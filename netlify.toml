@@ -13,9 +13,9 @@ pinned_version = "6"
   [plugins.inputs]
 
 [build]
-publish = "/Users/davidmarsh/Desktop/LiFi NYC/_Utilities/Websites/littlefightnyc website"
+publish = "."
 publishOrigin = "config"
-base = "/Users/davidmarsh/Desktop/LiFi NYC/_Utilities/Websites/littlefightnyc website"
+base = "."
 
   [build.environment]
 
