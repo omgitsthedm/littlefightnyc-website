@@ -23,9 +23,12 @@
 /insights  /blog/  301!
 /insights/  /blog/  301!
 
-# Custom 404 page
-/*  /404.html  404
-
+# Menu route aliases for currently available pages
+/services  /services/website-design-small-business-nyc/  301
 /services/  /services/website-design-small-business-nyc/  301
+/blog  /blog/nyc-small-business-digital.html  301
 /blog/  /blog/nyc-small-business-digital.html  301
 /industries.html  /solutions/#chapter-proof  301
+
+# Custom 404 page
+/*  /404.html  404
