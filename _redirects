@@ -2,6 +2,9 @@
 /sitemap.xml  /sitemap.xml  200
 /robots.txt   /robots.txt   200
 
+# Homepage route to the existing landing page
+/  /solutions/  301
+
 # Serve site.webmanifest
 /site.webmanifest  /site.webmanifest  200
 
