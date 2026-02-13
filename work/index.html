@@ -1,0 +1,1497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work | Little Fight NYC</title>
+    <meta
+      name="description"
+      content="Real results for real businesses. See how Little Fight NYC turns tech headaches into wins for shops, restaurants, and offices across New York."
+    />
+    <link rel="canonical" href="https://littlefightnyc.com/work/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Work | Little Fight NYC" />
+    <meta
+      property="og:description"
+      content="Real results for real businesses. See how Little Fight NYC turns tech headaches into wins for shops, restaurants, and offices across New York."
+    />
+    <meta property="og:url" content="https://littlefightnyc.com/work/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Work | Little Fight NYC" />
+    <meta
+      name="twitter:description"
+      content="Real results for real businesses. See how Little Fight NYC turns tech headaches into wins for shops, restaurants, and offices across New York."
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#FF5A00" />
+    <link rel="stylesheet" href="/css/styles.css?v=20260208" />
+    <link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208" />
+    <link rel="stylesheet" href="/css/services.css?v=20260208" />
+    <style>
+      .building-viewer-block {
+        margin-top: 36px;
+        background: linear-gradient(180deg, #ffffff, rgba(234, 235, 236, 0.4));
+        border: 1px solid #e2ebf2;
+        border-radius: 16px;
+        overflow: hidden;
+        padding: 0;
+      }
+      .building-viewer-header {
+        padding: 32px 32px 20px;
+      }
+      .building-viewer-header h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 6px 0 10px;
+        line-height: 1.3;
+      }
+      .building-viewer-header p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      .building-viewer-wrap {
+        position: relative;
+        width: 100%;
+        height: 480px;
+        background: #1a1d21;
+        cursor: grab;
+      }
+      .building-viewer-wrap:active {
+        cursor: grabbing;
+      }
+      .building-viewer-wrap canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .building-viewer-wrap.is-ready canvas {
+        opacity: 1;
+      }
+      .building-viewer-fallback {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        background:
+          radial-gradient(
+            circle at 20% 20%,
+            rgba(242, 154, 115, 0.2),
+            transparent 35%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(32, 88, 175, 0.2),
+            transparent 42%
+          ),
+          #1a1d21;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+      }
+      .building-viewer-wrap.is-ready .building-viewer-fallback {
+        opacity: 0;
+      }
+      .building-viewer-hint {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+        background: rgba(0, 0, 0, 0.45);
+        padding: 6px 14px;
+        border-radius: 20px;
+        pointer-events: none;
+        letter-spacing: 0.3px;
+        font-family: var(--font-body);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+      .building-viewer-wrap.is-ready .building-viewer-hint {
+        opacity: 1;
+      }
+      .building-viewer-meta {
+        padding: 20px 32px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .building-viewer-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .building-tag {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: var(--accent-warm-tint);
+        color: #c24400;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+      .building-viewer-cta a {
+        color: #ff5a00;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+      .building-viewer-cta a:hover {
+        color: #ff7a33;
+      }
+      .building-viewer-cta span {
+        display: inline-block;
+        transition: transform 0.2s ease;
+      }
+      .building-viewer-cta a:hover span {
+        transform: translateX(4px);
+      }
+      @media (max-width: 700px) {
+        .building-viewer-wrap {
+          height: 360px;
+        }
+        .building-viewer-header {
+          padding: 24px 20px 16px;
+        }
+        .building-viewer-meta {
+          padding: 16px 20px 22px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      .work-nyc-sequence {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        background: #101010;
+        isolation: isolate;
+      }
+      .work-nyc-sequence__bg {
+        position: absolute;
+        inset: 0;
+        background: #0f0f0f;
+        opacity: 0;
+        z-index: 0;
+        will-change: opacity;
+      }
+      .work-nyc-sequence__pill {
+        --pill-w: min(72vw, 1040px);
+        --pill-h: min(38vw, 540px);
+        --pill-r: 999px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: var(--pill-w);
+        height: var(--pill-h);
+        border-radius: var(--pill-r);
+        overflow: hidden;
+        transform: translate(-50%, -50%);
+        box-shadow:
+          0 24px 90px rgba(0, 0, 0, 0.46),
+          0 5px 18px rgba(0, 0, 0, 0.35);
+        z-index: 2;
+        will-change: width, height, border-radius, box-shadow;
+      }
+      .work-nyc-sequence__media {
+        position: absolute;
+        inset: 0;
+        background: #151515;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .work-nyc-sequence__frame {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.022);
+        transition: opacity 85ms linear, transform 380ms
+          cubic-bezier(0.2, 1, 0.3, 1);
+        will-change: opacity;
+      }
+      .work-nyc-sequence__frame.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .work-nyc-sequence__media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0) 58%,
+          rgba(0, 0, 0, 0.4) 100%
+        );
+        opacity: var(--overlay-opacity, 1);
+        transition: opacity 220ms linear;
+        pointer-events: none;
+        z-index: 3;
+      }
+      @media (max-width: 860px) {
+        .work-nyc-sequence__pill {
+          --pill-w: min(54vw, 300px);
+          --pill-h: min(92vw, 560px);
+        }
+      }
+    </style>
+  </head>
+  <body class="page-shell work-hub">
+    <div class="ambient-dots" aria-hidden="true" id="ambient-dots"></div>
+    <nav aria-label="Main navigation">
+      <div class="nav-container">
+        <a href="/" class="nav-logo" aria-label="Little Fight NYC - Home">
+          <div class="nav-logo-box" aria-hidden="true">
+            LITTLE<br />FIGHT<br />NYC
+          </div>
+          <span class="nav-logo-text">Little Fight NYC</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="nav-links"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-links" id="nav-links">
+          <a href="/">Home</a>
+          <a href="/services/">Services</a>
+          <a href="/solutions/">Solutions</a>
+          <a href="/work/" aria-current="page">Work</a>
+          <a href="/industries.html">Industries</a>
+          <a href="/about/">About</a>
+          <a href="/blog/">Blog</a>
+          <a href="/contact/">Contact</a>
+          <a href="/contact/" class="nav-cta">Let's Talk</a>
+        </div>
+      </div>
+    </nav>
+    <main id="main-content">
+      <section class="page-hero">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>/</span>
+            <span>Work</span>
+          </nav>
+          <p class="section-eyebrow">OUR WORK</p>
+          <h1 class="section-title">Happy businesses start here</h1>
+          <p class="section-description">
+            We have a thing for turning tech disasters into "I can't believe it
+            actually works now" moments. Here's the proof.
+          </p>
+        </div>
+      </section>
+
+      <section
+        class="work-nyc-sequence"
+        id="work-nyc-sequence"
+        aria-label="NYC visual sequence"
+      >
+        <div class="work-nyc-sequence__bg" id="work-nyc-sequence-bg"></div>
+        <div class="work-nyc-sequence__pill" id="work-nyc-sequence-pill">
+          <div class="work-nyc-sequence__media" id="work-nyc-sequence-media"></div>
+        </div>
+      </section>
+
+      <section class="work-metrics-band">
+        <div class="container work-metric-grid">
+          <article class="work-metric-card">
+            <p class="work-metric-kicker">Websites That Work</p>
+            <h2>People get what you do in seconds</h2>
+            <p>
+              No confusion, no bouncing. Your site finally tells your story the
+              way you'd tell it over coffee.
+            </p>
+          </article>
+          <article class="work-metric-card">
+            <p class="work-metric-kicker">Tech That Behaves</p>
+            <h2>Less freezing, more doing</h2>
+            <p>
+              We fix the printers, the registers, the Wi-Fi, the laptops &mdash;
+              all the stuff that slows your day down.
+            </p>
+          </article>
+          <article class="work-metric-card">
+            <p class="work-metric-kicker">Easy to Find</p>
+            <h2>Customers actually find you online</h2>
+            <p>
+              We set you up so Google, Yelp, and all the rest know you exist and
+              send people your way.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-content section-shell section-shell-soft">
+        <div class="container">
+          <div class="services-grid">
+            <article class="service-card">
+              <figure class="service-case-media">
+                <img
+                  src="/images/lf-photo-set/website_design_nyc_1.webp"
+                  alt="Website redesign case study preview"
+                  loading="lazy"
+                  decoding="async"
+                  width="1600"
+                  height="1000"
+                />
+              </figure>
+              <h3 class="service-title">
+                A Local Shop Gets a Website That Finally Feels Like Them
+              </h3>
+              <p class="service-description">
+                This neighborhood spot had a slow, confusing site that didn't
+                match how great they actually are. We rebuilt it from scratch
+                &mdash; faster, clearer, and way more inviting. Inquiries went
+                up, headaches went down.
+              </p>
+              <p>
+                <a href="/services/website-design-small-business-nyc/"
+                  >Learn about our website design &rarr;</a
+                >
+              </p>
+            </article>
+            <article class="service-card">
+              <figure class="service-case-media">
+                <img
+                  src="/images/lf-photo-set/nyc_retail.webp"
+                  alt="Hospitality POS environment with branded assets"
+                  loading="lazy"
+                  decoding="async"
+                  width="1600"
+                  height="1000"
+                />
+              </figure>
+              <h3 class="service-title">
+                A Busy Restaurant Stops Losing Orders to Frozen Registers
+              </h3>
+              <p class="service-description">
+                Mid-dinner-rush register freezes? Receipts printing to the wrong
+                station? Nightmare. We came in, untangled the mess, and now the
+                whole system hums along &mdash; even on a packed Saturday night.
+              </p>
+              <p>
+                <a href="/services/pos-and-register-setup-nyc/"
+                  >Learn about our POS setup &rarr;</a
+                >
+              </p>
+            </article>
+            <article class="service-card">
+              <figure class="service-case-media">
+                <img
+                  src="/images/lf-photo-set/apple_device_set_up.webp"
+                  alt="Apple device setup and management workflow preview"
+                  loading="lazy"
+                  decoding="async"
+                  width="1600"
+                  height="1000"
+                />
+              </figure>
+              <h3 class="service-title">
+                A Small Office Gets Every Mac and iPad Singing in Harmony
+              </h3>
+              <p class="service-description">
+                New hires used to spend half their first day just getting logged
+                in. We set up every device with the right apps, settings, and
+                security &mdash; so day one feels like day one-hundred.
+              </p>
+              <p>
+                <a href="/services/apple-device-setup-and-management/"
+                  >Learn about our Apple setup &rarr;</a
+                >
+              </p>
+            </article>
+          </div>
+
+          <article class="content-block building-viewer-block">
+            <div class="building-viewer-header">
+              <p class="work-metric-kicker">Real Estate &amp; Property</p>
+              <h2>Let Buyers Walk Through a Building Before They Ever Visit</h2>
+              <p>
+                Imagine a potential tenant spinning a gorgeous 3D model of your
+                property right on their phone. No app to install, nothing to
+                download &mdash; just a beautiful, interactive preview that
+                makes them want to book a tour immediately.
+              </p>
+            </div>
+            <div
+              class="building-viewer-wrap"
+              id="building-viewer"
+              role="img"
+              aria-label="Interactive 3D model of a classic NYC brownstone building you can spin and explore"
+            >
+              <canvas id="building-canvas"></canvas>
+              <div class="building-viewer-fallback" id="building-fallback">
+                Loading interactive 3D building viewer…
+              </div>
+              <div class="building-viewer-hint">
+                Drag to spin &middot; Scroll to zoom &middot; Right-click to
+                move around
+              </div>
+            </div>
+            <div class="building-viewer-meta">
+              <div class="building-viewer-tags">
+                <span class="building-tag">Works on Any Phone</span>
+                <span class="building-tag">No App Needed</span>
+                <span class="building-tag">Instant Loading</span>
+                <span class="building-tag">Fully Custom</span>
+              </div>
+              <p class="building-viewer-cta">
+                <a href="/contact/"
+                  >Want something like this for your property? Let's talk
+                  <span>&rarr;</span></a
+                >
+              </p>
+            </div>
+          </article>
+          <article class="content-block work-process-block">
+            <h2>How we make it happen</h2>
+            <p>
+              No mystery, no jargon, no disappearing acts. Every project follows
+              three simple steps so nothing falls through the cracks.
+            </p>
+            <div class="work-process-grid">
+              <article class="work-process-step">
+                <p class="work-process-label">Step 1</p>
+                <h3>Figure out what's broken</h3>
+                <p>
+                  We sit down, listen, and find the real problem &mdash; not
+                  just the symptom you've been Googling at 2 a.m.
+                </p>
+              </article>
+              <article class="work-process-step">
+                <p class="work-process-label">Step 2</p>
+                <h3>Fix it properly</h3>
+                <p>
+                  We build it right the first time so you're not calling us back
+                  next month for the same thing. (You can still call though. We
+                  like hearing from you.)
+                </p>
+              </article>
+              <article class="work-process-step">
+                <p class="work-process-label">Step 3</p>
+                <h3>Launch and look after it</h3>
+                <p>
+                  We flip the switch, make sure everything's humming, and stick
+                  around to fine-tune things as your business grows.
+                </p>
+              </article>
+            </div>
+          </article>
+          <article class="final-cta" style="margin-top: 24px">
+            <h2>Ready to love your tech again?</h2>
+            <p>
+              Tell us what's driving you crazy and we'll figure out the simplest
+              way to fix it. No pitch decks, no contracts to sign upfront
+              &mdash; just a friendly conversation.
+            </p>
+            <div class="hero-actions">
+              <a href="/contact/" class="btn btn-primary">Let's Talk</a
+              ><a href="/services/" class="btn btn-secondary">See What We Do</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">
+              <div class="footer-logo-box">LITTLE<br />FIGHT<br />NYC</div>
+              <span style="font-weight: 800; font-size: 1.1rem"
+                >Little Fight NYC</span
+              >
+            </div>
+            <p class="footer-text">
+              Helping small businesses punch above their weight with practical
+              websites, IT support, and smart systems.
+            </p>
+          </div>
+
+          <div>
+            <h2 class="footer-heading">Services</h2>
+            <div class="footer-links">
+              <a href="/services/website-design-small-business-nyc/"
+                >Website Design</a
+              >
+              <a href="/services/on-site-it-support-nyc/">On-Site IT Support</a>
+              <a href="/services/local-seo-and-google-ads-nyc/"
+                >Local SEO &amp; Ads</a
+              >
+              <a href="/services/pos-and-register-setup-nyc/">POS Setup</a>
+              <a href="/services/smart-home-services-nyc/">Smart Systems</a>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="footer-heading">Company</h2>
+            <div class="footer-links">
+              <a href="/">Home</a>
+              <a href="/solutions/">Solutions</a>
+              <a href="/work/">Work</a>
+              <a href="/about/">About</a>
+              <a href="/blog/">Blog</a>
+              <a href="/industries.html">Industries</a>
+              <a href="/contact/">Contact</a>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="footer-heading">Get In Touch</h2>
+            <div class="footer-links">
+              <a href="mailto:hello@littlefightnyc.com"
+                >hello@littlefightnyc.com</a
+              >
+              <a href="tel:+16463600318">646&#8209;360&#8209;0318</a>
+              <a href="/contact/">Manhattan, NYC</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copyright">
+            © 2026 Little Fight NYC. Built in New York with guts &amp; grit.
+          </p>
+          <div class="footer-legal">
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms of Service</a>
+          </div>
+        </div>
+
+        <div class="footer-credit">
+          <a href="https://littlefightnyc.com" target="_blank" rel="noopener"
+            >Designed, Hosted and Cared For by LittleFightNYC.com</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Little Fight NYC",
+        "description": "Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide.",
+        "url": "https://littlefightnyc.com",
+        "telephone": "+1-646-360-0318",
+        "email": "hello@littlefightnyc.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": "US"
+        },
+        "areaServed": [
+          {
+            "@type": "City",
+            "name": "New York"
+          },
+          {
+            "@type": "Country",
+            "name": "United States"
+          }
+        ],
+        "priceRange": "$$"
+      }
+    </script>
+    <script src="/js/main.js?v=20260208" defer></script>
+    <script>
+      (() => {
+        const root = document.getElementById("work-nyc-sequence");
+        const bg = document.getElementById("work-nyc-sequence-bg");
+        const pill = document.getElementById("work-nyc-sequence-pill");
+        const media = document.getElementById("work-nyc-sequence-media");
+        if (!root || !bg || !pill || !media) return;
+
+        const sources = [
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses1-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses2-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses3-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses4-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses5.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses6.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses7.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-cafes1-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-cafes2-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-grand-central-busy-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-brooklyn-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-small-business-owner-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-outdoor-bar-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-retail-2.webp",
+          "/images/lf-photo-set/nyc-scroll/nyc-web-design.webp",
+          "/images/lf-photo-set/nyc-scroll/website-design-nyc-1.webp",
+        ];
+
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        const frames = [];
+        let activeIndex = 0;
+        let prewarmStarted = false;
+        let timelineInitialized = false;
+        let engineLoading = false;
+
+        const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+        const mix = (a, b, t) => a + (b - a) * t;
+        const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+        const easeInOutCubic = (t) =>
+          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+        function preloadFrames() {
+          media.style.backgroundImage = `url("${sources[0]}")`;
+          sources.forEach((src, idx) => {
+            const img = document.createElement("img");
+            img.className =
+              "work-nyc-sequence__frame" + (idx === 0 ? " active" : "");
+            img.alt = "NYC sequence frame " + (idx + 1);
+            img.decoding = "async";
+            img.fetchPriority = idx < 2 ? "high" : "low";
+            if (idx < 2) {
+              img.src = src;
+              img.dataset.ready = "1";
+            } else {
+              img.dataset.src = src;
+              img.dataset.ready = "0";
+            }
+            media.appendChild(img);
+            frames.push(img);
+          });
+        }
+
+        function prewarmFrames() {
+          if (prewarmStarted) return;
+          prewarmStarted = true;
+          let i = 2;
+          const pump = () => {
+            if (i >= frames.length) return;
+            const frame = frames[i];
+            if (frame && frame.dataset.src && frame.dataset.ready !== "1") {
+              frame.src = frame.dataset.src;
+              frame.dataset.ready = "1";
+            }
+            i += 1;
+            setTimeout(pump, 26);
+          };
+          pump();
+        }
+
+        function setFrame(index) {
+          const safe = clamp(index, 0, frames.length - 1);
+          let resolved = safe;
+          if (!frames[resolved] || frames[resolved].dataset.ready !== "1") {
+            while (resolved > 0 && frames[resolved].dataset.ready !== "1") {
+              resolved -= 1;
+            }
+          }
+          if (resolved === activeIndex) return;
+          if (frames[activeIndex]) frames[activeIndex].classList.remove("active");
+          frames[resolved].classList.add("active");
+          activeIndex = resolved;
+        }
+
+        function rapidSequenceIndex(progress) {
+          const flipStart = 0.12;
+          const flipEnd = 0.72;
+          const t = clamp((progress - flipStart) / (flipEnd - flipStart), 0, 1);
+          if (t >= 1) return frames.length - 1;
+          const loops = 8;
+          const playable = Math.max(1, frames.length - 1);
+          const step = Math.floor(t * playable * loops);
+          return step % playable;
+        }
+
+        function render(progress) {
+          const p = clamp(progress, 0, 1);
+          const mobile = window.innerWidth <= 860;
+          const startW = mobile
+            ? Math.min(window.innerWidth * 0.52, 290)
+            : Math.min(window.innerWidth * 0.68, 980);
+          const startH = mobile
+            ? Math.min(window.innerWidth * 0.9, 540)
+            : Math.min(window.innerWidth * 0.36, 500);
+
+          const expandStart = 0.1;
+          const expandEnd = 0.88;
+          const expandT = clamp((p - expandStart) / (expandEnd - expandStart), 0, 1);
+          const expandEase = easeOutExpo(expandT);
+
+          const w = mix(startW, window.innerWidth, expandEase);
+          const h = mix(startH, window.innerHeight, expandEase);
+          const rStart = Math.max(58, startH * 0.5);
+          const r = mix(rStart, 0, easeInOutCubic(expandT));
+
+          pill.style.setProperty("--pill-w", w.toFixed(2) + "px");
+          pill.style.setProperty("--pill-h", h.toFixed(2) + "px");
+          pill.style.setProperty("--pill-r", r.toFixed(2) + "px");
+
+          const shA = mix(0.46, 0.04, p);
+          const shB = mix(0.35, 0.02, p);
+          pill.style.boxShadow = `0 24px 90px rgba(0,0,0,${shA.toFixed(3)}), 0 5px 18px rgba(0,0,0,${shB.toFixed(3)})`;
+
+          bg.style.opacity = clamp((p - 0.02) * 1.26, 0, 1).toFixed(3);
+          media.style.setProperty("--overlay-opacity", p > 0.86 ? "0" : "1");
+          setFrame(rapidSequenceIndex(p));
+        }
+
+        function loadScript(src) {
+          return new Promise((resolve, reject) => {
+            const s = document.createElement("script");
+            s.src = src;
+            s.async = true;
+            s.onload = resolve;
+            s.onerror = () => reject(new Error("Failed to load: " + src));
+            document.head.appendChild(s);
+          });
+        }
+
+        function initTimeline() {
+          if (timelineInitialized || !window.gsap || !window.ScrollTrigger) return;
+          gsap.registerPlugin(ScrollTrigger);
+          ScrollTrigger.create({
+            trigger: root,
+            start: "top top",
+            end: "+=3800",
+            pin: true,
+            scrub: 0.34,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onEnter: () => prewarmFrames(),
+            onEnterBack: () => prewarmFrames(),
+            onUpdate: (self) => render(self.progress),
+          });
+          ScrollTrigger.refresh();
+          timelineInitialized = true;
+        }
+
+        async function ensureEngine() {
+          if (engineLoading || timelineInitialized) return;
+          engineLoading = true;
+          try {
+            if (!window.gsap) await loadScript("/js/vendor/gsap.min.js");
+            if (!window.ScrollTrigger)
+              await loadScript("/js/vendor/ScrollTrigger.min.js");
+            initTimeline();
+          } catch (_) {
+            // Graceful fallback: keep static first frame.
+          } finally {
+            engineLoading = false;
+          }
+        }
+
+        function boot() {
+          preloadFrames();
+          render(0);
+          if (prefersReducedMotion) return;
+
+          const io = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  ensureEngine();
+                  prewarmFrames();
+                  io.disconnect();
+                  break;
+                }
+              }
+            },
+            { rootMargin: "20% 0px 20% 0px" },
+          );
+          io.observe(root);
+
+          if ("requestIdleCallback" in window) {
+            requestIdleCallback(() => ensureEngine(), { timeout: 3200 });
+            requestIdleCallback(() => prewarmFrames(), { timeout: 4600 });
+          } else {
+            setTimeout(() => ensureEngine(), 2800);
+            setTimeout(() => prewarmFrames(), 3600);
+          }
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", boot, { once: true });
+        } else {
+          boot();
+        }
+      })();
+    </script>
+
+    <script type="module">
+      const container = document.getElementById("building-viewer");
+      const canvas = document.getElementById("building-canvas");
+      const fallback = document.getElementById("building-fallback");
+      let viewerStarted = false;
+
+      const setFallback = (message) => {
+        if (fallback) {
+          fallback.textContent = message;
+        }
+      };
+
+      const setLoading = (isLoading) => {
+        if (container) {
+          container.classList.toggle("is-loading", isLoading);
+        }
+      };
+
+      const showReady = () => {
+        if (container) {
+          container.classList.add("is-ready");
+        }
+      };
+
+      const startViewer = async () => {
+        if (viewerStarted) {
+          return;
+        }
+        viewerStarted = true;
+        setLoading(true);
+
+        try {
+          const [THREE, controlsModule] = await Promise.all([
+            import("https://esm.sh/three@0.164.1"),
+            import("https://esm.sh/three@0.164.1/examples/jsm/controls/OrbitControls.js"),
+          ]);
+          const { OrbitControls } = controlsModule;
+
+          if (!container || !canvas) {
+            throw new Error("Viewer container or canvas missing.");
+          }
+
+          const testCtx =
+            canvas.getContext("webgl2") || canvas.getContext("webgl");
+          if (!testCtx) {
+            throw new Error("WebGL is not available on this device/browser.");
+          }
+
+          function getSize() {
+            const rect = container.getBoundingClientRect();
+            return { w: rect.width || 800, h: rect.height || 480 };
+          }
+
+          const { w: initW, h: initH } = getSize();
+
+          const scene = new THREE.Scene();
+          scene.background = new THREE.Color(0x87ceeb);
+          scene.fog = new THREE.Fog(0x87ceeb, 80, 150);
+
+          const camera = new THREE.PerspectiveCamera(
+            32,
+            initW / initH,
+            0.1,
+            220,
+          );
+          camera.position.set(22, 14, 26);
+
+          const renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: true,
+            powerPreference: "high-performance",
+          });
+          renderer.setSize(initW, initH, false);
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+          renderer.shadowMap.enabled = true;
+          renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+          renderer.toneMapping = THREE.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1.08;
+
+          scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+          const sun = new THREE.DirectionalLight(0xfff5e6, 1.8);
+          sun.position.set(15, 30, 20);
+          sun.castShadow = true;
+          sun.shadow.mapSize.set(2048, 2048);
+          sun.shadow.camera.left = -25;
+          sun.shadow.camera.right = 25;
+          sun.shadow.camera.top = 25;
+          sun.shadow.camera.bottom = -25;
+          sun.shadow.camera.near = 0.5;
+          sun.shadow.camera.far = 80;
+          sun.shadow.bias = -0.001;
+          scene.add(sun);
+          const fill = new THREE.DirectionalLight(0xaaccff, 0.3);
+          fill.position.set(-10, 10, -10);
+          scene.add(fill);
+
+          const controls = new OrbitControls(camera, renderer.domElement);
+          controls.enableDamping = true;
+          controls.dampingFactor = 0.05;
+          controls.autoRotate = true;
+          controls.autoRotateSpeed = 0.35;
+          controls.maxPolarAngle = Math.PI / 2.05;
+          controls.minDistance = 15;
+          controls.maxDistance = 55;
+
+          function makeBrickTex(w = 512, h = 512) {
+            const c = document.createElement("canvas");
+            c.width = w;
+            c.height = h;
+            const x = c.getContext("2d");
+            x.fillStyle = "#8a7d6b";
+            x.fillRect(0, 0, w, h);
+            const bw = w / 8;
+            const bh = h / 16;
+            const m = 2;
+            for (let r = 0; r < 16; r++) {
+              const o = (r % 2) * (bw / 2);
+              for (let col = -1; col < 9; col++) {
+                const px = col * bw + o;
+                const py = r * bh;
+                const cr = 140 + Math.random() * 50;
+                const cg2 = 45 + Math.random() * 30;
+                const cb = 30 + Math.random() * 25;
+                x.fillStyle = `rgb(${cr},${cg2},${cb})`;
+                x.fillRect(px + m, py + m, bw - m * 2, bh - m * 2);
+                for (let i = 0; i < 20; i++) {
+                  const nx = px + m + Math.random() * (bw - m * 2);
+                  const ny = py + m + Math.random() * (bh - m * 2);
+                  x.fillStyle =
+                    Math.random() > 0.5
+                      ? `rgba(255,255,255,${Math.random() * 0.15})`
+                      : `rgba(0,0,0,${Math.random() * 0.15})`;
+                  x.fillRect(nx, ny, 2, 2);
+                }
+              }
+            }
+            const t = new THREE.CanvasTexture(c);
+            t.wrapS = t.wrapT = THREE.RepeatWrapping;
+            t.colorSpace = THREE.SRGBColorSpace;
+            return t;
+          }
+
+          function makeBrickNorm(w = 512, h = 512) {
+            const c = document.createElement("canvas");
+            c.width = w;
+            c.height = h;
+            const x = c.getContext("2d");
+            x.fillStyle = "#8080ff";
+            x.fillRect(0, 0, w, h);
+            const bw = w / 8;
+            const bh = h / 16;
+            const m = 2;
+            for (let r = 0; r < 16; r++) {
+              const o = (r % 2) * (bw / 2);
+              for (let col = -1; col < 9; col++) {
+                const px = col * bw + o;
+                const py = r * bh;
+                x.fillStyle = "#7070e0";
+                x.fillRect(px, py, bw, m);
+                x.fillRect(px, py, m, bh);
+                x.fillStyle = "#8888ff";
+                x.fillRect(
+                  px + m + 1,
+                  py + m + 1,
+                  bw - m * 2 - 2,
+                  bh - m * 2 - 2,
+                );
+              }
+            }
+            const t = new THREE.CanvasTexture(c);
+            t.wrapS = t.wrapT = THREE.RepeatWrapping;
+            return t;
+          }
+
+          const brickTex = makeBrickTex();
+          brickTex.repeat.set(3, 6);
+          const brickNorm = makeBrickNorm();
+          brickNorm.repeat.set(3, 6);
+          const brickMat = new THREE.MeshStandardMaterial({
+            map: brickTex,
+            normalMap: brickNorm,
+            normalScale: new THREE.Vector2(0.5, 0.5),
+            roughness: 0.85,
+          });
+          const stoneMat = new THREE.MeshStandardMaterial({
+            color: 0xc4b08a,
+            roughness: 0.7,
+          });
+          const darkStoneMat = new THREE.MeshStandardMaterial({
+            color: 0x8a7d6b,
+            roughness: 0.8,
+          });
+          const windowMat = new THREE.MeshStandardMaterial({
+            color: 0x1a2530,
+            roughness: 0.1,
+            metalness: 0.8,
+          });
+          const frameMat = new THREE.MeshStandardMaterial({
+            color: 0xd4cfc2,
+            roughness: 0.5,
+          });
+          const doorMat = new THREE.MeshStandardMaterial({
+            color: 0x2a1506,
+            roughness: 0.6,
+            metalness: 0.1,
+          });
+          const metalMat = new THREE.MeshStandardMaterial({
+            color: 0x1a1a1a,
+            roughness: 0.4,
+            metalness: 0.9,
+          });
+
+          const bld = new THREE.Group();
+          scene.add(bld);
+          const FL = 6;
+          const FH = 4;
+          const BW = 12;
+          const BD = 9;
+          const BH = FL * FH;
+          const fz = BD / 2;
+
+          const body = new THREE.Mesh(
+            new THREE.BoxGeometry(BW, BH, BD),
+            brickMat,
+          );
+          body.position.y = BH / 2;
+          body.castShadow = true;
+          body.receiveShadow = true;
+          bld.add(body);
+
+          const base = new THREE.Mesh(
+            new THREE.BoxGeometry(BW + 0.3, 1.2, BD + 0.3),
+            darkStoneMat,
+          );
+          base.position.y = 0.6;
+          base.castShadow = true;
+          bld.add(base);
+
+          const cg = new THREE.Group();
+          cg.position.y = BH;
+          const c1 = new THREE.Mesh(
+            new THREE.BoxGeometry(BW + 1.2, 0.4, BD + 0.6),
+            stoneMat,
+          );
+          c1.position.y = 0.2;
+          cg.add(c1);
+          const c2 = new THREE.Mesh(
+            new THREE.BoxGeometry(BW + 0.8, 0.3, BD + 0.4),
+            stoneMat,
+          );
+          c2.position.y = 0.55;
+          cg.add(c2);
+          const dg = new THREE.BoxGeometry(0.3, 0.25, 0.15);
+          for (let i = 0; i < 30; i++) {
+            const d = new THREE.Mesh(dg, stoneMat);
+            d.position.set(-BW / 2 + 0.6 + i * 0.4, -0.12, BD / 2 + 0.15);
+            cg.add(d);
+          }
+          bld.add(cg);
+
+          const pg = new THREE.BoxGeometry(BW + 0.4, 1.0, 0.3);
+          const pf = new THREE.Mesh(pg, brickMat);
+          pf.position.set(0, BH + 1.3, BD / 2 + 0.05);
+          bld.add(pf);
+          const pb = new THREE.Mesh(pg, brickMat);
+          pb.position.set(0, BH + 1.3, -BD / 2 - 0.05);
+          bld.add(pb);
+          const psg = new THREE.BoxGeometry(0.3, 1.0, BD + 0.4);
+          const pl2 = new THREE.Mesh(psg, brickMat);
+          pl2.position.set(-BW / 2 - 0.05, BH + 1.3, 0);
+          bld.add(pl2);
+          const pr = new THREE.Mesh(psg, brickMat);
+          pr.position.set(BW / 2 + 0.05, BH + 1.3, 0);
+          bld.add(pr);
+          const cap = new THREE.Mesh(
+            new THREE.BoxGeometry(BW + 0.8, 0.15, BD + 0.8),
+            stoneMat,
+          );
+          cap.position.y = BH + 1.9;
+          bld.add(cap);
+
+          for (let f = 1; f <= FL; f++) {
+            const b = new THREE.Mesh(
+              new THREE.BoxGeometry(BW + 0.15, 0.15, BD + 0.15),
+              stoneMat,
+            );
+            b.position.y = f * FH;
+            bld.add(b);
+          }
+
+          const WW = 1.4;
+          const WH = 2.4;
+          const FT2 = 0.08;
+          function mkFrame(x, y, z, w, h, d) {
+            const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), frameMat);
+            m.position.set(x, y, z);
+            return m;
+          }
+          function mkWin(x, y, z) {
+            const g = new THREE.Group();
+            const rec = new THREE.Mesh(
+              new THREE.BoxGeometry(WW + 0.2, WH + 0.2, 0.3),
+              darkStoneMat,
+            );
+            rec.position.set(x, y, z + 0.05);
+            g.add(rec);
+            const glass = new THREE.Mesh(
+              new THREE.BoxGeometry(WW, WH, 0.15),
+              windowMat,
+            );
+            glass.position.set(x, y, z + 0.15);
+            g.add(glass);
+            g.add(mkFrame(x, y + WH / 2, z + 0.2, WW + 0.15, FT2, FT2));
+            g.add(mkFrame(x, y - WH / 2, z + 0.2, WW + 0.15, FT2, FT2));
+            g.add(mkFrame(x - WW / 2, y, z + 0.2, FT2, WH, FT2));
+            g.add(mkFrame(x + WW / 2, y, z + 0.2, FT2, WH, FT2));
+            g.add(mkFrame(x, y + 0.3, z + 0.2, WW, FT2, FT2));
+            const sill = new THREE.Mesh(
+              new THREE.BoxGeometry(WW + 0.4, 0.15, 0.3),
+              stoneMat,
+            );
+            sill.position.set(x, y - WH / 2 - 0.08, z + 0.2);
+            sill.castShadow = true;
+            g.add(sill);
+            const lint = new THREE.Mesh(
+              new THREE.BoxGeometry(WW + 0.3, 0.2, 0.15),
+              stoneMat,
+            );
+            lint.position.set(x, y + WH / 2 + 0.15, z + 0.15);
+            lint.castShadow = true;
+            g.add(lint);
+            return g;
+          }
+
+          const wxp = [-4.2, -1.4, 1.4, 4.2];
+          for (let f = 0; f < FL; f++) {
+            const y = f * FH + FH / 2 + 1.5;
+            for (let i = 0; i < 4; i++) {
+              if (f === 0 && (i === 1 || i === 2)) {
+                continue;
+              }
+              bld.add(mkWin(wxp[i], y, fz));
+            }
+          }
+
+          const swx = [-2.5, 2.5];
+          const sz = BW / 2;
+          for (let f = 0; f < FL; f++) {
+            const y = f * FH + FH / 2 + 1.5;
+            for (const wx of swx) {
+              const r = mkWin(0, y, 0);
+              r.rotation.y = Math.PI / 2;
+              r.position.set(sz, 0, wx);
+              bld.add(r);
+              const l = mkWin(0, y, 0);
+              l.rotation.y = -Math.PI / 2;
+              l.position.set(-sz, 0, wx);
+              bld.add(l);
+            }
+          }
+
+          const DW = 2;
+          const DH = 3.2;
+          const dr1 = new THREE.Mesh(
+            new THREE.BoxGeometry(DW + 0.4, DH + 0.3, 0.4),
+            darkStoneMat,
+          );
+          dr1.position.set(0, DH / 2 + 1.0, fz + 0.05);
+          bld.add(dr1);
+          const dr2 = new THREE.Mesh(
+            new THREE.BoxGeometry(DW, DH, 0.12),
+            doorMat,
+          );
+          dr2.position.set(0, DH / 2 + 1.0, fz + 0.2);
+          bld.add(dr2);
+          const dr3 = new THREE.Mesh(
+            new THREE.BoxGeometry(DW + 0.3, 0.15, 0.15),
+            stoneMat,
+          );
+          dr3.position.set(0, DH + 1.15, fz + 0.25);
+          bld.add(dr3);
+          const dr4 = new THREE.Mesh(
+            new THREE.BoxGeometry(DW, 0.6, 0.08),
+            windowMat,
+          );
+          dr4.position.set(0, DH + 0.6 + 1.0, fz + 0.2);
+          bld.add(dr4);
+          const knob = new THREE.Mesh(
+            new THREE.SphereGeometry(0.06, 8, 8),
+            metalMat,
+          );
+          knob.position.set(0.65, DH / 2 + 0.8, fz + 0.3);
+          bld.add(knob);
+
+          const SC = 5;
+          const SH = 0.22;
+          const SD = 0.4;
+          for (let i = 0; i < SC; i++) {
+            const s = new THREE.Mesh(
+              new THREE.BoxGeometry(3.5, SH, SD),
+              stoneMat,
+            );
+            s.position.set(0, SH / 2 + i * SH, fz + 0.5 + (SC - i) * SD);
+            s.castShadow = true;
+            s.receiveShadow = true;
+            bld.add(s);
+          }
+          const land = new THREE.Mesh(
+            new THREE.BoxGeometry(3.5, SC * SH, SD * 1.5),
+            stoneMat,
+          );
+          land.position.set(0, (SC * SH) / 2, fz + 0.5 + SD * 0.25);
+          land.castShadow = true;
+          bld.add(land);
+          for (const side of [-1, 1]) {
+            const x = (side * 3.5) / 2;
+            for (let i = 0; i <= SC; i++) {
+              const p = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.04, 0.04, 1.2, 6),
+                metalMat,
+              );
+              p.position.set(
+                x,
+                SH * i + 0.6,
+                fz + 0.5 + (SC - i) * SD + SD / 2,
+              );
+              bld.add(p);
+            }
+          }
+
+          const FEW = 3.5;
+          const FED = 2.5;
+          const FEX = 3.5;
+          for (let f = 1; f < FL; f++) {
+            const y = f * FH + 0.8;
+            const plat = new THREE.Mesh(
+              new THREE.BoxGeometry(FEW, 0.08, FED),
+              metalMat,
+            );
+            plat.position.set(FEX, y, fz + FED / 2);
+            plat.castShadow = true;
+            bld.add(plat);
+            for (let g = -FEW / 2 + 0.15; g < FEW / 2; g += 0.2) {
+              const gr = new THREE.Mesh(
+                new THREE.BoxGeometry(0.03, 0.02, FED - 0.1),
+                metalMat,
+              );
+              gr.position.set(FEX + g, y + 0.04, fz + FED / 2);
+              bld.add(gr);
+            }
+            for (const sx of [-FEW / 2, FEW / 2]) {
+              for (const sz2 of [0, FED]) {
+                const po = new THREE.Mesh(
+                  new THREE.CylinderGeometry(0.03, 0.03, 1.2, 6),
+                  metalMat,
+                );
+                po.position.set(FEX + sx, y + 0.6, fz + sz2);
+                bld.add(po);
+              }
+            }
+            const tr1 = new THREE.Mesh(
+              new THREE.BoxGeometry(FEW, 0.04, 0.04),
+              metalMat,
+            );
+            tr1.position.set(FEX, y + 1.2, fz + FED);
+            bld.add(tr1);
+            const tr2 = new THREE.Mesh(
+              new THREE.BoxGeometry(0.04, 0.04, FED),
+              metalMat,
+            );
+            tr2.position.set(FEX - FEW / 2, y + 1.2, fz + FED / 2);
+            bld.add(tr2);
+            const tr3 = new THREE.Mesh(
+              new THREE.BoxGeometry(0.04, 0.04, FED),
+              metalMat,
+            );
+            tr3.position.set(FEX + FEW / 2, y + 1.2, fz + FED / 2);
+            bld.add(tr3);
+            if (f < FL - 1) {
+              const ls = f % 2 === 0 ? -1 : 1;
+              const lx = FEX + ls * (FEW / 2 - 0.5);
+              const ll = new THREE.Mesh(
+                new THREE.BoxGeometry(0.04, FH, 0.04),
+                metalMat,
+              );
+              ll.position.set(lx - 0.25, y + FH / 2, fz + FED - 0.3);
+              bld.add(ll);
+              const lr = new THREE.Mesh(
+                new THREE.BoxGeometry(0.04, FH, 0.04),
+                metalMat,
+              );
+              lr.position.set(lx + 0.25, y + FH / 2, fz + FED - 0.3);
+              bld.add(lr);
+              for (let r = 0; r < 8; r++) {
+                const rn = new THREE.Mesh(
+                  new THREE.BoxGeometry(0.5, 0.03, 0.03),
+                  metalMat,
+                );
+                rn.position.set(lx, y + 0.3 + r * 0.45, fz + FED - 0.3);
+                bld.add(rn);
+              }
+            }
+          }
+
+          const dly = FH + 0.8;
+          const dlx = FEX;
+          for (const dx of [-0.25, 0.25]) {
+            const dl = new THREE.Mesh(
+              new THREE.BoxGeometry(0.04, dly, 0.04),
+              metalMat,
+            );
+            dl.position.set(dlx + dx, dly / 2, fz + FED - 0.3);
+            bld.add(dl);
+          }
+          for (let r = 0; r < 10; r++) {
+            const rn = new THREE.Mesh(
+              new THREE.BoxGeometry(0.5, 0.03, 0.03),
+              metalMat,
+            );
+            rn.position.set(dlx, 0.3 + r * (dly / 10), fz + FED - 0.3);
+            bld.add(rn);
+          }
+
+          const wt = new THREE.Group();
+          const tankMat2 = new THREE.MeshStandardMaterial({
+            color: 0x6b4226,
+            roughness: 0.9,
+          });
+          const tank = new THREE.Mesh(
+            new THREE.CylinderGeometry(1.2, 1.2, 2.5, 12),
+            tankMat2,
+          );
+          tank.position.y = BH + 4.5;
+          wt.add(tank);
+          const roof = new THREE.Mesh(
+            new THREE.ConeGeometry(1.4, 1.0, 12),
+            tankMat2,
+          );
+          roof.position.y = BH + 6.0;
+          wt.add(roof);
+          for (let i = 0; i < 4; i++) {
+            const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
+            const leg = new THREE.Mesh(
+              new THREE.CylinderGeometry(0.06, 0.06, 3, 6),
+              metalMat,
+            );
+            leg.position.set(Math.cos(a) * 0.9, BH + 2.7, Math.sin(a) * 0.9);
+            wt.add(leg);
+          }
+          wt.position.set(-3, 0, -1.5);
+          bld.add(wt);
+
+          const ground = new THREE.Mesh(
+            new THREE.PlaneGeometry(100, 100),
+            new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.9 }),
+          );
+          ground.rotation.x = -Math.PI / 2;
+          ground.receiveShadow = true;
+          scene.add(ground);
+          const sw = new THREE.Mesh(
+            new THREE.BoxGeometry(BW + 8, 0.1, 5),
+            new THREE.MeshStandardMaterial({ color: 0x999999, roughness: 0.8 }),
+          );
+          sw.position.set(0, 0.05, fz + 3.5);
+          sw.receiveShadow = true;
+          scene.add(sw);
+          const curb = new THREE.Mesh(
+            new THREE.BoxGeometry(BW + 8, 0.25, 0.3),
+            stoneMat,
+          );
+          curb.position.set(0, 0.125, fz + 6.1);
+          scene.add(curb);
+
+          const frameCameraToObject = (object, fitOffset = 1.4) => {
+            const box = new THREE.Box3().setFromObject(object);
+            const size = box.getSize(new THREE.Vector3());
+            const center = box.getCenter(new THREE.Vector3());
+            const maxSize = Math.max(size.x, size.y, size.z);
+            const fitHeightDistance =
+              maxSize /
+              (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)));
+            const fitWidthDistance = fitHeightDistance / camera.aspect;
+            const distance =
+              fitOffset * Math.max(fitHeightDistance, fitWidthDistance);
+            const direction = new THREE.Vector3(1, 0.56, 1).normalize();
+
+            camera.position.copy(
+              center.clone().add(direction.multiplyScalar(distance)),
+            );
+            camera.near = Math.max(0.1, distance / 100);
+            camera.far = distance * 25;
+            camera.updateProjectionMatrix();
+
+            controls.target.set(center.x, center.y + 0.6, center.z);
+            controls.minDistance = distance * 0.58;
+            controls.maxDistance = distance * 2.2;
+            controls.update();
+          };
+
+          frameCameraToObject(bld, 1.42);
+
+          let animId = null;
+          let hasRendered = false;
+          const animate = () => {
+            animId = window.requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+            if (!hasRendered) {
+              hasRendered = true;
+              showReady();
+            }
+          };
+
+          const handleResize = () => {
+            const { w, h } = getSize();
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h, false);
+            frameCameraToObject(bld, 1.42);
+          };
+
+          const ro = new ResizeObserver(handleResize);
+          ro.observe(container);
+
+          const io = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                if (!animId) {
+                  animate();
+                }
+              } else if (animId) {
+                window.cancelAnimationFrame(animId);
+                animId = null;
+              }
+            },
+            { threshold: 0.05 },
+          );
+          io.observe(container);
+
+          animate();
+        } catch (error) {
+          console.error("3D viewer failed:", error);
+          setFallback("3D viewer unavailable on this browser.");
+          viewerStarted = false;
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      startViewer();
+    </script>
+  </body>
+</html>
