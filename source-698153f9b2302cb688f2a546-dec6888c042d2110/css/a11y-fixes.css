@@ -1,0 +1,167 @@
+/* ============================================
+   LITTLE FIGHT NYC - ACCESSIBILITY OVERRIDE
+
+   Add this file AFTER your main styles.css:
+   <link rel="stylesheet" href="/css/styles.css">
+   <link rel="stylesheet" href="/css/a11y-fixes.css">
+   ============================================ */
+
+/* === ACCESSIBLE COLOR VARIABLES === */
+:root {
+  --orange-accessible: #C24000;
+  --orange-hover: #A33700;
+  --gray-accessible: #595959;
+}
+
+/* === FIX: Orange text/links on white === */
+.section-eyebrow,
+[class*="eyebrow"] {
+  color: var(--orange-accessible) !important;
+}
+
+/* === FIX: Area neighborhood links === */
+a[href^="/areas/"],
+a[href^="areas/"],
+a[style*="color: #FE5800"],
+a[style*="color:#FE5800"] {
+  color: var(--orange-accessible) !important;
+}
+
+a[href^="/areas/"]:hover,
+a[href^="/areas/"]:focus,
+a[href^="areas/"]:hover,
+a[href^="areas/"]:focus {
+  color: var(--orange-hover) !important;
+  text-decoration: underline;
+}
+
+/* === FIX: Muted gray labels (#888) === */
+[style*="color: #888"],
+[style*="color:#888"],
+.contact-label,
+.muted-text {
+  color: var(--gray-accessible) !important;
+}
+
+/* === FIX: Nav logo text === */
+.nav-logo-box,
+.footer-logo-box {
+  color: #ffffff !important;
+}
+
+/* === FIX: Buttons === */
+.btn-primary,
+.nav-cta,
+a.nav-cta,
+button[type="submit"].btn-primary {
+  background-color: var(--orange-accessible) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.nav-cta:hover,
+.nav-cta:focus {
+  background-color: var(--orange-hover) !important;
+}
+
+/* === FIX: Secondary button === */
+.btn-secondary {
+  color: var(--orange-accessible) !important;
+  border-color: var(--orange-accessible) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: var(--orange-hover) !important;
+  border-color: var(--orange-hover) !important;
+}
+
+/* === FIX: Storefront labels === */
+.storefront {
+  color: #ffffff !important;
+  background-color: var(--orange-accessible) !important;
+}
+
+/* === FIX: Hero badge === */
+.hero-badge {
+  color: var(--orange-accessible) !important;
+}
+
+.hero-badge-dot {
+  background-color: var(--orange-accessible) !important;
+}
+
+/* === FIX: Hero highlight text === */
+.hero-title .highlight {
+  color: var(--orange-accessible) !important;
+}
+
+/* === FIX: Footer links === */
+footer a:not(.btn) {
+  color: var(--orange-accessible);
+}
+
+footer a:not(.btn):hover {
+  color: var(--orange-hover);
+  text-decoration: underline;
+}
+
+/* === FIX: Footer text === */
+.footer-text,
+.footer-copyright,
+footer p {
+  color: var(--gray-accessible);
+}
+
+/* === FIX: Footer heading hierarchy === */
+.footer-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #ffffff;
+}
+
+/* === FIX: Service card hover border === */
+.service-card:hover {
+  border-color: var(--orange-accessible);
+}
+
+/* === FIX: Form focus state === */
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--orange-accessible);
+}
+
+/* === FIX: Nav link hover === */
+.nav-links a:hover {
+  color: var(--orange-accessible);
+}
+
+/* === ANIMATION PERFORMANCE === */
+.storefront,
+.service-card,
+.btn,
+.nav-cta,
+.faq-item {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.service-card:hover,
+.btn:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease-out;
+}
+
+/* === REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

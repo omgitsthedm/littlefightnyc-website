@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industries We Specialize In | Little Fight NYC</title>
+    <meta name="description" content="Little Fight NYC supports service-focused industries with mapped service stacks, real examples, and a story-first path from friction to growth.">
+    <link rel="canonical" href="https://littlefightnyc.com/industries.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://littlefightnyc.com/industries.html">
+    <meta property="og:title" content="Industries We Specialize In | Little Fight NYC">
+    <meta property="og:description" content="Service-industry growth systems with mapped stacks and clear execution by vertical.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://littlefightnyc.com/industries.html">
+    <meta name="twitter:title" content="Industries We Specialize In | Little Fight NYC">
+    <meta name="twitter:description" content="Service-industry growth systems with mapped stacks and clear execution by vertical.">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#FF5A00">
+<link rel="stylesheet" href="/css/styles.css?v=20260208">
+    <link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208">
+    <link rel="stylesheet" href="/css/services.css?v=20260208">
+    <style>
+        .industry-index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .industry-index-card {
+            display: block;
+            text-decoration: none;
+            border: 1px solid #edf1f4;
+            border-radius: 12px;
+            padding: 14px;
+            background: #fff;
+            color: var(--bg-dark);
+            font-weight: 700;
+        }
+
+        .industry-index-card span {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .industry-map-card {
+            scroll-margin-top: 100px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 640px) {
+            .industry-index-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .industries-nyc-sequence {
+            position: relative;
+            height: 320vh;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            isolation: isolate;
+        }
+
+        .industries-nyc-sequence__sticky {
+            position: sticky;
+            top: 0;
+            height: 100svh;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .industries-nyc-sequence__bg {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-primary);
+            opacity: 0;
+            z-index: 0;
+            will-change: opacity;
+        }
+
+        .industries-nyc-sequence__pill {
+            --pill-w: min(84vw, 1180px);
+            --pill-h: min(44vh, 420px);
+            --pill-r: 999px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: var(--pill-w);
+            height: var(--pill-h);
+            border-radius: var(--pill-r);
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            box-shadow:
+                0 24px 90px rgba(0, 0, 0, 0.46),
+                0 5px 18px rgba(0, 0, 0, 0.35);
+            z-index: 2;
+            will-change: width, height, border-radius, box-shadow;
+        }
+
+        .industries-nyc-sequence__media {
+            position: absolute;
+            inset: 0;
+            background: #f2f5f8;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .industries-nyc-sequence__frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.022);
+            transition: opacity 0ms linear, transform 160ms cubic-bezier(0.2, 1, 0.3, 1);
+            will-change: opacity;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .industries-nyc-sequence__frame.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .industries-nyc-sequence__media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, 0.24) 100%);
+            opacity: var(--overlay-opacity, 0.72);
+            transition: opacity 220ms linear;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @media (max-width: 860px) {
+            .industries-nyc-sequence {
+                height: 300vh;
+            }
+
+            .industries-nyc-sequence__pill {
+                --pill-w: min(90vw, 560px);
+                --pill-h: min(34vw, 220px);
+            }
+        }
+
+        .service-detail.theme-ocean .page-hero {
+            padding-bottom: 30px;
+        }
+
+        .industries-nyc-sequence + .page-content {
+            padding-top: 24px;
+        }
+    </style>
+</head>
+<body class="page-shell service-detail theme-ocean">
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="nav-logo" aria-label="Little Fight NYC - Home">
+                <div class="nav-logo-box" aria-hidden="true">LITTLE<br>FIGHT<br>NYC</div>
+                <span class="nav-logo-text">Little Fight NYC</span>
+            </a>
+
+            <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="/">Home</a>
+                <a href="/services/">Services</a>
+                <a href="/solutions/">Solutions</a>
+                <a href="/work/">Work</a>
+                <a href="/industries.html" aria-current="page">Industries</a>
+                <a href="/about/">About</a>
+                <a href="/blog/">Blog</a>
+                <a href="/contact/">Contact</a>
+                <a href="/contact/" class="nav-cta">Let's Talk</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="page-hero">
+            <div class="container">
+                <p class="back-links"><a href="/">← Home</a><span>•</span><a href="/solutions/">Solutions Story</a></p>
+                <p class="section-eyebrow">INDUSTRIES</p>
+                <div class="service-wayfinder"><i class="mdi mdi-city" aria-hidden="true"></i><span>Industry-specific growth systems</span></div>
+                <h1 class="section-title">Industry-focused. Proven growth system.</h1>
+                <p class="section-description">We keep the core method consistent and customize execution for each market. You get focused strategy, faster delivery, and messaging that feels made for your world.</p>
+                <div class="hero-actions">
+                    <a href="#industry-map" class="btn btn-primary">Explore Industry Stacks</a>
+                    <a href="/solutions/" class="btn btn-secondary">Read the Story Flow</a>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="industries-nyc-sequence"
+            id="industries-nyc-sequence"
+            aria-label="NYC visual sequence"
+        >
+            <div class="industries-nyc-sequence__sticky" id="industries-nyc-sequence-stage">
+                <div class="industries-nyc-sequence__bg" id="industries-nyc-sequence-bg"></div>
+                <div class="industries-nyc-sequence__pill" id="industries-nyc-sequence-pill">
+                    <div class="industries-nyc-sequence__media" id="industries-nyc-sequence-media"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container">
+                <article class="content-block" id="industry-index">
+                    <h2>Find your industry fast</h2>
+                    <p>Jump directly to your vertical, then follow the mapped service stack and proof direction.</p>
+                    <div class="industry-index-grid">
+                        <a class="industry-index-card" href="#industry-financial-services">Financial Services<span>Trust-first lead quality engines</span></a>
+                        <a class="industry-index-card" href="#industry-luxury-real-estate">Luxury Real Estate<span>Premium listing and inquiry journeys</span></a>
+                        <a class="industry-index-card" href="#industry-hospitality">Hospitality<span>Booking conversion architecture</span></a>
+                        <a class="industry-index-card" href="#industry-retail-ecommerce">Retail & E-Commerce<span>Storefront + checkout optimization</span></a>
+                        <a class="industry-index-card" href="#industry-professional-services">Professional Services<span>Authority and consult conversion</span></a>
+                        <a class="industry-index-card" href="#industry-life-sciences-healthtech">Life Sciences & HealthTech<span>Clear technical storytelling</span></a>
+                        <a class="industry-index-card" href="#industry-ai-b2b-tech">AI & B2B Tech<span>Complex product simplification</span></a>
+                        <a class="industry-index-card" href="#industry-restaurants-food">Restaurants & Food Brands<span>Reservations and local search</span></a>
+                        <a class="industry-index-card" href="#industry-personal-care-wellness">Personal Care & Wellness<span>Booking and repeat-client flows</span></a>
+                        <a class="industry-index-card" href="#industry-healthcare-practices">Healthcare Practices<span>Patient trust and appointment flow</span></a>
+                    </div>
+                </article>
+
+                <article class="content-block" id="industry-map">
+                    <h2>Industry-to-service mapping</h2>
+                    <p>Each card shows where to begin, what to layer next, and where to see aligned service detail.</p>
+                    <div class="industry-map-grid">
+                        <article class="industry-map-card" id="industry-financial-services">
+                            <h3>Financial Services</h3>
+                            <p>Lead with trust signals, credential clarity, and high-intent consultation funnels.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/branding-and-identity-design/">Branding</a>
+                                <a href="/services/local-seo-and-google-ads-nyc/">Local SEO & Ads</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: turn credibility into qualified consult requests.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-luxury-real-estate">
+                            <h3>Luxury Real Estate</h3>
+                            <p>Build premium visual narrative with clean listing pathways and broker positioning.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/branding-and-identity-design/">Branding</a>
+                                <a href="/services/tech-consulting-small-business/">Tech Consulting</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: present inventory with prestige and reduce inquiry drop-off.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-hospitality">
+                            <h3>Hospitality</h3>
+                            <p>Connect discovery to reservations with speed, review signals, and mobile-first UX.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/pos-and-register-setup-nyc/">POS Setup</a>
+                                <a href="/services/local-seo-and-google-ads-nyc/">Local SEO & Ads</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: increase direct bookings and reduce platform dependency.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-retail-ecommerce">
+                            <h3>Retail & E-Commerce</h3>
+                            <p>Unify in-store and online buying paths to increase conversion and average order value.</p>
+                            <div class="stack-list">
+                                <a href="/services/ecommerce-setup-shopify-square-woocommerce/">E-Commerce Setup</a>
+                                <a href="/services/pos-and-register-setup-nyc/">POS Setup</a>
+                                <a href="/services/apple-device-setup-and-management/">Apple Device Setup</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: remove checkout friction across channels.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-professional-services">
+                            <h3>Professional Services</h3>
+                            <p>Turn expertise into a predictable consultation pipeline through authority pages.</p>
+                            <div class="stack-list">
+                                <a href="/services/branding-and-identity-design/">Branding</a>
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/tech-consulting-small-business/">Tech Consulting</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: make differentiation obvious in crowded categories.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-life-sciences-healthtech">
+                            <h3>Life Sciences & HealthTech</h3>
+                            <p>Translate complex technical work into confident narratives for partners and buyers.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/branding-and-identity-design/">Branding</a>
+                                <a href="/services/tech-consulting-small-business/">Tech Consulting</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: make innovation legible without oversimplifying.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-ai-b2b-tech">
+                            <h3>AI & B2B Tech</h3>
+                            <p>Position product value fast, with clear CTA pathways for demos and pipeline growth.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/local-seo-and-google-ads-nyc/">Local SEO & Ads</a>
+                                <a href="/services/tech-consulting-small-business/">Tech Consulting</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: move from feature noise to business outcomes.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-restaurants-food">
+                            <h3>Restaurants & Food Brands</h3>
+                            <p>Support ordering, reservations, and local visibility with reliable service ops behind the scenes.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/pos-and-register-setup-nyc/">POS Setup</a>
+                                <a href="/services/local-seo-and-google-ads-nyc/">Local SEO & Ads</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: increase direct demand while reducing tech downtime.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-personal-care-wellness">
+                            <h3>Personal Care & Wellness</h3>
+                            <p>Design booking-first customer journeys with brand presence that supports premium pricing.</p>
+                            <div class="stack-list">
+                                <a href="/services/branding-and-identity-design/">Branding</a>
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/local-seo-and-google-ads-nyc/">Local SEO & Ads</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: improve booking volume and repeat retention.</p>
+                        </article>
+
+                        <article class="industry-map-card" id="industry-healthcare-practices">
+                            <h3>Healthcare Practices</h3>
+                            <p>Build trust and clarity for patients while simplifying scheduling and pre-visit flow.</p>
+                            <div class="stack-list">
+                                <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                                <a href="/services/on-site-it-support-nyc/">On-Site IT Support</a>
+                                <a href="/services/apple-device-setup-and-management/">Apple Device Setup</a>
+                            </div>
+                            <p class="industry-map-meta">Story angle: reduce appointment friction and improve conversion confidence.</p>
+                        </article>
+                    </div>
+                </article>
+
+                <article class="content-block">
+                    <h2>Need the full narrative version?</h2>
+                    <p>Use our connected story page to move from \"what is breaking\" to \"what we should do next\" in one easy flow.</p>
+                    <div class="story-links">
+                        <a href="/solutions/">Open Solutions Story</a>
+                        <a href="/services/">Compare Services</a>
+                        <a href="/contact/">Talk Through Your Stack</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="footer-logo-box">LITTLE<br>FIGHT<br>NYC</div>
+                        <span style="font-weight: 800; font-size: 1.1rem;">Little Fight NYC</span>
+                    </div>
+                    <p class="footer-text">
+                        Helping small businesses punch above their weight with practical websites, IT support, and smart systems.
+                    </p>
+                </div>
+
+                <div>
+                    <h2 class="footer-heading">Services</h2>
+                    <div class="footer-links">
+                        <a href="/services/website-design-small-business-nyc/">Website Design</a>
+                        <a href="/services/on-site-it-support-nyc/">On-Site IT Support</a>
+                        <a href="/services/local-seo-and-google-ads-nyc/">Local SEO & Ads</a>
+                        <a href="/services/pos-and-register-setup-nyc/">POS Setup</a>
+                        <a href="/services/smart-home-services-nyc/">Smart Systems</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="footer-heading">Company</h2>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/solutions/">Solutions</a>
+                        <a href="/work/">Work</a>
+                        <a href="/about/">About</a>
+                        <a href="/blog/">Blog</a>
+                        <a href="/industries.html">Industries</a>
+                        <a href="/contact/">Contact</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="footer-heading">Get In Touch</h2>
+                    <div class="footer-links">
+                        <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>
+                        <a href="tel:+16463600318">646-360-0318</a>
+                        <a href="/contact/">Manhattan, NYC</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2026 Little Fight NYC. Built in New York with guts & grit.</p>
+                <div class="footer-legal">
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html">Terms of Service</a>
+                </div>
+            </div>
+
+            <div class="footer-credit">
+                <a href="https://littlefightnyc.com" target="_blank" rel="noopener">Designed, Hosted and Cared For by LittleFightNYC.com</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js" defer></script>
+    <script>
+        (() => {
+            const root = document.getElementById("industries-nyc-sequence");
+            const stage = document.getElementById("industries-nyc-sequence-stage");
+            const bg = document.getElementById("industries-nyc-sequence-bg");
+            const pill = document.getElementById("industries-nyc-sequence-pill");
+            const media = document.getElementById("industries-nyc-sequence-media");
+            if (!root || !stage || !bg || !pill || !media) return;
+            if (root.dataset.sequenceBooted === "1") return;
+            root.dataset.sequenceBooted = "1";
+
+            const sources = [
+                "/images/lf-photo-set/nyc-scroll/nyc-retail-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-cafes1-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses4-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses2-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses3-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses5.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses6.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses7.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-grand-central-busy-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-brooklyn-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-small-business-owner-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-outdoor-bar-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-cafes2-2.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-web-design.webp",
+                "/images/lf-photo-set/nyc-scroll/website-design-nyc-1.webp",
+                "/images/lf-photo-set/nyc-scroll/nyc-streets-businesses1-2.webp"
+            ];
+
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const frames = [];
+            let activeIndex = 0;
+            let prewarmStarted = false;
+            let rafId = 0;
+
+            const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+            const mix = (a, b, t) => a + (b - a) * t;
+            const easeOutExpo = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t));
+            const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+            function preloadFrames() {
+                media.style.backgroundImage = `url("${sources[0]}")`;
+                sources.forEach((src, idx) => {
+                    const img = document.createElement("img");
+                    img.className = "industries-nyc-sequence__frame" + (idx === 0 ? " active" : "");
+                    img.alt = "";
+                    img.setAttribute("data-no-accent", "1");
+                    img.decoding = "async";
+                    img.loading = idx < 2 ? "eager" : "lazy";
+                    img.fetchPriority = idx < 2 ? "high" : "low";
+                    img.style.opacity = idx === 0 ? "1" : "0";
+                    img.style.transform = idx === 0 ? "scale(1)" : "scale(1.022)";
+                    if (idx < 2) {
+                        img.src = src;
+                        img.dataset.ready = "1";
+                    } else {
+                        img.dataset.src = src;
+                        img.dataset.ready = "0";
+                    }
+                    media.appendChild(img);
+                    frames.push(img);
+                });
+            }
+
+            function prewarmFrames() {
+                if (prewarmStarted) return;
+                prewarmStarted = true;
+                let i = 2;
+                const pump = () => {
+                    if (i >= frames.length) return;
+                    const frame = frames[i];
+                    if (frame && frame.dataset.src && frame.dataset.ready !== "1") {
+                        frame.src = frame.dataset.src;
+                        frame.dataset.ready = "1";
+                    }
+                    i += 1;
+                    setTimeout(pump, 24);
+                };
+                pump();
+            }
+
+            function setFrame(index) {
+                const safe = clamp(index, 0, frames.length - 1);
+                let resolved = safe;
+                if (!frames[resolved] || frames[resolved].dataset.ready !== "1") {
+                    while (resolved > 0 && frames[resolved].dataset.ready !== "1") {
+                        resolved -= 1;
+                    }
+                }
+                if (resolved === activeIndex && frames[resolved]) {
+                    frames[resolved].style.opacity = "1";
+                    frames[resolved].style.transform = "scale(1)";
+                    return;
+                }
+                if (frames[activeIndex]) {
+                    frames[activeIndex].classList.remove("active");
+                    frames[activeIndex].style.opacity = "0";
+                    frames[activeIndex].style.transform = "scale(1.022)";
+                }
+                frames[resolved].style.opacity = "1";
+                frames[resolved].style.transform = "scale(1)";
+                frames[resolved].classList.add("active");
+                activeIndex = resolved;
+            }
+
+            function rapidSequenceIndex(progress) {
+                const flipStart = 0.06;
+                const flipEnd = 0.64;
+                const t = clamp((progress - flipStart) / (flipEnd - flipStart), 0, 1);
+                if (t >= 1) return frames.length - 1;
+                const playable = Math.max(1, frames.length - 1);
+                const speedCurve = prefersReducedMotion ? 0.86 : 0.58;
+                return Math.floor(Math.pow(t, speedCurve) * playable);
+            }
+
+            function render(progress) {
+                const p = clamp(progress, 0, 1);
+                const mobile = window.innerWidth <= 860;
+                const startW = mobile
+                    ? Math.min(window.innerWidth * 0.9, 560)
+                    : Math.min(window.innerWidth * 0.82, 1180);
+                const startH = mobile
+                    ? Math.min(window.innerWidth * 0.34, 220)
+                    : Math.min(window.innerHeight * 0.44, 420);
+
+                const expandStart = 0.08;
+                const expandEnd = 0.8;
+                const expandT = clamp((p - expandStart) / (expandEnd - expandStart), 0, 1);
+                const expandEase = easeOutExpo(expandT);
+
+                const w = mix(startW, window.innerWidth, expandEase);
+                const h = mix(startH, window.innerHeight, expandEase);
+                const rStart = Math.max(52, startH * 0.5);
+                const r = mix(rStart, 0, easeInOutCubic(expandT));
+
+                pill.style.setProperty("--pill-w", w.toFixed(2) + "px");
+                pill.style.setProperty("--pill-h", h.toFixed(2) + "px");
+                pill.style.setProperty("--pill-r", r.toFixed(2) + "px");
+
+                const shA = mix(0.42, 0.04, p);
+                const shB = mix(0.31, 0.02, p);
+                pill.style.boxShadow = `0 24px 90px rgba(0,0,0,${shA.toFixed(3)}), 0 5px 18px rgba(0,0,0,${shB.toFixed(3)})`;
+
+                bg.style.opacity = clamp((p - 0.015) * 1.2, 0, 1).toFixed(3);
+                media.style.setProperty("--overlay-opacity", p > 0.84 ? "0" : "0.66");
+                setFrame(rapidSequenceIndex(p));
+            }
+
+            function progressFromScroll() {
+                const rect = root.getBoundingClientRect();
+                const total = Math.max(1, root.offsetHeight - window.innerHeight);
+                return clamp((-rect.top) / total, 0, 1);
+            }
+
+            function updateFromScroll() {
+                rafId = 0;
+                const progress = progressFromScroll();
+                render(progress);
+                if (progress > 0.02 && progress < 0.98) prewarmFrames();
+            }
+
+            function queueUpdate() {
+                if (rafId) return;
+                rafId = window.requestAnimationFrame(updateFromScroll);
+            }
+
+            function boot() {
+                preloadFrames();
+                render(0);
+                prewarmFrames();
+                queueUpdate();
+                window.addEventListener("scroll", queueUpdate, { passive: true });
+                window.addEventListener("resize", queueUpdate, { passive: true });
+                window.addEventListener("pagehide", () => {
+                    window.removeEventListener("scroll", queueUpdate);
+                    window.removeEventListener("resize", queueUpdate);
+                    if (rafId) {
+                        window.cancelAnimationFrame(rafId);
+                        rafId = 0;
+                    }
+                }, { once: true });
+                if ("requestIdleCallback" in window) {
+                    requestIdleCallback(() => prewarmFrames(), { timeout: 2400 });
+                } else {
+                    setTimeout(() => prewarmFrames(), 1600);
+                }
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", boot, { once: true });
+            } else {
+                boot();
+            }
+        })();
+    </script>
+</body>
+</html>

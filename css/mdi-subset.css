@@ -1,7 +1,7 @@
 @font-face {
   font-family: "Material Design Icons";
-  src: url("../fonts/mdi-subset.woff2") format("woff2"),
-    url("../fonts/mdi-subset.woff") format("woff");
+  src: url("/fonts/mdi-subset.woff2") format("woff2"),
+       url("/fonts/mdi-subset.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -20,163 +20,45 @@
   content: "\F0146";
 }
 
-.mdi-lan-connect::before {
-  content: "\F0318";
-}
-
-.mdi-monitor-dashboard::before {
-  content: "\F0A07";
-}
-
-.mdi-map-marker::before {
-  content: "\F034E";
-}
-
-.mdi-map-marker-radius::before {
-  content: "\F0352";
-}
-
-.mdi-map-marker-check-outline::before {
-  content: "\F12FB";
-}
-
-.mdi-cellphone::before {
-  content: "\F011C";
-}
-
-.mdi-palette-outline::before {
-  content: "\F0E0C";
-}
-
-.mdi-cart-outline::before {
-  content: "\F0111";
-}
-
-.mdi-cash-register::before {
-  content: "\F0CF4";
-}
-
-.mdi-compass-outline::before {
-  content: "\F018C";
-}
-
-.mdi-home-automation::before {
-  content: "\F07D1";
-}
-
-.mdi-email-outline::before {
-  content: "\F01F0";
-}
-
-.mdi-phone-outline::before {
-  content: "\F0DF0";
-}
-
-.mdi-cloud-outline::before {
-  content: "\F0163";
-}
-
-.mdi-cloud-check-outline::before {
-  content: "\F1BEC";
-}
-
-.mdi-cloud-download-outline::before {
-  content: "\F0B7D";
-}
-
-.mdi-cloud-upload-outline::before {
-  content: "\F0B7E";
-}
-
-.mdi-city::before {
-  content: "\F0146";
-}
-
-.mdi-earth::before {
-  content: "\F01E7";
-}
-
-.mdi-robot-outline::before {
-  content: "\F167A";
-}
-
-.mdi-shield-lock-outline::before {
-  content: "\F0CCC";
-}
-
-.mdi-storefront-outline::before {
-  content: "\F10C1";
-}
-
-.mdi-chart-line::before {
-  content: "\F012A";
-}
-
-.mdi-laptop::before {
-  content: "\F0322";
-}
-
-.mdi-wifi::before {
-  content: "\F05A9";
-}
-
-.mdi-phone::before {
-  content: "\F03F2";
-}
-
-.mdi-video::before {
-  content: "\F0567";
-}
-
-.mdi-briefcase-outline::before {
-  content: "\F0814";
-}
-
-.mdi-google::before {
-  content: "\F02AD";
-}
-
-.mdi-eye-off-outline::before {
-  content: "\F06D1";
-}
-
-.mdi-web::before {
-  content: "\F059F";
-}
-
-.mdi-clock-outline::before {
-  content: "\F0150";
-}
-
-.mdi-chevron-down::before {
-  content: "\F0140";
-}
+.mdi-lan-connect::before { content: "\F0318"; }
+.mdi-monitor-dashboard::before { content: "\F0A07"; }
+.mdi-map-marker::before { content: "\F034E"; }
+.mdi-map-marker-radius::before { content: "\F0352"; }
+.mdi-map-marker-check-outline::before { content: "\F12FB"; }
+.mdi-cellphone::before { content: "\F011C"; }
+.mdi-palette-outline::before { content: "\F0E0C"; }
+.mdi-cart-outline::before { content: "\F0111"; }
+.mdi-cash-register::before { content: "\F0CF4"; }
+.mdi-compass-outline::before { content: "\F018C"; }
+.mdi-home-automation::before { content: "\F07D1"; }
+.mdi-email-outline::before { content: "\F01F0"; }
+.mdi-phone-outline::before { content: "\F0DF0"; }
+.mdi-cloud-outline::before { content: "\F0163"; }
+.mdi-cloud-check-outline::before { content: "\F1BEC"; }
+.mdi-cloud-download-outline::before { content: "\F0B7D"; }
+.mdi-cloud-upload-outline::before { content: "\F0B7E"; }
+.mdi-city::before { content: "\F0146"; }
+.mdi-earth::before { content: "\F01E7"; }
+.mdi-robot-outline::before { content: "\F167A"; }
+.mdi-shield-lock-outline::before { content: "\F0CCC"; }
+.mdi-storefront-outline::before { content: "\F10C1"; }
+.mdi-chart-line::before { content: "\F012A"; }
+.mdi-laptop::before { content: "\F0322"; }
+.mdi-wifi::before { content: "\F05A9"; }
+.mdi-phone::before { content: "\F03F2"; }
+.mdi-video::before { content: "\F0567"; }
+.mdi-briefcase-outline::before { content: "\F0814"; }
+.mdi-google::before { content: "\F02AD"; }
+.mdi-eye-off-outline::before { content: "\F06D1"; }
+.mdi-web::before { content: "\F059F"; }
+.mdi-clock-outline::before { content: "\F0150"; }
+.mdi-chevron-down::before { content: "\F0140"; }
 
 /* City Growth animation icons */
-.mdi-bread-slice::before {
-  content: "\F0CEE";
-}
-
-.mdi-coffee::before {
-  content: "\F0176";
-}
-
-.mdi-door-open::before {
-  content: "\F081C";
-}
-
-.mdi-door-closed::before {
-  content: "\F081B";
-}
-
-.mdi-home-city::before {
-  content: "\F0D15";
-}
-
-.mdi-silverware-fork-knife::before {
-  content: "\F0A70";
-}
-
-.mdi-replay::before {
-  content: "\F0459";
-}
+.mdi-bread-slice::before { content: "\F0CEE"; }
+.mdi-coffee::before { content: "\F0176"; }
+.mdi-door-open::before { content: "\F081C"; }
+.mdi-door-closed::before { content: "\F081B"; }
+.mdi-home-city::before { content: "\F0D15"; }
+.mdi-silverware-fork-knife::before { content: "\F0A70"; }
+.mdi-replay::before { content: "\F0459"; }

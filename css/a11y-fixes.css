@@ -2,8 +2,7 @@
 :root {
   --brand-orange-accessible: #ff5a00;
   --brand-orange-hover: #ff7a33;
-  --brand-orange-ink: #11294f;
-  /* High contrast navy on orange */
+  --brand-orange-ink: #ffffff;
   --accent-accessible: #1f5bbe;
   --accent-hover: #184a99;
   --accent-bright: #2b71db;
@@ -44,14 +43,14 @@ a[href^="areas/"]:focus {
 .nav-cta,
 a.nav-cta,
 button[type="submit"].btn-primary {
-  color: var(--brand-orange-ink) !important;
+  color: #fff !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .nav-cta:hover,
 .nav-cta:focus {
-  color: var(--brand-orange-ink) !important;
+  color: #fff !important;
 }
 
 .btn-secondary {
@@ -109,7 +108,6 @@ footer .footer-credit a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {

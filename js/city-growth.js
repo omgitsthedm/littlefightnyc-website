@@ -11,11 +11,11 @@
   const buildings = Array.from(document.querySelectorAll(".city-building"));
 
   const growthPlan = [
-    { slug: "bakery", services: ["WiFi Fix", "POS Setup", "Google Maps"] },
-    { slug: "cafe", services: ["Website", "Socials"] },
-    { slug: "hotel", services: ["Network", "Security", "Backup"] },
-    { slug: "realty", services: ["Email", "Cloud"] },
-    { slug: "restaurant", services: ["Online Orders", "Printers", "Support"] },
+    { slug: "bakery",     services: ["Website", "SEO", "WiFi Fix", "Branding"] },
+    { slug: "cafe",       services: ["Website", "SEO", "WiFi Fix", "Branding", "Reviews"] },
+    { slug: "hotel",      services: ["Website", "SEO", "WiFi Fix", "Branding", "CRM", "Analytics"] },
+    { slug: "realty",     services: ["Website", "SEO", "WiFi Fix", "Branding"] },
+    { slug: "restaurant", services: ["Website", "SEO", "WiFi Fix", "Branding", "Reservations"] },
   ];
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -71,8 +71,7 @@
   function runSequence() {
     if (prefersReduced) { showAll(); return; }
 
-    // Much faster base delay
-    var delay = 100;
+    var delay = 300;
 
     growthPlan.forEach(function (plan) {
       var el = buildings.find(function (b) { return b.dataset.slug === plan.slug; });
@@ -80,12 +79,10 @@
       var floors = getAllFloors(el);
 
       floors.forEach(function (floor, i) {
-        // Tighter stagger for snappier feel
-        queue(function () { floor.classList.add("is-visible"); }, delay + i * 150);
+        queue(function () { floor.classList.add("is-visible"); }, delay + i * 320);
       });
 
-      // Shorter wait before next building starts
-      delay += floors.length * 150 + 100;
+      delay += floors.length * 320 + 200;
     });
   }
 
@@ -107,7 +104,7 @@
         }
       });
     },
-    { threshold: 0.1 }
+    { threshold: 0.3 }
   );
   observer.observe(stage);
 
