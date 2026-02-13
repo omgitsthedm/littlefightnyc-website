@@ -1,0 +1,24 @@
+# Serve sitemap.xml and robots.txt as real files (must be above catch-all)
+/sitemap.xml  /sitemap.xml  200
+/robots.txt   /robots.txt   200
+
+# Serve site.webmanifest
+/site.webmanifest  /site.webmanifest  200
+
+# Service slug redirects (legacy/root slug -> /services/<slug>/)
+/website-design-small-business-nyc/  /services/website-design-small-business-nyc/  301
+/on-site-it-support-nyc/  /services/on-site-it-support-nyc/  301
+/local-seo-and-google-ads-nyc/  /services/local-seo-and-google-ads-nyc/  301
+/apple-device-setup-and-management/  /services/apple-device-setup-and-management/  301
+/branding-and-identity-design/  /services/branding-and-identity-design/  301
+/ecommerce-setup-shopify-square-woocommerce/  /services/ecommerce-setup-shopify-square-woocommerce/  301
+/pos-and-register-setup-nyc/  /services/pos-and-register-setup-nyc/  301
+/tech-consulting-small-business/  /services/tech-consulting-small-business/  301
+/smart-home-services-nyc/  /services/smart-home-services-nyc/  301
+
+# Legacy insights path -> blog (forced so old page does not render)
+/insights  /blog/  301!
+/insights/  /blog/  301!
+
+# Custom 404 page
+/*  /404.html  404
