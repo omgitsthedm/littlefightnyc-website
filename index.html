@@ -1160,16 +1160,18 @@
 
         .page-section {
             display: none;
-            animation: fadeIn 0.4s ease;
+            opacity: 0;
+            transform: translateY(18px);
         }
 
         .page-section.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .page-section.visible-page {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.45s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
         }
 
         footer {
@@ -1312,6 +1314,8 @@
             *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
             .proof-ticker-content { animation: none !important; }
             .tl-line-fill { transition: none !important; }
+            .text-reveal .word { opacity:1 !important; transform:none !important; }
+            .scroll-progress { display:none !important; }
         }
 
         /* Focus visible for keyboard navigation */
@@ -1326,6 +1330,42 @@
 
         /* Font loading optimization */
         @font-face { font-display: swap; }
+
+        /* ═══ SCROLL PROGRESS BAR ═══ */
+        .scroll-progress { position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#FE5800,#FF6B35,#0891B2);z-index:1001;width:0%;transition:width 0.1s linear;pointer-events:none; }
+
+        /* ═══ TEXT REVEAL ANIMATION ═══ */
+        .text-reveal .word { display:inline-block;opacity:0;transform:translateY(18px);transition:opacity 0.5s cubic-bezier(0.25,0.46,0.45,0.94),transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .text-reveal.revealed .word { opacity:1;transform:translateY(0); }
+
+        /* ═══ COUNTER ANIMATION ═══ */
+        .counter-num { display:inline-block; }
+
+        /* ═══ NYC MAP ═══ */
+        .nyc-map-canvas { width:100%;max-width:500px;height:400px;margin:0 auto 32px;display:block;border-radius:12px; }
+        @media(max-width:640px) { .nyc-map-canvas { height:280px; } }
+
+        /* ═══ CONTACT FORM VALIDATION ═══ */
+        .form-field { position:relative; }
+        .form-field .field-status { position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:16px;opacity:0;transition:opacity 0.3s; }
+        .form-field.valid .field-status { opacity:1; }
+        .form-field.invalid .field-status { opacity:1; }
+        .form-field input.invalid-input, .form-field textarea.invalid-input { border-color:rgba(220,50,50,0.5) !important; }
+        .form-field input.valid-input, .form-field textarea.valid-input { border-color:rgba(34,197,94,0.4) !important; }
+        .confetti-canvas { position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10000; }
+        .form-success { text-align:center;padding:40px 20px;animation:fadeInUp 0.6s ease; }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+        /* ═══ WORK CARD LIVE PREVIEW ═══ */
+        .work-card-image { position:relative;overflow:hidden; }
+        .work-card-preview { position:absolute;inset:0;opacity:0;transition:opacity 0.4s ease; }
+        .work-card:hover .work-card-preview { opacity:1; }
+        .work-card-preview iframe { width:250%;height:250%;transform:scale(0.4);transform-origin:top left;border:none;pointer-events:none; }
+
+        /* ═══ LOTTIE-STYLE SERVICE ICON ANIMATION ═══ */
+        .service-icon-anim { transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1); }
+        .service-card:hover .service-icon-anim { transform:scale(1.15) rotate(-5deg); }
+        .service-icon canvas { width:100%;height:100%; }
     </style>
 
     <!-- Schema.org Structured Data -->
@@ -1405,6 +1445,7 @@
     </script>
 </head>
 <body style="background:#080b14">
+    <div class="scroll-progress" id="scrollProgress"></div>
     <canvas id="particle-canvas"></canvas>
 
     <svg class="grain" xmlns="http://www.w3.org/2000/svg">
@@ -1469,7 +1510,7 @@
                         NYC's Concierge Tech Support
                     </span>
                 </div>
-                <h1>We fix the tech <span class="highlight-orange">slowing down</span> your business.</h1>
+                <h1 class="text-reveal">We fix the tech <span class="highlight-orange">slowing down</span> your business.</h1>
                 <p style="margin-bottom:12px">No jargon. No judgment. Just warm, practical help for NYC small businesses who have better things to do than fight with their Wi-Fi.</p>
                 <p style="font-family:'Caveat',cursive;font-size:34px;color:#FE5800;margin-bottom:32px">Built for the businesses that keep NYC alive.</p>
                 <div class="hero-buttons">
@@ -1518,24 +1559,24 @@
         </div>
 
         <!-- TRUST BADGES -->
-        <div class="trust-badges container fade-in">
+        <div class="trust-badges container fade-in" id="trustBadges">
             <div class="trust-badge-item">
-                <div class="trust-badge-num">5+</div>
+                <div class="trust-badge-num"><span class="counter-num" data-target="5" data-suffix="+">0</span></div>
                 <div class="trust-badge-label">Years Serving NYC</div>
             </div>
             <div class="trust-badge-divider"></div>
             <div class="trust-badge-item">
-                <div class="trust-badge-num">⭐ 4.9</div>
+                <div class="trust-badge-num"><span class="counter-num" data-target="4.9" data-prefix="⭐ " data-decimals="1">0</span></div>
                 <div class="trust-badge-label">Google Rating</div>
             </div>
             <div class="trust-badge-divider"></div>
             <div class="trust-badge-item">
-                <div class="trust-badge-num">2hr</div>
+                <div class="trust-badge-num"><span class="counter-num" data-target="2" data-suffix="hr">0</span></div>
                 <div class="trust-badge-label">Avg Response</div>
             </div>
             <div class="trust-badge-divider"></div>
             <div class="trust-badge-item">
-                <div class="trust-badge-num">100%</div>
+                <div class="trust-badge-num"><span class="counter-num" data-target="100" data-suffix="%">0</span></div>
                 <div class="trust-badge-label">Satisfaction Rate</div>
             </div>
         </div>
@@ -1612,7 +1653,7 @@
             <div class="services-grid">
                 <div class="service-card fade-in">
                     <div class="service-badge">MOST POPULAR</div>
-                    <div class="service-icon">
+                    <div class="service-icon service-icon-anim">
                         <svg viewBox="0 0 24 24"><path d="M3 3H21V21H3Z" stroke="white" stroke-width="2" fill="none"/><path d="M9 11L11 13L15 9" stroke="white" stroke-width="2"/></svg>
                     </div>
                     <h3>Bespoke Websites</h3>
@@ -1622,7 +1663,7 @@
                     </ul>
                 </div>
                 <div class="service-card fade-in">
-                    <div class="service-icon">
+                    <div class="service-icon service-icon-anim">
                         <svg viewBox="0 0 24 24"><path d="M12 2L2 7V12C2 19.7 12 22 12 22S22 19.7 22 12V7L12 2Z"/></svg>
                     </div>
                     <h3>On-Site IT Support</h3>
@@ -1632,7 +1673,7 @@
                     </ul>
                 </div>
                 <div class="service-card fade-in">
-                    <div class="service-icon">
+                    <div class="service-icon service-icon-anim">
                         <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 9H17" stroke="white" stroke-width="2"/><path d="M7 14H14" stroke="white" stroke-width="2"/></svg>
                     </div>
                     <h3>Apple & Device Management</h3>
@@ -1642,7 +1683,7 @@
                     </ul>
                 </div>
                 <div class="service-card fade-in">
-                    <div class="service-icon">
+                    <div class="service-icon service-icon-anim">
                         <svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M3 20H13M8 13V20" stroke="white" stroke-width="2" fill="none"/><rect x="15" y="11" width="7" height="9" rx="1"/></svg>
                     </div>
                     <h3>POS & Payment Systems</h3>
@@ -1652,7 +1693,7 @@
                     </ul>
                 </div>
                 <div class="service-card fade-in">
-                    <div class="service-icon">
+                    <div class="service-icon service-icon-anim">
                         <svg viewBox="0 0 24 24"><path d="M12 2L2 7V12C2 19.7 12 22 12 22S22 19.7 22 12V7L12 2Z"/><circle cx="12" cy="12" r="4" fill="white"/></svg>
                     </div>
                     <h3>Smart Systems & Automation</h3>
@@ -1662,7 +1703,7 @@
                     </ul>
                 </div>
                 <div class="service-card fade-in">
-                    <div class="service-icon">
+                    <div class="service-icon service-icon-anim">
                         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7V12L16 14" stroke="white" stroke-width="2" fill="none"/></svg>
                     </div>
                     <h3>Local SEO & Ads</h3>
@@ -1761,7 +1802,7 @@
 
             <div class="work-carousel">
                 <div class="work-card" data-category="fashion" style="cursor:pointer" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
-                    <div class="work-card-image" style="--color1: #1a1a1a; --color2: #2d2d2d;"></div>
+                    <div class="work-card-image" style="--color1: #1a1a1a; --color2: #2d2d2d;"><div class="work-card-preview"><iframe src="https://www.afterhoursagenda.com" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
                     <div class="work-card-content">
                         <h4>After Hours Agenda</h4>
                         <div class="work-card-meta">NYC · Streetwear Brand</div>
@@ -1772,7 +1813,7 @@
                 </div>
 
                 <div class="work-card" data-category="nightlife" style="cursor:pointer" onclick="window.open('https://www.bsidenyc.bar','_blank')">
-                    <div class="work-card-image" style="--color1: #1a0a2e; --color2: #2d1b4e;"></div>
+                    <div class="work-card-image" style="--color1: #1a0a2e; --color2: #2d1b4e;"><div class="work-card-preview"><iframe src="https://www.bsidenyc.bar" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
                     <div class="work-card-content">
                         <h4>B-Side NYC</h4>
                         <div class="work-card-meta">NYC · Bar & Nightlife</div>
@@ -1783,7 +1824,7 @@
                 </div>
 
                 <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.grandfundingllc.com','_blank')">
-                    <div class="work-card-image" style="--color1: #0a2e1a; --color2: #1a4e2d;"></div>
+                    <div class="work-card-image" style="--color1: #0a2e1a; --color2: #1a4e2d;"><div class="work-card-preview"><iframe src="https://www.grandfundingllc.com" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
                     <div class="work-card-content">
                         <h4>Grand Funding LLC</h4>
                         <div class="work-card-meta">AZ & CA · Private Lending</div>
@@ -1794,7 +1835,7 @@
                 </div>
 
                 <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.logan.loans','_blank')">
-                    <div class="work-card-image" style="--color1: #0a1a2e; --color2: #1b2d4e;"></div>
+                    <div class="work-card-image" style="--color1: #0a1a2e; --color2: #1b2d4e;"><div class="work-card-preview"><iframe src="https://www.logan.loans" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
                     <div class="work-card-content">
                         <h4>Logan Loans</h4>
                         <div class="work-card-meta">AZ & SoCal · Mortgage</div>
@@ -1805,7 +1846,7 @@
                 </div>
 
                 <div class="work-card" data-category="film" style="cursor:pointer" onclick="window.open('https://ccfilms.net','_blank')">
-                    <div class="work-card-image" style="--color1: #2e0a0a; --color2: #4e1b1b;"></div>
+                    <div class="work-card-image" style="--color1: #2e0a0a; --color2: #4e1b1b;"><div class="work-card-preview"><iframe src="https://ccfilms.net" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
                     <div class="work-card-content">
                         <h4>CC Films, LLC</h4>
                         <div class="work-card-meta">Dallas · Film Production</div>
@@ -1818,8 +1859,9 @@
         </section>
 
         <section class="coverage container fade-in" style="text-align:center">
-            <h2 style="margin-bottom:16px">Where We Serve</h2>
+            <h2 style="margin-bottom:16px" class="text-reveal">Where We Serve</h2>
             <p style="color:#8a8ea0;margin-bottom:32px;font-size:15px">On-site IT support throughout Manhattan. Remote support for small businesses anywhere in the United States.</p>
+            <canvas class="nyc-map-canvas" id="nycMapCanvas"></canvas>
             <div style="margin-bottom:24px">
                 <h4 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#FE5800;margin-bottom:14px;font-weight:700">🗽 Manhattan On-Site</h4>
                 <div class="coverage-list" style="justify-content:center">
@@ -2266,22 +2308,25 @@
                         <p style="color:rgba(255,255,255,0.9);font-size:14px">No commitment. No credit card. Real help.</p>
                     </div>
                 </div>
-                <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:clamp(24px,4vw,40px)">
+                <div id="contactFormCard" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:clamp(24px,4vw,40px)">
                     <h3 style="margin-bottom:24px;text-align:center">Send us a message</h3>
-                    <form onsubmit="return false">
-                        <div style="margin-bottom:16px">
+                    <form id="contactForm" onsubmit="return handleContactSubmit(event)">
+                        <div style="margin-bottom:16px" class="form-field">
                             <label style="display:block;color:#8a8ea0;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Your Name</label>
-                            <input type="text" style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s" onfocus="this.style.borderColor='#FE5800';this.style.boxShadow='0 0 0 3px rgba(254,88,0,0.1)'" onblur="this.style.borderColor='rgba(22,27,46,0.5)';this.style.boxShadow='none'" placeholder="John Doe">
+                            <input type="text" id="cf-name" required minlength="2" style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s,box-shadow 0.3s" placeholder="John Doe">
+                            <span class="field-status"></span>
                         </div>
-                        <div style="margin-bottom:16px">
+                        <div style="margin-bottom:16px" class="form-field">
                             <label style="display:block;color:#8a8ea0;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Email</label>
-                            <input type="email" style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s" onfocus="this.style.borderColor='#FE5800';this.style.boxShadow='0 0 0 3px rgba(254,88,0,0.1)'" onblur="this.style.borderColor='rgba(22,27,46,0.5)';this.style.boxShadow='none'" placeholder="you@example.com">
+                            <input type="email" id="cf-email" required style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s,box-shadow 0.3s" placeholder="you@example.com">
+                            <span class="field-status"></span>
                         </div>
-                        <div style="margin-bottom:20px">
+                        <div style="margin-bottom:20px" class="form-field">
                             <label style="display:block;color:#8a8ea0;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">What's Going On?</label>
-                            <textarea style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;min-height:120px;outline:none;resize:none;transition:border-color 0.3s" onfocus="this.style.borderColor='#FE5800';this.style.boxShadow='0 0 0 3px rgba(254,88,0,0.1)'" onblur="this.style.borderColor='rgba(22,27,46,0.5)';this.style.boxShadow='none'" placeholder="Tell us what's happening..."></textarea>
+                            <textarea id="cf-message" required minlength="10" style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;min-height:120px;outline:none;resize:none;transition:border-color 0.3s,box-shadow 0.3s" placeholder="Tell us what's happening..."></textarea>
+                            <span class="field-status" style="top:24px;transform:none"></span>
                         </div>
-                        <button type="submit" class="btn btn-orange" style="width:100%;justify-content:center">Send Message →</button>
+                        <button type="submit" id="cf-submit" class="btn btn-orange" style="width:100%;justify-content:center">Send Message →</button>
                         <p style="text-align:center;color:#5a5e72;font-size:12px;margin-top:12px">We respond within 24 hours. Usually much faster.</p>
                     </form>
                 </div>
@@ -2332,15 +2377,37 @@
     <!-- Three.js removed — using canvas 2D for hero animation -->
     <script>
         function navigateTo(page) {
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            document.getElementById(page).classList.add('active');
-            window.scrollTo(0, 0);
+            var current = document.querySelector('.page-section.active');
+            var target = document.getElementById(page);
+            if (current && current !== target) {
+                current.classList.remove('visible-page');
+                setTimeout(function() {
+                    current.classList.remove('active');
+                    target.classList.add('active');
+                    window.scrollTo(0, 0);
+                    requestAnimationFrame(function() {
+                        requestAnimationFrame(function() {
+                            target.classList.add('visible-page');
+                        });
+                    });
+                }, 250);
+            } else if (target) {
+                document.querySelectorAll('.page-section').forEach(function(el) { el.classList.remove('active','visible-page'); });
+                target.classList.add('active');
+                window.scrollTo(0, 0);
+                requestAnimationFrame(function() {
+                    requestAnimationFrame(function() {
+                        target.classList.add('visible-page');
+                    });
+                });
+            }
             // Update active nav link
             document.querySelectorAll('.nav-links a').forEach(function(a) {
                 a.classList.toggle('active', a.dataset.page === page);
             });
+            // Close mobile drawer if open
+            var hamburger = document.querySelector('.nav-hamburger');
+            if (hamburger && hamburger.classList.contains('open')) toggleDrawer();
         }
 
         function toggleDrawer() {
@@ -2626,6 +2693,328 @@
         })();
 
         // 3D building removed — replaced with hero skyline animation
+
+        // ── SCROLL PROGRESS BAR ──
+        (function() {
+            var bar = document.getElementById('scrollProgress');
+            if (!bar) return;
+            window.addEventListener('scroll', function() {
+                var h = document.documentElement.scrollHeight - window.innerHeight;
+                bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+            }, { passive: true });
+        })();
+
+        // ── TEXT REVEAL ANIMATIONS ──
+        (function() {
+            document.querySelectorAll('.text-reveal').forEach(function(el) {
+                var nodes = [];
+                var wordIndex = 0;
+                function processNode(node) {
+                    if (node.nodeType === 3) {
+                        var words = node.textContent.split(/(\s+)/);
+                        var frag = document.createDocumentFragment();
+                        words.forEach(function(w) {
+                            if (w.match(/^\s+$/)) {
+                                frag.appendChild(document.createTextNode(w));
+                            } else if (w) {
+                                var span = document.createElement('span');
+                                span.className = 'word';
+                                span.style.transitionDelay = (wordIndex * 0.06) + 's';
+                                span.textContent = w;
+                                frag.appendChild(span);
+                                frag.appendChild(document.createTextNode(' '));
+                                wordIndex++;
+                            }
+                        });
+                        nodes.push({ old: node, replacement: frag });
+                    }
+                }
+                Array.from(el.childNodes).forEach(function(child) {
+                    if (child.nodeType === 3) {
+                        processNode(child);
+                    } else if (child.nodeType === 1) {
+                        Array.from(child.childNodes).forEach(processNode);
+                    }
+                });
+                nodes.forEach(function(n) { n.old.parentNode.replaceChild(n.replacement, n.old); });
+            });
+            var revealObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('revealed');
+                        revealObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.text-reveal').forEach(function(el) { revealObs.observe(el); });
+        })();
+
+        // ── COUNTER ANIMATIONS ──
+        (function() {
+            var counters = document.querySelectorAll('.counter-num');
+            var animated = new Set();
+            var counterObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting && !animated.has(e.target)) {
+                        animated.add(e.target);
+                        var el = e.target;
+                        var target = parseFloat(el.dataset.target);
+                        var decimals = parseInt(el.dataset.decimals) || 0;
+                        var prefix = el.dataset.prefix || '';
+                        var suffix = el.dataset.suffix || '';
+                        var duration = 1500;
+                        var start = performance.now();
+                        function step(now) {
+                            var progress = Math.min((now - start) / duration, 1);
+                            var eased = 1 - Math.pow(1 - progress, 3);
+                            var current = (eased * target).toFixed(decimals);
+                            el.textContent = prefix + current + suffix;
+                            if (progress < 1) requestAnimationFrame(step);
+                        }
+                        requestAnimationFrame(step);
+                    }
+                });
+            }, { threshold: 0.5 });
+            counters.forEach(function(c) { counterObs.observe(c); });
+        })();
+
+        // ── PARALLAX HERO DEPTH ──
+        (function() {
+            var hero = document.querySelector('.hero');
+            if (!hero) return;
+            var orbs = hero.querySelectorAll('.orb');
+            var heroCanvas = document.getElementById('hero-anim');
+            window.addEventListener('scroll', function() {
+                var y = window.scrollY;
+                if (y > 800) return;
+                orbs.forEach(function(orb, i) {
+                    var speed = 0.15 + i * 0.08;
+                    orb.style.transform = 'translateY(' + (-y * speed) + 'px)';
+                });
+                if (heroCanvas) {
+                    heroCanvas.style.transform = 'translateY(' + (y * 0.05) + 'px)';
+                }
+            }, { passive: true });
+        })();
+
+        // ── NYC MAP CANVAS ──
+        (function() {
+            var mc = document.getElementById('nycMapCanvas');
+            if (!mc) return;
+            var mctx = mc.getContext('2d');
+            var dpr = window.devicePixelRatio || 1;
+            function resizeMap() {
+                var rect = mc.getBoundingClientRect();
+                mc.width = rect.width * dpr;
+                mc.height = rect.height * dpr;
+                mctx.scale(dpr, dpr);
+                drawMap();
+            }
+            var neighborhoods = [
+                { name: 'East Village', x: 0.58, y: 0.62, onsite: true },
+                { name: 'Lower East Side', x: 0.62, y: 0.68, onsite: true },
+                { name: 'West Village', x: 0.44, y: 0.60, onsite: true },
+                { name: 'Meatpacking', x: 0.40, y: 0.56, onsite: true },
+                { name: 'SoHo', x: 0.52, y: 0.65, onsite: true },
+                { name: 'Midtown', x: 0.50, y: 0.38, onsite: true },
+                { name: 'Upper East Side', x: 0.60, y: 0.25, onsite: true },
+                { name: 'Brooklyn', x: 0.72, y: 0.82, onsite: false },
+                { name: 'Queens', x: 0.78, y: 0.35, onsite: false },
+                { name: 'Harlem', x: 0.50, y: 0.15, onsite: false }
+            ];
+            var mapT = 0;
+            function drawMap() {
+                var w = mc.width / dpr, h = mc.height / dpr;
+                mctx.clearRect(0, 0, w, h);
+
+                // Manhattan island shape
+                mctx.beginPath();
+                mctx.moveTo(w*0.45, h*0.08);
+                mctx.quadraticCurveTo(w*0.55, h*0.05, w*0.58, h*0.10);
+                mctx.lineTo(w*0.62, h*0.25);
+                mctx.lineTo(w*0.64, h*0.50);
+                mctx.lineTo(w*0.66, h*0.70);
+                mctx.quadraticCurveTo(w*0.60, h*0.78, w*0.52, h*0.80);
+                mctx.quadraticCurveTo(w*0.44, h*0.78, w*0.42, h*0.70);
+                mctx.lineTo(w*0.40, h*0.50);
+                mctx.lineTo(w*0.38, h*0.25);
+                mctx.lineTo(w*0.42, h*0.10);
+                mctx.closePath();
+                mctx.fillStyle = 'rgba(13,17,32,0.8)';
+                mctx.fill();
+                mctx.strokeStyle = 'rgba(254,88,0,0.2)';
+                mctx.lineWidth = 1.5;
+                mctx.stroke();
+
+                // Grid
+                mctx.strokeStyle = 'rgba(22,27,46,0.3)';
+                mctx.lineWidth = 0.5;
+                for (var i = 0.15; i < 0.85; i += 0.1) {
+                    mctx.beginPath(); mctx.moveTo(w*0.35, h*i); mctx.lineTo(w*0.68, h*i); mctx.stroke();
+                }
+
+                // Neighborhood dots
+                neighborhoods.forEach(function(n) {
+                    var px = n.x * w, py = n.y * h;
+                    var pulseSize = n.onsite ? 3 + Math.sin(mapT * 2 + n.x * 10) * 2 : 2;
+                    if (n.onsite) {
+                        mctx.fillStyle = 'rgba(254,88,0,0.15)';
+                        mctx.beginPath(); mctx.arc(px, py, 12 + Math.sin(mapT * 1.5) * 3, 0, Math.PI*2); mctx.fill();
+                    }
+                    mctx.fillStyle = n.onsite ? '#FE5800' : 'rgba(8,145,178,0.6)';
+                    mctx.beginPath(); mctx.arc(px, py, pulseSize, 0, Math.PI*2); mctx.fill();
+                    mctx.fillStyle = n.onsite ? 'rgba(240,240,236,0.8)' : 'rgba(138,142,160,0.6)';
+                    mctx.font = (n.onsite ? '600 ' : '400 ') + '10px Lexend, sans-serif';
+                    mctx.textAlign = 'center';
+                    mctx.fillText(n.name, px, py - 10);
+                });
+
+                // Legend
+                mctx.fillStyle = '#FE5800';
+                mctx.beginPath(); mctx.arc(w*0.15, h*0.92, 4, 0, Math.PI*2); mctx.fill();
+                mctx.fillStyle = 'rgba(240,240,236,0.7)';
+                mctx.font = '500 11px Lexend, sans-serif';
+                mctx.textAlign = 'left';
+                mctx.fillText('On-site', w*0.15 + 10, h*0.92 + 4);
+                mctx.fillStyle = 'rgba(8,145,178,0.6)';
+                mctx.beginPath(); mctx.arc(w*0.35, h*0.92, 4, 0, Math.PI*2); mctx.fill();
+                mctx.fillStyle = 'rgba(240,240,236,0.5)';
+                mctx.fillText('Remote', w*0.35 + 10, h*0.92 + 4);
+            }
+            function animateMap() {
+                mapT += 0.02;
+                drawMap();
+                requestAnimationFrame(animateMap);
+            }
+            resizeMap();
+            window.addEventListener('resize', resizeMap);
+            var mapObs = new IntersectionObserver(function(entries) {
+                if (entries[0].isIntersecting) { animateMap(); mapObs.disconnect(); }
+            }, { threshold: 0.1 });
+            mapObs.observe(mc);
+        })();
+
+        // ── CONTACT FORM VALIDATION ──
+        (function() {
+            var fields = document.querySelectorAll('#contactForm input, #contactForm textarea');
+            fields.forEach(function(f) {
+                f.addEventListener('input', function() { validateField(f); });
+                f.addEventListener('focus', function() {
+                    f.style.borderColor = '#FE5800';
+                    f.style.boxShadow = '0 0 0 3px rgba(254,88,0,0.1)';
+                });
+                f.addEventListener('blur', function() {
+                    if (!f.classList.contains('valid-input') && !f.classList.contains('invalid-input')) {
+                        f.style.borderColor = 'rgba(22,27,46,0.5)';
+                        f.style.boxShadow = 'none';
+                    }
+                });
+            });
+            function validateField(f) {
+                var wrapper = f.closest('.form-field');
+                var status = wrapper.querySelector('.field-status');
+                var valid = f.checkValidity() && f.value.trim().length > 0;
+                if (f.type === 'email') valid = valid && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value);
+                wrapper.classList.toggle('valid', valid);
+                wrapper.classList.toggle('invalid', !valid && f.value.length > 0);
+                f.classList.toggle('valid-input', valid);
+                f.classList.toggle('invalid-input', !valid && f.value.length > 0);
+                status.textContent = valid ? '\u2713' : (f.value.length > 0 ? '\u2717' : '');
+                status.style.color = valid ? '#22c55e' : '#ef4444';
+            }
+        })();
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            var name = document.getElementById('cf-name');
+            var email = document.getElementById('cf-email');
+            var msg = document.getElementById('cf-message');
+            if (!name.checkValidity() || !email.checkValidity() || !msg.checkValidity()) {
+                [name, email, msg].forEach(function(f) {
+                    if (!f.checkValidity()) {
+                        f.classList.add('invalid-input');
+                        f.closest('.form-field').classList.add('invalid');
+                        var st = f.closest('.form-field').querySelector('.field-status');
+                        st.textContent = '\u2717';
+                        st.style.color = '#ef4444';
+                    }
+                });
+                return false;
+            }
+            // Build success message safely with DOM methods
+            var firstName = name.value.split(' ')[0];
+            launchConfetti();
+            var card = document.getElementById('contactFormCard');
+            while (card.firstChild) card.removeChild(card.firstChild);
+            var successDiv = document.createElement('div');
+            successDiv.className = 'form-success';
+            var emoji = document.createElement('div');
+            emoji.style.cssText = 'font-size:48px;margin-bottom:16px';
+            emoji.textContent = '\uD83C\uDF89';
+            var h3 = document.createElement('h3');
+            h3.style.cssText = 'margin-bottom:12px;color:#f0f0ec';
+            h3.textContent = 'Message Sent!';
+            var p1 = document.createElement('p');
+            p1.style.cssText = 'color:#8a8ea0;font-size:15px;margin-bottom:8px';
+            p1.textContent = 'Thanks, ' + firstName + '! We\'ll be in touch within a few hours.';
+            var p2 = document.createElement('p');
+            p2.style.cssText = 'font-family:Caveat,cursive;font-size:24px;color:#FE5800';
+            p2.textContent = 'The Little Fight is on your side.';
+            successDiv.appendChild(emoji);
+            successDiv.appendChild(h3);
+            successDiv.appendChild(p1);
+            successDiv.appendChild(p2);
+            card.appendChild(successDiv);
+            return false;
+        }
+
+        function launchConfetti() {
+            var c = document.createElement('canvas');
+            c.className = 'confetti-canvas';
+            document.body.appendChild(c);
+            var ctx = c.getContext('2d');
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+            var pieces = [];
+            var colors = ['#FE5800','#FF6B35','#0891B2','#0C6A84','#f0f0ec','#22c55e'];
+            for (var i = 0; i < 120; i++) {
+                pieces.push({
+                    x: Math.random() * c.width,
+                    y: -10 - Math.random() * 200,
+                    w: 6 + Math.random() * 6,
+                    h: 3 + Math.random() * 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: 2 + Math.random() * 4,
+                    rot: Math.random() * Math.PI * 2,
+                    vr: (Math.random() - 0.5) * 0.2,
+                    gravity: 0.08 + Math.random() * 0.04
+                });
+            }
+            var frame = 0;
+            function drawConfetti() {
+                ctx.clearRect(0, 0, c.width, c.height);
+                pieces.forEach(function(p) {
+                    p.x += p.vx;
+                    p.vy += p.gravity;
+                    p.y += p.vy;
+                    p.rot += p.vr;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+                    ctx.restore();
+                });
+                frame++;
+                if (frame < 180) {
+                    requestAnimationFrame(drawConfetti);
+                } else {
+                    c.remove();
+                }
+            }
+            requestAnimationFrame(drawConfetti);
+        }
     </script>
 
     <!-- MOBILE STICKY BAR -->
