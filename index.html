@@ -1,1457 +1,2637 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="en" dir="ltr" style="background:#080b14">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%23FE5800'/%3E%3Ctext x='50' y='28' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='800' font-size='24'%3ELITTLE%3C/text%3E%3Ctext x='50' y='56' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='800' font-size='26'%3EFIGHT%3C/text%3E%3Ctext x='50' y='82' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='800' font-size='24'%3ENYC%3C/text%3E%3C/svg%3E">
+    <title>Little Fight NYC — NYC's Concierge Tech Support</title>
+    <meta name="description" content="NYC's concierge tech support for small businesses. On-site IT help in Manhattan, bespoke websites, local SEO, POS setup, and Apple device management. 2-hour response time. First hour free. Call (646) 360-0318.">
+    <meta name="keywords" content="IT support NYC, tech support Manhattan, small business IT, website design NYC, local SEO NYC, POS setup, Apple MDM, computer repair Manhattan, Wi-Fi setup NYC, on-site IT support">
+    <meta name="author" content="Little Fight NYC">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="https://www.littlefightnyc.com/">
 
-    <!-- Primary Meta Tags -->
-    <title>Little Fight NYC | Tech Support for Small Businesses in NYC</title>
-    <meta
-      name="title"
-      content="Little Fight NYC | Tech Support for Small Businesses in NYC"
-    />
-    <meta
-      name="description"
-      content="Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide. We fix websites, POS systems, Wi-Fi, and more."
-    />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Little Fight NYC — NYC's Concierge Tech Support">
+    <meta property="og:description" content="On-site IT support, bespoke websites, local SEO, and smart systems for NYC small businesses. 2-hour response. First hour free.">
+    <meta property="og:url" content="https://www.littlefightnyc.com/">
+    <meta property="og:site_name" content="Little Fight NYC">
+    <meta property="og:locale" content="en_US">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://littlefightnyc.com/" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Little Fight NYC — NYC's Concierge Tech Support">
+    <meta name="twitter:description" content="On-site IT support, bespoke websites, local SEO for NYC small businesses. First hour free.">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://littlefightnyc.com/" />
-    <meta
-      property="og:title"
-      content="Little Fight NYC | Tech Support for Small Businesses in NYC"
-    />
-    <meta
-      property="og:description"
-      content="Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide. We fix websites, POS systems, Wi-Fi, and more."
-    />
-    <meta
-      property="og:image"
-      content="https://littlefightnyc.com/images/og-image.jpg"
-    />
-    <meta property="og:site_name" content="Little Fight NYC" />
+    <!-- Mobile optimization -->
+    <meta name="theme-color" content="#080b14">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=yes">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%23FE5800'/%3E%3Ctext x='50' y='56' text-anchor='middle' fill='white' font-family='system-ui' font-weight='800' font-size='30'%3ELF%3C/text%3E%3C/svg%3E">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://littlefightnyc.com/" />
-    <meta
-      name="twitter:title"
-      content="Little Fight NYC | Tech Support for Small Businesses in NYC"
-    />
-    <meta
-      name="twitter:description"
-      content="Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide. We fix websites, POS systems, Wi-Fi, and more."
-    />
-    <meta
-      name="twitter:image"
-      content="https://littlefightnyc.com/images/og-image.jpg"
-    />
-
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#FF5A00" />
-
-    <!-- Preload critical font -->
-    <link rel="preload" href="/fonts/mdi-subset.woff2" as="font" type="font/woff2" crossorigin>
-
-    <!-- Critical CSS - Inlined to eliminate render blocking -->
-    <style>
-      /* Fallback font to prevent CLS */
-      @font-face {
-        font-family: "Lexend Fallback";
-        src: local("Arial");
-        size-adjust: 100%;
-        ascent-override: 90%;
-        descent-override: 22%;
-        line-gap-override: 0%;
-      }
-      :root {
-        --text-primary: #1f2326;
-        --text-secondary: #3e454d;
-        --text-muted: #5e6770;
-        --accent-ui: #ff5a00;
-        --accent-ui-strong: #ff5a00;
-        --accent-ui-strong-hover: #ff7a33;
-        --accent-ui-contrast: #11294f;
-        --accent-text: #1f5bbe;
-        --bg-dark: #1f2326;
-        --footer-text: #b8bfc8;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          sans-serif;
-        color: var(--text-primary);
-        background-color: #fff;
-        background-image:
-          radial-gradient(
-            circle at 8% 14%,
-            rgba(241, 142, 96, 0.13) 0 132px,
-            transparent 133px
-          ),
-          radial-gradient(
-            circle at 88% 18%,
-            rgba(35, 101, 207, 0.1) 0 152px,
-            transparent 153px
-          ),
-          radial-gradient(
-            circle at 14% 72%,
-            rgba(255, 208, 184, 0.2) 0 126px,
-            transparent 127px
-          ),
-          radial-gradient(
-            circle at 82% 78%,
-            rgba(35, 101, 207, 0.07) 0 140px,
-            transparent 141px
-          );
-        background-attachment: fixed;
-        line-height: 1.6;
-      }
-      /* Nav */
-      nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        z-index: 1000;
-        padding: 0 24px;
-      }
-      .nav-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 70px;
-      }
-      .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-      }
-      .nav-logo-box {
-        width: 45px;
-        height: 45px;
-        background: var(--accent-ui-strong);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent-ui-contrast);
-        font-weight: 900;
-        font-size: 0.55rem;
-        line-height: 1.1;
-        text-align: center;
-      }
-      .nav-logo-text {
-        font-weight: 800;
-        font-size: 1.1rem;
-        color: var(--text-primary);
-      }
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-      }
-      .nav-links a {
-        color: var(--text-secondary);
-        font-weight: 500;
-        text-decoration: none;
-        font-size: 0.95rem;
-      }
-      .nav-cta {
-        background: var(--accent-ui-strong);
-        color: var(--accent-ui-contrast) !important;
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-weight: 600;
-      }
-      .nav-toggle {
-        display: none;
-      }
-      /* Hero */
-      .hero {
-        min-height: calc(100vh - 70px);
-        display: flex;
-        align-items: center;
-        background: linear-gradient(135deg, #fcede6 0%, #fff 50%, #eaebec 100%);
-        padding: 80px 24px 32px;
-        position: relative;
-        overflow: hidden;
-      }
-      .hero-container {
-        max-width: 1280px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 40px;
-        align-items: center;
-        position: relative;
-        width: 100%;
-      }
-      .hero-content {
-        position: relative;
-        z-index: 1;
-      }
-      .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        background: rgba(64, 124, 138, 0.12);
-        border-radius: 50px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--accent-text);
-        margin-bottom: 24px;
-      }
-      .hero-title {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 24px;
-        color: var(--bg-dark);
-      }
-      .hero-title .highlight {
-        color: var(--accent-ui);
-      }
-      .hero-subtitle {
-        font-size: 1.15rem;
-        color: var(--text-secondary);
-        margin-bottom: 32px;
-      }
-      .hero-buttons {
-        display: flex;
-        gap: 16px;
-        margin-bottom: 24px;
-        min-height: 58px;
-      }
-      .btn {
-        padding: 16px 32px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1.1rem;
-        text-decoration: none;
-        border: 2px solid transparent;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 58px;
-        line-height: 1.2;
-      }
-      .btn-primary {
-        background: var(--accent-ui-strong);
-        color: var(--accent-ui-contrast);
-      }
-      .btn-secondary {
-        background: transparent;
-        color: var(--accent-text);
-        border-color: var(--accent-text);
-      }
-      .hero-note {
-        font-family: Georgia, "Times New Roman", serif;
-        font-style: italic;
-        font-size: 1.2rem;
-        color: var(--text-secondary);
-      }
-      /* Hero visual - must be in critical CSS to prevent CLS */
-      .hero-visual {
-        position: relative;
-      }
-      .illustration {
-        position: relative;
-        width: 100%;
-        height: clamp(340px, 42vh, 520px);
-        border-radius: 16px;
-        overflow: hidden;
-        background: linear-gradient(180deg, #E4EEF8 0%, #EDF3F9 40%, #F2F5F9 100%);
-      }
-      .city-buildings-row {
-        position: absolute;
-        left: 0; right: 0; bottom: 20px;
-        display: flex;
-        align-items: flex-end;
-        z-index: 5;
-      }
-      .city-building {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        flex-shrink: 0;
-      }
-      .city-bakery { width: 17%; }
-      .city-cafe { width: 18%; }
-      .city-hotel { width: 28%; }
-      .city-realty { width: 18%; }
-      .city-restaurant { width: 19%; }
-      .city-sidewalk {
-        position: absolute;
-        left: 0; right: 0; bottom: 0;
-        height: 20px;
-        background: linear-gradient(180deg, #B8AF9E, #C8BFAD);
-        border-top: 2px solid #A09882;
-        z-index: 10;
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-      /* Tablet */
-      @media (max-width: 968px) {
-        .hero {
-          padding: 80px 20px 32px;
-          min-height: auto;
-        }
-        .hero-container {
-          grid-template-columns: 1fr;
-          gap: 24px;
-        }
-        .hero-visual {
-          order: 2;
-          max-width: 520px;
-          margin: 0 auto;
-          width: 100%;
-        }
-        .illustration {
-          height: 300px;
-        }
-      }
-      /* Tablet + Mobile nav */
-      @media (max-width: 968px) {
-        .nav-toggle {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          gap: 5px;
-          width: 44px;
-          height: 44px;
-          padding: 10px;
-          background: none;
-          border: none;
-          cursor: pointer;
-        }
-        .nav-toggle span {
-          display: block;
-          width: 24px;
-          height: 2px;
-          background: var(--text-primary);
-          border-radius: 2px;
-        }
-        .nav-links {
-          opacity: 0;
-          visibility: hidden;
-        }
-        .nav-links.active {
-          opacity: 1;
-          visibility: visible;
-        }
-      }
-      /* Mobile */
-      @media (max-width: 640px) {
-        .hero {
-          padding: 76px 16px 24px;
-        }
-        .hero-container {
-          gap: 20px;
-        }
-        .hero-visual {
-          max-width: 100%;
-        }
-        .illustration {
-          height: 260px;
-          border-radius: 12px;
-        }
-        .hero-buttons {
-          flex-direction: column;
-          align-items: stretch;
-        }
-        .btn {
-          text-align: center;
-        }
-      }
-    </style>
-
-    <!-- Fonts disabled temporarily to achieve 100 PageSpeed score -->
-    <!-- To re-enable: self-host fonts or accept the CLS tradeoff -->
-    <!--
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Caveat:wght@500;700&display=swap">
-    -->
 
-    <!-- Google Analytics 4 -->
-    <!-- Placeholder: GA4 Measurement ID needed (G-XXXXXXXXXX) -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
-
-    <!-- Schema.org LocalBusiness -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Little Fight NYC",
-        "description": "Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide.",
-        "url": "https://littlefightnyc.com",
-        "telephone": "+1-646-360-0318",
-        "email": "hello@littlefightnyc.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "New York",
-          "addressRegion": "NY",
-          "addressCountry": "US"
-        },
-        "areaServed": [
-          {
-            "@type": "City",
-            "name": "New York",
-            "sameAs": "https://en.wikipedia.org/wiki/New_York_City"
-          },
-          {
-            "@type": "Country",
-            "name": "United States"
-          }
-        ],
-        "serviceType": [
-          "IT Support",
-          "Website Design",
-          "SEO",
-          "POS Setup",
-          "Tech Consulting"
-        ],
-        "priceRange": "$$",
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "09:00",
-          "closes": "18:00"
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-      }
-    </script>
 
-    <!-- Schema.org FAQPage -->
+        html, body {
+            background: #080b14;
+            color: #f0f0ec;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 5vw, 64px);
+        }
+
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #8a8ea0;
+            margin-bottom: 16px;
+        }
+
+        .eyebrow-dot {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #f0f0ec;
+        }
+
+        .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #FE5800;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(2rem, 5vw, 4rem); margin-bottom: 24px; }
+        h2 { font-size: clamp(1.5rem, 3.5vw, 3rem); margin-bottom: 16px; }
+        h3 { font-size: clamp(1.1rem, 2vw, 1.75rem); margin-bottom: 12px; }
+        h4 { font-size: 20px; margin-bottom: 10px; }
+
+        .highlight-orange {
+            color: #FE5800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight-orange::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FE5800, #FF6B35);
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 9999px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-50%);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, #FE5800, #FF6B35);
+            color: white;
+            box-shadow: 0 0 20px rgba(254, 88, 0, 0.3);
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(254, 88, 0, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #f0f0ec;
+            border: 2px solid #161b2e;
+        }
+
+        .btn-outline:hover {
+            background: #0d1120;
+            border-color: #FE5800;
+            color: #FE5800;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.02;
+        }
+
+        /* ═══ PREMIUM NAV ═══ */
+        nav { position:fixed;top:0;left:0;right:0;z-index:1000;transition:all 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+        nav .nav-bg { position:absolute;inset:0;background:rgba(8,11,20,0);backdrop-filter:blur(0);border-bottom:1px solid transparent;transition:all 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+        nav.scrolled .nav-bg { background:rgba(8,11,20,0.85);backdrop-filter:blur(20px) saturate(1.4);border-bottom:1px solid rgba(254,88,0,0.08);box-shadow:0 4px 30px rgba(0,0,0,0.3); }
+        nav.scrolled .nav-bg::after { content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(254,88,0,0.15) 30%,rgba(8,145,178,0.1) 70%,transparent); }
+        .nav-container { position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:14px clamp(20px,5vw,64px);display:flex;align-items:center;gap:12px;transition:padding 0.5s cubic-bezier(0.25,0.46,0.45,0.94);height:64px; }
+        nav.scrolled .nav-container { height:56px; }
+        /* nav height change handled by height property */
+        .nav-brand { display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0; }
+        .logo { width:38px;height:38px;background:#FE5800;border-radius:7px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 0 20px rgba(254,88,0,0.3); }
+        .logo svg { width:32px;height:32px; }
+        .nav-brand:hover .logo { transform:scale(1.06) rotate(-2deg);box-shadow:0 0 24px rgba(254,88,0,0.5),0 0 0 3px rgba(254,88,0,0.1); }
+        .nav-brand-text { display:flex;flex-direction:column;line-height:1.1; }
+        .nav-brand-name { font-size:15px;font-weight:800;color:#f0f0ec;letter-spacing:-0.02em; }
+        .nav-brand-tagline { font-size:10px;font-weight:600;color:#5a5e72;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.3s; }
+        .nav-brand:hover .nav-brand-tagline { color:#FE5800; }
+        .footer-logo { width:52px;height:52px;background:#FE5800;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;overflow:hidden; }
+        .footer-logo svg { width:44px;height:44px; }
+        .nav-links { display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0;margin-left:auto; }
+        .nav-links li { display:flex;align-items:center;margin:0;padding:0; }
+        .nav-links a { color:#8a8ea0;text-decoration:none;font-weight:500;font-size:13px;padding:6px 14px;border-radius:8px;position:relative;transition:all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);line-height:1;display:flex;align-items:center; }
+        .nav-links a:hover { color:#f0f0ec;background:rgba(240,240,236,0.04); }
+        .nav-links a.active { color:#FE5800;background:rgba(254,88,0,0.06); }
+        .nav-links a::after { content:'';position:absolute;bottom:2px;left:50%;width:0;height:3px;background:#FE5800;border-radius:2px;transform:translateX(-50%);transition:width 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+        .nav-links a.active::after { width:16px; }
+        .nav-links a:hover::after { width:24px; }
+        .nav-right { display:flex;align-items:center;gap:14px;margin-left:14px;flex-shrink:0; }
+        .nav-phone { display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#8a8ea0;text-decoration:none;transition:color 0.3s;white-space:nowrap;line-height:1; }
+        .nav-phone:hover { color:#f0f0ec; }
+        .nav-phone svg { color:#FE5800;flex-shrink:0; }
+        .nav-phone-dot { width:6px;height:6px;background:#22c55e;border-radius:50%;animation:navpulse 2s ease infinite;flex-shrink:0; }
+        @keyframes navpulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,0.4)} 50%{opacity:0.7;box-shadow:0 0 0 4px rgba(34,197,94,0)} }
+        .nav-divider { width:1px;height:24px;background:rgba(255,255,255,0.06); }
+        .nav-cta-btn { display:inline-flex;align-items:center;gap:6px;background:#FE5800;color:#fff;font-size:13px;font-weight:700;padding:9px 20px;border-radius:50px;text-decoration:none;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 2px 8px rgba(0,0,0,0.2);position:relative;overflow:hidden;line-height:1;white-space:nowrap; }
+        .nav-cta-btn:hover { background:#FF6B35;transform:translateY(-2px);box-shadow:0 0 20px rgba(254,88,0,0.3),0 8px 20px rgba(0,0,0,0.2); }
+        .nav-cta-btn::after { content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.15) 50%,transparent 70%);transform:translateX(-100%);transition:transform 0.6s; }
+        .nav-cta-btn:hover::after { transform:translateX(100%); }
+        .nav-hamburger { display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer;background:none;border:none;z-index:10; }
+        .nav-hamburger span { display:block;width:22px;height:2px;background:#f0f0ec;border-radius:2px;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);transform-origin:center; }
+        .nav-hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+        .nav-hamburger.open span:nth-child(2) { opacity:0;transform:scaleX(0); }
+        .nav-hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+        .nav-drawer { position:fixed;top:0;right:-100%;width:320px;max-width:85vw;height:100vh;background:rgba(8,11,20,0.97);backdrop-filter:blur(24px) saturate(1.3);z-index:999;padding:100px 32px 40px;transition:right 0.5s cubic-bezier(0.25,0.46,0.45,0.94);border-left:1px solid rgba(254,88,0,0.06);overflow-y:auto; }
+        .nav-drawer.open { right:0; }
+        .nav-drawer-overlay { position:fixed;inset:0;background:rgba(0,0,0,0);z-index:998;pointer-events:none;transition:background 0.5s; }
+        .nav-drawer-overlay.open { background:rgba(0,0,0,0.5);pointer-events:all; }
+        .nav-drawer a { display:flex;align-items:center;gap:12px;padding:16px 0;font-size:18px;font-weight:700;color:#8a8ea0;text-decoration:none;border-bottom:1px solid rgba(22,27,46,0.4);transition:all 0.3s; }
+        .nav-drawer a:hover,.nav-drawer a.active { color:#FE5800; }
+        .nav-drawer .drawer-icon { width:32px;height:32px;background:rgba(254,88,0,0.06);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0; }
+        .nav-drawer .drawer-cta { display:flex;flex-direction:column;gap:12px;margin-top:32px; }
+        .nav-drawer .drawer-phone { display:flex;align-items:center;gap:8px;color:#8a8ea0;font-size:14px;font-weight:600;padding:12px 0;border:none;text-decoration:none; }
+        .nav-drawer .drawer-phone svg { color:#FE5800; }
+        @media(max-width:960px) { .nav-links{display:none} .nav-phone{display:none} .nav-divider{display:none} .nav-cta-btn{display:none} .nav-hamburger{display:flex} }
+
+        .hero {
+            padding-top: 140px;
+            padding-bottom: 50px;
+            text-align: left;
+            margin-bottom: 32px;
+        }
+
+        .hero > .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-visual {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-visual canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+        }
+
+        /* ── Tablet landscape ── */
+        @media (max-width: 960px) {
+            .hero > .container { grid-template-columns: 1fr 0.8fr; gap: 40px; }
+            .hero-visual { height: 380px; }
+            .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .promise-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        /* ── Tablet portrait ── */
+        @media (max-width: 768px) {
+            .hero > .container { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+            .hero-content { max-width: 100%; }
+            .hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+            .hero-buttons { justify-content: center; }
+            .hero-contact { justify-content: center; }
+            .trust-bar { margin-left: auto; margin-right: auto; }
+            .stats-row { max-width: 100%; margin: 0 auto; }
+            .stat-item { text-align: center; }
+            .hero-visual { height: 260px; order: -1; }
+            .nav-links { display: none !important; }
+            .nav-cta { display: none !important; }
+            .hamburger { display: flex !important; }
+            .services-grid { grid-template-columns: 1fr 1fr !important; }
+            .promise-grid { grid-template-columns: 1fr 1fr !important; }
+            .testimonials { grid-template-columns: 1fr 1fr !important; }
+            .coverage-grid { grid-template-columns: 1fr !important; }
+            .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+        }
+        /* ── Large phone ── */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: clamp(1.75rem, 7vw, 2.4rem); }
+            .btn { padding: 13px 24px; font-size: 14px; }
+            .services-grid { grid-template-columns: 1fr !important; }
+            .promise-grid { grid-template-columns: 1fr 1fr !important; }
+            .testimonials { grid-template-columns: 1fr !important; }
+            .ba-grid { grid-template-columns: 1fr !important; }
+            .footer-grid { grid-template-columns: 1fr !important; }
+        }
+        /* ── Phone portrait ── */
+        @media (max-width: 480px) {
+            .hero { padding-top: 110px; padding-bottom: 60px; }
+            .hero h1 { font-size: 1.75rem; }
+            .hero p { font-size: 15px; }
+            .hero-visual { height: 200px; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .stat-number { font-size: 1.5rem; }
+            .service-card, .promise-card, .work-card { padding: 20px; }
+            h2 { font-size: clamp(1.4rem, 5vw, 2rem) !important; }
+        }
+        /* ── Small phone ── */
+        @media (max-width: 375px) {
+            .hero h1 { font-size: 1.5rem; }
+            .btn { padding: 12px 20px; font-size: 13px; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons .btn { width: 100%; justify-content: center; }
+        }
+
+        .breathing-orbs {
+            position: absolute;
+            width: 100%;
+            height: 400px;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            filter: blur(60px);
+        }
+
+        .orb-orange {
+            width: 300px;
+            height: 300px;
+            background: #FE5800;
+            top: 50px;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-blue {
+            width: 250px;
+            height: 250px;
+            background: #0891B2;
+            top: 100px;
+            right: 15%;
+            animation: float 9s ease-in-out 1s infinite;
+        }
+
+        .orb-teal {
+            width: 200px;
+            height: 200px;
+            background: #0C6A84;
+            top: 200px;
+            left: 50%;
+            animation: float 10s ease-in-out 2s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        .hero-eyebrow {
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #8a8ea0;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-start;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .hero-contact {
+            font-size: 14px;
+            color: #8a8ea0;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+        }
+
+        .hero-contact strong {
+            color: #FE5800;
+        }
+
+        .trust-bar {
+            background: rgba(13, 17, 32, 0.8);
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            border-radius: 12px;
+            padding: 14px 20px;
+            margin-bottom: 32px;
+            font-size: 13px;
+            color: #8a8ea0;
+            display: inline-block;
+        }
+
+        .trust-bar strong {
+            color: #f0f0ec;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 500px;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 800;
+            color: #FE5800;
+            text-shadow: 0 0 20px rgba(254, 88, 0, 0.5);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8a8ea0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hidden-cost {
+            padding-top: 40px; padding-bottom: 40px;
+            background: linear-gradient(180deg, rgba(13, 17, 32, 0.5) 0%, rgba(8, 11, 20, 0) 100%);
+            margin-bottom: 40px;
+        }
+
+        .hidden-cost .container {
+            max-width: 700px;
+        }
+
+        .bar-graph {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .bar-item {
+            margin-bottom: 28px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .bar-label-name {
+            font-weight: 600;
+            color: #f0f0ec;
+        }
+
+        .bar-label-value {
+            color: #FE5800;
+            font-weight: 800;
+        }
+
+        .bar-container {
+            background: rgba(22, 27, 46, 0.6);
+            border-radius: 6px;
+            height: 32px;
+            overflow: hidden;
+            border: 1px solid rgba(22, 27, 46, 0.8);
+        }
+
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #0891B2, #0C6A84);
+            width: 0;
+            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+        }
+
+        .bar-full {
+            background: linear-gradient(90deg, #FE5800, #FF6B35);
+        }
+
+        .hidden-cost-text {
+            text-align: center;
+            color: #8a8ea0;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        .hidden-cost-text strong {
+            color: #FE5800;
+            font-weight: 800;
+        }
+
+        .services {
+            padding-top: 40px; padding-bottom: 40px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .services-header {
+            max-width: 700px;
+            margin-bottom: 32px;
+        }
+
+        .services-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        /* building canvas removed */
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: #0d1120;
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #FE5800;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            background: #131829;
+            border-color: #FE5800;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(254, 88, 0, 0.15);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #FE5800, #FF6B35);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .service-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .service-card {
+            position: relative;
+        }
+        .service-badge {
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            background: #FE5800;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 12px 0 10px 0;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(254,88,0,0.3);
+        }
+
+        .service-card h3 {
+            margin-bottom: 12px;
+            color: #f0f0ec;
+        }
+
+        .service-card p {
+            color: #8a8ea0;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .promise {
+            padding-top: 40px; padding-bottom: 40px;
+            margin-bottom: 40px;
+        }
+
+        .promise-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .promise-subtext {
+            color: #8a8ea0;
+            font-size: 16px;
+            margin-top: 16px;
+        }
+
+        .promise-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .promise-card {
+            background: #0d1120;
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .promise-card:hover {
+            background: #131829;
+            border-color: #FE5800;
+        }
+
+        .promise-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .promise-card h4 {
+            color: #f0f0ec;
+            margin-bottom: 12px;
+        }
+
+        .promise-card p {
+            color: #8a8ea0;
+            font-size: 14px;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: #0d1120;
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .testimonial-stars {
+            color: #FE5800;
+            font-size: 12px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            color: #f0f0ec;
+            font-size: 14px;
+            margin-bottom: 16px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: #FE5800;
+            font-size: 13px;
+        }
+
+        .testimonial-role {
+            color: #8a8ea0;
+            font-size: 12px;
+        }
+
+        .work-section {
+            padding-top: 40px; padding-bottom: 40px;
+            margin-bottom: 40px;
+        }
+
+        .work-header {
+            margin-bottom: 40px;
+        }
+
+        .pill-nav {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+        }
+
+        .pill {
+            padding: 10px 20px;
+            border-radius: 9999px;
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            background: transparent;
+            color: #8a8ea0;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .pill:hover, .pill.active {
+            background: #FE5800;
+            border-color: #FE5800;
+            color: white;
+        }
+
+        .work-carousel {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+        }
+
+        .work-card {
+            flex: 0 0 calc(33.333% - 16px);
+            background: #0d1120;
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .work-card:hover {
+            border-color: #FE5800;
+            box-shadow: 0 10px 30px rgba(254, 88, 0, 0.15);
+        }
+
+        .work-card-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--color1), var(--color2));
+        }
+
+        .work-card-content {
+            padding: 24px;
+        }
+
+        .work-card h4 {
+            color: #f0f0ec;
+            margin-bottom: 4px;
+        }
+
+        .work-card-meta {
+            color: #8a8ea0;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .work-card-metric {
+            background: rgba(254, 88, 0, 0.1);
+            border: 1px solid rgba(254, 88, 0, 0.3);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: #FE5800;
+            font-weight: 700;
+            font-size: 12px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .work-card-quote {
+            color: #8a8ea0;
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        .coverage {
+            padding-top: 40px; padding-bottom: 40px;
+            margin-bottom: 40px;
+        }
+
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .coverage-column h3 {
+            margin-bottom: 24px;
+        }
+
+        .coverage-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .coverage-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #0d1120;
+            border-radius: 50px;
+            border: 1px solid rgba(22, 27, 46, 0.5);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .coverage-item:hover {
+            background: #131829;
+            border-color: #FE5800;
+        }
+
+        .coverage-item::before {
+            content: '📍';
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .coverage-item span {
+            color: #8a8ea0;
+        }
+
+        /* ═══ PREMIUM FAQ ═══ */
+        .faq-section {
+            padding-top:40px;padding-bottom:20px;margin-bottom:20px;
+            max-width:1240px;margin-left:auto;margin-right:auto;
+            padding-left:clamp(20px,5vw,64px);padding-right:clamp(20px,5vw,64px);
+            text-align:center;
+        }
+        .faq-grid {
+            display:grid;grid-template-columns:repeat(2,1fr);
+            gap:12px;margin-top:32px;text-align:left;
+        }
+        @media(max-width:768px){.faq-grid{grid-template-columns:1fr}}
+        .faq-card {
+            background:#0d1120;border:1px solid rgba(22,27,46,0.5);
+            border-radius:12px;overflow:hidden;
+            transition:all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .faq-card:hover{border-color:rgba(254,88,0,0.2)}
+        .faq-card summary {
+            padding:20px 24px;cursor:pointer;display:flex;
+            justify-content:space-between;align-items:center;
+            font-weight:700;font-size:15px;color:#f0f0ec;
+            list-style:none;transition:color 0.3s;line-height:1.4;
+        }
+        .faq-card summary::-webkit-details-marker{display:none}
+        .faq-card summary::marker{display:none;content:''}
+        .faq-card summary:hover{color:#FE5800}
+        .faq-card .faq-icon {
+            width:28px;height:28px;border-radius:50%;
+            background:rgba(254,88,0,0.08);display:flex;
+            align-items:center;justify-content:center;flex-shrink:0;
+            margin-left:12px;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            color:#FE5800;font-size:14px;
+        }
+        .faq-card[open] .faq-icon{transform:rotate(45deg);background:rgba(254,88,0,0.15)}
+        .faq-card[open]{border-color:rgba(254,88,0,0.15);background:#0e1224}
+        .faq-card .faq-body {
+            padding:0 24px 20px;color:#8a8ea0;font-size:14px;
+            line-height:1.8;border-top:1px solid rgba(22,27,46,0.3);
+            margin-top:-4px;padding-top:16px;
+            animation:faqSlide 0.3s ease;
+        }
+        @keyframes faqSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+        .faq-card .faq-body a{color:#FE5800;text-decoration:none;font-weight:600}
+        .faq-card .faq-body a:hover{text-decoration:underline}
+        }
+
+        /* ═══ APPROACH TIMELINE ═══ */
+        .approach-timeline {
+            position:relative;
+            max-width:700px;
+            margin:0 auto;
+            padding-left:48px;
+        }
+        .tl-line {
+            position:absolute;
+            left:18px;
+            top:0;
+            bottom:0;
+            width:3px;
+            background:rgba(22,27,46,0.5);
+            border-radius:2px;
+        }
+        .tl-line-fill {
+            width:100%;
+            height:0%;
+            background:linear-gradient(180deg,#FE5800,#0891B2);
+            border-radius:2px;
+            transition:height 1.5s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .tl-step {
+            position:relative;
+            padding-bottom:48px;
+            opacity:0;
+            transform:translateX(-20px);
+            transition:all 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .tl-step.visible {
+            opacity:1;
+            transform:translateX(0);
+        }
+        .tl-step:last-child { padding-bottom:0; }
+        .tl-node {
+            position:absolute;
+            left:-48px;
+            top:0;
+            width:38px;
+            height:38px;
+            background:#0d1120;
+            border:2px solid rgba(22,27,46,0.5);
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:16px;
+            z-index:2;
+            transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .tl-step.visible .tl-node {
+            border-color:#FE5800;
+            box-shadow:0 0 16px rgba(254,88,0,0.25);
+            transform:scale(1.1);
+        }
+        .tl-content {
+            background:#0d1120;
+            border:1px solid rgba(22,27,46,0.5);
+            border-radius:12px;
+            padding:28px;
+            transition:border-color 0.4s;
+        }
+        .tl-step.visible .tl-content {
+            border-color:rgba(254,88,0,0.12);
+        }
+        .tl-num {
+            font-size:11px;
+            font-weight:800;
+            color:#FE5800;
+            text-transform:uppercase;
+            letter-spacing:0.1em;
+            margin-bottom:8px;
+        }
+        .tl-content h3 {
+            font-size:clamp(1.1rem,2vw,1.4rem);
+            margin-bottom:10px;
+        }
+        .tl-content p {
+            color:#8a8ea0;
+            font-size:14px;
+            line-height:1.8;
+            margin-bottom:16px;
+        }
+        .tl-pills {
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+        }
+        .tl-pills span {
+            font-size:12px;
+            font-weight:600;
+            color:#8a8ea0;
+            background:rgba(254,88,0,0.04);
+            border:1px solid rgba(22,27,46,0.4);
+            padding:5px 12px;
+            border-radius:50px;
+            transition:all 0.3s;
+        }
+        .tl-pills span:hover {
+            border-color:rgba(254,88,0,0.2);
+            color:#FE5800;
+        }
+        @media(max-width:640px) {
+            .approach-timeline { padding-left:36px; }
+            .tl-node { left:-36px; width:32px; height:32px; font-size:14px; }
+            .tl-content { padding:20px; }
+        }
+
+        /* ═══ PREMIUM CTA FINAL ═══ */
+        .cta-final {
+            text-align: center;
+            border-radius: 16px;
+            margin-top: 40px;
+            margin-bottom: 80px;
+            padding: clamp(56px,7vw,80px) clamp(24px,5vw,64px);
+            position: relative;
+            overflow: hidden;
+            background: #0d1120;
+            border: 1px solid rgba(254,88,0,0.1);
+        }
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(254,88,0,0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(8,145,178,0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cta-final::after {
+            content: '';
+            position: absolute;
+            top: 0;left: 0;right: 0;height: 2px;
+            background: linear-gradient(90deg, transparent 10%, #FE5800 30%, #FF6B35 50%, #0891B2 70%, transparent 90%);
+            opacity: 0.5;
+        }
+        .cta-final h2 {
+            color: #f0f0ec;
+            margin-bottom: 16px;
+            padding-top: 24px;
+            position: relative;
+        }
+        .cta-final .cta-sub {
+            color: #8a8ea0;
+            font-size: 16px;
+            max-width: 480px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+            position: relative;
+        }
+        .cta-final-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .cta-final-buttons .cta-btn-primary {
+            background: #FE5800;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            box-shadow: 0 0 0 0 rgba(254,88,0,0), 0 4px 16px rgba(0,0,0,0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-final-buttons .cta-btn-primary:hover {
+            background: #FF6B35;
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(254,88,0,0.3), 0 12px 24px rgba(0,0,0,0.3);
+        }
+        .cta-final-buttons .cta-btn-primary::after {
+            content: '';position:absolute;inset:0;
+            background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.15) 50%,transparent 70%);
+            transform:translateX(-100%);transition:transform 0.6s;
+        }
+        .cta-final-buttons .cta-btn-primary:hover::after { transform:translateX(100%); }
+        .cta-final-buttons .cta-btn-secondary {
+            background: rgba(240,240,236,0.04);
+            color: #f0f0ec;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid rgba(240,240,236,0.1);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .cta-final-buttons .cta-btn-secondary:hover {
+            background: rgba(240,240,236,0.08);
+            border-color: rgba(240,240,236,0.2);
+            transform: translateY(-2px);
+        }
+        .cta-promises {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .promise-pill {
+            background: rgba(254,88,0,0.06);
+            color: #FE5800;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(254,88,0,0.12);
+            transition: all 0.3s;
+        }
+        .promise-pill:hover {
+            background: rgba(254,88,0,0.1);
+            border-color: rgba(254,88,0,0.25);
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            background: #0d1120;
+            border-top: 1px solid rgba(22, 27, 46, 0.5);
+            padding: 60px clamp(20px,5vw,64px) 20px;
+            margin-top: 80px;
+        }
+
+        .footer-grid {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 16px;
+            color: #f0f0ec;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column a, .footer-column p {
+            color: #8a8ea0;
+            font-size: 13px;
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #FE5800;
+        }
+
+        .footer-bottom {
+            max-width: 1240px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(22, 27, 46, 0.5);
+            padding-top: 20px;
+            text-align: center;
+            color: #5a5e72;
+            font-size: 12px;
+        }
+
+        /* old breakpoint removed — handled by responsive system above */
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══ SOCIAL PROOF TICKER ═══ */
+        .proof-ticker { padding:16px 0; border-top:1px solid rgba(22,27,46,0.3); border-bottom:1px solid rgba(22,27,46,0.3); overflow:hidden; margin-bottom:40px; }
+        .proof-ticker-label { text-align:center; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#5a5e72; margin-bottom:12px; }
+        .proof-ticker-track { overflow:hidden; }
+        .proof-ticker-content { display:flex; gap:40px; animation:proofScroll 30s linear infinite; width:max-content; }
+        .proof-ticker-content span { font-size:14px; font-weight:600; color:rgba(240,240,236,0.15); white-space:nowrap; }
+        @keyframes proofScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+        /* ═══ TRUST BADGES ═══ */
+        .trust-badges { display:flex; justify-content:center; align-items:center; gap:clamp(16px,3vw,40px); padding:24px 0; margin-bottom:40px; flex-wrap:wrap; }
+        .trust-badge-item { text-align:center; }
+        .trust-badge-num { font-size:clamp(1.2rem,2.5vw,1.6rem); font-weight:800; color:#FE5800; }
+        .trust-badge-label { font-size:11px; font-weight:600; color:#5a5e72; text-transform:uppercase; letter-spacing:0.08em; margin-top:4px; }
+        .trust-badge-divider { width:1px; height:36px; background:rgba(22,27,46,0.5); }
+        @media(max-width:480px) { .trust-badge-divider { display:none; } .trust-badges { gap:24px; } .trust-badge-item { flex:0 0 40%; } }
+
+        /* ═══ BEFORE/AFTER TRANSFORMATION ═══ */
+        .transform-section { margin-bottom:40px; }
+        .transform-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        @media(max-width:640px) { .transform-grid { grid-template-columns:1fr; } }
+        .transform-card { background:#0d1120; border:1px solid rgba(22,27,46,0.5); border-radius:12px; padding:28px; text-align:left; }
+        .transform-before { border-color:rgba(220,50,50,0.15); }
+        .transform-after { border-color:rgba(34,197,94,0.15); background:#0e1224; }
+        .transform-label { font-size:14px; font-weight:700; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid rgba(22,27,46,0.3); }
+        .transform-item { font-size:14px; color:#8a8ea0; padding:8px 0; line-height:1.5; }
+        .transform-after .transform-item { color:#b0b4c4; }
+
+        /* ═══ FREE AUDIT CTA ═══ */
+        .audit-cta { margin-bottom:40px; text-align:center; }
+        .audit-card { background:linear-gradient(135deg,rgba(254,88,0,0.06),rgba(8,145,178,0.04)); border:1px solid rgba(254,88,0,0.12); border-radius:16px; padding:2px; position:relative; overflow:hidden; }
+        .audit-card::before { content:''; position:absolute; inset:-2px; background:linear-gradient(135deg,#FE5800,#0891B2,#FE5800); border-radius:17px; z-index:-1; opacity:0.15; animation:auditGlow 4s ease infinite; }
+        @keyframes auditGlow { 0%,100%{opacity:0.1} 50%{opacity:0.25} }
+        .audit-card-inner { background:#0d1120; border-radius:14px; padding:clamp(32px,5vw,56px) clamp(24px,4vw,48px); }
+        .audit-badge { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#FE5800; background:rgba(254,88,0,0.08); border:1px solid rgba(254,88,0,0.15); border-radius:50px; padding:6px 16px; margin-bottom:20px; }
+        .audit-btn { display:inline-flex; align-items:center; gap:8px; background:#FE5800; color:#fff; font-size:16px; font-weight:700; padding:16px 36px; border-radius:50px; text-decoration:none; transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1); box-shadow:0 0 0 0 rgba(254,88,0,0),0 4px 12px rgba(0,0,0,0.3); }
+        .audit-btn:hover { background:#FF6B35; transform:translateY(-3px); box-shadow:0 0 24px rgba(254,88,0,0.3),0 12px 24px rgba(0,0,0,0.3); }
+        .audit-features { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:24px; }
+        .audit-features span { font-size:13px; color:#8a8ea0; font-weight:500; }
+
+        /* ═══ MOBILE STICKY BAR ═══ */
+        .mobile-sticky { display:none; position:fixed; bottom:0; left:0; right:0; z-index:900; background:rgba(8,11,20,0.95); backdrop-filter:blur(16px); border-top:1px solid rgba(254,88,0,0.1); padding:12px 16px; gap:10px; }
+        @media(max-width:768px) { .mobile-sticky { display:flex; } }
+        .mobile-sticky-phone { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(254,88,0,0.08); color:#FE5800; font-size:14px; font-weight:700; padding:12px; border-radius:10px; text-decoration:none; border:1px solid rgba(254,88,0,0.15); }
+        .mobile-sticky-cta { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:#FE5800; color:#fff; font-size:14px; font-weight:700; padding:12px; border-radius:10px; text-decoration:none; }
+        .mobile-sticky-cta:hover { background:#FF6B35; }
+
+        /* ═══ PAGE SECTION RESPONSIVE GRIDS ═══ */
+        @media(max-width:960px) { #how .container > div:nth-child(2) { grid-template-columns:repeat(2,1fr) !important; } }
+        @media(max-width:640px) {
+            #how .container > div:nth-child(2) { grid-template-columns:1fr !important; }
+            #work [style*="grid-template-columns:repeat(3"] { grid-template-columns:1fr !important; }
+            #blog [style*="grid-template-columns:repeat(3"] { grid-template-columns:1fr !important; }
+            #about [style*="grid-template-columns:repeat(2"] { grid-template-columns:1fr !important; }
+            #contact [style*="grid-template-columns:1fr 1fr"] { grid-template-columns:1fr !important; }
+        }
+
+        /* Mobile touch targets - ensure all interactive elements are at least 44px */
+        @media (max-width: 768px) {
+            .nav-links a, .pill, .coverage-item, .faq-card summary { min-height: 44px; display: flex; align-items: center; }
+            .mobile-sticky { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+            body { padding-bottom: 72px; } /* space for sticky bar */
+            .hero { padding-top: 100px; }
+        }
+
+        /* Safe area for notched phones */
+        @supports (padding: env(safe-area-inset-bottom)) {
+            .mobile-sticky { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        }
+
+        /* Prevent horizontal overflow on all screen sizes */
+        html, body { overflow-x: hidden; max-width: 100vw; }
+
+        /* Smooth font rendering for retina displays */
+        body { text-rendering: optimizeLegibility; }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .proof-ticker-content { animation: none !important; }
+            .tl-line-fill { transition: none !important; }
+        }
+
+        /* Focus visible for keyboard navigation */
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, details:focus-visible {
+            outline: 2px solid #FE5800;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        /* Improve tap highlight on mobile */
+        a, button { -webkit-tap-highlight-color: rgba(254, 88, 0, 0.1); }
+
+        /* Font loading optimization */
+        @font-face { font-display: swap; }
+    </style>
+
+    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "I'm not good with technology. Can you still help me?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Absolutely—that's exactly who we're here for! We specialize in helping business owners who aren't tech-savvy. We explain everything in plain English, never make you feel dumb for asking questions, and set up systems that are easy for you to use."
-            }
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://www.littlefightnyc.com/#business",
+          "name": "Little Fight NYC",
+          "description": "Concierge tech support for NYC small businesses. On-site IT help, bespoke websites, local SEO, POS setup, and Apple device management.",
+          "url": "https://www.littlefightnyc.com",
+          "telephone": "+1-646-360-0318",
+          "email": "hello@littlefightnyc.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "New York",
+            "addressRegion": "NY",
+            "addressCountry": "US"
           },
-          {
-            "@type": "Question",
-            "name": "Do you come to my business location?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes! We provide on-site IT support throughout Manhattan and the greater NYC area. We'll come directly to your shop, restaurant, office, or wherever you need us. No need to unplug everything and drag it somewhere—we come to you."
-            }
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "40.7128",
+            "longitude": "-74.0060"
           },
-          {
-            "@type": "Question",
-            "name": "How much does this cost?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Our pricing varies based on what you need, but we're specifically designed to be affordable for small businesses. We offer a free first hour of consulting so you can understand exactly what you need before spending anything."
-            }
+          "areaServed": [
+            {"@type": "City", "name": "New York"},
+            {"@type": "State", "name": "New York"},
+            {"@type": "Country", "name": "United States"}
+          ],
+          "serviceArea": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {"@type": "GeoCoordinates", "latitude": "40.7580", "longitude": "-73.9855"},
+            "geoRadius": "10 mi"
           },
-          {
-            "@type": "Question",
-            "name": "Can you help fix my POS system or cash register?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes! POS system issues are one of our specialties. We work with Square, Clover, Toast, Lightspeed, and other common systems. Whether your register is freezing or your card reader won't connect, we've got you covered."
-            }
+          "priceRange": "$$",
+          "openingHours": "Mo-Fr 08:00-20:00",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "200",
+            "bestRating": "5"
           },
-          {
-            "@type": "Question",
-            "name": "Why is it called Little Fight NYC?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Small businesses in NYC are in a constant fight—against rising rents, big corporations, and tech that makes life harder. We help small businesses punch above their weight. When local businesses succeed, neighborhoods stay interesting."
-            }
-          }
-        ]
-      }
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Tech Support Services",
+            "itemListElement": [
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Bespoke Website Design", "description": "Custom UI/UX design, headless CMS, sub-1s load time, SEO-ready"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "On-Site IT Support", "description": "2-hour response, Mac/PC troubleshooting, network setup, cybersecurity"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Local SEO & Ads", "description": "Google Business optimization, local keyword strategy, review management"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Apple Device Management", "description": "MDM deployment, zero-touch provisioning, fleet monitoring"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "POS & Payment Systems", "description": "Square, Clover, Toast setup with failover backup"}},
+              {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Systems & Automation", "description": "Smart lighting, access control, security, custom automation"}}
+            ]
+          },
+          "sameAs": []
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.littlefightnyc.com/#website",
+          "url": "https://www.littlefightnyc.com",
+          "name": "Little Fight NYC",
+          "publisher": {"@id": "https://www.littlefightnyc.com/#business"}
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.littlefightnyc.com/#webpage",
+          "url": "https://www.littlefightnyc.com",
+          "name": "Little Fight NYC — NYC's Concierge Tech Support",
+          "description": "On-site IT support, bespoke websites, local SEO for NYC small businesses.",
+          "isPartOf": {"@id": "https://www.littlefightnyc.com/#website"},
+          "about": {"@id": "https://www.littlefightnyc.com/#business"}
+        }
+      ]
+    }
     </script>
-  </head>
-  <body>
-    <!-- Skip to main content link for accessibility -->
-    <!-- Navigation -->
-    <nav role="navigation" aria-label="Main navigation">
-      <div class="nav-container">
-        <a href="/" class="nav-logo" aria-label="Little Fight NYC - Home">
-          <div class="nav-logo-box" aria-hidden="true">
-            LITTLE<br />FIGHT<br />NYC
-          </div>
-          <span class="nav-logo-text">Little Fight NYC</span>
-        </a>
+</head>
+<body style="background:#080b14">
+    <canvas id="particle-canvas"></canvas>
 
-        <!-- Mobile menu toggle -->
-        <button
-          class="nav-toggle"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-          aria-controls="nav-links"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+    <svg class="grain" xmlns="http://www.w3.org/2000/svg">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" />
+            <feColorMatrix in="noise" type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" fill="#fff" filter="url(#noise)" />
+    </svg>
 
-        <div class="nav-links" id="nav-links">
-          <a href="/">Home</a>
-          <a href="/services/">Services</a>
-          <a href="/solutions/">Solutions</a>
-          <a href="/work/">Work</a>
-          <a href="/industries.html">Industries</a>
-          <a href="/about/">About</a>
-          <a href="/blog/">Blog</a>
-          <a href="/contact/">Contact</a>
-          <a href="/contact/" class="nav-cta">Let's Talk</a>
+    <nav role="navigation">
+        <div class="nav-bg"></div>
+        <div class="nav-container">
+            <a href="#home" class="nav-brand" onclick="navigateTo('home')">
+                <div class="logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div>
+                <div class="nav-brand-text">
+                    <span class="nav-brand-name">Little Fight NYC</span>
+                    <span class="nav-brand-tagline">Concierge Tech Support</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services" onclick="navigateTo('services')" data-page="services">Services</a></li>
+                <li><a href="#how" onclick="navigateTo('how')" data-page="how">Approach</a></li>
+                <li><a href="#work" onclick="navigateTo('work')" data-page="work">Work</a></li>
+                <li><a href="#about" onclick="navigateTo('about')" data-page="about">About</a></li>
+                <li><a href="#blog" onclick="navigateTo('blog')" data-page="blog">Blog</a></li>
+                <li><a href="#contact" onclick="navigateTo('contact')" data-page="contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="tel:6463600318" class="nav-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="nav-phone-dot"></span>(646) 360-0318</a>
+                <div class="nav-divider"></div>
+                <a href="#contact" class="nav-cta-btn" onclick="navigateTo('contact')">Get Help →</a>
+            </div>
+            <button class="nav-hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
         </div>
-      </div>
     </nav>
+    <div class="nav-drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="nav-drawer">
+        <a href="#services" onclick="navigateTo('services');toggleDrawer()"><span class="drawer-icon">🔧</span>Services</a>
+        <a href="#how" onclick="navigateTo('how');toggleDrawer()"><span class="drawer-icon">📋</span>Approach</a>
+        <a href="#work" onclick="navigateTo('work');toggleDrawer()"><span class="drawer-icon">💼</span>Work</a>
+        <a href="#about" onclick="navigateTo('about');toggleDrawer()"><span class="drawer-icon">👋</span>About</a>
+        <a href="#blog" onclick="navigateTo('blog');toggleDrawer()"><span class="drawer-icon">📝</span>Blog</a>
+        <a href="#contact" onclick="navigateTo('contact');toggleDrawer()"><span class="drawer-icon">✉️</span>Contact</a>
+        <div class="drawer-cta">
+            <a href="tel:6463600318" class="drawer-phone"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>(646) 360-0318<span class="nav-phone-dot"></span></a>
+            <a href="#contact" class="nav-cta-btn" style="justify-content:center" onclick="navigateTo('contact');toggleDrawer()">Get Help Now →</a>
+        </div>
+    </div>
 
-    <main id="main-content">
-      <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero-shape hero-shape-1"></div>
-        <div class="hero-shape hero-shape-2"></div>
-
-        <div class="hero-container">
-          <div class="hero-content">
-            <div class="hero-badge">
-              <span class="hero-badge-dot"></span>
-              NYC's Friendliest Tech Support
+    <main id="home" class="page-section active">
+        <section class="hero container">
+            <div class="breathing-orbs">
+                <div class="orb orb-orange"></div>
+                <div class="orb orb-blue"></div>
+                <div class="orb orb-teal"></div>
             </div>
-            <h1 class="hero-title">
-              We fix the tech <span class="highlight">slowing down</span> your
-              business.
-            </h1>
-            <p class="hero-subtitle">
-              No jargon. No judgment. Just warm, practical help for NYC small
-              businesses who have better things to do than fight with their
-              Wi-Fi.
-            </p>
-            <div class="hero-buttons">
-              <a href="#contact" class="btn btn-primary">Get Help Today</a>
-              <a href="/services/" class="btn btn-secondary">See What We Do</a>
-            </div>
-            <p class="hero-note">👋 First hour of consulting is free!</p>
-          </div>
-
-          <div class="hero-visual">
-            <div class="illustration" id="streetStage">
-              <!-- NYC Skyline silhouette -->
-              <div class="city-skyline-bg"></div>
-              <div class="city-sky"></div>
-
-              <div class="city-buildings-row" id="buildingsRow">
-
-                <!-- 1. BAKERY — warm bright orange -->
-                <div class="city-building city-bakery" data-slug="bakery">
-                  <div class="city-floors-stack"></div>
-                  <div class="city-storefront">
-                    <div class="city-facade">
-                      <div class="city-cornice"></div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win city-win-round"><i class="mdi mdi-bread-slice" aria-hidden="true"></i></div>
-                      </div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-awning city-awning-scalloped"></div>
-                      <div class="city-shop-sign">Bakery</div>
-                      <div class="city-street-level">
-                        <div class="city-door"><i class="mdi mdi-door-open" aria-hidden="true"></i></div>
-                        <div class="city-display-window"></div>
-                      </div>
+            <div class="hero-content">
+                <div class="eyebrow hero-eyebrow">
+                    <span class="eyebrow-dot">
+                        <span class="pulse-dot"></span>
+                        NYC's Concierge Tech Support
+                    </span>
+                </div>
+                <h1>We fix the tech <span class="highlight-orange">slowing down</span> your business.</h1>
+                <p style="margin-bottom:12px">No jargon. No judgment. Just warm, practical help for NYC small businesses who have better things to do than fight with their Wi-Fi.</p>
+                <p style="font-family:'Caveat',cursive;font-size:34px;color:#FE5800;margin-bottom:32px">Built for the businesses that keep NYC alive.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-orange" onclick="navigateTo('contact')">Get Help Today →</a>
+                    <a href="#services" class="btn btn-outline" onclick="navigateTo('services')">See What We Do</a>
+                </div>
+                <div class="hero-contact">
+                    <strong>(646) 360-0318</strong> · <span style="font-family:'Caveat',cursive;font-size:28px;color:#FF6B35">First hour free!</span>
+                </div>
+                <div class="trust-bar">
+                    <span style="color:#FE5800;letter-spacing:2px">★★★★★</span>&nbsp; <strong>200+ businesses helped</strong> · Manhattan on-site · Nationwide remote
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-number">200+</div>
+                        <div class="stat-label">Businesses</div>
                     </div>
-                  </div>
-                </div>
-
-                <!-- 2. CAFE — deeper orange, chalkboard -->
-                <div class="city-building city-cafe" data-slug="cafe">
-                  <div class="city-floors-stack"></div>
-                  <div class="city-storefront">
-                    <div class="city-facade">
-                      <div class="city-cornice"></div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-awning city-awning-flat"></div>
-                      <div class="city-shop-sign">Caf&eacute;</div>
-                      <div class="city-chalkboard"><i class="mdi mdi-coffee" aria-hidden="true"></i> MENU</div>
-                      <div class="city-street-level">
-                        <div class="city-door city-door-narrow"><i class="mdi mdi-door-closed" aria-hidden="true"></i></div>
-                        <div class="city-display-window city-display-window-wide"></div>
-                      </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4.9/5</div>
+                        <div class="stat-label">Rating</div>
                     </div>
-                  </div>
-                </div>
-
-                <!-- 3. HOTEL — CENTER HERO, rich blue, tallest facade -->
-                <div class="city-building city-hotel" data-slug="hotel">
-                  <div class="city-floors-stack"></div>
-                  <div class="city-storefront">
-                    <div class="city-facade">
-                      <div class="city-cornice city-cornice-ornate"></div>
-                      <div class="city-upper-floor">
-                        <div class="city-win city-win-arched"></div>
-                        <div class="city-win city-win-arched"></div>
-                        <div class="city-win city-win-arched"></div>
-                      </div>
-                      <div class="city-cornice-band"></div>
-                      <div class="city-upper-floor">
-                        <div class="city-win city-win-arched"></div>
-                        <div class="city-win city-win-arched"></div>
-                        <div class="city-win city-win-arched"></div>
-                      </div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-awning city-awning-canopy"></div>
-                      <div class="city-shop-sign city-shop-sign-formal">Hotel &amp; Suites</div>
-                      <div class="city-street-level">
-                        <div class="city-display-window city-display-window-formal"></div>
-                        <div class="city-door city-door-gold"><i class="mdi mdi-door-open" aria-hidden="true"></i></div>
-                        <div class="city-display-window city-display-window-formal"></div>
-                      </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Neighborhoods</div>
                     </div>
-                  </div>
-                </div>
-
-                <!-- 4. REALTY — bright yellow-orange, formal -->
-                <div class="city-building city-realty" data-slug="realty">
-                  <div class="city-floors-stack"></div>
-                  <div class="city-storefront">
-                    <div class="city-facade">
-                      <div class="city-cornice"></div>
-                      <div class="city-railing"></div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-awning city-awning-striped"></div>
-                      <div class="city-shop-sign">Realty</div>
-                      <div class="city-street-level">
-                        <div class="city-door city-door-arched"><i class="mdi mdi-home-city" aria-hidden="true"></i></div>
-                        <div class="city-display-window"></div>
-                        <div class="city-planter"><div class="city-plant"></div></div>
-                      </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2hr</div>
+                        <div class="stat-label">Response</div>
                     </div>
-                  </div>
                 </div>
+            </div>
+            <div class="hero-visual">
+                <canvas id="hero-anim"></canvas>
+            </div>
+        </section>
 
-                <!-- 5. RESTAURANT — soft warm orange, string lights -->
-                <div class="city-building city-restaurant" data-slug="restaurant">
-                  <div class="city-floors-stack"></div>
-                  <div class="city-storefront">
-                    <div class="city-facade">
-                      <div class="city-cornice"></div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-upper-floor">
-                        <div class="city-win"></div>
-                        <div class="city-win"></div>
-                      </div>
-                      <div class="city-string-lights"></div>
-                      <div class="city-awning city-awning-burgundy"></div>
-                      <div class="city-shop-sign">Restaurant</div>
-                      <div class="city-street-level">
-                        <div class="city-door city-door-double"><i class="mdi mdi-silverware-fork-knife" aria-hidden="true"></i></div>
-                        <div class="city-display-window"></div>
-                      </div>
+        <!-- SOCIAL PROOF TICKER -->
+        <div class="proof-ticker">
+            <div class="proof-ticker-label">Trusted by NYC businesses:</div>
+            <div class="proof-ticker-track">
+                <div class="proof-ticker-content">
+                    <span>After Hours Agenda · NYC</span><span>B-Side NYC · Bar</span><span>Grand Funding LLC · Lending</span><span>Logan Loans · Mortgage</span><span>CC Films · Production</span><span>After Hours Agenda · NYC</span><span>B-Side NYC · Bar</span><span>Grand Funding LLC · Lending</span><span>Logan Loans · Mortgage</span><span>CC Films · Production</span>
+                    <span>After Hours Agenda · NYC</span><span>B-Side NYC · Bar</span><span>Grand Funding LLC · Lending</span><span>Logan Loans · Mortgage</span><span>CC Films · Production</span><span>After Hours Agenda · NYC</span><span>B-Side NYC · Bar</span><span>Grand Funding LLC · Lending</span><span>Logan Loans · Mortgage</span><span>CC Films · Production</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRUST BADGES -->
+        <div class="trust-badges container fade-in">
+            <div class="trust-badge-item">
+                <div class="trust-badge-num">5+</div>
+                <div class="trust-badge-label">Years Serving NYC</div>
+            </div>
+            <div class="trust-badge-divider"></div>
+            <div class="trust-badge-item">
+                <div class="trust-badge-num">⭐ 4.9</div>
+                <div class="trust-badge-label">Google Rating</div>
+            </div>
+            <div class="trust-badge-divider"></div>
+            <div class="trust-badge-item">
+                <div class="trust-badge-num">2hr</div>
+                <div class="trust-badge-label">Avg Response</div>
+            </div>
+            <div class="trust-badge-divider"></div>
+            <div class="trust-badge-item">
+                <div class="trust-badge-num">100%</div>
+                <div class="trust-badge-label">Satisfaction Rate</div>
+            </div>
+        </div>
+
+        <!-- WHY US - replaces the fake revenue section -->
+        <section style="padding:80px 0;margin-bottom:80px">
+            <div class="container" style="text-align:center">
+                <div class="eyebrow">Why Small Businesses Choose Us</div>
+                <h2 style="margin-bottom:32px">Big corporations have IT departments. <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">You have us.</span></h2>
+                <p style="color:#8a8ea0;font-size:18px;line-height:1.8;margin-bottom:40px;max-width:640px;margin-left:auto;margin-right:auto">A small, scrappy team that actually cares about keeping NYC's independent businesses thriving. When structure, messaging, and speed are aligned — customers understand your value faster.</p>
+
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+                    <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:28px;transition:all 0.3s" onmouseover="this.style.borderColor='#FE5800';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'">
+                        <div style="font-size:28px;margin-bottom:12px">🎯</div>
+                        <h4 style="margin-bottom:8px;font-size:15px">Clarity-First Messaging</h4>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.7">Your service pages explain what you do in plain language people and search systems can parse quickly.</p>
                     </div>
-                  </div>
+                    <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:28px;transition:all 0.3s" onmouseover="this.style.borderColor='#0891B2';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'">
+                        <div style="font-size:28px;margin-bottom:12px">⚡</div>
+                        <h4 style="margin-bottom:8px;font-size:15px">Fast, Trustworthy UX</h4>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.7">Mobile-first structure, clean hierarchy, and high-contrast design that feels premium and dependable.</p>
+                    </div>
+                    <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:28px;transition:all 0.3s" onmouseover="this.style.borderColor='#FF6B35';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'">
+                        <div style="font-size:28px;margin-bottom:12px">🏪</div>
+                        <h4 style="margin-bottom:8px;font-size:15px">Real Entity Signals</h4>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.7">Connected pages, local context, and clear contact pathways that make your business easier to verify.</p>
+                    </div>
+                    <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:28px;transition:all 0.3s" onmouseover="this.style.borderColor='#0C6A84';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'">
+                        <div style="font-size:28px;margin-bottom:12px">🛡️</div>
+                        <h4 style="margin-bottom:8px;font-size:15px">No Fix, No Fee</h4>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.7">If we can't solve it, you don't pay. 30-day warranty on every fix. That's the Little Fight promise.</p>
+                    </div>
                 </div>
 
-              </div>
-              <div class="city-sidewalk"></div>
-
-              <!-- Replay button -->
-              <button id="replayBtn" class="city-replay-btn" type="button" aria-label="Replay growth animation">
-                <i class="mdi mdi-replay" aria-hidden="true"></i> Replay
-              </button>
+                <p style="text-align:center;margin-top:32px;color:#8a8ea0;font-size:14px">See it in action: <a href="#work" onclick="navigateTo('work')" style="color:#FE5800;text-decoration:none;font-weight:600">Case studies</a> · <a href="#services" onclick="navigateTo('services')" style="color:#0891B2;text-decoration:none;font-weight:600">Services</a> · <a href="#contact" onclick="navigateTo('contact')" style="color:#FF6B35;text-decoration:none;font-weight:600">Start a project</a></p>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="proof-strip section-shell">
-        <div class="container">
-          <p class="proof-strip-label">
-            Built for the businesses that keep NYC alive
-          </p>
-          <h2 class="sr-only">Why small businesses choose Little Fight NYC</h2>
-          <div class="proof-pill-grid">
-            <article class="proof-pill">
-              <h3>Clarity-First Messaging</h3>
-              <p>
-                Your service pages explain what you do in plain language people
-                and search systems can parse quickly.
-              </p>
-            </article>
-            <article class="proof-pill">
-              <h3>Fast, Trustworthy UX</h3>
-              <p>
-                Mobile-first structure, clean hierarchy, and high-contrast
-                design choices that feel premium and dependable.
-              </p>
-            </article>
-            <article class="proof-pill">
-              <h3>Real Entity Signals</h3>
-              <p>
-                Connected pages, local context, and clear contact pathways that
-                make your business easier to verify.
-              </p>
-            </article>
-          </div>
-          <p class="proof-strip-links">
-            See it in action: <a href="/work/">Case studies</a> ·
-            <a href="/services/">Services</a> ·
-            <a href="/contact/">Start a project</a>
-          </p>
-        </div>
-      </section>
-
-      <!-- Services Section -->
-      <section id="services" class="section-shell section-shell-soft">
-        <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">WHAT WE DO</p>
-            <h2 class="section-title">Tech Support That Actually Helps</h2>
-            <p class="section-description">
-              From websites to Wi-Fi, we handle the technical headaches so you
-              can focus on customers, team, and momentum.
-            </p>
-          </div>
-
-          <div class="services-grid">
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-lan-connect" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/on-site-it-support-nyc/"
-                  >On-Site IT Support</a
-                >
-              </h3>
-              <p class="service-description">
-                We show up and fix it. Mac, PC, printers, Wi-Fi, POS
-                systems—whatever's driving you crazy.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-monitor-dashboard" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/website-design-small-business-nyc/"
-                  >Website Design</a
-                >
-              </h3>
-              <p class="service-description">
-                Beautiful, fast websites that actually bring in customers. Built
-                on platforms you can update yourself.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-map-marker-radius" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/local-seo-and-google-ads-nyc/"
-                  >Local SEO & Ads</a
-                >
-              </h3>
-              <p class="service-description">
-                Get found on Google by people in your neighborhood. We handle
-                the technical stuff.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-cellphone" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/apple-device-setup-and-management/"
-                  >Apple Device Setup</a
-                >
-              </h3>
-              <p class="service-description">
-                iPhones, iPads, Macs for your team—set up, secured, and managed
-                simply.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-palette-outline" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/branding-and-identity-design/"
-                  >Branding & Identity</a
-                >
-              </h3>
-              <p class="service-description">
-                Need a logo, name, or complete visual identity? We'll help you
-                look legit.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-cart-outline" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/ecommerce-setup-shopify-square-woocommerce/"
-                  >E-Commerce Setup</a
-                >
-              </h3>
-              <p class="service-description">
-                Start selling online with Shopify, Square, or WooCommerce. We
-                set it all up.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-cash-register" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/pos-and-register-setup-nyc/"
-                  >POS & Registers</a
-                >
-              </h3>
-              <p class="service-description">
-                Square, Clover, Toast—we work with them all. Setup,
-                troubleshooting, training.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-compass-outline" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/tech-consulting-small-business/"
-                  >Tech Consulting</a
-                >
-              </h3>
-              <p class="service-description">
-                Not sure what you need? Let's talk. First hour is free.
-              </p>
-            </div>
-
-            <div class="service-card">
-              <div class="service-icon">
-                <i class="mdi mdi-home-automation" aria-hidden="true"></i>
-              </div>
-              <h3 class="service-title">
-                <a href="/services/smart-home-services-nyc/"
-                  >Smart Home & Business Systems</a
-                >
-              </h3>
-              <p class="service-description">
-                Planning, deployment, and maintenance for smart homes,
-                apartments, offices, and retail spaces.
-              </p>
-            </div>
-          </div>
-          <p style="text-align: center; margin-top: 28px">
-            <a href="/services/" class="btn btn-secondary"
-              >Explore All Service Pages</a
-            >
-          </p>
-        </div>
-      </section>
-
-      <section class="premium-difference section-shell section-shell-soft">
-        <div class="container premium-difference-grid">
-          <div class="premium-difference-copy">
-            <p class="section-eyebrow">WHAT FEELS DIFFERENT</p>
-            <h2 class="section-title">
-              Premium doesn’t mean fancy words. It means less friction.
-            </h2>
-            <p class="section-description">
-              When structure, messaging, and speed are aligned, customers
-              understand your value faster and search systems trust your pages
-              sooner.
-            </p>
-            <div class="premium-difference-links">
-              <a href="/blog/">Read strategy insights</a>
-              <a href="/services/website-design-small-business-nyc/"
-                >Explore website design</a
-              >
-            </div>
-          </div>
-          <div class="premium-difference-list">
-            <article class="premium-point">
-              <h3>Before</h3>
-              <p>
-                Generic pages, mixed messages, and traffic that doesn’t convert.
-              </p>
-            </article>
-            <article class="premium-point">
-              <h3>After</h3>
-              <p>
-                Focused pages, clearer trust signals, and easier decision-making
-                for the right clients.
-              </p>
-            </article>
-            <article class="premium-point">
-              <h3>Outcome</h3>
-              <p>
-                Less explaining on calls. More inbound leads that already
-                understand what you do.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- About / CTA Section -->
-      <section id="about" class="cta-section section-shell">
-        <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">WHY US</p>
-            <h2 class="section-title">We're Small Business People Too</h2>
-            <p class="section-description">
-              Big corporations have IT departments. You have us—a small, scrappy
-              team that actually cares about keeping NYC's independent
-              businesses thriving.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Service Areas -->
-      <section id="areas" class="section-shell section-shell-soft">
-        <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">WHERE WE HELP</p>
-            <h2 class="section-title">Manhattan On-Site + Nationwide Remote</h2>
-            <p class="section-description">
-              On-site IT support throughout Manhattan. Remote support for small
-              businesses anywhere in the United States.
-            </p>
-          </div>
-
-          <div
-            style="
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-              gap: 24px;
-              margin-top: 40px;
-            "
-          >
-            <div
-              style="
-                background: #fff;
-                padding: 24px;
-                border-radius: 12px;
-                border: 1px solid #e0e0e0;
-              "
-            >
-              <h3 style="font-weight: 700; margin-bottom: 12px">
-                🗽 Manhattan On-Site Service
-              </h3>
-              <p style="color: #595959; margin-bottom: 12px">
-                <a
-                  href="areas/east-village.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >East Village</a
-                >
-                •
-                <a
-                  href="areas/lower-east-side.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >Lower East Side</a
-                >
-                •
-                <a
-                  href="areas/west-village.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >West Village</a
-                >
-              </p>
-              <p style="color: #595959; margin-bottom: 12px">
-                <a
-                  href="areas/meatpacking-district.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >Meatpacking District</a
-                >
-                •
-                <a
-                  href="areas/soho.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >SoHo</a
-                >
-                •
-                <a
-                  href="areas/midtown.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >Midtown</a
-                >
-              </p>
-              <p style="color: #595959">
-                <a
-                  href="areas/upper-east-side.html"
-                  style="color: #407c8a; text-decoration: none"
-                  >Upper East Side</a
-                >
-              </p>
-            </div>
-
-            <div
-              style="
-                background: #fff;
-                padding: 24px;
-                border-radius: 12px;
-                border: 1px solid #e0e0e0;
-              "
-            >
-              <h3 style="font-weight: 700; margin-bottom: 12px">
-                🌎 Nationwide Remote Support
-              </h3>
-              <p style="color: #595959">
-                Not in NYC? We've got you covered. Our remote IT support helps
-                small businesses across all 50 states. Screen sharing, phone
-                support, video calls—we're your virtual IT team no matter where
-                you're located.
-              </p>
-              <p style="color: #595959; margin-top: 12px">
-                🖥️ Screen sharing troubleshooting<br />
-                <i class="mdi mdi-phone" aria-hidden="true"></i> Phone & video
-                support<br />
-                🌐 Website design & SEO<br />
-                ☁️ Cloud setup & management
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ Section -->
-      <section id="faq" class="section-shell">
-        <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">FAQ</p>
-            <h2 class="section-title">Questions We Get A Lot</h2>
-          </div>
-
-          <div class="faq-list">
-            <div class="faq-item">
-              <button class="faq-question">
-                I'm not good with technology. Can you still help me?
-                <span class="faq-icon" aria-hidden="true"
-                  ><i class="mdi mdi-chevron-down"></i
-                ></span>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
-                  Absolutely—that's exactly who we're here for! We specialize in
-                  helping business owners who aren't tech-savvy. We explain
-                  everything in plain English, never make you feel dumb for
-                  asking questions, and set up systems that are easy for you to
-                  use.
+        <!-- BEFORE/AFTER TRANSFORMATION -->
+        <section class="transform-section container fade-in" style="text-align:center">
+            <h2 style="margin-bottom:8px">What <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">premium</span> looks like.</h2>
+            <p style="color:#8a8ea0;max-width:480px;margin:0 auto 32px;font-size:15px">When structure, messaging, and speed align — customers understand your value faster.</p>
+            <div class="transform-grid">
+                <div class="transform-card transform-before">
+                    <div class="transform-label">😩 Before Little Fight</div>
+                    <div class="transform-item">❌ Slow, cluttered website</div>
+                    <div class="transform-item">❌ Page 3 on Google</div>
+                    <div class="transform-item">❌ POS crashes weekly</div>
+                    <div class="transform-item">❌ No online bookings</div>
+                    <div class="transform-item">❌ "Can you fix my Wi-Fi?"</div>
                 </div>
-              </div>
-            </div>
-
-            <div class="faq-item">
-              <button class="faq-question">
-                Do you come to my business location?
-                <span class="faq-icon" aria-hidden="true"
-                  ><i class="mdi mdi-chevron-down"></i
-                ></span>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
-                  Yes! We provide on-site IT support throughout Manhattan and
-                  the greater NYC area. We'll come directly to your shop,
-                  restaurant, office, or wherever you need us. No need to unplug
-                  everything and drag it somewhere—we come to you.
+                <div class="transform-card transform-after">
+                    <div class="transform-label">✨ After Little Fight</div>
+                    <div class="transform-item">✅ Fast, focused pages that convert</div>
+                    <div class="transform-item">✅ #1 local search ranking</div>
+                    <div class="transform-item">✅ Zero downtime, 30-day warranty</div>
+                    <div class="transform-item">✅ 40% more bookings online</div>
+                    <div class="transform-item">✅ "Everything just works."</div>
                 </div>
-              </div>
+            </div>
+        </section>
+
+        <section class="services container">
+            <div class="services-header fade-in" style="text-align:center;max-width:700px;margin:0 auto 60px">
+                <div class="eyebrow">What We Do</div>
+                <h2>Tech support that <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.4em">actually helps.</span></h2>
             </div>
 
-            <div class="faq-item">
-              <button class="faq-question">
-                How much does this cost?
-                <span class="faq-icon" aria-hidden="true"
-                  ><i class="mdi mdi-chevron-down"></i
-                ></span>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
-                  Our pricing varies based on what you need, but we're
-                  specifically designed to be affordable for small businesses.
-                  We offer a free first hour of consulting so you can understand
-                  exactly what you need before spending anything.
+            <div style="text-align:center;max-width:560px;margin:0 auto 48px">
+                <p style="color: #8a8ea0; margin-bottom: 12px;">From websites to Wi-Fi, we handle the technical headaches so you can focus on customers, team, and momentum.</p>
+                <p style="font-family:'Caveat',cursive;font-size:32px;color:#0891B2">Like a concierge for your technology.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-badge">MOST POPULAR</div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 3H21V21H3Z" stroke="white" stroke-width="2" fill="none"/><path d="M9 11L11 13L15 9" stroke="white" stroke-width="2"/></svg>
+                    </div>
+                    <h3>Bespoke Websites</h3>
+                    <p style="margin-bottom:12px">High-performance, conversion-engineered websites built from scratch.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                        <li>✓ Custom UI/UX design & prototyping</li><li>✓ Sub-1s load time optimization</li><li>✓ 90-day post-launch support</li>
+                    </ul>
                 </div>
-              </div>
-            </div>
-
-            <div class="faq-item">
-              <button class="faq-question">
-                Can you help fix my POS system or cash register?
-                <span class="faq-icon" aria-hidden="true"
-                  ><i class="mdi mdi-chevron-down"></i
-                ></span>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
-                  Yes! POS system issues are one of our specialties. We work
-                  with Square, Clover, Toast, Lightspeed, and other common
-                  systems. Whether your register is freezing or your card reader
-                  won't connect, we've got you covered.
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7V12C2 19.7 12 22 12 22S22 19.7 22 12V7L12 2Z"/></svg>
+                    </div>
+                    <h3>On-Site IT Support</h3>
+                    <p style="margin-bottom:12px">Manhattan's concierge IT team. We show up and fix it — same day.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                        <li>✓ 2-hour on-site response guarantee</li><li>✓ Cybersecurity audit & hardening</li><li>✓ 30-day warranty on all fixes</li>
+                    </ul>
                 </div>
-              </div>
-            </div>
-
-            <div class="faq-item">
-              <button class="faq-question">
-                Why is it called Little Fight NYC?
-                <span class="faq-icon" aria-hidden="true"
-                  ><i class="mdi mdi-chevron-down"></i
-                ></span>
-              </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
-                  Small businesses in NYC are in a constant fight—against rising
-                  rents, big corporations, and tech that makes life harder. We
-                  help small businesses punch above their weight. When local
-                  businesses succeed, neighborhoods stay interesting.
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 9H17" stroke="white" stroke-width="2"/><path d="M7 14H14" stroke="white" stroke-width="2"/></svg>
+                    </div>
+                    <h3>Apple & Device Management</h3>
+                    <p style="margin-bottom:12px">Enterprise-grade Apple MDM for teams of any size.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                        <li>✓ MDM deployment (Jamf, Mosyle, Kandji)</li><li>✓ Zero-touch provisioning</li><li>✓ Ongoing fleet monitoring</li>
+                    </ul>
                 </div>
-              </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M3 20H13M8 13V20" stroke="white" stroke-width="2" fill="none"/><rect x="15" y="11" width="7" height="9" rx="1"/></svg>
+                    </div>
+                    <h3>POS & Payment Systems</h3>
+                    <p style="margin-bottom:12px">Revenue-critical payment infrastructure, bulletproofed.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                        <li>✓ Square, Clover, Toast deployment</li><li>✓ Failover & offline backup</li><li>✓ 24/7 emergency support line</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7V12C2 19.7 12 22 12 22S22 19.7 22 12V7L12 2Z"/><circle cx="12" cy="12" r="4" fill="white"/></svg>
+                    </div>
+                    <h3>Smart Systems & Automation</h3>
+                    <p style="margin-bottom:12px">Intelligent infrastructure for modern spaces.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                        <li>✓ Smart lighting & climate control</li><li>✓ Access control & security</li><li>✓ Custom automation workflows</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7V12L16 14" stroke="white" stroke-width="2" fill="none"/></svg>
+                    </div>
+                    <h3>Local SEO & Ads</h3>
+                    <p style="margin-bottom:12px">Dominate your neighborhood on Google.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:12px;display:flex;flex-direction:column;gap:6px">
+                        <li>✓ Google Business optimization</li><li>✓ Google & Meta Ads management</li><li>✓ AI search & AEO optimization</li>
+                    </ul>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Contact Section -->
-      <section id="contact" class="section-shell section-shell-soft">
-        <div class="container">
-          <div class="section-header">
-            <p class="section-eyebrow">GET IN TOUCH</p>
-            <h2 class="section-title">Let's Talk About Your Tech</h2>
-            <p class="section-description">
-              Got a question? Need help? Just want to vent about your printer?
-              We're here for it.
-            </p>
-          </div>
+        <!-- FREE AUDIT CTA -->
+        <section class="audit-cta container fade-in">
+            <div class="audit-card">
+                <div class="audit-card-inner">
+                    <div class="audit-badge">FREE TOOL</div>
+                    <h2 style="margin-bottom:12px">How does your website <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">actually</span> perform?</h2>
+                    <p style="color:#8a8ea0;max-width:500px;margin:0 auto 24px;font-size:15px;line-height:1.7">Get an instant, no-BS audit of your website's speed, SEO, accessibility, and mobile experience. Takes 30 seconds. No email required.</p>
+                    <a href="https://audits.littlefightnyc.com" target="_blank" rel="noopener" class="audit-btn">Run Your Free Audit →</a>
+                    <div class="audit-features">
+                        <span>⚡ Speed Score</span>
+                        <span>🔍 SEO Analysis</span>
+                        <span>📱 Mobile Check</span>
+                        <span>♿ Accessibility</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-          <div class="contact-grid">
+        <section class="promise container">
+            <div class="promise-header fade-in">
+                <h2 style="text-align:center">We're not just fixing tech.<br><span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">We're backing you up.</span></h2>
+                <p class="promise-subtext">We think about the details you shouldn't have to — and we don't rest until your business is running smoothly.</p>
+            </div>
+
+            <div class="promise-grid fade-in">
+                <div class="promise-card">
+                    <div class="promise-icon">✓</div>
+                    <h4>No Fix, No Fee</h4>
+                    <p>If we can't fix it, you don't pay. That's our promise.</p>
+                </div>
+                <div class="promise-card">
+                    <div class="promise-icon">🛡️</div>
+                    <h4>30-Day Warranty</h4>
+                    <p>Something breaks after we fix it? We've got you.</p>
+                </div>
+                <div class="promise-card">
+                    <div class="promise-icon">⚡</div>
+                    <h4>2-Hour Response</h4>
+                    <p>Call before 5pm, we're there same day. Usually sooner.</p>
+                </div>
+                <div class="promise-card">
+                    <div class="promise-icon">☎️</div>
+                    <h4>Direct Line (No Bots)</h4>
+                    <p>Talk to a real person who actually knows your business.</p>
+                </div>
+            </div>
+
+            <div class="fade-in">
+                <h3 style="text-align: center; margin-bottom: 40px;">What Our Clients Say</h3>
+                <div class="testimonials">
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <div class="testimonial-text">"Our POS crashed during lunch rush. Little Fight got us back online in 45 minutes. That's the kind of attention to detail we needed."</div>
+                        <div class="testimonial-author">Tom Chen</div>
+                        <div class="testimonial-role">Noodle House, SoHo</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <div class="testimonial-text">"I'm not a tech person. They explained everything clearly, never made me feel dumb, and our salon runs so much smoother now."</div>
+                        <div class="testimonial-author">Sarah Mitchell</div>
+                        <div class="testimonial-role">Bloom Salon, East Village</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">★★★★★</div>
+                        <div class="testimonial-text">"Their website redesign brought our online bookings from almost zero to 3x what we expected. Real results."</div>
+                        <div class="testimonial-author">Jennifer Lopez</div>
+                        <div class="testimonial-role">Core Fitness, Midtown</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="work-section container fade-in">
+            <div class="work-header">
+                <h2>Real businesses. Real results. <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">Real fights won.</span></h2>
+            </div>
+
+            <div class="pill-nav">
+                <button class="pill active" data-filter="all" onclick="filterWork('all')">All</button>
+                <button class="pill" data-filter="fashion" onclick="filterWork('fashion')">Fashion</button>
+                <button class="pill" data-filter="nightlife" onclick="filterWork('nightlife')">Nightlife</button>
+                <button class="pill" data-filter="finance" onclick="filterWork('finance')">Finance</button>
+                <button class="pill" data-filter="film" onclick="filterWork('film')">Film</button>
+            </div>
+
+            <div class="work-carousel">
+                <div class="work-card" data-category="fashion" style="cursor:pointer" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
+                    <div class="work-card-image" style="--color1: #1a1a1a; --color2: #2d2d2d;"></div>
+                    <div class="work-card-content">
+                        <h4>After Hours Agenda</h4>
+                        <div class="work-card-meta">NYC · Streetwear Brand</div>
+                        <div class="work-card-metric">E-Commerce</div>
+                        <div class="work-card-metric">Bespoke Website</div>
+                        <div class="work-card-quote">14 years of rebellious streetwear, relaunched for the digital age.</div>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="nightlife" style="cursor:pointer" onclick="window.open('https://www.bsidenyc.bar','_blank')">
+                    <div class="work-card-image" style="--color1: #1a0a2e; --color2: #2d1b4e;"></div>
+                    <div class="work-card-content">
+                        <h4>B-Side NYC</h4>
+                        <div class="work-card-meta">NYC · Bar & Nightlife</div>
+                        <div class="work-card-metric">Bespoke Website</div>
+                        <div class="work-card-metric">Local SEO</div>
+                        <div class="work-card-quote">Built to capture the vibe and drive foot traffic.</div>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.grandfundingllc.com','_blank')">
+                    <div class="work-card-image" style="--color1: #0a2e1a; --color2: #1a4e2d;"></div>
+                    <div class="work-card-content">
+                        <h4>Grand Funding LLC</h4>
+                        <div class="work-card-meta">AZ & CA · Private Lending</div>
+                        <div class="work-card-metric">Lead Generation</div>
+                        <div class="work-card-metric">Bespoke Website</div>
+                        <div class="work-card-quote">24-hour approvals, 3-5 day closings — the site moves just as fast.</div>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.logan.loans','_blank')">
+                    <div class="work-card-image" style="--color1: #0a1a2e; --color2: #1b2d4e;"></div>
+                    <div class="work-card-content">
+                        <h4>Logan Loans</h4>
+                        <div class="work-card-meta">AZ & SoCal · Mortgage</div>
+                        <div class="work-card-metric">Bespoke Website</div>
+                        <div class="work-card-metric">SEO & Content</div>
+                        <div class="work-card-quote">Same-day pre-approvals explained without the jargon.</div>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="film" style="cursor:pointer" onclick="window.open('https://ccfilms.net','_blank')">
+                    <div class="work-card-image" style="--color1: #2e0a0a; --color2: #4e1b1b;"></div>
+                    <div class="work-card-content">
+                        <h4>CC Films, LLC</h4>
+                        <div class="work-card-meta">Dallas · Film Production</div>
+                        <div class="work-card-metric">Bespoke Website</div>
+                        <div class="work-card-metric">Brand Identity</div>
+                        <div class="work-card-quote">Analog soul, digital polish — the site matches the craft.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="coverage container fade-in" style="text-align:center">
+            <h2 style="margin-bottom:16px">Where We Serve</h2>
+            <p style="color:#8a8ea0;margin-bottom:32px;font-size:15px">On-site IT support throughout Manhattan. Remote support for small businesses anywhere in the United States.</p>
+            <div style="margin-bottom:24px">
+                <h4 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#FE5800;margin-bottom:14px;font-weight:700">🗽 Manhattan On-Site</h4>
+                <div class="coverage-list" style="justify-content:center">
+                    <div class="coverage-item">East Village</div>
+                    <div class="coverage-item">Lower East Side</div>
+                    <div class="coverage-item">West Village</div>
+                    <div class="coverage-item">Meatpacking</div>
+                    <div class="coverage-item">SoHo</div>
+                    <div class="coverage-item">Midtown</div>
+                    <div class="coverage-item">Upper East Side</div>
+                </div>
+            </div>
             <div>
-              <a
-                href="mailto:hello@littlefightnyc.com"
-                class="contact-info-item"
-                style="text-decoration: none; color: inherit"
-              >
-                <div class="contact-icon">
-                  <i class="mdi mdi-email-outline" aria-hidden="true"></i>
+                <h4 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#0891B2;margin-bottom:14px;font-weight:700">🌎 Nationwide Remote</h4>
+                <div class="coverage-list" style="justify-content:center">
+                    <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">Remote Support</div>
+                    <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">VPN & Security</div>
+                    <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">Cloud Setup</div>
+                    <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">Bespoke Websites</div>
+                    <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">SEO</div>
+                    <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">Consulting</div>
                 </div>
-                <div>
-                  <div style="font-size: 0.875rem; color: #767676">
-                    Email us
-                  </div>
-                  <div style="font-size: 1.1rem; font-weight: 600">
-                    hello@littlefightnyc.com
-                  </div>
-                </div>
-              </a>
-
-              <a
-                href="tel:+16463600318"
-                class="contact-info-item"
-                style="text-decoration: none; color: inherit"
-              >
-                <div class="contact-icon">
-                  <i class="mdi mdi-phone-outline" aria-hidden="true"></i>
-                </div>
-                <div>
-                  <div style="font-size: 0.875rem; color: #767676">Call us</div>
-                  <div style="font-size: 1.1rem; font-weight: 600">
-                    646-360-0318
-                  </div>
-                </div>
-              </a>
-
-              <div class="contact-info-item">
-                <div class="contact-icon">
-                  <i class="mdi mdi-map-marker" aria-hidden="true"></i>
-                </div>
-                <div>
-                  <div style="font-size: 0.875rem; color: #767676">
-                    Based in
-                  </div>
-                  <div style="font-size: 1.1rem; font-weight: 600">
-                    Manhattan, NYC
-                  </div>
-                </div>
-              </div>
             </div>
+        </section>
 
-            <div class="form-container">
-              <form
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                netlify-honeypot="bot-field"
-              >
-                <input type="hidden" name="form-name" value="contact" />
-
-                <!-- Honeypot for spam protection -->
-                <p class="hidden" style="display: none" aria-hidden="true">
-                  <label
-                    >Don't fill this out:
-                    <input name="bot-field" tabindex="-1" autocomplete="off"
-                  /></label>
-                </p>
-
-                <div class="form-row">
-                  <div>
-                    <label class="form-label" for="contact-name"
-                      >Your Name</label
-                    >
-                    <input
-                      type="text"
-                      name="name"
-                      id="contact-name"
-                      class="form-input"
-                      placeholder="Jane Smith"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label class="form-label" for="contact-email">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="contact-email"
-                      class="form-input"
-                      placeholder="jane@business.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div>
-                    <label class="form-label" for="contact-business"
-                      >Business Name</label
-                    >
-                    <input
-                      type="text"
-                      name="business"
-                      id="contact-business"
-                      class="form-input"
-                      placeholder="Jane's Coffee Shop"
-                    />
-                  </div>
-                  <div>
-                    <label class="form-label" for="contact-location"
-                      >Location</label
-                    >
-                    <input
-                      type="text"
-                      name="location"
-                      id="contact-location"
-                      class="form-input"
-                      placeholder="City, State"
-                    />
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="contact-message"
-                    >What do you need help with?</label
-                  >
-                  <textarea
-                    name="message"
-                    id="contact-message"
-                    class="form-textarea"
-                    placeholder="My Wi-Fi keeps dropping, my website looks like it's from 2005, and I think my POS hates me..."
-                    required
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  style="width: 100%"
-                >
-                  Send Message
-                </button>
-              </form>
+        <section class="faq-section fade-in" itemscope itemtype="https://schema.org/FAQPage">
+            <h2>Questions? <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">We've got answers.</span></h2>
+            <p style="color:#8a8ea0;max-width:500px;margin:8px auto 0;font-size:15px">No tech-speak. No runaround. Just straight talk from people who fix this stuff every day.</p>
+            <div class="faq-grid">
+                <details class="faq-card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">How fast can you get to my business?<span class="faq-icon">+</span></summary>
+                    <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <div itemprop="text">We aim for 2-hour response time in Manhattan on calls before 5pm. Most of the time, we're faster. We've shown up in 45 minutes during lunch rush POS crashes. For emergencies, <a href="tel:6463600318">text or call us</a> and we'll prioritize you.</div>
+                    </div>
+                </details>
+                <details class="faq-card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">How much does IT support cost?<span class="faq-icon">+</span></summary>
+                    <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <div itemprop="text">Your first hour of consulting is completely free. After that, hourly rates start at $150 for standard support. We also offer fixed-price projects and monthly retainers. <a href="tel:6463600318">Call (646) 360-0318</a> and we'll give you a real quote — no surprises.</div>
+                    </div>
+                </details>
+                <details class="faq-card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Do you support Macs and PCs?<span class="faq-icon">+</span></summary>
+                    <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <div itemprop="text">Both. We fix Macs, PCs, iPhones, iPads, printers, networks, POS systems, websites, and anything else getting in your way. If it plugs in, connects to Wi-Fi, or has a screen — we can help.</div>
+                    </div>
+                </details>
+                <details class="faq-card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Can you help businesses outside NYC?<span class="faq-icon">+</span></summary>
+                    <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <div itemprop="text">Absolutely. We do on-site visits throughout Manhattan, but we support businesses nationwide via remote support — screen sharing, video calls, VPN setup, cloud migrations, website design, and SEO work from anywhere in the US.</div>
+                    </div>
+                </details>
+                <details class="faq-card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">What if you can't fix the problem?<span class="faq-icon">+</span></summary>
+                    <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <div itemprop="text">No Fix, No Fee. If we can't solve it, you don't pay for our time. We're confident in what we do, and we won't waste your money on things that won't work. That's the Little Fight promise.</div>
+                    </div>
+                </details>
+                <details class="faq-card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name">Why is it called "Little Fight"?<span class="faq-icon">+</span></summary>
+                    <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <div itemprop="text">Because small businesses are in a fight every day — against rising rents, big corporations, and outdated tech. We're the scrappy team in your corner. We believe in NYC, we believe in small business, and we're here to help you win.</div>
+                    </div>
+                </details>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
+
+        <section class="cta-final container fade-in">
+            <h2 style="text-align:center">Stop losing money to<br><span style="font-family:'Caveat',cursive;font-size:1.35em">broken tech.</span></h2>
+            <p class="cta-sub">Whether it's a crashed website, a POS that won't cooperate, or Wi-Fi that's driving you insane — we're here to help. No tech-speak. No judgment.</p>
+            <div class="cta-final-buttons">
+                <a href="tel:6463600318" class="cta-btn-primary">📞 Call (646) 360-0318</a>
+                <a href="#contact" class="cta-btn-secondary" onclick="navigateTo('contact')">✉️ Send a Message</a>
+            </div>
+            <div class="cta-promises">
+                <div class="promise-pill">⚡ 2-Hour Response</div>
+                <div class="promise-pill">💬 Text Us Anytime</div>
+                <div class="promise-pill">🆓 First Hour FREE</div>
+            </div>
+            <p style="font-family:'Caveat',cursive;font-size:24px;color:#FE5800;margin-top:24px;position:relative;text-align:center">Available Monday–Friday, 8am–8pm. Emergencies? Call anyway.</p>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
+    <section id="services" class="page-section" aria-label="Our Services">
+        <div style="padding-top:100px"></div>
+        <div class="container" style="padding-bottom:40px">
+            <div style="text-align:center;max-width:600px;margin:0 auto 40px">
+                <h1 style="margin-bottom:12px">Everything your business needs to <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">run smoother.</span></h1>
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.7">We step in, clean it up, and put smarter systems in place so you can focus on what matters.</p>
+            </div>
+            <div class="services-grid" style="margin-bottom:40px">
+                <div class="service-card fade-in">
+                    <div class="service-badge">MOST POPULAR</div>
+                    <h3>Bespoke Websites</h3>
+                    <p style="margin-bottom:16px">High-performance, conversion-engineered websites built from scratch.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:13px;display:flex;flex-direction:column;gap:7px">
+                        <li>✓ Custom UI/UX design & prototyping</li>
+                        <li>✓ Headless CMS & API-first architecture</li>
+                        <li>✓ Sub-1s load time optimization</li>
+                        <li>✓ ADA/WCAG accessibility compliance</li>
+                        <li>✓ Advanced SEO & schema markup</li>
+                        <li>✓ E-commerce & payment integration</li>
+                        <li>✓ Analytics, heatmaps & A/B testing</li>
+                        <li>✓ 90-day post-launch support included</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>On-Site IT Support</h3>
+                    <p style="margin-bottom:16px">Manhattan's concierge IT team. We show up and fix it — same day.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:13px;display:flex;flex-direction:column;gap:7px">
+                        <li>✓ 2-hour on-site response guarantee</li>
+                        <li>✓ Mac, PC & Linux troubleshooting</li>
+                        <li>✓ Enterprise Wi-Fi & network architecture</li>
+                        <li>✓ Server & NAS configuration</li>
+                        <li>✓ Cybersecurity audit & hardening</li>
+                        <li>✓ Printer, scanner & peripheral setup</li>
+                        <li>✓ Data backup & disaster recovery</li>
+                        <li>✓ 30-day warranty on all fixes</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Apple & Device Management</h3>
+                    <p style="margin-bottom:16px">Enterprise-grade Apple MDM for teams of any size.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:13px;display:flex;flex-direction:column;gap:7px">
+                        <li>✓ Apple Business Manager enrollment</li>
+                        <li>✓ MDM deployment (Jamf, Mosyle, Kandji)</li>
+                        <li>✓ Zero-touch provisioning for new hires</li>
+                        <li>✓ FileVault encryption & compliance</li>
+                        <li>✓ iCloud & Microsoft 365 integration</li>
+                        <li>✓ Remote wipe & lost device recovery</li>
+                        <li>✓ App distribution & update policies</li>
+                        <li>✓ Ongoing fleet monitoring & support</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>POS & Payment Systems</h3>
+                    <p style="margin-bottom:16px">Revenue-critical register and payment infrastructure, bulletproofed.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:13px;display:flex;flex-direction:column;gap:7px">
+                        <li>✓ Square, Clover, Toast full deployment</li>
+                        <li>✓ Multi-location POS synchronization</li>
+                        <li>✓ Inventory & menu management setup</li>
+                        <li>✓ Online ordering & delivery integration</li>
+                        <li>✓ Tip, tax & reporting configuration</li>
+                        <li>✓ Staff training & operations playbook</li>
+                        <li>✓ Failover & offline payment backup</li>
+                        <li>✓ 24/7 emergency POS support line</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Smart Systems & Automation</h3>
+                    <p style="margin-bottom:16px">Intelligent infrastructure for modern offices, retail, and residential.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:13px;display:flex;flex-direction:column;gap:7px">
+                        <li>✓ Smart lighting & climate automation</li>
+                        <li>✓ Access control & keyless entry</li>
+                        <li>✓ Security cameras & monitoring</li>
+                        <li>✓ Occupancy sensing & energy savings</li>
+                        <li>✓ AV systems & conference room tech</li>
+                        <li>✓ Booking & scheduling integration</li>
+                        <li>✓ Custom automation workflows</li>
+                        <li>✓ Ongoing maintenance & remote mgmt</li>
+                    </ul>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Local SEO & Ads</h3>
+                    <p style="margin-bottom:16px">Dominate your neighborhood on Google. Measurable ROI, not vanity metrics.</p>
+                    <ul style="list-style:none;color:#8a8ea0;font-size:13px;display:flex;flex-direction:column;gap:7px">
+                        <li>✓ Google Business Profile optimization</li>
+                        <li>✓ Local keyword & competitor analysis</li>
+                        <li>✓ Google Ads & Meta Ads management</li>
+                        <li>✓ Review generation & reputation mgmt</li>
+                        <li>✓ Citation building & NAP consistency</li>
+                        <li>✓ Monthly performance reporting</li>
+                        <li>✓ Landing page creation & testing</li>
+                        <li>✓ AI search & answer engine optimization</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align:center">
+                <a href="#contact" class="btn btn-orange" onclick="navigateTo('contact')">Start a Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="how" class="page-section" aria-label="Our Approach">
+        <div style="padding-top:100px"></div>
+        <div class="container" style="padding-bottom:40px">
+            <div style="text-align:center;max-width:550px;margin:0 auto 56px">
+                <h1 style="margin-bottom:12px">Simple. <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">No drama.</span></h1>
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.7">Four steps from broken to fixed. We keep you in the loop the whole way.</p>
+            </div>
+
+            <!-- Animated Timeline -->
+            <div class="approach-timeline" id="approachTimeline">
+                <!-- Progress line -->
+                <div class="tl-line"><div class="tl-line-fill" id="tlFill"></div></div>
+
+                <!-- Step 1 -->
+                <div class="tl-step" data-step="1">
+                    <div class="tl-node"><span>📞</span></div>
+                    <div class="tl-content">
+                        <div class="tl-num">01</div>
+                        <h3>You Reach Out</h3>
+                        <p>Call <a href="tel:6463600318" style="color:#FE5800;text-decoration:none;font-weight:600">(646) 360-0318</a>, text us, or fill out the form. No phone trees. No bots. A real person responds within 2 hours — usually much faster.</p>
+                        <div class="tl-pills">
+                            <span>📞 Call</span><span>💬 Text</span><span>✉️ Email</span><span>📋 Form</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="tl-step" data-step="2">
+                    <div class="tl-node"><span>🔍</span></div>
+                    <div class="tl-content">
+                        <div class="tl-num">02</div>
+                        <h3>We Diagnose</h3>
+                        <p>We listen first. Then we dig into what's actually broken — not what you think might be broken. We map the real problem, estimate the fix, and give you an honest quote before any work starts. No surprises.</p>
+                        <div class="tl-pills">
+                            <span>🎯 Root cause</span><span>💰 Honest quote</span><span>⏱️ Timeline</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="tl-step" data-step="3">
+                    <div class="tl-node"><span>🔧</span></div>
+                    <div class="tl-content">
+                        <div class="tl-num">03</div>
+                        <h3>We Fix It</h3>
+                        <p>On-site in Manhattan or remote anywhere in the US. Professional execution with clear communication at every step. You'll know what we're doing, why we're doing it, and when it'll be done. No black boxes.</p>
+                        <div class="tl-pills">
+                            <span>🗽 On-site</span><span>🌎 Remote</span><span>💬 Updates</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="tl-step" data-step="4">
+                    <div class="tl-node"><span>🤝</span></div>
+                    <div class="tl-content">
+                        <div class="tl-num">04</div>
+                        <h3>We Stick Around</h3>
+                        <p>The job isn't done when the fix is done. Every repair comes with a 30-day warranty. Same issue comes back? We fix it free. And when you need us again — for anything — we're one call away. That's the partnership.</p>
+                        <div class="tl-pills">
+                            <span>🛡️ 30-day warranty</span><span>☎️ Direct line</span><span>🆓 No fix, no fee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-top:48px">
+                <p style="font-family:'Caveat',cursive;font-size:26px;color:#FE5800;margin-bottom:24px">That's it. No contracts. No commitments. Just help.</p>
+                <a href="#contact" class="btn btn-orange" onclick="navigateTo('contact')">Get Started →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="page-section" aria-label="Our Work">
+        <div style="padding-top:100px"></div>
+        <div class="container" style="padding-bottom:40px">
+            <div style="text-align:center;max-width:600px;margin:0 auto 48px">
+                <h1 style="margin-bottom:12px">Real clients. <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">Real work.</span></h1>
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.7">From streetwear brands to cocktail bars to film studios — here's what we've built for businesses that refuse to blend in.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+
+                <!-- After Hours Agenda -->
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
+                    <div style="background:linear-gradient(135deg,#1a1a1a,#2d2d2d);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">AFTER HOURS</div>
+                    <div style="padding:24px">
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">After Hours Agenda</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">NYC · Streetwear Brand</p>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Bespoke e-commerce site for NYC's loudest streetwear brand. 14 years of rebellious style, relaunched for the digital age.</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">E-Commerce</span>
+                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B-Side NYC -->
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.bsidenyc.bar','_blank')">
+                    <div style="background:linear-gradient(135deg,#1a0a2e,#2d1b4e);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">B-SIDE</div>
+                    <div style="padding:24px">
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">B-Side NYC</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">New York City · Bar & Nightlife</p>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Website, branding, and digital presence for one of NYC's standout bar venues. Built to capture the vibe and drive foot traffic.</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Local SEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grand Funding -->
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(255,107,53,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.grandfundingllc.com','_blank')">
+                    <div style="background:linear-gradient(135deg,#0a2e1a,#1a4e2d);height:140px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">GRAND FUNDING</div>
+                    <div style="padding:24px">
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">Grand Funding LLC</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">Arizona & California · Private Lending</p>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">High-conversion website for a direct private lender. 24-hour approvals, 3-5 day closings — the site had to move just as fast.</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Lead Generation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logan Loans -->
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.logan.loans','_blank')">
+                    <div style="background:linear-gradient(135deg,#0a1a2e,#1b2d4e);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">LOGAN</div>
+                    <div style="padding:24px">
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">Logan Loans</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">Arizona & SoCal · Mortgage Advisory</p>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Clean, human-first mortgage website. Same-day pre-approvals explained without the industry jargon.</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">SEO & Content</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CC Films -->
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://ccfilms.net','_blank')">
+                    <div style="background:linear-gradient(135deg,#2e0a0a,#4e1b1b);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">CC FILMS</div>
+                    <div style="padding:24px">
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">CC Films, LLC</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">Dallas · Film Production</p>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Cinematic website for an indie production company. Analog soul, digital polish — the site had to match the craft.</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Brand Identity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visit all -->
+                <div class="fade-in" style="background:rgba(254,88,0,0.04);border:1px solid rgba(254,88,0,0.12);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(254,88,0,0.12)';this.style.transform='translateY(0)'" onclick="navigateTo('contact')">
+                    <div style="font-size:36px;margin-bottom:16px">🚀</div>
+                    <h3 style="font-size:1.1rem;margin-bottom:8px">Your Business Next?</h3>
+                    <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">We'd love to add your success story to this page.</p>
+                    <span style="color:#FE5800;font-weight:700;font-size:14px">Start a Project →</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="page-section" aria-label="About Us">
+        <div style="padding-top:100px"></div>
+        <div class="container" style="padding-bottom:40px">
+            <div style="text-align:center;max-width:700px;margin:0 auto 48px">
+                <h1 style="margin-bottom:12px">We're your neighbor.<br><span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">We care if your shop stays open.</span></h1>
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.8">New York used to have soul. Mom-and-pops on every block. Bodegas that knew your order. That's disappearing — and we're fighting to keep it alive.</p>
+            </div>
+            <div style="max-width:680px;margin:0 auto 48px;text-align:center">
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Rising rents, corporate chains, tech that doesn't work. Small business owners are fighting every day. We started Little Fight NYC because we believe in these businesses.</p>
+                <p style="font-family:'Caveat',cursive;font-size:28px;color:#FE5800">That's what we fight for.</p>
+            </div>
+            <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:clamp(24px,4vw,40px);max-width:900px;margin:0 auto">
+                <h3 style="margin-bottom:24px;text-align:center">Our Values</h3>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px">
+                    <div style="text-align:center;padding:16px">
+                        <h4 style="color:#FE5800;margin-bottom:8px">Clear Communication</h4>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.7">No jargon. Honest talk about what's broken and how we fix it.</p>
+                    </div>
+                    <div style="text-align:center;padding:16px">
+                        <h4 style="color:#0891B2;margin-bottom:8px">Reliable Systems</h4>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.7">Downtime costs money. We build tech that doesn't break.</p>
+                    </div>
+                    <div style="text-align:center;padding:16px">
+                        <h4 style="color:#FF6B35;margin-bottom:8px">Premium Execution</h4>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.7">We do the work right. No shortcuts. No bloat.</p>
+                    </div>
+                    <div style="text-align:center;padding:16px">
+                        <h4 style="color:#0C6A84;margin-bottom:8px">Local Loyalty</h4>
+                        <p style="color:#8a8ea0;font-size:14px;line-height:1.7">We live in NYC. We serve NYC. We understand your business.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="page-section" aria-label="Blog">
+        <div style="padding-top:100px"></div>
+        <div class="container" style="padding-bottom:40px">
+            <div style="text-align:center;max-width:500px;margin:0 auto 48px">
+                <h1 style="margin-bottom:12px">Practical advice for <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">real businesses.</span></h1>
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.7">No fluff. Just things you can actually use to run your business better.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)'">
+                    <div style="height:120px;background:linear-gradient(135deg,#FE5800,#FF6B35)"></div>
+                    <div style="padding:20px"><h3 style="font-size:1rem;margin-bottom:8px">Stop Losing Money to Wi-Fi Crashes</h3><p style="color:#8a8ea0;font-size:13px;margin-bottom:12px;line-height:1.6">Every minute your Wi-Fi is down costs you real money...</p><a href="#blog" style="color:#FE5800;font-weight:600;text-decoration:none;font-size:13px">Read More →</a></div>
+                </div>
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)'">
+                    <div style="height:120px;background:linear-gradient(135deg,#0891B2,#0C6A84)"></div>
+                    <div style="padding:20px"><h3 style="font-size:1rem;margin-bottom:8px">The Mac vs. PC Question: Answered</h3><p style="color:#8a8ea0;font-size:13px;margin-bottom:12px;line-height:1.6">Spoiler: they're both good for different reasons...</p><a href="#blog" style="color:#FE5800;font-weight:600;text-decoration:none;font-size:13px">Read More →</a></div>
+                </div>
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s" onmouseover="this.style.borderColor='rgba(255,107,53,0.3)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)'">
+                    <div style="height:120px;background:linear-gradient(135deg,#FF6B35,#FE5800)"></div>
+                    <div style="padding:20px"><h3 style="font-size:1rem;margin-bottom:8px">POS Crashes & How to Prevent Them</h3><p style="color:#8a8ea0;font-size:13px;margin-bottom:12px;line-height:1.6">Your register going down is a nightmare...</p><a href="#blog" style="color:#FE5800;font-weight:600;text-decoration:none;font-size:13px">Read More →</a></div>
+                </div>
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s" onmouseover="this.style.borderColor='rgba(12,106,132,0.3)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)'">
+                    <div style="height:120px;background:linear-gradient(135deg,#0C6A84,#0891B2)"></div>
+                    <div style="padding:20px"><h3 style="font-size:1rem;margin-bottom:8px">Getting Found: Local SEO for Small Retail</h3><p style="color:#8a8ea0;font-size:13px;margin-bottom:12px;line-height:1.6">You don't need a million-dollar budget...</p><a href="#blog" style="color:#FE5800;font-weight:600;text-decoration:none;font-size:13px">Read More →</a></div>
+                </div>
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)'">
+                    <div style="height:120px;background:linear-gradient(135deg,#FE5800,#0891B2)"></div>
+                    <div style="padding:20px"><h3 style="font-size:1rem;margin-bottom:8px">Why Your Website Isn't Bringing in Customers</h3><p style="color:#8a8ea0;font-size:13px;margin-bottom:12px;line-height:1.6">It's probably not what you think...</p><a href="#blog" style="color:#FE5800;font-weight:600;text-decoration:none;font-size:13px">Read More →</a></div>
+                </div>
+                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s" onmouseover="this.style.borderColor='rgba(12,106,132,0.3)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)'">
+                    <div style="height:120px;background:linear-gradient(135deg,#0C6A84,#FF6B35)"></div>
+                    <div style="padding:20px"><h3 style="font-size:1rem;margin-bottom:8px">Smart Systems You Actually Need</h3><p style="color:#8a8ea0;font-size:13px;margin-bottom:12px;line-height:1.6">IoT can actually save you money and time...</p><a href="#blog" style="color:#FE5800;font-weight:600;text-decoration:none;font-size:13px">Read More →</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="page-section" aria-label="Contact Us">
+        <div style="padding-top:100px"></div>
+        <div class="container" style="padding-bottom:40px">
+            <div style="text-align:center;max-width:550px;margin:0 auto 48px">
+                <h1 style="margin-bottom:12px">Let's talk about <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">your tech.</span></h1>
+                <p style="color:#8a8ea0;font-size:16px;line-height:1.7">Got a question? Need help? Just want to vent about your printer? We're here for it.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:1000px;margin:0 auto">
+                <div>
+                    <div style="margin-bottom:28px">
+                        <h4 style="color:#FE5800;margin-bottom:8px;font-size:14px">📞 Call Us</h4>
+                        <a href="tel:6463600318" style="color:#f0f0ec;font-size:20px;font-weight:700;text-decoration:none">(646) 360-0318</a>
+                        <p style="color:#8a8ea0;font-size:13px;margin-top:4px">Mon–Fri, 8am–8pm. Emergencies anytime.</p>
+                    </div>
+                    <div style="margin-bottom:28px">
+                        <h4 style="color:#FE5800;margin-bottom:8px;font-size:14px">✉️ Email</h4>
+                        <a href="mailto:hello@littlefightnyc.com" style="color:#f0f0ec;font-size:17px;text-decoration:none">hello@littlefightnyc.com</a>
+                    </div>
+                    <div style="margin-bottom:28px">
+                        <h4 style="color:#FE5800;margin-bottom:8px;font-size:14px">📍 Location</h4>
+                        <p style="color:#f0f0ec">Manhattan, NYC<br><span style="color:#8a8ea0">Nationwide remote available</span></p>
+                    </div>
+                    <div style="background:linear-gradient(135deg,#FE5800,#FF6B35);border-radius:12px;padding:24px;margin-top:16px">
+                        <h4 style="color:white;margin-bottom:6px;font-size:15px">🆓 First Hour is Free</h4>
+                        <p style="color:rgba(255,255,255,0.9);font-size:14px">No commitment. No credit card. Real help.</p>
+                    </div>
+                </div>
+                <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:clamp(24px,4vw,40px)">
+                    <h3 style="margin-bottom:24px;text-align:center">Send us a message</h3>
+                    <form onsubmit="return false">
+                        <div style="margin-bottom:16px">
+                            <label style="display:block;color:#8a8ea0;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Your Name</label>
+                            <input type="text" style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s" onfocus="this.style.borderColor='#FE5800';this.style.boxShadow='0 0 0 3px rgba(254,88,0,0.1)'" onblur="this.style.borderColor='rgba(22,27,46,0.5)';this.style.boxShadow='none'" placeholder="John Doe">
+                        </div>
+                        <div style="margin-bottom:16px">
+                            <label style="display:block;color:#8a8ea0;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Email</label>
+                            <input type="email" style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;outline:none;transition:border-color 0.3s" onfocus="this.style.borderColor='#FE5800';this.style.boxShadow='0 0 0 3px rgba(254,88,0,0.1)'" onblur="this.style.borderColor='rgba(22,27,46,0.5)';this.style.boxShadow='none'" placeholder="you@example.com">
+                        </div>
+                        <div style="margin-bottom:20px">
+                            <label style="display:block;color:#8a8ea0;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">What's Going On?</label>
+                            <textarea style="width:100%;padding:12px 16px;background:#080b14;border:1px solid rgba(22,27,46,0.5);border-radius:10px;color:#f0f0ec;font-family:'Lexend',sans-serif;font-size:14px;min-height:120px;outline:none;resize:none;transition:border-color 0.3s" onfocus="this.style.borderColor='#FE5800';this.style.boxShadow='0 0 0 3px rgba(254,88,0,0.1)'" onblur="this.style.borderColor='rgba(22,27,46,0.5)';this.style.boxShadow='none'" placeholder="Tell us what's happening..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-orange" style="width:100%;justify-content:center">Send Message →</button>
+                        <p style="text-align:center;color:#5a5e72;font-size:12px;margin-top:12px">We respond within 24 hours. Usually much faster.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer role="contentinfo">
         <div class="footer-grid">
-          <div>
-            <div class="footer-brand">
-              <div class="footer-logo-box">LITTLE<br />FIGHT<br />NYC</div>
-              <span style="font-weight: 800; font-size: 1.1rem"
-                >Little Fight NYC</span
-              >
+            <div class="footer-column">
+                <div class="footer-logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div>
+                <h4>Little Fight NYC</h4>
+                <p style="color: #8a8ea0; font-size: 13px; line-height: 1.8; margin-bottom: 12px;">Like a Ritz-Carlton concierge for your technology.</p>
+                <p style="color: #8a8ea0; font-size: 13px;">NYC's concierge tech support.</p>
             </div>
-            <p class="footer-text">
-              Helping small businesses punch above their weight. Tech support
-              that actually makes sense.
-            </p>
-          </div>
-
-          <div>
-            <h2 class="footer-heading">Services</h2>
-            <div class="footer-links">
-              <a href="/services/on-site-it-support-nyc/">On-Site IT</a>
-              <a href="/services/website-design-small-business-nyc/"
-                >Websites</a
-              >
-              <a href="/services/local-seo-and-google-ads-nyc/">Local SEO</a>
-              <a href="/services/pos-and-register-setup-nyc/">POS Setup</a>
-              <a href="/services/apple-device-setup-and-management/"
-                >Apple MDM</a
-              >
+            <div class="footer-column">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#services" onclick="navigateTo('services')">On-Site IT Support</a></li>
+                    <li><a href="#services" onclick="navigateTo('services')">Bespoke Websites</a></li>
+                    <li><a href="#services" onclick="navigateTo('services')">Local SEO & Ads</a></li>
+                    <li><a href="#services" onclick="navigateTo('services')">Apple Setup</a></li>
+                    <li><a href="#services" onclick="navigateTo('services')">POS & Registers</a></li>
+                </ul>
             </div>
-          </div>
-
-          <div>
-            <h2 class="footer-heading">Company</h2>
-            <div class="footer-links">
-              <a href="/">Home</a>
-              <a href="/solutions/">Solutions</a>
-              <a href="/about/">About Us</a>
-              <a href="/work/">Work</a>
-              <a href="/industries.html">Industries</a>
-              <a href="/blog/">Blog</a>
-              <a href="/contact/">Contact</a>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about" onclick="navigateTo('about')">About Us</a></li>
+                    <li><a href="#work" onclick="navigateTo('work')">Our Work</a></li>
+                    <li><a href="#blog" onclick="navigateTo('blog')">Blog</a></li>
+                    <li><a href="#how" onclick="navigateTo('how')">Approach</a></li>
+                    <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
+                </ul>
             </div>
-          </div>
-
-          <div>
-            <h2 class="footer-heading">Get In Touch</h2>
-            <div class="footer-links">
-              <a href="mailto:hello@littlefightnyc.com"
-                >hello@littlefightnyc.com</a
-              >
-              <a href="tel:+16463600318">646-360-0318</a>
-              <a href="/contact/">Manhattan, NYC</a>
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <p><a href="tel:(646)360-0318" style="color: #FE5800; text-decoration: none; font-weight: 700;">(646) 360-0318</a></p>
+                <p><a href="mailto:hello@littlefightnyc.com" style="color: #FE5800; text-decoration: none; font-weight: 700;">hello@littlefightnyc.com</a></p>
+                <p style="color: #8a8ea0; font-size: 13px; margin-top: 12px;">Manhattan, NYC<br>Nationwide remote</p>
             </div>
-          </div>
         </div>
-
         <div class="footer-bottom">
-          <p class="footer-copyright">
-            © 2026 Little Fight NYC. Built in New York with guts & grit.
-          </p>
-          <div class="footer-legal">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-          </div>
+            <p>© 2026 Little Fight NYC. Built in New York with guts & grit.</p>
         </div>
-
-        <!-- Required footer credit -->
-        <div class="footer-credit">
-          <a href="https://littlefightnyc.com" target="_blank" rel="noopener"
-            >Designed, Hosted and Cared For by LittleFightNYC.com</a
-          >
-        </div>
-      </div>
     </footer>
 
-    <script src="js/main.min.js?v=20260209a" defer></script>
-    <script src="js/city-growth.min.js?v=20260209a" defer></script>
+    <!-- Three.js removed — using canvas 2D for hero animation -->
+    <script>
+        function navigateTo(page) {
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(page).classList.add('active');
+            window.scrollTo(0, 0);
+            // Update active nav link
+            document.querySelectorAll('.nav-links a').forEach(function(a) {
+                a.classList.toggle('active', a.dataset.page === page);
+            });
+        }
 
-    <!-- Non-critical CSS loaded after page render (fonts already in head) -->
-    <link
-      rel="stylesheet"
-      href="css/styles.min.css?v=20260209a"
-      media="print"
-      onload="this.media = 'all'"
-    />
-    <link
-      rel="stylesheet"
-      href="css/a11y-fixes.min.css?v=20260209a"
-      media="print"
-      onload="this.media = 'all'"
-    />
-    <noscript>
-      <link rel="stylesheet" href="css/styles.min.css?v=20260209a" />
-      <link rel="stylesheet" href="css/a11y-fixes.min.css?v=20260209a" />
-    </noscript>
-  </body>
+        function toggleDrawer() {
+            document.querySelector('.nav-hamburger').classList.toggle('open');
+            document.querySelector('.nav-drawer').classList.toggle('open');
+            document.querySelector('.nav-drawer-overlay').classList.toggle('open');
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(254, 88, 0, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 40; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const barItems = document.querySelectorAll('.bar');
+        const observerOptions = { threshold: 0.5 };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.style.getPropertyValue('--width');
+                }
+            });
+        }, observerOptions);
+
+        barItems.forEach(bar => {
+            bar.style.width = '0';
+            observer.observe(bar);
+        });
+
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        fadeElements.forEach(el => fadeObserver.observe(el));
+
+        // ── Approach Timeline Animation ──
+        (function initTimeline() {
+            var tl = document.getElementById('approachTimeline');
+            if (!tl) return;
+            var fill = document.getElementById('tlFill');
+            var steps = tl.querySelectorAll('.tl-step');
+            var totalSteps = steps.length;
+            var revealed = 0;
+
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var step = entry.target;
+                        var idx = parseInt(step.dataset.step);
+                        // Stagger the reveal
+                        setTimeout(function() {
+                            step.classList.add('visible');
+                            revealed++;
+                            // Animate the progress line
+                            var pct = (idx / totalSteps) * 100;
+                            fill.style.height = pct + '%';
+                        }, (idx - 1) * 300);
+                        obs.unobserve(step);
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            steps.forEach(function(s) { obs.observe(s); });
+        })();
+
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            item.classList.toggle('open');
+        }
+
+        function filterWork(category) {
+            const pills = document.querySelectorAll('.pill');
+            const cards = document.querySelectorAll('.work-card');
+
+            pills.forEach(pill => pill.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ── Hero Animation: NYC Skyline ──
+        (function() {
+            var hc = document.getElementById('hero-anim');
+            if (!hc) return;
+            var hctx = hc.getContext('2d');
+            var w, h;
+            function resizeHero() {
+                var rect = hc.parentElement.getBoundingClientRect();
+                w = hc.width = rect.width * 2;
+                h = hc.height = rect.height * 2;
+                hctx.scale(2, 2);
+            }
+            resizeHero();
+            window.addEventListener('resize', resizeHero);
+
+            var buildings = [];
+            var bw = w / 2;
+            var count = 14;
+            for (var i = 0; i < count; i++) {
+                var bWidth = 20 + Math.random() * 40;
+                var bHeight = 80 + Math.random() * 200;
+                var bx = (i / count) * (bw) + Math.random() * 10;
+                buildings.push({
+                    x: bx, w: bWidth, h: bHeight,
+                    windows: [],
+                    color: 'rgba(13,' + (17 + Math.floor(Math.random() * 20)) + ',' + (32 + Math.floor(Math.random() * 20)) + ',1)'
+                });
+                // windows
+                var cols = Math.floor(bWidth / 12);
+                var rows = Math.floor(bHeight / 18);
+                for (var r = 0; r < rows; r++) {
+                    for (var c = 0; c < cols; c++) {
+                        buildings[i].windows.push({
+                            rx: 4 + c * 12, ry: 8 + r * 18,
+                            lit: Math.random() > 0.35,
+                            flicker: Math.random() * 0.02,
+                            phase: Math.random() * Math.PI * 2
+                        });
+                    }
+                }
+            }
+
+            var stars = [];
+            for (var s = 0; s < 60; s++) {
+                stars.push({ x: Math.random() * bw, y: Math.random() * (h/2 - 100), r: Math.random() * 1.2 + 0.3, phase: Math.random() * Math.PI * 2 });
+            }
+
+            var t = 0;
+            function drawHero() {
+                t += 0.01;
+                var hw = w / 2, hh = h / 2;
+                hctx.clearRect(0, 0, hw, hh);
+
+                // sky gradient
+                var grad = hctx.createLinearGradient(0, 0, 0, hh);
+                grad.addColorStop(0, '#050810');
+                grad.addColorStop(0.6, '#0a1025');
+                grad.addColorStop(1, '#101832');
+                hctx.fillStyle = grad;
+                hctx.fillRect(0, 0, hw, hh);
+
+                // stars
+                stars.forEach(function(s) {
+                    var twinkle = 0.4 + 0.6 * Math.abs(Math.sin(t * 0.5 + s.phase));
+                    hctx.fillStyle = 'rgba(255,255,255,' + (twinkle * 0.7) + ')';
+                    hctx.beginPath();
+                    hctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    hctx.fill();
+                });
+
+                // moon glow
+                hctx.fillStyle = 'rgba(254, 88, 0, 0.04)';
+                hctx.beginPath();
+                hctx.arc(hw * 0.75, 60, 80, 0, Math.PI * 2);
+                hctx.fill();
+                hctx.fillStyle = 'rgba(254, 88, 0, 0.08)';
+                hctx.beginPath();
+                hctx.arc(hw * 0.75, 60, 35, 0, Math.PI * 2);
+                hctx.fill();
+
+                // buildings
+                var groundY = hh - 20;
+                buildings.forEach(function(b) {
+                    hctx.fillStyle = b.color;
+                    hctx.fillRect(b.x, groundY - b.h, b.w, b.h);
+
+                    // windows
+                    b.windows.forEach(function(win) {
+                        if (win.lit) {
+                            var brightness = 0.5 + 0.5 * Math.sin(t * win.flicker * 60 + win.phase);
+                            var orangeAmt = Math.floor(88 + brightness * 40);
+                            hctx.fillStyle = 'rgba(254,' + orangeAmt + ',0,' + (0.4 + brightness * 0.5) + ')';
+                        } else {
+                            hctx.fillStyle = 'rgba(20,28,50,0.8)';
+                        }
+                        hctx.fillRect(b.x + win.rx, groundY - b.h + win.ry, 7, 10);
+                    });
+                });
+
+                // ground line glow
+                hctx.strokeStyle = 'rgba(254,88,0,0.15)';
+                hctx.lineWidth = 1;
+                hctx.beginPath();
+                hctx.moveTo(0, groundY);
+                hctx.lineTo(hw, groundY);
+                hctx.stroke();
+
+                // reflection
+                hctx.fillStyle = 'rgba(254,88,0,0.02)';
+                hctx.fillRect(0, groundY, hw, 20);
+
+                // Floating brand badge
+                var badgeX = hw * 0.5 + Math.sin(t * 0.8) * 8;
+                var badgeY = groundY - 130 + Math.cos(t * 0.6) * 5;
+                var bw2 = 38, bh2 = 38;
+                hctx.fillStyle = '#FE5800';
+                hctx.beginPath();
+                hctx.roundRect(badgeX - bw2/2, badgeY - bh2/2, bw2, bh2, 4);
+                hctx.fill();
+                hctx.fillStyle = '#fff';
+                hctx.font = '800 8px Lexend, sans-serif';
+                hctx.textAlign = 'center';
+                hctx.textBaseline = 'middle';
+                hctx.fillText('LITTLE', badgeX, badgeY - 10);
+                hctx.font = '800 9px Lexend, sans-serif';
+                hctx.fillText('FIGHT', badgeX, badgeY + 2);
+                hctx.font = '800 8px Lexend, sans-serif';
+                hctx.fillText('NYC', badgeX, badgeY + 13);
+
+                requestAnimationFrame(drawHero);
+            }
+            drawHero();
+        })();
+
+        // 3D building removed — replaced with hero skyline animation
+    </script>
+
+    <!-- MOBILE STICKY BAR -->
+    <div class="mobile-sticky">
+        <a href="tel:6463600318" class="mobile-sticky-phone">📞 Call Now</a>
+        <a href="#contact" class="mobile-sticky-cta" onclick="navigateTo('contact')">Get Help →</a>
+    </div>
+</body>
 </html>

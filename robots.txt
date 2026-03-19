@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Sitemap: https://www.littlefightnyc.com/sitemap.xml
 
-Sitemap: https://littlefightnyc.com/sitemap.xml
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
