@@ -292,6 +292,7 @@
             .hero-visual { height: 380px; }
             .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
             .promise-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .why-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         /* ── Tablet portrait ── */
         @media (max-width: 768px) {
@@ -309,6 +310,7 @@
             .hamburger { display: flex !important; }
             .services-grid { grid-template-columns: 1fr 1fr !important; }
             .promise-grid { grid-template-columns: 1fr 1fr !important; }
+            .why-grid { grid-template-columns: 1fr 1fr !important; }
             .testimonials { grid-template-columns: 1fr 1fr !important; }
             .coverage-grid { grid-template-columns: 1fr !important; }
             .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
@@ -318,7 +320,8 @@
             .hero h1 { font-size: clamp(1.75rem, 7vw, 2.4rem); }
             .btn { padding: 13px 24px; font-size: 14px; }
             .services-grid { grid-template-columns: 1fr !important; }
-            .promise-grid { grid-template-columns: 1fr 1fr !important; }
+            .promise-grid { grid-template-columns: 1fr !important; }
+            .why-grid { grid-template-columns: 1fr !important; }
             .testimonials { grid-template-columns: 1fr !important; }
             .ba-grid { grid-template-columns: 1fr !important; }
             .footer-grid { grid-template-columns: 1fr !important; }
@@ -666,6 +669,12 @@
             color: #8a8ea0;
             font-size: 16px;
             margin-top: 16px;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
 
         .promise-grid {
@@ -1588,7 +1597,7 @@
                 <h2 style="margin-bottom:32px">Big corporations have IT departments. <span style="font-family:'Caveat',cursive;color:#FE5800;font-size:1.35em">You have us.</span></h2>
                 <p style="color:#8a8ea0;font-size:18px;line-height:1.8;margin-bottom:40px;max-width:640px;margin-left:auto;margin-right:auto">A small, scrappy team that actually cares about keeping NYC's independent businesses thriving. When structure, messaging, and speed are aligned — customers understand your value faster.</p>
 
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+                <div class="why-grid">
                     <div style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:28px;transition:all 0.3s" onmouseover="this.style.borderColor='#FE5800';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'">
                         <div style="font-size:28px;margin-bottom:12px">🎯</div>
                         <h4 style="margin-bottom:8px;font-size:15px">Clarity-First Messaging</h4>
