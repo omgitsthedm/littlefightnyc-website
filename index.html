@@ -2816,58 +2816,114 @@
             var mctx = mc.getContext('2d');
             var dpr = window.devicePixelRatio || 1;
 
-            // Manhattan shoreline outline (normalized 0-1 coords, traced from real geography)
-            // West side runs top-to-bottom, east side bottom-to-top
-            var manhattanOutline = [
-                // Inwood / northern tip
-                [0.490, 0.030], [0.510, 0.025], [0.535, 0.035],
-                // East Harlem / Upper East shoreline (Harlem River / East River)
-                [0.555, 0.060], [0.570, 0.090], [0.580, 0.130],
-                [0.585, 0.170], [0.590, 0.200],
-                // East side — UES, Midtown East, Turtle Bay, Kips Bay
-                [0.595, 0.250], [0.600, 0.300], [0.605, 0.340],
-                [0.608, 0.380], [0.610, 0.420],
-                // UN / East 40s bulge
-                [0.615, 0.440], [0.612, 0.470],
-                // Gramercy, Stuyvesant, East Village shoreline
-                [0.608, 0.510], [0.610, 0.550], [0.615, 0.590],
-                // Lower East Side — slight eastward bulge
-                [0.620, 0.630], [0.625, 0.660], [0.628, 0.690],
-                // South St Seaport, FiDi — widening at bottom
-                [0.630, 0.730], [0.625, 0.770], [0.615, 0.800],
-                // Battery Park / southern tip
-                [0.590, 0.840], [0.555, 0.860], [0.520, 0.870],
-                [0.490, 0.868], [0.460, 0.855],
-                // West side — Battery Park up
-                [0.435, 0.830], [0.420, 0.800],
-                // TriBeCa, Hudson River Park
-                [0.410, 0.760], [0.405, 0.720],
-                // West Village, Chelsea piers — slight westward bulge
-                [0.395, 0.670], [0.390, 0.620], [0.388, 0.580],
-                // Chelsea, Hudson Yards
-                [0.390, 0.530], [0.392, 0.480],
-                // Midtown West, Hell's Kitchen
-                [0.395, 0.430], [0.398, 0.380], [0.400, 0.340],
-                // Upper West Side
-                [0.405, 0.290], [0.410, 0.240], [0.415, 0.200],
-                // Morningside, Harlem (west)
-                [0.420, 0.160], [0.430, 0.120], [0.440, 0.090],
-                // Washington Heights, Inwood (west)
-                [0.455, 0.060], [0.470, 0.040], [0.490, 0.030]
+            // Real Manhattan shoreline lat/lng — traced from actual geography
+            // Clockwise from northern tip (Inwood), down east side, around Battery, up west side
+            var shoreline = [
+                // Northern tip — Inwood Hill Park
+                [40.8782, -73.9212],
+                // Spuyten Duyvil / Inwood east
+                [40.8730, -73.9170], [40.8680, -73.9175],
+                // Dyckman / east shoreline (Harlem River)
+                [40.8600, -73.9250], [40.8530, -73.9280],
+                // Washington Heights east — curves inward at Harlem River
+                [40.8450, -73.9310], [40.8370, -73.9340],
+                // Hamilton Heights / Sugar Hill east
+                [40.8280, -73.9350], [40.8200, -73.9360],
+                // Harlem east — Harlem River meets East River
+                [40.8120, -73.9350], [40.8050, -73.9380],
+                // East Harlem / Randalls Island area — jogs east
+                [40.7970, -73.9330], [40.7920, -73.9360],
+                // UES north — along East River
+                [40.7850, -73.9430], [40.7780, -73.9440],
+                // Carl Schurz Park / Gracie Mansion — distinctive eastward bump
+                [40.7740, -73.9410], [40.7700, -73.9440],
+                // Yorkville to UES
+                [40.7640, -73.9500], [40.7580, -73.9550],
+                // Midtown East — fairly straight
+                [40.7530, -73.9590], [40.7500, -73.9620],
+                // UN headquarters — eastward bulge at East 42nd
+                [40.7490, -73.9640], [40.7470, -73.9660],
+                // Tudor City / Turtle Bay
+                [40.7440, -73.9680], [40.7400, -73.9710],
+                // Kips Bay — pulled back west
+                [40.7360, -73.9720], [40.7310, -73.9730],
+                // Stuyvesant Town / Peter Cooper Village — eastward
+                [40.7280, -73.9720], [40.7240, -73.9730],
+                // East Village east
+                [40.7200, -73.9740], [40.7160, -73.9750],
+                // LES — Williamsburg Bridge area, jogs east
+                [40.7130, -73.9730], [40.7100, -73.9760],
+                // LES south — Manhattan Bridge area
+                [40.7070, -73.9820], [40.7050, -73.9870],
+                // South Street Seaport — swings south and west
+                [40.7040, -73.9920], [40.7030, -73.9970],
+                // FiDi east / Pier 11
+                [40.7020, -74.0020],
+                // Battery — southern tip curves west
+                [40.7010, -74.0080], [40.7005, -74.0130],
+                // Battery Park — southernmost point
+                [40.7002, -74.0170],
+                // Battery Park City — west side starts, going north
+                [40.7010, -74.0190], [40.7050, -74.0200],
+                // Battery Park City north
+                [40.7100, -74.0185], [40.7150, -74.0170],
+                // TriBeCa / Hudson River Park
+                [40.7210, -74.0140], [40.7270, -74.0120],
+                // West Village — slight westward push at piers
+                [40.7330, -74.0110], [40.7370, -74.0095],
+                // Chelsea Piers — noticeable westward bump
+                [40.7430, -74.0080], [40.7480, -74.0070],
+                // Hudson Yards / Javits
+                [40.7540, -74.0020], [40.7580, -73.9990],
+                // Hell's Kitchen west
+                [40.7640, -73.9960], [40.7690, -73.9940],
+                // Midtown West / Intrepid
+                [40.7730, -73.9910], [40.7770, -73.9880],
+                // Lincoln Center / UWS begins
+                [40.7810, -73.9850], [40.7860, -73.9810],
+                // Riverside Park — UWS
+                [40.7920, -73.9770], [40.7980, -73.9730],
+                // 96th St / UWS north
+                [40.8030, -73.9700], [40.8080, -73.9670],
+                // Morningside Heights / Columbia
+                [40.8130, -73.9640], [40.8190, -73.9590],
+                // Manhattanville
+                [40.8230, -73.9550], [40.8280, -73.9510],
+                // Hamilton Heights west
+                [40.8340, -73.9460], [40.8400, -73.9420],
+                // Washington Heights west — Fort Washington Park
+                [40.8470, -73.9380], [40.8530, -73.9350],
+                // GW Bridge area
+                [40.8570, -73.9320], [40.8600, -73.9300],
+                // Fort Tryon Park / The Cloisters
+                [40.8640, -73.9280], [40.8680, -73.9260],
+                // Inwood Hill Park — back to top
+                [40.8730, -73.9230], [40.8782, -73.9212]
             ];
 
-            // Neighborhood positions matched to real geography
+            // Neighborhoods at real lat/lng positions
             var neighborhoods = [
-                { name: 'Upper East Side', x: 0.575, y: 0.230, onsite: true },
-                { name: 'Midtown',         x: 0.520, y: 0.400, onsite: true },
-                { name: 'Meatpacking',     x: 0.420, y: 0.580, onsite: true },
-                { name: 'West Village',    x: 0.430, y: 0.620, onsite: true },
-                { name: 'East Village',    x: 0.570, y: 0.600, onsite: true },
-                { name: 'SoHo',            x: 0.500, y: 0.670, onsite: true },
-                { name: 'Lower East Side', x: 0.585, y: 0.660, onsite: true },
-                { name: 'Harlem',          x: 0.500, y: 0.130, onsite: false },
-                { name: 'FiDi',            x: 0.530, y: 0.810, onsite: true }
+                { name: 'Upper East Side', lat: 40.7740, lng: -73.9560, onsite: true },
+                { name: 'Midtown',         lat: 40.7550, lng: -73.9780, onsite: true },
+                { name: 'Meatpacking',     lat: 40.7400, lng: -73.9990, onsite: true },
+                { name: 'West Village',    lat: 40.7340, lng: -74.0010, onsite: true },
+                { name: 'East Village',    lat: 40.7260, lng: -73.9830, onsite: true },
+                { name: 'SoHo',            lat: 40.7230, lng: -73.9960, onsite: true },
+                { name: 'Lower East Side', lat: 40.7150, lng: -73.9840, onsite: true },
+                { name: 'Harlem',          lat: 40.8110, lng: -73.9460, onsite: false },
+                { name: 'FiDi',            lat: 40.7070, lng: -74.0080, onsite: true }
             ];
+
+            // Central Park real bounds
+            var cpNW = [40.8000, -73.9580];
+            var cpSE = [40.7640, -73.9490];
+
+            // Geo bounds
+            var maxLat = 40.882, minLat = 40.698;
+            var minLng = -74.024, maxLng = -73.913;
+            var latRange = maxLat - minLat;  // 0.184
+            var lngRange = maxLng - minLng;  // 0.111
+            var cosLat = Math.cos(40.79 * Math.PI / 180); // ~0.757
 
             function resizeMap() {
                 var rect = mc.getBoundingClientRect();
@@ -2875,6 +2931,36 @@
                 mc.height = rect.height * dpr;
                 mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
                 drawMap();
+            }
+
+            // Convert lat/lng to canvas pixels, maintaining real aspect ratio
+            function geoToCanvas(lat, lng, w, h) {
+                var physH = latRange * 111.0;                    // ~20.4 km
+                var physW = lngRange * 111.0 * cosLat;           // ~9.3 km
+                var aspect = physW / physH;                      // ~0.456
+
+                // Fit island to canvas with padding
+                var pad = 0.06;
+                var availH = h * (1 - 2*pad);
+                var availW = w * (1 - 2*pad);
+
+                // Scale to fit
+                var scale;
+                if (availH * aspect < availW) {
+                    scale = availH;
+                } else {
+                    scale = availW / aspect;
+                }
+                var drawH = scale;
+                var drawW = scale * aspect;
+
+                var offX = (w - drawW) / 2;
+                var offY = (h - drawH) / 2;
+
+                var nx = (lng - minLng) / lngRange;
+                var ny = (maxLat - lat) / latRange;
+
+                return { x: offX + nx * drawW, y: offY + ny * drawH };
             }
 
             var mapT = 0;
@@ -2889,19 +2975,19 @@
                 mctx.fillStyle = waterGrad;
                 mctx.fillRect(0, 0, w, h);
 
-                // Draw Manhattan island
+                // Draw Manhattan island from real shoreline coords
+                var p0 = geoToCanvas(shoreline[0][0], shoreline[0][1], w, h);
                 mctx.beginPath();
-                mctx.moveTo(manhattanOutline[0][0]*w, manhattanOutline[0][1]*h);
-                for (var i = 1; i < manhattanOutline.length; i++) {
-                    // Smooth with quadratic curves
-                    if (i < manhattanOutline.length - 1) {
-                        var cpx = manhattanOutline[i][0]*w;
-                        var cpy = manhattanOutline[i][1]*h;
-                        var nx = (manhattanOutline[i][0]*w + manhattanOutline[i+1][0]*w) / 2;
-                        var ny = (manhattanOutline[i][1]*h + manhattanOutline[i+1][1]*h) / 2;
-                        mctx.quadraticCurveTo(cpx, cpy, nx, ny);
+                mctx.moveTo(p0.x, p0.y);
+                for (var i = 1; i < shoreline.length; i++) {
+                    var pt = geoToCanvas(shoreline[i][0], shoreline[i][1], w, h);
+                    if (i < shoreline.length - 1) {
+                        var nxt = geoToCanvas(shoreline[i+1][0], shoreline[i+1][1], w, h);
+                        var mx = (pt.x + nxt.x) / 2;
+                        var my = (pt.y + nxt.y) / 2;
+                        mctx.quadraticCurveTo(pt.x, pt.y, mx, my);
                     } else {
-                        mctx.lineTo(manhattanOutline[i][0]*w, manhattanOutline[i][1]*h);
+                        mctx.lineTo(pt.x, pt.y);
                     }
                 }
                 mctx.closePath();
@@ -2913,78 +2999,94 @@
                 mctx.fillStyle = islandGrad;
                 mctx.fill();
 
-                // Island border glow
+                // Border glow
                 mctx.strokeStyle = 'rgba(254,88,0,0.18)';
                 mctx.lineWidth = 1.5;
                 mctx.stroke();
-                // Second glow pass
                 mctx.strokeStyle = 'rgba(254,88,0,0.06)';
                 mctx.lineWidth = 4;
                 mctx.stroke();
 
-                // Street grid inside Manhattan (horizontal = streets, angled = avenues)
+                // Street grid clipped to island
                 mctx.save();
-                mctx.clip(); // Clip to island shape
-                mctx.strokeStyle = 'rgba(22,27,46,0.35)';
+                mctx.clip();
+                mctx.strokeStyle = 'rgba(22,27,46,0.3)';
                 mctx.lineWidth = 0.4;
-                // Horizontal streets
-                for (var sy = 0.10; sy < 0.85; sy += 0.035) {
+                // Horizontal streets — from real street positions (every ~10 blocks)
+                var streetLats = [];
+                for (var sl = 40.715; sl < 40.815; sl += 0.004) streetLats.push(sl);
+                streetLats.forEach(function(lat) {
+                    var left = geoToCanvas(lat, minLng, w, h);
+                    var right = geoToCanvas(lat, maxLng, w, h);
                     mctx.beginPath();
-                    mctx.moveTo(w*0.35, h*sy);
-                    mctx.lineTo(w*0.68, h*sy);
+                    mctx.moveTo(left.x, left.y);
+                    mctx.lineTo(right.x, right.y);
                     mctx.stroke();
-                }
-                // Vertical avenues (slightly angled to match Manhattan's tilt)
-                for (var sx = 0.39; sx < 0.64; sx += 0.025) {
+                });
+                // Avenues (vertical, slightly angled ~29° like real Manhattan grid)
+                var aveLngs = [];
+                for (var al = -74.010; al < -73.940; al += 0.003) aveLngs.push(al);
+                aveLngs.forEach(function(lng) {
+                    var top = geoToCanvas(40.82, lng + 0.002, w, h);
+                    var bot = geoToCanvas(40.71, lng - 0.002, w, h);
                     mctx.beginPath();
-                    mctx.moveTo(w*(sx+0.01), h*0.05);
-                    mctx.lineTo(w*(sx-0.01), h*0.90);
+                    mctx.moveTo(top.x, top.y);
+                    mctx.lineTo(bot.x, bot.y);
                     mctx.stroke();
-                }
-                // Broadway diagonal
+                });
+                // Broadway — the famous diagonal
                 mctx.strokeStyle = 'rgba(254,88,0,0.08)';
                 mctx.lineWidth = 1;
                 mctx.beginPath();
-                mctx.moveTo(w*0.500, h*0.10);
-                mctx.lineTo(w*0.540, h*0.40);
-                mctx.lineTo(w*0.510, h*0.60);
-                mctx.lineTo(w*0.520, h*0.85);
+                var bwy = [
+                    [40.8100, -73.9520], [40.7900, -73.9710], [40.7730, -73.9820],
+                    [40.7590, -73.9850], [40.7500, -73.9870], [40.7400, -73.9930],
+                    [40.7300, -73.9950], [40.7150, -73.9990], [40.7060, -74.0100]
+                ];
+                var bw0 = geoToCanvas(bwy[0][0], bwy[0][1], w, h);
+                mctx.moveTo(bw0.x, bw0.y);
+                for (var bi = 1; bi < bwy.length; bi++) {
+                    var bp = geoToCanvas(bwy[bi][0], bwy[bi][1], w, h);
+                    mctx.lineTo(bp.x, bp.y);
+                }
                 mctx.stroke();
                 mctx.restore();
 
-                // Central Park rectangle
+                // Central Park
+                var cpTL = geoToCanvas(cpNW[0], cpNW[1], w, h);
+                var cpBR = geoToCanvas(cpSE[0], cpSE[1], w, h);
+                var cpW = cpBR.x - cpTL.x;
+                var cpH = cpBR.y - cpTL.y;
                 mctx.fillStyle = 'rgba(8,145,178,0.06)';
                 mctx.strokeStyle = 'rgba(8,145,178,0.12)';
                 mctx.lineWidth = 0.8;
                 mctx.beginPath();
-                mctx.roundRect(w*0.455, h*0.170, w*0.095, h*0.160, 3);
+                mctx.roundRect(cpTL.x, cpTL.y, cpW, cpH, 3);
                 mctx.fill();
                 mctx.stroke();
-                mctx.fillStyle = 'rgba(8,145,178,0.4)';
+                mctx.fillStyle = 'rgba(8,145,178,0.35)';
                 mctx.font = '500 8px Lexend, sans-serif';
                 mctx.textAlign = 'center';
-                mctx.fillText('Central Park', w*0.503, h*0.255);
+                mctx.fillText('Central Park', cpTL.x + cpW/2, cpTL.y + cpH/2 + 3);
 
                 // Neighborhood dots and labels
                 neighborhoods.forEach(function(n) {
-                    var px = n.x * w, py = n.y * h;
-                    var pulseSize = n.onsite ? 3.5 + Math.sin(mapT * 2 + n.x * 10) * 1.5 : 2.5;
+                    var pos = geoToCanvas(n.lat, n.lng, w, h);
+                    var px = pos.x, py = pos.y;
+                    var pulseSize = n.onsite ? 3.5 + Math.sin(mapT * 2 + n.lat * 50) * 1.5 : 2.5;
 
-                    // Glow ring for on-site
                     if (n.onsite) {
-                        mctx.fillStyle = 'rgba(254,88,0,' + (0.08 + Math.sin(mapT * 1.5 + n.y * 5) * 0.04) + ')';
+                        mctx.fillStyle = 'rgba(254,88,0,' + (0.08 + Math.sin(mapT * 1.5 + n.lng * 20) * 0.04) + ')';
                         mctx.beginPath();
                         mctx.arc(px, py, 14 + Math.sin(mapT * 1.5) * 2, 0, Math.PI*2);
                         mctx.fill();
                     }
 
-                    // Dot
                     mctx.fillStyle = n.onsite ? '#FE5800' : 'rgba(8,145,178,0.5)';
                     mctx.beginPath();
                     mctx.arc(px, py, pulseSize, 0, Math.PI*2);
                     mctx.fill();
 
-                    // White dot center
                     if (n.onsite) {
                         mctx.fillStyle = 'rgba(255,255,255,0.8)';
                         mctx.beginPath();
@@ -2992,7 +3094,6 @@
                         mctx.fill();
                     }
 
-                    // Label
                     mctx.fillStyle = n.onsite ? 'rgba(240,240,236,0.85)' : 'rgba(138,142,160,0.5)';
                     mctx.font = (n.onsite ? '600 ' : '400 ') + '9px Lexend, sans-serif';
                     mctx.textAlign = 'center';
@@ -3002,14 +3103,16 @@
                 // River labels
                 mctx.fillStyle = 'rgba(8,145,178,0.2)';
                 mctx.font = 'italic 400 9px Lexend, sans-serif';
+                var hrPos = geoToCanvas(40.770, -74.015, w, h);
                 mctx.save();
-                mctx.translate(w*0.34, h*0.45);
-                mctx.rotate(-Math.PI/2 + 0.1);
+                mctx.translate(hrPos.x, hrPos.y);
+                mctx.rotate(-Math.PI/2 + 0.12);
                 mctx.fillText('Hudson River', 0, 0);
                 mctx.restore();
+                var erPos = geoToCanvas(40.755, -73.925, w, h);
                 mctx.save();
-                mctx.translate(w*0.67, h*0.45);
-                mctx.rotate(-Math.PI/2 - 0.1);
+                mctx.translate(erPos.x, erPos.y);
+                mctx.rotate(-Math.PI/2 - 0.12);
                 mctx.fillText('East River', 0, 0);
                 mctx.restore();
 
@@ -3021,7 +3124,6 @@
                 mctx.font = '500 10px Lexend, sans-serif';
                 mctx.textAlign = 'left';
                 mctx.fillText('On-site support', lx + 10, ly + 3.5);
-
                 mctx.fillStyle = 'rgba(8,145,178,0.5)';
                 mctx.beginPath(); mctx.arc(lx + 130, ly, 4, 0, Math.PI*2); mctx.fill();
                 mctx.fillStyle = 'rgba(240,240,236,0.5)';
