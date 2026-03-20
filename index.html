@@ -38,6 +38,9 @@
     <link rel="preload" href="/fonts/lexend-latin-variable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/caveat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" as="image" href="assets/afterhours-preview.webp">
+    <script type="importmap">
+    {"imports":{"three":"https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.min.js","three/addons/":"https://unpkg.com/three@0.164.1/examples/jsm/"}}
+    </script>
     <style>
 @font-face{font-family:'Lexend';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/lexend-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:'Lexend';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/lexend-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
@@ -72,7 +75,6 @@ h4{font-size:20px;margin-bottom:10px}
 .btn-orange:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(254, 88, 0, 0.4)}
 .btn-outline{background:transparent;color:#f0f0ec;border:2px solid #161b2e}
 .btn-outline:hover{background:#0d1120;border-color:#FE5800;color:#FE5800}
-#particle-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
 body > *{position:relative;z-index:1}
 .grain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:0.02}
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all 0.5s cubic-bezier(0.25,0.46,0.45,0.94)}
@@ -133,23 +135,22 @@ nav.scrolled .nav-container{height:56px}
 .nav-cta-btn{display:none}
 .nav-hamburger{display:flex}
 }
-.hero{padding-top:140px;padding-bottom:50px;text-align:left;margin-bottom:32px}
-.hero > .container{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero{padding-top:140px;padding-bottom:50px;text-align:left;margin-bottom:32px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative}
 .hero-content{max-width:600px}
-.hero-visual{position:relative;width:100%;height:480px;display:flex;align-items:center;justify-content:center}
-.pill-showcase{position:relative;width:100%;height:100%;overflow:hidden;background:#080b14;border-radius:12px}
-.pill-container{position:absolute;left:50%;top:50%;width:100%;height:100%;border-radius:999px;overflow:hidden;transform:translate(-50%, -50%) scale(0.8, 0.7);box-shadow:0 24px 90px rgba(0,0,0,0.46), 0 5px 18px rgba(0,0,0,0.35);will-change:transform}
-.pill-media{position:absolute;inset:0;background:#151515;background-size:cover;background-position:center}
-.pill-media .frame{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.022);transition:opacity 85ms linear, transform 380ms cubic-bezier(0.2, 1, 0.3, 1)}
-.pill-media .frame.active{opacity:1;transform:scale(1)}
-.pill-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(0,0,0,0.4) 100%);pointer-events:none;z-index:3}
-@media (max-width:960px){.hero > .container{grid-template-columns:1fr 0.8fr;gap:40px}
+.hero-visual{position:relative;width:100%;height:480px;border-radius:12px;overflow:hidden}
+.hero-visual canvas{width:100%;height:100%;display:block;touch-action:pan-y}
+.canvas-overlay{position:absolute;inset:0;background:#080b14;z-index:1;transition:opacity 0.4s ease-out;pointer-events:none}
+.canvas-overlay.revealed{opacity:0}
+.audio-toggle{position:fixed;bottom:2rem;right:2rem;width:3rem;height:3rem;border-radius:50%;background:rgba(8,139,178,0.15);border:1.5px solid #0891B2;color:#F0F0EC;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:background-color 0.2s ease;min-height:44px;min-width:44px}
+.audio-toggle:hover{background:rgba(8,139,178,0.25)}
+@media(prefers-reduced-motion:reduce){.hero-visual canvas,.canvas-overlay,.audio-toggle{display:none}.hero-visual{background:linear-gradient(135deg,#0c1020,#111730 50%,rgba(254,88,0,0.08))}}
+@media (max-width:960px){.hero{grid-template-columns:1fr 0.8fr;gap:40px}
 .hero-visual{height:380px}
 .services-grid{grid-template-columns:repeat(2, 1fr) !important}
 .promise-grid{grid-template-columns:repeat(2, 1fr) !important}
 .why-grid{grid-template-columns:repeat(2, 1fr) !important}
 }
-@media (max-width:768px){.hero > .container{grid-template-columns:1fr;gap:32px;text-align:center}
+@media (max-width:768px){.hero{grid-template-columns:1fr;gap:32px;text-align:center}
 .hero-content{max-width:100%}
 .hero h1{font-size:clamp(2rem, 8vw, 3rem)}
 .hero-buttons{justify-content:center}
@@ -668,7 +669,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
 </head>
 <body style="background:#080b14">
     <div class="scroll-progress" id="scrollProgress"></div>
-    <canvas id="particle-canvas"></canvas>
 
     <svg class="grain" xmlns="http://www.w3.org/2000/svg">
         <filter id="noise">
@@ -764,13 +764,13 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                     </div>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="pill-showcase" id="pillShowcase">
-                    <div class="pill-container" id="pillContainer">
-                        <div class="pill-media" id="pillMedia"></div>
-                    </div>
-                </div>
+            <div class="hero-visual hero-3d-container">
+                <canvas id="hero-3d-canvas"></canvas>
+                <div class="canvas-overlay"></div>
             </div>
+            <button class="audio-toggle" id="audioToggle" aria-label="Toggle ambient sound">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            </button>
         </section>
 
         <!-- SOCIAL PROOF TICKER -->
@@ -2195,8 +2195,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
     </footer>
 
     <!-- GSAP for pill scroll animation -->
-    <script src="vendor/gsap.min.js"></script>
-    <script src="vendor/ScrollTrigger.min.js"></script>
 
     <script>
         function navigateTo(page) {
@@ -2260,63 +2258,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
             }
         }, { passive: true });
 
-        const canvas = document.getElementById('particle-canvas');
-        // Skip particle animation on mobile for performance
-        if (canvas && window.innerWidth >= 768) {
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.vx = (Math.random() - 0.5) * 0.5;
-                    this.vy = (Math.random() - 0.5) * 0.5;
-                    this.size = Math.random() * 2 + 1;
-                    this.opacity = Math.random() * 0.5 + 0.2;
-                }
-                update() {
-                    this.x += this.vx; this.y += this.vy;
-                    if (this.x < 0) this.x = canvas.width;
-                    if (this.x > canvas.width) this.x = 0;
-                    if (this.y < 0) this.y = canvas.height;
-                    if (this.y > canvas.height) this.y = 0;
-                }
-                draw() {
-                    ctx.fillStyle = `rgba(254, 88, 0, ${this.opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            const particles = [];
-            for (let i = 0; i < 40; i++) { particles.push(new Particle()); }
-
-            let particlesRunning = true;
-            function animateParticles() {
-                if (!particlesRunning) return;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => { p.update(); p.draw(); });
-                requestAnimationFrame(animateParticles);
-            }
-
-            // Pause when tab is hidden
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) { particlesRunning = false; }
-                else if (!particlesRunning) { particlesRunning = true; animateParticles(); }
-            });
-
-            animateParticles();
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
-        } else if (canvas) {
-            canvas.style.display = 'none';
-        }
-
         const fadeElements = document.querySelectorAll('.fade-in');
         const fadeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -2370,106 +2311,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                 }
             });
         }
-
-        // ── Pill Scroll Animation ──
-        (function() {
-            var showcase = document.getElementById('pillShowcase');
-            var container = document.getElementById('pillContainer');
-            var media = document.getElementById('pillMedia');
-            if (!showcase || !container || !media) return;
-
-            var isMobile = window.innerWidth < 768;
-            var allSources = [
-                "assets/pill-scroll/nyc-streets-businesses1-2.webp",
-                "assets/pill-scroll/nyc-streets-businesses2-2.webp",
-                "assets/pill-scroll/nyc-streets-businesses3-2.webp",
-                "assets/pill-scroll/nyc-streets-businesses4-2.webp",
-                "assets/pill-scroll/nyc-streets-businesses5.webp",
-                "assets/pill-scroll/nyc-streets-businesses6.webp",
-                "assets/pill-scroll/nyc-streets-businesses7.webp",
-                "assets/pill-scroll/nyc-cafes1-2.webp",
-                "assets/pill-scroll/nyc-cafes2-2.webp",
-                "assets/pill-scroll/nyc-grand-central-busy-2.webp",
-                "assets/pill-scroll/nyc-brooklyn-2.webp",
-                "assets/pill-scroll/nyc-small-business-owner-2.webp",
-                "assets/pill-scroll/nyc-outdoor-bar-2.webp",
-                "assets/pill-scroll/nyc-retail-2.webp",
-                "assets/pill-scroll/nyc-web-design.webp",
-                "assets/pill-scroll/website-design-nyc-1.webp"
-            ];
-            // On mobile: load 8 images (every other), fewer loops. Saves ~1MB.
-            var sources = isMobile ? allSources.filter(function(_, i) { return i % 2 === 0; }) : allSources;
-            var loops = isMobile ? 2 : 4;
-
-            var frames = [];
-            var activeIndex = 0;
-
-            // Preload frames
-            sources.forEach(function(src, idx) {
-                var img = document.createElement('img');
-                img.className = 'frame' + (idx === 0 ? ' active' : '');
-                img.alt = 'NYC small business ' + (idx + 1);
-                img.loading = idx < 2 ? 'eager' : 'lazy';
-                img.src = src;
-                media.appendChild(img);
-                frames.push(img);
-            });
-
-            function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
-
-            function setFrame(index) {
-                var safe = clamp(index, 0, frames.length - 1);
-                if (safe === activeIndex) return;
-                frames[activeIndex].classList.remove('active');
-                frames[safe].classList.add('active');
-                activeIndex = safe;
-            }
-
-            // Cycle through frames based on scroll
-            function getFrameIndex(progress) {
-                var t = clamp(progress, 0, 1);
-                var step = Math.floor(t * (frames.length - 1) * loops);
-                return step % (frames.length - 1);
-            }
-
-            // Animate pill expansion on scroll — GPU-composited via transform
-            function render(progress) {
-                var p = clamp(progress, 0, 1);
-                var ease = 1 - Math.pow(2, -10 * p); // easeOutExpo
-
-                // Scale from 0.8/0.7 to 1.0/1.0 using transform (GPU compositable)
-                var sx = 0.8 + (0.2 * ease);
-                var sy = 0.7 + (0.3 * ease);
-                var r = 999 * (1 - ease);  // 999px -> 0
-
-                container.style.transform = 'translate(-50%, -50%) scale(' + sx + ', ' + sy + ')';
-                container.style.borderRadius = r + 'px';
-
-                setFrame(getFrameIndex(p));
-            }
-
-            // GSAP ScrollTrigger (if available)
-            if (window.gsap && window.ScrollTrigger) {
-                gsap.registerPlugin(ScrollTrigger);
-                ScrollTrigger.create({
-                    trigger: showcase,
-                    start: "top 60%",
-                    end: "bottom 20%",
-                    scrub: 0.5,
-                    onUpdate: function(self) { render(self.progress); }
-                });
-            } else {
-                // Fallback: auto-cycle without scroll
-                var autoProgress = 0;
-                function autoAnimate() {
-                    autoProgress += 0.003;
-                    if (autoProgress > 1) autoProgress = 0;
-                    render(autoProgress);
-                    requestAnimationFrame(autoAnimate);
-                }
-                autoAnimate();
-            }
-        })();
 
         // ── SCROLL PROGRESS BAR ──
         (function() {
@@ -2560,7 +2401,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
             var hero = document.querySelector('.hero');
             if (!hero) return;
             var orbs = hero.querySelectorAll('.orb');
-            var heroVisual = document.querySelector('.hero-visual');
             window.addEventListener('scroll', function() {
                 var y = window.scrollY;
                 if (y > 800) return;
@@ -2568,9 +2408,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                     var speed = 0.15 + i * 0.08;
                     orb.style.transform = 'translateY(' + (-y * speed) + 'px)';
                 });
-                if (heroVisual) {
-                    heroVisual.style.transform = 'translateY(' + (y * 0.05) + 'px)';
-                }
             }, { passive: true });
         })();
 
@@ -3040,5 +2877,14 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
         <a href="tel:+16463600318" class="mobile-sticky-phone">📞 Call Now</a>
         <a href="#contact" class="mobile-sticky-cta" onclick="navigateTo('contact')">Get Help →</a>
     </div>
+    <script type="module">
+    import { init, initAudio } from './js/hero-3d.js';
+    const container = document.querySelector('.hero-3d-container');
+    if (container) {
+        init(container);
+        const audioBtn = document.getElementById('audioToggle');
+        if (audioBtn) initAudio(audioBtn);
+    }
+    </script>
 </body>
 </html>
