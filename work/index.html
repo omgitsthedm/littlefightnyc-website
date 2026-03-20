@@ -32,9 +32,12 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#FF5A00" />
-    <link rel="stylesheet" href="/css/styles.css?v=20260208" />
-    <link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208" />
-    <link rel="stylesheet" href="/css/services.css?v=20260208" />
+    <link rel="stylesheet" href="/css/styles.css?v=20260208" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/css/styles.css?v=20260208"></noscript>
+    <link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208"></noscript>
+    <link rel="stylesheet" href="/css/services.css?v=20260208" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/css/services.css?v=20260208"></noscript>
     <style>
       .building-viewer-block {
         margin-top: 36px;
@@ -298,7 +301,7 @@
                 <img
                   src="/images/lf-photo-set/nyc_retail.webp"
                   alt="Hospitality POS environment with branded assets"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   width="1600"
                   height="1000"
@@ -323,7 +326,7 @@
                 <img
                   src="/images/lf-photo-set/apple_device_set_up.webp"
                   alt="Apple device setup and management workflow preview"
-                  loading="lazy"
+                  loading="eager"
                   decoding="async"
                   width="1600"
                   height="1000"
