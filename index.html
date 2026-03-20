@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='12' fill='%23FE5800'/%3E%3Ctext x='50' y='28' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='800' font-size='24'%3ELITTLE%3C/text%3E%3Ctext x='50' y='56' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='800' font-size='26'%3EFIGHT%3C/text%3E%3Ctext x='50' y='82' text-anchor='middle' fill='white' font-family='system-ui,sans-serif' font-weight='800' font-size='24'%3ENYC%3C/text%3E%3C/svg%3E">
     <title>Little Fight NYC — NYC's Concierge Tech Support</title>
     <meta name="description" content="NYC's concierge tech support for small businesses. On-site IT help in Manhattan, bespoke websites, local SEO, POS setup, and Apple device management. 2-hour response time. First hour free. Call (646) 360-0318.">
     <meta name="keywords" content="IT support NYC, tech support Manhattan, small business IT, website design NYC, local SEO NYC, POS setup, Apple MDM, computer repair Manhattan, Wi-Fi setup NYC, on-site IT support">
@@ -33,7 +32,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23FE5800'/%3E%3Ctext x='50' y='28' text-anchor='middle' fill='white' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='22' letter-spacing='-1'%3ELITTLE%3C/text%3E%3Ctext x='50' y='56' text-anchor='middle' fill='white' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='24' letter-spacing='-1'%3EFIGHT%3C/text%3E%3Ctext x='50' y='82' text-anchor='middle' fill='white' font-family='system-ui,-apple-system,sans-serif' font-weight='800' font-size='22' letter-spacing='-1'%3ENYC%3C/text%3E%3C/svg%3E">
 
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +51,6 @@
             font-family: 'Lexend', sans-serif;
             font-weight: 400;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         .container {
@@ -302,7 +299,7 @@
             overflow: hidden;
             transform: translate(-50%, -50%) scale(0.8, 0.7);
             box-shadow: 0 24px 90px rgba(0,0,0,0.46), 0 5px 18px rgba(0,0,0,0.35);
-            will-change: transform, border-radius;
+            will-change: transform;
         }
         .pill-media {
             position: absolute;
@@ -354,13 +351,7 @@
             .stat-item { text-align: center; }
             .hero-visual { height: 260px; order: -1; }
             .nav-links { display: none !important; }
-            .nav-cta { display: none !important; }
-            .hamburger { display: flex !important; }
-            .services-grid { grid-template-columns: 1fr 1fr !important; }
-            .promise-grid { grid-template-columns: 1fr 1fr !important; }
-            .why-grid { grid-template-columns: 1fr 1fr !important; }
             .testimonials { grid-template-columns: 1fr 1fr !important; }
-            .coverage-grid { grid-template-columns: 1fr !important; }
             .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
         }
         /* ── Large phone ── */
@@ -371,7 +362,6 @@
             .promise-grid { grid-template-columns: 1fr !important; }
             .why-grid { grid-template-columns: 1fr !important; }
             .testimonials { grid-template-columns: 1fr !important; }
-            .ba-grid { grid-template-columns: 1fr !important; }
             .footer-grid { grid-template-columns: 1fr !important; }
             .work-carousel { flex-direction: column; overflow-x: visible; gap: 16px; }
             .work-card { flex: none; width: 100%; }
@@ -520,78 +510,6 @@
             letter-spacing: 0.05em;
         }
 
-        .hidden-cost {
-            padding-top: 40px; padding-bottom: 40px;
-            background: linear-gradient(180deg, rgba(13, 17, 32, 0.5) 0%, rgba(8, 11, 20, 0) 100%);
-            margin-bottom: 40px;
-        }
-
-        .hidden-cost .container {
-            max-width: 700px;
-        }
-
-        .bar-graph {
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .bar-item {
-            margin-bottom: 28px;
-        }
-
-        .bar-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .bar-label-name {
-            font-weight: 600;
-            color: #f0f0ec;
-        }
-
-        .bar-label-value {
-            color: #FE5800;
-            font-weight: 800;
-        }
-
-        .bar-container {
-            background: rgba(22, 27, 46, 0.6);
-            border-radius: 6px;
-            height: 32px;
-            overflow: hidden;
-            border: 1px solid rgba(22, 27, 46, 0.8);
-        }
-
-        .bar {
-            height: 100%;
-            background: linear-gradient(90deg, #0891B2, #0C6A84);
-            width: 0;
-            transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 12px;
-        }
-
-        .bar-full {
-            background: linear-gradient(90deg, #FE5800, #FF6B35);
-        }
-
-        .hidden-cost-text {
-            text-align: center;
-            color: #8a8ea0;
-            margin-bottom: 24px;
-            font-size: 16px;
-        }
-
-        .hidden-cost-text strong {
-            color: #FE5800;
-            font-weight: 800;
-        }
-
         .services {
             padding-top: 40px; padding-bottom: 40px;
             margin-bottom: 40px;
@@ -603,13 +521,7 @@
             margin-bottom: 32px;
         }
 
-        .services-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            margin-bottom: 32px;
-        }
+
 
         /* building canvas removed */
 
@@ -665,9 +577,7 @@
             transition: transform 0.4s ease;
         }
 
-        .service-card:hover .service-icon {
-            transform: scale(1.1);
-        }
+
 
         .service-icon svg {
             width: 24px;
@@ -677,9 +587,6 @@
             fill: none;
         }
 
-        .service-card {
-            position: relative;
-        }
         .service-badge {
             position: absolute;
             top: -1px;
@@ -894,12 +801,6 @@
             display: inline-block;
         }
 
-        .work-card-quote {
-            color: #8a8ea0;
-            font-size: 13px;
-            font-style: italic;
-        }
-
         .work-card-narrative {
             color: #8a8ea0;
             font-size: 13px;
@@ -990,16 +891,6 @@
             margin-bottom: 40px;
         }
 
-        .coverage-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-        }
-
-        .coverage-column h3 {
-            margin-bottom: 24px;
-        }
-
         .coverage-list {
             display: flex;
             flex-wrap: wrap;
@@ -1078,7 +969,6 @@
         @keyframes faqSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
         .faq-card .faq-body a{color:#FE5800;text-decoration:none;font-weight:600}
         .faq-card .faq-body a:hover{text-decoration:underline}
-        }
 
         /* ═══ APPROACH TIMELINE ═══ */
         .approach-timeline {
@@ -1477,7 +1367,6 @@
         a, button { -webkit-tap-highlight-color: rgba(254, 88, 0, 0.1); }
 
         /* Font loading optimization */
-        @font-face { font-display: swap; }
 
         /* ═══ SCROLL PROGRESS BAR ═══ */
         .scroll-progress { position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#FE5800,#FF6B35,#0891B2);z-index:1001;width:0%;transition:width 0.1s linear;pointer-events:none; }
@@ -2088,11 +1977,11 @@
             </div>
 
             <div class="pill-nav">
-                <button class="pill active" data-filter="all" onclick="filterWork('all')">All</button>
-                <button class="pill" data-filter="fashion" onclick="filterWork('fashion')">Fashion</button>
-                <button class="pill" data-filter="nightlife" onclick="filterWork('nightlife')">Nightlife</button>
-                <button class="pill" data-filter="finance" onclick="filterWork('finance')">Finance</button>
-                <button class="pill" data-filter="film" onclick="filterWork('film')">Film</button>
+                <button class="pill active" data-filter="all" onclick="filterWork('all',event)">All</button>
+                <button class="pill" data-filter="fashion" onclick="filterWork('fashion',event)">Fashion</button>
+                <button class="pill" data-filter="nightlife" onclick="filterWork('nightlife',event)">Nightlife</button>
+                <button class="pill" data-filter="finance" onclick="filterWork('finance',event)">Finance</button>
+                <button class="pill" data-filter="film" onclick="filterWork('film',event)">Film</button>
             </div>
 
             <div class="work-carousel">
@@ -3318,14 +3207,14 @@
             });
         })();
 
+        const navEl = document.querySelector('nav');
         window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
+                navEl.classList.add('scrolled');
             } else {
-                nav.classList.remove('scrolled');
+                navEl.classList.remove('scrolled');
             }
-        });
+        }, { passive: true });
 
         const canvas = document.getElementById('particle-canvas');
         // Skip particle animation on mobile for performance
@@ -3372,7 +3261,7 @@
             // Pause when tab is hidden
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) { particlesRunning = false; }
-                else { particlesRunning = true; animateParticles(); }
+                else if (!particlesRunning) { particlesRunning = true; animateParticles(); }
             });
 
             animateParticles();
@@ -3383,22 +3272,6 @@
         } else if (canvas) {
             canvas.style.display = 'none';
         }
-
-        const barItems = document.querySelectorAll('.bar');
-        const observerOptions = { threshold: 0.5 };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.width = entry.target.style.getPropertyValue('--width');
-                }
-            });
-        }, observerOptions);
-
-        barItems.forEach(bar => {
-            bar.style.width = '0';
-            observer.observe(bar);
-        });
 
         const fadeElements = document.querySelectorAll('.fade-in');
         const fadeObserver = new IntersectionObserver((entries) => {
@@ -3418,8 +3291,6 @@
             var fill = document.getElementById('tlFill');
             var steps = tl.querySelectorAll('.tl-step');
             var totalSteps = steps.length;
-            var revealed = 0;
-
             var obs = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
@@ -3428,7 +3299,6 @@
                         // Stagger the reveal
                         setTimeout(function() {
                             step.classList.add('visible');
-                            revealed++;
                             // Animate the progress line
                             var pct = (idx / totalSteps) * 100;
                             fill.style.height = pct + '%';
@@ -3441,17 +3311,12 @@
             steps.forEach(function(s) { obs.observe(s); });
         })();
 
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            item.classList.toggle('open');
-        }
-
-        function filterWork(category) {
+        function filterWork(category, e) {
             const pills = document.querySelectorAll('.pill');
             const cards = document.querySelectorAll('.work-card');
 
             pills.forEach(pill => pill.classList.remove('active'));
-            event.target.classList.add('active');
+            if (e && e.target) e.target.classList.add('active');
 
             cards.forEach(card => {
                 if (category === 'all' || card.dataset.category === category) {
