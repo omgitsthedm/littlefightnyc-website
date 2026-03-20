@@ -181,27 +181,27 @@ export function init(container) {
   const T = 0.05, Y1 = 0.12, H1 = 0.22, Y2 = -0.16, H2 = 0.17;
   const OC = 0xFE5800, OE = 0xFF6B35, BL = 0x0891B2;
 
-  // "Little"
-  neonBars.push(NB(-.82, Y1, T, H1, OC), NB(-.76, Y1 - H1 / 2 + T / 2, .1, T, OC));
-  neonBars.push(NB(-.66, Y1 - .03, T, H1 * .6, OC), NB(-.66, Y1 + H1 / 2 - .01, T * .8, T * .8, OC));
-  neonBars.push(NB(-.57, Y1, T, H1, OC), NB(-.57, Y1 + H1 / 2 - T / 2, .1, T, OC));
-  neonBars.push(NB(-.46, Y1, T, H1, OC), NB(-.46, Y1 + H1 / 2 - T / 2, .1, T, OC));
-  neonBars.push(NB(-.36, Y1, T, H1, OC));
-  neonBars.push(NB(-.27, Y1, T, H1, OC), NB(-.21, Y1 + H1 / 2 - T / 2, .1, T, OC), NB(-.21, Y1, .1, T, OC), NB(-.21, Y1 - H1 / 2 + T / 2, .1, T, OC));
-  // "Fight"
-  neonBars.push(NB(-.04, Y1, T, H1, OE), NB(.03, Y1 + H1 / 2 - T / 2, .12, T, OE), NB(.01, Y1 + .01, .08, T, OE));
-  neonBars.push(NB(.14, Y1 - .03, T, H1 * .6, OE), NB(.14, Y1 + H1 / 2 - .01, T * .8, T * .8, OE));
-  // G: left vertical + top horizontal + bottom horizontal + right stub at mid
-  neonBars.push(NB(.24, Y1, T, H1, OE), NB(.31, Y1 + H1 / 2 - T / 2, .12, T, OE), NB(.31, Y1 - H1 / 2 + T / 2, .12, T, OE), NB(.37, Y1 - .02, T, H1 * .4, OE), NB(.33, Y1, .08, T, OE));
-  neonBars.push(NB(.48, Y1, T, H1, OE), NB(.48, Y1 + .01, .08, T, OE), NB(.55, Y1 - .05, T, H1 * .5, OE));
-  neonBars.push(NB(.65, Y1, T, H1, OE), NB(.65, Y1 + H1 / 2 - T / 2, .1, T, OE));
-  // "NYC, NY"
+  // "LI" (orange)
+  // L
+  neonBars.push(NB(-.45, Y1, T, H1, OC), NB(-.39, Y1 - H1 / 2 + T / 2, .1, T, OC));
+  // I
+  neonBars.push(NB(-.25, Y1, T, H1, OC));
+  // "FI" (orange-red)
+  // F
+  neonBars.push(NB(.05, Y1, T, H1, OE), NB(.12, Y1 + H1 / 2 - T / 2, .12, T, OE), NB(.10, Y1 + .01, .08, T, OE));
+  // I
+  neonBars.push(NB(.25, Y1, T, H1, OE));
+  // "NY, NY" (cyan)
+  // N
   neonBars.push(NB(-.28, Y2, T, H2, BL), NB(-.18, Y2, T, H2, BL), NB(-.23, Y2, .12, T * .7, BL));
+  // Y
   neonBars.push(NB(-.07, Y2 + H2 * .2, T, H2 * .5, BL), NB(.01, Y2 + H2 * .2, T, H2 * .5, BL), NB(-.03, Y2 - H2 * .15, T, H2 * .45, BL));
-  neonBars.push(NB(.12, Y2, T, H2, BL), NB(.18, Y2 + H2 / 2 - T / 2, .08, T, BL), NB(.18, Y2 - H2 / 2 + T / 2, .08, T, BL));
-  neonBars.push(NB(.27, Y2 - H2 / 2, T * .6, T * .6, BL));
-  neonBars.push(NB(.38, Y2, T, H2, BL), NB(.48, Y2, T, H2, BL), NB(.43, Y2, .12, T * .7, BL));
-  neonBars.push(NB(.58, Y2 + H2 * .2, T, H2 * .5, BL), NB(.66, Y2 + H2 * .2, T, H2 * .5, BL), NB(.62, Y2 - H2 * .15, T, H2 * .45, BL));
+  // comma
+  neonBars.push(NB(.09, Y2 - H2 / 2, T * .6, T * .6, BL));
+  // N
+  neonBars.push(NB(.22, Y2, T, H2, BL), NB(.32, Y2, T, H2, BL), NB(.27, Y2, .12, T * .7, BL));
+  // Y
+  neonBars.push(NB(.42, Y2 + H2 * .2, T, H2 * .5, BL), NB(.50, Y2 + H2 * .2, T, H2 * .5, BL), NB(.46, Y2 - H2 * .15, T, H2 * .45, BL));
 
   const neonLetters = neonBars.flat();
 
