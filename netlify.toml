@@ -77,6 +77,115 @@ for = "/*.png"
   [headers.values]
   Cache-Control = "public, max-age=31536000, immutable"
 
+# Avoid trailing-slash redirect chains
+[[redirects]]
+  from = "/services"
+  to = "/services/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/solutions"
+  to = "/solutions/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/blog/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/about"
+  to = "/about/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/work"
+  to = "/work/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/website-design-small-business-nyc"
+  to = "/services/website-design-small-business-nyc/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/on-site-it-support-nyc"
+  to = "/services/on-site-it-support-nyc/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/pos-and-register-setup-nyc"
+  to = "/services/pos-and-register-setup-nyc/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/local-seo-and-google-ads-nyc"
+  to = "/services/local-seo-and-google-ads-nyc/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/apple-device-setup-and-management"
+  to = "/services/apple-device-setup-and-management/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/smart-home-services-nyc"
+  to = "/services/smart-home-services-nyc/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/tech-consulting-small-business"
+  to = "/services/tech-consulting-small-business/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/branding-and-identity-design"
+  to = "/services/branding-and-identity-design/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/services/ecommerce-setup-shopify-square-woocommerce"
+  to = "/services/ecommerce-setup-shopify-square-woocommerce/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/ai-google-broke-the-internet-websites-survive"
+  to = "/ai-google-broke-the-internet-websites-survive/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/what-google-looks-for-business-website"
+  to = "/what-google-looks-for-business-website/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/why-business-websites-will-be-invisible"
+  to = "/why-business-websites-will-be-invisible/"
+  status = 200
+  force = true
+
 [[redirects]]
 from = "/website-design-small-business-nyc/"
 to = "/services/website-design-small-business-nyc/"
