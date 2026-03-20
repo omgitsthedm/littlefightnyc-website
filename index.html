@@ -284,10 +284,54 @@
             justify-content: center;
         }
 
-        .hero-visual canvas {
+        .pill-showcase {
+            position: relative;
             width: 100%;
             height: 100%;
-            border-radius: 16px;
+            overflow: hidden;
+            background: #080b14;
+            border-radius: 12px;
+        }
+        .pill-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 80%;
+            height: 70%;
+            border-radius: 999px;
+            overflow: hidden;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 24px 90px rgba(0,0,0,0.46), 0 5px 18px rgba(0,0,0,0.35);
+            will-change: width, height, border-radius, box-shadow;
+        }
+        .pill-media {
+            position: absolute;
+            inset: 0;
+            background: #151515;
+            background-size: cover;
+            background-position: center;
+        }
+        .pill-media .frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.022);
+            transition: opacity 85ms linear, transform 380ms cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .pill-media .frame.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .pill-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(0,0,0,0.4) 100%);
+            pointer-events: none;
+            z-index: 3;
         }
 
         /* ── Tablet landscape ── */
@@ -1556,7 +1600,11 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <canvas id="hero-anim"></canvas>
+                <div class="pill-showcase" id="pillShowcase">
+                    <div class="pill-container" id="pillContainer">
+                        <div class="pill-media" id="pillMedia"></div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -2387,7 +2435,10 @@
         </div>
     </footer>
 
-    <!-- Three.js removed — using canvas 2D for hero animation -->
+    <!-- GSAP for pill scroll animation -->
+    <script src="vendor/gsap.min.js"></script>
+    <script src="vendor/ScrollTrigger.min.js"></script>
+
     <script>
         function navigateTo(page) {
             var current = document.querySelector('.page-section.active');
@@ -2583,141 +2634,103 @@
             });
         }
 
-        // ── Hero Animation: NYC Skyline ──
+        // ── Pill Scroll Animation ──
         (function() {
-            var hc = document.getElementById('hero-anim');
-            if (!hc) return;
-            var hctx = hc.getContext('2d');
-            var w, h;
-            function resizeHero() {
-                var rect = hc.parentElement.getBoundingClientRect();
-                w = hc.width = rect.width * 2;
-                h = hc.height = rect.height * 2;
-                hctx.scale(2, 2);
-            }
-            resizeHero();
-            window.addEventListener('resize', resizeHero);
+            var showcase = document.getElementById('pillShowcase');
+            var container = document.getElementById('pillContainer');
+            var media = document.getElementById('pillMedia');
+            if (!showcase || !container || !media) return;
 
-            var buildings = [];
-            var bw = w / 2;
-            var count = 14;
-            for (var i = 0; i < count; i++) {
-                var bWidth = 20 + Math.random() * 40;
-                var bHeight = 80 + Math.random() * 200;
-                var bx = (i / count) * (bw) + Math.random() * 10;
-                buildings.push({
-                    x: bx, w: bWidth, h: bHeight,
-                    windows: [],
-                    color: 'rgba(13,' + (17 + Math.floor(Math.random() * 20)) + ',' + (32 + Math.floor(Math.random() * 20)) + ',1)'
+            var sources = [
+                "assets/pill-scroll/nyc-streets-businesses1-2.webp",
+                "assets/pill-scroll/nyc-streets-businesses2-2.webp",
+                "assets/pill-scroll/nyc-streets-businesses3-2.webp",
+                "assets/pill-scroll/nyc-streets-businesses4-2.webp",
+                "assets/pill-scroll/nyc-streets-businesses5.webp",
+                "assets/pill-scroll/nyc-streets-businesses6.webp",
+                "assets/pill-scroll/nyc-streets-businesses7.webp",
+                "assets/pill-scroll/nyc-cafes1-2.webp",
+                "assets/pill-scroll/nyc-cafes2-2.webp",
+                "assets/pill-scroll/nyc-grand-central-busy-2.webp",
+                "assets/pill-scroll/nyc-brooklyn-2.webp",
+                "assets/pill-scroll/nyc-small-business-owner-2.webp",
+                "assets/pill-scroll/nyc-outdoor-bar-2.webp",
+                "assets/pill-scroll/nyc-retail-2.webp",
+                "assets/pill-scroll/nyc-web-design.webp",
+                "assets/pill-scroll/website-design-nyc-1.webp"
+            ];
+
+            var frames = [];
+            var activeIndex = 0;
+
+            // Preload frames
+            sources.forEach(function(src, idx) {
+                var img = document.createElement('img');
+                img.className = 'frame' + (idx === 0 ? ' active' : '');
+                img.alt = 'NYC small business ' + (idx + 1);
+                img.loading = idx < 2 ? 'eager' : 'lazy';
+                img.src = src;
+                media.appendChild(img);
+                frames.push(img);
+            });
+
+            function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
+
+            function setFrame(index) {
+                var safe = clamp(index, 0, frames.length - 1);
+                if (safe === activeIndex) return;
+                frames[activeIndex].classList.remove('active');
+                frames[safe].classList.add('active');
+                activeIndex = safe;
+            }
+
+            // Rapid cycle through frames based on scroll
+            function getFrameIndex(progress) {
+                var t = clamp(progress, 0, 1);
+                var loops = 6;
+                var step = Math.floor(t * (frames.length - 1) * loops);
+                return step % (frames.length - 1);
+            }
+
+            // Animate pill expansion on scroll
+            function render(progress) {
+                var p = clamp(progress, 0, 1);
+                var ease = 1 - Math.pow(2, -10 * p); // easeOutExpo
+
+                // Expand from pill to full container
+                var w = 80 + (20 * ease);  // 80% -> 100%
+                var h = 70 + (30 * ease);  // 70% -> 100%
+                var r = 999 * (1 - ease);  // 999px -> 0
+
+                container.style.width = w + '%';
+                container.style.height = h + '%';
+                container.style.borderRadius = r + 'px';
+
+                setFrame(getFrameIndex(p));
+            }
+
+            // GSAP ScrollTrigger (if available)
+            if (window.gsap && window.ScrollTrigger) {
+                gsap.registerPlugin(ScrollTrigger);
+                ScrollTrigger.create({
+                    trigger: showcase,
+                    start: "top 60%",
+                    end: "bottom 20%",
+                    scrub: 0.5,
+                    onUpdate: function(self) { render(self.progress); }
                 });
-                // windows
-                var cols = Math.floor(bWidth / 12);
-                var rows = Math.floor(bHeight / 18);
-                for (var r = 0; r < rows; r++) {
-                    for (var c = 0; c < cols; c++) {
-                        buildings[i].windows.push({
-                            rx: 4 + c * 12, ry: 8 + r * 18,
-                            lit: Math.random() > 0.35,
-                            flicker: Math.random() * 0.02,
-                            phase: Math.random() * Math.PI * 2
-                        });
-                    }
+            } else {
+                // Fallback: auto-cycle without scroll
+                var autoProgress = 0;
+                function autoAnimate() {
+                    autoProgress += 0.003;
+                    if (autoProgress > 1) autoProgress = 0;
+                    render(autoProgress);
+                    requestAnimationFrame(autoAnimate);
                 }
+                autoAnimate();
             }
-
-            var stars = [];
-            for (var s = 0; s < 60; s++) {
-                stars.push({ x: Math.random() * bw, y: Math.random() * (h/2 - 100), r: Math.random() * 1.2 + 0.3, phase: Math.random() * Math.PI * 2 });
-            }
-
-            var t = 0;
-            function drawHero() {
-                t += 0.01;
-                var hw = w / 2, hh = h / 2;
-                hctx.clearRect(0, 0, hw, hh);
-
-                // sky gradient
-                var grad = hctx.createLinearGradient(0, 0, 0, hh);
-                grad.addColorStop(0, '#050810');
-                grad.addColorStop(0.6, '#0a1025');
-                grad.addColorStop(1, '#101832');
-                hctx.fillStyle = grad;
-                hctx.fillRect(0, 0, hw, hh);
-
-                // stars
-                stars.forEach(function(s) {
-                    var twinkle = 0.4 + 0.6 * Math.abs(Math.sin(t * 0.5 + s.phase));
-                    hctx.fillStyle = 'rgba(255,255,255,' + (twinkle * 0.7) + ')';
-                    hctx.beginPath();
-                    hctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                    hctx.fill();
-                });
-
-                // moon glow
-                hctx.fillStyle = 'rgba(254, 88, 0, 0.04)';
-                hctx.beginPath();
-                hctx.arc(hw * 0.75, 60, 80, 0, Math.PI * 2);
-                hctx.fill();
-                hctx.fillStyle = 'rgba(254, 88, 0, 0.08)';
-                hctx.beginPath();
-                hctx.arc(hw * 0.75, 60, 35, 0, Math.PI * 2);
-                hctx.fill();
-
-                // buildings
-                var groundY = hh - 20;
-                buildings.forEach(function(b) {
-                    hctx.fillStyle = b.color;
-                    hctx.fillRect(b.x, groundY - b.h, b.w, b.h);
-
-                    // windows
-                    b.windows.forEach(function(win) {
-                        if (win.lit) {
-                            var brightness = 0.5 + 0.5 * Math.sin(t * win.flicker * 60 + win.phase);
-                            var orangeAmt = Math.floor(88 + brightness * 40);
-                            hctx.fillStyle = 'rgba(254,' + orangeAmt + ',0,' + (0.4 + brightness * 0.5) + ')';
-                        } else {
-                            hctx.fillStyle = 'rgba(20,28,50,0.8)';
-                        }
-                        hctx.fillRect(b.x + win.rx, groundY - b.h + win.ry, 7, 10);
-                    });
-                });
-
-                // ground line glow
-                hctx.strokeStyle = 'rgba(254,88,0,0.15)';
-                hctx.lineWidth = 1;
-                hctx.beginPath();
-                hctx.moveTo(0, groundY);
-                hctx.lineTo(hw, groundY);
-                hctx.stroke();
-
-                // reflection
-                hctx.fillStyle = 'rgba(254,88,0,0.02)';
-                hctx.fillRect(0, groundY, hw, 20);
-
-                // Floating brand badge
-                var badgeX = hw * 0.5 + Math.sin(t * 0.8) * 8;
-                var badgeY = groundY - 130 + Math.cos(t * 0.6) * 5;
-                var bw2 = 38, bh2 = 38;
-                hctx.fillStyle = '#FE5800';
-                hctx.beginPath();
-                hctx.roundRect(badgeX - bw2/2, badgeY - bh2/2, bw2, bh2, 4);
-                hctx.fill();
-                hctx.fillStyle = '#fff';
-                hctx.font = '800 8px Lexend, sans-serif';
-                hctx.textAlign = 'center';
-                hctx.textBaseline = 'middle';
-                hctx.fillText('LITTLE', badgeX, badgeY - 10);
-                hctx.font = '800 9px Lexend, sans-serif';
-                hctx.fillText('FIGHT', badgeX, badgeY + 2);
-                hctx.font = '800 8px Lexend, sans-serif';
-                hctx.fillText('NYC', badgeX, badgeY + 13);
-
-                requestAnimationFrame(drawHero);
-            }
-            drawHero();
         })();
-
-        // 3D building removed — replaced with hero skyline animation
 
         // ── SCROLL PROGRESS BAR ──
         (function() {
@@ -2808,7 +2821,7 @@
             var hero = document.querySelector('.hero');
             if (!hero) return;
             var orbs = hero.querySelectorAll('.orb');
-            var heroCanvas = document.getElementById('hero-anim');
+            var heroVisual = document.querySelector('.hero-visual');
             window.addEventListener('scroll', function() {
                 var y = window.scrollY;
                 if (y > 800) return;
@@ -2816,8 +2829,8 @@
                     var speed = 0.15 + i * 0.08;
                     orb.style.transform = 'translateY(' + (-y * speed) + 'px)';
                 });
-                if (heroCanvas) {
-                    heroCanvas.style.transform = 'translateY(' + (y * 0.05) + 'px)';
+                if (heroVisual) {
+                    heroVisual.style.transform = 'translateY(' + (y * 0.05) + 'px)';
                 }
             }, { passive: true });
         })();
