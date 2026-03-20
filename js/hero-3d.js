@@ -26,9 +26,9 @@ export function init(container) {
   canvas.height = H;
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 60);
-  camera.position.set(0.5, 3, 12);
-  camera.lookAt(0.5, 2, 0);
+  const camera = new THREE.PerspectiveCamera(40, W / H, 0.1, 60);
+  camera.position.set(0.5, 2.2, 11);
+  camera.lookAt(0.5, 2.5, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
   renderer.setSize(W, H);
@@ -191,7 +191,8 @@ export function init(container) {
   // "Fight"
   neonBars.push(NB(-.04, Y1, T, H1, OE), NB(.03, Y1 + H1 / 2 - T / 2, .12, T, OE), NB(.01, Y1 + .01, .08, T, OE));
   neonBars.push(NB(.14, Y1 - .03, T, H1 * .6, OE), NB(.14, Y1 + H1 / 2 - .01, T * .8, T * .8, OE));
-  neonBars.push(NB(.24, Y1 + .02, T, H1 * .8, OE), NB(.31, Y1 + H1 / 2 - T / 2, .12, T, OE), NB(.31, Y1 - .01, .12, T, OE), NB(.37, Y1 + .06, T, H1 * .55, OE), NB(.31, Y1 - H1 / 2 + T / 2, .12, T, OE));
+  // G: left vertical + top horizontal + bottom horizontal + right stub at mid
+  neonBars.push(NB(.24, Y1, T, H1, OE), NB(.31, Y1 + H1 / 2 - T / 2, .12, T, OE), NB(.31, Y1 - H1 / 2 + T / 2, .12, T, OE), NB(.37, Y1 - .02, T, H1 * .4, OE), NB(.33, Y1, .08, T, OE));
   neonBars.push(NB(.48, Y1, T, H1, OE), NB(.48, Y1 + .01, .08, T, OE), NB(.55, Y1 - .05, T, H1 * .5, OE));
   neonBars.push(NB(.65, Y1, T, H1, OE), NB(.65, Y1 + H1 / 2 - T / 2, .1, T, OE));
   // "NYC, NY"
@@ -350,16 +351,6 @@ void main(){
   ambientParticles.userData.opacity = 0;
   scene.add(ambientParticles);
 
-  const shootingStarGeo = new THREE.BufferGeometry();
-  const shootingStarMat = new THREE.LineBasicMaterial({
-    color: new THREE.Color(0xFFFFFF),
-    transparent: true,
-    linewidth: 2
-  });
-  let shootingStarLine = null;
-  let lastShootingStarTime = 0;
-  let shootingStarAge = 99;
-  let nextShootingStarDelay = 5 + Math.random() * 4;
 
   const clock = new THREE.Clock();
   let startTime = null;
@@ -498,28 +489,11 @@ void main(){
     ambientParticles.userData.opacity += (0.4 - ambientParticles.userData.opacity) * 0.02;
     ambientParticles.material.opacity = ambientParticles.userData.opacity;
 
-    if (elapsed - lastShootingStarTime > nextShootingStarDelay) {
-      lastShootingStarTime = elapsed;
-      nextShootingStarDelay = 5 + Math.random() * 4;
-      shootingStarAge = 0;
-      const startPos = new THREE.Vector3((Math.random() - 0.5) * 20, 15, (Math.random() - 0.5) * 20);
-      const endPos = new THREE.Vector3((Math.random() - 0.5) * 15, -5, (Math.random() - 0.5) * 15);
-      if (shootingStarLine) scene.remove(shootingStarLine);
-      const ssGeo = new THREE.BufferGeometry().setFromPoints([startPos, endPos]);
-      shootingStarLine = new THREE.Line(ssGeo, shootingStarMat);
-      shootingStarMat.opacity = 1;
-      scene.add(shootingStarLine);
-    }
-    if (shootingStarLine) {
-      shootingStarAge = elapsed - lastShootingStarTime;
-      shootingStarMat.opacity = Math.max(0, 1 - shootingStarAge / 0.4);
-      if (shootingStarMat.opacity <= 0) { scene.remove(shootingStarLine); shootingStarLine = null; }
-    }
 
     if (hasScrolled) {
       const scrollPct = Math.min(window.scrollY / 500, 1);
-      camera.position.z = 10 - scrollPct * 2;
-      camera.position.y = 3 + scrollPct * 1;
+      camera.position.z = 11 - scrollPct * 2;
+      camera.position.y = 2.2 + scrollPct * 1;
     }
 
     controls.update();
