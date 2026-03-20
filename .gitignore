@@ -8,3 +8,5 @@ node_modules/
 docs/
 firebase-debug.log
 .claude/
+node_modules/
+package-lock.json
