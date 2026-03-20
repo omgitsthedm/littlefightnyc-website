@@ -910,6 +910,81 @@
             color: #f0f0ec;
         }
 
+        /* ═══ BLOG VISUAL ELEMENTS ═══ */
+        .blog-callout {
+            background: linear-gradient(135deg, rgba(254,88,0,0.06), rgba(254,88,0,0.02));
+            border-left: 3px solid #FE5800;
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 32px 0;
+        }
+        .blog-callout p { color: #c8c9d4; font-size: 15px; line-height: 1.7; margin: 0; }
+        .blog-callout strong { color: #f0f0ec; }
+        .blog-callout .callout-label {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: #FE5800; margin-bottom: 8px; display: block;
+        }
+
+        .blog-stat {
+            background: #0d1120;
+            border: 1px solid rgba(22,27,46,0.5);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin: 32px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .blog-stat-icon { font-size: 32px; flex-shrink: 0; }
+        .blog-stat-number {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 800;
+            font-size: clamp(1.8rem, 4vw, 2.4rem);
+            color: #FE5800;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .blog-stat-label { color: #8a8ea0; font-size: 14px; line-height: 1.5; }
+
+        .blog-tip {
+            background: linear-gradient(135deg, rgba(8,145,178,0.06), rgba(8,145,178,0.02));
+            border-left: 3px solid #0891B2;
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 32px 0;
+        }
+        .blog-tip p { color: #c8c9d4; font-size: 15px; line-height: 1.7; margin: 0; }
+        .blog-tip strong { color: #f0f0ec; }
+        .blog-tip .callout-label {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: #0891B2; margin-bottom: 8px; display: block;
+        }
+
+        .blog-warning {
+            background: linear-gradient(135deg, rgba(220,38,38,0.06), rgba(220,38,38,0.02));
+            border-left: 3px solid #DC2626;
+            border-radius: 0 10px 10px 0;
+            padding: 20px 24px;
+            margin: 32px 0;
+        }
+        .blog-warning p { color: #c8c9d4; font-size: 15px; line-height: 1.7; margin: 0; }
+        .blog-warning strong { color: #f0f0ec; }
+        .blog-warning .callout-label {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; color: #DC2626; margin-bottom: 8px; display: block;
+        }
+
+        .blog-pullquote {
+            border-left: 3px solid #FE5800;
+            padding: 4px 0 4px 24px;
+            margin: 36px 0;
+            font-family: 'Caveat', cursive;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: #f0f0ec;
+            line-height: 1.4;
+        }
+
         .coverage {
             padding-top: 40px; padding-bottom: 40px;
             margin-bottom: 40px;
@@ -2623,15 +2698,26 @@
             <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">AI and Google Broke the Internet (Here's How Websites Survive Now)</h1>
             <p style="color:#8a8ea0;font-size:17px;line-height:1.8;margin-bottom:40px">The internet changed overnight. Learn how Google search, AI summaries, and corporate content reshaped visibility online.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">What Actually Changed</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🌊 What Actually Changed</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">For years, search worked the same way: you typed a question, Google showed you ten blue links, and you picked one. That model is gone. Today, Google generates AI-powered summaries that pull information directly from websites and display it at the top of results. Users get their answer without ever visiting your site.</p>
+            <div class="blog-stat">
+                <div class="blog-stat-icon">📉</div>
+                <div>
+                    <div class="blog-stat-number">60%+</div>
+                    <div class="blog-stat-label">of Google searches now end without a click to any website</div>
+                </div>
+            </div>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">At the same time, massive corporate content operations have scaled up dramatically. Companies with dedicated teams publish hundreds of articles per week, flooding search results and pushing smaller sites further down the page. The combination of AI-extracted answers and content saturation means less traffic, less context, and less opportunity for independent businesses.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Why This Hits Local Businesses Hardest</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🏪 Why This Hits Local Businesses Hardest</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Local businesses are competing against organizations with bigger teams, larger budgets, and far more content. Authority signals in search — things like domain age, backlink volume, and content depth — naturally favor these larger players. A neighborhood restaurant or a local repair shop simply cannot produce content at the same scale as a media company or a franchise.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">This creates a visibility gap that keeps growing. The businesses that need local customers the most are the ones getting buried the fastest.</p>
+            <div class="blog-callout">
+                <span class="callout-label">💡 The Visibility Gap</span>
+                <p>The businesses that need local customers the most are the ones getting buried the fastest. This isn't a temporary dip — it's a structural shift in how search works.</p>
+            </div>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">What Surviving Websites Do Differently</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">💡 What Surviving Websites Do Differently</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:12px">The sites that still attract traffic share five traits:</p>
             <ul style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They answer real questions fast.</strong> No filler paragraphs. The answer is in the first sentence, with supporting detail below.</li>
@@ -2640,9 +2726,14 @@
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They connect strategy to proof.</strong> Every claim has a case study, a testimonial, or a specific example behind it.</li>
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They keep local trust front and center.</strong> Neighborhood-specific language, local partnerships, community involvement — all visible on the site.</li>
             </ul>
+            <div class="blog-tip">
+                <span class="callout-label">✅ Quick Self-Check</span>
+                <p><strong>Ask yourself:</strong> Can someone landing on your homepage understand what you do, where you are, and how to contact you — all within 5 seconds? If not, you're losing visitors before they even read a word.</p>
+            </div>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The New Standard</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🎯 The New Standard</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">AI did not kill websites. It killed lazy websites. The ones that were built once and never updated. The ones filled with stock photos and vague promises. The sites that survive today are fast, clear, and well-structured. They load quickly, say exactly what the business does, and give visitors a reason to trust them within seconds.</p>
+            <div class="blog-pullquote">AI didn't kill websites. It killed lazy websites.</div>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">This is the new baseline. Meeting it is not optional — it is the cost of being found.</p>
 
             <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
@@ -2692,15 +2783,16 @@
             <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">What Google Actually Looks For on a Business Website</h1>
             <p style="color:#8a8ea0;font-size:17px;line-height:1.8;margin-bottom:40px">Google evaluates credibility, clarity, and trust — not keyword density. Here's what actually matters for your business site.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Google Is Trying to Reduce Risk</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🛡️ Google Is Trying to Reduce Risk</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Every search is a small act of trust. When someone types a question into Google, the system has one job: deliver a result the user will not regret clicking on. Google is not looking for the cleverest website or the one with the most keywords. It is asking a simple question: "Will the user regret this recommendation?"</p>
+            <div class="blog-pullquote">Google isn't looking for the cleverest website. It's asking: "Will the user regret clicking this?"</div>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">That framing changes everything about how you should think about your site. You are not trying to trick an algorithm. You are trying to be the safest, most credible answer to a real question.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Keywords Are Labels, Not Levers</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🏷️ Keywords Are Labels, Not Levers</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">There was a time when repeating a phrase enough times would push your page up in results. That era is long over. Today, Google understands natural language well enough to know what a page is about without needing the exact phrase repeated twenty times. Clear, natural explanations outperform robotic keyword-stuffed phrasing every time.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Keywords still matter as labels — they tell Google what topic your page covers. But the way you use them should feel conversational, not mechanical.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Four Things Google Actually Evaluates</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔍 Four Things Google Actually Evaluates</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:12px">When Google crawls your business website, it is looking for four signals:</p>
             <ul style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
                 <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Clarity.</strong> Can a visitor understand what your business does within the first few seconds? If your homepage requires scrolling or guessing, you are losing both users and search rank.</li>
@@ -2708,9 +2800,17 @@
                 <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Consistency.</strong> Your website, your Google Business listing, your directory profiles, and your social pages should all agree on your name, address, phone number, and services. Discrepancies erode trust.</li>
                 <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Trust signals.</strong> Reviews, real photos, visible contact details, fast page load times, secure connections. These are the proof points that tell Google — and users — that you are legitimate.</li>
             </ul>
+            <div class="blog-tip">
+                <span class="callout-label">🎯 The Specificity Test</span>
+                <p><strong>Compare these two:</strong> "We provide solutions for businesses" vs. "We repair POS systems for restaurants in Manhattan." Google — and your customers — trust the second one instantly. Be specific about what you do, where you do it, and who you do it for.</p>
+            </div>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Why Blogging Alone Does Not Fix Visibility</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">✍️ Why Blogging Alone Does Not Fix Visibility</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Many businesses are told to "just start blogging" as a search strategy. But ten shallow posts about vaguely related topics will not move the needle. One well-structured, genuinely helpful page that thoroughly answers a question your customers actually ask is worth more than a dozen filler articles.</p>
+            <div class="blog-callout">
+                <span class="callout-label">📊 Quality Over Quantity</span>
+                <p><strong>One well-structured page</strong> that thoroughly answers a real customer question is worth more than a dozen filler articles. Google has gotten very good at telling the difference.</p>
+            </div>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Quality outperforms quantity every time in modern search. Google has become very good at distinguishing depth from padding.</p>
 
             <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
@@ -2760,23 +2860,35 @@
             <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">Why Most Business Websites Will Be Invisible in 18 Months</h1>
             <p style="color:#8a8ea0;font-size:17px;line-height:1.8;margin-bottom:40px">Websites are not failing — they are fading from view as AI decides trust before a click ever happens.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Web Stopped Being a Map</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🗺️ The Web Stopped Being a Map</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">The internet used to function like a map: search engines pointed you toward destinations, and you chose where to go. That model has shifted. Search engines now filter and extract, pulling the most relevant pieces of information from websites and displaying them directly in results. Fewer destinations are shown, and users visit fewer sites than ever before.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">For most business websites, this means the window of opportunity is shrinking. If your site is not structured in a way that search engines can confidently extract from, you simply will not appear.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Click Is Becoming Optional</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">👆 The Click Is Becoming Optional</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Users increasingly get their answers directly on the search results page. They see a summary, read a snippet, maybe glance at a review — and make their decision without visiting a single website. The click that used to be automatic is now optional.</p>
+            <div class="blog-stat">
+                <div class="blog-stat-icon">👆</div>
+                <div>
+                    <div class="blog-stat-number">Zero-Click</div>
+                    <div class="blog-stat-label">searches have been growing for years — users get answers without visiting any website</div>
+                </div>
+            </div>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">This is not speculation. Zero-click searches have been growing for years, and AI summaries have accelerated the trend. Your website needs to earn its click by offering something the summary cannot provide — depth, proof, or a direct action.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Built for a World That No Longer Exists</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🏚️ Built for a World That No Longer Exists</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Most business websites were built for a different internet. They assumed visitors would arrive, browse around, read multiple pages, and eventually contact the business. Today, trust is formed in snippets — in the two or three lines that appear in a search result. If those lines are vague or generic, the user moves on.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Your first impression is no longer your homepage. It is whatever fragment of your site Google decides to show in its results.</p>
+            <div class="blog-warning">
+                <span class="callout-label">⚠️ Reality Check</span>
+                <p>Your first impression is no longer your homepage. It's whatever fragment of your site Google decides to show in its results. If that fragment is vague or generic, the user moves on — and they never see the rest.</p>
+            </div>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The New Definition of Authority</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⚖️ The New Definition of Authority</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Authority used to be measured by domain age and backlinks. While those factors still matter, the weight is shifting. Clarity now matters more than longevity. Plain-language explanations, transparent proof of your work, and local relevance carry more weight than a decade-old domain that has not been updated since it launched.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">The businesses that will remain visible are the ones with direct language, logical heading structures, connected internal pages, and clear contact options. Not the ones with the oldest URL.</p>
+            <div class="blog-pullquote">Clarity now matters more than longevity. The businesses that stay visible are the ones with direct language — not the oldest URL.</div>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">What Needs to Change</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔧 What Needs to Change</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:12px">If your website is going to stay visible over the next 18 months, it needs:</p>
             <ul style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
                 <li style="margin-bottom:8px">Direct language that says what you do in the first sentence</li>
@@ -2785,6 +2897,10 @@
                 <li style="margin-bottom:8px">Clear contact options visible on every page</li>
                 <li style="margin-bottom:8px">Real proof — reviews, case studies, photos, specific examples</li>
             </ul>
+            <div class="blog-tip">
+                <span class="callout-label">⏰ The 18-Month Window</span>
+                <p>This isn't a someday problem. The sites that adapt in the next 18 months will establish the trust signals and structure that become increasingly difficult to build later. <strong>The window is closing.</strong></p>
+            </div>
 
             <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
             <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
@@ -2833,26 +2949,61 @@
             <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">How Small Businesses Can Stay Safe in a Digital World</h1>
             <p style="color:#8a8ea0;font-size:17px;line-height:1.8;margin-bottom:40px">Nearly half of small businesses have no cybersecurity measures in place. If you are one of them, here is where to start — and why it matters more than you think.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Numbers Are Not in Your Favor</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">📊 The Numbers Are Not in Your Favor</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Forty-six percent of all data breaches affect businesses with fewer than 1,000 employees. Sixty-one percent of small companies reported being the target of a cyberattack in the past year. These are not enterprise-scale threats targeting Fortune 500 companies — they are automated attacks scanning for the easiest targets. Small businesses with weak defenses are exactly that.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Guard Your Credit Card Transactions</h2>
+            <div class="blog-stat">
+                <div class="blog-stat-icon">🎯</div>
+                <div>
+                    <div class="blog-stat-number">46%</div>
+                    <div class="blog-stat-label">of all data breaches affect businesses with fewer than 1,000 employees</div>
+                </div>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">💳 Guard Your Credit Card Transactions</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">If you accept card payments, your POS system and payment processing setup are prime targets. Use PCI-compliant payment processors, keep your POS software updated, and never store card numbers on local systems. Isolate your payment network from the rest of your business Wi-Fi — a breach in one should not compromise the other.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Use Industry-Standard Protection</h2>
+            <div class="blog-warning">
+                <span class="callout-label">⚠️ Critical Rule</span>
+                <p><strong>Never store card numbers on local systems.</strong> Isolate your payment network from the rest of your business Wi-Fi — a breach in one should not compromise the other.</p>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🛡️ Use Industry-Standard Protection</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">At a minimum, every small business should have a commercial-grade firewall, endpoint protection on all devices, and automatic security updates enabled. Free antivirus software is not sufficient for a business handling customer data. Invest in managed security tools that monitor threats in real time and alert you before damage is done.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Lock Down Devices and Accounts</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔒 Lock Down Devices and Accounts</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Every device connected to your business network is a potential entry point. Require strong passwords on all accounts, enable multi-factor authentication wherever possible, and maintain an inventory of all devices with network access. When an employee leaves, revoke their credentials immediately — not next week.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Eighty percent of hacking incidents involve compromised credentials. Password management is not glamorous, but it is the single most impactful security measure a small business can implement.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Protect Your People</h2>
+            <div class="blog-stat">
+                <div class="blog-stat-icon">🔑</div>
+                <div>
+                    <div class="blog-stat-number">80%</div>
+                    <div class="blog-stat-label">of hacking incidents involve compromised credentials — password management is your #1 defense</div>
+                </div>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">👥 Protect Your People</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Ninety-six percent of phishing attacks arrive by email. Your staff are your first line of defense, and they need to know what to look for. Train employees to recognize suspicious links, unexpected attachments, and urgent-sounding requests for sensitive information. Run periodic phishing simulations to test awareness — not to punish, but to educate.</p>
+
+            <div class="blog-stat">
+                <div class="blog-stat-icon">📧</div>
+                <div>
+                    <div class="blog-stat-number">96%</div>
+                    <div class="blog-stat-label">of phishing attacks arrive by email — your staff are your first line of defense</div>
+                </div>
+            </div>
+
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Create a clear reporting process: if someone clicks a bad link, they should feel safe telling you immediately rather than trying to cover it up.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Shield Your Website</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🌐 Shield Your Website</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Your website is a public-facing asset, and it needs protection beyond hosting. Use HTTPS everywhere, keep your CMS and plugins updated, use strong admin passwords, and implement a web application firewall. If your site collects customer information through forms, make sure that data is encrypted in transit and stored securely.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Regularly back up your site so that if an attack does succeed, you can restore operations quickly rather than rebuilding from scratch.</p>
+
+            <div class="blog-tip">
+                <span class="callout-label">🔐 Security Checklist</span>
+                <p><strong>The basics:</strong> HTTPS everywhere, CMS and plugins updated, strong admin passwords, web application firewall, encrypted form data, and regular backups. Miss any one of these and you're leaving a door open.</p>
+            </div>
 
             <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
             <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
@@ -2895,11 +3046,25 @@
             <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">Why NYC's Mom-and-Pop Shops Need to Go Digital — Now</h1>
             <p style="color:#8a8ea0;font-size:17px;line-height:1.8;margin-bottom:40px">49% of consumers say they prefer local businesses over chains — they just need to be able to find you online. Here is why the digital shift cannot wait any longer.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Digital Imperative</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">📱 The Digital Imperative</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Ninety-eight percent of consumers search for local businesses online before visiting. Sixty-two percent will skip a business entirely if they cannot find it on the web. And seventy-six percent of people who search "near me" on their phone visit a business within 24 hours.</p>
+
+            <div class="blog-stat">
+                <div class="blog-stat-icon">📍</div>
+                <div>
+                    <div class="blog-stat-number">76%</div>
+                    <div class="blog-stat-label">of people who search "near me" visit a business within 24 hours</div>
+                </div>
+            </div>
+
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">These are not future projections. This is how people shop right now. If your business does not have a strong digital presence, you are invisible to the majority of potential customers walking past your door every day.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Digital Tools That Matter</h2>
+            <div class="blog-callout">
+                <span class="callout-label">🏙️ The NYC Reality</span>
+                <p>If your business doesn't have a strong digital presence, you're invisible to the majority of potential customers walking past your door every day. <strong>They're searching before they're shopping.</strong></p>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🧰 The Digital Tools That Matter</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:12px">You do not need every tool on the market. Focus on the ones that directly drive foot traffic and sales:</p>
             <ul style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">A real website.</strong> Not a Facebook page or a free listing — an actual website you control, with your hours, services, photos, and contact information clearly displayed.</li>
@@ -2909,12 +3074,28 @@
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Other targeted tech.</strong> Email marketing, online ordering, appointment scheduling — choose the tools that match how your customers actually want to interact with you.</li>
             </ul>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">From Clicks to Foot Traffic</h2>
+            <div class="blog-tip">
+                <span class="callout-label">🎯 Start Here</span>
+                <p>You don't need every tool on the market. <strong>Start with three things:</strong> a real website you control, a claimed Google Business Profile, and consistent business info across every directory. Everything else is a bonus.</p>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🚶 From Clicks to Foot Traffic</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Digital presence is not about replacing in-person business — it is about driving more of it. When customers can find you online, read your reviews, see your menu or product list, and get directions with one tap, they are far more likely to walk through your door.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">The data backs this up: businesses with strong digital presence see increased foot traffic, higher customer engagement and loyalty, and greater average spend per customer. Studies show that accepting digital payments alone can boost sales by roughly eight percent.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Cost of Waiting</h2>
+            <div class="blog-stat">
+                <div class="blog-stat-icon">💰</div>
+                <div>
+                    <div class="blog-stat-number">~8%</div>
+                    <div class="blog-stat-label">average sales increase from accepting digital payments alone</div>
+                </div>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⏳ The Cost of Waiting</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Every month without a proper digital presence is a month of lost customers. Your competitors — including chains with dedicated marketing teams — are already capturing the customers who search before they shop. The longer you wait, the harder it becomes to catch up.</p>
+
+            <div class="blog-pullquote">Every month without a proper digital presence is a month of lost customers.</div>
+
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">The good news: for most small businesses, getting the basics right is neither expensive nor complicated. It just requires starting.</p>
 
             <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
@@ -2958,27 +3139,44 @@
             <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">Protecting Your Kids From AI, the Smart Way</h1>
             <p style="color:#8a8ea0;font-size:17px;line-height:1.8;margin-bottom:40px">A practical guide for parents. AI guesses — it does not know. The goal is to teach kids to question it, not fear it.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">What AI Actually Is</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🤖 What AI Actually Is</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">A Large Language Model — the technology behind ChatGPT, Google's AI, and similar tools — is a prediction engine. It does not understand truth. It does not have knowledge in the way a teacher or a parent does. It calculates what words are most likely to come next based on patterns in the text it was trained on.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">This means AI does not know what is true. It knows what sounds true. That distinction is critical, especially for young people who may not yet have the experience to spot the difference.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">The Real Risks for Kids</h2>
+            <div class="blog-pullquote">AI does not know what is true. It knows what sounds true.</div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⚠️ The Real Risks for Kids</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">AI is particularly unreliable when dealing with emotional, ambiguous, or nuanced questions — exactly the kinds of questions young people tend to ask. A child asking an AI chatbot about friendships, feelings, or difficult situations will get a response that sounds thoughtful and authoritative, but may be shallow, misleading, or entirely wrong.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">The danger is not that AI gives obviously bad answers. The danger is that it gives confident-sounding answers that reinforce incorrect assumptions or unhealthy narratives. A child who is already struggling may take AI's polished response as validation rather than recognizing it as a statistical guess.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">AI Is Not a Person, a Friend, or a Therapist</h2>
+            <div class="blog-warning">
+                <span class="callout-label">⚠️ The Hidden Danger</span>
+                <p>The danger isn't that AI gives obviously bad answers. It's that it gives <strong>confident-sounding answers</strong> that reinforce incorrect assumptions. A child who's already struggling may take AI's polished response as validation.</p>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">💬 AI Is Not a Person, a Friend, or a Therapist</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">This is the single most important thing to help your child understand. AI is a tool, like a hammer or a calculator. It can be useful for specific tasks — summarizing information, generating ideas, checking facts (with verification). But it cannot care about your child. It cannot understand their situation. It cannot provide the emotional support that a real human relationship offers.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">When kids treat AI as a companion, they are building a relationship with a pattern-matching system that has no awareness of who they are or what they need.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Every Interaction Is a Prompt</h2>
+            <div class="blog-callout">
+                <span class="callout-label">🧠 The Key Distinction</span>
+                <p>AI is a tool, like a hammer or a calculator. Useful for specific tasks. But it <strong>cannot care</strong> about your child. It cannot understand their situation. It cannot provide the emotional support that a real human relationship offers.</p>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⌨️ Every Interaction Is a Prompt</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">The quality of what AI produces depends entirely on what you ask it. Vague, emotional questions produce vague, surface-level answers. If a child dumps their feelings into a chatbot without structure, they will get a polished but hollow response that may feel satisfying in the moment but offers no real insight.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Teaching kids to ask specific, focused questions — and to evaluate the answers critically — turns AI from a potential hazard into a genuine learning tool.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">Privacy: Treat AI Like a Public Space</h2>
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔒 Privacy: Treat AI Like a Public Space</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Everything typed into an AI system should be treated as if it were posted on a public bulletin board. No names, no school information, no addresses, no passwords, no personal details about friends or family. AI companies store and process conversations, and there is no guarantee about how that data will be used.</p>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px">Frame it simply for kids: if you would not say it to a stranger on the street, do not type it into a chatbot.</p>
 
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">How to Talk to Your Kids About AI</h2>
+            <div class="blog-tip">
+                <span class="callout-label">🗣️ The Simple Rule</span>
+                <p><strong>Tell your kids:</strong> If you wouldn't say it to a stranger on the street, don't type it into a chatbot. No names, no school info, no addresses, no personal details about friends or family.</p>
+            </div>
+
+            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🗣️ How to Talk to Your Kids About AI</h2>
             <p style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:12px">Keep it simple and concrete. Here are the key messages:</p>
             <ul style="color:#8a8ea0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">"AI guesses. It does not know."</strong> This is the foundation. Once kids understand this, they approach AI with the right level of skepticism.</li>
@@ -2987,6 +3185,11 @@
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Go to humans first for feelings.</strong> When something is emotionally important, talk to a real person who knows you and cares about you.</li>
                 <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Confidence is not correctness.</strong> AI always sounds sure of itself, even when it is completely wrong. Sounding confident and being right are two different things.</li>
             </ul>
+
+            <div class="blog-callout">
+                <span class="callout-label">💪 The Bottom Line</span>
+                <p>The goal isn't to make kids afraid of AI — it's to make them <strong>smarter than it.</strong> Teach them to question, verify, and always go to real humans for the things that matter most.</p>
+            </div>
 
             <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
             <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
