@@ -38,6 +38,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&family=Caveat:wght@700&display=swap" as="style">
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -779,9 +780,10 @@
             padding: 24px;
         }
 
-        .work-card h4 {
+        .work-card h3 {
             color: #f0f0ec;
             margin-bottom: 4px;
+            font-size: 20px;
         }
 
         .work-card-meta {
@@ -791,7 +793,7 @@
         }
 
         .work-card-metric {
-            background: rgba(254, 88, 0, 0.1);
+            background: rgba(254, 88, 0, 0.15);
             border: 1px solid rgba(254, 88, 0, 0.3);
             border-radius: 6px;
             padding: 8px 12px;
@@ -1402,6 +1404,12 @@
         .service-icon-anim { transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1); }
         .service-card:hover .service-icon-anim { transform:scale(1.15) rotate(-5deg); }
         .service-icon canvas { width:100%;height:100%; }
+
+        /* Accessibility: underline links in body text */
+        article a, .blog-callout a, .blog-tip a { text-decoration: underline; }
+
+        /* Accessibility: minimum tap target size for pill buttons */
+        .pill { min-height: 44px; min-width: 44px; }
     </style>
 
     <!-- Schema.org Structured Data -->
@@ -1802,7 +1810,7 @@
                     </div>
                 </div>
 
-                <p style="text-align:center;margin-top:32px;color:#8a8ea0;font-size:14px">See it in action: <a href="#work" onclick="navigateTo('work')" style="color:#FE5800;text-decoration:none;font-weight:600">Case studies</a> · <a href="#services" onclick="navigateTo('services')" style="color:#0891B2;text-decoration:none;font-weight:600">Services</a> · <a href="#contact" onclick="navigateTo('contact')" style="color:#FF6B35;text-decoration:none;font-weight:600">Start a project</a></p>
+                <p style="text-align:center;margin-top:32px;color:#8a8ea0;font-size:14px">See it in action: <a href="#work" onclick="navigateTo('work')" style="color:#FE5800;text-decoration:underline;font-weight:600">Case studies</a> · <a href="#services" onclick="navigateTo('services')" style="color:#0891B2;text-decoration:underline;font-weight:600">Services</a> · <a href="#contact" onclick="navigateTo('contact')" style="color:#FF6B35;text-decoration:underline;font-weight:600">Start a project</a></p>
             </div>
         </section>
 
@@ -1993,9 +2001,9 @@
 
             <div class="work-carousel">
                 <div class="work-card" data-category="fashion" style="cursor:pointer" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
-                    <div class="work-card-image"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="lazy" width="1280" height="800"></div>
+                    <div class="work-card-image"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="eager" width="1280" height="800"></div>
                     <div class="work-card-content">
-                        <h4>After Hours Agenda</h4>
+                        <h3>After Hours Agenda</h3>
                         <div class="work-card-meta">NYC · Streetwear Brand</div>
                         <div class="work-card-metric">E-Commerce</div>
                         <div class="work-card-metric">Bespoke Website</div>
@@ -2005,9 +2013,9 @@
                 </div>
 
                 <div class="work-card" data-category="nightlife" style="cursor:pointer" onclick="window.open('https://www.bsidenyc.bar','_blank')">
-                    <div class="work-card-image"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="lazy" width="1280" height="800"></div>
+                    <div class="work-card-image"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="eager" width="1280" height="800"></div>
                     <div class="work-card-content">
-                        <h4>B-Side NYC</h4>
+                        <h3>B-Side NYC</h3>
                         <div class="work-card-meta">NYC · Bar & Nightlife</div>
                         <div class="work-card-metric">Bespoke Website</div>
                         <div class="work-card-metric">Local SEO</div>
@@ -2017,9 +2025,9 @@
                 </div>
 
                 <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.grandfundingllc.com','_blank')">
-                    <div class="work-card-image"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy" width="1280" height="800"></div>
+                    <div class="work-card-image"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="eager" width="1280" height="800"></div>
                     <div class="work-card-content">
-                        <h4>Grand Funding LLC</h4>
+                        <h3>Grand Funding LLC</h3>
                         <div class="work-card-meta">AZ & CA · Private Lending</div>
                         <div class="work-card-metric">Lead Generation</div>
                         <div class="work-card-metric">Bespoke Website</div>
@@ -2031,7 +2039,7 @@
                 <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.logan.loans','_blank')">
                     <div class="work-card-image"><img src="assets/logan-preview.webp" alt="Logan Loans website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="work-card-content">
-                        <h4>Logan Loans</h4>
+                        <h3>Logan Loans</h3>
                         <div class="work-card-meta">AZ & SoCal · Mortgage</div>
                         <div class="work-card-metric">Bespoke Website</div>
                         <div class="work-card-metric">SEO & Content</div>
@@ -2043,7 +2051,7 @@
                 <div class="work-card" data-category="film" style="cursor:pointer" onclick="window.open('https://ccfilms.net','_blank')">
                     <div class="work-card-image"><img src="assets/ccfilms-preview.webp" alt="CC Films LLC website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="work-card-content">
-                        <h4>CC Films, LLC</h4>
+                        <h3>CC Films, LLC</h3>
                         <div class="work-card-meta">Dallas · Film Production</div>
                         <div class="work-card-metric">Bespoke Website</div>
                         <div class="work-card-metric">Brand Identity</div>
@@ -2059,7 +2067,7 @@
             <p style="color:#8a8ea0;margin-bottom:32px;font-size:15px">On-site IT support throughout Manhattan. Remote support for small businesses anywhere in the United States.</p>
             <canvas class="nyc-map-canvas" id="nycMapCanvas"></canvas>
             <div style="margin-bottom:24px">
-                <h4 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#FE5800;margin-bottom:14px;font-weight:700">🗽 Manhattan On-Site</h4>
+                <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#FE5800;margin-bottom:14px;font-weight:700">🗽 Manhattan On-Site</h3>
                 <div class="coverage-list" style="justify-content:center">
                     <div class="coverage-item">East Village</div>
                     <div class="coverage-item">Lower East Side</div>
@@ -2071,7 +2079,7 @@
                 </div>
             </div>
             <div>
-                <h4 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#0891B2;margin-bottom:14px;font-weight:700">🌎 Nationwide Remote</h4>
+                <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#0891B2;margin-bottom:14px;font-weight:700">🌎 Nationwide Remote</h3>
                 <div class="coverage-list" style="justify-content:center">
                     <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">Remote Support</div>
                     <div class="coverage-item" style="border-color:rgba(8,145,178,0.2)">VPN & Security</div>
@@ -2329,8 +2337,8 @@
                     <div style="height:160px;overflow:hidden"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="lazy" width="1280" height="800" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">E-Commerce</span>
-                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(254,88,0,0.15);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">E-Commerce</span>
+                            <span style="background:rgba(8,145,178,0.15);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                         </div>
                         <h3 style="margin-bottom:4px;font-size:1.1rem">After Hours Agenda</h3>
                         <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">NYC · Streetwear Brand</p>
@@ -2344,8 +2352,8 @@
                     <div style="height:160px;overflow:hidden"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="lazy" width="1280" height="800" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
-                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Local SEO</span>
+                            <span style="background:rgba(254,88,0,0.15);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.15);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Local SEO</span>
                         </div>
                         <h3 style="margin-bottom:4px;font-size:1.1rem">B-Side NYC</h3>
                         <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">NYC · Bar & Nightlife</p>
@@ -2359,8 +2367,8 @@
                     <div style="height:160px;overflow:hidden"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy" width="1280" height="800" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Lead Generation</span>
-                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(254,88,0,0.15);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Lead Generation</span>
+                            <span style="background:rgba(8,145,178,0.15);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                         </div>
                         <h3 style="margin-bottom:4px;font-size:1.1rem">Grand Funding LLC</h3>
                         <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">AZ & CA · Private Lending</p>
@@ -2374,8 +2382,8 @@
                     <div style="height:160px;overflow:hidden"><img src="assets/logan-preview.webp" alt="Logan Loans website preview" loading="lazy" width="1280" height="800" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
-                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">SEO & Content</span>
+                            <span style="background:rgba(254,88,0,0.15);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.15);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">SEO & Content</span>
                         </div>
                         <h3 style="margin-bottom:4px;font-size:1.1rem">Logan Loans</h3>
                         <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">AZ & SoCal · Mortgage</p>
@@ -2389,8 +2397,8 @@
                     <div style="height:160px;overflow:hidden"><img src="assets/ccfilms-preview.webp" alt="CC Films LLC website preview" loading="lazy" width="1280" height="800" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
                         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
-                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Brand Identity</span>
+                            <span style="background:rgba(254,88,0,0.15);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
+                            <span style="background:rgba(8,145,178,0.15);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Brand Identity</span>
                         </div>
                         <h3 style="margin-bottom:4px;font-size:1.1rem">CC Films, LLC</h3>
                         <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">Dallas · Film Production</p>
@@ -2540,20 +2548,20 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:1000px;margin:0 auto">
                 <div>
                     <div style="margin-bottom:28px">
-                        <h4 style="color:#FE5800;margin-bottom:8px;font-size:14px">📞 Call Us</h4>
+                        <h3 style="color:#FE5800;margin-bottom:8px;font-size:14px">📞 Call Us</h3>
                         <a href="tel:6463600318" style="color:#f0f0ec;font-size:20px;font-weight:700;text-decoration:none">(646) 360-0318</a>
                         <p style="color:#8a8ea0;font-size:13px;margin-top:4px">Mon–Fri, 8am–8pm. Emergencies anytime.</p>
                     </div>
                     <div style="margin-bottom:28px">
-                        <h4 style="color:#FE5800;margin-bottom:8px;font-size:14px">✉️ Email</h4>
+                        <h3 style="color:#FE5800;margin-bottom:8px;font-size:14px">✉️ Email</h3>
                         <a href="mailto:hello@littlefightnyc.com" style="color:#f0f0ec;font-size:17px;text-decoration:none">hello@littlefightnyc.com</a>
                     </div>
                     <div style="margin-bottom:28px">
-                        <h4 style="color:#FE5800;margin-bottom:8px;font-size:14px">📍 Location</h4>
+                        <h3 style="color:#FE5800;margin-bottom:8px;font-size:14px">📍 Location</h3>
                         <p style="color:#f0f0ec">Manhattan, NYC<br><span style="color:#8a8ea0">Nationwide remote available</span></p>
                     </div>
                     <div style="background:linear-gradient(135deg,#FE5800,#FF6B35);border-radius:12px;padding:24px;margin-top:16px">
-                        <h4 style="color:white;margin-bottom:6px;font-size:15px">🆓 First Hour is Free</h4>
+                        <h3 style="color:white;margin-bottom:6px;font-size:15px">🆓 First Hour is Free</h3>
                         <p style="color:rgba(255,255,255,0.9);font-size:14px">No commitment. No credit card. Real help.</p>
                     </div>
                 </div>
@@ -3121,12 +3129,12 @@
         <div class="footer-grid">
             <div class="footer-column">
                 <div class="footer-logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div>
-                <h4>Little Fight NYC</h4>
+                <h3 style="font-size:20px">Little Fight NYC</h3>
                 <p style="color: #8a8ea0; font-size: 13px; line-height: 1.8; margin-bottom: 12px;">Like a Ritz-Carlton concierge for your technology.</p>
                 <p style="color: #8a8ea0; font-size: 13px;">NYC's concierge tech support.</p>
             </div>
             <div class="footer-column">
-                <h4>Services</h4>
+                <h3 style="font-size:20px">Services</h3>
                 <ul>
                     <li><a href="#services" onclick="navigateTo('services')">On-Site IT Support</a></li>
                     <li><a href="#services" onclick="navigateTo('services')">Bespoke Websites</a></li>
@@ -3136,7 +3144,7 @@
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Company</h4>
+                <h3 style="font-size:20px">Company</h3>
                 <ul>
                     <li><a href="#about" onclick="navigateTo('about')">About Us</a></li>
                     <li><a href="#work" onclick="navigateTo('work')">Our Work</a></li>
@@ -3147,7 +3155,7 @@
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Contact</h4>
+                <h3 style="font-size:20px">Contact</h3>
                 <p><a href="tel:(646)360-0318" style="color: #FE5800; text-decoration: none; font-weight: 700;">(646) 360-0318</a></p>
                 <p><a href="mailto:hello@littlefightnyc.com" style="color: #FE5800; text-decoration: none; font-weight: 700;">hello@littlefightnyc.com</a></p>
                 <p style="color: #8a8ea0; font-size: 13px; margin-top: 12px;">Manhattan, NYC<br>Nationwide remote</p>
