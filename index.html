@@ -859,6 +859,7 @@
         .work-card-image {
             height: 180px;
             background: linear-gradient(135deg, var(--color1), var(--color2));
+            overflow: hidden;
         }
 
         .work-card-content {
@@ -892,6 +893,16 @@
             color: #8a8ea0;
             font-size: 13px;
             font-style: italic;
+        }
+
+        .work-card-narrative {
+            color: #8a8ea0;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        .work-card-narrative strong {
+            color: #f0f0ec;
         }
 
         .coverage {
@@ -1413,11 +1424,9 @@
         .form-success { text-align:center;padding:40px 20px;animation:fadeInUp 0.6s ease; }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
-        /* ═══ WORK CARD LIVE PREVIEW ═══ */
-        .work-card-image { position:relative;overflow:hidden; }
-        .work-card-preview { position:absolute;inset:0;opacity:0;transition:opacity 0.4s ease; }
-        .work-card:hover .work-card-preview { opacity:1; }
-        .work-card-preview iframe { width:250%;height:250%;transform:scale(0.4);transform-origin:top left;border:none;pointer-events:none; }
+        /* ═══ WORK CARD SCREENSHOTS ═══ */
+        .work-card-image img { width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease; }
+        .work-card:hover .work-card-image img { transform:scale(1.03); }
 
         /* ═══ LOTTIE-STYLE SERVICE ICON ANIMATION ═══ */
         .service-icon-anim { transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1); }
@@ -2008,57 +2017,62 @@
 
             <div class="work-carousel">
                 <div class="work-card" data-category="fashion" style="cursor:pointer" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
-                    <div class="work-card-image" style="--color1: #1a1a1a; --color2: #2d2d2d;"><div class="work-card-preview"><iframe src="https://www.afterhoursagenda.com" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
+                    <div class="work-card-image"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="lazy"></div>
                     <div class="work-card-content">
                         <h4>After Hours Agenda</h4>
                         <div class="work-card-meta">NYC · Streetwear Brand</div>
                         <div class="work-card-metric">E-Commerce</div>
                         <div class="work-card-metric">Bespoke Website</div>
-                        <div class="work-card-quote">14 years of rebellious streetwear, relaunched for the digital age.</div>
+                        <p class="work-card-narrative"><strong>The challenge:</strong> 14-year-old streetwear brand with a loyal following but zero online presence. Needed to go from Instagram-only to a full e-commerce operation.</p>
+                        <p class="work-card-narrative"><strong>What we built:</strong> Bespoke e-commerce site that matches the brand's rebellious energy. Custom product pages, lookbook integration, and a checkout flow that doesn't kill the vibe.</p>
                     </div>
                 </div>
 
                 <div class="work-card" data-category="nightlife" style="cursor:pointer" onclick="window.open('https://www.bsidenyc.bar','_blank')">
-                    <div class="work-card-image" style="--color1: #1a0a2e; --color2: #2d1b4e;"><div class="work-card-preview"><iframe src="https://www.bsidenyc.bar" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
+                    <div class="work-card-image"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="lazy"></div>
                     <div class="work-card-content">
                         <h4>B-Side NYC</h4>
                         <div class="work-card-meta">NYC · Bar & Nightlife</div>
                         <div class="work-card-metric">Bespoke Website</div>
                         <div class="work-card-metric">Local SEO</div>
-                        <div class="work-card-quote">Built to capture the vibe and drive foot traffic.</div>
+                        <p class="work-card-narrative"><strong>The challenge:</strong> New cocktail bar needed to stand out in one of the most competitive nightlife scenes in the world. No website, no Google presence.</p>
+                        <p class="work-card-narrative"><strong>What we built:</strong> Moody, immersive website built to capture the vibe and convert searches into foot traffic. Local SEO to own the neighborhood on Google.</p>
                     </div>
                 </div>
 
                 <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.grandfundingllc.com','_blank')">
-                    <div class="work-card-image" style="--color1: #0a2e1a; --color2: #1a4e2d;"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:inherit"></div>
+                    <div class="work-card-image"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy"></div>
                     <div class="work-card-content">
                         <h4>Grand Funding LLC</h4>
                         <div class="work-card-meta">AZ & CA · Private Lending</div>
                         <div class="work-card-metric">Lead Generation</div>
                         <div class="work-card-metric">Bespoke Website</div>
-                        <div class="work-card-quote">24-hour approvals, 3-5 day closings — the site moves just as fast.</div>
+                        <p class="work-card-narrative"><strong>The challenge:</strong> Direct private lender doing 24-hour approvals and 3-5 day closings, but their online presence didn't match the speed of their operation.</p>
+                        <p class="work-card-narrative"><strong>What we built:</strong> High-conversion lead generation site designed to move as fast as their business. Clean UX, clear calls-to-action, built for borrowers who need answers now.</p>
                     </div>
                 </div>
 
                 <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.logan.loans','_blank')">
-                    <div class="work-card-image" style="--color1: #0a1a2e; --color2: #1b2d4e;"><div class="work-card-preview"><iframe src="https://www.logan.loans" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
+                    <div class="work-card-image"><img src="assets/logan-preview.webp" alt="Logan Loans website preview" loading="lazy"></div>
                     <div class="work-card-content">
                         <h4>Logan Loans</h4>
                         <div class="work-card-meta">AZ & SoCal · Mortgage</div>
                         <div class="work-card-metric">Bespoke Website</div>
                         <div class="work-card-metric">SEO & Content</div>
-                        <div class="work-card-quote">Same-day pre-approvals explained without the jargon.</div>
+                        <p class="work-card-narrative"><strong>The challenge:</strong> Mortgage advisory firm drowning in industry jargon. Potential borrowers couldn't tell what made them different.</p>
+                        <p class="work-card-narrative"><strong>What we built:</strong> Clean, human-first mortgage website. Same-day pre-approvals explained without the jargon. SEO and content strategy to capture organic search traffic.</p>
                     </div>
                 </div>
 
                 <div class="work-card" data-category="film" style="cursor:pointer" onclick="window.open('https://ccfilms.net','_blank')">
-                    <div class="work-card-image" style="--color1: #2e0a0a; --color2: #4e1b1b;"><div class="work-card-preview"><iframe src="https://ccfilms.net" loading="lazy" sandbox="allow-scripts allow-same-origin" tabindex="-1"></iframe></div></div>
+                    <div class="work-card-image"><img src="assets/ccfilms-preview.webp" alt="CC Films LLC website preview" loading="lazy"></div>
                     <div class="work-card-content">
                         <h4>CC Films, LLC</h4>
                         <div class="work-card-meta">Dallas · Film Production</div>
                         <div class="work-card-metric">Bespoke Website</div>
                         <div class="work-card-metric">Brand Identity</div>
-                        <div class="work-card-quote">Analog soul, digital polish — the site matches the craft.</div>
+                        <p class="work-card-narrative"><strong>The challenge:</strong> Indie film production company with analog soul but no digital presence. Their work spoke for itself — but nobody could find it online.</p>
+                        <p class="work-card-narrative"><strong>What we built:</strong> Cinematic website that matches the craft. Analog soul, digital polish — portfolio-driven design with brand identity built from scratch.</p>
                     </div>
                 </div>
             </div>
@@ -2335,72 +2349,77 @@
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
 
                 <!-- After Hours Agenda -->
-                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
-                    <div style="background:linear-gradient(135deg,#1a1a1a,#2d2d2d);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">AFTER HOURS</div>
+                <div class="fade-in" data-category="fashion" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
+                    <div style="height:160px;overflow:hidden"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
-                        <h3 style="margin-bottom:4px;font-size:1.1rem">After Hours Agenda</h3>
-                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">NYC · Streetwear Brand</p>
-                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Bespoke e-commerce site for NYC's loudest streetwear brand. 14 years of rebellious style, relaunched for the digital age.</p>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
                             <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">E-Commerce</span>
                             <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                         </div>
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">After Hours Agenda</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">NYC · Streetwear Brand</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:10px"><strong style="color:#f0f0ec">The challenge:</strong> 14-year-old streetwear brand with a loyal following but zero online presence. Needed to go from Instagram-only to a full e-commerce operation.</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:0"><strong style="color:#f0f0ec">What we built:</strong> Bespoke e-commerce site that matches the brand's rebellious energy. Custom product pages, lookbook integration, and a checkout flow that doesn't kill the vibe.</p>
                     </div>
                 </div>
 
                 <!-- B-Side NYC -->
-                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.bsidenyc.bar','_blank')">
-                    <div style="background:linear-gradient(135deg,#1a0a2e,#2d1b4e);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">B-SIDE</div>
+                <div class="fade-in" data-category="nightlife" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.bsidenyc.bar','_blank')">
+                    <div style="height:160px;overflow:hidden"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
-                        <h3 style="margin-bottom:4px;font-size:1.1rem">B-Side NYC</h3>
-                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">New York City · Bar & Nightlife</p>
-                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Website, branding, and digital presence for one of NYC's standout bar venues. Built to capture the vibe and drive foot traffic.</p>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
                             <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                             <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Local SEO</span>
                         </div>
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">B-Side NYC</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">NYC · Bar & Nightlife</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:10px"><strong style="color:#f0f0ec">The challenge:</strong> New cocktail bar needed to stand out in one of the most competitive nightlife scenes in the world. No website, no Google presence.</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:0"><strong style="color:#f0f0ec">What we built:</strong> Moody, immersive website built to capture the vibe and convert searches into foot traffic. Local SEO to own the neighborhood on Google.</p>
                     </div>
                 </div>
 
-                <!-- Grand Funding -->
-                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(255,107,53,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.grandfundingllc.com','_blank')">
-                    <div style="height:140px;overflow:hidden"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top"></div>
+                <!-- Grand Funding LLC -->
+                <div class="fade-in" data-category="finance" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.grandfundingllc.com','_blank')">
+                    <div style="height:160px;overflow:hidden"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
-                        <h3 style="margin-bottom:4px;font-size:1.1rem">Grand Funding LLC</h3>
-                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">Arizona & California · Private Lending</p>
-                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">High-conversion website for a direct private lender. 24-hour approvals, 3-5 day closings — the site had to move just as fast.</p>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap">
-                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
-                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Lead Generation</span>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+                            <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Lead Generation</span>
+                            <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                         </div>
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">Grand Funding LLC</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">AZ & CA · Private Lending</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:10px"><strong style="color:#f0f0ec">The challenge:</strong> Direct private lender doing 24-hour approvals and 3-5 day closings, but their online presence didn't match the speed of their operation.</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:0"><strong style="color:#f0f0ec">What we built:</strong> High-conversion lead generation site designed to move as fast as their business. Clean UX, clear calls-to-action, built for borrowers who need answers now.</p>
                     </div>
                 </div>
 
                 <!-- Logan Loans -->
-                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.logan.loans','_blank')">
-                    <div style="background:linear-gradient(135deg,#0a1a2e,#1b2d4e);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">LOGAN</div>
+                <div class="fade-in" data-category="finance" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(254,88,0,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://www.logan.loans','_blank')">
+                    <div style="height:160px;overflow:hidden"><img src="assets/logan-preview.webp" alt="Logan Loans website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
-                        <h3 style="margin-bottom:4px;font-size:1.1rem">Logan Loans</h3>
-                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">Arizona & SoCal · Mortgage Advisory</p>
-                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Clean, human-first mortgage website. Same-day pre-approvals explained without the industry jargon.</p>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
                             <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                             <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">SEO & Content</span>
                         </div>
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">Logan Loans</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">AZ & SoCal · Mortgage</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:10px"><strong style="color:#f0f0ec">The challenge:</strong> Mortgage advisory firm drowning in industry jargon. Potential borrowers couldn't tell what made them different.</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:0"><strong style="color:#f0f0ec">What we built:</strong> Clean, human-first mortgage website. Same-day pre-approvals explained without the jargon. SEO and content strategy to capture organic search traffic.</p>
                     </div>
                 </div>
 
-                <!-- CC Films -->
-                <div class="fade-in" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://ccfilms.net','_blank')">
-                    <div style="background:linear-gradient(135deg,#2e0a0a,#4e1b1b);height:140px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.03em;font-family:'Lexend',sans-serif">CC FILMS</div>
+                <!-- CC Films, LLC -->
+                <div class="fade-in" data-category="film" style="background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;overflow:hidden;transition:all 0.3s;cursor:pointer" onmouseover="this.style.borderColor='rgba(8,145,178,0.3)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(22,27,46,0.5)';this.style.transform='translateY(0)'" onclick="window.open('https://ccfilms.net','_blank')">
+                    <div style="height:160px;overflow:hidden"><img src="assets/ccfilms-preview.webp" alt="CC Films LLC website preview" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease"></div>
                     <div style="padding:24px">
-                        <h3 style="margin-bottom:4px;font-size:1.1rem">CC Films, LLC</h3>
-                        <p style="color:#5a5e72;font-size:13px;margin-bottom:12px">Dallas · Film Production</p>
-                        <p style="color:#8a8ea0;font-size:14px;line-height:1.6;margin-bottom:16px">Cinematic website for an indie production company. Analog soul, digital polish — the site had to match the craft.</p>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
                             <span style="background:rgba(254,88,0,0.08);color:#FE5800;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Bespoke Website</span>
                             <span style="background:rgba(8,145,178,0.08);color:#0891B2;padding:5px 12px;border-radius:50px;font-size:12px;font-weight:600">Brand Identity</span>
                         </div>
+                        <h3 style="margin-bottom:4px;font-size:1.1rem">CC Films, LLC</h3>
+                        <p style="color:#5a5e72;font-size:13px;margin-bottom:14px">Dallas · Film Production</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:10px"><strong style="color:#f0f0ec">The challenge:</strong> Indie film production company with analog soul but no digital presence. Their work spoke for itself — but nobody could find it online.</p>
+                        <p style="color:#8a8ea0;font-size:13px;line-height:1.6;margin-bottom:0"><strong style="color:#f0f0ec">What we built:</strong> Cinematic website that matches the craft. Analog soul, digital polish — portfolio-driven design with brand identity built from scratch.</p>
                     </div>
                 </div>
 
