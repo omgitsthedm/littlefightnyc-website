@@ -670,6 +670,7 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
 <body style="background:#080b14">
     <div class="scroll-progress" id="scrollProgress"></div>
 
+    <canvas id="particle-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
     <svg class="grain" xmlns="http://www.w3.org/2000/svg">
         <filter id="noise">
             <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise" />
@@ -2248,6 +2249,53 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                 if (h && document.getElementById(h)) navigateTo(h);
             });
         })();
+
+        // ── PARTICLE BACKGROUND ──
+        const particleCanvas = document.getElementById('particle-canvas');
+        if (particleCanvas && window.innerWidth >= 768) {
+            const pCtx = particleCanvas.getContext('2d');
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+            const dots = [];
+            for (let i = 0; i < 40; i++) {
+                dots.push({
+                    x: Math.random() * particleCanvas.width,
+                    y: Math.random() * particleCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 2 + 1,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+            let pRunning = true;
+            function animateDots() {
+                if (!pRunning) return;
+                pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+                dots.forEach(d => {
+                    d.x += d.vx; d.y += d.vy;
+                    if (d.x < 0) d.x = particleCanvas.width;
+                    if (d.x > particleCanvas.width) d.x = 0;
+                    if (d.y < 0) d.y = particleCanvas.height;
+                    if (d.y > particleCanvas.height) d.y = 0;
+                    pCtx.fillStyle = `rgba(254, 88, 0, ${d.opacity})`;
+                    pCtx.beginPath();
+                    pCtx.arc(d.x, d.y, d.size, 0, Math.PI * 2);
+                    pCtx.fill();
+                });
+                requestAnimationFrame(animateDots);
+            }
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) { pRunning = false; }
+                else if (!pRunning) { pRunning = true; animateDots(); }
+            });
+            animateDots();
+            window.addEventListener('resize', () => {
+                particleCanvas.width = window.innerWidth;
+                particleCanvas.height = window.innerHeight;
+            });
+        } else if (particleCanvas) {
+            particleCanvas.style.display = 'none';
+        }
 
         const navEl = document.querySelector('nav');
         window.addEventListener('scroll', () => {
