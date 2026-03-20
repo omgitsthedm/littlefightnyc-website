@@ -35,7 +35,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="/fonts/fonts.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/fonts/fonts.css"></noscript>
-    <link rel="stylesheet" href="../css/styles.css?v=20260208" media="print" onload="this.media='all'">
+    <link rel="preload" href="../css/styles.css?v=20260208" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="../css/styles.css?v=20260208"></noscript>
     <link rel="stylesheet" href="../css/a11y-fixes.css?v=20260208" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="../css/a11y-fixes.css?v=20260208"></noscript>
@@ -172,6 +172,7 @@
 
         <p style="font-size: 1.25rem; color: #666; margin-bottom: 24px; font-style: italic;">A kind, practical reality check for parents who want to feel ready, not rattled.</p>
 
+        <p style="color:#8a8ea0;font-size:13px;margin-bottom:8px">By <strong style="color:#f0f0ec">Little Fight NYC</strong> · Updated March 2026</p>
         <div style="color: #888; margin-bottom: 40px;">January 2025 • 4 min read</div>
 
         <!-- Featured Image/Icon -->
@@ -349,7 +350,7 @@
         <section class="accent-photo-band section-shell">
             <div class="container">
                 <figure class="accent-photo-card">
-                    <img src="/assets/icons/mdi-subset/robot-outline.svg" alt="Robot icon representing artificial intelligence" loading="lazy" decoding="async" width="220" height="220">
+                    <img src="/assets/icons/mdi-subset/robot-outline.svg" alt="Robot icon representing artificial intelligence" loading="eager" decoding="async" width="220" height="220">
                 </figure>
             </div>
         </section>

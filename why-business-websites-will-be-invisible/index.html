@@ -24,7 +24,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#FF5A00">
-    <link rel="stylesheet" href="/css/styles.css?v=20260208" media="print" onload="this.media='all'">
+    <link rel="preload" href="/css/styles.css?v=20260208" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/css/styles.css?v=20260208"></noscript>
     <link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/css/a11y-fixes.css?v=20260208"></noscript>
@@ -341,7 +341,7 @@
                 <p>To stay visible, businesses need plain-language service descriptions, transparent proof, and consistent local relevance. Your <a href="/services/">services pages</a>, your <a href="/work/">portfolio and case studies</a>, and your primary <a href="/">home page</a> must reinforce the same story.</p>
 
                 <figure class="article-image">
-                    <img src="/assets/icons/mdi-subset/robot-outline.svg" alt="Robot icon representing artificial intelligence" loading="lazy" decoding="async" width="220" height="220">
+                    <img src="/assets/icons/mdi-subset/robot-outline.svg" alt="Robot icon representing artificial intelligence" loading="eager" decoding="async" width="220" height="220">
                 </figure>
 
                 <h2>What Changes When You Build for Humans and Machines</h2>
