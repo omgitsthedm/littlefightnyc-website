@@ -2,3 +2,9 @@
 .netlify/
 node_modules/
 .superpowers/
+.playwright-mcp/
+*.png
+*.bak
+docs/
+firebase-debug.log
+.claude/
