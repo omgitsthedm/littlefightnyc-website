@@ -306,26 +306,6 @@ void main(){
   const embers = new THREE.Points(embersGeo, emberMat);
   scene.add(embers);
 
-  const dataStreamPaths = [];
-  for (let i = 0; i < 6; i++) {
-    dataStreamPaths.push({
-      points: [
-        new THREE.Vector3(0, 5, 0),
-        new THREE.Vector3((Math.random() - 0.5) * 3, 2, (Math.random() - 0.5) * 3),
-        new THREE.Vector3((Math.random() - 0.5) * 5, 0, (Math.random() - 0.5) * 5)
-      ],
-      t: Math.random(),
-      speed: 0.3 + Math.random() * 0.3
-    });
-  }
-
-  const dataStreams = [];
-  const streamLineGeo = new THREE.BufferGeometry();
-  const streamLineMat = new THREE.LineBasicMaterial({
-    color: new THREE.Color(0x0891B2),
-    transparent: true,
-    blending: THREE.AdditiveBlending
-  });
 
   const ambientParticlesGeo = new THREE.BufferGeometry();
   const ambientPositions = new Float32Array(70 * 3);
@@ -455,11 +435,6 @@ void main(){
     }
 
     if (elapsed >= 0.8) {
-      dataStreamPaths.forEach(path => {
-        path.t += path.speed * 0.016;
-        if (path.t > 1) path.t = 0;
-      });
-
       emberVelocities.forEach((e, i) => {
         e.y -= 0.01;
         e.life -= 0.008;
