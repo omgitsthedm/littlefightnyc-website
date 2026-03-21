@@ -31,6 +31,8 @@ export function init(container) {
   camera.lookAt(0.5, 2.5, 0);
 
   const isMobile = window.innerWidth < 768;
+  const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
   renderer.setSize(W, H);
@@ -53,11 +55,23 @@ export function init(container) {
   controls.enableDamping = true;
   controls.dampingFactor = 0.02;
   controls.enablePan = false;
-  controls.enableRotate = false;
   controls.enableZoom = false;
   controls.autoRotate = false;
   controls.autoRotateSpeed = 0.2;
   controls.target.set(0.5, 2, 0);
+
+  if (!isTouchDevice) {
+    // Desktop: allow click-drag rotate, but don't grab the mouse
+    controls.enableRotate = true;
+  } else if (isTablet) {
+    // Tablet (iPad): no rotate, no zoom, allow scroll-through
+    controls.enableRotate = false;
+    canvas.style.touchAction = 'pan-y';
+  } else {
+    // Mobile: no controls
+    controls.enableRotate = false;
+  }
+
   controls.update();
 
   // --- Lighting: 3 point lights + ambient + directional ---
@@ -707,53 +721,3 @@ void main(){
   };
 }
 
-export function initAudio(toggleButton) {
-  let audioContext = null;
-  let audioPlaying = false;
-  let audioOscillators = [];
-  let audioGain = null;
-
-  toggleButton.addEventListener('click', () => {
-    if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    audioPlaying = !audioPlaying;
-    toggleButton.style.opacity = audioPlaying ? '1' : '0.5';
-    if (audioPlaying) startAudio();
-    else stopAudio();
-  });
-
-  function startAudio() {
-    if (audioOscillators.length > 0) return;
-    const ctx = audioContext;
-    audioGain = ctx.createGain();
-    audioGain.gain.value = 0.05;
-    audioGain.connect(ctx.destination);
-
-    const osc1 = ctx.createOscillator();
-    osc1.frequency.value = 120;
-    osc1.type = 'sawtooth';
-    osc1.connect(audioGain);
-    osc1.start();
-    audioOscillators.push(osc1);
-
-    const osc2 = ctx.createOscillator();
-    osc2.frequency.value = 55;
-    osc2.type = 'sine';
-    osc2.connect(audioGain);
-    osc2.start();
-    audioOscillators.push(osc2);
-
-    const osc3 = ctx.createOscillator();
-    osc3.frequency.value = 82;
-    osc3.type = 'sine';
-    osc3.connect(audioGain);
-    osc3.start();
-    audioOscillators.push(osc3);
-  }
-
-  function stopAudio() {
-    audioOscillators.forEach(osc => osc.stop());
-    audioOscillators = [];
-  }
-}
