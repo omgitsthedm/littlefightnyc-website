@@ -30,9 +30,11 @@ export function init(container) {
   camera.position.set(0.5, 2.2, 11);
   camera.lookAt(0.5, 2.5, 0);
 
+  const isMobile = window.innerWidth < 768;
+
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
   renderer.setSize(W, H);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.2;
 
@@ -40,8 +42,10 @@ export function init(container) {
   const renderPass = new RenderPass(scene, camera);
   composer.addPass(renderPass);
 
-  const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 1.0, 0.4, 0.3);
-  composer.addPass(bloom);
+  if (!isMobile) {
+    const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 1.0, 0.4, 0.3);
+    composer.addPass(bloom);
+  }
 
   scene.fog = new THREE.FogExp2(0x080B14, 0.02);
 
@@ -52,6 +56,10 @@ export function init(container) {
   controls.autoRotate = false;
   controls.autoRotateSpeed = 0.2;
   controls.target.set(0.5, 2, 0);
+  if (isMobile) {
+    controls.enableRotate = false;
+    controls.enableZoom = false;
+  }
   controls.update();
 
   const ambientLight = new THREE.AmbientLight(0x1a2040, 0.8);
@@ -251,9 +259,10 @@ export function init(container) {
 
   const sparkles = [];
   const embersGeo = new THREE.BufferGeometry();
-  const emberPositions = new Float32Array(35 * 3);
+  const emberCount = isMobile ? 15 : 35;
+  const emberPositions = new Float32Array(emberCount * 3);
   const emberVelocities = [];
-  for (let i = 0; i < 35; i++) {
+  for (let i = 0; i < emberCount; i++) {
     emberPositions[i * 3] = 0.3 + (Math.random() - 0.5) * 0.5;
     emberPositions[i * 3 + 1] = 3.0 + (Math.random() - 0.5) * 0.3;
     emberPositions[i * 3 + 2] = 0.78;
@@ -288,9 +297,9 @@ void main(){
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
 }`;
 
-  const emberColors = new Float32Array(35 * 3);
-  const emberAlphas = new Float32Array(35);
-  for (let i = 0; i < 35; i++) {
+  const emberColors = new Float32Array(emberCount * 3);
+  const emberAlphas = new Float32Array(emberCount);
+  for (let i = 0; i < emberCount; i++) {
     emberColors[i * 3] = 1; emberColors[i * 3 + 1] = 0.4; emberColors[i * 3 + 2] = 0;
     emberAlphas[i] = 0.8;
   }
@@ -308,9 +317,10 @@ void main(){
 
 
   const ambientParticlesGeo = new THREE.BufferGeometry();
-  const ambientPositions = new Float32Array(70 * 3);
-  const ambientColors = new Float32Array(70 * 3);
-  for (let i = 0; i < 70; i++) {
+  const particleCount = isMobile ? 30 : 70;
+  const ambientPositions = new Float32Array(particleCount * 3);
+  const ambientColors = new Float32Array(particleCount * 3);
+  for (let i = 0; i < particleCount; i++) {
     ambientPositions[i * 3] = (Math.random() - 0.5) * 10;
     ambientPositions[i * 3 + 1] = Math.random() * 5;
     ambientPositions[i * 3 + 2] = (Math.random() - 0.5) * 10;
