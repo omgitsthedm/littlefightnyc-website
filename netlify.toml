@@ -336,29 +336,29 @@ force = false
 
   [redirects.headers]
 
-# Redirect extensionless blog/page URLs to .html canonical versions
-# force = true is required because Netlify's Pretty URLs serves .html content at extensionless paths
+# Redirect .html blog/page URLs to extensionless Pretty URL canonical versions
+# force = true is required to override Netlify's asset serving for .html files
 [[redirects]]
-from = "/blog/cybersecurity-for-small-business"
-to = "/blog/cybersecurity-for-small-business.html"
+from = "/blog/cybersecurity-for-small-business.html"
+to = "/blog/cybersecurity-for-small-business"
 status = 301
 force = true
 
 [[redirects]]
-from = "/blog/nyc-small-business-digital"
-to = "/blog/nyc-small-business-digital.html"
+from = "/blog/nyc-small-business-digital.html"
+to = "/blog/nyc-small-business-digital"
 status = 301
 force = true
 
 [[redirects]]
-from = "/blog/protecting-kids-from-ai"
-to = "/blog/protecting-kids-from-ai.html"
+from = "/blog/protecting-kids-from-ai.html"
+to = "/blog/protecting-kids-from-ai"
 status = 301
 force = true
 
 [[redirects]]
-from = "/industries"
-to = "/industries.html"
+from = "/industries.html"
+to = "/industries"
 status = 301
 force = true
 
