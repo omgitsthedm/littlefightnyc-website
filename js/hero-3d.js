@@ -62,7 +62,7 @@ export function init(container) {
   }
   controls.update();
 
-  // --- Lighting: 2 point lights + ambient + directional ---
+  // --- Lighting: 3 point lights + ambient + directional ---
   const ambientLight = new THREE.AmbientLight(0x1a2040, 0.8);
   scene.add(ambientLight);
 
@@ -70,7 +70,6 @@ export function init(container) {
   dirLight.position.set(5, 10, 6);
   scene.add(dirLight);
 
-  // Street-level warm light (replaces many individual building lights)
   const streetLight1 = new THREE.PointLight(0xFFA040, 1.2, 20);
   streetLight1.position.set(-1, 1.5, 4);
   scene.add(streetLight1);
@@ -78,6 +77,10 @@ export function init(container) {
   const streetLight2 = new THREE.PointLight(0x8060FF, 0.8, 20);
   streetLight2.position.set(3, 3, 5);
   scene.add(streetLight2);
+
+  const streetLight3 = new THREE.PointLight(0xFF6040, 0.6, 18);
+  streetLight3.position.set(-3, 4, -1);
+  scene.add(streetLight3);
 
   // --- Ground ---
   const groundGeo = new THREE.PlaneGeometry(30, 30);
@@ -97,8 +100,7 @@ export function init(container) {
   gridHelper.material.opacity = 0;
   scene.add(gridHelper);
 
-  // --- Building definitions ---
-  // 18 buildings at varying x AND z positions for a real city block
+  // --- Building definitions: 15 buildings ---
   const buildingPositions = [
     // Front row (close to camera, z > 0)
     { x: -4.5, z: 1.5, w: 1.0, d: 1.0, height: 2.2, color: new THREE.Color(0xFF6B6B), rot: 0.02 },
@@ -109,106 +111,46 @@ export function init(container) {
 
     // Main row (z ~ 0, the primary skyline)
     { x: -4.2, z: -0.2, w: 1.2, d: 1.2, height: 3.5, color: new THREE.Color(0xFE5800), rot: 0 },
-    { x: -3.0, z: 0.1,  w: 1.0, d: 1.0, height: 2.4, color: new THREE.Color(0xFF6B35), rot: 0 },
-    { x: -1.8, z: -0.3, w: 1.4, d: 1.4, height: 4.2, color: new THREE.Color(0x0891B2), rot: -0.01 },
-    { x: -0.5, z: 0.0,  w: 0.9, d: 0.9, height: 2.8, color: new THREE.Color(0x06D6A0), rot: 0.02 },
-    { x: 0.5,  z: -0.1, w: 1.5, d: 1.5, height: 5.2, color: new THREE.Color(0x8B5CF6), rot: 0, isHero: true }, // tallest, neon sign
+    { x: -2.5, z: 0.1,  w: 1.0, d: 1.0, height: 2.4, color: new THREE.Color(0xFF6B35), rot: 0 },
+    { x: -1.0, z: -0.3, w: 1.4, d: 1.4, height: 4.2, color: new THREE.Color(0x0891B2), rot: -0.01 },
+    { x: 0.5,  z: -0.1, w: 1.5, d: 1.5, height: 5.2, color: new THREE.Color(0x8B5CF6), rot: 0, isHero: true },
     { x: 2.0,  z: -0.2, w: 1.1, d: 1.1, height: 3.8, color: new THREE.Color(0xE040A0), rot: 0 },
-    { x: 3.0,  z: 0.1,  w: 0.8, d: 0.8, height: 2.2, color: new THREE.Color(0xFFBE0B), rot: -0.02 },
-    { x: 3.8,  z: -0.3, w: 1.3, d: 1.3, height: 4.5, color: new THREE.Color(0x0891B2), rot: 0.01 },
-    { x: 5.0,  z: 0.0,  w: 1.0, d: 1.0, height: 3.0, color: new THREE.Color(0xFF6B6B), rot: 0 },
+    { x: 3.5,  z: 0.1,  w: 1.3, d: 1.3, height: 4.5, color: new THREE.Color(0x0891B2), rot: 0.01 },
 
     // Back row (behind main row, z < -1)
     { x: -3.5, z: -2.0, w: 1.5, d: 1.2, height: 4.8, color: new THREE.Color(0x8B5CF6), rot: 0.01 },
-    { x: -1.0, z: -2.2, w: 1.8, d: 1.5, height: 6.0, color: new THREE.Color(0x0891B2), rot: -0.01 },
-    { x: 1.5,  z: -2.5, w: 1.6, d: 1.3, height: 5.5, color: new THREE.Color(0xE040A0), rot: 0.02 },
+    { x: -1.0, z: -2.2, w: 1.8, d: 1.5, height: 5.5, color: new THREE.Color(0x0891B2), rot: -0.01 },
+    { x: 1.5,  z: -2.5, w: 1.6, d: 1.3, height: 5.0, color: new THREE.Color(0xE040A0), rot: 0.02 },
     { x: 4.0,  z: -2.0, w: 1.4, d: 1.2, height: 4.0, color: new THREE.Color(0x10B981), rot: -0.01 },
   ];
 
-  // --- Pre-calculate ALL windows across ALL buildings for instancing ---
-  const windowSpacingX = 0.2;
-  const windowSpacingY = 0.4;
-  const windowSize = 0.08;
-  const windowInset = 0.15;
-
-  // Window color palette
-  const warmYellow = new THREE.Color(0xFFDD00);
-  const coolWhite = new THREE.Color(0xDDEEFF);
-  const tvBlue = new THREE.Color(0x8899FF);
-  const darkWindowColor = new THREE.Color(0x111122);
-
-  // First pass: count all windows
-  let totalLitWindows = 0;
-  let totalDarkWindows = 0;
-
-  // Store per-building window data for second pass
-  const buildingWindowData = [];
-
-  buildingPositions.forEach((cfg) => {
-    const h = cfg.height;
-    const hw = cfg.w / 2;
-    const hd = cfg.d / 2;
-    const sides = [
-      { axis: 'z', pos: hd + 0.01, spanW: cfg.w, spanAxis: 'x' },    // front
-      { axis: 'z', pos: -(hd + 0.01), spanW: cfg.w, spanAxis: 'x' },  // back
-      { axis: 'x', pos: hw + 0.01, spanW: cfg.d, spanAxis: 'z' },     // right
-      { axis: 'x', pos: -(hw + 0.01), spanW: cfg.d, spanAxis: 'z' },  // left
-    ];
-
-    const bWindows = [];
-
-    sides.forEach((side) => {
-      const sW = side.spanW;
-      for (let u = -sW / 2 + windowInset; u <= sW / 2 - windowInset; u += windowSpacingX) {
-        for (let y = 0.5; y < h - 0.5; y += windowSpacingY) {
-          const lit = Math.random() < 0.65;
-          bWindows.push({ side, u, y, lit });
-          if (lit) totalLitWindows++;
-          else totalDarkWindows++;
-        }
-      }
-    });
-
-    buildingWindowData.push(bWindows);
+  // --- Shared window geometry and materials (performance optimization) ---
+  const sharedWindowGeo = new THREE.BoxGeometry(0.08, 0.08, 0.02);
+  const litYellowMat = new THREE.MeshStandardMaterial({
+    color: 0xFFDD00, emissive: 0xFFDD00, emissiveIntensity: 0, roughness: 0.3
   });
-
-  // --- Create instanced meshes for windows ---
-  const windowGeo = new THREE.PlaneGeometry(windowSize, windowSize);
-
-  const litWindowMat = new THREE.MeshStandardMaterial({
-    color: 0xFFDD00,
-    emissive: 0xFFDD00,
-    emissiveIntensity: 0,
-    roughness: 0.3,
-    side: THREE.DoubleSide
+  const litWhiteMat = new THREE.MeshStandardMaterial({
+    color: 0xDDEEFF, emissive: 0xDDEEFF, emissiveIntensity: 0, roughness: 0.3
   });
-
+  const litBlueMat = new THREE.MeshStandardMaterial({
+    color: 0x8899FF, emissive: 0x8899FF, emissiveIntensity: 0, roughness: 0.3
+  });
   const darkWindowMat = new THREE.MeshStandardMaterial({
-    color: 0x111122,
-    emissive: 0x111122,
-    emissiveIntensity: 0,
-    roughness: 0.8,
-    side: THREE.DoubleSide
+    color: 0x111122, emissive: 0x111122, emissiveIntensity: 0, roughness: 0.8
   });
 
-  const litWindowMesh = new THREE.InstancedMesh(windowGeo, litWindowMat, totalLitWindows);
-  const darkWindowMesh = new THREE.InstancedMesh(windowGeo, darkWindowMat, totalDarkWindows);
+  // Track all window meshes for animation
+  const allWindowMeshes = [];
+  // Track all lit window materials for emissive animation
+  const litWindowMats = [litYellowMat, litWhiteMat, litBlueMat];
 
-  // Set per-instance colors for lit windows (varied warmth)
-  const litColors = [warmYellow, coolWhite, tvBlue];
-  const litColorWeights = [0.55, 0.3, 0.15]; // mostly warm yellow
-
-  litWindowMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-  darkWindowMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
-
-  // We'll populate matrices after buildings are created (need building refs for animation)
-  // Store instance index counters
-  let litIdx = 0;
-  let darkIdx = 0;
-
-  // Temp objects for matrix computation
-  const _dummy = new THREE.Object3D();
-  const _color = new THREE.Color();
+  function pickWindowMat() {
+    const r = Math.random();
+    if (r < 0.30) return darkWindowMat;        // 30% dark
+    if (r < 0.30 + 0.55 * 0.70) return litYellowMat;  // ~38.5% yellow
+    if (r < 0.30 + 0.85 * 0.70) return litWhiteMat;    // ~21% white
+    return litBlueMat;                                    // ~10.5% blue
+  }
 
   // --- Create buildings ---
   const buildings = [];
@@ -237,7 +179,7 @@ export function init(container) {
     scene.add(body);
     buildings.push(body);
 
-    // Colorful emissive edge wireframes — signature style
+    // Colorful emissive edge wireframes
     const edges = new THREE.EdgesGeometry(bodyGeo);
     const wireframe = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: cfg.color, linewidth: 2 }));
     body.add(wireframe);
@@ -266,277 +208,128 @@ export function init(container) {
       });
       const awning = new THREE.Mesh(awningGeo, awningMat);
       awning.position.set(0, -h / 2 + 0.35, cfg.d / 2 + 0.15);
-      awning.rotation.x = -Math.PI / 6; // angled outward
+      awning.rotation.x = -Math.PI / 6;
       body.add(awning);
     }
-  });
 
-  // --- Populate window instance matrices ---
-  // We need to compute world-space positions for windows based on building position/rotation
-  // Since buildings animate (rise up), we store the window offsets relative to each building
-  // and update instance matrices each frame during the rise animation.
-  // For performance, after rise-up completes we only update once.
-
-  // Store window metadata for per-frame updates during animation
-  const windowInstances = []; // { buildingIdx, localPos: Vector3, localQuat: Quaternion, isLit, instanceIdx }
-
-  buildingPositions.forEach((cfg, bIdx) => {
-    const h = cfg.height;
+    // --- Windows on ALL 4 faces using individual meshes ---
     const hw = cfg.w / 2;
     const hd = cfg.d / 2;
-    const bWindows = buildingWindowData[bIdx];
+    const spacingX = 0.25;
+    const spacingY = 0.5;
+    const inset = 0.15;
 
-    bWindows.forEach((win) => {
-      const { side, u, y, lit } = win;
-      const localPos = new THREE.Vector3();
-      const localQuat = new THREE.Quaternion();
+    // Face definitions: [spanWidth, fixedAxisValue, axisConfig]
+    // front: spans x, fixed z = +hd
+    // back:  spans x, fixed z = -hd
+    // right: spans z, fixed x = +hw
+    // left:  spans z, fixed x = -hw
+    const faces = [
+      { spanW: cfg.w, fixedVal: hd + 0.011,  axis: 'front' },
+      { spanW: cfg.w, fixedVal: -(hd + 0.011), axis: 'back' },
+      { spanW: cfg.d, fixedVal: hw + 0.011,  axis: 'right' },
+      { spanW: cfg.d, fixedVal: -(hw + 0.011), axis: 'left' },
+    ];
 
-      const yLocal = y - h / 2 + 0.4;
+    faces.forEach((face) => {
+      for (let u = -face.spanW / 2 + inset; u <= face.spanW / 2 - inset; u += spacingX) {
+        for (let y = 0.5; y < h - 0.5; y += spacingY) {
+          const mat = pickWindowMat();
+          const win = new THREE.Mesh(sharedWindowGeo, mat);
 
-      if (side.axis === 'z') {
-        localPos.set(u, yLocal, side.pos);
-        if (side.pos < 0) {
-          localQuat.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+          const yLocal = y - h / 2 + 0.4;
+
+          if (face.axis === 'front') {
+            win.position.set(u, yLocal, face.fixedVal);
+          } else if (face.axis === 'back') {
+            win.position.set(u, yLocal, face.fixedVal);
+            win.rotation.y = Math.PI;
+          } else if (face.axis === 'right') {
+            win.position.set(face.fixedVal, yLocal, u);
+            win.rotation.y = Math.PI / 2;
+          } else {
+            win.position.set(face.fixedVal, yLocal, u);
+            win.rotation.y = -Math.PI / 2;
+          }
+
+          win.userData.isWindow = true;
+          if (mat !== darkWindowMat) {
+            win.userData.emissiveColor = new THREE.Color(mat.color.getHex());
+          }
+          body.add(win);
+          allWindowMeshes.push(win);
         }
-      } else {
-        localPos.set(side.pos, yLocal, u);
-        const angle = side.pos > 0 ? Math.PI / 2 : -Math.PI / 2;
-        localQuat.setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle);
       }
-
-      const idx = lit ? litIdx++ : darkIdx++;
-      const mesh = lit ? litWindowMesh : darkWindowMesh;
-
-      // Set color for lit windows
-      if (lit) {
-        const r = Math.random();
-        let col;
-        if (r < litColorWeights[0]) col = warmYellow;
-        else if (r < litColorWeights[0] + litColorWeights[1]) col = coolWhite;
-        else col = tvBlue;
-        // Add slight random variation
-        _color.copy(col);
-        _color.r += (Math.random() - 0.5) * 0.1;
-        _color.g += (Math.random() - 0.5) * 0.05;
-        _color.b += (Math.random() - 0.5) * 0.05;
-        litWindowMesh.setColorAt(idx, _color);
-      }
-
-      windowInstances.push({
-        buildingIdx: bIdx,
-        localPos,
-        localQuat,
-        isLit: lit,
-        instanceIdx: idx
-      });
     });
   });
 
-  if (litWindowMesh.instanceColor) litWindowMesh.instanceColor.needsUpdate = true;
+  // --- Rooftop details as children of building bodies ---
 
-  scene.add(litWindowMesh);
-  scene.add(darkWindowMesh);
-
-  // Function to update all window instance matrices based on current building positions
-  function updateWindowMatrices() {
-    windowInstances.forEach((wi) => {
-      const building = buildings[wi.buildingIdx];
-      const cfg = building.userData.cfg;
-
-      // Compute world position of this window
-      _dummy.position.copy(wi.localPos);
-      _dummy.quaternion.copy(wi.localQuat);
-      _dummy.scale.set(1, 1, 1);
-
-      // Apply building rotation
-      if (cfg.rot) {
-        const bQuat = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), cfg.rot);
-        _dummy.position.applyQuaternion(bQuat);
-        _dummy.quaternion.premultiply(bQuat);
-      }
-
-      // Apply building world position
-      _dummy.position.x += building.position.x;
-      _dummy.position.y += building.position.y;
-      _dummy.position.z += building.position.z;
-
-      // Apply building scale
-      _dummy.position.y = building.position.y + wi.localPos.y * building.scale.y;
-
-      _dummy.updateMatrix();
-
-      const mesh = wi.isLit ? litWindowMesh : darkWindowMesh;
-      mesh.setMatrixAt(wi.instanceIdx, _dummy.matrix);
-    });
-
-    litWindowMesh.instanceMatrix.needsUpdate = true;
-    darkWindowMesh.instanceMatrix.needsUpdate = true;
-  }
-
-  // Initial update (buildings are below ground, windows follow)
-  updateWindowMatrices();
-
-  // --- Rooftop details using InstancedMesh ---
-
-  // Water towers: cylinder + cone (on 3 buildings)
-  const waterTowerBuildings = [2, 7, 15]; // indices into buildingPositions (tall-ish ones, back row)
+  // Water towers on 3 tall buildings
+  const waterTowerIndices = [7, 11, 12]; // tall buildings
   const wtCylGeo = new THREE.CylinderGeometry(0.08, 0.1, 0.3, 6);
   const wtConeGeo = new THREE.ConeGeometry(0.12, 0.15, 6);
   const wtMat = new THREE.MeshStandardMaterial({ color: 0x3a2a1a, roughness: 0.9, metalness: 0.1 });
   const wtConeMat = new THREE.MeshStandardMaterial({ color: 0x2a1a0a, roughness: 0.9, metalness: 0.1 });
 
-  const wtCylMesh = new THREE.InstancedMesh(wtCylGeo, wtMat, waterTowerBuildings.length);
-  const wtConeMesh = new THREE.InstancedMesh(wtConeGeo, wtConeMat, waterTowerBuildings.length);
-
-  // We'll set these after rise-up too, but initialize them
-  const waterTowerData = waterTowerBuildings.map((bIdx, i) => {
+  waterTowerIndices.forEach((bIdx) => {
     const cfg = buildingPositions[bIdx];
-    return { bIdx, offsetX: (Math.random() - 0.5) * cfg.w * 0.4, offsetZ: (Math.random() - 0.5) * cfg.d * 0.4 };
+    const body = buildings[bIdx];
+    const h = cfg.height;
+    const offsetX = (Math.random() - 0.5) * cfg.w * 0.4;
+    const offsetZ = (Math.random() - 0.5) * cfg.d * 0.4;
+
+    const cyl = new THREE.Mesh(wtCylGeo, wtMat);
+    cyl.position.set(offsetX, h / 2 + 0.15, offsetZ);
+    body.add(cyl);
+
+    const cone = new THREE.Mesh(wtConeGeo, wtConeMat);
+    cone.position.set(offsetX, h / 2 + 0.375, offsetZ);
+    body.add(cone);
   });
 
-  function updateWaterTowers() {
-    waterTowerData.forEach((wt, i) => {
-      const building = buildings[wt.bIdx];
-      const cfg = building.userData.cfg;
-      const topY = building.position.y + cfg.height / 2 * building.scale.y;
-
-      // Cylinder
-      _dummy.position.set(building.position.x + wt.offsetX, topY + 0.15, building.position.z + wt.offsetZ);
-      _dummy.rotation.set(0, 0, 0);
-      _dummy.scale.set(1, 1, 1);
-      _dummy.updateMatrix();
-      wtCylMesh.setMatrixAt(i, _dummy.matrix);
-
-      // Cone on top
-      _dummy.position.y = topY + 0.375;
-      _dummy.updateMatrix();
-      wtConeMesh.setMatrixAt(i, _dummy.matrix);
-    });
-    wtCylMesh.instanceMatrix.needsUpdate = true;
-    wtConeMesh.instanceMatrix.needsUpdate = true;
-  }
-
-  scene.add(wtCylMesh);
-  scene.add(wtConeMesh);
-  updateWaterTowers();
-
-  // AC units: small boxes on rooftops (6 buildings)
-  const acBuildings = [0, 3, 5, 8, 11, 13];
+  // AC units on some buildings (small boxes on rooftops)
   const acGeo = new THREE.BoxGeometry(0.15, 0.1, 0.12);
   const acMat = new THREE.MeshStandardMaterial({ color: 0x555566, roughness: 0.7, metalness: 0.3 });
-  // 2 AC units per building = 12 instances
-  const acCount = acBuildings.length * 2;
-  const acMesh = new THREE.InstancedMesh(acGeo, acMat, acCount);
+  const acBuildings = [0, 3, 5, 9, 10, 14];
 
-  const acData = [];
   acBuildings.forEach((bIdx) => {
     const cfg = buildingPositions[bIdx];
+    const body = buildings[bIdx];
+    const h = cfg.height;
     for (let j = 0; j < 2; j++) {
-      acData.push({
-        bIdx,
-        offsetX: (Math.random() - 0.5) * cfg.w * 0.5,
-        offsetZ: (Math.random() - 0.5) * cfg.d * 0.5
-      });
+      const ac = new THREE.Mesh(acGeo, acMat);
+      ac.position.set(
+        (Math.random() - 0.5) * cfg.w * 0.5,
+        h / 2 + 0.05,
+        (Math.random() - 0.5) * cfg.d * 0.5
+      );
+      ac.rotation.y = Math.random() * 0.3;
+      body.add(ac);
     }
   });
 
-  function updateACUnits() {
-    acData.forEach((ac, i) => {
-      const building = buildings[ac.bIdx];
-      const cfg = building.userData.cfg;
-      const topY = building.position.y + cfg.height / 2 * building.scale.y;
-      _dummy.position.set(building.position.x + ac.offsetX, topY + 0.05, building.position.z + ac.offsetZ);
-      _dummy.rotation.set(0, Math.random() * 0.3, 0);
-      _dummy.scale.set(1, 1, 1);
-      _dummy.updateMatrix();
-      acMesh.setMatrixAt(i, _dummy.matrix);
-    });
-    acMesh.instanceMatrix.needsUpdate = true;
-  }
-
-  scene.add(acMesh);
-  updateACUnits();
-
-  // Rooftop railings on some buildings: thin boxes around edges
-  const railingBuildings = [6, 9, 10, 14];
-  // 4 railings per building = 16 instances
-  const railGeo = new THREE.BoxGeometry(1, 0.08, 0.02);
-  const railMat = new THREE.MeshStandardMaterial({ color: 0x444455, roughness: 0.6, metalness: 0.5 });
-  const railCount = railingBuildings.length * 4;
-  const railMesh = new THREE.InstancedMesh(railGeo, railMat, railCount);
-
-  const railData = [];
-  railingBuildings.forEach((bIdx) => {
-    const cfg = buildingPositions[bIdx];
-    // front, back, left, right
-    railData.push({ bIdx, side: 'front', w: cfg.w, d: cfg.d });
-    railData.push({ bIdx, side: 'back', w: cfg.w, d: cfg.d });
-    railData.push({ bIdx, side: 'left', w: cfg.w, d: cfg.d });
-    railData.push({ bIdx, side: 'right', w: cfg.w, d: cfg.d });
-  });
-
-  function updateRailings() {
-    railData.forEach((rd, i) => {
-      const building = buildings[rd.bIdx];
-      const cfg = building.userData.cfg;
-      const topY = building.position.y + cfg.height / 2 * building.scale.y;
-      const hw = cfg.w / 2;
-      const hd = cfg.d / 2;
-
-      _dummy.scale.set(1, 1, 1);
-      _dummy.rotation.set(0, 0, 0);
-
-      if (rd.side === 'front') {
-        _dummy.position.set(building.position.x, topY + 0.04, building.position.z + hd);
-        _dummy.scale.x = cfg.w;
-      } else if (rd.side === 'back') {
-        _dummy.position.set(building.position.x, topY + 0.04, building.position.z - hd);
-        _dummy.scale.x = cfg.w;
-      } else if (rd.side === 'left') {
-        _dummy.position.set(building.position.x - hw, topY + 0.04, building.position.z);
-        _dummy.rotation.y = Math.PI / 2;
-        _dummy.scale.x = cfg.d;
-      } else {
-        _dummy.position.set(building.position.x + hw, topY + 0.04, building.position.z);
-        _dummy.rotation.y = Math.PI / 2;
-        _dummy.scale.x = cfg.d;
-      }
-
-      _dummy.updateMatrix();
-      railMesh.setMatrixAt(i, _dummy.matrix);
-    });
-    railMesh.instanceMatrix.needsUpdate = true;
-  }
-
-  scene.add(railMesh);
-  updateRailings();
-
-  // Antenna/spire on the tallest building (hero building, index 9)
+  // Antenna/spire on the tallest building (hero building)
   const heroIdx = buildingPositions.findIndex(b => b.isHero);
+  const heroBody = buildings[heroIdx];
+  const heroH = buildingPositions[heroIdx].height;
+
   const antennaGeo = new THREE.CylinderGeometry(0.01, 0.025, 1.2, 4);
   const antennaMat = new THREE.MeshStandardMaterial({ color: 0x888899, roughness: 0.4, metalness: 0.8 });
   const antenna = new THREE.Mesh(antennaGeo, antennaMat);
-  // Position will be updated with building
-  scene.add(antenna);
+  antenna.position.set(0, heroH / 2 + 0.6, 0);
+  heroBody.add(antenna);
 
-  // Small blinking light on top of antenna
+  // Blinking light on top of antenna
   const antennaLightGeo = new THREE.SphereGeometry(0.03, 4, 4);
   const antennaLightMat = new THREE.MeshStandardMaterial({ color: 0xFF0000, emissive: 0xFF0000, emissiveIntensity: 2 });
   const antennaLight = new THREE.Mesh(antennaLightGeo, antennaLightMat);
-  scene.add(antennaLight);
-
-  function updateAntenna() {
-    const building = buildings[heroIdx];
-    const cfg = building.userData.cfg;
-    const topY = building.position.y + cfg.height / 2 * building.scale.y;
-    antenna.position.set(building.position.x, topY + 0.6, building.position.z);
-    antennaLight.position.set(building.position.x, topY + 1.2, building.position.z);
-  }
-  updateAntenna();
+  antennaLight.position.set(0, heroH / 2 + 1.2, 0);
+  heroBody.add(antennaLight);
 
   // --- Neon sign: "LI FI" only ---
   const neonGroup = new THREE.Group();
-  neonGroup.position.set(0.5, 3.0, 0.66); // on hero building front face
+  neonGroup.position.set(0, heroH / 2 - 0.4, buildingPositions[heroIdx].d / 2 + 0.04);
 
   // Sign backing
   neonGroup.add(new THREE.Mesh(
@@ -563,15 +356,11 @@ export function init(container) {
   }
 
   const neonBars = [];
-  const T = 0.05;
   const OC = 0xFE5800; // orange for "LI"
   const OE = 0xFF6B35; // orange-red for "FI"
 
-  // Letter dimensions
   const LH = 0.28; // letter height
   const LW = 0.04; // stroke width
-
-  // "LI" on the left, "FI" on the right — side by side with spacing
   const baseY = 0.0;
 
   // --- L ---
@@ -596,9 +385,15 @@ export function init(container) {
   const neonLetters = neonBars.flat();
 
   const neonPL = new THREE.PointLight(0xFE5800, 0, 5, 1.5);
-  neonPL.position.set(0.5, 3.2, 1.5);
-  scene.add(neonPL);
-  scene.add(neonGroup);
+  neonPL.position.set(0, 0, 1.0);
+  neonGroup.add(neonPL);
+
+  heroBody.add(neonGroup);
+
+  // We also add a scene-level point light for the neon glow to cast further
+  const neonSceneLight = new THREE.PointLight(0xFE5800, 0, 5, 1.5);
+  neonSceneLight.position.set(0.5, 3.2, 1.5);
+  scene.add(neonSceneLight);
 
   // --- Raycaster for neon sign hover ---
   const raycaster = new THREE.Raycaster();
@@ -609,7 +404,7 @@ export function init(container) {
     mouse.x = (e.clientX / W) * 2 - 1;
     mouse.y = -(e.clientY / H) * 2 + 1;
     raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(neonHitbox);
+    const intersects = raycaster.intersectObject(neonHitbox, true);
     neonHoverIntensity = intersects.length > 0 ? 1 : 0;
   };
 
@@ -618,7 +413,10 @@ export function init(container) {
   let firstPointerDown = true;
   const onPointerDown = () => {
     if (firstPointerDown) {
-      spawnSpark(0.5, 3.0, 0.66, 30, true);
+      // Compute neon sign world position for sparks
+      const neonWorldPos = new THREE.Vector3();
+      neonGroup.getWorldPosition(neonWorldPos);
+      spawnSpark(neonWorldPos.x, neonWorldPos.y, neonWorldPos.z, 30, true);
       firstPointerDown = false;
     }
   };
@@ -738,11 +536,6 @@ void main(){
     return c3 * t * t * t - c1 * t * t;
   }
 
-  function bezier(p0, p1, p2, t) {
-    const mt = 1 - t;
-    return mt * mt * p0 + 2 * mt * t * p1 + t * t * p2;
-  }
-
   function animate() {
     if (!started) {
       startTime = clock.getElapsedTime();
@@ -782,15 +575,10 @@ void main(){
         b.position.y = b.userData.startY + (b.userData.targetY - b.userData.startY) * lerpY;
       });
 
-      // Update instanced elements to follow buildings during rise
-      updateWindowMatrices();
-      updateWaterTowers();
-      updateACUnits();
-      updateRailings();
-      updateAntenna();
-
       if (elapsed >= 0.3 && elapsed < 0.35) {
-        spawnSpark(0.5, 3.0, 0.66, 50, true);
+        const neonWorldPos = new THREE.Vector3();
+        neonGroup.getWorldPosition(neonWorldPos);
+        spawnSpark(neonWorldPos.x, neonWorldPos.y, neonWorldPos.z, 50, true);
       }
 
       if (elapsed >= 0.4) {
@@ -800,18 +588,20 @@ void main(){
         });
         if (!neonPL.userData.intensitySet) {
           neonPL.intensity = 5;
+          neonSceneLight.intensity = 5;
           neonPL.userData.intensitySet = true;
         }
       }
 
       if (elapsed >= 0.6) {
         const windowP = Math.min((elapsed - 0.6) / 0.4, 1);
-        litWindowMat.emissiveIntensity = windowP * 2.0;
+        // Animate shared lit window materials
+        litWindowMats.forEach(m => { m.emissiveIntensity = windowP * 2.0; });
         darkWindowMat.emissiveIntensity = windowP * 0.1;
 
         buildings.forEach(b => {
           b.children.forEach(child => {
-            if (child instanceof THREE.Mesh && child.material.emissive) {
+            if (child instanceof THREE.Mesh && child.material.emissive && !child.userData.isWindow) {
               child.material.emissiveIntensity = windowP;
             }
           });
@@ -820,13 +610,7 @@ void main(){
     } else {
       if (!riseComplete) {
         riseComplete = true;
-        // Final position update for all instanced elements
         buildings.forEach(b => { b.position.y = b.userData.targetY; });
-        updateWindowMatrices();
-        updateWaterTowers();
-        updateACUnits();
-        updateRailings();
-        updateAntenna();
       }
 
       gridHelper.material.opacity = 0.3;
@@ -836,21 +620,14 @@ void main(){
         b.scale.y = 1 + Math.sin(elapsed * 0.6 + idx * 0.3) * 0.015;
 
         b.children.forEach(child => {
-          if (child instanceof THREE.Mesh && child.material.emissive) {
+          if (child instanceof THREE.Mesh && child.material.emissive && !child.userData.isWindow) {
             child.material.emissiveIntensity = 2.0;
           }
         });
       });
 
-      // Update windows only when buildings breathe (scale changes)
-      updateWindowMatrices();
-      // Update rooftop elements to follow breathing
-      updateWaterTowers();
-      updateACUnits();
-      updateRailings();
-      updateAntenna();
-
-      litWindowMat.emissiveIntensity = 2.0;
+      // Shared materials handle all windows at once
+      litWindowMats.forEach(m => { m.emissiveIntensity = 2.0; });
       darkWindowMat.emissiveIntensity = 0.1;
 
       neonLetters.forEach(bar => {
@@ -893,7 +670,6 @@ void main(){
 
     ambientParticles.userData.opacity += (0.4 - ambientParticles.userData.opacity) * 0.02;
     ambientParticles.material.opacity = ambientParticles.userData.opacity;
-
 
     if (hasScrolled) {
       const scrollPct = Math.min(window.scrollY / 500, 1);
