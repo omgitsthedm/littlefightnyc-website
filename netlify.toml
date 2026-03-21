@@ -336,6 +336,27 @@ force = false
 
   [redirects.headers]
 
+# Redirect extensionless blog/page URLs to .html canonical versions
+[[redirects]]
+from = "/blog/cybersecurity-for-small-business"
+to = "/blog/cybersecurity-for-small-business.html"
+status = 301
+
+[[redirects]]
+from = "/blog/nyc-small-business-digital"
+to = "/blog/nyc-small-business-digital.html"
+status = 301
+
+[[redirects]]
+from = "/blog/protecting-kids-from-ai"
+to = "/blog/protecting-kids-from-ai.html"
+status = 301
+
+[[redirects]]
+from = "/industries"
+to = "/industries.html"
+status = 301
+
 [[redirects]]
 from = "/*"
 to = "/404.html"
