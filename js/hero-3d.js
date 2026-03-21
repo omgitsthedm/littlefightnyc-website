@@ -53,13 +53,11 @@ export function init(container) {
   controls.enableDamping = true;
   controls.dampingFactor = 0.02;
   controls.enablePan = false;
+  controls.enableRotate = false;
+  controls.enableZoom = false;
   controls.autoRotate = false;
   controls.autoRotateSpeed = 0.2;
   controls.target.set(0.5, 2, 0);
-  if (isMobile) {
-    controls.enableRotate = false;
-    controls.enableZoom = false;
-  }
   controls.update();
 
   // --- Lighting: 3 point lights + ambient + directional ---
