@@ -2076,13 +2076,128 @@ main .ambient-content-layer {
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 40px;
+  align-items: start;
+}
+
+.contact-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-intro-card {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 28px;
+  color: #f5f1ea;
+  background:
+    linear-gradient(145deg, rgba(20, 31, 56, 0.98), rgba(39, 27, 62, 0.96)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(36, 74, 121, 0.18);
+  box-shadow: 0 22px 44px rgba(14, 28, 44, 0.12);
+}
+
+.contact-intro-card::before {
+  content: "";
+  position: absolute;
+  inset: auto -12% -26% 56%;
+  width: 240px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 90, 0, 0.26), rgba(255, 90, 0, 0));
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.contact-intro-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #ffd9c7;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-intro-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 16px currentColor;
+}
+
+.contact-intro-card h2 {
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  line-height: 1.12;
+  margin-bottom: 12px;
+}
+
+.contact-intro-card p {
+  color: rgba(245, 241, 234, 0.76);
+  font-size: 0.98rem;
+  line-height: 1.72;
+}
+
+.contact-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(245, 241, 234, 0.9);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.contact-illustration {
+  margin: 18px -6px 0;
+  padding: 18px 18px 8px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 118, 53, 0.2), transparent 34%),
+    radial-gradient(circle at 82% 12%, rgba(93, 143, 229, 0.22), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.contact-illustration img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.24));
+}
+
+.contact-info-list {
+  display: grid;
+  gap: 14px;
 }
 
 .contact-info-item {
   display: flex;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid #e5eaef;
+  box-shadow: 0 10px 22px rgba(11, 27, 45, 0.05);
 }
 
 .contact-icon {
@@ -4438,16 +4553,41 @@ footer .footer-credit a:hover {
                 <p class="section-eyebrow">CONTACT</p>
                 <h1 class="section-title">Contact Little Fight NYC</h1>
                 <p class="section-description">Tell us what is bugging you. We will meet you where you are and make a clear, friendly plan together.</p>
+                <div class="hero-actions">
+                    <a href="tel:+16463600318" class="btn btn-primary">Call or Text Us</a>
+                    <a href="mailto:hello@littlefightnyc.com" class="btn btn-secondary">Email the Problem</a>
+                </div>
+                <p class="hero-note">Screenshots, bounced emails, printer tantrums, broken checkouts, and messy websites are all welcome.</p>
             </div>
         </section>
         
 <section class="page-content">
   <div class="container">
     <div class="contact-grid">
-      <div>
-        <div class="contact-info-item" style="color:inherit;"><div class="contact-icon"><i class="mdi mdi-email-outline" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;" aria-hidden="true">Email</div><a href="mailto:hello@littlefightnyc.com" style="text-decoration:none;color:inherit;font-size:1.1rem;font-weight:600;">hello@littlefightnyc.com</a></div></div>
-        <div class="contact-info-item" style="color:inherit;"><div class="contact-icon"><i class="mdi mdi-phone-outline" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;" aria-hidden="true">Phone</div><a href="tel:+16463600318" style="text-decoration:none;color:inherit;font-size:1.1rem;font-weight:600;">(646) 360-0318</a></div></div>
-        <div class="contact-info-item"><div class="contact-icon"><i class="mdi mdi-map-marker" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;">Based in</div><div style="font-size:1.1rem;font-weight:600;">Manhattan, NYC</div></div></div>
+      <div class="contact-stack">
+        <article class="contact-intro-card">
+          <p class="contact-intro-kicker">Start messy</p>
+          <h2>You do not need to diagnose the problem first.</h2>
+          <p>
+            Send the messy version. Forward the bounceback. Share the screenshot.
+            Tell us what is stressing you out. We will help untangle the next
+            step without making you translate it into tech language first.
+          </p>
+          <div class="contact-chip-row" aria-label="Common requests">
+            <span class="contact-chip">Website help</span>
+            <span class="contact-chip">Email rescue</span>
+            <span class="contact-chip">POS issues</span>
+            <span class="contact-chip">Wi-Fi fixes</span>
+          </div>
+          <figure class="contact-illustration">
+            <img src="/assets/editorial/storefront-outline.webp" alt="Line illustration of neighborhood storefronts" loading="eager" decoding="async" width="2136" height="1024">
+          </figure>
+        </article>
+        <div class="contact-info-list">
+          <div class="contact-info-item" style="color:inherit;"><div class="contact-icon"><i class="mdi mdi-email-outline" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;" aria-hidden="true">Email</div><a href="mailto:hello@littlefightnyc.com" style="text-decoration:none;color:inherit;font-size:1.1rem;font-weight:600;">hello@littlefightnyc.com</a></div></div>
+          <div class="contact-info-item" style="color:inherit;"><div class="contact-icon"><i class="mdi mdi-phone-outline" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;" aria-hidden="true">Phone</div><a href="tel:+16463600318" style="text-decoration:none;color:inherit;font-size:1.1rem;font-weight:600;">(646) 360-0318</a></div></div>
+          <div class="contact-info-item"><div class="contact-icon"><i class="mdi mdi-map-marker" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;">Based in</div><div style="font-size:1.1rem;font-weight:600;">Manhattan, NYC</div></div></div>
+        </div>
       </div>
       <div class="form-container">
         <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
@@ -4575,8 +4715,8 @@ footer .footer-credit a:hover {
 }
     </script>
     <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","url":"https://littlefightnyc.com/contact/","name":"Contact Us — Get IT Help Today","provider":{"@type":"Organization","name":"Little Fight NYC"},"dateModified":"2026-03-20"}
+{"@context":"https://schema.org","@type":"WebPage","url":"https://littlefightnyc.com/contact/","name":"Contact Us — Get IT Help Today","author":{"@type":"Person","name":"David Marsh"},"publisher":{"@type":"Organization","name":"Little Fight NYC","url":"https://littlefightnyc.com/"},"provider":{"@type":"Organization","name":"Little Fight NYC"},"datePublished":"2026-03-20","dateModified":"2026-03-24"}
     </script>
-    <script src="/js/main.min.js" defer></script>
+    <script src="/js/main.js?v=20260324" defer></script>
 </body>
 </html>

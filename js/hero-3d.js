@@ -1,14 +1,22 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
 export function init(container) {
   if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return null;
 
   const canvas = container.querySelector('canvas');
   if (!canvas) return null;
+  const signalLayer = container.querySelector('.hero-signal-layer');
+  const radiantFrame = container.querySelector('#hero-radiant-frame');
+  const appStatus = container.querySelector('#hero-app-status');
+  const appDockValue = container.querySelector('#hero-app-dock-value');
+  const factGuide = container.querySelector('#hero-fact-guide');
+  const factBubble = container.querySelector('#hero-fact-bubble');
+  const factKicker = container.querySelector('#hero-fact-kicker');
+  const factTitle = container.querySelector('#hero-fact-title');
+  const factBody = container.querySelector('#hero-fact-body');
+  const factSource = container.querySelector('#hero-fact-source');
+  const factLink = container.querySelector('#hero-fact-link');
 
   let W = canvas.clientWidth || container.clientWidth;
   let H = canvas.clientHeight || container.clientHeight;
@@ -16,84 +24,304 @@ export function init(container) {
   canvas.height = H;
 
   const isMobile = window.innerWidth < 768;
+  const isPhone = window.innerWidth < 640;
   const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
   const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  const prefersSaveData = navigator.connection?.saveData === true;
+  const deviceMemory = navigator.deviceMemory || 4;
+  const hardwareThreads = navigator.hardwareConcurrency || 4;
+  const brandPalette = {
+    ink: 0x080b14,
+    night: 0x0d1120,
+    navy: 0x111730,
+    orange: 0xFE5800,
+    orangeSoft: 0xFF6B35,
+    cyan: 0x1FB9D8,
+    purple: 0x9557F2,
+    violet: 0xB46AF6,
+    green: 0x15B77E,
+    mint: 0x1DCCA1,
+    gold: 0xF3A51A,
+    amber: 0xFFBE0B,
+    red: 0xF4505F,
+    ivory: 0xF5F1EA,
+    slate: 0x9DA1B0,
+  };
+  const performanceTier = (prefersSaveData || deviceMemory <= 4 || hardwareThreads <= 4)
+    ? 'low'
+    : (isMobile || isTablet ? 'balanced' : 'high');
+  const idleGuideText = isTouchDevice
+    ? 'Swipe the skyline, tap a building, then open the source when you want the proof.'
+    : 'Drag the skyline, open a building, then open the source when you want the proof.';
+  const activeGuideText = isTouchDevice
+    ? 'Tap the open building again to zoom back out, or use View Source to check the citation.'
+    : 'Click the open building again to zoom back out, or use View Source to check the citation.';
+  const defaultTheme = {
+    accent: brandPalette.orange,
+    softAccent: 'rgba(254,88,0,0.16)',
+  };
+  const factSourceUrls = {
+    googleRetail: 'https://www.thinkwithgoogle.com/_qs/documents/3459/3-new-realities-of-local-retail_articles_1.pdf',
+    googleNearby: 'https://www.thinkwithgoogle.com/_qs/documents/620/mobile-search-trends-consumers-to-stores.pdf',
+    squareAppointments: 'https://squareup.com/us/en/the-bottom-line/reaching-customers/how-customers-use-square-appointments',
+    visa2022: 'https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.18711.html',
+    visa2023: 'https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.19891.html',
+    visa2018: 'https://usa.visa.com/about-visa/newsroom/press-releases.releaseId.15736.html',
+    gs1Rfid: 'https://www.supplychain.gs1us.org/rfid/warehouse-management',
+  };
+
+  function postRadiantParam(name, value) {
+    if (!radiantFrame?.contentWindow) return;
+    radiantFrame.contentWindow.postMessage({ type: 'param', name, value }, '*');
+  }
+
+  function syncRadiantState(active = false) {
+    const baseDrift = isMobile ? 0.16 : 0.2;
+    postRadiantParam('DRIFT_SPEED', active ? baseDrift + 0.02 : baseDrift);
+    postRadiantParam('GRAIN_AMOUNT', active ? 0.02 : 0.03);
+  }
+
+  function setSupportState({ fact = null } = {}) {
+    if (appStatus) appStatus.textContent = fact ? fact.kicker : 'Interactive Proof';
+    if (appDockValue) appDockValue.textContent = fact
+      ? fact.title
+      : 'Open a building to see how a custom site can drive bookings, trust, payments, and neighborhood traffic.';
+  }
+
+  const factCards = [
+    {
+      kicker: 'Availability',
+      title: 'People want stock answers before they leave home.',
+      body: '74% said nearby product availability would be helpful in local search results.',
+      source: 'Think with Google / Ipsos MediaCT and Sterling Brands, 2014',
+      accent: brandPalette.orange,
+      url: factSourceUrls.googleRetail,
+    },
+    {
+      kicker: 'Pricing',
+      title: 'Local price clarity removes hesitation.',
+      body: '75% said pricing at that store would be helpful in local search results.',
+      source: 'Think with Google / Ipsos MediaCT and Sterling Brands, 2014',
+      accent: brandPalette.orangeSoft,
+      url: factSourceUrls.googleRetail,
+    },
+    {
+      kicker: 'After Hours',
+      title: 'Booking should keep working after the shop closes.',
+      body: '48% of appointments made through Square Appointments are booked during off hours.',
+      source: 'Square Appointments, 2017',
+      accent: brandPalette.green,
+      url: factSourceUrls.squareAppointments,
+    },
+    {
+      kicker: 'Mobile Booking',
+      title: 'The phone is where a lot of bookings actually happen.',
+      body: '78% of online bookings through Square Appointments come through mobile devices.',
+      source: 'Square Appointments, 2017',
+      accent: brandPalette.cyan,
+      url: factSourceUrls.squareAppointments,
+    },
+    {
+      kicker: 'Payment Friction',
+      title: 'Payment limits can lose the sale before trust even starts.',
+      body: '41% of shoppers said they abandoned a purchase because a business did not accept their preferred digital payment option.',
+      source: 'Visa Global Back to Business Study, 2022',
+      accent: brandPalette.gold,
+      url: factSourceUrls.visa2022,
+    },
+    {
+      kicker: 'Foot Traffic',
+      title: 'Nearby search should behave like a doorway.',
+      body: '76% of people who search for something nearby on a smartphone visit a business within 24 hours.',
+      source: 'Think with Google / Google Purchased Digital Diary, 2016',
+      accent: brandPalette.orange,
+      url: factSourceUrls.googleNearby,
+    },
+    {
+      kicker: 'Intent',
+      title: 'Local discovery turns into real purchases fast.',
+      body: '28% of nearby smartphone searches end in a purchase.',
+      source: 'Think with Google / Google Purchased Digital Diary, 2016',
+      accent: brandPalette.red,
+      url: factSourceUrls.googleNearby,
+    },
+    {
+      kicker: 'Resilience',
+      title: 'Digital presence can become survival infrastructure.',
+      body: '90% of SMBs with an online presence said e-commerce efforts helped them survive during the pandemic.',
+      source: 'Visa Global Back to Business Study, 2022',
+      accent: brandPalette.cyan,
+      url: factSourceUrls.visa2022,
+    },
+    {
+      kicker: 'Online Revenue',
+      title: 'Online sales are not extra anymore.',
+      body: 'In Visa\'s study, online channels represented 52% of revenue on average over the prior three months.',
+      source: 'Visa Global Back to Business Study, 2022',
+      accent: brandPalette.purple,
+      url: factSourceUrls.visa2022,
+    },
+    {
+      kicker: 'Growth',
+      title: 'More payment options act like a growth lever.',
+      body: '73% of small businesses said accepting new forms of digital payment is fundamental to growth.',
+      source: 'Visa Global Back to Business Study, 2022',
+      accent: brandPalette.cyan,
+      url: factSourceUrls.visa2022,
+    },
+    {
+      kicker: 'New Customers',
+      title: 'Payment flexibility can widen who buys.',
+      body: '35% of surveyed business owners saw accepting new forms of payment as a crucial area that can help improve the business.',
+      source: 'Visa Global Back to Business Study, 2023',
+      accent: brandPalette.amber,
+      url: factSourceUrls.visa2023,
+    },
+    {
+      kicker: 'Sales Lift',
+      title: 'Digital checkout can cost less than old payment habits.',
+      body: 'Visa estimated the average cost of processing digital payments was 57% lower than non-digital payments when direct expenses and labor were included.',
+      source: 'Visa SMB Digital Era Report, 2018',
+      accent: brandPalette.gold,
+      url: factSourceUrls.visa2018,
+    },
+    {
+      kicker: 'Basket Size',
+      title: 'People often spend more when they pay by card.',
+      body: '65% of SMBs agreed customers spend more when they use cards versus cash.',
+      source: 'Visa SMB Digital Era Report, 2018',
+      accent: brandPalette.amber,
+      url: factSourceUrls.visa2018,
+    },
+    {
+      kicker: 'Inventory',
+      title: 'Digital stock systems sharpen the count.',
+      body: 'GS1 US says item-level inventory accuracy can rise to over 95% with RFID.',
+      source: 'GS1 US / Auburn University',
+      accent: brandPalette.green,
+      url: factSourceUrls.gs1Rfid,
+    },
+    {
+      kicker: 'In Stock',
+      title: 'Good inventory systems prevent missed sales.',
+      body: 'GS1 and Auburn University found RFID can reduce retail out-of-stocks by up to 50%.',
+      source: 'GS1 US / Auburn University',
+      accent: brandPalette.mint,
+      url: factSourceUrls.gs1Rfid,
+    },
+  ];
+  let hoveredBuildingIndex = null;
+  let selectedBuildingIndex = null;
+  let cameraState = 'idle';
+  const overviewCameraPosition = new THREE.Vector3();
+  const overviewCameraTarget = new THREE.Vector3();
+  const desiredCameraPosition = new THREE.Vector3();
+  const desiredCameraTarget = new THREE.Vector3();
+
+  function softAccentFromHex(hex) {
+    const color = new THREE.Color(hex);
+    return `rgba(${Math.round(color.r * 255)},${Math.round(color.g * 255)},${Math.round(color.b * 255)},0.16)`;
+  }
+
+  function applyTheme(accentHex) {
+    const accent = accentHex ?? defaultTheme.accent;
+    container.style.setProperty('--hero-accent', `#${accent.toString(16).padStart(6, '0')}`);
+    container.style.setProperty('--hero-accent-soft', softAccentFromHex(accent));
+  }
 
   // ── Scene ──
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x060810, 0.022);
+  scene.fog = new THREE.FogExp2(brandPalette.ink, 0.0028);
 
   // Camera: wider FOV + pulled back on mobile so full skyline is visible
-  const fov = isMobile ? 45 : 38;
-  const camZ = isMobile ? 13 : 12;
+  const fov = isMobile ? 42 : 36;
+  const camZ = isMobile ? 13.4 : 12.35;
   const camera = new THREE.PerspectiveCamera(fov, W / H, 0.1, 100);
-  camera.position.set(0, 3, camZ);
-  camera.lookAt(0, 2.2, 0);
+  camera.position.set(0.2, 3.3, camZ);
+  camera.lookAt(0.15, 2.65, 0.1);
 
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: false });
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: performanceTier !== 'low',
+      alpha: true,
+      powerPreference: 'high-performance',
+    });
   } catch (error) {
     console.error('Unable to initialize hero skyline renderer.', error);
     return null;
   }
   renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
-
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  if (!isMobile) {
-    composer.addPass(new UnrealBloomPass(new THREE.Vector2(W, H), 0.7, 0.5, 0.4));
-  }
+  const pixelRatioCap = performanceTier === 'high' ? 2 : performanceTier === 'balanced' ? 1.55 : 1.15;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, pixelRatioCap));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.NoToneMapping;
+  renderer.setClearColor(0x000000, 0);
 
   // ── Controls ──
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
-  controls.dampingFactor = 0.03;
+  controls.dampingFactor = 0.045;
   controls.enablePan = false;
   controls.enableZoom = false;
-  controls.autoRotate = true;          // on from the start — fixes mobile "still image"
-  controls.autoRotateSpeed = 0.3;
-  controls.target.set(0, 2.2, 0);
+  controls.autoRotate = false;
+  controls.autoRotateSpeed = isPhone ? 0.15 : isMobile ? 0.19 : 0.22;
+  controls.target.set(0.15, 2.55, 0.05);
   controls.minPolarAngle = Math.PI / 4;
   controls.maxPolarAngle = Math.PI / 2.2;
-
-  if (!isTouchDevice) {
-    controls.enableRotate = true;
-  } else {
-    controls.enableRotate = false;
-    canvas.style.touchAction = 'pan-y';
-  }
+  controls.enableRotate = true;
+  if (isTouchDevice) canvas.style.touchAction = 'pan-y';
   controls.update();
+  applyTheme(defaultTheme.accent);
+  if (factGuide) factGuide.textContent = idleGuideText;
+  setSupportState({ accent: defaultTheme.accent });
+  if (radiantFrame) {
+    radiantFrame.addEventListener('load', () => {
+      syncRadiantState(selectedBuildingIndex != null);
+    });
+  }
+  desiredCameraPosition.copy(camera.position);
+  desiredCameraTarget.copy(controls.target);
+  overviewCameraPosition.copy(camera.position);
+  overviewCameraTarget.copy(controls.target);
 
   // ── Lighting ──
-  scene.add(new THREE.AmbientLight(0x182040, 0.6));
+  scene.add(new THREE.AmbientLight(0x4b66a0, 1.28));
 
-  const moonLight = new THREE.DirectionalLight(0x4466aa, 0.4);
-  moonLight.position.set(8, 15, 10);
+  const skyFill = new THREE.HemisphereLight(0x92a7eb, 0x0c1020, 0.98);
+  scene.add(skyFill);
+
+  const moonLight = new THREE.DirectionalLight(0xe1ebff, 0.44);
+  moonLight.position.set(10, 17, 8);
   scene.add(moonLight);
+  const frontFill = new THREE.DirectionalLight(0xffce9c, 0.26);
+  frontFill.position.set(-2, 7, 12);
+  scene.add(frontFill);
 
-  [
-    { pos: [-2, 1.5, 4], color: 0xFFAA60, intensity: 1.4, dist: 14 },
-    { pos: [2, 1.5, 4],  color: 0xFFAA60, intensity: 1.4, dist: 14 },
-    { pos: [-4, 2.5, 2], color: 0xFF8844, intensity: 0.7, dist: 12 },
-    { pos: [4, 2.5, 2],  color: 0xFF8844, intensity: 0.7, dist: 12 },
-    { pos: [0, 5, 3],    color: 0x5533CC, intensity: 0.4, dist: 15 },
-  ].forEach(sl => {
-    const l = new THREE.PointLight(sl.color, sl.intensity, sl.dist);
-    l.position.set(...sl.pos);
-    scene.add(l);
-  });
+  function makeRadialTexture(stops) {
+    const size = 256;
+    const surface = document.createElement('canvas');
+    surface.width = size;
+    surface.height = size;
+    const ctx = surface.getContext('2d');
+    const gradient = ctx.createRadialGradient(size / 2, size / 2, 4, size / 2, size / 2, size / 2);
+    stops.forEach(([stop, color]) => gradient.addColorStop(stop, color));
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, size, size);
+    const texture = new THREE.CanvasTexture(surface);
+    texture.needsUpdate = true;
+    return texture;
+  }
 
   // ── Sky dome (gradient) ──
   const skyMat = new THREE.ShaderMaterial({
     side: THREE.BackSide,
     depthWrite: false,
+    transparent: true,
     uniforms: {
-      topColor:    { value: new THREE.Color(0x010306) },
-      bottomColor: { value: new THREE.Color(0x0a1025) },
+      topColor: { value: new THREE.Color(0x091123) },
+      bottomColor: { value: new THREE.Color(0x3553a0) },
     },
     vertexShader: `
       varying vec3 vWorld;
@@ -105,69 +333,321 @@ export function init(container) {
       uniform vec3 topColor, bottomColor;
       varying vec3 vWorld;
       void main(){
-        float h = normalize(vWorld + 5.0).y;
-        gl_FragColor = vec4(mix(bottomColor, topColor, max(pow(max(h,0.0),0.4),0.0)),1.0);
+        float h = normalize(vWorld + 6.0).y;
+        float band = smoothstep(-0.22, 0.36, h);
+        vec3 sky = mix(bottomColor, topColor, max(pow(max(band,0.0),0.55),0.0));
+        gl_FragColor = vec4(sky, 0.9);
       }`,
   });
   scene.add(new THREE.Mesh(new THREE.SphereGeometry(50, 16, 12), skyMat));
 
-  // Stars
-  const starCount = isMobile ? 80 : 220;
-  const starGeo = new THREE.BufferGeometry();
-  const starPos = new Float32Array(starCount * 3);
-  for (let i = 0; i < starCount; i++) {
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.random() * Math.PI * 0.4;
-    const r = 35 + Math.random() * 10;
-    starPos[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-    starPos[i * 3 + 1] = r * Math.cos(phi) + 5;
-    starPos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
-  }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({
-    color: 0xffffff, size: 0.12, transparent: true, opacity: 0.65, sizeAttenuation: true,
-  })));
+  const moonGlowTexture = makeRadialTexture([
+    [0, 'rgba(255,255,255,0.92)'],
+    [0.18, 'rgba(198,219,255,0.82)'],
+    [0.42, 'rgba(100,150,255,0.22)'],
+    [1, 'rgba(18,24,42,0)'],
+  ]);
+  const horizonGlowTexture = makeRadialTexture([
+    [0, 'rgba(254,88,0,0.42)'],
+    [0.22, 'rgba(84,168,255,0.24)'],
+    [1, 'rgba(10,16,30,0)'],
+  ]);
 
-  // Moon (subtle)
+  function createStarField(count, size, opacity, spreadOffset = 0) {
+    const geo = new THREE.BufferGeometry();
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI * (0.36 + spreadOffset);
+      const r = 34 + Math.random() * 12;
+      pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      pos[i * 3 + 1] = r * Math.cos(phi) + 5;
+      pos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const material = new THREE.PointsMaterial({
+      color: 0xffffff,
+      size,
+      transparent: true,
+      opacity,
+      sizeAttenuation: true,
+      depthWrite: false,
+    });
+    const field = new THREE.Points(geo, material);
+    field.userData = {
+      baseOpacity: opacity,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.16 + Math.random() * 0.18,
+    };
+    scene.add(field);
+    return field;
+  }
+
+  const starCount = performanceTier === 'high'
+    ? (isMobile ? 96 : 208)
+    : performanceTier === 'balanced'
+      ? (isMobile ? 64 : 132)
+      : (isMobile ? 40 : 78);
+  const starFields = [
+    createStarField(starCount, isMobile ? 0.14 : 0.16, 0.82),
+    createStarField(Math.max(14, Math.floor(starCount * 0.24)), isMobile ? 0.24 : 0.28, 1, 0.08),
+  ];
+
+  // Moon and glow halo
   const moonGeo = new THREE.SphereGeometry(1.2, 16, 16);
-  const moonMat2 = new THREE.MeshStandardMaterial({ color: 0xddeeff, emissive: 0x556688, emissiveIntensity: 0.6, roughness: 1 });
+  const moonMat2 = new THREE.MeshStandardMaterial({
+    color: 0xddeeff,
+    emissive: 0x5f79b2,
+    emissiveIntensity: 0.7,
+    roughness: 1,
+  });
   const moon = new THREE.Mesh(moonGeo, moonMat2);
-  moon.position.set(12, 18, -15);
+  moon.position.set(15.5, 21.5, -31);
   scene.add(moon);
+
+  const moonHalo = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: moonGlowTexture,
+    color: 0xaecfff,
+    transparent: true,
+    opacity: 0.38,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  }));
+  moonHalo.position.copy(moon.position);
+  moonHalo.scale.set(14.4, 14.4, 1);
+  scene.add(moonHalo);
+
+  const horizonGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: horizonGlowTexture,
+    color: 0x5e90ff,
+    transparent: true,
+    opacity: 0.16,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  }));
+  horizonGlow.position.set(0, 6.1, -26.4);
+  horizonGlow.scale.set(50, 18.4, 1);
+  scene.add(horizonGlow);
+
+  const cityGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: horizonGlowTexture,
+    color: brandPalette.orange,
+    transparent: true,
+    opacity: 0.12,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  }));
+  cityGlow.position.set(0, 4.1, -22.8);
+  cityGlow.scale.set(43, 14.6, 1);
+  scene.add(cityGlow);
+
+  const skylineBacklights = [];
+  [
+    { x: -6.2, y: 4.9, z: -11.2, color: brandPalette.orange, scale: [14, 11], opacity: 0.2, speed: 0.22 },
+    { x: 0.4, y: 5.2, z: -12.4, color: brandPalette.purple, scale: [17, 12], opacity: 0.16, speed: 0.18 },
+    { x: 6.6, y: 4.7, z: -11.6, color: brandPalette.cyan, scale: [14, 11], opacity: 0.2, speed: 0.24 },
+  ].forEach((cfg, index) => {
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: horizonGlowTexture,
+      color: cfg.color,
+      transparent: true,
+      opacity: cfg.opacity,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    }));
+    glow.position.set(cfg.x, cfg.y, cfg.z);
+    glow.scale.set(cfg.scale[0], cfg.scale[1], 1);
+    glow.userData = {
+      baseOpacity: cfg.opacity,
+      speed: cfg.speed,
+      phase: index * 0.8 + Math.random() * 0.4,
+    };
+    skylineBacklights.push(glow);
+    scene.add(glow);
+  });
+
+  const backdropDefs = [
+    { x: -5.8, z: -7.2, w: 2.1, d: 1.4, h: 5.6, color: 0x31457e },
+    { x: -3.2, z: -7.8, w: 1.8, d: 1.4, h: 6.7, color: 0x403888 },
+    { x: -0.2, z: -8.5, w: 2.6, d: 1.5, h: 8.2, color: 0x25618d },
+    { x: 2.9, z: -7.9, w: 2.0, d: 1.35, h: 6.9, color: 0x5d356d },
+    { x: 5.6, z: -7.3, w: 1.9, d: 1.35, h: 5.9, color: 0x2d5d74 },
+  ];
+  backdropDefs.forEach((cfg) => {
+    const block = new THREE.Mesh(
+      new THREE.BoxGeometry(cfg.w, cfg.h, cfg.d),
+      new THREE.MeshLambertMaterial({
+        color: cfg.color,
+        emissive: new THREE.Color(cfg.color).multiplyScalar(0.18),
+        emissiveIntensity: 0.7,
+      }),
+    );
+    block.position.set(cfg.x, cfg.h / 2 - 0.05, cfg.z);
+    scene.add(block);
+  });
+
+  const shootingStarHeadTexture = makeRadialTexture([
+    [0, 'rgba(255,255,255,0.95)'],
+    [0.3, 'rgba(255,210,160,0.82)'],
+    [1, 'rgba(15,18,28,0)'],
+  ]);
+  const shootingStarSystems = [];
+  [
+    {
+      points: [[-15, 15.8, -18], [-7, 18.5, -9], [1.5, 16.6, -1], [13, 11.7, 7]],
+      color: 0xffd3a6,
+      speed: 0.022,
+      offset: 0.16,
+    },
+    {
+      points: [[14, 14.8, -20], [6, 17.2, -12], [-1.2, 15.1, -5], [-11, 10.6, 4.5]],
+      color: 0x8cc8ff,
+      speed: 0.018,
+      offset: 0.63,
+    },
+  ].forEach((cfg) => {
+    const curve = new THREE.CatmullRomCurve3(cfg.points.map(([x, y, z]) => new THREE.Vector3(x, y, z)));
+    const trail = new THREE.Mesh(
+      new THREE.TubeGeometry(curve, 56, 0.022, 8, false),
+      new THREE.MeshBasicMaterial({
+        color: cfg.color,
+        transparent: true,
+        opacity: 0.065,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+      }),
+    );
+    scene.add(trail);
+    const head = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: shootingStarHeadTexture,
+      color: cfg.color,
+      transparent: true,
+      opacity: 0,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    }));
+    head.scale.set(0.9, 0.9, 1);
+    scene.add(head);
+    shootingStarSystems.push({
+      curve,
+      trail,
+      head,
+      baseOpacity: 0.065,
+      speed: cfg.speed,
+      offset: cfg.offset,
+    });
+  });
 
   // ── Ground ──
   const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(40, 40),
-    new THREE.MeshStandardMaterial({ color: 0x0c0e18, roughness: 0.15, metalness: 0.85, emissive: 0x020408, emissiveIntensity: 0.3 })
+    new THREE.PlaneGeometry(42, 42),
+    new THREE.MeshStandardMaterial({
+      color: 0x090d18,
+      roughness: 0.3,
+      metalness: 0.56,
+      emissive: 0x050913,
+      emissiveIntensity: 0.18,
+    }),
   );
   ground.rotation.x = -Math.PI / 2;
   scene.add(ground);
 
-  // Cyber-grid overlay
-  const grid = new THREE.GridHelper(40, 40, 0x0891B2, 0x0891B2);
+  const groundGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: horizonGlowTexture,
+    color: 0x254f90,
+    transparent: true,
+    opacity: 0.04,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  }));
+  groundGlow.position.set(0, 0.35, 0.2);
+  groundGlow.scale.set(31, 10.5, 1);
+  scene.add(groundGlow);
+
+  // Perspective guide floor
+  const grid = new THREE.GridHelper(40, 28, 0x1a3551, 0x14283d);
   grid.position.y = 0.01;
   grid.material.transparent = true;
   grid.material.opacity = 0;
   scene.add(grid);
 
+  // Long-exposure avenue strips
+  const longExposureTrails = [];
+  [
+    { x: -2.25, width: 0.28, length: 18, z: -0.8, color: brandPalette.cyan, opacity: 0.056, speed: 0.42 },
+    { x: -0.7, width: 0.18, length: 17, z: -0.4, color: brandPalette.purple, opacity: 0.049, speed: 0.5 },
+    { x: 0.65, width: 0.24, length: 18, z: -0.5, color: brandPalette.orange, opacity: 0.064, speed: 0.46 },
+    { x: 2.15, width: 0.18, length: 16, z: -0.2, color: brandPalette.gold, opacity: 0.046, speed: 0.38 },
+  ].forEach((cfg) => {
+    const strip = new THREE.Mesh(
+      new THREE.PlaneGeometry(cfg.width, cfg.length),
+      new THREE.MeshBasicMaterial({
+        color: cfg.color,
+        transparent: true,
+        opacity: cfg.opacity * 0.5,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        side: THREE.DoubleSide,
+      }),
+    );
+    strip.rotation.x = -Math.PI / 2;
+    strip.position.set(cfg.x, 0.018, cfg.z);
+    scene.add(strip);
+    longExposureTrails.push({
+      mesh: strip,
+      baseOpacity: cfg.opacity,
+      speed: cfg.speed,
+      phase: Math.random() * Math.PI * 2,
+    });
+  });
+
   // Road in front of buildings
-  const roadMat = new THREE.MeshStandardMaterial({ color: 0x181a28, roughness: 0.65, metalness: 0.15 });
+  const roadShoulder = new THREE.Mesh(
+    new THREE.PlaneGeometry(15.4, 3.05),
+    new THREE.MeshStandardMaterial({ color: 0x0c1220, roughness: 0.38, metalness: 0.3, emissive: 0x060b14, emissiveIntensity: 0.1 }),
+  );
+  roadShoulder.rotation.x = -Math.PI / 2;
+  roadShoulder.position.set(0, 0.014, 3.5);
+  scene.add(roadShoulder);
+
+  const roadMat = new THREE.MeshStandardMaterial({
+    color: 0x101824,
+    roughness: 0.24,
+    metalness: 0.44,
+    emissive: 0x091120,
+    emissiveIntensity: 0.16,
+  });
   const road = new THREE.Mesh(new THREE.PlaneGeometry(14, 2.4), roadMat);
   road.rotation.x = -Math.PI / 2;
-  road.position.set(0, 0.015, 3.5);
+  road.position.set(0, 0.016, 3.5);
   scene.add(road);
 
+  const roadSheen = new THREE.Mesh(
+    new THREE.PlaneGeometry(13.6, 2.04),
+    new THREE.MeshBasicMaterial({
+      color: 0x9dc8ff,
+      transparent: true,
+      opacity: 0.036,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+    }),
+  );
+  roadSheen.rotation.x = -Math.PI / 2;
+  roadSheen.position.set(0, 0.018, 3.5);
+  scene.add(roadSheen);
+
   // Yellow center line
-  const yellowLine = new THREE.MeshStandardMaterial({ color: 0xFFCC00, emissive: 0xFFCC00, emissiveIntensity: 0.25 });
-  const cl = new THREE.Mesh(new THREE.PlaneGeometry(12, 0.04), yellowLine);
+  const yellowLine = new THREE.MeshStandardMaterial({ color: 0xFFCC00, emissive: 0xFFCC00, emissiveIntensity: 0.46 });
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(12, 0.085), yellowLine);
   cl.rotation.x = -Math.PI / 2;
-  cl.position.set(0, 0.025, 3.5);
+  cl.position.set(0, 0.026, 3.5);
   scene.add(cl);
 
   // White dashed edge lines
-  const dashMat = new THREE.MeshStandardMaterial({ color: 0xcccccc, emissive: 0xcccccc, emissiveIntensity: 0.15 });
-  const dashGeo = new THREE.PlaneGeometry(0.35, 0.025);
-  for (let side of [-1, 1]) {
+  const dashMat = new THREE.MeshStandardMaterial({ color: 0xe6ebff, emissive: 0xe6ebff, emissiveIntensity: 0.26 });
+  const dashGeo = new THREE.PlaneGeometry(0.42, 0.05);
+  for (const side of [-1, 1]) {
     for (let x = -5.5; x < 6; x += 0.7) {
       const d = new THREE.Mesh(dashGeo, dashMat);
       d.rotation.x = -Math.PI / 2;
@@ -177,9 +657,9 @@ export function init(container) {
   }
 
   // Crosswalk
-  const cwMat = new THREE.MeshStandardMaterial({ color: 0xdddddd, emissive: 0xdddddd, emissiveIntensity: 0.1 });
+  const cwMat = new THREE.MeshStandardMaterial({ color: 0xf0f3ff, emissive: 0xf0f3ff, emissiveIntensity: 0.12 });
   for (let i = 0; i < 6; i++) {
-    const s = new THREE.Mesh(new THREE.PlaneGeometry(0.14, 2.2), cwMat);
+    const s = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 2.2), cwMat);
     s.rotation.x = -Math.PI / 2;
     s.position.set(-0.45 + i * 0.24, 0.025, 3.5);
     scene.add(s);
@@ -187,8 +667,8 @@ export function init(container) {
 
   // Sidewalk
   const sw = new THREE.Mesh(
-    new THREE.PlaneGeometry(14, 0.7),
-    new THREE.MeshStandardMaterial({ color: 0x1e2030, roughness: 0.7, metalness: 0.1 })
+    new THREE.PlaneGeometry(14, 0.76),
+    new THREE.MeshStandardMaterial({ color: 0x182132, roughness: 0.58, metalness: 0.18 }),
   );
   sw.rotation.x = -Math.PI / 2;
   sw.position.set(0, 0.016, 2.05);
@@ -197,129 +677,265 @@ export function init(container) {
   // Street lamps
   const lampPostGeo = new THREE.CylinderGeometry(0.018, 0.022, 2.4, 6);
   const lampMetalMat = new THREE.MeshStandardMaterial({ color: 0x333344, roughness: 0.4, metalness: 0.7 });
-  const lampGlowMat = new THREE.MeshStandardMaterial({ color: 0xFFDD88, emissive: 0xFFDD88, emissiveIntensity: 3, roughness: 0.2 });
+  const lampGlowMat = new THREE.MeshStandardMaterial({ color: 0xFFDD88, emissive: 0xFFDD88, emissiveIntensity: 3.8, roughness: 0.2 });
 
-  [-3.5, 0, 3.5].forEach(x => {
+  [-3.5, 0, 3.5].forEach((x) => {
     const post = new THREE.Mesh(lampPostGeo, lampMetalMat);
     post.position.set(x, 1.2, 2.75);
     scene.add(post);
 
-    // Arm
     const arm = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.02, 0.02), lampMetalMat);
     arm.position.set(x + 0.12, 2.38, 2.75);
     scene.add(arm);
 
-    // Lamp head
     const head = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.05, 0.08), lampMetalMat);
     head.position.set(x + 0.24, 2.36, 2.75);
     scene.add(head);
 
-    // Glow bulb
     const glow = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), lampGlowMat);
     glow.position.set(x + 0.24, 2.32, 2.75);
     scene.add(glow);
 
-    // Light source
-    const pl = new THREE.PointLight(0xFFDD88, 0.5, 5, 2);
+    const pl = new THREE.PointLight(0xFFDD88, 0.72, 5.8, 2);
     pl.position.set(x + 0.24, 2.3, 2.75);
     scene.add(pl);
+  });
+
+  const streetTrees = [];
+  const planterMat = new THREE.MeshStandardMaterial({ color: 0x26313f, roughness: 0.9, metalness: 0.08 });
+  const trunkMat = new THREE.MeshStandardMaterial({ color: 0x6f4327, roughness: 0.92, metalness: 0.02 });
+  const leafPalette = [brandPalette.green, brandPalette.mint, 0x7fd44c, 0x5dd67d];
+  [-5.0, -2.55, 0.05, 2.65, 5.05].forEach((x, index) => {
+    const group = new THREE.Group();
+    group.position.set(x, 0, 2.22);
+
+    const planter = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.22, 0.42), planterMat);
+    planter.position.y = 0.11;
+    group.add(planter);
+
+    const soil = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.12, 0.13, 0.04, 10),
+      new THREE.MeshStandardMaterial({ color: 0x1b140d, roughness: 1 }),
+    );
+    soil.position.y = 0.22;
+    group.add(soil);
+
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.05, 0.64, 8), trunkMat);
+    trunk.position.y = 0.52;
+    group.add(trunk);
+
+    const canopyColor = leafPalette[index % leafPalette.length];
+    const canopyMat = new THREE.MeshLambertMaterial({
+      color: new THREE.Color(canopyColor).lerp(new THREE.Color(brandPalette.ivory), 0.08),
+      emissive: new THREE.Color(canopyColor).multiplyScalar(0.12),
+      emissiveIntensity: 0.78,
+    });
+    const canopyOffsets = [
+      { x: 0, y: 0.96, z: 0, s: 0.34 },
+      { x: -0.16, y: 0.82, z: 0.04, s: 0.24 },
+      { x: 0.16, y: 0.84, z: -0.04, s: 0.24 },
+    ];
+    canopyOffsets.forEach((cfg) => {
+      const canopy = new THREE.Mesh(new THREE.SphereGeometry(cfg.s, 10, 10), canopyMat);
+      canopy.position.set(cfg.x, cfg.y, cfg.z);
+      group.add(canopy);
+    });
+
+    const fairy = new THREE.PointLight(canopyColor, 0.18, 1.8, 2);
+    fairy.position.set(0, 0.92, 0);
+    group.add(fairy);
+
+    group.userData = {
+      swaySpeed: 0.6 + Math.random() * 0.3,
+      swayAmount: 0.04 + Math.random() * 0.02,
+      phase: Math.random() * Math.PI * 2,
+    };
+    streetTrees.push(group);
+    scene.add(group);
   });
 
   // ── Building definitions ──
   const buildingDefs = [
     // Front row (z > 0, close to camera)
-    { x: -4.5, z: 1.2, w: 1.0, d: 1.0, h: 2.2, color: 0xFF6B6B },
-    { x: -2.8, z: 0.8, w: 1.3, d: 1.1, h: 3.0, color: 0xFE5800 },
-    { x: -1.2, z: 1.0, w: 0.9, d: 0.9, h: 2.5, color: 0x06D6A0 },
-    { x: 2.0,  z: 0.8, w: 1.1, d: 1.0, h: 2.8, color: 0xFFBE0B },
-    { x: 3.8,  z: 1.0, w: 0.8, d: 0.8, h: 2.0, color: 0x10B981 },
+    { x: -4.5, z: 1.2, w: 1.0, d: 1.0, h: 2.2, color: brandPalette.red },
+    { x: -2.8, z: 0.8, w: 1.3, d: 1.1, h: 3.0, color: 0xF09514 },
+    { x: -1.2, z: 1.0, w: 0.9, d: 0.9, h: 2.5, color: brandPalette.green },
+    { x: 2.0,  z: 0.8, w: 1.1, d: 1.0, h: 2.8, color: brandPalette.gold },
+    { x: 3.8,  z: 1.0, w: 0.8, d: 0.8, h: 2.0, color: brandPalette.cyan },
     // Main row (z ~ 0, primary skyline)
-    { x: -4.2, z: -0.5, w: 1.2, d: 1.2, h: 3.5, color: 0xFE5800 },
-    { x: -2.5, z: -0.2, w: 1.0, d: 1.0, h: 2.4, color: 0xFF6B35 },
-    { x: -1.0, z: -0.6, w: 1.4, d: 1.4, h: 4.2, color: 0x0891B2 },
-    { x: 0.5,  z: -0.4, w: 1.5, d: 1.5, h: 5.2, color: 0x8B5CF6, isHero: true },
-    { x: 2.0,  z: -0.5, w: 1.1, d: 1.1, h: 3.8, color: 0xE040A0 },
-    { x: 3.5,  z: -0.2, w: 1.3, d: 1.3, h: 4.5, color: 0x0891B2 },
+    { x: -4.2, z: -0.5, w: 1.2, d: 1.2, h: 3.5, color: brandPalette.orange },
+    { x: -2.5, z: -0.2, w: 1.0, d: 1.0, h: 2.4, color: 0xE24D67 },
+    { x: -1.0, z: -0.6, w: 1.4, d: 1.4, h: 4.2, color: 0x1595B5 },
+    { x: 0.5,  z: -0.4, w: 1.5, d: 1.5, h: 5.2, color: brandPalette.purple, isHero: true },
+    { x: 2.0,  z: -0.5, w: 1.1, d: 1.1, h: 3.8, color: brandPalette.violet },
+    { x: 3.5,  z: -0.2, w: 1.3, d: 1.3, h: 4.5, color: brandPalette.cyan },
     // Back row (z < -1)
-    { x: -3.5, z: -2.2, w: 1.5, d: 1.2, h: 4.8, color: 0x8B5CF6 },
-    { x: -1.0, z: -2.5, w: 1.8, d: 1.5, h: 5.5, color: 0x0891B2 },
-    { x: 1.5,  z: -2.8, w: 1.6, d: 1.3, h: 5.0, color: 0xE040A0 },
-    { x: 4.0,  z: -2.2, w: 1.4, d: 1.2, h: 4.0, color: 0x10B981 },
+    { x: -3.5, z: -2.2, w: 1.5, d: 1.2, h: 4.8, color: 0x7E57D9 },
+    { x: -1.0, z: -2.5, w: 1.8, d: 1.5, h: 5.5, color: 0x1282A7 },
+    { x: 1.5,  z: -2.8, w: 1.6, d: 1.3, h: 5.0, color: 0xD28A17 },
+    { x: 4.0,  z: -2.2, w: 1.4, d: 1.2, h: 4.0, color: 0x16A275 },
   ];
 
   // ── Window materials ──
-  const winGeo = new THREE.BoxGeometry(0.09, 0.13, 0.012);
+  const winGeo = new THREE.PlaneGeometry(0.11, 0.154);
+  function makeLitPlaneMaterial(hex, { transparent = false, opacity = 1 } = {}) {
+    const material = new THREE.MeshBasicMaterial({
+      color: hex,
+      transparent,
+      opacity,
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
+    });
+    material.userData.baseColor = new THREE.Color(hex);
+    return material;
+  }
   const winMats = {
-    warmYellow: new THREE.MeshStandardMaterial({ color: 0xFFDD44, emissive: 0xFFDD44, emissiveIntensity: 0, roughness: 0.3 }),
-    coolWhite:  new THREE.MeshStandardMaterial({ color: 0xCCDDFF, emissive: 0xCCDDFF, emissiveIntensity: 0, roughness: 0.3 }),
-    warmOrange: new THREE.MeshStandardMaterial({ color: 0xFFAA55, emissive: 0xFFAA55, emissiveIntensity: 0, roughness: 0.3 }),
-    tvBlue:     new THREE.MeshStandardMaterial({ color: 0x6688FF, emissive: 0x6688FF, emissiveIntensity: 0, roughness: 0.3 }),
-    dark:       new THREE.MeshStandardMaterial({ color: 0x0a0a18, emissive: 0x0a0a18, emissiveIntensity: 0, roughness: 0.9 }),
+    warmIvory: makeLitPlaneMaterial(0xFFF1C7),
+    coolWhite: makeLitPlaneMaterial(0xE7EEFF),
+    warmAmber: makeLitPlaneMaterial(0xFFC16B),
+    softCyan:  makeLitPlaneMaterial(0xB9E8FF),
+    dark:      makeLitPlaneMaterial(0x090d16),
   };
-  const litMats = [winMats.warmYellow, winMats.coolWhite, winMats.warmOrange, winMats.tvBlue];
+  const litMats = [winMats.warmIvory, winMats.coolWhite, winMats.warmAmber, winMats.softCyan];
+  const windowGlowTargets = new Map([
+    [winMats.warmIvory, 1.26],
+    [winMats.coolWhite, 1.18],
+    [winMats.warmAmber, 1.22],
+    [winMats.softCyan, 1.08],
+  ]);
+  const darkWindowGlowTarget = 1;
+  const animatedWindows = [];
+  const animatedWindowChance = performanceTier === 'low' ? 0.016 : isMobile ? 0.028 : 0.045;
+  const windowLift = 0.006;
 
   function pickWinMat() {
     const r = Math.random();
-    if (r < 0.22) return winMats.dark;
-    if (r < 0.52) return winMats.warmYellow;
+    if (r < 0.24) return winMats.dark;
+    if (r < 0.51) return winMats.warmIvory;
     if (r < 0.72) return winMats.coolWhite;
-    if (r < 0.88) return winMats.warmOrange;
-    return winMats.tvBlue;
+    if (r < 0.88) return winMats.warmAmber;
+    return winMats.softCyan;
   }
-
-  const flickerWindows = [];
 
   // ── Door / storefront materials ──
   const doorFrameMat = new THREE.MeshStandardMaterial({ color: 0x2a1a0a, roughness: 0.8, metalness: 0.2 });
-  const doorGlassMat = new THREE.MeshStandardMaterial({
-    color: 0xFFCC66, emissive: 0xFFCC66, emissiveIntensity: 0, roughness: 0.1, transparent: true, opacity: 0.85,
-  });
-  const storefrontMat = new THREE.MeshStandardMaterial({
-    color: 0xFFBB44, emissive: 0xFFBB44, emissiveIntensity: 0, roughness: 0.1, transparent: true, opacity: 0.75,
-  });
-  const awningColors = [0x882222, 0x228844, 0x224488, 0x884422, 0x882266];
+  const doorGlassMat = makeLitPlaneMaterial(0xFFCC66, { transparent: true, opacity: 0.88 });
+  const storefrontMat = makeLitPlaneMaterial(0xFFBB44, { transparent: true, opacity: 0.8 });
+  const awningColors = [0xF4505F, 0x15B77E, 0x1FB9D8, 0xF3A51A, 0x9557F2];
+  const doorGlassGlowTarget = 0.96;
+  const storefrontGlowTarget = 1.0;
+
+  function setLitPlaneIntensity(material, intensity) {
+    const baseColor = material.userData.baseColor;
+    if (!baseColor) return;
+    material.color.copy(baseColor).multiplyScalar(intensity);
+  }
+
+  function setWindowGlow(progress = 1) {
+    litMats.forEach((material) => {
+      setLitPlaneIntensity(material, (windowGlowTargets.get(material) || 1) * progress);
+    });
+    animatedWindows.forEach((windowState) => {
+      setLitPlaneIntensity(windowState.material, windowState.baseIntensity * progress);
+    });
+    setLitPlaneIntensity(winMats.dark, darkWindowGlowTarget);
+    setLitPlaneIntensity(doorGlassMat, doorGlassGlowTarget * progress);
+    setLitPlaneIntensity(storefrontMat, storefrontGlowTarget * progress);
+  }
 
   // ── Build each building ──
   const buildings = [];
 
   buildingDefs.forEach((cfg, bIdx) => {
     const { w, d, h } = cfg;
-    const baseColor = new THREE.Color(cfg.color).multiplyScalar(0.3);
-    const emColor = new THREE.Color(cfg.color);
+    const baseColor = new THREE.Color(cfg.color).lerp(new THREE.Color(brandPalette.ivory), 0.03);
+    const emColor = new THREE.Color(cfg.color).multiplyScalar(0.12);
+    const frameColor = new THREE.Color(cfg.color).lerp(new THREE.Color(brandPalette.ivory), 0.16);
+    const baseBodyEmissiveIntensity = 0.56;
+    const baseFrameEmissiveIntensity = 0.68;
 
     const bodyGeo = new THREE.BoxGeometry(w, h, d);
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: baseColor, emissive: emColor, emissiveIntensity: 0.15, roughness: 0.35, metalness: 0.3,
+    const bodyMat = new THREE.MeshLambertMaterial({
+      color: baseColor,
+      emissive: emColor,
+      emissiveIntensity: baseBodyEmissiveIntensity,
     });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     body.position.set(cfg.x, -(h + 2), cfg.z);
-    // Each building gets its own glow rhythm (unique speed + phase)
-    const glowSpeed = 0.3 + Math.random() * 0.5;   // 0.3–0.8 Hz, gentle
-    const glowPhase = Math.random() * Math.PI * 2;  // random start offset
-    body.userData = { targetY: h / 2, startY: -(h + 2), cfg, bIdx, glowSpeed, glowPhase, emColor };
+    body.userData = {
+      targetY: h / 2,
+      startY: -(h + 2),
+      cfg,
+      bIdx,
+      emColor,
+      baseEmissiveIntensity: baseBodyEmissiveIntensity,
+      fact: factCards[bIdx] || null,
+    };
     scene.add(body);
     buildings.push(body);
 
-    // Subtle wireframe
-    const wire = new THREE.LineSegments(
-      new THREE.EdgesGeometry(bodyGeo),
-      new THREE.LineBasicMaterial({ color: emColor.clone().multiplyScalar(0.6), transparent: true, opacity: 0.4 })
+    // Architectural trim: thicker than single-pixel lines, so edges read better on Windows and lower-end displays
+    const trimThickness = Math.max(0.06, Math.min(0.11, Math.min(w, d) * 0.13));
+    const trimDepth = 0.07;
+    const frameMat = new THREE.MeshLambertMaterial({
+      color: frameColor,
+      emissive: emColor.clone().multiplyScalar(0.18),
+      emissiveIntensity: baseFrameEmissiveIntensity,
+    });
+    frameMat.userData.baseEmissiveIntensity = baseFrameEmissiveIntensity;
+    const cornerGeo = new THREE.BoxGeometry(trimThickness, h + 0.05, trimThickness);
+    [
+      [w / 2 - trimThickness / 2, d / 2 - trimThickness / 2],
+      [-w / 2 + trimThickness / 2, d / 2 - trimThickness / 2],
+      [w / 2 - trimThickness / 2, -d / 2 + trimThickness / 2],
+      [-w / 2 + trimThickness / 2, -d / 2 + trimThickness / 2],
+    ].forEach(([tx, tz]) => {
+      const corner = new THREE.Mesh(cornerGeo, frameMat);
+      corner.position.set(tx, 0, tz);
+      body.add(corner);
+    });
+    const frontBarGeo = new THREE.BoxGeometry(w + 0.05, trimThickness, trimDepth);
+    const sideBarGeo = new THREE.BoxGeometry(trimDepth, trimThickness, d + 0.05);
+    const topFront = new THREE.Mesh(frontBarGeo, frameMat);
+    topFront.position.set(0, h / 2 - trimThickness / 2, d / 2 + trimDepth / 2);
+    body.add(topFront);
+    const topBack = topFront.clone();
+    topBack.position.z = -(d / 2 + trimDepth / 2);
+    body.add(topBack);
+    const topRight = new THREE.Mesh(sideBarGeo, frameMat);
+    topRight.position.set(w / 2 + trimDepth / 2, h / 2 - trimThickness / 2, 0);
+    body.add(topRight);
+    const topLeft = topRight.clone();
+    topLeft.position.x = -(w / 2 + trimDepth / 2);
+    body.add(topLeft);
+    const frontGlow = new THREE.Mesh(
+      new THREE.PlaneGeometry(Math.max(0.28, w - trimThickness * 1.9), Math.max(0.4, h - trimThickness * 2.2)),
+      new THREE.MeshBasicMaterial({
+        color: frameColor.clone().multiplyScalar(0.58),
+        transparent: true,
+        opacity: 0,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
     );
-    body.add(wire);
+    frontGlow.position.set(0, 0, d / 2 + 0.011);
+    body.add(frontGlow);
+    body.userData.frameMat = frameMat;
+    body.userData.frontGlow = frontGlow.material;
 
     // ── Windows: proper grid, all 4 faces ──
-    const winSpaceX = 0.17;
-    const winSpaceY = 0.22;
-    const marginEdge = 0.1;
+    const winSpaceX = 0.215;
+    const winSpaceY = 0.27;
+    const marginEdge = 0.12;
     const floorStart = 0.5;   // above ground (leaves room for door)
     const roofStop = 0.18;
 
-    // front/back span building width; left/right span building depth
+    // Keep window detail on broad faces only.
+    // Side-face window planes create edge moire/artifacts at shallow angles.
     const faces = [
       { span: w, depth: d, axis: 'front' },
       { span: w, depth: d, axis: 'back' },
-      { span: d, depth: w, axis: 'right' },
-      { span: d, depth: w, axis: 'left' },
     ];
 
     faces.forEach(face => {
@@ -330,30 +946,43 @@ export function init(container) {
         const u = startU + c * winSpaceX;
         for (let y = floorStart; y < h - roofStop; y += winSpaceY) {
           const mat = pickWinMat();
-          const win = new THREE.Mesh(winGeo, mat);
+          let windowMaterial = mat;
+          if (mat !== winMats.dark) {
+            if (Math.random() < animatedWindowChance) {
+              windowMaterial = mat.clone();
+              windowMaterial.userData.baseColor = mat.userData.baseColor.clone();
+              animatedWindows.push({
+                material: windowMaterial,
+                baseIntensity: windowGlowTargets.get(mat) || 1,
+                speed: 0.28 + Math.random() * 0.34,
+                flutterSpeed: 0.7 + Math.random() * 0.7,
+                dipSpeed: 0.42 + Math.random() * 0.5,
+                phase: Math.random() * Math.PI * 2,
+                dipDepth: 0.04 + Math.random() * 0.06,
+              });
+            }
+          }
+          const win = new THREE.Mesh(winGeo, windowMaterial);
           const yLocal = y - h / 2;
 
           switch (face.axis) {
             case 'front':
-              win.position.set(u, yLocal, d / 2 + 0.007);
+              win.position.set(u, yLocal, d / 2 + windowLift);
               break;
             case 'back':
-              win.position.set(u, yLocal, -(d / 2 + 0.007));
+              win.position.set(u, yLocal, -(d / 2 + windowLift));
               win.rotation.y = Math.PI;
               break;
             case 'right':
-              win.position.set(w / 2 + 0.007, yLocal, u);
+              win.position.set(w / 2 + windowLift, yLocal, u);
               win.rotation.y = Math.PI / 2;
               break;
             case 'left':
-              win.position.set(-(w / 2 + 0.007), yLocal, u);
+              win.position.set(-(w / 2 + windowLift), yLocal, u);
               win.rotation.y = -Math.PI / 2;
               break;
           }
 
-          if (mat !== winMats.dark && Math.random() < 0.07) {
-            flickerWindows.push({ mesh: win, phase: Math.random() * Math.PI * 2, speed: 1.5 + Math.random() * 4 });
-          }
           body.add(win);
         }
       }
@@ -366,8 +995,8 @@ export function init(container) {
     doorFrame.position.set(0, -h / 2 + doorH / 2 + 0.01, d / 2 + 0.01);
     body.add(doorFrame);
 
-    const doorGlass = new THREE.Mesh(new THREE.BoxGeometry(doorW, doorH * 0.65, 0.02), doorGlassMat.clone());
-    doorGlass.position.set(0, doorH * 0.08, 0.005);
+    const doorGlass = new THREE.Mesh(new THREE.PlaneGeometry(doorW, doorH * 0.65), doorGlassMat);
+    doorGlass.position.set(0, doorH * 0.08, 0.01);
     doorGlass.userData.isDoorGlass = true;
     doorFrame.add(doorGlass);
 
@@ -383,11 +1012,11 @@ export function init(container) {
     if (cfg.z > 0.3 && w >= 0.9) {
       const sfW = w * 0.28;
       const sfH = 0.28;
-      const sfGeo = new THREE.BoxGeometry(sfW, sfH, 0.018);
+      const sfGeo = new THREE.PlaneGeometry(sfW, sfH);
 
       [-1, 1].forEach(side => {
-        const sf = new THREE.Mesh(sfGeo, storefrontMat.clone());
-        sf.position.set(side * (doorW / 2 + sfW / 2 + 0.08), -h / 2 + sfH / 2 + 0.04, d / 2 + 0.01);
+        const sf = new THREE.Mesh(sfGeo, storefrontMat);
+        sf.position.set(side * (doorW / 2 + sfW / 2 + 0.08), -h / 2 + sfH / 2 + 0.04, d / 2 + 0.012);
         sf.userData.isStorefront = true;
         body.add(sf);
       });
@@ -407,6 +1036,35 @@ export function init(container) {
       val.position.set(0, -h / 2 + 0.31, d / 2 + 0.2);
       body.add(val);
     }
+  });
+
+  const dataBlips = [];
+  [
+    { x: -3.9, y: 4.7, z: -0.7, color: brandPalette.orange },
+    { x: -2.2, y: 5.1, z: -1.1, color: brandPalette.gold },
+    { x: -0.4, y: 4.9, z: -0.5, color: brandPalette.cyan },
+    { x: 1.6, y: 5.5, z: -0.8, color: brandPalette.purple },
+    { x: 3.6, y: 4.8, z: -0.4, color: brandPalette.cyan },
+    { x: 4.6, y: 4.1, z: 0.2, color: brandPalette.red },
+  ].forEach((cfg, index) => {
+    const blip = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: moonGlowTexture,
+      color: cfg.color,
+      transparent: true,
+      opacity: 0.26,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    }));
+    blip.position.set(cfg.x, cfg.y, cfg.z);
+    blip.scale.set(0.28, 0.28, 1);
+    blip.userData = {
+      baseY: cfg.y,
+      baseOpacity: 0.18 + (index % 2) * 0.04,
+      speed: 0.65 + index * 0.08,
+      phase: index * 0.9 + Math.random() * 0.6,
+    };
+    dataBlips.push(blip);
+    scene.add(blip);
   });
 
   // ── Rooftop: water towers (iconic NYC wooden barrel on stilts) ──
@@ -520,7 +1178,7 @@ export function init(container) {
   antenna.position.set(0, heroH / 2 + 0.6, 0);
   heroBody.add(antenna);
 
-  const blinkMat = new THREE.MeshStandardMaterial({ color: 0xFF0000, emissive: 0xFF0000, emissiveIntensity: 2 });
+  const blinkMat = new THREE.MeshStandardMaterial({ color: 0xFF0000, emissive: 0xFF0000, emissiveIntensity: 0.9 });
   const blink = new THREE.Mesh(new THREE.SphereGeometry(0.03, 4, 4), blinkMat);
   blink.position.set(0, heroH / 2 + 1.2, 0);
   heroBody.add(blink);
@@ -553,7 +1211,7 @@ export function init(container) {
   }
 
   const neonBars = [];
-  const OC = 0xFE5800, OE = 0xFF6B35;
+  const OC = brandPalette.orange, OE = brandPalette.orangeSoft;
   const LH = 0.28, LW = 0.04, bY = 0;
   // L
   neonBars.push(NB(-0.38, bY, LW, LH, OC));
@@ -576,28 +1234,222 @@ export function init(container) {
   neonSceneLight.position.set(0.5, 3.2, 1.5);
   scene.add(neonSceneLight);
 
+  const focusRing = new THREE.Mesh(
+    new THREE.RingGeometry(0.82, 1.18, 56),
+    new THREE.MeshBasicMaterial({ color: defaultTheme.accent, transparent: true, opacity: 0, side: THREE.DoubleSide })
+  );
+  focusRing.rotation.x = -Math.PI / 2;
+  focusRing.position.y = 0.04;
+  scene.add(focusRing);
+
+  const focusLight = new THREE.PointLight(defaultTheme.accent, 0, 7, 2);
+  scene.add(focusLight);
+
   // ── Interaction ──
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
   let neonHover = 0;
+  
+  function updateGuide(text) {
+    if (!factGuide) return;
+    factGuide.textContent = text;
+  }
+
+  function hideFactBubble() {
+    if (!factBubble) return;
+    factBubble.classList.remove('is-visible', 'is-below', 'is-hud', 'is-sheet');
+    factBubble.hidden = true;
+    if (factLink) factLink.tabIndex = -1;
+  }
+
+  function showFactBubble(fact) {
+    if (!factBubble || !fact) return;
+    if (factKicker) factKicker.textContent = fact.kicker;
+    if (factTitle) factTitle.textContent = fact.title;
+    if (factBody) factBody.textContent = fact.body;
+    if (factSource) factSource.textContent = fact.source;
+    if (factLink) {
+      const hasUrl = Boolean(fact.url);
+      factLink.hidden = !hasUrl;
+      factLink.tabIndex = hasUrl ? 0 : -1;
+      if (hasUrl) {
+        factLink.href = fact.url;
+      } else {
+        factLink.removeAttribute('href');
+      }
+    }
+    factBubble.hidden = false;
+    factBubble.classList.add('is-visible');
+  }
+
+  function positionFactBubble() {
+    if (!factBubble || selectedBuildingIndex == null) return;
+    const selectedBuilding = buildings[selectedBuildingIndex];
+    if (!selectedBuilding) return;
+
+    if (isPhone) {
+      factBubble.classList.remove('is-hud');
+      factBubble.classList.add('is-sheet');
+      factBubble.classList.remove('is-below');
+      factBubble.style.removeProperty('--bubble-x');
+      factBubble.style.removeProperty('--bubble-y');
+      factBubble.style.removeProperty('--bubble-tail-left');
+      return;
+    }
+
+    factBubble.classList.remove('is-sheet', 'is-below');
+    factBubble.classList.add('is-hud');
+    const bubbleWidth = factBubble.offsetWidth || (isTablet ? 390 : 430);
+    const top = isTablet ? 88 : 82;
+    const left = Math.max(16, Math.round((W - bubbleWidth) / 2));
+    factBubble.style.setProperty('--bubble-x', `${left}px`);
+    factBubble.style.setProperty('--bubble-y', `${top}px`);
+    factBubble.style.removeProperty('--bubble-tail-left');
+  }
+
+  function getFocusPose(building) {
+    const { cfg } = building.userData;
+    const focusDistance = THREE.MathUtils.clamp(
+      cfg.h * (isPhone ? 1.02 : 1.15),
+      isPhone ? 4.1 : isMobile ? 4.6 : 5.1,
+      isPhone ? 5.35 : isMobile ? 6.2 : 6.9,
+    );
+    const sideBias = THREE.MathUtils.clamp(-cfg.x * 0.08, -0.45, 0.45);
+    const position = new THREE.Vector3(
+      cfg.x + sideBias,
+      Math.max(isPhone ? 1.6 : 1.85, cfg.h * (isPhone ? 0.68 : 0.74)),
+      cfg.z + focusDistance,
+    );
+    const target = new THREE.Vector3(
+      cfg.x,
+      Math.max(1.15, cfg.h * 0.52),
+      cfg.z,
+    );
+    return { position, target };
+  }
+
+  function selectBuilding(buildingIndex) {
+    const building = buildings[buildingIndex];
+    const fact = building?.userData?.fact;
+    if (!building || !fact) return;
+
+    if (selectedBuildingIndex == null) {
+      overviewCameraPosition.copy(camera.position);
+      overviewCameraTarget.copy(controls.target);
+    }
+
+    selectedBuildingIndex = buildingIndex;
+    hoveredBuildingIndex = null;
+    controls.autoRotate = false;
+    controls.enableRotate = false;
+    cameraState = 'focus';
+
+    const { position, target } = getFocusPose(building);
+    desiredCameraPosition.copy(position);
+    desiredCameraTarget.copy(target);
+    applyTheme(fact.accent);
+    setSupportState({ fact, accent: fact.accent });
+    updateGuide(activeGuideText);
+    factGuide?.classList.add('is-hidden');
+    showFactBubble(fact);
+    positionFactBubble();
+    syncRadiantState(true);
+  }
+
+  function clearSelection(instant = false) {
+    if (selectedBuildingIndex == null) return;
+
+    selectedBuildingIndex = null;
+    applyTheme(defaultTheme.accent);
+    setSupportState({ accent: defaultTheme.accent });
+    updateGuide(idleGuideText);
+    factGuide?.classList.remove('is-hidden');
+    hideFactBubble();
+    syncRadiantState(false);
+    desiredCameraPosition.copy(overviewCameraPosition);
+    desiredCameraTarget.copy(overviewCameraTarget);
+
+    if (instant) {
+      camera.position.copy(overviewCameraPosition);
+      controls.target.copy(overviewCameraTarget);
+      controls.autoRotate = true;
+      controls.enableRotate = true;
+      cameraState = 'idle';
+      return;
+    }
+
+    cameraState = 'return';
+  }
+
+  function setMouseFromEvent(e) {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  }
+
+  function getBuildingHit() {
+    return raycaster.intersectObjects(buildings, false).find((hit) => Boolean(hit.object.userData.fact)) || null;
+  }
 
   const onPointerMove = (e) => {
-    mouse.x = (e.clientX / W) * 2 - 1;
-    mouse.y = -(e.clientY / H) * 2 + 1;
+    setMouseFromEvent(e);
     raycaster.setFromCamera(mouse, camera);
     neonHover = raycaster.intersectObject(neonHitbox, true).length > 0 ? 1 : 0;
+    const buildingHit = getBuildingHit();
+
+    if (selectedBuildingIndex == null) {
+      hoveredBuildingIndex = buildingHit ? buildingHit.object.userData.bIdx : null;
+    }
+
+    if (!isTouchDevice) {
+      if (selectedBuildingIndex != null) {
+        canvas.style.cursor = buildingHit ? 'pointer' : 'zoom-out';
+      } else {
+        canvas.style.cursor = buildingHit || neonHover > 0.5 ? 'pointer' : 'grab';
+      }
+    }
   };
   canvas.addEventListener('pointermove', onPointerMove);
+
+  const onPointerLeave = () => {
+    neonHover = 0;
+    if (selectedBuildingIndex == null) hoveredBuildingIndex = null;
+    if (!isTouchDevice) {
+      canvas.style.cursor = selectedBuildingIndex == null ? 'grab' : 'zoom-out';
+    }
+  };
+  canvas.addEventListener('pointerleave', onPointerLeave);
+
+  const onPointerDown = (e) => {
+    setMouseFromEvent(e);
+    raycaster.setFromCamera(mouse, camera);
+    const buildingHit = getBuildingHit();
+
+    if (buildingHit) {
+      const hitIndex = buildingHit.object.userData.bIdx;
+      if (hitIndex === selectedBuildingIndex) {
+        clearSelection(false);
+        return;
+      }
+      selectBuilding(hitIndex);
+      return;
+    }
+
+    if (selectedBuildingIndex != null) {
+      clearSelection(false);
+    }
+  };
+  canvas.addEventListener('pointerdown', onPointerDown);
 
   // (embers, sparkles, ambient particles removed — clean skyline look)
 
   // ── Animation loop ──
   const clock = new THREE.Clock();
-  let startTime = null, started = false, riseComplete = false, hasScrolled = false;
+  let startTime = null, started = false, riseComplete = false;
+  const riseDuration = 0.72;
 
-  function easeOutBack(t) {
-    const c1 = 1.70158, c3 = c1 + 1;
-    return c3 * t * t * t - c1 * t * t;
+  function easeOutCubic(t) {
+    return 1 - Math.pow(1 - t, 3);
   }
 
   function animate() {
@@ -610,83 +1462,163 @@ export function init(container) {
 
     const elapsed = clock.getElapsedTime() - startTime;
     const scrollP = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    if (scrollP > 0) hasScrolled = true;
-    canvas.style.opacity = scrollP > 0.7 ? String(Math.max(0, 1 - (scrollP - 0.7) / 0.3)) : '1';
+    const layerOpacity = scrollP > 0.7 ? Math.max(0, 1 - (scrollP - 0.7) / 0.3) : 1;
+    canvas.style.opacity = String(layerOpacity);
+    if (signalLayer) signalLayer.style.opacity = String(layerOpacity);
+    const riseFactor = Math.min(elapsed / riseDuration, 1);
 
-    // ── Rise phase (0–0.8s) ──
-    if (elapsed < 0.8) {
-      const p = elapsed / 0.8;
-      grid.material.opacity = p * 0.12;
+    starFields.forEach((field) => {
+      field.material.opacity = (field.userData.baseOpacity + Math.sin(elapsed * field.userData.speed + field.userData.phase) * 0.05) * layerOpacity;
+    });
+    moonHalo.material.opacity = (0.31 + Math.sin(elapsed * 0.16) * 0.018) * layerOpacity;
+    moonHalo.scale.setScalar(9.8 + Math.sin(elapsed * 0.1 + 0.6) * 0.22);
+    horizonGlow.material.opacity = (0.16 + Math.sin(elapsed * 0.1 + 0.8) * 0.02) * layerOpacity;
+    cityGlow.material.opacity = (0.095 + Math.sin(elapsed * 0.18 + 1.3) * 0.015) * layerOpacity;
+    roadSheen.material.opacity = (0.06 + Math.sin(elapsed * 0.24 + 1.1) * 0.012) * layerOpacity;
+    groundGlow.material.opacity = (0.075 + Math.sin(elapsed * 0.12 + 2.1) * 0.01) * layerOpacity;
+
+    skylineBacklights.forEach((glow) => {
+      glow.material.opacity = (glow.userData.baseOpacity + Math.sin(elapsed * glow.userData.speed + glow.userData.phase) * 0.05) * layerOpacity;
+    });
+
+    longExposureTrails.forEach((trail, index) => {
+      const shimmer = 0.78 + Math.sin(elapsed * trail.speed + trail.phase + index * 0.4) * 0.22;
+      trail.mesh.material.opacity = trail.baseOpacity * shimmer * riseFactor * layerOpacity;
+    });
+
+    dataBlips.forEach((blip) => {
+      blip.position.y = blip.userData.baseY + Math.sin(elapsed * blip.userData.speed + blip.userData.phase) * 0.12;
+      blip.material.opacity = (blip.userData.baseOpacity + Math.sin(elapsed * (blip.userData.speed + 0.18) + blip.userData.phase) * 0.08) * layerOpacity;
+    });
+
+    streetTrees.forEach((tree) => {
+      tree.rotation.z = Math.sin(elapsed * tree.userData.swaySpeed + tree.userData.phase) * tree.userData.swayAmount;
+    });
+
+    shootingStarSystems.forEach((system) => {
+      const cycle = (elapsed * system.speed + system.offset) % 1;
+      if (cycle < 0.14) {
+        const t = cycle / 0.14;
+        const pulse = Math.sin(t * Math.PI);
+        system.head.position.copy(system.curve.getPoint(t));
+        system.head.material.opacity = pulse * 0.95 * layerOpacity;
+        system.head.scale.setScalar(0.75 + pulse * 0.5);
+        system.trail.material.opacity = (system.baseOpacity + pulse * 0.08) * layerOpacity;
+      } else {
+        system.head.material.opacity = 0;
+        system.trail.material.opacity = system.baseOpacity * 0.45 * layerOpacity;
+      }
+    });
+
+    // ── Rise phase ──
+    if (elapsed < riseDuration) {
+        const p = elapsed / riseDuration;
+        grid.material.opacity = p * 0.018;
 
       buildings.forEach(b => {
-        b.position.y = b.userData.startY + (b.userData.targetY - b.userData.startY) * easeOutBack(p);
+        b.position.y = b.userData.startY + (b.userData.targetY - b.userData.startY) * easeOutCubic(p);
       });
 
-      if (elapsed >= 0.4) {
-        const np = Math.min((elapsed - 0.4) / 0.2, 1);
-        neonBars.forEach(bar => { bar.material.emissiveIntensity = np * 3.5; });
-        if (!neonPL.userData.lit) { neonPL.intensity = 5; neonSceneLight.intensity = 5; neonPL.userData.lit = true; }
+      if (elapsed >= 0.2) {
+        const np = Math.min((elapsed - 0.2) / 0.22, 1);
+        neonBars.forEach(bar => { bar.material.emissiveIntensity = np * 2.7; });
+        neonPL.intensity = 3.7 * np;
+        neonSceneLight.intensity = 3.3 * np;
       }
 
-      if (elapsed >= 0.5) {
-        const wp = Math.min((elapsed - 0.5) / 0.5, 1);
-        litMats.forEach(m => { m.emissiveIntensity = wp * 2.0; });
-        winMats.dark.emissiveIntensity = wp * 0.05;
-        doorGlassMat.emissiveIntensity = wp * 2.2;
-        storefrontMat.emissiveIntensity = wp * 2.8;
+      if (elapsed >= 0.24) {
+        const wp = Math.min((elapsed - 0.24) / 0.34, 1);
+        setWindowGlow(wp);
       }
+      blinkMat.emissiveIntensity = 0.9 * riseFactor;
     } else {
       // ── Steady state ──
       if (!riseComplete) {
         riseComplete = true;
         buildings.forEach(b => { b.position.y = b.userData.targetY; });
+        setWindowGlow(1);
+        if (selectedBuildingIndex == null) controls.autoRotate = true;
       }
 
-      grid.material.opacity = 0.12;
-      litMats.forEach(m => { m.emissiveIntensity = 2.0; });
-      winMats.dark.emissiveIntensity = 0.05;
-      doorGlassMat.emissiveIntensity = 2.2;
-      storefrontMat.emissiveIntensity = 2.8;
+      grid.material.opacity = 0.018;
+      setWindowGlow(1);
 
-      // Individual building glow — each has its own smooth rhythm
-      buildings.forEach(b => {
-        const { glowSpeed, glowPhase, emColor } = b.userData;
-        // Smooth sine glow: oscillates emissive between 0.12 and 0.22 (subtle, not fire-like)
-        const glow = 0.15 + Math.sin(elapsed * glowSpeed + glowPhase) * 0.04;
-        b.material.emissiveIntensity = glow;
-      });
+      const focusIndex = selectedBuildingIndex ?? hoveredBuildingIndex;
+      const focusBuilding = focusIndex != null ? buildings[focusIndex] : null;
+      const focusFact = focusBuilding?.userData?.fact || null;
 
-      // Window flicker (lively)
-      flickerWindows.forEach(fw => {
-        const v = Math.sin(elapsed * fw.speed + fw.phase);
-        if (fw.mesh.material !== winMats.dark) {
-          fw.mesh.material.emissiveIntensity = 2.0 + v * 0.6;
+      buildings.forEach((b) => {
+        b.material.emissiveIntensity = b.userData.baseEmissiveIntensity || 0;
+        if (b.userData.frameMat) {
+          b.userData.frameMat.emissiveIntensity = b.userData.frameMat.userData.baseEmissiveIntensity || 0;
+        }
+        if (b.userData.frontGlow) {
+          b.userData.frontGlow.opacity = 0;
         }
       });
 
-      // Neon hover
-      neonBars.forEach(bar => {
-        const target = neonHover > 0.5 ? 3.5 : 2.2;
-        bar.material.emissiveIntensity += (target - bar.material.emissiveIntensity) * 0.05;
+      animatedWindows.forEach((windowState, index) => {
+        const shimmer = 0.965 + Math.sin(elapsed * windowState.speed + windowState.phase + index * 0.05) * 0.035;
+        const flutter = Math.pow(Math.max(0, Math.sin(elapsed * windowState.flutterSpeed + windowState.phase * 1.2)), 18) * 0.05;
+        const dip = Math.pow(Math.max(0, Math.sin(elapsed * windowState.dipSpeed + windowState.phase * 0.55)), 24) * windowState.dipDepth;
+        setLitPlaneIntensity(windowState.material, windowState.baseIntensity * THREE.MathUtils.clamp(shimmer + flutter - dip, 0.88, 1.02));
       });
 
-      // Antenna blink
-      blinkMat.emissiveIntensity = Math.sin(elapsed * 3) > 0.7 ? 3.0 : 0.3;
+      if (focusBuilding && focusFact) {
+        const { cfg } = focusBuilding.userData;
+        focusRing.position.set(cfg.x, 0.04, cfg.z);
+        focusLight.position.set(cfg.x, cfg.h * 0.72, cfg.z + 0.15);
+        focusRing.material.color.setHex(focusFact.accent);
+        focusLight.color.setHex(focusFact.accent);
+        focusBuilding.material.emissiveIntensity = (focusBuilding.userData.baseEmissiveIntensity || 0) + (selectedBuildingIndex != null ? 0.12 : 0.06);
+        if (focusBuilding.userData.frameMat) {
+          focusBuilding.userData.frameMat.emissiveIntensity = (focusBuilding.userData.frameMat.userData.baseEmissiveIntensity || 0) + (selectedBuildingIndex != null ? 0.14 : 0.08);
+        }
+      }
 
-      // Storefront gentle pulse
-      doorGlassMat.emissiveIntensity = 2.2 + Math.sin(elapsed * 0.6) * 0.2;
-      storefrontMat.emissiveIntensity = 2.8 + Math.sin(elapsed * 0.4 + 1) * 0.25;
+      const focusStrength = selectedBuildingIndex != null ? 1 : (hoveredBuildingIndex != null ? 0.55 : 0);
+      const targetRingOpacity = focusStrength > 0 ? (selectedBuildingIndex != null ? 0.18 : 0.08) : 0;
+      const targetRingScale = focusStrength > 0 ? (selectedBuildingIndex != null ? 1.03 : 0.97) : 0.9;
+      const targetLightIntensity = focusStrength > 0 ? (selectedBuildingIndex != null ? 0.52 : 0.16) : 0;
+      focusRing.material.opacity += (targetRingOpacity - focusRing.material.opacity) * 0.16;
+      focusRing.scale.setScalar(focusRing.scale.x + (targetRingScale - focusRing.scale.x) * 0.16);
+      focusLight.intensity += (targetLightIntensity - focusLight.intensity) * 0.16;
+
+      // Neon hover
+      neonBars.forEach(bar => {
+        const target = neonHover > 0.5 ? 3.2 : 2.45;
+        bar.material.emissiveIntensity += (target - bar.material.emissiveIntensity) * 0.05;
+      });
+      neonPL.intensity += ((neonHover > 0.5 ? 4.5 : 3.8) - neonPL.intensity) * 0.08;
+      neonSceneLight.intensity += ((neonHover > 0.5 ? 4.1 : 3.4) - neonSceneLight.intensity) * 0.08;
+
+      blinkMat.emissiveIntensity = 0.9;
     }
 
-    // Scroll parallax
-    if (hasScrolled) {
-      const sp = Math.min(window.scrollY / 500, 1);
-      camera.position.z = camZ - sp * 2;
-      camera.position.y = 3 + sp * 1;
+    if (cameraState === 'focus' || cameraState === 'return') {
+      const lerp = cameraState === 'focus' ? 0.08 : 0.075;
+      camera.position.lerp(desiredCameraPosition, lerp);
+      controls.target.lerp(desiredCameraTarget, lerp);
+
+      if (cameraState === 'return'
+        && camera.position.distanceTo(desiredCameraPosition) < 0.08
+        && controls.target.distanceTo(desiredCameraTarget) < 0.05) {
+        cameraState = 'idle';
+        controls.autoRotate = true;
+        controls.enableRotate = true;
+      }
+    }
+
+    if (cameraState === 'idle' && selectedBuildingIndex == null) {
+      const idleTargetX = 0.15 + Math.sin(elapsed * 0.11) * 0.03;
+      const idleTargetY = 2.55 + Math.sin(elapsed * 0.22 + 0.4) * 0.045;
+      controls.target.x += (idleTargetX - controls.target.x) * 0.04;
+      controls.target.y += (idleTargetY - controls.target.y) * 0.04;
     }
 
     controls.update();
-    composer.render();
+    if (selectedBuildingIndex != null) positionFactBubble();
+    renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }
 
@@ -698,7 +1630,7 @@ export function init(container) {
       camera.aspect = nW / nH;
       camera.updateProjectionMatrix();
       renderer.setSize(nW, nH);
-      composer.setSize(nW, nH);
+      if (selectedBuildingIndex != null) positionFactBubble();
     }
   };
   window.addEventListener('resize', onResize);
@@ -708,7 +1640,9 @@ export function init(container) {
   return () => {
     window.removeEventListener('resize', onResize);
     canvas.removeEventListener('pointermove', onPointerMove);
+    canvas.removeEventListener('pointerleave', onPointerLeave);
+    canvas.removeEventListener('pointerdown', onPointerDown);
     renderer.dispose();
-    composer.dispose();
+    if (composer) composer.dispose();
   };
 }
