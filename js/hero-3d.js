@@ -8,11 +8,10 @@ export function init(container) {
   if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return null;
 
   const canvas = container.querySelector('canvas');
-  const overlay = container.querySelector('.canvas-overlay');
-  if (!canvas || !overlay) return null;
+  if (!canvas) return null;
 
-  let W = canvas.clientWidth;
-  let H = canvas.clientHeight;
+  let W = canvas.clientWidth || container.clientWidth;
+  let H = canvas.clientHeight || container.clientHeight;
   canvas.width = W;
   canvas.height = H;
 
@@ -31,7 +30,13 @@ export function init(container) {
   camera.position.set(0, 3, camZ);
   camera.lookAt(0, 2.2, 0);
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: false });
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: false });
+  } catch (error) {
+    console.error('Unable to initialize hero skyline renderer.', error);
+    return null;
+  }
   renderer.setSize(W, H);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -599,7 +604,7 @@ export function init(container) {
     if (!started) {
       startTime = clock.getElapsedTime();
       started = true;
-      overlay.classList.add('revealed');
+      container.classList.add('is-ready');
       clock.getDelta();
     }
 
