@@ -1,11 +1,10 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import * as THREE from './vendor/three/three.module.js';
+import { OrbitControls } from './vendor/three/OrbitControls.js';
 
 export function init(container) {
-  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return null;
-
   const canvas = container.querySelector('canvas');
   if (!canvas) return null;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const signalLayer = container.querySelector('.hero-signal-layer');
   const radiantFrame = container.querySelector('#hero-radiant-frame');
   const appStatus = container.querySelector('#hero-app-status');
@@ -30,6 +29,7 @@ export function init(container) {
   const prefersSaveData = navigator.connection?.saveData === true;
   const deviceMemory = navigator.deviceMemory || 4;
   const hardwareThreads = navigator.hardwareConcurrency || 4;
+  const useReducedMotion = prefersReducedMotion;
   const brandPalette = {
     ink: 0x080b14,
     night: 0x0d1120,
@@ -244,16 +244,24 @@ export function init(container) {
   try {
     renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: performanceTier !== 'low',
+      antialias: !isTouchDevice && performanceTier !== 'low',
       alpha: true,
-      powerPreference: 'high-performance',
+      powerPreference: isTouchDevice ? 'default' : 'high-performance',
     });
   } catch (error) {
     console.error('Unable to initialize hero skyline renderer.', error);
     return null;
   }
   renderer.setSize(W, H);
-  const pixelRatioCap = performanceTier === 'high' ? 2 : performanceTier === 'balanced' ? 1.55 : 1.15;
+  const pixelRatioCap = isPhone
+    ? 1.15
+    : isMobile
+      ? 1.35
+      : performanceTier === 'high'
+        ? 2
+        : performanceTier === 'balanced'
+          ? 1.55
+          : 1.15;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, pixelRatioCap));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
@@ -266,12 +274,15 @@ export function init(container) {
   controls.enablePan = false;
   controls.enableZoom = false;
   controls.autoRotate = false;
-  controls.autoRotateSpeed = isPhone ? 0.15 : isMobile ? 0.19 : 0.22;
+  controls.autoRotateSpeed = isPhone ? 0.13 : isMobile ? 0.17 : 0.22;
   controls.target.set(0.15, 2.55, 0.05);
   controls.minPolarAngle = Math.PI / 4;
   controls.maxPolarAngle = Math.PI / 2.2;
   controls.enableRotate = true;
-  if (isTouchDevice) canvas.style.touchAction = 'pan-y';
+  controls.rotateSpeed = isTouchDevice ? 0.82 : 0.62;
+  controls.touches.ONE = THREE.TOUCH.ROTATE;
+  controls.touches.TWO = THREE.TOUCH.DOLLY_PAN;
+  if (isTouchDevice) canvas.style.touchAction = 'none';
   controls.update();
   applyTheme(defaultTheme.accent);
   if (factGuide) factGuide.textContent = idleGuideText;
@@ -1372,7 +1383,7 @@ export function init(container) {
     if (instant) {
       camera.position.copy(overviewCameraPosition);
       controls.target.copy(overviewCameraTarget);
-      controls.autoRotate = true;
+      controls.autoRotate = !useReducedMotion;
       controls.enableRotate = true;
       cameraState = 'idle';
       return;
@@ -1537,7 +1548,7 @@ export function init(container) {
         riseComplete = true;
         buildings.forEach(b => { b.position.y = b.userData.targetY; });
         setWindowGlow(1);
-        if (selectedBuildingIndex == null) controls.autoRotate = true;
+        if (selectedBuildingIndex == null) controls.autoRotate = !useReducedMotion;
       }
 
       grid.material.opacity = 0.018;
@@ -1604,12 +1615,12 @@ export function init(container) {
         && camera.position.distanceTo(desiredCameraPosition) < 0.08
         && controls.target.distanceTo(desiredCameraTarget) < 0.05) {
         cameraState = 'idle';
-        controls.autoRotate = true;
+        controls.autoRotate = !useReducedMotion;
         controls.enableRotate = true;
       }
     }
 
-    if (cameraState === 'idle' && selectedBuildingIndex == null) {
+    if (!useReducedMotion && cameraState === 'idle' && selectedBuildingIndex == null) {
       const idleTargetX = 0.15 + Math.sin(elapsed * 0.11) * 0.03;
       const idleTargetY = 2.55 + Math.sin(elapsed * 0.22 + 0.4) * 0.045;
       controls.target.x += (idleTargetX - controls.target.x) * 0.04;
@@ -1643,6 +1654,5 @@ export function init(container) {
     canvas.removeEventListener('pointerleave', onPointerLeave);
     canvas.removeEventListener('pointerdown', onPointerDown);
     renderer.dispose();
-    if (composer) composer.dispose();
   };
 }

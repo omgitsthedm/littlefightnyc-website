@@ -42,9 +42,6 @@
     <link rel="preload" as="image" href="assets/afterhours-preview.webp">
     <link rel="preload" as="image" href="assets/bside-preview.webp">
     <link rel="preload" as="image" href="assets/grandfunding-preview.webp">
-    <script type="importmap">
-    {"imports":{"three":"https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.min.js","three/addons/":"https://unpkg.com/three@0.164.1/examples/jsm/"}}
-    </script>
     <style>
 .cf-turnstile { margin: 16px 0; }
 @font-face{font-family:'Lexend';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/lexend-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
@@ -3403,10 +3400,12 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
     </div>
     <script type="module">
     const container = document.querySelector('.hero-3d-container');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shouldBootEarly = window.matchMedia('(pointer: coarse)').matches
+        || window.innerWidth < 900
+        || navigator.maxTouchPoints > 0;
 
     function bootHero() {
-        if (!container || prefersReducedMotion || bootHero.started) return;
+        if (!container || bootHero.started) return;
         bootHero.started = true;
         const radiantFrame = container.querySelector('#hero-radiant-frame');
         if (radiantFrame && !radiantFrame.getAttribute('src')) {
@@ -3417,20 +3416,23 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
             .catch((error) => console.error('Hero skyline failed to load', error));
     }
 
-    if (container && !prefersReducedMotion) {
+    if (container) {
         const scheduleBoot = () => {
-            if ('requestIdleCallback' in window) {
+            if (shouldBootEarly) {
+                requestAnimationFrame(() => requestAnimationFrame(bootHero));
+            } else if ('requestIdleCallback' in window) {
                 requestIdleCallback(() => bootHero(), { timeout: 1800 });
             } else {
-                window.setTimeout(bootHero, 900);
+                window.setTimeout(bootHero, 450);
             }
         };
 
-        if (document.readyState === 'complete') {
-            scheduleBoot();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', scheduleBoot, { once: true });
         } else {
-            window.addEventListener('load', scheduleBoot, { once: true });
+            scheduleBoot();
         }
+        window.addEventListener('load', scheduleBoot, { once: true });
     }
     </script>
 </body>
