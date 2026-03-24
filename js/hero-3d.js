@@ -25,11 +25,11 @@ export function init(container) {
   scene.fog = new THREE.FogExp2(0x060810, 0.022);
 
   // Camera: wider FOV + pulled back on mobile so full skyline is visible
-  const fov = isMobile ? 52 : 42;
-  const camZ = isMobile ? 17 : 14;
+  const fov = isMobile ? 55 : 48;
+  const camZ = isMobile ? 19 : 18;
   const camera = new THREE.PerspectiveCamera(fov, W / H, 0.1, 100);
-  camera.position.set(0, 3.5, camZ);
-  camera.lookAt(0, 2.2, 0);
+  camera.position.set(0, 4, camZ);
+  camera.lookAt(0, 2, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: false });
   renderer.setSize(W, H);
@@ -51,7 +51,7 @@ export function init(container) {
   controls.enableZoom = false;
   controls.autoRotate = true;          // on from the start — fixes mobile "still image"
   controls.autoRotateSpeed = 0.3;
-  controls.target.set(0, 2.2, 0);
+  controls.target.set(0, 2, 0);
   controls.minPolarAngle = Math.PI / 4;
   controls.maxPolarAngle = Math.PI / 2.2;
 
@@ -770,7 +770,7 @@ export function init(container) {
     if (hasScrolled) {
       const sp = Math.min(window.scrollY / 500, 1);
       camera.position.z = camZ - sp * 2;
-      camera.position.y = 3.5 + sp * 1;
+      camera.position.y = 4 + sp * 1;
     }
 
     controls.update();
