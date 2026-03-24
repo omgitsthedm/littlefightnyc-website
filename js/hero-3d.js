@@ -467,7 +467,9 @@ export function init(container) {
     for (let j = 0; j < 2; j++) {
       const ax = (Math.random() - 0.5) * cfg.w * 0.4;
       const az = (Math.random() - 0.5) * cfg.d * 0.4;
-      body.add(Object.assign(new THREE.Mesh(acGeo, acMat), { position: new THREE.Vector3(ax, cfg.h / 2 + 0.035, az) }));
+      const acUnit = new THREE.Mesh(acGeo, acMat);
+      acUnit.position.set(ax, cfg.h / 2 + 0.035, az);
+      body.add(acUnit);
       const fan = new THREE.Mesh(fanGeo, fanMat);
       fan.position.set(ax, cfg.h / 2 + 0.035, az + 0.056);
       body.add(fan);
