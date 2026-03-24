@@ -25,11 +25,11 @@ export function init(container) {
   scene.fog = new THREE.FogExp2(0x060810, 0.022);
 
   // Camera: wider FOV + pulled back on mobile so full skyline is visible
-  const fov = isMobile ? 55 : 48;
-  const camZ = isMobile ? 19 : 18;
+  const fov = isMobile ? 45 : 38;
+  const camZ = isMobile ? 13 : 12;
   const camera = new THREE.PerspectiveCamera(fov, W / H, 0.1, 100);
-  camera.position.set(0, 4, camZ);
-  camera.lookAt(0, 2, 0);
+  camera.position.set(0, 3, camZ);
+  camera.lookAt(0, 2.2, 0);
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isMobile, alpha: false });
   renderer.setSize(W, H);
@@ -51,7 +51,7 @@ export function init(container) {
   controls.enableZoom = false;
   controls.autoRotate = true;          // on from the start — fixes mobile "still image"
   controls.autoRotateSpeed = 0.3;
-  controls.target.set(0, 2, 0);
+  controls.target.set(0, 2.2, 0);
   controls.minPolarAngle = Math.PI / 4;
   controls.maxPolarAngle = Math.PI / 2.2;
 
@@ -279,23 +279,26 @@ export function init(container) {
 
   buildingDefs.forEach((cfg, bIdx) => {
     const { w, d, h } = cfg;
-    const baseColor = new THREE.Color(cfg.color).multiplyScalar(0.18);
+    const baseColor = new THREE.Color(cfg.color).multiplyScalar(0.3);
     const emColor = new THREE.Color(cfg.color);
 
     const bodyGeo = new THREE.BoxGeometry(w, h, d);
     const bodyMat = new THREE.MeshStandardMaterial({
-      color: baseColor, emissive: emColor, emissiveIntensity: 0.06, roughness: 0.45, metalness: 0.25,
+      color: baseColor, emissive: emColor, emissiveIntensity: 0.15, roughness: 0.35, metalness: 0.3,
     });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     body.position.set(cfg.x, -(h + 2), cfg.z);
-    body.userData = { targetY: h / 2, startY: -(h + 2), cfg, bIdx };
+    // Each building gets its own glow rhythm (unique speed + phase)
+    const glowSpeed = 0.3 + Math.random() * 0.5;   // 0.3–0.8 Hz, gentle
+    const glowPhase = Math.random() * Math.PI * 2;  // random start offset
+    body.userData = { targetY: h / 2, startY: -(h + 2), cfg, bIdx, glowSpeed, glowPhase, emColor };
     scene.add(body);
     buildings.push(body);
 
     // Subtle wireframe
     const wire = new THREE.LineSegments(
       new THREE.EdgesGeometry(bodyGeo),
-      new THREE.LineBasicMaterial({ color: emColor.clone().multiplyScalar(0.4), transparent: true, opacity: 0.25 })
+      new THREE.LineBasicMaterial({ color: emColor.clone().multiplyScalar(0.6), transparent: true, opacity: 0.4 })
     );
     body.add(wire);
 
@@ -581,76 +584,7 @@ export function init(container) {
   };
   canvas.addEventListener('pointermove', onPointerMove);
 
-  let firstClick = true;
-  const onPointerDown = () => {
-    if (firstClick) {
-      const pos = new THREE.Vector3();
-      neonGroup.getWorldPosition(pos);
-      spawnSpark(pos.x, pos.y, pos.z, 35, true);
-      firstClick = false;
-    }
-  };
-  canvas.addEventListener('pointerdown', onPointerDown);
-
-  // ── Spark / ember particles ──
-  const sparkles = [];
-  function spawnSpark(x, y, z, count, isBurst) {
-    for (let i = 0; i < count; i++) {
-      const a = Math.random() * Math.PI * 2;
-      const spd = isBurst ? 3 + Math.random() * 4 : 0.5 + Math.random();
-      sparkles.push({
-        pos: new THREE.Vector3(x, y, z),
-        vel: new THREE.Vector3(Math.cos(a) * spd, (isBurst ? 2 + Math.random() * 2 : 1 + Math.random()) * spd, Math.sin(a) * spd),
-        life: 1,
-      });
-    }
-  }
-
-  const emberCount = isMobile ? 12 : 28;
-  const embersGeo = new THREE.BufferGeometry();
-  const ePos = new Float32Array(emberCount * 3);
-  const eCol = new Float32Array(emberCount * 3);
-  const eAlpha = new Float32Array(emberCount);
-  const eVel = [];
-  for (let i = 0; i < emberCount; i++) {
-    ePos[i * 3] = 0.5 + (Math.random() - 0.5) * 0.5;
-    ePos[i * 3 + 1] = 3 + Math.random() * 0.5;
-    ePos[i * 3 + 2] = 0.5;
-    eCol[i * 3] = 1; eCol[i * 3 + 1] = 0.4; eCol[i * 3 + 2] = 0;
-    eAlpha[i] = 0.8;
-    eVel.push({ x: (Math.random() - 0.5) * 0.2, y: 0.15 + Math.random() * 0.12, z: (Math.random() - 0.5) * 0.2, life: Math.random() });
-  }
-  embersGeo.setAttribute('position', new THREE.BufferAttribute(ePos, 3));
-  embersGeo.setAttribute('color', new THREE.BufferAttribute(eCol, 3));
-  embersGeo.setAttribute('alpha', new THREE.BufferAttribute(eAlpha, 1));
-
-  const emberVS = `varying vec3 vC;varying float vA;attribute vec3 color;attribute float alpha;
-    void main(){vC=color;vA=alpha;gl_PointSize=4.0;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
-  const emberFS = `varying vec3 vC;varying float vA;
-    void main(){float d=length(gl_PointCoord-vec2(.5));if(d>.5)discard;gl_FragColor=vec4(vC,vA*(1.-d*2.));}`;
-
-  scene.add(new THREE.Points(embersGeo, new THREE.ShaderMaterial({
-    vertexShader: emberVS, fragmentShader: emberFS, transparent: true, blending: THREE.AdditiveBlending,
-  })));
-
-  // Ambient particles
-  const pCount = isMobile ? 20 : 55;
-  const pGeo = new THREE.BufferGeometry();
-  const pPos = new Float32Array(pCount * 3);
-  const pCol = new Float32Array(pCount * 3);
-  for (let i = 0; i < pCount; i++) {
-    pPos[i * 3] = (Math.random() - 0.5) * 14;
-    pPos[i * 3 + 1] = Math.random() * 7;
-    pPos[i * 3 + 2] = (Math.random() - 0.5) * 14;
-    const c = new THREE.Color().setHSL(Math.random(), 0.5 + Math.random() * 0.5, 0.35 + Math.random() * 0.3);
-    pCol[i * 3] = c.r; pCol[i * 3 + 1] = c.g; pCol[i * 3 + 2] = c.b;
-  }
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-  pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3));
-  const ambientParticles = new THREE.Points(pGeo, new THREE.PointsMaterial({
-    size: 0.07, transparent: true, vertexColors: true, sizeAttenuation: true, opacity: 0,
-  }));
-  scene.add(ambientParticles);
+  // (embers, sparkles, ambient particles removed — clean skyline look)
 
   // ── Animation loop ──
   const clock = new THREE.Clock();
@@ -683,12 +617,6 @@ export function init(container) {
         b.position.y = b.userData.startY + (b.userData.targetY - b.userData.startY) * easeOutBack(p);
       });
 
-      if (elapsed >= 0.3 && elapsed < 0.35) {
-        const pos = new THREE.Vector3();
-        neonGroup.getWorldPosition(pos);
-        spawnSpark(pos.x, pos.y, pos.z, 50, true);
-      }
-
       if (elapsed >= 0.4) {
         const np = Math.min((elapsed - 0.4) / 0.2, 1);
         neonBars.forEach(bar => { bar.material.emissiveIntensity = np * 3.5; });
@@ -697,10 +625,10 @@ export function init(container) {
 
       if (elapsed >= 0.5) {
         const wp = Math.min((elapsed - 0.5) / 0.5, 1);
-        litMats.forEach(m => { m.emissiveIntensity = wp * 1.8; });
-        winMats.dark.emissiveIntensity = wp * 0.04;
-        doorGlassMat.emissiveIntensity = wp * 2;
-        storefrontMat.emissiveIntensity = wp * 2.5;
+        litMats.forEach(m => { m.emissiveIntensity = wp * 2.0; });
+        winMats.dark.emissiveIntensity = wp * 0.05;
+        doorGlassMat.emissiveIntensity = wp * 2.2;
+        storefrontMat.emissiveIntensity = wp * 2.8;
       }
     } else {
       // ── Steady state ──
@@ -710,67 +638,46 @@ export function init(container) {
       }
 
       grid.material.opacity = 0.12;
-      litMats.forEach(m => { m.emissiveIntensity = 1.8; });
-      winMats.dark.emissiveIntensity = 0.04;
-      doorGlassMat.emissiveIntensity = 2;
-      storefrontMat.emissiveIntensity = 2.5;
+      litMats.forEach(m => { m.emissiveIntensity = 2.0; });
+      winMats.dark.emissiveIntensity = 0.05;
+      doorGlassMat.emissiveIntensity = 2.2;
+      storefrontMat.emissiveIntensity = 2.8;
 
-      // Gentle breathing
-      buildings.forEach((b, i) => {
-        b.scale.y = 1 + Math.sin(elapsed * 0.5 + i * 0.4) * 0.006;
+      // Individual building glow — each has its own smooth rhythm
+      buildings.forEach(b => {
+        const { glowSpeed, glowPhase, emColor } = b.userData;
+        // Smooth sine glow: oscillates emissive between 0.12 and 0.22 (subtle, not fire-like)
+        const glow = 0.15 + Math.sin(elapsed * glowSpeed + glowPhase) * 0.04;
+        b.material.emissiveIntensity = glow;
       });
 
       // Window flicker (lively)
       flickerWindows.forEach(fw => {
         const v = Math.sin(elapsed * fw.speed + fw.phase);
         if (fw.mesh.material !== winMats.dark) {
-          fw.mesh.material.emissiveIntensity = 1.8 + v * 0.9;
+          fw.mesh.material.emissiveIntensity = 2.0 + v * 0.6;
         }
       });
 
       // Neon hover
       neonBars.forEach(bar => {
-        const target = neonHover > 0.5 ? 3.5 : 2.0;
+        const target = neonHover > 0.5 ? 3.5 : 2.2;
         bar.material.emissiveIntensity += (target - bar.material.emissiveIntensity) * 0.05;
       });
 
       // Antenna blink
       blinkMat.emissiveIntensity = Math.sin(elapsed * 3) > 0.7 ? 3.0 : 0.3;
 
-      // Storefront warm pulse
-      doorGlassMat.emissiveIntensity = 2 + Math.sin(elapsed * 0.8) * 0.3;
-      storefrontMat.emissiveIntensity = 2.5 + Math.sin(elapsed * 0.6 + 1) * 0.4;
+      // Storefront gentle pulse
+      doorGlassMat.emissiveIntensity = 2.2 + Math.sin(elapsed * 0.6) * 0.2;
+      storefrontMat.emissiveIntensity = 2.8 + Math.sin(elapsed * 0.4 + 1) * 0.25;
     }
-
-    // Embers
-    if (elapsed >= 0.8) {
-      eVel.forEach((e, i) => {
-        e.y -= 0.008; e.life -= 0.006;
-        if (e.life < 0) { e.life = 1; ePos[i * 3 + 1] = 3 + Math.random() * 0.5; ePos[i * 3] = 0.5 + (Math.random() - 0.5) * 0.5; }
-        ePos[i * 3] += e.x * 0.02; ePos[i * 3 + 1] += e.y * 0.02; ePos[i * 3 + 2] += e.z * 0.02;
-        eCol[i * 3] = 1; eCol[i * 3 + 1] = 0.4 * e.life; eCol[i * 3 + 2] = 0;
-        eAlpha[i] = e.life;
-      });
-      embersGeo.attributes.position.needsUpdate = true;
-      embersGeo.attributes.color.needsUpdate = true;
-      embersGeo.attributes.alpha.needsUpdate = true;
-    }
-
-    // Sparkles
-    for (let i = sparkles.length - 1; i >= 0; i--) {
-      const s = sparkles[i];
-      s.pos.add(s.vel); s.vel.y -= 0.01; s.life -= 0.01;
-      if (s.life < 0) sparkles.splice(i, 1);
-    }
-
-    // Ambient fade in
-    ambientParticles.material.opacity += (0.3 - ambientParticles.material.opacity) * 0.02;
 
     // Scroll parallax
     if (hasScrolled) {
       const sp = Math.min(window.scrollY / 500, 1);
       camera.position.z = camZ - sp * 2;
-      camera.position.y = 4 + sp * 1;
+      camera.position.y = 3 + sp * 1;
     }
 
     controls.update();
@@ -796,7 +703,6 @@ export function init(container) {
   return () => {
     window.removeEventListener('resize', onResize);
     canvas.removeEventListener('pointermove', onPointerMove);
-    canvas.removeEventListener('pointerdown', onPointerDown);
     renderer.dispose();
     composer.dispose();
   };
