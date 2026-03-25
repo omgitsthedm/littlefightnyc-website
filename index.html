@@ -377,39 +377,64 @@ border:1px solid rgba(255,255,255,0.05);
 box-shadow:0 38px 120px rgba(4,8,18,0.28);
 pointer-events:none}
 .blog-page-shell > *{position:relative;z-index:1}
-.blog-page-head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,0.85fr);gap:24px;align-items:end;margin-bottom:28px}
-.blog-page-intro{display:grid;gap:14px}
-.blog-page-intro h2{margin-bottom:0;max-width:10ch}
-.blog-page-intro p{max-width:40ch;color:rgba(240,240,236,0.78)}
-.blog-issue-card{padding:22px 24px;border-radius:28px;background:
+.blog-home-head{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(300px,0.88fr);gap:24px;align-items:end;margin-bottom:24px}
+.blog-home-copy{display:grid;gap:14px}
+.blog-home-copy h2{margin-bottom:0;max-width:10ch}
+.blog-home-copy p{max-width:39ch;color:rgba(240,240,236,0.78)}
+.blog-home-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.blog-home-note{padding:22px 24px;border-radius:28px;background:
 linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03)),
 radial-gradient(circle at top right,rgba(254,88,0,0.12),transparent 26%);
 border:1px solid rgba(255,255,255,0.08);
 display:grid;
 gap:14px}
-.blog-issue-card strong{color:#f5f1ea;font-size:1.05rem;line-height:1.42}
-.blog-issue-card p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.7}
-.blog-ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:22px}
-.blog-ledger-card{padding:16px 18px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07)}
-.blog-ledger-card strong{display:block;margin-bottom:6px;color:#f5f1ea;font-size:0.95rem}
-.blog-ledger-card span{color:rgba(240,240,236,0.7);font-size:13px;line-height:1.6}
-.blog-editorial-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
-.blog-editorial-grid .story-card{grid-column:span 2;background:
-linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));
-border-radius:24px;border:1px solid rgba(255,255,255,0.06)}
-.blog-editorial-grid .story-card.featured{grid-column:span 4;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,0.95fr);align-items:stretch}
-.blog-editorial-grid .story-card.featured .story-card-media{height:100%;min-height:100%;position:relative}
-.blog-editorial-grid .story-card.featured .story-card-media::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent 42%,rgba(10,13,24,0.22) 100%)}
-.blog-editorial-grid .story-card.featured .story-card-content{display:grid;gap:16px;padding:28px}
-.story-feature-kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#ffd6bf}
-.story-feature-kicker::before{content:'';width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 18px currentColor}
-.story-feature-title{font-size:clamp(1.55rem,2.8vw,2.35rem);line-height:1.02;max-width:10ch}
-.story-feature-deck{color:rgba(240,240,236,0.76);font-size:15px;line-height:1.74;max-width:32ch}
-.story-feature-meta{display:flex;flex-wrap:wrap;gap:12px;color:rgba(240,240,236,0.56);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
-.story-feature-rail{display:grid;gap:12px;padding:18px;border-radius:22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)}
-.story-feature-rail strong{color:#f5f1ea;font-size:0.98rem}
-.story-feature-rail p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.68}
-.story-feature-cta{display:inline-flex;align-items:center;gap:8px;color:#fff3e9;font-size:13px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase}
+.blog-home-note strong{color:#f5f1ea;font-size:1.08rem;line-height:1.42}
+.blog-home-note p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.7}
+.blog-home-topics{display:flex;flex-wrap:wrap;gap:10px}
+.blog-home-topics span{display:inline-flex;align-items:center;min-height:34px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.05);color:rgba(245,241,234,0.88);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+.blog-home-stage{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(320px,0.84fr);gap:20px}
+.blog-home-feature{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(280px,0.98fr);background:linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));border:1px solid rgba(255,255,255,0.06);border-radius:28px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.blog-home-feature-media{position:relative;min-height:100%;display:block;overflow:hidden}
+.blog-home-feature-media img{width:100%;height:100%;object-fit:cover;transition:transform 0.45s ease}
+.blog-home-feature:hover .blog-home-feature-media img,.blog-home-mini:hover .blog-home-mini-media img{transform:scale(1.035)}
+.blog-home-feature-media::after,.blog-home-mini-media::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent 42%,rgba(10,13,24,0.22) 100%)}
+.blog-home-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#ffd6bf}
+.blog-home-badge::before{content:'';width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 18px currentColor}
+.blog-home-feature-overlay{position:absolute;inset:auto 22px 22px 22px;display:grid;gap:10px;z-index:2}
+.blog-home-feature-overlay strong{font-size:clamp(1.2rem,2.2vw,1.8rem);line-height:1.06;color:#fff9f3;max-width:11ch}
+.blog-home-feature-body{display:grid;gap:16px;padding:28px}
+.blog-home-feature-title{font-size:clamp(1.55rem,2.8vw,2.35rem);line-height:1.02;max-width:10ch}
+.blog-home-feature-title a{color:#f5f1ea;text-decoration:none}
+.blog-home-feature-title a:hover{color:#fff}
+.blog-home-feature-deck{color:rgba(240,240,236,0.76);font-size:15px;line-height:1.74;max-width:32ch}
+.blog-home-meta{display:flex;flex-wrap:wrap;gap:12px;color:rgba(240,240,236,0.56);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.blog-home-proof{display:grid;gap:12px;padding:18px;border-radius:22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)}
+.blog-home-proof strong{color:#f5f1ea;font-size:0.98rem}
+.blog-home-proof p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.68}
+.blog-home-feature-footer{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.blog-home-link{display:inline-flex;align-items:center;gap:8px;color:#fff3e9;font-size:13px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none}
+.blog-home-link::after{content:'→';font-size:14px}
+.blog-home-link:hover{color:#fff}
+.blog-home-rail{display:grid;gap:16px}
+.blog-home-mini{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;padding:14px;border-radius:24px;background:linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));border:1px solid rgba(255,255,255,0.06);box-shadow:var(--shadow-soft);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
+.blog-home-mini:hover,.blog-home-linkcard:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.12);box-shadow:var(--shadow-strong)}
+.blog-home-mini-media{position:relative;overflow:hidden;border-radius:18px;display:block;min-height:170px}
+.blog-home-mini-media img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.45s ease}
+.blog-home-mini-body{display:grid;align-content:start;gap:10px;min-width:0}
+.blog-home-mini-kicker{display:inline-flex;align-items:center;padding:5px 12px;border-radius:50px;border:1px solid rgba(255,255,255,0.12);font-size:12px;font-weight:600;width:max-content}
+.blog-home-mini[data-accent="cyan"] .blog-home-mini-kicker{border-color:rgba(8,145,178,0.28);color:#70d9ee}
+.blog-home-mini[data-accent="purple"] .blog-home-mini-kicker{border-color:rgba(124,58,237,0.28);color:#ccb4ff}
+.blog-home-mini-title{font-size:1.12rem;line-height:1.28}
+.blog-home-mini-title a{color:#f5f1ea;text-decoration:none}
+.blog-home-mini-title a:hover{color:#fff}
+.blog-home-mini-copy{color:rgba(240,240,236,0.72);font-size:13px;line-height:1.62}
+.blog-home-mini-meta{color:#8a8f9e;font-size:13px}
+.blog-home-mini-read{display:inline-flex;align-items:center;gap:8px;color:var(--accent-orange);font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none}
+.blog-home-mini-read::after{content:'→';font-size:14px}
+.blog-home-linkcard{padding:22px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.07);display:grid;gap:14px;box-shadow:var(--shadow-soft);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
+.blog-home-linkcard strong{color:#f5f1ea;font-size:1.05rem;line-height:1.42}
+.blog-home-linkcard p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.68}
+.blog-home-linkcard-actions{display:flex;flex-wrap:wrap;gap:12px}
 .story-card-content{padding:24px}
 .story-card-text{color:var(--text-muted);font-size:13px;line-height:1.68;margin-bottom:10px}
 .story-card-read{display:inline-flex;align-items:center;gap:8px;color:var(--accent-orange);font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase}
@@ -751,23 +776,24 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
 .article-lead{font-size:16px !important}
 }
 @media(max-width:1100px){
-.editorial-head,.blog-page-head,.section-panel-grid{grid-template-columns:1fr}
-.field-notes-grid,.blog-ledger{grid-template-columns:1fr 1fr}
-.blog-editorial-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-.blog-editorial-grid .story-card,.blog-editorial-grid .story-card.featured{grid-column:span 1}
-.blog-editorial-grid .story-card.featured{grid-template-columns:1fr}
-.blog-editorial-grid .story-card.featured .story-card-media{min-height:220px}
+.editorial-head,.blog-home-head,.section-panel-grid,.blog-home-stage,.blog-home-feature{grid-template-columns:1fr}
+.field-notes-grid{grid-template-columns:1fr 1fr}
+.blog-home-mini{grid-template-columns:120px minmax(0,1fr)}
 }
 @media(max-width:768px){
 .section-page-shell,.blog-page-shell{padding-top:88px;padding-bottom:28px}
 .section-page-shell::before,.blog-page-shell::before{inset:12px 10px 0;border-radius:28px}
 .editorial-stage{padding:22px 18px;border-radius:26px}
-.field-notes-grid,.blog-ledger{grid-template-columns:1fr}
+.field-notes-grid{grid-template-columns:1fr}
 .section-panel{padding:22px 18px;border-radius:22px}
-.blog-page-head{margin-bottom:20px}
-.blog-page-intro h2,.editorial-head-copy h2{max-width:12ch}
-.story-feature-title{font-size:1.65rem}
-.story-feature-deck{max-width:none}
+.blog-home-head{margin-bottom:20px}
+.blog-home-copy h2,.editorial-head-copy h2{max-width:12ch}
+.blog-home-feature-title{font-size:1.65rem}
+.blog-home-feature-deck{max-width:none}
+.blog-home-mini{grid-template-columns:1fr}
+.blog-home-mini-media{min-height:180px}
+.blog-home-actions,.blog-home-linkcard-actions,.blog-home-feature-footer{flex-direction:column;align-items:stretch}
+.blog-home-actions .btn,.blog-home-linkcard-actions .btn{justify-content:center}
 .blog-article{border-radius:28px}
 .blog-article::after{left:18px;right:18px}
 }
@@ -1881,127 +1907,91 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
     <section id="blog" class="page-section" aria-label="Blog">
         <div class="blog-page-shell">
             <div class="container">
-                <div class="blog-page-head">
-                    <div class="blog-page-intro">
+                <div class="blog-home-head">
+                    <div class="blog-home-copy">
                         <span class="eyebrow-chip">Little Fight Journal</span>
                         <h2>Practical advice for <span class="editorial-script">real businesses.</span></h2>
-                        <p>A hybrid of field guide, neighborhood memo, and sharp editorial thinking. Built for owners who want plain-English strategy they can actually use this week.</p>
+                        <p>Sharp, plain-English notes on search, trust, payments, and the quiet tech details that decide whether a business feels legitimate online.</p>
+                        <div class="blog-home-actions">
+                            <a href="/blog/" class="btn btn-outline">Read the Full Journal</a>
+                            <a href="/contact/" class="btn btn-orange">Book a Site Review</a>
+                        </div>
                     </div>
-                    <aside class="blog-issue-card">
+                    <aside class="blog-home-note">
                         <span class="article-kicker" style="color:#FE5800">This issue</span>
-                        <strong>What makes a website feel trustworthy before the visitor ever calls, walks in, or checks out.</strong>
-                        <p>Search visibility, stronger payment flows, safer operations, and better digital habits. The through-line is simple: clearer systems make businesses feel more real.</p>
+                        <strong>Search is getting faster, patience is getting shorter, and your website has to prove itself before anyone calls.</strong>
+                        <p>The through-line is simple: clearer systems make businesses feel more real. That means sharper pages, better proof, less friction, and a calmer digital presence.</p>
+                        <div class="blog-home-topics" aria-label="Journal topics">
+                            <span>Search</span>
+                            <span>Trust</span>
+                            <span>Payments</span>
+                            <span>Operations</span>
+                        </div>
                     </aside>
                 </div>
-                <div class="blog-ledger">
-                    <article class="blog-ledger-card">
-                        <strong>Insightful, not academic</strong>
-                        <span>We translate big shifts in search, payments, and customer behavior into moves a local business can actually make.</span>
-                    </article>
-                    <article class="blog-ledger-card">
-                        <strong>Written like a field note</strong>
-                        <span>Direct, practical, a little opinionated, and grounded in what owners are seeing on the ground.</span>
-                    </article>
-                    <article class="blog-ledger-card">
-                        <strong>Designed to be skimmed</strong>
-                        <span>Strong pull quotes, callouts, proof points, and cleaner reading surfaces on desktop, tablet, and phone.</span>
-                    </article>
-                </div>
-                <div class="blog-editorial-grid">
-                    <article class="fade-in story-card featured" data-accent="orange" onclick="navigateTo('blog-post-1')">
-                        <div class="story-card-media" style="min-height:100%">
+                <div class="blog-home-stage">
+                    <article class="blog-home-feature fade-in">
+                        <a class="blog-home-feature-media" href="/ai-google-broke-the-internet-websites-survive/">
                             <img src="/assets/pill-scroll/website-design-nyc-1.webp" alt="Laptop and coffee on a wood table in front of tall windows" loading="lazy" width="1600" height="898">
-                            <div style="position:absolute;inset:auto 22px 22px 22px;display:grid;gap:10px">
-                                <span class="story-feature-kicker">Featured Dispatch</span>
-                                <strong style="font-size:clamp(1.2rem,2.2vw,1.8rem);line-height:1.06;color:#fff9f3;max-width:11ch">The web changed overnight.</strong>
+                            <div class="blog-home-feature-overlay">
+                                <span class="blog-home-badge">Featured dispatch</span>
+                                <strong>The web changed overnight.</strong>
                             </div>
-                        </div>
-                        <div class="story-card-content">
-                            <span class="story-feature-kicker">Digital Strategy</span>
-                            <h3 class="story-feature-title">AI and Google Broke the Internet</h3>
-                            <p class="story-feature-deck">What changed, why local businesses feel less visible, and how a sharper website can still punch through.</p>
-                            <div class="story-feature-meta">
+                        </a>
+                        <div class="blog-home-feature-body">
+                            <span class="blog-home-badge">Digital Strategy</span>
+                            <h3 class="blog-home-feature-title"><a href="/ai-google-broke-the-internet-websites-survive/">AI and Google Broke the Internet</a></h3>
+                            <p class="blog-home-feature-deck">What changed, why local businesses feel less visible, and how a sharper website can still punch through.</p>
+                            <div class="blog-home-meta">
                                 <span>Feb 2026</span>
                                 <span>7 min read</span>
                                 <span>Search + trust</span>
                             </div>
-                            <div class="story-feature-rail">
+                            <div class="blog-home-proof">
                                 <strong>The payoff</strong>
                                 <p>If your site can answer faster, prove more, and feel more specific than generic AI sludge, you still have an edge.</p>
                             </div>
-                            <span class="story-feature-cta">Read the full story</span>
-                        </div>
-                    </article>
-                    <article class="fade-in story-card" data-accent="cyan" onclick="navigateTo('blog-post-2')">
-                        <div class="story-card-media short">
-                            <img src="/assets/pill-scroll/nyc-small-business-owner-2.webp" alt="Small business owner working on a laptop beside a coffee cup" loading="lazy" width="1280" height="1600">
-                        </div>
-                        <div class="story-card-content">
-                            <div class="story-card-tags">
-                                <span class="tag-pill" style="border-color:rgba(8,145,178,0.28);color:#70d9ee">Search Visibility</span>
+                            <div class="blog-home-feature-footer">
+                                <a class="blog-home-link" href="/ai-google-broke-the-internet-websites-survive/">Read the full story</a>
+                                <a class="blog-home-link" href="/blog/">Open the journal</a>
                             </div>
-                            <h3 style="font-size:1.12rem;margin:4px 0 10px">What Google Actually Looks For</h3>
-                            <p class="story-card-text">A practical breakdown of clarity, specificity, and trust signals that matter more than keyword stuffing.</p>
-                            <div class="story-card-meta">Feb 2026 · 8 min</div>
-                            <span class="story-card-read">Read the guide</span>
                         </div>
                     </article>
-                    <article class="fade-in story-card" data-accent="purple" onclick="navigateTo('blog-post-3')">
-                        <div class="story-card-media short">
-                            <img src="/assets/pill-scroll/nyc-streets-businesses5.webp" alt="New York storefronts and street life at dusk" loading="lazy" width="1280" height="1600">
-                        </div>
-                        <div class="story-card-content">
-                            <div class="story-card-tags">
-                                <span class="tag-pill" style="border-color:rgba(124,58,237,0.28);color:#ccb4ff">Visibility Forecast</span>
+                    <div class="blog-home-rail">
+                        <article class="blog-home-mini fade-in" data-accent="cyan">
+                            <a class="blog-home-mini-media" href="/what-google-looks-for-business-website/">
+                                <img src="/assets/pill-scroll/nyc-small-business-owner-2.webp" alt="Small business owner working on a laptop beside a coffee cup" loading="lazy" width="1280" height="1600">
+                            </a>
+                            <div class="blog-home-mini-body">
+                                <span class="blog-home-mini-kicker">Search Visibility</span>
+                                <h3 class="blog-home-mini-title"><a href="/what-google-looks-for-business-website/">What Google Actually Looks For</a></h3>
+                                <p class="blog-home-mini-copy">A practical breakdown of clarity, specificity, and trust signals that matter more than keyword stuffing.</p>
+                                <div class="blog-home-mini-meta">Feb 2026 · 8 min</div>
+                                <a class="blog-home-mini-read" href="/what-google-looks-for-business-website/">Read the guide</a>
                             </div>
-                            <h3 style="font-size:1.12rem;margin:4px 0 10px">Why Most Websites Will Be Invisible in 18 Months</h3>
-                            <p class="story-card-text">The click is becoming optional. This piece explains how to stay visible when AI summaries get there first.</p>
-                            <div class="story-card-meta">Feb 2026 · 8 min</div>
-                            <span class="story-card-read">Read the forecast</span>
-                        </div>
-                    </article>
-                    <article class="fade-in story-card" data-accent="green" onclick="navigateTo('blog-post-4')">
-                        <div class="story-card-media short">
-                            <img src="/assets/editorial/cyber-safety-cover.webp" alt="Branded cover art for cybersecurity advice" loading="lazy" width="1080" height="1080">
-                        </div>
-                        <div class="story-card-content">
-                            <div class="story-card-tags">
-                                <span class="tag-pill" style="border-color:rgba(16,185,129,0.28);color:#8de4c2">Cybersecurity</span>
+                        </article>
+                        <article class="blog-home-mini fade-in" data-accent="purple">
+                            <a class="blog-home-mini-media" href="/why-business-websites-will-be-invisible/">
+                                <img src="/assets/pill-scroll/nyc-streets-businesses5.webp" alt="New York storefronts and street life at dusk" loading="lazy" width="1280" height="1600">
+                            </a>
+                            <div class="blog-home-mini-body">
+                                <span class="blog-home-mini-kicker">Visibility Forecast</span>
+                                <h3 class="blog-home-mini-title"><a href="/why-business-websites-will-be-invisible/">Why Most Websites Will Be Invisible in 18 Months</a></h3>
+                                <p class="blog-home-mini-copy">The click is becoming optional. This piece explains how to stay visible when AI summaries get there first.</p>
+                                <div class="blog-home-mini-meta">Feb 2026 · 8 min</div>
+                                <a class="blog-home-mini-read" href="/why-business-websites-will-be-invisible/">Read the forecast</a>
                             </div>
-                            <h3 style="font-size:1.12rem;margin:4px 0 10px">How Small Businesses Can Stay Safe Online</h3>
-                            <p class="story-card-text">A calmer, non-paranoid checklist for protecting devices, cards, logins, and customer data without turning into an IT department.</p>
-                            <div class="story-card-meta">Jan 2026 · 9 min</div>
-                            <span class="story-card-read">Read the checklist</span>
-                        </div>
-                    </article>
-                    <article class="fade-in story-card" data-accent="gold" onclick="navigateTo('blog-post-5')">
-                        <div class="story-card-media short">
-                            <img src="/assets/editorial/go-digital-cover.webp" alt="Branded cover art for neighborhood businesses going digital" loading="lazy" width="1080" height="1080">
-                        </div>
-                        <div class="story-card-content">
-                            <div class="story-card-tags">
-                                <span class="tag-pill" style="border-color:rgba(245,158,11,0.28);color:#ffd289">Neighborhood Commerce</span>
+                        </article>
+                        <article class="blog-home-linkcard fade-in">
+                            <span class="article-kicker" style="color:#FE5800">More inside</span>
+                            <strong>The full journal covers cybersecurity, neighborhood growth, AI safety, and the practical systems behind smoother small businesses.</strong>
+                            <p>Use the homepage to find the lead stories. Use the journal when you want the fuller field guide.</p>
+                            <div class="blog-home-linkcard-actions">
+                                <a href="/blog/" class="btn btn-outline">See All Articles</a>
+                                <a href="/contact/" class="btn btn-orange">Talk Through Your Site</a>
                             </div>
-                            <h3 style="font-size:1.12rem;margin:4px 0 10px">Why NYC’s Mom-and-Pop Shops Need to Go Digital</h3>
-                            <p class="story-card-text">How websites, maps, and modern payments translate into real foot traffic instead of just prettier marketing.</p>
-                            <div class="story-card-meta">Jan 2026 · 8 min</div>
-                            <span class="story-card-read">Read the playbook</span>
-                        </div>
-                    </article>
-                    <article class="fade-in story-card" data-accent="red" onclick="navigateTo('blog-post-6')">
-                        <div class="story-card-media short">
-                            <img src="/assets/editorial/ai-safety-cover.webp" alt="Branded cover art for safe conversations with kids about AI" loading="lazy" width="1080" height="1080">
-                        </div>
-                        <div class="story-card-content">
-                            <div class="story-card-tags">
-                                <span class="tag-pill" style="border-color:rgba(239,68,68,0.28);color:#ffb0aa">AI Safety</span>
-                            </div>
-                            <h3 style="font-size:1.12rem;margin:4px 0 10px">Protecting Your Kids From AI, the Smart Way</h3>
-                            <p class="story-card-text">A guide for parents who want practical language, not panic, when they talk to kids about AI tools.</p>
-                            <div class="story-card-meta">Jan 2026 · 7 min</div>
-                            <span class="story-card-read">Read the guide</span>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 </div>
             </div>
         </div>
