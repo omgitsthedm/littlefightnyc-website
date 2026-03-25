@@ -231,14 +231,14 @@ export function init(container) {
 
   // ── Scene ──
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(brandPalette.ink, 0.0028);
+  scene.fog = new THREE.FogExp2(brandPalette.ink, isPhone ? 0.00205 : isMobile ? 0.0022 : 0.0028);
 
   // Camera: wider FOV + pulled back on mobile so full skyline is visible
-  const fov = isMobile ? 42 : 36;
-  const camZ = isMobile ? 13.4 : 12.35;
+  const fov = isPhone ? 44 : isMobile ? 42 : 36;
+  const camZ = isPhone ? 13.8 : isMobile ? 13.4 : 12.35;
   const camera = new THREE.PerspectiveCamera(fov, W / H, 0.1, 100);
-  camera.position.set(0.2, 3.3, camZ);
-  camera.lookAt(0.15, 2.65, 0.1);
+  camera.position.set(0.18, isPhone ? 3.42 : 3.3, camZ);
+  camera.lookAt(0.15, isPhone ? 2.58 : 2.65, 0.1);
 
   let renderer;
   try {
@@ -254,9 +254,9 @@ export function init(container) {
   }
   renderer.setSize(W, H);
   const pixelRatioCap = isPhone
-    ? 1.15
+    ? 1.26
     : isMobile
-      ? 1.35
+      ? 1.42
       : performanceTier === 'high'
         ? 2
         : performanceTier === 'balanced'
@@ -298,15 +298,15 @@ export function init(container) {
   overviewCameraTarget.copy(controls.target);
 
   // ── Lighting ──
-  scene.add(new THREE.AmbientLight(0x4b66a0, 1.28));
+  scene.add(new THREE.AmbientLight(0x4b66a0, isPhone ? 1.46 : isMobile ? 1.38 : 1.28));
 
-  const skyFill = new THREE.HemisphereLight(0x92a7eb, 0x0c1020, 0.98);
+  const skyFill = new THREE.HemisphereLight(0x92a7eb, 0x0c1020, isPhone ? 1.12 : isMobile ? 1.05 : 0.98);
   scene.add(skyFill);
 
-  const moonLight = new THREE.DirectionalLight(0xe1ebff, 0.44);
+  const moonLight = new THREE.DirectionalLight(0xe1ebff, isPhone ? 0.58 : isMobile ? 0.51 : 0.44);
   moonLight.position.set(10, 17, 8);
   scene.add(moonLight);
-  const frontFill = new THREE.DirectionalLight(0xffce9c, 0.26);
+  const frontFill = new THREE.DirectionalLight(0xffce9c, isPhone ? 0.38 : isMobile ? 0.33 : 0.26);
   frontFill.position.set(-2, 7, 12);
   scene.add(frontFill);
 
@@ -400,8 +400,8 @@ export function init(container) {
       ? (isMobile ? 64 : 132)
       : (isMobile ? 40 : 78);
   const starFields = [
-    createStarField(starCount, isMobile ? 0.14 : 0.16, 0.82),
-    createStarField(Math.max(14, Math.floor(starCount * 0.24)), isMobile ? 0.24 : 0.28, 1, 0.08),
+    createStarField(starCount, isMobile ? 0.14 : 0.16, isPhone ? 0.9 : isMobile ? 0.86 : 0.82),
+    createStarField(Math.max(14, Math.floor(starCount * 0.24)), isMobile ? 0.24 : 0.28, isPhone ? 1.08 : 1, 0.08),
   ];
 
   // Moon and glow halo
@@ -420,7 +420,7 @@ export function init(container) {
     map: moonGlowTexture,
     color: 0xaecfff,
     transparent: true,
-    opacity: 0.38,
+    opacity: isPhone ? 0.46 : isMobile ? 0.42 : 0.38,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   }));
@@ -432,7 +432,7 @@ export function init(container) {
     map: horizonGlowTexture,
     color: 0x5e90ff,
     transparent: true,
-    opacity: 0.16,
+    opacity: isPhone ? 0.22 : isMobile ? 0.19 : 0.16,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   }));
@@ -444,7 +444,7 @@ export function init(container) {
     map: horizonGlowTexture,
     color: brandPalette.orange,
     transparent: true,
-    opacity: 0.12,
+    opacity: isPhone ? 0.17 : isMobile ? 0.145 : 0.12,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   }));
@@ -454,9 +454,9 @@ export function init(container) {
 
   const skylineBacklights = [];
   [
-    { x: -6.2, y: 4.9, z: -11.2, color: brandPalette.orange, scale: [14, 11], opacity: 0.2, speed: 0.22 },
-    { x: 0.4, y: 5.2, z: -12.4, color: brandPalette.purple, scale: [17, 12], opacity: 0.16, speed: 0.18 },
-    { x: 6.6, y: 4.7, z: -11.6, color: brandPalette.cyan, scale: [14, 11], opacity: 0.2, speed: 0.24 },
+    { x: -6.2, y: 4.9, z: -11.2, color: brandPalette.orange, scale: [14, 11], opacity: isPhone ? 0.26 : isMobile ? 0.23 : 0.2, speed: 0.22 },
+    { x: 0.4, y: 5.2, z: -12.4, color: brandPalette.purple, scale: [17, 12], opacity: isPhone ? 0.22 : isMobile ? 0.19 : 0.16, speed: 0.18 },
+    { x: 6.6, y: 4.7, z: -11.6, color: brandPalette.cyan, scale: [14, 11], opacity: isPhone ? 0.26 : isMobile ? 0.23 : 0.2, speed: 0.24 },
   ].forEach((cfg, index) => {
     const glow = new THREE.Sprite(new THREE.SpriteMaterial({
       map: horizonGlowTexture,
@@ -739,7 +739,7 @@ export function init(container) {
     const canopyMat = new THREE.MeshLambertMaterial({
       color: new THREE.Color(canopyColor).lerp(new THREE.Color(brandPalette.ivory), 0.08),
       emissive: new THREE.Color(canopyColor).multiplyScalar(0.12),
-      emissiveIntensity: 0.78,
+      emissiveIntensity: isMobile ? 0.92 : 0.78,
     });
     const canopyOffsets = [
       { x: 0, y: 0.96, z: 0, s: 0.34 },
@@ -863,8 +863,8 @@ export function init(container) {
     const baseColor = new THREE.Color(cfg.color).lerp(new THREE.Color(brandPalette.ivory), 0.03);
     const emColor = new THREE.Color(cfg.color).multiplyScalar(0.12);
     const frameColor = new THREE.Color(cfg.color).lerp(new THREE.Color(brandPalette.ivory), 0.16);
-    const baseBodyEmissiveIntensity = 0.56;
-    const baseFrameEmissiveIntensity = 0.68;
+    const baseBodyEmissiveIntensity = isPhone ? 0.72 : isMobile ? 0.66 : 0.56;
+    const baseFrameEmissiveIntensity = isPhone ? 0.86 : isMobile ? 0.77 : 0.68;
 
     const bodyGeo = new THREE.BoxGeometry(w, h, d);
     const bodyMat = new THREE.MeshLambertMaterial({
@@ -1289,6 +1289,8 @@ export function init(container) {
         factLink.removeAttribute('href');
       }
     }
+    factBubble.scrollTop = 0;
+    if (factBody) factBody.scrollTop = 0;
     factBubble.hidden = false;
     factBubble.classList.add('is-visible');
   }
@@ -1302,6 +1304,8 @@ export function init(container) {
       factBubble.classList.remove('is-hud');
       factBubble.classList.add('is-sheet');
       factBubble.classList.remove('is-below');
+      const maxBubbleHeight = Math.max(248, Math.min(H - 82, 288));
+      factBubble.style.setProperty('--bubble-max-height', `${maxBubbleHeight}px`);
       factBubble.style.removeProperty('--bubble-x');
       factBubble.style.removeProperty('--bubble-y');
       factBubble.style.removeProperty('--bubble-tail-left');
@@ -1310,6 +1314,7 @@ export function init(container) {
 
     factBubble.classList.remove('is-sheet', 'is-below');
     factBubble.classList.add('is-hud');
+    factBubble.style.removeProperty('--bubble-max-height');
     const bubbleWidth = factBubble.offsetWidth || (isTablet ? 390 : 430);
     const top = isTablet ? 88 : 82;
     const left = Math.max(16, Math.round((W - bubbleWidth) / 2));
@@ -1645,11 +1650,15 @@ export function init(container) {
     }
   };
   window.addEventListener('resize', onResize);
+  window.visualViewport?.addEventListener('resize', onResize);
+  window.visualViewport?.addEventListener('scroll', onResize);
 
   animate();
 
   return () => {
     window.removeEventListener('resize', onResize);
+    window.visualViewport?.removeEventListener('resize', onResize);
+    window.visualViewport?.removeEventListener('scroll', onResize);
     canvas.removeEventListener('pointermove', onPointerMove);
     canvas.removeEventListener('pointerleave', onPointerLeave);
     canvas.removeEventListener('pointerdown', onPointerDown);
