@@ -3246,6 +3246,7 @@ footer .footer-credit a:hover {
   max-width: 980px;
   position: relative;
   z-index: 1;
+  padding: 0 24px;
 }
 
 .back-links {
@@ -4012,77 +4013,115 @@ footer .footer-credit a:hover {
   font-size: 0.92rem;
 }
 
-.blog-signal-band {
-  padding: 0 24px 10px;
+.blog-hub-section .container,
+.featured-stage-grid,
+.page-hero .container {
+  max-width: 1180px;
 }
 
-.blog-signal-grid {
-  max-width: 980px;
+.page-hero {
+  padding-top: clamp(112px, 14vw, 148px);
+  padding-bottom: clamp(28px, 5vw, 54px);
+}
+
+.journal-masthead {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: clamp(24px, 4vw, 46px);
+  align-items: start;
 }
 
-.blog-signal-card {
-  background: linear-gradient(180deg, #ffffff, rgba(234, 235, 236, 0.62));
-  border: 1px solid #e3ebf1;
-  border-radius: 14px;
-  padding: 16px 16px 14px;
-  box-shadow: 0 8px 20px rgba(8, 34, 52, 0.04);
+.journal-masthead-copy {
+  position: relative;
+  padding: clamp(26px, 4vw, 42px);
+  border-radius: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 245, 0.9)),
+    radial-gradient(circle at top right, rgba(255, 90, 0, 0.14), transparent 34%);
+  box-shadow:
+    0 28px 68px rgba(16, 37, 58, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
-.blog-signal-kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.72rem;
+.journal-masthead-copy::before {
+  content: "";
+  position: absolute;
+  inset: 18px auto auto 18px;
+  width: 74px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-ui), rgba(255, 90, 0, 0));
+}
+
+.journal-masthead-copy .section-title {
+  max-width: 11ch;
+  font-size: clamp(2.35rem, 4.8vw, 5.25rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+.journal-masthead-copy .section-description {
+  max-width: 39rem;
+  margin-top: 18px;
+  color: #35404a;
+  font-size: 1.05rem;
+  line-height: 1.76;
+}
+
+.journal-intro-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.journal-intro-flags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(53, 64, 74, 0.12);
+  background: rgba(255, 255, 255, 0.64);
+  color: #24303a;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--accent-text);
-  margin-bottom: 5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.blog-signal-card h2 {
-  font-size: 1.02rem;
-  margin-bottom: 6px;
-  line-height: 1.35;
+.journal-intro-note {
+  margin-top: 18px;
+  color: #53606d;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 38rem;
 }
 
-.blog-signal-card p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-.blog-hub-section .container {
-  max-width: 1140px;
-}
-
-.journal-hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-  gap: clamp(22px, 3vw, 34px);
-  align-items: end;
-}
-
-.journal-sidecar {
+.journal-issue-card {
   position: relative;
   overflow: hidden;
-  padding: 22px;
-  border-radius: 28px;
-  border: 1px solid rgba(27, 56, 94, 0.14);
+  padding: 24px;
+  border-radius: 32px;
+  border: 1px solid rgba(20, 33, 52, 0.08);
   background:
-    linear-gradient(145deg, rgba(20, 31, 56, 0.98), rgba(39, 27, 62, 0.96)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
-  box-shadow: 0 22px 44px rgba(14, 28, 44, 0.14);
+    radial-gradient(circle at 84% 22%, rgba(87, 152, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 20% 100%, rgba(255, 90, 0, 0.2), transparent 40%),
+    linear-gradient(155deg, rgba(14, 22, 38, 0.98), rgba(24, 18, 41, 0.96) 56%, rgba(19, 30, 54, 0.96));
+  box-shadow: 0 30px 74px rgba(18, 28, 43, 0.22);
   color: #f5f1ea;
 }
 
-.journal-sidecar::before {
+.journal-issue-card::before {
   content: "";
   position: absolute;
-  inset: auto -12% -28% 48%;
-  width: 260px;
+  inset: auto -10% -34% 46%;
+  width: 270px;
   aspect-ratio: 1;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(255, 90, 0, 0.28), rgba(255, 90, 0, 0));
+  background: radial-gradient(circle, rgba(255, 90, 0, 0.34), rgba(255, 90, 0, 0));
   filter: blur(12px);
   pointer-events: none;
 }
@@ -4108,10 +4147,10 @@ footer .footer-credit a:hover {
   box-shadow: 0 0 16px currentColor;
 }
 
-.journal-sidecar-art {
+.issue-art {
   position: relative;
   overflow: hidden;
-  margin: 0 -6px 18px;
+  margin: 0 0 18px;
   border-radius: 24px;
   padding: 18px 18px 8px;
   background:
@@ -4121,7 +4160,7 @@ footer .footer-credit a:hover {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.journal-sidecar-art img {
+.issue-art img {
   display: block;
   width: 100%;
   height: auto;
@@ -4129,14 +4168,15 @@ footer .footer-credit a:hover {
   filter: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.24));
 }
 
-.journal-sidecar h2 {
-  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
-  line-height: 1.14;
+.journal-issue-card h2 {
+  font-size: clamp(1.55rem, 2.2vw, 2rem);
+  line-height: 1.08;
   margin-bottom: 12px;
+  text-wrap: balance;
 }
 
-.journal-sidecar p {
-  color: rgba(245, 241, 234, 0.76);
+.journal-issue-card p {
+  color: rgba(245, 241, 234, 0.78);
   font-size: 0.98rem;
   line-height: 1.72;
 }
@@ -4163,94 +4203,119 @@ footer .footer-credit a:hover {
   text-transform: uppercase;
 }
 
-.insight-grid {
+.issue-link-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  align-items: stretch;
+  gap: 10px;
+  margin-top: 18px;
 }
 
-.insight-card {
-  display: grid;
-  grid-template-columns: 1fr;
-  overflow: hidden;
-  border: 1px solid rgba(213, 223, 233, 0.9);
-  border-radius: 24px;
-  padding: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 251, 0.96)),
-    radial-gradient(circle at top right, rgba(255, 90, 0, 0.08), transparent 30%);
-  box-shadow: 0 16px 34px rgba(10, 38, 54, 0.08);
-  position: relative;
+.issue-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 13px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  color: #f5f1ea;
+  text-decoration: none;
   transition:
     transform 0.24s ease,
-    box-shadow 0.24s ease,
-    border-color 0.24s ease;
+    border-color 0.24s ease,
+    background 0.24s ease;
 }
 
-.insight-card::after {
-  content: "";
-  position: absolute;
-  inset: auto -28px -42px auto;
-  width: 110px;
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(255, 166, 118, 0.22), rgba(255, 166, 118, 0));
-  pointer-events: none;
+.issue-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.insight-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(191, 205, 218, 0.95);
-  box-shadow: 0 22px 38px rgba(6, 31, 48, 0.12);
+.issue-link span {
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
-.insight-card.featured-dispatch {
-  grid-column: span 2;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+.issue-link strong {
+  color: #ffd9c7;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.insight-card.featured-dispatch .insight-content {
-  padding: 28px 30px 30px;
+.featured-stage {
+  padding: 0 24px 26px;
+  scroll-margin-top: 112px;
 }
 
-.insight-visual {
+.featured-stage-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.34fr) minmax(290px, 0.66fr);
+  gap: clamp(18px, 2.6vw, 28px);
+}
+
+.dispatch-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(0, 1.02fr);
+  overflow: hidden;
+  border-radius: 34px;
+  border: 1px solid rgba(215, 224, 233, 0.96);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 251, 0.94)),
+    radial-gradient(circle at top right, rgba(255, 90, 0, 0.09), transparent 26%);
+  box-shadow: 0 24px 58px rgba(11, 34, 52, 0.1);
+}
+
+.dispatch-feature-media {
   position: relative;
-  min-height: 236px;
+  min-height: 100%;
   display: block;
   overflow: hidden;
-  text-decoration: none;
   background: #121722;
+  text-decoration: none;
 }
 
-.insight-visual img {
+.dispatch-feature-media img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.44s ease;
 }
 
-.insight-card:hover .insight-visual img {
+.dispatch-feature:hover .dispatch-feature-media img,
+.dispatch-mini-card:hover .dispatch-mini-media img,
+.dispatch-card:hover .dispatch-card-media img {
   transform: scale(1.04);
 }
 
-.insight-visual::after {
+.dispatch-feature-media::after,
+.dispatch-mini-media::after,
+.dispatch-card-media::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(10, 14, 24, 0.08), rgba(10, 14, 24, 0.08) 40%, rgba(10, 14, 24, 0.62)),
+    linear-gradient(180deg, rgba(10, 14, 24, 0.1), rgba(10, 14, 24, 0.08) 44%, rgba(10, 14, 24, 0.66)),
     linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
 }
 
-.insight-visual-badge,
-.insight-visual-note {
+.dispatch-feature-badge,
+.dispatch-feature-note,
+.dispatch-mini-badge,
+.dispatch-card-badge,
+.dispatch-card-note {
   position: absolute;
   z-index: 2;
 }
 
-.insight-visual-badge {
+.dispatch-feature-badge,
+.dispatch-mini-badge,
+.dispatch-card-badge {
   top: 14px;
   left: 14px;
   display: inline-flex;
@@ -4258,119 +4323,435 @@ footer .footer-credit a:hover {
   min-height: 32px;
   padding: 7px 11px;
   border-radius: 999px;
-  background: rgba(10, 14, 24, 0.68);
+  background: rgba(10, 14, 24, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
   color: #fff5ee;
-  font-size: 0.73rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   backdrop-filter: blur(10px);
 }
 
-.insight-visual-note {
+.dispatch-feature-note,
+.dispatch-card-note {
   left: 16px;
   right: 16px;
   bottom: 16px;
-  color: rgba(245, 241, 234, 0.94);
-  font-size: 0.98rem;
+  color: rgba(245, 241, 234, 0.96);
+  font-size: 1rem;
   line-height: 1.25;
   font-weight: 700;
   text-shadow: 0 10px 20px rgba(0, 0, 0, 0.28);
 }
 
-.insight-content {
+.dispatch-feature-body {
   display: grid;
   align-content: start;
-  gap: 12px;
-  padding: 22px 22px 24px;
+  gap: 14px;
+  padding: clamp(26px, 3vw, 36px);
 }
 
-.insight-meta-row {
+.dispatch-meta-row,
+.dispatch-card-meta-row {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
   align-items: center;
-  margin-bottom: 9px;
 }
 
-.insight-chip {
+.dispatch-chip,
+.dispatch-card-chip {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(255, 90, 0, 0.08);
   color: #bf4300;
   border: 1px solid rgba(255, 90, 0, 0.14);
-  font-size: 0.82rem;
+  font-size: 0.79rem;
   font-weight: 700;
 }
 
-.insight-meta {
+.dispatch-meta,
+.dispatch-card-meta {
   color: var(--text-muted);
   font-size: 0.86rem;
 }
 
-.insight-title {
-  font-size: 1.38rem;
-  margin-bottom: 0;
-  line-height: 1.25;
+.dispatch-feature-title {
+  font-size: clamp(2.15rem, 3vw, 3.45rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
-.insight-card.featured-dispatch .insight-title {
-  font-size: clamp(1.9rem, 2.5vw, 2.5rem);
-  line-height: 1.06;
-}
-
-.insight-title a {
+.dispatch-feature-title a,
+.dispatch-mini-title a,
+.dispatch-card-title a {
   color: var(--bg-dark);
   text-decoration: none;
 }
 
-.insight-title a:hover {
+.dispatch-feature-title a:hover,
+.dispatch-mini-title a:hover,
+.dispatch-card-title a:hover {
   color: var(--accent-text);
 }
 
-.insight-description {
+.dispatch-feature-description,
+.dispatch-mini-description,
+.dispatch-card-description {
   color: var(--text-secondary);
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.74;
 }
 
-.insight-proof {
-  padding: 14px 16px;
-  border-radius: 18px;
+.dispatch-proof-panel {
+  padding: 16px 18px;
+  border-radius: 20px;
   border: 1px solid rgba(255, 90, 0, 0.12);
-  background: linear-gradient(135deg, rgba(255, 232, 221, 0.84), rgba(235, 241, 255, 0.84));
-  color: #31404d;
-  font-size: 0.93rem;
-  line-height: 1.66;
+  background: linear-gradient(135deg, rgba(255, 232, 221, 0.88), rgba(235, 241, 255, 0.84));
 }
 
-.insight-read {
+.dispatch-proof-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #b64907;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dispatch-proof-panel p {
+  color: #31404d;
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.dispatch-feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.dispatch-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d14a00;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.dispatch-read::after,
+.dispatch-mini-read::after,
+.dispatch-card-read::after {
+  content: "→";
+  font-size: 0.95rem;
+}
+
+.dispatch-read:hover,
+.dispatch-mini-read:hover,
+.dispatch-card-read:hover {
+  color: #ff5a00;
+}
+
+.dispatch-mini-column {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.dispatch-mini-card {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+  padding: 14px;
+  border-radius: 26px;
+  border: 1px solid rgba(215, 224, 233, 0.92);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 249, 251, 0.92)),
+    radial-gradient(circle at top right, rgba(31, 91, 190, 0.08), transparent 36%);
+  box-shadow: 0 16px 34px rgba(10, 38, 54, 0.08);
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease;
+}
+
+.dispatch-mini-card:hover,
+.dispatch-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(188, 203, 217, 0.98);
+  box-shadow: 0 22px 42px rgba(8, 32, 50, 0.11);
+}
+
+.dispatch-mini-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-height: 154px;
+  border-radius: 18px;
+  background: #151a25;
+}
+
+.dispatch-mini-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.dispatch-mini-body {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dispatch-mini-title {
+  font-size: 1.26rem;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.dispatch-mini-read,
+.dispatch-card-read {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   margin-top: auto;
   color: #d14a00;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.09em;
   text-transform: uppercase;
   text-decoration: none;
 }
 
-.insight-read::after {
-  content: "→";
-  font-size: 0.95rem;
+.dispatch-mini-card--service {
+  grid-template-columns: 1fr;
+  padding: 22px;
+  border-color: rgba(17, 26, 42, 0.08);
+  background:
+    radial-gradient(circle at 84% 18%, rgba(31, 91, 190, 0.24), transparent 28%),
+    radial-gradient(circle at 16% 90%, rgba(255, 90, 0, 0.22), transparent 42%),
+    linear-gradient(155deg, rgba(14, 22, 38, 0.98), rgba(24, 18, 41, 0.96) 56%, rgba(19, 30, 54, 0.96));
+  color: #f5f1ea;
 }
 
-.insight-read:hover {
-  color: #ff5a00;
+.dispatch-mini-card--service h3,
+.dispatch-mini-card--service p,
+.dispatch-mini-card--service .dispatch-mini-meta {
+  color: #f5f1ea;
 }
 
-@media (max-width: 640px) {
+.dispatch-mini-card--service .dispatch-mini-meta {
+  opacity: 0.72;
+  font-size: 0.76rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.dispatch-mini-card--service .dispatch-mini-title a {
+  color: #f5f1ea;
+}
+
+.dispatch-mini-card--service .dispatch-mini-title a:hover {
+  color: #ffd9c7;
+}
+
+.dispatch-mini-card--service .dispatch-mini-read {
+  color: #ffd9c7;
+}
+
+.blog-hub-section {
+  padding-top: 18px;
+}
+
+.dispatch-library-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.dispatch-library-copy {
+  max-width: 46rem;
+}
+
+.dispatch-library-copy .section-title {
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+
+.dispatch-library-copy .section-description {
+  margin-top: 14px;
+  color: #4f5c69;
+}
+
+.dispatch-library-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.dispatch-library-pills span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(53, 64, 74, 0.12);
+  color: #24303a;
+  font-size: 0.77rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.dispatch-library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dispatch-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(213, 223, 233, 0.92);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 251, 0.96)),
+    radial-gradient(circle at top right, rgba(255, 90, 0, 0.08), transparent 30%);
+  box-shadow: 0 16px 34px rgba(10, 38, 54, 0.08);
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease;
+}
+
+.dispatch-card-media {
+  position: relative;
+  display: block;
+  min-height: 248px;
+  overflow: hidden;
+  background: #121722;
+}
+
+.dispatch-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.42s ease;
+}
+
+.dispatch-card-body {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 22px 22px 24px;
+}
+
+.dispatch-card-title {
+  font-size: 1.42rem;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+@media (max-width: 1100px) {
+  .journal-masthead,
+  .featured-stage-grid,
+  .dispatch-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .dispatch-library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
   .page-hero {
     padding-top: 104px;
+    padding-bottom: 22px;
+  }
+
+  .page-hero .container {
+    padding: 0 16px;
+  }
+
+  .journal-masthead-copy,
+  .journal-issue-card,
+  .dispatch-feature-body,
+  .dispatch-mini-card,
+  .dispatch-card-body,
+  .final-cta {
+    padding: 22px;
+  }
+
+  .journal-masthead-copy .section-title,
+  .dispatch-feature-title,
+  .dispatch-library-copy .section-title {
+    max-width: 7.5ch;
+    font-size: clamp(1.72rem, 8.7vw, 2.45rem);
+    line-height: 0.98;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+  }
+
+  .journal-intro-flags,
+  .dispatch-library-pills {
+    justify-content: flex-start;
+  }
+
+  .dispatch-mini-card {
+    grid-template-columns: 1fr;
+  }
+
+  .dispatch-mini-media {
+    min-height: 190px;
+  }
+
+  .dispatch-mini-body,
+  .dispatch-card-body {
+    gap: 10px;
+  }
+
+  .dispatch-feature-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dispatch-feature-actions .btn,
+  .dispatch-feature-actions .dispatch-read {
+    justify-content: center;
+  }
+
+  .dispatch-library-head {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .dispatch-library-grid {
+    grid-template-columns: 1fr;
   }
 
   .chapter-grid {
@@ -4383,25 +4764,6 @@ footer .footer-credit a:hover {
 
   .content-block {
     padding: 22px;
-  }
-
-  .final-cta {
-    padding: 24px;
-  }
-}
-
-@media (max-width: 980px) {
-  .journal-hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .insight-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .insight-card.featured-dispatch {
-    grid-column: span 1;
-    grid-template-columns: 1fr;
   }
 }
 
@@ -4640,26 +5002,34 @@ footer .footer-credit a:hover {
     <main id="main-content">
       <section class="page-hero section-shell">
         <div class="container">
-          <div class="journal-hero-grid">
-            <div class="journal-hero-copy">
+          <div class="journal-masthead">
+            <div class="journal-masthead-copy">
               <p class="back-links"><a href="/">← Home</a></p>
-              <p class="section-eyebrow">INSIGHTS</p>
+              <p class="section-eyebrow">Little Fight Field Guide</p>
               <h1 class="section-title">
-                Ideas that make websites feel clearer, faster, and harder to ignore
+                Practical advice for owners who need their website to pull its weight.
               </h1>
               <p class="section-description">
-                Practical notes for owners juggling search, bookings, payments,
-                inboxes, and the hundred tiny tech decisions that shape how a
-                business feels online.
+                Search, bookings, payments, inboxes, reputation, and the quiet
+                details that decide whether a business feels trustworthy online.
+              </p>
+              <div class="journal-intro-flags" aria-label="Editorial promises">
+                <span>Sharp reads for busy operators</span>
+                <span>NYC lens, not agency fluff</span>
+                <span>Built to be used, not admired</span>
+              </div>
+              <p class="journal-intro-note">
+                Start with the featured dispatch if you want the big picture,
+                then move into the quick reads when you need the faster version.
               </p>
               <div class="hero-actions">
-                <a href="/contact/" class="btn btn-primary">Get a Site Review</a>
-                <a href="/work/" class="btn btn-secondary">See Client Outcomes</a>
+                <a href="#featured-dispatch" class="btn btn-primary">Start with the Featured Story</a>
+                <a href="/contact/" class="btn btn-secondary">Book a Site Review</a>
               </div>
             </div>
-            <aside class="journal-sidecar" aria-label="Journal theme">
+            <aside class="journal-issue-card" aria-label="This week's field note">
               <p class="journal-sidecar-kicker">This week&rsquo;s field note</p>
-              <figure class="journal-sidecar-art">
+              <figure class="issue-art">
                 <img
                   src="/assets/editorial/storefront-outline.webp"
                   alt="Line illustration of a row of neighborhood storefronts"
@@ -4670,11 +5040,11 @@ footer .footer-credit a:hover {
                   height="1024"
                 />
               </figure>
-              <h2>Search, bookings, payments, and trust all live on the same surface now.</h2>
+              <h2>Search changed. Trust got faster. Your website has to do more in fewer seconds.</h2>
               <p>
-                If a website feels clear, alive, and easy to verify, people
-                stay longer and act faster. That is the through-line of this
-                journal.
+                That is the through-line of this desk: make the website
+                clearer, easier to verify, and more useful before a customer
+                ever calls.
               </p>
               <div class="journal-sidecar-pills" aria-label="Topics">
                 <span>Search</span>
@@ -4682,90 +5052,79 @@ footer .footer-credit a:hover {
                 <span>Operations</span>
                 <span>Reputation</span>
               </div>
+              <div class="issue-link-list">
+                <a class="issue-link" href="/what-google-looks-for-business-website/">
+                  <span>What Google actually looks for on a business site now</span>
+                  <strong>Guide</strong>
+                </a>
+                <a class="issue-link" href="/why-business-websites-will-be-invisible/">
+                  <span>Why zero-click search changes the value of every page</span>
+                  <strong>Forecast</strong>
+                </a>
+                <a class="issue-link" href="/contact/">
+                  <span>What to fix first when your site feels vague or invisible</span>
+                  <strong>Review</strong>
+                </a>
+              </div>
             </aside>
           </div>
         </div>
       </section>
 
-      <section class="blog-signal-band">
-        <div class="container blog-signal-grid">
-          <article class="blog-signal-card">
-            <p class="blog-signal-kicker">Focus 01</p>
-            <h2>Modern search behavior</h2>
-            <p>
-              How AI answers, summaries, and zero-click patterns are changing
-              the way customers find businesses.
-            </p>
-          </article>
-          <article class="blog-signal-card">
-            <p class="blog-signal-kicker">Focus 02</p>
-            <h2>High-clarity website strategy</h2>
-            <p>
-              How to structure pages so humans trust faster and machines
-              understand your services without guessing.
-            </p>
-          </article>
-          <article class="blog-signal-card">
-            <p class="blog-signal-kicker">Focus 03</p>
-            <h2>Practical implementation</h2>
-            <p>
-              Actions small teams can apply now without bloated marketing stacks
-              or complicated toolchains.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section
-        class="page-content section-shell section-shell-soft blog-hub-section"
-      >
-        <div class="container">
-          <div class="insight-grid">
-            <article class="insight-card featured-dispatch">
-              <a
-                class="insight-visual"
-                href="/ai-google-broke-the-internet-websites-survive/"
-              >
-                <img
-                  src="/assets/pill-scroll/website-design-nyc-1.webp"
-                  alt="Laptop and coffee on a wood table in front of tall windows"
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                  width="1600"
-                  height="898"
-                />
-                <span class="insight-visual-badge">Featured dispatch</span>
-                <span class="insight-visual-note">The web changed overnight.</span>
-              </a>
-              <div class="insight-content">
-                <div class="insight-meta-row">
-                  <span class="insight-chip">Search &amp; AI</span>
-                  <span class="insight-meta">February 2026 · 7 min read</span>
-                </div>
-                <h2 class="insight-title">
-                  <a href="/ai-google-broke-the-internet-websites-survive/"
-                    >AI and Google Broke the Internet (Here&rsquo;s How Websites Survive Now)</a
-                  >
-                </h2>
-                <p class="insight-description">
-                  What changed, why local businesses feel less visible, and how
-                  sharper structure, proof, and local specificity can still
-                  punch through.
-                </p>
-                <div class="insight-proof">
+      <section class="featured-stage" id="featured-dispatch">
+        <div class="featured-stage-grid">
+          <article class="dispatch-feature">
+            <a
+              class="dispatch-feature-media"
+              href="/ai-google-broke-the-internet-websites-survive/"
+            >
+              <img
+                src="/assets/pill-scroll/website-design-nyc-1.webp"
+                alt="Laptop and coffee on a wood table in front of tall windows"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                width="1600"
+                height="898"
+              />
+              <span class="dispatch-feature-badge">Featured dispatch</span>
+              <span class="dispatch-feature-note">The web changed overnight. Most small-business sites did not.</span>
+            </a>
+            <div class="dispatch-feature-body">
+              <div class="dispatch-meta-row">
+                <span class="dispatch-chip">Search &amp; AI</span>
+                <span class="dispatch-meta">February 2026 · 7 min read</span>
+              </div>
+              <h2 class="dispatch-feature-title">
+                <a href="/ai-google-broke-the-internet-websites-survive/">
+                  AI and Google Broke the Internet. Here&rsquo;s how business websites survive now.
+                </a>
+              </h2>
+              <p class="dispatch-feature-description">
+                What changed, why local businesses feel less visible, and how
+                sharper structure, proof, and local specificity can still punch
+                through.
+              </p>
+              <div class="dispatch-proof-panel">
+                <span class="dispatch-proof-label">Why this matters</span>
+                <p>
                   If your site can answer faster, prove more, and feel more
                   specific than generic AI sludge, you still have an edge.
-                </div>
-                <a class="insight-read" href="/ai-google-broke-the-internet-websites-survive/"
-                  >Read the full story</a
-                >
+                </p>
               </div>
-            </article>
+              <div class="dispatch-feature-actions">
+                <a class="dispatch-read" href="/ai-google-broke-the-internet-websites-survive/">
+                  Read the featured story
+                </a>
+                <a href="/contact/" class="btn btn-secondary">Talk Through Your Site</a>
+              </div>
+            </div>
+          </article>
 
-            <article class="insight-card">
+          <aside class="dispatch-mini-column" aria-label="Quick reads">
+            <article class="dispatch-mini-card">
               <a
-                class="insight-visual"
+                class="dispatch-mini-media"
                 href="/what-google-looks-for-business-website/"
               >
                 <img
@@ -4776,33 +5135,31 @@ footer .footer-credit a:hover {
                   width="1280"
                   height="1600"
                 />
-                <span class="insight-visual-badge">Search visibility</span>
-                <span class="insight-visual-note">Clarity beats keyword stuffing.</span>
+                <span class="dispatch-mini-badge">Quick read</span>
               </a>
-              <div class="insight-content">
-                <div class="insight-meta-row">
-                  <span class="insight-chip">SEO Strategy</span>
-                  <span class="insight-meta">February 2026 · 8 min read</span>
+              <div class="dispatch-mini-body">
+                <div class="dispatch-card-meta-row">
+                  <span class="dispatch-card-chip">SEO Strategy</span>
+                  <span class="dispatch-card-meta">February 2026 · 8 min read</span>
                 </div>
-                <h2 class="insight-title">
-                  <a href="/what-google-looks-for-business-website/"
-                    >What Google Actually Looks For on a Business Website</a
-                  >
-                </h2>
-                <p class="insight-description">
-                  Google now evaluates credibility, clarity, and trust signals
-                  more than keyword repetition. Here is what actually drives
-                  visibility.
+                <h3 class="dispatch-mini-title">
+                  <a href="/what-google-looks-for-business-website/">
+                    What Google actually looks for on a business website
+                  </a>
+                </h3>
+                <p class="dispatch-mini-description">
+                  A practical breakdown of clarity, trust signals, and page structure
+                  that matters more than keyword stuffing.
                 </p>
-                <a class="insight-read" href="/what-google-looks-for-business-website/"
-                  >Read the search guide</a
-                >
+                <a class="dispatch-mini-read" href="/what-google-looks-for-business-website/">
+                  Read the guide
+                </a>
               </div>
             </article>
 
-            <article class="insight-card">
+            <article class="dispatch-mini-card">
               <a
-                class="insight-visual"
+                class="dispatch-mini-media"
                 href="/why-business-websites-will-be-invisible/"
               >
                 <img
@@ -4813,33 +5170,74 @@ footer .footer-credit a:hover {
                   width="1280"
                   height="1600"
                 />
-                <span class="insight-visual-badge">Visibility forecast</span>
-                <span class="insight-visual-note">The click is becoming optional.</span>
+                <span class="dispatch-mini-badge">Prediction file</span>
               </a>
-              <div class="insight-content">
-                <div class="insight-meta-row">
-                  <span class="insight-chip">Search Visibility</span>
-                  <span class="insight-meta">February 2026 · 8 min read</span>
+              <div class="dispatch-mini-body">
+                <div class="dispatch-card-meta-row">
+                  <span class="dispatch-card-chip">Search visibility</span>
+                  <span class="dispatch-card-meta">February 2026 · 8 min read</span>
                 </div>
-                <h2 class="insight-title">
-                  <a href="/why-business-websites-will-be-invisible/"
-                    >Why Most Business Websites Will Be Invisible in 18 Months</a
-                  >
-                </h2>
-                <p class="insight-description">
-                  Most business websites are not failing. They are becoming
-                  invisible as AI answers and Google summaries influence
-                  decisions before users click.
+                <h3 class="dispatch-mini-title">
+                  <a href="/why-business-websites-will-be-invisible/">
+                    Why most business websites will be invisible in 18 months
+                  </a>
+                </h3>
+                <p class="dispatch-mini-description">
+                  The click is becoming optional. This explains what that means
+                  for neighborhood businesses still relying on generic sites.
                 </p>
-                <a class="insight-read" href="/why-business-websites-will-be-invisible/"
-                  >Read the forecast</a
-                >
+                <a class="dispatch-mini-read" href="/why-business-websites-will-be-invisible/">
+                  Read the forecast
+                </a>
               </div>
             </article>
 
-            <article class="insight-card">
+            <article class="dispatch-mini-card dispatch-mini-card--service">
+              <div class="dispatch-mini-body">
+                <p class="dispatch-mini-meta">Need a clearer site, not just clearer theory?</p>
+                <h3 class="dispatch-mini-title">
+                  <a href="/contact/">
+                    We review your website like an operator, not a template seller.
+                  </a>
+                </h3>
+                <p class="dispatch-mini-description">
+                  We&rsquo;ll show you where trust leaks, where search intent gets lost,
+                  and what to tighten first so the site feels sharper fast.
+                </p>
+                <a class="dispatch-mini-read" href="/contact/">
+                  Book a site review
+                </a>
+              </div>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section
+        class="page-content section-shell section-shell-soft blog-hub-section"
+      >
+        <div class="container">
+          <div class="dispatch-library-head">
+            <div class="dispatch-library-copy">
+              <p class="section-eyebrow">More field notes</p>
+              <h2 class="section-title">Useful reads for the operational side of the internet.</h2>
+              <p class="section-description">
+                For the owners dealing with staff logins, neighborhood visibility,
+                family safety, and the everyday systems behind the front counter.
+              </p>
+            </div>
+            <div class="dispatch-library-pills" aria-label="Browse topics">
+              <span>Cybersecurity</span>
+              <span>Neighborhood growth</span>
+              <span>Parenting &amp; AI</span>
+              <span>Small-team systems</span>
+            </div>
+          </div>
+
+          <div class="dispatch-library-grid">
+            <article class="dispatch-card">
               <a
-                class="insight-visual"
+                class="dispatch-card-media"
                 href="/blog/cybersecurity-for-small-business.html"
               >
                 <img
@@ -4850,32 +5248,32 @@ footer .footer-credit a:hover {
                   width="1080"
                   height="1080"
                 />
-                <span class="insight-visual-badge">Cybersecurity</span>
-                <span class="insight-visual-note">A calmer checklist for staying safe online.</span>
+                <span class="dispatch-card-badge">Cybersecurity</span>
+                <span class="dispatch-card-note">A calmer checklist for staying safe online.</span>
               </a>
-              <div class="insight-content">
-                <div class="insight-meta-row">
-                  <span class="insight-chip">Cybersecurity</span>
-                  <span class="insight-meta">January 2025 · 5 min read</span>
+              <div class="dispatch-card-body">
+                <div class="dispatch-card-meta-row">
+                  <span class="dispatch-card-chip">Cybersecurity</span>
+                  <span class="dispatch-card-meta">January 2025 · 5 min read</span>
                 </div>
-                <h2 class="insight-title">
-                  <a href="/blog/cybersecurity-for-small-business.html"
-                    >How Small Businesses Can Stay Safe in a Digital World</a
-                  >
-                </h2>
-                <p class="insight-description">
+                <h3 class="dispatch-card-title">
+                  <a href="/blog/cybersecurity-for-small-business.html">
+                    How small businesses can stay safe in a digital world
+                  </a>
+                </h3>
+                <p class="dispatch-card-description">
                   Actionable cybersecurity practices for teams that want better
-                  protection without enterprise complexity.
+                  protection without enterprise complexity or paranoia.
                 </p>
-                <a class="insight-read" href="/blog/cybersecurity-for-small-business.html"
-                  >Read the checklist</a
-                >
+                <a class="dispatch-card-read" href="/blog/cybersecurity-for-small-business.html">
+                  Read the checklist
+                </a>
               </div>
             </article>
 
-            <article class="insight-card">
+            <article class="dispatch-card">
               <a
-                class="insight-visual"
+                class="dispatch-card-media"
                 href="/blog/nyc-small-business-digital.html"
               >
                 <img
@@ -4886,32 +5284,32 @@ footer .footer-credit a:hover {
                   width="1080"
                   height="1080"
                 />
-                <span class="insight-visual-badge">Neighborhood commerce</span>
-                <span class="insight-visual-note">Foot traffic starts with digital trust.</span>
+                <span class="dispatch-card-badge">Neighborhood commerce</span>
+                <span class="dispatch-card-note">Foot traffic often starts with digital trust.</span>
               </a>
-              <div class="insight-content">
-                <div class="insight-meta-row">
-                  <span class="insight-chip">Digital Strategy</span>
-                  <span class="insight-meta">January 2025 · 5 min read</span>
+              <div class="dispatch-card-body">
+                <div class="dispatch-card-meta-row">
+                  <span class="dispatch-card-chip">Digital strategy</span>
+                  <span class="dispatch-card-meta">January 2025 · 5 min read</span>
                 </div>
-                <h2 class="insight-title">
-                  <a href="/blog/nyc-small-business-digital.html"
-                    >Why NYC&rsquo;s Mom-and-Pop Shops Need to Go Digital, Now</a
-                  >
-                </h2>
-                <p class="insight-description">
+                <h3 class="dispatch-card-title">
+                  <a href="/blog/nyc-small-business-digital.html">
+                    Why NYC&rsquo;s mom-and-pop shops need to go digital, now
+                  </a>
+                </h3>
+                <p class="dispatch-card-description">
                   How local businesses can strengthen visibility, trust, and
                   recurring revenue through practical digital upgrades.
                 </p>
-                <a class="insight-read" href="/blog/nyc-small-business-digital.html"
-                  >Read the playbook</a
-                >
+                <a class="dispatch-card-read" href="/blog/nyc-small-business-digital.html">
+                  Read the playbook
+                </a>
               </div>
             </article>
 
-            <article class="insight-card">
+            <article class="dispatch-card">
               <a
-                class="insight-visual"
+                class="dispatch-card-media"
                 href="/blog/protecting-kids-from-ai.html"
               >
                 <img
@@ -4922,26 +5320,26 @@ footer .footer-credit a:hover {
                   width="1080"
                   height="1080"
                 />
-                <span class="insight-visual-badge">AI safety</span>
-                <span class="insight-visual-note">Practical language, not panic.</span>
+                <span class="dispatch-card-badge">AI safety</span>
+                <span class="dispatch-card-note">Practical language, not panic.</span>
               </a>
-              <div class="insight-content">
-                <div class="insight-meta-row">
-                  <span class="insight-chip">Parenting</span>
-                  <span class="insight-meta">January 2025 · 4 min read</span>
+              <div class="dispatch-card-body">
+                <div class="dispatch-card-meta-row">
+                  <span class="dispatch-card-chip">Parenting</span>
+                  <span class="dispatch-card-meta">January 2025 · 4 min read</span>
                 </div>
-                <h2 class="insight-title">
-                  <a href="/blog/protecting-kids-from-ai.html"
-                    >Protecting Your Kids From AI, the Smart Way</a
-                  >
-                </h2>
-                <p class="insight-description">
+                <h3 class="dispatch-card-title">
+                  <a href="/blog/protecting-kids-from-ai.html">
+                    Protecting your kids from AI, the smart way
+                  </a>
+                </h3>
+                <p class="dispatch-card-description">
                   A practical reality check for parents who want to understand
                   AI risks and guide kids with confidence.
                 </p>
-                <a class="insight-read" href="/blog/protecting-kids-from-ai.html"
-                  >Read the parent guide</a
-                >
+                <a class="dispatch-card-read" href="/blog/protecting-kids-from-ai.html">
+                  Read the parent guide
+                </a>
               </div>
             </article>
           </div>
