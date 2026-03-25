@@ -629,8 +629,238 @@ body.page-shell :is(.journal-issue-card, .contact-intro-card, .services-signal-c
   }
 }
 
+body.page-shell {
+  --page-spot-x: 54%;
+  --page-spot-y: 18%;
+}
+
+body.page-shell {
+  background-image:
+    radial-gradient(circle at var(--page-spot-x) var(--page-spot-y), rgba(255, 90, 0, 0.12) 0, transparent 24%),
+    radial-gradient(circle at 10% 14%, rgba(255, 90, 0, 0.16) 0, transparent 21%),
+    radial-gradient(circle at 84% 18%, rgba(31, 91, 190, 0.13) 0, transparent 24%),
+    radial-gradient(circle at 16% 82%, rgba(255, 211, 187, 0.32) 0, transparent 22%),
+    radial-gradient(circle at 82% 76%, rgba(31, 91, 190, 0.08) 0, transparent 27%),
+    linear-gradient(180deg, #fffcf8 0%, #f7f4ef 100%);
+}
+
+body.page-shell::after {
+  animation: lifiAmbientSweep 26s ease-in-out infinite alternate;
+}
+
+.page-hero .section-title {
+  max-width: 13ch;
+  letter-spacing: -0.055em;
+  text-shadow: 0 18px 34px rgba(255, 90, 0, 0.08);
+}
+
+.page-hero .section-description,
+.page-hero .hero-note,
+.page-hero .journal-intro-note {
+  max-width: 58ch;
+}
+
+.page-hero .section-eyebrow,
+.page-hero .service-wayfinder,
+.journal-intro-flags span,
+.journal-sidecar-pills span,
+.contact-chip {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero .section-eyebrow::after,
+.page-hero .service-wayfinder::after,
+.journal-intro-flags span::after,
+.journal-sidecar-pills span::after,
+.contact-chip::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 -38%;
+  width: 42%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  opacity: 0.22;
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+
+.journal-wayfinder-card::after,
+.services-signal-card::after {
+  content: "";
+  position: absolute;
+  right: -8%;
+  bottom: -24%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(12px);
+  opacity: 0.72;
+  background: radial-gradient(circle, rgba(255, 90, 0, 0.18), transparent 68%);
+}
+
+.journal-wayfinder-card:nth-child(2)::after,
+.services-signal-card:nth-child(2)::after {
+  background: radial-gradient(circle, rgba(31, 91, 190, 0.18), transparent 68%);
+}
+
+.journal-wayfinder-card:nth-child(3)::after,
+.services-signal-card:nth-child(3)::after {
+  background: radial-gradient(circle, rgba(255, 176, 97, 0.22), transparent 68%);
+}
+
+.journal-issue-card,
+.journal-masthead-copy,
+.journal-wayfinder-card,
+.dispatch-feature,
+.dispatch-mini-card,
+.dispatch-card,
+.contact-intro-card,
+.form-container,
+.contact-info-item,
+.services-signal-card,
+.service-link-card,
+.service-card,
+.work-process-step,
+.premium-process-step,
+.industry-index-card,
+.industry-map-card,
+.story-card,
+.story-step,
+.final-cta {
+  --card-tilt-x: 0deg;
+  --card-tilt-y: 0deg;
+  --card-lift: 0px;
+  --card-reveal-y: 0px;
+  --card-reveal-scale: 1;
+  transform:
+    perspective(1400px)
+    rotateX(var(--card-tilt-x))
+    rotateY(var(--card-tilt-y))
+    translateY(calc(var(--card-lift) + var(--card-reveal-y)))
+    scale(var(--card-reveal-scale));
+  transform-style: preserve-3d;
+}
+
+.journal-issue-card::before,
+.journal-masthead-copy::before,
+.journal-wayfinder-card::before,
+.dispatch-feature::before,
+.dispatch-mini-card::before,
+.dispatch-card::before,
+.contact-intro-card::before,
+.form-container::before,
+.service-link-card::before,
+.work-process-step::before,
+.premium-process-step::before,
+.industry-map-card::before,
+.story-card::before,
+.story-step::before,
+.final-cta::before {
+  height: 4px;
+  background: linear-gradient(90deg, #ff5a00, #ffb061 38%, #1f5bbe 84%);
+}
+
+.journal-issue-card::after,
+.dispatch-feature::after,
+.final-cta::after,
+.contact-intro-card::after,
+.form-container::after {
+  opacity: 0.22;
+}
+
+.dispatch-card,
+.dispatch-mini-card,
+.service-link-card,
+.story-card,
+.story-step,
+.work-process-step,
+.premium-process-step,
+.industry-map-card {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 251, 0.94)),
+    radial-gradient(circle at 100% 0, rgba(255, 90, 0, 0.12), transparent 36%);
+}
+
+.hero-actions .btn,
+.btn,
+.nav-cta-btn,
+.mobile-sticky-phone,
+.mobile-sticky-cta,
+.dispatch-read,
+.dispatch-mini-read,
+.dispatch-card-read,
+.issue-link,
+.story-link,
+.story-links a,
+.back-to-top {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-actions .btn::before,
+.btn::before,
+.nav-cta-btn::before,
+.mobile-sticky-phone::before,
+.mobile-sticky-cta::before,
+.dispatch-read::before,
+.dispatch-mini-read::before,
+.dispatch-card-read::before,
+.issue-link::before,
+.story-link::before,
+.story-links a::before,
+.back-to-top::before {
+  content: "";
+  position: absolute;
+  inset: -1px auto -1px -30%;
+  width: 34%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.38), transparent);
+  opacity: 0;
+  transform: skewX(-18deg) translateX(0);
+  pointer-events: none;
+  transition: opacity 240ms ease, transform 560ms var(--lifi-motion-ease-soft);
+}
+
+.hero-actions .btn.is-pressing,
+.btn.is-pressing,
+.nav-cta-btn.is-pressing,
+.mobile-sticky-phone.is-pressing,
+.mobile-sticky-cta.is-pressing,
+.dispatch-read.is-pressing,
+.dispatch-mini-read.is-pressing,
+.dispatch-card-read.is-pressing,
+.issue-link.is-pressing,
+.story-link.is-pressing,
+.story-links a.is-pressing,
+.back-to-top.is-pressing {
+  transform: scale(0.985) translateY(1px);
+}
+
+.lifi-reveal-item {
+  opacity: 0;
+  filter: saturate(0.94);
+  --card-reveal-y: 28px;
+  --card-reveal-scale: 0.985;
+  transition:
+    opacity 0.72s var(--lifi-motion-ease),
+    filter 0.72s var(--lifi-motion-ease),
+    transform 0.72s var(--lifi-motion-ease),
+    box-shadow 0.38s var(--lifi-motion-ease),
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+  transition-delay: calc(var(--reveal-index, 0) * 72ms);
+}
+
+.lifi-reveal-item.is-onstage {
+  opacity: 1;
+  filter: none;
+  --card-reveal-y: 0px;
+  --card-reveal-scale: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   body.page-shell::before,
+  body.page-shell::after,
   .page-hero::after,
   .journal-issue-card .issue-art img,
   .contact-illustration img {
@@ -675,8 +905,72 @@ body.page-shell :is(.journal-issue-card, .contact-intro-card, .services-signal-c
   .dispatch-card-read,
   .story-link,
   .story-links a,
-  .hero-actions .btn {
+  .hero-actions .btn,
+  .btn,
+  .nav-cta-btn,
+  .mobile-sticky-phone,
+  .mobile-sticky-cta,
+  .back-to-top,
+  .lifi-reveal-item {
     transition: none !important;
     transform: none !important;
+  }
+
+  .lifi-reveal-item {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journal-masthead-copy:hover,
+  .journal-wayfinder-card:hover,
+  .journal-issue-card:hover,
+  .dispatch-feature:hover,
+  .dispatch-mini-card:hover,
+  .dispatch-card:hover,
+  .contact-intro-card:hover,
+  .form-container:hover,
+  .services-signal-card:hover,
+  .service-link-card:hover,
+  .service-card:hover,
+  .work-process-step:hover,
+  .premium-process-step:hover,
+  .industry-map-card:hover,
+  .story-card:hover,
+  .story-step:hover,
+  .final-cta:hover {
+    --card-lift: -10px;
+  }
+
+  .hero-actions .btn:hover::before,
+  .btn:hover::before,
+  .nav-cta-btn:hover::before,
+  .mobile-sticky-phone:hover::before,
+  .mobile-sticky-cta:hover::before,
+  .dispatch-read:hover::before,
+  .dispatch-mini-read:hover::before,
+  .dispatch-card-read:hover::before,
+  .issue-link:hover::before,
+  .story-link:hover::before,
+  .story-links a:hover::before,
+  .back-to-top:hover::before {
+    opacity: 0.9;
+    transform: skewX(-18deg) translateX(320%);
+  }
+}
+
+@keyframes lifiAmbientSweep {
+  0% {
+    opacity: 0.18;
+    transform: translate3d(-1.5%, -1%, 0) scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate3d(1%, 1.5%, 0) scale(1.03);
+  }
+  100% {
+    opacity: 0.24;
+    transform: translate3d(2%, -1.5%, 0) scale(1.02);
   }
 }

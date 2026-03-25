@@ -9,6 +9,7 @@ export function init(container) {
   const radiantFrame = container.querySelector('#hero-radiant-frame');
   const appStatus = container.querySelector('#hero-app-status');
   const appDockValue = container.querySelector('#hero-app-dock-value');
+  const appDockChip = container.querySelector('.hero-app-dock-chip');
   const factGuide = container.querySelector('#hero-fact-guide');
   const factBubble = container.querySelector('#hero-fact-bubble');
   const factKicker = container.querySelector('#hero-fact-kicker');
@@ -56,6 +57,8 @@ export function init(container) {
   const activeGuideText = isTouchDevice
     ? 'Tap the open building again to zoom back out, or use View Source to check the citation.'
     : 'Click the open building again to zoom back out, or use View Source to check the citation.';
+  const idleDockChipText = isTouchDevice ? 'Swipe / Open / Verify' : 'Orbit / Inspect / Verify';
+  const activeDockChipText = isTouchDevice ? 'Focus / Source Live' : 'Focus / Source Live';
   const defaultTheme = {
     accent: brandPalette.orange,
     softAccent: 'rgba(254,88,0,0.16)',
@@ -79,6 +82,23 @@ export function init(container) {
     const baseDrift = isMobile ? 0.16 : 0.2;
     postRadiantParam('DRIFT_SPEED', active ? baseDrift + 0.02 : baseDrift);
     postRadiantParam('GRAIN_AMOUNT', active ? 0.02 : 0.03);
+  }
+
+  function setHeroSelectionState(active) {
+    container.classList.toggle('is-selected', active);
+    if (appDockChip) appDockChip.textContent = active ? activeDockChipText : idleDockChipText;
+  }
+
+  let sourcePulseTimer = null;
+  function pulseSourceLink() {
+    if (!factLink || useReducedMotion) return;
+    factLink.classList.remove('is-pulse');
+    void factLink.offsetWidth;
+    factLink.classList.add('is-pulse');
+    if (sourcePulseTimer) window.clearTimeout(sourcePulseTimer);
+    sourcePulseTimer = window.setTimeout(() => {
+      factLink.classList.remove('is-pulse');
+    }, 1200);
   }
 
   function setSupportState({ fact = null } = {}) {
@@ -274,7 +294,8 @@ export function init(container) {
   controls.enablePan = false;
   controls.enableZoom = false;
   controls.autoRotate = false;
-  controls.autoRotateSpeed = isPhone ? 0.13 : isMobile ? 0.17 : 0.22;
+  const baseAutoRotateSpeed = isPhone ? 0.11 : isMobile ? 0.15 : 0.21;
+  controls.autoRotateSpeed = baseAutoRotateSpeed;
   controls.target.set(0.15, 2.55, 0.05);
   controls.minPolarAngle = Math.PI / 4;
   controls.maxPolarAngle = Math.PI / 2.2;
@@ -287,6 +308,7 @@ export function init(container) {
   applyTheme(defaultTheme.accent);
   if (factGuide) factGuide.textContent = idleGuideText;
   setSupportState({ accent: defaultTheme.accent });
+  setHeroSelectionState(false);
   if (radiantFrame) {
     radiantFrame.addEventListener('load', () => {
       syncRadiantState(selectedBuildingIndex != null);
@@ -1293,6 +1315,7 @@ export function init(container) {
     if (factBody) factBody.scrollTop = 0;
     factBubble.hidden = false;
     factBubble.classList.add('is-visible');
+    pulseSourceLink();
   }
 
   function positionFactBubble() {
@@ -1365,6 +1388,7 @@ export function init(container) {
     desiredCameraTarget.copy(target);
     applyTheme(fact.accent);
     setSupportState({ fact, accent: fact.accent });
+    setHeroSelectionState(true);
     updateGuide(activeGuideText);
     factGuide?.classList.add('is-hidden');
     showFactBubble(fact);
@@ -1378,6 +1402,7 @@ export function init(container) {
     selectedBuildingIndex = null;
     applyTheme(defaultTheme.accent);
     setSupportState({ accent: defaultTheme.accent });
+    setHeroSelectionState(false);
     updateGuide(idleGuideText);
     factGuide?.classList.remove('is-hidden');
     hideFactBubble();
@@ -1482,14 +1507,15 @@ export function init(container) {
     canvas.style.opacity = String(layerOpacity);
     if (signalLayer) signalLayer.style.opacity = String(layerOpacity);
     const riseFactor = Math.min(elapsed / riseDuration, 1);
+    const introProgress = Math.min(Math.max((elapsed - 0.08) / 0.86, 0), 1);
 
     starFields.forEach((field) => {
-      field.material.opacity = (field.userData.baseOpacity + Math.sin(elapsed * field.userData.speed + field.userData.phase) * 0.05) * layerOpacity;
+      field.material.opacity = (field.userData.baseOpacity + Math.sin(elapsed * field.userData.speed + field.userData.phase) * 0.05) * layerOpacity * (0.6 + introProgress * 0.4);
     });
-    moonHalo.material.opacity = (0.31 + Math.sin(elapsed * 0.16) * 0.018) * layerOpacity;
-    moonHalo.scale.setScalar(9.8 + Math.sin(elapsed * 0.1 + 0.6) * 0.22);
-    horizonGlow.material.opacity = (0.16 + Math.sin(elapsed * 0.1 + 0.8) * 0.02) * layerOpacity;
-    cityGlow.material.opacity = (0.095 + Math.sin(elapsed * 0.18 + 1.3) * 0.015) * layerOpacity;
+    moonHalo.material.opacity = (0.31 + Math.sin(elapsed * 0.16) * 0.018) * layerOpacity * (0.72 + introProgress * 0.28);
+    moonHalo.scale.setScalar((9.1 + introProgress * 0.7) + Math.sin(elapsed * 0.1 + 0.6) * 0.22);
+    horizonGlow.material.opacity = (0.16 + Math.sin(elapsed * 0.1 + 0.8) * 0.02) * layerOpacity * (0.68 + introProgress * 0.32);
+    cityGlow.material.opacity = (0.095 + Math.sin(elapsed * 0.18 + 1.3) * 0.015) * layerOpacity * (0.65 + introProgress * 0.35);
     roadSheen.material.opacity = (0.06 + Math.sin(elapsed * 0.24 + 1.1) * 0.012) * layerOpacity;
     groundGlow.material.opacity = (0.075 + Math.sin(elapsed * 0.12 + 2.1) * 0.01) * layerOpacity;
 
@@ -1592,13 +1618,20 @@ export function init(container) {
         }
       }
 
+      const selectedPulse = selectedBuildingIndex != null ? (Math.sin(elapsed * 2.4) * 0.5 + 0.5) : 0;
       const focusStrength = selectedBuildingIndex != null ? 1 : (hoveredBuildingIndex != null ? 0.55 : 0);
-      const targetRingOpacity = focusStrength > 0 ? (selectedBuildingIndex != null ? 0.18 : 0.08) : 0;
-      const targetRingScale = focusStrength > 0 ? (selectedBuildingIndex != null ? 1.03 : 0.97) : 0.9;
-      const targetLightIntensity = focusStrength > 0 ? (selectedBuildingIndex != null ? 0.52 : 0.16) : 0;
+      const targetRingOpacity = focusStrength > 0 ? (selectedBuildingIndex != null ? 0.2 + selectedPulse * 0.04 : 0.08) : 0;
+      const targetRingScale = focusStrength > 0 ? (selectedBuildingIndex != null ? 1.01 + selectedPulse * 0.06 : 0.97) : 0.9;
+      const targetLightIntensity = focusStrength > 0 ? (selectedBuildingIndex != null ? 0.48 + selectedPulse * 0.12 : 0.16) : 0;
       focusRing.material.opacity += (targetRingOpacity - focusRing.material.opacity) * 0.16;
       focusRing.scale.setScalar(focusRing.scale.x + (targetRingScale - focusRing.scale.x) * 0.16);
       focusLight.intensity += (targetLightIntensity - focusLight.intensity) * 0.16;
+
+      if (focusBuilding?.userData?.frontGlow) {
+        focusBuilding.userData.frontGlow.opacity = selectedBuildingIndex != null
+          ? 0.08 + selectedPulse * 0.06
+          : 0.035;
+      }
 
       // Neon hover
       neonBars.forEach(bar => {
@@ -1628,8 +1661,13 @@ export function init(container) {
     if (!useReducedMotion && cameraState === 'idle' && selectedBuildingIndex == null) {
       const idleTargetX = 0.15 + Math.sin(elapsed * 0.11) * 0.03;
       const idleTargetY = 2.55 + Math.sin(elapsed * 0.22 + 0.4) * 0.045;
+      const idleCameraY = (isPhone ? 3.42 : 3.3) + Math.sin(elapsed * 0.18 + 0.35) * (isPhone ? 0.014 : isMobile ? 0.018 : 0.028);
+      const idleCameraZ = camZ + Math.sin(elapsed * 0.13 + 0.8) * (isPhone ? 0.02 : isMobile ? 0.03 : 0.05);
       controls.target.x += (idleTargetX - controls.target.x) * 0.04;
       controls.target.y += (idleTargetY - controls.target.y) * 0.04;
+      camera.position.y += (idleCameraY - camera.position.y) * 0.02;
+      camera.position.z += (idleCameraZ - camera.position.z) * 0.018;
+      controls.autoRotateSpeed += ((baseAutoRotateSpeed + Math.sin(elapsed * 0.16) * (isPhone ? 0.006 : isMobile ? 0.01 : 0.014)) - controls.autoRotateSpeed) * 0.045;
     }
 
     controls.update();
@@ -1662,6 +1700,7 @@ export function init(container) {
     canvas.removeEventListener('pointermove', onPointerMove);
     canvas.removeEventListener('pointerleave', onPointerLeave);
     canvas.removeEventListener('pointerdown', onPointerDown);
+    if (sourcePulseTimer) window.clearTimeout(sourcePulseTimer);
     renderer.dispose();
   };
 }
