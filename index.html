@@ -265,8 +265,6 @@ nav.scrolled .nav-container{height:56px}
 .stat-number{font-size:1.5rem}
 .service-card, .promise-card, .work-card{padding:20px}
 h2{font-size:clamp(1.4rem, 5vw, 2rem) !important}
-.blog-stat{flex-direction:column;text-align:center;gap:12px}
-.blog-stat-number{font-size:1.6rem}
 }
 @media (max-width:375px){.hero h1{font-size:1.5rem}
 .btn{padding:12px 20px;font-size:13px}
@@ -370,60 +368,116 @@ overflow:hidden}
 .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .blog-page-shell{position:relative;padding-block:100px 48px}
 .blog-page-shell::before{content:'';position:absolute;inset:18px clamp(14px,4vw,34px) 0;border-radius:38px;background:
-radial-gradient(circle at top left,rgba(254,88,0,0.12),transparent 30%),
-radial-gradient(circle at top right,rgba(8,145,178,0.12),transparent 28%),
-linear-gradient(180deg,#12162a 0%,#0b0f1c 34%,#090c16 100%);
+radial-gradient(circle at 12% 8%,rgba(254,88,0,0.16),transparent 22%),
+radial-gradient(circle at 82% 10%,rgba(8,145,178,0.16),transparent 24%),
+radial-gradient(circle at 18% 76%,rgba(245,158,11,0.08),transparent 18%),
+radial-gradient(circle at 88% 78%,rgba(16,185,129,0.08),transparent 18%),
+linear-gradient(180deg,#171a2d 0%,#0f1525 32%,#090c16 100%);
 border:1px solid rgba(255,255,255,0.05);
 box-shadow:0 38px 120px rgba(4,8,18,0.28);
 pointer-events:none}
+.blog-page-shell::after{content:'';position:absolute;inset:32px clamp(26px,5vw,56px) 16px;background:
+linear-gradient(120deg,rgba(255,255,255,0.045) 0 1px,transparent 1px) 0 0/28px 28px,
+radial-gradient(circle at 16% 18%,rgba(254,88,0,0.1),transparent 18%),
+radial-gradient(circle at 78% 20%,rgba(8,145,178,0.08),transparent 18%);
+opacity:0.34;
+border-radius:34px;
+pointer-events:none;
+mask-image:linear-gradient(180deg,rgba(0,0,0,0.72),rgba(0,0,0,0.08))}
 .blog-page-shell > *{position:relative;z-index:1}
-.blog-home-head{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(300px,0.88fr);gap:24px;align-items:end;margin-bottom:24px}
-.blog-home-copy{display:grid;gap:14px}
-.blog-home-copy h2{margin-bottom:0;max-width:10ch}
-.blog-home-copy p{max-width:39ch;color:rgba(240,240,236,0.78)}
+.blog-home-head{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,0.92fr);gap:26px;align-items:stretch;margin-bottom:24px}
+.blog-home-copy,.blog-home-note,.blog-home-feature,.blog-home-mini,.blog-home-linkcard{transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
+.blog-home-copy{display:grid;gap:16px;align-content:start;padding:30px 30px 28px;border-radius:30px;background:
+linear-gradient(180deg,rgba(250,243,233,0.98),rgba(255,247,239,0.94)),
+radial-gradient(circle at top right,rgba(254,88,0,0.12),transparent 26%),
+radial-gradient(circle at 0% 100%,rgba(8,145,178,0.08),transparent 24%);
+border:1px solid rgba(255,255,255,0.82);
+box-shadow:0 22px 54px rgba(6,12,24,0.16);
+position:relative;
+overflow:hidden}
+.blog-home-copy::before{content:'';position:absolute;left:22px;top:18px;width:168px;height:10px;border-radius:999px;background:linear-gradient(90deg,rgba(254,88,0,0.72),rgba(255,180,77,0.32),rgba(8,145,178,0.18))}
+.blog-home-copy::after{content:'';position:absolute;right:-38px;top:-34px;width:140px;height:140px;border-radius:42px;background:radial-gradient(circle,rgba(254,88,0,0.18),rgba(254,88,0,0));transform:rotate(18deg);pointer-events:none}
+.blog-home-copy h2{margin-bottom:0;max-width:9ch;color:#181b26}
+.blog-home-copy p{max-width:39ch;color:#495362}
+.blog-home-copy .eyebrow-chip{background:rgba(254,88,0,0.12);border-color:rgba(254,88,0,0.16);color:#af4305}
+.blog-home-copy .btn-outline,.blog-home-linkcard .btn-outline{color:#1a2231;border-color:rgba(26,34,49,0.14);background:rgba(255,255,255,0.48)}
+.blog-home-copy .btn-outline:hover,.blog-home-linkcard .btn-outline:hover{background:#ffffff;border-color:rgba(254,88,0,0.28);color:#c44a06}
 .blog-home-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
-.blog-home-note{padding:22px 24px;border-radius:28px;background:
-linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03)),
-radial-gradient(circle at top right,rgba(254,88,0,0.12),transparent 26%);
+.blog-home-note{padding:24px 24px 22px;border-radius:30px;background:
+radial-gradient(circle at top right,rgba(254,88,0,0.22),transparent 28%),
+radial-gradient(circle at bottom left,rgba(8,145,178,0.22),transparent 34%),
+linear-gradient(180deg,rgba(17,22,39,0.98),rgba(10,14,24,0.94));
 border:1px solid rgba(255,255,255,0.08);
 display:grid;
-gap:14px}
-.blog-home-note strong{color:#f5f1ea;font-size:1.08rem;line-height:1.42}
-.blog-home-note p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.7}
+gap:16px;
+box-shadow:var(--shadow-soft);
+position:relative;
+overflow:hidden;
+backdrop-filter:blur(12px)}
+.blog-home-note::after{content:'';position:absolute;inset:auto -14% -42% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(254,88,0,0.24),rgba(254,88,0,0));pointer-events:none}
+.blog-home-note strong{color:#f7f3ec;font-size:1.08rem;line-height:1.42;max-width:27ch}
+.blog-home-note p{color:rgba(240,240,236,0.76);font-size:14px;line-height:1.7;max-width:38ch}
 .blog-home-topics{display:flex;flex-wrap:wrap;gap:10px}
 .blog-home-topics span{display:inline-flex;align-items:center;min-height:34px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.09);background:rgba(255,255,255,0.05);color:rgba(245,241,234,0.88);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+.blog-home-topics span:nth-child(1){border-color:rgba(254,88,0,0.24);background:rgba(254,88,0,0.12);color:#ffd8c5}
+.blog-home-topics span:nth-child(2){border-color:rgba(8,145,178,0.22);background:rgba(8,145,178,0.12);color:#bcecf4}
+.blog-home-topics span:nth-child(3){border-color:rgba(245,158,11,0.22);background:rgba(245,158,11,0.12);color:#ffe2ab}
+.blog-home-topics span:nth-child(4){border-color:rgba(16,185,129,0.2);background:rgba(16,185,129,0.1);color:#c5f5e1}
+.blog-home-note-list{display:grid;gap:10px}
+.blog-home-note-item{display:grid;gap:4px;padding:12px 14px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.07);position:relative;overflow:hidden}
+.blog-home-note-item::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:999px;background:var(--note-feature-accent,var(--accent-orange))}
+.blog-home-note-item:nth-child(1){--note-feature-accent:var(--accent-orange)}
+.blog-home-note-item:nth-child(2){--note-feature-accent:var(--accent-cyan)}
+.blog-home-note-item:nth-child(3){--note-feature-accent:var(--accent-green)}
+.blog-home-note-label{color:color-mix(in srgb,var(--note-feature-accent) 62%,white 18%);font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase}
+.blog-home-note-copy{color:#f5f1ea;font-size:0.94rem;font-weight:700;line-height:1.42}
 .blog-home-stage{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(320px,0.84fr);gap:20px}
-.blog-home-feature{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(280px,0.98fr);background:linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));border:1px solid rgba(255,255,255,0.06);border-radius:28px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.blog-home-feature{display:grid;grid-template-columns:minmax(0,0.94fr) minmax(300px,1.06fr);background:linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));border:1px solid rgba(255,255,255,0.06);border-radius:30px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.blog-home-feature:hover,.blog-home-copy:hover,.blog-home-note:hover,.blog-home-linkcard:hover{border-color:rgba(255,255,255,0.12);box-shadow:var(--shadow-strong)}
 .blog-home-feature-media{position:relative;min-height:100%;display:block;overflow:hidden}
 .blog-home-feature-media img{width:100%;height:100%;object-fit:cover;transition:transform 0.45s ease}
+.blog-home-feature-media::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,10,18,0.1),transparent 28%,transparent 60%,rgba(7,10,18,0.44)),radial-gradient(circle at 16% 20%,rgba(254,88,0,0.22),transparent 26%),radial-gradient(circle at 86% 12%,rgba(8,145,178,0.18),transparent 24%);z-index:1;pointer-events:none}
 .blog-home-feature:hover .blog-home-feature-media img,.blog-home-mini:hover .blog-home-mini-media img{transform:scale(1.035)}
 .blog-home-feature-media::after,.blog-home-mini-media::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent 42%,rgba(10,13,24,0.22) 100%)}
 .blog-home-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#ffd6bf}
 .blog-home-badge::before{content:'';width:10px;height:10px;border-radius:50%;background:currentColor;box-shadow:0 0 18px currentColor}
 .blog-home-feature-overlay{position:absolute;inset:auto 22px 22px 22px;display:grid;gap:10px;z-index:2}
 .blog-home-feature-overlay strong{font-size:clamp(1.2rem,2.2vw,1.8rem);line-height:1.06;color:#fff9f3;max-width:11ch}
-.blog-home-feature-body{display:grid;gap:16px;padding:28px}
-.blog-home-feature-title{font-size:clamp(1.55rem,2.8vw,2.35rem);line-height:1.02;max-width:10ch}
-.blog-home-feature-title a{color:#f5f1ea;text-decoration:none}
-.blog-home-feature-title a:hover{color:#fff}
-.blog-home-feature-deck{color:rgba(240,240,236,0.76);font-size:15px;line-height:1.74;max-width:32ch}
-.blog-home-meta{display:flex;flex-wrap:wrap;gap:12px;color:rgba(240,240,236,0.56);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
-.blog-home-proof{display:grid;gap:12px;padding:18px;border-radius:22px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06)}
-.blog-home-proof strong{color:#f5f1ea;font-size:0.98rem}
-.blog-home-proof p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.68}
+.blog-home-feature-body{display:grid;gap:16px;padding:30px 30px 28px;background:
+linear-gradient(180deg,rgba(250,243,233,0.98),rgba(245,235,221,0.96)),
+radial-gradient(circle at top right,rgba(254,88,0,0.14),transparent 30%),
+radial-gradient(circle at bottom left,rgba(8,145,178,0.08),transparent 28%);
+position:relative}
+.blog-home-feature-body::before{content:'';position:absolute;left:0;top:24px;bottom:24px;width:6px;border-radius:999px;background:linear-gradient(180deg,var(--accent-orange),var(--accent-cyan))}
+.blog-home-feature-body::after{content:'';position:absolute;right:18px;top:18px;width:92px;height:92px;border-radius:28px;background:radial-gradient(circle,rgba(254,88,0,0.16),rgba(254,88,0,0));pointer-events:none}
+.blog-home-feature-body > *{position:relative;z-index:1}
+.blog-home-feature-title{font-size:clamp(1.7rem,2.8vw,2.45rem);line-height:1.02;max-width:10ch}
+.blog-home-feature-title a{color:#171b25;text-decoration:none}
+.blog-home-feature-title a:hover{color:#0f4fa6}
+.blog-home-feature-deck{color:#4a5261;font-size:15px;line-height:1.74;max-width:32ch}
+.blog-home-meta{display:flex;flex-wrap:wrap;gap:12px;color:#677183;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.blog-home-proof{display:grid;gap:12px;padding:18px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,0.66),rgba(255,244,233,0.82));border:1px solid rgba(254,88,0,0.14);box-shadow:inset 0 1px 0 rgba(255,255,255,0.5)}
+.blog-home-proof strong{color:#171b25;font-size:0.98rem}
+.blog-home-proof p{color:#4b5563;font-size:14px;line-height:1.68}
 .blog-home-feature-footer{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-.blog-home-link{display:inline-flex;align-items:center;gap:8px;color:#fff3e9;font-size:13px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none}
+.blog-home-link{display:inline-flex;align-items:center;gap:8px;color:#c44a06;font-size:13px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none}
 .blog-home-link::after{content:'→';font-size:14px}
-.blog-home-link:hover{color:#fff}
+.blog-home-link:hover{color:#ff5a00}
 .blog-home-rail{display:grid;gap:16px}
-.blog-home-mini{display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;padding:14px;border-radius:24px;background:linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));border:1px solid rgba(255,255,255,0.06);box-shadow:var(--shadow-soft);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
+.blog-home-mini{--mini-accent:var(--accent-cyan);display:grid;grid-template-columns:140px minmax(0,1fr);gap:16px;padding:14px;border-radius:24px;background:
+radial-gradient(circle at top right,color-mix(in srgb,var(--mini-accent) 18%,transparent),transparent 34%),
+linear-gradient(180deg,rgba(15,20,37,0.96),rgba(11,14,25,0.92));
+border:1px solid rgba(255,255,255,0.06);box-shadow:var(--shadow-soft);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease;position:relative;overflow:hidden}
+.blog-home-mini::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:999px;background:var(--mini-accent)}
 .blog-home-mini:hover,.blog-home-linkcard:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.12);box-shadow:var(--shadow-strong)}
 .blog-home-mini-media{position:relative;overflow:hidden;border-radius:18px;display:block;min-height:170px}
 .blog-home-mini-media img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.45s ease}
 .blog-home-mini-body{display:grid;align-content:start;gap:10px;min-width:0}
-.blog-home-mini-kicker{display:inline-flex;align-items:center;padding:5px 12px;border-radius:50px;border:1px solid rgba(255,255,255,0.12);font-size:12px;font-weight:600;width:max-content}
-.blog-home-mini[data-accent="cyan"] .blog-home-mini-kicker{border-color:rgba(8,145,178,0.28);color:#70d9ee}
-.blog-home-mini[data-accent="purple"] .blog-home-mini-kicker{border-color:rgba(124,58,237,0.28);color:#ccb4ff}
+.blog-home-mini-kicker{display:inline-flex;align-items:center;padding:5px 12px;border-radius:50px;border:1px solid color-mix(in srgb,var(--mini-accent) 40%,rgba(255,255,255,0.12));background:color-mix(in srgb,var(--mini-accent) 12%,rgba(255,255,255,0.02));font-size:12px;font-weight:700;width:max-content;color:color-mix(in srgb,var(--mini-accent) 72%,white 16%)}
+.blog-home-mini[data-accent="cyan"]{--mini-accent:var(--accent-cyan)}
+.blog-home-mini[data-accent="purple"]{--mini-accent:var(--accent-purple)}
+.blog-home-mini[data-accent="gold"]{--mini-accent:var(--accent-gold)}
+.blog-home-mini[data-accent="orange"]{--mini-accent:var(--accent-orange)}
 .blog-home-mini-title{font-size:1.12rem;line-height:1.28}
 .blog-home-mini-title a{color:#f5f1ea;text-decoration:none}
 .blog-home-mini-title a:hover{color:#fff}
@@ -431,17 +485,27 @@ gap:14px}
 .blog-home-mini-meta{color:#8a8f9e;font-size:13px}
 .blog-home-mini-read{display:inline-flex;align-items:center;gap:8px;color:var(--accent-orange);font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none}
 .blog-home-mini-read::after{content:'→';font-size:14px}
-.blog-home-linkcard{padding:22px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.07);display:grid;gap:14px;box-shadow:var(--shadow-soft);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
-.blog-home-linkcard strong{color:#f5f1ea;font-size:1.05rem;line-height:1.42}
-.blog-home-linkcard p{color:rgba(240,240,236,0.72);font-size:14px;line-height:1.68}
+.blog-home-linkcard{padding:24px;border-radius:24px;background:
+linear-gradient(180deg,rgba(249,242,232,0.98),rgba(255,247,238,0.92)),
+radial-gradient(circle at bottom right,rgba(8,145,178,0.12),transparent 24%);
+border:1px solid rgba(254,88,0,0.12);display:grid;gap:14px;box-shadow:var(--shadow-soft);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease;position:relative;overflow:hidden}
+.blog-home-linkcard::after{content:'';position:absolute;right:-22px;bottom:-44px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(8,145,178,0.14),rgba(8,145,178,0));pointer-events:none}
+.blog-home-linkcard strong{color:#171b25;font-size:1.05rem;line-height:1.42}
+.blog-home-linkcard p{color:#4d5665;font-size:14px;line-height:1.68}
+.blog-home-linkcard-list{display:grid;gap:8px}
+.blog-home-linkcard-list span{display:flex;align-items:flex-start;gap:10px;color:#3a4552;font-size:13px;line-height:1.58}
+.blog-home-linkcard-list span::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent-orange);margin-top:6px;flex:0 0 auto;box-shadow:0 0 0 4px rgba(254,88,0,0.12)}
+.blog-home-linkcard-list span:nth-child(2)::before{background:var(--accent-cyan);box-shadow:0 0 0 4px rgba(8,145,178,0.12)}
+.blog-home-linkcard-list span:nth-child(3)::before{background:var(--accent-green);box-shadow:0 0 0 4px rgba(16,185,129,0.12)}
 .blog-home-linkcard-actions{display:flex;flex-wrap:wrap;gap:12px}
 .story-card-content{padding:24px}
 .story-card-text{color:var(--text-muted);font-size:13px;line-height:1.68;margin-bottom:10px}
 .story-card-read{display:inline-flex;align-items:center;gap:8px;color:var(--accent-orange);font-weight:800;font-size:13px;letter-spacing:0.06em;text-transform:uppercase}
 .story-card-read::after{content:'→';font-size:14px}
 .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.story-card{--card-accent:var(--accent-orange);background:linear-gradient(180deg,var(--bg-elevated),var(--bg-elevated-2));border:1px solid var(--border-deep);border-radius:18px;overflow:hidden;cursor:pointer;position:relative;transform:translateZ(0);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
+.story-card{--card-accent:var(--accent-orange);display:block;color:inherit;text-decoration:none;background:linear-gradient(180deg,var(--bg-elevated),var(--bg-elevated-2));border:1px solid var(--border-deep);border-radius:18px;overflow:hidden;cursor:pointer;position:relative;transform:translateZ(0);transition:transform 0.28s cubic-bezier(0.22,1,0.36,1),border-color 0.28s ease,box-shadow 0.28s ease}
 .story-card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--card-accent) 44%,rgba(255,255,255,0.08));box-shadow:var(--shadow-strong)}
+.story-card:focus-visible,.work-card:focus-visible{outline:2px solid rgba(254,88,0,0.92);outline-offset:4px}
 .story-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,color-mix(in srgb,var(--card-accent) 12%,transparent),transparent 32%);opacity:0;pointer-events:none;transition:opacity 0.28s ease}
 .story-card:hover::after{opacity:1}
 .story-card[data-accent="orange"]{--card-accent:var(--accent-orange)}
@@ -462,52 +526,7 @@ gap:14px}
 .story-card-text{color:var(--text-muted);font-size:13px;line-height:1.6;margin-bottom:10px}
 .story-card-text strong{color:var(--text-main)}
 .story-link{color:var(--accent-orange);font-weight:700;font-size:14px}
-.blog-article{position:relative;max-width:min(980px,calc(100% - 28px)) !important;margin:0 auto !important;padding:132px clamp(22px,5vw,56px) 104px !important;background:
-linear-gradient(180deg,var(--bg-paper-soft) 0%,var(--bg-paper) 40%,var(--bg-paper-deep) 100%);
-border:1px solid var(--paper-line);
-border-radius:38px;
-box-shadow:var(--paper-shadow);
-color:var(--text-ink);
-overflow:hidden}
-.blog-article::before{content:'';position:absolute;inset:0;background:
-linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.24) 24%,transparent 46%),
-radial-gradient(circle at top right,rgba(254,88,0,0.12),transparent 20%),
-radial-gradient(circle at bottom left,rgba(8,145,178,0.12),transparent 24%);
-pointer-events:none}
-.blog-article::after{content:'';position:absolute;left:26px;right:26px;top:18px;height:14px;border-radius:999px;background:repeating-linear-gradient(90deg,rgba(254,88,0,0.95) 0 22px,rgba(8,145,178,0.9) 22px 44px,rgba(255,180,77,0.9) 44px 66px,rgba(111,75,204,0.88) 66px 88px);opacity:0.78}
-.blog-article > *{position:relative;z-index:1}
-.blog-article > .article-back{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border-radius:999px;background:rgba(255,255,255,0.58);border:1px solid rgba(104,74,41,0.14);color:#4d4457;text-decoration:none;font-size:13px;font-weight:700;margin-bottom:30px;transition:border-color 0.24s ease,color 0.24s ease,transform 0.24s ease,background 0.24s ease}
-.blog-article > .article-back:hover{color:#241c25;border-color:rgba(254,88,0,0.32);background:rgba(255,255,255,0.82);transform:translateY(-1px)}
-.article-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:24px}
-.article-meta span{margin-left:0 !important;color:rgba(74,79,97,0.86) !important}
 .article-kicker{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.12em}
-.article-lead{max-width:34ch;color:var(--text-ink-soft) !important;font-size:19px !important;line-height:1.82 !important;margin-bottom:42px !important}
-.blog-article h2,.blog-article h3,.blog-article summary,.blog-article strong{color:var(--text-ink) !important}
-.blog-article p,.blog-article li,.blog-article details p{color:var(--text-ink-soft) !important;font-size:16px !important;line-height:1.86 !important}
-.blog-article ul{padding-left:24px}
-.blog-article li{margin-bottom:10px}
-.blog-article a{color:#9a3d0a;text-decoration-thickness:2px;text-underline-offset:3px}
-.blog-callout,.blog-tip,.blog-warning{padding:22px 24px;border-radius:24px;border-left:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.45)}
-.blog-callout{background:linear-gradient(135deg,rgba(254,88,0,0.14),rgba(255,202,168,0.58))}
-.blog-tip{background:linear-gradient(135deg,rgba(8,145,178,0.13),rgba(198,240,249,0.66))}
-.blog-warning{background:linear-gradient(135deg,rgba(239,68,68,0.14),rgba(255,219,214,0.7))}
-.blog-callout p,.blog-tip p,.blog-warning p{color:#40384b !important;font-size:15px !important;line-height:1.76 !important}
-.blog-callout .callout-label,.blog-tip .callout-label,.blog-warning .callout-label{margin-bottom:10px;font-size:11px;font-weight:800;letter-spacing:0.12em}
-.blog-stat{padding:24px 26px;border-radius:26px;background:linear-gradient(135deg,rgba(255,255,255,0.76),rgba(246,233,215,0.94));border:1px solid rgba(111,73,38,0.14);box-shadow:0 18px 40px rgba(21,16,23,0.08)}
-.blog-stat-label{color:#5e5a68;font-size:14px;line-height:1.58}
-.blog-stat-number{color:#b64816;text-shadow:none}
-.blog-pullquote{padding:8px 0 8px 22px;border-left:4px solid rgba(254,88,0,0.66);margin:40px 0;font-size:clamp(1.6rem,3vw,2rem);color:#2f2740 !important}
-.blog-article details{margin-bottom:14px !important;padding:18px 20px !important;border-radius:18px !important;background:rgba(255,255,255,0.66) !important;border:1px solid rgba(111,73,38,0.14) !important}
-.blog-article summary{font-size:15px !important;line-height:1.5;list-style:none}
-.blog-article summary::-webkit-details-marker{display:none}
-.blog-article details[open]{background:rgba(255,255,255,0.84) !important}
-.article-rail{margin-top:40px !important;padding:24px 26px !important;background:rgba(255,255,255,0.7) !important;border:1px solid rgba(111,73,38,0.14) !important;border-radius:20px !important}
-.article-cta{margin-top:56px !important;padding:34px !important;background:linear-gradient(180deg,#161b2d,#0d1221) !important;border:1px solid rgba(254,88,0,0.18) !important;border-radius:24px !important;text-align:center;box-shadow:var(--shadow-soft)}
-.article-cta p{color:rgba(240,240,236,0.72) !important;font-size:14px !important;line-height:1.72 !important}
-.article-cta h3{font-size:1.08rem !important;color:#f5f1ea !important}
-.blog-article > div[style*="margin-top:40px;padding:20px;background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:10px"]{margin-top:42px !important;padding:24px 26px !important;background:rgba(255,255,255,0.72) !important;border:1px solid rgba(111,73,38,0.14) !important;border-radius:20px !important}
-.blog-article > div[style*="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center"]{margin-top:58px !important;padding:36px !important;background:linear-gradient(180deg,#161b2d,#0d1221) !important;border:1px solid rgba(254,88,0,0.18) !important;border-radius:24px !important;text-align:center;box-shadow:var(--shadow-soft)}
-.blog-article > div[style*="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center"] p{color:rgba(240,240,236,0.72) !important;font-size:14px !important;line-height:1.72 !important}
 .services{padding-top:40px;padding-bottom:40px;margin-bottom:40px;position:relative}
 .services-header{max-width:700px;margin-bottom:32px}
 .services-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:24px}
@@ -542,7 +561,7 @@ pointer-events:none}
 .pill{padding:10px 20px;border-radius:9999px;border:1px solid rgba(22, 27, 46, 0.5);background:transparent;color:#9da1b0;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;transition:all 0.3s ease}
 .pill:hover, .pill.active{background:#FE5800;border-color:#FE5800;color:white}
 .work-carousel{display:flex;gap:24px;overflow-x:auto;padding-bottom:16px}
-.work-card{flex:0 0 calc(33.333% - 16px);background:#0d1120;border:1px solid rgba(22, 27, 46, 0.5);border-radius:12px;overflow:hidden;transition:all 0.3s ease}
+.work-card{display:block;color:inherit;text-decoration:none;flex:0 0 calc(33.333% - 16px);background:#0d1120;border:1px solid rgba(22, 27, 46, 0.5);border-radius:12px;overflow:hidden;transition:all 0.3s ease}
 .work-card:hover{border-color:#FE5800;box-shadow:0 10px 30px rgba(254, 88, 0, 0.15)}
 .work-card-image{height:180px;background:linear-gradient(135deg, var(--color1), var(--color2));overflow:hidden}
 .work-card-content{padding:24px}
@@ -551,23 +570,6 @@ pointer-events:none}
 .work-card-metric{background:#0d1120;border:1px solid rgba(254, 88, 0, 0.3);border-radius:6px;padding:8px 12px;color:#FE5800;font-weight:700;font-size:12px;margin-bottom:12px;display:inline-block}
 .work-card-narrative{color:#9da1b0;font-size:13px;line-height:1.6;margin-bottom:8px}
 .work-card-narrative strong{color:#f0f0ec}
-.blog-callout{background:linear-gradient(135deg, rgba(254,88,0,0.06), rgba(254,88,0,0.02));border-left:3px solid #FE5800;border-radius:0 10px 10px 0;padding:20px 24px;margin:32px 0}
-.blog-callout p{color:#c8c9d4;font-size:15px;line-height:1.7;margin:0}
-.blog-callout strong{color:#f0f0ec}
-.blog-callout .callout-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#FE5800;margin-bottom:8px;display:block}
-.blog-stat{background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:12px;padding:24px 28px;margin:32px 0;display:flex;align-items:center;gap:20px}
-.blog-stat-icon{font-size:32px;flex-shrink:0}
-.blog-stat-number{font-family:'Lexend', sans-serif;font-weight:800;font-size:clamp(1.8rem, 4vw, 2.4rem);color:#FE5800;line-height:1;margin-bottom:4px}
-.blog-stat-label{color:#9da1b0;font-size:14px;line-height:1.5}
-.blog-tip{background:linear-gradient(135deg, rgba(8,145,178,0.06), rgba(8,145,178,0.02));border-left:3px solid #0891B2;border-radius:0 10px 10px 0;padding:20px 24px;margin:32px 0}
-.blog-tip p{color:#c8c9d4;font-size:15px;line-height:1.7;margin:0}
-.blog-tip strong{color:#f0f0ec}
-.blog-tip .callout-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#0891B2;margin-bottom:8px;display:block}
-.blog-warning{background:linear-gradient(135deg, rgba(220,38,38,0.06), rgba(220,38,38,0.02));border-left:3px solid #DC2626;border-radius:0 10px 10px 0;padding:20px 24px;margin:32px 0}
-.blog-warning p{color:#c8c9d4;font-size:15px;line-height:1.7;margin:0}
-.blog-warning strong{color:#f0f0ec}
-.blog-warning .callout-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#DC2626;margin-bottom:8px;display:block}
-.blog-pullquote{border-left:3px solid #FE5800;padding:4px 0 4px 24px;margin:36px 0;font-family:'Caveat', cursive;font-size:clamp(1.4rem, 3vw, 1.8rem);font-weight:700;color:#f0f0ec;line-height:1.4}
 .coverage{padding-top:40px;padding-bottom:40px;margin-bottom:40px}
 .coverage-list{display:flex;flex-wrap:wrap;gap:10px}
 .coverage-item{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#0d1120;border-radius:50px;border:1px solid rgba(22, 27, 46, 0.5);transition:all 0.3s ease;font-size:14px;white-space:nowrap}
@@ -636,7 +638,7 @@ radial-gradient(ellipse at 70% 50%, rgba(8,145,178,0.05) 0%, transparent 60%);po
 radial-gradient(circle at 10% 0%,rgba(254,88,0,0.08),transparent 24%),
 radial-gradient(circle at 88% 2%,rgba(8,145,178,0.08),transparent 22%),
 linear-gradient(180deg,#080b14 0%,#0a0f1a 100%)}
-#about.page-section,#blog.page-section,#contact.page-section,[id^="blog-post-"].page-section{background:
+#about.page-section,#blog.page-section,#contact.page-section{background:
 radial-gradient(circle at 12% 6%,rgba(254,88,0,0.1),transparent 24%),
 radial-gradient(circle at 88% 10%,rgba(8,145,178,0.1),transparent 24%),
 linear-gradient(180deg,#090c16 0%,#090d18 26%,#0c1020 100%)}
@@ -716,7 +718,7 @@ details summary{min-height:44px !important;display:flex !important;align-items:c
 .trust-bar{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 20px !important}
 .trust-bar span{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 4px !important;pointer-events:none}
 .trust-badge-label a{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 8px !important}
-article a, .blog-callout a, .blog-tip a{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 4px !important}
+article a{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 4px !important}
 div[itemprop="text"] a, .faq-card a, p a[href^="tel"], p a[href^="mailto"]{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 4px !important}
 p a[style*="text-decoration"]{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 4px !important}
 .content-meta a{min-height:44px !important;display:inline-flex !important;align-items:center !important;padding:10px 4px !important}
@@ -760,7 +762,7 @@ to{opacity:1;transform:translateY(0)}
 .service-icon-anim{transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1)}
 .service-card:hover .service-icon-anim{transform:scale(1.15) rotate(-5deg)}
 .service-icon canvas{width:100%;height:100%}
-article a, .blog-callout a, .blog-tip a{text-decoration:underline}
+article a{text-decoration:underline}
 .pill{min-height:44px;min-width:44px;padding:10px 12px !important;display:inline-flex !important;align-items:center !important;justify-content:center !important}
 .service-card,.promise-card,.testimonial-card,.work-card,.faq-card,.coverage-item,.transform-card,.story-card{will-change:transform}
 .service-card,.promise-card,.testimonial-card,.work-card,.faq-card,.story-card,.hover-lift{backface-visibility:hidden}
@@ -771,9 +773,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
 .faq-card summary{min-height:72px}
 @media(max-width:768px){.section-links{gap:14px}
 .story-grid{grid-template-columns:1fr}
-.blog-article{padding:124px 20px 84px !important}
-.article-meta{gap:10px}
-.article-lead{font-size:16px !important}
 }
 @media(max-width:1100px){
 .editorial-head,.blog-home-head,.section-panel-grid,.blog-home-stage,.blog-home-feature{grid-template-columns:1fr}
@@ -792,10 +791,10 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
 .blog-home-feature-deck{max-width:none}
 .blog-home-mini{grid-template-columns:1fr}
 .blog-home-mini-media{min-height:180px}
+.blog-home-copy,.blog-home-note,.blog-home-linkcard,.blog-home-feature-body{padding:22px 18px}
+.blog-home-note-item{padding:11px 12px 11px 15px}
 .blog-home-actions,.blog-home-linkcard-actions,.blog-home-feature-footer{flex-direction:column;align-items:stretch}
 .blog-home-actions .btn,.blog-home-linkcard-actions .btn{justify-content:center}
-.blog-article{border-radius:28px}
-.blog-article::after{left:18px;right:18px}
 }
 </style>
 
@@ -870,157 +869,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
           "description": "On-site IT support, bespoke websites, local SEO for NYC small businesses.",
           "isPartOf": {"@id": "https://littlefightnyc.com/#website"},
           "about": {"@id": "https://littlefightnyc.com/#business"}
-        }
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Article",
-          "@id": "https://littlefightnyc.com/#blog-post-1",
-          "headline": "AI and Google Broke the Internet (Here's How Websites Survive Now)",
-          "description": "The internet changed overnight. Learn how Google search, AI summaries, and corporate content reshaped visibility online.",
-          "datePublished": "2026-02-07",
-          "image": "https://littlefightnyc.com/favicon-32x32.png",
-          "author": [{"@type": "Person", "name": "David Marsh"}, {"@type": "Organization", "name": "Little Fight NYC"}],
-          "publisher": {"@type": "Organization", "name": "Little Fight NYC", "logo": {"@type": "ImageObject", "url": "https://littlefightnyc.com/favicon-32x32.png"}},
-          "mainEntityOfPage": "https://littlefightnyc.com/#blog-post-1",
-          "articleSection": "Digital Strategy",
-          "wordCount": 900
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://littlefightnyc.com/#blog-post-1-faq",
-          "mainEntity": [
-            {"@type": "Question", "name": "Why does Google feel worse lately?", "acceptedAnswer": {"@type": "Answer", "text": "Google now prioritizes AI-generated summaries and large-scale content producers over smaller, independent sites. This means search results often feel less personal and less relevant for local queries."}},
-            {"@type": "Question", "name": "Did AI replace search engines?", "acceptedAnswer": {"@type": "Answer", "text": "Not entirely, but AI has fundamentally changed how search engines present information. Instead of directing users to websites, search engines now extract and summarize content directly."}},
-            {"@type": "Question", "name": "Why are local businesses harder to find online?", "acceptedAnswer": {"@type": "Answer", "text": "Large companies dominate search results because they produce more content, earn more backlinks, and have established domain authority. Local businesses with smaller websites get pushed further down."}},
-            {"@type": "Question", "name": "What is AI-optimized content?", "acceptedAnswer": {"@type": "Answer", "text": "Content structured so that AI systems can accurately extract and represent your information — clear headings, direct answers, schema markup, and well-organized page structures."}},
-            {"@type": "Question", "name": "How can a small business website stay visible?", "acceptedAnswer": {"@type": "Answer", "text": "Focus on clarity, speed, and local trust signals. Answer real customer questions. Keep business information consistent everywhere. Build pages that prove you are a real, operating business."}}
-          ]
-        },
-        {
-          "@type": "Article",
-          "@id": "https://littlefightnyc.com/#blog-post-2",
-          "headline": "What Google Actually Looks For on a Business Website",
-          "description": "Google evaluates credibility, clarity, and trust — not keyword density. Here's what actually matters.",
-          "datePublished": "2026-02-07",
-          "image": "https://littlefightnyc.com/favicon-32x32.png",
-          "author": [{"@type": "Person", "name": "David Marsh"}, {"@type": "Organization", "name": "Little Fight NYC"}],
-          "publisher": {"@type": "Organization", "name": "Little Fight NYC", "logo": {"@type": "ImageObject", "url": "https://littlefightnyc.com/favicon-32x32.png"}},
-          "mainEntityOfPage": "https://littlefightnyc.com/#blog-post-2",
-          "articleSection": "Search Visibility",
-          "wordCount": 1000
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://littlefightnyc.com/#blog-post-2-faq",
-          "mainEntity": [
-            {"@type": "Question", "name": "Do keywords still matter for ranking?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, but as topic signals rather than ranking levers. Google understands synonyms and context now. Use keywords naturally in headings and descriptions."}},
-            {"@type": "Question", "name": "Why doesn't my website rank even though I have all the right keywords?", "acceptedAnswer": {"@type": "Answer", "text": "Keywords are just one factor. Google also evaluates page speed, mobile usability, trust signals like reviews and backlinks, content depth, and business information consistency."}},
-            {"@type": "Question", "name": "How does Google determine if a business is trustworthy?", "acceptedAnswer": {"@type": "Answer", "text": "Google looks at consistent business information across directories, genuine customer reviews, secure website connections, page load speed, real photos, and visible contact information."}},
-            {"@type": "Question", "name": "Does website design affect my search ranking?", "acceptedAnswer": {"@type": "Answer", "text": "Indirectly, yes. Poor design leads to higher bounce rates and lower engagement, which signals to Google that users are not finding what they need."}},
-            {"@type": "Question", "name": "Can better content actually increase leads?", "acceptedAnswer": {"@type": "Answer", "text": "Absolutely. Content that directly answers customer questions builds trust before they ever contact you, making them far more likely to reach out."}}
-          ]
-        },
-        {
-          "@type": "Article",
-          "@id": "https://littlefightnyc.com/#blog-post-3",
-          "headline": "Why Most Business Websites Will Be Invisible in 18 Months",
-          "description": "Websites aren't failing — they're fading from view as AI decides trust before a click happens.",
-          "datePublished": "2026-02-07",
-          "image": "https://littlefightnyc.com/favicon-32x32.png",
-          "author": [{"@type": "Person", "name": "David Marsh"}, {"@type": "Organization", "name": "Little Fight NYC"}],
-          "publisher": {"@type": "Organization", "name": "Little Fight NYC", "logo": {"@type": "ImageObject", "url": "https://littlefightnyc.com/favicon-32x32.png"}},
-          "mainEntityOfPage": "https://littlefightnyc.com/#blog-post-3",
-          "articleSection": "Search Visibility",
-          "wordCount": 1000
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://littlefightnyc.com/#blog-post-3-faq",
-          "mainEntity": [
-            {"@type": "Question", "name": "Are websites becoming less important?", "acceptedAnswer": {"@type": "Answer", "text": "No — but the bar for what constitutes an effective website has risen dramatically. Websites need to be structured for AI extraction, optimized for speed, and built around trust signals."}},
-            {"@type": "Question", "name": "My site ranks well but I'm getting fewer calls. Why?", "acceptedAnswer": {"@type": "Answer", "text": "AI summaries, featured snippets, and map packs can satisfy user questions before they reach your organic listing. You need to provide value the summary cannot."}},
-            {"@type": "Question", "name": "How does AI affect local business visibility?", "acceptedAnswer": {"@type": "Answer", "text": "AI summaries tend to pull from larger, more established sources. Local businesses need consistent information, clear content, and strong local trust signals to compete."}},
-            {"@type": "Question", "name": "What makes a website visible in 2026?", "acceptedAnswer": {"@type": "Answer", "text": "Speed, clarity, structured data, genuine trust signals, and content that directly addresses real customer questions."}},
-            {"@type": "Question", "name": "Can a website redesign actually improve leads?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, if the redesign focuses on structure and clarity rather than just aesthetics. A site that loads faster, communicates more clearly, and makes it easy to take action will convert more visitors."}}
-          ]
-        },
-        {
-          "@type": "Article",
-          "@id": "https://littlefightnyc.com/#blog-post-4",
-          "headline": "How Small Businesses Can Stay Safe in a Digital World",
-          "description": "Nearly half of small businesses have no cybersecurity measures. Here's how to protect yours.",
-          "datePublished": "2026-01-15",
-          "image": "https://littlefightnyc.com/favicon-32x32.png",
-          "author": [{"@type": "Person", "name": "David Marsh"}, {"@type": "Organization", "name": "Little Fight NYC"}],
-          "publisher": {"@type": "Organization", "name": "Little Fight NYC", "logo": {"@type": "ImageObject", "url": "https://littlefightnyc.com/favicon-32x32.png"}},
-          "mainEntityOfPage": "https://littlefightnyc.com/#blog-post-4",
-          "articleSection": "Cybersecurity",
-          "wordCount": 1100
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://littlefightnyc.com/#blog-post-4-faq",
-          "mainEntity": [
-            {"@type": "Question", "name": "Do small businesses really get targeted by hackers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Small businesses are often targeted precisely because they tend to have weaker defenses. Automated attacks scan for vulnerabilities regardless of company size."}},
-            {"@type": "Question", "name": "What is the most common type of cyberattack on small businesses?", "acceptedAnswer": {"@type": "Answer", "text": "Phishing — fraudulent emails designed to trick employees into revealing credentials or clicking malicious links."}},
-            {"@type": "Question", "name": "How much does basic cybersecurity cost?", "acceptedAnswer": {"@type": "Answer", "text": "Basic managed security can range from a few hundred to a few thousand dollars per month, depending on devices and complexity — a fraction of the average breach cost."}},
-            {"@type": "Question", "name": "Is multi-factor authentication really necessary?", "acceptedAnswer": {"@type": "Answer", "text": "It is one of the most effective security measures available. Even if a password is compromised, MFA adds a second barrier that prevents unauthorized access."}},
-            {"@type": "Question", "name": "What should I do if my business has already been breached?", "acceptedAnswer": {"@type": "Answer", "text": "Contain the breach by isolating affected systems, reset all credentials, notify affected customers, and engage a security professional to investigate."}}
-          ]
-        },
-        {
-          "@type": "Article",
-          "@id": "https://littlefightnyc.com/#blog-post-5",
-          "headline": "Why NYC's Mom-and-Pop Shops Need to Go Digital — Now",
-          "description": "49% of consumers prefer local over chains — they just need to find you online.",
-          "datePublished": "2026-01-15",
-          "image": "https://littlefightnyc.com/favicon-32x32.png",
-          "author": [{"@type": "Person", "name": "David Marsh"}, {"@type": "Organization", "name": "Little Fight NYC"}],
-          "publisher": {"@type": "Organization", "name": "Little Fight NYC", "logo": {"@type": "ImageObject", "url": "https://littlefightnyc.com/favicon-32x32.png"}},
-          "mainEntityOfPage": "https://littlefightnyc.com/#blog-post-5",
-          "articleSection": "Digital Strategy",
-          "wordCount": 1000
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://littlefightnyc.com/#blog-post-5-faq",
-          "mainEntity": [
-            {"@type": "Question", "name": "Do I really need a website if I have a Facebook page?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Social media profiles are important, but you do not control them. A website is an asset you own and control, and it carries more trust with search engines and customers."}},
-            {"@type": "Question", "name": "How much does it cost to get a small business online?", "acceptedAnswer": {"@type": "Answer", "text": "A professional website, Google Business Profile setup, and basic local SEO can be done for a few thousand dollars with ongoing maintenance of a few hundred per month."}},
-            {"@type": "Question", "name": "What is local SEO and why does it matter?", "acceptedAnswer": {"@type": "Answer", "text": "Local SEO optimizes your online presence so you appear in search results when nearby people look for what you offer. For brick-and-mortar businesses, it is the most important form of marketing."}},
-            {"@type": "Question", "name": "Will digital tools replace the personal touch that makes my shop special?", "acceptedAnswer": {"@type": "Answer", "text": "Not at all. Digital tools get people to your door — the personal touch keeps them coming back. The best local businesses use technology to handle logistics so they can spend more time with customers."}},
-            {"@type": "Question", "name": "How do digital payments increase sales?", "acceptedAnswer": {"@type": "Answer", "text": "Customers spend more when paying digitally, contactless payments speed up checkout, and the combined effect is roughly an 8% increase in average transaction value."}}
-          ]
-        },
-        {
-          "@type": "Article",
-          "@id": "https://littlefightnyc.com/#blog-post-6",
-          "headline": "Protecting Your Kids From AI, the Smart Way",
-          "description": "A practical guide for parents. AI guesses — it doesn't know. Teach kids to question it, not fear it.",
-          "datePublished": "2026-01-15",
-          "image": "https://littlefightnyc.com/favicon-32x32.png",
-          "author": [{"@type": "Person", "name": "David Marsh"}, {"@type": "Organization", "name": "Little Fight NYC"}],
-          "publisher": {"@type": "Organization", "name": "Little Fight NYC", "logo": {"@type": "ImageObject", "url": "https://littlefightnyc.com/favicon-32x32.png"}},
-          "mainEntityOfPage": "https://littlefightnyc.com/#blog-post-6",
-          "articleSection": "AI Safety",
-          "wordCount": 900
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://littlefightnyc.com/#blog-post-6-faq",
-          "mainEntity": [
-            {"@type": "Question", "name": "Should I ban my child from using AI entirely?", "acceptedAnswer": {"@type": "Answer", "text": "A blanket ban is usually counterproductive. AI is everywhere now. Supervised use with open conversations about what AI can and cannot do is more effective than prohibition."}},
-            {"@type": "Question", "name": "At what age should kids start using AI tools?", "acceptedAnswer": {"@type": "Answer", "text": "Children should be able to understand the concept that AI can be wrong before using it independently — around age 10-12 with supervision, with greater independence as they demonstrate critical thinking."}},
-            {"@type": "Question", "name": "Can AI be used safely for homework?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, when used as a learning aid rather than an answer machine. AI is great for explaining concepts and brainstorming, but should not write essays or provide final answers."}},
-            {"@type": "Question", "name": "What if my child is already using AI as an emotional support tool?", "acceptedAnswer": {"@type": "Answer", "text": "Do not panic. Start a conversation about what they are getting from the interaction and gently introduce the idea that AI responses are patterns, not genuine understanding."}},
-            {"@type": "Question", "name": "How do I stay informed about AI risks for children?", "acceptedAnswer": {"@type": "Answer", "text": "Follow digital literacy organizations, talk to your child's school about AI policies, and use the tools yourself to understand what your child is interacting with."}}
-          ]
         }
       ]
     }
@@ -1431,7 +1279,7 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
             </div>
 
             <div class="work-carousel">
-                <div class="work-card" data-category="fashion" style="cursor:pointer" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
+                <a class="work-card" data-category="fashion" href="https://www.afterhoursagenda.com" target="_blank" rel="noopener noreferrer">
                     <div class="work-card-image"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="eager" fetchpriority="high" width="1280" height="800"></div>
                     <div class="work-card-content">
                         <h3>After Hours Agenda</h3>
@@ -1441,9 +1289,9 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="work-card-narrative"><strong>The challenge:</strong> 14-year-old streetwear brand with a loyal following but zero online presence. Needed to go from Instagram-only to a full e-commerce operation.</p>
                         <p class="work-card-narrative"><strong>What we built:</strong> Bespoke e-commerce site that matches the brand's rebellious energy. Custom product pages, lookbook integration, and a checkout flow that doesn't kill the vibe.</p>
                     </div>
-                </div>
+                </a>
 
-                <div class="work-card" data-category="nightlife" style="cursor:pointer" onclick="window.open('https://www.bsidenyc.bar','_blank')">
+                <a class="work-card" data-category="nightlife" href="https://www.bsidenyc.bar" target="_blank" rel="noopener noreferrer">
                     <div class="work-card-image"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="eager" width="1280" height="800"></div>
                     <div class="work-card-content">
                         <h3>B-Side NYC</h3>
@@ -1453,9 +1301,9 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="work-card-narrative"><strong>The challenge:</strong> New cocktail bar needed to stand out in one of the most competitive nightlife scenes in the world. No website, no Google presence.</p>
                         <p class="work-card-narrative"><strong>What we built:</strong> Moody, immersive website built to capture the vibe and convert searches into foot traffic. Local SEO to own the neighborhood on Google.</p>
                     </div>
-                </div>
+                </a>
 
-                <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.grandfundingllc.com','_blank')">
+                <a class="work-card" data-category="finance" href="https://www.grandfundingllc.com" target="_blank" rel="noopener noreferrer">
                     <div class="work-card-image"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="eager" width="1280" height="800"></div>
                     <div class="work-card-content">
                         <h3>Grand Funding LLC</h3>
@@ -1465,9 +1313,9 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="work-card-narrative"><strong>The challenge:</strong> Direct private lender doing 24-hour approvals and 3-5 day closings, but their online presence didn't match the speed of their operation.</p>
                         <p class="work-card-narrative"><strong>What we built:</strong> High-conversion lead generation site designed to move as fast as their business. Clean UX, clear calls-to-action, built for borrowers who need answers now.</p>
                     </div>
-                </div>
+                </a>
 
-                <div class="work-card" data-category="finance" style="cursor:pointer" onclick="window.open('https://www.logan.loans','_blank')">
+                <a class="work-card" data-category="finance" href="https://www.logan.loans" target="_blank" rel="noopener noreferrer">
                     <div class="work-card-image"><img src="assets/logan-preview.webp" alt="Logan Loans website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="work-card-content">
                         <h3>Logan Loans</h3>
@@ -1477,9 +1325,9 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="work-card-narrative"><strong>The challenge:</strong> Mortgage advisory firm drowning in industry jargon. Potential borrowers couldn't tell what made them different.</p>
                         <p class="work-card-narrative"><strong>What we built:</strong> Clean, human-first mortgage website. Same-day pre-approvals explained without the jargon. SEO and content strategy to capture organic search traffic.</p>
                     </div>
-                </div>
+                </a>
 
-                <div class="work-card" data-category="film" style="cursor:pointer" onclick="window.open('https://ccfilms.net','_blank')">
+                <a class="work-card" data-category="film" href="https://ccfilms.net" target="_blank" rel="noopener noreferrer">
                     <div class="work-card-image"><img src="assets/ccfilms-preview.webp" alt="CC Films LLC website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="work-card-content">
                         <h3>CC Films, LLC</h3>
@@ -1489,7 +1337,7 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="work-card-narrative"><strong>The challenge:</strong> Indie film production company with analog soul but no digital presence. Their work spoke for itself — but nobody could find it online.</p>
                         <p class="work-card-narrative"><strong>What we built:</strong> Cinematic website that matches the craft. Analog soul, digital polish — portfolio-driven design with brand identity built from scratch.</p>
                     </div>
-                </div>
+                </a>
             </div>
         </section>
 
@@ -1767,7 +1615,7 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
             <div class="story-grid">
 
                 <!-- After Hours Agenda -->
-                <div class="fade-in story-card" data-accent="orange" data-category="fashion" onclick="window.open('https://www.afterhoursagenda.com','_blank')">
+                <a class="fade-in story-card" data-accent="orange" data-category="fashion" href="https://www.afterhoursagenda.com" target="_blank" rel="noopener noreferrer">
                     <div class="story-card-media"><img src="assets/afterhours-preview.webp" alt="After Hours Agenda website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="story-card-content">
                         <div class="story-card-tags">
@@ -1779,10 +1627,10 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="story-card-text"><strong>The challenge:</strong> 14-year-old streetwear brand with a loyal following but zero online presence. Needed to go from Instagram-only to a full e-commerce operation.</p>
                         <p class="story-card-text" style="margin-bottom:0"><strong>What we built:</strong> Bespoke e-commerce site that matches the brand's rebellious energy. Custom product pages, lookbook integration, and a checkout flow that doesn't kill the vibe.</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- B-Side NYC -->
-                <div class="fade-in story-card" data-accent="cyan" data-category="nightlife" onclick="window.open('https://www.bsidenyc.bar','_blank')">
+                <a class="fade-in story-card" data-accent="cyan" data-category="nightlife" href="https://www.bsidenyc.bar" target="_blank" rel="noopener noreferrer">
                     <div class="story-card-media"><img src="assets/bside-preview.webp" alt="B-Side NYC website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="story-card-content">
                         <div class="story-card-tags">
@@ -1794,10 +1642,10 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="story-card-text"><strong>The challenge:</strong> New cocktail bar needed to stand out in one of the most competitive nightlife scenes in the world. No website, no Google presence.</p>
                         <p class="story-card-text" style="margin-bottom:0"><strong>What we built:</strong> Moody, immersive website built to capture the vibe and convert searches into foot traffic. Local SEO to own the neighborhood on Google.</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Grand Funding LLC -->
-                <div class="fade-in story-card" data-accent="orange" data-category="finance" onclick="window.open('https://www.grandfundingllc.com','_blank')">
+                <a class="fade-in story-card" data-accent="orange" data-category="finance" href="https://www.grandfundingllc.com" target="_blank" rel="noopener noreferrer">
                     <div class="story-card-media"><img src="assets/grandfunding-preview.webp" alt="Grand Funding LLC website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="story-card-content">
                         <div class="story-card-tags">
@@ -1809,10 +1657,10 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="story-card-text"><strong>The challenge:</strong> Direct private lender doing 24-hour approvals and 3-5 day closings, but their online presence didn’t match the speed of their operation.</p>
                         <p class="story-card-text" style="margin-bottom:0"><strong>What we built:</strong> High-conversion lead generation site designed to move as fast as their business. Clean UX, clear calls-to-action, built for borrowers who need answers now.</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Logan Loans -->
-                <div class="fade-in story-card" data-accent="orange" data-category="finance" onclick="window.open('https://www.logan.loans','_blank')">
+                <a class="fade-in story-card" data-accent="orange" data-category="finance" href="https://www.logan.loans" target="_blank" rel="noopener noreferrer">
                     <div class="story-card-media"><img src="assets/logan-preview.webp" alt="Logan Loans website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="story-card-content">
                         <div class="story-card-tags">
@@ -1824,10 +1672,10 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="story-card-text"><strong>The challenge:</strong> Mortgage advisory firm drowning in industry jargon. Potential borrowers couldn’t tell what made them different.</p>
                         <p class="story-card-text" style="margin-bottom:0"><strong>What we built:</strong> Clean, human-first mortgage website. Same-day pre-approvals explained without the jargon. SEO and content strategy to capture organic search traffic.</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- CC Films, LLC -->
-                <div class="fade-in story-card" data-accent="cyan" data-category="film" onclick="window.open('https://ccfilms.net','_blank')">
+                <a class="fade-in story-card" data-accent="cyan" data-category="film" href="https://ccfilms.net" target="_blank" rel="noopener noreferrer">
                     <div class="story-card-media"><img src="assets/ccfilms-preview.webp" alt="CC Films LLC website preview" loading="lazy" width="1280" height="800"></div>
                     <div class="story-card-content">
                         <div class="story-card-tags">
@@ -1839,15 +1687,15 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <p class="story-card-text"><strong>The challenge:</strong> Indie film production company with analog soul but no digital presence. Their work spoke for itself, but nobody could find it online.</p>
                         <p class="story-card-text" style="margin-bottom:0"><strong>What we built:</strong> Cinematic website that matches the craft. Analog soul, digital polish, and a portfolio-driven brand system built from scratch.</p>
                     </div>
-                </div>
+                </a>
 
                 <!-- Visit all -->
-                <div class="fade-in story-card" data-accent="warm" style="background:rgba(254,88,0,0.04);border:1px solid rgba(254,88,0,0.12);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px" onclick="navigateTo('contact')">
+                <a class="fade-in story-card" data-accent="warm" href="#contact" style="background:rgba(254,88,0,0.04);border:1px solid rgba(254,88,0,0.12);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px">
                     <div style="font-size:36px;margin-bottom:16px">🚀</div>
                     <h3 style="font-size:1.1rem;margin-bottom:8px">Your Business Next?</h3>
                     <p style="color:#9da1b0;font-size:14px;line-height:1.6;margin-bottom:16px">We'd love to add your success story to this page.</p>
                     <span style="color:#FE5800;font-weight:700;font-size:14px">Start a Project →</span>
-                </div>
+                </a>
 
             </div>
         </div>
@@ -1918,14 +1766,28 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         </div>
                     </div>
                     <aside class="blog-home-note">
-                        <span class="article-kicker" style="color:#FE5800">This issue</span>
-                        <strong>Search is getting faster, patience is getting shorter, and your website has to prove itself before anyone calls.</strong>
-                        <p>The through-line is simple: clearer systems make businesses feel more real. That means sharper pages, better proof, less friction, and a calmer digital presence.</p>
+                        <span class="article-kicker" style="color:#FE5800">What owners get</span>
+                        <strong>The journal shows what to tighten, what to clarify, and what helps a business feel buttoned-up fast.</strong>
+                        <p>Less agency fog. More real guidance on getting found, feeling trustworthy, and making daily systems less annoying for you and your customers.</p>
                         <div class="blog-home-topics" aria-label="Journal topics">
                             <span>Search</span>
                             <span>Trust</span>
                             <span>Payments</span>
                             <span>Operations</span>
+                        </div>
+                        <div class="blog-home-note-list" aria-label="What this journal covers">
+                            <div class="blog-home-note-item">
+                                <span class="blog-home-note-label">Clarity</span>
+                                <span class="blog-home-note-copy">Sharper pages that explain what you do before a visitor gets impatient.</span>
+                            </div>
+                            <div class="blog-home-note-item">
+                                <span class="blog-home-note-label">Trust</span>
+                                <span class="blog-home-note-copy">Proof points, payment cues, and practical details that make a business feel more real.</span>
+                            </div>
+                            <div class="blog-home-note-item">
+                                <span class="blog-home-note-label">Momentum</span>
+                                <span class="blog-home-note-copy">Calmer advice on search, security, AI, and neighborhood growth that you can actually use this week.</span>
+                            </div>
                         </div>
                     </aside>
                 </div>
@@ -1934,8 +1796,8 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                         <a class="blog-home-feature-media" href="/ai-google-broke-the-internet-websites-survive/">
                             <img src="/assets/pill-scroll/website-design-nyc-1.webp" alt="Laptop and coffee on a wood table in front of tall windows" loading="lazy" width="1600" height="898">
                             <div class="blog-home-feature-overlay">
-                                <span class="blog-home-badge">Featured dispatch</span>
-                                <strong>The web changed overnight.</strong>
+                                <span class="blog-home-badge">Start here</span>
+                                <strong>How local sites still win.</strong>
                             </div>
                         </a>
                         <div class="blog-home-feature-body">
@@ -1953,7 +1815,7 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                             </div>
                             <div class="blog-home-feature-footer">
                                 <a class="blog-home-link" href="/ai-google-broke-the-internet-websites-survive/">Read the full story</a>
-                                <a class="blog-home-link" href="/blog/">Open the journal</a>
+                                <a class="blog-home-link" href="/blog/">Browse all notes</a>
                             </div>
                         </div>
                     </article>
@@ -1970,7 +1832,7 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                                 <a class="blog-home-mini-read" href="/what-google-looks-for-business-website/">Read the guide</a>
                             </div>
                         </article>
-                        <article class="blog-home-mini fade-in" data-accent="purple">
+                        <article class="blog-home-mini fade-in" data-accent="gold">
                             <a class="blog-home-mini-media" href="/why-business-websites-will-be-invisible/">
                                 <img src="/assets/pill-scroll/nyc-streets-businesses5.webp" alt="New York storefronts and street life at dusk" loading="lazy" width="1280" height="1600">
                             </a>
@@ -1983,9 +1845,14 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                             </div>
                         </article>
                         <article class="blog-home-linkcard fade-in">
-                            <span class="article-kicker" style="color:#FE5800">More inside</span>
-                            <strong>The full journal covers cybersecurity, neighborhood growth, AI safety, and the practical systems behind smoother small businesses.</strong>
-                            <p>Use the homepage to find the lead stories. Use the journal when you want the fuller field guide.</p>
+                            <span class="article-kicker" style="color:#FE5800">Inside the journal</span>
+                            <strong>Field notes on visibility, cybersecurity, payments, AI, and the practical systems behind smoother small businesses.</strong>
+                            <p>Use the homepage to grab the strongest reads fast. Open the journal when you want the fuller field guide with more context and more examples.</p>
+                            <div class="blog-home-linkcard-list">
+                                <span>Website and search strategy without the agency fog.</span>
+                                <span>Operational advice owners can actually use this week.</span>
+                                <span>Calmer guidance on security, payments, and AI.</span>
+                            </div>
                             <div class="blog-home-linkcard-actions">
                                 <a href="/blog/" class="btn btn-outline">See All Articles</a>
                                 <a href="/contact/" class="btn btn-orange">Talk Through Your Site</a>
@@ -2068,539 +1935,6 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
         </div>
     </section>
 
-    <!-- Blog Post 1: AI and Google Broke the Internet -->
-    <div id="blog-post-1" class="page-section">
-        <article class="container blog-article">
-            <a href="#blog" onclick="navigateTo('blog')" class="article-back">&larr; Back to Blog</a>
-            <div class="article-meta">
-                <span class="article-kicker" style="color:#FE5800">DIGITAL STRATEGY</span>
-                <span style="color:#8a8f9e;font-size:13px;margin-left:12px">February 7, 2026 · 7 min read</span><span style="color:#8a8f9e;font-size:13px;margin-left:12px">by Little Fight NYC</span>
-            </div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">AI and Google Broke the Internet (Here's How Websites Survive Now)</h2>
-            <p class="article-lead">The internet changed overnight. Learn how Google search, AI summaries, and corporate content reshaped visibility online.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🌊 What Actually Changed</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">For years, search worked the same way: you typed a question, Google showed you ten blue links, and you picked one. That model is gone. Today, Google generates AI-powered summaries that pull information directly from websites and display it at the top of results. Users get their answer without ever visiting your site.</p>
-            <div class="blog-stat">
-                <div class="blog-stat-icon">📉</div>
-                <div>
-                    <div class="blog-stat-number">60%+</div>
-                    <div class="blog-stat-label">of Google searches now end without a click to any website</div>
-                </div>
-            </div>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">At the same time, massive corporate content operations have scaled up dramatically. Companies with dedicated teams publish hundreds of articles per week, flooding search results and pushing smaller sites further down the page. The combination of AI-extracted answers and content saturation means less traffic, less context, and less opportunity for independent businesses.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🏪 Why This Hits Local Businesses Hardest</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Local businesses are competing against organizations with bigger teams, larger budgets, and far more content. Authority signals in search — things like domain age, backlink volume, and content depth — naturally favor these larger players. A neighborhood restaurant or a local repair shop simply cannot produce content at the same scale as a media company or a franchise.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">This creates a visibility gap that keeps growing. The businesses that need local customers the most are the ones getting buried the fastest.</p>
-            <div class="blog-callout">
-                <span class="callout-label">💡 The Visibility Gap</span>
-                <p>The businesses that need local customers the most are the ones getting buried the fastest. This isn't a temporary dip — it's a structural shift in how search works.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">💡 What Surviving Websites Do Differently</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:12px">The sites that still attract traffic share five traits:</p>
-            <ul style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They answer real questions fast.</strong> No filler paragraphs. The answer is in the first sentence, with supporting detail below.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They prove they are real businesses.</strong> Photos, addresses, team names, reviews — tangible evidence that a human is behind the site.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They organize content for machines and humans.</strong> Proper headings, logical structure, schema markup that helps search engines understand the page.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They connect strategy to proof.</strong> Every claim has a case study, a testimonial, or a specific example behind it.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">They keep local trust front and center.</strong> Neighborhood-specific language, local partnerships, community involvement — all visible on the site.</li>
-            </ul>
-            <div class="blog-tip">
-                <span class="callout-label">✅ Quick Self-Check</span>
-                <p><strong>Ask yourself:</strong> Can someone landing on your homepage understand what you do, where you are, and how to contact you — all within 5 seconds? If not, you're losing visitors before they even read a word.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🎯 The New Standard</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">AI did not kill websites. It killed lazy websites. The ones that were built once and never updated. The ones filled with stock photos and vague promises. The sites that survive today are fast, clear, and well-structured. They load quickly, say exactly what the business does, and give visitors a reason to trust them within seconds.</p>
-            <div class="blog-pullquote">AI didn't kill websites. It killed lazy websites.</div>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">This is the new baseline. Meeting it is not optional — it is the cost of being found.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Why does Google feel worse lately?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Google now prioritizes AI-generated summaries and large-scale content producers over smaller, independent sites. This means search results often feel less personal and less relevant for local queries, because the algorithm rewards volume and authority metrics that favor big publishers.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Did AI replace search engines?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Not entirely, but AI has fundamentally changed how search engines present information. Instead of directing users to websites, search engines now extract and summarize content directly. The search engine is still there — it just shares less traffic than it used to.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Why are local businesses harder to find online?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Large companies dominate search results because they produce more content, earn more backlinks, and have established domain authority. Local businesses with smaller websites get pushed below the fold or excluded from AI summaries entirely.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">What is AI-optimized content?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Content structured so that AI systems can accurately extract and represent your information. This means clear headings, direct answers to common questions, schema markup, and well-organized page structures that machines can parse reliably.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How can a small business website stay visible?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Focus on clarity, speed, and local trust signals. Answer the questions your customers actually ask. Keep your business information consistent everywhere. Build pages that prove you are a real, operating business — not just a template with placeholder text.</p>
-            </details>
-
-            <div style="margin-top:40px;padding:20px;background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:10px">
-                <h3 style="font-size:1rem;margin-bottom:8px;color:#f0f0ec">Keep Reading</h3>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7"><a href="#blog-post-2" onclick="navigateTo('blog-post-2')" style="color:#FE5800;text-decoration:underline;font-weight:600">What Google Actually Looks For on a Business Website →</a></p>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:8px"><a href="#blog-post-3" onclick="navigateTo('blog-post-3')" style="color:#FE5800;text-decoration:underline;font-weight:600">Why Most Business Websites Will Be Invisible in 18 Months →</a></p>
-            </div>
-
-            <div style="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center">
-                <h3 style="margin-bottom:12px;font-size:1.1rem">Want your website built for this reality?</h3>
-                <p style="color:#9da1b0;font-size:14px;margin-bottom:20px">We help local businesses build clear, modern sites that get found and get trusted.</p>
-                <a href="#contact" onclick="navigateTo('contact')" class="btn btn-orange">Get in Touch &rarr;</a>
-            </div>
-        </article>
-    </div>
-
-    <!-- Blog Post 2: What Google Actually Looks For -->
-    <div id="blog-post-2" class="page-section">
-        <article class="container blog-article">
-            <a href="#blog" onclick="navigateTo('blog')" class="article-back">&larr; Back to Blog</a>
-            <div class="article-meta">
-                <span class="article-kicker" style="color:#0891B2">SEARCH VISIBILITY</span>
-                <span style="color:#8a8f9e;font-size:13px;margin-left:12px">February 7, 2026 · 8 min read</span><span style="color:#8a8f9e;font-size:13px;margin-left:12px">by Little Fight NYC</span>
-            </div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">What Google Actually Looks For on a Business Website</h2>
-            <p class="article-lead">Google evaluates credibility, clarity, and trust — not keyword density. Here's what actually matters for your business site.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🛡️ Google Is Trying to Reduce Risk</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Every search is a small act of trust. When someone types a question into Google, the system has one job: deliver a result the user will not regret clicking on. Google is not looking for the cleverest website or the one with the most keywords. It is asking a simple question: "Will the user regret this recommendation?"</p>
-            <div class="blog-pullquote">Google isn't looking for the cleverest website. It's asking: "Will the user regret clicking this?"</div>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">That framing changes everything about how you should think about your site. You are not trying to trick an algorithm. You are trying to be the safest, most credible answer to a real question.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🏷️ Keywords Are Labels, Not Levers</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">There was a time when repeating a phrase enough times would push your page up in results. That era is long over. Today, Google understands natural language well enough to know what a page is about without needing the exact phrase repeated twenty times. Clear, natural explanations outperform robotic keyword-stuffed phrasing every time.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Keywords still matter as labels — they tell Google what topic your page covers. But the way you use them should feel conversational, not mechanical.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔍 Four Things Google Actually Evaluates</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:12px">When Google crawls your business website, it is looking for four signals:</p>
-            <ul style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
-                <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Clarity.</strong> Can a visitor understand what your business does within the first few seconds? If your homepage requires scrolling or guessing, you are losing both users and search rank.</li>
-                <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Specificity.</strong> Real examples, actual locations, specific service scenarios. Generic language like "we provide solutions" tells Google nothing useful. Saying "we repair POS systems for restaurants in Manhattan" tells it everything.</li>
-                <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Consistency.</strong> Your website, your Google Business listing, your directory profiles, and your social pages should all agree on your name, address, phone number, and services. Discrepancies erode trust.</li>
-                <li style="margin-bottom:12px"><strong style="color:#f0f0ec">Trust signals.</strong> Reviews, real photos, visible contact details, fast page load times, secure connections. These are the proof points that tell Google — and users — that you are legitimate.</li>
-            </ul>
-            <div class="blog-tip">
-                <span class="callout-label">🎯 The Specificity Test</span>
-                <p><strong>Compare these two:</strong> "We provide solutions for businesses" vs. "We repair POS systems for restaurants in Manhattan." Google — and your customers — trust the second one instantly. Be specific about what you do, where you do it, and who you do it for.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">✍️ Why Blogging Alone Does Not Fix Visibility</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Many businesses are told to "just start blogging" as a search strategy. But ten shallow posts about vaguely related topics will not move the needle. One well-structured, genuinely helpful page that thoroughly answers a question your customers actually ask is worth more than a dozen filler articles.</p>
-            <div class="blog-callout">
-                <span class="callout-label">📊 Quality Over Quantity</span>
-                <p><strong>One well-structured page</strong> that thoroughly answers a real customer question is worth more than a dozen filler articles. Google has gotten very good at telling the difference.</p>
-            </div>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Quality outperforms quantity every time in modern search. Google has become very good at distinguishing depth from padding.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Do keywords still matter for ranking?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Yes, but as topic signals rather than ranking levers. Google understands synonyms and context now. Use keywords naturally in your headings and descriptions, but do not force them into every sentence. Clear writing about your topic is more effective than repetition.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Why doesn't my website rank even though I have all the right keywords?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Keywords are just one factor. Google also evaluates page speed, mobile usability, trust signals like reviews and backlinks, content depth, and whether your business information is consistent across the web. A keyword-optimized page with no trust signals will not rank well.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How does Google determine if a business is trustworthy?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Google looks at a combination of factors: consistent business information across directories, genuine customer reviews, secure website connections (HTTPS), page load speed, real photos, visible contact information, and whether the content demonstrates actual expertise rather than generic claims.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Does website design affect my search ranking?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Indirectly, yes. Poor design leads to higher bounce rates and lower engagement, which signals to Google that users are not finding what they need. Mobile responsiveness, page speed, and clear navigation all affect how Google evaluates your site quality.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Can better content actually increase leads?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Absolutely. Content that directly answers customer questions builds trust before they ever contact you. When someone reads a page that clearly understands their problem, they are far more likely to pick up the phone or fill out a form. Good content is a sales tool, not just a search tool.</p>
-            </details>
-
-            <div style="margin-top:40px;padding:20px;background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:10px">
-                <h3 style="font-size:1rem;margin-bottom:8px;color:#f0f0ec">Keep Reading</h3>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7"><a href="#blog-post-1" onclick="navigateTo('blog-post-1')" style="color:#FE5800;text-decoration:underline;font-weight:600">AI and Google Broke the Internet (Here's How Websites Survive Now) →</a></p>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:8px"><a href="#blog-post-3" onclick="navigateTo('blog-post-3')" style="color:#FE5800;text-decoration:underline;font-weight:600">Why Most Business Websites Will Be Invisible in 18 Months →</a></p>
-            </div>
-
-            <div style="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center">
-                <h3 style="margin-bottom:12px;font-size:1.1rem">Want your website built for this reality?</h3>
-                <p style="color:#9da1b0;font-size:14px;margin-bottom:20px">We help local businesses build clear, modern sites that get found and get trusted.</p>
-                <a href="#contact" onclick="navigateTo('contact')" class="btn btn-orange">Get in Touch &rarr;</a>
-            </div>
-        </article>
-    </div>
-
-    <!-- Blog Post 3: Why Most Websites Will Be Invisible -->
-    <div id="blog-post-3" class="page-section">
-        <article class="container blog-article">
-            <a href="#blog" onclick="navigateTo('blog')" class="article-back">&larr; Back to Blog</a>
-            <div class="article-meta">
-                <span class="article-kicker" style="color:#7C3AED">SEARCH VISIBILITY</span>
-                <span style="color:#8a8f9e;font-size:13px;margin-left:12px">February 7, 2026 · 8 min read</span><span style="color:#8a8f9e;font-size:13px;margin-left:12px">by Little Fight NYC</span>
-            </div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">Why Most Business Websites Will Be Invisible in 18 Months</h2>
-            <p class="article-lead">Websites are not failing — they are fading from view as AI decides trust before a click ever happens.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🗺️ The Web Stopped Being a Map</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">The internet used to function like a map: search engines pointed you toward destinations, and you chose where to go. That model has shifted. Search engines now filter and extract, pulling the most relevant pieces of information from websites and displaying them directly in results. Fewer destinations are shown, and users visit fewer sites than ever before.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">For most business websites, this means the window of opportunity is shrinking. If your site is not structured in a way that search engines can confidently extract from, you simply will not appear.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">👆 The Click Is Becoming Optional</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Users increasingly get their answers directly on the search results page. They see a summary, read a snippet, maybe glance at a review — and make their decision without visiting a single website. The click that used to be automatic is now optional.</p>
-            <div class="blog-stat">
-                <div class="blog-stat-icon">👆</div>
-                <div>
-                    <div class="blog-stat-number">Zero-Click</div>
-                    <div class="blog-stat-label">searches have been growing for years — users get answers without visiting any website</div>
-                </div>
-            </div>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">This is not speculation. Zero-click searches have been growing for years, and AI summaries have accelerated the trend. Your website needs to earn its click by offering something the summary cannot provide — depth, proof, or a direct action.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🏚️ Built for a World That No Longer Exists</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Most business websites were built for a different internet. They assumed visitors would arrive, browse around, read multiple pages, and eventually contact the business. Today, trust is formed in snippets — in the two or three lines that appear in a search result. If those lines are vague or generic, the user moves on.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Your first impression is no longer your homepage. It is whatever fragment of your site Google decides to show in its results.</p>
-            <div class="blog-warning">
-                <span class="callout-label">⚠️ Reality Check</span>
-                <p>Your first impression is no longer your homepage. It's whatever fragment of your site Google decides to show in its results. If that fragment is vague or generic, the user moves on — and they never see the rest.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⚖️ The New Definition of Authority</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Authority used to be measured by domain age and backlinks. While those factors still matter, the weight is shifting. Clarity now matters more than longevity. Plain-language explanations, transparent proof of your work, and local relevance carry more weight than a decade-old domain that has not been updated since it launched.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">The businesses that will remain visible are the ones with direct language, logical heading structures, connected internal pages, and clear contact options. Not the ones with the oldest URL.</p>
-            <div class="blog-pullquote">Clarity now matters more than longevity. The businesses that stay visible are the ones with direct language — not the oldest URL.</div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔧 What Needs to Change</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:12px">If your website is going to stay visible over the next 18 months, it needs:</p>
-            <ul style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
-                <li style="margin-bottom:8px">Direct language that says what you do in the first sentence</li>
-                <li style="margin-bottom:8px">Logical headings that create a clear content hierarchy</li>
-                <li style="margin-bottom:8px">Connected pages that link to each other and reinforce your expertise</li>
-                <li style="margin-bottom:8px">Clear contact options visible on every page</li>
-                <li style="margin-bottom:8px">Real proof — reviews, case studies, photos, specific examples</li>
-            </ul>
-            <div class="blog-tip">
-                <span class="callout-label">⏰ The 18-Month Window</span>
-                <p>This isn't a someday problem. The sites that adapt in the next 18 months will establish the trust signals and structure that become increasingly difficult to build later. <strong>The window is closing.</strong></p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Are websites becoming less important?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">No — but the bar for what constitutes an effective website has risen dramatically. A basic brochure site that worked in 2020 is no longer enough. Websites need to be structured for AI extraction, optimized for speed, and built around trust signals to remain visible.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">My site ranks well but I'm getting fewer calls. Why?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">You may be ranking in positions where your listing is visible but not being clicked. AI summaries, featured snippets, and map packs can satisfy the user's question before they reach your organic listing. The solution is to provide value that the summary cannot — such as detailed service pages, booking tools, or compelling social proof.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How does AI affect local business visibility?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">AI summaries tend to pull from larger, more established sources. Local businesses need to ensure their information is consistent, their content is clear and specific, and their local trust signals (reviews, Google Business profile, directory listings) are strong enough to compete for inclusion.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">What makes a website visible in 2026?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Speed, clarity, structured data, genuine trust signals, and content that directly addresses real customer questions. The days of ranking through keywords alone are over. Visibility now requires a combination of technical quality and genuine credibility.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Can a website redesign actually improve leads?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Yes, if the redesign focuses on structure and clarity rather than just aesthetics. A site that loads faster, communicates more clearly, and makes it easy to take action will convert more visitors. Design that prioritizes user trust over visual flash consistently outperforms.</p>
-            </details>
-
-            <div style="margin-top:40px;padding:20px;background:#0d1120;border:1px solid rgba(22,27,46,0.5);border-radius:10px">
-                <h3 style="font-size:1rem;margin-bottom:8px;color:#f0f0ec">Keep Reading</h3>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7"><a href="#blog-post-1" onclick="navigateTo('blog-post-1')" style="color:#FE5800;text-decoration:underline;font-weight:600">AI and Google Broke the Internet (Here's How Websites Survive Now) →</a></p>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:8px"><a href="#blog-post-2" onclick="navigateTo('blog-post-2')" style="color:#FE5800;text-decoration:underline;font-weight:600">What Google Actually Looks For on a Business Website →</a></p>
-            </div>
-
-            <div style="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center">
-                <h3 style="margin-bottom:12px;font-size:1.1rem">Want your website built for this reality?</h3>
-                <p style="color:#9da1b0;font-size:14px;margin-bottom:20px">We help local businesses build clear, modern sites that get found and get trusted.</p>
-                <a href="#contact" onclick="navigateTo('contact')" class="btn btn-orange">Get in Touch &rarr;</a>
-            </div>
-        </article>
-    </div>
-
-    <!-- Blog Post 4: Cybersecurity for Small Businesses -->
-    <div id="blog-post-4" class="page-section">
-        <article class="container blog-article">
-            <a href="#blog" onclick="navigateTo('blog')" class="article-back">&larr; Back to Blog</a>
-            <div class="article-meta">
-                <span class="article-kicker" style="color:#059669">CYBERSECURITY</span>
-                <span style="color:#8a8f9e;font-size:13px;margin-left:12px">January 2026 · 9 min read</span><span style="color:#8a8f9e;font-size:13px;margin-left:12px">by Little Fight NYC</span>
-            </div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">How Small Businesses Can Stay Safe in a Digital World</h2>
-            <p class="article-lead">Nearly half of small businesses have no cybersecurity measures in place. If you are one of them, here is where to start — and why it matters more than you think.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">📊 The Numbers Are Not in Your Favor</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Forty-six percent of all data breaches affect businesses with fewer than 1,000 employees. Sixty-one percent of small companies reported being the target of a cyberattack in the past year. These are not enterprise-scale threats targeting Fortune 500 companies — they are automated attacks scanning for the easiest targets. Small businesses with weak defenses are exactly that.</p>
-
-            <div class="blog-stat">
-                <div class="blog-stat-icon">🎯</div>
-                <div>
-                    <div class="blog-stat-number">46%</div>
-                    <div class="blog-stat-label">of all data breaches affect businesses with fewer than 1,000 employees</div>
-                </div>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">💳 Guard Your Credit Card Transactions</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">If you accept card payments, your POS system and payment processing setup are prime targets. Use PCI-compliant payment processors, keep your POS software updated, and never store card numbers on local systems. Isolate your payment network from the rest of your business Wi-Fi — a breach in one should not compromise the other.</p>
-
-            <div class="blog-warning">
-                <span class="callout-label">⚠️ Critical Rule</span>
-                <p><strong>Never store card numbers on local systems.</strong> Isolate your payment network from the rest of your business Wi-Fi — a breach in one should not compromise the other.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🛡️ Use Industry-Standard Protection</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">At a minimum, every small business should have a commercial-grade firewall, endpoint protection on all devices, and automatic security updates enabled. Free antivirus software is not sufficient for a business handling customer data. Invest in managed security tools that monitor threats in real time and alert you before damage is done.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔒 Lock Down Devices and Accounts</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Every device connected to your business network is a potential entry point. Require strong passwords on all accounts, enable multi-factor authentication wherever possible, and maintain an inventory of all devices with network access. When an employee leaves, revoke their credentials immediately — not next week.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Eighty percent of hacking incidents involve compromised credentials. Password management is not glamorous, but it is the single most impactful security measure a small business can implement.</p>
-
-            <div class="blog-stat">
-                <div class="blog-stat-icon">🔑</div>
-                <div>
-                    <div class="blog-stat-number">80%</div>
-                    <div class="blog-stat-label">of hacking incidents involve compromised credentials — password management is your #1 defense</div>
-                </div>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">👥 Protect Your People</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Ninety-six percent of phishing attacks arrive by email. Your staff are your first line of defense, and they need to know what to look for. Train employees to recognize suspicious links, unexpected attachments, and urgent-sounding requests for sensitive information. Run periodic phishing simulations to test awareness — not to punish, but to educate.</p>
-
-            <div class="blog-stat">
-                <div class="blog-stat-icon">📧</div>
-                <div>
-                    <div class="blog-stat-number">96%</div>
-                    <div class="blog-stat-label">of phishing attacks arrive by email — your staff are your first line of defense</div>
-                </div>
-            </div>
-
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Create a clear reporting process: if someone clicks a bad link, they should feel safe telling you immediately rather than trying to cover it up.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🌐 Shield Your Website</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Your website is a public-facing asset, and it needs protection beyond hosting. Use HTTPS everywhere, keep your CMS and plugins updated, use strong admin passwords, and implement a web application firewall. If your site collects customer information through forms, make sure that data is encrypted in transit and stored securely.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Regularly back up your site so that if an attack does succeed, you can restore operations quickly rather than rebuilding from scratch.</p>
-
-            <div class="blog-tip">
-                <span class="callout-label">🔐 Security Checklist</span>
-                <p><strong>The basics:</strong> HTTPS everywhere, CMS and plugins updated, strong admin passwords, web application firewall, encrypted form data, and regular backups. Miss any one of these and you're leaving a door open.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Do small businesses really get targeted by hackers?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Yes. Small businesses are often targeted precisely because they tend to have weaker defenses. Automated attacks do not discriminate by company size — they scan for vulnerabilities, and small businesses frequently have more of them.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">What is the most common type of cyberattack on small businesses?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Phishing — fraudulent emails designed to trick employees into revealing credentials or clicking malicious links. It accounts for the vast majority of initial breach vectors because it exploits human behavior rather than technical vulnerabilities.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How much does basic cybersecurity cost?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Basic managed security for a small business can range from a few hundred to a few thousand dollars per month, depending on the number of devices and complexity. This is a fraction of the average cost of a data breach, which can run into the hundreds of thousands for even a small company.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Is multi-factor authentication really necessary?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">It is one of the most effective security measures available. Even if a password is compromised, MFA adds a second barrier that prevents unauthorized access. It stops the vast majority of automated credential attacks.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">What should I do if my business has already been breached?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Contain the breach immediately by isolating affected systems, reset all credentials, notify affected customers if personal data was exposed, and engage a security professional to investigate the scope. Document everything for insurance and potential regulatory reporting.</p>
-            </details>
-
-            <div style="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center">
-                <h3 style="margin-bottom:12px;font-size:1.1rem">Need help securing your business?</h3>
-                <p style="color:#9da1b0;font-size:14px;margin-bottom:20px">We help small businesses implement practical security measures that actually work.</p>
-                <a href="#contact" onclick="navigateTo('contact')" class="btn btn-orange">Get in Touch &rarr;</a>
-            </div>
-        </article>
-    </div>
-
-    <!-- Blog Post 5: NYC Mom-and-Pop Shops Going Digital -->
-    <div id="blog-post-5" class="page-section">
-        <article class="container blog-article">
-            <a href="#blog" onclick="navigateTo('blog')" class="article-back">&larr; Back to Blog</a>
-            <div class="article-meta">
-                <span class="article-kicker" style="color:#D97706">DIGITAL STRATEGY</span>
-                <span style="color:#8a8f9e;font-size:13px;margin-left:12px">January 2026 · 8 min read</span><span style="color:#8a8f9e;font-size:13px;margin-left:12px">by Little Fight NYC</span>
-            </div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">Why NYC's Mom-and-Pop Shops Need to Go Digital — Now</h2>
-            <p class="article-lead">49% of consumers say they prefer local businesses over chains — they just need to be able to find you online. Here is why the digital shift cannot wait any longer.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">📱 The Digital Imperative</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Ninety-eight percent of consumers search for local businesses online before visiting. Sixty-two percent will skip a business entirely if they cannot find it on the web. And seventy-six percent of people who search "near me" on their phone visit a business within 24 hours.</p>
-
-            <div class="blog-stat">
-                <div class="blog-stat-icon">📍</div>
-                <div>
-                    <div class="blog-stat-number">76%</div>
-                    <div class="blog-stat-label">of people who search "near me" visit a business within 24 hours</div>
-                </div>
-            </div>
-
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">These are not future projections. This is how people shop right now. If your business does not have a strong digital presence, you are invisible to the majority of potential customers walking past your door every day.</p>
-
-            <div class="blog-callout">
-                <span class="callout-label">🏙️ The NYC Reality</span>
-                <p>If your business doesn't have a strong digital presence, you're invisible to the majority of potential customers walking past your door every day. <strong>They're searching before they're shopping.</strong></p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🧰 The Digital Tools That Matter</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:12px">You do not need every tool on the market. Focus on the ones that directly drive foot traffic and sales:</p>
-            <ul style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">A real website.</strong> Not a Facebook page or a free listing — an actual website you control, with your hours, services, photos, and contact information clearly displayed.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Local SEO.</strong> Claim and optimize your Google Business Profile. Make sure your name, address, and phone number are consistent across every directory. Encourage reviews from happy customers.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Modern POS systems.</strong> A good point-of-sale system does more than process payments. It tracks inventory, identifies your best-selling products, and gives you data to make smarter decisions.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Mobile Device Management.</strong> If your team uses phones or tablets for work, MDM keeps those devices secure and properly configured without requiring IT expertise.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Other targeted tech.</strong> Email marketing, online ordering, appointment scheduling — choose the tools that match how your customers actually want to interact with you.</li>
-            </ul>
-
-            <div class="blog-tip">
-                <span class="callout-label">🎯 Start Here</span>
-                <p>You don't need every tool on the market. <strong>Start with three things:</strong> a real website you control, a claimed Google Business Profile, and consistent business info across every directory. Everything else is a bonus.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🚶 From Clicks to Foot Traffic</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Digital presence is not about replacing in-person business — it is about driving more of it. When customers can find you online, read your reviews, see your menu or product list, and get directions with one tap, they are far more likely to walk through your door.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">The data backs this up: businesses with strong digital presence see increased foot traffic, higher customer engagement and loyalty, and greater average spend per customer. Studies show that accepting digital payments alone can boost sales by roughly eight percent.</p>
-
-            <div class="blog-stat">
-                <div class="blog-stat-icon">💰</div>
-                <div>
-                    <div class="blog-stat-number">~8%</div>
-                    <div class="blog-stat-label">average sales increase from accepting digital payments alone</div>
-                </div>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⏳ The Cost of Waiting</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Every month without a proper digital presence is a month of lost customers. Your competitors — including chains with dedicated marketing teams — are already capturing the customers who search before they shop. The longer you wait, the harder it becomes to catch up.</p>
-
-            <div class="blog-pullquote">Every month without a proper digital presence is a month of lost customers.</div>
-
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">The good news: for most small businesses, getting the basics right is neither expensive nor complicated. It just requires starting.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Do I really need a website if I have a Facebook page?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Yes. Social media profiles are important, but you do not control them. Algorithms change, platforms add restrictions, and your reach can disappear overnight. A website is an asset you own and control, and it carries more trust with both search engines and customers.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How much does it cost to get a small business online?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">A professional website, Google Business Profile setup, and basic local SEO can be done for a few thousand dollars. Ongoing maintenance is typically a few hundred per month. Compared to the revenue from even a handful of new customers, the ROI is significant.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">What is local SEO and why does it matter?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Local SEO is the process of optimizing your online presence so you appear in search results when people nearby are looking for what you offer. It includes your Google Business Profile, directory listings, reviews, and website content. For brick-and-mortar businesses, it is the most important form of marketing.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Will digital tools replace the personal touch that makes my shop special?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Not at all. Digital tools get people to your door — the personal touch is what keeps them coming back. Technology and hospitality are not opposites. The best local businesses use digital tools to handle logistics so they can spend more time with customers, not less.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How do digital payments increase sales?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Customers spend more when paying digitally because the transaction feels less tangible than handing over cash. Contactless and mobile payments also speed up checkout, reduce friction, and let you serve more customers during peak hours. The combined effect is roughly an 8% increase in average transaction value.</p>
-            </details>
-
-            <div style="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center">
-                <h3 style="margin-bottom:12px;font-size:1.1rem">Ready to bring your shop online?</h3>
-                <p style="color:#9da1b0;font-size:14px;margin-bottom:20px">We help NYC's local businesses build a digital presence that drives real foot traffic.</p>
-                <a href="#contact" onclick="navigateTo('contact')" class="btn btn-orange">Get in Touch &rarr;</a>
-            </div>
-        </article>
-    </div>
-
-    <!-- Blog Post 6: Protecting Kids From AI -->
-    <div id="blog-post-6" class="page-section">
-        <article class="container blog-article">
-            <a href="#blog" onclick="navigateTo('blog')" class="article-back">&larr; Back to Blog</a>
-            <div class="article-meta">
-                <span class="article-kicker" style="color:#DC2626">AI SAFETY</span>
-                <span style="color:#8a8f9e;font-size:13px;margin-left:12px">January 2026 · 7 min read</span><span style="color:#8a8f9e;font-size:13px;margin-left:12px">by Little Fight NYC</span>
-            </div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.2;margin-bottom:24px">Protecting Your Kids From AI, the Smart Way</h2>
-            <p class="article-lead">A practical guide for parents. AI guesses — it does not know. The goal is to teach kids to question it, not fear it.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🤖 What AI Actually Is</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">A Large Language Model — the technology behind ChatGPT, Google's AI, and similar tools — is a prediction engine. It does not understand truth. It does not have knowledge in the way a teacher or a parent does. It calculates what words are most likely to come next based on patterns in the text it was trained on.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">This means AI does not know what is true. It knows what sounds true. That distinction is critical, especially for young people who may not yet have the experience to spot the difference.</p>
-
-            <div class="blog-pullquote">AI does not know what is true. It knows what sounds true.</div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⚠️ The Real Risks for Kids</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">AI is particularly unreliable when dealing with emotional, ambiguous, or nuanced questions — exactly the kinds of questions young people tend to ask. A child asking an AI chatbot about friendships, feelings, or difficult situations will get a response that sounds thoughtful and authoritative, but may be shallow, misleading, or entirely wrong.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">The danger is not that AI gives obviously bad answers. The danger is that it gives confident-sounding answers that reinforce incorrect assumptions or unhealthy narratives. A child who is already struggling may take AI's polished response as validation rather than recognizing it as a statistical guess.</p>
-
-            <div class="blog-warning">
-                <span class="callout-label">⚠️ The Hidden Danger</span>
-                <p>The danger isn't that AI gives obviously bad answers. It's that it gives <strong>confident-sounding answers</strong> that reinforce incorrect assumptions. A child who's already struggling may take AI's polished response as validation.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">💬 AI Is Not a Person, a Friend, or a Therapist</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">This is the single most important thing to help your child understand. AI is a tool, like a hammer or a calculator. It can be useful for specific tasks — summarizing information, generating ideas, checking facts (with verification). But it cannot care about your child. It cannot understand their situation. It cannot provide the emotional support that a real human relationship offers.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">When kids treat AI as a companion, they are building a relationship with a pattern-matching system that has no awareness of who they are or what they need.</p>
-
-            <div class="blog-callout">
-                <span class="callout-label">🧠 The Key Distinction</span>
-                <p>AI is a tool, like a hammer or a calculator. Useful for specific tasks. But it <strong>cannot care</strong> about your child. It cannot understand their situation. It cannot provide the emotional support that a real human relationship offers.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">⌨️ Every Interaction Is a Prompt</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">The quality of what AI produces depends entirely on what you ask it. Vague, emotional questions produce vague, surface-level answers. If a child dumps their feelings into a chatbot without structure, they will get a polished but hollow response that may feel satisfying in the moment but offers no real insight.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Teaching kids to ask specific, focused questions — and to evaluate the answers critically — turns AI from a potential hazard into a genuine learning tool.</p>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🔒 Privacy: Treat AI Like a Public Space</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Everything typed into an AI system should be treated as if it were posted on a public bulletin board. No names, no school information, no addresses, no passwords, no personal details about friends or family. AI companies store and process conversations, and there is no guarantee about how that data will be used.</p>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px">Frame it simply for kids: if you would not say it to a stranger on the street, do not type it into a chatbot.</p>
-
-            <div class="blog-tip">
-                <span class="callout-label">🗣️ The Simple Rule</span>
-                <p><strong>Tell your kids:</strong> If you wouldn't say it to a stranger on the street, don't type it into a chatbot. No names, no school info, no addresses, no personal details about friends or family.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 16px;color:#f0f0ec">🗣️ How to Talk to Your Kids About AI</h2>
-            <p style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:12px">Keep it simple and concrete. Here are the key messages:</p>
-            <ul style="color:#9da1b0;font-size:16px;line-height:1.8;margin-bottom:20px;padding-left:24px">
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">"AI guesses. It does not know."</strong> This is the foundation. Once kids understand this, they approach AI with the right level of skepticism.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">It is a tool, not a person.</strong> Useful for homework help and brainstorming. Not a substitute for friends, parents, or counselors.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Always verify facts.</strong> If AI tells you something, check it with a reliable source before repeating it or acting on it.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Go to humans first for feelings.</strong> When something is emotionally important, talk to a real person who knows you and cares about you.</li>
-                <li style="margin-bottom:10px"><strong style="color:#f0f0ec">Confidence is not correctness.</strong> AI always sounds sure of itself, even when it is completely wrong. Sounding confident and being right are two different things.</li>
-            </ul>
-
-            <div class="blog-callout">
-                <span class="callout-label">💪 The Bottom Line</span>
-                <p>The goal isn't to make kids afraid of AI — it's to make them <strong>smarter than it.</strong> Teach them to question, verify, and always go to real humans for the things that matter most.</p>
-            </div>
-
-            <h2 style="font-size:1.4rem;margin:48px 0 24px;color:#f0f0ec">Frequently Asked Questions</h2>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Should I ban my child from using AI entirely?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">A blanket ban is usually counterproductive. AI is everywhere now, and your child will encounter it regardless. Instead, teach them to use it critically and safely. Supervised use with open conversations about what AI can and cannot do is more effective than prohibition.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">At what age should kids start using AI tools?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">There is no universal answer, but a good rule of thumb is that children should be able to understand the concept that AI can be wrong before using it independently. For most kids, that means around age 10-12 with supervision, and greater independence as they demonstrate critical thinking skills.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">Can AI be used safely for homework?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Yes, when used as a learning aid rather than an answer machine. AI is great for explaining concepts, generating practice problems, and brainstorming ideas. It should not be used to write essays or provide final answers. The key is teaching kids the difference between using AI to learn and using AI to avoid learning.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">What if my child is already using AI as an emotional support tool?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Do not panic or shame them. Start a conversation about what they are getting from the interaction and gently introduce the idea that AI responses are generated patterns, not genuine understanding. Help them identify real people they can talk to and make those connections accessible and judgment-free.</p>
-            </details>
-            <details style="border:1px solid rgba(22,27,46,0.5);border-radius:10px;padding:16px 20px;margin-bottom:12px;background:#0d1120">
-                <summary style="cursor:pointer;font-weight:700;color:#f0f0ec;font-size:15px;list-style:none">How do I stay informed about AI risks for children?</summary>
-                <p style="color:#9da1b0;font-size:14px;line-height:1.7;margin-top:12px">Follow organizations focused on digital literacy and child safety online. Talk to your child's school about their AI policies. And most importantly, use the tools yourself — spend time with ChatGPT or similar systems so you understand firsthand what your child is interacting with.</p>
-            </details>
-
-            <div style="margin-top:56px;padding:32px;background:#0d1120;border:1px solid rgba(254,88,0,0.15);border-radius:12px;text-align:center">
-                <h3 style="margin-bottom:12px;font-size:1.1rem">Need help with technology at home or at work?</h3>
-                <p style="color:#9da1b0;font-size:14px;margin-bottom:20px">We help families and businesses navigate technology with clarity and confidence.</p>
-                <a href="#contact" onclick="navigateTo('contact')" class="btn btn-orange">Get in Touch &rarr;</a>
-            </div>
-        </article>
-    </div>
 
     <footer role="contentinfo">
         <div class="footer-grid">
@@ -2628,7 +1962,8 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
                     <li><a href="#blog" onclick="navigateTo('blog')">Blog</a></li>
                     <li><a href="#how" onclick="navigateTo('how')">Approach</a></li>
                     <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
-                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -2687,28 +2022,34 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
             document.querySelector('.nav-drawer-overlay').classList.toggle('open');
         }
 
+        var legacyBlogRoutes = {
+            'blog-post-1': '/ai-google-broke-the-internet-websites-survive/',
+            'blog-post-2': '/what-google-looks-for-business-website/',
+            'blog-post-3': '/why-business-websites-will-be-invisible/',
+            'blog-post-4': '/blog/cybersecurity-for-small-business.html',
+            'blog-post-5': '/blog/nyc-small-business-digital.html',
+            'blog-post-6': '/blog/protecting-kids-from-ai.html'
+        };
+
         // Handle initial hash route on page load
         (function() {
             var hash = window.location.hash.replace('#','');
+            if (hash && legacyBlogRoutes[hash]) {
+                window.location.replace(legacyBlogRoutes[hash]);
+                return;
+            }
             if (hash && hash !== 'home' && document.getElementById(hash)) {
                 navigateTo(hash);
             }
             window.addEventListener('hashchange', function() {
                 var h = window.location.hash.replace('#','');
+                if (h && legacyBlogRoutes[h]) {
+                    window.location.replace(legacyBlogRoutes[h]);
+                    return;
+                }
                 if (h && document.getElementById(h)) navigateTo(h);
             });
         })();
-
-        document.querySelectorAll('.story-card[onclick], .work-card[onclick]').forEach(function(card) {
-            card.tabIndex = 0;
-            card.setAttribute('role', 'link');
-            card.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    card.click();
-                }
-            });
-        });
 
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const canUseAmbientMotion = !prefersReducedMotion && (typeof navigator !== 'undefined' ? navigator.hardwareConcurrency || 6 : 6) >= 4 && (typeof navigator !== 'undefined' && 'deviceMemory' in navigator ? navigator.deviceMemory >= 4 : true);
@@ -3403,7 +2744,9 @@ article a, .blog-callout a, .blog-tip a{text-decoration:underline}
         }
         import('./js/hero-3d.js')
             .then(({ init }) => init(container))
-            .catch((error) => console.error('Hero skyline failed to load', error));
+            .catch(() => {
+                container.setAttribute('data-hero-failed', 'true');
+            });
     }
 
     if (container) {

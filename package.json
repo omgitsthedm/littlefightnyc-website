@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "preview": "node scripts/preview-server.mjs"
+  },
   "devDependencies": {
     "clean-css-cli": "^5.6.3",
     "terser": "^5.46.1"
