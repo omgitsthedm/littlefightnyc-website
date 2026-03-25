@@ -24,7 +24,7 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#FF5A00">
     <link rel="preload" as="image" href="/assets/icons/mdi-subset/robot-outline.svg">
-    <style>.article-shell{max-width:840px;margin:0 auto}.article-meta{color:var(--text-muted);font-size:.95rem;margin-bottom:18px}.article-hero-art{background:linear-gradient(135deg,#141414 0,#1f2a35 45%,#2058af 100%);border-radius:16px;padding:28px;margin-bottom:22px;border:1px solid rgba(255,255,255,.08)}.article-hero-art svg{width:100%;height:auto;display:block}.article-body p{color:var(--text-secondary);margin-bottom:16px;font-size:1.05rem}.article-body h2{font-size:1.8rem;margin:34px 0 14px;color:var(--bg-dark)}.article-body h3{font-size:1.28rem;margin:24px 0 10px;color:var(--bg-dark)}.article-body ul{margin:0 0 16px 20px;color:var(--text-secondary)}.article-body li{margin-bottom:10px}.article-body a{color:var(--accent-text);font-weight:600}.faq-block{margin-top:34px;border:1px solid #e6edf2;border-radius:14px;background:#fff;padding:22px}.faq-block h3{margin-top:0}.faq-item-inline{padding:12px 0;border-bottom:1px solid #eef3f7}.faq-item-inline:last-child{border-bottom:none;padding-bottom:0}.faq-item-inline h4{font-size:1rem;margin-bottom:6px;color:var(--bg-dark)}.author-bio{margin-top:24px;background:#f9fbfd;border:1px solid #e6edf2;border-radius:14px;padding:20px}.author-bio h3{margin-top:0}.article-cta{margin-top:24px;padding:22px;border-radius:14px;background:linear-gradient(135deg,#f29a73 0,#2058af 100%);color:#fff}.article-cta h3,.article-cta p{color:#fff}</style>
+    <style>.article-hero-art svg{width:100%;height:auto;display:block}</style>
 
     <script type="application/ld+json">
     {
@@ -97,9 +97,10 @@
     }
     </script>
 <link rel="stylesheet" href="/css/lifi-shared-page.min.css">
+    <link rel="stylesheet" href="/css/lifi-editorial-polish.css?v=20260324d">
     <link rel="stylesheet" href="/css/lifi-motion-polish.css?v=20260324c">
 </head>
-<body class="page-shell service-detail theme-ocean">
+<body class="page-shell service-detail theme-ocean editorial-article">
     <nav role="navigation" aria-label="Main navigation">
         <div class="nav-container">
             <a href="/" class="nav-logo" aria-label="Little Fight NYC - Home">
@@ -134,8 +135,14 @@
                 <p class="section-eyebrow">DIGITAL STRATEGY</p>
                 <h1 class="section-title">AI and Google Broke the Internet (Here’s How Websites Survive Now)</h1>
                 <p class="section-description">Search does not work like it used to. AI answers, Google summaries, and heavyweight corporate pages changed who gets seen online. Here is what happened and what to do next.</p>
-                <p style="color:rgba(255,255,255,0.55);font-size:13px;margin-bottom:16px">By <strong style="color:#f0f0ec">David Marsh, Little Fight NYC</strong> · Published February 7, 2026</p>
+                <p class="editorial-byline">By <strong>David Marsh, Little Fight NYC</strong> · Published February 7, 2026</p>
                 <p class="article-meta">Updated March 20, 2026 · 7 min read</p>
+                <div class="article-signal-bar" aria-label="What this story covers">
+                    <span class="article-signal-pill">Search + AI shift</span>
+                    <span class="article-signal-pill">Built for owners</span>
+                    <span class="article-signal-pill">Clarity before tactics</span>
+                </div>
+                <div class="article-hero-frame">
                 <div class="article-hero-art" aria-label="Symbolic graphic of old internet search chaos">
                     <svg viewBox="0 0 980 380" role="img" aria-label="CRT screen with noisy search results and 404 motifs">
                         <defs>
@@ -170,11 +177,26 @@
                         <circle cx="878" cy="245" r="10" fill="#2058AF"/>
                     </svg>
                 </div>
+                </div>
             </div>
         </section>
 
         <section class="page-content">
             <div class="container article-shell article-body">
+                <section class="article-top-summary" aria-label="Quick summary">
+                    <article class="article-summary-card">
+                        <span class="article-summary-kicker">What changed</span>
+                        <p>Search moved from link lists toward answer surfaces, summaries, and authority-heavy results.</p>
+                    </article>
+                    <article class="article-summary-card">
+                        <span class="article-summary-kicker">Why it matters</span>
+                        <p>Local businesses get less patience, fewer clicks, and a bigger trust job the moment someone lands.</p>
+                    </article>
+                    <article class="article-summary-card">
+                        <span class="article-summary-kicker">What to do</span>
+                        <p>Make the site faster to understand, easier to verify, and more obviously tied to real work.</p>
+                    </article>
+                </section>
                 <p>The old internet deal was simple: create something useful, publish it, and if it was good enough, people could find it. That deal changed fast. Today, search pages are crowded with ads, AI summaries, and giant publisher domains. For independent businesses, the rules are different now.</p>
 
                 <h2>What actually changed?</h2>
@@ -241,6 +263,19 @@
                     <p>Little Fight NYC is a New York City web design and digital strategy studio focused on building clear, fast, and trustworthy websites for local businesses and creative brands. The studio specializes in modern search visibility, helping businesses stay discoverable in both traditional Google results and AI-driven search platforms.</p>
                 </section>
 
+                <section class="article-related-grid" aria-label="Read next">
+                    <a class="article-related-card" href="/what-google-looks-for-business-website/">
+                        <span class="article-related-kicker">Read next</span>
+                        <h3>What Google actually looks for on a business website</h3>
+                        <p>The practical trust signals and structure cues that matter more than keyword repetition now.</p>
+                    </a>
+                    <a class="article-related-card" href="/why-business-websites-will-be-invisible/">
+                        <span class="article-related-kicker">Then zoom out</span>
+                        <h3>Why most business websites will be invisible in 18 months</h3>
+                        <p>The longer-term visibility shift, and why generic pages keep losing ground.</p>
+                    </a>
+                </section>
+
                 <section class="article-cta" aria-labelledby="next-step-title">
                     <h3 id="next-step-title">Want your website built for this new search reality?</h3>
                     <p>We help local businesses turn confusion into a clear, modern site structure that gets found and gets trusted.</p>
@@ -250,8 +285,8 @@
                     </div>
                 </section>
 
-                <p style="margin-top: 28px;"><a href="/blog/">← Back to all posts</a></p>
-                <footer class="content-meta" style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:32px;text-align:center;">
+                <a class="article-back-link" href="/blog/">← Back to all posts</a>
+                <footer class="content-meta" style="font-size:13px;margin-top:32px;text-align:center;">
   By <address class="author" rel="author" style="display:inline;font-style:normal;">David Marsh, Little Fight NYC</address> ·
   Published <time class="published" datetime="2026-02-07">February 7, 2026</time>
 </footer>
@@ -328,6 +363,6 @@
         </div>
     </footer>
 
-    <script src="/js/main.min.js" defer></script>
+    <script src="/js/main.js?v=20260324c" defer></script>
 </body>
 </html>
