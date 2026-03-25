@@ -1,0 +1,662 @@
+:root {
+  --lifi-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --lifi-motion-ease-soft: cubic-bezier(0.25, 1, 0.5, 1);
+  --lifi-glass-surface: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 250, 252, 0.82) 100%
+  );
+  --lifi-glass-border: rgba(255, 255, 255, 0.72);
+  --lifi-glass-shadow:
+    0 28px 72px rgba(12, 30, 48, 0.1),
+    0 10px 28px rgba(255, 90, 0, 0.08);
+  --lifi-glass-shadow-strong:
+    0 36px 96px rgba(12, 30, 48, 0.14),
+    0 16px 40px rgba(255, 90, 0, 0.12);
+}
+
+body.page-shell {
+  background-color: #faf7f2;
+  background-image:
+    radial-gradient(circle at 10% 14%, rgba(255, 90, 0, 0.16) 0, transparent 21%),
+    radial-gradient(circle at 84% 18%, rgba(31, 91, 190, 0.13) 0, transparent 24%),
+    radial-gradient(circle at 16% 82%, rgba(255, 211, 187, 0.32) 0, transparent 22%),
+    radial-gradient(circle at 82% 76%, rgba(31, 91, 190, 0.08) 0, transparent 27%),
+    linear-gradient(180deg, #fffcf8 0%, #f7f4ef 100%);
+}
+
+body.page-shell::before {
+  inset: -18%;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 90, 0, 0.28) 0, rgba(255, 90, 0, 0) 34%),
+    radial-gradient(circle at 82% 24%, rgba(31, 91, 190, 0.2) 0, rgba(31, 91, 190, 0) 36%),
+    radial-gradient(circle at 46% 88%, rgba(255, 208, 184, 0.3) 0, rgba(255, 208, 184, 0) 34%);
+  filter: blur(72px) saturate(1.08);
+  opacity: 0.76;
+  animation: lifiAmbientDrift 24s ease-in-out infinite alternate;
+}
+
+body.page-shell::after {
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.46), transparent 34%, transparent 68%, rgba(255, 255, 255, 0.24)),
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.26), transparent 18%),
+    repeating-linear-gradient(90deg, rgba(31, 91, 190, 0.05) 0 1px, transparent 1px 90px);
+  mix-blend-mode: soft-light;
+  opacity: 0.24;
+}
+
+main#main-content {
+  isolation: isolate;
+}
+
+.page-hero,
+.page-content,
+.featured-stage,
+.services-signal-band {
+  position: relative;
+  overflow: clip;
+}
+
+.page-hero::before,
+.featured-stage::before,
+.page-content::before,
+.services-signal-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.page-hero::before {
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 28%, rgba(255, 90, 0, 0.12) 0, transparent 34%),
+    radial-gradient(circle at 86% 18%, rgba(31, 91, 190, 0.12) 0, transparent 32%);
+  opacity: 0.95;
+}
+
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 24px clamp(14px, 3vw, 36px) auto;
+  height: min(28rem, 78%);
+  border-radius: 32px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.1)),
+    radial-gradient(circle at 18% 24%, rgba(255, 90, 0, 0.14), transparent 36%),
+    radial-gradient(circle at 82% 26%, rgba(31, 91, 190, 0.14), transparent 38%);
+  filter: blur(18px);
+  opacity: 0.52;
+  pointer-events: none;
+  z-index: 0;
+  animation: lifiHeroGlow 18s ease-in-out infinite alternate;
+}
+
+.page-hero .container,
+.featured-stage-grid,
+.services-signal-grid,
+.page-content .container {
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero .section-title {
+  max-width: 15ch;
+  text-wrap: balance;
+  color: var(--bg-dark);
+}
+
+.blog-hub .page-hero .section-title,
+.service-hub .page-hero .section-title {
+  max-width: 18ch;
+}
+
+.page-hero .section-description,
+.page-hero .hero-note,
+.page-hero .journal-intro-note {
+  max-width: 60ch;
+  color: var(--text-secondary);
+}
+
+.page-hero .breadcrumbs,
+.page-hero .breadcrumbs a,
+.page-hero .back-links,
+.page-hero .back-links a,
+.page-hero p[style*="Updated"] {
+  color: rgba(31, 35, 38, 0.68) !important;
+}
+
+.page-hero p[style*="Updated"] strong {
+  color: var(--bg-dark) !important;
+}
+
+.page-hero .container > .breadcrumbs,
+.page-hero .container > .back-links,
+.page-hero .container > .section-eyebrow,
+.page-hero .container > .service-wayfinder,
+.page-hero .container > .section-title,
+.page-hero .container > .section-description,
+.page-hero .container > .journal-intro-flags,
+.page-hero .container > .journal-intro-note,
+.page-hero .container > .hero-actions,
+.page-hero .container > .hero-note,
+.page-hero .container > p[style*="Updated"],
+.page-hero .journal-issue-card {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0) scale(0.985);
+  animation: lifiRiseIn 0.82s var(--lifi-motion-ease) forwards;
+}
+
+.page-hero .container > .breadcrumbs,
+.page-hero .container > .back-links {
+  animation-delay: 80ms;
+}
+
+.page-hero .container > .section-eyebrow,
+.page-hero .container > .service-wayfinder,
+.page-hero .container > p[style*="Updated"] {
+  animation-delay: 150ms;
+}
+
+.page-hero .container > .section-title {
+  animation-delay: 220ms;
+}
+
+.page-hero .container > .section-description {
+  animation-delay: 310ms;
+}
+
+.page-hero .container > .journal-intro-flags,
+.page-hero .container > .hero-actions {
+  animation-delay: 400ms;
+}
+
+.page-hero .container > .journal-intro-note,
+.page-hero .container > .hero-note,
+.page-hero .journal-issue-card {
+  animation-delay: 490ms;
+}
+
+.journal-issue-card,
+.contact-intro-card,
+.services-signal-card,
+.dispatch-proof-panel,
+.story-jump-links {
+  color: #f6f2eb;
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(27, 31, 41, 0.84), rgba(30, 37, 52, 0.76)),
+    radial-gradient(circle at 18% 18%, rgba(255, 90, 0, 0.14), transparent 36%),
+    radial-gradient(circle at 82% 20%, rgba(31, 91, 190, 0.12), transparent 38%);
+  box-shadow:
+    0 30px 80px rgba(9, 15, 24, 0.24),
+    0 12px 30px rgba(255, 90, 0, 0.12);
+}
+
+.journal-issue-card,
+.dispatch-feature,
+.dispatch-mini-card,
+.dispatch-card,
+.form-container,
+.contact-info-item,
+.service-link-card,
+.work-process-step,
+.premium-process-step,
+.industry-index-card,
+.industry-map-card,
+.story-card,
+.story-step,
+.service-wayfinder,
+.final-cta {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--lifi-glass-border);
+  background: var(--lifi-glass-surface);
+  box-shadow: var(--lifi-glass-shadow);
+  backdrop-filter: blur(18px) saturate(1.16);
+  -webkit-backdrop-filter: blur(18px) saturate(1.16);
+}
+
+.journal-issue-card::before,
+.dispatch-feature::before,
+.dispatch-mini-card::before,
+.dispatch-card::before,
+.contact-intro-card::before,
+.form-container::before,
+.services-signal-card::before,
+.service-link-card::before,
+.work-process-step::before,
+.premium-process-step::before,
+.industry-map-card::before,
+.story-card::before,
+.story-step::before,
+.final-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, #ff5a00, #ffb061 42%, rgba(31, 91, 190, 0.9));
+  opacity: 0.95;
+}
+
+.content-block,
+.industry-index-card,
+.contact-info-item {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.88));
+  border-color: rgba(255, 255, 255, 0.74);
+  box-shadow:
+    0 20px 54px rgba(12, 30, 48, 0.08),
+    0 8px 24px rgba(31, 91, 190, 0.05);
+}
+
+body.page-shell :is(.journal-issue-card, .contact-intro-card, .services-signal-card, .dispatch-proof-panel, .story-jump-links) {
+  color: #f6f2eb;
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(180deg, rgba(27, 31, 41, 0.84), rgba(30, 37, 52, 0.76)),
+    radial-gradient(circle at 18% 18%, rgba(255, 90, 0, 0.14), transparent 36%),
+    radial-gradient(circle at 82% 20%, rgba(31, 91, 190, 0.12), transparent 38%);
+  box-shadow:
+    0 30px 80px rgba(9, 15, 24, 0.24),
+    0 12px 30px rgba(255, 90, 0, 0.12);
+}
+
+.journal-issue-card :is(h2, p, span, a, strong),
+.contact-intro-card :is(h2, p, span),
+.services-signal-card :is(h2, p, .services-signal-kicker),
+.dispatch-proof-panel :is(p, span),
+.story-jump-links a {
+  color: inherit;
+}
+
+.journal-issue-card .issue-link,
+.story-jump-links a {
+  color: #f9f6f1;
+}
+
+.journal-issue-card .issue-link strong,
+.dispatch-proof-panel .dispatch-proof-label,
+.services-signal-card .services-signal-kicker,
+.contact-intro-card .contact-intro-kicker {
+  color: #ffb061;
+}
+
+.contact-intro-card .contact-chip {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #fff6ec;
+  box-shadow: none;
+}
+
+.content-block,
+.final-cta,
+.services-signal-card,
+.story-jump-links,
+.industry-map-card,
+.service-link-card,
+.work-process-step,
+.premium-process-step,
+.dispatch-proof-panel,
+.contact-info-item {
+  transition:
+    transform 0.38s var(--lifi-motion-ease),
+    box-shadow 0.38s var(--lifi-motion-ease),
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+  will-change: transform;
+}
+
+.dispatch-feature-media,
+.dispatch-mini-media,
+.dispatch-card-media,
+.issue-art,
+.contact-illustration {
+  overflow: hidden;
+}
+
+.dispatch-feature-media img,
+.dispatch-mini-media img,
+.dispatch-card-media img,
+.issue-art img,
+.contact-illustration img,
+.accent-photo-card img,
+.stats-image-card img {
+  transform: scale(1.01);
+  transition:
+    transform 0.95s var(--lifi-motion-ease),
+    filter 0.55s ease;
+}
+
+.journal-intro-flags span,
+.journal-sidecar-pills span,
+.contact-chip,
+.dispatch-chip,
+.dispatch-card-chip,
+.service-wayfinder {
+  border-color: rgba(255, 255, 255, 0.76);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 10px 24px rgba(12, 30, 48, 0.08);
+}
+
+.service-wayfinder,
+.story-jump-links,
+.journal-intro-flags span,
+.journal-sidecar-pills span,
+.contact-chip {
+  backdrop-filter: blur(16px) saturate(1.14);
+  -webkit-backdrop-filter: blur(16px) saturate(1.14);
+}
+
+.journal-issue-card,
+.dispatch-feature,
+.final-cta {
+  box-shadow: var(--lifi-glass-shadow-strong);
+}
+
+.journal-issue-card::after,
+.dispatch-feature::after,
+.final-cta::after,
+.contact-intro-card::after,
+.form-container::after {
+  content: "";
+  position: absolute;
+  top: -32%;
+  left: -18%;
+  width: 46%;
+  height: 180%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  opacity: 0.18;
+  transform: rotate(16deg);
+  pointer-events: none;
+}
+
+.journal-issue-card .issue-art img,
+.contact-illustration img {
+  animation: lifiCardFloat 14s ease-in-out infinite;
+}
+
+.dispatch-read,
+.dispatch-mini-read,
+.dispatch-card-read,
+.issue-link,
+.story-link,
+.hero-actions .btn,
+.story-links a {
+  transition:
+    transform 0.28s var(--lifi-motion-ease-soft),
+    color 0.28s ease,
+    box-shadow 0.28s var(--lifi-motion-ease-soft),
+    border-color 0.28s ease;
+}
+
+.dispatch-read,
+.dispatch-mini-read,
+.dispatch-card-read,
+.story-link,
+.story-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dispatch-read::after,
+.dispatch-mini-read::after,
+.dispatch-card-read::after,
+.story-link::after,
+.story-links a::after {
+  content: "→";
+  transform: translateX(0);
+  transition: transform 0.28s var(--lifi-motion-ease-soft);
+}
+
+.contact-info-item {
+  gap: 18px;
+  padding: 18px 20px;
+  border-radius: 18px;
+}
+
+.contact-info-item .contact-icon {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 12px 26px rgba(31, 91, 190, 0.14);
+}
+
+.content-block h2,
+.dispatch-feature-title a,
+.dispatch-mini-title a,
+.dispatch-card-title a,
+.final-cta h2 {
+  text-wrap: balance;
+}
+
+.section-shell .accent-photo-card,
+.stats-image-card {
+  box-shadow:
+    0 22px 54px rgba(12, 30, 48, 0.12),
+    0 8px 24px rgba(255, 90, 0, 0.08);
+}
+
+.featured-stage::before,
+.page-content::before,
+.services-signal-band::before {
+  background:
+    radial-gradient(circle at 84% 22%, rgba(31, 91, 190, 0.08), transparent 24%),
+    radial-gradient(circle at 14% 70%, rgba(255, 90, 0, 0.08), transparent 24%);
+  opacity: 0.9;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .content-block:hover,
+  .final-cta:hover,
+  .dispatch-proof-panel:hover,
+  .contact-info-item:hover,
+  .services-signal-card:hover,
+  .service-link-card:hover,
+  .industry-map-card:hover,
+  .work-process-step:hover,
+  .premium-process-step:hover,
+  .story-card:hover,
+  .story-step:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 90, 0, 0.2);
+    box-shadow:
+      0 30px 78px rgba(12, 30, 48, 0.13),
+      0 14px 36px rgba(255, 90, 0, 0.12);
+  }
+
+  .dispatch-feature:hover,
+  .journal-issue-card:hover,
+  .contact-intro-card:hover,
+  .form-container:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 90, 0, 0.22);
+    box-shadow: var(--lifi-glass-shadow-strong);
+  }
+
+  .dispatch-feature:hover .dispatch-feature-media img,
+  .dispatch-mini-card:hover .dispatch-mini-media img,
+  .dispatch-card:hover .dispatch-card-media img,
+  .journal-issue-card:hover .issue-art img,
+  .contact-intro-card:hover .contact-illustration img,
+  .accent-photo-card:hover img,
+  .stats-image-card:hover img {
+    transform: scale(1.06);
+    filter: saturate(1.04) contrast(1.03);
+  }
+
+  .dispatch-read:hover,
+  .dispatch-mini-read:hover,
+  .dispatch-card-read:hover,
+  .story-link:hover,
+  .story-links a:hover,
+  .issue-link:hover,
+  .hero-actions .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .dispatch-read:hover::after,
+  .dispatch-mini-read:hover::after,
+  .dispatch-card-read:hover::after,
+  .story-link:hover::after,
+  .story-links a:hover::after {
+    transform: translateX(4px);
+  }
+}
+
+@media (max-width: 900px) {
+  .page-hero::after {
+    inset: 18px 18px auto;
+    height: min(24rem, 76%);
+  }
+
+  .page-hero .section-title,
+  .blog-hub .page-hero .section-title,
+  .service-hub .page-hero .section-title {
+    max-width: none;
+  }
+
+  .journal-issue-card,
+  .dispatch-feature,
+  .dispatch-mini-card,
+  .dispatch-card,
+  .contact-intro-card,
+  .form-container,
+  .final-cta {
+    box-shadow:
+      0 24px 60px rgba(12, 30, 48, 0.12),
+      0 10px 24px rgba(255, 90, 0, 0.08);
+  }
+}
+
+@media (max-width: 640px) {
+  body.page-shell::before {
+    opacity: 0.62;
+    filter: blur(52px) saturate(1.02);
+  }
+
+  body.page-shell::after {
+    opacity: 0.36;
+  }
+
+  .page-hero::after {
+    inset: 14px 12px auto;
+    height: min(18rem, 68%);
+    border-radius: 24px;
+  }
+
+  .content-block,
+  .final-cta,
+  .journal-issue-card,
+  .dispatch-feature,
+  .dispatch-mini-card,
+  .dispatch-card,
+  .contact-intro-card,
+  .form-container,
+  .services-signal-card,
+  .service-link-card,
+  .industry-map-card,
+  .work-process-step,
+  .premium-process-step,
+  .story-card,
+  .story-step {
+    backdrop-filter: blur(12px) saturate(1.08);
+    -webkit-backdrop-filter: blur(12px) saturate(1.08);
+  }
+}
+
+@keyframes lifiAmbientDrift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, 2%, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(4%, -3%, 0) scale(1.02);
+  }
+}
+
+@keyframes lifiHeroGlow {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+    opacity: 0.86;
+  }
+  100% {
+    transform: translate3d(2%, 3%, 0) scale(1.04);
+    opacity: 1;
+  }
+}
+
+@keyframes lifiRiseIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lifiCardFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.01);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.page-shell::before,
+  .page-hero::after,
+  .journal-issue-card .issue-art img,
+  .contact-illustration img {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .page-hero .container > .breadcrumbs,
+  .page-hero .container > .back-links,
+  .page-hero .container > .section-eyebrow,
+  .page-hero .container > .service-wayfinder,
+  .page-hero .container > .section-title,
+  .page-hero .container > .section-description,
+  .page-hero .container > .journal-intro-flags,
+  .page-hero .container > .journal-intro-note,
+  .page-hero .container > .hero-actions,
+  .page-hero .container > .hero-note,
+  .page-hero .container > p[style*="Updated"],
+  .page-hero .journal-issue-card {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .content-block,
+  .final-cta,
+  .dispatch-proof-panel,
+  .contact-info-item,
+  .services-signal-card,
+  .service-link-card,
+  .industry-map-card,
+  .work-process-step,
+  .premium-process-step,
+  .story-card,
+  .story-step,
+  .dispatch-feature,
+  .journal-issue-card,
+  .contact-intro-card,
+  .form-container,
+  .dispatch-read,
+  .dispatch-mini-read,
+  .dispatch-card-read,
+  .story-link,
+  .story-links a,
+  .hero-actions .btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
