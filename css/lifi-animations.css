@@ -1,0 +1,168 @@
+/* ── lifi-animations.css — LiFi NYC Site-Wide Animation System ── */
+
+/* ── Easing tokens ── */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ── Scroll reveal base ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Stagger variants ── */
+.stagger > *:nth-child(1) { transition-delay: 0ms; }
+.stagger > *:nth-child(2) { transition-delay: 60ms; }
+.stagger > *:nth-child(3) { transition-delay: 120ms; }
+.stagger > *:nth-child(4) { transition-delay: 180ms; }
+.stagger > *:nth-child(5) { transition-delay: 240ms; }
+.stagger > *:nth-child(6) { transition-delay: 300ms; }
+
+/* ── Hover lift for cards ── */
+.card-lift {
+  transition: transform var(--duration-base) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(254,88,0,0.15);
+}
+
+/* ── Button micro-interaction ── */
+.btn {
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-base) var(--ease-out),
+              background var(--duration-base) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 30px rgba(254,88,0,0.35);
+}
+
+/* ── Page hero entrance ── */
+@keyframes heroSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-hero .section-eyebrow   { animation: heroSlideUp 0.5s var(--ease-out) 0.1s both; }
+.page-hero .section-title      { animation: heroSlideUp 0.6s var(--ease-out) 0.2s both; }
+.page-hero .section-description{ animation: heroSlideUp 0.6s var(--ease-out) 0.3s both; }
+.page-hero .hero-actions        { animation: heroSlideUp 0.6s var(--ease-out) 0.4s both; }
+
+/* ── Nav link underline grow ── */
+nav .nav-links a:not(.nav-cta) {
+  position: relative;
+}
+
+nav .nav-links a:not(.nav-cta)::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #FE5800;
+  transition: width var(--duration-base) var(--ease-out);
+}
+
+nav .nav-links a:not(.nav-cta):hover::after {
+  width: 100%;
+}
+
+/* ── Orange accent pulse on stat numbers ── */
+@keyframes subtlePulse {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  50%       { text-shadow: 0 0 20px rgba(254,88,0,0.4); }
+}
+
+.stat-number {
+  animation: subtlePulse 4s ease-in-out infinite;
+}
+
+/* ── Skeleton shimmer for loading ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.1)  50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.5s linear infinite;
+  border-radius: 8px;
+}
+
+/* ── Service card hover glow ── */
+.service-card {
+  transition: transform var(--duration-base) var(--ease-out),
+              border-color var(--duration-base) ease,
+              box-shadow var(--duration-base) var(--ease-out);
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(254,88,0,0.3) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px rgba(254,88,0,0.15) inset;
+}
+
+/* ── Footer link hover ── */
+.footer-links a {
+  transition: color var(--duration-fast) ease,
+              transform var(--duration-fast) ease;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: #FE5800 !important;
+  transform: translateX(3px);
+}
+
+/* ── Callout box entrance ── */
+.callout {
+  transition: border-color var(--duration-base) ease;
+}
+
+.callout:hover {
+  border-left-color: rgba(254,88,0,0.6);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

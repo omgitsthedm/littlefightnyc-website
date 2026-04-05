@@ -1,0 +1,471 @@
+/* ── lifi-article.css — LiFi NYC Article Stylesheet ── */
+/* Editorial, premium, dark-native article layout */
+
+/* ── Layout containers ── */
+.article-shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+}
+
+.article-hero-band {
+  position: relative;
+  width: 100%;
+  padding: 64px 24px 0;
+  margin-bottom: 0;
+  background: linear-gradient(180deg, rgba(254,88,0,0.08) 0%, transparent 100%);
+  border-top: 3px solid rgba(254,88,0,0.45);
+}
+
+.article-body {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #d0d4e0;
+  margin-top: 2rem;
+}
+
+.article-body h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f0f0ec;
+  margin-top: 3rem;
+  margin-bottom: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(254,88,0,0.15);
+  line-height: 1.25;
+}
+
+.article-body h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f0f0ec;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+}
+
+.article-body a {
+  color: #FE5800;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(254,88,0,0.3);
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.article-body a:hover {
+  color: #FF6B35;
+  border-bottom-color: #FE5800;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.article-body ul li,
+.article-body ol li {
+  margin-bottom: 0.75rem;
+}
+
+.article-body ul li::marker {
+  color: #FE5800;
+}
+
+.article-body ol li::marker {
+  color: #FE5800;
+  font-weight: 700;
+}
+
+.article-body strong {
+  color: #f0f0ec;
+  font-weight: 700;
+}
+
+.article-body em {
+  color: #c0c4d0;
+}
+
+/* ── Callout boxes ── */
+.callout {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border-left: 4px solid;
+  background: rgba(13,17,32,0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.callout::before {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.callout-tip {
+  border-left-color: #0891B2;
+  background: rgba(8,145,178,0.08);
+}
+
+.callout-tip::before {
+  content: "💡 TIP";
+  color: #0891B2;
+}
+
+.callout-stat {
+  border-left-color: #FE5800;
+  background: rgba(254,88,0,0.08);
+}
+
+.callout-stat::before {
+  content: "📊 STAT";
+  color: #FE5800;
+}
+
+.callout-warning {
+  border-left-color: #f59e0b;
+  background: rgba(245,158,11,0.08);
+}
+
+.callout-warning::before {
+  content: "⚠️ HEADS UP";
+  color: #f59e0b;
+}
+
+.callout-lifi {
+  border-left-color: #FE5800;
+  background: rgba(254,88,0,0.06);
+}
+
+.callout-lifi::before {
+  content: "🔥 HOW LIFI CAN HELP";
+  color: #FE5800;
+}
+
+.callout-quote {
+  border-left-color: #FE5800;
+  background: rgba(254,88,0,0.05);
+  text-align: center;
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.65;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  color: #f0f0ec;
+  padding: 2rem 2.5rem;
+  border-left-width: 0;
+  border-top: 3px solid rgba(254,88,0,0.4);
+}
+
+.callout-quote::before {
+  content: none;
+}
+
+/* Legacy inline callout pattern — upgrade to glass */
+.legacy-article-body p[style*="background:rgba(64,124,138"],
+.legacy-article-body p[style*="background:rgba(64, 124, 138"] {
+  padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  border-left: 4px solid #0891B2;
+  background: rgba(8,145,178,0.08) !important;
+  color: #d0d4e0 !important;
+}
+
+/* ── Stat highlight bar ── */
+.stat-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 2.5rem 0;
+}
+
+@media (max-width: 600px) {
+  .stat-trio {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-block {
+  padding: 1.5rem 1.25rem;
+  background: rgba(13,17,32,0.85);
+  border: 1px solid rgba(254,88,0,0.12);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #FE5800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #9da1b0;
+  line-height: 1.4;
+}
+
+/* ── Step cards ── */
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 2rem 0;
+}
+
+.step-card {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  padding: 1.5rem;
+  background: rgba(13,17,32,0.85);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  transition: transform 250ms cubic-bezier(0.22,1,0.36,1), box-shadow 250ms cubic-bezier(0.22,1,0.36,1), border-color 250ms ease;
+  cursor: default;
+}
+
+.step-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+  border-color: rgba(254,88,0,0.2);
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: #FE5800;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-card-body h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f0f0ec;
+  margin: 0 0 0.5rem;
+}
+
+.step-card-body p {
+  font-size: 0.95rem;
+  color: #9da1b0;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── CTA block ── */
+.article-cta-block,
+.article-cta {
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  margin: 3.5rem 0;
+  background: linear-gradient(180deg, rgba(20,24,36,0.95), rgba(14,18,28,0.92));
+  border: 1px solid rgba(254,88,0,0.2);
+}
+
+.article-cta-block h3,
+.article-cta h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f0f0ec;
+  margin-bottom: 1rem;
+}
+
+.article-cta-block p,
+.article-cta p {
+  margin-bottom: 1.5rem;
+  color: #9da1b0;
+  font-size: 1rem;
+}
+
+/* ── Related articles grid ── */
+.article-related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 3rem 0 1rem;
+}
+
+@media (max-width: 600px) {
+  .article-related-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.article-related-card {
+  display: block;
+  padding: 1.25rem 1.25rem 1.5rem;
+  background: rgba(13,17,32,0.9);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 250ms cubic-bezier(0.22,1,0.36,1), box-shadow 250ms cubic-bezier(0.22,1,0.36,1), border-color 250ms ease;
+  cursor: pointer;
+}
+
+.article-related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+  border-color: rgba(254,88,0,0.3);
+}
+
+.article-related-kicker {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #FE5800;
+  margin-bottom: 0.5rem;
+}
+
+.article-related-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0f0ec;
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.article-related-card p {
+  font-size: 0.875rem;
+  color: #9da1b0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Back link ── */
+.article-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #FE5800;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: transform 200ms ease, color 200ms ease;
+}
+
+.article-back-link:hover {
+  color: #FF6B35;
+  transform: translateX(-3px);
+}
+
+/* Back link at bottom */
+.legacy-article-shell .article-back-link:last-of-type,
+.article-shell > .article-back-link:last-of-type {
+  margin-top: 2.5rem;
+  margin-bottom: 0;
+}
+
+/* ── Article meta / byline ── */
+.editorial-byline {
+  font-size: 0.925rem;
+  color: #9da1b0;
+  margin-bottom: 0.5rem;
+}
+
+.article-meta {
+  font-size: 0.85rem;
+  color: #6b7185;
+  margin-bottom: 1rem;
+}
+
+/* ── Signal pills ── */
+.article-signal-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1rem 0 2rem;
+}
+
+.article-signal-pill {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(254,88,0,0.1);
+  color: #FE5800;
+  border: 1px solid rgba(254,88,0,0.2);
+  letter-spacing: 0.02em;
+}
+
+/* ── Article image / icon hero ── */
+.article-image {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+/* Legacy dark-mode fix for inline blockquote boxes (AI article) */
+.article-body p[style*="background:#222"],
+.article-body p[style*="background: #222"] {
+  background: rgba(20,24,36,0.95) !important;
+  color: #f0f0ec !important;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Legacy inline note box fix (blue left-border blocks) */
+.article-body p[style*="border-left:4px solid #1f5bbe"],
+.article-body p[style*="border-left: 4px solid #1f5bbe"] {
+  background: rgba(8,145,178,0.07) !important;
+  border-left-color: #0891B2 !important;
+  color: #d0d4e0 !important;
+  border-radius: 0 12px 12px 0;
+  padding: 1.25rem 1.5rem !important;
+}
+
+/* Callout inline in article body, legacy style */
+.article-body div[class~="callout"] {
+  font-size: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .article-shell {
+    padding: 80px 20px 60px;
+  }
+
+  .article-body {
+    font-size: 1.05rem;
+  }
+
+  .article-body h2 {
+    font-size: 1.45rem;
+    margin-top: 2.5rem;
+  }
+
+  .article-body h3 {
+    font-size: 1.15rem;
+  }
+
+  .callout-quote {
+    padding: 1.5rem 1.25rem;
+    font-size: 1.1rem;
+  }
+}
