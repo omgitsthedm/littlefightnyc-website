@@ -205,6 +205,38 @@ footer:last-of-type {
 /* ── Borders ── */
 hr, .divider { border-color: rgba(255,255,255,0.08) !important; }
 
+/* ── Sub-page card overrides (services, work, about, solutions, industries) ── */
+.services-grid .service-card,
+.service-detail-card,
+.work-card, .work-process-step, .case-study-card,
+.building-viewer-block, .building-viewer-fallback-card,
+.about-card, .team-card, .value-card,
+.solution-card, .industry-card, .industry-index-card,
+.industry-map-card {
+  background: linear-gradient(180deg, rgba(20,24,36,0.95), rgba(14,18,28,0.92)) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: #f0f0ec !important;
+}
+.service-card h3, .solution-card h3, .industry-card h3,
+.work-card h3, .about-card h3 { color: #f0f0ec !important; }
+.service-card p, .solution-card p, .industry-card p,
+.work-card p, .about-card p { color: #c0c5d0 !important; }
+
+/* Hero sections on all sub-pages */
+.page-hero { background: linear-gradient(180deg, rgba(8,11,20,0.9), transparent) !important; }
+.section-eyebrow { color: #fe5800 !important; }
+.section-title { color: #f0f0ec !important; }
+.section-description { color: #c0c5d0 !important; }
+
+/* Generic white background killer */
+[style*="background:#fff"],
+[style*="background: #fff"],
+[style*="background:white"],
+[style*="background: white"] {
+  background: linear-gradient(180deg, rgba(20,24,36,0.95), rgba(14,18,28,0.92)) !important;
+  color: #f0f0ec !important;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   body::before { animation: none; }
