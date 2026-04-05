@@ -974,3 +974,92 @@ body.page-shell::after {
     transform: translate3d(2%, -1.5%, 0) scale(1.02);
   }
 }
+
+/* ── Premium Polish Pass (Apr 2026) ── */
+
+/* Smoother scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus rings for accessibility */
+:focus-visible {
+  outline: 2px solid rgba(255, 90, 0, 0.6);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Subtle text selection branding */
+::selection {
+  background: rgba(255, 90, 0, 0.22);
+  color: inherit;
+}
+
+/* Hero headline letter-spacing refinement */
+.hero-title {
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+/* Elevated nav — subtle bottom glow on scroll */
+.nav-container.scrolled {
+  box-shadow:
+    0 1px 0 rgba(255, 90, 0, 0.08),
+    0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Premium footer signature hover */
+.footer-signature a,
+.footer-signature span[style*="color"] {
+  transition: color 0.28s ease, text-shadow 0.28s ease;
+}
+.footer-signature a:hover,
+.footer-signature span[style*="color"]:hover {
+  text-shadow: 0 0 16px rgba(255, 90, 0, 0.3);
+}
+
+/* Ambient glow pulse on hero phone number */
+.hero-phone-bar {
+  position: relative;
+}
+.hero-phone-bar::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 90, 0, 0.12), transparent 70%);
+  opacity: 0;
+  animation: lifiPhoneGlow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes lifiPhoneGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* Smoother image loading transition */
+img[loading="lazy"] {
+  transition: opacity 0.5s var(--lifi-motion-ease);
+}
+
+/* Enhanced link underline animation */
+.content-block a:not(.btn):not([class*="dispatch"]):not([class*="issue"]) {
+  text-decoration: none;
+  background-image: linear-gradient(rgba(255, 90, 0, 0.4), rgba(255, 90, 0, 0.4));
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.32s var(--lifi-motion-ease);
+}
+.content-block a:not(.btn):not([class*="dispatch"]):not([class*="issue"]):hover {
+  background-size: 100% 2px;
+}
+
+/* Reduced motion: respect everything */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-phone-bar::after { animation: none; }
+  img[loading="lazy"] { transition: none; }
+  .content-block a { transition: none; }
+}
