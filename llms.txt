@@ -1,0 +1,31 @@
+# Little Fight NYC
+
+> NYC's concierge tech support for small businesses.
+
+Little Fight NYC is a technology services agency based in New York City. We provide on-site IT support, bespoke website design, local SEO, branding, e-commerce setup, POS systems, Apple device management, smart home services, and tech consulting for small businesses.
+
+## What We Do
+
+- On-site IT support with 2-hour response time in Manhattan
+- Custom website design for small businesses (not templates)
+- Local SEO and Google Ads management for NYC businesses
+- Branding and identity design
+- E-commerce setup (Shopify, Square, WooCommerce)
+- POS and register setup for retail and restaurants
+- Apple device setup and management
+- Smart home and office automation
+- Tech consulting for small business operations
+
+## Who We Serve
+
+Small businesses in New York City — cafes, restaurants, bars, retail shops, professional services, creative studios, and local service providers. We focus on Manhattan neighborhoods including East Village, West Village, SoHo, Lower East Side, Meatpacking District, Midtown, and Upper East Side.
+
+## Contact
+
+- Phone: (646) 360-0318 (first hour free)
+- Website: https://littlefightnyc.com
+- Email: info@littlefightnyc.com
+
+## Technology
+
+Static HTML/CSS/JS website with THREE.js interactive hero. Hosted on Netlify.
