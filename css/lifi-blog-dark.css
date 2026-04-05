@@ -1,0 +1,146 @@
+/* Blog Dark Theme Override — loaded LAST to win specificity */
+
+/* Base */
+body, html { background: #080b14 !important; color: #f0f0ec !important; }
+
+/* All sections transparent */
+.page-hero, .page-content, .section-shell, .hero,
+.featured-stage, .section-shell-soft, .blog-hub-section,
+main, section { background: transparent !important; }
+
+/* Hero gradient backgrounds */
+.page-hero .container,
+.hero { background: transparent !important; }
+.page-hero {
+  background: linear-gradient(180deg, rgba(8,11,20,0.95), rgba(8,11,20,0.7)) !important;
+}
+
+/* All white cards → dark glass */
+.content-block, .story-card, .story-step, .proof-pill,
+.service-card, .premium-difference-copy, .premium-point,
+.faq-item, .contact-intro-card, .form-container,
+.dispatch-feature, .dispatch-mini-card, .dispatch-card,
+.journal-issue-card, .journal-wayfinder-card,
+.final-cta, .cta-section, .audit-card,
+.transform-card, .promise-card, .testimonial-card,
+article, .article-body, .story-body,
+div[style*="background:#fff"],
+div[style*="background: #fff"],
+div[style*="background:white"] {
+  background: linear-gradient(180deg, rgba(20,24,36,0.95), rgba(14,18,28,0.92)) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: #f0f0ec !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.2) !important;
+}
+
+/* Forms */
+.form-input, .form-textarea, input, textarea, select {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: #f0f0ec !important;
+}
+.form-label, label { color: #9da1b0 !important; }
+
+/* Headings */
+h1, h2, h3, h4, h5, h6,
+.content-block h2, .content-block h3,
+.story-card h3, .faq-question,
+.section-title, .dispatch-feature-title a,
+.dispatch-mini-title a, .dispatch-card-title a {
+  color: #f0f0ec !important;
+}
+
+/* Body text */
+p, li, td, dd,
+.content-block p, .content-block li,
+.story-card p, .faq-answer,
+.section-description, .section-copy,
+.dispatch-feature-description, .dispatch-mini-description,
+.dispatch-card-description, .footer-text {
+  color: #c0c5d0 !important;
+}
+
+/* Muted text */
+.section-eyebrow, .dispatch-chip, .dispatch-card-chip,
+.dispatch-feature-badge, .dispatch-mini-badge, .dispatch-card-badge {
+  color: #fe5800 !important;
+}
+.dispatch-meta, .dispatch-card-meta, .dispatch-card-meta-row span {
+  color: rgba(255,255,255,0.5) !important;
+}
+
+/* Links */
+a:not(.btn):not(.nav-cta):not(.nav-logo):not(.nav-brand) {
+  color: #fe5800;
+}
+.dispatch-read, .dispatch-mini-read, .dispatch-card-read {
+  color: #fe5800 !important;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left-color: #fe5800 !important;
+  color: #c0c5d0 !important;
+  background: rgba(255,90,0,0.04) !important;
+}
+
+/* Code */
+code, pre, kbd {
+  background: rgba(255,255,255,0.06) !important;
+  color: #f0f0ec !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* Story jump links / table of contents */
+.story-jump-links {
+  background: linear-gradient(180deg, rgba(20,24,36,0.95), rgba(14,18,28,0.92)) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+.story-jump-links a { color: #f0f0ec !important; }
+
+/* Proof / callout panels */
+.dispatch-proof-panel {
+  background: rgba(255,90,0,0.06) !important;
+  border-color: rgba(255,90,0,0.15) !important;
+}
+.dispatch-proof-label { color: #fe5800 !important; }
+.dispatch-proof-panel p { color: #c0c5d0 !important; }
+
+/* CTA sections */
+.final-cta h2, .cta-section h2, .audit-card h2 { color: #f0f0ec !important; }
+.final-cta p, .cta-section p, .audit-card p { color: #9da1b0 !important; }
+
+/* Pills / tags */
+.proof-pill, .dispatch-library-pills span,
+.journal-intro-flags span, .journal-sidecar-pills span {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: #f0f0ec !important;
+}
+
+/* Images */
+.accent-photo-card, figure { box-shadow: 0 22px 54px rgba(0,0,0,0.3) !important; }
+
+/* Content meta */
+.content-meta { color: rgba(255,255,255,0.5) !important; }
+.back-links a, .breadcrumbs a { color: #9da1b0 !important; }
+
+/* Article hero / gradient bar */
+.article-hero-art { background: transparent !important; }
+.lf-accent-media { border-color: rgba(255,255,255,0.08) !important; }
+
+/* Footer */
+footer:last-of-type { background: #0d1120 !important; }
+.footer-heading { color: #f0f0ec !important; }
+.footer-links a { color: #9da1b0 !important; }
+.footer-text { color: #9da1b0 !important; }
+.footer-copyright { color: rgba(255,255,255,0.5) !important; }
+.footer-legal a { color: rgba(255,255,255,0.5) !important; }
+.footer-credit a { color: #fe5800 !important; }
+.footer-bottom { border-color: rgba(255,255,255,0.08) !important; }
+
+/* Hero-specific overrides */
+.hero { min-height: auto !important; }
+
+/* Borders that were light */
+hr, .divider { border-color: rgba(255,255,255,0.08) !important; }
