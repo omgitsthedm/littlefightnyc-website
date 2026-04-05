@@ -410,6 +410,11 @@ body.page-shell :is(.journal-issue-card, .contact-intro-card, .services-signal-c
   transition: transform 0.28s var(--lifi-motion-ease-soft);
 }
 
+/* Allow Turnstile iframe to render fully inside form */
+.form-container {
+  overflow: visible;
+}
+
 .contact-info-item {
   gap: 18px;
   padding: 18px 20px;
