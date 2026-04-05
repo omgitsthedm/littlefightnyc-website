@@ -50,12 +50,30 @@ main, section { background: transparent !important; }
   background: linear-gradient(180deg, rgba(8,11,20,0.9), transparent) !important;
 }
 
-/* ── Nav — force dark (no white header) ── */
-nav, .nav-container, .nav-bg {
-  background: rgba(8, 11, 20, 0.92) !important;
+/* ── Nav — force dark (kill white header completely) ── */
+nav, .nav-container, .nav-bg,
+nav[role="navigation"],
+.nav-scrolled {
+  background: rgba(8, 11, 20, 0.95) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom-color: rgba(255, 90, 0, 0.08) !important;
 }
+.nav-scrolled {
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3) !important;
+}
+/* Nav links dropdown (mobile) */
+.nav-links {
+  background: rgba(8, 11, 20, 0.98) !important;
+  border-top-color: rgba(255, 90, 0, 0.1) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4) !important;
+}
+.nav-links a { color: #f0f0ec !important; }
+.nav-links a:hover { color: #fe5800 !important; }
+.nav-brand-name, .nav-brand-tagline, .nav-logo-text { color: #f0f0ec !important; }
+.nav-phone { color: #f0f0ec !important; }
+/* Nav toggle hamburger bars */
+.nav-toggle span { background: #f0f0ec !important; }
 
 /* ── KILL ALL WHITE BACKGROUNDS ── */
 *, *::before, *::after {
