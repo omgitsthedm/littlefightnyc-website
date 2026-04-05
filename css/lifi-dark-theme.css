@@ -85,7 +85,7 @@ nav[role="navigation"],
   --text-muted: #9da1b0;
 }
 
-/* Cards, blocks, containers → dark glass */
+/* Cards, blocks, containers → dark glass with visible edges */
 .content-block, .story-card, .story-step, .proof-pill,
 .service-card, .premium-difference-copy, .premium-point,
 .faq-item, .contact-intro-card, .form-container,
@@ -98,17 +98,43 @@ nav[role="navigation"],
 .premium-process-step, .work-process-step,
 .industry-map-card, .service-link-card {
   background: linear-gradient(180deg, rgba(20,24,36,0.95), rgba(14,18,28,0.92)) !important;
-  border-color: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(254,88,0,0.1) !important;
   color: #f0f0ec !important;
   box-shadow: 0 16px 48px rgba(0,0,0,0.25) !important;
 }
 
-/* Article body container */
+/* Service cards + example cards: stronger accent for visibility */
+.service-card, .example-card, .work-metric-card,
+.industry-map-card, .service-link-card {
+  border-left: 3px solid rgba(254,88,0,0.25) !important;
+  border-radius: 12px !important;
+}
+
+/* Article body container — keep transparent for prose flow */
 .story-body, .article-body, .article-content,
 .content-main, .post-content,
-.page-content .container > article,
-.page-content .container > .content-block {
+.page-content .container > article {
   background: transparent !important;
+}
+
+/* Content blocks inside page-content: subtle card treatment, not invisible */
+.page-content .container > .content-block {
+  background: linear-gradient(180deg, rgba(20,24,36,0.6), rgba(14,18,28,0.5)) !important;
+  border: 1px solid rgba(254,88,0,0.08) !important;
+  border-left: 3px solid rgba(254,88,0,0.25) !important;
+  border-radius: 12px !important;
+  padding: 32px !important;
+  margin-bottom: 24px !important;
+}
+
+.page-content .container > .content-block h2 {
+  color: #f0f0ec !important;
+  font-weight: 700;
+}
+
+.page-content .container > .content-block p {
+  color: #c0c5d0 !important;
+  line-height: 1.7;
 }
 
 /* Individual content pieces inside cards */
