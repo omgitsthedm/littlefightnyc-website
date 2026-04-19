@@ -116,7 +116,7 @@
 }
 
 .callout-tip::before {
-  content: "💡 TIP";
+  content: "Tip";
   color: #0891B2;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .callout-stat::before {
-  content: "📊 STAT";
+  content: "Stat";
   color: #FE5800;
 }
 
@@ -136,7 +136,7 @@
 }
 
 .callout-warning::before {
-  content: "⚠️ HEADS UP";
+  content: "Heads up";
   color: #f59e0b;
 }
 
@@ -146,7 +146,7 @@
 }
 
 .callout-lifi::before {
-  content: "🔥 HOW LIFI CAN HELP";
+  content: "How LiFi can help";
   color: #FE5800;
 }
 
