@@ -25,6 +25,7 @@ const skipRootFiles = new Set([
   ".impeccable.md",
   ".netlifyignore",
   "AGENTS.md",
+  "CLAUDE.md",
   "HANDOFF.md",
   "canva_brand_kit_little_fight_nyc.md",
   "firebase-debug.log",
