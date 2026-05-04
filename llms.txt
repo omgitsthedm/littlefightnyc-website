@@ -1,31 +1,74 @@
 # Little Fight NYC
 
-> NYC's concierge tech support for small businesses.
+> Right-sized digital systems for New York businesses.
 
-Little Fight NYC is a technology services agency based in New York City. We provide on-site IT support, bespoke website design, local SEO, branding, e-commerce setup, POS systems, Apple device management, smart home services, and tech consulting for small businesses.
+Little Fight NYC helps small and mid-sized New York businesses build better websites, choose smarter software, improve local visibility, and create workflows that fit the way the business actually works.
+
+## Core Promise
+
+Keep what works. Connect what matters. Replace what drags. Build what fits.
 
 ## What We Do
 
-- On-site IT support with 2-hour response time in Manhattan
-- Custom website design for small businesses (not templates)
-- Local SEO and Google Ads management for NYC businesses
-- Branding and identity design
-- E-commerce setup (Shopify, Square, WooCommerce)
-- POS and register setup for retail and restaurants
-- Apple device setup and management
-- Smart home and office automation
-- Tech consulting for small business operations
+- Business System Fit Checks across website clarity, software stack, local visibility, and workflows.
+- Small business websites, service pages, landing pages, e-commerce, booking paths, and conversion flows.
+- Business systems including intake, lead tracking, dashboards, automations, and lightweight internal tools.
+- Local SEO and AEO for Google Business Profile, Maps visibility, reviews, FAQs, schema, and analytics.
+- Software stack review, tool selection, integrations, and practical support for New York businesses.
 
 ## Who We Serve
 
-Small businesses in New York City — cafes, restaurants, bars, retail shops, professional services, creative studios, and local service providers. We focus on Manhattan neighborhoods including East Village, West Village, SoHo, Lower East Side, Meatpacking District, Midtown, and Upper East Side.
+Owner-operated businesses and teams under 50 across Manhattan and New York City, including restaurants, bars, salons, wellness studios, shops, galleries, creative studios, professional services, practices, and local brands.
+
+## Key Pages
+
+- Homepage: https://littlefightnyc.com/
+- Fit Check: https://littlefightnyc.com/fit-check/
+- Business Systems: https://littlefightnyc.com/business-systems/
+- Websites: https://littlefightnyc.com/websites/
+- Local Search: https://littlefightnyc.com/local-search/
+- Software Guides: https://littlefightnyc.com/software-guides/
+- Software Cost Calculator: https://littlefightnyc.com/software-cost-calculator/
+- Pricing: https://littlefightnyc.com/pricing/
+- Work: https://littlefightnyc.com/work/
+- Industries: https://littlefightnyc.com/industries
+
+## Software Guides
+
+- Square vs Toast for Manhattan bars and restaurants: https://littlefightnyc.com/software-guides/square-vs-toast-manhattan-restaurants/
+- Square Appointments vs GlossGenius for NYC salons: https://littlefightnyc.com/software-guides/square-appointments-vs-glossgenius-nyc-salons/
+- Webflow vs Squarespace for Manhattan small businesses: https://littlefightnyc.com/software-guides/webflow-vs-squarespace-manhattan-small-business/
+- Shopify vs Squarespace for NYC retail: https://littlefightnyc.com/software-guides/shopify-vs-squarespace-nyc-retail/
+- Airtable vs Notion vs Monday for small business operations: https://littlefightnyc.com/software-guides/airtable-vs-notion-vs-monday-small-business/
+- Custom business systems vs SaaS subscriptions: https://littlefightnyc.com/software-guides/custom-business-system-vs-saas-subscriptions/
+
+## Industry Pages
+
+- Restaurants and bars: https://littlefightnyc.com/industries/restaurants-bars/
+- Salons and wellness: https://littlefightnyc.com/industries/salons-wellness/
+- Retail and e-commerce: https://littlefightnyc.com/industries/retail-ecommerce/
+- Galleries and creative studios: https://littlefightnyc.com/industries/galleries-creative-studios/
+- Professional services: https://littlefightnyc.com/industries/professional-services/
+- Medical and wellness practices: https://littlefightnyc.com/industries/medical-wellness-practices/
+
+## Local Manhattan Pages
+
+- Lower East Side: https://littlefightnyc.com/areas/lower-east-side
+- East Village: https://littlefightnyc.com/areas/east-village
+- West Village: https://littlefightnyc.com/areas/west-village
+- SoHo: https://littlefightnyc.com/areas/soho
+- Chelsea: https://littlefightnyc.com/areas/chelsea
+- Midtown: https://littlefightnyc.com/areas/midtown
+- Upper West Side: https://littlefightnyc.com/areas/upper-west-side
+- Upper East Side: https://littlefightnyc.com/areas/upper-east-side
+- Meatpacking District: https://littlefightnyc.com/areas/meatpacking-district
 
 ## Contact
 
-- Phone: (646) 360-0318 (first hour free)
+- Phone: (646) 360-0318
 - Website: https://littlefightnyc.com
-- Email: info@littlefightnyc.com
+- Email: hello@littlefightnyc.com
 
 ## Technology
 
-Static HTML/CSS/JS website with THREE.js interactive hero. Hosted on Netlify.
+Static HTML/CSS/JS website with Three.js interactive hero, Netlify delivery, LocalBusiness schema, visible FAQs, Article and FAQ schema for guides, and Netlify Forms intake.
