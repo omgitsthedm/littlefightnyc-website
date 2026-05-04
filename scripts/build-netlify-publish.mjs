@@ -3,7 +3,8 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const outDir = path.join(root, "dist");
+const publishDirName = process.env.LIFI_PUBLISH_DIR || "dist";
+const outDir = path.join(root, publishDirName);
 
 const skipRootDirs = new Set([
   ".git",
@@ -56,6 +57,7 @@ function shouldCopy(source) {
 
   if (!relative) return true;
   if (parts.at(-1) === ".DS_Store") return false;
+  if (parts.length === 1 && /^dist(?:-.+)?$/.test(rootName)) return false;
   if (parts.length === 1 && skipRootFiles.has(rootName)) return false;
   if (parts.length === 1 && isRootScreenshot(rootName)) return false;
   if (skipRootDirs.has(rootName)) return false;
