@@ -18,6 +18,58 @@
   --lf-shadow: var(--shadow-premium);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page-updated {
+  margin-top: 18px;
+  color: color-mix(in srgb, var(--lf-cream) 62%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.page-updated strong,
+.page-updated time {
+  color: var(--lf-cream);
+}
+
+.guide-source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.guide-source-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: var(--lf-cream);
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 700;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.guide-source-links a:hover,
+.guide-source-links a:focus-visible {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--lf-orange) 68%, white 8%);
+  background: rgba(254, 88, 0, 0.08);
+}
+
 html,
 body {
   background: var(--lf-midnight);

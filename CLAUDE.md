@@ -53,7 +53,8 @@ Current state: production deployed and source pushed.
 
 Verified:
 - Local, GitHub, and Netlify are linked.
-- Sitemap has 54 public URLs and live pages return 200.
+- Sitemap has 53 public URLs and live pages return 200.
+- `/industries/`, `/privacy/`, and `/terms/` have directory-style index pages with normalized canonical links.
 - Internal private paths return 404 in production.
 - Netlify Forms are present with honeypot and matching `form-name`.
 - Consent-first GA4 loader is installed sitewide.
@@ -62,6 +63,7 @@ Verified:
 - `robots.txt`, `sitemap.xml`, `llms.txt`, favicon, and manifest are present.
 - Head order is normalized with charset first, minified runtime scripts are referenced sitewide, and pages use the 1200 x 630 OG image.
 - Page titles/descriptions are unique and within launch-length guardrails on public pages.
+- Public pages include crawler-visible authorship/date signals where appropriate.
 
 Known gaps:
 - Full GSC/GTM/Google Ads verification requires account tokens.

@@ -276,19 +276,19 @@ force = true
 
 [[redirects]]
 from = "/industries.html"
-to = "/industries"
+to = "/industries/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/privacy.html"
-to = "/privacy"
+to = "/privacy/"
 status = 301
 force = true
 
 [[redirects]]
 from = "/terms.html"
-to = "/terms"
+to = "/terms/"
 status = 301
 force = true
 
