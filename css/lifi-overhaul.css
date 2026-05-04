@@ -1,19 +1,21 @@
+@import url("/css/brand-tokens.css");
+
 /* Little Fight NYC strategic overhaul layer */
 :root {
-  --lf-midnight: #080b14;
-  --lf-midnight-2: #0d1120;
-  --lf-panel: #11182a;
-  --lf-panel-soft: rgba(18, 24, 40, 0.76);
-  --lf-line: rgba(255, 255, 255, 0.09);
-  --lf-line-orange: rgba(254, 88, 0, 0.2);
-  --lf-orange: #fe5800;
-  --lf-orange-soft: #ff7a35;
-  --lf-blue: #0891b2;
-  --lf-cream: #f0f0ec;
-  --lf-muted: #aeb5c5;
-  --lf-dim: #7e879a;
-  --lf-radius: 8px;
-  --lf-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+  --lf-midnight: var(--brand-midnight);
+  --lf-midnight-2: var(--brand-midnight-elevated);
+  --lf-panel: var(--brand-panel);
+  --lf-panel-soft: var(--brand-panel-soft);
+  --lf-line: var(--brand-line);
+  --lf-line-orange: var(--brand-line-orange);
+  --lf-orange: var(--brand-orange);
+  --lf-orange-soft: var(--brand-orange-soft);
+  --lf-blue: var(--brand-cyan);
+  --lf-cream: var(--brand-cream);
+  --lf-muted: var(--brand-muted);
+  --lf-dim: var(--brand-dim);
+  --lf-radius: var(--radius-tight);
+  --lf-shadow: var(--shadow-premium);
 }
 
 html,
