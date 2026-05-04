@@ -64,6 +64,8 @@ Verified:
 - Head order is normalized with charset first, minified runtime scripts are referenced sitewide, and pages use the 1200 x 630 OG image.
 - Page titles/descriptions are unique and within launch-length guardrails on public pages.
 - Public pages include crawler-visible authorship/date signals where appropriate.
+- Footer legal links now use explicit `Privacy Policy` wording, and guide/industry cards use destination-specific link labels instead of repeated generic CTAs.
+- Static QA checks pass for JSON-LD parsing, heading hierarchy, and internal directory links that would otherwise create redirect chains.
 
 Known gaps:
 - Full GSC/GTM/Google Ads verification requires account tokens.

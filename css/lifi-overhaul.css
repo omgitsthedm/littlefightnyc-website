@@ -38,8 +38,15 @@
 }
 
 .page-updated strong,
-.page-updated time {
+.page-updated time,
+.page-updated .author {
   color: var(--lf-cream);
+}
+
+.page-updated .author {
+  display: inline;
+  font-style: normal;
+  font-weight: 800;
 }
 
 .guide-source-links {
