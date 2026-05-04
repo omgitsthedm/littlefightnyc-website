@@ -577,6 +577,61 @@ body > * {
   border-color: rgba(254, 88, 0, 0.55);
 }
 
+.lifi-consent {
+  position: fixed;
+  right: clamp(16px, 4vw, 36px);
+  bottom: clamp(16px, 4vw, 36px);
+  z-index: 10000;
+  width: min(420px, calc(100vw - 32px));
+  padding: 18px;
+  border: 1px solid rgba(254, 88, 0, 0.24);
+  border-radius: 10px;
+  background: rgba(8, 11, 20, 0.96);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+  color: var(--lf-cream);
+}
+
+.lifi-consent p {
+  margin: 0;
+  color: var(--lf-muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.lifi-consent strong {
+  color: var(--lf-cream);
+}
+
+.lifi-consent__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.lifi-consent button {
+  min-height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.lifi-consent__accept {
+  background: var(--lf-orange);
+  color: #fff;
+}
+
+.lifi-consent__decline {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--lf-cream);
+}
+
 .check-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

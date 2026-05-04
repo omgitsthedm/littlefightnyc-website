@@ -20,6 +20,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const isDesktop = () => window.innerWidth > 960;
+    const setNavLinkAvailability = (available) => {
+      navLinks.querySelectorAll("a, button, input, select, textarea, [tabindex]").forEach((item) => {
+        if (available) {
+          const previousTabindex = item.dataset.previousTabindex;
+          if (previousTabindex !== undefined) {
+            if (previousTabindex) item.setAttribute("tabindex", previousTabindex);
+            else item.removeAttribute("tabindex");
+            delete item.dataset.previousTabindex;
+          } else {
+            item.removeAttribute("tabindex");
+          }
+          return;
+        }
+
+        if (item.dataset.previousTabindex === undefined) {
+          item.dataset.previousTabindex = item.getAttribute("tabindex") || "";
+        }
+        item.setAttribute("tabindex", "-1");
+      });
+    };
 
     const closeMenu = ({ restoreFocus = false } = {}) => {
       navToggle.classList.remove("active");
@@ -27,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
       navToggle.setAttribute("aria-expanded", "false");
       navToggle.setAttribute("aria-label", "Open navigation");
       navLinks.setAttribute("aria-hidden", "true");
+      setNavLinkAvailability(false);
       navOverlay.classList.remove("is-visible");
       navOverlay.setAttribute("aria-hidden", "true");
       document.body.classList.remove("nav-menu-open");
@@ -39,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       navToggle.setAttribute("aria-expanded", "true");
       navToggle.setAttribute("aria-label", "Close navigation");
       navLinks.setAttribute("aria-hidden", "false");
+      setNavLinkAvailability(true);
       navOverlay.classList.add("is-visible");
       navOverlay.setAttribute("aria-hidden", "false");
       document.body.classList.add("nav-menu-open");
@@ -46,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navToggle.setAttribute("aria-label", "Open navigation");
     navLinks.setAttribute("aria-hidden", isDesktop() ? "false" : "true");
+    setNavLinkAvailability(isDesktop());
 
     navToggle.addEventListener("click", () => {
       const expanded = navToggle.getAttribute("aria-expanded") === "true";
@@ -76,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isDesktop()) {
           navLinks.classList.remove("open", "active");
           navLinks.setAttribute("aria-hidden", "false");
+          setNavLinkAvailability(true);
           navOverlay.classList.remove("is-visible");
           navOverlay.setAttribute("aria-hidden", "true");
           document.body.classList.remove("nav-menu-open");
@@ -87,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!navLinks.classList.contains("open")) {
           navLinks.setAttribute("aria-hidden", "true");
+          setNavLinkAvailability(false);
         }
       },
       { passive: true },
