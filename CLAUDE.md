@@ -75,7 +75,8 @@ This is the current ground truth after the main website overhaul and Fit Check/p
 
 Latest source state:
 - Git branch: `main`
-- Latest pushed commit: `d2cfd09 Sharpen Little Fight acquisition copy`
+- Latest functional copy commit: `d2cfd09 Sharpen Little Fight acquisition copy`
+- Current head: run `git log -1 --oneline`
 - Previous related commits: `33ef236 Document overhaul handoff for Claude Code`, `17a5f6e Integrate Fit Check conversion overhaul`, `5aced6f Route phone leads to conversion paths`, `6c6109b Capture Fit Check follow-up preference`
 - Main Netlify project: `littlefightnyc`
 - Main production URL: `https://littlefightnyc.com`
