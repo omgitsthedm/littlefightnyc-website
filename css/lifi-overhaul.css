@@ -847,6 +847,232 @@ body > * {
   white-space: nowrap;
 }
 
+.visual-photo-section {
+  padding-top: clamp(44px, 7vw, 76px);
+}
+
+.visual-photo-grid,
+.photo-proof-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.visual-photo-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.photo-route-card {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: minmax(230px, 1fr) auto auto auto;
+  align-content: stretch;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--lf-cream) !important;
+  text-decoration: none !important;
+  isolation: isolate;
+  background: linear-gradient(180deg, rgba(15, 21, 40, 0.98), rgba(8, 11, 20, 0.98));
+  box-shadow: var(--lf-shadow);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms, box-shadow 220ms;
+}
+
+.photo-route-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(180deg, transparent 0 58%, rgba(254, 88, 0, 0.08) 58% 100%);
+  pointer-events: none;
+}
+
+.photo-route-card::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.photo-route-card:nth-child(1)::after {
+  background-image: url("/images/lf-photo-set/nyc_web_design.webp");
+}
+
+.photo-route-card:nth-child(2)::after {
+  background-image: url("/images/lf-photo-set/pos_system_tip_jar.webp");
+  background-position: center 54%;
+}
+
+.photo-route-card:nth-child(3)::after {
+  background-image: url("/images/lf-photo-set/nyc_streets_businesses2.webp");
+  background-position: center 48%;
+}
+
+.photo-route-card:nth-child(4)::after {
+  background-image: url("/images/lf-photo-set/nyc_cafes1.webp");
+  background-position: center 42%;
+}
+
+.photo-route-card img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  filter: saturate(1.02) contrast(1.03) brightness(0.98);
+  transform: scale(1.001);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), filter 320ms;
+}
+
+.photo-proof-card img {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.04) contrast(1.04) brightness(0.94);
+  transform: scale(1.01);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), filter 320ms;
+}
+
+.photo-route-card > :not(img) {
+  position: relative;
+  z-index: 3;
+}
+
+.photo-route-card:nth-child(2) img {
+  object-position: center 54%;
+}
+
+.photo-route-card:nth-child(3) img {
+  object-position: center 48%;
+}
+
+.photo-route-card:hover,
+.photo-route-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(254, 88, 0, 0.42);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.36);
+}
+
+.photo-route-card:hover img,
+.photo-route-card:focus-visible img,
+.photo-proof-card:hover img {
+  transform: scale(1.045);
+  filter: saturate(1.08) contrast(1.05) brightness(1);
+}
+
+.photo-route-badge,
+.photo-proof-card span {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(254, 88, 0, 0.92);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.photo-route-badge {
+  margin: 16px 16px 0;
+}
+
+.photo-route-card strong {
+  display: block;
+  margin: 12px 16px 0;
+  color: var(--lf-cream);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.photo-route-card small {
+  display: block;
+  margin: 8px 16px 18px;
+  color: rgba(247, 239, 226, 0.78);
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.photo-proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.photo-proof-card {
+  position: relative;
+  min-height: 440px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background-color: #080b14;
+  background-size: cover;
+  background-position: center;
+  isolation: isolate;
+  box-shadow: var(--lf-shadow);
+}
+
+.photo-proof-card:nth-child(1) {
+  background-image: url("/images/lf-photo-set/nyc_outdoor_bar.webp");
+}
+
+.photo-proof-card:nth-child(2) {
+  background-image: url("/images/lf-photo-set/nyc_small_business_owner.webp");
+  background-position: center 42%;
+}
+
+.photo-proof-card:nth-child(3) {
+  background-image: url("/images/lf-photo-set/nyc_retail.webp");
+  background-position: center 48%;
+}
+
+.photo-proof-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(8, 11, 20, 0) 0%, rgba(8, 11, 20, 0.18) 42%, rgba(8, 11, 20, 0.92) 100%);
+}
+
+.photo-proof-card div {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+  padding: 20px;
+}
+
+.photo-proof-card h3 {
+  margin: 0;
+  color: var(--lf-cream);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.photo-proof-card p {
+  margin: 0;
+  color: rgba(247, 239, 226, 0.76);
+  font-size: 0.94rem;
+  line-height: 1.58;
+}
+
 .visual-route::before {
   content: "";
   position: absolute;
@@ -1941,6 +2167,8 @@ textarea.fit-input {
   .overhaul-grid.three,
   .method-grid,
   .visual-route,
+  .visual-photo-grid,
+  .photo-proof-grid,
   .visual-money-leaks,
   .visual-wayfind-grid,
   .mini-process {
@@ -2146,6 +2374,8 @@ textarea.fit-input {
   .overhaul-grid.two,
   .method-grid,
   .visual-route,
+  .visual-photo-grid,
+  .photo-proof-grid,
   .visual-money-leaks,
   .visual-wayfind-grid,
   .mini-process,
@@ -2183,6 +2413,27 @@ textarea.fit-input {
   .visual-route-heading {
     max-width: 16ch;
     gap: 0.1em 0.28em;
+  }
+
+  .photo-route-card {
+    padding: 0;
+    grid-template-rows: 190px auto auto auto;
+  }
+
+  .photo-route-card img {
+    height: 190px;
+  }
+
+  .photo-route-card::after {
+    height: 190px;
+  }
+
+  .photo-proof-card {
+    min-height: 330px;
+  }
+
+  .photo-proof-card div {
+    padding: 18px;
   }
 
   .overhaul-deck {
@@ -2250,6 +2501,8 @@ textarea.fit-input {
   .calculator-grid,
   .calculator-card,
   .overhaul-panel,
+  .photo-route-card,
+  .photo-proof-card,
   .fit-intake-console,
   .fit-intake-brief,
   .visual-signpost,
