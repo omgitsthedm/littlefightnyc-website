@@ -215,7 +215,7 @@ async function parseForm(req: Request): Promise<URLSearchParams> {
 }
 
 function readInput(params: URLSearchParams): string {
-  return cleanText(params.get("SpeechResult") || params.get("Digits") || params.get("Body"), 900);
+  return cleanText(paramValue(params, "SpeechResult") || paramValue(params, "Digits") || paramValue(params, "Body"), 900);
 }
 
 function isAffirmative(input: string): boolean {
@@ -286,7 +286,7 @@ function questionFor(state: VoiceState, index: number): string {
 }
 
 function buildPayload(state: VoiceState, params: URLSearchParams): JsonRecord {
-  const caller = cleanText(state.caller || params.get("From"), 80);
+  const caller = cleanText(state.caller || paramValue(params, "From") || paramValue(params, "Caller"), 80);
   const selectedEntry = state.selectedEntry || classifyEntry(state.problem || "");
   const initialProblem = cleanText(state.problem, 1400);
   const urgencyLevel = state.urgencyLevel || inferUrgency(initialProblem, "");
@@ -309,7 +309,7 @@ function buildPayload(state: VoiceState, params: URLSearchParams): JsonRecord {
       selected_entry: selectedEntry,
       initial_problem: initialProblem,
       urgency_level: urgencyLevel,
-      call_sid: cleanText(state.callSid || params.get("CallSid"), 100),
+      call_sid: cleanText(state.callSid || paramValue(params, "CallSid"), 100),
       from: caller,
     },
     contact: {
@@ -330,7 +330,7 @@ function buildPayload(state: VoiceState, params: URLSearchParams): JsonRecord {
         event_payload: {
           selected_entry: selectedEntry,
           urgency_level: urgencyLevel,
-          call_sid: cleanText(state.callSid || params.get("CallSid"), 100),
+          call_sid: cleanText(state.callSid || paramValue(params, "CallSid"), 100),
         },
       },
     ],
@@ -407,11 +407,17 @@ function paramValue(params: URLSearchParams, name: string): string {
   if (direct !== null) return cleanText(direct, 1200);
 
   const lowerName = name.toLowerCase();
+  const normalizedName = normalizeParamKey(name);
   for (const [key, value] of params.entries()) {
     if (key.toLowerCase() === lowerName) return cleanText(value, 1200);
+    if (normalizeParamKey(key) === normalizedName) return cleanText(value, 1200);
   }
 
   return "";
+}
+
+function normalizeParamKey(key: string): string {
+  return key.replace(/[^a-z0-9]/gi, "").toLowerCase();
 }
 
 function safeEqual(left: string, right: string): boolean {
@@ -468,8 +474,8 @@ function allowTrialSignatureFallback(params: URLSearchParams): boolean {
   const expectedAccountSid = env("TWILIO_ACCOUNT_SID");
   const accountSid = paramValue(params, "AccountSid");
   const callSid = paramValue(params, "CallSid");
-  const from = paramValue(params, "From");
-  const to = paramValue(params, "To");
+  const from = paramValue(params, "From") || paramValue(params, "Caller");
+  const to = paramValue(params, "To") || paramValue(params, "Called");
 
   return (
     Boolean(expectedAccountSid) &&
@@ -538,8 +544,8 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   const step = url.searchParams.get("step") || "start";
   const input = readInput(params);
   const state = decodeState(url.searchParams.get("s") || "");
-  state.caller = cleanText(state.caller || params.get("From"), 80);
-  state.callSid = cleanText(state.callSid || params.get("CallSid"), 100);
+  state.caller = cleanText(state.caller || paramValue(params, "From") || paramValue(params, "Caller"), 80);
+  state.callSid = cleanText(state.callSid || paramValue(params, "CallSid"), 100);
 
   if (step === "health") {
     return new Response(JSON.stringify({ ok: true, endpoint: "fit-check-voice" }), {
