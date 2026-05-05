@@ -86,6 +86,365 @@ for = "/*.png"
   [headers.values]
   Cache-Control = "public, max-age=31536000, immutable"
 
+
+# Slashless route rewrites for crawl probes and direct typed URLs.
+# Canonicals still point to the trailing-slash URLs.
+[[redirects]]
+from = "/about"
+to = "/about/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/ai-google-broke-the-internet-websites-survive"
+to = "/ai-google-broke-the-internet-websites-survive/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/blog"
+to = "/blog/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/business-systems"
+to = "/business-systems/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/contact"
+to = "/contact/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/fit-check"
+to = "/fit-check/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/fit-check/thanks"
+to = "/fit-check/thanks/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries"
+to = "/industries/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries/galleries-creative-studios"
+to = "/industries/galleries-creative-studios/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries/medical-wellness-practices"
+to = "/industries/medical-wellness-practices/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries/professional-services"
+to = "/industries/professional-services/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries/restaurants-bars"
+to = "/industries/restaurants-bars/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries/retail-ecommerce"
+to = "/industries/retail-ecommerce/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/industries/salons-wellness"
+to = "/industries/salons-wellness/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/it-support"
+to = "/it-support/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/local-search"
+to = "/local-search/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/nyc-websites-it-support"
+to = "/nyc-websites-it-support/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/pricing"
+to = "/pricing/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/privacy"
+to = "/privacy/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services"
+to = "/services/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/apple-device-setup-and-management"
+to = "/services/apple-device-setup-and-management/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/branding-and-identity-design"
+to = "/services/branding-and-identity-design/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/ecommerce-setup-shopify-square-woocommerce"
+to = "/services/ecommerce-setup-shopify-square-woocommerce/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/local-seo-and-google-ads-nyc"
+to = "/services/local-seo-and-google-ads-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/on-site-it-support-nyc"
+to = "/services/on-site-it-support-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/pos-and-register-setup-nyc"
+to = "/services/pos-and-register-setup-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/tech-consulting-small-business"
+to = "/services/tech-consulting-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/services/website-design-small-business-nyc"
+to = "/services/website-design-small-business-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-cost-calculator"
+to = "/software-cost-calculator/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides"
+to = "/software-guides/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides/airtable-vs-notion-vs-monday-small-business"
+to = "/software-guides/airtable-vs-notion-vs-monday-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides/custom-business-system-vs-saas-subscriptions"
+to = "/software-guides/custom-business-system-vs-saas-subscriptions/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides/shopify-vs-squarespace-nyc-retail"
+to = "/software-guides/shopify-vs-squarespace-nyc-retail/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides/square-appointments-vs-glossgenius-nyc-salons"
+to = "/software-guides/square-appointments-vs-glossgenius-nyc-salons/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides/square-vs-toast-manhattan-restaurants"
+to = "/software-guides/square-vs-toast-manhattan-restaurants/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/software-guides/webflow-vs-squarespace-manhattan-small-business"
+to = "/software-guides/webflow-vs-squarespace-manhattan-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/solutions"
+to = "/solutions/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/terms"
+to = "/terms/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/websites"
+to = "/websites/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/what-google-looks-for-business-website"
+to = "/what-google-looks-for-business-website/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/why-business-websites-will-be-invisible"
+to = "/why-business-websites-will-be-invisible/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/work"
+to = "/work/"
+status = 200
+force = true
+
+# Extensionless page rewrites for flat .html routes.
+# These source files are flat .html pages whose canonicals are extensionless and slashless.
+[[redirects]]
+from = "/areas/manhattan/"
+to = "/areas/manhattan"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/brooklyn/"
+to = "/areas/brooklyn"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/queens/"
+to = "/areas/queens"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/bronx/"
+to = "/areas/bronx"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/staten-island/"
+to = "/areas/staten-island"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/chelsea/"
+to = "/areas/chelsea"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/east-village/"
+to = "/areas/east-village"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/lower-east-side/"
+to = "/areas/lower-east-side"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/meatpacking-district/"
+to = "/areas/meatpacking-district"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/midtown/"
+to = "/areas/midtown"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/soho/"
+to = "/areas/soho"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/west-village/"
+to = "/areas/west-village"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/upper-east-side/"
+to = "/areas/upper-east-side"
+status = 200
+force = true
+
+[[redirects]]
+from = "/areas/upper-west-side/"
+to = "/areas/upper-west-side"
+status = 200
+force = true
+
+[[redirects]]
+from = "/blog/cybersecurity-for-small-business/"
+to = "/blog/cybersecurity-for-small-business"
+status = 200
+force = true
+
+[[redirects]]
+from = "/blog/nyc-small-business-digital/"
+to = "/blog/nyc-small-business-digital"
+status = 200
+force = true
+
+[[redirects]]
+from = "/blog/protecting-kids-from-ai/"
+to = "/blog/protecting-kids-from-ai"
+status = 200
+force = true
+
 # Old URL → new URL redirects (service pages moved under /services/)
 [[redirects]]
 from = "/website-design-small-business-nyc/"

@@ -1,4 +1,4 @@
-import { cp, mkdir, readdir, rm } from "node:fs/promises";
+import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -67,6 +67,61 @@ function shouldCopy(source) {
   return true;
 }
 
+async function walkFiles(dir, predicate, results = []) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const file = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      await walkFiles(file, predicate, results);
+    } else if (predicate(file)) {
+      results.push(file);
+    }
+  }
+
+  return results;
+}
+
+function minifiedCssPath(href) {
+  const [pathname, query = ""] = href.split("?");
+  if (!pathname.startsWith("/css/") || pathname.endsWith(".min.css")) {
+    return href;
+  }
+
+  const candidate = pathname.replace(/\.css$/, ".min.css");
+  if (!existsSync(path.join(outDir, candidate.slice(1)))) {
+    return href;
+  }
+
+  return query ? `${candidate}?${query}` : candidate;
+}
+
+function makeOptimizedStylesheet(href) {
+  const optimizedHref = minifiedCssPath(href);
+  return `<link rel="stylesheet" href="${optimizedHref}">`;
+}
+
+async function optimizePublishedHtml() {
+  const htmlFiles = await walkFiles(outDir, (file) => file.endsWith(".html"));
+
+  for (const file of htmlFiles) {
+    let html = await readFile(file, "utf8");
+    const original = html;
+
+    html = html.replace(
+      /<link\s+rel="stylesheet"\s+href="(\/css\/[^"]+)"\s*>/g,
+      (_match, href) => makeOptimizedStylesheet(href),
+    );
+
+    html = html.replace(
+      /<link\s+href="(\/css\/[^"]+)"\s+rel="stylesheet"\s*>/g,
+      (_match, href) => makeOptimizedStylesheet(href),
+    );
+
+    if (html !== original) {
+      await writeFile(file, html);
+    }
+  }
+}
+
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
 
@@ -84,3 +139,5 @@ for (const entry of await readdir(root, { withFileTypes: true })) {
 if (!existsSync(path.join(outDir, "index.html"))) {
   throw new Error("Netlify publish build did not copy index.html.");
 }
+
+await optimizePublishedHtml();
