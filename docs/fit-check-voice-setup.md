@@ -74,6 +74,26 @@ Use E.164 format, for example:
 
 `+16463600318`
 
+Optional voice tuning:
+
+`TWILIO_TTS_VOICE`
+
+Default:
+
+`Polly.Matthew-Neural`
+
+`TWILIO_TTS_LANGUAGE`
+
+Default:
+
+`en-US`
+
+`TWILIO_TTS_RATE`
+
+Default:
+
+`106%`
+
 Optional AI/backend upgrades already supported by the web Fit Check:
 
 `OPENAI_API_KEY`

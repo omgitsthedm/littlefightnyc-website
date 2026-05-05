@@ -140,8 +140,17 @@ function response(body: string, status = 200): Response {
   return new Response(body, { status, headers: twimlHeaders });
 }
 
+function safeXmlAttribute(value: string, fallback: string): string {
+  const cleaned = cleanText(value, 80);
+  return /^[a-zA-Z0-9_.:%+-]+$/.test(cleaned) ? cleaned : fallback;
+}
+
 function say(text: string): string {
-  return `<Say>${escapeXml(text)}</Say>`;
+  const voice = safeXmlAttribute(env("TWILIO_TTS_VOICE") || "Polly.Matthew-Neural", "Polly.Matthew-Neural");
+  const language = safeXmlAttribute(env("TWILIO_TTS_LANGUAGE") || "en-US", "en-US");
+  const rate = safeXmlAttribute(env("TWILIO_TTS_RATE") || "106%", "106%");
+
+  return `<Say voice="${voice}" language="${language}"><prosody rate="${rate}">${escapeXml(text)}</prosody></Say>`;
 }
 
 function pause(seconds = 1): string {
@@ -558,7 +567,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "Thanks for calling Little Fight NYC. This is the Fit Check intake assistant. I can ask a few questions about your website, software, local search visibility, or workflow so David has useful context before following up. This call may be transcribed and summarized by AI for human review. Is that okay? Say yes or press 1. If not, say no or press 2 and I can take a short non AI message instead.",
+          "Little Fight NYC Fit Check. I am an AI intake assistant. I will ask a few questions and send David a brief. This may be transcribed and summarized for human review. Say yes or press 1 to continue. Say no or press 2 to leave a short message.",
           "consent",
           state,
           { numDigits: "1", timeout: "8" },
@@ -588,7 +597,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
         twiml([
           gather(
             req,
-            "I need a clear yes before using the AI summary. Say yes or press 1 to continue, or say no or press 2 to leave a short message.",
+            "I need a clear yes before using the AI summary. Say yes or press 1 to continue. Say no or press 2 to leave a short message.",
             "consent",
             state,
             { numDigits: "1", timeout: "8" },
@@ -602,7 +611,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "Got it. Tell me what is going on in plain English. You do not need the right tech term. Please do not share passwords, private keys, recovery codes, or payment details.",
+          "Got it. Tell me what is going on in plain English. Do not share passwords, recovery codes, private keys, or payment details.",
           "problem",
           state,
           { timeout: "10" },
@@ -632,7 +641,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
 
     return response(
       twiml([
-        say(`${warning}I am placing this first as ${categoryNames[state.selectedEntry]}. Now I need to understand urgency.`),
+        say(`${warning}I am placing this first as ${categoryNames[state.selectedEntry]}. Next, urgency.`),
         gather(
           req,
           "Is this actively affecting customers, payments, bookings, website access, email, or staff access right now? Press 1 or say yes for active issue. Press 2 for urgent but not a fire. Press 3 for planned improvement. Press 4 for exploring.",
