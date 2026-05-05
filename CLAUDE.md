@@ -69,6 +69,184 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Final 1200 x 630 branded OG image.
 - Founder photo set and final logo export set.
 
+## Claude Code Handoff - May 5, 2026
+
+This is the current ground truth after the main website overhaul and Fit Check/phone conversion integration.
+
+Latest source state:
+- Git branch: `main`
+- Latest pushed commit: `17a5f6e Integrate Fit Check conversion overhaul`
+- Previous related commits: `5aced6f Route phone leads to conversion paths`, `6c6109b Capture Fit Check follow-up preference`
+- Main Netlify project: `littlefightnyc`
+- Main production URL: `https://littlefightnyc.com`
+- Main production deploy: `69f97db77398a0611933d949`
+- Audit Netlify project: `audits-littlefightnyc`
+- Audit production URL: `https://audits.littlefightnyc.com`
+- Audit alias: `https://audit.littlefightnyc.com`
+- Audit production deploy: `69f97e41a05b188f3dc593a8`
+- Production Netlify deploy command used for main site: `npx netlify deploy --prod --build`
+- Production Netlify deploy command used for audit site: `npx netlify deploy --prod --site 6588401d-53d4-42a3-a4f8-89fb3b937446 --build`
+
+Core strategic direction:
+- Preserve the midnight blue premium base and animated orange dot atmosphere.
+- Lead with right-sized digital systems for New York businesses.
+- Keep the core promise: keep what works, connect what matters, replace what drags, and build what fits.
+- Do not lead with concierge tech support anymore. Tech support exists as an urgent/support path inside the larger systems model.
+- The website should route prospects toward money faster:
+  - Urgent issue -> alert David, route to support, optionally live transfer during business hours.
+  - Messy business setup -> Business System Fit Check.
+  - Poor-fit or unclear request -> light review without a long intake.
+
+Primary files and responsibilities:
+- `index.html`
+  - Homepage.
+  - Has the new "Routing to revenue" section: one intake, three useful outcomes.
+  - Primary CTA remains `/fit-check/`.
+- `fit-check/index.html`
+  - Public Business System Fit Check page.
+  - Reworked from "AI intake" into a fast, practical routing experience.
+  - Captures `preferred_follow_up` with Text me, Call me, Email me, or Whatever is fastest.
+  - Keeps concise trust language: "Do not share sensitive information here."
+- `contact/index.html`
+  - Static contact page is now secondary to the guided Fit Check.
+  - Hero CTA says "Get routed faster."
+  - Contact form captures `preferred_follow_up` and `likely_route`.
+- `js/fit-check-intake.js`
+  - Browser-side Fit Check intake flow.
+  - Builds the payload sent to `/api/fit-check/submit`.
+  - Includes `preferred_follow_up` in both `answers` and `contact`.
+  - Keep `js/fit-check-intake.min.js` regenerated after edits.
+- `netlify/functions/fit-check-submit.mts`
+  - Main web intake backend.
+  - Handles deterministic classification fallback, optional OpenAI classification, Netlify Forms backup, optional Supabase storage, optional Resend email, and optional Twilio SMS notifications.
+  - Critical fix: explicit `planned_improvement`, `exploratory`, and `urgent_but_not_emergency` user choices override keyword urgency detection so words like "booking" do not automatically create emergency routing.
+  - Client-facing sensitive-data warning is intentionally short.
+- `netlify/functions/fit-check-voice.mts`
+  - Twilio Voice webhook at `/api/fit-check/voice`.
+  - Keeps the call short: consent, issue, urgency, one adaptive question, preferred follow-up, contact.
+  - Posts the final voice lead into the same Fit Check backend.
+  - Sends David SMS call notifications when Twilio notification env vars are present.
+  - Can send caller SMS follow-up links when enabled.
+  - Has call-status handling at `/api/fit-check/voice?step=status` for abandoned-call recovery.
+- `js/main.js`
+  - Shared site runtime.
+  - Injects `.site-conversion-rail` across pages that load the shared runtime.
+  - The rail changes copy by route and exposes "Start Fit Check" plus "Call now."
+  - Keep `js/main.min.js` regenerated after edits.
+- `css/lifi-overhaul.css`
+  - Main visual overhaul layer.
+  - Contains sitewide conversion rail styling.
+  - Preserves midnight blue/orange visual system and mobile sticky spacing.
+- `netlify.toml`
+  - Main site Netlify config.
+  - Publishes `dist/`.
+  - Builds with `node scripts/build-netlify-publish.mjs`.
+  - Functions live in `netlify/functions`.
+  - Retires `/smart-home-services-nyc/` and `/services/smart-home-services-nyc/` with 301 redirects to `/business-systems/`.
+- `sitemap.xml`
+  - Smart-home service URL removed.
+  - `/fit-check/` remains high-priority.
+- `work/ai-change-log.txt`
+  - Append meaningful changes here.
+- `scripts/build-netlify-publish.mjs`
+  - Main static publish builder.
+  - Excludes repo-only folders and generates `dist/`.
+  - Run before production deploys.
+
+Audit app locations:
+- Live audit app is a separate Netlify project, not a page inside the main site.
+- Canonical local audit source found at:
+  - `/Users/davidmarsh/Desktop/LiFi NYC/Brand/Internal/Audits/site/index.html`
+- Temporary deployed working copy used during this pass:
+  - `tmp/audits-sync/public/index.html`
+- These two audit index files were synced after the deploy so the next audit deploy should not revert the Fit Check positioning.
+- Audit app now includes:
+  - Website Fit Check framing.
+  - Midnight blue/orange atmosphere.
+  - Links into `https://littlefightnyc.com/fit-check/`.
+  - Copy that treats the audit as a feeder into the Business System Fit Check when the bigger problem is site, tools, search, or workflow.
+
+Production env status, names only:
+- Set in production functions:
+  - `TWILIO_ACCOUNT_SID`
+  - `TWILIO_AUTH_TOKEN`
+  - `TWILIO_NOTIFY_FROM`
+  - `TWILIO_NOTIFY_TO`
+  - `TWILIO_PUBLIC_VOICE_URL`
+  - `TWILIO_TTS_LANGUAGE`
+  - `TWILIO_TTS_RATE`
+  - `TWILIO_TTS_VOICE`
+  - `TWILIO_ALLOW_SIGNATURE_FALLBACK`
+  - `FIT_CHECK_BOOKING_URL`
+  - `FIT_CHECK_CALLER_SMS_ENABLED`
+  - `FIT_CHECK_RECOVERY_SMS_ENABLED`
+  - `FIT_CHECK_URGENT_FORWARD_NUMBER`
+  - `FIT_CHECK_URL`
+- Not set at last check:
+  - `FIT_CHECK_NOTIFY_EMAIL`
+  - `FIT_CHECK_URGENT_SUPPORT_URL`
+  - `URGENT_SUPPORT_PAYMENT_URL`
+  - `FIT_CHECK_TRANSFER_NUMBER`
+  - `FIT_CHECK_TRANSFER_AFTER_HOURS`
+  - `FIT_CHECK_BUSINESS_TIMEZONE`
+- Do not print, commit, or paste secret values. If Twilio testing is complete, rotate credentials and remove `TWILIO_ALLOW_SIGNATURE_FALLBACK`.
+
+Phone and notification behavior:
+- Every phone call can generate SMS notification to David through `TWILIO_NOTIFY_TO`.
+- Caller SMS follow-up is enabled by `FIT_CHECK_CALLER_SMS_ENABLED`.
+- Abandoned-call recovery SMS is enabled by `FIT_CHECK_RECOVERY_SMS_ENABLED`.
+- Urgent calls use `FIT_CHECK_URGENT_FORWARD_NUMBER` as the transfer/alert number.
+- Live transfer is business-hours aware. The timezone defaults to `America/New_York` unless `FIT_CHECK_BUSINESS_TIMEZONE` is set.
+- There is no dedicated urgent support checkout URL configured yet. Until `FIT_CHECK_URGENT_SUPPORT_URL` or `URGENT_SUPPORT_PAYMENT_URL` is set, urgent conversion links fall back to the Fit Check URL.
+- Function-sent email alerts are not live until Resend env vars are configured. Netlify Forms backup still exists.
+
+Verification already completed:
+- `node scripts/build-netlify-publish.mjs`
+- `git diff --check`
+- `node --check js/main.js`
+- `node --check js/fit-check-intake.js`
+- `node --check js/main.min.js`
+- `node --check js/fit-check-intake.min.js`
+- `npx netlify functions:build --src netlify/functions --functions tmp/functions-build`
+- `xmllint --noout sitemap.xml`
+- Local smoke test against `/api/fit-check/submit` confirmed a planned booking-flow lead routes as:
+  - Primary category: `Business System Build`
+  - Urgency: `planned_improvement`
+  - Recommended next step: `Systems mapping session`
+- Live checks confirmed:
+  - Homepage has "Routing to revenue" and "One intake. Three useful outcomes."
+  - `/fit-check/` has Business System Fit Check language, `preferred_follow_up`, conversion routing, and short sensitive-info warning.
+  - `/contact/` has "Get routed faster", `preferred_follow_up`, and `likely_route`.
+  - `/services/smart-home-services-nyc/` returns 301 to `/business-systems/`.
+  - `sitemap.xml` no longer includes the smart-home service URL.
+  - `audit.littlefightnyc.com` and `audits.littlefightnyc.com` both include the new Fit Check CTAs.
+- Netlify Lighthouse from production deploy on `/`:
+  - Performance: 100
+  - Accessibility: 98
+  - Best Practices: 100
+  - SEO: 100
+  - PWA: 30
+
+Known local state:
+- Tracked main-site changes were committed and pushed.
+- Untracked local items were intentionally left alone:
+  - `.impeccable.md`
+  - `AGENTS.md`
+  - `HANDOFF.md`
+  - `backup/`
+  - `deploy-1774613740316-76014a44-fd1b-47ba-bf80-1e9cd4e8661f.zip`
+  - `squirrel.toml`
+  - `tmp/`
+- Do not delete or add those untracked items unless David explicitly asks.
+
+Recommended next moves:
+- Add a real urgent support payment/deposit link and set `FIT_CHECK_URGENT_SUPPORT_URL` or `URGENT_SUPPORT_PAYMENT_URL`.
+- Configure Resend email alerts if David wants email for every Fit Check/call in addition to SMS.
+- Rotate Twilio trial credentials after testing and remove `TWILIO_ALLOW_SIGNATURE_FALLBACK`.
+- Run fresh mobile and desktop Lighthouse across `/`, `/fit-check/`, `/business-systems/`, `/websites/`, `/local-search/`, and `/software-guides/`.
+- Finish schema coverage for breadcrumbs, glossary/DefinedTerm, and HowTo where actually appropriate.
+- Build the off-site SEO handoff package and remaining software guide hub content.
+
 ## Launch Checklist Status
 Current state: production deployed and source pushed.
 
