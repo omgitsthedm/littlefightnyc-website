@@ -110,7 +110,7 @@
       early:
         "This sounds like a local visibility issue. The search side matters, but the website and follow-up path still need to be ready for the leads it creates.",
       firstCheck: [
-        "Google Business Profile",
+        "Google profile",
         "service pages",
         "reviews",
         "neighborhood relevance",
@@ -220,20 +220,20 @@
     "Quick Fix": [
       {
         id: "what_broken",
-        label: "What is broken right now?",
+        label: "What broke?",
         helper: "Name the visible issue. No passwords or private access details.",
         type: "textarea",
         placeholder: "Example: The booking form is live but nobody receives the submissions.",
       },
       {
         id: "business_impact",
-        label: "Is it blocking customers, payments, bookings, email, or staff access?",
+        label: "Is it blocking sales or customers right now?",
         type: "choice",
         options: ["Yes, customers are affected", "Yes, staff are blocked", "Not sure", "No, but it is annoying"],
       },
       {
         id: "platform_involved",
-        label: "Which platform, account, domain, email, form, POS, or booking tool is involved?",
+        label: "What tool or account is involved?",
         type: "textarea",
         placeholder: "Squarespace, Google Workspace, Square, Toast, Shopify, domain registrar...",
       },
@@ -246,13 +246,13 @@
     "Website Cleanup": [
       {
         id: "current_site",
-        label: "What feels weak about the current website?",
+        label: "What feels weak?",
         type: "textarea",
         placeholder: "Mobile, copy, service pages, form flow, speed, SEO basics, old design...",
       },
       {
         id: "site_platform",
-        label: "What platform is the site on?",
+        label: "What is the site built on?",
         type: "text",
         placeholder: "Squarespace, Webflow, WordPress, Wix, Shopify, not sure...",
       },
@@ -284,7 +284,7 @@
       },
       {
         id: "current_platform_rebuild",
-        label: "What platform is the current site on, if you know?",
+        label: "What is the current site built on, if you know?",
         type: "text",
       },
       {
@@ -296,7 +296,7 @@
     "Tool / Software Decision": [
       {
         id: "software_cost",
-        label: "What software or platform are you worried about?",
+        label: "Which tool or bill worries you?",
         type: "textarea",
         placeholder: "Example: We pay for a customer list, but the team still uses spreadsheets.",
       },
@@ -355,7 +355,7 @@
       },
       {
         id: "google_profile",
-        label: "Do you have a Google Business Profile, and is it accurate?",
+        label: "Do you have a Google profile, and is it accurate?",
         type: "choice",
         options: ["Yes, accurate", "Yes, but weak", "Not sure", "No"],
       },
@@ -551,7 +551,7 @@
       replace: inferKcrb("replace"),
       build: inferKcrb("build"),
       disclaimer:
-        "This is not a quote. It is a fast first read based on what you shared. David needs to review the setup before scope, timeline, or pricing can be confirmed.",
+        "This is not a quote. It is a fast first read. David reviews the setup before scope, timing, or price.",
     };
   }
 
@@ -978,7 +978,7 @@
     const result = classify();
     return {
       ...result,
-      client_facing_summary: `${result.client_facing_summary} This is not a quote. It is a fast first read based on what you shared. David needs to review the setup before scope, timeline, or pricing can be confirmed.`,
+      client_facing_summary: `${result.client_facing_summary} This is not a quote. It is a fast first read. David reviews the setup before scope, timing, or price.`,
       internal_summary: `Initial problem: ${state.initialProblem}\n\nAnswers:\n${Object.entries(state.answers)
         .map(([key, value]) => `${key}: ${value}`)
         .join("\n")}`,

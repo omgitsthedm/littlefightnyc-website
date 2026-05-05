@@ -126,7 +126,7 @@ const toolNames = [
   "Calendly",
   "Fresha",
   "GlossGenius",
-  "Google Business Profile",
+  "Google profile",
   "Google Workspace",
   "HubSpot",
   "Instagram",
@@ -833,7 +833,7 @@ function buildDeterministicResult(lead: JsonRecord): FitCheckResult {
   const nextStep = recommendedNextStep(primary, urgency);
   const sensitive = includesAny(text, sensitiveTriggers);
   const disclaimer =
-    "This is not a quote. It is a fast first read based on what you shared. David needs to review the setup before scope, timeline, or pricing can be confirmed.";
+    "This is not a quote. It is a fast first read. David reviews the setup before scope, timing, or price.";
 
   const clientSummary = [
     `Based on what you shared, this sounds like ${categoryLanguage[primary]}`,
@@ -1061,7 +1061,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
           {
             role: "system",
             content:
-              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the business owner used the term first. Focus on dollars saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
+              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the owner used the term first. Focus on money saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
           },
           {
             role: "user",

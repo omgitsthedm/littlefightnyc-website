@@ -151,7 +151,7 @@ export function init(container) {
     },
     {
       kicker: 'Foot Traffic',
-      title: 'Nearby search should behave like a doorway.',
+      title: 'Nearby search should bring people in.',
       body: '76% of people who search for something nearby on a smartphone visit a business within 24 hours.',
       source: 'Think with Google / Google Purchased Digital Diary, 2016',
       accent: brandPalette.orange,
