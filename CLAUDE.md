@@ -25,9 +25,20 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Panel blue: `#111827`
 - Little Fight orange: `#fe5800`
 - Soft orange: `#ff7a35`
+- Copper: `#d98a3a`
+- Gold: `#f5b84b`
+- Teal: `#12b8a6`
+- Sky: `#5ab7ff`
+- Green: `#79d88a`
+- Rose: `#ff6f91`
 - Cream text: `#f7efe2`
 - Muted text: `#a7adbb`
 - Hairline: `rgba(255, 255, 255, 0.1)`
+
+Color rules:
+- Keep midnight blue as the premium base and Little Fight orange as the signature atmosphere.
+- Use teal, gold, green, sky, and rose as functional accents for cards, routing, proof, and state, not as broad new themes.
+- The expanded palette should make the site easier to scan, not louder.
 
 ## Technical Decisions
 - Static HTML/CSS/JS site, deployed on Netlify.
