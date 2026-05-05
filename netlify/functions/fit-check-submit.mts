@@ -427,6 +427,22 @@ function detectUrgency(lead: JsonRecord, text: string): UrgencyLevel {
   const stated = cleanText(lead.urgency_level).toLowerCase();
 
   if (
+    stated.includes("planned_improvement") ||
+    stated.includes("planned improvement") ||
+    stated.includes("planning")
+  ) {
+    return "planned_improvement";
+  }
+
+  if (stated.includes("exploratory") || stated.includes("exploring")) {
+    return "exploratory";
+  }
+
+  if (stated.includes("urgent_but_not_emergency") || stated.includes("not a fire")) {
+    return "urgent_but_not_emergency";
+  }
+
+  if (
     selected === "broken" ||
     stated.includes("emergency") ||
     stated.includes("actively") ||
@@ -447,7 +463,6 @@ function detectUrgency(lead: JsonRecord, text: string): UrgencyLevel {
     return "urgent_but_not_emergency";
   }
 
-  if (stated.includes("planning") || stated.includes("exploring")) return "exploratory";
   return "planned_improvement";
 }
 
@@ -823,9 +838,7 @@ function buildDeterministicResult(lead: JsonRecord): FitCheckResult {
   const clientSummary = [
     `Based on what you shared, this sounds like ${categoryLanguage[primary]}`,
     ballparkLanguage[ballparkType],
-    sensitive
-      ? "Please do not share passwords, recovery codes, payment details, private keys, or API tokens here. David can explain the safest way to grant access if this moves forward."
-      : "",
+    sensitive ? "Please do not share sensitive information here. David can walk you through safer access if this moves forward." : "",
     disclaimer,
   ]
     .filter(Boolean)
@@ -1048,7 +1061,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
           {
             role: "system",
             content:
-              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, website cleanup, website rebuild, software/tool decision, local visibility, or a business system problem. Be direct, warm, practical, and human. Ask the fewest useful questions possible when you are writing recommendations. Never provide firm quotes. Never ask for passwords, recovery codes, API keys, private tokens, payment details, or sensitive credentials. Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing is confirmed. Map every issue to Keep / Connect / Replace / Build.",
+              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, website cleanup, website rebuild, software/tool decision, local visibility, or a business system problem. Be direct, warm, practical, and human. Ask the fewest useful questions possible when you are writing recommendations. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Connect / Replace / Build.",
           },
           {
             role: "user",

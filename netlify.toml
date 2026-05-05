@@ -185,9 +185,21 @@ force = false
 
 [[redirects]]
 from = "/smart-home-services-nyc/"
-to = "/services/smart-home-services-nyc/"
+to = "/business-systems/"
 status = 301
-force = false
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
+
+[[redirects]]
+from = "/services/smart-home-services-nyc/"
+to = "/business-systems/"
+status = 301
+force = true
 
   [redirects.query]
 

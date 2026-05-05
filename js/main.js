@@ -255,6 +255,61 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  const buildConversionRail = () => {
+    if (document.querySelector(".site-conversion-rail")) return;
+
+    const path = window.location.pathname.replace(/index\.html$/, "");
+    const isFitCheck = path.startsWith("/fit-check/");
+    const isContact = path.startsWith("/contact/");
+    const primaryHref = isFitCheck ? "#fit-check-intake" : "/fit-check/";
+    const primaryText = "Start Fit Check";
+    const note = isContact
+      ? "Need the faster route?"
+      : isFitCheck
+        ? "Something active?"
+        : "Messy setup?";
+    const detail = isContact
+      ? "The guided Fit Check routes the problem before the first reply."
+      : isFitCheck
+        ? "Call if customers, payments, bookings, email, or access are blocked."
+        : "Get routed to urgent support, a paid Fit Check, or a light review.";
+
+    const rail = document.createElement("aside");
+    rail.className = "site-conversion-rail";
+    rail.setAttribute("aria-label", "Fast next step");
+    rail.innerHTML = `
+      <div class="site-conversion-rail__inner">
+        <div class="site-conversion-rail__copy">
+          <strong>${note}</strong>
+          <span>${detail}</span>
+        </div>
+        <div class="site-conversion-rail__actions">
+          <a class="site-conversion-rail__primary" href="${primaryHref}">${primaryText}</a>
+          <a class="site-conversion-rail__secondary" href="tel:+16463600318">Call now</a>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(rail);
+    document.body.classList.add("has-site-conversion-rail");
+
+    let railFrame = 0;
+    const syncRail = () => {
+      railFrame = 0;
+      const visible = path !== "/" || window.scrollY > 420;
+      rail.classList.toggle("is-visible", visible);
+    };
+    syncRail();
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!railFrame) railFrame = window.requestAnimationFrame(syncRail);
+      },
+      { passive: true },
+    );
+  };
+
+  buildConversionRail();
+
   const hero = document.querySelector(".hero");
   if (hero && !prefersReducedMotion && finePointer) {
     let heroBounds = null;
@@ -379,7 +434,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document
     .querySelectorAll(
-      ".btn, .nav-cta-btn, .mobile-sticky-phone, .mobile-sticky-cta, .dispatch-read, .dispatch-mini-read, .dispatch-card-read, .issue-link, .story-link, .story-links a, .back-to-top",
+      ".btn, .nav-cta-btn, .mobile-sticky-phone, .mobile-sticky-cta, .dispatch-read, .dispatch-mini-read, .dispatch-card-read, .issue-link, .story-link, .story-links a, .back-to-top, .site-conversion-rail a",
     )
     .forEach((element) => {
       let pressTimer = null;

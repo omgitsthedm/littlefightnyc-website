@@ -42,10 +42,15 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Fit Check voice intake is wired at `/api/fit-check/voice` for a Twilio Voice webhook. It keeps the caller flow short: consent, issue, urgency, one context question, preferred follow-up, contact. It posts to the same Fit Check backend, submits a Netlify Forms backup, routes callers toward urgent support/Fit Check/light review, and can dial David during business hours when `FIT_CHECK_URGENT_FORWARD_NUMBER` is configured.
 - Fit Check phone conversion links are env-driven: `FIT_CHECK_BOOKING_URL`, `FIT_CHECK_PAYMENT_URL`, `FIT_CHECK_URGENT_SUPPORT_URL`, `URGENT_SUPPORT_PAYMENT_URL`, and `FIT_CHECK_URL`.
 - Fit Check call notifications are env-driven: `TWILIO_NOTIFY_FROM`, `TWILIO_NOTIFY_TO`, `FIT_CHECK_CALLER_SMS_ENABLED`, and `FIT_CHECK_RECOVERY_SMS_ENABLED`.
+- Main website conversion now mirrors the Fit Check phone routing model: urgent issue, messy setup, or light review.
+- `js/main.js` injects a sitewide conversion rail with Fit Check and call CTAs on pages that load the shared runtime.
+- Web Fit Check and contact forms capture `preferred_follow_up` so David knows whether to text, call, or email first.
+- The smart-home service route is retired from public acquisition and redirects to `/business-systems/`.
 - Trial Twilio number voice webhook is configured to `https://littlefightnyc.com/api/fit-check/voice`; production Netlify has signed webhook validation enabled via `TWILIO_AUTH_TOKEN` plus a temporary trial fallback gated by `TWILIO_ACCOUNT_SID`.
 - Trial Twilio number status callback is configured to `https://littlefightnyc.com/api/fit-check/voice?step=status` for abandoned-call recovery and call-status alerts.
 - Fit Check voice prompts override Twilio's basic TTS with `TWILIO_TTS_VOICE` / `TWILIO_TTS_LANGUAGE` / `TWILIO_TTS_RATE`; defaults are `Polly.Matthew-Neural`, `en-US`, and `106%`.
 - Audit app is a separate Netlify site, synced at `audit.littlefightnyc.com` and `audits.littlefightnyc.com`.
+- Audit app landing copy now frames the website audit as a feeder into the Business System Fit Check.
 
 ## Pending External Items
 - Google Search Console verification token or HTML verification file.
