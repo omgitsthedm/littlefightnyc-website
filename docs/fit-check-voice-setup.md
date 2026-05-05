@@ -24,7 +24,7 @@ Fallback URL:
 4. If the caller says yes, collects:
    - issue description
    - urgency
-   - 3 adaptive context answers
+   - 1 adaptive context answer
    - name and business
 5. Posts the completed call into the same Fit Check backend used by the website.
 6. Submits a Netlify Forms backup record.
@@ -151,6 +151,7 @@ That should return TwiML with the consent prompt.
 
 - This is not streaming speech-to-speech Realtime yet.
 - It is a Twilio speech-gathering intake flow.
+- The caller flow is intentionally short: consent, issue, urgency, one context question, contact.
 - Email spelling by voice is intentionally avoided.
 - Caller ID is used as the phone contact when available.
 - A human still reviews before scope, timeline, or pricing is confirmed.

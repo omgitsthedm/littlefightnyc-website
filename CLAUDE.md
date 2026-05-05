@@ -39,7 +39,7 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Fit Check works with deterministic local/server classification by default; it upgrades to OpenAI classification when `OPENAI_API_KEY` is configured.
 - Fit Check lead storage uses Netlify Forms as a no-secret fallback and can write to Supabase when `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are configured.
 - Fit Check notification email can use Resend when `RESEND_API_KEY`, `FIT_CHECK_NOTIFY_EMAIL`, and `FIT_CHECK_EMAIL_FROM` are configured.
-- Fit Check voice intake is wired at `/api/fit-check/voice` for a Twilio Voice webhook. It asks AI consent, gathers speech answers, posts to the same Fit Check backend, submits a Netlify Forms backup, and can dial David on urgent calls when `FIT_CHECK_URGENT_FORWARD_NUMBER` is configured.
+- Fit Check voice intake is wired at `/api/fit-check/voice` for a Twilio Voice webhook. It keeps the caller flow short: consent, issue, urgency, one context question, contact. It posts to the same Fit Check backend, submits a Netlify Forms backup, and can dial David on urgent calls when `FIT_CHECK_URGENT_FORWARD_NUMBER` is configured.
 - Trial Twilio number voice webhook is configured to `https://littlefightnyc.com/api/fit-check/voice`; production Netlify has signed webhook validation enabled via `TWILIO_AUTH_TOKEN` plus a temporary trial fallback gated by `TWILIO_ACCOUNT_SID`.
 - Fit Check voice prompts override Twilio's basic TTS with `TWILIO_TTS_VOICE` / `TWILIO_TTS_LANGUAGE` / `TWILIO_TTS_RATE`; defaults are `Polly.Matthew-Neural`, `en-US`, and `106%`.
 - Audit app is a separate Netlify site, synced at `audit.littlefightnyc.com` and `audits.littlefightnyc.com`.
