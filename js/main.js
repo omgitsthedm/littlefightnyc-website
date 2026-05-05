@@ -264,15 +264,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const primaryHref = isFitCheck ? "#fit-check-intake" : "/fit-check/";
     const primaryText = "Start Fit Check";
     const note = isContact
-      ? "Need the faster route?"
+      ? "Want the clean route?"
       : isFitCheck
         ? "Something active?"
-        : "Messy setup?";
+        : "Setup acting up?";
     const detail = isContact
-      ? "The guided Fit Check routes the problem before the first reply."
+      ? "Answer a few pointed questions so David gets the useful version first."
       : isFitCheck
         ? "Call if customers, payments, bookings, email, or access are blocked."
-        : "Get routed to urgent support, a paid Fit Check, or a light review.";
+        : "Route it to urgent support, a Fit Check, or a light review without the form wall.";
 
     const rail = document.createElement("aside");
     rail.className = "site-conversion-rail";

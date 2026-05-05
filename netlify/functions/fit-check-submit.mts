@@ -92,24 +92,24 @@ const jsonHeaders = {
 
 const categoryLanguage: Record<ApprovedCategory, string> = {
   "Quick Fix":
-    "an active support issue or focused fix. Little Fight should first confirm what is broken, what platform is involved, and whether customers, bookings, payments, email, or staff access are being affected.",
+    "an active support issue or focused fix. Little Fight should first confirm what broke, which platform is involved, and whether customers, bookings, payments, email, or staff access are affected.",
   "Website Cleanup":
-    "a website cleanup. The foundation may still be usable, but the message, mobile experience, calls-to-action, forms, structure, or SEO basics need attention.",
+    "a website cleanup. The foundation may still be usable, but the message, mobile experience, calls-to-action, forms, structure, or search basics need attention.",
   "Website Build / Rebuild":
-    "a larger website project. If the platform, structure, content, and conversion paths are all working against the business, a cleanup may not be enough.",
+    "a larger website project. If the platform, structure, content, and conversion paths are all fighting the business, a cleanup may not be enough.",
   "Tool / Software Decision":
-    "a tool-stack decision. The next step is to look at what you are paying for, what the team actually uses, what is disconnected, and whether to keep, connect, replace, or build around the tools.",
+    "a tool-stack decision. The next step is to look at what you pay for, what the team actually uses, what is disconnected, and whether to keep, connect, replace, or build around the tools.",
   "Business System Build":
     "a business system project. The issue is not just one tool. It is the workflow behind the work: intake, follow-up, tracking, handoffs, reporting, and the places where the team still works around the software.",
   "Local Search / Visibility":
-    "a local search and visibility issue. Little Fight would review the Google profile, service pages, reviews, neighborhood relevance, analytics, and whether the site supports how customers search.",
+    "a local search and visibility issue. Little Fight would review the Google profile, service pages, reviews, neighborhood relevance, analytics, and whether the site matches how customers search.",
   "Not Sure Yet":
     "unclear enough that it deserves human review. You do not need the perfect technical term before David looks at the setup.",
 };
 
 const ballparkLanguage: Record<string, string> = {
   "Level 1: On-demand support":
-    "This likely starts as on-demand support. The first goal is to identify whether it is a quick fix or part of a larger systems issue.",
+    "This likely starts as on-demand support. First goal: find out whether this is a contained fix or a symptom of a larger setup issue.",
   "Level 2: Fit Check / Diagnostic":
     "The best next step is a Fit Check so David can review the setup before recommending scope.",
   "Level 3: Focused cleanup":
@@ -117,7 +117,7 @@ const ballparkLanguage: Record<string, string> = {
   "Level 4: Project build":
     "This sounds like a project build. David would need to scope the current setup, the tools involved, and what should be kept, connected, replaced, or built.",
   "Level 5: Custom system / operating layer":
-    "This sounds like a larger business system opportunity, especially if the current platform is expensive, underused, or forcing the team into workarounds.",
+    "This sounds like a larger business system opportunity, especially if the current platform is expensive, underused, or forcing the team into daily workarounds.",
 };
 
 const toolNames = [
@@ -618,7 +618,7 @@ function buildKeepConnectReplaceBuild(
   }
 
   if (primary === "Local Search / Visibility" || secondary.includes("Local Search / Visibility")) {
-    build.add("Build the local visibility foundation: Google profile, service pages, FAQs, reviews, schema, analytics, and reporting.");
+    build.add("Build the local visibility foundation: Google profile, service pages, visible FAQs, reviews, matching schema, analytics, and reporting.");
   }
 
   if (!keep.size) keep.add("Preserve anything already working for customers or staff.");
@@ -1369,7 +1369,7 @@ async function sendSmsNotifications(lead: JsonRecord, result: FitCheckResult) {
     const body =
       conversion.stage === "urgent_support"
         ? `Little Fight NYC: got your urgent Fit Check. David has the brief. ${conversion.label}: ${conversion.url}`
-        : `Little Fight NYC: got your Fit Check. ${conversion.label}: ${conversion.url}`;
+        : `Little Fight NYC: got your Fit Check. Next step: ${conversion.label}: ${conversion.url}`;
     caller = await sendTwilioSms(callerPhone, body);
   }
 

@@ -669,14 +669,14 @@ function finalClientLine(result: JsonRecord | null, state: VoiceState): string {
 
   if (conversion.stage === "urgent_support") {
     return callerSmsEnabled
-      ? `This sounds urgent. I am alerting David and texting you the next step. This is not a quote.`
-      : `This sounds urgent. I am alerting David now. This is not a quote.`;
+      ? `Got it. This sounds urgent. I am alerting David and texting you the next step. This is not a quote.`
+      : `Got it. This sounds urgent. I am alerting David now. This is not a quote.`;
   }
 
   if (conversion.stage === "fit_check") {
     return callerSmsEnabled
-      ? `This sounds like a Fit Check. I am texting you the next step and sending David the brief. This is not a quote.`
-      : `This sounds like a Fit Check. I am sending David the brief. This is not a quote.`;
+      ? `This sounds like a Fit Check. I am texting you the next step and sending David the useful version. This is not a quote.`
+      : `This sounds like a Fit Check. I am sending David the useful version. This is not a quote.`;
   }
 
   if (cleanText(resultRecord?.client_facing_summary)) {
@@ -754,7 +754,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "Little Fight NYC Fit Check. I am an AI intake assistant. I will ask a few quick questions and send David a brief. Do not share sensitive information on this call. Say yes or press 1 to continue. Say no or press 2 to leave a message.",
+          "Little Fight NYC Fit Check. I am the intake assistant. I will ask a few quick questions, summarize the call for David, and send him the brief. Do not share sensitive information. Say yes or press 1 to continue. Say no or press 2 to leave a message.",
           "consent",
           state,
           { numDigits: "1", timeout: "8" },
@@ -798,7 +798,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "Got it. What is broken, messy, expensive, or not working?",
+          "Got it. What is broken, messy, expensive, or not working right now?",
           "problem",
           state,
           { timeout: "10" },
@@ -829,10 +829,10 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
 
     return response(
       twiml([
-        say(`${warning}I am placing this first as ${categoryNames[state.selectedEntry]}.`),
+        say(`${warning}First read: ${categoryNames[state.selectedEntry]}.`),
         gather(
           req,
-          "Is this affecting customers right now? Press 1 for yes. Press 2 for urgent but not on fire. Press 3 for planned cleanup. Press 4 if you are just exploring.",
+          "Is this affecting customers right now? Press 1 for yes. Press 2 for urgent but not a fire. Press 3 for planned cleanup. Press 4 if you are just exploring.",
           "urgency",
           state,
           { numDigits: "1", timeout: "8" },
@@ -915,7 +915,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         say(finalClientLine(result, state)),
         pause(1),
-        say("Thanks. David will review it before scope or pricing."),
+        say("Thanks. David will review it before talking scope or pricing."),
         urgentDial(req, state),
         say("Thanks for calling Little Fight NYC."),
         hangup(),
