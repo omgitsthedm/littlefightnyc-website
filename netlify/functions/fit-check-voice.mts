@@ -19,6 +19,7 @@ type VoiceState = {
   q2?: string;
   q3?: string;
   contact?: string;
+  followUpPreference?: string;
   caller?: string;
   callSid?: string;
   retry?: number;
@@ -270,6 +271,7 @@ function stateSummary(state: VoiceState): string {
     state.q1 ? `Answer 1: ${state.q1}` : "",
     state.q2 ? `Answer 2: ${state.q2}` : "",
     state.q3 ? `Answer 3: ${state.q3}` : "",
+    state.followUpPreference ? `Preferred follow-up: ${state.followUpPreference}` : "",
     state.contact ? `Contact: ${state.contact}` : "",
   ]
     .filter(Boolean)
@@ -288,6 +290,7 @@ function buildPayload(state: VoiceState, params: URLSearchParams): JsonRecord {
   const initialProblem = cleanText(state.problem, 1400);
   const urgencyLevel = state.urgencyLevel || inferUrgency(initialProblem, "");
   const contactSpeech = cleanText(state.contact, 400);
+  const followUpPreference = cleanText(state.followUpPreference, 160);
   const guessedBusiness = contactSpeech || `Voice caller ${caller || "unknown"}`;
 
   return {
@@ -303,6 +306,7 @@ function buildPayload(state: VoiceState, params: URLSearchParams): JsonRecord {
       voice_q2: cleanText(state.q2, 900),
       voice_q3: cleanText(state.q3, 900),
       voice_contact: contactSpeech,
+      preferred_follow_up: followUpPreference,
       selected_entry: selectedEntry,
       initial_problem: initialProblem,
       urgency_level: urgencyLevel,
@@ -378,6 +382,7 @@ async function submitBackupForm(req: Request, state: VoiceState, result: JsonRec
   form.set("ai_result_json", JSON.stringify(resultRecord));
   form.set("messy_now", cleanText(state.problem, 1200));
   form.set("current_tools", [state.q1, state.q2, state.q3].map((item) => cleanText(item, 500)).join(" | "));
+  form.set("preferred_follow_up", cleanText(state.followUpPreference));
   form.set("consent_ai_summary", state.consent ? "true" : "false");
 
   try {
@@ -660,7 +665,22 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "Last thing. Say your name and business name. Caller ID gives us your phone number if it is available.",
+          "How should David follow up: text, phone, or email?",
+          "followup",
+          state,
+          { timeout: "9" },
+        ),
+      ]),
+    );
+  }
+
+  if (step === "followup") {
+    state.followUpPreference = input;
+    return response(
+      twiml([
+        gather(
+          req,
+          "Last thing. Say your name and business name.",
           "contact",
           state,
           { timeout: "9" },

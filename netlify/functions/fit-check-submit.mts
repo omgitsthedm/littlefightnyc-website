@@ -716,12 +716,14 @@ function whatToCheckFirst(primary: ApprovedCategory, secondary: ApprovedCategory
 }
 
 function makeInternalBrief(lead: JsonRecord, result: FitCheckResult): string {
+  const answers = asRecord(lead.answers);
   const lines = [
     "Lead Summary",
     `Name: ${cleanText(lead.lead_name) || "Unknown"}`,
     `Business: ${cleanText(lead.business_name) || "Unknown"}`,
     `Email: ${cleanText(lead.email) || "Unknown"}`,
     `Phone: ${cleanText(lead.phone) || "Unknown"}`,
+    `Preferred follow-up: ${cleanText(answers.preferred_follow_up) || "Unknown"}`,
     `Website: ${cleanText(lead.website_url) || "Unknown"}`,
     `Industry: ${cleanText(lead.industry) || "Unknown"}`,
     `Location: ${cleanText(lead.location) || "Unknown"}`,
@@ -1211,6 +1213,7 @@ async function saveEventToSupabase(
 }
 
 function emailText(lead: JsonRecord, result: FitCheckResult): string {
+  const answers = asRecord(lead.answers);
   return [
     `Primary category: ${result.primary_category}`,
     `Secondary: ${result.secondary_categories.join(", ") || "None"}`,
@@ -1221,6 +1224,7 @@ function emailText(lead: JsonRecord, result: FitCheckResult): string {
     `Business: ${cleanText(lead.business_name) || "Unknown"}`,
     `Email: ${cleanText(lead.email) || "Unknown"}`,
     `Phone: ${cleanText(lead.phone) || "Unknown"}`,
+    `Preferred follow-up: ${cleanText(answers.preferred_follow_up) || "Unknown"}`,
     `Website: ${cleanText(lead.website_url) || "Unknown"}`,
     `Location: ${cleanText(lead.location) || "Unknown"}`,
     "",
