@@ -150,7 +150,7 @@ body > * {
 }
 
 .nav-cta-desktop::before {
-  content: "Fit Check \2192" !important;
+  content: "Start Here \2192" !important;
 }
 
 .mobile-sticky-cta {

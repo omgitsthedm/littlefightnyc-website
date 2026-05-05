@@ -754,7 +754,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "Little Fight NYC Fit Check. I am the intake assistant. I will ask a few quick questions, summarize the call for David, and send him the brief. Do not share sensitive information. Say yes or press 1 to continue. Say no or press 2 to leave a message.",
+          "Little Fight NYC. I am the helper that gets David the useful version first. I will ask a few quick questions. Do not share sensitive information. Say yes or press 1 to continue. Say no or press 2 to leave a message.",
           "consent",
           state,
           { numDigits: "1", timeout: "8" },

@@ -29,10 +29,10 @@ const NEXT_STEPS = [
   "Human follow-up",
   "Emergency support",
   "Fit Check call",
-  "Website audit",
-  "Tool-stack audit",
-  "Local search audit",
-  "Systems mapping session",
+  "Website review",
+  "Software savings review",
+  "Google visibility review",
+  "Lead and follow-up review",
   "Not a fit",
   "Needs more info",
 ] as const;
@@ -98,11 +98,11 @@ const categoryLanguage: Record<ApprovedCategory, string> = {
   "Website Build / Rebuild":
     "a larger website project. If the platform, structure, content, and conversion paths are all fighting the business, a cleanup may not be enough.",
   "Tool / Software Decision":
-    "a tool-stack decision. The next step is to look at what you pay for, what the team actually uses, what is disconnected, and whether to keep, connect, replace, or build around the tools.",
+    "a software savings question. The next step is to look at what you pay for, what the team actually uses, what drains cash, and what should stay, go, or be replaced with something simpler.",
   "Business System Build":
-    "a business system project. The issue is not just one tool. It is the workflow behind the work: intake, follow-up, tracking, handoffs, reporting, and the places where the team still works around the software.",
+    "a lead and follow-up cleanup. The issue is not just one tool. It is what happens after a customer calls, books, pays, fills out a form, or asks for help.",
   "Local Search / Visibility":
-    "a local search and visibility issue. Little Fight would review the Google profile, service pages, reviews, neighborhood relevance, analytics, and whether the site matches how customers search.",
+    "a Google and local visibility issue. Little Fight would review whether nearby customers can find, trust, and contact the business when they are ready to buy.",
   "Not Sure Yet":
     "unclear enough that it deserves human review. You do not need the perfect technical term before David looks at the setup.",
 };
@@ -110,14 +110,14 @@ const categoryLanguage: Record<ApprovedCategory, string> = {
 const ballparkLanguage: Record<string, string> = {
   "Level 1: On-demand support":
     "This likely starts as on-demand support. First goal: find out whether this is a contained fix or a symptom of a larger setup issue.",
-  "Level 2: Fit Check / Diagnostic":
-    "The best next step is a Fit Check so David can review the setup before recommending scope.",
+  "Level 2: First Look":
+    "The best next step is a First Look so David can review the setup before recommending the smallest useful move.",
   "Level 3: Focused cleanup":
     "This sounds like a focused cleanup. The foundation may be usable, but one or more pieces need to be clarified, connected, or repaired.",
   "Level 4: Project build":
-    "This sounds like a project build. David would need to scope the current setup, the tools involved, and what should be kept, connected, replaced, or built.",
-  "Level 5: Custom system / operating layer":
-    "This sounds like a larger business system opportunity, especially if the current platform is expensive, underused, or forcing the team into daily workarounds.",
+    "This sounds like a project build. David would need to review what exists now, what is costing money, and what would help the business actually run better.",
+  "Level 5: Larger custom help":
+    "This sounds like larger custom help, especially if a pricey monthly platform is underused or forcing the team into daily workarounds.",
 };
 
 const toolNames = [
@@ -534,7 +534,7 @@ function inferBallpark(
   }
 
   if (primary === "Not Sure Yet" || secondary.length >= 2) {
-    return "Level 2: Fit Check / Diagnostic";
+    return "Level 2: First Look";
   }
 
   if (primary === "Website Cleanup" || primary === "Local Search / Visibility") {
@@ -550,7 +550,7 @@ function inferBallpark(
       text.includes("custom") ||
       text.includes("platform"))
   ) {
-    return "Level 5: Custom system / operating layer";
+    return "Level 5: Larger custom help";
   }
 
   if (
@@ -561,7 +561,7 @@ function inferBallpark(
     return "Level 4: Project build";
   }
 
-  return "Level 2: Fit Check / Diagnostic";
+  return "Level 2: First Look";
 }
 
 function buildKeepConnectReplaceBuild(
@@ -703,11 +703,11 @@ function recommendedNextStep(primary: ApprovedCategory, urgency: UrgencyLevel): 
   if (urgency === "emergency") return "Emergency support";
   if (primary === "Quick Fix") return "Human follow-up";
   if (primary === "Website Cleanup" || primary === "Website Build / Rebuild") {
-    return "Website audit";
+    return "Website review";
   }
-  if (primary === "Tool / Software Decision") return "Tool-stack audit";
-  if (primary === "Business System Build") return "Systems mapping session";
-  if (primary === "Local Search / Visibility") return "Local search audit";
+  if (primary === "Tool / Software Decision") return "Software savings review";
+  if (primary === "Business System Build") return "Lead and follow-up review";
+  if (primary === "Local Search / Visibility") return "Google visibility review";
   return "Fit Check call";
 }
 
@@ -725,12 +725,12 @@ function whatToCheckFirst(primary: ApprovedCategory, secondary: ApprovedCategory
     checks.add("current tools, subscription cost, usage, overlap, and workarounds");
   }
   if (primary === "Business System Build" || secondary.includes("Business System Build")) {
-    checks.add("intake, follow-up, lead tracking, handoffs, dashboards, and reporting");
+    checks.add("where leads land, who follows up, what gets missed, and what staff do by hand");
   }
   if (primary === "Local Search / Visibility" || secondary.includes("Local Search / Visibility")) {
-    checks.add("Google Business Profile, service pages, reviews, analytics, and local search terms");
+    checks.add("Google profile, reviews, service pages, and what nearby customers search before calling");
   }
-  if (!checks.size) checks.add("website, tools, local visibility, and the workflow behind the first customer action");
+  if (!checks.size) checks.add("website, monthly tools, Google visibility, and what happens after a customer reaches out");
   return Array.from(checks).slice(0, 5);
 }
 
@@ -809,7 +809,7 @@ function makeFollowUpEmail(lead: JsonRecord, result: FitCheckResult): {
         : ""
     }. The first thing I would look at is what should be kept, connected, replaced, or built so we do not sell you a bigger move when a focused fix will do.`,
     "",
-    "The best next step is for me to review the current site, tools, and workflow context, then recommend the clearest next move.",
+    "The best next step is for me to review the current site, monthly tools, and where the work gets stuck, then recommend the smallest useful next move.",
     "",
     "Best,",
     "David",
@@ -1061,7 +1061,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
           {
             role: "system",
             content:
-              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, website cleanup, website rebuild, software/tool decision, local visibility, or a business system problem. Be direct, warm, practical, and human. Ask the fewest useful questions possible when you are writing recommendations. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Connect / Replace / Build.",
+              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the business owner used the term first. Focus on dollars saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
           },
           {
             role: "user",
@@ -1098,7 +1098,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
                   tool_opportunity: 1,
                 },
                 recommended_next_step: "Fit Check call",
-                ballpark_type: "Level 2: Fit Check / Diagnostic",
+                ballpark_type: "Level 2: First Look",
                 disclaimer: "This is not a quote.",
                 follow_up_email: { subject: "", body: "" },
                 missing_info: [],

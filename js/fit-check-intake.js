@@ -24,11 +24,29 @@
     unsure: "Not Sure Yet",
   };
 
+  const publicCategoryLabels = {
+    "Quick Fix": "Broken thing",
+    "Website Cleanup": "Website cleanup",
+    "Website Build / Rebuild": "Website rebuild",
+    "Tool / Software Decision": "Software savings review",
+    "Business System Build": "Lead and follow-up cleanup",
+    "Local Search / Visibility": "Google and local visibility",
+    "Not Sure Yet": "Not sure yet",
+  };
+
+  const publicBallparkLabels = {
+    "Level 1: On-demand support": "Active support",
+    "Level 2: First Look": "First look",
+    "Level 3: Focused cleanup": "Focused cleanup",
+    "Level 4: Project build": "Project build",
+    "Level 5: Larger custom help": "Larger custom help",
+  };
+
   const categoryCopy = {
     "Quick Fix": {
-      short: "Active support first. Systems second.",
+      short: "Active support first. Bigger cleanup second.",
       early:
-        "This sounds like something Little Fight should treat as active support first. If it touches multiple tools, David can separate the immediate fix from the larger cleanup.",
+        "This sounds like something Little Fight should treat as active support first. If it touches more than one tool, David can separate the immediate fix from the bigger cleanup.",
       firstCheck: [
         "what is broken right now",
         "which platform, account, domain, form, email, booking, or payment tool is involved",
@@ -58,14 +76,14 @@
         "business positioning",
         "service structure",
         "conversion path",
-        "SEO/AEO foundation",
+        "Google and search foundation",
       ],
       ballpark: "Level 4: Project build",
     },
     "Tool / Software Decision": {
-      short: "The tool stack needs a fit check.",
+      short: "The monthly bill needs a fit check.",
       early:
-        "This sounds like a tool-stack decision. The useful question is not whether the software is good in general. It is whether it fits how your team actually works.",
+        "This sounds like a software cost question. The useful question is not whether the software is good in general. It is whether it helps enough to justify the bill.",
       firstCheck: [
         "current tools and monthly costs",
         "what the team actually uses",
@@ -75,15 +93,15 @@
       ballpark: "Level 4: Project build",
     },
     "Business System Build": {
-      short: "The workflow behind the work is the issue.",
+      short: "Leads and follow-up may be the issue.",
       early:
-        "This sounds more like a business system problem than one broken tool. The messy part is usually hiding between intake, follow-up, handoffs, and reporting.",
+        "This sounds bigger than one broken tool. The messy part is usually hiding between leads, follow-up, handoffs, and the places staff still work by memory.",
       firstCheck: [
         "where leads or requests land",
         "who follows up",
         "what gets entered twice",
         "what falls through the cracks",
-        "whether a dashboard or automation layer would help",
+        "whether one simple place to see the work would help",
       ],
       ballpark: "Level 4: Project build",
     },
@@ -108,9 +126,9 @@
         "website",
         "tools",
         "local visibility",
-        "intake and follow-up workflow",
+        "leads and follow-up",
       ],
-      ballpark: "Level 2: Fit Check / Diagnostic",
+      ballpark: "Level 2: First Look",
     },
   };
 
@@ -179,7 +197,7 @@
       "nobody knows",
       "spreadsheet",
       "tracking",
-      "workflow",
+      "daily work",
       "workaround",
     ],
     "Local Search / Visibility": [
@@ -280,7 +298,7 @@
         id: "software_cost",
         label: "What software or platform are you worried about?",
         type: "textarea",
-        placeholder: "Example: We pay for a CRM, but the team still uses spreadsheets.",
+        placeholder: "Example: We pay for a customer list, but the team still uses spreadsheets.",
       },
       {
         id: "monthly_cost",
@@ -312,10 +330,10 @@
         type: "textarea",
       },
       {
-        id: "tools_in_workflow",
-        label: "Which tools are part of that workflow now?",
+        id: "tools_in_daily_work",
+        label: "Which tools are part of that daily work now?",
         type: "textarea",
-        placeholder: "Forms, email, Square, Shopify, spreadsheets, Airtable, Notion, CRM...",
+        placeholder: "Forms, email, Square, Shopify, spreadsheets, Airtable, Notion, customer list...",
       },
       {
         id: "thirty_day_fix",
@@ -518,7 +536,7 @@
       state.primaryCategory === "Business System Build" &&
       /3000|\$3|expensive|dashboard|custom|platform/i.test(text)
     ) {
-      ballpark = "Level 5: Custom system / operating layer";
+      ballpark = "Level 5: Larger custom help";
     }
 
     return {
@@ -541,11 +559,11 @@
     if (urgency === "emergency") return "Emergency support";
     if (category === "Quick Fix") return "Human follow-up";
     if (category === "Website Cleanup" || category === "Website Build / Rebuild") {
-      return "Website audit";
+      return "Website review";
     }
-    if (category === "Tool / Software Decision") return "Tool-stack audit";
-    if (category === "Business System Build") return "Systems mapping session";
-    if (category === "Local Search / Visibility") return "Local search audit";
+    if (category === "Tool / Software Decision") return "Software savings review";
+    if (category === "Business System Build") return "Fit Check call";
+    if (category === "Local Search / Visibility") return "Google visibility review";
     return "Fit Check call";
   }
 
@@ -555,7 +573,7 @@
 
     const defaults = {
       keep: ["Preserve any tools, pages, or habits already helping customers or staff."],
-      connect: ["Check whether working pieces are isolated from the rest of the workflow."],
+      connect: ["Check whether working pieces are isolated from the rest of the business."],
       replace: ["Do not replace anything until David reviews fit, cost, usage, and risk."],
       build: ["Build the missing piece only if a smaller fix will not solve it."],
     };
@@ -574,13 +592,13 @@
 
     if (type === "build") {
       if (category === "Business System Build") {
-        return ["Build or tailor the intake, follow-up, dashboard, automation, or reporting layer around the real workflow."];
+        return ["Build or tailor the lead capture, follow-up, owner view, or simple helper around the way the day actually works."];
       }
       if (category.includes("Website")) {
         return ["Build clearer service pages, CTAs, form paths, and conversion structure around the actual offer."];
       }
       if (category === "Local Search / Visibility") {
-        return ["Build the Google profile, service-page, FAQ, review, schema, and reporting foundation."];
+        return ["Build the Google profile, service page, review, and tracking foundation."];
       }
     }
 
@@ -591,7 +609,15 @@
     const category = state.primaryCategory;
     const copy = categoryCopy[category] || categoryCopy["Not Sure Yet"];
     const checks = copy.firstCheck.slice(0, 3).join(", ");
-    return `Here's what I'm hearing: ${clean(state.initialProblem) || "you have a messy setup that needs review"}. The issue seems to be ${category}. The first thing Little Fight should probably check is ${checks}.`;
+    return `Here's what I'm hearing: ${clean(state.initialProblem) || "you have a messy setup that needs review"}. The issue seems to be ${displayCategory(category)}. The first thing Little Fight should probably check is ${checks}.`;
+  }
+
+  function displayCategory(category) {
+    return publicCategoryLabels[category] || category || "Not sure yet";
+  }
+
+  function displayBallpark(ballpark) {
+    return publicBallparkLabels[ballpark] || ballpark || "First look";
   }
 
   function hasSensitiveText(value) {
@@ -611,7 +637,7 @@
     const current = result || classify();
     const copy = categoryCopy[current.primary_category] || categoryCopy["Not Sure Yet"];
     if (liveRead) liveRead.textContent = copy.early;
-    if (liveCategory) liveCategory.textContent = current.primary_category;
+    if (liveCategory) liveCategory.textContent = displayCategory(current.primary_category);
     if (liveUrgency) {
       liveUrgency.textContent =
         current.urgency_level === "emergency"
@@ -622,7 +648,7 @@
               ? "Exploratory"
               : "Planned improvement";
     }
-    if (liveBallpark) liveBallpark.textContent = current.ballpark_type || copy.ballpark;
+    if (liveBallpark) liveBallpark.textContent = displayBallpark(current.ballpark_type || copy.ballpark);
     if (liveNext) liveNext.textContent = current.recommended_next_step;
     if (liveKcrb) {
       liveKcrb.innerHTML = ["keep", "connect", "replace", "build"]
@@ -799,8 +825,8 @@
       readbackSummary.innerHTML = `
         <p>${escapeHtml(result.client_facing_summary)}</p>
         <div class="fit-readback-grid">
-          <span><strong>Likely category</strong>${escapeHtml(result.primary_category)}</span>
-          <span><strong>Ballpark type</strong>${escapeHtml(result.ballpark_type)}</span>
+          <span><strong>Likely next move</strong>${escapeHtml(displayCategory(result.primary_category))}</span>
+          <span><strong>Ballpark type</strong>${escapeHtml(displayBallpark(result.ballpark_type))}</span>
           <span><strong>Next step</strong>${escapeHtml(result.recommended_next_step)}</span>
         </div>
       `;
@@ -968,7 +994,7 @@
       },
       follow_up_email: {
         subject: "Re: Little Fight Fit Check",
-        body: "Thanks for walking through the setup. David should review the site, tools, and workflow before confirming scope.",
+        body: "Thanks for walking through the setup. David should review the site, tools, and daily work before confirming scope.",
       },
       human_review_flags: ["Fallback local result used"],
       missing_info: [],
@@ -1014,7 +1040,7 @@
 
     if (submitButton) {
       submitButton.disabled = false;
-      submitButton.textContent = "Send Fit Check Brief";
+      submitButton.textContent = "Send this to David";
     }
   }
 
@@ -1028,8 +1054,8 @@
 
     resultMount.innerHTML = `
       <div class="fit-result-header">
-        <p class="overhaul-kicker">Your likely category</p>
-        <h2>${escapeHtml(result.primary_category)}</h2>
+        <p class="overhaul-kicker">Your likely next move</p>
+        <h2>${escapeHtml(displayCategory(result.primary_category))}</h2>
         <p>${escapeHtml(result.client_facing_summary)}</p>
       </div>
       <div class="fit-result-grid">
@@ -1039,7 +1065,7 @@
         </article>
         <article>
           <h3>General next-step type</h3>
-          <p>${escapeHtml(result.ballpark_type)}</p>
+          <p>${escapeHtml(displayBallpark(result.ballpark_type))}</p>
           <p>${escapeHtml(result.recommended_next_step)}</p>
         </article>
         <article>
@@ -1050,7 +1076,7 @@
       </div>
       <div class="overhaul-actions">
         <a class="btn-fit" href="${urgent ? "tel:+16463600318" : "/contact/"}">${urgent ? "Call Little Fight" : "Schedule follow-up"}</a>
-        <a class="btn-ghost" href="/software-cost-calculator/">Estimate software drag</a>
+        <a class="btn-ghost" href="/software-cost-calculator/">Estimate monthly waste</a>
         <button class="btn-ghost" type="button" data-fit-add-detail>Add more detail</button>
       </div>
     `;

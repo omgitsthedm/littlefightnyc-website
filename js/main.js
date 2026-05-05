@@ -262,17 +262,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const isFitCheck = path.startsWith("/fit-check/");
     const isContact = path.startsWith("/contact/");
     const primaryHref = isFitCheck ? "#fit-check-intake" : "/fit-check/";
-    const primaryText = "Start Fit Check";
+    const primaryText = "Start Here";
     const note = isContact
-      ? "Want the clean route?"
+      ? "Want the fastest path?"
       : isFitCheck
-        ? "Something active?"
-        : "Setup acting up?";
+        ? "Something costing you money right now?"
+        : "Paying for tools that do not pay you back?";
     const detail = isContact
-      ? "Answer a few pointed questions so David gets the useful version first."
+      ? "Tell us what is expensive, broken, slow, or unfair."
       : isFitCheck
         ? "Call if customers, payments, bookings, email, or access are blocked."
-        : "Route it to urgent support, a Fit Check, or a light review without the form wall.";
+        : "Tell us what is broken, slow, expensive, or annoying. We will find the smallest useful next move.";
 
     const rail = document.createElement("aside");
     rail.className = "site-conversion-rail";
