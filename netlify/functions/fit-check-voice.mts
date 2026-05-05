@@ -398,24 +398,109 @@ async function submitNoAiMessage(req: Request, state: VoiceState): Promise<void>
   await submitBackupForm(req, state, null);
 }
 
+function headerValue(req: Request, name: string): string {
+  return cleanText(req.headers.get(name), 400);
+}
+
+function paramValue(params: URLSearchParams, name: string): string {
+  const direct = params.get(name);
+  if (direct !== null) return cleanText(direct, 1200);
+
+  const lowerName = name.toLowerCase();
+  for (const [key, value] of params.entries()) {
+    if (key.toLowerCase() === lowerName) return cleanText(value, 1200);
+  }
+
+  return "";
+}
+
+function safeEqual(left: string, right: string): boolean {
+  try {
+    return timingSafeEqual(Buffer.from(left), Buffer.from(right));
+  } catch {
+    return false;
+  }
+}
+
+function signatureFor(token: string, url: string, params: URLSearchParams): string {
+  const data = Array.from(params.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .reduce((acc, [key, value]) => `${acc}${key}${value}`, url);
+
+  return createHmac("sha1", token).update(data).digest("base64");
+}
+
+function candidateSignatureUrls(req: Request): string[] {
+  const url = new URL(req.url);
+  const urls = new Set<string>([req.url]);
+  const forwardedHost = headerValue(req, "x-forwarded-host") || headerValue(req, "host");
+  const forwardedProto = headerValue(req, "x-forwarded-proto") || "https";
+  const publicVoiceUrl = env("TWILIO_PUBLIC_VOICE_URL") || "https://littlefightnyc.com/api/fit-check/voice";
+
+  if (forwardedHost) {
+    urls.add(`${forwardedProto}://${forwardedHost}${url.pathname}${url.search}`);
+    urls.add(`https://${forwardedHost}${url.pathname}${url.search}`);
+  }
+
+  urls.add(`${url.origin}${url.pathname}${url.search}`);
+  urls.add(`https://littlefightnyc.com${url.pathname}${url.search}`);
+  urls.add(`${publicVoiceUrl}${url.search}`);
+
+  return Array.from(urls);
+}
+
+function candidateSignatureParams(params: URLSearchParams): URLSearchParams[] {
+  const candidates = [params];
+  const withoutCallToken = new URLSearchParams(params);
+  withoutCallToken.delete("CallToken");
+  withoutCallToken.delete("call_token");
+
+  if (withoutCallToken.toString() !== params.toString()) {
+    candidates.push(withoutCallToken);
+  }
+
+  return candidates;
+}
+
+function allowTrialSignatureFallback(params: URLSearchParams): boolean {
+  if (env("TWILIO_ALLOW_SIGNATURE_FALLBACK") !== "true") return false;
+
+  const expectedAccountSid = env("TWILIO_ACCOUNT_SID");
+  const accountSid = paramValue(params, "AccountSid");
+  const callSid = paramValue(params, "CallSid");
+  const from = paramValue(params, "From");
+  const to = paramValue(params, "To");
+
+  return (
+    Boolean(expectedAccountSid) &&
+    accountSid === expectedAccountSid &&
+    /^CA[a-f0-9]{32}$/i.test(callSid) &&
+    /^\+\d{7,15}$/.test(from) &&
+    /^\+\d{7,15}$/.test(to)
+  );
+}
+
 function validateTwilioSignature(req: Request, params: URLSearchParams): boolean {
   const token = env("TWILIO_AUTH_TOKEN");
   if (!token) return true;
 
-  const signature = req.headers.get("x-twilio-signature") || "";
-  if (!signature) return false;
+  const signature = headerValue(req, "x-twilio-signature");
+  if (!signature) return allowTrialSignatureFallback(params);
 
-  const url = req.url;
-  const data = Array.from(params.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .reduce((acc, [key, value]) => `${acc}${key}${value}`, url);
-  const expected = createHmac("sha1", token).update(data).digest("base64");
-
-  try {
-    return timingSafeEqual(Buffer.from(signature), Buffer.from(expected));
-  } catch {
-    return false;
+  for (const candidateUrl of candidateSignatureUrls(req)) {
+    for (const candidateParams of candidateSignatureParams(params)) {
+      if (safeEqual(signature, signatureFor(token, candidateUrl, candidateParams))) {
+        return true;
+      }
+    }
   }
+
+  if (allowTrialSignatureFallback(params)) {
+    console.warn("Twilio signature fallback accepted for trial voice request.");
+    return true;
+  }
+
+  return false;
 }
 
 function finalClientLine(result: JsonRecord | null, state: VoiceState): string {

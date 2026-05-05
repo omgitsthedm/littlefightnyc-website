@@ -40,7 +40,7 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Fit Check lead storage uses Netlify Forms as a no-secret fallback and can write to Supabase when `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are configured.
 - Fit Check notification email can use Resend when `RESEND_API_KEY`, `FIT_CHECK_NOTIFY_EMAIL`, and `FIT_CHECK_EMAIL_FROM` are configured.
 - Fit Check voice intake is wired at `/api/fit-check/voice` for a Twilio Voice webhook. It asks AI consent, gathers speech answers, posts to the same Fit Check backend, submits a Netlify Forms backup, and can dial David on urgent calls when `FIT_CHECK_URGENT_FORWARD_NUMBER` is configured.
-- Trial Twilio number voice webhook is configured to `https://littlefightnyc.com/api/fit-check/voice`; production Netlify has signed webhook validation enabled via `TWILIO_AUTH_TOKEN`.
+- Trial Twilio number voice webhook is configured to `https://littlefightnyc.com/api/fit-check/voice`; production Netlify has signed webhook validation enabled via `TWILIO_AUTH_TOKEN` plus a temporary trial fallback gated by `TWILIO_ACCOUNT_SID`.
 - Audit app is a separate Netlify site, synced at `audit.littlefightnyc.com` and `audits.littlefightnyc.com`.
 
 ## Pending External Items
@@ -51,7 +51,7 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Fit Check OpenAI model/env selection, if AI classification should run server-side instead of deterministic fallback.
 - Supabase table creation from `docs/fit-check-schema.sql`, if database storage should be enabled.
 - Resend verified sender/domain, if function-based David notification should be enabled beyond Netlify Forms.
-- Rotate the trial Twilio Auth Token and API key/secret after voice testing because credentials were shared in chat.
+- Rotate the trial Twilio Auth Token and API key/secret after voice testing because credentials were shared in chat; then remove `TWILIO_ALLOW_SIGNATURE_FALLBACK`.
 - `FIT_CHECK_URGENT_FORWARD_NUMBER` if urgent calls should attempt live transfer to David.
 - Real inbox confirmation for test form email delivery.
 - Real iOS device QA confirmation.

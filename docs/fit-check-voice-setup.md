@@ -50,6 +50,22 @@ Required for signed Twilio webhook validation:
 
 `TWILIO_AUTH_TOKEN`
 
+Recommended while the trial number is being tested:
+
+`TWILIO_PUBLIC_VOICE_URL`
+
+Set to:
+
+`https://littlefightnyc.com/api/fit-check/voice`
+
+Temporary trial fallback when Twilio's real inbound request shape fails strict signature validation:
+
+`TWILIO_ACCOUNT_SID`
+
+`TWILIO_ALLOW_SIGNATURE_FALLBACK`
+
+Set `TWILIO_ALLOW_SIGNATURE_FALLBACK` to `true` only during trial testing, then remove it after token rotation and strict validation is confirmed.
+
 Optional urgent transfer number:
 
 `FIT_CHECK_URGENT_FORWARD_NUMBER`
