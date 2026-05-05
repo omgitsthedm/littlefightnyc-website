@@ -2,7 +2,11 @@
 
 ## Project Overview
 
-Little Fight NYC is a concierge tech support company serving NYC small businesses. The website is a multi-page static site (~33 HTML pages) with a Three.js 3D hero animation. No build step — static HTML/CSS/JS deployed directly to Netlify.
+Little Fight NYC is now positioned around right-sized websites, tools, local visibility, and business systems for New York businesses. On-demand support remains part of the offer, but it is no longer the headline identity.
+
+The live site is a multi-page static HTML/CSS/JS website deployed to Netlify. The current conversion path centers on `/fit-check/`, plus a short Twilio-compatible Fit Check voice intake at `/api/fit-check/voice`.
+
+For the newest operational handoff, use `CLAUDE.md` in the repo root first. This document is older project context and should be treated as secondary.
 
 ---
 
@@ -10,14 +14,14 @@ Little Fight NYC is a concierge tech support company serving NYC small businesse
 
 | What | Path / URL |
 |------|-----------|
-| Local repo | `~/Desktop/littlefightnyc-website` |
+| Local repo | `~/Desktop/LiFi NYC/Brand/Website/littlefightnyc-website` |
 | GitHub | `https://github.com/omgitsthedm/littlefightnyc-website.git` |
 | Live site | `https://littlefightnyc.com` |
 | Netlify site ID | `0907d8fe-7018-48db-a6be-1f906e4b2619` |
 | Netlify project name | `littlefightnyc` |
-| Branch | `main` (Netlify auto-deploys) |
-| Source copy | `~/Desktop/LiFi NYC/Brand/Website/Website-Rebuild/SITE-COPY.md` |
-| Original deploy files | `~/Desktop/LiFi NYC/Brand/Website/DEPLOY-READY/` |
+| Branch | `main` |
+| Current handoff | `CLAUDE.md` |
+| Audit app local sync | `tmp/audits-sync/` |
 | Dev server | `python3 -m http.server 8090` from repo root |
 
 ---
@@ -26,29 +30,13 @@ Little Fight NYC is a concierge tech support company serving NYC small businesse
 
 ### Homepage (`/index.html`)
 
-The homepage is a single self-contained file (~3900 lines) with all CSS, HTML, and JS inline. It uses hash routing internally via a `navigateTo('pagename')` function that toggles `.page-section` visibility.
+The homepage now leads with the right-sized systems positioning, the Keep / Connect / Replace / Build framework, the Fit Check offer, software guides, and the routing-to-revenue model.
 
-**Hash routes within index.html:**
-
-| Route | Content |
-|-------|---------|
-| `#home` | 3D hero, social proof ticker, trust badges, why-us cards, before/after, services preview, free audit CTA, promise cards, testimonials, work carousel, NYC canvas map, FAQ, final CTA |
-| `#services` | 6 service cards with 8 bullet points each |
-| `#how` | Animated vertical timeline with scroll-triggered reveals |
-| `#work` | 5 real client cards + CTA card, pill filters (Fashion, Nightlife, Finance, Film) |
-| `#about` | Company info |
-| `#blog` | 6 article index cards |
-| `#contact` | Contact form with Cloudflare Turnstile CAPTCHA |
-| `#blog-post-1` | AI and Google Broke the Internet (DIGITAL STRATEGY) |
-| `#blog-post-2` | What Google Actually Looks For (SEARCH VISIBILITY) |
-| `#blog-post-3` | Why Websites Will Be Invisible (SEARCH VISIBILITY) |
-| `#blog-post-4` | Cybersecurity for Small Business (CYBERSECURITY) |
-| `#blog-post-5` | NYC Mom-and-Pops Go Digital (DIGITAL STRATEGY) |
-| `#blog-post-6` | Protecting Kids From AI (AI SAFETY) |
+The old hash-route homepage notes are no longer current. The acquisition paths now live as crawlable page routes such as `/fit-check/`, `/business-systems/`, `/websites/`, `/local-search/`, `/software-guides/`, `/services/`, and `/solutions/`.
 
 ### Standalone Pages (directory-based pretty URLs)
 
-Each has its own `index.html` with full inline CSS/JS.
+Each has its own `index.html` and shared CSS/JS assets.
 
 **Service pages (`/services/`):**
 
@@ -62,7 +50,7 @@ Each has its own `index.html` with full inline CSS/JS.
 | `/services/branding-and-identity-design/` | Branding & Identity |
 | `/services/ecommerce-setup-shopify-square-woocommerce/` | E-Commerce Setup |
 | `/services/pos-and-register-setup-nyc/` | POS & Register Setup |
-| `/services/smart-home-services-nyc/` | Smart Home Services |
+| `/services/smart-home-services-nyc/` | Redirects to `/business-systems/` |
 | `/services/tech-consulting-small-business/` | Tech Consulting |
 
 **Blog posts (mixed formats):**

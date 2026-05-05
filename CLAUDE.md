@@ -75,16 +75,16 @@ This is the current ground truth after the main website overhaul and Fit Check/p
 
 Latest source state:
 - Git branch: `main`
-- Latest pushed commit: `17a5f6e Integrate Fit Check conversion overhaul`
-- Previous related commits: `5aced6f Route phone leads to conversion paths`, `6c6109b Capture Fit Check follow-up preference`
+- Latest pushed commit: `d2cfd09 Sharpen Little Fight acquisition copy`
+- Previous related commits: `33ef236 Document overhaul handoff for Claude Code`, `17a5f6e Integrate Fit Check conversion overhaul`, `5aced6f Route phone leads to conversion paths`, `6c6109b Capture Fit Check follow-up preference`
 - Main Netlify project: `littlefightnyc`
 - Main production URL: `https://littlefightnyc.com`
-- Main production deploy: `69f97db77398a0611933d949`
+- Main production deploy: `69f99130a503739762614abc`
 - Audit Netlify project: `audits-littlefightnyc`
 - Audit production URL: `https://audits.littlefightnyc.com`
 - Audit alias: `https://audit.littlefightnyc.com`
 - Audit production deploy: `69f97e41a05b188f3dc593a8`
-- Production Netlify deploy command used for main site: `npx netlify deploy --prod --build`
+- Production Netlify deploy command used for main site: `npx netlify deploy --prod`
 - Production Netlify deploy command used for audit site: `npx netlify deploy --prod --site 6588401d-53d4-42a3-a4f8-89fb3b937446 --build`
 
 Core strategic direction:
@@ -221,11 +221,17 @@ Verification already completed:
   - `sitemap.xml` no longer includes the smart-home service URL.
   - `audit.littlefightnyc.com` and `audits.littlefightnyc.com` both include the new Fit Check CTAs.
 - Netlify Lighthouse from production deploy on `/`:
-  - Performance: 100
+  - Performance: 99
   - Accessibility: 98
   - Best Practices: 100
   - SEO: 100
   - PWA: 30
+- Latest copy/SEO pass verified:
+  - JSON-LD parsed across 67 public HTML files.
+  - Core titles/descriptions are in target length range.
+  - Main pages use answer-first copy and matching schema descriptions.
+  - Service detail pages no longer carry duplicate old `article:modified_time` tags.
+  - Live checks confirmed updated homepage, Fit Check, Local Search, sitemap, shared JS conversion rail, and voice health endpoint.
 
 Known local state:
 - Tracked main-site changes were committed and pushed.
