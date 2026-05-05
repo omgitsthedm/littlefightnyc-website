@@ -2,6 +2,7 @@ headersOrigin = "config"
 redirectsOrigin = "config"
 
 [functions]
+directory = "netlify/functions"
 
   [functions."*"]
 

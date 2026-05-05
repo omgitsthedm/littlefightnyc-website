@@ -35,7 +35,10 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Brand tokens live in `css/brand-tokens.css`; the overhaul layer aliases those tokens for page-level styling.
 - GA4 loads only through `js/lifi-tracking.js` after consent and idle/first interaction.
 - UTM, `gclid`, `gbraid`, and `wbraid` are captured into `sessionStorage` and copied into form hidden fields.
-- Main conversion path is `/fit-check/`.
+- Main conversion path is `/fit-check/`, now powered by a conversational Fit Check POC with a Netlify Function at `/api/fit-check/submit`.
+- Fit Check works with deterministic local/server classification by default; it upgrades to OpenAI classification when `OPENAI_API_KEY` is configured.
+- Fit Check lead storage uses Netlify Forms as a no-secret fallback and can write to Supabase when `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are configured.
+- Fit Check notification email can use Resend when `RESEND_API_KEY`, `FIT_CHECK_NOTIFY_EMAIL`, and `FIT_CHECK_EMAIL_FROM` are configured.
 - Audit app is a separate Netlify site, synced at `audit.littlefightnyc.com` and `audits.littlefightnyc.com`.
 
 ## Pending External Items
@@ -43,6 +46,9 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 - Google Tag Manager container ID, if GTM should be used instead of direct GA4.
 - Google Ads conversion ID/label.
 - Netlify form notification recipient confirmation.
+- Fit Check OpenAI model/env selection, if AI classification should run server-side instead of deterministic fallback.
+- Supabase table creation from `docs/fit-check-schema.sql`, if database storage should be enabled.
+- Resend verified sender/domain, if function-based David notification should be enabled beyond Netlify Forms.
 - Real inbox confirmation for test form email delivery.
 - Real iOS device QA confirmation.
 - Final 1200 x 630 branded OG image.

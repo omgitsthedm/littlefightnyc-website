@@ -16,6 +16,7 @@ const skipRootDirs = new Set([
   "backup",
   "dist",
   "docs",
+  "netlify",
   "node_modules",
   "scripts",
   "tmp",
