@@ -116,6 +116,10 @@ function cleanText(value: unknown, limit = 900): string {
     .slice(0, limit);
 }
 
+function isE164(value: string): boolean {
+  return /^\+\d{7,15}$/.test(value);
+}
+
 function escapeXml(value: unknown): string {
   return cleanText(value, 2400)
     .replace(/&/g, "&amp;")
@@ -157,6 +161,10 @@ function twiml(parts: string[]): string {
 function absoluteUrl(req: Request, query: string): string {
   const url = new URL(req.url);
   return `${url.origin}/api/fit-check/voice${query}`;
+}
+
+function publicFitCheckUrl(): string {
+  return cleanText(env("FIT_CHECK_URL") || "https://littlefightnyc.com/fit-check/", 500);
 }
 
 function gather(req: Request, prompt: string, step: string, state: VoiceState, options: {
@@ -400,6 +408,141 @@ async function submitNoAiMessage(req: Request, state: VoiceState): Promise<void>
   await submitBackupForm(req, state, null);
 }
 
+async function sendTwilioSms(to: string, body: string): Promise<{
+  configured: boolean;
+  sent: boolean;
+  status?: number;
+  error?: string;
+}> {
+  const accountSid = env("TWILIO_ACCOUNT_SID");
+  const authToken = env("TWILIO_AUTH_TOKEN");
+  const from = env("TWILIO_NOTIFY_FROM") || env("TWILIO_FROM_NUMBER") || "";
+  if (!accountSid || !authToken || !from || !isE164(to)) {
+    return { configured: false, sent: false };
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const twilioResponse = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(accountSid)}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        signal: controller.signal,
+        body: new URLSearchParams({
+          From: from,
+          To: to,
+          Body: body.slice(0, 1500),
+        }).toString(),
+      },
+    );
+
+    return { configured: true, sent: twilioResponse.ok, status: twilioResponse.status };
+  } catch (error) {
+    return {
+      configured: true,
+      sent: false,
+      error: cleanText((error as Error).message, 160),
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function notifyDavidBySms(subject: string, state: VoiceState, details: string[] = []) {
+  const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
+  if (!notifyTo) return { configured: false, sent: false };
+
+  const lines = [
+    subject,
+    state.caller ? `Caller: ${state.caller}` : "",
+    state.callSid ? `Call: ${state.callSid}` : "",
+    state.problem ? `Issue: ${state.problem}` : "",
+    state.urgencyLevel ? `Urgency: ${state.urgencyLevel}` : "",
+    state.followUpPreference ? `Follow-up: ${state.followUpPreference}` : "",
+    ...details,
+  ].filter(Boolean);
+
+  return sendTwilioSms(notifyTo, lines.join("\n"));
+}
+
+function businessHoursState(now = new Date()): {
+  open: boolean;
+  label: string;
+} {
+  const timeZone = env("FIT_CHECK_BUSINESS_TIMEZONE") || "America/New_York";
+  const startHour = Number(env("FIT_CHECK_BUSINESS_START_HOUR") || 9);
+  const endHour = Number(env("FIT_CHECK_BUSINESS_END_HOUR") || 18);
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    weekday: "short",
+    hour: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(now);
+  const weekday = parts.find((part) => part.type === "weekday")?.value || "Sun";
+  const hour = Number(parts.find((part) => part.type === "hour")?.value || 0);
+  const weekdayOpen = !["Sat", "Sun"].includes(weekday);
+  const open = weekdayOpen && hour >= startHour && hour < endHour;
+
+  return {
+    open,
+    label: `${weekday} ${String(hour).padStart(2, "0")}:00 ${timeZone}`,
+  };
+}
+
+function conversionPathForVoice(result: JsonRecord | null, state: VoiceState): {
+  stage: "urgent_support" | "fit_check" | "light_review";
+  label: string;
+  url: string;
+} {
+  const resultRecord = result?.result && typeof result.result === "object"
+    ? (result.result as JsonRecord)
+    : null;
+  const category = cleanText(resultRecord?.primary_category) || categoryNames[state.selectedEntry || "unsure"];
+  const urgency = cleanText(resultRecord?.urgency_level) || state.urgencyLevel || "planned_improvement";
+  const urgentUrl = cleanText(env("FIT_CHECK_URGENT_SUPPORT_URL") || env("URGENT_SUPPORT_PAYMENT_URL"), 500);
+  const fitCheckUrl = cleanText(env("FIT_CHECK_BOOKING_URL") || env("FIT_CHECK_PAYMENT_URL"), 500);
+  const fallbackUrl = publicFitCheckUrl();
+
+  if (urgency === "emergency" || category === "Quick Fix") {
+    return {
+      stage: "urgent_support",
+      label: urgentUrl ? "Start urgent support" : "Urgent support follow-up",
+      url: urgentUrl || fallbackUrl,
+    };
+  }
+
+  if (category === "Not Sure Yet") {
+    return {
+      stage: "light_review",
+      label: "Human review",
+      url: fallbackUrl,
+    };
+  }
+
+  return {
+    stage: "fit_check",
+    label: fitCheckUrl ? "Book a Fit Check" : "Fit Check follow-up",
+    url: fitCheckUrl || fallbackUrl,
+  };
+}
+
+async function sendCallRecoverySms(params: URLSearchParams): Promise<void> {
+  if (env("FIT_CHECK_RECOVERY_SMS_ENABLED") !== "true") return;
+  const caller = cleanText(paramValue(params, "From") || paramValue(params, "Caller"), 80);
+  if (!isE164(caller)) return;
+
+  await sendTwilioSms(
+    caller,
+    `Little Fight NYC: looks like the call dropped. Finish the Fit Check here: ${publicFitCheckUrl()}`,
+  );
+}
+
 function headerValue(req: Request, name: string): string {
   return cleanText(req.headers.get(name), 400);
 }
@@ -521,23 +664,69 @@ function finalClientLine(result: JsonRecord | null, state: VoiceState): string {
     categoryNames[state.selectedEntry || "unsure"] ||
     "Not Sure Yet";
 
-  if (cleanText(resultRecord?.client_facing_summary)) {
-    return `Based on what you shared, this sounds like ${category}. I will send David the brief so he can review it directly. This is not a quote.`;
+  const conversion = conversionPathForVoice(result, state);
+  const callerSmsEnabled = env("FIT_CHECK_CALLER_SMS_ENABLED") === "true" && isE164(cleanText(state.caller));
+
+  if (conversion.stage === "urgent_support") {
+    return callerSmsEnabled
+      ? `This sounds urgent. I am alerting David and texting you the next step. This is not a quote.`
+      : `This sounds urgent. I am alerting David now. This is not a quote.`;
   }
 
-  return `Based on what you shared, this sounds like ${category}. I will send David the brief so he can review it directly. This is not a quote.`;
+  if (conversion.stage === "fit_check") {
+    return callerSmsEnabled
+      ? `This sounds like a Fit Check. I am texting you the next step and sending David the brief. This is not a quote.`
+      : `This sounds like a Fit Check. I am sending David the brief. This is not a quote.`;
+  }
+
+  if (cleanText(resultRecord?.client_facing_summary)) {
+    return `Based on what you shared, this sounds like ${category}. David will review it directly. This is not a quote.`;
+  }
+
+  return `Based on what you shared, this sounds like ${category}. David will review it directly. This is not a quote.`;
 }
 
 function urgentDial(req: Request, state: VoiceState): string {
   if (state.urgencyLevel !== "emergency") return "";
   const forwardNumber = cleanText(env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
   if (!forwardNumber) return "";
+  const hours = businessHoursState();
+  const transferAfterHours = env("FIT_CHECK_TRANSFER_AFTER_HOURS") === "true";
+  if (!hours.open && !transferAfterHours) {
+    return say("It is outside normal hours, so I am sending the urgent alert instead of transferring the call.");
+  }
 
   const action = absoluteUrl(req, `?step=dial_done&s=${encodeURIComponent(encodeState(state))}`);
   return [
-    say("This sounds active, so I am going to try David now. If he cannot pick up, the brief has still been captured."),
+    say("I am going to try David now. If he cannot pick up, the brief has still been captured."),
     `<Dial timeout="18" action="${escapeXml(action)}">${escapeXml(forwardNumber)}</Dial>`,
   ].join("");
+}
+
+async function handleStatusCallback(params: URLSearchParams): Promise<Response> {
+  const state: VoiceState = {
+    caller: cleanText(paramValue(params, "From") || paramValue(params, "Caller"), 80),
+    callSid: cleanText(paramValue(params, "CallSid"), 100),
+  };
+  const callStatus = cleanText(paramValue(params, "CallStatus"), 80);
+  const duration = Number(paramValue(params, "CallDuration") || paramValue(params, "Duration") || 0);
+  const statusLabel = callStatus || "status";
+
+  await notifyDavidBySms(`Fit Check call ${statusLabel}`, state, [
+    Number.isFinite(duration) && duration > 0 ? `Duration: ${duration}s` : "",
+  ]);
+
+  const recoveryThreshold = Number(env("FIT_CHECK_RECOVERY_THRESHOLD_SECONDS") || 35);
+  if (
+    callStatus === "completed" &&
+    Number.isFinite(duration) &&
+    duration > 0 &&
+    duration <= recoveryThreshold
+  ) {
+    await sendCallRecoverySms(params);
+  }
+
+  return new Response("", { status: 204, headers: twimlHeaders });
 }
 
 async function handleStep(req: Request, params: URLSearchParams): Promise<Response> {
@@ -554,7 +743,13 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
     });
   }
 
+  if (step === "status") {
+    return handleStatusCallback(params);
+  }
+
   if (step === "start") {
+    await notifyDavidBySms("Incoming Fit Check call", state);
+
     return response(
       twiml([
         gather(
@@ -615,6 +810,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   if (step === "no_ai_message") {
     state.problem = input || "Caller declined AI summary and did not leave a clear message.";
     await submitNoAiMessage(req, state);
+    await notifyDavidBySms("Fit Check caller left a message", state);
     return response(
       twiml([
         say("Thanks. I have the short message and caller ID if available. David can follow up from there."),

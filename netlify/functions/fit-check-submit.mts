@@ -310,6 +310,10 @@ function cleanArray(value: unknown): string[] {
   ).slice(0, 12);
 }
 
+function isE164(value: string): boolean {
+  return /^\+\d{7,15}$/.test(value);
+}
+
 function asRecord(value: unknown): JsonRecord {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as JsonRecord)
@@ -1240,6 +1244,125 @@ function emailText(lead: JsonRecord, result: FitCheckResult): string {
   ].join("\n");
 }
 
+function conversionPath(lead: JsonRecord, result: FitCheckResult): {
+  label: string;
+  url: string;
+  stage: string;
+} {
+  const urgentUrl = cleanText(env("FIT_CHECK_URGENT_SUPPORT_URL") || env("URGENT_SUPPORT_PAYMENT_URL"), 500);
+  const fitCheckUrl = cleanText(env("FIT_CHECK_BOOKING_URL") || env("FIT_CHECK_PAYMENT_URL"), 500);
+  const fallbackUrl = cleanText(env("FIT_CHECK_URL") || "https://littlefightnyc.com/fit-check/", 500);
+
+  if (result.urgency_level === "emergency" || result.primary_category === "Quick Fix") {
+    return {
+      label: urgentUrl ? "Start urgent support" : "Urgent support follow-up",
+      url: urgentUrl || fallbackUrl,
+      stage: "urgent_support",
+    };
+  }
+
+  const fitScore = Number(result.lead_score.fit || 0);
+  if (result.primary_category === "Not Sure Yet" && fitScore <= 2) {
+    return {
+      label: "Human review",
+      url: fallbackUrl,
+      stage: "light_review",
+    };
+  }
+
+  return {
+    label: fitCheckUrl ? "Book a Fit Check" : "Fit Check follow-up",
+    url: fitCheckUrl || fallbackUrl,
+    stage: "fit_check",
+  };
+}
+
+async function sendTwilioSms(to: string, body: string) {
+  const accountSid = env("TWILIO_ACCOUNT_SID");
+  const authToken = env("TWILIO_AUTH_TOKEN");
+  const from = env("TWILIO_NOTIFY_FROM") || env("TWILIO_FROM_NUMBER");
+  if (!accountSid || !authToken || !from || !isE164(to)) {
+    return { configured: false, sent: false };
+  }
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 6000);
+
+  try {
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(accountSid)}/Messages.json`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString("base64")}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        signal: controller.signal,
+        body: new URLSearchParams({
+          From: from,
+          To: to,
+          Body: body.slice(0, 1500),
+        }).toString(),
+      },
+    );
+
+    return { configured: true, sent: response.ok, status: response.status };
+  } catch (error) {
+    return {
+      configured: true,
+      sent: false,
+      error: cleanText((error as Error).message, 160),
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function sendSmsNotifications(lead: JsonRecord, result: FitCheckResult) {
+  const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
+  const answers = asRecord(lead.answers);
+  const conversion = conversionPath(lead, result);
+  const business = cleanText(lead.business_name) || "Unknown business";
+  const callerPhone = cleanText(lead.phone);
+  const preferredFollowUp = cleanText(answers.preferred_follow_up) || "Unknown";
+  const urgencyPrefix = result.urgency_level === "emergency" ? "URGENT " : "";
+  const internalBody = [
+    `${urgencyPrefix}Fit Check: ${business}`,
+    `${result.primary_category} / ${result.urgency_level}`,
+    `Follow-up: ${preferredFollowUp}`,
+    callerPhone ? `Caller: ${callerPhone}` : "",
+    cleanText(lead.initial_problem, 220),
+    `${conversion.label}: ${conversion.url}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const internal = notifyTo
+    ? await sendTwilioSms(notifyTo, internalBody)
+    : { configured: false, sent: false };
+
+  let caller = { configured: false, sent: false } as {
+    configured: boolean;
+    sent: boolean;
+    status?: number;
+    error?: string;
+  };
+
+  if (
+    cleanText(lead.intake_mode) === "voice" &&
+    isE164(callerPhone) &&
+    env("FIT_CHECK_CALLER_SMS_ENABLED") === "true"
+  ) {
+    const body =
+      conversion.stage === "urgent_support"
+        ? `Little Fight NYC: got your urgent Fit Check. David has the brief. ${conversion.label}: ${conversion.url}`
+        : `Little Fight NYC: got your Fit Check. ${conversion.label}: ${conversion.url}`;
+    caller = await sendTwilioSms(callerPhone, body);
+  }
+
+  return { internal, caller, conversion };
+}
+
 async function sendNotification(lead: JsonRecord, result: FitCheckResult) {
   const apiKey = env("RESEND_API_KEY");
   if (!apiKey) return { configured: false, sent: false };
@@ -1334,6 +1457,16 @@ export default async (req: Request) => {
       error: cleanText((error as Error).message, 160),
     }));
 
+    const smsNotification = await sendSmsNotifications(lead, result).catch((error) => ({
+      internal: {
+        configured: true,
+        sent: false,
+        error: cleanText((error as Error).message, 160),
+      },
+      caller: { configured: false, sent: false },
+      conversion: conversionPath(lead, result),
+    }));
+
     return new Response(
       JSON.stringify({
         ok: true,
@@ -1342,6 +1475,7 @@ export default async (req: Request) => {
         result,
         persistence,
         notification,
+        sms_notification: smsNotification,
       }),
       { headers: jsonHeaders },
     );

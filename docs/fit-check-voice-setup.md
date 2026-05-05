@@ -29,7 +29,9 @@ Fallback URL:
    - name and business
 5. Posts the completed call into the same Fit Check backend used by the website.
 6. Submits a Netlify Forms backup record.
-7. If urgent and configured, tries to dial David.
+7. Routes the lead toward urgent support, a Fit Check, or light review.
+8. If urgent and configured, tries to dial David during business hours.
+9. Sends SMS alerts and caller follow-up links when Twilio notification env vars are configured.
 
 ## Required Twilio Setup
 
@@ -40,8 +42,11 @@ Fallback URL:
    - `https://littlefightnyc.com/api/fit-check/voice`
    - HTTP `POST`
 4. Optional but recommended: set the fallback URL to the same endpoint.
-5. Test by calling the Twilio number directly.
-6. After direct testing works, forward the Google Voice number to the Twilio number.
+5. Set the status callback URL to:
+   - `https://littlefightnyc.com/api/fit-check/voice?step=status`
+   - HTTP `POST`
+6. Test by calling the Twilio number directly.
+7. After direct testing works, forward the Google Voice number to the Twilio number.
 
 ## Netlify Environment Variables
 
@@ -74,6 +79,68 @@ Optional urgent transfer number:
 Use E.164 format, for example:
 
 `+16463600318`
+
+Notification and recovery SMS:
+
+`TWILIO_NOTIFY_FROM`
+
+Usually the Twilio number in E.164 format.
+
+`TWILIO_NOTIFY_TO`
+
+David's phone number in E.164 format. While the Twilio account is in trial mode, this number must be verified in Twilio.
+
+`FIT_CHECK_CALLER_SMS_ENABLED`
+
+Set to `true` to text callers their next-step link after completed voice Fit Checks.
+
+`FIT_CHECK_RECOVERY_SMS_ENABLED`
+
+Set to `true` to text short abandoned callers a recovery link.
+
+`FIT_CHECK_RECOVERY_THRESHOLD_SECONDS`
+
+Default: `35`
+
+Business hours and urgent transfer:
+
+`FIT_CHECK_BUSINESS_TIMEZONE`
+
+Default: `America/New_York`
+
+`FIT_CHECK_BUSINESS_START_HOUR`
+
+Default: `9`
+
+`FIT_CHECK_BUSINESS_END_HOUR`
+
+Default: `18`
+
+`FIT_CHECK_TRANSFER_AFTER_HOURS`
+
+Set to `true` if urgent calls should try David even outside business hours.
+
+Conversion links:
+
+`FIT_CHECK_URL`
+
+Default: `https://littlefightnyc.com/fit-check/`
+
+`FIT_CHECK_BOOKING_URL`
+
+Used for normal Fit Check follow-up links.
+
+`FIT_CHECK_PAYMENT_URL`
+
+Optional payment/deposit link for Fit Check.
+
+`FIT_CHECK_URGENT_SUPPORT_URL`
+
+Used for urgent support follow-up links.
+
+`URGENT_SUPPORT_PAYMENT_URL`
+
+Optional payment/deposit link for urgent support.
 
 Optional voice tuning:
 
@@ -157,6 +224,8 @@ That should return TwiML with the consent prompt.
 - This is not streaming speech-to-speech Realtime yet.
 - It is a Twilio speech-gathering intake flow.
 - The caller flow is intentionally short: consent, issue, urgency, one context question, preferred follow-up, contact.
+- Completed calls can send David an internal SMS and text callers a next-step link when notification env vars are configured.
+- Short abandoned calls can receive a recovery SMS when status callbacks and recovery SMS are enabled.
 - Email spelling by voice is intentionally avoided.
 - Caller ID is used as the phone contact when available.
 - A human still reviews before scope, timeline, or pricing is confirmed.
