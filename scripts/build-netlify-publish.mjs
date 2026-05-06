@@ -31,6 +31,7 @@ const skipRootFiles = new Set([
   "HANDOFF.md",
   "OFF_DOMAIN_PLAYBOOK.md",
   "PLACEHOLDERS.md",
+  "VOICE.md",
   "canva_brand_kit_little_fight_nyc.md",
   "firebase-debug.log",
   "index.html.bak",

@@ -186,12 +186,16 @@
     <main id="home">
   <section class="hero container overhaul-home-hero">
     <div class="hero-content">
-      <div class="eyebrow hero-eyebrow"><span class="eyebrow-dot"><span class="pulse-dot"></span> 20+ NYC businesses since 2017. 100+ nationwide since 2012.</span></div>
-      <h1><span class="hero-title-line">Fix the part</span> <span class="hero-title-line">of your business</span> <span class="hero-title-line">that&rsquo;s bleeding</span> <span class="highlight-orange hero-title-line">money.</span></h1>
-      <p>NYC owners &mdash; websites, custom systems, consulting, IT support. Working sites live in 14 days, or you don&rsquo;t pay. <strong>24-hour live AI phone agent.</strong></p>
-      <p class="hero-system-line"><span>More customers.</span> <span>Fewer bills.</span> <span>Less chaos.</span></p>
-      <div class="hero-buttons"><a href="/fit-check/" class="btn btn-orange">Start a 60-second Fit Check</a><a href="/fires/" class="btn btn-outline">See real fires we put out</a></div>
-      <div class="hero-proof-line">Built by David Marsh. Voice or text 24/7: <a href="tel:+16463600318" style="color: var(--brand-orange); text-decoration: underline; font-weight: 700;">(646) 360-0318</a></div>
+      <div class="eyebrow hero-eyebrow"><span class="eyebrow-dot"><span class="pulse-dot"></span> NYC small business tech. Real human picks up.</span></div>
+      <h1><span class="hero-title-line">Tech help</span> <span class="hero-title-line">for NYC</span> <span class="hero-title-line">small business.</span> <span class="highlight-orange hero-title-line">We pick up.</span></h1>
+      <p>Websites. Computers. POS. Wi-Fi. Custom software. IT. <strong>9am&ndash;9pm Eastern, a real human answers.</strong> After hours, AI takes the message and David calls back.</p>
+      <div class="hero-contact-row" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:1.5em 0; max-width:540px;">
+        <a href="tel:+16463600318" class="btn btn-orange" style="text-align:center;">📞 Call (646) 360-0318</a>
+        <a href="sms:+16463600318" class="btn btn-outline" style="text-align:center;">💬 Text us</a>
+        <a href="mailto:hello@littlefightnyc.com" class="btn btn-outline" style="text-align:center;">✉️ Email us</a>
+        <a href="/fit-check/" class="btn btn-outline" style="text-align:center;">📝 Send a message</a>
+      </div>
+      <p class="hero-proof-line">20+ NYC businesses since 2017. 100+ nationwide since 2012. Built by David Marsh.</p>
     </div>
     <div class="hero-stage">
   <div class="hero-visual hero-3d-container">
@@ -432,8 +436,10 @@
       };
     </script>
     <div class="mobile-sticky">
-      <a href="tel:+16463600318" class="mobile-sticky-phone">Call Now</a>
-      <a href="/fit-check/" class="mobile-sticky-cta">Start Here &rarr;</a>
+      <a href="tel:+16463600318" class="mobile-sticky-phone" aria-label="Call Little Fight NYC">📞 Call</a>
+      <a href="sms:+16463600318" class="mobile-sticky-phone" aria-label="Text Little Fight NYC">💬 Text</a>
+      <a href="mailto:hello@littlefightnyc.com" class="mobile-sticky-phone" aria-label="Email Little Fight NYC">✉️ Email</a>
+      <a href="/fit-check/" class="mobile-sticky-cta">📝 Message &rarr;</a>
     </div>
     <script type="module">const e=document.querySelector(".hero-3d-container"),t=window.innerWidth<768;function r(){if(!e||r.started||t)return;r.started=!0;const n=e.querySelector("#hero-radiant-frame");n&&!n.getAttribute("src")&&n.setAttribute("src",n.dataset.src||""),import("./js/hero-3d.js?v=20260325a").then(({init:t})=>t(e)).catch(()=>{e.setAttribute("data-hero-failed","true")})}e&&(e.addEventListener("pointerenter",r,{once:!0,passive:!0}),e.addEventListener("click",r,{once:!0,passive:!0}),e.addEventListener("focusin",r,{once:!0}));</script>
     <script src="/js/reveal.js" defer></script>
