@@ -1,5 +1,8 @@
 # Little Fight NYC Website Config
 
+## Latest Handoff
+Read `HANDOFF.md` before making major edits. It contains the May 6, 2026 Claude Code handoff with the current live deploy, completed overhaul work, Fit Check/phone intake state, SEO/AEO answer engine, case studies, verification results, concerns, and next work queue.
+
 ## Client
 Little Fight NYC
 
