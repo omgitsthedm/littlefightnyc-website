@@ -1,0 +1,838 @@
+/* ============================================
+   Little Fight NYC — Battle pages, calculator, vertical SEO
+   Visual polish layer (loaded after lifi-overhaul.css)
+   ============================================ */
+
+/* ---------- 1. Hero treatment ---------- */
+.overhaul-page-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Atmospheric orange glow behind hero */
+.overhaul-page-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10% -5% auto auto;
+  width: min(720px, 70vw);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle at center,
+    rgba(254, 88, 0, 0.18) 0%,
+    rgba(254, 88, 0, 0.08) 30%,
+    transparent 65%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+  animation: lf-glow-breathe 9s ease-in-out infinite alternate;
+}
+
+.overhaul-page-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto auto -15% -10%;
+  width: min(560px, 60vw);
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle at center,
+    rgba(8, 145, 178, 0.14) 0%,
+    rgba(8, 145, 178, 0.05) 35%,
+    transparent 65%
+  );
+  filter: blur(50px);
+  pointer-events: none;
+  animation: lf-glow-breathe 11s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes lf-glow-breathe {
+  from { transform: scale(1) translate(0, 0); opacity: 0.85; }
+  to   { transform: scale(1.12) translate(2%, -1%); opacity: 1; }
+}
+
+/* Kicker: more present, with a leading dot */
+.overhaul-page-hero .overhaul-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: rgba(254, 88, 0, 0.08);
+  border: 1px solid var(--brand-line-orange);
+  border-radius: 999px;
+  color: var(--brand-orange);
+  font-size: 0.78em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.4em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.overhaul-page-hero .overhaul-kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: var(--brand-orange);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(254, 88, 0, 0.7);
+  animation: lf-pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes lf-pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.3); opacity: 0.65; }
+}
+
+/* Title: tighter tracking, slightly bigger */
+.overhaul-page-hero .overhaul-title {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  max-width: 18ch;
+}
+
+/* Deck */
+.overhaul-page-hero .overhaul-deck {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--brand-cream);
+  max-width: 56ch;
+  margin-top: 1.2em;
+}
+
+/* ---------- 2. 4-channel contact row ---------- */
+.hero-contact-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 1.8em 0 1.2em !important;
+  max-width: 560px;
+}
+
+.hero-contact-row .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 220ms var(--motion-snap), box-shadow 220ms ease, background 200ms ease, border-color 200ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-contact-row .btn-orange {
+  background: linear-gradient(135deg, #fe5800 0%, #ff7a35 100%);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(254, 88, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-contact-row .btn-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(254, 88, 0, 0.42);
+}
+
+.hero-contact-row .btn-outline {
+  background: rgba(8, 11, 20, 0.55);
+  color: var(--brand-cream);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-contact-row .btn-outline:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-orange);
+  background: rgba(254, 88, 0, 0.08);
+  color: #fff;
+}
+
+/* Hours line under buttons */
+.overhaul-page-hero .container > p:last-of-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(121, 216, 138, 0.06);
+  border-left: 3px solid var(--brand-green);
+  border-radius: 6px;
+  font-size: 0.92em !important;
+  color: var(--brand-cream);
+  margin-top: 0.6em;
+}
+
+/* ---------- 3. Direct answer block ---------- */
+section[aria-label="Direct answer"] {
+  padding-block: clamp(40px, 6vw, 80px) !important;
+}
+
+section[aria-label="Direct answer"] .overhaul-deck {
+  position: relative;
+  padding: clamp(24px, 3vw, 36px) clamp(28px, 3.5vw, 44px);
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.05) 0%, rgba(8, 11, 20, 0.4) 100%);
+  border: 1px solid var(--brand-line-orange);
+  border-left: 4px solid var(--brand-orange);
+  border-radius: 16px;
+  font-size: 1.1rem !important;
+  line-height: 1.6;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+section[aria-label="Direct answer"] .overhaul-deck::before {
+  content: "Bottom line";
+  position: absolute;
+  top: -10px;
+  left: 24px;
+  background: var(--brand-orange);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------- 4. Comparison table ---------- */
+.vs-table {
+  background: rgba(8, 11, 20, 0.4);
+  border: 1px solid var(--brand-line);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.vs-table thead th {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, rgba(254, 88, 0, 0.12) 0%, rgba(254, 88, 0, 0.06) 100%) !important;
+  font-size: 0.85em !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase;
+  padding: 18px 18px !important;
+  z-index: 5;
+}
+
+.vs-table tbody tr {
+  transition: background 180ms ease;
+}
+
+.vs-table tbody tr:hover {
+  background: rgba(254, 88, 0, 0.03);
+}
+
+.vs-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.vs-table tbody tr:nth-child(even):hover {
+  background: rgba(254, 88, 0, 0.04);
+}
+
+.vs-table td:first-child strong {
+  color: var(--brand-cream);
+  font-size: 1.02em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.vs-table td {
+  font-size: 0.96em;
+}
+
+/* Pills */
+.vs-pill {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.72em !important;
+  padding: 5px 12px !important;
+  position: relative;
+}
+
+.vs-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.vs-pill.win::before { background: #79d88a; box-shadow: 0 0 8px rgba(121, 216, 138, 0.6); }
+.vs-pill.lose::before { background: #ff6f91; box-shadow: 0 0 8px rgba(255, 111, 145, 0.6); }
+.vs-pill.tie::before  { background: var(--brand-muted); }
+
+/* Mobile: stack table into cards */
+@media (max-width: 720px) {
+  .vs-table { display: block; border: 0; background: transparent; box-shadow: none; }
+  .vs-table thead { display: none; }
+  .vs-table tbody { display: block; }
+  .vs-table tr {
+    display: block;
+    background: rgba(8, 11, 20, 0.45) !important;
+    border: 1px solid var(--brand-line);
+    border-radius: 14px;
+    margin-bottom: 14px;
+    padding: 16px 18px;
+  }
+  .vs-table tr:hover { background: rgba(254, 88, 0, 0.04) !important; }
+  .vs-table td { display: block; padding: 10px 0 !important; border: 0 !important; border-top: 1px dashed var(--brand-line) !important; }
+  .vs-table td:first-child { border-top: 0 !important; padding-top: 0 !important; }
+  .vs-table td:not(:first-child)::before {
+    content: attr(data-col-label);
+    display: block;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--brand-orange);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+}
+
+/* ---------- 5. System cards (When each wins, Industry, etc.) ---------- */
+.system-card {
+  position: relative;
+  transition: transform 280ms var(--motion-snap), border-color 200ms ease, box-shadow 280ms ease, background 280ms ease;
+}
+
+.system-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-orange) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(254, 88, 0, 0.18);
+}
+
+.system-card h3 {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.system-card h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 1.2em;
+  background: var(--brand-orange);
+  border-radius: 2px;
+}
+
+.system-card h3 a {
+  color: inherit;
+  text-decoration: none;
+  background: linear-gradient(120deg, var(--brand-orange) 0%, var(--brand-orange) 100%);
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  transition: background-size 280ms var(--motion-snap), color 200ms;
+}
+
+.system-card:hover h3 a {
+  background-size: 100% 2px;
+  color: var(--brand-orange);
+}
+
+.system-card a[href][style*="color"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1em;
+  transition: gap 200ms ease;
+}
+
+.system-card:hover a[href][style*="color"] {
+  gap: 12px;
+}
+
+/* ---------- 6. FAQ list polish ---------- */
+.faq-card {
+  position: relative;
+  background: rgba(8, 11, 20, 0.4) !important;
+  border: 1px solid var(--brand-line) !important;
+  border-radius: 14px !important;
+  padding: 1.4em 1.6em !important;
+  margin-bottom: 14px !important;
+  transition: border-color 200ms ease, background 200ms ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.faq-card:hover {
+  border-color: rgba(254, 88, 0, 0.4) !important;
+  background: rgba(8, 11, 20, 0.55) !important;
+}
+
+.faq-card h3 {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 1.1em !important;
+  color: var(--brand-cream) !important;
+  margin-bottom: 0.6em !important;
+  line-height: 1.35;
+}
+
+.faq-card h3::before {
+  content: "Q";
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--brand-orange);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.75em;
+  font-weight: 800;
+  margin-top: 2px;
+}
+
+.faq-card p {
+  margin-left: 38px;
+  line-height: 1.65 !important;
+  color: var(--brand-muted) !important;
+}
+
+.faq-card p a {
+  color: var(--brand-orange);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- 7. Hurts/red-flag callouts ---------- */
+.red-flag {
+  background: linear-gradient(135deg, rgba(255, 111, 145, 0.06) 0%, rgba(8, 11, 20, 0.3) 100%) !important;
+  border: 1px solid rgba(255, 111, 145, 0.18) !important;
+  border-left: 4px solid #ff6f91 !important;
+  border-radius: 12px !important;
+  padding: 16px 22px !important;
+  margin: 14px 0 !important;
+  position: relative;
+  transition: transform 220ms ease, border-color 200ms ease;
+}
+
+.red-flag:hover {
+  transform: translateX(4px);
+  border-color: rgba(255, 111, 145, 0.4) !important;
+}
+
+.red-flag strong {
+  color: #ff6f91 !important;
+  font-size: 1.04em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ---------- 8. Plugin rot / hurts unordered lists ---------- */
+section[aria-label="Plugin rot"] ul,
+section[aria-label="Template trap"] ul,
+section[aria-label="What goes wrong"] ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+section[aria-label="Plugin rot"] ul li,
+section[aria-label="Template trap"] ul li {
+  position: relative;
+  padding: 12px 14px 12px 38px;
+  margin-bottom: 8px;
+  background: rgba(8, 11, 20, 0.35);
+  border: 1px solid var(--brand-line);
+  border-radius: 10px;
+  transition: border-color 200ms, transform 200ms;
+}
+
+section[aria-label="Plugin rot"] ul li:hover,
+section[aria-label="Template trap"] ul li:hover {
+  border-color: rgba(255, 111, 145, 0.35);
+  transform: translateX(4px);
+}
+
+section[aria-label="Plugin rot"] ul li::before,
+section[aria-label="Template trap"] ul li::before {
+  content: "✕";
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 111, 145, 0.14);
+  color: #ff6f91;
+  border-radius: 50%;
+  font-size: 0.7em;
+  font-weight: 800;
+}
+
+/* ---------- 9. App stack grid (Shopify) ---------- */
+.app-stack .app-row {
+  background: linear-gradient(135deg, rgba(255, 111, 145, 0.05) 0%, rgba(8, 11, 20, 0.5) 100%) !important;
+  transition: transform 220ms ease, border-color 200ms;
+}
+
+.app-stack .app-row:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 111, 145, 0.5) !important;
+}
+
+/* ---------- 10. method-band (When each wins section) ---------- */
+.method-band {
+  position: relative;
+}
+
+.method-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(254, 88, 0, 0.04) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.method-band > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- 11. Fit-check band (final CTA) ---------- */
+.fit-check-band {
+  position: relative;
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.08) 0%, rgba(8, 11, 20, 0.6) 100%) !important;
+  border: 1px solid var(--brand-line-orange) !important;
+  border-radius: 22px !important;
+  padding: clamp(28px, 4vw, 48px) !important;
+  overflow: hidden;
+}
+
+.fit-check-band::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -50% -10% auto auto;
+  width: 60%;
+  aspect-ratio: 1;
+  background: radial-gradient(
+    circle at center,
+    rgba(254, 88, 0, 0.18) 0%,
+    transparent 60%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+  animation: lf-glow-breathe 8s ease-in-out infinite alternate;
+}
+
+.fit-check-band > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fit-check-band .btn-fit {
+  background: linear-gradient(135deg, #fe5800 0%, #ff7a35 100%);
+  color: #fff !important;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 24px rgba(254, 88, 0, 0.32);
+  transition: transform 220ms var(--motion-snap), box-shadow 220ms ease;
+}
+
+.fit-check-band .btn-fit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(254, 88, 0, 0.5);
+}
+
+.fit-check-band .btn-ghost {
+  color: var(--brand-cream) !important;
+  text-decoration: none;
+  padding: 14px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(8, 11, 20, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 200ms, background 200ms;
+}
+
+.fit-check-band .btn-ghost:hover {
+  border-color: var(--brand-orange);
+  background: rgba(254, 88, 0, 0.08);
+}
+
+/* ---------- 12. Calculator polish ---------- */
+.calc-shell {
+  position: relative;
+}
+
+.calc-controls {
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.04) 0%, rgba(8, 11, 20, 0.55) 100%) !important;
+  border: 1px solid var(--brand-line-orange) !important;
+  border-radius: 22px !important;
+  padding: 2em !important;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.calc-controls::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: -30% -10% auto auto;
+  width: 40%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(254, 88, 0, 0.12) 0%, transparent 60%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.calc-controls > * { position: relative; z-index: 1; }
+
+.calc-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5l5 5 5-5' stroke='%23fe5800' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  background-color: var(--brand-midnight) !important;
+  padding-right: 44px !important;
+  cursor: pointer;
+  font-weight: 600;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+.calc-field select:hover {
+  border-color: rgba(254, 88, 0, 0.5) !important;
+}
+
+.results {
+  background: linear-gradient(180deg, rgba(8, 11, 20, 0.5) 0%, rgba(13, 17, 32, 0.7) 100%) !important;
+  border-radius: 22px !important;
+  padding: 2.4em !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+  border: 1px solid var(--brand-line-orange) !important;
+}
+
+.verdict {
+  font-size: 1.5em !important;
+  letter-spacing: -0.01em;
+  line-height: 1.4 !important;
+  padding-bottom: 1em;
+  border-bottom: 1px solid var(--brand-line);
+  margin-bottom: 1.4em !important;
+}
+
+.num-grid {
+  gap: 14px !important;
+}
+
+.num-card {
+  position: relative;
+  padding: 1.4em !important;
+  border-radius: 16px !important;
+  transition: transform 220ms ease, border-color 200ms;
+  overflow: hidden;
+}
+
+.num-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--brand-orange);
+  opacity: 0.7;
+}
+
+.num-card.danger::before { background: #ff6f91; }
+.num-card.win::before    { background: #79d88a; }
+
+.num-card:hover {
+  transform: translateY(-2px);
+}
+
+.num-card .num {
+  font-size: 2.6em !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em;
+  line-height: 1 !important;
+}
+
+.num-card .label {
+  font-size: 0.78em !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 700;
+  margin-top: 8px !important;
+}
+
+.num-card .sub {
+  font-size: 0.88em !important;
+  margin-top: 0.8em !important;
+  color: var(--brand-muted) !important;
+}
+
+.savings-banner {
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.16) 0%, rgba(254, 88, 0, 0.04) 100%) !important;
+  border: 1px solid var(--brand-orange) !important;
+  border-radius: 18px !important;
+  padding: 1.8em 2em !important;
+  margin-top: 1.6em !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.savings-banner::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  right: -10%;
+  top: -50%;
+  width: 50%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(254, 88, 0, 0.18) 0%, transparent 60%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.savings-banner > * { position: relative; z-index: 1; }
+
+.savings-banner .num {
+  font-size: 3em !important;
+  letter-spacing: -0.03em;
+  text-shadow: 0 0 24px rgba(254, 88, 0, 0.3);
+}
+
+.hurts-list li {
+  padding: 1em 1.2em 1em 3.2em !important;
+  border-radius: 12px !important;
+  position: relative;
+  transition: transform 200ms;
+}
+
+.hurts-list li::before {
+  content: "!";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 111, 145, 0.18);
+  color: #ff6f91;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95em;
+}
+
+.hurts-list li:hover {
+  transform: translateX(4px);
+}
+
+/* ---------- 13. Compare hub callout (calculator promo) ---------- */
+.compare-calc-promo {
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.1) 0%, rgba(8, 11, 20, 0.5) 100%) !important;
+  border: 1px solid var(--brand-orange) !important;
+  border-radius: 18px !important;
+  padding: 24px 28px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.compare-calc-promo::before {
+  content: "🧮";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 4em;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* ---------- 14. Decorative section divider ---------- */
+.overhaul-section + .overhaul-section::before {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(254, 88, 0, 0.18) 30%,
+    rgba(254, 88, 0, 0.32) 50%,
+    rgba(254, 88, 0, 0.18) 70%,
+    transparent 100%
+  ) !important;
+  height: 1px !important;
+}
+
+/* ---------- 15. Reveal-on-scroll polish ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .system-card,
+  .faq-card,
+  .red-flag,
+  .num-card,
+  .vs-table tbody tr {
+    animation: lf-fade-up 600ms ease-out backwards;
+  }
+
+  .system-card:nth-child(2) { animation-delay: 80ms; }
+  .system-card:nth-child(3) { animation-delay: 160ms; }
+  .system-card:nth-child(4) { animation-delay: 240ms; }
+
+  .faq-card:nth-child(2) { animation-delay: 60ms; }
+  .faq-card:nth-child(3) { animation-delay: 120ms; }
+  .faq-card:nth-child(4) { animation-delay: 180ms; }
+  .faq-card:nth-child(5) { animation-delay: 240ms; }
+}
+
+@keyframes lf-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 16. Mobile tuning ---------- */
+@media (max-width: 720px) {
+  .hero-contact-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .hero-contact-row .btn {
+    padding: 12px 12px;
+    font-size: 0.85rem;
+  }
+  .num-card .num { font-size: 2em !important; }
+  .savings-banner .num { font-size: 2.2em !important; }
+  section[aria-label="Direct answer"] .overhaul-deck {
+    padding: 22px 18px;
+    font-size: 1rem !important;
+  }
+  section[aria-label="Direct answer"] .overhaul-deck::before {
+    left: 14px;
+    top: -9px;
+    font-size: 0.62rem;
+    padding: 3px 10px;
+  }
+}
