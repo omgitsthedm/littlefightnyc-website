@@ -87,6 +87,163 @@ for = "/*.png"
   Cache-Control = "public, max-age=31536000, immutable"
 
 
+# Answer-engine and case-study direct route rewrites.
+[[redirects]]
+from = "/answers"
+to = "/answers/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/case-studies"
+to = "/case-studies/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/website-form-not-working-small-business"
+to = "/answers/website-form-not-working-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/business-not-showing-on-google-maps"
+to = "/answers/business-not-showing-on-google-maps/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/small-business-website-cost-nyc"
+to = "/answers/small-business-website-cost-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/reduce-monthly-software-costs-small-business"
+to = "/answers/reduce-monthly-software-costs-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/square-vs-toast-nyc-restaurant-pos"
+to = "/answers/square-vs-toast-nyc-restaurant-pos/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/best-booking-software-nyc-salons"
+to = "/answers/best-booking-software-nyc-salons/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/connect-website-form-to-crm"
+to = "/answers/connect-website-form-to-crm/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/replace-spreadsheet-with-business-dashboard"
+to = "/answers/replace-spreadsheet-with-business-dashboard/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/pos-system-keeps-freezing"
+to = "/answers/pos-system-keeps-freezing/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/business-email-not-working"
+to = "/answers/business-email-not-working/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/domain-dns-help-small-business"
+to = "/answers/domain-dns-help-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/google-business-profile-suspended-nyc"
+to = "/answers/google-business-profile-suspended-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/local-pharmacy-website-community-support"
+to = "/answers/local-pharmacy-website-community-support/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/hair-salon-save-money-software"
+to = "/answers/hair-salon-save-money-software/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/restaurant-website-booking-payments"
+to = "/answers/restaurant-website-booking-payments/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/service-business-lead-tracking-nyc"
+to = "/answers/service-business-lead-tracking-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/shopify-vs-squarespace-local-retail"
+to = "/answers/shopify-vs-squarespace-local-retail/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/webflow-vs-squarespace-small-business"
+to = "/answers/webflow-vs-squarespace-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/when-custom-business-system-beats-saas"
+to = "/answers/when-custom-business-system-beats-saas/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/urgent-it-support-small-business-nyc"
+to = "/answers/urgent-it-support-small-business-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/google-business-profile-help-nyc-small-business"
+to = "/answers/google-business-profile-help-nyc-small-business/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/website-designer-disappeared-what-now"
+to = "/answers/website-designer-disappeared-what-now/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/local-seo-for-neighborhood-businesses-nyc"
+to = "/answers/local-seo-for-neighborhood-businesses-nyc/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/answers/small-business-ai-tools-worth-it"
+to = "/answers/small-business-ai-tools-worth-it/"
+status = 200
+force = true
+
 # Slashless route rewrites for crawl probes and direct typed URLs.
 # Canonicals still point to the trailing-slash URLs.
 [[redirects]]
