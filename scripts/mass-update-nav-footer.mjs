@@ -99,6 +99,48 @@ const REPLACEMENTS = [
     new: "use",
     caseSensitive: false,
   },
+
+  // 9. Industries pages: Hero CTA pattern
+  {
+    name: "industries-hero-cta",
+    old: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/industries/">Open industries hub</a></div>',
+    new: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a><a class="btn-ghost" href="/industries/">Open industries hub</a></div>',
+  },
+
+  // 10. Industries pages: Footer "Estimate software drag" CTA
+  {
+    name: "industries-footer-cta",
+    old: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/software-cost-calculator/">Estimate software drag</a></div>',
+    new: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a><a class="btn-ghost" href="tel:+16463600318">Call (646) 360-0318</a></div>',
+  },
+
+  // 11. Industries hub: Hero CTA pattern (links to /software-guides/)
+  {
+    name: "industries-hub-hero-cta",
+    old: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/software-guides/">Read software guides</a></div>',
+    new: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a><a class="btn-ghost" href="/consulting/">Book a Walkthrough audit</a></div>',
+  },
+
+  // 12. Industries hub: Footer "Estimate monthly waste" CTA
+  {
+    name: "industries-hub-footer-cta",
+    old: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/software-cost-calculator/">Estimate monthly waste</a></div>',
+    new: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a><a class="btn-ghost" href="tel:+16463600318">Call (646) 360-0318</a></div>',
+  },
+
+  // 13. Generic answer pages: hero with "Start Here" + tel CTA
+  {
+    name: "answer-page-hero-cta",
+    old: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="tel:+16463600318">Call if it is broken</a></div>',
+    new: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a><a class="btn-ghost" href="tel:+16463600318">Call (646) 360-0318</a></div>',
+  },
+
+  // 14. Generic answer pages: footer-CTA with "Back to answers"
+  {
+    name: "answer-page-footer-back",
+    old: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/answers/">Back to answers</a></div>',
+    new: '<div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a><a class="btn-ghost" href="/answers/">Back to answers</a></div>',
+  },
 ];
 
 const SKIP_DIRS = new Set([
