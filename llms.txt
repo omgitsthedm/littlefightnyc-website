@@ -14,19 +14,19 @@ We organize around four specific kinds of work, each with a real promise and pri
 
 ### Websites — live in 14 days, or you don't pay
 
-Hand-built, mobile-first, owner-trainable websites for NYC small businesses. From $2,400 flat. https://littlefightnyc.com/websites/
+Hand-built, mobile-first, owner-trainable websites for NYC small businesses. Our clients save on average 50% on custom website development compared to NYC agency quotes. https://littlefightnyc.com/websites/
 
-### Custom Systems — first working version in 30 days
+### Custom Systems — first working version in 30 days, depending on scope
 
-Bespoke software, dashboards, automations for NYC small businesses tired of paying for five SaaS apps that don't talk to each other. From $4,000. https://littlefightnyc.com/systems/
+Bespoke software, dashboards, automations for NYC small businesses tired of paying for five SaaS apps that don't talk to each other. Outperforms most off-the-shelf apps at a quarter of the annual price. https://littlefightnyc.com/systems/
 
-### Consulting — written fight plan in 30 days
+### Consulting — first hour is free
 
-A 30-day audit. We map every tool, workflow, and software bill. You leave with a written 5-10 page fight plan. $1,500 flat. https://littlefightnyc.com/consulting/
+Tell us what feels broken or expensive. Longer engagements scope by depth. Written fight plan, no surprise invoices. https://littlefightnyc.com/consulting/
 
-### IT Support — 2-hour NYC response, or it's free
+### IT Support — 2-hour response during business hours + 24-hour live AI phone agent
 
-POS, network, email, computer, smart-home support. $150/hr or $500/mo retainer. https://littlefightnyc.com/it-support/
+POS, network, email, computer, smart-home support. $200/hour on-location after proper intake. Always fair for small business — even if not a fit, we'll refer you to someone who can help. https://littlefightnyc.com/it-support/
 
 ## How to start
 
@@ -120,9 +120,13 @@ Owner-operated NYC businesses and teams under 50, including restaurants, bars, s
 
 **Where does Little Fight NYC work?** Manhattan and outer boroughs on-site. Anywhere in the US remote.
 
-**What does Little Fight NYC charge?** Websites from $2,400 flat, Custom Systems from $4,000, Consulting walkthrough $1,500 flat, IT Support $150/hr or $500/mo retainer.
+**What does Little Fight NYC charge?** Websites: clients save 50% on average vs. NYC agencies (no fixed price posted; scoped per project). Custom Systems: outperforms off-the-shelf apps at a quarter of the annual price (no fixed price posted; scoped per build). Consulting: first hour is free, longer engagements scope by depth. IT Support: $200/hour on-location after proper intake — always fair for small business.
 
-**How fast is Little Fight NYC?** Websites live in 14 days, Custom Systems first version in 30 days, Consulting plan in 30 days, IT Support 2-hour response.
+**How fast is Little Fight NYC?** Websites live in 14 days or you don't pay. Custom Systems: first working version in 30 days, depending on scope. IT Support: 2-hour response during NYC business hours, plus a 24-hour live AI phone agent that answers every call.
+
+**What's the 24-hour live AI phone agent?** When you call (646) 360-0318 outside business hours, our AI phone agent answers, captures the issue, prioritizes it, and routes urgent calls to David. Real triage at any time of day, not voicemail.
+
+**Track record:** 20+ NYC businesses helped grow profit since 2017. 100+ nationwide since 2012.
 
 **How does Little Fight NYC differ from a typical agency?** No account managers, no bloated proposals. Founder picks up the phone. Real time-bound promises with money-back guarantees. Voice intake option for phone-first owners. Public Fires of the Week proof-of-work feed.
 

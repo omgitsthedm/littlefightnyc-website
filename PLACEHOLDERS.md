@@ -1,84 +1,39 @@
-# Placeholders — Little Fight NYC Overhaul (May 2026)
+# Placeholders — Little Fight NYC Overhaul
 
-> Every value below needs a David sign-off or a real value before launch.
-> All placeholders are wrapped in `[PLACEHOLDER: ...]` in copy, or `// TODO(placeholder): ...` in code.
+> Last updated: May 6, 2026 — David's confirmed answers locked in.
 
-## Quadrant product names (display names, not URLs)
+## RESOLVED (David confirmed)
 
-| URL prefix | Placeholder display name | David's choice |
-|---|---|---|
-| `/websites/` | **Storefront** | TBD |
-| `/systems/` (new) | **Backroom** | TBD |
-| `/consulting/` (new) | **Walkthrough** | TBD |
-| `/it-support/` | **Bullpen** | TBD |
+| # | Answer |
+|---|---|
+| 1. Quadrant names | ✅ Websites · Custom Systems · Consulting · IT Support |
+| 2. Websites: 14 days or you don't pay | ✅ Real |
+| 3. Custom Systems: 30 days first version | ✅ Real, depending on scope |
+| 4. IT Support promise | **2-hour response during business hours + 24-hour service with our live AI phone agent** |
+| 5. Websites pricing | ❌ NO PRICE POSTED. Use: "Clients save on average 50% on custom website development." |
+| 6. Custom Systems pricing | ❌ NO PRICE POSTED. Use: "Outperform most off-the-shelf apps at a quarter of the annual price." |
+| 7. Consulting pricing | "First hour is free. Longer consultations depend on depth." |
+| 8. IT Support pricing | "$200/hour on-location after proper intake. Fair for small business — even if not a fit, reach out and we'll refer you to someone who can." |
+| 9. Real number | **20+ NYC businesses since 2017. 100+ nationwide since 2012.** |
+| 12. LinkedIn | ❌ NO LinkedIn anywhere. Remove all references. |
+| 15. Anthropic API key | Not yet — use voice call (Twilio) first. |
+| 16. Phone | ✅ (646) 360-0318 |
+| 17. Email | ✅ hello@littlefightnyc.com |
 
-If David rejects all four names, find/replace by URL slug — easy.
+## STILL PENDING
 
-## Quadrant promises (per-product time-bound guarantees)
+| # | What's needed |
+|---|---|
+| 10. Above-fold proof | Use placeholder client names in a "Recent clients" band (NOT testimonials): **Hair By Rachel Charles, Public House Creative, Grand Funding LLC**. Real case studies coming later. |
+| 11. Founder photo | Placeholder until David sends real headshot |
+| 13. Founder bio | Wait for voice text from David |
+| 14. Fires of the Week | Replace seed with generic mid-tier examples. David's 3 confirmed examples: law firm WiFi went down, boutique store can't run credit cards, Interior Design firm large format printer went down. Generate similar generic ones for the rest. |
 
-| Product | Placeholder promise | David's confirmation |
-|---|---|---|
-| Storefront / Websites | "Working website live in 14 days or you don't pay" | TBD |
-| Backroom / Systems | "First working version in 30 days" | TBD |
-| Walkthrough / Consulting | "Written plan in 30 days" | TBD |
-| Bullpen / IT Support | "2-hour NYC response or it's free" | TBD |
+## EXECUTION RULES (this overhaul cycle)
 
-## Quadrant pricing ranges (publish vs. hide?)
-
-| Product | Placeholder range | David's confirmation |
-|---|---|---|
-| Storefront | $2,400–$6,000 flat | TBD |
-| Backroom | $4,000–$15,000 + monthly | TBD |
-| Walkthrough | $1,500 flat | TBD |
-| Bullpen | $150/hr or $500/mo retainer | TBD |
-
-## Above-fold proof (homepage + every quadrant pillar)
-
-| Asset | Placeholder | Real value needed |
-|---|---|---|
-| Founder photo | Generic placeholder image | Real photo of David |
-| Specific stat | "47 NYC businesses fixed since 2022" | Real number |
-| Named NYC clients | "Trusted by [Client A], [Client B], [Client C]" | 3 permissioned client names |
-
-## Author identity (E-E-A-T)
-
-| Field | Placeholder | Real value needed |
-|---|---|---|
-| Author full name | "David Marsh" (assumed correct) | Confirm |
-| LinkedIn URL | `[PLACEHOLDER: LinkedIn]` | Real URL |
-| Past press / speaking | none | Any links if available |
-| Bio (short) | Generic placeholder | Real 100-word bio |
-| Photo | Placeholder | Real headshot |
-
-## Fires of the Week (seed content)
-
-| Field | Placeholder | Real value needed |
-|---|---|---|
-| First 20 entries | Anonymized realistic placeholders | Replace with real fires from last 3 months |
-
-## Ask Little Fight (AI assistant)
-
-| Field | Placeholder | Real value needed |
-|---|---|---|
-| `ANTHROPIC_API_KEY` | env var, not set | Set in Netlify env vars |
-| Daily query cap | 200 (placeholder) | David's call |
-| Punt-to-human number | (646) 360-0318 (current) | Confirm |
-
-## Phone number
-
-| Where | Current value | Confirm |
-|---|---|---|
-| Sitewide | (646) 360-0318 | Still correct? |
-
-## Email
-
-| Where | Current value | Confirm |
-|---|---|---|
-| Sitewide | hello@littlefightnyc.com | Still correct? |
-
-## Off-domain assets (handed to David in OFF_DOMAIN_PLAYBOOK.md)
-
-- YouTube channel — does it exist? URL needed if yes
-- Reddit identity — username strategy needed
-- GBP listing — current state confirmation
-- Press / podcast contacts — list if any
+- **No prices on Websites or Custom Systems pages.** Use value-prop language.
+- **No "$1,500 flat" anywhere.** Consulting = first hour free + variable.
+- **IT Support price ($200/hr on-location) only mentioned with the "after proper intake" + "fair for small business" framing.**
+- **Real numbers replace generic claims:** "20+ NYC businesses since 2017" or "100+ nationwide since 2012."
+- **24-hour AI phone agent** is the differentiator — surface it on homepage, IT Support page, contact, anywhere "response time" is discussed.
+- **Three placeholder client names** can appear in a "Recent clients" band on homepage + about, but not in testimonial format.
