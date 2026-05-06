@@ -30,6 +30,23 @@ This is the framing behind every word on the site. We don't say "fight massive c
 - **Don't politicize it.** "Capitalism" / "corporate" = no. "Big chains" / "billion-dollar competitors" = yes when needed, but most of the time just describe the work.
 - **Do make it tangible.** Bodega vs chain pharmacy. Salon vs Sephora. Specific. Real.
 
+## The differentiation claim (positioning)
+
+**Little Fight is THE differentiated resource for NYC small business tech and support.** Not a tech shop. Not a consultancy. Not an agency. The resource. When someone asks "who do I call for tech in NYC if I'm a small business," the answer is Little Fight.
+
+Every page should signal this without bragging:
+
+**What makes Little Fight different (the proof points):**
+1. **Founder picks up the phone.** No account managers, no ticket queue, no "we'll route you to the right team."
+2. **24-hour live AI phone agent.** Off-hours, the phone still answers — captures the issue, prioritizes, and routes urgent calls to David. Most NYC IT shops send you to voicemail at 5:01pm.
+3. **Tools the chains use, sized for the corner shop.** We build the same kind of websites, dashboards, automations, and IT setups that big chains have — sized for what a NYC small business can afford.
+4. **Real numbers, honest scoping.** No "contact for quote." Where pricing is fixed, we post it. Where it varies, we say what determines it. Most agencies hide pricing because they're hoping to anchor high.
+5. **14 days or you don't pay** (websites). Specific time-bound guarantees most agencies won't make.
+6. **Always fair for small business.** Even if not a fit, we refer to someone who is. We'd rather lose the work than let a NYC shop pay the wrong vendor.
+7. **NYC time.** 9am–9pm Eastern, real human. Not "global support" code for a call center in another timezone.
+
+When pitching the differentiation, **don't list it like marketing.** Show it through specifics: "If you call (646) 360-0318, David picks up." That's the proof. Not "world-class customer service" (forbidden phrase).
+
 ## The core principle
 
 **Kind, not nice.**
