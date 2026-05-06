@@ -813,7 +813,134 @@ section[aria-label="Template trap"] ul li::before {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- 16. Mobile tuning ---------- */
+/* ---------- 17. International scope strip ---------- */
+.reach-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 1.6em 0;
+  align-items: stretch;
+}
+
+.reach-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 12px;
+  background: rgba(8, 11, 20, 0.55);
+  border: 1px solid var(--brand-line);
+  border-radius: 999px;
+  font-size: 0.92em;
+  color: var(--brand-cream);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 200ms, transform 220ms var(--motion-snap), background 200ms;
+}
+
+.reach-pill:hover {
+  border-color: var(--brand-orange);
+  background: rgba(254, 88, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.reach-pill .reach-ico {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(254, 88, 0, 0.12);
+  border-radius: 50%;
+  color: var(--brand-orange);
+}
+
+.reach-pill .reach-ico svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.reach-pill strong {
+  color: var(--brand-orange);
+  font-weight: 700;
+  margin-right: 4px;
+  letter-spacing: 0.01em;
+}
+
+.reach-pill .reach-tag {
+  font-size: 0.78em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-muted);
+}
+
+/* Bigger "Where we work" panel for about / dedicated section */
+.reach-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 1.6em 0;
+}
+
+.reach-panel .reach-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1.4em 1.5em;
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.05) 0%, rgba(8, 11, 20, 0.55) 100%);
+  border: 1px solid var(--brand-line);
+  border-radius: 16px;
+  transition: border-color 200ms, transform 220ms var(--motion-snap);
+  overflow: hidden;
+}
+
+.reach-panel .reach-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--brand-orange);
+  opacity: 0.7;
+}
+
+.reach-panel .reach-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-orange);
+}
+
+.reach-panel .reach-card .reach-ico {
+  width: 44px;
+  height: 44px;
+  background: rgba(254, 88, 0, 0.14);
+  border-radius: 14px;
+}
+
+.reach-panel .reach-card .reach-ico svg {
+  width: 24px;
+  height: 24px;
+}
+
+.reach-panel .reach-card h3 {
+  font-size: 1.05em;
+  font-weight: 800;
+  color: var(--brand-cream);
+  margin: 0;
+}
+
+.reach-panel .reach-card p {
+  font-size: 0.92em;
+  color: var(--brand-muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ---------- 18. Mobile tuning ---------- */
 @media (max-width: 720px) {
   .hero-contact-row {
     grid-template-columns: 1fr 1fr;
