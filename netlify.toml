@@ -821,6 +821,105 @@ to = "/terms/"
 status = 301
 force = true
 
+# New 4-quadrant slashless rewrites
+[[redirects]]
+from = "/systems"
+to = "/systems/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/consulting"
+to = "/consulting/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/fires"
+to = "/fires/"
+status = 200
+force = true
+
+[[redirects]]
+from = "/ask"
+to = "/ask/"
+status = 200
+force = true
+
+# 301 — retired URLs map into the 4-quadrant model
+[[redirects]]
+from = "/business-systems/"
+to = "/systems/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/business-systems"
+to = "/systems/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/local-search/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/local-search"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides"
+to = "/consulting/"
+status = 301
+force = true
+
+# Software-guides sub-pages — preserve SEO juice into /consulting/
+[[redirects]]
+from = "/software-guides/airtable-vs-notion-vs-monday-small-business/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides/custom-business-system-vs-saas-subscriptions/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides/shopify-vs-squarespace-nyc-retail/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides/square-appointments-vs-glossgenius-nyc-salons/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides/square-vs-toast-manhattan-restaurants/"
+to = "/consulting/"
+status = 301
+force = true
+
+[[redirects]]
+from = "/software-guides/webflow-vs-squarespace-manhattan-small-business/"
+to = "/consulting/"
+status = 301
+force = true
+
 [[redirects]]
 from = "/*"
 to = "/404.html"

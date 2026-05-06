@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://littlefightnyc.com/</loc><lastmod>2026-05-06</lastmod><priority>1.0</priority></url>
-  <url><loc>https://littlefightnyc.com/fit-check/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
-  <url><loc>https://littlefightnyc.com/business-systems/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
-  <url><loc>https://littlefightnyc.com/websites/</loc><lastmod>2026-05-06</lastmod><priority>0.8</priority></url>
-  <url><loc>https://littlefightnyc.com/local-search/</loc><lastmod>2026-05-06</lastmod><priority>0.8</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/</loc><lastmod>2026-05-06</lastmod><priority>0.8</priority></url>
+  <url><loc>https://littlefightnyc.com/fit-check/</loc><lastmod>2026-05-06</lastmod><priority>0.95</priority></url>
+  <url><loc>https://littlefightnyc.com/websites/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
+  <url><loc>https://littlefightnyc.com/systems/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
+  <url><loc>https://littlefightnyc.com/consulting/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
+  <url><loc>https://littlefightnyc.com/it-support/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
+  <url><loc>https://littlefightnyc.com/fires/</loc><lastmod>2026-05-06</lastmod><priority>0.85</priority></url>
+  <url><loc>https://littlefightnyc.com/ask/</loc><lastmod>2026-05-06</lastmod><priority>0.85</priority></url>
+  <url><loc>https://littlefightnyc.com/case-studies/</loc><lastmod>2026-05-06</lastmod><priority>0.8</priority></url>
   <url><loc>https://littlefightnyc.com/pricing/</loc><lastmod>2026-05-06</lastmod><priority>0.8</priority></url>
   <url><loc>https://littlefightnyc.com/software-cost-calculator/</loc><lastmod>2026-05-06</lastmod><priority>0.7</priority></url>
-  <url><loc>https://littlefightnyc.com/nyc-websites-it-support/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
-  <url><loc>https://littlefightnyc.com/it-support/</loc><lastmod>2026-05-06</lastmod><priority>0.9</priority></url>
+  <url><loc>https://littlefightnyc.com/nyc-websites-it-support/</loc><lastmod>2026-05-06</lastmod><priority>0.7</priority></url>
   <url><loc>https://littlefightnyc.com/areas/manhattan</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
   <url><loc>https://littlefightnyc.com/areas/brooklyn</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
   <url><loc>https://littlefightnyc.com/areas/queens</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
@@ -22,12 +24,6 @@
   <url><loc>https://littlefightnyc.com/about/</loc><lastmod>2026-05-06</lastmod><priority>0.6</priority></url>
   <url><loc>https://littlefightnyc.com/blog/</loc><lastmod>2026-05-06</lastmod><priority>0.6</priority></url>
   <url><loc>https://littlefightnyc.com/contact/</loc><lastmod>2026-05-06</lastmod><priority>0.6</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/airtable-vs-notion-vs-monday-small-business/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/custom-business-system-vs-saas-subscriptions/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/shopify-vs-squarespace-nyc-retail/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/square-appointments-vs-glossgenius-nyc-salons/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/square-vs-toast-manhattan-restaurants/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
-  <url><loc>https://littlefightnyc.com/software-guides/webflow-vs-squarespace-manhattan-small-business/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
   <url><loc>https://littlefightnyc.com/industries/galleries-creative-studios/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
   <url><loc>https://littlefightnyc.com/industries/medical-wellness-practices/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
   <url><loc>https://littlefightnyc.com/industries/professional-services/</loc><lastmod>2026-05-06</lastmod><priority>0.5</priority></url>
