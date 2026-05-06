@@ -940,7 +940,38 @@ section[aria-label="Template trap"] ul li::before {
   line-height: 1.55;
 }
 
-/* ---------- 18. Mobile tuning ---------- */
+/* ---------- 19. Industrial icon system in buttons ---------- */
+.btn svg.lf-btn-ico,
+.hero-contact-row .btn svg {
+  width: 16px;
+  height: 16px;
+  vertical-align: -0.16em;
+  margin-right: 0.5em;
+  flex: 0 0 auto;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero-contact-row .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The reach pills: ensure their icons stay tight */
+.reach-pill svg,
+.reach-card svg {
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- 20. Mobile tuning ---------- */
 @media (max-width: 720px) {
   .hero-contact-row {
     grid-template-columns: 1fr 1fr;
