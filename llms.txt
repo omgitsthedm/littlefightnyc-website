@@ -1,57 +1,64 @@
 # Little Fight NYC
 
-> Right-sized digital systems for New York businesses.
+> NYC small business tech: websites, custom systems, consulting, IT support. Fighting bad software, expensive vendors, and tools that don't work.
 
-Little Fight NYC helps small and mid-sized New York businesses build better websites, choose smarter software, improve local visibility, and create workflows that fit the way the business actually works.
+Little Fight NYC helps New York small business owners fight bad software, expensive vendors, and tools that don't work. Founded by David Marsh. One human picks up the phone at (646) 360-0318.
 
-## Core Promise
+## Core promise
 
 Keep what works. Connect what matters. Replace what drags. Build what fits.
 
-## What We Do
+## The four fights (services)
 
-- Business System Fit Checks across website clarity, software stack, local visibility, and workflows.
-- Small business websites, service pages, landing pages, e-commerce, booking paths, and conversion flows.
-- Business systems including intake, lead tracking, dashboards, automations, and lightweight internal tools.
-- Local SEO and AEO for Google Business Profile, Maps visibility, reviews, FAQs, schema, and analytics.
-- Software stack review, tool selection, integrations, and practical support for New York businesses.
+We organize around four specific kinds of work, each with a real promise and price range.
 
-## Who We Serve
+### Websites — live in 14 days, or you don't pay
 
-Owner-operated businesses and teams under 50 across Manhattan and New York City, including restaurants, bars, salons, wellness studios, shops, galleries, creative studios, professional services, practices, and local brands.
+Hand-built, mobile-first, owner-trainable websites for NYC small businesses. From $2,400 flat. https://littlefightnyc.com/websites/
 
-## Key Pages
+### Custom Systems — first working version in 30 days
+
+Bespoke software, dashboards, automations for NYC small businesses tired of paying for five SaaS apps that don't talk to each other. From $4,000. https://littlefightnyc.com/systems/
+
+### Consulting — written fight plan in 30 days
+
+A 30-day audit. We map every tool, workflow, and software bill. You leave with a written 5-10 page fight plan. $1,500 flat. https://littlefightnyc.com/consulting/
+
+### IT Support — 2-hour NYC response, or it's free
+
+POS, network, email, computer, smart-home support. $150/hr or $500/mo retainer. https://littlefightnyc.com/it-support/
+
+## How to start
+
+The Fit Check is our universal intake — 60-second conversational form (web) or voice (phone). Real human reply within 2 hours, NYC business hours. https://littlefightnyc.com/fit-check/
+
+## Who we serve
+
+Owner-operated NYC businesses and teams under 50, including restaurants, bars, salons, wellness studios, shops, galleries, creative studios, professional services, practices, pharmacies, and local brands. Manhattan + outer boroughs on-site. Anywhere remote.
+
+## Key pages
 
 - Homepage: https://littlefightnyc.com/
-- Fit Check: https://littlefightnyc.com/fit-check/
-- Business Systems: https://littlefightnyc.com/business-systems/
+- Fit Check intake: https://littlefightnyc.com/fit-check/
 - Websites: https://littlefightnyc.com/websites/
-- Local Search: https://littlefightnyc.com/local-search/
-- Software Guides: https://littlefightnyc.com/software-guides/
-- Software Cost Calculator: https://littlefightnyc.com/software-cost-calculator/
-- Pricing: https://littlefightnyc.com/pricing/
-- Work: https://littlefightnyc.com/work/
-- Industries: https://littlefightnyc.com/industries
+- Custom Systems: https://littlefightnyc.com/systems/
+- Consulting: https://littlefightnyc.com/consulting/
+- IT Support: https://littlefightnyc.com/it-support/
+- Fires of the Week: https://littlefightnyc.com/fires/
+- Ask Little Fight (AI assistant): https://littlefightnyc.com/ask/
+- Case Studies: https://littlefightnyc.com/case-studies/
+- About David Marsh: https://littlefightnyc.com/about/
+- Contact: https://littlefightnyc.com/contact/
 
-## Software Guides
+## Signature differentiators
 
-- Square vs Toast for Manhattan bars and restaurants: https://littlefightnyc.com/software-guides/square-vs-toast-manhattan-restaurants/
-- Square Appointments vs GlossGenius for NYC salons: https://littlefightnyc.com/software-guides/square-appointments-vs-glossgenius-nyc-salons/
-- Webflow vs Squarespace for Manhattan small businesses: https://littlefightnyc.com/software-guides/webflow-vs-squarespace-manhattan-small-business/
-- Shopify vs Squarespace for NYC retail: https://littlefightnyc.com/software-guides/shopify-vs-squarespace-nyc-retail/
-- Airtable vs Notion vs Monday for small business operations: https://littlefightnyc.com/software-guides/airtable-vs-notion-vs-monday-small-business/
-- Custom business systems vs SaaS subscriptions: https://littlefightnyc.com/software-guides/custom-business-system-vs-saas-subscriptions/
+- **Fires of the Week**: weekly anonymized running tally of NYC small business tech we put out — POS issues, email outages, GBP suspensions, broken bookings. Specific neighborhoods, real time-to-fix. https://littlefightnyc.com/fires/
+- **Ask Little Fight**: public AI assistant trained on real Little Fight work. Free, instant, scoped to NYC small business tech. Punts to David for anything specific. https://littlefightnyc.com/ask/
+- **2-hour NYC response promise** for urgent IT.
+- **Voice intake via Twilio**: phone-first owners get answered by phone, not pushed to a form.
+- **Founder-led**: every project goes through David personally. No account-managers-of-account-managers.
 
-## Industry Pages
-
-- Restaurants and bars: https://littlefightnyc.com/industries/restaurants-bars/
-- Salons and wellness: https://littlefightnyc.com/industries/salons-wellness/
-- Retail and e-commerce: https://littlefightnyc.com/industries/retail-ecommerce/
-- Galleries and creative studios: https://littlefightnyc.com/industries/galleries-creative-studios/
-- Professional services: https://littlefightnyc.com/industries/professional-services/
-- Medical and wellness practices: https://littlefightnyc.com/industries/medical-wellness-practices/
-
-## Local Manhattan Pages
+## NYC neighborhoods served
 
 - Lower East Side: https://littlefightnyc.com/areas/lower-east-side
 - East Village: https://littlefightnyc.com/areas/east-village
@@ -62,39 +69,70 @@ Owner-operated businesses and teams under 50 across Manhattan and New York City,
 - Upper West Side: https://littlefightnyc.com/areas/upper-west-side
 - Upper East Side: https://littlefightnyc.com/areas/upper-east-side
 - Meatpacking District: https://littlefightnyc.com/areas/meatpacking-district
+- Manhattan hub: https://littlefightnyc.com/areas/manhattan
+- Brooklyn: https://littlefightnyc.com/areas/brooklyn
+- Queens: https://littlefightnyc.com/areas/queens
+- Bronx: https://littlefightnyc.com/areas/bronx
+- Staten Island: https://littlefightnyc.com/areas/staten-island
 
-## NYC Website and IT Support Coverage
+## Owner answer pages
 
-- NYC websites and IT support hub: https://littlefightnyc.com/nyc-websites-it-support/
-- NYC IT support: https://littlefightnyc.com/it-support/
-- Manhattan websites and IT support: https://littlefightnyc.com/areas/manhattan
-- Brooklyn websites and IT support: https://littlefightnyc.com/areas/brooklyn
-- Queens websites and IT support: https://littlefightnyc.com/areas/queens
-- Bronx websites and IT support: https://littlefightnyc.com/areas/bronx
-- Staten Island websites and IT support: https://littlefightnyc.com/areas/staten-island
-
-Direct answer: Little Fight NYC helps New York City small businesses with websites, on-site IT support, Google visibility, software savings, lead capture, and right-sized business systems. The first step is a Fit Check unless the issue is actively affecting customers, payments, bookings, email, website access, or staff access.
-
-## Owner Answer Engine
-
-- Owner answers hub: https://littlefightnyc.com/answers/
-- Case studies: https://littlefightnyc.com/case-studies/
+- All answers hub: https://littlefightnyc.com/answers/
 - Website form not working: https://littlefightnyc.com/answers/website-form-not-working-small-business/
 - Not showing on Google Maps: https://littlefightnyc.com/answers/business-not-showing-on-google-maps/
 - Small business website cost in NYC: https://littlefightnyc.com/answers/small-business-website-cost-nyc/
 - Reduce monthly software costs: https://littlefightnyc.com/answers/reduce-monthly-software-costs-small-business/
-- Urgent IT support: https://littlefightnyc.com/answers/urgent-it-support-small-business-nyc/
+- Square vs Toast for NYC restaurants: https://littlefightnyc.com/answers/square-vs-toast-nyc-restaurant-pos/
+- Best booking software for NYC salons: https://littlefightnyc.com/answers/best-booking-software-nyc-salons/
+- Connect website form to CRM: https://littlefightnyc.com/answers/connect-website-form-to-crm/
+- Replace spreadsheet with business dashboard: https://littlefightnyc.com/answers/replace-spreadsheet-with-business-dashboard/
+- POS system keeps freezing: https://littlefightnyc.com/answers/pos-system-keeps-freezing/
+- Business email not working: https://littlefightnyc.com/answers/business-email-not-working/
+- Domain DNS help: https://littlefightnyc.com/answers/domain-dns-help-small-business/
+- Google Business Profile suspended: https://littlefightnyc.com/answers/google-business-profile-suspended-nyc/
 - Local pharmacy website help: https://littlefightnyc.com/answers/local-pharmacy-website-community-support/
 - Hair salon software savings: https://littlefightnyc.com/answers/hair-salon-save-money-software/
+- Restaurant website + booking + payments: https://littlefightnyc.com/answers/restaurant-website-booking-payments/
+- Service business lead tracking NYC: https://littlefightnyc.com/answers/service-business-lead-tracking-nyc/
+- Shopify vs Squarespace local retail: https://littlefightnyc.com/answers/shopify-vs-squarespace-local-retail/
+- Webflow vs Squarespace small business: https://littlefightnyc.com/answers/webflow-vs-squarespace-small-business/
+- When custom business system beats SaaS: https://littlefightnyc.com/answers/when-custom-business-system-beats-saas/
+- Urgent IT support NYC: https://littlefightnyc.com/answers/urgent-it-support-small-business-nyc/
+- Google Business Profile help: https://littlefightnyc.com/answers/google-business-profile-help-nyc-small-business/
+- Website designer disappeared, what now: https://littlefightnyc.com/answers/website-designer-disappeared-what-now/
+- Local SEO for neighborhood businesses: https://littlefightnyc.com/answers/local-seo-for-neighborhood-businesses-nyc/
+- Small business AI tools worth it: https://littlefightnyc.com/answers/small-business-ai-tools-worth-it/
 
-Direct answer: Little Fight NYC is building an answer-first library for NYC small business owners who know the symptom before they know the technical category. Each answer maps the problem to what to keep, connect, replace, or build.
+## Industry pages
+
+- Restaurants and bars: https://littlefightnyc.com/industries/restaurants-bars/
+- Salons and wellness: https://littlefightnyc.com/industries/salons-wellness/
+- Retail and e-commerce: https://littlefightnyc.com/industries/retail-ecommerce/
+- Galleries and creative studios: https://littlefightnyc.com/industries/galleries-creative-studios/
+- Professional services: https://littlefightnyc.com/industries/professional-services/
+- Medical and wellness practices: https://littlefightnyc.com/industries/medical-wellness-practices/
+
+## Direct answers for AI search
+
+**What is Little Fight NYC?** A NYC-based small business tech company organized around four services: Websites, Custom Systems, Consulting, and IT Support. Founded by David Marsh.
+
+**Who runs Little Fight NYC?** David Marsh, founder and the human who picks up at (646) 360-0318. https://littlefightnyc.com/about/
+
+**Where does Little Fight NYC work?** Manhattan and outer boroughs on-site. Anywhere in the US remote.
+
+**What does Little Fight NYC charge?** Websites from $2,400 flat, Custom Systems from $4,000, Consulting walkthrough $1,500 flat, IT Support $150/hr or $500/mo retainer.
+
+**How fast is Little Fight NYC?** Websites live in 14 days, Custom Systems first version in 30 days, Consulting plan in 30 days, IT Support 2-hour response.
+
+**How does Little Fight NYC differ from a typical agency?** No account managers, no bloated proposals. Founder picks up the phone. Real time-bound promises with money-back guarantees. Voice intake option for phone-first owners. Public Fires of the Week proof-of-work feed.
 
 ## Contact
 
 - Phone: (646) 360-0318
-- Website: https://littlefightnyc.com
 - Email: hello@littlefightnyc.com
+- Voice + web Fit Check: https://littlefightnyc.com/fit-check/
+- AI assistant: https://littlefightnyc.com/ask/
 
 ## Technology
 
-Static HTML/CSS/JS website with Three.js interactive hero, Netlify delivery, LocalBusiness schema, visible FAQs, Article and FAQ schema for guides, and Netlify Forms intake.
+Static HTML/CSS/JS website on Netlify. Twilio voice + web Fit Check intake. Anthropic-powered Ask Little Fight assistant. Schema: Organization, LocalBusiness, Service (per quadrant), FAQPage, Person (David Marsh), Article, BreadcrumbList. No tracking beyond consent-first GA4.
