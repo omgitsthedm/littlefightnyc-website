@@ -5,7 +5,7 @@ import { join, dirname } from "node:path";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const POLISH_LINK = '<link rel="stylesheet" href="/css/lifi-battle.css?v=20260506a">';
-const ANCHOR = /<link[^>]+href="\/css\/lifi-overhaul\.css[^"]*"[^>]*>/;
+const ANCHOR = /<link[^>]+href="\/css\/lifi-overhaul(?:\.min)?\.css[^"]*"[^>]*>/;
 const SKIP_DIRS = new Set(["dist", "backup", "tmp", "node_modules", ".netlify", ".git"]);
 
 async function* walkHtml(dir) {
