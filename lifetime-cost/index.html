@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><script src="/js/lifi-tracking.min.js" defer data-ga4-id="G-0Q1TGWH0HL"></script><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lifetime Cost Calculator | What your website really costs | Little Fight NYC</title>
+  <meta name="description" content="Pick your website platform, see what it really costs over 5 years — including subscription, hidden upsells, your time, and the SEO/conversion penalty. Honest math vs custom-built websites.">
+  <meta name="author" content="David Marsh">
+  <link rel="canonical" href="https://littlefightnyc.com/lifetime-cost/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Lifetime Cost Calculator | What your website really costs">
+  <meta property="og:description" content="Pick your platform. See what it really costs over 5 years — subscription, hidden upsells, your time, SEO penalty.">
+  <meta property="og:url" content="https://littlefightnyc.com/lifetime-cost/"><meta property="og:image:height" content="630"><meta property="og:image:width" content="1200">
+  <meta property="og:image" content="https://littlefightnyc.com/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lifetime Cost Calculator | Little Fight NYC">
+  <meta name="twitter:description" content="Pick your platform. See what it really costs."><meta name="twitter:image" content="https://littlefightnyc.com/images/og-image.jpg">
+  <meta name="theme-color" content="#080b14">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/css/lifi-shared-page.min.css">
+  <link rel="stylesheet" href="/css/lifi-motion-polish.css?v=20260325a">
+  <link rel="stylesheet" href="/css/lifi-animations.css">
+  <link rel="stylesheet" href="/css/lifi-core.css">
+  <link rel="stylesheet" href="/css/lifi-nav-footer.css">
+  <link rel="stylesheet" href="/css/lifi-dark-theme.css">
+  <link rel="stylesheet" href="/css/lifi-overhaul.css?v=20260505h">
+  <style>
+    .calc-shell { max-width:880px; margin:2em auto; }
+    .calc-controls { background:var(--brand-panel-soft); border:1px solid var(--brand-line-orange); border-radius:var(--radius-tight); padding:1.8em; margin-bottom:2em; }
+    .calc-row { display:flex; gap:1.5em; flex-wrap:wrap; align-items:flex-end; margin-bottom:1em; }
+    .calc-field { flex:1; min-width:240px; }
+    .calc-field label { display:block; font-size:0.85em; color:var(--brand-orange); font-weight:700; letter-spacing:0.04em; text-transform:uppercase; margin-bottom:8px; }
+    .calc-field select, .calc-field input { width:100%; padding:14px 16px; border-radius:var(--radius-tight); background:var(--brand-midnight); border:1.5px solid var(--brand-line); color:var(--brand-cream); font-size:1em; font-family:inherit; }
+    .calc-field select:focus, .calc-field input:focus { outline:none; border-color:var(--brand-orange); box-shadow:0 0 0 3px rgba(254,88,0,0.1); }
+    .results { background:var(--brand-panel); border:1px solid var(--brand-line-orange); border-radius:var(--radius-tight); padding:2em; margin-bottom:2em; }
+    .verdict { font-size:1.4em; font-weight:700; color:var(--brand-cream); margin-bottom:1em; line-height:1.4; }
+    .verdict strong { color:var(--brand-orange); }
+    .num-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1em; margin:1.5em 0; }
+    .num-card { background:rgba(8,11,20,0.6); border:1px solid var(--brand-line); border-radius:var(--radius-tight); padding:1.2em; }
+    .num-card.danger { border-color:rgba(255,111,145,0.3); background:rgba(255,111,145,0.04); }
+    .num-card.win { border-color:rgba(121,216,138,0.3); background:rgba(121,216,138,0.04); }
+    .num-card .num { font-size:2.2em; font-weight:800; line-height:1; font-family:'Lexend',sans-serif; }
+    .num-card.danger .num { color:#ff6f91; }
+    .num-card.win .num { color:#79d88a; }
+    .num-card .num.neutral { color:var(--brand-orange); }
+    .num-card .label { font-size:0.85em; color:var(--brand-muted); margin-top:6px; letter-spacing:0.04em; text-transform:uppercase; }
+    .num-card .sub { font-size:0.85em; color:var(--brand-cream); margin-top:0.6em; line-height:1.45; }
+    .hurts-list { list-style:none; padding:0; margin:1.5em 0; }
+    .hurts-list li { padding:1em 1.2em; background:rgba(255,111,145,0.06); border:1px solid rgba(255,111,145,0.2); border-radius:var(--radius-tight); margin-bottom:8px; line-height:1.55; }
+    .hurts-list li strong { color:#ff6f91; }
+    .savings-banner { background:linear-gradient(90deg,rgba(254,88,0,0.12),rgba(254,88,0,0.04)); border:1px solid var(--brand-orange); border-radius:var(--radius-tight); padding:1.5em; margin:1.5em 0; }
+    .savings-banner .num { font-size:2.5em; font-weight:800; color:var(--brand-orange); line-height:1; font-family:'Lexend',sans-serif; }
+    .savings-banner .label { font-size:0.95em; color:var(--brand-cream); margin-top:0.5em; }
+  </style>
+</head>
+<body class="">
+<nav role="navigation" aria-label="Main navigation"><div class="nav-bg"></div><div class="nav-container"><a href="/" class="nav-brand"><div class="logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div><div class="nav-brand-text"><span class="nav-brand-name">Little Fight NYC</span><span class="nav-brand-tagline">NYC Small Business Tech</span></div></a><div class="nav-links" id="nav-links"><a href="/websites/">Websites</a><a href="/systems/">Custom Systems</a><a href="/consulting/">Consulting</a><a href="/it-support/">IT Support</a><a href="/fires/">Fires</a><a href="/case-studies/">Case Studies</a><a href="/fit-check/">Start Here</a></div><div class="nav-right"><a href="tel:+16463600318" class="nav-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="nav-phone-dot"></span>(646) 360-0318</a><div class="nav-divider"></div><a href="/fit-check/" class="nav-cta-btn">Start Here &rarr;</a><button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button></div></div></nav>
+<main id="main-content">
+
+<section class="page-hero overhaul-page-hero"><div class="container">
+  <p class="overhaul-kicker">Lifetime Cost Calculator</p>
+  <h1 class="overhaul-title">What your website actually costs you. Pick a platform, see the damage.</h1>
+  <p class="overhaul-deck">Subscription. Hidden upsells. Your time. Lost SEO ranking. Lost conversion. Most NYC owners don&rsquo;t realize the &ldquo;cheap&rdquo; website costs them $3,000&ndash;$10,000+ over 5 years &mdash; before counting the customers it loses them.</p>
+</div></section>
+
+<section class="overhaul-section"><div class="container">
+  <div class="calc-shell">
+
+    <div class="calc-controls">
+      <div class="calc-row">
+        <div class="calc-field">
+          <label for="platform">Pick your platform (current or considering)</label>
+          <select id="platform">
+            <option value="squarespace-business">Squarespace Business ($23/mo)</option>
+            <option value="squarespace-commerce">Squarespace Commerce ($39/mo)</option>
+            <option value="wix-light">Wix Light ($17/mo)</option>
+            <option value="wix-core">Wix Core ($29/mo)</option>
+            <option value="wix-business">Wix Business ($36/mo)</option>
+            <option value="wix-elite">Wix Business Elite ($159/mo)</option>
+            <option value="godaddy-basic">GoDaddy Premium DIY ($16.99/mo)</option>
+            <option value="godaddy-pro-499">GoDaddy Pro Web Design ($499 one-time + $20/mo hosting)</option>
+            <option value="wordpress-com">WordPress.com Business ($25/mo)</option>
+            <option value="shopify-basic">Shopify Basic ($39/mo + 2.9% transactions)</option>
+            <option value="shopify-standard">Shopify ($105/mo + 2.7% transactions)</option>
+            <option value="shopify-advanced">Shopify Advanced ($399/mo + 2.5% transactions)</option>
+            <option value="webflow-basic">Webflow Basic ($18/mo)</option>
+            <option value="webflow-cms">Webflow CMS ($29/mo)</option>
+            <option value="weebly-square">Weebly / Square Online ($26/mo Performance)</option>
+            <option value="fiverr-cheap">Fiverr cheap freelancer ($300 one-time + you pay hosting)</option>
+            <option value="upwork-template">Upwork template freelancer ($800 one-time + you pay hosting)</option>
+            <option value="agency-cheap">NYC agency, low end ($5,000 + $30/mo hosting)</option>
+            <option value="agency-mid">NYC agency, typical ($10,000 + $50/mo retainer)</option>
+            <option value="agency-high">NYC agency, premium ($15,000 + $200/mo retainer)</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="years">Years you&rsquo;ll run it</label>
+          <input type="number" id="years" min="1" max="15" value="5">
+        </div>
+      </div>
+      <p style="font-size:0.9em; color:var(--brand-muted); margin:0;">Numbers update live. All prices from public 2026 rate cards.</p>
+    </div>
+
+    <div class="results" id="results">
+      <p class="verdict" id="verdict">Pick a platform above to see the math.</p>
+
+      <div class="num-grid">
+        <div class="num-card danger">
+          <div class="label">Subscription cost</div>
+          <div class="num" id="subscription">—</div>
+          <div class="sub" id="sub-detail">Direct platform fees only</div>
+        </div>
+        <div class="num-card danger">
+          <div class="label">Hidden upsells</div>
+          <div class="num" id="upsells">—</div>
+          <div class="sub" id="upsell-detail">Apps, integrations, premium support</div>
+        </div>
+        <div class="num-card danger">
+          <div class="label">Your time cost</div>
+          <div class="num" id="time-cost">—</div>
+          <div class="sub" id="time-detail">At $50/hr opportunity cost</div>
+        </div>
+        <div class="num-card danger">
+          <div class="label">Total real cost</div>
+          <div class="num" id="total">—</div>
+          <div class="sub" id="total-detail">All in over the period</div>
+        </div>
+      </div>
+
+      <ul class="hurts-list" id="hurts">
+        <li><strong>Pick a platform</strong> to see the specific ways it&rsquo;ll cost you in performance, SEO, conversion, and lock-in.</li>
+      </ul>
+
+      <div class="savings-banner">
+        <div class="label" style="font-size:0.85em; color:var(--brand-orange); font-weight:700; letter-spacing:0.04em; text-transform:uppercase;">vs Little Fight (5-year all-in)</div>
+        <div class="num" id="savings">—</div>
+        <div class="label" id="savings-detail">Pick a platform to compare against the custom path.</div>
+      </div>
+
+      <div class="overhaul-actions" style="margin-top:1.5em;">
+        <a href="/fit-check/" class="btn-fit">Start a 60-second Fit Check</a>
+        <a href="tel:+16463600318" class="btn-ghost">Call (646) 360-0318</a>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<section class="overhaul-section method-band" aria-label="Why custom outperforms templates"><div class="container">
+  <p class="overhaul-kicker">Why custom outperforms templates</p>
+  <h2 class="overhaul-title sm">It&rsquo;s not just price &mdash; it&rsquo;s the customers you lose.</h2>
+  <p class="overhaul-deck" style="max-width:800px;">The lifetime cost above is just dollars. The bigger cost is what templates do to your <strong>SEO ranking, conversion rate, and the customers you never get</strong>. Here&rsquo;s the gap.</p>
+  <div class="overhaul-grid three">
+    <article class="system-card">
+      <h3>Google ranks faster sites higher</h3>
+      <p>Custom sites: Lighthouse 95&ndash;100. Template sites: 50&ndash;75. The gap directly affects ranking. A faster custom site with the same SEO fundamentals will outrank a template site for the same keywords, every time.</p>
+    </article>
+    <article class="system-card">
+      <h3>Templates compete with thousands of clones</h3>
+      <p>If you picked Squarespace template &ldquo;Brine,&rdquo; ~50,000 other small businesses also did. Google sees structural similarity. Custom = unique signal Google can rank.</p>
+    </article>
+    <article class="system-card">
+      <h3>JavaScript bloat kills conversion</h3>
+      <p>Template platforms ship 1.5&ndash;3 MB of editor JavaScript on every page. Custom sites ship 50&ndash;200 KB. The 3-second slower load costs you 30%+ of your visitors before they see your offer.</p>
+    </article>
+    <article class="system-card">
+      <h3>Generic schema = generic search results</h3>
+      <p>Templates ship one site-wide schema block. Custom sites ship page-specific JSON-LD: Service, FAQPage, LocalBusiness, Article. That&rsquo;s how AI search (ChatGPT, Perplexity, Google AI) cites you instead of the chain.</p>
+    </article>
+    <article class="system-card">
+      <h3>Mobile-first is not the same as &ldquo;mobile-friendly&rdquo;</h3>
+      <p>Templates are typically desktop-first with mobile bolted on. NYC small business traffic is 70%+ mobile. Custom sites are designed mobile-first &mdash; the site looks and converts better on the phone where your customers actually are.</p>
+    </article>
+    <article class="system-card">
+      <h3>Conversion is designed, not chosen from a dropdown</h3>
+      <p>Template platforms give you a hero, a few sections, a contact form. Custom sites are designed around how YOUR specific customers buy &mdash; the menu, the booking, the local pickup, the Fit Check. That&rsquo;s 2&ndash;5&times; conversion.</p>
+    </article>
+  </div>
+</div></section>
+
+<section class="overhaul-section"><div class="container">
+  <p class="overhaul-kicker">The honest part</p>
+  <h2 class="overhaul-title sm">When a template platform IS the right call.</h2>
+  <p class="overhaul-deck" style="max-width:800px;">We&rsquo;ll tell you straight: not every NYC small business needs a custom site. <strong>If you&rsquo;re solo, no integrations, no growth plan, and you have time to learn the editor</strong> &mdash; Squarespace or Wix is fine. Don&rsquo;t pay us for that. Use the calculator above to confirm the math, then go DIY.</p>
+  <p class="overhaul-deck" style="max-width:800px;">But if your site has to <strong>actually convert customers</strong>, has to <strong>integrate with a POS or booking system</strong>, has to <strong>rank on Google for competitive keywords</strong>, or has to be <strong>owned outright</strong> &mdash; the template platform is the wrong tool. The calculator above shows you why.</p>
+</div></section>
+
+<section class="overhaul-section tight"><div class="container">
+  <div class="fit-check-band">
+    <p class="overhaul-kicker">Already know which one you&rsquo;re leaving?</p>
+    <h2 class="overhaul-title sm">First hour of consulting is free.</h2>
+    <p class="overhaul-deck">Tell us your current platform and what your shop actually needs. We&rsquo;ll show you the migration path or recommend you stay where you are. No upsell.</p>
+    <div class="overhaul-actions">
+      <a class="btn-fit" href="/fit-check/">Start a 60-second Fit Check</a>
+      <a class="btn-ghost" href="/compare/">See all comparisons</a>
+    </div>
+  </div>
+</div></section>
+
+<script>
+// Lifetime cost calculator. All prices from public 2026 platform rate cards.
+// Real cost = subscription + typical upsells + your time at $50/hr opportunity cost.
+// Little Fight 5-year baseline: $3,000 build + $25/mo hosting × 60 months = $4,500 all-in.
+
+const PLATFORMS = {
+  "squarespace-business":  { name: "Squarespace Business", monthly: 23,  upsell: 200,  hours: 35, hurts: ["template","squarespace-tax","slow-mobile","gen-schema"] },
+  "squarespace-commerce":  { name: "Squarespace Commerce", monthly: 39,  upsell: 300,  hours: 35, hurts: ["template","squarespace-tax","slow-mobile","gen-schema"] },
+  "wix-light":             { name: "Wix Light",            monthly: 17,  upsell: 250,  hours: 40, hurts: ["template","wix-bloat","gen-schema","slow-mobile"] },
+  "wix-core":              { name: "Wix Core",             monthly: 29,  upsell: 400,  hours: 40, hurts: ["template","wix-bloat","gen-schema","slow-mobile"] },
+  "wix-business":          { name: "Wix Business",         monthly: 36,  upsell: 600,  hours: 40, hurts: ["template","wix-bloat","gen-schema","slow-mobile"] },
+  "wix-elite":             { name: "Wix Business Elite",   monthly: 159, upsell: 800,  hours: 40, hurts: ["template","wix-bloat","overpriced","gen-schema"] },
+  "godaddy-basic":         { name: "GoDaddy Premium DIY",  monthly: 17,  upsell: 500,  hours: 45, hurts: ["template","godaddy-upsell","slow-mobile","bad-support","gen-schema"] },
+  "godaddy-pro-499":       { name: "GoDaddy Pro Web Design",monthly: 20, upsell: 600,  hours: 10, hurts: ["template","godaddy-upsell","offshore","slow-mobile","gen-schema"], oneTime: 499 },
+  "wordpress-com":         { name: "WordPress.com Business",monthly: 25, upsell: 500,  hours: 50, hurts: ["template","wp-bloat","plugin-rot","gen-schema"] },
+  "shopify-basic":         { name: "Shopify Basic",        monthly: 39,  upsell: 1200, hours: 30, hurts: ["template","shopify-apps","transaction-fees"] },
+  "shopify-standard":      { name: "Shopify",              monthly: 105, upsell: 2400, hours: 30, hurts: ["template","shopify-apps","transaction-fees"] },
+  "shopify-advanced":      { name: "Shopify Advanced",     monthly: 399, upsell: 3600, hours: 30, hurts: ["template","shopify-apps","overpriced"] },
+  "webflow-basic":         { name: "Webflow Basic",        monthly: 18,  upsell: 200,  hours: 50, hurts: ["webflow-learning","designer-required","limited-cms"] },
+  "webflow-cms":           { name: "Webflow CMS",          monthly: 29,  upsell: 300,  hours: 50, hurts: ["webflow-learning","designer-required"] },
+  "weebly-square":         { name: "Weebly / Square Online",monthly: 26, upsell: 200,  hours: 35, hurts: ["template","limited","gen-schema"] },
+  "fiverr-cheap":          { name: "Fiverr cheap freelancer", monthly: 15, upsell: 200,hours: 15, hurts: ["template","ghosting-risk","no-support","slow-mobile","gen-schema"], oneTime: 300 },
+  "upwork-template":       { name: "Upwork template freelancer",monthly: 15, upsell: 300, hours: 20, hurts: ["template","ghosting-risk","no-support","gen-schema"], oneTime: 800 },
+  "agency-cheap":          { name: "NYC agency, low end",  monthly: 30,  upsell: 600,  hours: 5,  hurts: ["overpriced","slow-launch","account-managers"], oneTime: 5000 },
+  "agency-mid":            { name: "NYC agency, typical",  monthly: 50,  upsell: 1200, hours: 5,  hurts: ["overpriced","slow-launch","account-managers"], oneTime: 10000 },
+  "agency-high":           { name: "NYC agency, premium",  monthly: 200, upsell: 3000, hours: 5,  hurts: ["overpriced","slow-launch","account-managers","retainer-trap"], oneTime: 15000 },
+};
+
+const HURTS = {
+  "template":         "<strong>Generic template:</strong> looks like 10,000 other small business sites. Google can&rsquo;t differentiate it from the others competing for the same keywords.",
+  "slow-mobile":      "<strong>Slow on mobile:</strong> 3&ndash;6 second load times. NYC traffic is 70%+ mobile &mdash; you lose ~30% of visitors before they see your offer.",
+  "gen-schema":       "<strong>Generic schema:</strong> one site-wide schema block. AI search (ChatGPT, Perplexity, Google AI Overviews) cites competitors with proper page-specific JSON-LD instead of you.",
+  "wix-bloat":        "<strong>Wix JavaScript bloat:</strong> 1.5&ndash;3 MB of editor framework loads on every page. Lighthouse Performance score 50&ndash;75. Custom sites: 95&ndash;100.",
+  "squarespace-tax":  "<strong>Monthly platform tax:</strong> stop paying = site goes dark. You&rsquo;re renting your business&rsquo;s online presence, not owning it.",
+  "godaddy-upsell":   "<strong>Endless upsells:</strong> domain privacy, SSL, email, security, hosting tier &mdash; all sold separately and aggressively. Real total typically 2&ndash;3&times; the advertised price.",
+  "bad-support":      "<strong>Famously bad support:</strong> long hold times, scripted responses, different agent every call. When something breaks, you wait.",
+  "offshore":         "<strong>Offshore template designers:</strong> work from a portal, no relationship, no understanding of your shop. The site exists but rarely converts.",
+  "wp-bloat":         "<strong>WordPress plugin bloat:</strong> a typical WordPress.com Business site loads 15&ndash;30 plugins. Each one is a security and performance risk.",
+  "plugin-rot":       "<strong>Plugin rot:</strong> WordPress plugins go unmaintained. The "free" plugin you used today might break the site in 18 months when its author abandons it.",
+  "shopify-apps":     "<strong>Shopify App Store dependency:</strong> the basic Shopify install does maybe 60% of what most retail shops need. The other 40% comes from $20&ndash;$200/mo paid apps. Real Shopify cost is 2&ndash;3&times; the subscription.",
+  "transaction-fees": "<strong>Transaction fees:</strong> 2.5%&ndash;2.9% per sale on top of credit card processing. On $200K annual revenue, that&rsquo;s $5,000&ndash;$5,800/year extra in fees.",
+  "overpriced":       "<strong>Overpriced for NYC small biz:</strong> the tier you&rsquo;re paying for is built for mid-market companies. You&rsquo;re subsidizing features you&rsquo;ll never use.",
+  "webflow-learning": "<strong>Webflow learning curve:</strong> Webflow is a designer tool, not an owner tool. Most NYC owners can&rsquo;t edit a Webflow site themselves &mdash; you&rsquo;ll need a developer for every change.",
+  "designer-required":"<strong>Designer required:</strong> Webflow templates still need a designer to customize meaningfully. You&rsquo;re paying the platform AND a designer.",
+  "limited-cms":      "<strong>Limited CMS:</strong> Webflow Basic doesn&rsquo;t include real CMS. If you want a blog, news section, or product database, you&rsquo;re upgrading.",
+  "limited":          "<strong>Feature-limited:</strong> the platform stops where the next paid tier starts. You&rsquo;ll outgrow it within 18 months.",
+  "ghosting-risk":    "<strong>Ghosting risk:</strong> freelancer marketplaces have a known issue &mdash; the seller delivers something acceptable, then disappears when something breaks. You can&rsquo;t reach them. The site rots.",
+  "no-support":       "<strong>No ongoing support:</strong> when the form stops working, the SSL expires, or the hosting goes down, there&rsquo;s no one to call. You&rsquo;re hiring another freelancer.",
+  "account-managers": "<strong>Account managers:</strong> you talk to a project manager, who talks to a designer, who talks to a developer. By the time your feedback reaches the actual builder, it&rsquo;s a game of telephone.",
+  "slow-launch":      "<strong>8&ndash;12 week launches:</strong> NYC agencies typically take 2&ndash;3 months to launch a small business site. Little Fight does it in 14 days, or you don&rsquo;t pay.",
+  "retainer-trap":    "<strong>Retainer trap:</strong> the agency keeps charging you $200/mo for "maintenance" that takes them 2 hours a year. Over 5 years, that&rsquo;s $12,000 for almost nothing.",
+};
+
+const LITTLE_FIGHT_5YR_LOW = 3500;   // 5-year all-in for a focused build
+const LITTLE_FIGHT_5YR_MID = 5000;   // mid-range
+const LITTLE_FIGHT_HOSTING = 25;     // monthly hosting
+const HOURLY_OPP_COST = 50;          // owner&rsquo;s time at $50/hr opportunity cost
+
+function fmt(n) {
+  return "$" + Math.round(n).toLocaleString("en-US");
+}
+
+function calculate() {
+  const key = document.getElementById("platform").value;
+  const years = Math.max(1, Math.min(15, parseInt(document.getElementById("years").value) || 5));
+  const p = PLATFORMS[key];
+
+  // Cost calc
+  const months = years * 12;
+  const subscription = p.monthly * months + (p.oneTime || 0);
+  // Upsells scale moderately with years (assume most upsells are recurring annual upgrades)
+  const upsells = Math.round(p.upsell * (years / 5) * (years > 0 ? 1 : 0));
+  const timeCost = p.hours * HOURLY_OPP_COST;
+  const total = subscription + upsells + timeCost;
+
+  // Little Fight comparison: build (one-time) + hosting × months
+  const lfBuild = p.monthly < 30 && years <= 5 ? LITTLE_FIGHT_5YR_LOW : LITTLE_FIGHT_5YR_MID;
+  const lfHosting = LITTLE_FIGHT_HOSTING * months;
+  const lfTotal = (lfBuild - (LITTLE_FIGHT_HOSTING * 60)) + lfHosting;
+  // (lfBuild already includes 5yr hosting baseline of $1,500; subtract that and add actual months hosting)
+  const savings = total - lfTotal;
+
+  // Update DOM
+  document.getElementById("subscription").textContent = fmt(subscription);
+  document.getElementById("sub-detail").textContent = `${p.name}: ${fmt(p.monthly)}/mo${p.oneTime ? " + " + fmt(p.oneTime) + " one-time" : ""} × ${months} months`;
+  document.getElementById("upsells").textContent = fmt(upsells);
+  document.getElementById("upsell-detail").textContent = `Apps, premium tiers, third-party integrations needed for a working setup`;
+  document.getElementById("time-cost").textContent = fmt(timeCost);
+  document.getElementById("time-detail").textContent = `${p.hours} hours of your time at $50/hr opportunity cost`;
+  document.getElementById("total").textContent = fmt(total);
+  document.getElementById("total-detail").textContent = `Real all-in cost over ${years} year${years === 1 ? "" : "s"}`;
+
+  // Verdict
+  let verdict;
+  if (savings > 1000) {
+    verdict = `Custom-built saves you <strong>${fmt(savings)}</strong> over ${years} year${years === 1 ? "" : "s"} compared to ${p.name} &mdash; before counting the customers a faster, owned, ranking site would win you.`;
+  } else if (savings > 0) {
+    verdict = `Custom-built is roughly <strong>${fmt(savings)}</strong> cheaper over ${years} year${years === 1 ? "" : "s"}. The bigger gain: better ranking, better conversion, no monthly trap.`;
+  } else if (savings > -1500) {
+    verdict = `${p.name} is roughly <strong>${fmt(Math.abs(savings))}</strong> cheaper than custom over ${years} year${years === 1 ? "" : "s"} on dollars alone. But: slower on Google, lower conversion, doesn&rsquo;t own the site.`;
+  } else {
+    verdict = `${p.name} is <strong>${fmt(Math.abs(savings))}</strong> cheaper on raw dollars over ${years} year${years === 1 ? "" : "s"}. If price is your only criterion, that&rsquo;s the answer. If conversion or ranking matters, custom still wins long-term.`;
+  }
+  document.getElementById("verdict").innerHTML = verdict;
+
+  // Hurts list
+  const hurts = p.hurts.map(h => `<li>${HURTS[h]}</li>`).join("");
+  document.getElementById("hurts").innerHTML = hurts;
+
+  // Savings banner
+  if (savings > 0) {
+    document.getElementById("savings").textContent = "+" + fmt(savings) + " saved";
+    document.getElementById("savings-detail").innerHTML = `Custom-built (${fmt(lfTotal)} all-in over ${years} years) costs ${fmt(savings)} less than ${p.name}.`;
+  } else {
+    document.getElementById("savings").textContent = fmt(Math.abs(savings)) + " more";
+    document.getElementById("savings-detail").innerHTML = `Custom-built (${fmt(lfTotal)} over ${years} years) costs ${fmt(Math.abs(savings))} more on raw dollars &mdash; but typically wins back 2&ndash;5&times; that on conversion + ranking.`;
+  }
+}
+
+document.getElementById("platform").addEventListener("change", calculate);
+document.getElementById("years").addEventListener("input", calculate);
+calculate();
+</script>
+
+</main>
+<footer role="contentinfo"><div class="footer-grid"><div class="footer-column"><div class="footer-logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div><h3>Little Fight NYC</h3><p>Tools the chains use, sized for the corner shop.</p><p>Helping NYC small businesses shrink bills, grow business, and stay staples of the neighborhood.</p></div><div class="footer-column"><h3>The Four Fights</h3><ul><li><a href="/websites/">Websites &mdash; live in 14 days</a></li><li><a href="/systems/">Custom Systems &mdash; built in 30</a></li><li><a href="/consulting/">Consulting &mdash; first hour free</a></li><li><a href="/it-support/">IT Support &mdash; 2-hour response</a></li><li><a href="/fit-check/">Start a Fit Check</a></li></ul></div><div class="footer-column"><h3>Company</h3><ul><li><a href="/about/">About David</a></li><li><a href="/case-studies/">Case Studies</a></li><li><a href="/fires/">Fires of the Week</a></li><li><a href="/ask/">Ask Little Fight</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms</a></li></ul></div><div class="footer-column"><h3>Contact</h3><ul><li><a href="tel:+16463600318" style="color:#fe5800;font-weight:700">(646) 360-0318</a></li><li><a href="mailto:hello@littlefightnyc.com" style="color:#fe5800;font-weight:700">hello@littlefightnyc.com</a></li></ul><p style="color:#8a8ea0;font-size:13px;margin-top:8px">Manhattan, NYC<br>Nationwide remote</p></div></div><div class="footer-bottom"><p>&copy; 2026 Little Fight NYC. Built in New York for owners with bills to lower and customers to win.</p><p style="margin-top:8px"><a href="https://littlefightnyc.com">Designed, hosted, and cared for by LittleFightNYC.com</a></p></div></footer>
+<script src="/js/main.min.js?v=20260505d" defer></script>
+<script src="/js/reveal.js" defer></script>
+</body>
+</html>
