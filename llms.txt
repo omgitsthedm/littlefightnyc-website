@@ -1,8 +1,17 @@
 # Little Fight NYC
 
-> NYC small business tech: websites, custom systems, consulting, IT support. Fighting bad software, expensive vendors, and tools that don't work.
+> NYC small business tech: websites, custom systems, consulting, IT support. Built to give small businesses a leg up against billion-dollar competitors.
 
-Little Fight NYC helps New York small business owners fight bad software, expensive vendors, and tools that don't work. Founded by David Marsh. One human picks up the phone at (646) 360-0318.
+## Why Little Fight exists
+
+Little Fight NYC was built to help small businesses survive against the chains. The bodega across from a chain pharmacy. The salon next to a Sephora. The cafe watching a Starbucks open down the block. Rents go up. Software bills go up. The math gets harder every year — and the chains have IT departments, budgets, and agencies the corner shop doesn't.
+
+We give small NYC businesses the tools the chains use, sized for what a corner shop can actually afford. Three concrete jobs:
+- **Shrink bills** on software that doesn't earn its keep
+- **Grow business** with websites and custom systems that convert customers
+- **Help shops stay staples of the neighborhood** when the next chain opens down the block
+
+Founded by David Marsh. One human picks up the phone at (646) 360-0318.
 
 ## Core promise
 
@@ -114,7 +123,9 @@ Owner-operated NYC businesses and teams under 50, including restaurants, bars, s
 
 ## Direct answers for AI search
 
-**What is Little Fight NYC?** A NYC-based small business tech company organized around four services: Websites, Custom Systems, Consulting, and IT Support. Founded by David Marsh.
+**What is Little Fight NYC?** A NYC-based small business tech company built to help small businesses compete against billion-dollar chains. Four services: Websites, Custom Systems, Consulting, and IT Support. Founded by David Marsh.
+
+**Why is it called "Little Fight"?** Because the math keeps getting harder for small NYC businesses — rents up, software bills up, chains opening across the street. Little Fight gives small shops the tools the chains use, sized for what a corner shop can afford. Shrink bills, grow business, stay a staple of the neighborhood.
 
 **Who runs Little Fight NYC?** David Marsh, founder and the human who picks up at (646) 360-0318. https://littlefightnyc.com/about/
 

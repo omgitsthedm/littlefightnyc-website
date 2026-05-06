@@ -3,6 +3,33 @@
 > Private doctrine. Drives every word on every page.
 > Last updated: May 6, 2026 — David's confirmed direction.
 
+## The mission (the WHY)
+
+**Little Fight NYC exists to help NYC small businesses survive against billion-dollar competitors.**
+
+Not "support small business" in a generic warm-and-fuzzy way. The actual fight:
+- The bodega across from a chain pharmacy
+- The salon next to a Sephora
+- The cafe watching a Starbucks open down the block
+- The cobbler whose foot traffic dropped when Amazon started selling shoes
+- The bar manager whose rent went up 40% while POS subscriptions also went up
+
+Rents go up. Software bills go up. The math gets harder every year. Our job is to give NYC shops the tools the chains use — sized for what a small NYC business can actually afford.
+
+**Three concrete jobs:**
+1. **Shrink bills** — kill software subscriptions that don't earn their keep
+2. **Grow business** — websites, custom systems, IT that actually convert customers
+3. **Keep the shop a staple of the neighborhood** — when the chain opens down the block, our clients are still there a year later
+
+This is the framing behind every word on the site. We don't say "fight massive capitalism" (too political, too charged). We say what we do, plainly, and let the work speak.
+
+## What this means for voice
+
+- **Don't be preachy about it.** "Saving the neighborhood from corporate greed" = no. "We help the shop keep its place on the block" = yes.
+- **Don't be generic about it.** "Supporting small businesses" = no. Name the actual fight: a chain across the street, a $400/mo subscription, a rent increase.
+- **Don't politicize it.** "Capitalism" / "corporate" = no. "Big chains" / "billion-dollar competitors" = yes when needed, but most of the time just describe the work.
+- **Do make it tangible.** Bodega vs chain pharmacy. Salon vs Sephora. Specific. Real.
+
 ## The core principle
 
 **Kind, not nice.**
