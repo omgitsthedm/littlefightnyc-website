@@ -1,7 +1,14 @@
+import { Link, useSearchParams } from "react-router-dom";
 import CallToAction from "@/components/CallToAction";
-import { ownerAnswers } from "@/data/site";
+import { answerGuides, ownerAnswers } from "@/data/site";
 
 export default function Answers() {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("q")?.trim().toLowerCase() ?? "";
+  const visibleGuides = query
+    ? answerGuides.filter((guide) => `${guide.question} ${guide.short}`.toLowerCase().includes(query))
+    : answerGuides;
+
   return (
     <>
       <section className="page-hero">
@@ -20,6 +27,21 @@ export default function Answers() {
             <p>{answer.short}</p>
           </article>
         ))}
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <p className="eyebrow">Field guides</p>
+          <h2>Search questions local owners actually ask.</h2>
+        </div>
+        <div className="answer-list">
+          {visibleGuides.map((guide) => (
+            <Link key={guide.slug} to={`/answers/${guide.slug}/`}>
+              <h2>{guide.question}</h2>
+              <p>{guide.short}</p>
+            </Link>
+          ))}
+        </div>
       </section>
 
       <CallToAction compact />

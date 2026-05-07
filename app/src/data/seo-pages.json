@@ -1,0 +1,464 @@
+{
+  "site": {
+    "name": "Little Fight NYC",
+    "url": "https://littlefightnyc.com",
+    "phone": "+16463600318",
+    "phoneDisplay": "(646) 360-0318",
+    "email": "hello@littlefightnyc.com",
+    "location": "New York, NY",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "image": "https://littlefightnyc.com/assets/og-image.jpg",
+    "sameAs": []
+  },
+  "pages": [
+    {
+      "path": "/",
+      "title": "Little Fight NYC | Websites, IT Support, Local SEO & Systems",
+      "description": "Little Fight NYC helps New York small businesses build better websites, fix IT issues, improve Google visibility, and cut software waste.",
+      "h1": "Better tech. Fewer bills. More customers.",
+      "shortAnswer": "Short answer: Little Fight NYC helps local businesses with the four digital areas that affect money every day: websites, IT support, local search, and business systems.",
+      "type": "WebPage",
+      "image": "/assets/local-business-base.webp",
+      "faq": [
+        {
+          "question": "What does Little Fight NYC do?",
+          "answer": "Little Fight NYC helps small businesses with websites, IT support, local Google visibility, software cleanup, and right-sized business systems."
+        },
+        {
+          "question": "Who does Little Fight NYC help?",
+          "answer": "Little Fight NYC helps New York shops, salons, pharmacies, restaurants, studios, service businesses, and teams under 50."
+        }
+      ]
+    },
+    {
+      "path": "/services/",
+      "title": "Services | Little Fight NYC",
+      "description": "Explore websites, IT support, local search visibility, and practical business systems for New York small businesses that need better tools without more monthly waste.",
+      "h1": "Four areas. One operating partner.",
+      "shortAnswer": "Short answer: Little Fight NYC works across four connected areas: the website people see, the tech that has to work, the way customers find you, and the system behind the work.",
+      "type": "CollectionPage",
+      "image": "/assets/hero-laptop.webp"
+    },
+    {
+      "path": "/services/websites/",
+      "title": "Small Business Websites NYC | Little Fight NYC",
+      "description": "Small business website help in NYC: clearer copy, mobile polish, service pages, forms, booking paths, trust signals, and conversion cleanup.",
+      "h1": "A clearer front door.",
+      "shortAnswer": "Short answer: Little Fight builds small business websites in NYC that explain the business quickly, earn trust, and make the next action obvious.",
+      "type": "Service",
+      "serviceName": "Small business websites",
+      "image": "/assets/hero-laptop.webp",
+      "faq": [
+        {
+          "question": "Do I need a new website or a cleanup?",
+          "answer": "If the platform still works and customers can use it, start with the message, mobile layout, forms, and booking path before rebuilding everything."
+        },
+        {
+          "question": "Can you connect the site to booking or payments?",
+          "answer": "Yes. The website should connect to the action that makes the business money: booking, calls, forms, estimates, purchases, or follow-up."
+        }
+      ]
+    },
+    {
+      "path": "/services/it-support/",
+      "title": "Small Business IT Support NYC | Little Fight NYC",
+      "description": "Practical IT support for NYC small businesses with email, domains, Wi-Fi, POS, booking, payments, devices, and account access.",
+      "h1": "Fast help when the basics break.",
+      "shortAnswer": "Short answer: Little Fight provides practical IT support for NYC small businesses when email, domains, devices, Wi-Fi, POS, booking, or payment tools stop cooperating.",
+      "type": "Service",
+      "serviceName": "Small business IT support",
+      "image": "/assets/typing.webp",
+      "faq": [
+        {
+          "question": "Do you help when something is broken today?",
+          "answer": "Yes. If customers, payments, bookings, email, or access are affected, call first so the immediate issue can be separated from any larger cleanup."
+        },
+        {
+          "question": "Do you need passwords on the first call?",
+          "answer": "No. Do not share sensitive information on a call or form. If access is needed, Little Fight will use a safer handoff."
+        }
+      ]
+    },
+    {
+      "path": "/services/local-search/",
+      "title": "Local SEO & Google Visibility NYC | Little Fight NYC",
+      "description": "Local search help for NYC businesses: Google Business Profile, Maps, reviews, service pages, neighborhood relevance, and reporting.",
+      "h1": "Show up where locals look.",
+      "shortAnswer": "Short answer: Little Fight helps NYC local businesses improve Google visibility with clearer service pages, Google profile cleanup, review paths, and neighborhood signals.",
+      "type": "Service",
+      "serviceName": "Local SEO and Google visibility",
+      "image": "/assets/local-business-base.webp",
+      "faq": [
+        {
+          "question": "Why does a competitor show up before us?",
+          "answer": "Google needs a clear business profile, matching website pages, local language, reviews, and proof that the business serves the area being searched."
+        },
+        {
+          "question": "Is local SEO separate from the website?",
+          "answer": "No. The website, Google profile, reviews, and lead path all support each other. Search works better when the whole path is clear."
+        }
+      ]
+    },
+    {
+      "path": "/services/business-systems/",
+      "title": "Business Systems for NYC Small Businesses | Little Fight NYC",
+      "description": "Right-sized business systems for NYC teams: lead intake, follow-up, dashboards, tool cleanup, workflow automation, and software cost reduction.",
+      "h1": "Less spreadsheet. Less memory. Less waste.",
+      "shortAnswer": "Short answer: Little Fight builds right-sized business systems for NYC teams that are losing time to spreadsheets, scattered leads, duplicate entry, and monthly software waste.",
+      "type": "Service",
+      "serviceName": "Business systems and workflow cleanup",
+      "image": "/assets/manhattan.webp",
+      "faq": [
+        {
+          "question": "Is custom always better than software?",
+          "answer": "No. Good tools stay. The right move may be to keep, connect, replace, or build, depending on the workflow and monthly cost."
+        },
+        {
+          "question": "What can a small business system include?",
+          "answer": "It can include lead intake, follow-up, dashboards, forms, booking or payment handoffs, staff notifications, and simple reporting."
+        }
+      ]
+    },
+    {
+      "path": "/fit-check/",
+      "title": "Business System Fit Check NYC | Little Fight NYC",
+      "description": "Start with a Fit Check to find out whether your issue is urgent support, website cleanup, software waste, local visibility, or workflow cleanup.",
+      "h1": "Start here if the setup feels off.",
+      "shortAnswer": "Short answer: the Fit Check helps place a messy business tech problem before anyone sells you a rebuild, platform, or giant project.",
+      "type": "ContactPage",
+      "image": "/assets/og-image.jpg",
+      "faq": [
+        {
+          "question": "Is the Fit Check a quote?",
+          "answer": "No. It is a fast first read so David can review the website, tools, search visibility, and workflow before scope or pricing is confirmed."
+        },
+        {
+          "question": "Should I share passwords in the Fit Check?",
+          "answer": "No. Do not share sensitive information in the Fit Check or on a call."
+        }
+      ]
+    },
+    {
+      "path": "/answers/",
+      "title": "Small Business Tech Answers NYC | Little Fight NYC",
+      "description": "Plain-English answers about websites, IT support, local SEO, booking tools, software costs, and business systems for NYC local businesses.",
+      "h1": "Fast answers before another bill.",
+      "shortAnswer": "Short answer: these guides help local business owners understand the next smart move before buying software, rebuilding a site, or chasing another vendor.",
+      "type": "CollectionPage",
+      "image": "/assets/typing.webp"
+    },
+    {
+      "path": "/answers/website-form-not-working-small-business/",
+      "title": "Website Form Not Working? | Little Fight NYC",
+      "description": "Website form messages go missing when routing, spam filters, plugins, or domain email records break. Here is what NYC small businesses should check first.",
+      "h1": "Why are website form messages not reaching my small business?",
+      "shortAnswer": "Short answer: start with the form settings, email routing, spam filters, and domain records. If people say they submitted a form but nothing arrives, treat it as an active revenue leak before redesigning the site.",
+      "type": "Article",
+      "image": "/assets/hero-laptop.webp"
+    },
+    {
+      "path": "/answers/reduce-monthly-software-costs-small-business/",
+      "title": "Cut Small Business Software Costs | Little Fight NYC",
+      "description": "A practical way for small businesses to cut monthly software waste, reduce duplicate tools, keep what works, and replace only the pieces that drag.",
+      "h1": "How can a small business cut monthly software costs?",
+      "shortAnswer": "Short answer: list every tool, what it costs, who uses it, and what work still happens outside it. Keep the useful tools, connect the gaps, replace the waste, and build only what off-the-shelf software does badly.",
+      "type": "Article",
+      "image": "/assets/manhattan.webp"
+    },
+    {
+      "path": "/answers/business-not-showing-on-google-maps/",
+      "title": "Business Not Showing on Google Maps NYC | Little Fight NYC",
+      "description": "Why a local NYC business may not appear on Google Maps and what to fix across profile, website, reviews, and service pages.",
+      "h1": "Why is my NYC business not showing on Google Maps?",
+      "shortAnswer": "Short answer: Google needs a complete business profile, consistent contact details, real reviews, relevant service pages, and local proof that matches how customers search nearby.",
+      "type": "Article",
+      "image": "/assets/local-business-base.webp"
+    },
+    {
+      "path": "/answers/hair-salon-save-money-software/",
+      "title": "Save Money on Salon Booking Software NYC | Little Fight NYC",
+      "description": "How NYC salons can reduce booking software costs while keeping appointments, payments, reminders, and client follow-up simple.",
+      "h1": "How can an NYC hair salon save money on booking software?",
+      "shortAnswer": "Short answer: keep the booking tool if staff and clients actually use it. Cut costs by removing duplicate tools, cleaning service menus, connecting follow-up, and replacing spreadsheets only where they create real drag.",
+      "type": "Article",
+      "image": "/assets/local-business-base.webp"
+    },
+    {
+      "path": "/answers/local-pharmacy-website-community-support/",
+      "title": "Local Pharmacy Website Help NYC | Little Fight NYC",
+      "description": "How a local pharmacy website can make hours, services, refills, phone actions, and community support easier to find.",
+      "h1": "How can a local pharmacy website better support its community?",
+      "shortAnswer": "Short answer: make hours, services, refills, insurance notes, phone actions, local help, and trust signals easy to find. A pharmacy site should reduce confusion before the customer calls or walks in.",
+      "type": "Article",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
+      "path": "/answers/when-custom-business-system-beats-saas/",
+      "title": "Custom Business System vs SaaS | Little Fight NYC",
+      "description": "When a right-sized custom business system may beat another monthly SaaS subscription for a small business.",
+      "h1": "When does a custom business system beat another subscription?",
+      "shortAnswer": "Short answer: custom may make sense when a business pays for a big platform but still relies on spreadsheets, duplicate entry, manual follow-up, or reports nobody trusts.",
+      "type": "Article",
+      "image": "/assets/manhattan.webp"
+    },
+    {
+      "path": "/case-studies/",
+      "title": "Case Studies | Little Fight NYC",
+      "description": "Private, pattern-based case studies showing how Little Fight NYC helps local businesses keep what works, connect gaps, and reduce digital drag.",
+      "h1": "Proof without fake numbers.",
+      "shortAnswer": "Short answer: Little Fight case studies focus on practical changes: fewer missed leads, clearer customer paths, cleaner booking, stronger local search, and less software waste.",
+      "type": "CollectionPage",
+      "image": "/assets/og-image.jpg"
+    },
+    {
+      "path": "/about/",
+      "title": "About Little Fight NYC | Local Business Tech Help",
+      "description": "Little Fight NYC helps local shops, salons, pharmacies, restaurants, studios, and service teams get better websites, working tech, stronger Google visibility, and simpler systems.",
+      "h1": "Built for the businesses that keep New York human.",
+      "shortAnswer": "Short answer: Little Fight NYC helps local businesses get a fairer shot at better websites, working tech, stronger Google visibility, and practical systems without enterprise pricing or endless monthly waste.",
+      "type": "AboutPage",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
+      "path": "/contact/",
+      "title": "Contact Little Fight NYC | Small Business Tech Help",
+      "description": "Contact Little Fight NYC for website help, IT support, local SEO, business systems, software cleanup, and urgent small business tech issues.",
+      "h1": "Tell us what is going on.",
+      "shortAnswer": "Short answer: call Little Fight if something is actively affecting customers. Use the Fit Check if the setup is messy but not urgent.",
+      "type": "ContactPage",
+      "image": "/assets/og-image.jpg"
+    },
+    {
+      "path": "/areas/lower-east-side/",
+      "title": "Lower East Side Website & IT Support | Little Fight NYC",
+      "description": "Websites, IT support, Google visibility, and business systems for Lower East Side shops, restaurants, bars, galleries, and local teams.",
+      "h1": "Tech support, websites, and local search for Lower East Side businesses.",
+      "shortAnswer": "Short answer: Lower East Side businesses need fast mobile websites, clear local search signals, and tools that keep up with busy nights, small teams, and quick decisions.",
+      "type": "PlacePage",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
+      "path": "/areas/east-village/",
+      "title": "East Village Website & Business Systems | Little Fight NYC",
+      "description": "Right-sized websites, local search, IT support, and workflow cleanup for East Village local businesses.",
+      "h1": "Right-sized websites and systems for East Village local businesses.",
+      "shortAnswer": "Short answer: East Village businesses win when locals can find them, understand the offer fast, and take action without chasing broken links or confusing booking paths.",
+      "type": "PlacePage",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
+      "path": "/areas/soho/",
+      "title": "SoHo Website Design & Business Systems | Little Fight NYC",
+      "description": "Premium websites, local SEO, IT support, and simple business systems for SoHo shops, galleries, studios, and service businesses.",
+      "h1": "Premium websites and business systems for SoHo shops and studios.",
+      "shortAnswer": "Short answer: SoHo businesses need polished public-facing pages and simple behind-the-scenes systems that protect leads, appointments, payments, and follow-up.",
+      "type": "PlacePage",
+      "image": "/assets/manhattan.webp"
+    },
+    {
+      "path": "/areas/chelsea/",
+      "title": "Chelsea Local SEO, Websites & IT Support | Little Fight NYC",
+      "description": "Website, local SEO, IT support, and workflow cleanup help for Chelsea studios, salons, galleries, restaurants, and service businesses.",
+      "h1": "Websites, local SEO, and workflow cleanup for Chelsea businesses.",
+      "shortAnswer": "Short answer: Chelsea businesses need strong search visibility, sharp service pages, and systems that make inquiries, bookings, and follow-up easy to see.",
+      "type": "PlacePage",
+      "image": "/assets/manhattan.webp"
+    },
+    {
+      "path": "/areas/midtown/",
+      "title": "Midtown Small Business IT Support & Websites | Little Fight NYC",
+      "description": "Practical IT support, websites, local search, and business systems for Midtown small businesses and professional teams.",
+      "h1": "IT support and digital systems for Midtown small businesses.",
+      "shortAnswer": "Short answer: Midtown businesses need reliable daily tech, fast website actions, and workflows that reduce interruptions for teams already moving under pressure.",
+      "type": "PlacePage",
+      "image": "/assets/manhattan.webp"
+    },
+    {
+      "path": "/areas/upper-east-side/",
+      "title": "Upper East Side Websites & Local SEO | Little Fight NYC",
+      "description": "Local search, websites, IT support, and business systems for Upper East Side salons, shops, practices, and service teams.",
+      "h1": "Local search, websites, and support for Upper East Side businesses.",
+      "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, accurate Google visibility, and simple systems that make appointments and follow-up easy.",
+      "type": "PlacePage",
+      "image": "/assets/manhattan.webp"
+    },
+    {
+      "path": "/areas/upper-west-side/",
+      "title": "Upper West Side Website & Tech Help | Little Fight NYC",
+      "description": "Better websites, IT support, Google visibility, and practical business systems for Upper West Side local businesses.",
+      "h1": "Better websites and practical tech help for Upper West Side businesses.",
+      "shortAnswer": "Short answer: Upper West Side local businesses need clear websites, reliable support, and search visibility that helps nearby customers choose them.",
+      "type": "PlacePage",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
+      "path": "/areas/west-village/",
+      "title": "West Village Websites, SEO & Business Systems | Little Fight NYC",
+      "description": "Premium local websites, Google visibility, IT support, and right-sized business systems for West Village businesses.",
+      "h1": "Premium local websites and systems for West Village businesses.",
+      "shortAnswer": "Short answer: West Village businesses need elegant, fast websites and practical systems that help customers act without adding another expensive platform.",
+      "type": "PlacePage",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
+      "path": "/thanks/",
+      "title": "Thanks | Little Fight NYC",
+      "description": "Thanks for reaching out to Little Fight NYC. Here is what happens next after a Fit Check or contact request.",
+      "h1": "Thanks. We have the messy setup.",
+      "shortAnswer": "Short answer: Little Fight will review what you sent and look for the clearest next move: what to keep, connect, replace, or build.",
+      "type": "WebPage",
+      "image": "/assets/og-image.jpg"
+    },
+    {
+      "path": "/privacy/",
+      "title": "Privacy | Little Fight NYC",
+      "description": "Little Fight NYC privacy notes for Fit Check forms, contact requests, analytics, and sensitive information.",
+      "h1": "Privacy, plain and simple.",
+      "shortAnswer": "Short answer: Little Fight collects only the information needed to understand your business issue, follow up, and improve the site. Do not send sensitive information through public forms.",
+      "type": "WebPage",
+      "image": "/assets/og-image.jpg"
+    },
+    {
+      "path": "/terms/",
+      "title": "Terms | Little Fight NYC",
+      "description": "Little Fight NYC terms covering scope, safe account access, public forms, and human review before quotes or project commitments.",
+      "h1": "Simple terms.",
+      "shortAnswer": "Short answer: Little Fight scopes work before quoting it, avoids fake certainty, and expects safe access handoffs for any accounts, systems, or sensitive business tools.",
+      "type": "WebPage",
+      "image": "/assets/og-image.jpg"
+    }
+  ],
+  "matrix": {
+    "services": [
+      {
+        "slug": "websites",
+        "label": "Websites",
+        "serviceName": "Small business websites",
+        "plain": "a clear website, useful service pages, working forms, and a path customers understand",
+        "description": "Website design, cleanup, service pages, forms, booking paths, and conversion help for local businesses.",
+        "image": "/assets/hero-laptop.webp"
+      },
+      {
+        "slug": "it-support",
+        "label": "IT Support",
+        "serviceName": "Small business IT support",
+        "plain": "email, domains, Wi-Fi, POS, booking, payments, devices, and account access that keep working",
+        "description": "Practical IT support for email, domains, Wi-Fi, POS, booking, payments, devices, and access.",
+        "image": "/assets/typing.webp"
+      },
+      {
+        "slug": "local-search",
+        "label": "Local Search",
+        "serviceName": "Local SEO and Google visibility",
+        "plain": "Google visibility, Maps trust, reviews, service pages, and local proof people can act on",
+        "description": "Local SEO, Google Business Profile cleanup, Maps visibility, service pages, reviews, and reporting.",
+        "image": "/assets/local-business-base.webp"
+      },
+      {
+        "slug": "business-systems",
+        "label": "Business Systems",
+        "serviceName": "Business systems and workflow cleanup",
+        "plain": "lead intake, follow-up, dashboards, tool cleanup, and fewer expensive software workarounds",
+        "description": "Right-sized business systems, lead intake, follow-up, dashboards, workflow cleanup, and software cost reduction.",
+        "image": "/assets/manhattan.webp"
+      }
+    ],
+    "areas": [
+      {
+        "slug": "lower-east-side",
+        "name": "Lower East Side",
+        "zipCodes": ["10002"],
+        "shortNeed": "fast mobile answers, clear local search signals, and tools that keep up with busy nights",
+        "image": "/assets/nyc-street.webp"
+      },
+      {
+        "slug": "east-village",
+        "name": "East Village",
+        "zipCodes": ["10003", "10009"],
+        "shortNeed": "clear pages, practical booking paths, and fewer dead ends before customers act",
+        "image": "/assets/nyc-street.webp"
+      },
+      {
+        "slug": "soho",
+        "name": "SoHo",
+        "zipCodes": ["10012", "10013"],
+        "shortNeed": "polished public pages and simple systems that protect leads, bookings, and follow-up",
+        "image": "/assets/manhattan.webp"
+      },
+      {
+        "slug": "chelsea",
+        "name": "Chelsea",
+        "zipCodes": ["10001", "10011"],
+        "shortNeed": "strong search visibility, sharp service pages, and clean inquiry tracking",
+        "image": "/assets/manhattan.webp"
+      },
+      {
+        "slug": "midtown",
+        "name": "Midtown",
+        "zipCodes": ["10016", "10017", "10018", "10019", "10022"],
+        "shortNeed": "reliable daily tech and workflows that reduce interruptions for busy teams",
+        "image": "/assets/manhattan.webp"
+      },
+      {
+        "slug": "upper-east-side",
+        "name": "Upper East Side",
+        "zipCodes": ["10021", "10028", "10065", "10128"],
+        "shortNeed": "high-trust websites, accurate Google visibility, and easier appointment paths",
+        "image": "/assets/manhattan.webp"
+      },
+      {
+        "slug": "upper-west-side",
+        "name": "Upper West Side",
+        "zipCodes": ["10023", "10024", "10025"],
+        "shortNeed": "clear websites, practical support, and nearby search visibility customers can trust",
+        "image": "/assets/nyc-street.webp"
+      },
+      {
+        "slug": "west-village",
+        "name": "West Village",
+        "zipCodes": ["10014"],
+        "shortNeed": "elegant fast websites and practical systems without another oversized platform",
+        "image": "/assets/nyc-street.webp"
+      }
+    ]
+  },
+  "glossaryTerms": [
+    {
+      "slug": "business-system",
+      "term": "Business system",
+      "definition": "A connected set of pages, tools, handoffs, reminders, records, and reports that helps the business move work from first contact to finished job.",
+      "plain": "The way the work actually moves, not just the software you bought."
+    },
+    {
+      "slug": "crm",
+      "term": "CRM",
+      "definition": "A customer relationship management system, usually the place where leads, customers, notes, follow-up, and sales history should live.",
+      "plain": "The list of people who asked for help, bought something, or need a reply."
+    },
+    {
+      "slug": "google-business-profile",
+      "term": "Google Business Profile",
+      "definition": "The free Google listing that controls how a local business appears in Search and Maps, including hours, phone, reviews, services, photos, and location.",
+      "plain": "The Google card people see before they ever reach your website."
+    },
+    {
+      "slug": "local-search",
+      "term": "Local search",
+      "definition": "The work that helps nearby customers find, trust, and choose a business through Google, Maps, service pages, reviews, and neighborhood signals.",
+      "plain": "Showing up when someone nearby is already looking."
+    },
+    {
+      "slug": "software-stack",
+      "term": "Software stack",
+      "definition": "The group of tools a business uses to run daily work, such as website platforms, booking tools, POS, payments, email, spreadsheets, CRMs, and reporting.",
+      "plain": "All the apps you pay for, plus the work people still do around them."
+    },
+    {
+      "slug": "workflow-automation",
+      "term": "Workflow automation",
+      "definition": "A rule or system that moves routine work forward automatically, such as sending a lead to the right place, creating a follow-up task, or updating a dashboard.",
+      "plain": "The boring repeatable step happens without someone remembering to do it."
+    }
+  ]
+}

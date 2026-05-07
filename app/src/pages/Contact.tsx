@@ -26,6 +26,26 @@ export default function Contact() {
         </a>
       </section>
 
+      <section className="section split">
+        <div>
+          <p className="eyebrow">Local base</p>
+          <h2>New York, NY.</h2>
+          <p>
+            Little Fight works with local businesses across Manhattan and NYC. The public contact
+            footprint stays byte-identical across the site: Little Fight NYC, New York, NY,
+            (646) 360-0318, hello@littlefightnyc.com.
+          </p>
+        </div>
+        <div className="map-frame">
+          <iframe
+            title="Map of New York City"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=New%20York%2C%20NY&output=embed"
+          />
+        </div>
+      </section>
+
       <CallToAction compact />
     </>
   );

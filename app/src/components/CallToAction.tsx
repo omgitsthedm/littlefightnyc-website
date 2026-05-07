@@ -17,7 +17,7 @@ export default function CallToAction({ compact = false }: CallToActionProps) {
         </p>
       </div>
       <div className="cta-actions">
-        <Link className="button primary" to="/fit-check">
+        <Link className="button primary" to="/fit-check/">
           Start a Fit Check <ArrowRight size={18} />
         </Link>
         <a className="button ghost" href="tel:+16463600318">

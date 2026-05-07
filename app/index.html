@@ -1,35 +1,48 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>document.documentElement.classList.remove("no-js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Little Fight NYC | Websites, IT Support, and Better Systems</title>
     <meta
       name="description"
       content="Little Fight NYC helps local businesses fix websites, IT support, Google visibility, software waste, and messy workflows without bloated monthly tools."
     />
     <meta name="theme-color" content="#080b14" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="geo.region" content="US-NY" />
+    <meta name="geo.placename" content="New York" />
+    <meta name="geo.position" content="40.7128;-74.006" />
+    <meta name="ICBM" content="40.7128, -74.006" />
+    <link rel="canonical" href="https://littlefightnyc.com/" />
+    <link rel="preload" href="/assets/local-business-base.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width: 761px)" />
+    <link rel="preload" href="/assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" />
     <meta property="og:title" content="Little Fight NYC" />
     <meta
       property="og:description"
       content="Better tech, fewer bills, and more customers for New York small businesses."
     />
     <meta property="og:image" content="/assets/og-image.jpg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <meta property="og:url" content="https://littlefightnyc.com/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Little Fight NYC" />
+    <meta name="twitter:description" content="Better tech, fewer bills, and more customers for New York small businesses." />
+    <meta name="twitter:image" content="/assets/og-image.jpg" />
   </head>
   <body>
-    <form name="fit-check-scratch" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <form name="fit-check-scratch" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
       <input type="hidden" name="form-name" value="fit-check-scratch" />
-      <input name="bot-field" />
-      <input name="name" />
-      <input name="business" />
-      <input name="follow_up" />
-      <textarea name="message"></textarea>
+      <label>Leave this blank <input name="bot-field" /></label>
+      <label>Name <input name="name" /></label>
+      <label>Business <input name="business" /></label>
+      <label>Contact <input name="contact" /></label>
+      <label>Follow up <input name="follow_up" /></label>
+      <label>Message <textarea name="message"></textarea></label>
     </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

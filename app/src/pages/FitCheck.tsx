@@ -28,28 +28,36 @@ export default function FitCheck() {
           })}
         </div>
 
-        <form className="fit-form" name="fit-check-scratch" method="POST" data-netlify="true">
+        <form className="fit-form" name="fit-check-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="fit-check-scratch" />
-          <label>
+          <p className="hidden-field">
+            <label htmlFor="bot-field">Do not fill this out</label>
+            <input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
+          </p>
+          <label htmlFor="fit-name">
             Your name
-            <input name="name" autoComplete="name" required />
+            <input id="fit-name" name="name" autoComplete="name" required />
           </label>
-          <label>
+          <label htmlFor="fit-business">
             Business
-            <input name="business" autoComplete="organization" required />
+            <input id="fit-business" name="business" autoComplete="organization" required />
           </label>
-          <label>
+          <label htmlFor="fit-contact">
+            Phone or email
+            <input id="fit-contact" name="contact" autoComplete="email tel" required />
+          </label>
+          <label htmlFor="fit-follow-up">
             Best follow-up
-            <select name="follow_up" defaultValue="text">
+            <select id="fit-follow-up" name="follow_up" defaultValue="text">
               <option value="text">Text me</option>
               <option value="phone">Call me</option>
               <option value="email">Email me</option>
               <option value="fastest">Whatever is fastest</option>
             </select>
           </label>
-          <label>
+          <label htmlFor="fit-message">
             What feels broken, expensive, slow, or disconnected?
-            <textarea name="message" rows={5} required />
+            <textarea id="fit-message" name="message" rows={5} required />
           </label>
           <p className="form-note">Do not share sensitive information here.</p>
           <button className="button primary" type="submit">

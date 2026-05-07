@@ -4,69 +4,27 @@ redirectsOrigin = "config"
 [functions]
 directory = "netlify/functions"
 
-  [functions."*"]
-
 [[plugins]]
 origin = "ui"
 package = "@netlify/plugin-lighthouse"
 pinned_version = "6"
 
-  [plugins.inputs]
-
 [build]
-command = "node scripts/build-netlify-publish.mjs"
-publish = "dist"
-publishOrigin = "config"
 base = "."
-
-  [build.environment]
-
-  [build.processing]
-
-    [build.processing.css]
-
-    [build.processing.html]
-
-    [build.processing.images]
-
-    [build.processing.js]
-
-  [build.services]
+command = "cd app && npm ci && npm run build"
+publish = "app/dist"
+publishOrigin = "config"
 
 [[headers]]
 for = "/*"
 
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-src 'self' https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://maps.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "DENY"
-  Referrer-Policy = "strict-origin-when-cross-origin"
-  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-
-[[headers]]
-for = "/css/*"
-
-  [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-for = "/js/*"
-
-  [headers.values]
-  Cache-Control = "public, max-age=3600, must-revalidate"
-
-[[headers]]
-for = "/fonts/*"
-
-  [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-for = "/images/*"
-
-  [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
 for = "/assets/*"
@@ -75,859 +33,219 @@ for = "/assets/*"
   Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-for = "/*.ico"
+for = "/*.xml"
 
   [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
+  Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
-for = "/*.png"
+for = "/robots.txt"
 
   [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
+  Cache-Control = "public, max-age=3600, must-revalidate"
 
+[[headers]]
+for = "/llms.txt"
 
-# Answer-engine and case-study direct route rewrites.
+  [headers.values]
+  Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+for = "/.netlify/functions/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
+# Canonical slash redirects for crawl hygiene.
 [[redirects]]
-from = "/answers"
-to = "/answers/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/case-studies"
-to = "/case-studies/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/website-form-not-working-small-business"
-to = "/answers/website-form-not-working-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/business-not-showing-on-google-maps"
-to = "/answers/business-not-showing-on-google-maps/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/small-business-website-cost-nyc"
-to = "/answers/small-business-website-cost-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/reduce-monthly-software-costs-small-business"
-to = "/answers/reduce-monthly-software-costs-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/square-vs-toast-nyc-restaurant-pos"
-to = "/answers/square-vs-toast-nyc-restaurant-pos/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/best-booking-software-nyc-salons"
-to = "/answers/best-booking-software-nyc-salons/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/connect-website-form-to-crm"
-to = "/answers/connect-website-form-to-crm/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/replace-spreadsheet-with-business-dashboard"
-to = "/answers/replace-spreadsheet-with-business-dashboard/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/pos-system-keeps-freezing"
-to = "/answers/pos-system-keeps-freezing/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/business-email-not-working"
-to = "/answers/business-email-not-working/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/domain-dns-help-small-business"
-to = "/answers/domain-dns-help-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/google-business-profile-suspended-nyc"
-to = "/answers/google-business-profile-suspended-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/local-pharmacy-website-community-support"
-to = "/answers/local-pharmacy-website-community-support/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/hair-salon-save-money-software"
-to = "/answers/hair-salon-save-money-software/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/restaurant-website-booking-payments"
-to = "/answers/restaurant-website-booking-payments/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/service-business-lead-tracking-nyc"
-to = "/answers/service-business-lead-tracking-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/shopify-vs-squarespace-local-retail"
-to = "/answers/shopify-vs-squarespace-local-retail/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/webflow-vs-squarespace-small-business"
-to = "/answers/webflow-vs-squarespace-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/when-custom-business-system-beats-saas"
-to = "/answers/when-custom-business-system-beats-saas/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/urgent-it-support-small-business-nyc"
-to = "/answers/urgent-it-support-small-business-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/google-business-profile-help-nyc-small-business"
-to = "/answers/google-business-profile-help-nyc-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/website-designer-disappeared-what-now"
-to = "/answers/website-designer-disappeared-what-now/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/local-seo-for-neighborhood-businesses-nyc"
-to = "/answers/local-seo-for-neighborhood-businesses-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/answers/small-business-ai-tools-worth-it"
-to = "/answers/small-business-ai-tools-worth-it/"
-status = 200
-force = true
-
-# Slashless route rewrites for crawl probes and direct typed URLs.
-# Canonicals still point to the trailing-slash URLs.
-[[redirects]]
-from = "/about"
-to = "/about/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/ai-google-broke-the-internet-websites-survive"
-to = "/ai-google-broke-the-internet-websites-survive/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/blog"
-to = "/blog/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/business-systems"
-to = "/business-systems/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/contact"
-to = "/contact/"
-status = 200
-force = true
+from = "/services"
+to = "/services/"
+status = 301
 
 [[redirects]]
 from = "/fit-check"
 to = "/fit-check/"
-status = 200
-force = true
+status = 301
 
 [[redirects]]
-from = "/fit-check/thanks"
-to = "/fit-check/thanks/"
-status = 200
-force = true
+from = "/answers"
+to = "/answers/"
+status = 301
 
 [[redirects]]
-from = "/industries"
-to = "/industries/"
-status = 200
-force = true
+from = "/case-studies"
+to = "/case-studies/"
+status = 301
 
 [[redirects]]
-from = "/industries/galleries-creative-studios"
-to = "/industries/galleries-creative-studios/"
-status = 200
-force = true
+from = "/contact"
+to = "/contact/"
+status = 301
 
 [[redirects]]
-from = "/industries/medical-wellness-practices"
-to = "/industries/medical-wellness-practices/"
-status = 200
-force = true
+from = "/about"
+to = "/about/"
+status = 301
 
 [[redirects]]
-from = "/industries/professional-services"
-to = "/industries/professional-services/"
-status = 200
-force = true
+from = "/glossary"
+to = "/glossary/"
+status = 301
 
 [[redirects]]
-from = "/industries/restaurants-bars"
-to = "/industries/restaurants-bars/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/industries/retail-ecommerce"
-to = "/industries/retail-ecommerce/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/industries/salons-wellness"
-to = "/industries/salons-wellness/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/it-support"
-to = "/it-support/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/local-search"
-to = "/local-search/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/nyc-websites-it-support"
-to = "/nyc-websites-it-support/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/pricing"
-to = "/pricing/"
-status = 200
-force = true
+from = "/thanks"
+to = "/thanks/"
+status = 301
 
 [[redirects]]
 from = "/privacy"
 to = "/privacy/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services"
-to = "/services/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/apple-device-setup-and-management"
-to = "/services/apple-device-setup-and-management/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/branding-and-identity-design"
-to = "/services/branding-and-identity-design/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/ecommerce-setup-shopify-square-woocommerce"
-to = "/services/ecommerce-setup-shopify-square-woocommerce/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/local-seo-and-google-ads-nyc"
-to = "/services/local-seo-and-google-ads-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/on-site-it-support-nyc"
-to = "/services/on-site-it-support-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/pos-and-register-setup-nyc"
-to = "/services/pos-and-register-setup-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/tech-consulting-small-business"
-to = "/services/tech-consulting-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/services/website-design-small-business-nyc"
-to = "/services/website-design-small-business-nyc/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-cost-calculator"
-to = "/software-cost-calculator/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides"
-to = "/software-guides/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides/airtable-vs-notion-vs-monday-small-business"
-to = "/software-guides/airtable-vs-notion-vs-monday-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides/custom-business-system-vs-saas-subscriptions"
-to = "/software-guides/custom-business-system-vs-saas-subscriptions/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides/shopify-vs-squarespace-nyc-retail"
-to = "/software-guides/shopify-vs-squarespace-nyc-retail/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides/square-appointments-vs-glossgenius-nyc-salons"
-to = "/software-guides/square-appointments-vs-glossgenius-nyc-salons/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides/square-vs-toast-manhattan-restaurants"
-to = "/software-guides/square-vs-toast-manhattan-restaurants/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/software-guides/webflow-vs-squarespace-manhattan-small-business"
-to = "/software-guides/webflow-vs-squarespace-manhattan-small-business/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/solutions"
-to = "/solutions/"
-status = 200
-force = true
+status = 301
 
 [[redirects]]
 from = "/terms"
 to = "/terms/"
-status = 200
-force = true
+status = 301
 
+[[redirects]]
+from = "/services/:slug"
+to = "/services/:slug/"
+status = 301
+
+[[redirects]]
+from = "/answers/:slug"
+to = "/answers/:slug/"
+status = 301
+
+[[redirects]]
+from = "/areas/:slug"
+to = "/areas/:slug/"
+status = 301
+
+[[redirects]]
+from = "/areas/:area/:service"
+to = "/areas/:area/:service/"
+status = 301
+
+[[redirects]]
+from = "/glossary/:slug"
+to = "/glossary/:slug/"
+status = 301
+
+# Current service aliases.
 [[redirects]]
 from = "/websites"
-to = "/websites/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/what-google-looks-for-business-website"
-to = "/what-google-looks-for-business-website/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/why-business-websites-will-be-invisible"
-to = "/why-business-websites-will-be-invisible/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/work"
-to = "/work/"
-status = 200
-force = true
-
-# Extensionless page rewrites for flat .html routes.
-# These source files are flat .html pages whose canonicals are extensionless and slashless.
-[[redirects]]
-from = "/areas/manhattan/"
-to = "/areas/manhattan"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/brooklyn/"
-to = "/areas/brooklyn"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/queens/"
-to = "/areas/queens"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/bronx/"
-to = "/areas/bronx"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/staten-island/"
-to = "/areas/staten-island"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/chelsea/"
-to = "/areas/chelsea"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/east-village/"
-to = "/areas/east-village"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/lower-east-side/"
-to = "/areas/lower-east-side"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/meatpacking-district/"
-to = "/areas/meatpacking-district"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/midtown/"
-to = "/areas/midtown"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/soho/"
-to = "/areas/soho"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/west-village/"
-to = "/areas/west-village"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/upper-east-side/"
-to = "/areas/upper-east-side"
-status = 200
-force = true
-
-[[redirects]]
-from = "/areas/upper-west-side/"
-to = "/areas/upper-west-side"
-status = 200
-force = true
-
-[[redirects]]
-from = "/blog/cybersecurity-for-small-business/"
-to = "/blog/cybersecurity-for-small-business"
-status = 200
-force = true
-
-[[redirects]]
-from = "/blog/nyc-small-business-digital/"
-to = "/blog/nyc-small-business-digital"
-status = 200
-force = true
-
-[[redirects]]
-from = "/blog/protecting-kids-from-ai/"
-to = "/blog/protecting-kids-from-ai"
-status = 200
-force = true
-
-# Old URL → new URL redirects (service pages moved under /services/)
-[[redirects]]
-from = "/website-design-small-business-nyc/"
-to = "/services/website-design-small-business-nyc/"
+to = "/services/websites/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/on-site-it-support-nyc/"
-to = "/services/on-site-it-support-nyc/"
+from = "/websites/"
+to = "/services/websites/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/local-seo-and-google-ads-nyc/"
-to = "/services/local-seo-and-google-ads-nyc/"
+from = "/it-support"
+to = "/services/it-support/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/apple-device-setup-and-management/"
-to = "/services/apple-device-setup-and-management/"
+from = "/it-support/"
+to = "/services/it-support/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/branding-and-identity-design/"
-to = "/services/branding-and-identity-design/"
+from = "/local-search"
+to = "/services/local-search/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/ecommerce-setup-shopify-square-woocommerce/"
-to = "/services/ecommerce-setup-shopify-square-woocommerce/"
+from = "/local-search/"
+to = "/services/local-search/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/pos-and-register-setup-nyc/"
-to = "/services/pos-and-register-setup-nyc/"
+from = "/business-systems"
+to = "/services/business-systems/"
 status = 301
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/tech-consulting-small-business/"
-to = "/services/tech-consulting-small-business/"
+from = "/business-systems/"
+to = "/services/business-systems/"
 status = 301
-force = false
 
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
-
+# Old service URLs mapped into real scratch routes.
 [[redirects]]
-from = "/smart-home-services-nyc/"
-to = "/business-systems/"
+from = "/website-design-small-business-nyc/*"
+to = "/services/websites/"
 status = 301
-force = true
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/services/smart-home-services-nyc/"
-to = "/business-systems/"
+from = "/services/website-design-small-business-nyc/*"
+to = "/services/websites/"
 status = 301
-force = true
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/insights"
-to = "/blog/"
+from = "/on-site-it-support-nyc/*"
+to = "/services/it-support/"
 status = 301
-force = true
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/insights/"
-to = "/blog/"
+from = "/services/on-site-it-support-nyc/*"
+to = "/services/it-support/"
 status = 301
-force = true
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
 
 [[redirects]]
-from = "/sitemap.xml"
-to = "/sitemap.xml"
-status = 200
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
-
-[[redirects]]
-from = "/robots.txt"
-to = "/robots.txt"
-status = 200
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
-
-[[redirects]]
-from = "/site.webmanifest"
-to = "/site.webmanifest"
-status = 200
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]
-
-# Redirect .html blog/page URLs to extensionless Pretty URL canonical versions
-# force = true is required to override Netlify's asset serving for .html files
-[[redirects]]
-from = "/blog/cybersecurity-for-small-business.html"
-to = "/blog/cybersecurity-for-small-business"
+from = "/local-seo-and-google-ads-nyc/*"
+to = "/services/local-search/"
 status = 301
-force = true
 
 [[redirects]]
-from = "/blog/nyc-small-business-digital.html"
-to = "/blog/nyc-small-business-digital"
+from = "/services/local-seo-and-google-ads-nyc/*"
+to = "/services/local-search/"
 status = 301
-force = true
 
 [[redirects]]
-from = "/blog/protecting-kids-from-ai.html"
-to = "/blog/protecting-kids-from-ai"
+from = "/tech-consulting-small-business/*"
+to = "/services/business-systems/"
 status = 301
-force = true
 
 [[redirects]]
-from = "/industries.html"
-to = "/industries/"
+from = "/services/tech-consulting-small-business/*"
+to = "/services/business-systems/"
 status = 301
-force = true
+
+[[redirects]]
+from = "/software-guides/*"
+to = "/answers/reduce-monthly-software-costs-small-business/"
+status = 301
+
+[[redirects]]
+from = "/work/*"
+to = "/case-studies/"
+status = 301
+
+[[redirects]]
+from = "/solutions/*"
+to = "/services/"
+status = 301
+
+[[redirects]]
+from = "/blog/*"
+to = "/answers/"
+status = 301
 
 [[redirects]]
 from = "/privacy.html"
 to = "/privacy/"
 status = 301
-force = true
 
 [[redirects]]
 from = "/terms.html"
 to = "/terms/"
 status = 301
-force = true
 
-# New 4-quadrant slashless rewrites
-[[redirects]]
-from = "/systems"
-to = "/systems/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/consulting"
-to = "/consulting/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/fires"
-to = "/fires/"
-status = 200
-force = true
-
-[[redirects]]
-from = "/ask"
-to = "/ask/"
-status = 200
-force = true
-
-# 301 — retired URLs map into the 4-quadrant model
-[[redirects]]
-from = "/business-systems/"
-to = "/systems/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/business-systems"
-to = "/systems/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/local-search/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/local-search"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides"
-to = "/consulting/"
-status = 301
-force = true
-
-# Software-guides sub-pages — preserve SEO juice into /consulting/
-[[redirects]]
-from = "/software-guides/airtable-vs-notion-vs-monday-small-business/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides/custom-business-system-vs-saas-subscriptions/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides/shopify-vs-squarespace-nyc-retail/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides/square-appointments-vs-glossgenius-nyc-salons/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides/square-vs-toast-manhattan-restaurants/"
-to = "/consulting/"
-status = 301
-force = true
-
-[[redirects]]
-from = "/software-guides/webflow-vs-squarespace-manhattan-small-business/"
-to = "/consulting/"
-status = 301
-force = true
-
+# Unknown paths should be a real 404, not a soft-404 SPA shell.
 [[redirects]]
 from = "/*"
 to = "/404.html"
 status = 404
-force = false
-
-  [redirects.query]
-
-  [redirects.conditions]
-
-  [redirects.headers]

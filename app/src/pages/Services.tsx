@@ -1,4 +1,5 @@
 import CallToAction from "@/components/CallToAction";
+import { Link } from "react-router-dom";
 import { services } from "@/data/site";
 
 export default function Services() {
@@ -20,7 +21,7 @@ export default function Services() {
             return (
               <article className={`service-detail ${service.accent}`} key={service.title}>
                 <div className="service-detail-media">
-                  <img src={service.image} alt="" />
+                  <img src={service.image} alt="" width="900" height="675" loading="lazy" decoding="async" />
                   <span>0{index + 1}</span>
                 </div>
                 <div className="service-detail-copy">
@@ -35,6 +36,9 @@ export default function Services() {
                     ))}
                   </ul>
                   <strong>{service.outcome}</strong>
+                  <Link className="button ghost" to={`/services/${service.slug}`}>
+                    Open {service.eyebrow}
+                  </Link>
                 </div>
               </article>
             );

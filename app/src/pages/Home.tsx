@@ -22,7 +22,7 @@ export default function Home() {
             for New York shops, salons, pharmacies, restaurants, studios, and local teams.
           </p>
           <div className="hero-actions">
-            <Link className="button primary" to="/fit-check">
+            <Link className="button primary" to="/fit-check/">
               Start a Fit Check <ArrowRight size={18} />
             </Link>
             <a className="button ghost" href="tel:+16463600318">
@@ -33,7 +33,14 @@ export default function Home() {
 
         <div className="hero-board agency-board" aria-label="Little Fight four service areas">
           <div className="board-photo">
-            <img src="/assets/local-business-base.jpg" alt="New York local business storefront" />
+            <img
+              src="/assets/local-business-base.webp"
+              alt="New York local business storefront"
+              width="1200"
+              height="900"
+              fetchPriority="high"
+              decoding="async"
+            />
           </div>
           <div className="service-map">
             {services.map((service, index) => {
@@ -77,7 +84,7 @@ export default function Home() {
       </section>
 
       <section className="cinema-band">
-        <img src="/assets/nyc-street.jpg" alt="New York City street at dusk" />
+        <img src="/assets/nyc-street.webp" alt="New York City street at dusk" width="1200" height="800" loading="lazy" decoding="async" />
         <div>
           <p className="eyebrow">Neighborhood advantage</p>
           <h2>Your neighbors are your customers.</h2>
@@ -94,16 +101,23 @@ export default function Home() {
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <article className={`service-card agency-card ${service.accent}`} key={service.title}>
+              <Link className={`service-card agency-card ${service.accent}`} key={service.title} to={`/services/${service.slug}/`}>
                 <div className="service-image">
-                  <img src={service.image} alt="" />
+                  <img
+                    src={service.image}
+                    alt={`${service.eyebrow} help for New York small businesses`}
+                    width="900"
+                    height="675"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <p className="eyebrow">{service.eyebrow}</p>
                 <Icon size={28} />
                 <h3>{service.title}</h3>
                 <p>{service.plain}</p>
                 <strong>{service.outcome}</strong>
-              </article>
+              </Link>
             );
           })}
         </div>
@@ -137,7 +151,7 @@ export default function Home() {
       </section>
 
       <section className="image-band">
-        <img src="/assets/manhattan.jpg" alt="Manhattan skyline at night" />
+        <img src="/assets/manhattan.webp" alt="Manhattan skyline at night" width="1200" height="800" loading="lazy" decoding="async" />
         <div>
           <p className="eyebrow">Built for New York time</p>
           <h2>Local businesses do not need mystery software.</h2>

@@ -10,5 +10,6 @@ firebase-debug.log
 .claude/
 node_modules/
 package-lock.json
+!app/package-lock.json
 dist/
 dist-*/
