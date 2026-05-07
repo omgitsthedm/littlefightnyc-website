@@ -1,37 +1,25 @@
-import { ArrowRight, BadgeDollarSign, Eye, Phone, Wrench } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import CallToAction from "@/components/CallToAction";
-import { agencyProcess, businessTypes, proofSignals, services } from "@/data/site";
-
-const painCards = [
-  {
-    title: "The website is not helping.",
-    text: "People land there, get confused, and leave without calling, booking, buying, or filling out the form.",
-    icon: Eye,
-  },
-  {
-    title: "The monthly tools keep charging.",
-    text: "The team still works around them with spreadsheets, inboxes, notes, and memory.",
-    icon: BadgeDollarSign,
-  },
-  {
-    title: "Something breaks at the worst time.",
-    text: "Email, booking, Wi-Fi, POS, forms, domains, devices, and access issues do not wait politely.",
-    icon: Wrench,
-  },
-];
+import HeroCanvas from "@/components/HeroCanvas";
+import { agencyProcess, businessTypes, fitRoutes, proofSignals, services } from "@/data/site";
 
 export default function Home() {
   return (
     <>
-      <section className="hero">
+      <section className="hero cinematic-hero">
+        <HeroCanvas />
+        <div className="hero-vignette" aria-hidden="true" />
         <div className="hero-copy">
-          <p className="eyebrow">Little Fight NYC agency</p>
-          <h1>A sharper digital agency for New York local business.</h1>
+          <p className="eyebrow">Serving NYC small businesses</p>
+          <h1>
+            Better tech.
+            <span>Fewer bills.</span>
+            <strong>More customers.</strong>
+          </h1>
           <p className="hero-lede">
-            We design, fix, and connect the four digital areas that keep a small
-            business competitive: the website, the tech, the local visibility,
-            and the system behind the work.
+            Websites, IT support, Google visibility, and simple business systems
+            for New York shops, salons, pharmacies, restaurants, studios, and local teams.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/fit-check">
@@ -45,7 +33,7 @@ export default function Home() {
 
         <div className="hero-board agency-board" aria-label="Little Fight four service areas">
           <div className="board-photo">
-            <img src="/assets/owner.webp" alt="New York small business owner at work" />
+            <img src="/assets/local-business-base.jpg" alt="New York local business storefront" />
           </div>
           <div className="service-map">
             {services.map((service, index) => {
@@ -72,19 +60,28 @@ export default function Home() {
       <section className="section split">
         <div>
           <p className="eyebrow">Why owners call</p>
-          <h2>The problem is usually not one broken thing.</h2>
+          <h2>You are not alone. We have heard all four.</h2>
         </div>
         <div className="pain-grid">
-          {painCards.map((card) => {
+          {fitRoutes.map((card) => {
             const Icon = card.icon;
             return (
-              <article className="soft-card" key={card.title}>
+              <article className="soft-card" key={card.label}>
                 <Icon size={24} />
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
+                <h3>{card.label}</h3>
+                <p>{card.copy}</p>
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="cinema-band">
+        <img src="/assets/nyc-street.jpg" alt="New York City street at dusk" />
+        <div>
+          <p className="eyebrow">Neighborhood advantage</p>
+          <h2>Your neighbors are your customers.</h2>
+          <p>We build for the people who walk past your storefront, search nearby, compare quickly, and decide fast.</p>
         </div>
       </section>
 
@@ -140,7 +137,7 @@ export default function Home() {
       </section>
 
       <section className="image-band">
-        <img src="/assets/local-business.webp" alt="New York restaurant storefront at night" />
+        <img src="/assets/manhattan.jpg" alt="Manhattan skyline at night" />
         <div>
           <p className="eyebrow">Built for New York time</p>
           <h2>Local businesses do not need mystery software.</h2>
