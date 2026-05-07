@@ -1,7 +1,7 @@
 import { ArrowRight, BadgeDollarSign, Eye, Phone, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import CallToAction from "@/components/CallToAction";
-import { businessTypes, fitRoutes, proofSignals, services } from "@/data/site";
+import { agencyProcess, businessTypes, proofSignals, services } from "@/data/site";
 
 const painCards = [
   {
@@ -26,11 +26,12 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow">Little Fight NYC</p>
-          <h1>Better tech. Fewer bills. More customers.</h1>
+          <p className="eyebrow">Little Fight NYC agency</p>
+          <h1>A sharper digital agency for New York local business.</h1>
           <p className="hero-lede">
-            Websites, IT support, Google visibility, and simple business systems for
-            New York shops, salons, pharmacies, restaurants, studios, and local teams.
+            We design, fix, and connect the four digital areas that keep a small
+            business competitive: the website, the tech, the local visibility,
+            and the system behind the work.
           </p>
           <div className="hero-actions">
             <Link className="button primary" to="/fit-check">
@@ -42,20 +43,19 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-board" aria-label="Little Fight routing board">
+        <div className="hero-board agency-board" aria-label="Little Fight four service areas">
           <div className="board-photo">
             <img src="/assets/owner.webp" alt="New York small business owner at work" />
           </div>
-          <div className="route-stack">
-            {fitRoutes.map((route) => {
-              const Icon = route.icon;
+          <div className="service-map">
+            {services.map((service, index) => {
+              const Icon = service.icon;
               return (
-                <article key={route.label}>
+                <article key={service.eyebrow} className={`map-card ${service.accent}`}>
+                  <span>0{index + 1}</span>
                   <Icon size={22} />
-                  <div>
-                    <h3>{route.label}</h3>
-                    <p>{route.copy}</p>
-                  </div>
+                  <h3>{service.eyebrow}</h3>
+                  <p>{service.outcome}</p>
                 </article>
               );
             })}
@@ -64,10 +64,9 @@ export default function Home() {
       </section>
 
       <section className="strip">
-        <p>Keep what works.</p>
-        <p>Connect what matters.</p>
-        <p>Replace what drags.</p>
-        <p>Build what fits.</p>
+        {services.map((service) => (
+          <p key={service.eyebrow}>{service.eyebrow}</p>
+        ))}
       </section>
 
       <section className="section split">
@@ -91,18 +90,49 @@ export default function Home() {
 
       <section className="section">
         <div className="section-heading">
-          <p className="eyebrow">What we make fit</p>
-          <h2>Plain help for real business problems.</h2>
+          <p className="eyebrow">The four areas</p>
+          <h2>One agency for the whole digital side.</h2>
         </div>
-        <div className="service-grid">
+        <div className="service-grid agency-grid">
           {services.map((service) => {
             const Icon = service.icon;
             return (
-              <article className="service-card" key={service.title}>
+              <article className={`service-card agency-card ${service.accent}`} key={service.title}>
+                <div className="service-image">
+                  <img src={service.image} alt="" />
+                </div>
+                <p className="eyebrow">{service.eyebrow}</p>
                 <Icon size={28} />
                 <h3>{service.title}</h3>
                 <p>{service.plain}</p>
                 <strong>{service.outcome}</strong>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="section split process-section">
+        <div>
+          <p className="eyebrow">Agency method</p>
+          <h2>Not a menu of random services. A sequence.</h2>
+          <p>
+            A business owner should not have to guess whether the problem is the
+            site, Google, software, or the back-office workflow. We map the chain,
+            fix the leak, and build around what still works.
+          </p>
+        </div>
+        <div className="process-list">
+          {agencyProcess.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <article key={step.label}>
+                <span>{index + 1}</span>
+                <Icon size={22} />
+                <div>
+                  <h3>{step.label}</h3>
+                  <p>{step.copy}</p>
+                </div>
               </article>
             );
           })}

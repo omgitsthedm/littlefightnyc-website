@@ -1,5 +1,4 @@
 import {
-  BadgeDollarSign,
   CalendarCheck,
   ClipboardCheck,
   CreditCard,
@@ -9,8 +8,10 @@ import {
   Laptop,
   MapPin,
   MessagesSquare,
+  MousePointerClick,
   Phone,
   PlugZap,
+  ReceiptText,
   Search,
   ShieldCheck,
   Sparkles,
@@ -25,9 +26,14 @@ export type RouteItem = {
 };
 
 export type Service = {
+  eyebrow: string;
   title: string;
+  headline: string;
   plain: string;
   outcome: string;
+  includes: string[];
+  image: string;
+  accent: string;
   icon: LucideIcon;
 };
 
@@ -55,40 +61,71 @@ export const navItems: RouteItem[] = [
 
 export const services: Service[] = [
   {
-    title: "Fix what is broken",
-    plain: "Website down, email failing, forms missing leads, booking not working, devices acting up.",
-    outcome: "Stop the leak first.",
-    icon: Wrench,
-  },
-  {
-    title: "Build a clearer website",
-    plain: "A site that tells customers who you help, what to do next, and why they can trust you.",
-    outcome: "Turn visits into calls, bookings, and forms.",
+    eyebrow: "Websites",
+    title: "The website people see",
+    headline: "A clearer front door.",
+    plain: "Design, copy, service pages, booking paths, forms, mobile polish, and the trust signals customers need before they call.",
+    outcome: "Turn attention into action.",
+    includes: ["Website builds", "Landing pages", "Service pages", "Forms and booking paths"],
+    image: "/assets/websites.webp",
+    accent: "orange",
     icon: Laptop,
   },
   {
-    title: "Cut software waste",
-    plain: "Find the tools worth keeping and the subscriptions quietly charging for features nobody uses.",
-    outcome: "Lower monthly drag.",
-    icon: BadgeDollarSign,
+    eyebrow: "IT Support",
+    title: "The technology that has to work",
+    headline: "Fast help when the basics break.",
+    plain: "Email, domains, DNS, devices, Wi-Fi, POS, booking, payment, accounts, access, and the daily tech that cannot be mysterious.",
+    outcome: "Protect the business day.",
+    includes: ["On-demand support", "Email and domain help", "POS and payment troubleshooting", "Device and account setup"],
+    image: "/assets/pos.webp",
+    accent: "teal",
+    icon: Wrench,
   },
   {
-    title: "Connect the tools",
-    plain: "Forms, booking, payment, email, Google, and spreadsheets should not live in separate rooms.",
-    outcome: "Make the handoff cleaner.",
-    icon: PlugZap,
-  },
-  {
-    title: "Get found locally",
-    plain: "Google profile, Maps, service pages, reviews, and answers customers can actually find.",
-    outcome: "Show up when locals search.",
+    eyebrow: "Local Search",
+    title: "The way customers find you",
+    headline: "Show up where locals look.",
+    plain: "Google Business Profile, Maps, reviews, service pages, neighborhood signals, answer-first content, and simple reporting.",
+    outcome: "Get found by people already looking.",
+    includes: ["Google profile cleanup", "Local SEO", "Review paths", "Search-ready service pages"],
+    image: "/assets/local-business.webp",
+    accent: "gold",
     icon: Search,
   },
   {
-    title: "Build the simple system",
-    plain: "Lead tracking, intake, follow-up, dashboards, reminders, and the workflow behind the work.",
-    outcome: "Less memory work for the owner.",
+    eyebrow: "Business Systems",
+    title: "The system behind the work",
+    headline: "Less spreadsheet. Less memory. Less waste.",
+    plain: "Lead intake, follow-up, dashboards, automations, tool cleanup, software decisions, and lightweight workflows built around how the business actually runs.",
+    outcome: "Make the back room easier to run.",
+    includes: ["Lead tracking", "Tool-stack cleanup", "Dashboards", "Workflow automation"],
+    image: "/assets/owner.webp",
+    accent: "green",
     icon: ClipboardCheck,
+  },
+];
+
+export const agencyProcess = [
+  {
+    label: "Read the business",
+    copy: "We look at the site, tools, search presence, and workflow before naming the fix.",
+    icon: FileSearch,
+  },
+  {
+    label: "Fix the leak",
+    copy: "If something is costing calls, bookings, payments, or trust, it moves first.",
+    icon: MousePointerClick,
+  },
+  {
+    label: "Clean the stack",
+    copy: "Keep the useful tools. Cut the monthly drag. Connect what should already be talking.",
+    icon: ReceiptText,
+  },
+  {
+    label: "Build what fits",
+    copy: "When off-the-shelf software is too big or too wrong, build the missing piece.",
+    icon: Sparkles,
   },
 ];
 

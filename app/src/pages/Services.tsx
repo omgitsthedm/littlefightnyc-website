@@ -6,23 +6,36 @@ export default function Services() {
     <>
       <section className="page-hero">
         <p className="eyebrow">Services</p>
-        <h1>Help by problem, not by jargon.</h1>
+        <h1>Four areas. One operating partner.</h1>
         <p>
-          You do not need the perfect tech term. Tell us what is broken,
-          expensive, invisible, slow, or scattered.
+          Little Fight is the agency for the public-facing website, the daily
+          tech, the local search layer, and the system behind the work.
         </p>
       </section>
 
       <section className="section">
-        <div className="service-grid large">
-          {services.map((service) => {
+        <div className="service-detail-stack">
+          {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <article className="service-card" key={service.title}>
-                <Icon size={30} />
-                <h2>{service.title}</h2>
-                <p>{service.plain}</p>
-                <strong>{service.outcome}</strong>
+              <article className={`service-detail ${service.accent}`} key={service.title}>
+                <div className="service-detail-media">
+                  <img src={service.image} alt="" />
+                  <span>0{index + 1}</span>
+                </div>
+                <div className="service-detail-copy">
+                  <p className="eyebrow">{service.eyebrow}</p>
+                  <Icon size={32} />
+                  <h2>{service.headline}</h2>
+                  <h3>{service.title}</h3>
+                  <p>{service.plain}</p>
+                  <ul>
+                    {service.includes.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                  <strong>{service.outcome}</strong>
+                </div>
               </article>
             );
           })}
