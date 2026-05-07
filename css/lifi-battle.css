@@ -971,7 +971,303 @@ section[aria-label="Template trap"] ul li::before {
   stroke-linejoin: round;
 }
 
-/* ---------- 20. Mobile tuning ---------- */
+/* ============================================
+   ‖ $8K-tier overhaul layer — applied last
+   Cleanup of competing elements + hero recomposition
+   ============================================ */
+
+/* ---------- 21. Hide the unfinished 3D hero canvas ---------- */
+/* Hero stage is a placeholder that clashes with the rest of the polish.
+   Hidden until properly refined. Markup retained so it can be
+   re-enabled later by removing this rule. */
+.hero-stage,
+.hero-3d-container,
+#hero-3d-canvas,
+#hero-radiant-frame,
+.hero-app-chrome,
+.hero-app-dock,
+.hero-signal-layer,
+.hero-visual {
+  display: none !important;
+}
+
+/* ---------- 22. Hero recomposition (single-column confident) ---------- */
+.overhaul-home-hero {
+  display: block !important;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-top: clamp(80px, 14vh, 160px) !important;
+  padding-bottom: clamp(60px, 10vh, 120px) !important;
+  text-align: left;
+  position: relative;
+}
+
+.overhaul-home-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10% 5% auto auto;
+  width: min(640px, 70vw);
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 65% 35%,
+    rgba(254, 88, 0, 0.16) 0%,
+    rgba(254, 88, 0, 0.06) 35%,
+    transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: lf-glow-breathe 9s ease-in-out infinite alternate;
+}
+
+.overhaul-home-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto auto -10% -10%;
+  width: min(560px, 60vw);
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(8, 145, 178, 0.12) 0%,
+    rgba(8, 145, 178, 0.04) 35%,
+    transparent 70%);
+  filter: blur(70px);
+  pointer-events: none;
+  animation: lf-glow-breathe 12s ease-in-out infinite alternate-reverse;
+}
+
+.overhaul-home-hero .hero-content {
+  max-width: 740px;
+  position: relative;
+  z-index: 1;
+}
+
+.overhaul-home-hero h1 {
+  font-size: clamp(2.6rem, 6vw, 4.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.025em !important;
+  margin-bottom: 0.5em;
+  max-width: 16ch;
+}
+
+.overhaul-home-hero h1 .highlight-orange {
+  color: var(--brand-orange);
+  display: inline;
+  background: none;
+}
+
+.overhaul-home-hero > .hero-content > p {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--brand-cream);
+  max-width: 56ch;
+  margin: 0 0 1.6em;
+}
+
+.overhaul-home-hero .hero-contact-row {
+  margin: 1.5em 0 1.4em !important;
+  max-width: 580px !important;
+}
+
+.overhaul-home-hero .reach-strip {
+  margin-top: 0;
+}
+
+/* ---------- 23. Nav: stop label wrapping at common widths ---------- */
+nav .nav-links {
+  gap: 1.2em;
+}
+
+nav .nav-links a {
+  white-space: nowrap;
+  font-size: 0.95em;
+  letter-spacing: -0.005em;
+  padding: 6px 4px;
+}
+
+@media (max-width: 1100px) and (min-width: 961px) {
+  nav .nav-links { gap: 0.9em; }
+  nav .nav-links a { font-size: 0.9em; }
+  nav .nav-phone { font-size: 0.9em; }
+}
+
+@media (max-width: 1024px) and (min-width: 961px) {
+  nav .nav-brand-tagline { display: none; }
+}
+
+/* ---------- 24. Unify Four Fights / system-card icons ---------- */
+.system-card .lf-picto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 1em;
+  background: rgba(254, 88, 0, 0.12);
+  border: 1px solid rgba(254, 88, 0, 0.28);
+  border-radius: 12px;
+  color: var(--brand-orange);
+}
+
+.system-card .lf-picto svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- 25. Site-wide card unification ---------- */
+.system-card,
+.fit-card,
+.guide-card,
+.faq-card,
+.method-step,
+.photo-proof-card {
+  border-radius: 16px !important;
+}
+
+.fit-card,
+.guide-card,
+.method-step {
+  background: linear-gradient(135deg, rgba(254, 88, 0, 0.04) 0%, rgba(8, 11, 20, 0.55) 100%) !important;
+  border: 1px solid var(--brand-line) !important;
+  padding: 1.6em 1.8em !important;
+  transition: transform 280ms var(--motion-snap), border-color 200ms ease, background 200ms ease, box-shadow 280ms ease;
+}
+
+.fit-card:hover,
+.guide-card:hover,
+.method-step:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand-orange) !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.photo-proof-card {
+  border: 1px solid var(--brand-line);
+  overflow: hidden;
+  background: rgba(8, 11, 20, 0.5);
+  transition: transform 320ms var(--motion-snap), border-color 200ms;
+}
+
+.photo-proof-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-orange);
+}
+
+.photo-proof-card img {
+  transition: transform 800ms ease;
+}
+
+.photo-proof-card:hover img {
+  transform: scale(1.03);
+}
+
+/* ---------- 26. Cookie banner — get out of the way ---------- */
+[class*="privacy"][class*="banner"],
+.privacy-settings,
+.consent-banner,
+#privacy-banner,
+.lifi-consent-banner {
+  bottom: 12px !important;
+  right: 12px !important;
+  left: auto !important;
+  max-width: 340px !important;
+  font-size: 0.86em !important;
+  padding: 12px 14px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+}
+
+@media (max-width: 720px) {
+  [class*="privacy"][class*="banner"],
+  .privacy-settings,
+  .consent-banner,
+  #privacy-banner,
+  .lifi-consent-banner {
+    left: 12px !important;
+    right: 12px !important;
+    max-width: none !important;
+  }
+}
+
+/* ---------- 27. Footer refinement ---------- */
+footer[role="contentinfo"] {
+  border-top: 1px solid var(--brand-line);
+  padding-top: clamp(48px, 8vw, 80px);
+}
+
+footer[role="contentinfo"] .footer-grid {
+  gap: clamp(24px, 4vw, 48px);
+}
+
+footer[role="contentinfo"] h3 {
+  font-size: 0.78em !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
+  color: var(--brand-orange) !important;
+  margin-bottom: 1em !important;
+  font-weight: 700;
+}
+
+footer[role="contentinfo"] ul li {
+  margin-bottom: 0.5em;
+}
+
+footer[role="contentinfo"] ul li a {
+  color: var(--brand-cream) !important;
+  font-size: 0.95em;
+  text-decoration: none;
+  transition: color 200ms;
+}
+
+footer[role="contentinfo"] ul li a:hover {
+  color: var(--brand-orange) !important;
+}
+
+footer[role="contentinfo"] .footer-bottom {
+  border-top: 1px solid var(--brand-line);
+  margin-top: clamp(32px, 5vw, 56px);
+  padding-top: 1.6em;
+  font-size: 0.86em;
+  color: var(--brand-muted);
+}
+
+footer[role="contentinfo"] .footer-bottom a {
+  color: var(--brand-orange);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms;
+}
+
+footer[role="contentinfo"] .footer-bottom a:hover {
+  border-color: var(--brand-orange);
+}
+
+/* ---------- 28. Mobile hero tuning ---------- */
+@media (max-width: 720px) {
+  .overhaul-home-hero {
+    padding-top: clamp(60px, 12vh, 100px) !important;
+    padding-bottom: 40px !important;
+  }
+  .overhaul-home-hero h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem) !important;
+  }
+  .overhaul-home-hero .reach-strip {
+    gap: 8px;
+  }
+  .overhaul-home-hero .reach-pill {
+    font-size: 0.82em;
+    padding: 8px 12px 8px 10px;
+  }
+  .overhaul-home-hero .reach-pill .reach-tag {
+    display: none;
+  }
+}
+
+/* ---------- 29. Mobile tuning (existing) ---------- */
 @media (max-width: 720px) {
   .hero-contact-row {
     grid-template-columns: 1fr 1fr;
