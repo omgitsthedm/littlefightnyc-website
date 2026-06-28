@@ -37,28 +37,26 @@
 ## Repo State
 
 - Branch: main, at origin/main `0610f67` after fresh clone (clean, no dirty files in the fresh clone).
-- The PREVIOUS local checkout was 68 commits behind and is preserved at sibling `littlefightnyc-website.STALE-2026-06-28` (contains old `.ai/` + 6 untracked files: `README.md`, `AGENTS.md`, `CLAUDE.md` [local-untracked variant], `NEXT_STEPS.md`, `PROJECT_STATUS.md`, `.env.example`). David to decide if any belong in the live repo.
+- The PREVIOUS local checkout (68 commits behind) was preserved as `littlefightnyc-website.STALE-2026-06-28`, then DELETED 2026-06-28 (David-approved); its 6 untracked files were stale boilerplate (`.env.example` had no secrets).
 - `.ai/` is repo-only (publish dir is `dist/`) so it is not served publicly — no `/.ai/*` exclude needed.
 
 ## Commerce / Data Risk
 
-- No retail commerce. Risk driver = live lead pipeline: Netlify Functions, Fit Check (`/api/fit-check/submit`, `/api/fit-check/voice` Twilio), optional OpenAI/Supabase/Resend integrations.
-- Per HANDOFF: a trial Twilio Auth Token + API key/secret were shared in chat and need rotation — never echo credentials.
+- No retail commerce. Risk driver = live lead pipeline: Netlify Functions, Fit Check (`/api/fit-check/submit`), optional OpenAI/Supabase/Resend integrations. (Twilio voice removed 2026-06-28.)
+- Twilio fully removed 2026-06-28 (account closed by David; 9 `TWILIO_*` Netlify vars deleted). Never echo any credentials.
 
 ## QA-PENDING
 
-- Health-check `https://littlefightnyc.com` (read-only) before any production claim.
-- David: decide disposition of the 6 untracked files in the STALE backup (keep/merge/discard); then the backup folder can be removed.
+- Live verified 2026-06-28: littlefightnyc.com 200, new copy live, `.ai/` 404.
 - Verify Netlify deploy metadata before deployment claims.
 - Confirm whether LFNYC Core needs an AI-Ops pointer appended to the tracked `CLAUDE.md` (not added this pass).
 
 ## Do Not Touch
 
-- `.env`, `.env.local`, secrets, Twilio/OpenAI/Supabase/Resend credentials
+- `.env`, `.env.local`, secrets, OpenAI/Supabase/Resend credentials
 - Live page content / function behavior
-- Fit Check production submissions, Twilio voice, email/DB writes
+- Fit Check production submissions, email/DB writes
 - Netlify deploy settings / build config; `git push`
-- The `littlefightnyc-website.STALE-2026-06-28` backup (David's to review/remove)
 
 ## Proposed Changes / Inbox
 
@@ -66,7 +64,6 @@
 
 ## Next Steps Queue
 
-- David reviews the STALE backup's 6 untracked files; remove backup once cleared.
 - Optional read-only live health verification of littlefightnyc.com.
 - Decide on a CLAUDE.md AI-Ops pointer.
 
@@ -78,10 +75,10 @@
 
 ## Next Agent Directive
 
-Read `.ai/RULES.md` and `.ai/STATE.md` before working. LFNYC Core is the agency's own LIVE site with Netlify Functions + a real Fit Check lead pipeline (Twilio/OpenAI/Supabase/Resend, env-gated). Never publish prices. Treat `git push`/deploy, Fit Check submissions, Twilio voice, emails, and DB writes as production actions requiring `APPROVE LIVE CHANGE`. Do not inspect `.env`/secrets. The stale backup folder is David's to review.
+Read `.ai/RULES.md` and `.ai/STATE.md` before working. LFNYC Core is the agency's own LIVE site with Netlify Functions + a real Fit Check lead pipeline (OpenAI/Supabase/Resend, env-gated; Twilio removed 2026-06-28). Never publish prices. Treat `git push`/deploy, Fit Check submissions, emails, and DB writes as production actions requiring `APPROVE LIVE CHANGE`. Do not inspect `.env`/secrets.
 
 ## Emergency / Bypass Notes
 
-- No bypass approved for source/function edits, deploy, push, Fit Check/Twilio/email/DB actions, or production mutations.
+- No bypass approved for source/function edits, deploy, push, Fit Check/email/DB actions, or production mutations.
 - Bypass/YOLO is only an execution accelerator for approved local setup and read-only verification.
 - Emergency mode: stop forward work, preserve evidence, use the smallest reversible action.

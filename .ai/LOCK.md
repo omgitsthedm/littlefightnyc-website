@@ -13,7 +13,7 @@ Files:
 - .ai/LOCK.md
 Started:
 Expected Closeout:
-Recovery Note: This is the agency's own LIVE site (littlefightnyc.com) with Netlify Functions + a Fit Check lead flow (OpenAI/Supabase/Resend/Twilio). Treat push/deploy, form submissions, voice calls, emails, and DB writes as production actions. `.ai/` is repo-only (publish dir is `dist/`), so it is not served publicly.
+Recovery Note: This is the agency's own LIVE site (littlefightnyc.com) with Netlify Functions + a Fit Check lead flow (OpenAI/Supabase/Resend). Treat push/deploy, form submissions, emails, and DB writes as production actions. (Twilio voice/SMS removed 2026-06-28.) `.ai/` is repo-only (publish dir is `dist/`), so it is not served publicly.
 
 ## Use
 
