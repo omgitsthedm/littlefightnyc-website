@@ -33,13 +33,13 @@ Bespoke software, dashboards, automations for NYC small businesses tired of payi
 
 Tell us what feels broken or expensive. Longer engagements scope by depth. Written fight plan, no surprise invoices. https://littlefightnyc.com/consulting/
 
-### IT Support — 2-hour response during business hours + 24-hour live AI phone agent
+### IT Support — 2-hour response during business hours, next-business-day callback after hours
 
 POS, network, email, computer, smart-home support. $200/hour on-location after proper intake. Always fair for small business — even if not a fit, we'll refer you to someone who can help. https://littlefightnyc.com/it-support/
 
 ## How to start
 
-The Fit Check is our universal intake — 60-second conversational form (web) or voice (phone). Real human reply within 2 hours, NYC business hours. https://littlefightnyc.com/fit-check/
+The Fit Check is our universal intake — 60-second conversational form (web) or a quick phone call. Real human reply within 2 hours, NYC business hours. https://littlefightnyc.com/fit-check/
 
 ## Who we serve
 
@@ -64,7 +64,7 @@ Owner-operated NYC businesses and teams under 50, including restaurants, bars, s
 - **Fires of the Week**: weekly anonymized running tally of NYC small business tech we put out — POS issues, email outages, GBP suspensions, broken bookings. Specific neighborhoods, real time-to-fix. https://littlefightnyc.com/fires/
 - **Ask Little Fight**: public AI assistant trained on real Little Fight work. Free, instant, scoped to NYC small business tech. Punts to David for anything specific. https://littlefightnyc.com/ask/
 - **2-hour NYC response promise** for urgent IT.
-- **Voice intake via Twilio**: phone-first owners get answered by phone, not pushed to a form.
+- **Phone intake**: phone-first owners can call instead of filling out a form.
 - **Founder-led**: every project goes through David personally. No account-managers-of-account-managers.
 
 ## NYC neighborhoods served
@@ -172,21 +172,21 @@ Owner-operated NYC businesses and teams under 50, including restaurants, bars, s
 
 **What does Little Fight NYC charge?** Websites: clients save 50% on average vs. NYC agencies (no fixed price posted; scoped per project). Custom Systems: outperforms off-the-shelf apps at a quarter of the annual price (no fixed price posted; scoped per build). Consulting: first hour is free, longer engagements scope by depth. IT Support: $200/hour on-location after proper intake — always fair for small business.
 
-**How fast is Little Fight NYC?** Websites live in 14 days or you don't pay. Custom Systems: first working version in 30 days, depending on scope. IT Support: 2-hour response during NYC business hours, plus a 24-hour live AI phone agent that answers every call.
+**How fast is Little Fight NYC?** Websites live in 14 days or you don't pay. Custom Systems: first working version in 30 days, depending on scope. IT Support: 2-hour response during NYC business hours, with next-business-day callback after hours.
 
-**What's the 24-hour live AI phone agent?** When you call (646) 360-0318 outside business hours, our AI phone agent answers, captures the issue, prioritizes it, and routes urgent calls to David. Real triage at any time of day, not voicemail.
+**Can I reach you after hours?** Call (646) 360-0318 anytime. During NYC business hours you get a fast human response; after hours, leave a message and David calls back the next business day.
 
 **Track record:** 20+ NYC businesses helped grow profit since 2017. 100+ nationwide since 2012.
 
-**How does Little Fight NYC differ from a typical agency?** No account managers, no bloated proposals. Founder picks up the phone. Real time-bound promises with money-back guarantees. Voice intake option for phone-first owners. Public Fires of the Week proof-of-work feed.
+**How does Little Fight NYC differ from a typical agency?** No account managers, no bloated proposals. Founder picks up the phone. Real time-bound promises with money-back guarantees. Phone intake option for phone-first owners. Public Fires of the Week proof-of-work feed.
 
 ## Contact
 
 - Phone: (646) 360-0318
 - Email: hello@littlefightnyc.com
-- Voice + web Fit Check: https://littlefightnyc.com/fit-check/
+- Web + phone Fit Check: https://littlefightnyc.com/fit-check/
 - AI assistant: https://littlefightnyc.com/ask/
 
 ## Technology
 
-Static HTML/CSS/JS website on Netlify. Twilio voice + web Fit Check intake. Anthropic-powered Ask Little Fight assistant. Schema: Organization, LocalBusiness, Service (per quadrant), FAQPage, Person (David Marsh), Article, BreadcrumbList. No tracking beyond consent-first GA4.
+Static HTML/CSS/JS website on Netlify. Web + phone Fit Check intake. Anthropic-powered Ask Little Fight assistant. Schema: Organization, LocalBusiness, Service (per quadrant), FAQPage, Person (David Marsh), Article, BreadcrumbList. No tracking beyond consent-first GA4.

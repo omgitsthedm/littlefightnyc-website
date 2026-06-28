@@ -16,7 +16,7 @@
 | 8. IT Support pricing | "$200/hour on-location after proper intake. Fair for small business — even if not a fit, reach out and we'll refer you to someone who can." |
 | 9. Real number | **20+ NYC businesses since 2017. 100+ nationwide since 2012.** |
 | 12. LinkedIn | ❌ NO LinkedIn anywhere. Remove all references. |
-| 15. Anthropic API key | Not yet — use voice call (Twilio) first. |
+| 15. Anthropic API key | Not yet — use the Fit Check or a call first. |
 | 16. Phone | ✅ (646) 360-0318 |
 | 17. Email | ✅ hello@littlefightnyc.com |
 

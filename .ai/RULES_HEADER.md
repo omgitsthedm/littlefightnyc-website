@@ -38,7 +38,7 @@ Live URL:
 
 Stack:
 
-Static HTML/CSS/JS (built into `dist/`) + **Netlify Functions** (`netlify/functions`). Fit Check conversational lead flow: `/api/fit-check/submit`, optional OpenAI classification, optional Supabase storage, optional Resend email, **Twilio Voice** intake at `/api/fit-check/voice`. GA4 (consent-gated). No retail commerce.
+Static HTML/CSS/JS (built into `dist/`) + **Netlify Functions** (`netlify/functions`). Fit Check conversational lead flow: `/api/fit-check/submit`, optional OpenAI classification, optional Supabase storage, optional Resend email. GA4 (consent-gated). No retail commerce. (Twilio voice + SMS removed 2026-06-28; `(646) 360-0318` kept as a normal call line.)
 
 ## Onboarding Note
 
@@ -49,10 +49,10 @@ This `.ai/` was created on a **fresh clone** of `origin/main` (2026-06-28) after
 - This is Little Fight NYC's own LIVE site — treat as production.
 - **Never publish prices** — only the four time-bound promises per the LFNYC pricing doctrine. Do not add prices/quotes to any page.
 - Deploy is Netlify; `git push` to `main` triggers a production build/deploy. Push/deploy require explicit `APPROVE LIVE CHANGE`.
-- Fit Check is a REAL lead pipeline. Do not submit the Fit Check form, trigger Twilio voice calls, send emails (Resend), or write leads to Supabase against production unless sandboxed or David-run. These are transactional.
+- Fit Check is a REAL lead pipeline. Do not submit the Fit Check form, send emails (Resend), or write leads to Supabase against production unless sandboxed or David-run. These are transactional.
 - Preserve mobile-first / WCAG AA / brand palette+fonts / the required footer ("Designed, Hosted and Cared For by LittleFightNYC.com") and existing SEO/sitemap/robots/redirect/CSP behavior on any content work.
 - Dirty/untracked files must be recorded, not cleaned or committed, unless David explicitly approves.
-- `.env`/`.env.local` and secrets are off-limits — never read or echo. Many integrations are env-gated: `OPENAI_API_KEY`, `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`, `TWILIO_*`. Per HANDOFF, a trial Twilio token needs rotation — never echo credentials.
+- `.env`/`.env.local` and secrets are off-limits — never read or echo. Env-gated integrations: `OPENAI_API_KEY`, `SUPABASE_URL`/`SUPABASE_SERVICE_ROLE_KEY`, `RESEND_API_KEY`. Twilio was removed 2026-06-28 — David should delete `TWILIO_*` env vars in Netlify and close the Twilio account/number. Never echo credentials.
 
 ## LFNYC Core QA Harness Map
 
@@ -67,6 +67,6 @@ Observational checks an agent may run later (read-only, no writes):
 Transactional/gated checks (David-run / approved only):
 
 - `git push` / Netlify publish / promote (production build+deploy)
-- Fit Check form submission, Twilio voice calls, Resend email sends, Supabase lead writes
+- Fit Check form submission, Resend email sends, Supabase lead writes
 - domain / DNS / env / secret changes
 - any edit to live page content / function behavior
