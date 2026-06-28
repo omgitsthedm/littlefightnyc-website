@@ -73,6 +73,7 @@
 ## Recent Session History
 
 - 2026-06-28: Claude onboarded LFNYC Core via Option A — fresh clone of origin/main (prior local 68 behind), created `.ai/{LOCK,RULES_HEADER,RULES,STATE}.md`, generated `.ai/RULES.md`. No `/.ai/*` exclude needed (publish dir is `dist/`). Committed `.ai/` only and pushed. Stale checkout preserved at `littlefightnyc-website.STALE-2026-06-28`. No source/function behavior change, no env inspection, no Fit Check/Twilio/email/DB action.
+- 2026-06-28: Twilio BACKEND removed locally (NOT deployed): deleted `netlify/functions/fit-check-voice.mts` (Twilio Voice webhook) and surgically removed Twilio SMS from `fit-check-submit.mts` (`isE164`, `conversionPath`, `sendTwilioSms`, `sendSmsNotifications`, handler block, response field). Core lead flow intact (deterministic→OpenAI→Supabase→Resend email). **BLOCKED on deploy** pending David decisions: (1) fate of sitewide phone number `(646) 360-0318` = `tel:+16463600318` on ~106 pages; (2) whether to strip "24/7 AI phone agent / voice intake / Twilio" marketing across pages + `llms.txt`. Do NOT deploy until resolved — would leave a dead advertised AI line. David must also remove `TWILIO_*` env vars in Netlify + close the Twilio account/number externally.
 
 ## Next Agent Directive
 
