@@ -53,11 +53,16 @@ Color rules:
 - Fit Check works with deterministic local/server classification by default; it upgrades to OpenAI classification when `OPENAI_API_KEY` is configured.
 - Fit Check lead storage uses Netlify Forms as a no-secret fallback and can write to Supabase when `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are configured.
 - Fit Check notification email can use Resend when `RESEND_API_KEY`, `FIT_CHECK_NOTIFY_EMAIL`, and `FIT_CHECK_EMAIL_FROM` are configured.
+- Fit Check voice intake is wired at `/api/fit-check/voice` for a Twilio Voice webhook. It keeps the caller flow short: consent, issue, urgency, one context question, preferred follow-up, contact. It posts to the same Fit Check backend, submits a Netlify Forms backup, routes callers toward urgent support/Fit Check/light review, and can dial David during business hours when `FIT_CHECK_URGENT_FORWARD_NUMBER` is configured.
 - Fit Check phone conversion links are env-driven: `FIT_CHECK_BOOKING_URL`, `FIT_CHECK_PAYMENT_URL`, `FIT_CHECK_URGENT_SUPPORT_URL`, `URGENT_SUPPORT_PAYMENT_URL`, and `FIT_CHECK_URL`.
+- Fit Check call notifications are env-driven: `TWILIO_NOTIFY_FROM`, `TWILIO_NOTIFY_TO`, `FIT_CHECK_CALLER_SMS_ENABLED`, and `FIT_CHECK_RECOVERY_SMS_ENABLED`.
 - Main website conversion now mirrors the Fit Check phone routing model: urgent issue, messy setup, or light review.
 - `js/main.js` injects a sitewide conversion rail with Fit Check and call CTAs on pages that load the shared runtime.
 - Web Fit Check and contact forms capture `preferred_follow_up` so David knows whether to text, call, or email first.
 - The smart-home service route is retired from public acquisition and redirects to `/business-systems/`.
+- Trial Twilio number voice webhook is configured to `https://littlefightnyc.com/api/fit-check/voice`; production Netlify has signed webhook validation enabled via `TWILIO_AUTH_TOKEN` plus a temporary trial fallback gated by `TWILIO_ACCOUNT_SID`.
+- Trial Twilio number status callback is configured to `https://littlefightnyc.com/api/fit-check/voice?step=status` for abandoned-call recovery and call-status alerts.
+- Fit Check voice prompts override Twilio's basic TTS with `TWILIO_TTS_VOICE` / `TWILIO_TTS_LANGUAGE` / `TWILIO_TTS_RATE`; defaults are `Polly.Matthew-Neural`, `en-US`, and `106%`.
 - Audit app is a separate Netlify site, synced at `audit.littlefightnyc.com` and `audits.littlefightnyc.com`.
 - Audit app landing copy now frames the website audit as a feeder into the Business System Fit Check.
 
@@ -71,6 +76,7 @@ Color rules:
 - Resend verified sender/domain, if function-based David notification should be enabled beyond Netlify Forms.
 - `RESEND_API_KEY`, `FIT_CHECK_NOTIFY_EMAIL`, and `FIT_CHECK_EMAIL_FROM` are not currently configured in production, so function-sent email alerts for every completed call are not live yet.
 - Payment/deposit URLs are not currently configured in production; caller SMS will fall back to `/fit-check/` until real booking/payment links are set.
+- Rotate the trial Twilio Auth Token and API key/secret after voice testing because credentials were shared in chat; then remove `TWILIO_ALLOW_SIGNATURE_FALLBACK`.
 - `FIT_CHECK_URGENT_FORWARD_NUMBER` if urgent calls should attempt live transfer to David.
 - Real inbox confirmation for test form email delivery.
 - Real iOS device QA confirmation.
@@ -127,12 +133,14 @@ Primary files and responsibilities:
   - Keep `js/fit-check-intake.min.js` regenerated after edits.
 - `netlify/functions/fit-check-submit.mts`
   - Main web intake backend.
-  - Handles deterministic classification fallback, optional OpenAI classification, Netlify Forms backup, optional Supabase storage, and optional Resend email.
+  - Handles deterministic classification fallback, optional OpenAI classification, Netlify Forms backup, optional Supabase storage, optional Resend email, and optional Twilio SMS notifications.
   - Critical fix: explicit `planned_improvement`, `exploratory`, and `urgent_but_not_emergency` user choices override keyword urgency detection so words like "booking" do not automatically create emergency routing.
   - Client-facing sensitive-data warning is intentionally short.
 - `netlify/functions/fit-check-voice.mts`
+  - Twilio Voice webhook at `/api/fit-check/voice`.
   - Keeps the call short: consent, issue, urgency, one adaptive question, preferred follow-up, contact.
   - Posts the final voice lead into the same Fit Check backend.
+  - Sends David SMS call notifications when Twilio notification env vars are present.
   - Can send caller SMS follow-up links when enabled.
   - Has call-status handling at `/api/fit-check/voice?step=status` for abandoned-call recovery.
 - `js/main.js`
@@ -175,6 +183,15 @@ Audit app locations:
 
 Production env status, names only:
 - Set in production functions:
+  - `TWILIO_ACCOUNT_SID`
+  - `TWILIO_AUTH_TOKEN`
+  - `TWILIO_NOTIFY_FROM`
+  - `TWILIO_NOTIFY_TO`
+  - `TWILIO_PUBLIC_VOICE_URL`
+  - `TWILIO_TTS_LANGUAGE`
+  - `TWILIO_TTS_RATE`
+  - `TWILIO_TTS_VOICE`
+  - `TWILIO_ALLOW_SIGNATURE_FALLBACK`
   - `FIT_CHECK_BOOKING_URL`
   - `FIT_CHECK_CALLER_SMS_ENABLED`
   - `FIT_CHECK_RECOVERY_SMS_ENABLED`
@@ -187,8 +204,10 @@ Production env status, names only:
   - `FIT_CHECK_TRANSFER_NUMBER`
   - `FIT_CHECK_TRANSFER_AFTER_HOURS`
   - `FIT_CHECK_BUSINESS_TIMEZONE`
+- Do not print, commit, or paste secret values. If Twilio testing is complete, rotate credentials and remove `TWILIO_ALLOW_SIGNATURE_FALLBACK`.
 
 Phone and notification behavior:
+- Every phone call can generate SMS notification to David through `TWILIO_NOTIFY_TO`.
 - Caller SMS follow-up is enabled by `FIT_CHECK_CALLER_SMS_ENABLED`.
 - Abandoned-call recovery SMS is enabled by `FIT_CHECK_RECOVERY_SMS_ENABLED`.
 - Urgent calls use `FIT_CHECK_URGENT_FORWARD_NUMBER` as the transfer/alert number.
@@ -244,6 +263,7 @@ Known local state:
 Recommended next moves:
 - Add a real urgent support payment/deposit link and set `FIT_CHECK_URGENT_SUPPORT_URL` or `URGENT_SUPPORT_PAYMENT_URL`.
 - Configure Resend email alerts if David wants email for every Fit Check/call in addition to SMS.
+- Rotate Twilio trial credentials after testing and remove `TWILIO_ALLOW_SIGNATURE_FALLBACK`.
 - Run fresh mobile and desktop Lighthouse across `/`, `/fit-check/`, `/business-systems/`, `/websites/`, `/local-search/`, and `/software-guides/`.
 - Finish schema coverage for breadcrumbs, glossary/DefinedTerm, and HowTo where actually appropriate.
 - Build the off-site SEO handoff package and remaining software guide hub content.

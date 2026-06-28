@@ -9,7 +9,6 @@ const outDir = path.join(root, publishDirName);
 const skipRootDirs = new Set([
   ".git",
   ".github",
-  ".ai",
   ".claude",
   ".playwright-mcp",
   ".superpowers",
