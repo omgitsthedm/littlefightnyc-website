@@ -1,7 +1,5 @@
 # Little Fight NYC Website - Claude Code Handoff
 
-> ⚠️ **SUPERSEDED 2026-06-28:** Twilio was removed completely (voice webhook + SMS + all AI-phone-agent marketing). Any Twilio / voice-agent / "24-hour AI" sections below are OBSOLETE. After-hours is now: leave a message at (646) 360-0318, David calls back next business day.
-
 Last updated: May 6, 2026
 
 This is the current working handoff for Claude Code. It covers the Little Fight NYC website overhaul, Fit Check intake system, phone intake work, SEO/AEO expansion, case studies, live deploy state, verification results, known concerns, and the next recommended work.

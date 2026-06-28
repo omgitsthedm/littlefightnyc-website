@@ -38,7 +38,7 @@ Every page should signal this without bragging:
 
 **What makes Little Fight different (the proof points):**
 1. **Founder picks up the phone.** No account managers, no ticket queue, no "we'll route you to the right team."
-2. **The founder picks up.** Business hours: a real human, fast. After hours: leave a message and David calls back the next business day — not a ticket queue, not a rotating helpdesk.
+2. **24-hour live AI phone agent.** Off-hours, the phone still answers — captures the issue, prioritizes, and routes urgent calls to David. Most NYC IT shops send you to voicemail at 5:01pm.
 3. **Tools the chains use, sized for the corner shop.** We build the same kind of websites, dashboards, automations, and IT setups that big chains have — sized for what a NYC small business can afford.
 4. **Real numbers, honest scoping.** No "contact for quote." Where pricing is fixed, we post it. Where it varies, we say what determines it. Most agencies hide pricing because they're hoping to anchor high.
 5. **14 days or you don't pay** (websites). Specific time-bound guarantees most agencies won't make.

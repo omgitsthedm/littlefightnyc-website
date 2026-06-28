@@ -9,7 +9,7 @@
 | 1. Quadrant names | ✅ Websites · Custom Systems · Consulting · IT Support |
 | 2. Websites: 14 days or you don't pay | ✅ Real |
 | 3. Custom Systems: 30 days first version | ✅ Real, depending on scope |
-| 4. IT Support promise | **2-hour response during business hours; after hours, leave a message and David calls back next business day** |
+| 4. IT Support promise | **2-hour response during business hours + 24-hour service with our live AI phone agent** |
 | 5. Websites pricing | ❌ NO PRICE POSTED. Use: "Clients save on average 50% on custom website development." |
 | 6. Custom Systems pricing | ❌ NO PRICE POSTED. Use: "Outperform most off-the-shelf apps at a quarter of the annual price." |
 | 7. Consulting pricing | "First hour is free. Longer consultations depend on depth." |
@@ -35,5 +35,5 @@
 - **No "$1,500 flat" anywhere.** Consulting = first hour free + variable.
 - **IT Support price ($200/hr on-location) only mentioned with the "after proper intake" + "fair for small business" framing.**
 - **Real numbers replace generic claims:** "20+ NYC businesses since 2017" or "100+ nationwide since 2012."
-- **Founder-direct response** is the differentiator (2-hour business-hours response + next-business-day callback) — surface it on homepage, IT Support page, contact, anywhere "response time" is discussed.
+- **24-hour AI phone agent** is the differentiator — surface it on homepage, IT Support page, contact, anywhere "response time" is discussed.
 - **Three placeholder client names** can appear in a "Recent clients" band on homepage + about, but not in testimonial format.
