@@ -1,8 +1,10 @@
-# Little Fight NYC Current Workspace
+# Little Fight NYC — Source of Truth
 
-Last verified: 2026-05-12 by Codex.
+Last verified: 2026-06-30 (consolidation).
 
-This repository is the current local source of truth for `https://littlefightnyc.com`.
+This repository (`Brand/Website/littlefightnyc-website/`) is THE source of truth for
+`https://littlefightnyc.com`. Branch **`main` is canonical** and the site **auto-deploys
+from `main`**.
 
 ## Production Linkage
 
@@ -11,10 +13,19 @@ This repository is the current local source of truth for `https://littlefightnyc
 - Netlify config: `netlify.toml`
 - Build command: `cd app && npm ci && npm run build`
 - Publish directory: `app/dist`
-- Current production deploy ID: `6a02b70bc2dc6fac47dcc643`
-- Current production deploy published: `2026-05-12T05:14:04.813Z`
+- **Deploy mechanism: GitHub `main` → Netlify auto-build → auto-publish.**
+  (As of 2026-06-30 `main` equals the live source; pushing `main` deploys production.)
 
-The current production deploy was made through the Netlify API/manual deploy path. It is not a GitHub `main` deploy.
+## Deploy workflow (the only one you need)
+
+1. Edit the app under `app/` (see Current Source).
+2. `cd app && npm run build` to sanity-check locally.
+3. `git add -A && git commit && git push origin main`.
+4. Netlify builds `app/dist` from `main` and publishes to littlefightnyc.com automatically.
+5. Verify the live URL.
+
+Manual `netlify deploy --prod` is no longer required and should be avoided — it
+re-introduces the main-vs-live divergence that caused the 2026-06-30 incident.
 
 ## Current Source
 
@@ -31,34 +42,30 @@ Root files that still matter:
 - `netlify.toml`
 - `netlify/functions/**`
 - `.netlify/state.json`
-- `AGENTS.md`
-- `CLAUDE.md`
-- `HANDOFF.md`
+- `AGENTS.md` / `CLAUDE.md` / `HANDOFF.md`
 
 Generated output:
 
-- `app/dist/**` is build output.
-- Do not hand-edit `app/dist/**` for normal work.
+- `app/dist/**` is build output (gitignored). Do not hand-edit.
 
-## Git Warning
+## Secrets
 
-Current branch: `little-fight-overhaul`.
+- `app/.env` holds API keys and is gitignored. Never commit it. The same values must be
+  set as Netlify environment variables (site settings) for the serverless functions.
 
-This branch and its dirty/untracked files are ahead of `origin/main` for live-site purposes. Treat the dirty working tree as recovered production source. Do not reset, checkout, clean, or overwrite it without explicit instruction.
+## History / archives (2026-06-30 consolidation)
 
-Before making changes, run:
+- The previous `main` (an unrelated OLD static site) is preserved on branch
+  `archive/old-static-main-20260630` — NOT deleted.
+- Stale local clones were moved to `Brand/_archive_littlefightnyc_20260630/`.
+- Full mirror of the live site at consolidation time:
+  `Brand/_littlefightnyc-LIVE-backup-20260630/`.
+- Netlify deploy history is intact (`netlify api restoreSiteDeploy` to roll back).
 
-```bash
-git status --short --branch
-```
+## Incident lesson (2026-06-30)
 
-Before handing off, run:
-
-```bash
-cd app && npm run build
-```
-
-## Legacy Material
-
-The root static pages, root `dist/`, and old folders are legacy/reference material unless a task explicitly targets them. The current live app is built from `app/`.
-
+The site had been published via MANUAL Netlify deploys while git `main` held a stale,
+unrelated static site that ALSO auto-deployed. A push to `main` auto-deployed the stale
+version over the manual production build, so the site briefly showed the old version.
+Fixed by making `main` the canonical source so git and live can never diverge again.
+Before touching production, always confirm `main` builds and matches live.

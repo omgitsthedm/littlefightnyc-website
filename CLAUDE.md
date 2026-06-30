@@ -1,6 +1,6 @@
 # Little Fight NYC Website Config
 
-## Current Source Of Truth - May 12, 2026
+## Current Source Of Truth - Updated 2026-06-30 (consolidation)
 
 The current live `https://littlefightnyc.com` source is this folder:
 
@@ -11,11 +11,9 @@ Current app source is under `app/`. Netlify uses root `netlify.toml`, runs `cd a
 Netlify project:
 - Site name: `littlefightnyc`
 - Site ID: `0907d8fe-7018-48db-a6be-1f906e4b2619`
-- Current production deploy ID: `6a02b70bc2dc6fac47dcc643`
-- Published: `2026-05-12T05:14:04.813Z`
-- Deploy source: Netlify API/manual deploy
+- **Deploy source: GitHub `main` → Netlify auto-build → auto-publish.**
 
-Important: GitHub `main` is not the current live source of truth. The local branch `little-fight-overhaul` plus its dirty/untracked files represents the recovered live source. Do not reset, clean, or overwrite the working tree unless David explicitly asks.
+**`main` IS now the canonical source of truth (as of 2026-06-30).** Edit `app/` → commit → `git push origin main` → Netlify auto-builds and publishes. Do NOT use manual `netlify deploy --prod` (it caused the 2026-06-30 incident where a stale `main` auto-deployed over a manual build). The old static-site `main` is archived at branch `archive/old-static-main-20260630`; stale local clones are in `Brand/_archive_littlefightnyc_20260630/`; a live mirror backup is in `Brand/_littlefightnyc-LIVE-backup-20260630/`.
 
 Read `SOURCE_OF_TRUTH.md` before major edits.
 
