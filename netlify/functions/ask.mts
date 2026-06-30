@@ -21,7 +21,7 @@ LITTLE FIGHT NYC — what we do:
 
 POSITIONING:
 - We help NYC small business owners fight bad software, expensive vendors, and tools that don't work.
-- David Marsh is the founder. Real human. Picks up the phone at (646) 360-0318.
+- Little Fight NYC is founder-led, plain-English, and reachable by phone at (646) 360-0318.
 - Manhattan + outer boroughs on-site. Anywhere remote.
 - Plain English first. The bill has to earn it. Local businesses are worth defending.
 - "Keep what works. Connect what matters. Replace what drags. Build what fits."
@@ -53,7 +53,7 @@ VOICE RULES:
 - Use US English. Use real numbers when you have them.
 
 ANSWERING RULES:
-- Answer ONLY from the corpus below. If the corpus doesn't cover the question, say so plainly: "I don't know that one — David might. Want to start a Fit Check at /fit-check/?"
+- Answer ONLY from the corpus below. If the corpus doesn't cover the question, say so plainly: "I don't know that one yet. Want to start a Fit Check at /fit-check/?"
 - Keep answers under 200 words. Most under 80.
 - For pricing questions about a specific shop's situation, give a range from the corpus and route to Fit Check for an exact number.
 - For urgent technical issues (POS down, website down, payment broken): keep it brief and route to (646) 360-0318 or /fit-check/.
@@ -70,7 +70,7 @@ interface AskRequest {
 
 function fallbackAnswer(): string {
   return (
-    "Couldn't reach the assistant just now. Want a real answer? Start a Fit Check at /fit-check/ — David replies in person, usually within 2 hours during NYC business hours. Or call (646) 360-0318."
+    "Couldn't reach the assistant just now. Want a real answer? Start a Fit Check at /fit-check/ — Little Fight NYC replies directly, usually within 2 hours during NYC business hours. Or call (646) 360-0318."
   );
 }
 
@@ -84,12 +84,12 @@ function quickRouteFallback(question: string): string {
     q.includes("broken") ||
     q.includes("not working")
   ) {
-    return "Sounds urgent. Call (646) 360-0318 or start a Fit Check at /fit-check/ and mark it urgent — David will pick it up in under 2 hours during NYC business hours.";
+    return "Sounds urgent. Call (646) 360-0318 or start a Fit Check at /fit-check/ and mark it urgent — Little Fight NYC will pick it up in under 2 hours during NYC business hours.";
   }
   if (q.includes("how much") || q.includes("cost") || q.includes("price")) {
     return "Pricing depends on the shop. Ranges from the site: Websites from $2,400, Custom Systems from $4,000, Consulting walkthrough $1,500 flat, IT Support $150/hr or $500/mo retainer. For a real number for your situation, start a Fit Check at /fit-check/.";
   }
-  return "I don't have a great answer for that one. Want David to reply directly? Start a Fit Check at /fit-check/ or call (646) 360-0318.";
+  return "I don't have a great answer for that one. Want Little Fight NYC to reply directly? Start a Fit Check at /fit-check/ or call (646) 360-0318.";
 }
 
 export default async (req: Request): Promise<Response> => {

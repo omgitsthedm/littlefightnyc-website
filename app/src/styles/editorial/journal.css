@@ -1,0 +1,333 @@
+/* Journal — index + post detail. Magazine archive discipline. */
+
+.lf-journal {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-journal {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-journal {
+    padding: var(--lf-space-9) var(--lf-margin-desktop) var(--lf-space-10);
+  }
+}
+
+.lf-journal__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-9);
+}
+
+.lf-journal__group-label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0 0 var(--lf-space-4);
+}
+
+.lf-journal__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-journal__item {
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-journal__link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--lf-space-4);
+  padding: var(--lf-space-5) 0;
+  text-decoration: none;
+  color: var(--lf-bone);
+  transition: padding-left var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 768px) {
+  .lf-journal__link {
+    gap: var(--lf-space-6);
+    padding: var(--lf-space-6) 0;
+  }
+}
+
+.lf-journal__link:hover {
+  padding-left: var(--lf-space-3);
+}
+
+.lf-journal__num {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--lf-fight);
+  align-self: start;
+  padding-top: var(--lf-space-1);
+  min-width: 2em;
+}
+
+.lf-journal__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+}
+
+.lf-journal__title {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 72;
+  font-weight: 600;
+  font-size: var(--lf-text-lg);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 1024px) {
+  .lf-journal__title {
+    font-size: var(--lf-text-xl);
+  }
+}
+
+.lf-journal__link:hover .lf-journal__title {
+  color: var(--lf-fight);
+}
+
+.lf-journal__desc {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+  max-width: 70ch;
+  letter-spacing: -0.005em;
+}
+
+/* ============================================================
+   Single post — long-form editorial body
+   ============================================================ */
+
+.lf-post {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-post {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-post {
+    padding: var(--lf-space-9) var(--lf-margin-desktop) var(--lf-space-10);
+  }
+}
+
+.lf-post__inner {
+  max-width: 68ch;
+  margin-inline: auto;
+}
+
+.lf-post__byline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-bone-soft);
+  padding-block: var(--lf-space-3);
+  border-block: 1px solid var(--lf-hairline);
+  margin-bottom: var(--lf-space-7);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lf-post__byline-by {
+  color: var(--lf-bone-dim);
+}
+
+.lf-post__byline-name {
+  color: var(--lf-fight);
+  text-decoration: none;
+}
+
+/* HTML body — applies editorial type to imported article content */
+.lf-post__body {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-md);
+  line-height: 1.7;
+  color: var(--lf-bone);
+  letter-spacing: -0.003em;
+}
+
+.lf-post__body h1 {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 144;
+  font-weight: 600;
+  font-size: var(--lf-text-2xl);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-post__body h2 {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 72;
+  font-weight: 600;
+  font-size: var(--lf-text-xl);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--lf-bone);
+  margin: var(--lf-space-7) 0 var(--lf-space-4);
+}
+
+.lf-post__body h3 {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 600;
+  font-size: var(--lf-text-lg);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--lf-bone);
+  margin: var(--lf-space-6) 0 var(--lf-space-3);
+}
+
+.lf-post__body p {
+  margin: 0 0 var(--lf-space-4);
+}
+
+.lf-post__body p + p {
+  text-indent: 1.5em;
+}
+
+.lf-post__body ul,
+.lf-post__body ol {
+  padding-left: var(--lf-space-5);
+  margin: 0 0 var(--lf-space-4);
+}
+
+.lf-post__body li {
+  margin-bottom: var(--lf-space-2);
+}
+
+.lf-post__body a {
+  color: color-mix(in srgb, var(--lf-bone) 78%, var(--lf-fight) 22%);
+  font-weight: 650;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.02em 0.14em;
+  margin-inline: -0.04em;
+  transition:
+    color var(--lf-time-fast) var(--lf-ease-out-quart),
+    background-color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+.lf-post__body a:hover {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 16%, transparent);
+}
+
+.lf-post__body strong {
+  color: var(--lf-bone);
+  font-weight: 600;
+}
+
+.lf-post__body em,
+.lf-post__body i {
+  font-style: italic;
+}
+
+.lf-post__body blockquote {
+  margin: var(--lf-space-6) 0;
+  padding-left: var(--lf-space-5);
+  border-left: 1px solid color-mix(in srgb, var(--lf-bone) 14%, transparent);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--lf-fight) 8%, transparent),
+    transparent 62%
+  );
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--lf-fight) 42%, transparent);
+  font-style: italic;
+  font-size: var(--lf-text-lg);
+  line-height: 1.4;
+  color: var(--lf-bone);
+}
+
+.lf-post__body article {
+  display: block;
+}
+
+/* Suppress duplicate <h1> from the legacy article body (we already showed it
+   in the PageHero). The first <h1> inside the article body becomes invisible. */
+.lf-post__body > article:first-of-type > h1:first-child,
+.lf-post__body > h1:first-child,
+.lf-post__body article > h1:first-of-type {
+  display: none;
+}
+
+/* Suppress duplicate byline if it's the first <p> with "By David Marsh" pattern */
+.lf-post__body > article:first-of-type > p:first-of-type:has(time),
+.lf-post__body > p:first-of-type:has(time) {
+  display: none;
+}
+
+/* Suppress eyebrow-style first p that's just a category tag like "CYBERSECURITY" */
+.lf-post__body article > p:first-child:not(:has(*)) {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0 0 var(--lf-space-4);
+}
+
+/* ============================================================
+   Related posts at the end
+   ============================================================ */
+
+.lf-post-related {
+  padding: var(--lf-space-8) var(--lf-margin-mobile);
+  background: var(--lf-paper);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-post-related {
+    padding: var(--lf-space-9) var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-post-related {
+    padding: var(--lf-space-9) var(--lf-margin-desktop);
+  }
+}
+
+.lf-post-related__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+.lf-post-related__label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0 0 var(--lf-space-5);
+}

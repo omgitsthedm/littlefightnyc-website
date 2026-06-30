@@ -1,50 +1,74 @@
-import { Link, useSearchParams } from "react-router-dom";
-import CallToAction from "@/components/CallToAction";
-import { answerGuides, ownerAnswers } from "@/data/site";
+import {
+  CalendarCheck,
+  ClipboardCheck,
+  CreditCard,
+  MapPin,
+  MessagesSquare,
+  Store,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import PageHero from "@/components/editorial/PageHero";
+import VisualIndex from "@/components/editorial/VisualIndex";
+import QuietContact from "@/components/editorial/QuietContact";
+import { answerGuides } from "@/data/site";
+import "@/styles/editorial/answers.css";
+
+const ANSWER_ICONS: Record<string, LucideIcon> = {
+  "website-form-not-working-small-business": MessagesSquare,
+  "reduce-monthly-software-costs-small-business": CreditCard,
+  "business-not-showing-on-google-maps": MapPin,
+  "hair-salon-save-money-software": CalendarCheck,
+  "local-pharmacy-website-community-support": Store,
+  "when-custom-business-system-beats-saas": ClipboardCheck,
+};
+
+const ANSWER_IMAGES: Record<string, string> = {
+  "website-form-not-working-small-business": "/assets/hero-laptop.webp",
+  "reduce-monthly-software-costs-small-business": "/assets/pos.webp",
+  "business-not-showing-on-google-maps": "/assets/local-business-base.webp",
+  "hair-salon-save-money-software": "/assets/nyc-hair-salon-street.webp",
+  "local-pharmacy-website-community-support": "/assets/storefront-health-foods.webp",
+  "when-custom-business-system-beats-saas": "/assets/coworking-laptops.webp",
+};
 
 export default function Answers() {
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get("q")?.trim().toLowerCase() ?? "";
-  const visibleGuides = query
-    ? answerGuides.filter((guide) => `${guide.question} ${guide.short}`.toLowerCase().includes(query))
-    : answerGuides;
+  const overview = answerGuides.map((guide) => ({
+    body: guide.short.replace(/^Short answer:\s*/i, ""),
+    eyebrow: "Owner answer",
+    icon: ANSWER_ICONS[guide.slug] ?? MessagesSquare,
+    image: ANSWER_IMAGES[guide.slug] ?? "/assets/typing.webp",
+    title: guide.question,
+    to: `/answers/${guide.slug}/`,
+  }));
 
   return (
     <>
-      <section className="page-hero">
-        <p className="eyebrow">Owner answers</p>
-        <h1>Fast answers before another bill.</h1>
-        <p>
-          Plain-English decisions for local owners comparing websites, software,
-          Google visibility, IT support, and custom systems.
-        </p>
-      </section>
+      <PageHero
+        eyebrow="Owner Answers"
+        title={
+          <>
+            Plain answers,<br />
+            <span className="lf-em">no selling.</span>
+          </>
+        }
+        dek="Real questions NYC owners ask us. Each answer is short, direct, and not trying to make a sale."
+        image={{
+          src: "/assets/nyc-street.webp",
+          alt: "A New York side street at human scale",
+          width: 1600,
+          height: 1200,
+        }}
+      />
 
-      <section className="section answer-list">
-        {ownerAnswers.map((answer) => (
-          <article key={answer.question}>
-            <h2>{answer.question}</h2>
-            <p>{answer.short}</p>
-          </article>
-        ))}
-      </section>
+      <VisualIndex
+        eyebrow="Problem library"
+        title="Start with the symptom."
+        dek="Each answer is mapped to the kind of thing an owner actually notices first: missing leads, software drag, bad Google visibility, or a tool that no longer fits."
+        items={overview}
+        variant="compact"
+      />
 
-      <section className="section">
-        <div className="section-heading">
-          <p className="eyebrow">Field guides</p>
-          <h2>Search questions local owners actually ask.</h2>
-        </div>
-        <div className="answer-list">
-          {visibleGuides.map((guide) => (
-            <Link key={guide.slug} to={`/answers/${guide.slug}/`}>
-              <h2>{guide.question}</h2>
-              <p>{guide.short}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <CallToAction compact />
+      <QuietContact />
     </>
   );
 }

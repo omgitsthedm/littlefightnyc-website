@@ -1,1 +1,29 @@
-/* /404.html 404
+# Service-slug renames (May 2026 — four-category restructure)
+/services/websites/      /services/custom-local-websites/  301
+/services/websites       /services/custom-local-websites/  301
+/services/local-search/  /services/tech-consulting/        301
+/services/local-search   /services/tech-consulting/        301
+/websites/               /services/custom-local-websites/  301
+/websites                /services/custom-local-websites/  301
+/systems/                /services/business-systems/       301
+/systems                 /services/business-systems/       301
+/consulting/             /services/tech-consulting/        301
+/consulting              /services/tech-consulting/        301
+/it-support/             /services/it-support/             301
+/it-support              /services/it-support/             301
+/lifetime-cost/          /answers/reduce-monthly-software-costs-small-business/  301
+/lifetime-cost           /answers/reduce-monthly-software-costs-small-business/  301
+
+# Information architecture consolidation (May 2026)
+/work/           /services/                 301
+/work            /services/                 301
+/studio/         /services/#studio          301
+/studio          /services/#studio          301
+/answers/        /field-guide/#answers      301
+/answers         /field-guide/#answers      301
+/industries/     /field-guide/#industries   301
+/industries      /field-guide/#industries   301
+/case-studies/   /field-guide/#studies      301
+/case-studies    /field-guide/#studies      301
+# Default SPA fallback
+/*  /404.html  404

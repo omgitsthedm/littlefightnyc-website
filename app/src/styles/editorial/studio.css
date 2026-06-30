@@ -1,0 +1,219 @@
+/* Studio — internal experiments + long-running builds. Photo-essay rhythm. */
+
+.lf-studio {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-studio {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-studio {
+    padding: var(--lf-space-9) var(--lf-margin-desktop) var(--lf-space-10);
+  }
+}
+
+.lf-studio__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-studio__inner {
+    gap: var(--lf-space-10);
+  }
+}
+
+.lf-studio__item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-6);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .lf-studio__item {
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--lf-space-8);
+  }
+  .lf-studio__item:nth-child(even) .lf-studio__image {
+    order: 2;
+  }
+}
+
+.lf-studio__image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--lf-paper);
+}
+
+.lf-studio__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.05) saturate(0.85) brightness(0.78);
+  will-change: transform;
+}
+
+@supports (animation-timeline: view()) {
+  .lf-studio__image img {
+    animation: lf-studio-scroll linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes lf-studio-scroll {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.06); }
+  }
+}
+
+/* Status pill — top right corner of the photo */
+.lf-studio__status {
+  position: absolute;
+  top: var(--lf-space-3);
+  right: var(--lf-space-3);
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid var(--lf-hairline);
+  color: var(--lf-bone);
+  white-space: nowrap;
+}
+
+.lf-studio__status--active,
+.lf-studio__status--live {
+  color: var(--lf-fight);
+  border-color: var(--lf-hairline-warm);
+}
+
+.lf-studio__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+}
+
+.lf-studio__kind {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0;
+}
+
+.lf-studio__name {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 72, "wght" 700;
+  font-weight: 700;
+  font-size: var(--lf-text-xl);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-2);
+}
+
+@media (min-width: 1024px) {
+  .lf-studio__name {
+    font-size: var(--lf-text-2xl);
+  }
+}
+
+.lf-studio__oneline {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 32;
+  font-size: var(--lf-text-md);
+  line-height: 1.35;
+  color: var(--lf-bone);
+  letter-spacing: -0.005em;
+  margin: 0 0 var(--lf-space-3);
+  max-width: 50ch;
+}
+
+.lf-studio__desc {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-base);
+  line-height: 1.65;
+  color: var(--lf-bone-soft);
+  margin: 0;
+  max-width: 60ch;
+}
+
+.lf-studio__foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-4);
+  padding-top: var(--lf-space-4);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 640px) {
+  .lf-studio__foot {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--lf-space-4);
+  }
+}
+
+.lf-studio__foot-label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  display: inline-block;
+  margin-right: var(--lf-space-2);
+}
+
+.lf-studio__stack-list {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone);
+  letter-spacing: 0.02em;
+}
+
+.lf-studio__live {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  text-decoration: none;
+  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+  white-space: nowrap;
+}
+
+.lf-studio__live:hover {
+  color: var(--lf-ember);
+}
+
+/* Index-card link affordances */
+.lf-studio__image-link {
+  display: block;
+  text-decoration: none;
+}
+
+.lf-studio__name-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+.lf-studio__name-link:hover {
+  color: var(--lf-fight);
+}

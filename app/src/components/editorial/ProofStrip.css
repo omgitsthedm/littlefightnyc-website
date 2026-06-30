@@ -1,0 +1,91 @@
+/* Proof Strip — the four differentiation points, mono-led editorial. */
+
+.lf-proof {
+  padding-block: var(--lf-space-9);
+  background: var(--lf-ink);
+}
+
+.lf-proof__head {
+  margin-bottom: var(--lf-space-7);
+  max-width: 28ch;
+}
+
+.lf-proof__eyebrow {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-4);
+  display: inline-block;
+  padding-bottom: var(--lf-space-2);
+}
+
+.lf-proof__title {
+  font-size: var(--lf-text-2xl);
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 144;
+  color: var(--lf-bone);
+}
+
+.lf-proof__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+  counter-reset: lf-proof;
+}
+
+@media (min-width: 768px) {
+  .lf-proof__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-proof__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.lf-proof__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+  padding: var(--lf-space-6) var(--lf-space-5) var(--lf-space-6) 0;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-proof__item {
+    padding-right: var(--lf-space-6);
+    border-right: 1px solid var(--lf-hairline);
+  }
+  .lf-proof__item:nth-child(2n) {
+    border-right: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-proof__item:nth-child(2n) {
+    border-right: 1px solid var(--lf-hairline);
+  }
+  .lf-proof__item:last-child {
+    border-right: 0;
+  }
+}
+
+.lf-proof__num {
+  color: var(--lf-fight);
+}
+
+.lf-proof__item-title {
+  font-size: var(--lf-text-lg);
+  line-height: 1.05;
+  color: var(--lf-bone);
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 72;
+  font-weight: 700;
+}
+
+.lf-proof__body {
+  font-size: var(--lf-text-sm);
+  line-height: 1.6;
+  color: var(--lf-bone-soft);
+}

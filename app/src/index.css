@@ -11,8 +11,8 @@
   --midnight: #06080f;
   --panel: #0a0d18;
   --panel-2: #0e1220;
-  --orange: #f97316;
-  --orange-soft: #fb923c;
+  --orange: #FE5800;       /* Little Fight orange — locked brand color */
+  --orange-soft: #FF7A35;  /* Ember — hover/active */
   --cream: #f0f2f8;
   --muted: #a7adbb;
   --hairline: rgba(255, 255, 255, 0.12);
@@ -84,7 +84,7 @@ img {
 }
 
 .route-loading {
-  min-height: 45vh;
+  min-height: calc(100svh - 96px);
   padding: clamp(64px, 12vw, 140px) 0;
   color: var(--muted);
   font-weight: 800;

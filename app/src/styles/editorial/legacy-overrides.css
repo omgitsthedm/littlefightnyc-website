@@ -1,0 +1,865 @@
+/* Legacy Overrides — translates SiteShell-era class names into the editorial
+ * visual language when they appear inside .lf-editorial scope. This is a fast
+ * pass: every inner page gets the editorial typeset, color palette, and
+ * spacing rhythm without needing per-page rewrites. Iterate later.
+ */
+
+/* Page container — every inner page lives inside <main class="lf-page"> */
+.lf-editorial .lf-page {
+  padding-block: var(--lf-space-6) var(--lf-space-8);
+}
+
+.lf-editorial .lf-page > * + * {
+  margin-top: var(--lf-space-6);
+}
+
+/* Section blocks (legacy: .section, .section.split, etc.) */
+.lf-editorial .section,
+.lf-editorial .pain-grid,
+.lf-editorial .service-grid,
+.lf-editorial .agency-grid,
+.lf-editorial .process-section,
+.lf-editorial .proof-grid {
+  padding-inline: var(--lf-margin-mobile);
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .section,
+  .lf-editorial .pain-grid,
+  .lf-editorial .service-grid,
+  .lf-editorial .agency-grid,
+  .lf-editorial .process-section,
+  .lf-editorial .proof-grid {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-editorial .section,
+  .lf-editorial .pain-grid,
+  .lf-editorial .service-grid,
+  .lf-editorial .agency-grid,
+  .lf-editorial .process-section,
+  .lf-editorial .proof-grid {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+/* Typography reset — every heading inside editorial uses Fraunces */
+.lf-editorial h1,
+.lf-editorial h2,
+.lf-editorial h3,
+.lf-editorial h4 {
+  font-family: var(--lf-serif);
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.lf-editorial h1 {
+  font-size: var(--lf-text-2xl);
+  margin-bottom: var(--lf-space-4);
+}
+
+.lf-editorial h2 {
+  font-size: var(--lf-text-xl);
+  margin-bottom: var(--lf-space-4);
+}
+
+.lf-editorial h3 {
+  font-size: var(--lf-text-md);
+  margin-bottom: var(--lf-space-2);
+  line-height: 1.15;
+}
+
+.lf-editorial h4 {
+  font-size: var(--lf-text-base);
+  font-variation-settings: "opsz" 32;
+  margin-bottom: var(--lf-space-2);
+}
+
+.lf-editorial p {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-base);
+  line-height: 1.6;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-3);
+  max-width: 64ch;
+}
+
+/* Eyebrows — mono uppercase, fight-orange */
+.lf-editorial .eyebrow {
+  display: inline-block;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-3);
+  padding-bottom: var(--lf-space-2);
+  border-bottom: 1px solid var(--lf-hairline-warm);
+}
+
+/* Cards — paper-black + hairline, no rounded corners */
+.lf-editorial .soft-card,
+.lf-editorial .map-card,
+.lf-editorial .service-card,
+.lf-editorial .agency-card,
+.lf-editorial article {
+  background: var(--lf-paper);
+  border: 1px solid var(--lf-hairline);
+  border-radius: 0 !important;
+  padding: var(--lf-space-5);
+  box-shadow: none !important;
+  color: var(--lf-bone);
+  transition: background-color 220ms var(--lf-ease-out),
+              border-color 220ms var(--lf-ease-out);
+}
+
+.lf-editorial .soft-card:hover,
+.lf-editorial .map-card:hover,
+.lf-editorial .service-card:hover,
+.lf-editorial .agency-card:hover {
+  border-color: color-mix(in srgb, var(--lf-bone) 22%, var(--lf-hairline));
+}
+
+.lf-editorial .service-card,
+.lf-editorial .agency-card {
+  display: block;
+  text-decoration: none;
+  color: var(--lf-bone);
+}
+
+/* Buttons — editorial mono uppercase, solid enough to feel intentional,
+   without orange wireframe boxes. */
+.lf-editorial .button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--lf-space-3) var(--lf-space-5);
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 14%, transparent);
+  background: color-mix(in srgb, var(--lf-fight) 14%, var(--lf-paper));
+  color: var(--lf-bone);
+  text-decoration: none;
+  transition: background-color 200ms var(--lf-ease-out),
+              border-color 200ms var(--lf-ease-out),
+              color 200ms var(--lf-ease-out);
+  min-height: 44px;
+}
+
+.lf-editorial .button:hover {
+  border-color: color-mix(in srgb, var(--lf-bone) 22%, transparent);
+  background: color-mix(in srgb, var(--lf-fight) 24%, var(--lf-paper));
+  color: var(--lf-bone);
+}
+
+.lf-editorial .button.primary {
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+}
+
+.lf-editorial .button.primary:hover {
+  background: var(--lf-ember);
+}
+
+.lf-editorial .button.ghost {
+  border-color: var(--lf-hairline);
+  color: var(--lf-bone);
+}
+
+.lf-editorial .button.ghost:hover {
+  border-color: color-mix(in srgb, var(--lf-bone) 18%, transparent);
+  background: color-mix(in srgb, var(--lf-fight) 14%, var(--lf-paper));
+  color: var(--lf-bone);
+}
+
+.lf-editorial .button.small {
+  padding: var(--lf-space-2) var(--lf-space-4);
+}
+
+/* Body-copy links should read as editorial references, not default web
+   underlines. Weight + warm highlight provide the non-color cue. */
+.lf-editorial main :where(p, dd) > a:not([class]) {
+  color: color-mix(in srgb, var(--lf-bone) 78%, var(--lf-fight) 22%);
+  font-weight: 650;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.02em 0.14em;
+  margin-inline: -0.04em;
+  transition:
+    color var(--lf-time-fast) var(--lf-ease-out-quart),
+    background-color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+.lf-editorial main :where(p, dd) > a:not([class]):hover {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 16%, transparent);
+}
+
+/* Hero treatments — strip the cinematic/gradient overlays */
+.lf-editorial .hero,
+.lf-editorial .cinematic-hero {
+  position: relative;
+  padding: var(--lf-space-7) 0;
+  background: transparent;
+  min-height: 0;
+}
+
+.lf-editorial .hero-vignette,
+.lf-editorial .hero-canvas,
+.lf-editorial canvas[aria-hidden="true"] {
+  display: none !important;
+}
+
+.lf-editorial .hero h1 {
+  font-size: var(--lf-text-2xl);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  margin-bottom: var(--lf-space-4);
+  color: var(--lf-bone);
+}
+
+.lf-editorial .hero h1 strong {
+  color: var(--lf-fight);
+  font-weight: 700;
+  font-style: italic;
+  display: block;
+}
+
+.lf-editorial .hero h1 span {
+  display: block;
+}
+
+.lf-editorial .hero-lede {
+  font-style: italic;
+  font-size: var(--lf-text-md);
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-editorial .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin-bottom: var(--lf-space-6);
+}
+
+/* Strip / inline lists */
+.lf-editorial .strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3) var(--lf-space-5);
+  padding: var(--lf-space-5) var(--lf-margin-mobile);
+  border-block: 1px solid var(--lf-hairline);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-soft);
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+/* Process list */
+.lf-editorial .process-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-3);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .process-list article {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: var(--lf-space-3);
+  padding: var(--lf-space-4);
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .process-list article > span:first-child {
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-weight: 700;
+}
+
+/* Cinema/image bands — flatten the legacy parallax/overlay treatment */
+.lf-editorial .cinema-band,
+.lf-editorial .image-band {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-5);
+  padding: var(--lf-space-7) var(--lf-margin-mobile);
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  border-block: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .cinema-band,
+  .lf-editorial .image-band {
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--lf-space-7);
+    padding-block: var(--lf-space-8);
+  }
+}
+
+.lf-editorial .cinema-band img,
+.lf-editorial .image-band img {
+  border: 1px solid var(--lf-hairline);
+  filter: contrast(1.05) saturate(0.92) brightness(0.95);
+  width: 100%;
+  height: auto;
+}
+
+/* Form elements */
+.lf-editorial input,
+.lf-editorial textarea,
+.lf-editorial select {
+  background: var(--lf-paper);
+  border: 1px solid var(--lf-hairline);
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-base);
+  padding: var(--lf-space-3);
+  width: 100%;
+  border-radius: 0;
+}
+
+.lf-editorial input:focus,
+.lf-editorial textarea:focus,
+.lf-editorial select:focus {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 2px;
+  border-color: color-mix(in srgb, var(--lf-bone) 24%, transparent);
+}
+
+.lf-editorial label {
+  display: block;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-2);
+}
+
+/* Misc legacy bits */
+.lf-editorial .nap,
+.lf-editorial .fine-print,
+.lf-editorial .footer-brand,
+.lf-editorial .footer-silos {
+  /* These belong to old SiteShell footer; hide if they slip through */
+  display: none;
+}
+
+.lf-editorial .site-shell > .site-header,
+.lf-editorial .site-footer,
+.lf-editorial .mobile-sticky-cta {
+  display: none;
+}
+
+.lf-editorial .route-loading {
+  min-height: calc(100svh - 68px);
+  padding: var(--lf-space-8) var(--lf-margin-mobile);
+  display: grid;
+  place-content: center;
+  gap: var(--lf-space-3);
+  text-align: center;
+  color: var(--lf-bone-soft);
+}
+
+.lf-editorial .route-loading__label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--lf-fight);
+}
+
+.lf-editorial .route-loading__line {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-md);
+  font-style: italic;
+  font-variation-settings: "opsz" 32;
+}
+
+/* =========================================================================
+ * Inner-page editorial primitives — overrides for the legacy page components
+ * that haven't been rewritten yet. Goal: any page rendered inside the shell
+ * already feels like it belongs in the same magazine.
+ * ========================================================================= */
+
+/* Page hero — top of every inner page */
+.lf-editorial .page-hero {
+  padding: var(--lf-space-7) var(--lf-margin-mobile);
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .page-hero {
+    padding: var(--lf-space-8) var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-editorial .page-hero {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-editorial .page-hero h1 {
+  font-size: var(--lf-text-2xl);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-variation-settings: "opsz" 144;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-4);
+  max-width: 24ch;
+}
+
+@media (min-width: 1024px) {
+  .lf-editorial .page-hero h1 {
+    font-size: var(--lf-text-3xl);
+    max-width: 22ch;
+  }
+}
+
+.lf-editorial .page-hero p {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-md);
+  line-height: 1.4;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  max-width: 56ch;
+}
+
+@media (min-width: 1024px) {
+  .lf-editorial .page-hero p {
+    font-size: var(--lf-text-lg);
+  }
+}
+
+.lf-editorial .short-answer {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  color: var(--lf-bone);
+}
+
+/* Service detail layout */
+.lf-editorial .service-detail-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-6);
+}
+
+.lf-editorial .service-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-5);
+  padding: var(--lf-space-5);
+  background: var(--lf-paper);
+  border: 1px solid var(--lf-hairline);
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: border-color 220ms var(--lf-ease-out);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .service-detail {
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--lf-space-7);
+    padding: var(--lf-space-7);
+  }
+}
+
+.lf-editorial .service-detail:hover {
+  border-color: color-mix(in srgb, var(--lf-bone) 22%, var(--lf-hairline));
+}
+
+.lf-editorial .service-detail-media {
+  position: relative;
+  background: var(--lf-ink);
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .service-detail-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: contrast(1.05) saturate(0.92) brightness(0.95);
+}
+
+.lf-editorial .service-detail-media span {
+  position: absolute;
+  top: var(--lf-space-3);
+  left: var(--lf-space-3);
+  background: var(--lf-ink);
+  color: var(--lf-fight);
+  padding: var(--lf-space-1) var(--lf-space-3);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 16%, transparent);
+}
+
+.lf-editorial .service-detail-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+}
+
+.lf-editorial .service-detail-copy svg {
+  color: var(--lf-fight);
+  width: 32px;
+  height: 32px;
+}
+
+.lf-editorial .service-detail-copy h2 {
+  font-size: var(--lf-text-xl);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 144;
+}
+
+.lf-editorial .service-detail-copy h3 {
+  font-size: var(--lf-text-md);
+  color: var(--lf-bone-soft);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "opsz" 32;
+}
+
+.lf-editorial .service-detail-copy ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+  list-style: none;
+  padding: 0;
+  border-top: 1px solid var(--lf-hairline);
+  padding-top: var(--lf-space-3);
+}
+
+.lf-editorial .service-detail-copy ul li {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+  color: var(--lf-bone);
+  padding-left: var(--lf-space-4);
+  position: relative;
+}
+
+.lf-editorial .service-detail-copy ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+}
+
+.lf-editorial .service-detail-copy strong {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  display: block;
+  padding-top: var(--lf-space-3);
+  margin-top: var(--lf-space-2);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+/* FAQ list */
+.lf-editorial .faq-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .faq-list article {
+  padding: var(--lf-space-5) 0;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  background: transparent;
+  border-radius: 0 !important;
+}
+
+.lf-editorial .faq-list h3 {
+  font-size: var(--lf-text-md);
+  line-height: 1.2;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  margin-bottom: var(--lf-space-3);
+}
+
+.lf-editorial .faq-list p {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-base);
+  line-height: 1.65;
+  color: var(--lf-bone-soft);
+  font-variation-settings: "opsz" 14;
+  margin-bottom: 0;
+  max-width: 64ch;
+}
+
+/* Answer list — links */
+.lf-editorial .answer-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .answer-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-editorial .answer-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.lf-editorial .answer-list article,
+.lf-editorial .answer-list a {
+  padding: var(--lf-space-5);
+  border-right: 1px solid var(--lf-hairline);
+  border-bottom: 1px solid var(--lf-hairline);
+  background: transparent;
+  border-radius: 0 !important;
+  color: var(--lf-bone);
+  text-decoration: none;
+  transition: background-color 200ms var(--lf-ease-out);
+}
+
+.lf-editorial .answer-list a {
+  display: block;
+}
+
+.lf-editorial .answer-list a:hover {
+  background: var(--lf-paper);
+}
+
+.lf-editorial .answer-list h3 {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-md);
+  font-variation-settings: "opsz" 32;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-2);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.lf-editorial .answer-list p {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone-soft);
+  margin-bottom: 0;
+}
+
+/* Section split — two-column heading + body */
+.lf-editorial .section.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-6);
+}
+
+@media (min-width: 1024px) {
+  .lf-editorial .section.split {
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--lf-space-8);
+    align-items: start;
+  }
+}
+
+.lf-editorial .section-heading {
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-editorial .section-heading h2 {
+  font-size: var(--lf-text-xl);
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 144;
+  color: var(--lf-bone);
+  line-height: 1;
+}
+
+/* Service grid (small cards) */
+.lf-editorial .service-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+  border-left: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-editorial .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.lf-editorial .service-grid.large {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .service-grid.large {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.lf-editorial .service-grid .service-card,
+.lf-editorial .service-grid a {
+  padding: var(--lf-space-5);
+  border-right: 1px solid var(--lf-hairline);
+  border-bottom: 1px solid var(--lf-hairline);
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  display: block;
+  text-decoration: none;
+  color: var(--lf-bone);
+  transition: background-color 200ms var(--lf-ease-out);
+}
+
+.lf-editorial .service-grid a:hover {
+  background: var(--lf-paper);
+}
+
+.lf-editorial .service-grid svg {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-2);
+}
+
+.lf-editorial .service-grid h3 {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-md);
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  margin-bottom: var(--lf-space-2);
+}
+
+.lf-editorial .service-grid p {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone-soft);
+  margin-bottom: 0;
+}
+
+/* Pain grid (homepage Why owners call) */
+.lf-editorial .pain-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .pain-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.lf-editorial .pain-grid article {
+  border-bottom: 1px solid var(--lf-hairline);
+  border-right: 0;
+  background: transparent;
+  padding: var(--lf-space-5);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .pain-grid article {
+    border-right: 1px solid var(--lf-hairline);
+  }
+  .lf-editorial .pain-grid article:nth-child(2n) {
+    border-right: 0;
+  }
+}
+
+.lf-editorial .pain-grid svg {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-3);
+}
+
+/* CallToAction at the bottom of inner pages — make it editorial */
+.lf-editorial .cta,
+.lf-editorial .call-to-action {
+  padding: var(--lf-space-8) var(--lf-margin-mobile);
+  max-width: var(--lf-max-w);
+  margin: var(--lf-space-7) auto 0;
+  border-top: 1px solid var(--lf-hairline);
+  text-align: left;
+  background: transparent;
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .cta,
+  .lf-editorial .call-to-action {
+    padding: var(--lf-space-8) var(--lf-margin-tablet);
+  }
+}
+
+.lf-editorial .cta h2,
+.lf-editorial .call-to-action h2 {
+  font-size: var(--lf-text-xl);
+  letter-spacing: -0.025em;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 144;
+  margin-bottom: var(--lf-space-4);
+  max-width: 22ch;
+}
+
+.lf-editorial .cta .cta-actions,
+.lf-editorial .cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-4);
+}
+
+/* Process list (numbered steps) */
+.lf-editorial .agency-board,
+.lf-editorial .board-photo,
+.lf-editorial .service-map {
+  display: none;
+}
+
+/* Hide hero-board (homepage-specific in legacy that doesn't belong on inner pages) */
+.lf-editorial .hero-board {
+  display: none;
+}

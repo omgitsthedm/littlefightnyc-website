@@ -121,9 +121,8 @@ export default function SiteShell() {
             ))}
             <Link to="/about/">About</Link>
             <Link to="/glossary/">Glossary</Link>
-            <Link to="/contact/">Contact</Link>
-            <Link to="/privacy/">Privacy</Link>
-            <Link to="/terms/">Terms</Link>
+            <Link to="/audit/">Audit</Link>
+            <Link to="/legal/">Privacy and terms</Link>
           </div>
         </div>
         <p className="fine-print">

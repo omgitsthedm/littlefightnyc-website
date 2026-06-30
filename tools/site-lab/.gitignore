@@ -1,0 +1,6 @@
+node_modules/
+reports/
+backstop_data/
+backstop.config.cjs
+.cache/
+.lighthouseci/

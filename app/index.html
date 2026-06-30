@@ -1,26 +1,27 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <script>document.documentElement.classList.remove("no-js")</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Little Fight NYC | Websites, IT Support, and Better Systems</title>
     <meta
       name="description"
       content="Little Fight NYC helps local businesses fix websites, IT support, Google visibility, software waste, and messy workflows without bloated monthly tools."
     />
-    <meta name="theme-color" content="#080b14" />
+    <meta name="theme-color" content="#0A0A0A" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="geo.region" content="US-NY" />
     <meta name="geo.placename" content="New York" />
     <meta name="geo.position" content="40.7128;-74.006" />
     <meta name="ICBM" content="40.7128, -74.006" />
     <link rel="canonical" href="https://littlefightnyc.com/" />
-    <link rel="preload" href="/assets/local-business-base.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width: 761px)" />
-    <link rel="preload" href="/assets/fonts/lexend-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Editorial typeset is self-hosted via @fontsource — no external network on first paint. -->
+
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="application-name" content="Little Fight NYC" />
     <meta property="og:title" content="Little Fight NYC" />
     <meta
       property="og:description"
@@ -35,16 +36,8 @@
     <meta name="twitter:image" content="/assets/og-image.jpg" />
   </head>
   <body>
-    <form name="fit-check-scratch" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
-      <input type="hidden" name="form-name" value="fit-check-scratch" />
-      <label>Leave this blank <input name="bot-field" /></label>
-      <label>Name <input name="name" /></label>
-      <label>Business <input name="business" /></label>
-      <label>Contact <input name="contact" /></label>
-      <label>Follow up <input name="follow_up" /></label>
-      <label>Message <textarea name="message"></textarea></label>
-    </form>
     <div id="root"></div>
+    <script src="/register-sw.js" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

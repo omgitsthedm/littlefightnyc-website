@@ -1,32 +1,91 @@
 import { Link } from "react-router-dom";
-import CallToAction from "@/components/CallToAction";
+import PageHero from "@/components/editorial/PageHero";
+import QuietContact from "@/components/editorial/QuietContact";
 import { glossaryTerms } from "@/data/site";
 
 export default function Glossary() {
   return (
     <>
-      <section className="page-hero">
-        <p className="eyebrow">Plain-English glossary</p>
-        <h1>Useful words. No vendor fog.</h1>
-        <p className="short-answer">
-          Short answer: these are the terms New York business owners run into when websites, tools, Google, and workflow
-          start costing real money.
-        </p>
-      </section>
+      <PageHero
+        eyebrow="Glossary"
+        title={
+          <>
+            Useful words,{" "}
+            <br />
+            <span className="lf-em">no vendor fog.</span>
+          </>
+        }
+        dek="The terms NYC owners hit when websites, tools, Google, and workflow start costing real money."
+        image={{
+          src: "/assets/sign-more-shops.webp",
+          alt: "Hand-painted shop signage",
+          width: 1600,
+          height: 1200,
+        }}
+      />
 
-      <section className="section">
-        <div className="answer-list term-list">
-          {glossaryTerms.map((term) => (
-            <Link key={term.slug} to={`/glossary/${term.slug}/`}>
-              <p className="eyebrow">Defined term</p>
-              <h3>{term.term}</h3>
-              <p>{term.plain}</p>
-            </Link>
-          ))}
+      <section
+        style={{
+          padding: "var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9)",
+        }}
+      >
+        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+          <ul
+            style={{
+              listStyle: "none",
+              padding: 0,
+              margin: 0,
+              borderTop: "1px solid var(--lf-hairline)",
+            }}
+          >
+            {glossaryTerms.map((term) => (
+              <li
+                key={term.slug}
+                style={{ borderBottom: "1px solid var(--lf-hairline)" }}
+              >
+                <Link
+                  to={`/glossary/${term.slug}/`}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr",
+                    gap: "var(--lf-space-2)",
+                    padding: "var(--lf-space-5) 0",
+                    textDecoration: "none",
+                    color: "var(--lf-bone)",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--lf-serif)",
+                      fontVariationSettings: '"opsz" 72',
+                      fontWeight: 600,
+                      fontSize: "var(--lf-text-lg)",
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {term.term}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--lf-serif)",
+                      fontStyle: "italic",
+                      fontVariationSettings: '"opsz" 14',
+                      fontSize: "var(--lf-text-base)",
+                      color: "var(--lf-bone-soft)",
+                      letterSpacing: "-0.005em",
+                    }}
+                  >
+                    {term.plain}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <CallToAction compact />
+      <QuietContact />
     </>
   );
 }

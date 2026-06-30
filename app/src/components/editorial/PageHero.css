@@ -1,0 +1,210 @@
+/* PageHero — reusable inner-page hero. Quiet, photography-optional. */
+
+.lf-pagehero {
+  padding: clamp(3.5rem, 8vw, 6rem) var(--lf-margin-mobile) clamp(3rem, 6vw, 5rem);
+  background:
+    linear-gradient(105deg, rgba(255, 111, 31, 0.16), transparent 32%, rgba(118, 183, 255, 0.09)),
+    repeating-linear-gradient(90deg, rgba(245, 241, 232, 0.04) 0 1px, transparent 1px 122px),
+    repeating-linear-gradient(180deg, rgba(245, 241, 232, 0.032) 0 1px, transparent 1px 88px),
+    linear-gradient(180deg, #241812 0%, #171412 55%, var(--lf-ink) 100%);
+  border-bottom: 1px solid color-mix(in srgb, var(--lf-bone) 8%, transparent);
+}
+
+@media (min-width: 768px) {
+  .lf-pagehero {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-pagehero {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-pagehero__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+/* Choreographed entrance: eyebrow → title → dek → image stagger when
+   the section reveals. Each element opacity/translateY-shifts
+   from a hidden initial state to revealed. Uses transform + opacity only. */
+.lf-pagehero__eyebrow,
+.lf-pagehero__title,
+.lf-pagehero__dek {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: transform, opacity;
+}
+
+.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__eyebrow,
+.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__title,
+.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__dek {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__eyebrow { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 0ms both; }
+.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__title   { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 90ms both; }
+.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__dek     { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 180ms both; }
+
+@keyframes lf-pagehero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-pagehero__eyebrow,
+  .lf-pagehero__title,
+  .lf-pagehero__dek,
+  .lf-pagehero__image {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+.lf-pagehero--with-image .lf-pagehero__inner {
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .lf-pagehero--with-image .lf-pagehero__inner {
+    grid-template-columns: minmax(32rem, 0.96fr) minmax(22rem, 0.88fr);
+    gap: clamp(2.5rem, 5vw, 6rem);
+  }
+}
+
+@media (min-width: 1440px) {
+  .lf-pagehero--with-image .lf-pagehero__inner {
+    grid-template-columns: minmax(36rem, 1.02fr) minmax(28rem, 0.82fr);
+  }
+}
+
+.lf-pagehero__text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.lf-pagehero--with-image .lf-pagehero__text {
+  max-width: min(100%, 48rem);
+}
+
+/* No image: let the text breathe across a wider column so it doesn't sit
+   orphaned to the left of empty space */
+.lf-pagehero:not(.lf-pagehero--with-image) .lf-pagehero__text {
+  max-width: 64rem;
+}
+
+.lf-pagehero__eyebrow {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0;
+}
+
+.lf-pagehero__title {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 144;
+  font-weight: 600;
+  font-size: clamp(3rem, 7.5vw, 6.8rem);
+  line-height: 0.94;
+  letter-spacing: -0.032em;
+  color: var(--lf-bone);
+  margin: 0;
+  max-width: 12.5ch;
+}
+
+@media (min-width: 768px) {
+  .lf-pagehero__title {
+    font-size: clamp(3.75rem, 8vw, 7.2rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-pagehero__title {
+    font-size: clamp(4.8rem, 6.7vw, 7.8rem);
+  }
+}
+
+.lf-pagehero__title em,
+.lf-pagehero__title i,
+.lf-pagehero__title .lf-em {
+  color: var(--lf-fight);
+  font-style: italic;
+  font-weight: 600;
+  font-variation-settings: "opsz" 144, "wght" 600;
+}
+
+.lf-pagehero__dek {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 32;
+  font-size: clamp(1.05rem, 1vw, 1.25rem);
+  line-height: 1.43;
+  color: var(--lf-bone-soft);
+  letter-spacing: -0.005em;
+  max-width: 50ch;
+  margin: 0;
+}
+
+@media (min-width: 1024px) {
+  .lf-pagehero__dek {
+    max-width: 42ch;
+  }
+}
+
+.lf-pagehero__image {
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: var(--lf-paper);
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 10%, transparent);
+  box-shadow:
+    0 1px 0 rgba(245, 241, 232, 0.08) inset,
+    0 24px 70px rgba(255, 111, 31, 0.1),
+    0 16px 48px rgba(0, 0, 0, 0.34);
+}
+
+@media (min-width: 1024px) {
+  .lf-pagehero__image {
+    align-self: center;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.lf-pagehero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.05) saturate(0.96) brightness(0.96);
+  will-change: transform;
+}
+
+/* Scroll-driven zoom — TRANSFORM ONLY for smooth 60fps */
+@supports (animation-timeline: view()) {
+  .lf-pagehero__image img {
+    animation: lf-pagehero-scroll linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes lf-pagehero-scroll {
+    0% { transform: scale(1.0); }
+    100% { transform: scale(1.06); }
+  }
+}

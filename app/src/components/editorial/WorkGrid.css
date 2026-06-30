@@ -1,0 +1,165 @@
+/* Work Grid — four large photographs. No descriptions, no eyebrow, no prices.
+ * The image is the story. The label is the only word.
+ */
+
+.lf-work {
+  padding: 0;
+}
+
+.lf-work__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+@media (min-width: 768px) {
+  .lf-work__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.lf-work__tile {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  overflow: hidden;
+  background: var(--lf-paper);
+  aspect-ratio: 4 / 3;
+  isolation: isolate;
+}
+
+@media (min-width: 768px) {
+  .lf-work__tile {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.lf-work__tile-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.lf-work__tile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.05) saturate(0.78) brightness(0.55);
+  transition: filter var(--lf-time-cinematic) var(--lf-ease-out-quart),
+              transform var(--lf-time-cinematic) var(--lf-ease-out-quart);
+}
+
+.lf-work__tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.05) 0%,
+    rgba(10, 10, 10, 0.35) 70%,
+    rgba(10, 10, 10, 0.7) 100%
+  );
+  transition: opacity var(--lf-time-base) var(--lf-ease-out-quart);
+  opacity: 1;
+  pointer-events: none;
+}
+
+.lf-work__tile-label {
+  position: absolute;
+  z-index: 2;
+  left: var(--lf-margin-mobile);
+  bottom: var(--lf-space-5);
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 144;
+  font-weight: 600;
+  font-size: var(--lf-text-lg);
+  letter-spacing: 0;
+  line-height: 1.02;
+  color: var(--lf-bone);
+  max-width: min(14ch, 100%);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: balance;
+  transition: color var(--lf-time-base) var(--lf-ease-out-quart),
+              transform var(--lf-time-base) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 768px) {
+  .lf-work__tile-label {
+    left: var(--lf-margin-tablet);
+    bottom: var(--lf-space-6);
+    font-size: var(--lf-text-xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-work__tile-label {
+    left: var(--lf-margin-desktop);
+    bottom: var(--lf-space-7);
+    font-size: var(--lf-text-2xl);
+  }
+}
+
+@media (hover: hover) {
+  .lf-work__tile:hover .lf-work__tile-image img {
+    transform: scale(1.04);
+    filter: contrast(1.08) saturate(0.92) brightness(0.7);
+  }
+
+  .lf-work__tile:hover::after {
+    opacity: 0.6;
+  }
+
+  .lf-work__tile:hover .lf-work__tile-label {
+    color: var(--lf-fight);
+  }
+}
+
+/* Verb + label pairing on tile (added when 4 services got named) */
+.lf-work__tile-text {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--lf-space-5) var(--lf-margin-mobile);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+  z-index: 2;
+  max-width: min(34rem, 100%);
+}
+
+@media (min-width: 768px) {
+  .lf-work__tile-text {
+    padding: var(--lf-space-6) var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-work__tile-text {
+    padding: var(--lf-space-7) var(--lf-margin-desktop);
+  }
+}
+
+.lf-work__tile-verb {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  opacity: 0.9;
+}
+.lf-work__tile-text .lf-work__tile-label {
+  position: static;
+  padding: 0;
+}
+
+.lf-work__tile-line {
+  max-width: 28ch;
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-sm);
+  line-height: 1.35;
+  color: var(--lf-bone-soft);
+}

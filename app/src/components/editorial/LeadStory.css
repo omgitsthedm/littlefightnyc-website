@@ -1,0 +1,377 @@
+/* Lead Story — full magazine cover spread + integrated feature article. */
+
+.lf-lead {
+  padding-block: 0 var(--lf-space-10);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .lf-lead {
+    padding-block: 0 var(--lf-space-11);
+  }
+}
+
+/* ============================================================
+   The cover photograph — full-bleed, cinematic anchor
+   ============================================================ */
+
+.lf-lead__cover {
+  margin: 0 0 var(--lf-space-7) 0;
+  position: relative;
+  /* Scroll reveal — fade + slight Y rise + slight scale up */
+  opacity: 0;
+  transform: translateY(24px) scale(1.02);
+  transition: opacity var(--lf-time-cinematic) var(--lf-ease-out-quart),
+              transform var(--lf-time-cinematic) var(--lf-ease-out-quart);
+}
+
+.lf-lead__cover[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+@media (min-width: 768px) {
+  .lf-lead__cover {
+    margin-bottom: var(--lf-space-9);
+  }
+}
+
+.lf-lead__cover-frame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--lf-paper);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .lf-lead__cover-frame {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-lead__cover-frame {
+    aspect-ratio: 24 / 9;
+  }
+}
+
+.lf-lead__cover-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.06) saturate(0.88) brightness(0.92);
+  /* Subtle slow ken-burns on the cover — gives the page motion at rest */
+  animation: lf-lead-ken-burns 30s var(--lf-ease-in-out) infinite alternate;
+}
+
+@keyframes lf-lead-ken-burns {
+  0% {
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    transform: scale(1.04) translateX(-1%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-lead__cover-frame img {
+    animation: none;
+  }
+}
+
+.lf-lead__cover-caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--lf-space-3);
+  padding: var(--lf-space-3) var(--lf-margin-mobile) 0;
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .lf-lead__cover-caption {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-lead__cover-caption {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-lead__cover-tag {
+  color: var(--lf-fight);
+  flex-shrink: 0;
+}
+
+.lf-lead__cover-text {
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone-dim);
+  font-variation-settings: "opsz" 14;
+  letter-spacing: -0.005em;
+}
+
+/* ============================================================
+   Body wrap — narrower than the cover for premium read measure
+   ============================================================ */
+
+.lf-lead__body-wrap {
+  position: relative;
+}
+
+/* Kicker — small star + label, above the headline */
+.lf-lead__kicker {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-lead__kicker-mark {
+  font-size: var(--lf-text-base);
+  line-height: 1;
+}
+
+.lf-lead__kicker-divider {
+  color: var(--lf-bone-soft);
+  opacity: 0.4;
+}
+
+.lf-lead__kicker-issue {
+  color: var(--lf-fight);
+}
+
+/* Massive headline */
+.lf-lead__headline {
+  font-size: var(--lf-text-2xl);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  font-variation-settings: "opsz" 144;
+  font-weight: 700;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-6);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--lf-time-slow) var(--lf-ease-out-quart),
+              transform var(--lf-time-slow) var(--lf-ease-out-quart);
+  transition-delay: 80ms;
+}
+
+.lf-lead__headline[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+  .lf-lead__headline {
+    font-size: var(--lf-text-3xl);
+    letter-spacing: -0.045em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-lead__headline {
+    font-size: var(--lf-text-4xl);
+  }
+}
+
+.lf-lead__headline-italic {
+  color: var(--lf-fight);
+  font-variation-settings: "opsz" 144;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .lf-lead__br {
+    display: none;
+  }
+}
+
+.lf-lead__dek {
+  font-size: var(--lf-text-lg);
+  line-height: 1.35;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  letter-spacing: -0.01em;
+  max-width: 44ch;
+  margin-bottom: var(--lf-space-6);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--lf-time-base) var(--lf-ease-out-quart),
+              transform var(--lf-time-base) var(--lf-ease-out-quart);
+  transition-delay: 160ms;
+}
+
+.lf-lead__dek[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .lf-lead__dek {
+    font-size: var(--lf-text-xl);
+    max-width: 52ch;
+  }
+}
+
+/* Byline strip — reading time + author + role */
+.lf-lead__byline {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-bone-soft);
+  padding-block: var(--lf-space-3);
+  border-block: 1px solid var(--lf-hairline);
+  margin-bottom: var(--lf-space-7);
+}
+
+.lf-lead__byline-by {
+  color: var(--lf-bone-dim);
+}
+
+.lf-lead__byline-name {
+  color: var(--lf-fight);
+}
+
+.lf-lead__byline-divider {
+  color: var(--lf-bone-soft);
+  opacity: 0.4;
+}
+
+/* Body */
+.lf-lead__body {
+  max-width: 64ch;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--lf-time-slow) var(--lf-ease-out-quart),
+              transform var(--lf-time-slow) var(--lf-ease-out-quart);
+}
+
+.lf-lead__body[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lf-lead__paragraph {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-md);
+  line-height: 1.6;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-lead__paragraph + .lf-lead__paragraph {
+  text-indent: 1.5em;
+}
+
+.lf-lead__paragraph--dropcap::first-letter {
+  float: left;
+  font-family: var(--lf-serif);
+  font-size: 6.5em;
+  line-height: 0.82;
+  padding-top: 0.04em;
+  padding-right: 0.08em;
+  color: var(--lf-fight);
+  font-weight: 900;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.04em;
+}
+
+/* Inline pull quote — magazine craft, lives inside the article flow */
+.lf-lead__inline-quote {
+  position: relative;
+  margin-block: var(--lf-space-7);
+  padding: var(--lf-space-5) 0 var(--lf-space-5) var(--lf-space-6);
+  border-left: 1px solid color-mix(in srgb, var(--lf-bone) 14%, transparent);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--lf-fight) 8%, transparent),
+    transparent 56%
+  );
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--lf-fight) 42%, transparent);
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity var(--lf-time-slow) var(--lf-ease-out-quart),
+              transform var(--lf-time-slow) var(--lf-ease-out-quart);
+}
+
+.lf-lead__inline-quote[data-revealed="true"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (min-width: 768px) {
+  .lf-lead__inline-quote {
+    margin-block: var(--lf-space-8);
+    padding-left: var(--lf-space-7);
+  }
+}
+
+.lf-lead__inline-quote-mark {
+  position: absolute;
+  top: -0.4em;
+  left: var(--lf-space-3);
+  font-family: var(--lf-serif);
+  font-weight: 900;
+  font-size: 5rem;
+  line-height: 0.7;
+  color: var(--lf-fight);
+  font-variation-settings: "opsz" 144;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+@media (min-width: 768px) {
+  .lf-lead__inline-quote-mark {
+    font-size: 7rem;
+    left: var(--lf-space-4);
+  }
+}
+
+.lf-lead__inline-quote-text {
+  font-size: var(--lf-text-xl);
+  font-style: italic;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 144;
+  font-weight: 600;
+  margin-bottom: var(--lf-space-3);
+}
+
+@media (min-width: 1024px) {
+  .lf-lead__inline-quote-text {
+    font-size: var(--lf-text-2xl);
+  }
+}
+
+.lf-lead__inline-quote-attr {
+  color: var(--lf-bone-soft);
+}
+
+/* Continue link */
+.lf-lead__continue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  margin-top: var(--lf-space-5);
+  color: color-mix(in srgb, var(--lf-bone) 84%, var(--lf-fight) 16%);
+  background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
+  padding: var(--lf-space-2) var(--lf-space-3);
+  text-decoration: none;
+  transition: color var(--lf-time-base) var(--lf-ease-out-quart),
+              background-color var(--lf-time-base) var(--lf-ease-out-quart),
+              gap var(--lf-time-base) var(--lf-ease-out-quart);
+}
+
+.lf-lead__continue:hover {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
+  gap: var(--lf-space-3);
+}

@@ -1,76 +1,104 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import CallToAction from "@/components/CallToAction";
+import PageHero from "@/components/editorial/PageHero";
+import QuietContact from "@/components/editorial/QuietContact";
 import { answerGuides } from "@/data/site";
+import "@/styles/editorial/answers.css";
 
 export default function AnswerGuide() {
   const { slug } = useParams();
   const guide = answerGuides.find((item) => item.slug === slug);
   const related = answerGuides.filter((item) => item.slug !== guide?.slug).slice(0, 3);
 
-  if (!guide) return <Navigate to="/answers/" replace />;
+  if (!guide) return <Navigate to="/field-guide/#answers" replace />;
 
   return (
     <>
-      <article className="page-hero article-hero">
-        <p className="eyebrow">Owner answer · David Marsh · Updated May 7, 2026</p>
-        <h1>{guide.question}</h1>
-        <p className="short-answer">{guide.short}</p>
-      </article>
+      <PageHero
+        eyebrow="Owner Answer"
+        title={<>{guide.question}</>}
+        dek={guide.short}
+        image={{
+          src: "/assets/local-business.webp",
+          alt: "An NYC owner-operated business at street level",
+          width: 1600,
+          height: 1200,
+        }}
+      />
 
-      <section className="section article-body">
-        {guide.sections.map((section) => (
-          <article key={section.heading}>
-            <h2>{section.heading}</h2>
-            <p>{section.body}</p>
-          </article>
-        ))}
-        <article>
-          <h2>Useful outside references.</h2>
-          <p>
-            For local visibility questions, start with{" "}
-            <a href="https://support.google.com/business/" rel="noreferrer" target="_blank">
-              Google Business Profile Help
-            </a>
-            . For website search data, use{" "}
-            <a href="https://search.google.com/search-console/about" rel="noreferrer" target="_blank">
-              Google Search Console
-            </a>
-            .
+      <section className="lf-answer-page">
+        <div className="lf-answer-page__inner">
+          <p className="lf-answer-page__byline">
+            <span>Little Fight NYC</span>
+            <span aria-hidden="true"> · </span>
+            <span>Published </span>
+            <time dateTime="2026-05-07">May 7, 2026</time>
+            <span aria-hidden="true"> · </span>
+            <span>Updated </span>
+            <time dateTime="2026-05-12">May 12, 2026</time>
           </p>
-        </article>
-      </section>
 
-      <section className="section split">
-        <div>
-          <p className="eyebrow">FAQ</p>
-          <h2>Quick answers.</h2>
-        </div>
-        <div className="faq-list">
-          {guide.faq.map((item) => (
-            <article key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
+          {guide.sections.map((section) => (
+            <article key={section.heading} className="lf-answer-page__section">
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
             </article>
           ))}
+
+          {guide.faq.length > 0 && (
+            <section className="lf-answer-page__faq">
+              <p className="lf-answer-page__faq-title">Quick answers</p>
+              <div className="lf-answer-page__faq-list">
+                {guide.faq.map((item) => (
+                  <div key={item.question}>
+                    <h3 className="lf-answer-page__faq-q">{item.question}</h3>
+                    <p className="lf-answer-page__faq-a">{item.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {related.length > 0 && (
+            <section
+              style={{
+                marginTop: "var(--lf-space-9)",
+                paddingTop: "var(--lf-space-7)",
+                borderTop: "1px solid var(--lf-hairline)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "var(--lf-mono)",
+                  fontSize: "11px",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "var(--lf-bone-dim)",
+                  margin: "0 0 var(--lf-space-5)",
+                }}
+              >
+                Related reading
+              </p>
+              <ul className="lf-answers-index__list" style={{ borderTop: "1px solid var(--lf-hairline)" }}>
+                {related.map((item, i) => (
+                  <li key={item.slug} className="lf-answers-index__item">
+                    <Link to={`/answers/${item.slug}/`} className="lf-answers-index__link">
+                      <span className="lf-answers-index__num">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="lf-answers-index__body">
+                        <span className="lf-answers-index__q">{item.question}</span>
+                        <span className="lf-answers-index__short">{item.short}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
       </section>
 
-      <section className="section">
-        <div className="section-heading">
-          <p className="eyebrow">Related reading</p>
-          <h2>Keep sorting the mess.</h2>
-        </div>
-        <div className="answer-list">
-          {related.map((item) => (
-            <Link key={item.slug} to={`/answers/${item.slug}/`}>
-              <h3>{item.question}</h3>
-              <p>{item.short}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <CallToAction compact />
+      <QuietContact />
     </>
   );
 }

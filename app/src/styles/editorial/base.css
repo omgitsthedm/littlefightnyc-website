@@ -1,0 +1,343 @@
+/* Little Fight NYC — Editorial Base
+ * Scoped reset + ground rules. Applies only inside .lf-editorial.
+ */
+
+.lf-editorial {
+  background: var(--lf-ink);
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern", "liga", "calt";
+  /* Editorial hanging punctuation — quote marks and bullets extend into the
+     margin so the optical text edge stays clean. Currently Safari-only;
+     gracefully ignored elsewhere. */
+  hanging-punctuation: first allow-end last;
+  /* Proportional lining figures in the sans body — switches to tabular
+     where explicitly needed (mono class, promise strip). */
+  font-variant-numeric: lining-nums proportional-nums;
+  /* Hard guarantee: no decorative overshoot or oversize type ever produces
+     horizontal scroll on mobile. `overflow-x: clip` allows sticky/fixed
+     children to still work (unlike `hidden`, which breaks sticky positioning). */
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Belt-and-braces against any document-level horizontal scroll +
+   ink-ground background so React doesn't need to set it inline. */
+html:has(.lf-editorial),
+body:has(.lf-editorial) {
+  overflow-x: clip;
+  max-width: 100vw;
+  background: var(--lf-ink);
+}
+
+.lf-editorial *,
+.lf-editorial *::before,
+.lf-editorial *::after {
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+.lf-editorial img,
+.lf-editorial picture,
+.lf-editorial video {
+  max-width: 100%;
+  display: block;
+}
+
+.lf-editorial a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lf-editorial button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.lf-editorial h1,
+.lf-editorial h2,
+.lf-editorial h3,
+.lf-editorial h4,
+.lf-editorial p,
+.lf-editorial ul,
+.lf-editorial ol,
+.lf-editorial figure {
+  margin: 0;
+  padding: 0;
+}
+
+/* Editorial line-breaking. balance for short titles, pretty for body so
+   widows/orphans don't strand a single word on the last line.
+   Both gracefully degrade — older browsers ignore. */
+.lf-editorial h1,
+.lf-editorial h2,
+.lf-editorial h3,
+.lf-editorial h4 {
+  text-wrap: balance;
+}
+
+.lf-editorial p {
+  text-wrap: pretty;
+}
+
+.lf-editorial :target {
+  scroll-margin-top: clamp(72px, 10vh, 120px);
+}
+
+.lf-editorial ul,
+.lf-editorial ol {
+  list-style: none;
+}
+
+/* Selection — the page bleeds when you mark it */
+.lf-editorial ::selection {
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+}
+
+/* Focus — visible, not gaudy. Slightly thicker offset for premium feel,
+   plus a subtle inset glow so the focused element looks intentional. */
+.lf-editorial :focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Press feedback — every link and button gets a hair of press inertia.
+   No layout shift (uses transform). Skipped on keyboard focus. */
+.lf-editorial a:active:not(:disabled),
+.lf-editorial button:active:not(:disabled) {
+  transform: translateY(0.5px);
+}
+
+/* Inline arrow nudge on link hover. Targets the trailing aria-hidden span
+   used everywhere for "Read more →" patterns — anchor with arrow last.
+   No effect when the link has no trailing arrow. */
+.lf-editorial a > span[aria-hidden="true"]:last-child {
+  display: inline-block;
+  transition: transform var(--lf-time-fast) var(--lf-ease-out-quart);
+  will-change: transform;
+}
+.lf-editorial a:hover > span[aria-hidden="true"]:last-child {
+  transform: translateX(3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial a:hover > span[aria-hidden="true"]:last-child {
+    transform: none;
+  }
+}
+
+/* Mono class — tabular figures so monospaced numerals align in columns
+   (promise strip, dates, phone numbers when rendered mono). */
+.lf-editorial .lf-mono {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* The grain — Pentagram-grade filmic noise over the ink ground.
+ * Subtle. You feel it more than see it. Adds "sheen."
+ */
+.lf-editorial::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--lf-z-content);
+  opacity: 0.05;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+/* Page container */
+.lf-editorial .lf-container {
+  width: 100%;
+  max-width: var(--lf-max-w);
+  margin: 0 auto;
+  padding-inline: var(--lf-margin-mobile);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .lf-container {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-editorial .lf-container {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+/* Hairline rule primitive */
+.lf-editorial .lf-rule {
+  border: 0;
+  border-top: 1px solid var(--lf-hairline);
+  margin: 0;
+}
+
+/* Editorial type primitives */
+.lf-editorial .lf-mono {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-italic {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 144;
+}
+
+.lf-editorial .lf-display {
+  font-family: var(--lf-serif);
+  font-weight: 700;
+  font-variation-settings: "opsz" 144;
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.lf-editorial .lf-serif-body {
+  font-family: var(--lf-serif);
+  font-weight: 400;
+  font-variation-settings: "opsz" 14;
+  line-height: 1.55;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial *,
+  .lf-editorial *::before,
+  .lf-editorial *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Numeral-bearing mono classes get tabular nums so 01/02/03... align as columns.
+   Applied centrally so individual components don't need to remember. */
+.lf-editorial .lf-answers-index__num,
+.lf-editorial .lf-sd-issues__numeral,
+.lf-editorial .lf-mono,
+.lf-editorial [class*="__numeral"],
+.lf-editorial [class*="__num"] {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "tnum", "lnum", "kern", "liga";
+}
+
+/* ─── Scroll-driven list reveals ───────────────────────────────
+   Each item lifts + fades as it scrolls into view. CSS-only via
+   animation-timeline: view(). In browsers without support, items
+   are simply visible (no harm). */
+@supports (animation-timeline: view()) {
+  .lf-editorial .lf-cases__item,
+  .lf-editorial .lf-studio__item,
+  .lf-editorial .lf-sd-issues__item,
+  .lf-editorial .lf-sd-fallacies__item,
+  .lf-editorial .lf-answers-index__item,
+  .lf-editorial .lf-archive__entry,
+  .lf-editorial .lf-svc__card {
+    animation: lf-list-rise 700ms cubic-bezier(0.25, 1, 0.5, 1) both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 70%;
+    will-change: transform, opacity;
+  }
+
+  @keyframes lf-list-rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-cases__item,
+  .lf-editorial .lf-studio__item,
+  .lf-editorial .lf-sd-issues__item,
+  .lf-editorial .lf-sd-fallacies__item,
+  .lf-editorial .lf-answers-index__item,
+  .lf-editorial .lf-archive__entry,
+  .lf-editorial .lf-svc__card {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Inline image scroll-reveal ───────────────────────────────
+   For figures/images inside long-form content. Subtle clip-path
+   reveal from bottom plus slight scale settle. Only triggers
+   on first scroll-into-view; uses entry range so it never repeats. */
+@supports (animation-timeline: view()) {
+  .lf-editorial .lf-post__inner img,
+  .lf-editorial .lf-answer-page img,
+  .lf-editorial figure img,
+  .lf-editorial .lf-img-reveal {
+    animation: lf-img-clip 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+    will-change: clip-path, transform;
+  }
+
+  @keyframes lf-img-clip {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: scale(1.02);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      transform: scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-post__inner img,
+  .lf-editorial .lf-answer-page img,
+  .lf-editorial figure img,
+  .lf-editorial .lf-img-reveal {
+    animation: none !important;
+    clip-path: none;
+    transform: none;
+  }
+}
+
+/* Skip-to-content link — visually hidden until keyboard-focused, then
+   prominent at the top-left. Accessibility primitive. */
+.lf-editorial .lf-skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: top 160ms var(--lf-ease-out-quart);
+}
+
+.lf-editorial .lf-skip-link:focus {
+  top: 16px;
+}

@@ -1,40 +1,45 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import PageHero from "@/components/editorial/PageHero";
+import QuietContact from "@/components/editorial/QuietContact";
+import { trackEvent } from "@/lib/analytics";
 
 export default function Thanks() {
+  useEffect(() => {
+    let cameFromFitCheck = false;
+
+    try {
+      cameFromFitCheck = window.sessionStorage.getItem("lf_fit_check_submitted") === "true";
+      if (cameFromFitCheck) {
+        window.sessionStorage.removeItem("lf_fit_check_submitted");
+      }
+    } catch {
+      cameFromFitCheck = false;
+    }
+
+    if (!cameFromFitCheck) return;
+
+    trackEvent("generate_lead", {
+      method: "fit_check_form",
+      form_name: "fit-check-scratch",
+      page_path: "/thanks/",
+    });
+  }, []);
+
   return (
-    <section className="page-hero">
-      <p className="eyebrow">Fit Check received</p>
-      <h1>Thanks. We have the messy setup.</h1>
-      <p className="short-answer">
-        Short answer: Little Fight will review what you sent and look for the clearest next move:
-        what to keep, connect, replace, or build.
-      </p>
-      <div className="route-stack">
-        <article>
-          <span>01</span>
-          <div>
-            <h3>We review the context.</h3>
-            <p>Website, tools, urgency, local visibility, and workflow signals get checked together.</p>
-          </div>
-        </article>
-        <article>
-          <span>02</span>
-          <div>
-            <h3>We find the first useful move.</h3>
-            <p>The goal is not to sell the biggest project. It is to find the right first fix.</p>
-          </div>
-        </article>
-        <article>
-          <span>03</span>
-          <div>
-            <h3>David follows up.</h3>
-            <p>Urgent issues get treated differently from planned website, search, or systems work.</p>
-          </div>
-        </article>
-      </div>
-      <Link className="button ghost" to="/answers/">
-        Read owner answers
-      </Link>
-    </section>
+    <>
+      <PageHero
+        eyebrow="Fit Check Received"
+        title={
+          <>
+            We've got the{" "}
+            <br />
+            <span className="lf-em">messy setup.</span>
+          </>
+        }
+        dek="Little Fight NYC is reading what you sent right now (or first thing tomorrow if it's after hours). Urgent issues get a same-day call. Planned work gets a written reply by morning at the latest. If it just turned into a fire, call (646) 360-0318 — we'll bump everything else."
+      />
+
+      <QuietContact />
+    </>
   );
 }

@@ -1,0 +1,231 @@
+/* About page — Founder's Letter editorial layout. */
+
+.lf-about {
+  padding-block: var(--lf-space-6) var(--lf-space-8);
+}
+
+.lf-about__head {
+  margin-bottom: var(--lf-space-7);
+  max-width: var(--lf-max-w);
+}
+
+.lf-about__eyebrow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-5);
+  padding-bottom: var(--lf-space-2);
+}
+
+.lf-about__eyebrow-divider {
+  color: var(--lf-bone-soft);
+  opacity: 0.6;
+}
+
+.lf-about__eyebrow-issue {
+  color: var(--lf-fight);
+}
+
+.lf-about__headline {
+  font-size: var(--lf-text-xl);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: "opsz" 144;
+  font-weight: 700;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-5);
+}
+
+@media (min-width: 768px) {
+  .lf-about__headline {
+    font-size: var(--lf-text-2xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-about__headline {
+    font-size: var(--lf-text-3xl);
+  }
+}
+
+.lf-about__headline .lf-italic {
+  color: var(--lf-fight);
+  font-variation-settings: "opsz" 144;
+}
+
+@media (max-width: 480px) {
+  .lf-about__br {
+    display: none;
+  }
+}
+
+.lf-about__dek {
+  font-size: var(--lf-text-md);
+  line-height: 1.4;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  letter-spacing: -0.005em;
+  max-width: 50ch;
+}
+
+@media (min-width: 1024px) {
+  .lf-about__dek {
+    font-size: var(--lf-text-lg);
+  }
+}
+
+.lf-about__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-7);
+}
+
+@media (min-width: 1024px) {
+  .lf-about__body {
+    grid-template-columns: 1fr 0.6fr;
+    grid-template-areas:
+      "figure facts"
+      "story  facts"
+      "cta    facts";
+    column-gap: var(--lf-space-7);
+  }
+}
+
+.lf-about__figure {
+  grid-area: figure;
+}
+
+.lf-about__story {
+  grid-area: story;
+  max-width: 64ch;
+}
+
+.lf-about__paragraph {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-md);
+  line-height: 1.65;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-about__paragraph + .lf-about__paragraph {
+  text-indent: 1.5em;
+}
+
+.lf-about__paragraph--dropcap::first-letter {
+  float: left;
+  font-family: var(--lf-serif);
+  font-size: 5.5em;
+  line-height: 0.85;
+  padding-top: 0.06em;
+  padding-right: 0.08em;
+  color: var(--lf-fight);
+  font-weight: 900;
+  font-variation-settings: "opsz" 144;
+  letter-spacing: -0.04em;
+}
+
+.lf-about__byline {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-bone-soft);
+  margin-top: var(--lf-space-6);
+  padding-top: var(--lf-space-3);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-about__byline-name {
+  color: var(--lf-fight);
+}
+
+.lf-about__facts {
+  grid-area: facts;
+  align-self: start;
+  position: relative;
+  padding: var(--lf-space-5);
+  background: var(--lf-paper);
+  border: 1px solid var(--lf-hairline);
+}
+
+.lf-about__facts::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--lf-fight);
+}
+
+.lf-about__facts-title {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-4);
+  padding-bottom: var(--lf-space-2);
+}
+
+.lf-about__facts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-4);
+  margin: 0;
+}
+
+.lf-about__fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-1);
+}
+
+.lf-about__fact dt {
+  color: var(--lf-bone-soft);
+}
+
+.lf-about__fact dd {
+  margin: 0;
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-size: var(--lf-text-base);
+  color: var(--lf-bone);
+}
+
+.lf-about__phone {
+  color: color-mix(in srgb, var(--lf-bone) 84%, var(--lf-fight) 16%);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
+  padding: 0.02em 0.14em;
+  transition:
+    color 200ms var(--lf-ease-out),
+    background-color 200ms var(--lf-ease-out);
+}
+
+.lf-about__phone:hover {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
+}
+
+.lf-about__cta {
+  grid-area: cta;
+}
+
+.lf-about__cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  color: color-mix(in srgb, var(--lf-bone) 84%, var(--lf-fight) 16%);
+  background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
+  padding: var(--lf-space-2) var(--lf-space-3);
+  text-decoration: none;
+  transition:
+    color 200ms var(--lf-ease-out),
+    background-color 200ms var(--lf-ease-out),
+    gap 200ms var(--lf-ease-out);
+}
+
+.lf-about__cta-link:hover {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
+  gap: var(--lf-space-3);
+}

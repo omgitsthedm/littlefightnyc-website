@@ -1,0 +1,212 @@
+/* Services Preview — what we actually do, with prices. Conversion-relevant. */
+
+.lf-svc {
+  padding-block: var(--lf-space-8) var(--lf-space-9);
+  background: var(--lf-ink);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-svc {
+    padding-block: var(--lf-space-9) var(--lf-space-10);
+  }
+}
+
+.lf-svc__head {
+  margin-bottom: var(--lf-space-7);
+  max-width: var(--lf-max-w);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--lf-time-slow) var(--lf-ease-out-quart),
+              transform var(--lf-time-slow) var(--lf-ease-out-quart);
+}
+
+.lf-svc__head[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lf-svc__eyebrow {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-4);
+  display: inline-block;
+}
+
+.lf-svc__title {
+  font-size: var(--lf-text-2xl);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  font-variation-settings: "opsz" 144;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-4);
+}
+
+@media (min-width: 1024px) {
+  .lf-svc__title {
+    font-size: var(--lf-text-3xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-svc__title {
+    font-size: var(--lf-text-4xl);
+  }
+}
+
+.lf-svc__title .lf-italic {
+  color: var(--lf-fight);
+}
+
+.lf-svc__lede {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-md);
+  line-height: 1.4;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  max-width: 52ch;
+  letter-spacing: -0.005em;
+}
+
+@media (min-width: 1024px) {
+  .lf-svc__lede {
+    font-size: var(--lf-text-lg);
+  }
+}
+
+.lf-svc__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+  border-left: 1px solid var(--lf-hairline);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--lf-time-cinematic) var(--lf-ease-out-quart),
+              transform var(--lf-time-cinematic) var(--lf-ease-out-quart);
+}
+
+.lf-svc__grid[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+  .lf-svc__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-svc__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.lf-svc__card {
+  border-right: 1px solid var(--lf-hairline);
+  border-bottom: 1px solid var(--lf-hairline);
+  background: transparent;
+  transition: background-color var(--lf-time-base) var(--lf-ease-out-quart);
+}
+
+.lf-svc__card:hover {
+  background: var(--lf-paper);
+}
+
+.lf-svc__card-link {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--lf-space-5);
+  padding: var(--lf-space-6) var(--lf-space-5);
+  height: 100%;
+  text-decoration: none;
+  color: var(--lf-bone);
+  position: relative;
+  isolation: isolate;
+}
+
+.lf-svc__card-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--lf-fight);
+  transition: width var(--lf-time-base) var(--lf-ease-out-quart);
+}
+
+.lf-svc__card:hover .lf-svc__card-link::after {
+  width: 100%;
+}
+
+.lf-svc__numeral {
+  font-size: var(--lf-text-xl);
+  color: var(--lf-fight);
+  font-weight: 900;
+  line-height: 1;
+  font-variation-settings: "opsz" 144;
+  transition: color var(--lf-time-base) var(--lf-ease-out-quart);
+}
+
+.lf-svc__card:hover .lf-svc__numeral {
+  color: var(--lf-ember);
+}
+
+.lf-svc__card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+}
+
+.lf-svc__card-label {
+  color: var(--lf-bone);
+}
+
+.lf-svc__card-italic {
+  font-size: var(--lf-text-md);
+  line-height: 1.2;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  letter-spacing: -0.01em;
+}
+
+.lf-svc__card-desc {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-sm);
+  line-height: 1.55;
+  color: var(--lf-bone-soft);
+  margin: 0;
+}
+
+.lf-svc__card-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-1);
+  padding-top: var(--lf-space-3);
+  border-top: 1px solid var(--lf-hairline);
+  margin-top: var(--lf-space-2);
+}
+
+.lf-svc__card-price {
+  color: var(--lf-fight);
+  font-weight: 600;
+}
+
+.lf-svc__card-promise {
+  font-size: var(--lf-text-xs);
+  color: var(--lf-bone-soft);
+}
+
+.lf-svc__card-cta {
+  color: var(--lf-fight);
+  margin-top: auto;
+}
+
+/* Verb mono-tag prefix on the service card label */
+.lf-svc__card-verb {
+  color: var(--lf-fight);
+  margin-right: 2px;
+}

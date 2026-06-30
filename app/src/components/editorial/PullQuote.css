@@ -1,0 +1,91 @@
+/* Pull Quote — the magazine rhythm break. Big serif italic, oversized orange marks. */
+
+.lf-pull {
+  padding-block: var(--lf-space-9);
+  background: var(--lf-paper);
+  position: relative;
+  /* Marks have intentional decorative overshoot; clip locally so the rest of
+     the page can't accidentally horizontal-scroll because of them. */
+  overflow: hidden;
+  /* Color shift acts as the section divider, no borders needed */
+}
+
+@media (min-width: 768px) {
+  .lf-pull {
+    padding-block: var(--lf-space-10);
+  }
+}
+
+.lf-pull__inner {
+  position: relative;
+  text-align: center;
+  max-width: 28ch;
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .lf-pull__inner {
+    max-width: 36ch;
+  }
+}
+
+.lf-pull__mark {
+  position: absolute;
+  font-family: var(--lf-serif);
+  font-weight: 900;
+  font-size: 5rem;
+  line-height: 0.7;
+  color: var(--lf-fight);
+  font-variation-settings: "opsz" 144;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .lf-pull__mark {
+    font-size: 10rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lf-pull__mark {
+    font-size: 12rem;
+  }
+}
+
+/* Marks live inside the bounds of the inner. The decorative overshoot is small
+   and the section also clips horizontally — no chance of viewport overflow. */
+.lf-pull__mark--open {
+  top: -0.5em;
+  left: -0.25em;
+}
+
+.lf-pull__mark--close {
+  bottom: -0.85em;
+  right: -0.2em;
+}
+
+.lf-pull__quote {
+  font-style: italic;
+  font-size: var(--lf-text-xl);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 144;
+  font-weight: 600;
+  margin-bottom: var(--lf-space-5);
+}
+
+@media (min-width: 1024px) {
+  .lf-pull__quote {
+    font-size: var(--lf-text-2xl);
+  }
+}
+
+.lf-pull__attribution {
+  color: var(--lf-bone-soft);
+}
+
+.lf-pull__attribution-name {
+  color: var(--lf-fight);
+}

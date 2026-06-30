@@ -1,0 +1,32 @@
+{
+  "name": "@littlefightnyc/site-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "scan": "node scripts/creative-scan.mjs --base=https://littlefightnyc.com --out=reports/live --max=0",
+    "scan:live": "node scripts/creative-scan.mjs --base=https://littlefightnyc.com --out=reports/live --max=0",
+    "scan:local": "node scripts/creative-scan.mjs --base=http://127.0.0.1:4173 --out=reports/local --max=0",
+    "scan:smoke": "node scripts/creative-scan.mjs --base=https://littlefightnyc.com --out=reports/smoke --max=8",
+    "routes": "node scripts/discover-routes.mjs --base=https://littlefightnyc.com",
+    "backstop:write": "node scripts/write-backstop-config.mjs --base=https://littlefightnyc.com --max=40",
+    "backstop:reference": "node scripts/run-backstop.cjs reference --config=backstop.config.cjs",
+    "backstop:test": "node scripts/run-backstop.cjs test --config=backstop.config.cjs",
+    "links": "linkinator https://littlefightnyc.com --recurse --skip \"^mailto:|^tel:\" --verbosity error",
+    "unlighthouse": "unlighthouse-ci --site https://littlefightnyc.com --urls /,/services/,/field-guide/,/fit-check/,/journal/read-your-monthly-software-bill/",
+    "lhci": "lhci autorun --config=./lighthouserc.cjs",
+    "ultraship": "node scripts/ultraship-suite.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "^1.59.1",
+    "@unlighthouse/cli": "^0.17.9",
+    "backstopjs": "^6.3.25",
+    "linkinator": "^7.6.1",
+    "pngjs": "^7.0.0"
+  },
+  "overrides": {
+    "tmp": "^0.2.5"
+  }
+}

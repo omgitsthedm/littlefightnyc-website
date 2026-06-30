@@ -1,0 +1,89 @@
+/* Sticky Help Bar — mobile-only persistent CTA. Two equal cells. */
+
+.lf-sticky-help {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .lf-sticky-help {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--lf-z-ticker);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--lf-ink);
+    border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.lf-sticky-help__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--lf-space-3) var(--lf-space-4);
+  min-height: 56px;
+  text-decoration: none;
+  transition: background-color var(--lf-time-fast) var(--lf-ease-out);
+}
+
+.lf-sticky-help__cell--call {
+  background: transparent;
+  border-right: 1px solid var(--lf-hairline);
+}
+
+.lf-sticky-help__cell--call:hover,
+.lf-sticky-help__cell--call:active {
+  background: var(--lf-paper);
+}
+
+.lf-sticky-help__cell--fit {
+  background: var(--lf-fight);
+}
+
+.lf-sticky-help__cell--fit:hover,
+.lf-sticky-help__cell--fit:active {
+  background: var(--lf-ember);
+}
+
+.lf-sticky-help__label {
+  color: var(--lf-bone-dim);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.lf-sticky-help__cell--fit .lf-sticky-help__label {
+  color: rgba(10, 10, 10, 0.75);
+}
+
+.lf-sticky-help__detail {
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-base);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--lf-fight);
+}
+
+.lf-sticky-help__cell--fit .lf-sticky-help__detail {
+  color: var(--lf-ink);
+}
+
+/* Reserve space at the bottom of the page so content isn't hidden under the bar */
+@media (max-width: 767px) {
+  .lf-editorial {
+    padding-bottom: 80px;
+  }
+}
+
+/* PhoneAction wrapper needs to fill its grid cell on the sticky bar */
+.lf-sticky-help > .lf-phone-action {
+  display: flex;
+}
+.lf-sticky-help > .lf-phone-action > button {
+  width: 100%;
+}

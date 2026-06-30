@@ -1,52 +1,67 @@
-import CallToAction from "@/components/CallToAction";
-import { Link } from "react-router-dom";
-import { services } from "@/data/site";
+import { Sparkles } from "lucide-react";
+import PageHero from "@/components/editorial/PageHero";
+import VisualIndex from "@/components/editorial/VisualIndex";
+import ServiceEditorialSpread from "@/components/editorial/ServiceEditorialSpread";
+import QuietContact from "@/components/editorial/QuietContact";
+import { services, studioProjects } from "@/data/site";
 
 export default function Services() {
+  const overview = services.map((service) => ({
+    body: service.plain,
+    eyebrow: service.verb,
+    icon: service.icon,
+    image: service.image,
+    title: service.eyebrow,
+    to: `/services/${service.slug}/`,
+  }));
+  const studioOverview = studioProjects.map((project) => ({
+    body: project.oneline,
+    eyebrow: `${project.kind} · ${project.status}`,
+    icon: Sparkles,
+    image: project.image,
+    title: project.name,
+    to: `/studio/${project.slug}/`,
+  }));
+
   return (
     <>
-      <section className="page-hero">
-        <p className="eyebrow">Services</p>
-        <h1>Four areas. One operating partner.</h1>
-        <p>
-          Little Fight is the agency for the public-facing website, the daily
-          tech, the local search layer, and the system behind the work.
-        </p>
-      </section>
+      <PageHero
+        eyebrow="The Work"
+        title={
+          <>
+            Four services.<br />
+            {" "}
+            <span className="lf-em">One agency.</span>
+          </>
+        }
+        dek="Most owners only need one or two. Each engagement is scoped to the actual problem — never to a menu, never on a hunch. The consult is always free, and we'll tell you straight if you don't need us yet."
+        image={{
+          src: "/assets/coworking-laptops.webp",
+          alt: "Open laptops in a Brooklyn workspace",
+          width: 1600,
+          height: 1200,
+        }}
+      />
 
-      <section className="section">
-        <div className="service-detail-stack">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <article className={`service-detail ${service.accent}`} key={service.title}>
-                <div className="service-detail-media">
-                  <img src={service.image} alt="" width="900" height="675" loading="lazy" decoding="async" />
-                  <span>0{index + 1}</span>
-                </div>
-                <div className="service-detail-copy">
-                  <p className="eyebrow">{service.eyebrow}</p>
-                  <Icon size={32} />
-                  <h2>{service.headline}</h2>
-                  <h3>{service.title}</h3>
-                  <p>{service.plain}</p>
-                  <ul>
-                    {service.includes.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                  <strong>{service.outcome}</strong>
-                  <Link className="button ghost" to={`/services/${service.slug}`}>
-                    Open {service.eyebrow}
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </section>
+      <VisualIndex
+        eyebrow="Overview"
+        title="Find the right shape of help."
+        dek="The work starts by naming the problem correctly: broken today, hard to find, expensive every month, or too manual to keep running by memory. These are the four services we offer under one agency."
+        items={overview}
+      />
 
-      <CallToAction compact />
+      <ServiceEditorialSpread />
+
+      <VisualIndex
+        id="studio"
+        eyebrow="Studio"
+        title="Experiments that sharpen the client work."
+        dek="Internal builds, prototypes, and long-running tools. Some become client systems. Some stay weird. All of them make the work faster and more exact."
+        items={studioOverview}
+        variant="compact"
+      />
+
+      <QuietContact />
     </>
   );
 }

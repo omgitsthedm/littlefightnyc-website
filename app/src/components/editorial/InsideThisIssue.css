@@ -1,0 +1,126 @@
+/* Inside This Issue — the compressed magazine TOC. One section that does the work
+ * of the four list sections it replaces. Newspaper "Inside" column flavor.
+ */
+
+.lf-inside {
+  padding-block: var(--lf-space-7);
+  background: var(--lf-ink);
+}
+
+@media (min-width: 768px) {
+  .lf-inside {
+    padding-block: var(--lf-space-9);
+  }
+}
+
+.lf-inside__head {
+  margin-bottom: var(--lf-space-7);
+}
+
+.lf-inside__eyebrow {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-4);
+  display: inline-block;
+  padding-bottom: var(--lf-space-2);
+}
+
+.lf-inside__title {
+  font-size: var(--lf-text-2xl);
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  font-variation-settings: "opsz" 144;
+}
+
+.lf-inside__title .lf-italic {
+  color: var(--lf-fight);
+}
+
+.lf-inside__list {
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-inside__row {
+  border-bottom: 1px solid var(--lf-hairline);
+  transition: background-color 200ms var(--lf-ease-out);
+}
+
+.lf-inside__row:hover {
+  background: var(--lf-paper);
+}
+
+.lf-inside__link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--lf-space-4);
+  padding: var(--lf-space-5) 0;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .lf-inside__link {
+    padding: var(--lf-space-6) 0;
+    gap: var(--lf-space-5);
+  }
+}
+
+.lf-inside__link::before {
+  /* Orange edge that grows in from the left on hover */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--lf-fight);
+  transition: width 220ms var(--lf-ease-out);
+}
+
+.lf-inside__row:hover .lf-inside__link::before {
+  width: 3px;
+}
+
+.lf-inside__row:hover .lf-inside__link {
+  padding-left: var(--lf-space-4);
+}
+
+.lf-inside__numeral {
+  color: var(--lf-fight);
+  font-weight: 600;
+  min-width: 2.5em;
+  align-self: center;
+  font-size: var(--lf-text-sm);
+}
+
+.lf-inside__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+}
+
+.lf-inside__label {
+  color: var(--lf-bone);
+  font-size: var(--lf-text-sm);
+}
+
+.lf-inside__summary {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-md);
+  line-height: 1.35;
+  color: var(--lf-bone);
+  font-variation-settings: "opsz" 32;
+  letter-spacing: -0.005em;
+}
+
+@media (min-width: 768px) {
+  .lf-inside__summary {
+    font-size: var(--lf-text-lg);
+  }
+}
+
+.lf-inside__page {
+  color: var(--lf-bone-soft);
+  align-self: center;
+  flex-shrink: 0;
+}

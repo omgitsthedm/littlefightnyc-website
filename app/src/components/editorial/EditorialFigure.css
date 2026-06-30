@@ -1,0 +1,49 @@
+/* Editorial Figure — photograph woven into the story, not catalogued. */
+
+.lf-fig {
+  margin: 0;
+  display: block;
+}
+
+.lf-fig__frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--lf-paper);
+  /* No more 1px border on every photo — that was the textbook-Fig.-1 tell */
+}
+
+.lf-fig__frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* Filmic grade — the magazine plate look */
+  filter: contrast(1.06) saturate(0.88) brightness(0.95);
+}
+
+.lf-fig__caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--lf-space-3);
+  padding-block: var(--lf-space-3) var(--lf-space-2);
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone-dim);
+  font-variation-settings: "opsz" 14;
+  letter-spacing: -0.005em;
+  /* No bottom border — caption is a hanging note, not a fenced box */
+}
+
+.lf-fig__number {
+  font-family: var(--lf-mono);
+  font-style: normal;
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.06em;
+  color: var(--lf-fight);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.lf-fig__text {
+  flex: 1;
+}

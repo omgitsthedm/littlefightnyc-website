@@ -19,7 +19,7 @@ publishOrigin = "config"
 for = "/*"
 
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://maps.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  Content-Security-Policy = "default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://www.clarity.ms https://*.clarity.ms; frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://maps.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
   Permissions-Policy = "camera=(), microphone=(), geolocation=()"
   Referrer-Policy = "strict-origin-when-cross-origin"
   Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
@@ -51,6 +51,19 @@ for = "/llms.txt"
   Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
+for = "/site.webmanifest"
+
+  [headers.values]
+  Cache-Control = "public, max-age=3600, must-revalidate"
+  Content-Type = "application/manifest+json; charset=UTF-8"
+
+[[headers]]
+for = "/sw.js"
+
+  [headers.values]
+  Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
 for = "/.netlify/functions/*"
 
   [headers.values]
@@ -63,28 +76,73 @@ to = "/services/"
 status = 301
 
 [[redirects]]
+from = "/work"
+to = "/services/"
+status = 301
+
+[[redirects]]
+from = "/work/"
+to = "/services/"
+status = 301
+
+[[redirects]]
 from = "/fit-check"
 to = "/fit-check/"
 status = 301
 
 [[redirects]]
 from = "/answers"
-to = "/answers/"
+to = "/field-guide/#answers"
+status = 301
+
+[[redirects]]
+from = "/answers/"
+to = "/field-guide/#answers"
 status = 301
 
 [[redirects]]
 from = "/case-studies"
-to = "/case-studies/"
+to = "/field-guide/#studies"
 status = 301
 
 [[redirects]]
-from = "/contact"
-to = "/contact/"
+from = "/case-studies/"
+to = "/field-guide/#studies"
+status = 301
+
+[[redirects]]
+from = "/industries"
+to = "/field-guide/#industries"
+status = 301
+
+[[redirects]]
+from = "/industries/"
+to = "/field-guide/#industries"
+status = 301
+
+[[redirects]]
+from = "/studio"
+to = "/services/#studio"
+status = 301
+
+[[redirects]]
+from = "/studio/"
+to = "/services/#studio"
 status = 301
 
 [[redirects]]
 from = "/about"
 to = "/about/"
+status = 301
+
+[[redirects]]
+from = "/field-guide"
+to = "/field-guide/"
+status = 301
+
+[[redirects]]
+from = "/audit"
+to = "/audit/"
 status = 301
 
 [[redirects]]
@@ -98,13 +156,8 @@ to = "/thanks/"
 status = 301
 
 [[redirects]]
-from = "/privacy"
-to = "/privacy/"
-status = 301
-
-[[redirects]]
-from = "/terms"
-to = "/terms/"
+from = "/legal"
+to = "/legal/"
 status = 301
 
 [[redirects]]
@@ -132,15 +185,30 @@ from = "/glossary/:slug"
 to = "/glossary/:slug/"
 status = 301
 
+[[redirects]]
+from = "/industries/:slug"
+to = "/industries/:slug/"
+status = 301
+
+[[redirects]]
+from = "/case-studies/:slug"
+to = "/case-studies/:slug/"
+status = 301
+
+[[redirects]]
+from = "/studio/:slug"
+to = "/studio/:slug/"
+status = 301
+
 # Current service aliases.
 [[redirects]]
 from = "/websites"
-to = "/services/websites/"
+to = "/services/custom-local-websites/"
 status = 301
 
 [[redirects]]
 from = "/websites/"
-to = "/services/websites/"
+to = "/services/custom-local-websites/"
 status = 301
 
 [[redirects]]
@@ -154,13 +222,33 @@ to = "/services/it-support/"
 status = 301
 
 [[redirects]]
+from = "/systems"
+to = "/services/business-systems/"
+status = 301
+
+[[redirects]]
+from = "/systems/"
+to = "/services/business-systems/"
+status = 301
+
+[[redirects]]
+from = "/consulting"
+to = "/services/tech-consulting/"
+status = 301
+
+[[redirects]]
+from = "/consulting/"
+to = "/services/tech-consulting/"
+status = 301
+
+[[redirects]]
 from = "/local-search"
-to = "/services/local-search/"
+to = "/services/tech-consulting/"
 status = 301
 
 [[redirects]]
 from = "/local-search/"
-to = "/services/local-search/"
+to = "/services/tech-consulting/"
 status = 301
 
 [[redirects]]
@@ -173,15 +261,25 @@ from = "/business-systems/"
 to = "/services/business-systems/"
 status = 301
 
+[[redirects]]
+from = "/lifetime-cost"
+to = "/answers/reduce-monthly-software-costs-small-business/"
+status = 301
+
+[[redirects]]
+from = "/lifetime-cost/"
+to = "/answers/reduce-monthly-software-costs-small-business/"
+status = 301
+
 # Old service URLs mapped into real scratch routes.
 [[redirects]]
 from = "/website-design-small-business-nyc/*"
-to = "/services/websites/"
+to = "/services/custom-local-websites/"
 status = 301
 
 [[redirects]]
 from = "/services/website-design-small-business-nyc/*"
-to = "/services/websites/"
+to = "/services/custom-local-websites/"
 status = 301
 
 [[redirects]]
@@ -196,12 +294,12 @@ status = 301
 
 [[redirects]]
 from = "/local-seo-and-google-ads-nyc/*"
-to = "/services/local-search/"
+to = "/services/tech-consulting/"
 status = 301
 
 [[redirects]]
 from = "/services/local-seo-and-google-ads-nyc/*"
-to = "/services/local-search/"
+to = "/services/tech-consulting/"
 status = 301
 
 [[redirects]]
@@ -214,14 +312,82 @@ from = "/services/tech-consulting-small-business/*"
 to = "/services/business-systems/"
 status = 301
 
+# Legacy article URLs — preserve SEO juice by 301-redirecting to the new
+# journal URLs. Each legacy slug now lives at /journal/{slug}/.
+[[redirects]]
+from = "/blog/cybersecurity-for-small-business.html"
+to = "/journal/cybersecurity-for-small-business/"
+status = 301
+
+[[redirects]]
+from = "/blog/nyc-small-business-digital.html"
+to = "/journal/nyc-small-business-digital/"
+status = 301
+
+[[redirects]]
+from = "/blog/protecting-kids-from-ai.html"
+to = "/journal/protecting-kids-from-ai/"
+status = 301
+
+[[redirects]]
+from = "/blog/*"
+to = "/journal/"
+status = 301
+
+[[redirects]]
+from = "/software-guides/airtable-vs-notion-vs-monday-small-business/*"
+to = "/journal/airtable-vs-notion-vs-monday-small-business/"
+status = 301
+
+[[redirects]]
+from = "/software-guides/custom-business-system-vs-saas-subscriptions/*"
+to = "/journal/custom-business-system-vs-saas-subscriptions/"
+status = 301
+
+[[redirects]]
+from = "/software-guides/shopify-vs-squarespace-nyc-retail/*"
+to = "/journal/shopify-vs-squarespace-nyc-retail/"
+status = 301
+
+[[redirects]]
+from = "/software-guides/square-appointments-vs-glossgenius-nyc-salons/*"
+to = "/journal/square-appointments-vs-glossgenius-nyc-salons/"
+status = 301
+
+[[redirects]]
+from = "/software-guides/square-vs-toast-manhattan-restaurants/*"
+to = "/journal/square-vs-toast-manhattan-restaurants/"
+status = 301
+
+[[redirects]]
+from = "/software-guides/webflow-vs-squarespace-manhattan-small-business/*"
+to = "/journal/webflow-vs-squarespace-manhattan-small-business/"
+status = 301
+
 [[redirects]]
 from = "/software-guides/*"
-to = "/answers/reduce-monthly-software-costs-small-business/"
+to = "/journal/"
+status = 301
+
+# Legacy top-level long-form essays
+[[redirects]]
+from = "/ai-google-broke-the-internet-websites-survive/*"
+to = "/journal/ai-google-broke-the-internet-websites-survive/"
+status = 301
+
+[[redirects]]
+from = "/what-google-looks-for-business-website/*"
+to = "/journal/what-google-looks-for-business-website/"
+status = 301
+
+[[redirects]]
+from = "/why-business-websites-will-be-invisible/*"
+to = "/journal/why-business-websites-will-be-invisible/"
 status = 301
 
 [[redirects]]
 from = "/work/*"
-to = "/case-studies/"
+to = "/field-guide/#studies"
 status = 301
 
 [[redirects]]
@@ -230,18 +396,13 @@ to = "/services/"
 status = 301
 
 [[redirects]]
-from = "/blog/*"
-to = "/answers/"
-status = 301
-
-[[redirects]]
 from = "/privacy.html"
-to = "/privacy/"
+to = "/legal/"
 status = 301
 
 [[redirects]]
 from = "/terms.html"
-to = "/terms/"
+to = "/legal/"
 status = 301
 
 # Unknown paths should be a real 404, not a soft-404 SPA shell.

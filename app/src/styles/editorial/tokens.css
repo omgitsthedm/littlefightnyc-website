@@ -1,0 +1,75 @@
+/* Little Fight NYC — Editorial Tokens (v5 — Elevate)
+ * Two colors. Ink ground. One orange. Bone type. Nothing else.
+ */
+
+.lf-editorial {
+  /* Palette — three notes, period */
+  --lf-ink: #0A0A0A;          /* primary ground */
+  --lf-paper: #131313;        /* second surface — slightly warmer this pass */
+  --lf-hairline: #1F1F1F;     /* rules, dividers */
+  --lf-hairline-warm: #2A1F1B; /* hairlines under fight-orange ink */
+  --lf-bone: #F5F1E8;         /* primary type — editorial cream */
+  --lf-bone-soft: #B8B1A0;    /* secondary type — softer this pass */
+  --lf-bone-dim: #918878;     /* tertiary type — captions, marginalia */
+  --lf-fight: #FF6F1F;        /* THE orange — vibrant, juicy, not red */
+  --lf-ember: #FF8533;        /* hover / active warmth */
+  --lf-blue: #76B7FF;         /* support signal — modern, readable, never dominant */
+  --lf-blue-soft: #B8D9FF;    /* quiet blue for secondary labels */
+
+  /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
+  --lf-text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);     /* 12-14px */
+  --lf-text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 1rem);      /* 14-16px */
+  --lf-text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);     /* 16-18px */
+  --lf-text-md: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);   /* 18-22px */
+  --lf-text-lg: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);     /* 22-28px */
+  --lf-text-xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.75rem);     /* 30-44px */
+  --lf-text-2xl: clamp(2.75rem, 2rem + 3.5vw, 5rem);          /* 44-80px */
+  --lf-text-3xl: clamp(3.75rem, 2.5rem + 6vw, 9rem);          /* 60-144px */
+  --lf-text-4xl: clamp(5rem, 3rem + 9vw, 13rem);              /* 80-208px */
+  --lf-text-5xl: clamp(6rem, 4rem + 12vw, 18rem);             /* 96-288px — Press Strike scale */
+
+  /* Type families */
+  --lf-serif: "Fraunces Variable", "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --lf-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Spacing — editorial rhythm */
+  --lf-space-1: 4px;
+  --lf-space-2: 8px;
+  --lf-space-3: 12px;
+  --lf-space-4: 16px;
+  --lf-space-5: 24px;
+  --lf-space-6: 32px;
+  --lf-space-7: 48px;
+  --lf-space-8: 64px;
+  --lf-space-9: 96px;
+  --lf-space-10: 128px;
+  --lf-space-11: 160px;   /* cover-tier breathing */
+  --lf-space-12: 192px;   /* massive deliberate pause */
+
+  /* Layout */
+  --lf-margin-mobile: 20px;
+  --lf-margin-tablet: 48px;
+  --lf-margin-desktop: 64px;
+  --lf-column-gap: 32px;
+  --lf-max-w: 1440px;
+
+  /* Motion — bounce is OUT. Only natural deceleration. */
+  --lf-ease-slam: cubic-bezier(0.16, 1, 0.3, 1);
+  --lf-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --lf-ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --lf-ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --lf-ease-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+
+  /* Timing — premium pacing, not web-app pacing */
+  --lf-time-fast: 240ms;
+  --lf-time-base: 320ms;
+  --lf-time-slow: 480ms;
+  --lf-time-cinematic: 750ms;
+
+  /* Z-index */
+  --lf-z-content: 1;
+  --lf-z-ticker: 100;
+  --lf-z-drawer: 500;
+  --lf-z-flash: 999;
+}

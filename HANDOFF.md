@@ -1,8 +1,33 @@
 # Little Fight NYC Website - Claude Code Handoff
 
-Last updated: May 6, 2026
+Last updated: May 12, 2026
 
-This is the current working handoff for Claude Code. It covers the Little Fight NYC website overhaul, Fit Check intake system, phone intake work, SEO/AEO expansion, case studies, live deploy state, verification results, known concerns, and the next recommended work.
+## May 12, 2026 Source-Of-Truth Correction
+
+This file originally described the May 6 Git-backed state. The current live site has since been recovered and deployed from the local React/Vite app.
+
+Current source folder:
+
+`/Users/davidmarsh/Desktop/LiFi NYC/Brand/Website/littlefightnyc-website`
+
+Current app source:
+
+`/Users/davidmarsh/Desktop/LiFi NYC/Brand/Website/littlefightnyc-website/app`
+
+Netlify project:
+- Site name: `littlefightnyc`
+- Site ID: `0907d8fe-7018-48db-a6be-1f906e4b2619`
+- Build command: `cd app && npm ci && npm run build`
+- Publish directory: `app/dist`
+- Current production deploy ID: `6a02b70bc2dc6fac47dcc643`
+- Published: `2026-05-12T05:14:04.813Z`
+- Deploy source: Netlify API/manual deploy, not a GitHub `main` deploy
+
+Important: GitHub `main` is not guaranteed to match the current live site. The local `little-fight-overhaul` branch and its dirty/untracked files are the recovered production source. Do not reset, clean, or overwrite them without David's explicit instruction.
+
+See `SOURCE_OF_TRUTH.md` for the short operational version.
+
+The older May 6 handoff remains below as historical context for strategy, Fit Check, phone intake, SEO/AEO expansion, and known concerns.
 
 ## Current State
 

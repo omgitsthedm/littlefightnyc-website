@@ -1,0 +1,85 @@
+/* Dateline Ribbon — sticky top, the magazine-issue device.
+ * Mirror of a newspaper masthead's date line.
+ */
+
+.lf-dateline {
+  position: sticky;
+  top: 0;
+  z-index: var(--lf-z-ticker);
+  background: var(--lf-ink);
+  border-bottom: 1px solid var(--lf-hairline);
+  /* Sheen: a 1px highlight on the top edge */
+  box-shadow: inset 0 1px 0 0 rgba(245, 241, 232, 0.04);
+  backdrop-filter: saturate(140%);
+  -webkit-backdrop-filter: saturate(140%);
+}
+
+.lf-dateline__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-3);
+  height: 40px;
+  /* No internal scroll. If content can't fit, we hide the lowest-priority items
+     via responsive rules below. Phone number is sacred — it never hides. */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .lf-dateline__inner {
+    gap: var(--lf-space-4);
+  }
+}
+
+.lf-dateline__date,
+.lf-dateline__issue,
+.lf-dateline__locale {
+  color: var(--lf-bone-soft);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.lf-dateline__issue-num {
+  color: var(--lf-fight);
+  font-weight: 700;
+}
+
+.lf-dateline__divider {
+  width: 1px;
+  height: 16px;
+  background: var(--lf-hairline);
+  flex-shrink: 0;
+}
+
+.lf-dateline__phone {
+  margin-left: auto;
+  color: var(--lf-fight);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 120ms var(--lf-ease-out);
+  /* Wet ink: subtle warmth on hover */
+}
+
+.lf-dateline__phone:hover {
+  color: var(--lf-ember);
+}
+
+@media (max-width: 767px) {
+  .lf-dateline__locale {
+    display: none;
+  }
+  /* Hide one divider so the layout reads: DATE | ISSUE  …  PHONE */
+  .lf-dateline__divider:last-of-type {
+    display: none;
+  }
+}
+
+/* On the narrowest phones, the date format compresses. The phone number stays. */
+@media (max-width: 380px) {
+  .lf-dateline__date {
+    font-size: 11px;
+  }
+  .lf-dateline__divider {
+    display: none;
+  }
+}

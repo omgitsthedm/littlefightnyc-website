@@ -1,0 +1,100 @@
+/* Editorial Masthead — compact running header for inner pages.
+ * No animation. Just brand identity + section marker.
+ */
+
+.lf-mh {
+  padding-block: var(--lf-space-6) var(--lf-space-5);
+  border-bottom: 1px solid var(--lf-hairline);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .lf-mh {
+    padding-block: var(--lf-space-7) var(--lf-space-6);
+  }
+}
+
+/* Orange edge — the persistent "ink top rule" on every inner page */
+.lf-mh::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--lf-fight);
+}
+
+.lf-mh__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .lf-mh__inner {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--lf-space-5);
+  }
+}
+
+.lf-mh__brand {
+  display: inline-block;
+  position: relative;
+}
+
+.lf-mh__wordmark {
+  font-size: var(--lf-text-xl);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 144;
+  font-weight: 700;
+  color: var(--lf-bone);
+  margin: 0;
+  transition: color 180ms var(--lf-ease-out);
+}
+
+@media (min-width: 1024px) {
+  .lf-mh__wordmark {
+    font-size: var(--lf-text-2xl);
+  }
+}
+
+.lf-mh__underline {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--lf-fight);
+  margin-top: var(--lf-space-1);
+  transition: background-color 180ms var(--lf-ease-out);
+}
+
+.lf-mh__brand:hover .lf-mh__wordmark {
+  color: var(--lf-fight);
+}
+
+.lf-mh__brand:hover .lf-mh__underline {
+  background: var(--lf-ember);
+}
+
+.lf-mh__section {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-bone-soft);
+}
+
+.lf-mh__section-label {
+  color: var(--lf-fight);
+}
+
+.lf-mh__section-divider {
+  opacity: 0.5;
+}
+
+.lf-mh__section-name {
+  color: var(--lf-bone);
+}

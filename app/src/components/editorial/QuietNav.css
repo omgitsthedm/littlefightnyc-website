@@ -1,0 +1,96 @@
+.lf-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--lf-z-ticker);
+  background: rgba(10, 10, 10, 0.85);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lf-space-4);
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  padding: var(--lf-space-4) var(--lf-margin-mobile);
+  min-height: 56px;
+}
+
+@media (min-width: 768px) {
+  .lf-nav__inner {
+    padding-inline: var(--lf-margin-tablet);
+    min-height: 64px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-nav__inner {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-nav__brand {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 600;
+  font-size: var(--lf-text-base);
+  letter-spacing: -0.01em;
+  color: var(--lf-bone);
+  text-decoration: none;
+  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 768px) {
+  .lf-nav__brand {
+    font-size: var(--lf-text-md);
+  }
+}
+
+.lf-nav__brand:hover {
+  color: var(--lf-fight);
+}
+
+.lf-nav__phone {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+  color: var(--lf-bone);
+  text-decoration: none;
+  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+.lf-nav__phone:hover {
+  color: var(--lf-fight);
+}
+
+.lf-nav__phone-label {
+  display: none;
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+@media (min-width: 768px) {
+  .lf-nav__phone-label {
+    display: inline;
+  }
+}
+
+.lf-nav__phone-number {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 500;
+  font-size: var(--lf-text-base);
+  letter-spacing: -0.005em;
+}
+
+@media (min-width: 768px) {
+  .lf-nav__phone-number {
+    font-size: var(--lf-text-md);
+  }
+}

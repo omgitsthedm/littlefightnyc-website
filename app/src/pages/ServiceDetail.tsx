@@ -1,99 +1,183 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import CallToAction from "@/components/CallToAction";
 import { areaPages, services } from "@/data/site";
+import PageHero from "@/components/editorial/PageHero";
+import EditorialBody from "@/components/editorial/EditorialBody";
+import QuietContact from "@/components/editorial/QuietContact";
+import "@/styles/editorial/service-detail.css";
+
+const FEATURE_IMAGE: Record<string, string> = {
+  "tech-consulting": "/assets/local-business.webp",
+  "it-support": "/assets/typing.webp",
+  "custom-local-websites": "/assets/hero-laptop.webp",
+  "business-systems": "/assets/pos.webp",
+};
+
+const LEGACY_SLUG_MAP: Record<string, string> = {
+  websites: "custom-local-websites",
+  "local-search": "tech-consulting",
+};
+
+const AREA_ROUTE_SLUG: Record<string, string> = {
+  "custom-local-websites": "websites",
+  "tech-consulting": "local-search",
+};
+
+function areaRouteSlug(serviceSlug: string) {
+  return AREA_ROUTE_SLUG[serviceSlug] ?? serviceSlug;
+}
 
 export default function ServiceDetail() {
   const { slug } = useParams();
-  const service = services.find((item) => item.slug === slug);
-
+  const resolved = slug && LEGACY_SLUG_MAP[slug] ? LEGACY_SLUG_MAP[slug] : slug;
+  if (slug && LEGACY_SLUG_MAP[slug]) {
+    return <Navigate to={`/services/${resolved}/`} replace />;
+  }
+  const service = services.find((item) => item.slug === resolved);
   if (!service) return <Navigate to="/services/" replace />;
 
-  const Icon = service.icon;
   const related = services.filter((item) => item.slug !== service.slug);
-  const localPages = areaPages.slice(0, 6);
 
   return (
     <>
-      <section className="page-hero">
-        <p className="eyebrow">{service.eyebrow}</p>
-        <h1>{service.headline}</h1>
-        <p className="short-answer">{service.shortAnswer}</p>
+      <PageHero
+        eyebrow={`Service · ${service.verb}`}
+        title={<>{service.headline}</>}
+        dek={service.shortAnswer}
+        image={{
+          src: FEATURE_IMAGE[service.slug] ?? service.image,
+          alt: `${service.eyebrow} for New York small businesses`,
+          width: 1200,
+          height: 900,
+        }}
+      />
+
+      <section className="lf-sd">
+        <div className="lf-sd__inner">
+          <EditorialBody dropcap>
+            <p>{service.plain}</p>
+            <p>{service.outcome}</p>
+          </EditorialBody>
+
+          <aside className="lf-sd__aside">
+            <p className="lf-sd__aside-label">What's included</p>
+            <ul className="lf-sd__aside-list">
+              {service.includes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </aside>
+        </div>
       </section>
 
-      <section className={`service-detail ${service.accent}`}>
-        <div className="service-detail-media">
-          <img
-            src={service.image}
-            alt={`${service.eyebrow} for New York small businesses`}
-            width="900"
-            height="675"
-            loading="eager"
-            decoding="async"
-          />
-          <span>LF</span>
+      <section className="lf-sd-deep">
+        <div className="lf-sd-deep__inner">
+          <p className="lf-sd-deep__label">What this service actually does</p>
+          <div className="lf-sd-deep__prose">
+            {service.whatItDoes.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         </div>
-        <div className="service-detail-copy">
-          <Icon size={34} />
-          <h2>{service.title}</h2>
-          <p>{service.plain}</p>
-          <ul>
-            {service.includes.map((item) => (
-              <li key={item}>{item}</li>
+      </section>
+
+      <section className="lf-sd-issues">
+        <div className="lf-sd-issues__inner">
+          <header className="lf-sd-issues__head">
+            <p className="lf-sd-issues__label">Common issues we see</p>
+            <h2 className="lf-sd-issues__title">What we actually walk into.</h2>
+          </header>
+          <ol className="lf-sd-issues__list">
+            {service.commonIssues.map((issue, i) => (
+              <li key={i} className="lf-sd-issues__item">
+                <span className="lf-sd-issues__numeral" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="lf-sd-issues__body">
+                  <h3 className="lf-sd-issues__item-title">{issue.title}</h3>
+                  <p className="lf-sd-issues__item-text">{issue.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="lf-sd-fallacies">
+        <div className="lf-sd-fallacies__inner">
+          <header className="lf-sd-fallacies__head">
+            <p className="lf-sd-fallacies__label">Common fallacies</p>
+            <h2 className="lf-sd-fallacies__title">What people are usually wrong about.</h2>
+          </header>
+          <dl className="lf-sd-fallacies__list">
+            {service.fallacies.map((f, i) => (
+              <div key={i} className="lf-sd-fallacies__item">
+                <dt className="lf-sd-fallacies__myth">
+                  <span className="lf-sd-fallacies__tag">Myth</span>
+                  <span className="lf-sd-fallacies__myth-text">"{f.myth}"</span>
+                </dt>
+                <dd className="lf-sd-fallacies__reality">
+                  <span className="lf-sd-fallacies__tag lf-sd-fallacies__tag--reality">Reality</span>
+                  <span>{f.reality}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {service.faq.length > 0 && (
+        <section className="lf-sd-faq">
+          <div className="lf-sd-faq__inner">
+            <h2 className="lf-sd-faq__title">Owner questions, answered plainly.</h2>
+            <dl className="lf-sd-faq__list">
+              {service.faq.map((item) => (
+                <div key={item.question} className="lf-sd-faq__item">
+                  <dt className="lf-sd-faq__q">{item.question}</dt>
+                  <dd className="lf-sd-faq__a">{item.answer}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      )}
+
+      <section className="lf-sd-local">
+        <div className="lf-sd-local__inner">
+          <p className="lf-sd-local__label">Neighborhood pages</p>
+          <ul className="lf-sd-local__list">
+            {areaPages.map((area) => (
+              <li key={area.slug}>
+                <Link
+                  className="lf-sd-local__link"
+                  to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}
+                >
+                  <span>{service.eyebrow}</span>
+                  <strong>{area.name}</strong>
+                </Link>
+              </li>
             ))}
           </ul>
-          <strong>{service.outcome}</strong>
         </div>
       </section>
 
-      <section className="section split">
-        <div>
-          <p className="eyebrow">Plain-English FAQ</p>
-          <h2>What owners usually ask.</h2>
-        </div>
-        <div className="faq-list">
-          {service.faq.map((item) => (
-            <article key={item.question}>
-              <h3>{item.question}</h3>
-              <p>{item.answer}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="section-heading">
-          <p className="eyebrow">Related services</p>
-          <h2>The other pieces still matter.</h2>
-        </div>
-        <div className="service-grid large">
-          {related.map((item) => (
-            <Link className={`service-card ${item.accent}`} key={item.slug} to={`/services/${item.slug}/`}>
-              <item.icon size={26} />
-              <h3>{item.eyebrow}</h3>
-              <p>{item.outcome}</p>
-            </Link>
-          ))}
+      <section className="lf-sd-related">
+        <div className="lf-sd-related__inner">
+          <p className="lf-sd-related__label">The other three services</p>
+          <ul className="lf-sd-related__list">
+            {related.map((item) => (
+              <li key={item.slug}>
+                <Link to={`/services/${item.slug}/`} className="lf-sd-related__link">
+                  <span className="lf-sd-related__verb">{item.verb}</span>
+                  <span className="lf-sd-related__name">{item.eyebrow}</span>
+                  <span className="lf-sd-related__line">{item.headline}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section className="section">
-        <div className="section-heading">
-          <p className="eyebrow">NYC neighborhoods</p>
-          <h2>{service.eyebrow} help, tuned to the block.</h2>
-        </div>
-        <div className="answer-list">
-          {localPages.map((area) => (
-            <Link key={area.slug} to={`/areas/${area.slug}/${service.slug}/`}>
-              <h3>
-                {service.eyebrow} for {area.name}
-              </h3>
-              <p>{area.shortAnswer}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <CallToAction compact />
+      <QuietContact />
     </>
   );
 }

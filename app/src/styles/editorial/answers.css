@@ -1,0 +1,217 @@
+/* Answers — text-led index. Magazine table-of-contents discipline. */
+
+.lf-answers-index {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-answers-index {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-answers-index {
+    padding: var(--lf-space-9) var(--lf-margin-desktop) var(--lf-space-10);
+  }
+}
+
+.lf-answers-index__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+.lf-answers-index__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-answers-index__item {
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-answers-index__link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--lf-space-4);
+  padding: var(--lf-space-5) 0;
+  text-decoration: none;
+  color: var(--lf-bone);
+  transition: padding-left var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 768px) {
+  .lf-answers-index__link {
+    gap: var(--lf-space-6);
+    padding: var(--lf-space-6) 0;
+  }
+}
+
+.lf-answers-index__link:hover {
+  padding-left: var(--lf-space-3);
+}
+
+.lf-answers-index__num {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--lf-fight);
+  align-self: start;
+  padding-top: var(--lf-space-1);
+  min-width: 2em;
+}
+
+.lf-answers-index__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+}
+
+.lf-answers-index__q {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 72;
+  font-weight: 600;
+  font-size: var(--lf-text-lg);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 1024px) {
+  .lf-answers-index__q {
+    font-size: var(--lf-text-xl);
+  }
+}
+
+.lf-answers-index__link:hover .lf-answers-index__q {
+  color: var(--lf-fight);
+}
+
+.lf-answers-index__short {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+  max-width: 70ch;
+  letter-spacing: -0.005em;
+}
+
+/* Single answer guide page */
+.lf-answer-page {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-answer-page {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-answer-page {
+    padding: var(--lf-space-9) var(--lf-margin-desktop) var(--lf-space-10);
+  }
+}
+
+.lf-answer-page__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+.lf-answer-page__short {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 32;
+  font-size: var(--lf-text-lg);
+  line-height: 1.4;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-7);
+  max-width: 56ch;
+  letter-spacing: -0.005em;
+}
+
+.lf-answer-page__byline {
+  margin: 0 0 var(--lf-space-7);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lf-bone-soft);
+}
+
+.lf-answer-page__byline a {
+  color: var(--lf-fight);
+}
+
+.lf-answer-page__section {
+  margin-bottom: var(--lf-space-7);
+  max-width: 60ch;
+}
+
+.lf-answer-page__section h2 {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 72;
+  font-weight: 600;
+  font-size: var(--lf-text-xl);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-3);
+}
+
+.lf-answer-page__section p {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-md);
+  line-height: 1.7;
+  color: var(--lf-bone);
+  margin: 0;
+  letter-spacing: -0.003em;
+}
+
+.lf-answer-page__faq {
+  margin-top: var(--lf-space-8);
+  padding-top: var(--lf-space-7);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-answer-page__faq-title {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-answer-page__faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-5);
+  max-width: 60ch;
+}
+
+.lf-answer-page__faq-q {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 600;
+  font-size: var(--lf-text-md);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-2);
+}
+
+.lf-answer-page__faq-a {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-base);
+  line-height: 1.6;
+  color: var(--lf-bone-soft);
+  margin: 0;
+}

@@ -1,0 +1,119 @@
+/* EditorialBody — long-form prose wrapper. Restrained typography. */
+
+.lf-body {
+  max-width: 60ch;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--lf-time-cinematic) var(--lf-ease-out-quart),
+              transform var(--lf-time-cinematic) var(--lf-ease-out-quart);
+}
+
+.lf-body[data-revealed="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lf-body--wide {
+  max-width: 72ch;
+}
+
+.lf-body p {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-md);
+  line-height: 1.7;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-5);
+  letter-spacing: -0.003em;
+}
+
+.lf-body p:last-child {
+  margin-bottom: 0;
+}
+
+.lf-body p + p {
+  text-indent: 1.5em;
+}
+
+.lf-body h2 {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 72;
+  font-weight: 600;
+  font-size: var(--lf-text-xl);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  margin: var(--lf-space-7) 0 var(--lf-space-4);
+}
+
+.lf-body h2:first-child {
+  margin-top: 0;
+}
+
+.lf-body h3 {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 600;
+  font-size: var(--lf-text-lg);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--lf-bone);
+  margin: var(--lf-space-6) 0 var(--lf-space-3);
+}
+
+.lf-body ul,
+.lf-body ol {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 14;
+  font-size: var(--lf-text-md);
+  line-height: 1.7;
+  color: var(--lf-bone);
+  padding-left: var(--lf-space-5);
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-body li {
+  margin-bottom: var(--lf-space-2);
+}
+
+.lf-body strong {
+  color: var(--lf-bone);
+  font-weight: 600;
+}
+
+.lf-body em {
+  font-style: italic;
+}
+
+.lf-body a {
+  color: color-mix(in srgb, var(--lf-bone) 78%, var(--lf-fight) 22%);
+  font-weight: 650;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.02em 0.14em;
+  margin-inline: -0.04em;
+  transition:
+    color var(--lf-time-fast) var(--lf-ease-out-quart),
+    background-color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+.lf-body a:hover {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 16%, transparent);
+}
+
+/* Drop cap — one-shot, applies to the first paragraph only when --dropcap is on */
+.lf-body--dropcap > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 144;
+  font-size: 5.5em;
+  line-height: 0.85;
+  padding-top: 0.06em;
+  padding-right: 0.1em;
+  color: var(--lf-fight);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}

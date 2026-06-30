@@ -1,0 +1,74 @@
+import { ExternalLink, FileSearch, ShieldCheck } from "lucide-react";
+import PageHero from "@/components/editorial/PageHero";
+import EditorialBody from "@/components/editorial/EditorialBody";
+import QuietContact from "@/components/editorial/QuietContact";
+import "@/styles/editorial/audit.css";
+
+const AUDIT_URL = "https://audit.littlefightnyc.com/";
+
+export default function Audit() {
+  return (
+    <>
+      <PageHero
+        eyebrow="Website Audit"
+        title={
+          <>
+            See what your site{" "}
+            <br />
+            <span className="lf-em">is leaking.</span>
+          </>
+        }
+        dek="The redesigned audit tool reviews visibility, trust, speed, structure, and the practical paths that turn a visitor into a call."
+        image={{
+          src: "/assets/coworking-laptops.webp",
+          alt: "Open laptops in a Brooklyn workspace",
+          width: 1600,
+          height: 1200,
+        }}
+      />
+
+      <section className="lf-audit-page">
+        <div className="lf-audit-page__inner">
+          <EditorialBody>
+            <p>
+              The audit is the fastest way to get a first read on a business
+              website before a consult. It checks whether the page structure,
+              copy, local signals, performance, and contact paths are helping
+              people understand the business or quietly adding friction.
+            </p>
+            <p>
+              Use it when the site looks fine but leads are soft, Google feels
+              unpredictable, or nobody can tell whether the next move should be
+              a rebuild, a repair, or a smaller cleanup.
+            </p>
+          </EditorialBody>
+
+          <div className="lf-audit-page__panel" aria-label="Open the website audit">
+            <div className="lf-audit-page__marks" aria-hidden="true">
+              <span><FileSearch size={24} strokeWidth={1.8} /></span>
+              <span><ShieldCheck size={24} strokeWidth={1.8} /></span>
+            </div>
+            <div>
+              <p className="lf-audit-page__eyebrow">Redesigned audit tool</p>
+              <h2 className="lf-audit-page__title">Run the external audit.</h2>
+              <p className="lf-audit-page__copy">
+                Opens the dedicated audit experience at audit.littlefightnyc.com.
+              </p>
+            </div>
+            <a
+              className="lf-audit-page__button"
+              href={AUDIT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Audit
+              <ExternalLink size={18} strokeWidth={1.8} aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <QuietContact />
+    </>
+  );
+}

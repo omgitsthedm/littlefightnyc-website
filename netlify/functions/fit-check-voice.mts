@@ -454,7 +454,7 @@ async function sendTwilioSms(to: string, body: string): Promise<{
   }
 }
 
-async function notifyDavidBySms(subject: string, state: VoiceState, details: string[] = []) {
+async function notifyTeamBySms(subject: string, state: VoiceState, details: string[] = []) {
   const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
   if (!notifyTo) return { configured: false, sent: false };
 
@@ -669,21 +669,21 @@ function finalClientLine(result: JsonRecord | null, state: VoiceState): string {
 
   if (conversion.stage === "urgent_support") {
     return callerSmsEnabled
-      ? `Got it. This sounds urgent. I am alerting David and texting you the next step. This is not a quote.`
-      : `Got it. This sounds urgent. I am alerting David now. This is not a quote.`;
+      ? `Got it. This sounds urgent. I am alerting Little Fight NYC and texting you the next step. This is not a quote.`
+      : `Got it. This sounds urgent. I am alerting Little Fight NYC now. This is not a quote.`;
   }
 
   if (conversion.stage === "fit_check") {
     return callerSmsEnabled
-      ? `This sounds like a Fit Check. I am texting you the next step and sending David the useful version. This is not a quote.`
-      : `This sounds like a Fit Check. I am sending David the useful version. This is not a quote.`;
+      ? `This sounds like a Fit Check. I am texting you the next step and sending Little Fight NYC the useful version. This is not a quote.`
+      : `This sounds like a Fit Check. I am sending Little Fight NYC the useful version. This is not a quote.`;
   }
 
   if (cleanText(resultRecord?.client_facing_summary)) {
-    return `Based on what you shared, this sounds like ${category}. David will review it directly. This is not a quote.`;
+    return `Based on what you shared, this sounds like ${category}. Little Fight NYC will review it directly. This is not a quote.`;
   }
 
-  return `Based on what you shared, this sounds like ${category}. David will review it directly. This is not a quote.`;
+  return `Based on what you shared, this sounds like ${category}. Little Fight NYC will review it directly. This is not a quote.`;
 }
 
 function urgentDial(req: Request, state: VoiceState): string {
@@ -698,7 +698,7 @@ function urgentDial(req: Request, state: VoiceState): string {
 
   const action = absoluteUrl(req, `?step=dial_done&s=${encodeURIComponent(encodeState(state))}`);
   return [
-    say("I am going to try David now. If he cannot pick up, the brief has still been captured."),
+    say("I am going to try the urgent line now. If nobody can pick up, the brief has still been captured."),
     `<Dial timeout="18" action="${escapeXml(action)}">${escapeXml(forwardNumber)}</Dial>`,
   ].join("");
 }
@@ -712,7 +712,7 @@ async function handleStatusCallback(params: URLSearchParams): Promise<Response> 
   const duration = Number(paramValue(params, "CallDuration") || paramValue(params, "Duration") || 0);
   const statusLabel = callStatus || "status";
 
-  await notifyDavidBySms(`Fit Check call ${statusLabel}`, state, [
+  await notifyTeamBySms(`Fit Check call ${statusLabel}`, state, [
     Number.isFinite(duration) && duration > 0 ? `Duration: ${duration}s` : "",
   ]);
 
@@ -748,13 +748,13 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   }
 
   if (step === "start") {
-    await notifyDavidBySms("Incoming Fit Check call", state);
+    await notifyTeamBySms("Incoming Fit Check call", state);
 
     return response(
       twiml([
         gather(
           req,
-          "Little Fight NYC. I am the helper that gets David the useful version first. I will ask a few quick questions. Do not share sensitive information. Say yes or press 1 to continue. Say no or press 2 to leave a message.",
+          "Little Fight NYC. I am the helper that gets the useful version first. I will ask a few quick questions. Do not share sensitive information. Say yes or press 1 to continue. Say no or press 2 to leave a message.",
           "consent",
           state,
           { numDigits: "1", timeout: "8" },
@@ -810,10 +810,10 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   if (step === "no_ai_message") {
     state.problem = input || "Caller declined AI summary and did not leave a clear message.";
     await submitNoAiMessage(req, state);
-    await notifyDavidBySms("Fit Check caller left a message", state);
+    await notifyTeamBySms("Fit Check caller left a message", state);
     return response(
       twiml([
-        say("Thanks. I have the short message and caller ID if available. David can follow up from there."),
+        say("Thanks. I have the short message and caller ID if available. Little Fight NYC can follow up from there."),
         hangup(),
       ]),
     );
@@ -861,7 +861,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         gather(
           req,
-          "How should David follow up: text, phone, or email?",
+          "How should Little Fight NYC follow up: text, phone, or email?",
           "followup",
           state,
           { timeout: "9" },
@@ -915,7 +915,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
       twiml([
         say(finalClientLine(result, state)),
         pause(1),
-        say("Thanks. David will review it before talking scope or pricing."),
+        say("Thanks. Little Fight NYC will review it before talking scope or pricing."),
         urgentDial(req, state),
         say("Thanks for calling Little Fight NYC."),
         hangup(),

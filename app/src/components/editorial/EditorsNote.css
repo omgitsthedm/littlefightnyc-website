@@ -1,0 +1,47 @@
+/* Editor's Note — the italic dek that follows the masthead. */
+
+.lf-note {
+  padding-block: 0 var(--lf-space-8);
+}
+
+.lf-note__label {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-4);
+  display: inline-block;
+  padding-bottom: var(--lf-space-2);
+}
+
+.lf-note__lede {
+  font-size: var(--lf-text-xl);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 144;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-5);
+  max-width: 22ch;
+}
+
+@media (min-width: 1024px) {
+  .lf-note__lede {
+    font-size: var(--lf-text-2xl);
+    max-width: 28ch;
+  }
+}
+
+@media (max-width: 767px) {
+  .lf-note__br {
+    display: none;
+  }
+}
+
+.lf-note__body {
+  font-size: var(--lf-text-md);
+  line-height: 1.6;
+  color: var(--lf-bone-soft);
+  max-width: 56ch;
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-note__sign {
+  color: var(--lf-bone-soft);
+}

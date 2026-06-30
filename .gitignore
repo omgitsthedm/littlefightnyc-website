@@ -13,3 +13,13 @@ package-lock.json
 !app/package-lock.json
 dist/
 dist-*/
+
+# --- secrets & local cruft (added during 2026-06-30 consolidation) ---
+.env
+*.env
+.env.*
+app/.env
+tmp/
+backup/
+deploy-*.zip
+*.zip

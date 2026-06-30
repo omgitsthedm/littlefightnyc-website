@@ -1,47 +1,57 @@
-import { useLocation } from "react-router-dom";
+import PageHero from "@/components/editorial/PageHero";
+import EditorialBody from "@/components/editorial/EditorialBody";
+import QuietContact from "@/components/editorial/QuietContact";
 
 export default function Legal() {
-  const isTerms = useLocation().pathname.includes("terms");
-
   return (
-    <section className="page-hero">
-      <p className="eyebrow">{isTerms ? "Terms" : "Privacy"}</p>
-      <h1>{isTerms ? "Simple terms." : "Privacy, plain and simple."}</h1>
-      {isTerms ? (
-        <>
-          <p className="short-answer">
-            Short answer: Little Fight scopes work before quoting it, avoids fake certainty, and expects safe
-            access handoffs for any accounts, systems, or sensitive business tools.
-          </p>
-          <div className="article-body">
-            <article>
-              <h2>Work and scope</h2>
-              <p>Project scope, pricing, access needs, and timelines should be confirmed in writing before work begins.</p>
-            </article>
-            <article>
-              <h2>No sensitive information in forms</h2>
-              <p>Do not send passwords, recovery codes, API keys, payment details, or private customer data through public forms.</p>
-            </article>
-          </div>
-        </>
-      ) : (
-        <>
-          <p className="short-answer">
-            Short answer: Little Fight collects only the information needed to understand your business issue,
-            follow up, and improve the site. Do not send sensitive information through public forms.
-          </p>
-          <div className="article-body">
-            <article>
-              <h2>What forms collect</h2>
-              <p>Fit Check forms may collect your name, business, contact details, follow-up preference, and plain-English context about the issue.</p>
-            </article>
-            <article>
-              <h2>What not to send</h2>
-              <p>Do not send passwords, recovery codes, API keys, credit card numbers, bank details, or regulated private information.</p>
-            </article>
-          </div>
-        </>
-      )}
-    </section>
+    <>
+      <PageHero
+        eyebrow="Privacy and Terms"
+        title={
+          <>
+            Privacy and terms,{" "}
+            <br />
+            <span className="lf-em">plain.</span>
+          </>
+        }
+        dek="Little Fight collects only what it needs to understand the issue, scopes work before quoting it, and handles account access through safer handoffs."
+      />
+
+      <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9)" }}>
+        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+          <EditorialBody>
+            <h2 id="privacy">What forms collect</h2>
+            <p>
+              Fit Check and contact paths may collect your name, business
+              name, contact information, follow-up preference, and a plain
+              description of the issue. That is the minimum needed to reply
+              usefully.
+            </p>
+            <h2>What not to send</h2>
+            <p>
+              Do not send passwords, recovery codes, API keys, credit card
+              numbers, bank details, protected health information, or private
+              customer data through any public form on this site.
+            </p>
+            <h2 id="terms">Work and scope</h2>
+            <p>
+              Project scope, pricing, access needs, and timelines are
+              confirmed in writing before work begins. If anything changes
+              mid-engagement, the change is written down and acknowledged
+              before the work continues.
+            </p>
+            <h2>Safe account access</h2>
+            <p>
+              If access to a website, domain, payment tool, booking system, or
+              business account is required, Little Fight sets up a safer handoff
+              instead of asking for credentials over a public form, email, or
+              text thread.
+            </p>
+          </EditorialBody>
+        </div>
+      </section>
+
+      <QuietContact />
+    </>
   );
 }

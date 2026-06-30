@@ -104,18 +104,18 @@ const categoryLanguage: Record<ApprovedCategory, string> = {
   "Local Search / Visibility":
     "a Google and local visibility issue. Little Fight would review whether nearby customers can find, trust, and contact the business when they are ready to buy.",
   "Not Sure Yet":
-    "unclear enough that it deserves human review. You do not need the perfect technical term before David looks at the setup.",
+    "unclear enough that it deserves human review. You do not need the perfect technical term before Little Fight looks at the setup.",
 };
 
 const ballparkLanguage: Record<string, string> = {
   "Level 1: On-demand support":
     "This likely starts as on-demand support. First goal: find out whether this is a contained fix or a symptom of a larger setup issue.",
   "Level 2: First Look":
-    "The best next step is a First Look so David can review the setup before recommending the smallest useful move.",
+    "The best next step is a First Look so Little Fight can review the setup before recommending the smallest useful move.",
   "Level 3: Focused cleanup":
     "This sounds like a focused cleanup. The foundation may be usable, but one or more pieces need to be clarified, connected, or repaired.",
   "Level 4: Project build":
-    "This sounds like a project build. David would need to review what exists now, what is costing money, and what would help the business actually run better.",
+    "This sounds like a project build. Little Fight would need to review what exists now, what is costing money, and what would help the business actually run better.",
   "Level 5: Larger custom help":
     "This sounds like larger custom help, especially if a pricey monthly platform is underused or forcing the team into daily workarounds.",
 };
@@ -623,7 +623,7 @@ function buildKeepConnectReplaceBuild(
 
   if (!keep.size) keep.add("Preserve anything already working for customers or staff.");
   if (!connect.size) connect.add("Check whether working pieces are isolated from the rest of the workflow.");
-  if (!replace.size) replace.add("Do not replace anything until David reviews fit, cost, usage, and risk.");
+  if (!replace.size) replace.add("Do not replace anything until Little Fight reviews fit, cost, usage, and risk.");
   if (!build.size) build.add("Build only the missing piece if a smaller fix will do.");
 
   return {
@@ -812,7 +812,7 @@ function makeFollowUpEmail(lead: JsonRecord, result: FitCheckResult): {
     "The best next step is for me to review the current site, monthly tools, and where the work gets stuck, then recommend the smallest useful next move.",
     "",
     "Best,",
-    "David",
+    "Little Fight NYC",
   ];
 
   return { subject, body: body.join("\n") };
@@ -833,12 +833,12 @@ function buildDeterministicResult(lead: JsonRecord): FitCheckResult {
   const nextStep = recommendedNextStep(primary, urgency);
   const sensitive = includesAny(text, sensitiveTriggers);
   const disclaimer =
-    "This is not a quote. It is a fast first read. David reviews the setup before scope, timing, or price.";
+    "This is not a quote. It is a fast first read. Little Fight reviews the setup before scope, timing, or price.";
 
   const clientSummary = [
     `Based on what you shared, this sounds like ${categoryLanguage[primary]}`,
     ballparkLanguage[ballparkType],
-    sensitive ? "Please do not share sensitive information here. David can walk you through safer access if this moves forward." : "",
+    sensitive ? "Please do not share sensitive information here. Little Fight can walk you through safer access if this moves forward." : "",
     disclaimer,
   ]
     .filter(Boolean)
@@ -1061,7 +1061,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
           {
             role: "system",
             content:
-              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the owner used the term first. Focus on money saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be David. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
+              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the owner used the term first. Focus on money saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be an individual founder. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
           },
           {
             role: "user",
@@ -1074,7 +1074,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
                 secondary_categories: ["Website Cleanup"],
                 urgency_level: "planned_improvement",
                 client_facing_summary: "Must include the phrase 'not a quote'.",
-                internal_summary: "Internal brief for David.",
+                internal_summary: "Internal brief for Little Fight.",
                 business_snapshot: {
                   business_type: "",
                   location: "",
@@ -1368,7 +1368,7 @@ async function sendSmsNotifications(lead: JsonRecord, result: FitCheckResult) {
   ) {
     const body =
       conversion.stage === "urgent_support"
-        ? `Little Fight NYC: got your urgent Fit Check. David has the brief. ${conversion.label}: ${conversion.url}`
+        ? `Little Fight NYC: got your urgent Fit Check. The team has the brief. ${conversion.label}: ${conversion.url}`
         : `Little Fight NYC: got your Fit Check. Next step: ${conversion.label}: ${conversion.url}`;
     caller = await sendTwilioSms(callerPhone, body);
   }

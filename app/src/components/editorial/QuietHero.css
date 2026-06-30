@@ -1,0 +1,438 @@
+/* Quiet Hero — one photograph, character cascade headline, bottom marquee.
+ * Editorial gravitas via type. Living evidence via the always-on ticker.
+ */
+
+.lf-hero {
+  position: relative;
+  min-height: min(100svh, 760px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+@media (min-width: 768px) {
+  .lf-hero {
+    min-height: min(90vh, 820px);
+  }
+}
+
+.lf-hero__image {
+  position: absolute;
+  inset: -3%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.lf-hero__image picture,
+.lf-hero__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lf-hero__image picture {
+  position: absolute;
+  inset: 0;
+}
+
+.lf-hero__image img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Tint overlay — lifted so brand color comes through */
+.lf-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    /* Subtle warm fight-orange glow from bottom-left to give brand presence */
+    radial-gradient(ellipse at 0% 100%, rgba(254, 88, 0, 0.18) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.05) 0%, rgba(10, 10, 10, 0.45) 60%, rgba(10, 10, 10, 0.88) 100%);
+  pointer-events: none;
+}
+
+.lf-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  padding: var(--lf-space-7) var(--lf-margin-mobile) calc(var(--lf-space-7) + 64px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-4);
+}
+
+@media (min-width: 768px) {
+  .lf-hero__content {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) calc(var(--lf-space-8) + 72px);
+    gap: var(--lf-space-6);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-hero__content {
+    padding: var(--lf-space-8) var(--lf-margin-desktop) calc(var(--lf-space-8) + 72px);
+  }
+}
+
+/* ============================================================
+   Claim — character cascade reveal
+   ============================================================ */
+
+.lf-hero__claim {
+  font-family: var(--lf-serif);
+  /* opsz 72 instead of 144 — gives fuller strokes at display size.
+   * wght 700 instead of 600 — more presence on a dark hero. */
+  font-variation-settings: "opsz" 72, "wght" 700;
+  font-weight: 700;
+  font-size: var(--lf-text-2xl);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  color: #FFFFFF;
+  margin: 0;
+  max-width: 22ch;
+}
+
+.lf-hero__brief {
+  max-width: 48rem;
+  display: grid;
+  gap: var(--lf-space-3);
+  color: var(--lf-bone-soft);
+}
+
+.lf-hero__brief p {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 18;
+  font-size: var(--lf-text-md);
+  line-height: 1.28;
+  letter-spacing: -0.006em;
+}
+
+.lf-hero__promise {
+  color: var(--lf-bone);
+  font-style: italic;
+}
+
+.lf-hero__claim .lf-hero__char {
+  color: #FFFFFF;
+}
+
+@media (min-width: 768px) {
+  .lf-hero__claim {
+    font-size: var(--lf-text-3xl);
+    letter-spacing: -0.045em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-hero__claim {
+    font-size: clamp(5.25rem, 7.2vw, 8.75rem);
+    max-width: 17ch;
+  }
+}
+
+.lf-hero__line {
+  display: block;
+  overflow: visible;
+  padding-block: 0.04em;
+}
+
+/* Bulletproof pattern: default state is VISIBLE. Animation runs FROM hidden
+ * to visible with `backwards` fill mode (which paints the from-state during
+ * the delay). If anything interrupts the animation, the text stays readable. */
+.lf-hero__char {
+  display: inline-block;
+  transform: translateY(0);
+  opacity: 1;
+  animation: lf-hero-char-rise 760ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(180ms + var(--lf-i, 0) * 14ms);
+  will-change: transform, opacity;
+  white-space: pre;
+}
+
+@keyframes lf-hero-char-rise {
+  from {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Italic orange emphasis — same cascade, color forced, matched weight */
+.lf-hero__claim-em {
+  color: var(--lf-fight);
+  font-style: italic;
+  font-weight: 700;
+  font-variation-settings: "opsz" 72, "wght" 700;
+}
+
+.lf-hero__claim-em .lf-hero__char {
+  color: var(--lf-fight);
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-hero__char {
+    animation-delay: 0ms !important;
+    animation-duration: 0.001ms !important;
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+  .lf-hero__claim-em .lf-hero__char {
+    animation: none !important;
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+  }
+}
+
+.lf-hero__channels {
+  list-style: none;
+  margin: var(--lf-space-2) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  max-width: 68rem;
+  background: color-mix(in srgb, var(--lf-bone) 13%, transparent);
+  opacity: 1;
+  transform: translateY(0);
+  animation: lf-hero-cta-in 500ms cubic-bezier(0.22, 1, 0.36, 1) 260ms backwards;
+}
+
+@media (min-width: 900px) {
+  .lf-hero__channels {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.lf-hero__channels li {
+  min-width: 0;
+}
+
+.lf-hero__channel {
+  min-height: 72px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-1);
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--lf-space-3);
+  background:
+    linear-gradient(180deg, rgba(19, 19, 19, 0.7), rgba(10, 10, 10, 0.54));
+  border: 0;
+  text-decoration: none;
+  appearance: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  backdrop-filter: blur(12px);
+  transition:
+    background-color var(--lf-time-fast) var(--lf-ease-out-quart),
+    box-shadow var(--lf-time-fast) var(--lf-ease-out-quart),
+    color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+@media (min-width: 640px) {
+  .lf-hero__channel {
+    min-height: 82px;
+    padding: var(--lf-space-3) var(--lf-space-4);
+  }
+}
+
+.lf-hero__channel:hover {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lf-paper) 84%, var(--lf-fight) 16%), rgba(10, 10, 10, 0.62));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--lf-bone) 22%, transparent);
+}
+
+@keyframes lf-hero-cta-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-hero__channels {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.lf-hero__channel-label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+.lf-hero__channel-detail {
+  font-family: var(--lf-serif);
+  font-variation-settings: "opsz" 32;
+  font-weight: 650;
+  font-size: var(--lf-text-base);
+  letter-spacing: -0.01em;
+  color: var(--lf-bone);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 1024px) {
+  .lf-hero__channel-detail {
+    font-size: clamp(1.05rem, 0.9rem + 0.35vw, 1.2rem);
+  }
+}
+
+.lf-hero__channel-note {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  line-height: 1.25;
+}
+
+@media (max-width: 480px) {
+  .lf-hero__content {
+    padding-bottom: calc(var(--lf-space-8) + 84px);
+  }
+
+  .lf-hero__channel {
+    min-height: 64px;
+    gap: 2px;
+    padding: var(--lf-space-2) var(--lf-space-3);
+  }
+
+  .lf-hero__channel-label {
+    font-size: 10px;
+  }
+
+  .lf-hero__channel-detail {
+    font-size: 0.95rem;
+  }
+
+  .lf-hero__channel-note {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Marquee — "what we fix today" infinite ticker at the bottom
+   ============================================================ */
+
+.lf-hero__marquee {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding-block: var(--lf-space-3);
+  /* Solid background instead of backdrop-filter — backdrop blur was the
+     biggest paint cost on mobile. Looks the same on a dark photo. */
+  background: rgba(8, 8, 8, 0.88);
+  border-top: 1px solid var(--lf-hairline);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4rem, #000 calc(100% - 4rem), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 4rem, #000 calc(100% - 4rem), transparent 100%);
+  opacity: 0;
+  animation: lf-hero-marquee-in 800ms cubic-bezier(0.22, 1, 0.36, 1) 1400ms forwards;
+  contain: layout paint;
+}
+
+@keyframes lf-hero-marquee-in {
+  to { opacity: 1; }
+}
+
+.lf-hero__marquee-track {
+  display: flex;
+  gap: 0;
+  animation: lf-marquee-scroll 80s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
+@keyframes lf-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.lf-hero__marquee:hover .lf-hero__marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-hero__marquee-track {
+    animation: none;
+  }
+  .lf-hero__marquee {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.lf-hero__marquee-list {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-5);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-inline-end: var(--lf-space-5);
+  white-space: nowrap;
+}
+
+.lf-hero__marquee-label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  padding-inline: var(--lf-space-4);
+  border-inline-end: 1px solid var(--lf-hairline);
+  flex-shrink: 0;
+}
+
+.lf-hero__marquee-item {
+  position: relative;
+  padding-inline-end: var(--lf-space-5);
+}
+
+.lf-hero__marquee-link {
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-variation-settings: "opsz" 32;
+  font-size: var(--lf-text-sm);
+  letter-spacing: -0.005em;
+  color: var(--lf-bone-soft);
+  text-decoration: none;
+  transition: color 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lf-hero__marquee-link:hover {
+  color: var(--lf-fight);
+}
+
+.lf-hero__marquee-item::after {
+  content: "·";
+  position: absolute;
+  right: 0;
+  color: var(--lf-fight);
+  font-style: normal;
+  pointer-events: none;
+}
