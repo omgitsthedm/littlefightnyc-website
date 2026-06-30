@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build:html": "node build/inject-partials.mjs",
     "preview": "node scripts/preview-server.mjs",
     "generate:aeo": "node scripts/generate-aeo-beast-pages.mjs",
     "indexnow": "node scripts/submit-indexnow.mjs"
