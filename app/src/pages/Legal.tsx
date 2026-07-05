@@ -14,7 +14,7 @@ export default function Legal() {
             <span className="lf-em">plain.</span>
           </>
         }
-        dek="Little Fight collects only what it needs to understand the issue, scopes work before quoting it, and handles account access through safer handoffs."
+        dek="Little Fight collects only what it needs to understand the issue, scopes work before quoting it, measures what is working, and handles account access through safer handoffs."
       />
 
       <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9)" }}>
@@ -26,6 +26,29 @@ export default function Legal() {
               name, contact information, follow-up preference, and a plain
               description of the issue. That is the minimum needed to reply
               usefully.
+            </p>
+            <h2>Analytics and advertising pixels</h2>
+            <p>
+              Little Fight uses analytics and advertising tools, including
+              Google Analytics and the TikTok Pixel, to understand which pages
+              are useful, which contact paths work, and whether marketing is
+              sending the right people to the site.
+            </p>
+            <p>
+              These tools may record page views, approximate device/browser
+              details, referral information, and events such as phone clicks,
+              email clicks, Fit Check or contact button clicks, and form
+              submits. Little Fight uses this information for measurement,
+              reporting, and improving marketing, not to sell personal
+              information.
+            </p>
+            <h2>Cookies, pixels, and opt-outs</h2>
+            <p>
+              Analytics scripts, cookies, pixels, or similar browser storage
+              may be used by Little Fight and its providers to measure site
+              activity. You can limit this through your browser settings,
+              content blockers, private browsing tools, or opt-out controls
+              offered by Google, TikTok, and other advertising platforms.
             </p>
             <h2>What not to send</h2>
             <p>
@@ -46,6 +69,11 @@ export default function Legal() {
               business account is required, Little Fight sets up a safer handoff
               instead of asking for credentials over a public form, email, or
               text thread.
+            </p>
+            <h2>Privacy questions</h2>
+            <p>
+              For privacy questions or requests, email Little Fight at
+              {" "}<a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>.
             </p>
           </EditorialBody>
         </div>
