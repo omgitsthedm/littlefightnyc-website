@@ -241,6 +241,8 @@ a.lf-momentum__card:focus-visible .lf-momentum__card-go {
   transition: background-color var(--lf-time-snappy) var(--lf-ease-standard),
     transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
+/* Dark ink on the orange fill for AA contrast — scoped to beat `.lf-editorial a`. */
+.lf-editorial .lf-momentum__cta-button { color: var(--lf-ink); }
 .lf-momentum__cta-button:hover {
   background: var(--lf-ember);
   transform: translateY(-2px);

@@ -1,3 +1,4 @@
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import "./EditorialFigure.css";
 
 type Props = {
@@ -29,6 +30,11 @@ export default function EditorialFigure({
           alt={alt}
           width={width}
           height={height}
+          {...responsiveImageProps(
+            src,
+            "(min-width: 1024px) 620px, (min-width: 640px) 60vw, 100vw",
+            [480, 640, 900],
+          )}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
           {...(priority ? { fetchPriority: "high" } : {})}
