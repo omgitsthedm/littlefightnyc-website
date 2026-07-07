@@ -343,8 +343,10 @@ function foundationSchemas(page) {
     "slogan": "Better tech. Fewer bills. More customers.",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "New York, NY",
       "addressLocality": "New York",
       "addressRegion": "NY",
+      "postalCode": "10002",
       "addressCountry": "US"
     },
     "geo": {
@@ -636,19 +638,22 @@ function routeImagePreload(page) {
   if (!asset?.endsWith(".webp")) return "";
 
   if (page.path === "/") {
-    return [
-      `<link rel="preload" href="/assets/hero-soho-crosswalk-640.webp" as="image" type="image/webp" fetchpriority="high" media="(max-width: 767px)" data-route-preload>`,
-      `<link rel="preload" href="/assets/hero-soho-crosswalk-1200.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width: 768px) and (max-width: 1279px)" data-route-preload>`,
-      `<link rel="preload" href="/assets/hero-soho-crosswalk-1600.webp" as="image" type="image/webp" fetchpriority="high" media="(min-width: 1280px)" data-route-preload>`
-    ].join("\n    ");
+    // Mirror the first-paint home hero <img> in snapshot() exactly (same
+    // src/srcset/sizes) so the preload picks the identical candidate the LCP
+    // image uses — the link is guaranteed-used, never a wasted second fetch.
+    const heroSrcSet =
+      "/assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w";
+    const heroSizes = "(min-width: 1024px) 40vw, 100vw";
+    return `<link rel="preload" href="/assets/hero-soho-crosswalk-640.webp" imagesrcset="${escapeAttr(heroSrcSet)}" imagesizes="${escapeAttr(heroSizes)}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
 
-  const base = asset.slice(0, -".webp".length);
-  const srcSet = `${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w`;
-  const href = `${base}-640.webp`;
-  const sizes = "(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw";
-
-  return `<link rel="preload" href="${escapeAttr(href)}" imagesrcset="${escapeAttr(srcSet)}" imagesizes="${escapeAttr(sizes)}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  // Inner pages: page.image is the OG/social image, which is NOT reliably the
+  // rendered LCP (the PageHero image differs), so preloading it fetches an asset
+  // the page never uses ("preloaded but not used" + wasted bytes). A wrong
+  // preload is worse than none — only the home hero (above) is guaranteed-used.
+  // Genuinely-used inner-page hero preloads are added explicitly in
+  // routeExtraImagePreloads().
+  return "";
 }
 
 function routeExtraImagePreloads(page) {

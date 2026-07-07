@@ -66,7 +66,6 @@
 
 .lf-sd__aside-list li {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-md);
   line-height: 1.3;
   color: var(--lf-bone);
@@ -98,7 +97,6 @@
 
 .lf-sd-faq__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144;
   font-weight: 600;
   font-size: var(--lf-text-xl);
   line-height: 1;
@@ -138,7 +136,6 @@
 
 .lf-sd-faq__q {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-weight: 600;
   font-size: var(--lf-text-md);
   line-height: 1.2;
@@ -148,7 +145,6 @@
 
 .lf-sd-faq__a {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.6;
   color: var(--lf-bone-soft);
@@ -215,8 +211,8 @@
   border-bottom: 1px solid var(--lf-hairline);
   color: var(--lf-bone);
   text-decoration: none;
-  transition: color var(--lf-time-fast) var(--lf-ease-out-quart),
-              padding-left var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard),
+              padding-left var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-sd-local__link:hover {
@@ -234,7 +230,6 @@
 
 .lf-sd-local__link strong {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-md);
   line-height: 1.2;
   font-weight: 600;
@@ -286,8 +281,8 @@
   border-bottom: 1px solid var(--lf-hairline);
   text-decoration: none;
   color: var(--lf-bone);
-  transition: color var(--lf-time-fast) var(--lf-ease-out-quart),
-              padding-left var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard),
+              padding-left var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-sd-related__link:hover {
@@ -305,7 +300,6 @@
 
 .lf-sd-related__line {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.05;
@@ -345,7 +339,6 @@
 }
 .lf-sd-deep__prose p {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 18;
   font-size: var(--lf-text-md);
   line-height: 1.7;
   color: var(--lf-bone);
@@ -388,7 +381,6 @@
 }
 .lf-sd-issues__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72, "wght" 600;
   font-weight: 600;
   font-size: var(--lf-text-2xl);
   line-height: 1.05;
@@ -427,7 +419,6 @@
 .lf-sd-issues__body { min-width: 0; }
 .lf-sd-issues__item-title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32, "wght" 600;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.2;
@@ -437,7 +428,6 @@
 }
 .lf-sd-issues__item-text {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.65;
   color: var(--lf-bone-soft);
@@ -478,7 +468,6 @@
 }
 .lf-sd-fallacies__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72, "wght" 600;
   font-weight: 600;
   font-size: var(--lf-text-2xl);
   line-height: 1.05;
@@ -529,17 +518,14 @@
 .lf-sd-fallacies__tag--reality { color: var(--lf-fight); }
 .lf-sd-fallacies__myth-text {
   font-family: var(--lf-serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-md);
   line-height: 1.4;
-  color: var(--lf-bone-dim);
+  color: var(--lf-bone-soft);
   letter-spacing: -0.005em;
   max-width: 32ch;
 }
 .lf-sd-fallacies__reality span:last-child {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 18;
   font-size: var(--lf-text-base);
   line-height: 1.65;
   color: var(--lf-bone);

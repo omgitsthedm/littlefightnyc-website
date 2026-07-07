@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { services } from "@/data/site";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import "./ServiceEditorialSpread.css";
 
 const ROMAN = ["I.", "II.", "III.", "IV."] as const;
@@ -50,8 +51,12 @@ export default function ServiceEditorialSpread() {
               alt="A New York deli storefront with street-level signage"
               width={1600}
               height={1200}
-              loading="lazy"
+              fetchPriority="high"
               decoding="async"
+              {...responsiveImageProps(
+                "/assets/storefront-shop-deli.webp",
+                "(max-width: 720px) 100vw, 50vw",
+              )}
             />
             <figcaption>
               Built for small teams where the website, the register, the inbox,
@@ -83,7 +88,15 @@ export default function ServiceEditorialSpread() {
                       <span>{image.caption}</span>
                     </span>
                     <span className="lf-service-spread__thumb" aria-hidden="true">
-                      <img src={image.src} alt="" width={1600} height={1200} loading="lazy" decoding="async" />
+                      <img
+                        src={image.src}
+                        alt=""
+                        width={1600}
+                        height={1200}
+                        loading="lazy"
+                        decoding="async"
+                        {...responsiveImageProps(image.src, "(max-width: 720px) 100vw, 50vw")}
+                      />
                     </span>
                   </Link>
                 </li>
@@ -100,6 +113,10 @@ export default function ServiceEditorialSpread() {
                 height={1600}
                 loading="lazy"
                 decoding="async"
+                {...responsiveImageProps(
+                  "/assets/nyc-stickys-steam.webp",
+                  "(max-width: 720px) 100vw, 50vw",
+                )}
               />
               <figcaption>Customer path</figcaption>
             </figure>
@@ -111,6 +128,10 @@ export default function ServiceEditorialSpread() {
                 height={1200}
                 loading="lazy"
                 decoding="async"
+                {...responsiveImageProps(
+                  "/assets/coworking-laptops.webp",
+                  "(max-width: 720px) 100vw, 50vw",
+                )}
               />
               <figcaption>Owner view</figcaption>
             </figure>

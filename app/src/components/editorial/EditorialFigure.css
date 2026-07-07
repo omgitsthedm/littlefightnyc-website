@@ -29,7 +29,6 @@
   font-style: italic;
   font-size: var(--lf-text-sm);
   color: var(--lf-bone-dim);
-  font-variation-settings: "opsz" 14;
   letter-spacing: -0.005em;
   /* No bottom border — caption is a hanging note, not a fenced box */
 }

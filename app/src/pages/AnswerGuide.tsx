@@ -16,7 +16,7 @@ export default function AnswerGuide() {
       <PageHero
         eyebrow="Owner Answer"
         title={<>{guide.question}</>}
-        dek={guide.short}
+        dek={guide.short.replace(/^Short answer:\s*/i, "")}
         image={{
           src: "/assets/local-business.webp",
           alt: "An NYC owner-operated business at street level",

@@ -18,7 +18,7 @@ export default function Audit() {
             <span className="lf-em">is leaking.</span>
           </>
         }
-        dek="The redesigned audit tool reviews visibility, trust, speed, structure, and the practical paths that turn a visitor into a call."
+        dek="A fast outside read of your website: whether people can find it, trust it, and load it quickly, and whether the structure and contact paths actually turn a visitor into a call."
         image={{
           src: "/assets/coworking-laptops.webp",
           alt: "Open laptops in a Brooklyn workspace",
@@ -49,7 +49,7 @@ export default function Audit() {
               <span><ShieldCheck size={24} strokeWidth={1.8} /></span>
             </div>
             <div>
-              <p className="lf-audit-page__eyebrow">Redesigned audit tool</p>
+              <p className="lf-audit-page__eyebrow">Website audit</p>
               <h2 className="lf-audit-page__title">Run the external audit.</h2>
               <p className="lf-audit-page__copy">
                 Opens the dedicated audit experience at audit.littlefightnyc.com.

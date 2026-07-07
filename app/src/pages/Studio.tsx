@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { studioProjects } from "@/data/site";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/studio.css";
 
 export default function Studio() {
@@ -31,7 +32,10 @@ export default function Studio() {
               <Link to={`/studio/${p.slug}/`} className="lf-studio__image lf-studio__image-link" aria-label={`Read about ${p.name}`}>
                 <img
                   src={p.image}
+                  {...responsiveImageProps(p.image, "(max-width: 720px) 100vw, 50vw")}
                   alt=""
+                  width={1600}
+                  height={1200}
                   loading={i < 2 ? "eager" : "lazy"}
                   decoding="async"
                 />

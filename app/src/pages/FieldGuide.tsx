@@ -113,8 +113,8 @@ export default function FieldGuide() {
       <VisualIndex
         id="industries"
         eyebrow="Industries"
-        title="Different counters. Same hidden work."
-        dek="Every business type has its own customer path. These maps show where websites, bookings, Google visibility, staff handoffs, and reporting usually need to line up."
+        title="Find your business type."
+        dek="Pick the counter that looks like yours. Each map opens into where websites, bookings, Google visibility, staff handoffs, and reporting tend to line up for that kind of shop."
         items={industryItems}
         variant="compact"
       />
@@ -122,8 +122,8 @@ export default function FieldGuide() {
       <VisualIndex
         id="answers"
         eyebrow="Answers"
-        title="Start with the symptom."
-        dek="Short, plain-English answers for the problems owners notice first: missing leads, software drag, bad Google visibility, and tools that no longer fit."
+        title="Jump to your question."
+        dek="The things owners ask us most, answered in plain English. Find the symptom that sounds like your week: missing leads, software drag, bad Google visibility, or tools that no longer fit."
         items={answerItems}
         variant="compact"
       />

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { caseStudies, services } from "@/data/site";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/case-studies.css";
 
 function serviceLabel(slug: string): string | undefined {
@@ -35,7 +36,10 @@ export default function CaseStudies() {
               <Link to={`/case-studies/${study.slug}/`} className="lf-cases__image lf-cases__image-link" aria-label={`Read the ${study.client} case study`}>
                 <img
                   src={study.image}
+                  {...responsiveImageProps(study.image, "(max-width: 720px) 100vw, 50vw")}
                   alt=""
+                  width={1600}
+                  height={1200}
                   loading={i < 2 ? "eager" : "lazy"}
                   decoding="async"
                 />

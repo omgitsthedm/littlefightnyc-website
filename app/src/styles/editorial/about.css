@@ -31,7 +31,6 @@
   font-size: var(--lf-text-xl);
   line-height: 0.92;
   letter-spacing: -0.03em;
-  font-variation-settings: "opsz" 144;
   font-weight: 700;
   color: var(--lf-bone);
   margin-bottom: var(--lf-space-5);
@@ -51,7 +50,6 @@
 
 .lf-about__headline .lf-italic {
   color: var(--lf-fight);
-  font-variation-settings: "opsz" 144;
 }
 
 @media (max-width: 480px) {
@@ -64,7 +62,6 @@
   font-size: var(--lf-text-md);
   line-height: 1.4;
   color: var(--lf-bone);
-  font-variation-settings: "opsz" 32;
   letter-spacing: -0.005em;
   max-width: 50ch;
 }
@@ -103,7 +100,6 @@
 
 .lf-about__paragraph {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-md);
   line-height: 1.65;
   color: var(--lf-bone);
@@ -123,7 +119,6 @@
   padding-right: 0.08em;
   color: var(--lf-fight);
   font-weight: 900;
-  font-variation-settings: "opsz" 144;
   letter-spacing: -0.04em;
 }
 
@@ -148,6 +143,8 @@
   padding: var(--lf-space-5);
   background: var(--lf-paper);
   border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  overflow: hidden;
 }
 
 .lf-about__facts::before {
@@ -186,7 +183,6 @@
 .lf-about__fact dd {
   margin: 0;
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-base);
   color: var(--lf-bone);
 }
@@ -197,8 +193,8 @@
   background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
   padding: 0.02em 0.14em;
   transition:
-    color 200ms var(--lf-ease-out),
-    background-color 200ms var(--lf-ease-out);
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-about__phone:hover {
@@ -219,9 +215,9 @@
   padding: var(--lf-space-2) var(--lf-space-3);
   text-decoration: none;
   transition:
-    color 200ms var(--lf-ease-out),
-    background-color 200ms var(--lf-ease-out),
-    gap 200ms var(--lf-ease-out);
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    gap var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-about__cta-link:hover {

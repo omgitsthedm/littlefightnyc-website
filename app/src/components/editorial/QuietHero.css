@@ -49,7 +49,7 @@
   z-index: 1;
   background:
     /* Subtle warm fight-orange glow from bottom-left to give brand presence */
-    radial-gradient(ellipse at 0% 100%, rgba(254, 88, 0, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--lf-fight) 18%, transparent) 0%, transparent 55%),
     linear-gradient(180deg, rgba(10, 10, 10, 0.05) 0%, rgba(10, 10, 10, 0.45) 60%, rgba(10, 10, 10, 0.88) 100%);
   pointer-events: none;
 }
@@ -87,12 +87,11 @@
   font-family: var(--lf-serif);
   /* opsz 72 instead of 144 — gives fuller strokes at display size.
    * wght 700 instead of 600 — more presence on a dark hero. */
-  font-variation-settings: "opsz" 72, "wght" 700;
   font-weight: 700;
   font-size: var(--lf-text-2xl);
   line-height: 0.94;
   letter-spacing: -0.04em;
-  color: #FFFFFF;
+  color: var(--lf-bone);
   margin: 0;
   max-width: 22ch;
 }
@@ -106,7 +105,6 @@
 
 .lf-hero__brief p {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 18;
   font-size: var(--lf-text-md);
   line-height: 1.28;
   letter-spacing: -0.006em;
@@ -118,7 +116,7 @@
 }
 
 .lf-hero__claim .lf-hero__char {
-  color: #FFFFFF;
+  color: var(--lf-bone);
 }
 
 @media (min-width: 768px) {
@@ -170,7 +168,6 @@
   color: var(--lf-fight);
   font-style: italic;
   font-weight: 700;
-  font-variation-settings: "opsz" 72, "wght" 700;
 }
 
 .lf-hero__claim-em .lf-hero__char {
@@ -479,7 +476,6 @@
 .lf-hero__marquee-link {
   font-family: var(--lf-serif);
   font-style: italic;
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-sm);
   letter-spacing: -0.005em;
   color: var(--lf-bone-soft);

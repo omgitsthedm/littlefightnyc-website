@@ -3,6 +3,10 @@
 .lf-fit {
   padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
   background: var(--lf-ink);
+
+  /* Local state hues (not brand colors) — warn + confirm signals. */
+  --lf-fit-warn: #F87171;   /* soft red for invalid fields */
+  --lf-fit-ok: #4ADE80;     /* soft green for confirmed fields */
 }
 
 @media (min-width: 768px) {
@@ -66,7 +70,7 @@
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lf-bone-dim);
+  color: var(--lf-bone-soft);
 }
 
 .lf-fit__field input,
@@ -77,7 +81,6 @@
   border-bottom: 1px solid var(--lf-hairline);
   border-radius: 0;
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-md);
   letter-spacing: -0.005em;
   color: var(--lf-bone);
@@ -97,9 +100,47 @@
 .lf-fit__field input:focus,
 .lf-fit__field select:focus,
 .lf-fit__field textarea:focus {
-  border-bottom-color: color-mix(in srgb, var(--lf-fight) 64%, var(--lf-bone) 18%);
+  border-bottom-color: var(--lf-fight);
   border-bottom-width: 2px;
-  box-shadow: 0 0.65rem 1.65rem color-mix(in srgb, var(--lf-fight) 10%, transparent);
+  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--lf-fight) 60%, transparent),
+              0 0.65rem 1.65rem color-mix(in srgb, var(--lf-fight) 12%, transparent);
+}
+
+/* Error state — invalid / flagged field. */
+.lf-fit__field input[aria-invalid="true"],
+.lf-fit__field select[aria-invalid="true"],
+.lf-fit__field textarea[aria-invalid="true"],
+.lf-fit__field.is-error input,
+.lf-fit__field.is-error select,
+.lf-fit__field.is-error textarea {
+  border-bottom-color: var(--lf-fit-warn);
+  border-bottom-width: 2px;
+}
+
+.lf-fit__field input[aria-invalid="true"]:focus,
+.lf-fit__field select[aria-invalid="true"]:focus,
+.lf-fit__field textarea[aria-invalid="true"]:focus,
+.lf-fit__field.is-error input:focus,
+.lf-fit__field.is-error select:focus,
+.lf-fit__field.is-error textarea:focus {
+  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--lf-fit-warn) 60%, transparent),
+              0 0.65rem 1.65rem color-mix(in srgb, var(--lf-fit-warn) 12%, transparent);
+}
+
+.lf-fit__error {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--lf-fit-warn);
+  margin: 0;
+  min-height: 0;
+}
+
+/* Success state — a confirmed / validated field. */
+.lf-fit__field.is-valid input,
+.lf-fit__field.is-valid select,
+.lf-fit__field.is-valid textarea {
+  border-bottom-color: color-mix(in srgb, var(--lf-fit-ok) 70%, var(--lf-hairline));
 }
 
 .lf-fit__field textarea {
@@ -118,35 +159,79 @@
   padding-right: var(--lf-space-6);
 }
 
-.lf-fit__submit {
+/* Scoped under .lf-editorial to win over the base `button` reset
+ * (background/border/padding: none) — otherwise the pill renders as bare text. */
+.lf-editorial .lf-fit__submit {
   grid-column: 1 / -1;
+  justify-self: start;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--lf-space-2);
-  padding: var(--lf-space-4) var(--lf-space-6);
+  gap: 0.5em;
+  padding: 14px 26px;
   background: var(--lf-fight);
   color: var(--lf-ink);
-  font-family: var(--lf-mono);
+  font-family: var(--lf-sans);
   font-size: var(--lf-text-sm);
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  text-transform: none;
   border: 0;
-  border-radius: 0;
+  border-radius: var(--lf-radius-pill);
   cursor: pointer;
-  min-height: 56px;
+  min-height: 48px;
   margin-top: var(--lf-space-3);
-  transition: background-color var(--lf-time-fast) var(--lf-ease-out-quart),
-              transform var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: background-color var(--lf-time-snappy) var(--lf-ease-standard),
+              transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-fit__submit:hover {
   background: var(--lf-ember);
+  transform: translateY(-2px);
 }
 
 .lf-fit__submit:active {
-  transform: scale(0.99);
+  transform: translateY(0);
+}
+
+.lf-fit__submit:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* Disabled / loading state. */
+.lf-fit__submit:disabled,
+.lf-fit__submit[aria-busy="true"] {
+  cursor: not-allowed;
+  background: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-paper));
+  color: color-mix(in srgb, var(--lf-ink) 70%, var(--lf-bone));
+  transform: none;
+}
+
+.lf-fit__submit[aria-busy="true"] .lf-fit__spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid color-mix(in srgb, var(--lf-ink) 40%, transparent);
+  border-top-color: var(--lf-ink);
+  border-radius: var(--lf-radius-pill);
+  animation: lf-fit-spin 0.7s linear infinite;
+}
+
+@keyframes lf-fit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-fit__submit,
+  .lf-fit__submit:hover,
+  .lf-fit__submit:active {
+    transition: background-color var(--lf-time-snappy) var(--lf-ease-standard);
+    transform: none;
+  }
+  .lf-fit__submit[aria-busy="true"] .lf-fit__spinner {
+    animation: none;
+  }
 }
 
 .lf-fit__aside {
@@ -175,7 +260,6 @@
 .lf-fit__aside-phone {
   display: block;
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144;
   font-weight: 600;
   font-size: var(--lf-text-xl);
   line-height: 1;
@@ -199,7 +283,6 @@
 .lf-fit__aside-note {
   font-family: var(--lf-serif);
   font-style: italic;
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.55;
   color: var(--lf-bone-soft);

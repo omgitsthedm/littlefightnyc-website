@@ -21,6 +21,22 @@ type Props = {
   variant?: "feature" | "compact";
 };
 
+// Destination-specific CTA verb, keyed off the item's route so each card
+// tells you where it goes instead of a repeated generic "Open".
+const CTA_BY_SECTION: Record<string, string> = {
+  services: "See the service",
+  studio: "See the project",
+  answers: "Read the answer",
+  "case-studies": "See the study",
+  industries: "See the playbook",
+  journal: "Read the entry",
+};
+
+function ctaLabel(to: string): string {
+  const section = to.replace(/^\/+/, "").split("/")[0];
+  return CTA_BY_SECTION[section] ?? "Open";
+}
+
 export default function VisualIndex({
   dek,
   eyebrow,
@@ -74,7 +90,7 @@ export default function VisualIndex({
                   </span>
                   <span className="lf-visual-index__body">{item.body}</span>
                   <span className="lf-visual-index__open">
-                    Open <span aria-hidden="true">→</span>
+                    {ctaLabel(item.to)} <span aria-hidden="true">→</span>
                   </span>
                 </span>
               </Link>

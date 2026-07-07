@@ -19,7 +19,6 @@
 
 .lf-body p {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-md);
   line-height: 1.7;
   color: var(--lf-bone);
@@ -37,7 +36,6 @@
 
 .lf-body h2 {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72;
   font-weight: 600;
   font-size: var(--lf-text-xl);
   line-height: 1.05;
@@ -52,7 +50,6 @@
 
 .lf-body h3 {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.1;
@@ -64,7 +61,6 @@
 .lf-body ul,
 .lf-body ol {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-md);
   line-height: 1.7;
   color: var(--lf-bone);
@@ -95,8 +91,8 @@
   padding: 0.02em 0.14em;
   margin-inline: -0.04em;
   transition:
-    color var(--lf-time-fast) var(--lf-ease-out-quart),
-    background-color var(--lf-time-fast) var(--lf-ease-out-quart);
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-body a:hover {
@@ -108,7 +104,6 @@
 .lf-body--dropcap > p:first-of-type::first-letter {
   float: left;
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144;
   font-size: 5.5em;
   line-height: 0.85;
   padding-top: 0.06em;

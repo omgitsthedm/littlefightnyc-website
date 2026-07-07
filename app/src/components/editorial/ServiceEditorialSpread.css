@@ -62,7 +62,6 @@
 
 .lf-service-spread__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144, "wght" 750;
   font-weight: 750;
   font-size: clamp(3rem, 8vw, 8.5rem);
   line-height: 0.88;
@@ -76,7 +75,6 @@
   max-width: 36rem;
   font-family: var(--lf-serif);
   font-style: italic;
-  font-variation-settings: "opsz" 28;
   font-size: var(--lf-text-md);
   line-height: 1.42;
   color: color-mix(in srgb, var(--lf-ink) 76%, var(--lf-bone) 24%) !important;
@@ -169,7 +167,6 @@
 
 .lf-service-spread__num {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 96, "wght" 800;
   font-weight: 800;
   font-size: var(--lf-text-xl);
   line-height: 0.85;
@@ -202,7 +199,6 @@
 
 .lf-service-spread__copy strong {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72, "wght" 650;
   font-weight: 650;
   font-size: var(--lf-text-xl);
   line-height: 0.98;
@@ -211,7 +207,6 @@
 .lf-service-spread__copy span:last-child {
   max-width: 48ch;
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 18;
   font-size: var(--lf-text-base);
   line-height: 1.5;
   color: color-mix(in srgb, var(--lf-ink) 70%, var(--lf-bone) 30%);

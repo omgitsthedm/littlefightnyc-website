@@ -440,7 +440,7 @@ export const services: Service[] = [
         reality: "Almost no small business needs Salesforce. It's an excellent platform for organizations with dedicated admins, complex sales orgs, and serious budgets. For a 5–50 person small business, it's typically more software than the team will ever use, at a price that makes it expensive to walk away from. There are right-sized alternatives — and often, a custom-built lead layer is both cheaper and a better fit.",
       },
       {
-        myth: "We should just use Airtable / Notion / [favorite no-code tool] for everything.",
+        myth: "We should just use Airtable or Notion for everything.",
         reality: "Sometimes yes — for the right size and use case, no-code tools are excellent. But they hit ceilings: when the data model gets complex, when permissions matter, when the workflow involves customers (not just staff), when you need a real interface for a non-technical user. Knowing when a no-code tool is the right answer and when it's a temporary fix is a real part of the job.",
       },
       {
@@ -614,7 +614,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         heading: "Local language matters",
-        body: "A SoHo shop, Chelsea salon, Midtown firm, and Lower East Side bar should not all explain themselves the same way.",
+        body: "Google rewards specifics. A late-night bar, a Midtown clinic, and a SoHo boutique each serve a different customer, so the service language on each page should read differently too, not the same block with the neighborhood swapped.",
       },
     ],
     faq: [

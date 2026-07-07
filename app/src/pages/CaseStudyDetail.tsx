@@ -36,8 +36,10 @@ export default function CaseStudyDetail() {
         title={<>{study.client}</>}
         dek={study.title}
         image={{
+          // Decorative: the adjacent H1 already announces the client name,
+          // so an alt repeating it would be redundant for screen readers.
           src: study.image,
-          alt: study.client,
+          alt: "",
           width: 1800,
           height: 1200,
         }}

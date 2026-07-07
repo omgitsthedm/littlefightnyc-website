@@ -88,7 +88,6 @@
 
 .lf-line__text {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144;
   font-weight: 500;
   font-size: var(--lf-text-2xl);
   line-height: 1.05;
@@ -115,5 +114,4 @@
   color: var(--lf-fight);
   font-style: italic;
   font-weight: 500;
-  font-variation-settings: "opsz" 144, "wght" 500;
 }

@@ -32,7 +32,7 @@ export default function PageHero({ eyebrow, title, dek, image }: Props) {
         </div>
 
         {image && (
-          <div className="lf-pagehero__image" aria-hidden="true">
+          <div className="lf-pagehero__image">
             <img
               src={image.src}
               alt={image.alt}

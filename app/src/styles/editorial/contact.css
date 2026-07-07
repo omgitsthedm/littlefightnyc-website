@@ -31,7 +31,6 @@
   font-size: var(--lf-text-xl);
   line-height: 0.95;
   letter-spacing: -0.03em;
-  font-variation-settings: "opsz" 144;
   font-weight: 700;
   color: var(--lf-bone);
   margin-bottom: var(--lf-space-5);
@@ -63,7 +62,6 @@
   font-size: var(--lf-text-md);
   line-height: 1.4;
   color: var(--lf-bone);
-  font-variation-settings: "opsz" 32;
   letter-spacing: -0.005em;
   max-width: 56ch;
 }
@@ -90,14 +88,12 @@
   font-size: var(--lf-text-2xl);
   letter-spacing: -0.025em;
   color: var(--lf-bone);
-  font-variation-settings: "opsz" 144;
   margin-bottom: var(--lf-space-4);
   line-height: 1;
 }
 
 .lf-contact__locale-body {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.65;
   color: var(--lf-bone-soft);

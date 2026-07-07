@@ -90,7 +90,6 @@
 
 .lf-clients__name {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72, "wght" 600;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.1;

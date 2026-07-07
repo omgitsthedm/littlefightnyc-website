@@ -1,17 +1,60 @@
+import { useState } from "react";
+import type { FormEvent } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import "@/styles/editorial/fitcheck.css";
 
+type FieldName = "name" | "business" | "contact" | "message";
+
+const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
+  { name: "name", message: "Tell us who you are." },
+  { name: "business", message: "Add your business name." },
+  { name: "contact", message: "Add a phone or email so we can reply." },
+  { name: "message", message: "Tell us what feels broken." },
+];
+
 export default function FitCheck() {
+  const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
+  const [submitting, setSubmitting] = useState(false);
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget;
+    const nextErrors: Partial<Record<FieldName, string>> = {};
+
+    for (const field of REQUIRED_FIELDS) {
+      const el = form.elements.namedItem(field.name) as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+        | null;
+      if (!el || el.value.trim() === "") {
+        nextErrors[field.name] = field.message;
+      }
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      event.preventDefault();
+      setErrors(nextErrors);
+      const first = form.elements.namedItem(
+        Object.keys(nextErrors)[0],
+      ) as HTMLElement | null;
+      first?.focus();
+      return;
+    }
+
+    // Valid — let the native Netlify POST proceed, show the loading state.
+    setErrors({});
+    setSubmitting(true);
+  }
+
   return (
     <>
       <PageHero
         eyebrow="Fit Check"
         title={
           <>
-            Tell us what's<br />
+            Show us the<br />
             {" "}
-            <span className="lf-em">broken.</span>
+            <span className="lf-em">moving parts.</span>
           </>
         }
         dek="Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. The consult is free. Do not share passwords or private customer data."
@@ -32,6 +75,8 @@ export default function FitCheck() {
             action="/thanks/"
             data-netlify="true"
             netlify-honeypot="bot-field"
+            onSubmit={handleSubmit}
+            noValidate
           >
             <input type="hidden" name="form-name" value="fit-check-scratch" />
             <input type="hidden" name="subject" value="New Little Fight NYC Fit Check" />
@@ -41,17 +86,41 @@ export default function FitCheck() {
               <input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
             </p>
 
-            <div className="lf-fit__field">
+            <div className={`lf-fit__field${errors.name ? " is-error" : ""}`}>
               <label htmlFor="fit-name">Your name</label>
-              <input id="fit-name" name="name" autoComplete="name" required />
+              <input
+                id="fit-name"
+                name="name"
+                autoComplete="name"
+                required
+                aria-invalid={errors.name ? true : undefined}
+                aria-describedby={errors.name ? "fit-name-error" : undefined}
+              />
+              {errors.name && (
+                <p className="lf-fit__error" id="fit-name-error">
+                  {errors.name}
+                </p>
+              )}
             </div>
 
-            <div className="lf-fit__field">
+            <div className={`lf-fit__field${errors.business ? " is-error" : ""}`}>
               <label htmlFor="fit-business">Business</label>
-              <input id="fit-business" name="business" autoComplete="organization" required />
+              <input
+                id="fit-business"
+                name="business"
+                autoComplete="organization"
+                required
+                aria-invalid={errors.business ? true : undefined}
+                aria-describedby={errors.business ? "fit-business-error" : undefined}
+              />
+              {errors.business && (
+                <p className="lf-fit__error" id="fit-business-error">
+                  {errors.business}
+                </p>
+              )}
             </div>
 
-            <div className="lf-fit__field">
+            <div className={`lf-fit__field${errors.contact ? " is-error" : ""}`}>
               <label htmlFor="fit-contact">Phone or email</label>
               <input
                 id="fit-contact"
@@ -59,7 +128,14 @@ export default function FitCheck() {
                 autoComplete="email"
                 required
                 placeholder="(646) 555-0118 or hello@yourshop.com"
+                aria-invalid={errors.contact ? true : undefined}
+                aria-describedby={errors.contact ? "fit-contact-error" : undefined}
               />
+              {errors.contact && (
+                <p className="lf-fit__error" id="fit-contact-error">
+                  {errors.contact}
+                </p>
+              )}
             </div>
 
             <div className="lf-fit__field">
@@ -72,7 +148,11 @@ export default function FitCheck() {
               </select>
             </div>
 
-            <div className="lf-fit__field lf-fit__field--full">
+            <div
+              className={`lf-fit__field lf-fit__field--full${
+                errors.message ? " is-error" : ""
+              }`}
+            >
               <label htmlFor="fit-message">
                 What feels broken, expensive, slow, or disconnected?
               </label>
@@ -82,11 +162,32 @@ export default function FitCheck() {
                 rows={5}
                 required
                 placeholder="A short sentence is fine. We'll ask the rest on the call."
+                aria-invalid={errors.message ? true : undefined}
+                aria-describedby={errors.message ? "fit-message-error" : undefined}
               />
+              {errors.message && (
+                <p className="lf-fit__error" id="fit-message-error">
+                  {errors.message}
+                </p>
+              )}
             </div>
 
-            <button className="lf-fit__submit" type="submit">
-              Send the messy setup <span aria-hidden="true">→</span>
+            <button
+              className="lf-fit__submit"
+              type="submit"
+              disabled={submitting}
+              aria-busy={submitting ? true : undefined}
+            >
+              {submitting ? (
+                <>
+                  <span className="lf-fit__spinner" aria-hidden="true" />
+                  Sending…
+                </>
+              ) : (
+                <>
+                  Send it over <span aria-hidden="true">→</span>
+                </>
+              )}
             </button>
           </form>
 

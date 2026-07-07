@@ -198,7 +198,6 @@ body:has(.lf-editorial) {
 .lf-editorial .lf-italic {
   font-family: var(--lf-serif);
   font-style: italic;
-  font-variation-settings: "opsz" 144;
 }
 
 .lf-editorial .lf-display {
@@ -212,7 +211,6 @@ body:has(.lf-editorial) {
 .lf-editorial .lf-serif-body {
   font-family: var(--lf-serif);
   font-weight: 400;
-  font-variation-settings: "opsz" 14;
   line-height: 1.55;
 }
 

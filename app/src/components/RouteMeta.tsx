@@ -213,17 +213,34 @@ function brandedTitle(title: string, maxLength = 60) {
   return withBrand.length <= maxLength ? withBrand : title;
 }
 
+const serviceMetaSentence: Record<string, string> = {
+  websites:
+    "Little Fight builds clear pages, working forms, and booking paths that turn local visitors into customers.",
+  "it-support":
+    "Little Fight fixes email, domains, Wi-Fi, POS, payments, and account access before they cost you a sale.",
+  "local-search":
+    "Little Fight sharpens Google Profile, Maps, reviews, and service pages so nearby customers find you.",
+  "business-systems":
+    "Little Fight cleans up lead intake, follow-up, dashboards, and software waste that slow daily work.",
+};
+
 function serviceAreaPages(): SeoPage[] {
   const matrix = seoData.matrix as { services: MatrixService[]; areas: MatrixArea[] };
 
   return matrix.areas.flatMap((area) =>
-    matrix.services.map((service) => ({
-      path: `/areas/${area.slug}/${service.slug}/`,
-      title: `${service.label} in ${area.name} | Little Fight NYC`,
-      description: `${service.label} help for ${area.name} businesses. Little Fight fixes websites, tools, Google signals, and handoffs that slow daily work.`,
-      shortAnswer: `Short answer: ${area.name} businesses need ${service.plain}.`,
-      image: service.image ?? area.image,
-    }))
+    matrix.services.map((service) => {
+      const secondSentence =
+        serviceMetaSentence[service.slug] ??
+        "Little Fight fixes the websites, tools, Google signals, and handoffs that slow daily work.";
+
+      return {
+        path: `/areas/${area.slug}/${service.slug}/`,
+        title: `${service.label} in ${area.name} | Little Fight NYC`,
+        description: `${service.label} help for ${area.name} businesses. ${secondSentence}`,
+        shortAnswer: `Short answer: ${area.name} businesses need ${service.plain}.`,
+        image: service.image ?? area.image,
+      };
+    })
   );
 }
 
@@ -277,7 +294,7 @@ const pages = [
   ...industryPages(),
   {
     path: "/journal/",
-    title: "Little Fight Journal for NYC Operators | Little Fight NYC",
+    title: "Journal for NYC Small Business Operators | Little Fight NYC",
     description:
       "Plain-English field notes on websites, IT support, software bills, local search, and business systems for New York small business owners.",
     shortAnswer:

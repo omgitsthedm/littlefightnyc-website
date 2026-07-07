@@ -2,8 +2,10 @@
 
 .lf-visual-index {
   padding: var(--lf-space-8) var(--lf-margin-mobile);
+  /* rgba (not color-mix) inside the gradient — color-mix in a gradient stop
+   * resolves to `none` on some browsers. rgba is the surface value of --lf-paper. */
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--lf-paper) 92%, transparent), var(--lf-ink));
+    linear-gradient(180deg, rgba(26, 28, 35, 0.6), var(--lf-ink));
   border-top: 1px solid var(--lf-hairline);
 }
 
@@ -64,7 +66,6 @@
 
 .lf-visual-index__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 96, "wght" 600;
   font-weight: 600;
   font-size: var(--lf-text-2xl);
   line-height: 0.96;
@@ -78,7 +79,6 @@
   font-family: var(--lf-serif);
   font-style: italic;
   font-size: var(--lf-text-md);
-  font-variation-settings: "opsz" 24;
   line-height: 1.4;
   color: var(--lf-bone-soft);
 }
@@ -119,15 +119,21 @@
   grid-template-rows: auto 1fr;
   min-height: 100%;
   overflow: hidden;
-  background: color-mix(in srgb, var(--lf-paper) 94%, var(--lf-blue, #4ba3ff) 6%);
+  background: var(--lf-paper);
   border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
   text-decoration: none;
   color: var(--lf-bone);
   transition:
-    border-color var(--lf-time-fast) var(--lf-ease-out-quart),
-    background var(--lf-time-fast) var(--lf-ease-out-quart),
-    transform var(--lf-time-fast) var(--lf-ease-out-quart);
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
   counter-increment: lf-visual-index;
+}
+
+.lf-visual-index__item:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
 }
 
 .lf-visual-index__item::before {
@@ -141,7 +147,8 @@
   letter-spacing: 0.12em;
   color: var(--lf-bone);
   background: color-mix(in srgb, var(--lf-ink) 72%, transparent);
-  border: 1px solid rgba(245, 241, 232, 0.18);
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 18%, transparent);
+  border-radius: var(--lf-radius-sm);
   padding: 6px 8px;
 }
 
@@ -173,9 +180,11 @@
   content: "";
   position: absolute;
   inset: 0;
+  /* rgba (not color-mix/var) — color-mix in a gradient stop can resolve to
+   * `none`. Values track the tokens: ink #050507, fight #F97316, blue #3B82F6. */
   background:
-    linear-gradient(180deg, rgba(10, 10, 10, 0.02), rgba(10, 10, 10, 0.38)),
-    linear-gradient(90deg, rgba(255, 111, 31, 0.12), rgba(75, 163, 255, 0.1));
+    linear-gradient(180deg, rgba(5, 5, 7, 0.02), rgba(5, 5, 7, 0.42)),
+    linear-gradient(90deg, rgba(249, 115, 22, 0.12), rgba(59, 130, 246, 0.1));
   pointer-events: none;
 }
 
@@ -197,11 +206,12 @@
   z-index: 1;
   display: inline-grid;
   place-items: center;
-  width: 3rem;
-  height: 3rem;
+  width: var(--lf-chip);
+  height: var(--lf-chip);
   color: var(--lf-ink);
-  background: color-mix(in srgb, var(--lf-fight) 78%, var(--lf-blue, #4ba3ff) 22%);
-  box-shadow: 0 0 0 1px rgba(245, 241, 232, 0.18);
+  background: var(--lf-fight);
+  border-radius: var(--lf-radius-sm);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--lf-bone) 18%, transparent);
 }
 
 .lf-visual-index__copy {
@@ -219,12 +229,11 @@
 }
 
 .lf-visual-index__item-eyebrow {
-  color: var(--lf-blue, #8ecaff);
+  color: var(--lf-blue-soft);
 }
 
 .lf-visual-index__item-title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72, "wght" 600;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.08;
@@ -246,13 +255,14 @@
   padding-top: var(--lf-space-3);
 }
 
-@media (hover: hover) {
-  .lf-visual-index__item:hover {
-    border-color: color-mix(in srgb, var(--lf-bone) 22%, var(--lf-hairline));
-    background: color-mix(in srgb, var(--lf-paper) 88%, var(--lf-blue, #4ba3ff) 12%);
-    transform: translateY(-2px);
-  }
+.lf-visual-index__item:hover,
+.lf-visual-index__item:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-fight) 6%, var(--lf-paper));
+  transform: translateY(var(--lf-lift));
+}
 
+@media (hover: hover) {
   .lf-visual-index__item:hover .lf-visual-index__media img {
     filter: contrast(1.08) saturate(1) brightness(0.96);
     transform: scale(1.055);
@@ -266,6 +276,7 @@
   }
 
   .lf-visual-index__item:hover,
+  .lf-visual-index__item:focus-visible,
   .lf-visual-index__item:hover .lf-visual-index__media img {
     transform: none;
   }

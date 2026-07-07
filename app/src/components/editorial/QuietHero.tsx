@@ -32,7 +32,7 @@ const MARQUEE_ITEMS: { label: string; to: string }[] = [
   { label: "Missed callbacks", to: "/fit-check/" },
   { label: "Booking link dead", to: "/answers/website-form-not-working-small-business/" },
   { label: "Website timing out", to: "/fit-check/" },
-  { label: "WiFi down at the counter", to: "/services/it-support/" },
+  { label: "Wi-Fi down at the counter", to: "/services/it-support/" },
   { label: "Printer offline", to: "/services/it-support/" },
   { label: "Lead form sending to nobody", to: "/answers/website-form-not-working-small-business/" },
   { label: "Monthly bill creep", to: "/journal/read-your-monthly-software-bill/" },

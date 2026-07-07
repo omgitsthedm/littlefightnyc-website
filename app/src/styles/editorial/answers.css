@@ -39,7 +39,7 @@
   padding: var(--lf-space-5) 0;
   text-decoration: none;
   color: var(--lf-bone);
-  transition: padding-left var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: padding-left var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 @media (min-width: 768px) {
@@ -71,13 +71,12 @@
 
 .lf-answers-index__q {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--lf-bone);
-  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 @media (min-width: 1024px) {
@@ -92,8 +91,6 @@
 
 .lf-answers-index__short {
   font-family: var(--lf-serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.5;
   color: var(--lf-bone-soft);
@@ -125,8 +122,6 @@
 
 .lf-answer-page__short {
   font-family: var(--lf-serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 32;
   font-size: var(--lf-text-lg);
   line-height: 1.4;
   color: var(--lf-bone);
@@ -155,7 +150,6 @@
 
 .lf-answer-page__section h2 {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72;
   font-weight: 600;
   font-size: var(--lf-text-xl);
   line-height: 1.05;
@@ -166,7 +160,6 @@
 
 .lf-answer-page__section p {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-md);
   line-height: 1.7;
   color: var(--lf-bone);
@@ -198,7 +191,6 @@
 
 .lf-answer-page__faq-q {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-weight: 600;
   font-size: var(--lf-text-md);
   line-height: 1.2;
@@ -209,7 +201,6 @@
 
 .lf-answer-page__faq-a {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.6;
   color: var(--lf-bone-soft);

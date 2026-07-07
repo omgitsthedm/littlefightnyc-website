@@ -44,7 +44,6 @@
 
 .lf-quiet-foot__brand-link {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-weight: 600;
   font-size: var(--lf-text-md);
   letter-spacing: 0;
@@ -117,7 +116,7 @@
 
 .lf-quiet-foot__group ul {
   display: grid;
-  gap: var(--lf-space-2);
+  gap: var(--lf-space-1);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -127,23 +126,41 @@
 .lf-quiet-foot__company a,
 .lf-quiet-foot__contact a {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-sm);
   color: var(--lf-bone);
   text-decoration: none;
   transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
 }
 
+/* 44px hit areas without truncation — labels wrap, never clip. */
 .lf-quiet-foot__nav a {
-  display: inline-block;
-  max-width: 18ch;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  max-width: 22ch;
   line-height: 1.25;
+}
+
+.lf-quiet-foot__company a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .lf-quiet-foot__nav a:hover,
 .lf-quiet-foot__company a:hover,
 .lf-quiet-foot__contact a:hover {
   color: var(--lf-fight);
+}
+
+.lf-quiet-foot__nav a:focus-visible,
+.lf-quiet-foot__company a:focus-visible,
+.lf-quiet-foot__contact a:focus-visible,
+.lf-quiet-foot__brand-link:focus-visible,
+.lf-quiet-foot__signature a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+  border-radius: var(--lf-radius-sm);
 }
 
 .lf-quiet-foot__bottom {
@@ -159,11 +176,37 @@
 }
 
 .lf-quiet-foot__contact a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
+}
+
+/* Mandated Little Fight signature line. */
+.lf-quiet-foot__signature {
+  margin: 0;
+  padding-top: var(--lf-space-5);
+  border-top: 1px solid color-mix(in oklch, var(--lf-bone) 12%, transparent);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+.lf-quiet-foot__signature a {
+  color: var(--lf-fight);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--lf-fight) 40%, transparent);
+  transition: border-color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+.lf-quiet-foot__signature a:hover {
+  border-bottom-color: var(--lf-fight);
 }
 
 @media (max-width: 420px) {

@@ -13,7 +13,7 @@
   --lf-hairline-warm: #2A1C12; /* hairlines under fight-orange ink */
   --lf-bone: #FFFFFF;         /* primary type — product-OS white */
   --lf-bone-soft: #A1A1AA;    /* secondary type (Axiom text-secondary) */
-  --lf-bone-dim: #71717A;     /* tertiary type — captions, marginalia */
+  --lf-bone-dim: #8A8A94;     /* tertiary type — captions, marginalia (AA-safe on --lf-ink, ~5.9:1) */
   --lf-fight: #F97316;        /* THE orange — Axiom lead signal */
   --lf-ember: #FB8B3C;        /* hover / active warmth */
   --lf-blue: #3B82F6;         /* accent — Axiom blue, now a real second signal */
@@ -64,6 +64,8 @@
   --lf-margin-desktop: 64px;
   --lf-column-gap: 32px;
   --lf-max-w: 1440px;
+  --lf-chip: 44px;             /* standard icon-chip square (Axiom tap target) */
+  --lf-lift: -4px;            /* standard hover translateY lift for cards/controls */
 
   /* Radius — Axiom card language. Editorial rules stay sharp (0); surfaces round. */
   --lf-radius-sm: 12px;

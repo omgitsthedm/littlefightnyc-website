@@ -51,7 +51,7 @@
   padding: var(--lf-space-5) 0;
   text-decoration: none;
   color: var(--lf-bone);
-  transition: padding-left var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: padding-left var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 @media (min-width: 768px) {
@@ -83,13 +83,12 @@
 
 .lf-journal__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--lf-bone);
-  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 @media (min-width: 1024px) {
@@ -104,8 +103,6 @@
 
 .lf-journal__desc {
   font-family: var(--lf-serif);
-  font-style: italic;
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-base);
   line-height: 1.5;
   color: var(--lf-bone-soft);
@@ -165,7 +162,6 @@
 /* HTML body — applies editorial type to imported article content */
 .lf-post__body {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-md);
   line-height: 1.7;
   color: var(--lf-bone);
@@ -174,7 +170,6 @@
 
 .lf-post__body h1 {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144;
   font-weight: 600;
   font-size: var(--lf-text-2xl);
   line-height: 0.95;
@@ -185,7 +180,6 @@
 
 .lf-post__body h2 {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 72;
   font-weight: 600;
   font-size: var(--lf-text-xl);
   line-height: 1.05;
@@ -196,7 +190,6 @@
 
 .lf-post__body h3 {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
   font-weight: 600;
   font-size: var(--lf-text-lg);
   line-height: 1.1;
@@ -233,8 +226,8 @@
   padding: 0.02em 0.14em;
   margin-inline: -0.04em;
   transition:
-    color var(--lf-time-fast) var(--lf-ease-out-quart),
-    background-color var(--lf-time-fast) var(--lf-ease-out-quart);
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-post__body a:hover {

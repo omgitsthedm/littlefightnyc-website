@@ -99,7 +99,7 @@ export default function Journal() {
       <VisualIndex
         eyebrow="Field guide"
         title="Pick the kind of decision you're making."
-        dek="How-tos, software comparisons, and essays now read more like a working field guide than a text archive."
+        dek="Grouped by the kind of call you're weighing: how-tos when you're doing it yourself, software comparisons when you're choosing a tool, and essays when you're deciding which direction to take."
         items={overview}
         variant="compact"
       />

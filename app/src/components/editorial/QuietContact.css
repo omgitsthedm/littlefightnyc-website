@@ -53,7 +53,6 @@
 
 .lf-contact-block__title {
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 144;
   font-weight: 700;
   font-size: var(--lf-text-2xl);
   line-height: 0.95;
@@ -77,7 +76,6 @@
 .lf-contact-block__dek {
   max-width: 54ch;
   font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 18;
   font-size: var(--lf-text-md);
   line-height: 1.42;
   letter-spacing: -0.004em;
@@ -266,7 +264,6 @@
 .lf-contact-block__promises em {
   font-family: var(--lf-serif);
   font-style: italic;
-  font-variation-settings: "opsz" 14;
   font-size: var(--lf-text-sm);
   color: var(--lf-bone-soft);
   letter-spacing: -0.005em;

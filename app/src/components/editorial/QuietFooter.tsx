@@ -108,6 +108,16 @@ export default function QuietFooter() {
             © {year} Little Fight NYC. All rights reserved.
           </p>
         </div>
+
+        <p className="lf-quiet-foot__signature">
+          Designed, Hosted and Cared For by{" "}
+          <a
+            href="https://littlefightnyc.com"
+            rel="author"
+          >
+            LittleFightNYC.com
+          </a>
+        </p>
       </div>
     </footer>
   );

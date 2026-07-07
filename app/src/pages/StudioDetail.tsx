@@ -43,8 +43,10 @@ export default function StudioDetail() {
         title={<>{project.name}</>}
         dek={project.oneline}
         image={{
+          // Decorative: the adjacent H1 already announces the project name,
+          // so an alt repeating it would be redundant for screen readers.
           src: project.image,
-          alt: project.name,
+          alt: "",
           width: 1800,
           height: 1200,
         }}
