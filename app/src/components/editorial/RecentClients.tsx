@@ -11,11 +11,11 @@ import "./RecentClients.css";
  * proof; the rest form a grid. Staggered reveal, hover lift + image zoom.
  */
 const FEATURED_SLUGS = [
-  "deckspace",
-  "cc-films",
-  "hair-by-rachel-charles",
   "grand-funding-llc",
+  "hair-by-rachel-charles",
+  "cc-films",
   "public-house-creative",
+  "deckspace",
 ] as const;
 
 export default function RecentClients() {
