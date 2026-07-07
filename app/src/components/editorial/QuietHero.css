@@ -55,6 +55,20 @@
   pointer-events: none;
 }
 
+/* Mobile crop shifts brighter buildings behind the hero copy — strengthen the
+ * scrim so the muted subtext stays readable. */
+@media (max-width: 767px) {
+  .lf-hero::after {
+    background:
+      radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.20) 0%, transparent 55%),
+      linear-gradient(180deg, rgba(5, 5, 7, 0.35) 0%, rgba(5, 5, 7, 0.6) 55%, rgba(5, 5, 7, 0.92) 100%);
+  }
+  /* Lift the muted subtext to near-white on the busy mobile photo crop. */
+  .lf-hero__brief {
+    color: color-mix(in srgb, var(--lf-bone) 90%, var(--lf-bone-soft));
+  }
+}
+
 .lf-hero__content {
   position: relative;
   z-index: 2;
@@ -138,6 +152,13 @@
   display: block;
   overflow: visible;
   padding-block: 0.04em;
+}
+
+/* Group each word's character-spans so the headline breaks only BETWEEN words,
+ * never mid-word (the chars are individually wrapped for the cascade reveal). */
+.lf-hero__word {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 /* Bulletproof pattern: default state is VISIBLE. Animation runs FROM hidden

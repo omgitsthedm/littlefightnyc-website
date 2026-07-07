@@ -1,20 +1,50 @@
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietHero.css";
 
-// Plain-text split helper: each char becomes a <span> with --lf-i index
-// so the CSS can stagger the cascade reveal.
+// Plain-text split helper: each char becomes a <span> with a --lf-i index so
+// the CSS can stagger the cascade reveal. Chars are grouped into per-word
+// wrappers (inline-block, nowrap) so the headline breaks only BETWEEN words —
+// never mid-word — while the character animation is preserved.
 function cascade(text: string, startIdx: number, prefix: string) {
-  return [...text].map((c, i) => (
-    <span
-      key={`${prefix}-${i}`}
-      className="lf-hero__char"
-      style={{ ["--lf-i" as string]: `${startIdx + i}` }}
-    >
-      {c === " " ? " " : c}
-    </span>
-  ));
+  const out: ReactNode[] = [];
+  const words = text.split(" ");
+  let idx = startIdx;
+  words.forEach((word, wi) => {
+    const chars = [...word].map((c) => {
+      const el = (
+        <span
+          key={`${prefix}-${idx}`}
+          className="lf-hero__char"
+          style={{ ["--lf-i" as string]: `${idx}` }}
+        >
+          {c}
+        </span>
+      );
+      idx += 1;
+      return el;
+    });
+    out.push(
+      <span key={`${prefix}-w-${wi}`} className="lf-hero__word">
+        {chars}
+      </span>
+    );
+    if (wi < words.length - 1) {
+      out.push(
+        <span
+          key={`${prefix}-sp-${idx}`}
+          className="lf-hero__char lf-hero__space"
+          style={{ ["--lf-i" as string]: `${idx}` }}
+        >
+          {" "}
+        </span>
+      );
+      idx += 1;
+    }
+  });
+  return out;
 }
 
 // Each marquee item links to the page that addresses the problem.

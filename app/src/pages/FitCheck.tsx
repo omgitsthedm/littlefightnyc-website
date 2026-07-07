@@ -81,7 +81,7 @@ export default function FitCheck() {
             <input type="hidden" name="form-name" value="fit-check-scratch" />
             <input type="hidden" name="subject" value="New Little Fight NYC Fit Check" />
             <input type="hidden" name="source" value="littlefightnyc.com/fit-check" />
-            <p className="lf-fit__honeypot">
+            <p className="lf-fit__honeypot" aria-hidden="true">
               <label htmlFor="bot-field">Do not fill this out</label>
               <input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
             </p>
