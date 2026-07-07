@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Globe, LifeBuoy, MapPin, Workflow, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
+import AmbientField from "./AmbientField";
 import "./MomentumSection.css";
 
 /**
@@ -49,6 +50,7 @@ export default function MomentumSection() {
 
   return (
     <section className="lf-momentum" aria-labelledby="lf-momentum-heading">
+      <AmbientField />
       <div ref={headRef} className="lf-container lf-momentum__head">
         <p className="lf-mono lf-momentum__eyebrow">
           <span className="lf-momentum__eyebrow-num">II.</span>
