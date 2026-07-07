@@ -1,7 +1,17 @@
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
+import EditorialFigure from "@/components/editorial/EditorialFigure";
+import PullQuote from "@/components/editorial/PullQuote";
+import StatBlock from "@/components/editorial/StatBlock";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
 import QuietContact from "@/components/editorial/QuietContact";
+
+const PROMISES = [
+  { value: "Free", label: "Every consult — always" },
+  { value: "14 days", label: "Typical website ship" },
+  { value: "24 hrs", label: "On-site when it's urgent" },
+  { value: "2 hrs", label: "Callback, 9am–9pm ET" },
+];
 
 export default function About() {
   return (
@@ -42,24 +52,49 @@ export default function About() {
               something breaks, search visibility that tells the truth, and
               small systems that make the day move.
             </p>
+          </EditorialBody>
+
+          <EditorialFigure
+            src="/assets/interior-spice-shop.webp"
+            alt="Inside an owner-run specialty shop in New York"
+            number="01"
+            caption="The places that make a block worth living on — usually the ones with the least time and the smallest tech budget."
+            width={1600}
+            height={1067}
+          />
+
+          <EditorialBody>
             <p>
               The order is always the same. Keep what works. Connect what
-              matters. Replace what drags. Build only what fits. Most owners
-              assume the answer is a rebuild. It almost never is.
+              matters. Replace what drags. Build only what fits.
             </p>
-            <p>
-              The promises are easy to remember. The consult is always free.
-              Websites usually ship within 14 days. On-site visits land within
-              24 hours when needed. Callbacks come within 2 hours,
-              9am-9pm Eastern. After hours, AI takes the message and David
-              calls back.
+          </EditorialBody>
+
+          <PullQuote cite="How the work usually starts">
+            Most owners assume the answer is a rebuild. It almost never is.
+          </PullQuote>
+
+          <StatBlock eyebrow="The promises" items={PROMISES} />
+          <EditorialBody>
+            <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
+              After hours, AI takes the message and David calls back.
             </p>
+          </EditorialBody>
+
+          <EditorialFigure
+            src="/assets/owner.webp"
+            alt="A small-business owner at the counter"
+            number="02"
+            caption="Most calls start with “I don't know if this is a stupid question.” It almost never is — it's the business."
+            width={1600}
+            height={1067}
+          />
+
+          <EditorialBody>
             <p>
-              Most calls start with "I don't know if this is a stupid
-              question…" It almost never is. The Wi-Fi being weird, the email
-              going to a stranger, the booking link that hasn't worked in three
-              months - none of that is stupid. It is the business. Call when
-              you need the path fixed.
+              The Wi-Fi being weird, the email going to a stranger, the booking
+              link that hasn't worked in three months — none of that is stupid.
+              It is the business. Call when you need the path fixed.
             </p>
             <p>
               The direct line is (646) 360-0318. Email is

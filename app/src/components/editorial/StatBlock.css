@@ -1,0 +1,50 @@
+/* StatBlock — quantified beat. Appearance only; reveal via global rule. */
+
+.lf-stats {
+  margin: var(--lf-space-8) 0;
+  padding: var(--lf-space-6) 0;
+  border-top: 1px solid var(--lf-hairline);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-stats__eyebrow {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-stats__grid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-6) var(--lf-space-5);
+}
+@media (min-width: 720px) {
+  .lf-stats__grid[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lf-stats__grid[data-count="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.lf-stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+}
+
+.lf-stats__value {
+  font-family: var(--lf-display);
+  font-weight: 700;
+  font-size: var(--lf-text-2xl);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--lf-fight);
+}
+
+.lf-stats__label {
+  margin: 0;
+  font-size: var(--lf-text-sm);
+  line-height: 1.4;
+  color: var(--lf-bone-soft);
+}

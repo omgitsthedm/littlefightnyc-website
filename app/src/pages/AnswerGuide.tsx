@@ -4,6 +4,16 @@ import QuietContact from "@/components/editorial/QuietContact";
 import { answerGuides } from "@/data/site";
 import "@/styles/editorial/answers.css";
 
+// A distinct frame per answer so no two share a hero.
+const ANSWER_IMAGE: Record<string, string> = {
+  "website-form-not-working-small-business": "/assets/hero-laptop.webp",
+  "reduce-monthly-software-costs-small-business": "/assets/pos.webp",
+  "business-not-showing-on-google-maps": "/assets/sign-more-shops.webp",
+  "hair-salon-save-money-software": "/assets/nyc-hair-salon-street.webp",
+  "local-pharmacy-website-community-support": "/assets/storefront-health-foods.webp",
+  "when-custom-business-system-beats-saas": "/assets/coworking-laptops.webp",
+};
+
 export default function AnswerGuide() {
   const { slug } = useParams();
   const guide = answerGuides.find((item) => item.slug === slug);
@@ -18,8 +28,8 @@ export default function AnswerGuide() {
         title={<>{guide.question}</>}
         dek={guide.short.replace(/^Short answer:\s*/i, "")}
         image={{
-          src: "/assets/local-business.webp",
-          alt: "An NYC owner-operated business at street level",
+          src: ANSWER_IMAGE[guide.slug] ?? "/assets/local-business.webp",
+          alt: "",
           width: 1600,
           height: 1200,
         }}
