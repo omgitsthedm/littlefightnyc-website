@@ -12,6 +12,7 @@ const WorkGrid = lazy(() => import("@/components/editorial/WorkGrid"));
 const MomentumSection = lazy(() => import("@/components/editorial/MomentumSection"));
 const RecentClients = lazy(() => import("@/components/editorial/RecentClients"));
 const BrandLine = lazy(() => import("@/components/editorial/BrandLine"));
+const SignatureBand = lazy(() => import("@/components/editorial/SignatureBand"));
 const QuietContact = lazy(() => import("@/components/editorial/QuietContact"));
 const QuietFooter = lazy(() => import("@/components/editorial/QuietFooter"));
 const StickyHelpBar = lazy(() => import("@/components/editorial/StickyHelpBar"));
@@ -58,6 +59,7 @@ export default function Home() {
             <WorkGrid />
             <MomentumSection />
             <RecentClients />
+            <SignatureBand />
             <BrandLine />
             <QuietContact />
           </Suspense>

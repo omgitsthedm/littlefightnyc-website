@@ -1,7 +1,8 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowUpRight, Award } from "lucide-react";
+import { ArrowUpRight, Award, Gauge } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
+import StatBlock from "@/components/editorial/StatBlock";
 import QuietContact from "@/components/editorial/QuietContact";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { caseStudies, services } from "@/data/site";
@@ -125,6 +126,10 @@ export default function CaseStudyDetail() {
             <EditorialBody dropcap>
               {study.body?.map((p, i) => <p key={i}>{p}</p>)}
             </EditorialBody>
+
+            {study.metrics && study.metrics.length > 0 && (
+              <StatBlock eyebrow="Project at a glance" icon={Gauge} items={study.metrics} />
+            )}
           </div>
         </div>
 

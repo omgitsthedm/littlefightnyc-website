@@ -2,8 +2,17 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { areaPages, services } from "@/data/site";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
+import EditorialFigure from "@/components/editorial/EditorialFigure";
+import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
 import "@/styles/editorial/service-detail.css";
+
+const FIGURE_CAPTION: Record<string, string> = {
+  "tech-consulting": "The unglamorous middle of the stack — where the money quietly leaks.",
+  "it-support": "The register, the reader, the tablet — the tools the day actually runs on.",
+  "custom-local-websites": "Built for your block, not picked from a template menu.",
+  "business-systems": "One source of truth instead of a stack of spreadsheets and memory.",
+};
 
 const FEATURE_IMAGE: Record<string, string> = {
   "tech-consulting": "/assets/local-business.webp",
@@ -56,7 +65,7 @@ export default function ServiceDetail() {
         <div className="lf-sd__inner">
           <EditorialBody dropcap>
             <p>{service.plain}</p>
-            <p>{service.outcome}</p>
+            <PullQuote cite="What you can count on">{service.outcome}</PullQuote>
           </EditorialBody>
 
           <aside className="lf-sd__aside">
@@ -78,6 +87,13 @@ export default function ServiceDetail() {
               <p key={i}>{para}</p>
             ))}
           </div>
+          <EditorialFigure
+            src={service.image}
+            alt=""
+            caption={FIGURE_CAPTION[service.slug] ?? ""}
+            width={1600}
+            height={1067}
+          />
         </div>
       </section>
 

@@ -65,6 +65,7 @@ export type CaseStudy = {
   published?: string;
   updated?: string;
   body?: string[];
+  metrics?: Array<{ value: string; label: string }>;
 };
 
 export type StudioProject = {
@@ -797,6 +798,11 @@ export const caseStudies: CaseStudy[] = [
     client: "CC Films",
     url: "https://ccfilms.net",
     slug: "cc-films",
+    metrics: [
+      { value: "Official source", label: "Behaves like one, not a brochure" },
+      { value: "Schema + headers", label: "Hardened for search + crawlers" },
+      { value: "Netlify + GitHub", label: "Existing deploy path kept" },
+    ],
     image: "/assets/case-cc-films.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
@@ -817,6 +823,11 @@ export const caseStudies: CaseStudy[] = [
     client: "DeckSpace",
     url: "https://www.getdeckspace.com",
     slug: "deckspace",
+    metrics: [
+      { value: "Low-latency", label: "Speed treated as a core feature" },
+      { value: "3-in-1", label: "Onboard guide · social · memory layer" },
+      { value: "Live", label: "getdeckspace.com" },
+    ],
     image: "/assets/case-deckspace.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
@@ -837,6 +848,11 @@ export const caseStudies: CaseStudy[] = [
     client: "Hair By Rachel Charles",
     url: "https://www.hairbyrachelcharles.com",
     slug: "hair-by-rachel-charles",
+    metrics: [
+      { value: "100", label: "Lighthouse, across the board" },
+      { value: "2 weeks", label: "Instagram-only → real booking site" },
+      { value: "Square", label: "Booking kept — clients already knew it" },
+    ],
     image: "/assets/case-hair-by-rachel-charles.webp",
     services: ["custom-local-websites", "tech-consulting"],
     title: "From Instagram-only to a real booking flow.",
@@ -855,6 +871,11 @@ export const caseStudies: CaseStudy[] = [
     client: "After Hours Agenda",
     url: "https://www.afterhoursagenda.com",
     slug: "after-hours-agenda",
+    metrics: [
+      { value: "Next.js 14", label: "Custom build, no platform lock-in" },
+      { value: "1 day", label: "To ship a new product drop" },
+      { value: "Square + Printful", label: "Payments + fulfillment wired" },
+    ],
     image: "/assets/case-after-hours-agenda.webp",
     services: ["custom-local-websites", "business-systems"],
     title: "End-to-end e-commerce that doesn't drown the brand.",
@@ -873,6 +894,11 @@ export const caseStudies: CaseStudy[] = [
     client: "ClearHelp",
     url: "https://www.clearhelp.org",
     slug: "clearhelp",
+    metrics: [
+      { value: "3 sites", label: "One shared Supabase backend" },
+      { value: "Per-site CI", label: "Independent deploys on push" },
+      { value: "Real-time", label: "Intake routing, no copying" },
+    ],
     image: "/assets/case-clearhelp.webp",
     services: ["custom-local-websites", "business-systems"],
     title: "Multi-site setup with a real backend.",
@@ -891,6 +917,11 @@ export const caseStudies: CaseStudy[] = [
     client: "Public House Creative",
     url: "https://www.publichousecreative.com",
     slug: "public-house-creative",
+    metrics: [
+      { value: "3 tools → 1", label: "Estimates in one source of truth" },
+      { value: "Every number", label: "Audits back to its source" },
+      { value: "Active build", label: "Runs on real estimates" },
+    ],
     image: "/assets/case-public-house-cockpit.webp",
     services: ["business-systems"],
     title: "An internal cockpit for the work they actually run.",
@@ -909,6 +940,11 @@ export const caseStudies: CaseStudy[] = [
     client: "Grand Funding LLC",
     url: "https://www.grandfundingllc.com",
     slug: "grand-funding-llc",
+    metrics: [
+      { value: "Type-led", label: "No finance-site cliches" },
+      { value: "Schema", label: "Org · FinancialService · Person" },
+      { value: "Live", label: "grandfundingllc.com" },
+    ],
     image: "/assets/case-grand-funding-llc.webp",
     services: ["custom-local-websites"],
     title: "A clean public face for a finance business.",

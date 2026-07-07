@@ -1,0 +1,47 @@
+import AmbientField from "./AmbientField";
+import { useScrollReveal } from "./useScrollReveal";
+import "./SignatureBand.css";
+
+/**
+ * SignatureBand — the home page's signature beat. A full-bleed statement over
+ * the living blue constellation, with four honest facts revealing in sequence.
+ * Orange is the signal (eyebrow + accent); the burst behind is blue. The
+ * ambient canvas pauses off-screen and never runs under reduced-motion.
+ */
+const STATS = [
+  { value: "2012", label: "In New York's corner since" },
+  { value: "14-day", label: "Typical website ship" },
+  { value: "Free", label: "Every first consult" },
+  { value: "Custom", label: "Coded, never templated" },
+];
+
+export default function SignatureBand() {
+  const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.25 });
+
+  return (
+    <section className="lf-signature" aria-label="Little Fight NYC, by the numbers">
+      <div className="lf-signature__ambient" aria-hidden="true">
+        <AmbientField />
+      </div>
+      <div ref={ref} className="lf-signature__inner" data-revealed="false">
+        <p className="lf-mono lf-signature__eyebrow">The record</p>
+        <h2 className="lf-signature__title">
+          Punching above our weight for New York&rsquo;s{" "}
+          <span className="lf-signature__em">small businesses.</span>
+        </h2>
+        <dl className="lf-signature__stats">
+          {STATS.map((s, i) => (
+            <div
+              key={s.label}
+              className="lf-signature__stat"
+              style={{ ["--lf-i" as string]: i }}
+            >
+              <dt className="lf-signature__value">{s.value}</dt>
+              <dd className="lf-signature__label">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
