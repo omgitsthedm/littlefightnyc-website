@@ -1,5 +1,17 @@
 # Little Fight NYC Website Config
 
+## 2026-07-07 — SEO-beast + bulletproof pass (LIVE, `74d00d1`)
+
+- **FAQPage rich-results schema on every FAQ-bearing page.** Answers/services/home already had it; filled the gaps — 8 neighborhood hubs + 6 glossary terms — by syncing the authored `faq` into the prerender source (`seo-pages.json`) + wiring glossary faq through `glossaryPages()`. Verified in prerendered HTML: FAQPage + BreadcrumbList (+ DefinedTerm on glossary) emit. LocalBusiness/ProfessionalService (PostalAddress/GeoCoordinates/areaServed/OpeningHours) + breadcrumbs already emitted; **`streetAddress` and `site.sameAs` are still empty** — add real values to lift Structured Data + entity strength (see GBP note below).
+- **Command palette (Cmd/Ctrl-K or `/`):** accessible quick-nav over all 40 destinations, fuzzy filter, arrow/enter, Esc. **Gotcha:** home renders OUTSIDE `EditorialShell` (standalone "magazine cover"), so a shell-only component never mounts on `/` — must also be rendered in `Home.tsx`. Also: **prod build strips `console.log`** — instrument with `window.__flags` when debugging live/built code.
+- **Lighthouse (live final):** Home Perf 92 / A11y 96→(fixed) / BP 100 / SEO 100; Services Perf 90 / A11y 100 / BP 100 / SEO 100. CLS 0, TBT 0 across the board.
+- **A11y fix:** the two home orange CTAs (`.lf-fight__cta`, `.lf-momentum__cta-button`) rendered WHITE on orange (2.8:1) because a global `.lf-editorial a` color rule (0,1,1) beat the CTA's `color:var(--lf-ink)` (0,1,0). Scoped overrides → dark ink on orange (~7:1). No other page affected.
+- **Perf:** `EditorialFigure` now emits a responsive srcset (480/640/900) — killed the ~182KB oversized-image finding on service pages.
+- **Security headers confirmed live:** CSP (frame-ancestors none, form-action self), HSTS+preload, X-Frame DENY, nosniff, Referrer-Policy, Permissions-Policy.
+
+### ⚠️ Google Business Profile is the traffic bottleneck (not the site)
+June GBP: 54 profile views, **0 calls / 0 chats / 0 website clicks / 0 interactions**. The website is now SEO-strong, but GBP is a **separate channel** that needs direct work in Business Profile Manager (David's login): confirm the website URL + call button are set, add real photos + categories + services, post updates, and get reviews. Website-side assists available once David provides the GBP URL + social handles: populate `site.sameAs` (currently `[]`) and add the real `streetAddress`/registered address to the LocalBusiness schema for entity/NAP strength.
+
 ## 2026-07-07 — Elevated visuals + honest case proof + signature moment + full audit (LIVE, `6ffd3c9`)
 
 - **Case studies (7):** "Project at a glance" StatBlock of **honest, verifiable facts pulled straight from each real case body** (Rachel: `100` Lighthouse + `2 weeks`; AHA: `Next.js 14` + `1 day` drops; ClearHelp: `3 sites`/`1` Supabase; PHC: `3 tools → 1`; etc.). New `metrics?` field on `CaseStudy`. No fabricated numbers.
