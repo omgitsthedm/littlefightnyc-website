@@ -16,6 +16,7 @@ const SignatureBand = lazy(() => import("@/components/editorial/SignatureBand"))
 const QuietContact = lazy(() => import("@/components/editorial/QuietContact"));
 const QuietFooter = lazy(() => import("@/components/editorial/QuietFooter"));
 const StickyHelpBar = lazy(() => import("@/components/editorial/StickyHelpBar"));
+const CommandPalette = lazy(() => import("@/components/editorial/CommandPalette"));
 
 function useDeferredSections() {
   const [ready, setReady] = useState(false);
@@ -69,6 +70,7 @@ export default function Home() {
         <Suspense fallback={null}>
           <StickyHelpBar />
           <QuietFooter />
+          <CommandPalette />
         </Suspense>
       )}
     </div>
