@@ -48,8 +48,9 @@
   inset: 0;
   z-index: 1;
   background:
-    /* Subtle warm fight-orange glow from bottom-left to give brand presence */
-    radial-gradient(ellipse at 0% 100%, color-mix(in srgb, var(--lf-fight) 18%, transparent) 0%, transparent 55%),
+    /* Cool blue glow from bottom-left — ambient atmosphere behind the orange
+       "New York." headline so the orange reads as the signal, not orange-on-orange. */
+    radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.20) 0%, transparent 55%),
     linear-gradient(180deg, rgba(10, 10, 10, 0.05) 0%, rgba(10, 10, 10, 0.45) 60%, rgba(10, 10, 10, 0.88) 100%);
   pointer-events: none;
 }

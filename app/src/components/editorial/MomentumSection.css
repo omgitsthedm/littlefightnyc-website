@@ -105,9 +105,11 @@ a.lf-momentum__card:focus-visible {
   position: absolute;
   inset: -40% 30% auto -10%;
   height: 120%;
+  /* Blue ambient glow — orange is the signal (title + accents), so the burst
+     behind the feature card stays cool and lets the orange pop. */
   background:
-    radial-gradient(60% 60% at 20% 20%, rgba(249, 115, 22, 0.22), transparent 70%),
-    radial-gradient(50% 50% at 80% 40%, rgba(59, 130, 246, 0.18), transparent 70%);
+    radial-gradient(60% 60% at 20% 20%, rgba(59, 130, 246, 0.20), transparent 70%),
+    radial-gradient(50% 50% at 80% 40%, rgba(59, 130, 246, 0.12), transparent 70%);
   filter: blur(8px);
   z-index: -1;
   pointer-events: none;
