@@ -1,5 +1,7 @@
 # Little Fight NYC Website - Claude Code Handoff
 
+> ⚠️ **HISTORICAL (May 2026). Do not treat as current.** Some deploy/branch notes here are stale (e.g. "`main` not guaranteed to match live", a dirty `little-fight-overhaul` branch). **Current truth:** `main` IS canonical and auto-deploys to Netlify (~40s). For the authoritative stack, deploy model, and architecture see **`AGENTS.md` → "Tech Stack & Architecture (current)"** and **`SOURCE_OF_TRUTH.md`**, plus the dated `## 2026-07-…` entries in `CLAUDE.md`. This file is kept only as history.
+
 Last updated: May 12, 2026
 
 ## May 12, 2026 Source-Of-Truth Correction

@@ -51,10 +51,10 @@ The visual direction should feel like playful tactile NYC with premium restraint
 The blog should feel like a hybrid of a field guide and an editorial publication: insightful, practical, and memorable. It should not look like generic SaaS, Apple-clean minimalism, dark neon gamer UI, or a startup agency template.
 
 Brand anchors that should stay intact:
-- Bright orange as the lead brand signal
-- Blue support tones for contrast, links, and readable accents
-- Lexend for primary type
-- Caveat as a selective accent voice
+- Bright orange as the lead brand signal (`#F97316`; hover/ember for states)
+- Blue (`#3B82F6`) as a real accent — background bursts/ambient are blue, orange stays the signal
+- **Inter** for display + body (700/800 display, 400/500/600 body), **JetBrains Mono** for labels/metadata. *(2026-07 Axiom "Momentum" pivot — Lexend/Caveat/Fraunces are retired; authoritative tokens in `app/src/styles/editorial/tokens.css`, documented in `app/DESIGN.md`.)*
+- Note: the hub of proof/answers is now named **"Examples"** at `/examples/` (was "Field Guide" — 301 preserved)
 - React 19 + Vite + TypeScript SPA, prerendered for SEO, Netlify delivery (see Tech Stack above)
 - WCAG-aware contrast, responsive intent, and reduced-motion respect
 - Performance and polish should coexist; motion is welcome when it helps clarity or delight

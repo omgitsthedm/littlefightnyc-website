@@ -1,5 +1,7 @@
 # Little Fight NYC — Developer Handoff
 
+> ⚠️ **HISTORICAL / static-era. Do not treat as current.** This describes the retired hand-built static HTML/CSS/JS site (Lexend/Caveat, `#080b14` midnight palette). **The live site is now a React 19 + Vite + TypeScript SPA** (Axiom "Momentum" design, Inter, near-black `#050507`, orange `#F97316`). Authoritative current docs: **`AGENTS.md` (Tech Stack & Architecture)**, **`app/DESIGN.md` (design system)**, **`SOURCE_OF_TRUTH.md` (deploy)**. Kept only as history.
+
 ## Project Overview
 
 Little Fight NYC is now positioned around right-sized websites, tools, local visibility, and business systems for New York businesses. On-demand support remains part of the offer, but it is no longer the headline identity.
