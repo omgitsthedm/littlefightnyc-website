@@ -1,0 +1,35 @@
+/* PullQuote — a call-out beat lifted from body copy. Appearance only;
+   the reveal is handled by the global `.lf-editorial [data-reveal]` rule. */
+
+.lf-pullquote {
+  margin: var(--lf-space-8) 0;
+  padding: var(--lf-space-2) 0 var(--lf-space-2) var(--lf-space-6);
+  border-left: 3px solid var(--lf-fight);
+  max-width: 52ch;
+}
+
+.lf-pullquote__quote {
+  margin: 0;
+  font-family: var(--lf-display);
+  font-weight: 500;
+  font-size: var(--lf-text-lg);
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+  color: var(--lf-bone);
+  text-wrap: pretty;
+}
+
+.lf-pullquote__cite {
+  margin-top: var(--lf-space-4);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+@media (min-width: 768px) {
+  .lf-pullquote__quote {
+    font-size: var(--lf-text-xl);
+  }
+}

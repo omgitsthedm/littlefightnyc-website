@@ -144,11 +144,11 @@
       ]
     },
     {
-      "path": "/field-guide/",
-      "title": "Field Guide for NYC Small Business Tech | Little Fight NYC",
-      "description": "Case studies, industry maps, and plain-English answers about websites, IT support, local SEO, software costs, and business systems for NYC businesses.",
+      "path": "/examples/",
+      "title": "Examples: Real NYC Small Business Work & Plain Answers | Little Fight NYC",
+      "description": "Real examples of our work, business-type maps, and plain-English answers about websites, IT support, local SEO, software costs, and business systems for NYC businesses.",
       "h1": "Proof, maps, and plain answers.",
-      "shortAnswer": "Short answer: the Field Guide combines Little Fight case studies, industry maps, and practical answers so owners can see the pattern before another pitch.",
+      "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most — before any pitch.",
       "type": "CollectionPage",
       "image": "/assets/storefront-shop-deli.webp"
     },
@@ -505,6 +505,15 @@
       "shortAnswer": "A long-running build for a paint-and-finish company \u2014 discovery, classification, and reporting in one premium UI.",
       "type": "Article",
       "image": "/assets/hero-laptop.webp"
+    },
+    {
+      "path": "/studio/venuecircuit/",
+      "title": "VenueCircuit \u2014 From the Studio | Little Fight NYC",
+      "description": "A full software product Little Fight shipped to the public: the financial operating system for independent live-event venues. Close the night in 90 seconds.",
+      "h1": "VenueCircuit",
+      "shortAnswer": "The operating system for independent live-event venues \u2014 close the night in 90 seconds and know every number down to the receipt.",
+      "type": "Article",
+      "image": "/assets/case-venuecircuit.webp"
     }
   ],
   "matrix": {

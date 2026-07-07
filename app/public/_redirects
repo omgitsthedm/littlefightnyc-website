@@ -19,11 +19,14 @@
 /work            /services/                 301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301
-/answers/        /field-guide/#answers      301
-/answers         /field-guide/#answers      301
-/industries/     /field-guide/#industries   301
-/industries      /field-guide/#industries   301
-/case-studies/   /field-guide/#studies      301
-/case-studies    /field-guide/#studies      301
+/answers/        /examples/#answers      301
+/answers         /examples/#answers      301
+/industries/     /examples/#industries   301
+/industries      /examples/#industries   301
+/case-studies/   /examples/#studies      301
+/case-studies    /examples/#studies      301
+# Field Guide renamed to Examples (2026-07-07) — preserve the indexed URL
+/field-guide/    /examples/                 301
+/field-guide     /examples/                 301
 # Default SPA fallback
 /*  /404.html  404

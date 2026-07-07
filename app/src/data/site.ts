@@ -89,6 +89,12 @@ export type AreaPage = {
   shortAnswer: string;
   localPattern: string;
   firstMove: string;
+  intro: string;
+  businessLandscape: string;
+  localSearchReality: string;
+  whatWeFixHere: string[];
+  faq: Array<{ question: string; answer: string }>;
+  nearby: string[];
 };
 
 export type AnswerGuide = {
@@ -105,11 +111,16 @@ export type GlossaryTerm = {
   definition: string;
   plain: string;
   whenItMatters: string;
+  howItWorks: string;
+  example: string;
+  costOfIgnoring: string;
+  related: string[];
+  faq: Array<{ question: string; answer: string }>;
 };
 
 export const navItems: RouteItem[] = [
   { label: "Work", path: "/services/" },
-  { label: "Field Guide", path: "/field-guide/" },
+  { label: "Examples", path: "/examples/" },
   { label: "Audit", path: "/audit/" },
   { label: "Fit Check", path: "/fit-check/" },
 ];
@@ -530,22 +541,22 @@ export const ownerAnswers: Answer[] = [
   {
     question: "Do I need a new website or just a better path?",
     short: "If the site is trusted but the form, booking, or follow-up is broken, fix the path before buying a full rebuild.",
-    path: "/field-guide/#answers",
+    path: "/examples/#answers",
   },
   {
     question: "Why are we paying for software and still using spreadsheets?",
     short: "That usually means the tool is not fitting the workflow. Keep the useful parts, connect the gaps, replace the drag.",
-    path: "/field-guide/#answers",
+    path: "/examples/#answers",
   },
   {
     question: "Why does a competitor show up on Google before us?",
     short: "Google needs a clear profile, real service pages, review signals, and local proof it can understand.",
-    path: "/field-guide/#answers",
+    path: "/examples/#answers",
   },
   {
     question: "Can custom be cheaper than another subscription?",
     short: "Sometimes. Not always. The math starts with the monthly bill plus the staff time lost around it.",
-    path: "/field-guide/#answers",
+    path: "/examples/#answers",
   },
 ];
 
@@ -561,8 +572,20 @@ export const answerGuides: AnswerGuide[] = [
         body: "Check where the form sends messages, whether the inbox is filtering them, whether the form plugin is still connected, and whether the domain email records are healthy.",
       },
       {
+        heading: "Test it like a real customer",
+        body: "Open the site on your phone, not the office computer, and fill the form out end to end with a real message. Then check the main inbox, the spam and junk folders, and any shared inbox a staff member watches. If the confirmation screen says thank you but nothing lands, the problem is almost always the email path, not the form itself.",
+      },
+      {
+        heading: "The usual culprits",
+        body: "Most silent forms come from a short list: a notification address that belongs to a former employee, a mailbox that filled up, missing SPF or DKIM records so your host's mail gets marked as spam, or a plugin or website builder trial that quietly expired. Each one is fixable in an afternoon once you find which it is.",
+      },
+      {
         heading: "When it becomes a system issue",
         body: "If the form works but follow-up depends on memory, the fix is not only technical. The business needs a clearer lead path after the message lands.",
+      },
+      {
+        heading: "When to call us",
+        body: "Call if you are losing inquiries right now, if you cannot tell whether the form ever worked, or if messages land but nobody has a reliable way to answer them the same day. We check the whole path from the button to your inbox, confirm it with a live test, and set up a backup copy of every lead so one broken setting never costs you a customer again.",
       },
     ],
     faq: [
@@ -587,8 +610,20 @@ export const answerGuides: AnswerGuide[] = [
         body: "The subscription is only one cost. Staff time, double entry, missed leads, confusing onboarding, and manual reporting also count.",
       },
       {
+        heading: "Make the list first",
+        body: "Pull your last three months of bank and card statements and write down every software charge, including the annual ones that hide as a single yearly hit. Note what each tool is for, who actually opens it, and the login. Owners are regularly surprised to find two tools doing the same job, or a subscription nobody has used since a staff member left.",
+      },
+      {
+        heading: "What it usually saves",
+        body: "The fastest wins are duplicate tools, unused seats you are still paying per person for, and premium tiers you were upsold but never needed. Cutting three or four of those often frees real money each month with zero change to how the work gets done. Only after that do you look at whether a bigger tool can be swapped for something simpler.",
+      },
+      {
         heading: "Do not cut what works",
         body: "Some software earns its place. The goal is not to cancel everything. The goal is to stop paying for tools that do not fit the work.",
+      },
+      {
+        heading: "When to call us",
+        body: "Call when the list is long, the tools do not talk to each other, or the same information gets typed into three places. We map what you pay against what the work actually needs, tell you plainly what to keep, cancel, or connect, and only suggest building something custom when the math clearly beats one more subscription.",
       },
     ],
     faq: [
@@ -613,8 +648,20 @@ export const answerGuides: AnswerGuide[] = [
         body: "Google Business Profile matters, but the website, reviews, categories, service language, and neighborhood signals all support Maps visibility.",
       },
       {
+        heading: "Start with the profile basics",
+        body: "Sign in to Google Business Profile and confirm the business is verified, the address and hours are exact, and the primary category matches what you actually do. An unverified profile, a category that is close but wrong, or hours that changed after the holidays are common reasons a real business slips out of the local results.",
+      },
+      {
+        heading: "Make your name, address, and phone match everywhere",
+        body: "Google trusts a business it can confirm. Your name, address, and phone number should read the same way on the website, the Google profile, Yelp, and any old directory listing. Mismatched suite numbers, an old phone line, or a former address on a stale listing all make Google less sure where you are, and less likely to place you on the map for a nearby search.",
+      },
+      {
         heading: "Local language matters",
         body: "Google rewards specifics. A late-night bar, a Midtown clinic, and a SoHo boutique each serve a different customer, so the service language on each page should read differently too, not the same block with the neighborhood swapped.",
+      },
+      {
+        heading: "When to call us",
+        body: "Call if the profile looks correct but you still do not appear, if you have duplicate or hijacked listings, or if reviews and service pages need real work rather than a quick edit. We audit the whole local picture, fix the profile and the listings that feed it, and build service pages that tell Google clearly what you do and which neighborhoods you serve.",
       },
     ],
     faq: [
@@ -639,8 +686,20 @@ export const answerGuides: AnswerGuide[] = [
         body: "A salon still needs clear services, deposits or payments, reminders, reviews, lead tracking, and fast answers before a client books.",
       },
       {
+        heading: "Know what you are really paying",
+        body: "Booking platforms charge in more than one place: a monthly fee per stylist, a card processing rate on every payment, and sometimes a cut of new clients they send you. Add those up for a real month. A platform that felt cheap at the monthly price can quietly take a meaningful slice of each chair once the booking fees and card rates are counted.",
+      },
+      {
         heading: "The common leak",
         body: "Many salons pay for a platform but still track new leads through Instagram, phone calls, texts, and memory.",
+      },
+      {
+        heading: "Clean the menu before you switch",
+        body: "Before paying for anything new, tidy what you have. Retire services no one books, set deposits on the appointments that get no-showed, and turn on the reminder texts most tools already include. A cluttered service menu and missing deposits cost more in empty chairs than the software fee ever does, and fixing them costs nothing.",
+      },
+      {
+        heading: "When to call us",
+        body: "Call when you are paying for a platform but still chasing new clients by hand, running two tools that overlap, or unsure whether to switch or stay. We start by asking what to keep, not what to replace, then connect the follow-up and cut the overlap so the tools you already trust do more of the work.",
       },
     ],
     faq: [
@@ -665,8 +724,20 @@ export const answerGuides: AnswerGuide[] = [
         body: "People are often checking hours, availability, directions, services, vaccines, delivery, refill paths, and whether a real local person can help.",
       },
       {
+        heading: "Put the everyday actions up front",
+        body: "The homepage should answer the questions you get on the phone all day: are you open now, how do I refill, do you deliver, do you take my insurance, and how do I reach a real person. A tap-to-call button, clear hours, and a simple refill path near the top save the customer a phone call and save your staff the interruption.",
+      },
+      {
         heading: "Local trust beats generic polish",
         body: "The site should feel credible, helpful, and current, not like a national chain template with a different logo.",
+      },
+      {
+        heading: "Keep it clear without crossing privacy lines",
+        body: "A pharmacy site can be genuinely helpful without collecting sensitive health details through a plain web form. Point people to the safe way to share private information, whether that is a phone call, a secure portal, or an in-person visit, and keep any general contact form free of prescription or medical specifics. Clear beats clever, and safe beats both.",
+      },
+      {
+        heading: "When to call us",
+        body: "Call if the site buries hours and refills, looks like a chain template, or you want a delivery and refill path that fits how your counter actually runs. We build a fast, accessible pharmacy site focused on the actions customers take most, keep the trust signals local, and make sure private information has a safe home instead of an open web form.",
       },
     ],
     faq: [
@@ -691,8 +762,20 @@ export const answerGuides: AnswerGuide[] = [
         body: "If a tool solves most of the workflow, has strong support, and the team uses it every day, keep it.",
       },
       {
+        heading: "The signs you have outgrown the subscription",
+        body: "Watch for the tells: you pay for a platform but still keep the real numbers in a spreadsheet, the same job gets typed into two systems, staff work around the tool instead of through it, or the reports it produces are the ones nobody believes. When the software is fighting how you actually run, another subscription rarely fixes it.",
+      },
+      {
         heading: "Build when the missing piece is specific",
         body: "A right-sized dashboard, intake path, or follow-up workflow can be cleaner than paying every month for a platform built for someone else.",
+      },
+      {
+        heading: "Weigh it honestly",
+        body: "Custom is not automatically cheaper. It makes sense when the monthly subscription is real, the staff time lost to workarounds is real, and the system will be used for years, not months. If a tool mostly works and just needs to be connected to your other tools, that is the better and cheaper move, and we will tell you so.",
+      },
+      {
+        heading: "When to call us",
+        body: "Call when you cannot tell whether to keep paying, switch tools, or build. Start with a Fit Check so the workflow is mapped before anything is scoped. We only recommend building when the numbers clearly beat one more subscription, and we would rather connect what you own than sell you something you do not need.",
       },
     ],
     faq: [
@@ -866,6 +949,25 @@ export const glossaryTerms: GlossaryTerm[] = [
     plain: "The way the work actually moves, not just the software you bought.",
     whenItMatters:
       "It matters when leads live in too many places, staff copy the same details twice, or the owner is the only person who knows what happens next.",
+    howItWorks:
+      "Think of every job as a trip from a customer's first hello to the moment you get paid. A business system is the map for that trip: where a new inquiry lands, who picks it up, what happens next, and where the record of it is kept. When the steps are connected, a lead can't fall through a crack, because each step hands the work cleanly to the next. Most of the time you already own the tools to do this, they just aren't talking to each other yet.",
+    example:
+      "A neighborhood plumber gets calls, texts, and website forms all day. Right now each one lands somewhere different, and he only remembers to call people back when he's sitting in the truck. A business system funnels all three into one list, sends the customer an automatic 'got your message, we'll call within the hour' note, and reminds him if a job hasn't been quoted by end of day.",
+    costOfIgnoring:
+      "When there's no system, the leaks are invisible until you add them up: the callback that never happened, the quote that sat in a text thread, the repeat customer who booked the other guy because he answered first. None of these feel like a crisis on their own, but together they can quietly cost you a job or two a week. And the whole operation stays trapped in the owner's head, so you can never take a real day off.",
+    related: ["workflow-automation", "crm", "software-stack"],
+    faq: [
+      {
+        question: "Isn't a business system just more software I have to learn?",
+        answer:
+          "No. Usually it's connecting the tools you already pay for so they work together, plus cleaning up a few messy handoffs. The goal is fewer things to check, not more apps to log into.",
+      },
+      {
+        question: "I'm a two-person shop. Am I too small for this?",
+        answer:
+          "Small shops benefit the most, because there's no big team to catch what falls through the cracks. When it's just you, a simple system is the difference between remembering everything and losing jobs you never knew you had.",
+      },
+    ],
   },
   {
     slug: "crm",
@@ -875,6 +977,25 @@ export const glossaryTerms: GlossaryTerm[] = [
     plain: "The list of people who asked for help, bought something, or need a reply.",
     whenItMatters:
       "It matters when customer notes are split between email, texts, spreadsheets, booking tools, and memory.",
+    howItWorks:
+      "A CRM is one shared list of everyone who's ever contacted you, with a little history attached to each name. When someone calls, emails, or books, their details go into that one place, along with notes on what they wanted and when you last talked. Then it reminds you who's waiting on a callback and who hasn't heard from you in a while. Instead of digging through your phone and inbox to remember a customer, you open one screen and it's all there.",
+    example:
+      "A dental office keeps patient reminders in a paper book, insurance notes on sticky pads, and 'call back about the crown' in someone's head. A CRM puts each patient's contact, last visit, and follow-up in one record, so when they call, whoever answers can see the whole picture, and nobody's six-month cleaning gets forgotten.",
+    costOfIgnoring:
+      "Without one place for people, the same customer gets asked the same question three times, and warm leads go cold because nobody remembered to follow up. Every repeat customer you lose track of is money you already earned once and let walk out the door. It also means the business lives in whoever's memory is best that day, which is fragile and impossible to hand off.",
+    related: ["business-system", "workflow-automation", "software-stack"],
+    faq: [
+      {
+        question: "Do I need an expensive CRM like the big companies use?",
+        answer:
+          "Almost never. Most small businesses are better off with something simple and cheap, set up to match how they actually work. A fancy CRM you don't use is worse than a plain one you do.",
+      },
+      {
+        question: "I already have my customers in a spreadsheet. Isn't that enough?",
+        answer:
+          "A spreadsheet is a fine start, but it won't remind you to follow up or catch a lead the moment it comes in. A CRM adds the nudges and the shared access a growing shop needs.",
+      },
+    ],
   },
   {
     slug: "google-business-profile",
@@ -884,6 +1005,25 @@ export const glossaryTerms: GlossaryTerm[] = [
     plain: "The Google card people see before they ever reach your website.",
     whenItMatters:
       "It matters when competitors appear on Maps before you, hours are wrong, reviews are stale, or customers call with questions the profile should answer.",
+    howItWorks:
+      "When someone searches your business name, or 'florist near me,' Google shows a card with your hours, phone number, photos, reviews, and a map pin. That card is your Google Business Profile, and it's free to claim and control. You fill in the correct details, add real photos, list your services, and reply to reviews, and Google uses all of it to decide who to show and where. For a lot of local businesses, this card gets seen far more than the actual website.",
+    example:
+      "A corner florist has beautiful arrangements but a Google card with old hours and one blurry photo from years ago. A customer searching 'flower delivery near me' sees a competitor with fresh photos, 200 reviews, and a 'call' button, and picks them without a second thought. Fixing the florist's profile, real photos, current hours, a few review replies, puts them back in that first-glance comparison.",
+    costOfIgnoring:
+      "An ignored profile quietly sends your customers to whoever looks more alive on the map. Wrong hours cost you the person who drove over and found you closed, and that person often leaves a bad review on top of it. Since this is usually the very first thing a new customer sees, a stale card can lose the sale before they ever learn how good you are.",
+    related: ["local-search", "business-system"],
+    faq: [
+      {
+        question: "Is this the same as having a website?",
+        answer:
+          "No, and you need both. The website is your home; the Google profile is the sign on the busy street that points people to it. Many customers check the profile first and only visit the site if the card earns their trust.",
+      },
+      {
+        question: "How do I get more reviews without being pushy?",
+        answer:
+          "The simplest way is to ask happy customers at the right moment, right after a good job, usually with a quick text or a link. A small, steady habit of asking beats any trick, and it keeps the card looking active.",
+      },
+    ],
   },
   {
     slug: "local-search",
@@ -893,6 +1033,25 @@ export const glossaryTerms: GlossaryTerm[] = [
     plain: "Showing up when someone nearby is already looking.",
     whenItMatters:
       "It matters when the business depends on local customers, appointments, foot traffic, bookings, or service-area inquiries.",
+    howItWorks:
+      "When someone nearby searches for what you do, Google tries to answer with the businesses it trusts most for that area. Local search is the work of earning that trust: an accurate Google profile, clear pages that say what you do and where, steady reviews, and consistent name, address, and phone details everywhere you appear. Google reads all of those signals together to decide who shows up in the map and the top results. Do the signals well and you appear right when someone is ready to call or walk in.",
+    example:
+      "A diner two blocks away is packed, while an equally good diner around the corner is empty. The difference often isn't the food, it's that the busy one shows up first when someone types 'breakfast near me,' with photos, hours, and reviews all lined up. Getting the quiet diner's pages, profile, and reviews in order helps it appear in that same hungry-and-nearby moment.",
+    costOfIgnoring:
+      "If you're invisible in local search, you're paying rent on a spot customers can't find online, and handing those searches to the competitor down the block. The customers are actively looking and ready to buy, so every missed appearance is a sale that went to someone else for no good reason. Over a year, that's a steady stream of walk-ins and bookings you never even got the chance to win.",
+    related: ["google-business-profile", "business-system"],
+    faq: [
+      {
+        question: "How long until local search actually helps me?",
+        answer:
+          "The quick wins, fixing your profile and correcting wrong details, can help within weeks. The steadier gains from reviews and good pages build over a few months, so it's a habit, not a one-time switch.",
+      },
+      {
+        question: "Do I need to pay Google for ads to show up nearby?",
+        answer:
+          "Not to appear in the regular map and search results, that part is earned, not bought. Ads can add reach on top, but a well-kept profile and honest pages do most of the heavy lifting for free.",
+      },
+    ],
   },
   {
     slug: "software-stack",
@@ -902,6 +1061,25 @@ export const glossaryTerms: GlossaryTerm[] = [
     plain: "All the apps you pay for, plus the work people still do around them.",
     whenItMatters:
       "It matters when the monthly bill keeps growing but the business still runs through manual workarounds.",
+    howItWorks:
+      "Your software stack is simply every tool you use to run the business, the booking app, the card reader, the email, the spreadsheet, all of it. The trouble usually isn't any single tool, it's that they don't share information, so people become the glue, retyping the same details from one app into another. A good look at the stack asks three plain questions of each tool: is it earning its cost, does it talk to the others, and is anyone actually using it. From there you drop what's dead, connect what should link up, and keep what works.",
+    example:
+      "A busy salon pays for a booking app, a separate payment system, an email newsletter tool, and a spreadsheet the manager keeps by hand. Nothing connects, so the front desk copies each appointment into the spreadsheet and retypes new clients into the newsletter list. Trimming the dead tools and connecting the booking app to payments and the email list gives the manager back an hour a day.",
+    costOfIgnoring:
+      "An unmanaged stack leaks money two ways: the subscriptions nobody uses anymore, and the staff hours spent gluing mismatched tools together by hand. It's common to find a business paying for three tools that half-overlap while a person retypes data between them every morning. Left alone, the bill creeps up every year while the actual work still runs on the same tired workarounds.",
+    related: ["business-system", "workflow-automation", "crm"],
+    faq: [
+      {
+        question: "Does fixing my stack mean ripping everything out and starting over?",
+        answer:
+          "Usually not. Most of the win comes from cutting a couple of unused tools and connecting the good ones, not a rip-and-replace. We keep what works and only replace what's genuinely dragging you down.",
+      },
+      {
+        question: "How do I know if I'm paying for tools I don't use?",
+        answer:
+          "A quick pass through your card statement for recurring charges almost always turns up a surprise or two. If you can't remember the last time you opened it, that's usually your answer.",
+      },
+    ],
   },
   {
     slug: "workflow-automation",
@@ -911,6 +1089,25 @@ export const glossaryTerms: GlossaryTerm[] = [
     plain: "The boring repeatable step happens without someone remembering to do it.",
     whenItMatters:
       "It matters when staff spend time copying details, chasing reminders, or checking three places to answer one simple question.",
+    howItWorks:
+      "Automation is just a simple 'when this happens, do that' rule that runs on its own. When a form comes in, add the person to your list and send a thank-you. When a job is marked done, create a reminder to ask for a review a week later. You decide the rule once, and then it happens every single time without anyone thinking about it. It's best aimed at the small, boring, repeatable steps, the ones humans forget exactly because they're dull.",
+    example:
+      "A dog groomer used to text every client the night before to confirm, when she remembered. Now an automatic reminder goes out the evening before each appointment, and a 'we'd love a review' note goes out the morning after. She didn't hire anyone, she just set two rules once, and no-shows dropped while reviews went up.",
+    costOfIgnoring:
+      "Doing the boring steps by hand costs you twice: the hours spent copying and reminding, and the times a human simply forgets and a customer slips away. Those forgotten follow-ups and un-sent confirmations are lost bookings that never show up as a bill, so the leak stays hidden. Meanwhile your best people spend their day on busywork a rule could handle, instead of on the customers in front of them.",
+    related: ["business-system", "crm", "software-stack"],
+    faq: [
+      {
+        question: "Will automation make my business feel cold or robotic to customers?",
+        answer:
+          "Done right, it does the opposite, customers get faster replies and never get forgotten, which feels more attentive, not less. You automate the reminder to follow up; the actual relationship stays human.",
+      },
+      {
+        question: "Is this only for big companies with tech teams?",
+        answer:
+          "No. The most useful automations for a small shop are small and cheap, one confirmation text, one follow-up reminder. You don't need a tech team, just the right rule set up once.",
+      },
+    ],
   },
 ];
 
@@ -925,6 +1122,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Bars, restaurants, galleries, shops, studios, and local services compete in a dense neighborhood where people search nearby and decide quickly.",
     firstMove: "Check the website action path, Google profile, booking or payment flow, and follow-up process.",
+    intro:
+      "The Lower East Side runs on old tenement blocks that turned into one of the city's densest nightlife and small-shop corridors — Orchard, Ludlow, Rivington, Delancey, and the rebuilt Essex Market. The businesses here are mostly owner-run: the person who signs the lease is usually the one behind the bar, in the kitchen, or steaming vintage on the rack.",
+    businessLandscape:
+      "This is bar-and-restaurant country layered with vintage and thrift shops, tattoo studios, small galleries, music rooms, and cocktail dens, most of them single-location and hands-on. The pressure is real: the Essex Crossing development brought chain tenants and national restaurant groups onto blocks that used to be all independents, and delivery apps quietly take a cut of every kitchen's busiest hours. Vintage and record sellers now compete with Depop, eBay, and Instagram resellers who never pay LES rent. A one-room bar or gallery is going up against operators who have marketing staff and app deals it will never see.",
+    localSearchReality:
+      "Most people find a spot here by pulling up Google Maps and scanning what's open, close, and well-reviewed right now — often mid-walk down Orchard or after getting off the F at Delancey. Late-night 'open now' and 'happy hour near me' searches decide where a group of four ends up, and a stale hours listing or a menu that won't load on a phone loses that table instantly. Tourists lean on Maps ratings while locals lean on recent reviews and Instagram, so both signals have to be current. Chains win here because their listings are always accurate and their photos are fresh — not because the food or the room is better.",
+    whatWeFixHere: [
+      "A Google Business Profile that still shows pre-renovation hours or an old phone number",
+      "A menu or events page that loads slowly or breaks on a phone during peak walk-in hours",
+      "A reservation or guest-list link buried three taps deep instead of one tap from Maps",
+      "Reviews from months ago with no owner replies, so the listing reads as neglected",
+      "A payment or deposit flow for private events that lives in DMs and gets lost",
+    ],
+    faq: [
+      {
+        question: "My bar gets found on Maps, not Google search. Does a website still matter?",
+        answer:
+          "Yes, because the Maps listing links straight to it. When someone taps your profile for hours, the menu, or a reservation, a slow or broken page sends them to the next pin. The website is what closes the visit Maps started.",
+      },
+      {
+        question: "Delivery apps take a big cut. Can you help me push people to order direct?",
+        answer:
+          "We set up a direct order and reservation path on your own site and profile so regulars have a reason to skip the app. We do not rip out what works overnight — we give you a channel you actually own alongside it.",
+      },
+      {
+        question: "I run vintage and most of my sales start on Instagram. Where does a website fit?",
+        answer:
+          "Instagram starts the conversation; a simple site and an accurate Google profile close it for the people who search your name later or want your address and hours. It also keeps you findable when a post disappears down the feed.",
+      },
+    ],
+    nearby: ["east-village", "soho", "west-village"],
   },
   {
     slug: "east-village",
@@ -936,6 +1164,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Restaurants, salons, wellness studios, retail shops, and service businesses need clear pages and practical systems without corporate bloat.",
     firstMove: "Clean up the service pages, Google visibility, booking path, and tool stack before buying more software.",
+    intro:
+      "The East Village stretches from St. Marks Place through Alphabet City, and it kept more of its independent, lived-in character than most of Manhattan below 14th Street. The shops, dive bars, and studios here tend to be owned by people who live nearby and have run the same storefront for years, not by operators flown in from a head office.",
+    businessLandscape:
+      "This is a neighborhood of owner-run restaurants and ramen counters, record and book shops, tattoo studios, salons, and a heavy layer of yoga, wellness, and bodywork practices around the numbered avenues. The pressure shows up as chain drugstores and bank branches taking over corner retail, plus delivery apps thinning the margins on the small kitchens that define the area. Wellness studios in particular compete against national booking platforms and app-based classpasses that own the customer relationship and rent it back to them. An independent studio or café is often fighting operators who never actually set foot in the neighborhood.",
+    localSearchReality:
+      "Locals here search by habit — 'best ramen East Village,' 'nail salon near me,' 'yoga 10009' — and they trust recent reviews and photos over polished ads. Foot traffic on St. Marks and Avenue A is a mix of NYU students, longtime residents, and weekend visitors, so a business needs to read as both trustworthy and current at a glance. Where small shops lose is inconsistency: a name spelled differently across Google, Instagram, and Yelp, or class times that don't match between the profile and the booking app. Chains win on tidy, identical listings everywhere, not on being better neighbors.",
+    whatWeFixHere: [
+      "A studio schedule that says one thing on Google and another in the booking app",
+      "A business name, address, or hours that don't match across Google, Yelp, and Instagram",
+      "A service menu that lists treatments but never the price range people actually search for",
+      "A booking button that opens a clunky third-party page instead of a clean flow",
+      "A Google profile with no recent photos, so it looks closed or abandoned",
+    ],
+    faq: [
+      {
+        question: "I pay for a booking platform already. Do I need a website too?",
+        answer:
+          "The booking platform handles the transaction, but it does not help people find or trust you first. A simple site plus an accurate Google profile is what turns a 'near me' search into someone opening that booking link. They work together.",
+      },
+      {
+        question: "My salon lives on Instagram. Is that enough?",
+        answer:
+          "Instagram shows your work, but it does not answer hours, address, and pricing for the person deciding right now. Those questions get asked on Google, and if the answer is missing or wrong, they book the shop that answered. We make sure both point to the same clear truth.",
+      },
+      {
+        question: "How do I compete with the chain pharmacy or gym that moved in?",
+        answer:
+          "You will not out-spend them, so we make you easier to find and faster to act on for the people who want a local, owner-run option. Accurate search presence, real reviews, and a booking or contact path that just works is where independents actually win here.",
+      },
+    ],
+    nearby: ["lower-east-side", "soho", "chelsea"],
   },
   {
     slug: "soho",
@@ -947,6 +1206,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Retail, galleries, design studios, and premium local services need trust quickly, especially when customers compare multiple options in one walk or search session.",
     firstMove: "Review the website, local proof, contact path, and whether staff are still using memory or spreadsheets.",
+    intro:
+      "SoHo's cast-iron blocks went from an artists' loft district to the most expensive retail corridor in the country, but between the global flagships there are still independent boutiques, galleries, showrooms, and design studios run by their founders. In SoHo the bar for how a business looks and feels is set by the Prada and Chanel windows next door, whether the small operator likes it or not.",
+    businessLandscape:
+      "The owner-run businesses here are independent fashion and home boutiques, art galleries, architecture and design studios, showrooms, and high-end salons and skincare rooms. They sit shoulder to shoulder with brand flagships and rotating pop-ups that spend more on a single window display than a small shop spends in a year. The pressure is a mix of astronomical rent, global retailers who own the block's foot traffic, and e-commerce giants who intercept the search before anyone reaches Broadway or West Broadway. A founder-run boutique has to look as credible online as a brand with a whole creative department, or the browsing customer assumes the brand is safer.",
+    localSearchReality:
+      "SoHo runs on comparison shopping in real time — someone standing on Spring Street will search a boutique's name, check the gallery's current show, or compare three salons before committing, all in one session. Tourists and out-of-neighborhood shoppers drive a lot of this, and they judge fast on photos, reviews, and whether the site looks premium on a phone. Small shops lose when their online presence looks thinner than the experience in the store, or when a gallery's site never says what's on view this week. The flagships win on production value, so an independent's site has to feel intentional, not improvised.",
+    whatWeFixHere: [
+      "A boutique site that looks dated next to the brand flagships customers just walked past",
+      "A gallery page that doesn't clearly show the current exhibition or opening dates",
+      "An appointment or private-shopping request that has no clean path and gets missed",
+      "Product or lookbook images that are heavy and slow, hurting the premium impression",
+      "Client and lead details kept in a staffer's head or a scattered spreadsheet instead of one place",
+    ],
+    faq: [
+      {
+        question: "My rent is already brutal. Why invest in the website?",
+        answer:
+          "Because in SoHo the website is often the first impression, and a thin one makes an expensive store look less credible than it is. It is the cheapest part of your presence to fix and the one comparison shoppers judge you on before they ever walk in.",
+      },
+      {
+        question: "I sell in-store, not online. Do I need e-commerce?",
+        answer:
+          "Not necessarily. Many SoHo shops do better with a beautiful, fast site that drives visits, appointments, and private-shopping requests rather than a full store. We build for how you actually sell instead of adding a platform you will resent.",
+      },
+      {
+        question: "We're a small studio competing against firms with real marketing teams. Can we look as legit?",
+        answer:
+          "Yes. A focused site with strong work, clear contact, and a tidy Google presence closes the credibility gap without a marketing department. Clients judge the work and the ease of reaching you, and both of those we can make excellent.",
+      },
+    ],
+    nearby: ["west-village", "lower-east-side", "east-village"],
   },
   {
     slug: "chelsea",
@@ -958,6 +1248,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Studios, galleries, salons, fitness, hospitality, and service firms compete for customers who search locally and expect fast answers.",
     firstMove: "Align Google visibility, service pages, intake forms, booking, and follow-up into one cleaner path.",
+    intro:
+      "Chelsea holds the city's densest cluster of contemporary art galleries in the West 20s, the High Line running above 10th Avenue, and a long spine of fitness studios, restaurants, and salons serving a walk-everywhere residential base. Many of these are owner-operated, and they now sit in the shadow of Hudson Yards, the biggest private development in the country, rising a few blocks west.",
+    businessLandscape:
+      "The independents here are art galleries, boutique fitness and pilates studios, salons and wellness rooms, restaurants, and service firms — plus the remnants of the old Flower District around 28th Street. The pressure comes from several directions: Hudson Yards pulled retail energy and chain tenants to the far west side, national gym brands like Equinox and boutique-fitness chains compete on every block, and delivery apps squeeze the restaurants. Galleries face their own consolidation as bigger operations open multiple spaces and dominate the online listings collectors check. A single-location studio or gallery is up against operators with real ad budgets and app partnerships.",
+    localSearchReality:
+      "People find Chelsea businesses through 'near me' and neighborhood-plus-service searches — 'pilates Chelsea,' 'galleries open today,' 'dinner near the High Line' — often while walking the area or coming off the 1, C, or E trains. High Line and gallery-crawl foot traffic mixes tourists with locals, so a business needs to look current to both. Small shops lose when their class schedule or gallery hours are wrong online, or when a chain's spotless listing simply outranks them on Maps. The chains rarely win on quality here; they win on always-accurate, review-rich profiles.",
+    whatWeFixHere: [
+      "A fitness schedule that doesn't match between Google, the website, and the booking app",
+      "A gallery site that doesn't surface the current show or hours for a Saturday crawl",
+      "Service pages that describe everything but never answer what it costs or how to start",
+      "An inquiry form that sends leads into an inbox where they sit unseen for days",
+      "A Google profile outranked by a chain simply because it has more recent reviews and photos",
+    ],
+    faq: [
+      {
+        question: "Hudson Yards and the chains pulled attention west. How do I stay found?",
+        answer:
+          "By owning the neighborhood searches they don't care about — your specific service plus Chelsea, plus the blocks around the High Line. Tight local search presence and current reviews keep you visible to the people already near your door, which is who actually converts.",
+      },
+      {
+        question: "I run a studio on a national booking app. Isn't that enough visibility?",
+        answer:
+          "The app captures people who already picked you; it does not win the person still deciding. That decision happens on Google and Maps, and if your profile and site are weak there, the chain studio gets the search. We strengthen the front door the app can't.",
+      },
+      {
+        question: "We're a gallery — collectors already know us. Why worry about the website?",
+        answer:
+          "New collectors, visitors, and press check the site for the current show and hours before they walk over, and a stale page reads as a stale program. Keeping the exhibition and hours effortless to update is a small fix that protects a serious reputation.",
+      },
+    ],
+    nearby: ["west-village", "midtown", "east-village"],
   },
   {
     slug: "midtown",
@@ -969,6 +1290,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Professional services, practices, studios, retailers, and operators need practical support without enterprise overhead.",
     firstMove: "Start with what is blocking calls, bookings, staff access, payments, or customer trust.",
+    intro:
+      "Midtown is the working engine of the city — office towers, the Diamond District on 47th Street, the Garment District, and the lunch counters, tailors, and service shops that keep the workforce fed and dressed. The small businesses tucked between the skyscrapers are often family-run operations that have served the same office crowd for decades.",
+    businessLandscape:
+      "The owner-run businesses here are delis and lunch spots, dry cleaners, tailors and alteration shops, jewelers in the Diamond District, and small professional practices and service firms serving the office population. Their pressure is specific: fast-casual chains like Sweetgreen and Chipotle dominate the weekday lunch rush, foot traffic swings hard with return-to-office patterns, and delivery apps take a cut of the orders that used to be walk-ins. A deli or tailor here lives and dies on office workers who now split their week between the office and home, so every regular counts more than it used to. These are operators competing on service and speed against chains with corporate apps and loyalty programs.",
+    localSearchReality:
+      "Midtown search is fast and functional — 'lunch near me,' 'dry cleaner 10017,' 'watch repair near Grand Central' — typed by office workers with a narrow window and low patience. The crowd is weekday-heavy and commuter-driven, so a business is often found by someone who works nearby but doesn't live there and won't hunt. Small shops lose when their hours don't reflect the real office-hours reality, when there's no easy order-ahead or pickup path, or when a chain's app simply removes the friction first. The chains win on convenience and speed of action, not on quality.",
+    whatWeFixHere: [
+      "Google hours that don't reflect the real weekday, weekend, and holiday office-crowd pattern",
+      "No order-ahead or pickup path, so the lunch rush goes to the chain with an app",
+      "A phone number or contact form that quietly fails while calls are the main lead source",
+      "Staff logins, POS, and tools that break and stall the shop with no reliable support",
+      "A service business with no clear intake, so inquiries scatter across email, voicemail, and text",
+    ],
+    faq: [
+      {
+        question: "My customers are office workers whose schedules changed. How does that affect my setup?",
+        answer:
+          "It means your hours, your busiest windows, and your order-ahead options all have to match the new hybrid reality, or you miss the rush you still have. We tune your profile and site to when the office crowd is actually here instead of the old five-day pattern.",
+      },
+      {
+        question: "The chains have apps for ordering ahead. Can a small shop offer that?",
+        answer:
+          "Yes, without a custom app. A clean order-ahead or pickup link on your site and Google profile gives the office worker the same one-tap convenience. You keep the margin and the relationship instead of renting both from a platform.",
+      },
+      {
+        question: "My biggest issue is tech that breaks mid-day. Do you handle that?",
+        answer:
+          "Yes. Midtown support is often less about marketing and more about the POS, phone, or logins that stall the shop during the rush. We fix what's blocking the day first, then look at visibility, because a shop that can't take an order can't grow.",
+      },
+    ],
+    nearby: ["chelsea", "upper-east-side", "upper-west-side"],
   },
   {
     slug: "upper-east-side",
@@ -980,6 +1332,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Salons, wellness practices, medical-adjacent services, shops, and professional offices need clarity and trust before customers call.",
     firstMove: "Review service pages, profile accuracy, reviews, booking, and the intake path after a customer reaches out.",
+    intro:
+      "The Upper East Side is affluent, residential, and appointment-driven, running from Museum Mile along Fifth Avenue to the hospital corridor near the East River — Lenox Hill, Weill Cornell, Hospital for Special Surgery, and Memorial Sloan Kettering. The small businesses here are heavy on private practices and personal-care services, most of them owner-operated professionals whose reputation is the business.",
+    businessLandscape:
+      "This is the neighborhood of solo and small-group dental and medical practices, dermatology and aesthetics, physical therapy, salons and blow-dry rooms, Madison Avenue boutiques, framers, and specialty food shops. The defining pressure is private-equity consolidation: dental service organizations and PE-backed medical groups are buying up independent practices, and urgent-care chains like CityMD and blow-dry and beauty chains compete for the same appointment-minded clientele. A solo dentist or independent salon is now up against roll-ups that share back-office marketing, centralized booking, and ad spend. Patients and clients here have high expectations and quiet loyalty, but they research before they call.",
+    localSearchReality:
+      "Upper East Side customers research carefully — 'best dentist Upper East Side,' 'dermatologist 10028,' 'facial near me' — and they weight reviews, credentials, and how professional the site feels before booking anything personal or medical. This is a less walk-in, more deliberate crowd; the search happens at home or on the phone, then leads to a call or an online booking. Independents lose when their site looks less credible than the PE-backed group's, when reviews are thin, or when there's no easy way to request an appointment. The chains and roll-ups win on polish and booking convenience, not on the actual care.",
+    whatWeFixHere: [
+      "A practice site that looks less credible than the PE-backed group down the block",
+      "An appointment request that forces a phone call instead of a simple online option",
+      "A Google profile missing services, credentials, insurance details, or recent reviews",
+      "New-patient or new-client intake that's clunky, repetitive, or lost after the first contact",
+      "A salon or practice name and address that read inconsistently across listings and reduce trust",
+    ],
+    faq: [
+      {
+        question: "A dental group backed by investors opened nearby. How do I compete as an independent?",
+        answer:
+          "You lead with what they can't fake: a credible site, real patient reviews, and a booking path as easy as theirs. Patients here choose the practice that looks trustworthy and is simple to reach, and an independent can win both without a corporate marketing budget.",
+      },
+      {
+        question: "My patients are older and call to book. Do I still need online booking?",
+        answer:
+          "Keep the phone — but add an online request option, because the family members and newer patients who research you expect it. Offering both captures the caller and the researcher instead of forcing everyone through the channel that's convenient for you.",
+      },
+      {
+        question: "Isn't a professional practice above worrying about Google reviews?",
+        answer:
+          "Not on the Upper East Side, where clients quietly check reviews before anything personal or medical. A handful of recent, genuine reviews and an owner who responds signals a practice that's present and cared-for, which is exactly what this clientele is looking for.",
+      },
+    ],
+    nearby: ["upper-west-side", "midtown"],
   },
   {
     slug: "upper-west-side",
@@ -991,6 +1374,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Neighborhood shops, wellness studios, restaurants, practices, and service teams often need fewer tools and cleaner customer paths.",
     firstMove: "Find the biggest leak across the website, Google visibility, booking, payments, or follow-up.",
+    intro:
+      "The Upper West Side is brownstone-lined and family-heavy, anchored by Lincoln Center, Central Park, and Riverside Park, with a long tradition of neighborhood institutions like Zabar's and the independent shops along Broadway, Amsterdam, and Columbus. The businesses here are largely owner-run and relationship-based, serving families and longtime residents who shop close to home.",
+    businessLandscape:
+      "The independents here are neighborhood restaurants and cafés, kids' enrichment and music programs, pediatric and wellness practices, bookstores, hardware and specialty food shops, salons, and dry cleaners. The pressure is quieter than downtown but real: chain pharmacies took over corner after corner and then left storefronts empty, delivery apps skim the local restaurants, and national fitness and enrichment brands compete for the family dollar. A family-run shop or a kids' program here depends on trust built over years, but new parents and new arrivals still find businesses by searching first. These owners are competing against chains and apps that never learned a single customer's name.",
+    localSearchReality:
+      "Search here is practical and family-driven — 'pediatric dentist Upper West Side,' 'kids music classes near me,' 'hardware store Amsterdam Avenue' — often run by a parent solving a problem quickly. The crowd is overwhelmingly local and repeat, so accurate hours, an easy phone tap, and current reviews matter more than flashy design. Small shops lose when their listing is stale, when a class or program schedule is impossible to find, or when a chain simply shows up first on Maps. The chains win on findability and consistency, not on the neighborhood knowledge these owners actually have.",
+    whatWeFixHere: [
+      "A class, camp, or program schedule that parents can't easily find or read on a phone",
+      "A Google profile with outdated hours that sends a busy parent to a competitor",
+      "A shop paying for tools it barely uses when it needs fewer, simpler ones",
+      "A restaurant with no clean direct-order path, losing margin to the delivery apps",
+      "A contact or registration form that fails quietly, so inquiries never reach the owner",
+    ],
+    faq: [
+      {
+        question: "Most of my customers are regulars. Why does search visibility matter?",
+        answer:
+          "Because the neighborhood keeps turning over — new families arrive constantly, and they find you by searching before they ever walk in. Strong local presence protects the flow of new regulars that keeps a relationship business healthy over time.",
+      },
+      {
+        question: "I run a kids' program and registration is a mess. Can you simplify it?",
+        answer:
+          "Yes. We make the schedule easy to find and the sign-up path clean, so parents can register in a couple of taps instead of emailing back and forth. Less friction there usually means fewer dropped enrollments and far fewer admin headaches for you.",
+      },
+      {
+        question: "I feel like I'm paying for software I don't use. Can you help?",
+        answer:
+          "That's common up here, and often the fix is fewer tools, not more. We look at what you actually use, cut what drags, and connect what's left so the shop runs cleaner and the monthly bill stops creeping.",
+      },
+    ],
+    nearby: ["upper-east-side", "midtown"],
   },
   {
     slug: "west-village",
@@ -1002,6 +1416,37 @@ export const areaPages: AreaPage[] = [
     localPattern:
       "Restaurants, boutiques, salons, studios, and service businesses rely on neighborhood trust and fast customer decisions.",
     firstMove: "Check the public website, local search signals, booking or contact path, and software bills.",
+    intro:
+      "The West Village is Manhattan's most walkable and picturesque quarter — winding, low-rise streets off the grid, tree-lined blocks, and famous corridors like Bleecker Street that draw locals and visitors in equal measure. The businesses here trade on charm and reputation, and most are owner-run restaurants, boutiques, and cafés where the founder is a fixture on the block.",
+    businessLandscape:
+      "The independents are intimate restaurants and wine bars, boutiques and design shops, salons, cafés, and specialty food and wine stores. The neighborhood's retail history is a cautionary tale: Bleecker Street swung from independent shops to luxury flagships and then to empty windows as rents outran everyone, and delivery apps now pressure the small kitchens that give the area its reputation. A boutique or restaurant here competes with both luxury brand spillover and the algorithmic pull of apps and e-commerce that intercept customers before they wander the block. The charm is the moat, but the online presence has to live up to the in-person experience or the visitor never makes the trip.",
+    localSearchReality:
+      "The West Village runs on discovery and destination searches — 'best restaurants West Village,' 'wine bar near me,' 'cute boutiques Bleecker Street' — from a heavy mix of tourists, date-nighters, and locals. Photos, recent reviews, and a reservation or hours answer decide where a visitor commits, often while wandering with their phone out. Small shops lose when the site looks thinner than the storefront, when the reservation or menu link is buried, or when a stale listing makes a beloved spot look closed. Nobody wins here on ad budget — they win on looking as good online as they do on the street, and being effortless to act on.",
+    whatWeFixHere: [
+      "A restaurant site where the reservation link or menu is buried instead of one tap away",
+      "A boutique's online presence that looks thinner than the shop actually is",
+      "A Google profile with old photos or hours that makes a loved spot look closed",
+      "Delivery apps skimming every order with no direct-order alternative for regulars",
+      "A stack of overlapping software subscriptions that could be fewer, cheaper tools",
+    ],
+    faq: [
+      {
+        question: "My spot is beloved locally. Why does the website matter?",
+        answer:
+          "Because the tourists and date-nighters who fill your tables don't know you yet — they find you by searching while they wander. A site and profile that match how good the place actually is turns that search into a reservation instead of a scroll-past.",
+      },
+      {
+        question: "Reservations come through an app I pay for. Isn't that covered?",
+        answer:
+          "The app takes the booking, but the person still has to choose you first, and that choice happens on Google, Maps, and your site. If those look weak, the reservation app never gets the chance. We strengthen the step that comes before it.",
+      },
+      {
+        question: "Rents here are brutal and I'm watching costs. Will this add another bill?",
+        answer:
+          "Usually the opposite. We often find overlapping subscriptions we can cut, then build a lean site and clean local presence that does more for less. The goal is fewer tools that actually work, not another platform on the pile.",
+      },
+    ],
+    nearby: ["soho", "chelsea", "lower-east-side"],
   },
 ];
 
@@ -1044,6 +1489,24 @@ export const studioProjects: StudioProject[] = [
       "The Cockpit is the largest non-public build Little Fight has shipped. Built for Public House Creative, it turns the messy first pass of an estimate — site photos, blueprints, hand-drawn notes, scope emails — into a structured artifact: documents in, rooms classified, drivers reconciled, report out.",
       "The build is Next.js + Supabase + Anthropic for classification + Netlify Functions for the heavier processing. The interface is field-precision: dense information, never condensed. The data tells the truth. The estimator's judgment makes the call.",
       "Real estimates run through it. The math is honest. The team uses it on every project.",
+    ],
+  },
+  {
+    slug: "venuecircuit",
+    name: "VenueCircuit",
+    kind: "Financial OS for live-event venues",
+    status: "Live",
+    oneline:
+      "A full product Little Fight shipped to the public: the operating system for independent live-event venues — close the night in 90 seconds and know every number down to the receipt.",
+    description:
+      "VenueCircuit is the most ambitious thing in the Studio — not a website or an internal tool, but a complete software product, live to the public. It's a financial operating system for independent music venues and event spaces: the GM closes the night in about 90 seconds, the venue's money stays separate from the promoter's, and the quarter is already reconciled. Live at venuecircuit.app.",
+    stack: ["Next.js", "Supabase", "TypeScript", "Netlify"],
+    image: "/assets/case-venuecircuit.webp",
+    external: "https://venuecircuit.app",
+    body: [
+      "VenueCircuit answers a question independent venue owners live with every night: where did the money actually go? Bar, door, staff, promoter splits, and payouts all land in one place, and the night closes in about 90 seconds instead of a spreadsheet marathon the next morning.",
+      "The core rule is that the venue's money and the promoter's money never blur together. Every number drills down to the receipt behind it, so a GM can answer a question at midnight and the owner can trust the quarter without a forensic audit.",
+      "It's live at venuecircuit.app in open beta, with a free 45-day pilot — the same range Little Fight brings to a client's systems, turned all the way up.",
     ],
   },
 ];

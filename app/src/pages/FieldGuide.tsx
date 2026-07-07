@@ -85,7 +85,7 @@ export default function FieldGuide() {
   return (
     <>
       <PageHero
-        eyebrow="Field Guide"
+        eyebrow="Examples"
         title={
           <>
             Proof, maps,{" "}

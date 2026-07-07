@@ -28,7 +28,7 @@ export default function CaseStudyDetail() {
   const figureRef = useScrollReveal<HTMLElement>({ threshold: 0.2 });
   const arcRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
 
-  if (!study) return <Navigate to="/field-guide/#studies" replace />;
+  if (!study) return <Navigate to="/examples/#studies" replace />;
 
   const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 3);
   const published = study.published ?? "2026-05-07";

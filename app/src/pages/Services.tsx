@@ -48,6 +48,7 @@ export default function Services() {
         title="Find the right shape of help."
         dek="The work starts by naming the problem correctly: broken today, hard to find, expensive every month, or too manual to keep running by memory. These are the four services we offer under one agency."
         items={overview}
+        variant="grid"
       />
 
       <ServiceEditorialSpread />
@@ -56,7 +57,7 @@ export default function Services() {
         id="studio"
         eyebrow="Studio"
         title="Systems, not just sites."
-        dek="Some fights need more than a website. Dakota is our own AI that finds and qualifies new business overnight. The Estimator's Cockpit turns a contractor's messiest paperwork into a clean, structured bid. Real tools, running in production — the same range we bring to your systems."
+        dek="Some fights need more than a website. Dakota is our own AI that finds and qualifies new business overnight. The Estimator's Cockpit turns a contractor's messiest paperwork into a clean, structured bid. VenueCircuit is a full financial platform we shipped for independent venues. Real tools, running in production — the same range we bring to your systems."
         items={studioOverview}
         variant="compact"
       />

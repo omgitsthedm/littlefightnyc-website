@@ -18,7 +18,7 @@ type Props = {
   id?: string;
   items: VisualIndexItem[];
   title: string;
-  variant?: "feature" | "compact";
+  variant?: "feature" | "compact" | "grid";
 };
 
 // Destination-specific CTA verb, keyed off the item's route so each card

@@ -9,7 +9,7 @@ export default function AnswerGuide() {
   const guide = answerGuides.find((item) => item.slug === slug);
   const related = answerGuides.filter((item) => item.slug !== guide?.slug).slice(0, 3);
 
-  if (!guide) return <Navigate to="/field-guide/#answers" replace />;
+  if (!guide) return <Navigate to="/examples/#answers" replace />;
 
   return (
     <>

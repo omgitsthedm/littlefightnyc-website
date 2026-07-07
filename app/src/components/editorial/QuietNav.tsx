@@ -6,7 +6,7 @@ import "./QuietNav.css";
 
 const NAV_LINKS = [
   { label: "Services", to: "/services/" },
-  { label: "Field Guide", to: "/field-guide/" },
+  { label: "Examples", to: "/examples/" },
   { label: "About", to: "/about/" },
   { label: "Journal", to: "/journal/" },
   { label: "Contact", to: "/contact/" },

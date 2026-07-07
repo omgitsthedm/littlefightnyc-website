@@ -30,7 +30,7 @@ export default function RecentClients() {
       <div className="lf-clients__inner">
         <div className="lf-clients__head">
           <p className="lf-mono lf-clients__label">Recent work</p>
-          <Link to="/field-guide/#studies" viewTransition className="lf-clients__all">
+          <Link to="/examples/#studies" viewTransition className="lf-clients__all">
             All case studies <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>

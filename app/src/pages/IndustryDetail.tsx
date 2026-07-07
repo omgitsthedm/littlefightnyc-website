@@ -19,7 +19,7 @@ export default function IndustryDetail() {
   const list = industries as unknown as Industry[];
   const entry = list.find((p) => p.slug === slug);
 
-  if (!entry) return <Navigate to="/field-guide/#industries" replace />;
+  if (!entry) return <Navigate to="/examples/#industries" replace />;
 
   const { headline, body } = prepareIndustryHtml(entry.html);
   const heroTitle = headline || entry.title.replace(" Help", "");

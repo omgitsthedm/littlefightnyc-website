@@ -68,17 +68,17 @@ export default function App() {
           <Route path="it-support" element={<Navigate to="/services/it-support/" replace />} />
           <Route path="lifetime-cost" element={<Navigate to="/answers/reduce-monthly-software-costs-small-business/" replace />} />
           <Route path="fit-check" element={route(FitCheck)} />
-          <Route path="field-guide" element={route(FieldGuide)} />
+          <Route path="examples" element={route(FieldGuide)} />
           <Route path="audit" element={route(Audit)} />
-          <Route path="answers" element={<Navigate to="/field-guide/#answers" replace />} />
+          <Route path="answers" element={<Navigate to="/examples/#answers" replace />} />
           <Route path="answers/:slug" element={route(AnswerGuide)} />
           <Route path="glossary" element={route(Glossary)} />
           <Route path="glossary/:slug" element={route(GlossaryTerm)} />
           <Route path="journal" element={route(Journal)} />
           <Route path="journal/:slug" element={route(JournalPost)} />
-          <Route path="industries" element={<Navigate to="/field-guide/#industries" replace />} />
+          <Route path="industries" element={<Navigate to="/examples/#industries" replace />} />
           <Route path="industries/:slug" element={route(IndustryDetail)} />
-          <Route path="case-studies" element={<Navigate to="/field-guide/#studies" replace />} />
+          <Route path="case-studies" element={<Navigate to="/examples/#studies" replace />} />
           <Route path="case-studies/:slug" element={route(CaseStudyDetail)} />
           <Route path="studio" element={<Navigate to="/services/#studio" replace />} />
           <Route path="studio/:slug" element={route(StudioDetail)} />

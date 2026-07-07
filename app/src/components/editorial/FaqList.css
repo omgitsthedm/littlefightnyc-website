@@ -1,0 +1,48 @@
+/* FaqList — plain-English Q&A. Appearance only; reveal via global rule. */
+
+.lf-faq {
+  margin-top: var(--lf-space-8);
+  padding-top: var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-faq__label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-faq__list {
+  margin: 0;
+  display: grid;
+  gap: 0;
+}
+
+.lf-faq__item {
+  padding: var(--lf-space-5) 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+.lf-faq__item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.lf-faq__q {
+  font-family: var(--lf-display);
+  font-weight: 600;
+  font-size: var(--lf-text-md);
+  line-height: 1.3;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-2);
+}
+
+.lf-faq__a {
+  margin: 0;
+  font-size: var(--lf-text-md);
+  line-height: 1.6;
+  color: var(--lf-bone-soft);
+  max-width: 64ch;
+}

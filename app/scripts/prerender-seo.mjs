@@ -460,7 +460,7 @@ function foundationSchemas(page) {
     "publisher": { "@id": `${siteUrl}/#organization` },
     "potentialAction": {
       "@type": "SearchAction",
-      "target": `${siteUrl}/field-guide/?q={search_term_string}`,
+      "target": `${siteUrl}/examples/?q={search_term_string}`,
       "query-input": "required name=search_term_string"
     }
   };
@@ -659,14 +659,14 @@ function routeImagePreload(page) {
 }
 
 function routeExtraImagePreloads(page) {
-  if (page.path !== "/field-guide/") return "";
+  if (page.path !== "/examples/") return "";
 
   return `<link rel="preload" href="/assets/case-hair-by-rachel-charles-480.webp" imagesrcset="/assets/case-hair-by-rachel-charles-480.webp 480w, /assets/case-hair-by-rachel-charles-900.webp 900w" imagesizes="(min-width: 1180px) 34vw, (min-width: 720px) 48vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
 }
 
 function routeChunkPrefix(page) {
   if (page.path === "/services/") return "Services-";
-  if (page.path === "/field-guide/") return "FieldGuide-";
+  if (page.path === "/examples/") return "Examples-";
   if (page.path === "/fit-check/") return "FitCheck-";
   if (page.path.startsWith("/journal/") && page.path !== "/journal/") return "JournalPost-";
   return "";
@@ -745,7 +745,7 @@ const primaryLinks = [
   { href: "/services/custom-local-websites/", label: "Custom Local Websites" },
   { href: "/services/business-systems/", label: "Business Systems" },
   { href: "/services/#studio", label: "Studio" },
-  { href: "/field-guide/", label: "Field Guide" },
+  { href: "/examples/", label: "Examples" },
   { href: "/audit/", label: "Audit" },
   { href: "/journal/", label: "Journal" },
   { href: "/fit-check/", label: "Fit Check" },

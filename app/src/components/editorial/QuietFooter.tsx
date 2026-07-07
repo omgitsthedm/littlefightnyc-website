@@ -16,7 +16,7 @@ const footerGroups = [
   {
     title: "Proof",
     links: [
-      { label: "Field Guide", to: "/field-guide/" },
+      { label: "Examples", to: "/examples/" },
       { label: "CC Films", to: "/case-studies/cc-films/" },
       { label: "DeckSpace", to: "/case-studies/deckspace/" },
       { label: "Hair By Rachel Charles", to: "/case-studies/hair-by-rachel-charles/" },

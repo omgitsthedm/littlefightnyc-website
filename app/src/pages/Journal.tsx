@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BookOpenText, FileText, ListChecks, Workflow } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
@@ -58,16 +59,27 @@ const POST_IMAGE: Record<string, string> = {
 
 const CATEGORY_ORDER: Post["category"][] = ["howto", "essay", "blog", "guide"];
 
+type Filter = Post["category"] | "all";
+
 export default function Journal() {
   const posts = journal as unknown as Post[];
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const counts = CATEGORY_ORDER.map((cat) => ({
+    category: cat,
+    label: CATEGORY_LABEL[cat],
+    count: posts.filter((p) => p.category === cat).length,
+  })).filter((c) => c.count > 0);
+
+  const visible = filter === "all" ? posts : posts.filter((p) => p.category === filter);
 
   // Group by category for the index, in priority order.
   const grouped = CATEGORY_ORDER.map((cat) => ({
     category: cat,
     label: CATEGORY_LABEL[cat],
-    posts: posts.filter((p) => p.category === cat),
+    posts: visible.filter((p) => p.category === cat),
   })).filter((g) => g.posts.length > 0);
-  const overview = posts.map((post) => ({
+  const overview = visible.map((post) => ({
     body: post.description,
     eyebrow: CATEGORY_LABEL[post.category],
     icon: CATEGORY_ICON[post.category],
@@ -96,10 +108,36 @@ export default function Journal() {
         }}
       />
 
+      <div className="lf-journal-filter">
+        <div className="lf-journal-filter__inner" role="group" aria-label="Filter journal by type">
+          <button
+            type="button"
+            className="lf-journal-filter__chip"
+            data-active={filter === "all"}
+            aria-pressed={filter === "all"}
+            onClick={() => setFilter("all")}
+          >
+            All <span className="lf-journal-filter__count">{posts.length}</span>
+          </button>
+          {counts.map((c) => (
+            <button
+              key={c.category}
+              type="button"
+              className="lf-journal-filter__chip"
+              data-active={filter === c.category}
+              aria-pressed={filter === c.category}
+              onClick={() => setFilter(c.category)}
+            >
+              {c.label} <span className="lf-journal-filter__count">{c.count}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <VisualIndex
-        eyebrow="Field guide"
+        eyebrow="Browse"
         title="Pick the kind of decision you're making."
-        dek="Grouped by the kind of call you're weighing: how-tos when you're doing it yourself, software comparisons when you're choosing a tool, and essays when you're deciding which direction to take."
+        dek="How-tos when you're doing it yourself, software comparisons when you're choosing a tool, and essays when you're deciding which direction to take. Filter by type above, or scan them all."
         items={overview}
         variant="compact"
       />
