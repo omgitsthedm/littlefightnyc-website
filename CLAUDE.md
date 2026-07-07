@@ -350,4 +350,17 @@ A "TOOL RUNBOOK" (Firecrawl/OpenSEO/Immich/agent-browser, Astro rebuild) was han
 
 - **Real imagery shipped (commit `2c5963b`):** og-image → composited 1200×630 of the real Little Fight NYC coaster-at-a-bar ("Your website called. It needs us." + QR) on brand-black — every social share is now an authentic branded artifact. About hero → real Empire Diner NYC-night photo (was generic `local-business.webp` stock), responsive webp 480/640/900/1200. Verified live.
 - **Form-capture QA PASSED:** live Fit Check submit (`fit-check-scratch`) → Netlify capture → `/thanks/` redirect works end-to-end. Used Playwright (not agent-browser — same outcome, no redundant tooling). A QA test lead was submitted (obvious "QA TEST — please ignore" markers).
+## 2026-07-07 — Premium elevation (Apple-tier), waves shipping
+
+Standing bar set by David: littlefightnyc.com is the flagship shopfront — Apple-designed-a-service-site premium, proactively elevated, never just patched. **Orange = signal (text/buttons/accents); background bursts = blue.** Editorial inspiration (do NOT integrate the cyan/magenta/Bodoni portfolio template — mine its *principles*): sequence-as-argument, white-space-as-punctuation, full-bleed moments earn drama, case-studies-as-narrative, asymmetric grids, restrained motion. Plus visual data explainers + premium cross-device scroll.
+
+- **Blue bursts (LIVE, `517d0b8`):** flipped the orange hero/section glows to blue ambient (PageHero, QuietHero, MomentumSection) so orange text pops. rgba not color-mix in gradients.
+- **Wave 1 — motion system (LIVE, `4cefda8`):** reliable route transition (page content re-keys → fade+rise, chrome persists; RR viewTransition prop is a no-op with BrowserRouter/<Routes>), scroll-aware glass nav, one motion language (choreographed reveals fade+16px/80ms stagger, tactile :active press on every CTA/card), `motion.css`. Reduced-motion safe.
+- **Wave 2a — case studies as features (LIVE, `e80482a`):** `CaseStudyDetail` rebuilt data-driven for all 7 — text hero → full-bleed project moment → asymmetric sticky-meta + story → the Problem→Kept→Changed→Result **arc** as a numbered narrative spine (setup→tension→resolution), staggered reveal.
+- **Wave 2b — visual data explainer (LIVE, `d1b2269`):** surfaced the unused `agencyProcess` data on About as a system-diagram flow (4 beats on an orange→blue line that draws in on scroll, icon chips on the line).
+
+**Remaining roadmap:** Wave 2c — home/services editorial sequencing (pacing, full-bleed, asymmetric); Wave 3 — the signature showstopper (David picked "bold + wow": scroll-cinematic reveal or tasteful WebGL). Verified each: build/tsc/eslint green, desktop+mobile, 0 console errors, auto-deploy ~40s.
+
+## Prior open item
+
 - **⏳ OpenSEO/DataForSEO — awaiting David's key.** The SEO audit's new value = real keyword volume/difficulty + competitor SERP data + keyword→page opportunity map (not covered by on-page work). Needs a **paid DataForSEO key**: create account at dataforseo.com → top up ($50 min) → `DATAFORSEO_API_KEY = base64("login:password")`. Provide the key and I stand up OpenSEO (`every-app/open-seo`, docker) + run baseline + keyword map + final audit. Not standing up the idle Docker stack until then.
