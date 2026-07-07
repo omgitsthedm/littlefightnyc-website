@@ -1,5 +1,16 @@
 # Little Fight NYC Website Config
 
+## 2026-07-07 — The mission section + content-accuracy / true-wins pass (LIVE)
+
+David: the site had no "wow / connect-the-dots" moment and the Services page was "a mess" with misrepresented work. Shipped `925d1b2` + `a169a97`, live-verified desktop + mobile.
+
+- **New home section "The Fight"** (`components/editorial/TheFight.tsx/.css`, first in the deferred block right after the hero). The mission, told as an argument: *"The chains brought a tech team. The corner store never got one."* → a muted **WHAT THEY BROUGHT** card (Whole Foods / Great Clips / Uber Eats / DoorDash / PE roll-ups) **vs** an orange-championed **WHO WE'RE IN THE CORNER FOR** card (laundromat / hardware store / mom-and-pop diner / dental practice / corner florist) → the answer (systems the big guys have for a fraction of a big firm's bill; kill the pen-and-paper + spreadsheets; adapt to how you run; NYC ethos but the fight travels) → CTA "Put us in your corner" → /fit-check/.
+- **VERA removed entirely** (studioProjects + `/studio/vera/` prerender; both 404 live). It was fabricated on-site as a "listing intelligence pipeline" powering Local Search — in reality a killed NYC apartment-hunter that never shipped. False claim + dead → cannot be a "true win."
+- **3D Schematics removed** from the Services/Studio surface — an explicitly-unproven sandbox ("the bet is not proven"), fails the true-wins bar for the flagship shopfront.
+- **Dakota relabeled** `kind` → **"AI client finder"** (was "Autonomous sales agent"), per David's exact framing.
+- **Studio section reframed** off "experiments" → **"Systems, not just sites."** Now the two genuine production tools only: Dakota (AI client finder) + Estimator's Cockpit. If David wants 3D Schematics back, restore the studioProjects entry + its seo-pages.json block.
+- Prerender now 101 routes (was 103). No orphaned links; seo-pages.json valid; build/eslint green.
+
 ## Current Source Of Truth - Updated 2026-06-30 (consolidation)
 
 The current live `https://littlefightnyc.com` source is this folder:
