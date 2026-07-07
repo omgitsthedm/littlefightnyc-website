@@ -1,5 +1,28 @@
 # Little Fight NYC Website Config
 
+## 2026-07-07 — Full content + visual build-out (LIVE, waves 1–2)
+
+David: "every page needs to be real and have context and visuals — more than 2 sentences and one picture." Plus four discrete asks. Planned (`~/.claude/plans/fizzy-rolling-widget.md`), approved, shipped live in two waves (`1456977`, `d19b01c` + meta fix). Verified live desktop + mobile (390px): 0 console errors, no overflow, all pages hydrate.
+
+**Structural (Wave 0):**
+- Services overview → balanced **2×2** (new `VisualIndex variant="grid"`, no feature-span; kills the orphan 4th card). Other pages' `feature` variant untouched.
+- **VenueCircuit** added to the Studio (real venuecircuit.app screenshot → `assets/case-venuecircuit.webp`, `status: "Live"`, `external` link, `/studio/venuecircuit/` prerender). Studio is now 3 cards (Dakota · Cockpit · VenueCircuit).
+- **Journal filter bar** — client-side category chips (All / How To / Essay / Notebook / Software Guide, with counts). Accessible (`aria-pressed`), default All (prerender-safe). Chip CSS scoped under `.lf-editorial` to beat the button reset.
+- **Field Guide → Examples** rename, incl. **URL** `/field-guide/ → /examples/` with a **301** (preserves the indexed URL). Swept nav/footer/routes/Navigate targets/site.ts/seo-pages/prerender-seo.mjs/_redirects. Component file still `FieldGuide.tsx` internally (route element only).
+
+**Content depth — killed the filler (Wave 1):**
+- **Local areas (8):** extended `AreaPage` type + authored real, neighborhood-specific `intro` / `businessLandscape` / `localSearchReality` / `whatWeFixHere[]` / `faq[]` / `nearby[]`, plus a **distinct NYC hero per area** (no more shared image). Content by a subagent, integrated + typechecked by me; no fabricated stats.
+- **Glossary (6):** extended `GlossaryTerm` type + `howItWorks` / `example` / `costOfIgnoring` / `related[]` / `faq[]`; distinct hero each.
+- **Answers (6):** grew 2 → 5 sections each; distinct hero per answer (was one shared image).
+- **Case studies (7):** left as-is — already the richest pages after services; **declined to fabricate metrics** (VERA accuracy guardrail).
+
+**Visuals (Wave 2):**
+- New reusable components: **PullQuote** (call-out), **FaqList** (plain-English Q&A), **StatBlock** (quantified beat) — used sitewide.
+- **About** rebuilt from a 6-paragraph wall → 2 captioned figures + a pull-quote + a StatBlock of the four promises (Free / 14-day / 24-hr / 2-hr).
+
+**Types:** `AreaPage` + `GlossaryTerm` gained fields (all required; all entries populated). tsc + eslint green; build 102 routes. squirrelscan quick pass: 0 errors, no broken links, no lingering `/field-guide/` refs (warnings are pre-existing: trailing-slash redirects, streetAddress omitted by design, HTML cache headers).
+- **Subagent content payloads** persisted at `scratchpad/wave1/{areaPages,glossaryTerms,answerGuides}.ts` and spliced into `site.ts` via a node marker-replace (repeatable).
+
 ## 2026-07-07 — The mission section + content-accuracy / true-wins pass (LIVE)
 
 David: the site had no "wow / connect-the-dots" moment and the Services page was "a mess" with misrepresented work. Shipped `925d1b2` + `a169a97`, live-verified desktop + mobile.
