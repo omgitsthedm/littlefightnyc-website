@@ -1,40 +1,69 @@
 import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import { useScrollReveal } from "./useScrollReveal";
+import { caseStudies } from "@/data/site";
 import "./RecentClients.css";
 
 /**
- * Recent work band. Each name links to its case study detail page.
- * Kept explicit so the homepage can feature the strongest proof set.
+ * Recent work — real project screenshots, not a text list. Each card shows the
+ * shipped work and links to its case study. First card runs wide as the featured
+ * proof; the rest form a grid. Staggered reveal, hover lift + image zoom.
  */
-const FEATURED = [
-  { slug: "deckspace", client: "DeckSpace" },
-  { slug: "cc-films", client: "CC Films" },
-  { slug: "hair-by-rachel-charles", client: "Hair By Rachel Charles" },
-  { slug: "grand-funding-llc", client: "Grand Funding LLC" },
-  { slug: "public-house-creative", client: "Public House Creative" },
+const FEATURED_SLUGS = [
+  "deckspace",
+  "cc-films",
+  "hair-by-rachel-charles",
+  "grand-funding-llc",
+  "public-house-creative",
 ] as const;
 
 export default function RecentClients() {
-  const ref = useScrollReveal<HTMLElement>({ threshold: 0.3 });
+  const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.12 });
+
+  const featured = FEATURED_SLUGS
+    .map((slug) => caseStudies.find((c) => c.slug === slug))
+    .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
   return (
-    <section ref={ref} className="lf-clients" aria-label="Recent work">
+    <section className="lf-clients" aria-label="Recent work">
       <div className="lf-clients__inner">
         <div className="lf-clients__head">
-          <p className="lf-clients__label">Recent work</p>
-          <Link to="/field-guide/#studies" className="lf-clients__all">
-            All case studies <span aria-hidden="true">→</span>
+          <p className="lf-mono lf-clients__label">Recent work</p>
+          <Link to="/field-guide/#studies" viewTransition className="lf-clients__all">
+            All case studies <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>
-        <ul className="lf-clients__list">
-          {FEATURED.map((study) => (
-            <li key={study.slug} className="lf-clients__name">
-              <Link to={`/case-studies/${study.slug}/`} className="lf-clients__link">
-                {study.client}
-              </Link>
-            </li>
+
+        <div ref={ref} className="lf-clients__grid">
+          {featured.map((study, i) => (
+            <Link
+              key={study.slug}
+              to={`/case-studies/${study.slug}/`}
+              viewTransition
+              className={`lf-clients__card${i === 0 ? " lf-clients__card--feature" : ""}`}
+              style={{ ["--lf-i" as string]: i }}
+            >
+              <span className="lf-clients__shot" aria-hidden="true">
+                <img
+                  src={study.image}
+                  {...responsiveImageProps(study.image, "(min-width: 1024px) 42vw, 100vw", [480, 640, 900])}
+                  alt=""
+                  width={1600}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span className="lf-clients__meta">
+                <span className="lf-mono lf-clients__type">{study.type}</span>
+                <span className="lf-clients__client">{study.client}</span>
+                <span className="lf-clients__title">{study.title}</span>
+              </span>
+              <ArrowUpRight className="lf-clients__go" size={18} strokeWidth={2} aria-hidden="true" />
+            </Link>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

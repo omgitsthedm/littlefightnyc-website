@@ -4,6 +4,11 @@ node_modules/
 .superpowers/
 .playwright-mcp/
 *.png
+# ...but the PWA / apple-touch icons in public/ MUST deploy (Netlify builds from
+# git, so blanket-ignoring these caused a 404 on the live manifest icons).
+!app/public/apple-touch-icon.png
+!app/public/icon-192.png
+!app/public/icon-512.png
 *.bak
 docs/
 firebase-debug.log
