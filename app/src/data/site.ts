@@ -1009,7 +1009,7 @@ export const studioProjects: StudioProject[] = [
   {
     slug: "dakota",
     name: "Dakota",
-    kind: "Autonomous sales agent",
+    kind: "AI client finder",
     status: "Active",
     oneline: "An AI agent that finds leads, drafts cold outreach, and routes responses — running on a Mac in the office.",
     description:
@@ -1028,38 +1028,6 @@ export const studioProjects: StudioProject[] = [
       { label: "Real conversations started (week)", value: "2" },
       { label: "Average reply latency", value: "47 min" },
       { label: "Last agent run", value: "earlier today" },
-    ],
-  },
-  {
-    slug: "3d-schematics",
-    name: "3D Schematics",
-    kind: "Interactive systems diagrams",
-    status: "Sandbox",
-    oneline: "Three.js experiments for explaining systems architecture in a way 2D diagrams cannot.",
-    description:
-      "Three.js sketches built to test whether a moving, rotatable schematic does the work of a slide deck better than the slide deck does. Used for client onboarding explainers — what the system is, what is connected to what, what is missing. Some of these become production artifacts; most stay in the sandbox.",
-    stack: ["Three.js", "TypeScript", "React Three Fiber"],
-    image: "/assets/interior-spice-shop.webp",
-    body: [
-      "The Three.js sandbox started during a client engagement that needed an explainer. The traditional artifact would have been a slide deck — but the system we were explaining was inherently 3D (a paint-and-finish workflow with multiple zones, drivers, and reconciliation paths) and the deck was always going to be flat.",
-      "The sandbox now includes about a dozen sketches: a paint-job estimator that rotates and lets you click through the stages, a CRM workflow visualized as orbiting nodes around a customer, a software-stack audit where each tool is a block you can scale up and down. Most stay in the sandbox. A few become production artifacts for client onboarding.",
-      "The bet is that explaining systems three-dimensionally is more efficient than explaining them with bullet points. The bet is not proven. The sandbox is where we keep testing.",
-    ],
-  },
-  {
-    slug: "vera",
-    name: "Vera",
-    kind: "Listing intelligence pipeline",
-    status: "Active",
-    oneline: "A pipeline that watches and scores small-business listings across platforms.",
-    description:
-      "Vera is the internal data plumbing that asks: where is a business showing up, what is it being called, and what is the actual signal to Google? It scrapes, cross-references, scores, and watches. Some of what it learns ends up in client engagements as evidence; some of it goes into the Little Fight Journal as how-tos.",
-    stack: ["Node", "Supabase", "Anthropic", "Cron"],
-    image: "/assets/hand-donut-sprinkles.webp",
-    body: [
-      "Vera is the internal data plumbing that asks: where is a business showing up online, what is it being called, and what signal is it actually sending to Google? A small business often has six or seven different 'selves' across the internet — the website, the Google Business Profile, Yelp, Apple Maps, Bing Places, a Squarespace listing, an industry directory — and Google can only score what it can match.",
-      "Vera scrapes those surfaces, cross-references the data, scores each match, and watches the deltas over time. The first dataset was for Little Fight's own clients, to know whose listings were drifting. The second became the basis for a few how-to articles in the Journal. The third is a tool we are working toward shipping for other agencies.",
-      "Vera is what makes the Local Search service work without anyone having to manually check thirty sites every quarter.",
     ],
   },
   {

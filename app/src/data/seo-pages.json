@@ -498,24 +498,6 @@
       "image": "/assets/coworking-laptops.webp"
     },
     {
-      "path": "/studio/3d-schematics/",
-      "title": "3D Schematics \u2014 From the Studio | Little Fight NYC",
-      "description": "Three.js experiments from Little Fight Studio for explaining systems architecture, workflow paths, and technical decisions in a clearer way.",
-      "h1": "3D Schematics",
-      "shortAnswer": "Three.js experiments for explaining systems architecture in a way 2D diagrams cannot.",
-      "type": "Article",
-      "image": "/assets/interior-spice-shop.webp"
-    },
-    {
-      "path": "/studio/vera/",
-      "title": "Vera \u2014 From the Studio | Little Fight NYC",
-      "description": "A pipeline that watches and scores small-business listings across platforms so local search opportunities and weak signals are easier to see.",
-      "h1": "Vera",
-      "shortAnswer": "A pipeline that watches and scores small-business listings across platforms.",
-      "type": "Article",
-      "image": "/assets/hand-donut-sprinkles.webp"
-    },
-    {
       "path": "/studio/cockpit/",
       "title": "Estimator's Cockpit \u2014 From the Studio | Little Fight NYC",
       "description": "A long-running build for a paint-and-finish company that brings discovery, classification, validation, and reporting into one premium UI.",

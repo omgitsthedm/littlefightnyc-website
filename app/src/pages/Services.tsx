@@ -55,8 +55,8 @@ export default function Services() {
       <VisualIndex
         id="studio"
         eyebrow="Studio"
-        title="Experiments that sharpen the client work."
-        dek="Internal builds, prototypes, and long-running tools. Some become client systems. Some stay weird. All of them make the work faster and more exact."
+        title="Systems, not just sites."
+        dek="Some fights need more than a website. Dakota is our own AI that finds and qualifies new business overnight. The Estimator's Cockpit turns a contractor's messiest paperwork into a clean, structured bid. Real tools, running in production — the same range we bring to your systems."
         items={studioOverview}
         variant="compact"
       />
