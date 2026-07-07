@@ -16,8 +16,8 @@ export default function About() {
         }
         dek="Little Fight NYC helps NYC small businesses outwork billion-dollar competitors. The work is practical, the scope is honest, and the consult is always free."
         image={{
-          src: "/assets/local-business.webp",
-          alt: "A New York City small business storefront",
+          src: "/assets/about-empire-diner.webp",
+          alt: "The chrome-clad Empire Diner glowing on a Manhattan corner at night",
           width: 1200,
           height: 900,
         }}
