@@ -2,22 +2,32 @@
 
 ## Source Of Truth
 
-Last verified: 2026-05-12 by Codex.
+Last verified: 2026-07-07.
 
-This folder is the current local source of truth for `https://littlefightnyc.com`:
+Repo (off iCloud): `~/Code/LiFi NYC/Clients/LittleFightNYC/Brand/Website/littlefightnyc-website`
+(Desktop path `~/Desktop/LiFi NYC/Clients/LittleFightNYC/...` is a same-name symlink into `~/Code`.)
 
-`/Users/davidmarsh/Desktop/LiFi NYC/Brand/Website/littlefightnyc-website`
-
-Current production work happens in the React/Vite app under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
+Production work happens in the React/Vite app under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
 
 Netlify project:
 - Site name: `littlefightnyc`
 - Site ID: `0907d8fe-7018-48db-a6be-1f906e4b2619`
-- Current production deploy ID verified on 2026-05-12: `6a02b70bc2dc6fac47dcc643`
 
-Important: GitHub `main` is not guaranteed to match the current live site. The live deploy was made through the Netlify API/manual deploy path, and the local `little-fight-overhaul` branch has dirty/untracked recovered source. Do not reset, clean, or overwrite that working tree unless David explicitly asks.
+**Deploy model (confirmed 2026-07 for THIS repo):** GitHub `main` **is** canonical and **auto-deploys** to Netlify (~40s: push → auto-build → publish). Do NOT `netlify deploy --prod` manually (caused a 2026-06-30 incident). The general "LiFi sites are manual deploys" rule does **not** apply to littlefightnyc.
 
 See `SOURCE_OF_TRUTH.md` before major edits.
+
+## Tech Stack & Architecture (current — 2026-07-07)
+
+- **App:** React 19 + TypeScript + Vite 7 in `app/`. Routing = React Router 7 (`react-router-dom`, `BrowserRouter` + `<Routes>`). Icons = `lucide-react`.
+- **Routing / layout:** `src/App.tsx` defines all routes. Most pages inherit `EditorialShell` (QuietNav + QuietFooter + StickyHelpBar + RouteMeta + **CommandPalette**). ⚠️ The home page `/` is a **standalone layout** (its own `.lf-editorial` wrapper, own nav/footer) — it does NOT use EditorialShell, so any shell-only global (e.g. CommandPalette) must **also** be rendered in `Home.tsx`.
+- **Rendering:** client-rendered SPA. `src/main.tsx` uses `createRoot` (not hydrate). At build, `scripts/prerender-seo.mjs` writes one static `index.html` per route (102) with full `<head>` SEO + JSON-LD (FAQPage, BreadcrumbList, LocalBusiness/ProfessionalService, DefinedTerm, Article, HowTo) and a lightweight SEO `snapshot()` in `#root` that `createRoot` replaces on load. ⚠️ So the visible body is **JS-gated** (not true SSR). Home below-the-fold mounts via `useDeferredSections()` on the next idle frame. **Open perf next-step:** true "instant-like-Apple" FCP needs a real SSG + `hydrateRoot` migration (route + section components are `lazy()`, which complicates `renderToString`).
+- **Data (source of truth):** `src/data/site.ts` — `services`, `caseStudies` (+`metrics`), `answerGuides`, `areaPages`, `glossaryTerms`, `studioProjects`, `navItems`. Plus `journal.json`, `industries.json`. ⚠️ `src/data/seo-pages.json` is the **prerender's** SEO/schema source and is a **separate copy** — keep FAQ/meta in sync with `site.ts` (a node splice syncs area/glossary faq; scratch payloads at the session scratchpad).
+- **Design system:** Axiom Momentum tokens in `src/styles/editorial/tokens.css` (bg `#050507`, orange `#F97316`, blue `#3B82F6` accent, Inter). Reveals via `src/styles/editorial/motion.css` `[data-reveal]` + `useScrollReveal`. Reusable editorial components in `src/components/editorial/` (PageHero w/ content-type icon, EditorialFigure, PullQuote, FaqList, StatBlock, SignatureBand, VisualIndex, MomentumSection, TheFight, ProcessFlow, BrandLine, AmbientField, CommandPalette).
+- **CSS gotchas:** (1) `.lf-editorial button` reset strips custom `<button>` fill/border/padding — scope custom button rules under `.lf-editorial`. (2) global `.lf-editorial a` color (0,1,1) can override a single-class CTA's `color` (0,1,0) — scope CTA color rules under `.lf-editorial` too (this caused white-on-orange AA fails). (3) use `rgba()` not `color-mix()` inside gradients.
+- **Build/deploy:** `cd app && npm run build` = `tsc -b && vite build && node scripts/prerender-seo.mjs`. ⚠️ **Prod build strips `console.log`** — debug built/live code with `window.__flags`, not console.
+- **Conversion + infra:** `/fit-check/` (Netlify Function + Twilio voice intake). Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) in root `netlify.toml`. Analytics: consent-gated GA4 + TikTok pixel via `src/lib/analytics.ts`.
+- **Quality bar (live-verified 2026-07-07):** Lighthouse Home 92 / Services 90 perf, BP + SEO 100, CLS 0, TBT 0; Accessibility 100 (post contrast-fix); squirrelscan full = 83/B (ceiling = by-design HTML caching + service-area streetAddress omission + trailing-slash canonicalization).
 
 ## Design Context
 
@@ -45,7 +55,7 @@ Brand anchors that should stay intact:
 - Blue support tones for contrast, links, and readable accents
 - Lexend for primary type
 - Caveat as a selective accent voice
-- Static-first HTML, CSS, and JavaScript with Netlify delivery
+- React 19 + Vite + TypeScript SPA, prerendered for SEO, Netlify delivery (see Tech Stack above)
 - WCAG-aware contrast, responsive intent, and reduced-motion respect
 - Performance and polish should coexist; motion is welcome when it helps clarity or delight
 
