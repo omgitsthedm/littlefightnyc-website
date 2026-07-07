@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { useScrollReveal } from "./useScrollReveal";
 import "./WorkGrid.css";
 
 const TILES = [
@@ -42,11 +43,18 @@ const TILES = [
  * The whole photograph is the link.
  */
 export default function WorkGrid() {
+  const gridRef = useScrollReveal<HTMLDivElement>({ threshold: 0.15 });
   return (
     <section className="lf-work" aria-label="What Little Fight does">
-      <div className="lf-work__grid">
+      <div ref={gridRef} className="lf-work__grid">
         {TILES.map((tile, index) => (
-          <Link key={tile.slug} to={`/services/${tile.slug}/`} viewTransition className="lf-work__tile">
+          <Link
+            key={tile.slug}
+            to={`/services/${tile.slug}/`}
+            viewTransition
+            className="lf-work__tile"
+            style={{ ["--lf-i" as string]: index }}
+          >
             <div className="lf-work__tile-image" aria-hidden="true">
               <img
                 src={tile.image}
