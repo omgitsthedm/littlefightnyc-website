@@ -1,5 +1,13 @@
 # Little Fight NYC Website Config
 
+## 2026-07-07 — Elevated visuals + honest case proof + signature moment + full audit (LIVE, `6ffd3c9`)
+
+- **Case studies (7):** "Project at a glance" StatBlock of **honest, verifiable facts pulled straight from each real case body** (Rachel: `100` Lighthouse + `2 weeks`; AHA: `Next.js 14` + `1 day` drops; ClearHelp: `3 sites`/`1` Supabase; PHC: `3 tools → 1`; etc.). New `metrics?` field on `CaseStudy`. No fabricated numbers.
+- **ServiceDetail (4):** outcome promise → PullQuote; each page now shows its own previously-unused `service.image` as a captioned `EditorialFigure`.
+- **Signature moment:** new `SignatureBand` on home (full-bleed "THE RECORD / Punching above our weight for New York's small businesses" + 4 honest facts: 2012 / 14-day / Free / Custom) revealing in sequence over the blue `AmbientField`. Reduced-motion + off-screen-pause safe. Placed after RecentClients.
+- **Full squirrelscan (`--coverage full`, 102 pages): 83/B.** Perfect (100) on Accessibility, Core SEO, Mobile, Images, Security, E-E-A-T, Local SEO, Social, URL Structure. The score ceiling is **by-design / needs-a-business-decision**, NOT code defects: canonical-chain = correct non-slash→slash 301 normalization; `perf/bad-caching` = HTML `max-age=0` is correct Netlify practice (hashed assets already immutable); `schema/local-business` streetAddress = intentionally omitted (service-area business — add a real registered address to lift Structured Data if wanted). Chasing these would risk correctness, so left as-is.
+- Verified live: case metrics, service figures, and the signature band all render; 0 console errors, no overflow, mobile + desktop.
+
 ## 2026-07-07 — Wayfinding icon system (LIVE, `baee209`)
 
 Made iconography consistent end-to-end (was only on card grids). **PageHero** now takes an optional `icon` (content-type chip by the eyebrow) — wired on all 23 detail + hub pages: MapPin (neighborhoods), BookOpen (glossary), HelpCircle (answers), Award (case studies), Sparkles (studio), Layers (services), Building2 (industries), Newspaper (journal), FileSearch (audit), ClipboardCheck (fit check), Users (about), `service.icon` (each service). **FaqList / StatBlock** gained title icons (propagate to every glossary/area/about page); Area "What we fix"/"Nearby" + Glossary "Related" labels iconned. **Footer** group titles (Work/Proof/Answers/Local/Library) carry matching icons → footer reads as a symbol-guided site map. Verified live: hero chip + FAQ + 5 footer icons render, 0 console errors, no overflow. ⚠️ Gotcha hit: a bulk import-injection script wrongly added lucide icons to the *first* `import {` (react/react-router) in 2 files — always target the lucide import specifically.
