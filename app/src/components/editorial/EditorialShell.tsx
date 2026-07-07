@@ -9,6 +9,7 @@ import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "./QuietNav";
 import QuietFooter from "./QuietFooter";
 import StickyHelpBar from "./StickyHelpBar";
+import CommandPalette from "./CommandPalette";
 
 export default function EditorialShell() {
   const location = useLocation();
@@ -26,6 +27,7 @@ export default function EditorialShell() {
       </main>
       <StickyHelpBar />
       <QuietFooter />
+      <CommandPalette />
     </div>
   );
 }

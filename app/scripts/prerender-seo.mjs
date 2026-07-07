@@ -175,6 +175,7 @@ function glossaryPages() {
     shortAnswer: `Short answer: ${term.plain}`,
     type: "DefinedTerm",
     image: "/assets/typing.webp",
+    faq: term.faq,
     term
   }));
 
