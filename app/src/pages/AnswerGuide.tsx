@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { HelpCircle } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { answerGuides } from "@/data/site";
@@ -25,6 +26,7 @@ export default function AnswerGuide() {
     <>
       <PageHero
         eyebrow="Owner Answer"
+        icon={HelpCircle}
         title={<>{guide.question}</>}
         dek={guide.short.replace(/^Short answer:\s*/i, "")}
         image={{

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Sparkles } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { studioProjects } from "@/data/site";
@@ -10,6 +11,7 @@ export default function Studio() {
     <>
       <PageHero
         eyebrow="The Studio"
+        icon={Sparkles}
         title={
           <>
             What we build<br />

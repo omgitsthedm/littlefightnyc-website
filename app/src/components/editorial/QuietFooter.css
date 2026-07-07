@@ -214,3 +214,14 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Wayfinding icons on footer group titles (match the page-type hero icons). */
+.lf-quiet-foot__group h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.lf-quiet-foot__group h2 svg {
+  color: var(--lf-fight);
+  flex: none;
+}

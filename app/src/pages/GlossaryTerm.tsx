@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { BookOpen, Waypoints } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
@@ -29,6 +30,7 @@ export default function GlossaryTerm() {
     <>
       <PageHero
         eyebrow="Plain-English term"
+        icon={BookOpen}
         title={<>{term.term}</>}
         dek={term.plain}
         image={{
@@ -69,6 +71,9 @@ export default function GlossaryTerm() {
             >
               <p
                 style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.55em",
                   fontFamily: "var(--lf-mono)",
                   fontSize: "11px",
                   letterSpacing: "0.16em",
@@ -77,6 +82,7 @@ export default function GlossaryTerm() {
                   margin: "0 0 var(--lf-space-4)",
                 }}
               >
+                <Waypoints size={14} strokeWidth={2} aria-hidden="true" style={{ color: "var(--lf-fight)", flex: "none" }} />
                 Related terms
               </p>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexWrap: "wrap", gap: "var(--lf-space-3)" }}>

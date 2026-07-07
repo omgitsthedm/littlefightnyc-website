@@ -1,4 +1,5 @@
 import PageHero from "@/components/editorial/PageHero";
+import { MessageSquare } from "lucide-react";
 import QuietContact from "@/components/editorial/QuietContact";
 
 export default function Contact() {
@@ -6,6 +7,7 @@ export default function Contact() {
     <>
       <PageHero
         eyebrow="Contact"
+        icon={MessageSquare}
         title={
           <>
             Tell us what's<br />

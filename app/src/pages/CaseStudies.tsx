@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Award } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { caseStudies, services } from "@/data/site";
@@ -14,6 +15,7 @@ export default function CaseStudies() {
     <>
       <PageHero
         eyebrow="Case Studies"
+        icon={Award}
         title={
           <>
             Real shops.<br />

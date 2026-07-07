@@ -1,4 +1,5 @@
 import { Navigate, useParams } from "react-router-dom";
+import { Building2 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import industries from "@/data/industries.json";
@@ -28,6 +29,7 @@ export default function IndustryDetail() {
     <>
       <PageHero
         eyebrow="Industry"
+        icon={Building2}
         title={<>{heroTitle}</>}
         dek={entry.description}
         image={entry.image ? {

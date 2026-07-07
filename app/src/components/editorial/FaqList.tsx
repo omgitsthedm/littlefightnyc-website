@@ -1,3 +1,4 @@
+import { MessageCircleQuestion } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./FaqList.css";
 
@@ -19,7 +20,10 @@ export default function FaqList({
 
   return (
     <section ref={ref} className="lf-faq" data-reveal aria-label={title}>
-      <p className="lf-faq__label">{title}</p>
+      <p className="lf-faq__label">
+        <MessageCircleQuestion size={14} strokeWidth={2} aria-hidden="true" />
+        {title}
+      </p>
       <dl className="lf-faq__list">
         {items.map((item) => (
           <div key={item.question} className="lf-faq__item">

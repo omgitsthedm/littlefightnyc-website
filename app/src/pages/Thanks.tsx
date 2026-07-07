@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { CheckCircle2 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { trackEvent } from "@/lib/analytics";
@@ -29,6 +30,7 @@ export default function Thanks() {
     <>
       <PageHero
         eyebrow="Fit Check Received"
+        icon={CheckCircle2}
         title={
           <>
             We've got the{" "}

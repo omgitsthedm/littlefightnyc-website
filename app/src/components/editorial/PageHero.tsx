@@ -1,9 +1,11 @@
+import type { LucideIcon } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "./PageHero.css";
 
 type Props = {
   eyebrow?: string;
+  icon?: LucideIcon;
   title: React.ReactNode;
   dek?: React.ReactNode;
   image?: {
@@ -15,18 +17,27 @@ type Props = {
 };
 
 /**
- * Reusable hero for every inner page. Eyebrow (small mono), big serif title,
- * optional italic dek, optional image. No icons, no buttons, no underlines.
- * One purpose: tell the visitor what page they're on, quietly.
+ * Reusable hero for every inner page. Eyebrow (small mono, with an optional
+ * content-type wayfinding icon chip), big serif title, optional italic dek,
+ * optional image. One purpose: tell the visitor what kind of page they're on.
  */
-export default function PageHero({ eyebrow, title, dek, image }: Props) {
+export default function PageHero({ eyebrow, icon: Icon, title, dek, image }: Props) {
   const ref = useScrollReveal<HTMLDivElement>({ revealOnMount: true });
 
   return (
     <section className={`lf-pagehero ${image ? "lf-pagehero--with-image" : ""}`}>
       <div ref={ref} className="lf-pagehero__inner">
         <div className="lf-pagehero__text">
-          {eyebrow && <p className="lf-pagehero__eyebrow">{eyebrow}</p>}
+          {(eyebrow || Icon) && (
+            <p className="lf-pagehero__eyebrow">
+              {Icon && (
+                <span className="lf-pagehero__eyebrow-icon" aria-hidden="true">
+                  <Icon size={15} strokeWidth={2} />
+                </span>
+              )}
+              {eyebrow}
+            </p>
+          )}
           <h1 className="lf-pagehero__title">{title}</h1>
           {dek && <p className="lf-pagehero__dek">{dek}</p>}
         </div>

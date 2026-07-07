@@ -1,3 +1,4 @@
+import type { LucideIcon } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./StatBlock.css";
 
@@ -8,9 +9,11 @@ import "./StatBlock.css";
  */
 export default function StatBlock({
   eyebrow,
+  icon: Icon,
   items,
 }: {
   eyebrow?: string;
+  icon?: LucideIcon;
   items: Array<{ value: string; label: string }>;
 }) {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.2 });
@@ -19,7 +22,12 @@ export default function StatBlock({
 
   return (
     <section ref={ref} className="lf-stats" data-reveal aria-label={eyebrow ?? "By the numbers"}>
-      {eyebrow && <p className="lf-stats__eyebrow">{eyebrow}</p>}
+      {eyebrow && (
+        <p className="lf-stats__eyebrow">
+          {Icon && <Icon size={14} strokeWidth={2} aria-hidden="true" />}
+          {eyebrow}
+        </p>
+      )}
       <dl className="lf-stats__grid" data-count={items.length}>
         {items.map((s) => (
           <div key={s.label} className="lf-stats__item">

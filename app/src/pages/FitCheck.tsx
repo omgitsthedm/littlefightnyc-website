@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ClipboardCheck } from "lucide-react";
 import type { FormEvent } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
@@ -50,6 +51,7 @@ export default function FitCheck() {
     <>
       <PageHero
         eyebrow="Fit Check"
+        icon={ClipboardCheck}
         title={
           <>
             Show us the<br />

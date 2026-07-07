@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { Layers,  Sparkles } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
 import ServiceEditorialSpread from "@/components/editorial/ServiceEditorialSpread";
@@ -27,6 +27,7 @@ export default function Services() {
     <>
       <PageHero
         eyebrow="The Work"
+        icon={Layers}
         title={
           <>
             Four services.<br />

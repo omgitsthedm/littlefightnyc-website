@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Sparkles } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
@@ -40,6 +41,7 @@ export default function StudioDetail() {
     <>
       <PageHero
         eyebrow={`Studio · ${project.kind}`}
+        icon={Sparkles}
         title={<>{project.name}</>}
         dek={project.oneline}
         image={{

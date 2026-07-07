@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
+import { Award, BookOpen, HelpCircle, Layers, MapPin } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import "./QuietFooter.css";
 
-const footerGroups = [
+const footerGroups: Array<{ title: string; icon: LucideIcon; links: Array<{ label: string; to: string }> }> = [
   {
     title: "Work",
+    icon: Layers,
     links: [
       { label: "Tech Consulting", to: "/services/tech-consulting/" },
       { label: "IT Support", to: "/services/it-support/" },
@@ -15,6 +18,7 @@ const footerGroups = [
   },
   {
     title: "Proof",
+    icon: Award,
     links: [
       { label: "Examples", to: "/examples/" },
       { label: "CC Films", to: "/case-studies/cc-films/" },
@@ -28,6 +32,7 @@ const footerGroups = [
   },
   {
     title: "Answers",
+    icon: HelpCircle,
     links: [
       { label: "Form Not Working", to: "/answers/website-form-not-working-small-business/" },
       { label: "Cut Software Costs", to: "/answers/reduce-monthly-software-costs-small-business/" },
@@ -39,6 +44,7 @@ const footerGroups = [
   },
   {
     title: "Local",
+    icon: MapPin,
     links: [
       { label: "Lower East Side", to: "/areas/lower-east-side/" },
       { label: "East Village", to: "/areas/east-village/" },
@@ -52,6 +58,7 @@ const footerGroups = [
   },
   {
     title: "Library",
+    icon: BookOpen,
     links: [
       { label: "Journal", to: "/journal/" },
       { label: "Glossary", to: "/glossary/" },
@@ -86,7 +93,10 @@ export default function QuietFooter() {
         <nav className="lf-quiet-foot__nav" aria-label="Footer">
           {footerGroups.map((group) => (
             <div className="lf-quiet-foot__group" key={group.title}>
-              <h2>{group.title}</h2>
+              <h2>
+                <group.icon size={14} strokeWidth={2} aria-hidden="true" />
+                {group.title}
+              </h2>
               <ul>
                 {group.links.map((link) => (
                   <li key={link.to}>

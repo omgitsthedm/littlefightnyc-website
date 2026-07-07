@@ -11,6 +11,7 @@ export default function Audit() {
     <>
       <PageHero
         eyebrow="Website Audit"
+        icon={FileSearch}
         title={
           <>
             See what your site{" "}

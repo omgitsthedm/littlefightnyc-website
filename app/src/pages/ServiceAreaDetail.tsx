@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { MapPin } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
@@ -35,6 +36,7 @@ export default function ServiceAreaDetail() {
     <>
       <PageHero
         eyebrow={`${area.name} · ${service.eyebrow}`}
+        icon={MapPin}
         title={
           <>
             {service.eyebrow} for{" "}

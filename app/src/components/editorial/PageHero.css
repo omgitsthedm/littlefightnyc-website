@@ -112,6 +112,9 @@
 }
 
 .lf-pagehero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
   font-family: var(--lf-mono);
   font-size: 11px;
   font-weight: 500;
@@ -119,6 +122,19 @@
   text-transform: uppercase;
   color: var(--lf-bone-dim);
   margin: 0;
+}
+
+/* Content-type wayfinding chip — one icon that says what kind of page this is. */
+.lf-pagehero__eyebrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 30%, transparent);
 }
 
 .lf-pagehero__title {

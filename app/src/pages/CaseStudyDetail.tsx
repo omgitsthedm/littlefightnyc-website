@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Award } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
@@ -50,6 +50,7 @@ export default function CaseStudyDetail() {
     <>
       <PageHero
         eyebrow={`Case Study · ${study.type}`}
+        icon={Award}
         title={<>{study.client}</>}
         dek={study.title}
       />

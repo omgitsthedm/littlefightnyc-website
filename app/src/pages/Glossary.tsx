@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { glossaryTerms } from "@/data/site";
@@ -8,6 +9,7 @@ export default function Glossary() {
     <>
       <PageHero
         eyebrow="Glossary"
+        icon={BookOpen}
         title={
           <>
             Useful words,{" "}

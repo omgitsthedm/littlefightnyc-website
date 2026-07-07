@@ -1,4 +1,4 @@
-import {
+import { HelpCircle, 
   CalendarCheck,
   ClipboardCheck,
   CreditCard,
@@ -45,6 +45,7 @@ export default function Answers() {
     <>
       <PageHero
         eyebrow="Owner Answers"
+        icon={HelpCircle}
         title={
           <>
             Plain answers,<br />

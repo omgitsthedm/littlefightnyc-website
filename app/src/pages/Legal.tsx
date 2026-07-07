@@ -1,4 +1,5 @@
 import PageHero from "@/components/editorial/PageHero";
+import { Scale } from "lucide-react";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
 
@@ -7,6 +8,7 @@ export default function Legal() {
     <>
       <PageHero
         eyebrow="Privacy and Terms"
+        icon={Scale}
         title={
           <>
             Privacy and terms,{" "}

@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import journal from "@/data/journal.json";
@@ -72,6 +73,7 @@ export default function JournalPost() {
     <>
       <PageHero
         eyebrow={CATEGORY_LABEL[post.category]}
+        icon={BookOpen}
         title={<>{post.title}</>}
         dek={post.description}
         image={{

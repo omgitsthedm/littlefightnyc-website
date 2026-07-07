@@ -1,4 +1,4 @@
-import {
+import { Building2, 
   BriefcaseBusiness,
   HeartPulse,
   Palette,
@@ -43,6 +43,7 @@ export default function Industries() {
     <>
       <PageHero
         eyebrow="Who We Help"
+        icon={Building2}
         title={
           <>
             Industries<br />

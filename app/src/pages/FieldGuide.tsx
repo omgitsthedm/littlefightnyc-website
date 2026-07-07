@@ -1,4 +1,4 @@
-import {
+import { LayoutGrid, 
   BriefcaseBusiness,
   CalendarCheck,
   ClipboardCheck,
@@ -86,6 +86,7 @@ export default function FieldGuide() {
     <>
       <PageHero
         eyebrow="Examples"
+        icon={LayoutGrid}
         title={
           <>
             Proof, maps,{" "}

@@ -41,6 +41,7 @@ export default function ServiceDetail() {
     <>
       <PageHero
         eyebrow={`Service · ${service.verb}`}
+        icon={service.icon}
         title={<>{service.headline}</>}
         dek={service.shortAnswer}
         image={{

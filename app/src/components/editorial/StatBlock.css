@@ -8,6 +8,9 @@
 }
 
 .lf-stats__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.16em;
@@ -15,6 +18,7 @@
   color: var(--lf-bone-dim);
   margin: 0 0 var(--lf-space-5);
 }
+.lf-stats__eyebrow svg { color: var(--lf-fight); flex: none; }
 
 .lf-stats__grid {
   margin: 0;

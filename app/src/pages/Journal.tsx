@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BookOpenText, FileText, ListChecks, Workflow } from "lucide-react";
+import { BookOpenText, FileText, ListChecks, Workflow, Newspaper } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
 import QuietContact from "@/components/editorial/QuietContact";
@@ -92,6 +92,7 @@ export default function Journal() {
     <>
       <PageHero
         eyebrow="The Journal"
+        icon={Newspaper}
         title={
           <>
             What we've been{" "}

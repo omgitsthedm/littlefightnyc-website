@@ -1,4 +1,5 @@
 import PageHero from "@/components/editorial/PageHero";
+import { BadgeCheck, Users } from "lucide-react";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
@@ -18,6 +19,7 @@ export default function About() {
     <>
       <PageHero
         eyebrow="About"
+        icon={Users}
         title={
           <>
             Built for small<br />
@@ -74,7 +76,7 @@ export default function About() {
             Most owners assume the answer is a rebuild. It almost never is.
           </PullQuote>
 
-          <StatBlock eyebrow="The promises" items={PROMISES} />
+          <StatBlock eyebrow="The promises" icon={BadgeCheck} items={PROMISES} />
           <EditorialBody>
             <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
               After hours, AI takes the message and David calls back.

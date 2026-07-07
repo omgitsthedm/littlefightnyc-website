@@ -1,4 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
+import { MapPin, Wrench, Waypoints } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
@@ -41,6 +42,7 @@ export default function AreaDetail() {
     <>
       <PageHero
         eyebrow={`Neighborhood · ${area.name}`}
+        icon={MapPin}
         title={<>{area.headline}</>}
         dek={area.shortAnswer}
         image={{
@@ -72,6 +74,9 @@ export default function AreaDetail() {
           >
             <p
               style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.55em",
                 fontFamily: "var(--lf-mono)",
                 fontSize: "11px",
                 letterSpacing: "0.16em",
@@ -80,6 +85,7 @@ export default function AreaDetail() {
                 margin: "0 0 var(--lf-space-4)",
               }}
             >
+              <Wrench size={14} strokeWidth={2} aria-hidden="true" style={{ color: "var(--lf-fight)", flex: "none" }} />
               What we fix here
             </p>
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--lf-space-3)" }}>
@@ -196,6 +202,9 @@ export default function AreaDetail() {
             >
               <p
                 style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.55em",
                   fontFamily: "var(--lf-mono)",
                   fontSize: "11px",
                   letterSpacing: "0.16em",
@@ -204,6 +213,7 @@ export default function AreaDetail() {
                   margin: "0 0 var(--lf-space-4)",
                 }}
               >
+                <Waypoints size={14} strokeWidth={2} aria-hidden="true" style={{ color: "var(--lf-fight)", flex: "none" }} />
                 Nearby neighborhoods
               </p>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexWrap: "wrap", gap: "var(--lf-space-3)" }}>
