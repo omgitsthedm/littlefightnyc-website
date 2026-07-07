@@ -202,11 +202,11 @@ body:has(.lf-editorial) {
 }
 
 .lf-editorial .lf-display {
-  font-family: var(--lf-serif);
-  font-weight: 700;
-  font-variation-settings: "opsz" 144;
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
   line-height: 0.95;
-  letter-spacing: 0;
+  /* Inter needs negative tracking at display sizes to read as display. */
+  letter-spacing: var(--lf-display-tracking);
 }
 
 .lf-editorial .lf-serif-body {

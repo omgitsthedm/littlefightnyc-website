@@ -290,7 +290,10 @@
   letter-spacing: -0.01em;
   color: var(--lf-bone);
   line-height: 1.1;
-  overflow-wrap: anywhere;
+  /* Keep contact values (esp. the email) from breaking mid-address in this
+   * top-of-page conversion card. Break only between whole words, never inside. */
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 @media (min-width: 1024px) {

@@ -1,20 +1,23 @@
-/* Little Fight NYC — Editorial Tokens (v5 — Elevate)
- * Two colors. Ink ground. One orange. Bone type. Nothing else.
+/* Little Fight NYC — Design Tokens (v6 — Axiom Momentum)
+ * Product-OS soul: near-black ground, Inter display, one orange lead,
+ * blue as a real accent. Evolved from the Axiom "Momentum" system and
+ * reconciled with the Little Fight brand. See app/DESIGN.md.
  */
 
 .lf-editorial {
-  /* Palette — three notes, period */
-  --lf-ink: #0A0A0A;          /* primary ground */
-  --lf-paper: #131313;        /* second surface — slightly warmer this pass */
-  --lf-hairline: #1F1F1F;     /* rules, dividers */
-  --lf-hairline-warm: #2A1F1B; /* hairlines under fight-orange ink */
-  --lf-bone: #F5F1E8;         /* primary type — editorial cream */
-  --lf-bone-soft: #B8B1A0;    /* secondary type — softer this pass */
-  --lf-bone-dim: #918878;     /* tertiary type — captions, marginalia */
-  --lf-fight: #FF6F1F;        /* THE orange — vibrant, juicy, not red */
-  --lf-ember: #FF8533;        /* hover / active warmth */
-  --lf-blue: #76B7FF;         /* support signal — modern, readable, never dominant */
-  --lf-blue-soft: #B8D9FF;    /* quiet blue for secondary labels */
+  /* Palette — Axiom product-OS. Roles kept distinct for contrast parity. */
+  --lf-ink: #050507;          /* primary ground / background (Axiom bg) */
+  --lf-paper: #1A1C23;        /* elevated surface — cards, panels (Axiom surface) */
+  --lf-paper-2: #12141A;      /* recessed surface, one step under paper */
+  --lf-hairline: #27272A;     /* rules, dividers, borders (Axiom border) */
+  --lf-hairline-warm: #2A1C12; /* hairlines under fight-orange ink */
+  --lf-bone: #FFFFFF;         /* primary type — product-OS white */
+  --lf-bone-soft: #A1A1AA;    /* secondary type (Axiom text-secondary) */
+  --lf-bone-dim: #71717A;     /* tertiary type — captions, marginalia */
+  --lf-fight: #F97316;        /* THE orange — Axiom lead signal */
+  --lf-ember: #FB8B3C;        /* hover / active warmth */
+  --lf-blue: #3B82F6;         /* accent — Axiom blue, now a real second signal */
+  --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
 
   /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
   --lf-text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);     /* 12-14px */
@@ -28,10 +31,18 @@
   --lf-text-4xl: clamp(5rem, 3rem + 9vw, 13rem);              /* 80-208px */
   --lf-text-5xl: clamp(6rem, 4rem + 12vw, 18rem);             /* 96-288px — Press Strike scale */
 
-  /* Type families */
-  --lf-serif: "Fraunces Variable", "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  /* Type families — Inter for display + body (Fraunces retired), mono for labels.
+   * --lf-serif is kept as the DISPLAY token name so the 37 heading consumers
+   * switch to Inter without a rename; display distinction now comes from
+   * weight + tighter tracking (see --lf-display-* below), not a serif face. */
+  --lf-serif: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lf-display: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Display tuning — Inter needs weight + negative tracking to read as display. */
+  --lf-display-weight: 700;
+  --lf-display-tracking: -0.03em;
 
   /* Spacing — editorial rhythm */
   --lf-space-1: 4px;
@@ -54,6 +65,17 @@
   --lf-column-gap: 32px;
   --lf-max-w: 1440px;
 
+  /* Radius — Axiom card language. Editorial rules stay sharp (0); surfaces round. */
+  --lf-radius-sm: 12px;
+  --lf-radius-control: 32px;   /* buttons, inputs, pills-to-be */
+  --lf-radius-card: 32px;      /* cards, panels, bento tiles */
+  --lf-radius-pill: 9999px;
+
+  /* Card system (Axiom) */
+  --lf-card-padding: 24px;
+  --lf-card-bg: var(--lf-paper);
+  --lf-card-border: 1px solid var(--lf-hairline);
+
   /* Motion — bounce is OUT. Only natural deceleration. */
   --lf-ease-slam: cubic-bezier(0.16, 1, 0.3, 1);
   --lf-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -66,6 +88,10 @@
   --lf-time-base: 320ms;
   --lf-time-slow: 480ms;
   --lf-time-cinematic: 750ms;
+
+  /* Axiom snappy layer — hovers, bento reveals, interactive feedback */
+  --lf-time-snappy: 180ms;
+  --lf-ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   /* Z-index */
   --lf-z-content: 1;

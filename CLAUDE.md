@@ -310,3 +310,22 @@ Known gaps:
 - Schema coverage is strong but BreadcrumbList/HowTo/DefinedTerm coverage is not yet complete across every non-homepage route.
 - Programmatic SEO is started, not complete to the 15+ service-city target.
 - Off-site SEO handoff package is not built yet.
+
+## 2026-07-06 — Full audit + Axiom Momentum design system
+
+**Audit (live prod).** squirrelscan (100pp, overall 78/C), Lighthouse (mobile 83–97, desktop 99–100, A11y 100, SEO 100), fresh-state browser pass. Full report: `_qa/audit-2026-07-06.md`.
+
+**Fixes shipped (in `app/`):**
+- TikTok pixel `_env` TypeError (site-wide, from the prior commit) — root cause was the hand-rolled `ttq` shim omitting `window.TiktokAnalyticsObject`; TikTok's `events.js` resolves the queue via that global. Fixed in `src/lib/analytics.ts`. Restores tracking + takes Lighthouse Best-Practices 73→~100.
+- CSP in `netlify.toml` now allowlists `analytics.tiktok.com` (script + connect) so the pixel isn't blocked when headers deploy.
+- Added `width`/`height` to the image fallbacks missing them (WorkGrid tiles, ServiceEditorialSpread thumb) — CLS fix.
+- Hero quick-contact email no longer breaks mid-address (`QuietHero.css` — `overflow-wrap: normal`).
+
+**Design system — Axiom Momentum (product-OS soul).** David approved: scope = "formalize + evolve"; soul = "go Axiom product-OS."
+- Tokens refactored to v6 in `src/styles/editorial/tokens.css`: bg `#050507`, surface `#1A1C23`, orange `#F97316` (was `#FF6F1F`), blue `#3B82F6` accent (now prominent), white/`#A1A1AA` text, border `#27272A`; added 32px radius tokens + snappy `180ms` motion. This SUPERSEDES the old midnight-blue/`#FE5800` palette FOR THIS SITE (a deliberate pivot from the agency default; documented in `app/DESIGN.md`).
+- Fraunces retired → **Inter** carries display + body (weights 700/800 + italic added); dropped ~80KB from first paint. `--lf-serif` now points to Inter.
+- New `MomentumSection` bento feature section on the home page (32px cards, orange icon chips, mono labels, blue Fit Check CTA, staggered reveal, reduced-motion safe).
+- Full system documented in `app/DESIGN.md` (Aura frontmatter format).
+- Verified: `npm run build` green (tsc + vite + prerender), local render check (bg `#050507`, Inter h1, 0 console errors, no overflow, tap targets ≥48px on the new CTA).
+
+**⚠️ Deploy divergence flagged.** `netlify.toml` in git already carries full security headers (CSP/HSTS/X-Frame-Options/etc.) + immutable asset caching, but LIVE serves almost none of them (only bare HSTS; assets `max-age=0`). So live is running a deploy that predates the current `netlify.toml`. Pushing main SHOULD trigger the auto-build that finally applies these — but confirm a new Netlify deploy actually fires and re-check live headers after. Do NOT manual `netlify deploy --prod` (per the 2026-06-30 rule).

@@ -3,6 +3,7 @@ declare global {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
     clarity?: (...args: unknown[]) => void;
+    TiktokAnalyticsObject?: string;
     ttq?: {
       load?: (pixelId: string) => void;
       page?: () => void;
@@ -89,7 +90,13 @@ function bootClarity() {
 function ensureTikTokQueue() {
   if (window.ttq) return;
 
-  const queue = [] as unknown[] & NonNullable<Window["ttq"]>;
+  // TikTok's events.js resolves the command queue via this global. Without it
+  // the SDK dereferences `undefined` on init and throws
+  // "Cannot set properties of undefined (setting '_env')". Set it before the
+  // SDK script is inserted.
+  window.TiktokAnalyticsObject = "ttq";
+
+  const queue = [] as unknown as NonNullable<Window["ttq"]>;
   const methods = [
     "page",
     "track",
@@ -112,16 +119,15 @@ function ensureTikTokQueue() {
   queue.methods = methods;
   queue.setAndDefer = (target, method) => {
     target[method] = (...args: unknown[]) => {
-      (target as unknown[]).push([method, ...args]);
+      (target as unknown as unknown[]).push([method, ...args]);
     };
   };
   methods.forEach((method) => queue.setAndDefer?.(queue as Record<string, unknown>, method));
   queue.instance = (pixelId: string) => {
-    const instances = queue._i ?? {};
-    const instance = (instances[pixelId] as unknown[] & Record<string, unknown>) ?? [];
+    queue._i = queue._i ?? {};
+    const instance = (queue._i[pixelId] as unknown as unknown[] & Record<string, unknown>) ?? [];
     methods.forEach((method) => queue.setAndDefer?.(instance as Record<string, unknown>, method));
-    instances[pixelId] = instance;
-    queue._i = instances;
+    queue._i[pixelId] = instance;
     return instance as Record<string, unknown>;
   };
   queue.load = (pixelId: string) => {

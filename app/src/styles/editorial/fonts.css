@@ -1,12 +1,14 @@
 /* Self-hosted fonts via @fontsource. No external network on first paint.
- * Variable Fraunces with weight axis only (opsz axis dropped to halve the
- * font payload; the opsz visual difference is marginal). Inter + JetBrains
- * Mono just the weights we use.
+ * v6 (Axiom Momentum): Fraunces retired — Inter now carries both display and
+ * body. Inter 700/800 added for display headlines; JetBrains Mono for labels.
+ * Dropping the two Fraunces variable faces removes ~80KB from first paint.
  */
 
-@import "@fontsource-variable/fraunces/wght.css";
-@import "@fontsource-variable/fraunces/wght-italic.css";
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
 @import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/inter/800.css";
+@import "@fontsource/inter/400-italic.css";
+@import "@fontsource/inter/600-italic.css";
 @import "@fontsource/jetbrains-mono/500.css";

@@ -83,7 +83,7 @@ export default function ServiceEditorialSpread() {
                       <span>{image.caption}</span>
                     </span>
                     <span className="lf-service-spread__thumb" aria-hidden="true">
-                      <img src={image.src} alt="" loading="lazy" decoding="async" />
+                      <img src={image.src} alt="" width={1600} height={1200} loading="lazy" decoding="async" />
                     </span>
                   </Link>
                 </li>

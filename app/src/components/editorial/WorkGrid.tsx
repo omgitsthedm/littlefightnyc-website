@@ -56,6 +56,8 @@ export default function WorkGrid() {
                   [480, 640, 900],
                 )}
                 alt=""
+                width={1600}
+                height={1200}
                 loading={index < 2 ? "eager" : "lazy"}
                 decoding="async"
               />

@@ -8,6 +8,7 @@ import QuietHero from "@/components/editorial/QuietHero";
 
 const RouteMeta = lazy(() => import("@/components/RouteMeta"));
 const WorkGrid = lazy(() => import("@/components/editorial/WorkGrid"));
+const MomentumSection = lazy(() => import("@/components/editorial/MomentumSection"));
 const RecentClients = lazy(() => import("@/components/editorial/RecentClients"));
 const BrandLine = lazy(() => import("@/components/editorial/BrandLine"));
 const QuietContact = lazy(() => import("@/components/editorial/QuietContact"));
@@ -53,6 +54,7 @@ export default function Home() {
         {showDeferred && (
           <Suspense fallback={null}>
             <WorkGrid />
+            <MomentumSection />
             <RecentClients />
             <BrandLine />
             <QuietContact />
