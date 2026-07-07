@@ -1,5 +1,9 @@
 # Little Fight NYC Website Config
 
+## 2026-07-07 — Wayfinding icon system (LIVE, `baee209`)
+
+Made iconography consistent end-to-end (was only on card grids). **PageHero** now takes an optional `icon` (content-type chip by the eyebrow) — wired on all 23 detail + hub pages: MapPin (neighborhoods), BookOpen (glossary), HelpCircle (answers), Award (case studies), Sparkles (studio), Layers (services), Building2 (industries), Newspaper (journal), FileSearch (audit), ClipboardCheck (fit check), Users (about), `service.icon` (each service). **FaqList / StatBlock** gained title icons (propagate to every glossary/area/about page); Area "What we fix"/"Nearby" + Glossary "Related" labels iconned. **Footer** group titles (Work/Proof/Answers/Local/Library) carry matching icons → footer reads as a symbol-guided site map. Verified live: hero chip + FAQ + 5 footer icons render, 0 console errors, no overflow. ⚠️ Gotcha hit: a bulk import-injection script wrongly added lucide icons to the *first* `import {` (react/react-router) in 2 files — always target the lucide import specifically.
+
 ## 2026-07-07 — Full content + visual build-out (LIVE, waves 1–2)
 
 David: "every page needs to be real and have context and visuals — more than 2 sentences and one picture." Plus four discrete asks. Planned (`~/.claude/plans/fizzy-rolling-widget.md`), approved, shipped live in two waves (`1456977`, `d19b01c` + meta fix). Verified live desktop + mobile (390px): 0 console errors, no overflow, all pages hydrate.
