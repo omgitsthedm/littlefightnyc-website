@@ -46,7 +46,7 @@ export default function WorkGrid() {
     <section className="lf-work" aria-label="What Little Fight does">
       <div className="lf-work__grid">
         {TILES.map((tile, index) => (
-          <Link key={tile.slug} to={`/services/${tile.slug}/`} className="lf-work__tile">
+          <Link key={tile.slug} to={`/services/${tile.slug}/`} viewTransition className="lf-work__tile">
             <div className="lf-work__tile-image" aria-hidden="true">
               <img
                 src={tile.image}

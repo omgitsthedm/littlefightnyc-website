@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 import "@/styles/editorial/fonts.css";
 import "@/styles/editorial/tokens.css";
@@ -11,13 +11,18 @@ import QuietFooter from "./QuietFooter";
 import StickyHelpBar from "./StickyHelpBar";
 
 export default function EditorialShell() {
+  const location = useLocation();
   return (
     <div className="lf-editorial" id="top">
       <RouteMeta />
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />
       <main id="main-content" className="lf-page">
-        <Outlet />
+        {/* Re-key on path so the page content fades + rises on each navigation;
+            nav/footer are siblings and never re-mount. */}
+        <div className="lf-page-enter" key={location.pathname}>
+          <Outlet />
+        </div>
       </main>
       <StickyHelpBar />
       <QuietFooter />

@@ -14,12 +14,21 @@ const NAV_LINKS = [
 
 export default function QuietNav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // The panel closes on link tap (see the panel NavLinks) — no route-change
   // effect, so there's no synchronous setState-in-effect.
+
+  // Chrome condenses + gains a glass floor once the page scrolls off the hero.
+  // setState only fires inside the scroll handler (an event), never sync-in-effect.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // While open: Escape closes (returns focus to the toggle), and Tab is
   // trapped inside the panel so keyboard users never fall behind it.
@@ -62,9 +71,9 @@ export default function QuietNav() {
   }, [open]);
 
   return (
-    <header className="lf-nav">
+    <header className="lf-nav" data-scrolled={scrolled}>
       <div className="lf-nav__inner">
-        <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home">
+        <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home" viewTransition>
           Little Fight NYC
         </Link>
 
@@ -73,6 +82,7 @@ export default function QuietNav() {
             <NavLink
               key={link.to}
               to={link.to}
+              viewTransition
               className={({ isActive }) =>
                 `lf-nav__link${isActive ? " lf-nav__link--active" : ""}`
               }
@@ -125,6 +135,7 @@ export default function QuietNav() {
                 <NavLink
                   key={link.to}
                   to={link.to}
+                  viewTransition
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
                     `lf-nav__panel-link${isActive ? " lf-nav__panel-link--active" : ""}`

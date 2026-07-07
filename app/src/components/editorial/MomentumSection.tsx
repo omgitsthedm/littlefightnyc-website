@@ -94,6 +94,7 @@ export default function MomentumSection() {
           <Link
             key={label}
             to={to}
+            viewTransition
             className="lf-momentum__card lf-momentum__card--cap"
             style={{ ["--i" as string]: index + 1 }}
           >
@@ -120,7 +121,7 @@ export default function MomentumSection() {
           <p className="lf-momentum__card-line">
             Take the Fit Check. Two minutes, three useful outcomes, no pitch.
           </p>
-          <Link to="/fit-check/" className="lf-momentum__cta-button">
+          <Link to="/fit-check/" viewTransition className="lf-momentum__cta-button">
             Start the Fit Check
             <ArrowUpRight size={18} strokeWidth={2} />
           </Link>
