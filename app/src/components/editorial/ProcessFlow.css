@@ -1,0 +1,113 @@
+/* Process-flow explainer — the agency method as a drawn sequence. */
+
+.lf-process {
+  padding: var(--lf-space-10) 0;
+  background:
+    radial-gradient(70% 60% at 0% 0%, rgba(59, 130, 246, 0.06), transparent 60%),
+    var(--lf-ink);
+  border-block: 1px solid var(--lf-hairline);
+}
+.lf-process__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  padding-inline: var(--lf-margin-mobile);
+}
+@media (min-width: 768px) { .lf-process__inner { padding-inline: var(--lf-margin-tablet); } }
+@media (min-width: 1280px) { .lf-process__inner { padding-inline: var(--lf-margin-desktop); } }
+
+.lf-process__kicker { color: var(--lf-fight); margin-bottom: var(--lf-space-4); }
+.lf-process__title {
+  font-size: var(--lf-text-xl);
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-8);
+  max-width: 22ch;
+}
+
+.lf-process__flow { position: relative; }
+
+/* The connecting line — draws left→right on reveal. */
+.lf-process__line {
+  position: absolute;
+  top: 22px;               /* icon center (44px chip) */
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--lf-fight), var(--lf-blue));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1000ms cubic-bezier(0, 0, 0.2, 1);
+  display: none;
+}
+@media (min-width: 720px) {
+  .lf-process__line { display: block; }
+}
+.lf-process__flow[data-revealed="true"] .lf-process__line { transform: scaleX(1); }
+
+.lf-process__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-6);
+}
+@media (min-width: 720px) {
+  .lf-process__steps { grid-template-columns: repeat(4, 1fr); gap: var(--lf-space-5); }
+}
+
+.lf-process__step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+  /* reveal — staggered up as the line reaches each step */
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 500ms cubic-bezier(0, 0, 0.2, 1),
+    transform 500ms cubic-bezier(0, 0, 0.2, 1);
+  transition-delay: calc(200ms + var(--lf-i, 0) * 160ms);
+}
+.lf-process__flow[data-revealed="true"] .lf-process__step {
+  opacity: 1;
+  transform: none;
+}
+
+.lf-process__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 12%, var(--lf-ink));
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 34%, transparent);
+}
+
+.lf-process__step-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+}
+.lf-process__step-num { color: var(--lf-fight); }
+.lf-process__step-label {
+  font-family: var(--lf-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: var(--lf-text-md);
+  line-height: 1.1;
+  color: var(--lf-bone);
+}
+.lf-process__step-copy {
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+  max-width: 32ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-process__line { transform: scaleX(1); transition: none; }
+  .lf-process__step { opacity: 1; transform: none; transition: none; }
+}

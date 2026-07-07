@@ -1,5 +1,6 @@
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
+import ProcessFlow from "@/components/editorial/ProcessFlow";
 import QuietContact from "@/components/editorial/QuietContact";
 
 export default function About() {
@@ -69,6 +70,8 @@ export default function About() {
           </EditorialBody>
         </div>
       </section>
+
+      <ProcessFlow />
 
       <QuietContact />
     </>
