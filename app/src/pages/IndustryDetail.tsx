@@ -2,8 +2,9 @@ import { Navigate, useParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import industries from "@/data/industries.json";
-import { prepareLegacyHtml } from "@/lib/legacyHtml";
+import { prepareIndustryHtml } from "@/lib/legacyHtml";
 import "@/styles/editorial/journal.css";
+import "@/styles/editorial/industry.css";
 
 type Industry = {
   slug: string;
@@ -20,11 +21,14 @@ export default function IndustryDetail() {
 
   if (!entry) return <Navigate to="/field-guide/#industries" replace />;
 
+  const { headline, body } = prepareIndustryHtml(entry.html);
+  const heroTitle = headline || entry.title.replace(" Help", "");
+
   return (
     <>
       <PageHero
         eyebrow="Industry"
-        title={<>{entry.title.replace(" Help", "")}</>}
+        title={<>{heroTitle}</>}
         dek={entry.description}
         image={entry.image ? {
           src: entry.image,
@@ -34,11 +38,11 @@ export default function IndustryDetail() {
         } : undefined}
       />
 
-      <article className="lf-post">
+      <article className="lf-post lf-post--industry">
         <div className="lf-post__inner">
           <div
             className="lf-post__body"
-            dangerouslySetInnerHTML={{ __html: prepareLegacyHtml(entry.html) }}
+            dangerouslySetInnerHTML={{ __html: body }}
           />
         </div>
       </article>

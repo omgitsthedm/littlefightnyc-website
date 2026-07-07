@@ -1,0 +1,167 @@
+/* Industry detail layout (Axiom Momentum). Turns the flat legacy-HTML column
+ * into a carded, two-rhythm layout: readable prose measure for text, a
+ * responsive card grid for the numbered category blocks, a real CTA button row,
+ * and a quiet meta line. Scoped to .lf-post--industry so journal/answers prose
+ * that share .lf-post are untouched. */
+
+.lf-post--industry .lf-post__inner {
+  max-width: var(--lf-max-w);
+}
+
+/* Keep running prose at a readable measure even though the column is wide. */
+.lf-post--industry .lf-post__body > section > p,
+.lf-post--industry .lf-post__body > section > h2,
+.lf-post--industry .lf-post__body > section > ul {
+  max-width: 64ch;
+}
+
+.lf-post--industry .lf-post__body > section {
+  margin-block: var(--lf-space-8);
+}
+
+.lf-post--industry .lf-post__body h2 {
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  font-size: var(--lf-text-lg);
+  line-height: 1.08;
+  color: var(--lf-bone);
+  margin-bottom: var(--lf-space-4);
+}
+
+/* ---- Kicker (was the "Page sections" scaffolding heading) ---- */
+.lf-post--industry .lf-post__kicker {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin-bottom: var(--lf-space-4);
+}
+
+/* ---- CTA button row (was a run-on line of links) ---- */
+.lf-post--industry .lf-post__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin: var(--lf-space-6) 0 var(--lf-space-3);
+}
+.lf-post--industry .lf-post__cta-row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--lf-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 40%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+/* First CTA (Call) reads as the primary — solid fill. */
+.lf-post--industry .lf-post__cta-row a:first-child {
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  border-color: var(--lf-fight);
+}
+.lf-post--industry .lf-post__cta-row a:hover,
+.lf-post--industry .lf-post__cta-row a:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
+}
+.lf-post--industry .lf-post__cta-row a:first-child:hover {
+  background: var(--lf-ember);
+}
+.lf-post--industry .lf-post__cta-row a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-post--industry .lf-post__meta {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin-bottom: var(--lf-space-8);
+}
+
+/* ---- Card grid: any section that directly holds <article> cards ---- */
+.lf-post--industry section:has(> article) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--lf-space-4);
+  margin-block: var(--lf-space-5);
+  max-width: none;
+}
+
+.lf-post--industry article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+  padding: var(--lf-space-5);
+  background: var(--lf-card-bg);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  height: 100%;
+}
+/* Stray empties left by the malformed source. */
+.lf-post--industry article:empty { display: none; }
+
+/* Prose / CTA blocks are also <article> in the source but carry an <h2>, not a
+ * card <h3> — let them span the full grid as full-width prose, no card chrome. */
+.lf-post--industry section:has(> article) > article:has(h2) {
+  grid-column: 1 / -1;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  max-width: 64ch;
+}
+/* Leading number chip on each card. */
+.lf-post--industry article > span:first-child {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.1em;
+  color: var(--lf-fight);
+}
+.lf-post--industry article h3 {
+  font-family: var(--lf-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: var(--lf-text-md);
+  line-height: 1.1;
+  color: var(--lf-bone);
+  margin: 0;
+}
+.lf-post--industry article p,
+.lf-post--industry article li {
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+}
+.lf-post--industry article ul {
+  margin: 0;
+  padding-left: 1.1em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+}
+
+/* ---- Comparison / link lists in prose sections ---- */
+.lf-post--industry .lf-post__body a:not(.lf-post__cta-row a) {
+  color: var(--lf-blue);
+  text-underline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-post--industry .lf-post__cta-row a { transition: none; }
+}

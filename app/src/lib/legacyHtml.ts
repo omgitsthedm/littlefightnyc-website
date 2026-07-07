@@ -35,3 +35,57 @@ export function prepareLegacyHtml(html: string) {
 
   return prepared;
 }
+
+function decodeEntities(text: string) {
+  return text
+    .replace(/&rsquo;/g, "’")
+    .replace(/&lsquo;/g, "‘")
+    .replace(/&rdquo;/g, "”")
+    .replace(/&ldquo;/g, "“")
+    .replace(/&mdash;/g, "—")
+    .replace(/&ndash;/g, "–")
+    .replace(/&hellip;/g, "…")
+    .replace(/&amp;/g, "&")
+    .replace(/<[^>]+>/g, "")
+    .trim();
+}
+
+/**
+ * Industry pages share one legacy-HTML shape (intro + "Page sections" +
+ * numbered <article> cards). This lifts the real headline out of the body (so
+ * it isn't a second hero), wraps the run-on CTA/date cluster into structured
+ * blocks, and relabels the scaffolding heading. The card grid + button styling
+ * are handled in industry.css via the `.lf-post--industry` scope.
+ */
+export function prepareIndustryHtml(html: string): { headline: string; body: string } {
+  const titleMatch = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  const headline = titleMatch ? decodeEntities(titleMatch[1]) : "";
+
+  // Drop the duplicate title from the body before shared prep runs.
+  let body = prepareLegacyHtml(html.replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, ""));
+
+  // The legacy source opens <article> per card but never closes them, so the
+  // browser nests each card inside the previous one. Close the prior article
+  // before every new one (orphan leading </article> tags are ignored), leaving
+  // the cards as flat siblings the grid can lay out. Then drop the empty
+  // articles this leaves where the source used <article> as a pseudo-close.
+  body = body
+    .replace(/<article>/gi, "</article><article>")
+    .replace(/<article>\s*<\/article>/gi, "");
+
+  // The Call/Text/Email/Contact anchors + "Published <time>" render as a flat
+  // run of siblings ("Contact formPublished May 4, 2026"). Wrap them so CSS can
+  // lay out a real button row and a separate meta line.
+  body = body.replace(
+    /(<a href="tel:[\s\S]*?Contact form<\/a>)\s*Published\s*(<time[\s\S]*?<\/time>)/i,
+    '<div class="lf-post__cta-row">$1</div><p class="lf-post__meta">Published $2</p>'
+  );
+
+  // "Page sections" is a scaffolding TOC label, not a headline.
+  body = body.replace(
+    /<h2[^>]*>\s*Page sections\s*<\/h2>/i,
+    '<p class="lf-post__kicker">On this page</p>'
+  );
+
+  return { headline, body };
+}
