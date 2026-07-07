@@ -26,14 +26,16 @@ function useDeferredSections() {
       return undefined;
     }
 
-    const id = globalThis.setTimeout(() => {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(() => setReady(true), { timeout: 1200 });
-        return;
-      }
+    // Mount the below-the-fold sections as soon as the main thread is idle
+    // after the hero paints — no artificial delay. (The old 2.2s setTimeout made
+    // the whole page appear broken/blank below the hero for seconds.)
+    const ric = window.requestIdleCallback;
+    if (typeof ric === "function") {
+      const id = ric(() => setReady(true), { timeout: 250 });
+      return () => window.cancelIdleCallback?.(id);
+    }
 
-      setReady(true);
-    }, 2200);
+    const id = globalThis.setTimeout(() => setReady(true), 50);
     return () => globalThis.clearTimeout(id);
   }, []);
 
