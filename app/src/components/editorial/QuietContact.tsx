@@ -1,31 +1,37 @@
 import { Link } from "react-router-dom";
+import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietContact.css";
 
 const CONTACT_CHANNELS = [
   {
+    icon: Phone,
     label: "Call",
     detail: "(646) 360-0318",
     href: "tel:+16463600318",
     note: "When something is broken",
   },
   {
+    icon: MessageSquare,
     label: "Text",
     detail: "(646) 360-0318",
     action: "text",
     note: "When you are at the counter",
   },
   {
+    icon: Mail,
     label: "Email",
     detail: "hello@littlefightnyc.com",
     href: "mailto:hello@littlefightnyc.com",
     note: "For the longer version",
   },
   {
+    icon: ClipboardCheck,
     label: "Form",
     detail: "Fit Check",
     to: "/fit-check/",
     note: "When the problem has parts",
+    primary: true,
   },
 ] as const;
 
@@ -51,29 +57,40 @@ export default function QuietContact() {
         </div>
 
         <ul className="lf-contact-block__channels" aria-label="Contact options">
-          {CONTACT_CHANNELS.map((channel) => (
-            <li key={channel.label}>
-              {"to" in channel ? (
-                <Link className="lf-contact-block__channel" to={channel.to}>
+          {CONTACT_CHANNELS.map((channel) => {
+            const Icon = channel.icon;
+            const isPrimary = "primary" in channel && channel.primary;
+            const inner = (
+              <>
+                <span className="lf-contact-block__channel-top">
+                  <span className="lf-contact-block__channel-icon" aria-hidden="true">
+                    <Icon size={20} strokeWidth={1.75} />
+                  </span>
                   <span className="lf-contact-block__channel-label">{channel.label}</span>
-                  <span className="lf-contact-block__channel-detail">{channel.detail}</span>
-                  <span className="lf-contact-block__channel-note">{channel.note}</span>
-                </Link>
-              ) : "action" in channel ? (
-                <button className="lf-contact-block__channel" type="button" onClick={openTextMessage}>
-                  <span className="lf-contact-block__channel-label">{channel.label}</span>
-                  <span className="lf-contact-block__channel-detail">{channel.detail}</span>
-                  <span className="lf-contact-block__channel-note">{channel.note}</span>
-                </button>
-              ) : (
-                <a className="lf-contact-block__channel" href={channel.href}>
-                  <span className="lf-contact-block__channel-label">{channel.label}</span>
-                  <span className="lf-contact-block__channel-detail">{channel.detail}</span>
-                  <span className="lf-contact-block__channel-note">{channel.note}</span>
-                </a>
-              )}
-            </li>
-          ))}
+                  <ArrowUpRight
+                    className="lf-contact-block__channel-go"
+                    size={16}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </span>
+                <span className="lf-contact-block__channel-detail">{channel.detail}</span>
+                <span className="lf-contact-block__channel-note">{channel.note}</span>
+              </>
+            );
+            const cls = `lf-contact-block__channel${isPrimary ? " lf-contact-block__channel--primary" : ""}`;
+            return (
+              <li key={channel.label}>
+                {"to" in channel ? (
+                  <Link className={cls} to={channel.to}>{inner}</Link>
+                ) : "action" in channel ? (
+                  <button className={cls} type="button" onClick={openTextMessage}>{inner}</button>
+                ) : (
+                  <a className={cls} href={channel.href}>{inner}</a>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <ul className="lf-contact-block__promises" aria-label="What you can expect">

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietHero.css";
 
@@ -39,28 +40,33 @@ const MARQUEE_ITEMS: { label: string; to: string }[] = [
 
 const CONTACT_CHANNELS = [
   {
+    icon: Phone,
     label: "Call",
     detail: "(646) 360-0318",
     note: "If something is broken",
     href: "tel:+16463600318",
   },
   {
+    icon: MessageSquare,
     label: "Text",
     detail: "(646) 360-0318",
     note: "Quick at the counter",
     action: "text",
   },
   {
+    icon: Mail,
     label: "Email",
     detail: "hello@littlefightnyc.com",
     note: "For the longer version",
     href: "mailto:hello@littlefightnyc.com",
   },
   {
+    icon: ClipboardCheck,
     label: "Form",
     detail: "Fit Check",
     note: "When it has parts",
     to: "/fit-check/",
+    primary: true,
   },
 ] as const;
 
@@ -131,29 +137,35 @@ export default function QuietHero() {
         </div>
 
         <ul className="lf-hero__channels" aria-label="Contact Little Fight NYC">
-          {CONTACT_CHANNELS.map((channel) => (
-            <li key={channel.label}>
-              {"to" in channel ? (
-                <Link className="lf-hero__channel" to={channel.to}>
+          {CONTACT_CHANNELS.map((channel) => {
+            const Icon = channel.icon;
+            const isPrimary = "primary" in channel && channel.primary;
+            const inner = (
+              <>
+                <span className="lf-hero__channel-top">
+                  <span className="lf-hero__channel-icon" aria-hidden="true">
+                    <Icon size={18} strokeWidth={1.75} />
+                  </span>
                   <span className="lf-hero__channel-label">{channel.label}</span>
-                  <span className="lf-hero__channel-detail">{channel.detail}</span>
-                  <span className="lf-hero__channel-note">{channel.note}</span>
-                </Link>
-              ) : "action" in channel ? (
-                <button className="lf-hero__channel" type="button" onClick={openTextMessage}>
-                  <span className="lf-hero__channel-label">{channel.label}</span>
-                  <span className="lf-hero__channel-detail">{channel.detail}</span>
-                  <span className="lf-hero__channel-note">{channel.note}</span>
-                </button>
-              ) : (
-                <a className="lf-hero__channel" href={channel.href}>
-                  <span className="lf-hero__channel-label">{channel.label}</span>
-                  <span className="lf-hero__channel-detail">{channel.detail}</span>
-                  <span className="lf-hero__channel-note">{channel.note}</span>
-                </a>
-              )}
-            </li>
-          ))}
+                  <ArrowUpRight className="lf-hero__channel-go" size={15} strokeWidth={2} aria-hidden="true" />
+                </span>
+                <span className="lf-hero__channel-detail">{channel.detail}</span>
+                <span className="lf-hero__channel-note">{channel.note}</span>
+              </>
+            );
+            const cls = `lf-hero__channel${isPrimary ? " lf-hero__channel--primary" : ""}`;
+            return (
+              <li key={channel.label}>
+                {"to" in channel ? (
+                  <Link className={cls} to={channel.to}>{inner}</Link>
+                ) : "action" in channel ? (
+                  <button className={cls} type="button" onClick={openTextMessage}>{inner}</button>
+                ) : (
+                  <a className={cls} href={channel.href}>{inner}</a>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
 

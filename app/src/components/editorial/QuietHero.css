@@ -194,15 +194,12 @@
 
 .lf-hero__channels {
   list-style: none;
-  margin: var(--lf-space-2) 0 0;
+  margin: var(--lf-space-3) 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  gap: var(--lf-space-3);
   max-width: 68rem;
-  background: color-mix(in srgb, var(--lf-bone) 13%, transparent);
-  opacity: 1;
-  transform: translateY(0);
   animation: lf-hero-cta-in 500ms cubic-bezier(0.22, 1, 0.36, 1) 260ms backwards;
 }
 
@@ -214,45 +211,99 @@
 
 .lf-hero__channels li {
   min-width: 0;
+  display: flex;
 }
 
-.lf-hero__channel {
-  min-height: 72px;
+/* Hero channel = glass card-button (Axiom Momentum language, over the photo).
+ * Scoped under .lf-editorial to win over the base `button` reset
+ * (background/border/padding) for the Text channel's <button>. Panels are kept
+ * opaque enough to read consistently over any part of the hero photograph. */
+.lf-editorial .lf-hero__channel {
+  min-height: 118px;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-1);
-  align-items: flex-start;
-  justify-content: center;
-  padding: var(--lf-space-3);
-  background:
-    linear-gradient(180deg, rgba(19, 19, 19, 0.7), rgba(10, 10, 10, 0.54));
-  border: 0;
+  gap: var(--lf-space-2);
+  align-items: stretch;
+  padding: var(--lf-space-4);
+  border-radius: var(--lf-radius-card);
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 16%, transparent);
+  background: color-mix(in srgb, var(--lf-paper) 88%, transparent);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   text-decoration: none;
   appearance: none;
-  color: inherit;
+  color: var(--lf-bone);
   cursor: pointer;
   font: inherit;
   text-align: left;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   transition:
-    background-color var(--lf-time-fast) var(--lf-ease-out-quart),
-    box-shadow var(--lf-time-fast) var(--lf-ease-out-quart),
-    color var(--lf-time-fast) var(--lf-ease-out-quart);
+    transform var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-@media (min-width: 640px) {
-  .lf-hero__channel {
-    min-height: 82px;
-    padding: var(--lf-space-3) var(--lf-space-4);
-  }
+.lf-editorial .lf-hero__channel:hover,
+.lf-editorial .lf-hero__channel:focus-visible {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--lf-fight) 55%, transparent);
+  background: color-mix(in srgb, var(--lf-fight) 12%, color-mix(in srgb, var(--lf-paper) 90%, transparent));
+}
+.lf-hero__channel:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
 }
 
-.lf-hero__channel:hover {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--lf-paper) 84%, var(--lf-fight) 16%), rgba(10, 10, 10, 0.62));
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--lf-bone) 22%, transparent);
+.lf-hero__channel-top {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+}
+.lf-hero__channel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 32%, transparent);
+}
+.lf-hero__channel-go {
+  margin-left: auto;
+  color: var(--lf-bone-soft);
+  transition:
+    transform var(--lf-time-snappy) var(--lf-ease-standard),
+    color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-hero__channel:hover .lf-hero__channel-go,
+.lf-hero__channel:focus-visible .lf-hero__channel-go {
+  color: var(--lf-fight);
+  transform: translate(2px, -2px);
+}
+
+/* Primary door — Fit Check, blue accent */
+.lf-editorial .lf-hero__channel--primary {
+  border-color: color-mix(in srgb, var(--lf-blue) 44%, transparent);
+  background: color-mix(in srgb, var(--lf-blue) 16%, color-mix(in srgb, var(--lf-paper) 88%, transparent));
+}
+.lf-hero__channel--primary .lf-hero__channel-icon {
+  color: var(--lf-blue);
+  background: color-mix(in srgb, var(--lf-blue) 16%, transparent);
+  border-color: color-mix(in srgb, var(--lf-blue) 36%, transparent);
+}
+.lf-editorial .lf-hero__channel--primary:hover,
+.lf-editorial .lf-hero__channel--primary:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-blue) 62%, transparent);
+  background: color-mix(in srgb, var(--lf-blue) 20%, color-mix(in srgb, var(--lf-paper) 88%, transparent));
+}
+.lf-hero__channel--primary:hover .lf-hero__channel-go,
+.lf-hero__channel--primary:focus-visible .lf-hero__channel-go {
+  color: var(--lf-blue);
 }
 
 @keyframes lf-hero-cta-in {
@@ -279,17 +330,17 @@
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lf-fight);
+  color: var(--lf-bone-soft);
 }
 
 .lf-hero__channel-detail {
-  font-family: var(--lf-serif);
-  font-variation-settings: "opsz" 32;
-  font-weight: 650;
+  margin-top: auto;
+  font-family: var(--lf-display);
+  font-weight: 600;
   font-size: var(--lf-text-base);
   letter-spacing: -0.01em;
   color: var(--lf-bone);
-  line-height: 1.1;
+  line-height: 1.12;
   /* Keep contact values (esp. the email) from breaking mid-address in this
    * top-of-page conversion card. Break only between whole words, never inside. */
   overflow-wrap: normal;
@@ -303,12 +354,10 @@
 }
 
 .lf-hero__channel-note {
-  font-family: var(--lf-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--lf-bone-dim);
-  line-height: 1.25;
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone-soft);
+  line-height: 1.3;
 }
 
 @media (max-width: 480px) {
@@ -316,10 +365,21 @@
     padding-bottom: calc(var(--lf-space-8) + 84px);
   }
 
+  /* Phones: one column so the full email fits on a line (no mid-address break). */
+  .lf-hero__channels {
+    grid-template-columns: 1fr;
+    gap: var(--lf-space-2);
+  }
+
   .lf-hero__channel {
     min-height: 64px;
-    gap: 2px;
-    padding: var(--lf-space-2) var(--lf-space-3);
+    gap: var(--lf-space-1);
+    padding: var(--lf-space-3);
+  }
+
+  .lf-hero__channel-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .lf-hero__channel-label {
