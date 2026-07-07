@@ -329,3 +329,17 @@ Known gaps:
 - Verified: `npm run build` green (tsc + vite + prerender), local render check (bg `#050507`, Inter h1, 0 console errors, no overflow, tap targets ≥48px on the new CTA).
 
 **⚠️ Deploy divergence flagged.** `netlify.toml` in git already carries full security headers (CSP/HSTS/X-Frame-Options/etc.) + immutable asset caching, but LIVE serves almost none of them (only bare HSTS; assets `max-age=0`). So live is running a deploy that predates the current `netlify.toml`. Pushing main SHOULD trigger the auto-build that finally applies these — but confirm a new Netlify deploy actually fires and re-check live headers after. Do NOT manual `netlify deploy --prod` (per the 2026-06-30 rule).
+
+**✅ RESOLVED same day.** Push to `main` DID auto-deploy (~40s) and the full headers went live (CSP, HSTS, X-Frame DENY, nosniff, Referrer-Policy). For THIS repo, `git push origin main` → Netlify auto-build → live in ~40s is confirmed working (the general "LiFi = manual deploys" memory does NOT apply to littlefightnyc — it's genuine auto-deploy from main).
+
+## 2026-07-07 — Ultra-polish: whole-site convergence to Axiom Momentum (LIVE)
+
+Multi-agent audit (design/copy/code) + a 26-agent polish workflow, shipped to main (commits `b1cbb4c`, `0cabcfb`). Net diff ~+880/−6215 across 88 files. Full plan: `_qa/polish-plan-2026-07-06.md`.
+
+- **Core problem fixed:** the site was mid-migration — Momentum on 3 surfaces vs old editorial-magazine on ~90%. Converged all 24 inner-page heroes (`PageHero`) off the brown ground onto `#050507`, and VisualIndex + `legacy-overrides.css` cards to the 32px Momentum language.
+- **Foundation:** deleted dead `index.css` (1280→74 lines) + 22 dead component files + Fraunces dep; swept 103 no-op `opsz` declarations; `--lf-bone-dim` → `#8A8A94` (WCAG AA); added `--lf-chip`/`--lf-lift` tokens; loaded Inter 900.
+- **Chrome:** added the primary nav (`QuietNav`, desktop links + accessible mobile drawer) and the **mandated LiFi footer signature line** (both were missing).
+- **FitCheck:** submit is now a Momentum orange pill with focus/error/success/disabled/loading states + client validation.
+- **Copy/SEO/perf:** fixed 2 user-facing leaks, meta/voice/microcopy rewrites, Services/Studio/CaseStudies srcset (~400KB mobile), home hero preload, `/blog`→`/journal` links, LocalBusiness `postalCode` (streetAddress omitted — service-area business, no public street; add real registered address later if wanted).
+- **⚠️ Button-reset gotcha (hit 3×):** `.lf-editorial button` reset (`background/border/padding: none`, specificity 0,1,1) silently strips any custom `<button>` styling (pill fill, card bg) unless the rule is scoped under `.lf-editorial` (→ 0,2,0). QuietContact/QuietHero channels and the FitCheck submit all needed this. Any NEW styled `<button>` must scope its base rule under `.lf-editorial`.
+- Verified live: `/services/`, `/fit-check/`, home — hero `#050507`, nav/footer/pill correct, 32px cards, no overflow, 0 console errors; security headers + schema live.
