@@ -341,9 +341,11 @@ function foundationSchemas(page) {
     "priceRange": "$$",
     "image": site.image,
     "slogan": "Better tech. Fewer bills. More customers.",
+    // Service-area business: no public storefront street address. locality +
+    // region + postalCode is valid, honest PostalAddress schema. If a real
+    // registered/mailing street address is provided, add streetAddress here.
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "New York, NY",
       "addressLocality": "New York",
       "addressRegion": "NY",
       "postalCode": "10002",
