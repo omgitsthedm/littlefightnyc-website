@@ -23,6 +23,7 @@ import {
   glossaryTerms,
   services,
 } from "@/data/site";
+import { CMDK_OPEN_EVENT, consumePendingPaletteOpen } from "@/lib/palette";
 import "./CommandPalette.css";
 
 type Item = { label: string; to: string; group: string; icon: LucideIcon };
@@ -124,6 +125,22 @@ export default function CommandPalette() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  // Chrome-initiated open (the ⌘K chip in QuietNav dispatches CMDK_OPEN_EVENT).
+  // The pending check covers Home, where the palette mounts deferred — a chip
+  // click just before mount still opens it instead of being dropped.
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener(CMDK_OPEN_EVENT, onOpen);
+    // Deferred, not sync-in-effect: consume a click that landed pre-mount.
+    const id = window.setTimeout(() => {
+      if (consumePendingPaletteOpen()) onOpen();
+    }, 0);
+    return () => {
+      window.clearTimeout(id);
+      window.removeEventListener(CMDK_OPEN_EVENT, onOpen);
+    };
+  }, []);
 
   // Focus the input when opening; restore focus to the invoker on close.
   useEffect(() => {

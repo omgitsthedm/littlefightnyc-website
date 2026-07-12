@@ -1053,7 +1053,7 @@
       "type": "Article",
       "published": "2026-05-13",
       "updated": "2026-05-13",
-      "image": "/assets/case-cc-films.webp"
+      "image": "/assets/og-case-cc-films.webp"
     },
     {
       "path": "/case-studies/deckspace/",
@@ -1064,7 +1064,7 @@
       "type": "Article",
       "published": "2026-05-13",
       "updated": "2026-05-13",
-      "image": "/assets/case-deckspace.webp"
+      "image": "/assets/og-case-deckspace.webp"
     },
     {
       "path": "/case-studies/hair-by-rachel-charles/",
@@ -1073,7 +1073,7 @@
       "h1": "Hair By Rachel Charles",
       "shortAnswer": "From Instagram-only to a real booking flow.",
       "type": "Article",
-      "image": "/assets/case-hair-by-rachel-charles.webp"
+      "image": "/assets/og-case-hair-by-rachel-charles.webp"
     },
     {
       "path": "/case-studies/after-hours-agenda/",
@@ -1082,7 +1082,7 @@
       "h1": "After Hours Agenda",
       "shortAnswer": "E-commerce that doesn't drown the brand.",
       "type": "Article",
-      "image": "/assets/case-after-hours-agenda.webp"
+      "image": "/assets/og-case-after-hours-agenda.webp"
     },
     {
       "path": "/case-studies/clearhelp/",
@@ -1091,7 +1091,7 @@
       "h1": "ClearHelp",
       "shortAnswer": "Multi-site setup with a real backend.",
       "type": "Article",
-      "image": "/assets/case-clearhelp.webp"
+      "image": "/assets/og-case-clearhelp.webp"
     },
     {
       "path": "/case-studies/public-house-creative/",
@@ -1100,7 +1100,7 @@
       "h1": "Public House Creative",
       "shortAnswer": "An internal cockpit for the work they actually run.",
       "type": "Article",
-      "image": "/assets/case-public-house-cockpit.webp"
+      "image": "/assets/og-case-public-house-creative.webp"
     },
     {
       "path": "/case-studies/grand-funding-llc/",
@@ -1109,7 +1109,7 @@
       "h1": "Grand Funding LLC",
       "shortAnswer": "A clean public face for a finance business.",
       "type": "Article",
-      "image": "/assets/case-grand-funding-llc.webp"
+      "image": "/assets/og-case-grand-funding-llc.webp"
     },
     {
       "path": "/case-studies/venuecircuit/",
@@ -1118,7 +1118,7 @@
       "h1": "VenueCircuit",
       "shortAnswer": "Short answer: VenueCircuit is Little Fight's own shipped software product. A financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
       "type": "Article",
-      "image": "/assets/case-venuecircuit.webp"
+      "image": "/assets/og-case-venuecircuit.webp"
     },
     {
       "path": "/studio/dakota/",

@@ -2,18 +2,33 @@ import { Link } from "react-router-dom";
 import { Award } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import DeviceFrame from "@/components/editorial/DeviceFrame";
 import { caseStudies, services } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { useViewTransitionNav } from "@/lib/viewTransition";
 import "@/styles/editorial/case-studies.css";
+
+// Warm the detail chunk before the morph so the new snapshot is the real page.
+const preloadDetail = () => import("@/pages/CaseStudyDetail");
 
 function serviceLabel(slug: string): string | undefined {
   return services.find((s) => s.slug === slug)?.eyebrow;
+}
+
+/** "https://www.ccfilms.net" → "ccfilms.net" for the drawn URL bar. */
+function displayDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }
 
 const COUNT_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
 
 export default function CaseStudies() {
   const countWord = COUNT_WORDS[caseStudies.length] ?? String(caseStudies.length);
+  const vtNav = useViewTransitionNav();
   return (
     <>
       <PageHero
@@ -38,21 +53,35 @@ export default function CaseStudies() {
         <div className="lf-cases__inner">
           {caseStudies.map((study, i) => (
             <article key={study.slug} className="lf-cases__item">
-              <Link to={`/case-studies/${study.slug}/`} className="lf-cases__image lf-cases__image-link" aria-label={`Read the ${study.client} case study`}>
-                <img
-                  src={study.image}
-                  {...responsiveImageProps(study.image, "(max-width: 720px) 100vw, 50vw")}
-                  alt=""
-                  width={1600}
-                  height={1200}
-                  loading={i < 2 ? "eager" : "lazy"}
-                  decoding="async"
-                />
+              <Link
+                to={`/case-studies/${study.slug}/`}
+                className="lf-cases__image lf-cases__image-link"
+                aria-label={`Read the ${study.client} case study`}
+                onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
+              >
+                <DeviceFrame domain={displayDomain(study.url)}>
+                  <img
+                    src={study.image}
+                    {...responsiveImageProps(study.image, "(max-width: 720px) 100vw, 50vw")}
+                    alt=""
+                    width={1600}
+                    height={1200}
+                    loading={i < 2 ? "eager" : "lazy"}
+                    decoding="async"
+                    style={{ viewTransitionName: `case-${study.slug}` }}
+                  />
+                </DeviceFrame>
               </Link>
               <div className="lf-cases__copy">
                 <p className="lf-cases__type">{study.type}</p>
                 <h2 className="lf-cases__title">
-                  <Link to={`/case-studies/${study.slug}/`} className="lf-cases__title-link">{study.client}</Link>
+                  <Link
+                    to={`/case-studies/${study.slug}/`}
+                    className="lf-cases__title-link"
+                    onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
+                  >
+                    {study.client}
+                  </Link>
                 </h2>
                 <p className="lf-cases__deck">{study.title}</p>
 
@@ -102,7 +131,11 @@ export default function CaseStudies() {
                     </span>
                   </div>
                   <div className="lf-cases__actions">
-                    <Link to={`/case-studies/${study.slug}/`} className="lf-cases__read">
+                    <Link
+                      to={`/case-studies/${study.slug}/`}
+                      className="lf-cases__read"
+                      onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
+                    >
                       Read the case
                       <span aria-hidden="true"> →</span>
                     </Link>

@@ -73,6 +73,14 @@
   color: var(--lf-ink);
 }
 
+/* Contextual detail lines run longer than "Tech Audit" — step the size down
+   a notch and allow a tidy two-line wrap inside the 56px cell. */
+.lf-sticky-help__detail--ctx {
+  font-size: var(--lf-text-sm);
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
 /* Reserve space at the bottom of the page so content isn't hidden under the bar */
 @media (max-width: 767px) {
   .lf-editorial {

@@ -28,6 +28,25 @@
   }
 }
 
+/* ---- Shared-element route morphs (lib/viewTransition.ts) ----------------- */
+/* While a scripted view transition drives the navigation, <html> carries
+ * data-vt-route. The incoming page must NOT also play the re-key fade —
+ * that would double-animate. Browsers without the API never get the
+ * attribute, so the fade below stays exactly as-is for them. */
+html[data-vt-route] .lf-page-enter {
+  animation: none;
+}
+
+/* Paired elements (case card image → detail hero, journal title → post h1)
+ * morph with a slightly longer, standard-eased group animation. Scoped to
+ * scripted transitions only. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-vt-route]::view-transition-group(*) {
+    animation-duration: 380ms;
+    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
 /* ---- Route transition (reliable, chrome stays put) ---------------------- */
 /* The page content re-keys on navigation and plays a fade + rise. Nav/footer
  * are siblings so they never re-mount or flash. Reduced-motion = instant. */

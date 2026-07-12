@@ -2,6 +2,8 @@
  * Scoped reset + ground rules. Applies only inside .lf-editorial.
  */
 
+@import "./texture.css"; /* film grain (::after) + .lf-seam utility */
+
 .lf-editorial {
   background: var(--lf-ink);
   color: var(--lf-bone);

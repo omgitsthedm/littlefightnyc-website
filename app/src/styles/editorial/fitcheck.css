@@ -91,6 +91,64 @@
   background: var(--lf-fight);
 }
 
+/* ---- Step-3 payoff beat --------------------------------------------------
+ * When both choices are made and step 3 arrives, the three segments connect:
+ * one orange line draws across the bar and lets go, then the step heading
+ * gets a single underline sweep. One-shot (FitCheck.tsx disarms the class),
+ * no loops, and reduced-motion never sees either overlay. */
+.lf-fit__progress-bar {
+  position: relative;
+}
+
+.lf-fit__progress-bar.is-payoff::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  transform-origin: left center;
+  pointer-events: none;
+  animation: lf-fit-connect 620ms var(--lf-ease-out-quart) both;
+}
+
+@keyframes lf-fit-connect {
+  from { transform: scaleX(0); opacity: 1; }
+  62%  { transform: scaleX(1); opacity: 1; }
+  to   { transform: scaleX(1); opacity: 0; }
+}
+
+.lf-fit__step-title--payoff {
+  position: relative;
+}
+
+.lf-fit__step-title--payoff::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: min(180px, 60%);
+  height: 2px;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  transform-origin: left center;
+  pointer-events: none;
+  animation: lf-fit-underline 700ms var(--lf-ease-out-quart) 280ms both;
+}
+
+@keyframes lf-fit-underline {
+  from { transform: scaleX(0); opacity: 1; }
+  70%  { transform: scaleX(1); opacity: 1; }
+  to   { transform: scaleX(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-fit__progress-bar.is-payoff::after,
+  .lf-fit__step-title--payoff::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 .lf-fit__step {
   display: grid;
   gap: var(--lf-space-5);

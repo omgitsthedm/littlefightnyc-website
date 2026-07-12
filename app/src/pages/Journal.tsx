@@ -5,8 +5,12 @@ import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { useViewTransitionNav } from "@/lib/viewTransition";
 import journal from "@/data/journal.json";
 import "@/styles/editorial/journal.css";
+
+// Warm the post chunk before the morph so the new snapshot is the real page.
+const preloadPost = () => import("@/pages/JournalPost");
 
 type Post = {
   slug: string;
@@ -80,6 +84,7 @@ export default function Journal() {
 
   const featuredRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
   const listRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
+  const vtNav = useViewTransitionNav();
 
   return (
     <>
@@ -152,6 +157,7 @@ export default function Journal() {
               to={`/journal/${featured.slug}/`}
               viewTransition
               className="lf-journal-featured__card"
+              onClick={vtNav(`/journal/${featured.slug}/`, preloadPost)}
             >
               <span className="lf-journal-featured__media" aria-hidden="true">
                 <img
@@ -174,7 +180,12 @@ export default function Journal() {
                   <span className="lf-journal__cat">{CATEGORY_LABEL[featured.category]}</span>
                   <span className="lf-journal__read">~{minutes[featured.slug]} min read</span>
                 </span>
-                <span className="lf-journal-featured__title">{featured.title}</span>
+                <span
+                  className="lf-journal-featured__title"
+                  style={{ viewTransitionName: `post-${featured.slug}` }}
+                >
+                  {featured.title}
+                </span>
                 <span className="lf-journal-featured__desc">{featured.description}</span>
                 <span className="lf-journal-featured__meta">{featured.published}</span>
                 <span className="lf-journal-featured__cta">
@@ -195,13 +206,20 @@ export default function Journal() {
             <ol className="lf-journal__list">
               {rows.map((post, i) => (
                 <li key={post.slug} className="lf-journal__item">
-                  <Link to={`/journal/${post.slug}/`} viewTransition className="lf-journal__link">
+                  <Link
+                    to={`/journal/${post.slug}/`}
+                    viewTransition
+                    className="lf-journal__link"
+                    onClick={vtNav(`/journal/${post.slug}/`, preloadPost)}
+                  >
                     <span className="lf-journal__num">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="lf-journal__body">
                       <span className="lf-journal__title">
-                        {post.title}
+                        <span style={{ viewTransitionName: `post-${post.slug}` }}>
+                          {post.title}
+                        </span>
                         <span className="lf-journal__chips">
                           <span className="lf-journal__cat">{CATEGORY_LABEL[post.category]}</span>
                           <span className="lf-journal__read">~{minutes[post.slug]} min read</span>

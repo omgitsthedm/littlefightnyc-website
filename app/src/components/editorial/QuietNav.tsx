@@ -2,6 +2,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
 import PhoneAction from "./PhoneAction";
+import { useOpenNow } from "@/lib/openNow";
+import { openCommandPalette } from "@/lib/palette";
 import "./QuietNav.css";
 
 const NAV_LINKS = [
@@ -11,6 +13,29 @@ const NAV_LINKS = [
   { label: "Journal", to: "/journal/" },
   { label: "Contact", to: "/contact/" },
 ] as const;
+
+/**
+ * Honest availability dot for the callback window (9am–9pm ET, computed in
+ * lib/openNow.ts and re-checked every minute). Shared by the nav (next to the
+ * phone) and the footer contact row. Styles live in QuietNav.css (.lf-open).
+ */
+export function OpenNowBadge({ className }: { className?: string }) {
+  const openNow = useOpenNow();
+  return (
+    <span
+      className={`lf-open${openNow.open ? " lf-open--live" : ""}${
+        className ? ` ${className}` : ""
+      }`}
+      role="status"
+      aria-label={openNow.sentence}
+    >
+      <span className="lf-open__dot" aria-hidden="true" />
+      <span className="lf-open__label" aria-hidden="true">
+        {openNow.label}
+      </span>
+    </span>
+  );
+}
 
 export default function QuietNav() {
   const [open, setOpen] = useState(false);
@@ -93,10 +118,21 @@ export default function QuietNav() {
         </nav>
 
         <div className="lf-nav__actions">
+          <OpenNowBadge className="lf-open--nav" />
+
           <PhoneAction className="lf-nav__phone" align="right">
             <span className="lf-nav__phone-label">Call or text</span>
             <span className="lf-nav__phone-number">(646) 360-0318</span>
           </PhoneAction>
+
+          <button
+            type="button"
+            className="lf-nav__cmdk"
+            aria-label="Open quick navigation (Command K)"
+            onClick={openCommandPalette}
+          >
+            <kbd aria-hidden="true">⌘K</kbd>
+          </button>
 
           <button
             ref={toggleRef}

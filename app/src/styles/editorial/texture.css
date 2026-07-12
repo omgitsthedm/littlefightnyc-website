@@ -1,0 +1,57 @@
+/* Little Fight NYC — Texture layer
+ * Film grain + section seams. Token-driven, decorative only.
+ *
+ * Grain: a 128px tileable monochrome noise PNG (embedded data URI, ~4.8KB)
+ * laid over the whole viewport as a fixed .lf-editorial::after layer.
+ * Centered on mid-gray so `overlay` blending is tonally neutral — it adds
+ * texture, never brightness. Complements the existing ::before SVG-turbulence
+ * sheen in base.css: ::before lifts the ink ground (screen), this layer sits
+ * over CONTENT — photography included — binding graded imagery and ground
+ * into one filmic surface. You feel it more than see it (opacity 0.025).
+ */
+
+@supports (mix-blend-mode: overlay) {
+  .lf-editorial::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: var(--lf-z-content);
+    opacity: 0.025;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/png;base64,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");
+    background-size: 128px 128px;
+  }
+}
+
+/* Respect users who ask for reduced transparency/effects. */
+@media (prefers-reduced-transparency: reduce) {
+  .lf-editorial::after {
+    content: none;
+  }
+}
+
+/* ─── .lf-seam — section seam utility ─────────────────────────────
+ * A soft 1px gradient horizon between major page sections: hairline
+ * at the center, dissolving to nothing at both edges, so adjoining
+ * sections read as separate plates without a hard rule.
+ *
+ * Usage (element form — an <hr> or spacer div between sections):
+ *   <hr className="lf-seam" />
+ * Sits flush by default; give it margin-block from the section's own
+ * rhythm (e.g. style or a wrapper), not here — the utility stays inert.
+ * NOT applied anywhere by default; opt in per page.
+ */
+.lf-editorial .lf-seam {
+  border: 0;
+  margin: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--lf-hairline) 18%,
+    var(--lf-hairline) 82%,
+    transparent 100%
+  );
+}

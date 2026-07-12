@@ -442,3 +442,111 @@
   color: var(--lf-bone-dim);
   text-align: center;
 }
+
+/* ---- Open-now indicator (shared: nav actions + footer contact row) ------- */
+/* Honest availability for the callback window (lib/openNow.ts). Open: a
+   slow-pulsing orange dot + mono label. Closed: a static dim dot + when
+   we're back. The pulse collapses under reduced motion. */
+.lf-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.lf-open__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lf-bone-dim);
+  opacity: 0.55;
+}
+
+.lf-open--live .lf-open__dot {
+  background: var(--lf-fight);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lf-open--live .lf-open__dot {
+    animation: lf-open-pulse 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+}
+
+@keyframes lf-open-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(249, 115, 22, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+
+.lf-open__label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--lf-bone-dim);
+  white-space: nowrap;
+  transform: translateY(1px); /* optical baseline with neighbors */
+}
+
+.lf-open--live .lf-open__label {
+  color: var(--lf-fight);
+}
+
+/* Nav placement: the full chip needs room — below 900px the dot alone sits
+   by the phone number (the aria sentence stays complete). */
+.lf-open--nav {
+  padding-inline: var(--lf-space-1);
+}
+
+@media (max-width: 899px) {
+  .lf-open--nav .lf-open__label {
+    display: none;
+  }
+}
+
+/* ---- Command palette chip (⌘K) ------------------------------------------- */
+/* Desktop pointer devices only — hidden wherever hover doesn't exist. Scoped
+   under .lf-editorial to beat the base button reset (the 3×-hit gotcha). */
+.lf-editorial .lf-nav__cmdk {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .lf-editorial .lf-nav__cmdk {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .lf-editorial .lf-nav__cmdk kbd {
+    font-family: var(--lf-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    color: var(--lf-bone-dim);
+    padding: 6px 8px;
+    background: none;
+    border: 1px solid var(--lf-hairline);
+    border-radius: var(--lf-radius-sm);
+    transition:
+      color var(--lf-time-snappy) var(--lf-ease-standard),
+      border-color var(--lf-time-snappy) var(--lf-ease-standard);
+  }
+
+  .lf-editorial .lf-nav__cmdk:hover kbd {
+    color: var(--lf-bone);
+    border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
+  }
+
+  .lf-editorial .lf-nav__cmdk:focus-visible {
+    outline: 2px solid var(--lf-fight);
+    outline-offset: 2px;
+    border-radius: var(--lf-radius-sm);
+  }
+}

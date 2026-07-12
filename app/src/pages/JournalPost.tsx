@@ -58,7 +58,14 @@ export default function JournalPost() {
       <PageHero
         eyebrow={CATEGORY_LABEL[post.category]}
         icon={BookOpen}
-        title={<>{post.title}</>}
+        title={
+          // Shared-element morph target: pairs with the Journal hub's
+          // featured/row title (`post-${slug}` — see Journal.tsx +
+          // lib/viewTransition.ts). Inert without the View Transitions API.
+          <span style={{ viewTransitionName: `post-${post.slug}` }}>
+            {post.title}
+          </span>
+        }
         dek={post.description}
         image={{
           src: POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category],

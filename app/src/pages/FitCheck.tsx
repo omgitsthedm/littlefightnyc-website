@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarDays, ClipboardCheck, Clock, Flame } from "lucide-react";
 import type { FormEvent } from "react";
 import PageHero from "@/components/editorial/PageHero";
@@ -56,14 +56,88 @@ function composeMessage(symptom: string | null, urgency: string | null): string 
   return lines.join("\n");
 }
 
+/* ---- Draft memory (sessionStorage) --------------------------------------
+ * The 3-step flow used to forget everything if you navigated away. Progress
+ * now survives within the tab session and is cleared on successful submit.
+ * All storage access is guarded — private modes that throw just degrade to
+ * the old behavior. */
+
+const DRAFT_KEY = "lf_tech_audit_draft";
+
+type ContactFields = {
+  name: string;
+  business: string;
+  contact: string;
+  follow_up: string;
+};
+
+const EMPTY_FIELDS: ContactFields = {
+  name: "",
+  business: "",
+  contact: "",
+  follow_up: "text",
+};
+
+type Draft = {
+  step: Step;
+  symptom: string | null;
+  urgency: string | null;
+  message: string;
+  messageDirty: boolean;
+  fields: ContactFields;
+};
+
+function readDraft(): Draft | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.sessionStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw) as Partial<Draft>;
+    if (!d || typeof d !== "object") return null;
+    const step: Step = d.step === 2 ? 2 : d.step === 3 ? 3 : 1;
+    return {
+      step,
+      symptom: typeof d.symptom === "string" ? d.symptom : null,
+      urgency: typeof d.urgency === "string" ? d.urgency : null,
+      message: typeof d.message === "string" ? d.message : "",
+      messageDirty: d.messageDirty === true,
+      fields: { ...EMPTY_FIELDS, ...(d.fields ?? {}) },
+    };
+  } catch {
+    return null;
+  }
+}
+
+function writeDraft(draft: Draft): void {
+  try {
+    window.sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch {
+    /* storage unavailable — flow still works, it just won't remember */
+  }
+}
+
+function clearDraft(): void {
+  try {
+    window.sessionStorage.removeItem(DRAFT_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
 export default function FitCheck() {
-  const [step, setStep] = useState<Step>(1);
-  const [symptom, setSymptom] = useState<string | null>(null);
-  const [urgency, setUrgency] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
-  const [messageDirty, setMessageDirty] = useState(false);
+  // Restore any in-tab draft once per mount, before state initializes.
+  const draft = useMemo(() => readDraft(), []);
+  const [step, setStep] = useState<Step>(draft?.step ?? 1);
+  const [symptom, setSymptom] = useState<string | null>(draft?.symptom ?? null);
+  const [urgency, setUrgency] = useState<string | null>(draft?.urgency ?? null);
+  const [message, setMessage] = useState(draft?.message ?? "");
+  const [messageDirty, setMessageDirty] = useState(draft?.messageDirty ?? false);
+  const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  // Payoff beat — plays once when step 3 is REACHED with both choices made
+  // (not when a saved draft restores straight into step 3).
+  const [payoff, setPayoff] = useState(false);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
   const attribution = readAttribution();
@@ -77,6 +151,23 @@ export default function FitCheck() {
     headingRef.current?.focus();
   }, [step]);
 
+  // Keep the draft current — progress survives navigate-away-and-back.
+  useEffect(() => {
+    writeDraft({ step, symptom, urgency, message, messageDirty, fields });
+  }, [step, symptom, urgency, message, messageDirty, fields]);
+
+  // The beat is one-shot: disarm after it has played so re-renders and
+  // later step changes can never replay it.
+  useEffect(() => {
+    if (!payoff) return undefined;
+    const id = window.setTimeout(() => setPayoff(false), 1600);
+    return () => window.clearTimeout(id);
+  }, [payoff]);
+
+  function setField(name: keyof ContactFields, value: string) {
+    setFields((prev) => ({ ...prev, [name]: value }));
+  }
+
   function pickSymptom(label: string) {
     setSymptom(label);
     if (!messageDirty) setMessage(composeMessage(label, urgency));
@@ -86,6 +177,7 @@ export default function FitCheck() {
   function pickUrgency(label: string) {
     setUrgency(label);
     if (!messageDirty) setMessage(composeMessage(symptom, label));
+    if (symptom) setPayoff(true);
     setStep(3);
   }
 
@@ -114,6 +206,8 @@ export default function FitCheck() {
     }
 
     // Valid — let the native Netlify POST proceed, show the loading state.
+    // The draft is done its job; a returning visitor starts fresh.
+    clearDraft();
     setErrors({});
     setSubmitting(true);
   }
@@ -146,7 +240,10 @@ export default function FitCheck() {
               <p className="lf-fit__progress-label" aria-live="polite">
                 Step {step} of 3 <span className="lf-fit__sr">— {STEP_TITLES[step]}</span>
               </p>
-              <div className="lf-fit__progress-bar" aria-hidden="true">
+              <div
+                className={`lf-fit__progress-bar${payoff ? " is-payoff" : ""}`}
+                aria-hidden="true"
+              >
                 {([1, 2, 3] as const).map((s) => (
                   <span
                     key={s}
@@ -266,7 +363,9 @@ export default function FitCheck() {
             {step === 3 && (
               <div className="lf-fit__step">
                 <h2
-                  className="lf-fit__step-title"
+                  className={`lf-fit__step-title${
+                    payoff ? " lf-fit__step-title--payoff" : ""
+                  }`}
                   id="fit-step-title"
                   tabIndex={-1}
                   ref={headingRef}
@@ -307,6 +406,8 @@ export default function FitCheck() {
                       name="name"
                       autoComplete="name"
                       required
+                      value={fields.name}
+                      onChange={(e) => setField("name", e.target.value)}
                       aria-invalid={errors.name ? true : undefined}
                       aria-describedby={errors.name ? "fit-name-error" : undefined}
                     />
@@ -324,6 +425,8 @@ export default function FitCheck() {
                       name="business"
                       autoComplete="organization"
                       required
+                      value={fields.business}
+                      onChange={(e) => setField("business", e.target.value)}
                       aria-invalid={errors.business ? true : undefined}
                       aria-describedby={errors.business ? "fit-business-error" : undefined}
                     />
@@ -342,6 +445,8 @@ export default function FitCheck() {
                       autoComplete="email"
                       required
                       placeholder="(646) 555-0118 or hello@yourshop.com"
+                      value={fields.contact}
+                      onChange={(e) => setField("contact", e.target.value)}
                       aria-invalid={errors.contact ? true : undefined}
                       aria-describedby={errors.contact ? "fit-contact-error" : undefined}
                     />
@@ -354,7 +459,12 @@ export default function FitCheck() {
 
                   <div className="lf-fit__field">
                     <label htmlFor="fit-follow-up">Best way to reach you</label>
-                    <select id="fit-follow-up" name="follow_up" defaultValue="text">
+                    <select
+                      id="fit-follow-up"
+                      name="follow_up"
+                      value={fields.follow_up}
+                      onChange={(e) => setField("follow_up", e.target.value)}
+                    >
                       <option value="text">Text me</option>
                       <option value="phone">Call me</option>
                       <option value="email">Email me</option>

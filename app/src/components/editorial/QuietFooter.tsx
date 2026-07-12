@@ -2,6 +2,7 @@ import { useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { Award, BookOpen, ChevronDown, HelpCircle, Layers, MapPin } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { OpenNowBadge } from "./QuietNav";
 import "./QuietFooter.css";
 
 // Hydration-safe mobile check: server snapshot says desktop (plain lists),
@@ -157,6 +158,7 @@ export default function QuietFooter() {
         <div className="lf-quiet-foot__bottom">
           <p className="lf-quiet-foot__contact">
             <a href="tel:+16463600318">(646) 360-0318</a>
+            <OpenNowBadge />
             <span aria-hidden="true">·</span>
             <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>
           </p>

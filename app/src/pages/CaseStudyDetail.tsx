@@ -1,3 +1,4 @@
+import { useLayoutEffect } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowUpRight, Award, Gauge } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
@@ -28,6 +29,23 @@ export default function CaseStudyDetail() {
   const study = caseStudies.find((s) => s.slug === slug);
 
   const arcRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
+
+  // Shared-element morph: pair this hero's backdrop image with the hub card
+  // image (`case-${slug}` — see CaseStudies.tsx + lib/viewTransition.ts).
+  // PageHero owns the img, so the name is stamped here, synchronously in the
+  // commit, which is early enough for the view transition's new snapshot.
+  // No-op styling for browsers without the View Transitions API.
+  useLayoutEffect(() => {
+    if (!study) return undefined;
+    const img = document.querySelector<HTMLElement>(
+      ".lf-pagehero--case .lf-pagehero__backdrop img",
+    );
+    if (!img) return undefined;
+    img.style.viewTransitionName = `case-${study.slug}`;
+    return () => {
+      img.style.viewTransitionName = "";
+    };
+  }, [study]);
 
   if (!study) return <Navigate to="/examples/#studies" replace />;
 
