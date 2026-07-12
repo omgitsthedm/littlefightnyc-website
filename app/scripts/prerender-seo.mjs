@@ -1265,6 +1265,16 @@ function methodBlock(page) {
   `;
 }
 
+// The human behind the phone — E-E-A-T signal, crawler-visible on /about/
+// (the FounderCard component only exists after hydration).
+function founderBlock(page) {
+  if (page.path !== "/about/") return "";
+  return `
+    <h2>Who answers the phone</h2>
+    <p>David Marsh, founder. When you call, you get David. Not a call center. Not a ticket queue. Little Fight has been in New York's corner since 2012.</p>
+  `;
+}
+
 // The four time promises are the business's strongest trust signals and were
 // entirely absent from crawler-visible HTML. Every snapshot now carries them.
 function promisesBlock() {
@@ -1369,6 +1379,7 @@ function snapshot(page) {
     ${articleMeta(page)}
     ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
     ${authored}
+    ${founderBlock(page)}
     ${fitCheckFormHtml(page)}
     ${wantsMethod ? methodBlock(page) : ""}
     ${promisesBlock()}
