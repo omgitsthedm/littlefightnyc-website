@@ -115,7 +115,10 @@
 
 .lf-nav__phone {
   display: inline-flex;
-  align-items: baseline;
+  /* center, not baseline: the label is display:none on mobile, and baseline
+     alignment inside the 44px hit-box floated the number above the brand —
+     the row read visibly uneven (David caught it on iPhone, 2026-07-12). */
+  align-items: center;
   gap: var(--lf-space-2);
   min-height: 44px;
   padding-inline: var(--lf-space-2);
@@ -125,6 +128,11 @@
   border: 0;
   cursor: pointer;
   transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+}
+
+/* Keep the mono label and the number on a shared baseline where both show. */
+.lf-nav__phone-label {
+  transform: translateY(1px);
 }
 
 .lf-nav__phone:hover {

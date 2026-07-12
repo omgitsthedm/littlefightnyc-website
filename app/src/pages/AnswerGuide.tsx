@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { HelpCircle } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
 import { answerGuides } from "@/data/site";
 import "@/styles/editorial/answers.css";
 
@@ -49,6 +50,8 @@ export default function AnswerGuide() {
               <p>{section.body}</p>
             </article>
           ))}
+
+          <AnswerDiagram slug={guide.slug} />
 
           {guide.faq.length > 0 && (
             <section className="lf-answer-page__faq">

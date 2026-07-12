@@ -22,7 +22,8 @@ export default function PhoneAction({
 }: Props) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLSpanElement>(null);
-  const menuId = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
   const openText = () => {
     setOpen(false);
     window.location.href = SMS_URL;
@@ -34,7 +35,10 @@ export default function PhoneAction({
       if (!wrapRef.current?.contains(e.target as Node)) setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
     };
     document.addEventListener("mousedown", onDocClick);
     document.addEventListener("keydown", onKey);
@@ -47,11 +51,11 @@ export default function PhoneAction({
   return (
     <span ref={wrapRef} className="lf-phone-action">
       <button
+        ref={triggerRef}
         type="button"
         className={className}
-        aria-haspopup="menu"
         aria-expanded={open}
-        aria-controls={menuId}
+        aria-controls={panelId}
         aria-label={ariaLabel}
         onClick={() => setOpen((v) => !v)}
       >
@@ -60,12 +64,10 @@ export default function PhoneAction({
 
       {open && (
         <span
-          id={menuId}
-          role="menu"
+          id={panelId}
           className={`lf-phone-action__menu lf-phone-action__menu--${align} lf-phone-action__menu--${direction}`}
         >
           <a
-            role="menuitem"
             className="lf-phone-action__item"
             href={`tel:${TEL}`}
             onClick={() => setOpen(false)}
@@ -75,7 +77,6 @@ export default function PhoneAction({
           </a>
           <button
             type="button"
-            role="menuitem"
             className="lf-phone-action__item"
             onClick={openText}
           >

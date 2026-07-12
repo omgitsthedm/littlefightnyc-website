@@ -84,6 +84,7 @@ export default function CommandPalette() {
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const items = useMemo(() => buildItems(), []);
 
@@ -124,17 +125,43 @@ export default function CommandPalette() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  // Focus the input when opening; reset active row on query change.
+  // Focus the input when opening; restore focus to the invoker on close.
   useEffect(() => {
     if (open) {
+      const previous = document.activeElement as HTMLElement | null;
       const id = window.setTimeout(() => inputRef.current?.focus(), 20);
-      return () => window.clearTimeout(id);
+      return () => {
+        window.clearTimeout(id);
+        if (previous?.isConnected) previous.focus();
+      };
     }
     return undefined;
   }, [open]);
 
   function onListKey(e: React.KeyboardEvent) {
-    if (e.key === "Escape") {
+    if (e.key === "Tab") {
+      // Focus trap — cycle Tab/Shift-Tab inside the dialog.
+      const root = rootRef.current;
+      if (!root) return;
+      const focusables = Array.from(
+        root.querySelectorAll<HTMLElement>(
+          'button, input, a[href], [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => !el.hasAttribute("disabled"));
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const current = document.activeElement;
+      if (e.shiftKey) {
+        if (current === first || !root.contains(current)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (current === last || !root.contains(current)) {
+        e.preventDefault();
+        first.focus();
+      }
+    } else if (e.key === "Escape") {
       e.preventDefault();
       close();
     } else if (e.key === "ArrowDown") {
@@ -164,6 +191,7 @@ export default function CommandPalette() {
 
   return (
     <div
+      ref={rootRef}
       className="lf-cmdk"
       role="dialog"
       aria-modal="true"
@@ -190,7 +218,13 @@ export default function CommandPalette() {
               setActive(0);
             }}
             aria-label="Search pages"
+            role="combobox"
+            aria-expanded="true"
             aria-controls="lf-cmdk-list"
+            aria-autocomplete="list"
+            aria-activedescendant={
+              results.length > 0 ? `lf-cmdk-opt-${active}` : undefined
+            }
             autoComplete="off"
             spellCheck={false}
           />
@@ -203,7 +237,13 @@ export default function CommandPalette() {
           {results.map((item, i) => {
             const Icon = item.icon;
             return (
-              <li key={item.to} role="option" aria-selected={i === active} data-idx={i}>
+              <li
+                key={item.to}
+                id={`lf-cmdk-opt-${i}`}
+                role="option"
+                aria-selected={i === active}
+                data-idx={i}
+              >
                 <button
                   type="button"
                   className="lf-cmdk__item"

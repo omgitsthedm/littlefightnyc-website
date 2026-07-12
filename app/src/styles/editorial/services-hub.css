@@ -1,0 +1,127 @@
+/* Services hub — the symptom router band. Replaces the old 2×2 card grid
+   that repeated the same four services the hero and the editorial spread
+   already state (the page said its one message three times). */
+
+.lf-svc-router {
+  padding: var(--lf-space-7) var(--lf-margin-mobile);
+  background: var(--lf-ink);
+}
+
+@media (min-width: 768px) {
+  .lf-svc-router {
+    padding: var(--lf-space-8) var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-svc-router {
+    padding: var(--lf-space-8) var(--lf-margin-desktop);
+  }
+}
+
+.lf-svc-router__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: grid;
+  gap: var(--lf-space-5);
+}
+
+.lf-svc-router__label {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0;
+}
+
+.lf-svc-router__label svg {
+  color: var(--lf-fight);
+  flex: none;
+}
+
+.lf-svc-router__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-3);
+}
+
+@media (min-width: 720px) {
+  .lf-svc-router__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1180px) {
+  .lf-svc-router__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.lf-svc-router__item {
+  display: flex;
+}
+
+.lf-editorial .lf-svc-router__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+  width: 100%;
+  min-height: 108px;
+  padding: var(--lf-space-4) var(--lf-space-5);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+  text-decoration: none;
+  color: var(--lf-bone);
+  transition:
+    transform var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-svc-router__link:hover,
+.lf-editorial .lf-svc-router__link:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-fight) 6%, var(--lf-paper-2));
+}
+
+.lf-editorial .lf-svc-router__link:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-svc-router__symptom {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  font-weight: 600;
+  font-size: var(--lf-text-base);
+  line-height: 1.2;
+}
+
+.lf-svc-router__symptom svg {
+  color: var(--lf-fight);
+  flex: none;
+}
+
+.lf-svc-router__service {
+  margin-top: auto;
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-editorial .lf-svc-router__link:hover .lf-svc-router__service,
+.lf-editorial .lf-svc-router__link:focus-visible .lf-svc-router__service {
+  color: var(--lf-fight);
+}

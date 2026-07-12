@@ -1,0 +1,178 @@
+/* FounderCard — monogram panel + honest copy. Tokens only; gradients use
+ * rgba (solid fallback first) per the color-mix-in-gradient gotcha. */
+
+.lf-founder {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
+  gap: var(--lf-space-6);
+  align-items: center;
+  margin: var(--lf-space-8) 0;
+  padding: var(--lf-card-padding);
+  background: var(--lf-card-bg);
+  border: var(--lf-card-border);
+  border-radius: var(--lf-radius-card);
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--lf-time-slow) var(--lf-ease-out),
+    transform var(--lf-time-slow) var(--lf-ease-out);
+}
+.lf-founder[data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Monogram panel (photo slot) ---- */
+
+.lf-founder__panel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  /* Solid fallback first, then the orange-to-blue ambient wash. */
+  background: var(--lf-paper-2);
+  background:
+    radial-gradient(130% 110% at 18% 12%, rgba(249, 115, 22, 0.38), rgba(249, 115, 22, 0) 58%),
+    radial-gradient(140% 120% at 85% 92%, rgba(59, 130, 246, 0.34), rgba(59, 130, 246, 0) 62%),
+    var(--lf-paper-2);
+}
+
+.lf-founder__monogram {
+  font-family: var(--lf-display);
+  font-weight: 800;
+  font-size: clamp(3.5rem, 4rem + 2vw, 6rem);
+  letter-spacing: var(--lf-display-tracking);
+  line-height: 1;
+  color: var(--lf-bone);
+}
+
+.lf-founder__panel-label {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-soft);
+}
+
+.lf-founder__photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Copy ---- */
+
+.lf-founder__eyebrow {
+  margin: 0 0 var(--lf-space-3);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+.lf-founder__name {
+  margin: 0 0 var(--lf-space-3);
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  font-size: var(--lf-text-lg);
+  line-height: 1.15;
+  color: var(--lf-bone);
+}
+.lf-founder__role {
+  font-weight: 500;
+  color: var(--lf-bone-soft);
+}
+
+.lf-founder__line {
+  margin: 0 0 var(--lf-space-5);
+  max-width: 44ch;
+  font-size: var(--lf-text-md);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+}
+
+.lf-founder__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-3) var(--lf-space-5);
+  margin: 0;
+}
+
+/* Scoped under .lf-editorial so the global `.lf-editorial a` color rule
+ * (specificity 0,1,1) cannot repaint the phone link. */
+.lf-editorial .lf-founder__tel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--lf-chip);
+  padding: 0 var(--lf-space-4);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-sm);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  border-radius: var(--lf-radius-control);
+  text-decoration: none;
+  transition:
+    background var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-editorial .lf-founder__tel:hover {
+  background: var(--lf-ember);
+  transform: translateY(var(--lf-lift));
+}
+.lf-editorial .lf-founder__tel:active {
+  transform: translateY(0);
+}
+.lf-editorial .lf-founder__tel:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-founder__since {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+/* ---- Mobile ---- */
+
+@media (max-width: 640px) {
+  .lf-founder {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--lf-space-5);
+  }
+  .lf-founder__panel {
+    aspect-ratio: 16 / 10;
+    max-height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-founder {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .lf-editorial .lf-founder__tel {
+    transition: none !important;
+  }
+}

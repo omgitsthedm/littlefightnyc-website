@@ -4,6 +4,7 @@ import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
 import StatBlock from "@/components/editorial/StatBlock";
+import FounderCard from "@/components/editorial/FounderCard";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
@@ -83,6 +84,8 @@ export default function About() {
               After hours, AI takes the message and David calls back.
             </p>
           </EditorialBody>
+
+          <FounderCard />
 
           <MiniMapNYC compact />
 

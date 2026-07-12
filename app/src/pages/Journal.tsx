@@ -35,31 +35,14 @@ const CATEGORY_LABEL: Record<Post["category"], string> = {
 };
 
 const CATEGORY_IMAGE: Record<Post["category"], string> = {
-  howto: "/assets/typing.webp",
-  essay: "/assets/nyc-chinatown-night.webp",
-  blog: "/assets/nyc-street-crowd.webp",
-  guide: "/assets/coworking-laptops.webp",
+  howto: "/assets/journal-cat-how-to.webp",
+  essay: "/assets/journal-cat-essay.webp",
+  blog: "/assets/journal-cat-notebook.webp",
+  guide: "/assets/journal-cat-software-guide.webp",
 };
 
-const POST_IMAGE: Record<string, string> = {
-  "cybersecurity-for-small-business": "/assets/typing.webp",
-  "nyc-small-business-digital": "/assets/storefront-shop-deli.webp",
-  "protecting-kids-from-ai": "/assets/hero-laptop.webp",
-  "airtable-vs-notion-vs-monday-small-business": "/assets/coworking-laptops.webp",
-  "custom-business-system-vs-saas-subscriptions": "/assets/case-public-house-cockpit.webp",
-  "shopify-vs-squarespace-nyc-retail": "/assets/interior-jeans-rack.webp",
-  "square-appointments-vs-glossgenius-nyc-salons": "/assets/nyc-hair-salon-street.webp",
-  "square-vs-toast-manhattan-restaurants": "/assets/pizza-menu-chalkboard.webp",
-  "webflow-vs-squarespace-manhattan-small-business": "/assets/storefront-blue-gift-shop.webp",
-  "ai-google-broke-the-internet-websites-survive": "/assets/nyc-chinatown-night.webp",
-  "what-google-looks-for-business-website": "/assets/sign-more-shops.webp",
-  "why-business-websites-will-be-invisible": "/assets/nyc-street-crowd.webp",
-  "read-your-monthly-software-bill": "/assets/pos.webp",
-  "set-up-google-business-profile-nyc": "/assets/local-business-base.webp",
-  "migrate-off-squarespace-without-breaking-booking": "/assets/hero-soho-crosswalk.webp",
-  "keep-connect-replace-build-framework": "/assets/interior-grocery.webp",
-  "spot-developer-about-to-ghost": "/assets/hand-donut-sprinkles.webp",
-};
+// Branded category art carries every card — stock photos retired 2026-07-12.
+const POST_IMAGE: Record<string, string> = {};
 
 const CATEGORY_ORDER: Post["category"][] = ["howto", "essay", "blog", "guide"];
 
@@ -143,6 +126,22 @@ export default function Journal() {
             </button>
           ))}
         </div>
+        <p
+          aria-live="polite"
+          style={{
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0 0 0 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+          }}
+        >
+          {visible.length} posts shown
+        </p>
       </div>
 
       {/* Latest post, full width — the newest thing we wrote leads. */}

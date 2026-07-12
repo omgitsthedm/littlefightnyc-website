@@ -1,19 +1,23 @@
-import { Layers,  Sparkles } from "lucide-react";
+import { Layers, Sparkles, Waypoints } from "lucide-react";
+import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
 import ServiceEditorialSpread from "@/components/editorial/ServiceEditorialSpread";
 import QuietContact from "@/components/editorial/QuietContact";
-import { services, studioProjects } from "@/data/site";
+import { fitRoutes, services, studioProjects } from "@/data/site";
+import "@/styles/editorial/services-hub.css";
+
+/* Symptom → service. Owners arrive with a feeling, not a service name —
+   route from the feeling. (Replaces the old 2×2 card grid: the page used
+   to state the same four services three times in a row.) */
+const SYMPTOM_TO_SERVICE: Record<string, string> = {
+  "Something is broken": "it-support",
+  "The setup is messy": "business-systems",
+  "The monthly bill hurts": "tech-consulting",
+  "People cannot find us": "custom-local-websites",
+};
 
 export default function Services() {
-  const overview = services.map((service) => ({
-    body: service.plain,
-    eyebrow: service.verb,
-    icon: service.icon,
-    image: service.image,
-    title: service.eyebrow,
-    to: `/services/${service.slug}/`,
-  }));
   const studioOverview = studioProjects.map((project) => ({
     body: project.oneline,
     eyebrow: `${project.kind} · ${project.status}`,
@@ -44,13 +48,39 @@ export default function Services() {
         }}
       />
 
-      <VisualIndex
-        eyebrow="Overview"
-        title="Find the right shape of help."
-        dek="The work starts by naming the problem correctly: broken today, hard to find, expensive every month, or too manual to keep running by memory. These are the four services we offer under one agency."
-        items={overview}
-        variant="grid"
-      />
+      <nav className="lf-svc-router" aria-label="Start from the symptom">
+        <div className="lf-svc-router__inner">
+          <p className="lf-svc-router__label">
+            <Waypoints size={14} strokeWidth={2} aria-hidden="true" />
+            Start from what you feel, not from a service name
+          </p>
+          <ul className="lf-svc-router__list">
+            {fitRoutes.map((route) => {
+              const serviceSlug = SYMPTOM_TO_SERVICE[route.label];
+              const service = services.find((s) => s.slug === serviceSlug);
+              if (!service) return null;
+              const Icon = route.icon;
+              return (
+                <li key={route.label} className="lf-svc-router__item">
+                  <Link
+                    to={`/services/${service.slug}/`}
+                    viewTransition
+                    className="lf-svc-router__link"
+                  >
+                    <span className="lf-svc-router__symptom">
+                      <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+                      {route.label}
+                    </span>
+                    <span className="lf-svc-router__service">
+                      → {service.eyebrow}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
 
       <ServiceEditorialSpread />
 
