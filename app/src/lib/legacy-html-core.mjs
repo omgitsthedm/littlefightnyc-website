@@ -124,7 +124,39 @@ export function prepareLegacyHtml(html) {
     prepared = balanceTag(prepared, tag);
   }
 
-  return prepared;
+  return closeDanglingParagraphs(prepared);
+}
+
+/* The legacy source leans on the parser auto-closing <p> before block
+ * elements. Browsers recover identically, but the emitted HTML counts as
+ * unbalanced to extractors/validators — make the auto-closes explicit. */
+const P_AUTOCLOSERS = /^(?:p|div|ul|ol|li|table|section|article|h[1-6]|blockquote|figure|hr|pre)$/;
+function closeDanglingParagraphs(html) {
+  const re = /<(\/?)([a-z][a-z0-9]*)(?:\s[^>]*)?>/gi;
+  let out = "";
+  let last = 0;
+  let pOpen = false;
+  for (const m of html.matchAll(re)) {
+    const isClose = m[1] === "/";
+    const tag = m[2].toLowerCase();
+    if (tag === "p" && isClose && !pOpen) {
+      // Orphan closer — drop it, mirroring balanceTag.
+      out += html.slice(last, m.index);
+      last = m.index + m[0].length;
+      continue;
+    }
+    // A repeated <p> opener is the closers-as-openers corruption again —
+    // close before it just like before any other block tag.
+    if (pOpen && P_AUTOCLOSERS.test(tag) && !(tag === "p" && isClose)) {
+      out += html.slice(last, m.index) + "</p>";
+      last = m.index;
+      pOpen = false;
+    }
+    if (tag === "p") pOpen = !isClose;
+  }
+  out += html.slice(last);
+  if (pOpen) out += "</p>";
+  return out;
 }
 
 function decodeEntities(text) {
