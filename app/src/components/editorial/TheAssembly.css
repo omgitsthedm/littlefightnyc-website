@@ -361,15 +361,52 @@
   transform: none;
 }
 
-/* ---- Phone composition (≤640px): 5 cards, tighter orbit, shorter runway ---- */
+/* ---- Phone composition (≤640px) ────────────────────────────────
+   FLOW layout, not viewport-center math (David's iPhone screenshots,
+   2026-07-12: the headline stamped over a card because the head was
+   pixel-anchored from the top while cards anchored from 52svh —
+   shorter real-world viewports collided the two; the sub-line floated
+   mid-wires; huge dead space below). On phones the stage is a flex
+   column: head → canvas (a real box that RESERVES its space) → sub →
+   CTA. Nothing can ever overlap the head, and there is no orphan void:
+   the group centers as one composition. Cards keep their --p math but
+   anchor to the canvas box center. */
 @media (max-width: 640px) {
   .lf-assembly__runway { height: 200vh; }
   .lf-assembly__stage {
     --lf-as-scale: 1; /* phone poses are authored 1:1 */
-    --lf-as-center: 52svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: var(--lf-space-4);
+    padding: 76px var(--lf-margin-mobile) var(--lf-space-5);
   }
-  .lf-assembly__head { top: 94px; row-gap: var(--lf-space-2); }
+
+  .lf-assembly__head {
+    position: static;
+    order: 1;
+    padding-inline: 0;
+    row-gap: var(--lf-space-2);
+  }
   .lf-assembly__title { font-size: var(--lf-text-lg); }
+
+  .lf-assembly__canvas {
+    position: relative;
+    order: 2;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: 430px;
+    flex: none;
+  }
+  /* Children re-anchor to the canvas box center. */
+  .lf-assembly__canvas > .lf-assembly__card,
+  .lf-assembly__canvas > .lf-assembly__hub,
+  .lf-assembly__canvas > .lf-assembly__wires {
+    left: 50%;
+    top: 50%;
+  }
 
   .lf-assembly__wireset--desktop { display: none; }
   .lf-assembly__wireset--mobile { display: block; }
@@ -378,16 +415,39 @@
   .lf-assembly__card-label { font-size: 9px; letter-spacing: 0.05em; }
   .lf-assembly__card--spam { display: none; }
 
-  .lf-assembly__card--pos    { --from-xu: -70;  --from-yu: -225; --to-xu: 0;    --to-yu: -195; }
-  .lf-assembly__card--form   { --from-xu: -120; --from-yu: -115; --to-xu: -100; --to-yu: -95; }
-  .lf-assembly__card--hours  { --from-xu: 120;  --from-yu: -138; --to-xu: 100;  --to-yu: -95; }
-  .lf-assembly__card--sheets { --from-xu: -110; --from-yu: 90;   --to-xu: -100; --to-yu: 150; }
-  .lf-assembly__card--dms    { --from-xu: 100;  --from-yu: 235;  --to-xu: 100;  --to-yu: 150; }
+  /* Poses fit the 430px canvas (max |y| + half-card ≈ 210 < 215). */
+  .lf-assembly__card--pos    { --from-xu: -70;  --from-yu: -185; --to-xu: 0;    --to-yu: -170; }
+  .lf-assembly__card--form   { --from-xu: -120; --from-yu: -100; --to-xu: -92;  --to-yu: -82; }
+  .lf-assembly__card--hours  { --from-xu: 120;  --from-yu: -120; --to-xu: 92;   --to-yu: -82; }
+  .lf-assembly__card--sheets { --from-xu: -110; --from-yu: 80;   --to-xu: -92;  --to-yu: 132; }
+  .lf-assembly__card--dms    { --from-xu: 100;  --from-yu: 205;  --to-xu: 92;   --to-yu: 132; }
 
   .lf-assembly__hub { padding: 13px 18px; }
   .lf-assembly__hub-label { font-size: 12px; }
-  .lf-assembly__sub { top: 64px; font-size: 13px; }
-  .lf-assembly__cta-row { top: calc(var(--lf-as-center) + 250px); }
+
+  /* Sub-line + CTA live in flow BELOW the composition — never mid-wires. */
+  .lf-assembly__sub {
+    position: static;
+    order: 3;
+    transform: none;
+    max-width: 86vw;
+    font-size: 13px;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0;
+  }
+  .lf-assembly__cta-row {
+    position: static;
+    order: 4;
+    transform: none;
+  }
+
+  /* Short phones (collapsed-toolbar Safari, SE class): tighter canvas. */
+  @media (max-height: 720px) {
+    .lf-assembly__stage { --lf-as-scale: 0.84; padding-top: 64px; }
+    .lf-assembly__canvas { height: 360px; }
+  }
 }
 
 /* ---- Reduced motion: no runway, no pin, no scrub — one composed frame.

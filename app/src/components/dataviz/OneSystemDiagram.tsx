@@ -1,4 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { CalendarCheck, CreditCard, Mail, MapPin, Table2 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { proofSignals } from "@/data/site";
 import "./OneSystemDiagram.css";
@@ -20,6 +22,7 @@ type Tool = {
   id: string;
   label: string;
   verdict: string;
+  icon: LucideIcon;
   x: number;
   y: number;
   side?: "right";
@@ -27,21 +30,11 @@ type Tool = {
 
 // Scattered positions, % of the canvas (x from the anchored side).
 const TOOLS: Tool[] = [
-  { id: "booking", label: "Booking app", verdict: VERDICT.Keep, x: 3, y: 6 },
-  { id: "pos", label: "POS", verdict: VERDICT.Connect, x: 6, y: 2, side: "right" },
-  { id: "sheet", label: "Spreadsheet", verdict: VERDICT.Replace, x: 0, y: 58 },
-  { id: "google", label: "Google profile", verdict: VERDICT.Keep, x: 0, y: 60, side: "right" },
-  { id: "inbox", label: "Inbox", verdict: VERDICT.Connect, x: 28, y: 84 },
-];
-
-// The before-state tangle — pairs of tools talking past each other.
-const TANGLE: Array<[string, string]> = [
-  ["booking", "sheet"],
-  ["booking", "pos"],
-  ["pos", "google"],
-  ["sheet", "inbox"],
-  ["google", "inbox"],
-  ["booking", "google"],
+  { id: "booking", label: "Booking app", verdict: VERDICT.Keep, icon: CalendarCheck, x: 3, y: 6 },
+  { id: "pos", label: "POS", verdict: VERDICT.Connect, icon: CreditCard, x: 6, y: 2, side: "right" },
+  { id: "sheet", label: "Spreadsheet", verdict: VERDICT.Replace, icon: Table2, x: 0, y: 58 },
+  { id: "google", label: "Google profile", verdict: VERDICT.Keep, icon: MapPin, x: 0, y: 60, side: "right" },
+  { id: "inbox", label: "Inbox", verdict: VERDICT.Connect, icon: Mail, x: 28, y: 84 },
 ];
 
 type Pt = { x: number; y: number };
@@ -78,16 +71,6 @@ export default function OneSystemDiagram() {
     return () => ro.disconnect();
   }, []);
 
-  const tangleD = (a: Pt, b: Pt, i: number) => {
-    const mx = (a.x + b.x) / 2;
-    const my = (a.y + b.y) / 2;
-    const dx = b.x - a.x;
-    const dy = b.y - a.y;
-    const len = Math.hypot(dx, dy) || 1;
-    const bend = (i % 2 === 0 ? 1 : -1) * Math.min(34, len * 0.22);
-    return `M ${a.x} ${a.y} Q ${mx + (-dy / len) * bend} ${my + (dx / len) * bend}, ${b.x} ${b.y}`;
-  };
-
   const hub = centers.hub;
 
   return (
@@ -105,18 +88,6 @@ export default function OneSystemDiagram() {
           viewBox={`0 0 ${size.w || 1} ${size.h || 1}`}
           focusable="false"
         >
-          {hub &&
-            TANGLE.map(([a, b], i) =>
-              centers[a] && centers[b] ? (
-                <path
-                  key={`t-${i}`}
-                  className="lf-onesys__tangle"
-                  d={tangleD(centers[a], centers[b], i)}
-                  pathLength={1}
-                  style={{ ["--lf-i" as string]: i }}
-                />
-              ) : null,
-            )}
           {hub &&
             TOOLS.map(
               (t, i) =>
@@ -143,7 +114,10 @@ export default function OneSystemDiagram() {
               ["--lf-i" as string]: i,
             }}
           >
-            <span className="lf-onesys__node-label">{t.label}</span>
+            <span className="lf-onesys__node-label">
+              <t.icon size={12} strokeWidth={1.75} aria-hidden="true" />
+              {t.label}
+            </span>
             <span className="lf-onesys__chip" data-verdict={t.verdict}>
               {t.verdict}
             </span>
