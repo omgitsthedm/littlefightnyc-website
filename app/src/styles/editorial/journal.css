@@ -265,6 +265,81 @@
   display: block;
 }
 
+/* Topic-tag rows: prepareLegacyHtml wraps the legacy bare-<span> runs in
+   .lf-post__tags — unstyled they rendered as one mashed line ("Parent guide
+   AI literacy Calm, not panicAI"). Chip them like the list-row category chips. */
+.lf-post__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-2);
+  margin: var(--lf-space-4) 0;
+}
+.lf-post__tags > span {
+  display: inline-block;
+  padding: 3px 10px;
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  white-space: nowrap;
+}
+
+/* CTA button row + meta line (prepareLegacyHtml wraps the legacy run-on
+   "Call…Text us…Email us…Contact formBy David Marsh · Published…" cluster).
+   Mirrors industry.css — that sheet only ships with the IndustryDetail chunk,
+   so the software-guide journal posts need their own copy. */
+.lf-post .lf-post__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin: var(--lf-space-6) 0 var(--lf-space-3);
+}
+.lf-editorial .lf-post .lf-post__cta-row a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--lf-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 40%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  text-decoration: none;
+}
+/* First CTA (Call) reads as the primary — solid fill. */
+.lf-editorial .lf-post .lf-post__cta-row a:first-child {
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  border-color: var(--lf-fight);
+}
+.lf-editorial .lf-post .lf-post__cta-row a:hover,
+.lf-editorial .lf-post .lf-post__cta-row a:focus-visible {
+  border-color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
+}
+.lf-editorial .lf-post .lf-post__cta-row a:first-child:hover {
+  background: var(--lf-ember);
+  color: var(--lf-ink);
+}
+.lf-post .lf-post__meta {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin-bottom: var(--lf-space-6);
+}
+.lf-editorial .lf-post .lf-post__meta a {
+  color: var(--lf-bone-soft);
+}
+
 /* Suppress duplicate <h1> from the legacy article body (we already showed it
    in the PageHero). The first <h1> inside the article body becomes invisible. */
 .lf-post__body > article:first-of-type > h1:first-child,

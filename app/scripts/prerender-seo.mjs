@@ -2,7 +2,7 @@ import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { build as esbuildBundle } from "esbuild";
-import { prepareLegacyHtml } from "../src/lib/legacy-html-core.mjs";
+import { prepareIndustryHtml, prepareLegacyHtml } from "../src/lib/legacy-html-core.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
@@ -1178,7 +1178,11 @@ function authoredContentHtml(page) {
   }
 
   if (page.industry?.html) {
-    return prepareLegacyHtml(page.industry.html);
+    // Same pipeline the app uses (prepareIndustryHtml, NOT bare
+    // prepareLegacyHtml) — the app's IndustryDetail flattens the card
+    // <article>s and lifts the duplicate <h1>; rendering the snapshot through
+    // anything else re-introduces the drift this file exists to prevent.
+    return prepareIndustryHtml(page.industry.html).body;
   }
 
   return "";

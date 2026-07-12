@@ -23,23 +23,75 @@ const SMS_LINK_REWRITE = new RegExp(
   "gi"
 );
 
+/* Drop orphan closers (they'd close the PAGE's wrapping <article>/<section>
+ * in the prerendered document and spill the rest of the page out of it) and
+ * append whatever closers the source left open at the end. */
+function balanceTag(html, tag) {
+  const re = new RegExp("<" + tag + "(?:\\s[^>]*)?>|</" + tag + ">", "gi");
+  let depth = 0;
+  let out = "";
+  let last = 0;
+  for (const m of html.matchAll(re)) {
+    if (m[0][1] === "/") {
+      if (depth === 0) {
+        out += html.slice(last, m.index);
+        last = m.index + m[0].length;
+        continue;
+      }
+      depth--;
+    } else {
+      depth++;
+    }
+  }
+  out += html.slice(last);
+  if (depth > 0) out += ("</" + tag + ">").repeat(depth);
+  return out;
+}
+
 export function prepareLegacyHtml(html) {
+  const countOpens = (t) => (html.match(new RegExp("<" + t + "(?:\\s|>)", "gi")) || []).length;
+  const countCloses = (t) => (html.match(new RegExp("</" + t + ">", "gi")) || []).length;
+  // The legacy source writes CLOSERS as OPENERS: table ends appear as
+  // "<tr><tbody><table>", header rows end "<tr><thead><tbody>", body rows
+  // end "<tr><tr>", anchors close as a bare "<a>", and sections/articles
+  // "close" by opening the next one. Browsers visually recover from most of
+  // it, but articles NEST (each card renders inside the previous one — the
+  // guide-post cards squeezed to a sliver on phones) and AI extractors
+  // mangle it. Repair structurally before anything else.
   let prepared = html
-    // The legacy source writes CLOSERS as OPENERS: table ends appear as
-    // "<tr><tbody><table>" and sections "close" by opening the next one.
-    // Browsers visually recover but the DOM nests 30+ levels deep and AI
-    // extractors mangle it. Repair structurally before anything else.
     .replace(/<tr>\s*<tbody>\s*<table>/gi, "</tr></tbody></table>")
-    .replace(/<section>/gi, "</section><section>")
-    .replace(/<section>\s*<\/section>/gi, "")
+    .replace(/<tr>\s*<thead>\s*<tbody>/gi, "</tr></thead><tbody>")
+    .replace(/<tr>\s*(?=<tr[\s>])/gi, "</tr>")
+    // A bare attributeless <a> is always a mangled </a> — real links carry href.
+    .replace(/<a>/gi, "</a>")
     .replace(/<h1(\s[^>]*)?>/gi, '<h2 class="lf-post__legacy-title">')
     .replace(/<\/h1>/gi, "</h2>")
+    // Decorative legacy diagrams. Order matters: properly-closed <svg>…</svg>
+    // first — stripping only the opener (the old behavior) left the diagram's
+    // <text> nodes rendering as junk prose ("404 independent source not found").
+    .replace(/\s*<svg\b[^>]*>[\s\S]*?<\/svg>/gi, " ")
     .replace(/\s*<svg\b[^>]*>[\s\S]*?<svg>/gi, " ")
     .replace(/\s*<svg\b[^>]*\/?>/gi, " ")
     .replace(/<li>\s*<li>/gi, "<li>")
-    .replace(/<ul>\s*(?=<article\b|<section\b|<p\b|<h[1-6]\b|<a\b)/gi, "</ul>")
-    .replace(/<ol>\s*(?=<article\b|<section\b|<p\b|<h[1-6]\b|<a\b)/gi, "</ol>")
+    .replace(/<ul>\s*(?=<article\b|<section\b|<p\b|<h[1-6]\b|<a\b|<div\b|<\/|$)/gi, "</ul>")
+    .replace(/<ol>\s*(?=<article\b|<section\b|<p\b|<h[1-6]\b|<a\b|<div\b|<\/|$)/gi, "</ol>")
     .replace(SMS_LINK_REWRITE, 'href="/contact/"');
+
+  // ONLY treat "<section>"/"<article>" as separators when the source is
+  // actually corrupted (it has openers but ZERO closers). Well-formed posts
+  // must pass through untouched — this transform once ran unconditionally and
+  // doubled every closer in already-balanced posts (stray </section> closers
+  // that ended the page template's wrapper early in the prerendered HTML).
+  if (countOpens("section") > 0 && countCloses("section") === 0) {
+    prepared = prepared
+      .replace(/<section>/gi, "</section><section>")
+      .replace(/<section>\s*<\/section>/gi, "");
+  }
+  if (countOpens("article") > 0 && countCloses("article") === 0) {
+    prepared = prepared
+      .replace(/<article>/gi, "</article><article>")
+      .replace(/<article>\s*<\/article>/gi, "");
+  }
 
   for (const [pattern, replacement] of INTERNAL_LINK_REWRITES) {
     prepared = prepared.replace(pattern, replacement);
@@ -49,12 +101,28 @@ export function prepareLegacyHtml(html) {
     prepared = prepared.replace(/<h3(\s[^>]*)?>/gi, "<h2$1>").replace(/<\/h3>/gi, "</h2>");
   }
 
-  // Balance the section repair: drop the leading orphan closer the separator
-  // transform creates, and close whatever the source left open at the end.
-  prepared = prepared.replace(/^(\s*)<\/section>/, "$1");
-  const opens = (prepared.match(/<section\b/gi) || []).length;
-  const closes = (prepared.match(/<\/section>/gi) || []).length;
-  if (opens > closes) prepared += "</section>".repeat(opens - closes);
+  // The Call/Text/Email/Contact anchors + byline render as one mashed run
+  // ("…Contact formBy David Marsh · Published May 4, 2026") on industry pages
+  // AND the software-guide journal posts. Wrap them so CSS can lay out a real
+  // button row and a separate meta line. The optional "By <a>…</a> ·" group
+  // covers the journal shape; industries go straight to "Published <time>".
+  prepared = prepared.replace(
+    /(<a href="tel:[\s\S]*?Contact form<\/a>)\s*((?:By\s*<a[\s\S]*?<\/a>\s*·\s*)?Published\s*<time[\s\S]*?<\/time>)/i,
+    '<div class="lf-post__cta-row">$1</div><p class="lf-post__meta">$2</p>'
+  );
+
+  // The topic-tag rows are runs of bare <span>s — unwrapped they render as one
+  // mashed line ("Parent guide AI literacy Calm, not panicAI"). Group each run
+  // so journal.css can lay them out as chips.
+  prepared = prepared.replace(
+    /((?:<span>[^<]{1,60}<\/span>\s*){2,})/g,
+    '<p class="lf-post__tags">$1</p>'
+  );
+
+  // Balance the repairs: drop orphan closers, close what's left open.
+  for (const tag of ["a", "section", "article", "ul", "ol", "table", "thead", "tbody", "tr"]) {
+    prepared = balanceTag(prepared, tag);
+  }
 
   return prepared;
 }
@@ -85,24 +153,13 @@ export function prepareIndustryHtml(html) {
   const headline = titleMatch ? decodeEntities(titleMatch[1]) : "";
 
   // Drop the duplicate title from the body before shared prep runs.
+  // (The card-flattening <article> repair now lives in prepareLegacyHtml,
+  // gated on the closers-as-openers corruption, so journal guide posts get
+  // the same flat-sibling cards as industry pages.)
   let body = prepareLegacyHtml(html.replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, ""));
 
-  // The legacy source opens <article> per card but never closes them, so the
-  // browser nests each card inside the previous one. Close the prior article
-  // before every new one (orphan leading </article> tags are ignored), leaving
-  // the cards as flat siblings the grid can lay out. Then drop the empty
-  // articles this leaves where the source used <article> as a pseudo-close.
-  body = body
-    .replace(/<article>/gi, "</article><article>")
-    .replace(/<article>\s*<\/article>/gi, "");
-
-  // The Call/Text/Email/Contact anchors + "Published <time>" render as a flat
-  // run of siblings ("Contact formPublished May 4, 2026"). Wrap them so CSS can
-  // lay out a real button row and a separate meta line.
-  body = body.replace(
-    /(<a href="tel:[\s\S]*?Contact form<\/a>)\s*Published\s*(<time[\s\S]*?<\/time>)/i,
-    '<div class="lf-post__cta-row">$1</div><p class="lf-post__meta">Published $2</p>'
-  );
+  // (The CTA button-row / meta-line wrap now lives in prepareLegacyHtml — the
+  // journal guide posts share the same run-on Call/Text/Email/byline cluster.)
 
   // "Page sections" is a scaffolding TOC label, not a headline.
   body = body.replace(
