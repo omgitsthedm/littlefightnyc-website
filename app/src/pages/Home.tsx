@@ -8,6 +8,7 @@ import QuietHero from "@/components/editorial/QuietHero";
 import { watchListReveals } from "@/lib/listReveal";
 
 const RouteMeta = lazy(() => import("@/components/RouteMeta"));
+const TheAssembly = lazy(() => import("@/components/editorial/TheAssembly"));
 const FaqList = lazy(() => import("@/components/editorial/FaqList"));
 const TheFight = lazy(() => import("@/components/editorial/TheFight"));
 const WorkGrid = lazy(() => import("@/components/editorial/WorkGrid"));
@@ -81,6 +82,7 @@ export default function Home() {
         <QuietHero />
         {showDeferred && (
           <Suspense fallback={null}>
+            <TheAssembly />
             <TheFight />
             <WorkGrid />
             <MomentumSection />

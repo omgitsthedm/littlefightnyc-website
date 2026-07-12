@@ -1,0 +1,405 @@
+/* TheAssembly — the homepage signature cinematic. Tokens only.
+ *
+ * A 300vh runway (200vh ≤640px) reserves height in normal flow (zero CLS)
+ * and pins a 100svh stage. JS writes scroll progress 0→1 to `--p` on the
+ * stage; every move below derives from --p via calc()+clamp() on
+ * transform/opacity/filter only — deterministic, cross-engine, and it
+ * scrubs backward perfectly.
+ *
+ * Acts on the progress track:
+ *   0.00–0.25  CHAOS      cards scattered + tilted, idle drift
+ *   0.25–0.70  ASSEMBLY   cards fly to orbit (staggered ~0.035/card, 0.18
+ *                         travel), connectors draw (+0.13, 0.12), verdict
+ *                         chips stamp (+0.20, 0.08)
+ *   0.70–1.00  RESOLUTION hub scales in (0.70–0.82), sub-line (0.78–0.88),
+ *                         CTA (0.84–0.94)
+ *
+ * Geometry: orbit poses live in a 1000×640 design space (hub at 500,320),
+ * scaled by --lf-as-scale so the SVG connectors and the CSS card positions
+ * stay in perfect registration at every width. Chaos poses are clamped to
+ * ±40vw so the mess never leaves the stage. Default --p: 1 → no JS renders
+ * the composed final frame, never the chaos.
+ */
+
+.lf-assembly {
+  position: relative;
+  background: var(--lf-ink);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+/* Visually hidden narration — real text for readers and crawlers. */
+.lf-assembly__vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lf-assembly__runway {
+  height: 300vh;
+}
+
+.lf-assembly__stage {
+  --p: 1; /* no-JS / prerender default: the composed final frame */
+  --lf-as-scale: 1;
+  --lf-as-center: 58svh;
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  /* Blue ambient burst (brand rule: orange = signal, bursts = blue). */
+  background:
+    radial-gradient(90% 60% at 50% 112%, rgba(59, 130, 246, 0.09), transparent 62%),
+    var(--lf-ink);
+}
+
+@media (max-width: 1279px) {
+  .lf-assembly__stage { --lf-as-scale: 0.85; }
+}
+@media (max-width: 1023px) {
+  .lf-assembly__stage { --lf-as-scale: 0.66; }
+}
+
+/* ---- Headline block ---- */
+.lf-assembly__head {
+  position: absolute;
+  z-index: 4;
+  inset-inline: 0;
+  top: clamp(76px, 11svh, 128px);
+  display: grid;
+  justify-items: center;
+  row-gap: var(--lf-space-3);
+  text-align: center;
+  padding-inline: var(--lf-margin-mobile);
+  pointer-events: none;
+}
+
+.lf-assembly__overline {
+  /* Act-1 label; leaves with the first headline. */
+  --h1out: clamp(0, calc((var(--p) - 0.24) / 0.08), 1);
+  color: var(--lf-fight);
+  opacity: calc(1 - var(--h1out));
+}
+
+.lf-assembly__titles {
+  display: grid;
+}
+
+.lf-assembly__title {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-size: var(--lf-text-xl);
+  color: var(--lf-bone);
+  white-space: nowrap;
+}
+
+.lf-assembly__title--chaos {
+  --h1out: clamp(0, calc((var(--p) - 0.24) / 0.08), 1);
+  opacity: calc(1 - var(--h1out));
+  transform: translateY(calc(var(--h1out) * -10px));
+}
+
+.lf-assembly__title--fix {
+  --h2in: clamp(0, calc((var(--p) - 0.30) / 0.10), 1);
+  opacity: var(--h2in);
+  transform: translateY(calc((1 - var(--h2in)) * 12px));
+}
+
+/* ---- Canvas: a 0×0 anchor at the stage's composition center ---- */
+.lf-assembly__canvas {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: var(--lf-as-center);
+  width: 0;
+  height: 0;
+}
+
+/* ---- Connectors (same visual language as OneSystemDiagram spokes) ---- */
+.lf-assembly__wires {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(1000px * var(--lf-as-scale));
+  /* The 0×0 canvas anchor would collapse us via the global `max-width: 100%`. */
+  max-width: none;
+  height: calc(640px * var(--lf-as-scale));
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.lf-assembly__wireset--mobile { display: none; }
+
+.lf-assembly__wire {
+  fill: none;
+  stroke: var(--lf-fight);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.45));
+  stroke-dasharray: 1;
+  /* Draws from the card toward the hub as the card arrives. */
+  --tc: clamp(0, calc((var(--p) - var(--seg-start) - 0.13) / 0.12), 1);
+  stroke-dashoffset: calc(1 - var(--tc));
+  /* Fully transparent until the draw starts — round line caps would
+     otherwise paint a stray dot at the hub while dashoffset is 1. */
+  opacity: calc(min(1, var(--tc) * 14) * 0.95);
+}
+
+/* ---- Problem cards ---- */
+.lf-assembly__card {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 176px;
+  padding: 10px 12px;
+  background: var(--lf-paper-2);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  will-change: transform;
+
+  /* Per-phase progress: travel, then chip stamp. */
+  --t: clamp(0, calc((var(--p) - var(--seg-start)) / 0.18), 1);
+  --tk: clamp(0, calc((var(--p) - var(--seg-start) - 0.20) / 0.08), 1);
+  --drift: calc(1 - var(--t));
+
+  --from-x: clamp(-40vw, calc(var(--from-xu) * var(--lf-as-scale) * 1px), 40vw);
+  --from-y: calc(var(--from-yu) * var(--lf-as-scale) * 1px);
+  --to-x: calc(var(--to-xu) * var(--lf-as-scale) * 1px);
+  --to-y: calc(var(--to-yu) * var(--lf-as-scale) * 1px);
+
+  transform:
+    translate(-50%, -50%)
+    translate3d(
+      calc(var(--from-x) + (var(--to-x) - var(--from-x)) * var(--t)),
+      calc(var(--from-y) + (var(--to-y) - var(--from-y)) * var(--t)),
+      0
+    )
+    rotate(calc(var(--from-r) * (1 - var(--t))));
+}
+
+/* Depth: the two farthest cards sit slightly out of focus until they arrive. */
+.lf-assembly__card--hours,
+.lf-assembly__card--sheets {
+  filter: blur(calc(0.5px * (1 - var(--t))));
+}
+
+/* Chaos pose (unitless px in the design space) → orbit pose. */
+.lf-assembly__card--pos    { --from-xu: -500; --from-yu: -180; --from-r: -9deg; --to-xu: -360; --to-yu: -150; }
+.lf-assembly__card--form   { --from-xu: 490;  --from-yu: -215; --from-r: 7deg;  --to-xu: 360;  --to-yu: -150; }
+.lf-assembly__card--hours  { --from-xu: -625; --from-yu: 80;   --from-r: 4deg;  --to-xu: -430; --to-yu: 60; }
+.lf-assembly__card--sheets { --from-xu: 625;  --from-yu: 30;   --from-r: -6deg; --to-xu: 430;  --to-yu: 60; }
+.lf-assembly__card--dms    { --from-xu: -270; --from-yu: 300;  --from-r: 8deg;  --to-xu: -250; --to-yu: 230; }
+.lf-assembly__card--spam   { --from-xu: 330;  --from-yu: 255;  --from-r: -7deg; --to-xu: 250;  --to-yu: 230; }
+
+/* Barely-perceptible idle drift on the inner wrapper (never fights the
+   card's own transform); amplitude fades to zero as the card assembles.
+   Paused off-screen via the IntersectionObserver class. */
+.lf-assembly__card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  animation: lf-as-drift 6.5s ease-in-out infinite;
+  animation-delay: calc(var(--seg-start, 0) * -20s);
+  animation-play-state: paused;
+}
+.lf-as-live .lf-assembly__card-inner {
+  animation-play-state: running;
+}
+
+@keyframes lf-as-drift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(calc(var(--drift, 0) * 2px), calc(var(--drift, 0) * -2px)); }
+  66% { transform: translate(calc(var(--drift, 0) * -1.5px), calc(var(--drift, 0) * 1.5px)); }
+}
+
+.lf-assembly__card-label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1.45;
+  color: var(--lf-bone-soft);
+}
+
+/* ---- Verdict chips ---- */
+.lf-assembly__chip {
+  font-family: var(--lf-mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  padding: 2px 8px;
+  opacity: var(--tk, 1);
+  transform: scale(calc(0.8 + 0.2 * var(--tk, 1)));
+  transform-origin: left center;
+}
+
+/* ---- Act 3: the hub ---- */
+.lf-assembly__hub {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 22px;
+  background: var(--lf-paper);
+  border: 1px solid rgba(249, 115, 22, 0.6);
+  border-radius: var(--lf-radius-sm);
+  box-shadow: 0 0 0 5px rgba(249, 115, 22, 0.1);
+  --th: clamp(0, calc((var(--p) - 0.70) / 0.12), 1);
+  opacity: var(--th);
+  transform: translate(-50%, -50%) scale(calc(0.6 + 0.4 * var(--th)));
+}
+/* Breathing glow — the OneSystemDiagram pulse, gated to on-screen. */
+.lf-as-live .lf-assembly__hub {
+  animation: lf-as-hub-pulse 3200ms var(--lf-ease-standard) infinite;
+}
+@keyframes lf-as-hub-pulse {
+  0%, 100% { box-shadow: 0 0 0 5px rgba(249, 115, 22, 0.1); }
+  50% { box-shadow: 0 0 0 9px rgba(249, 115, 22, 0.16), 0 0 24px rgba(249, 115, 22, 0.25); }
+}
+
+.lf-assembly__hub-label {
+  font-family: var(--lf-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  white-space: nowrap;
+}
+
+.lf-assembly__hub .lf-assembly__chip--build {
+  --tk: 1;
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  border-color: var(--lf-fight);
+  font-weight: 700;
+  transform: none;
+}
+
+/* ---- Act 3: sub-line ---- */
+.lf-assembly__sub {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: calc(72px * var(--lf-as-scale));
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: min(76vw, 460px);
+  margin: 0;
+  padding: 6px 16px;
+  text-align: center;
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+  /* Soft ink backdrop so the hub's lower connectors never cut through the words. */
+  background: rgba(5, 5, 7, 0.72);
+  border-radius: var(--lf-radius-pill);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  --ts: clamp(0, calc((var(--p) - 0.78) / 0.10), 1);
+  opacity: var(--ts);
+}
+
+/* ---- Act 3: CTA — a real link, outside the aria-hidden canvas, focusable
+   at every p. Scoped under .lf-editorial for the link-color gotcha. ---- */
+.lf-assembly__cta-row {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: calc(var(--lf-as-center) + 150px * var(--lf-as-scale));
+  transform: translateX(-50%);
+}
+
+.lf-editorial a.lf-assembly__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 14px 24px;
+  min-height: 48px;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink); /* dark ink on orange — AA */
+  font-family: var(--lf-sans);
+  font-weight: 600;
+  font-size: var(--lf-text-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  --tb: clamp(0, calc((var(--p) - 0.84) / 0.10), 1);
+  opacity: var(--tb);
+  transform: translateY(calc((1 - var(--tb)) * 14px));
+  transition: background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-editorial a.lf-assembly__cta svg {
+  flex-shrink: 0; /* the global svg max-width + nowrap text otherwise crush it to 0 */
+}
+.lf-editorial a.lf-assembly__cta:hover {
+  background: var(--lf-ember);
+}
+.lf-editorial a.lf-assembly__cta:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+  /* Keyboard users can land here at any p — never hand them an invisible target. */
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Phone composition (≤640px): 5 cards, tighter orbit, shorter runway ---- */
+@media (max-width: 640px) {
+  .lf-assembly__runway { height: 200vh; }
+  .lf-assembly__stage {
+    --lf-as-scale: 1; /* phone poses are authored 1:1 */
+    --lf-as-center: 52svh;
+  }
+  .lf-assembly__head { top: 94px; row-gap: var(--lf-space-2); }
+  .lf-assembly__title { font-size: var(--lf-text-lg); }
+
+  .lf-assembly__wireset--desktop { display: none; }
+  .lf-assembly__wireset--mobile { display: block; }
+
+  .lf-assembly__card { width: 148px; padding: 8px 10px; }
+  .lf-assembly__card-label { font-size: 9px; letter-spacing: 0.05em; }
+  .lf-assembly__card--spam { display: none; }
+
+  .lf-assembly__card--pos    { --from-xu: -70;  --from-yu: -225; --to-xu: 0;    --to-yu: -195; }
+  .lf-assembly__card--form   { --from-xu: -120; --from-yu: -115; --to-xu: -100; --to-yu: -95; }
+  .lf-assembly__card--hours  { --from-xu: 120;  --from-yu: -138; --to-xu: 100;  --to-yu: -95; }
+  .lf-assembly__card--sheets { --from-xu: -110; --from-yu: 90;   --to-xu: -100; --to-yu: 150; }
+  .lf-assembly__card--dms    { --from-xu: 100;  --from-yu: 235;  --to-xu: 100;  --to-yu: 150; }
+
+  .lf-assembly__hub { padding: 13px 18px; }
+  .lf-assembly__hub-label { font-size: 12px; }
+  .lf-assembly__sub { top: 64px; font-size: 13px; }
+  .lf-assembly__cta-row { top: calc(var(--lf-as-center) + 250px); }
+}
+
+/* ---- Reduced motion: no runway, no pin, no scrub — one composed frame.
+   --p keeps its default of 1, so orbit + hub + headline + CTA all render. ---- */
+@media (prefers-reduced-motion: reduce) {
+  .lf-assembly__runway { height: auto; }
+  .lf-assembly__stage {
+    position: relative;
+    top: auto;
+  }
+  .lf-assembly__card-inner,
+  .lf-assembly__hub {
+    animation: none !important;
+  }
+}
