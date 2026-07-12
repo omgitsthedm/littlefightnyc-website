@@ -286,3 +286,129 @@
     animation: none;
   }
 }
+
+/* ============================================================
+   Drawer upgrade: mono section labels, staggered link reveal,
+   and a "talk to us" action row (Tech Audit pill + call/text).
+   ============================================================ */
+
+.lf-nav__panel-label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: var(--lf-space-3) 0 var(--lf-space-2);
+  padding: 0 var(--lf-space-2);
+}
+
+.lf-nav__panel-label--talk {
+  margin-top: var(--lf-space-5);
+}
+
+/* Staggered entrance, consistent with the site's reveal language. */
+.lf-nav__panel-link,
+.lf-nav__panel-actions {
+  animation: lf-nav-item-in 420ms var(--lf-ease-out-quart) both;
+  animation-delay: calc(40ms + var(--lf-i, 6) * 45ms);
+}
+
+@keyframes lf-nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-nav__panel-link,
+  .lf-nav__panel-actions {
+    animation: none;
+  }
+}
+
+.lf-nav__panel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+  padding: 0 var(--lf-space-2) var(--lf-space-2);
+}
+
+/* The orange door — Tech Audit. Dark ink on orange for AA. */
+.lf-editorial .lf-nav__panel-fit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 52px;
+  padding: 14px 24px;
+  border-radius: var(--lf-radius-control);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-weight: 600;
+  font-size: var(--lf-text-sm);
+  text-decoration: none;
+  transition: background var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-nav__panel-fit:hover,
+.lf-editorial .lf-nav__panel-fit:focus-visible {
+  background: var(--lf-ember);
+  color: var(--lf-ink);
+}
+
+.lf-nav__panel-fit:focus-visible {
+  outline: 2px solid var(--lf-bone);
+  outline-offset: 2px;
+}
+
+.lf-nav__panel-reach {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-2);
+}
+
+.lf-editorial .lf-nav__panel-reach-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  border-radius: var(--lf-radius-control);
+  border: 1px solid var(--lf-hairline);
+  background: var(--lf-paper);
+  color: var(--lf-bone);
+  font-weight: 600;
+  font-size: var(--lf-text-sm);
+  text-decoration: none;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-nav__panel-reach-btn:hover,
+.lf-editorial .lf-nav__panel-reach-btn:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
+  color: var(--lf-fight);
+}
+
+.lf-nav__panel-reach-btn:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 2px;
+}
+
+.lf-nav__panel-reach-btn svg {
+  color: var(--lf-fight);
+}
+
+.lf-nav__panel-note {
+  margin: 0;
+  font-size: var(--lf-text-xs);
+  color: var(--lf-bone-dim);
+  text-align: center;
+}

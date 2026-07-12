@@ -99,3 +99,84 @@
   color: var(--lf-bone-soft);
   max-width: 64ch;
 }
+
+/* ============================================================
+   /contact/ — real content: response window, coverage map, FAQ.
+   ============================================================ */
+
+.lf-contact-window,
+.lf-contact-map {
+  padding: clamp(2.5rem, 6vw, 5rem) var(--lf-margin-mobile);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-contact-window,
+  .lf-contact-map {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-contact-window,
+  .lf-contact-map {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-contact-window__inner,
+.lf-contact-map__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.lf-contact-window__head {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.2vw, 1rem);
+}
+
+.lf-contact-window__eyebrow {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0;
+}
+
+.lf-contact-window__title {
+  font-family: var(--lf-serif);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  font-size: clamp(1.9rem, 3.6vw, 3.2rem);
+  line-height: 1.02;
+  color: var(--lf-bone);
+  margin: 0;
+}
+
+.lf-contact-map__dek {
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
+  color: var(--lf-bone-soft);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.lf-contact-window__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0;
+  font-size: var(--lf-text-sm);
+  color: var(--lf-bone-soft);
+}
+
+.lf-contact-window__note svg {
+  color: var(--lf-fight);
+  flex: none;
+}

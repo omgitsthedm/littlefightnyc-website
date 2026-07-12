@@ -291,7 +291,9 @@ export function installAnalyticsHooks() {
       track("email_click", { link_url: href, link_text: target.textContent?.trim() });
     } else if (target.hostname && target.hostname !== window.location.hostname) {
       track("external_link_click", { link_url: target.href, link_text: target.textContent?.trim() });
-    } else if (href.includes("fit-check")) {
+    } else if (href.includes("fit-check") || href.includes("tech-audit")) {
+      // Event name stays fit_check_intent for analytics continuity — the
+      // user-facing offer was renamed to "Tech Audit" on 2026-07-12.
       track("fit_check_intent", { link_url: href, link_text: target.textContent?.trim() });
     }
   };

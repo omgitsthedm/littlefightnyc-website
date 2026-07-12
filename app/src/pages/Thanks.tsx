@@ -29,7 +29,7 @@ export default function Thanks() {
   return (
     <>
       <PageHero
-        eyebrow="Fit Check Received"
+        eyebrow="Tech Audit Received"
         icon={CheckCircle2}
         title={
           <>

@@ -324,7 +324,7 @@ html[data-snap="1"] .lf-hero__char {
   transform: translate(2px, -2px);
 }
 
-/* Primary door — Fit Check, blue accent */
+/* Primary door — Tech Audit, blue accent */
 .lf-editorial .lf-hero__channel--primary {
   border-color: color-mix(in srgb, var(--lf-blue) 44%, transparent);
   background: color-mix(in srgb, var(--lf-blue) 16%, color-mix(in srgb, var(--lf-paper) 88%, transparent));
@@ -398,38 +398,74 @@ html[data-snap="1"] .lf-hero__char {
   line-height: 1.3;
 }
 
-@media (max-width: 480px) {
-  .lf-hero__content {
-    padding-bottom: calc(var(--lf-space-8) + 84px);
-  }
+/* Long value (the phone number) on wide screens, short verb on phones. */
+.lf-hero__channel-detail--short {
+  display: none;
+}
 
-  /* Phones: one column so the full email fits on a line (no mid-address break). */
+/* Phones: two compact doors only — Call + Tech Audit. Text and email live in
+ * the sticky help bar, so the hero stops repeating the phone number and
+ * "The Fight" arrives a full viewport sooner. */
+@media (max-width: 639px) {
   .lf-hero__channels {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--lf-space-2);
   }
 
-  .lf-hero__channel {
+  /* Order is Call · Text · Email · Form — keep the first and last. */
+  .lf-hero__channels li:nth-child(2),
+  .lf-hero__channels li:nth-child(3) {
+    display: none;
+  }
+
+  /* Compact horizontal door: icon beside the words, one line each. */
+  .lf-editorial .lf-hero__channel {
     min-height: 64px;
-    gap: var(--lf-space-1);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--lf-space-3);
     padding: var(--lf-space-3);
   }
 
+  .lf-hero__channel-top {
+    flex: none;
+  }
+
   .lf-hero__channel-icon {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
 
   .lf-hero__channel-label {
-    font-size: 10px;
+    display: none;
+  }
+
+  .lf-hero__channel-go {
+    display: none;
   }
 
   .lf-hero__channel-detail {
+    margin-top: 0;
     font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .lf-hero__channel-detail--full {
+    display: none;
+  }
+
+  .lf-hero__channel-detail--short {
+    display: block;
   }
 
   .lf-hero__channel-note {
     display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .lf-hero__content {
+    padding-bottom: calc(var(--lf-space-8) + 84px);
   }
 }
 

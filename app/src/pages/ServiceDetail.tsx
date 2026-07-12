@@ -32,6 +32,26 @@ const AREA_ROUTE_SLUG: Record<string, string> = {
   "tech-consulting": "local-search",
 };
 
+// Per-service closing band — the last line matches the page you just read.
+const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
+  "tech-consulting": {
+    heading: "Want us to read your setup?",
+    lede: "The first hour is free. We tell you what to keep, what to cut, and what to fix first. If you do not need us, we say so.",
+  },
+  "it-support": {
+    heading: "Something broken right now?",
+    lede: "Call. A human answers, 9am-9pm New York time. If it needs hands, we can be on site within 24 hours.",
+  },
+  "custom-local-websites": {
+    heading: "Want a site that pulls its weight?",
+    lede: "Tell us about your business. If we build your site, it is live in 14 days — or you don't pay.",
+  },
+  "business-systems": {
+    heading: "Tired of running it all by hand?",
+    lede: "Tell us how your day works. We will show you what the software should be doing for you instead.",
+  },
+};
+
 function areaRouteSlug(serviceSlug: string) {
   return AREA_ROUTE_SLUG[serviceSlug] ?? serviceSlug;
 }
@@ -196,7 +216,10 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      <QuietContact />
+      <QuietContact
+        heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what's broken."}
+        lede={CLOSING_LINE[service.slug]?.lede}
+      />
     </>
   );
 }

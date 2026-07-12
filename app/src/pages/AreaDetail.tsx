@@ -44,8 +44,10 @@ export default function AreaDetail() {
       <PageHero
         eyebrow={`Neighborhood · ${area.name}`}
         icon={MapPin}
+        displayName={`${area.name}.`}
         title={<>{area.headline}</>}
         dek={area.shortAnswer.replace(/^Short answer:\s*/i, "")}
+        chips={area.zipCodes}
         image={{
           src: AREA_IMAGE[area.slug] ?? "/assets/nyc-street-crowd.webp",
           alt: `${area.name}, New York`,
@@ -112,12 +114,6 @@ export default function AreaDetail() {
           </section>
 
           <FaqList title={`Owning a business in ${area.name}`} items={area.faq} />
-
-          <EditorialBody>
-            <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
-              <em>ZIP codes served:</em> {area.zipCodes.join(", ")}
-            </p>
-          </EditorialBody>
 
           <section
             style={{
@@ -247,7 +243,10 @@ export default function AreaDetail() {
         </div>
       </section>
 
-      <QuietContact />
+      <QuietContact
+        heading={`Near ${area.name}? We're close.`}
+        lede="We work in your neighborhood. Call or text and a real person answers, 9am-9pm New York time."
+      />
     </>
   );
 }

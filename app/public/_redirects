@@ -76,9 +76,13 @@
 /privacy.html    /legal/      301
 /terms.html      /legal/      301
 
+# --- Fit Check renamed to Tech Audit (2026-07-12) — preserve the indexed URL
+/fit-check/      /tech-audit/       301
+/fit-check       /tech-audit/       301
+
 # --- Canonical trailing-slash hygiene (only fires when no file matches)
 /services        /services/         301
-/fit-check       /fit-check/        301
+/tech-audit      /tech-audit/       301
 /about           /about/            301
 /audit           /audit/            301
 /glossary        /glossary/         301

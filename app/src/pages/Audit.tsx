@@ -11,7 +11,7 @@ export default function Audit() {
   return (
     <>
       <PageHero
-        eyebrow="Website Audit"
+        eyebrow="Instant Website Scan"
         icon={FileSearch}
         title={
           <>
@@ -33,7 +33,7 @@ export default function Audit() {
         <div className="lf-audit-page__inner">
           <EditorialBody>
             <p>
-              The audit is the fastest way to get a first read on a business
+              The scan is the fastest way to get a first read on a business
               website before a consult. It checks whether the page structure,
               copy, local signals, performance, and contact paths are helping
               people understand the business or quietly adding friction.
@@ -48,8 +48,8 @@ export default function Audit() {
           <div className="lf-audit-page__gauges">
             <p className="lf-audit-page__gauges-label">What the read covers</p>
             <ScoreRing
-              label="What the audit measures"
-              summary="The audit reads five things: page structure, copy, local signals, performance, and contact paths. The gauges start empty — your numbers get filled in when the audit runs."
+              label="What the scan measures"
+              summary="The scan reads five things: page structure, copy, local signals, performance, and contact paths. The gauges start empty — your numbers get filled in when the scan runs."
               caption="Your numbers get filled in"
               items={[
                 { label: "Structure", value: null },
@@ -67,10 +67,10 @@ export default function Audit() {
               <span><ShieldCheck size={24} strokeWidth={1.8} /></span>
             </div>
             <div>
-              <p className="lf-audit-page__eyebrow">Website audit</p>
-              <h2 className="lf-audit-page__title">Run the external audit.</h2>
+              <p className="lf-audit-page__eyebrow">Instant website scan</p>
+              <h2 className="lf-audit-page__title">Run the free scan.</h2>
               <p className="lf-audit-page__copy">
-                Opens the dedicated audit experience at audit.littlefightnyc.com.
+                Opens the scan tool at audit.littlefightnyc.com. It runs on its own — no waiting for a person.
               </p>
             </div>
             <a

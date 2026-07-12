@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
 import PhoneAction from "./PhoneAction";
 import "./QuietNav.css";
 
@@ -131,12 +131,14 @@ export default function QuietNav() {
             className="lf-nav__panel"
           >
             <nav className="lf-nav__panel-nav" aria-label="Primary mobile">
-              {NAV_LINKS.map((link) => (
+              <p className="lf-nav__panel-label" aria-hidden="true">Go to</p>
+              {NAV_LINKS.map((link, i) => (
                 <NavLink
                   key={link.to}
                   to={link.to}
                   viewTransition
                   onClick={() => setOpen(false)}
+                  style={{ ["--lf-i" as string]: i }}
                   className={({ isActive }) =>
                     `lf-nav__panel-link${isActive ? " lf-nav__panel-link--active" : ""}`
                   }
@@ -144,6 +146,34 @@ export default function QuietNav() {
                   {link.label}
                 </NavLink>
               ))}
+
+              <p className="lf-nav__panel-label lf-nav__panel-label--talk" aria-hidden="true">
+                Talk to us
+              </p>
+              <div className="lf-nav__panel-actions">
+                <Link
+                  to="/tech-audit/"
+                  viewTransition
+                  onClick={() => setOpen(false)}
+                  className="lf-nav__panel-fit"
+                >
+                  Start the Tech Audit
+                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+                </Link>
+                <div className="lf-nav__panel-reach">
+                  <a className="lf-nav__panel-reach-btn" href="tel:+16463600318">
+                    <Phone size={16} strokeWidth={1.9} aria-hidden="true" />
+                    Call
+                  </a>
+                  <a className="lf-nav__panel-reach-btn" href="sms:+16463600318">
+                    <MessageSquare size={16} strokeWidth={1.9} aria-hidden="true" />
+                    Text
+                  </a>
+                </div>
+                <p className="lf-nav__panel-note">
+                  A human answers, 9am-9pm New York time.
+                </p>
+              </div>
             </nav>
           </div>
         </>

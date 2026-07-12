@@ -104,7 +104,7 @@ export default function About() {
             <p>
               The direct line is (646) 360-0318. Email is
               hello@littlefightnyc.com. If the problem has moving parts, the
-              Fit Check is the cleanest way to send context without sending
+              Tech Audit is the cleanest way to send context without sending
               passwords, private customer data, or recovery codes.
             </p>
           </EditorialBody>

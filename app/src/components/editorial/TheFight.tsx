@@ -14,15 +14,15 @@ const THEM = [
   "Great Clips",
   "Uber Eats",
   "DoorDash",
-  "Private equity roll-ups",
+  "Private-equity buyers",
 ];
 
 const YOU = [
-  "The laundromat",
+  "The neighborhood law firm",
+  "The corner bar",
+  "The local clothing brand",
   "The hardware store",
-  "The mom-and-pop diner",
-  "The dental practice",
-  "The corner florist",
+  "The family clinic",
 ];
 
 export default function TheFight() {
@@ -59,7 +59,7 @@ export default function TheFight() {
               ))}
             </ul>
             <p className="lf-fight__side-note">
-              National chains and roll-ups with full tech teams and budgets to match.
+              National chains and investor-owned groups with full tech teams and big budgets.
             </p>
           </div>
 
@@ -85,10 +85,10 @@ export default function TheFight() {
             We build the systems the big guys have — for a fraction of what a big
             firm charges. Keep what works, kill the pen-and-paper and the endless
             spreadsheets, and fit the tech to how you already run. New York is our
-            home and our ethos; the fight isn&rsquo;t bound by it. Anyone worth
+            home and our attitude. But the fight travels. Anyone worth
             fighting for can call.
           </p>
-          <Link to="/fit-check/" viewTransition className="lf-fight__cta">
+          <Link to="/tech-audit/" viewTransition className="lf-fight__cta">
             Put us in your corner
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>

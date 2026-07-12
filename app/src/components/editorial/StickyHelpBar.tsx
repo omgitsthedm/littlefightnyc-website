@@ -5,7 +5,7 @@ import "./StickyHelpBar.css";
 export default function StickyHelpBar() {
   const { pathname } = useLocation();
   const trimmed = pathname.replace(/\/$/, "");
-  const hide = trimmed === "/fit-check" || trimmed === "/thanks";
+  const hide = trimmed === "/tech-audit" || trimmed === "/thanks";
 
   if (hide) return null;
 
@@ -19,9 +19,9 @@ export default function StickyHelpBar() {
         <span className="lf-mono lf-sticky-help__label">Call or text</span>
         <span className="lf-sticky-help__detail">(646) 360-0318</span>
       </PhoneAction>
-      <Link className="lf-sticky-help__cell lf-sticky-help__cell--fit" to="/fit-check/">
+      <Link className="lf-sticky-help__cell lf-sticky-help__cell--fit" to="/tech-audit/">
         <span className="lf-mono lf-sticky-help__label">Start</span>
-        <span className="lf-sticky-help__detail">Fit Check <span aria-hidden="true">→</span></span>
+        <span className="lf-sticky-help__detail">Tech Audit <span aria-hidden="true">→</span></span>
       </Link>
     </div>
   );

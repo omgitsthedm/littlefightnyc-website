@@ -205,7 +205,7 @@
   line-height: 1.35;
 }
 
-/* Primary door — the Fit Check form, flagged with the blue accent */
+/* Primary door — the Tech Audit form, flagged with the blue accent */
 .lf-editorial .lf-contact-block__channel--primary {
   background: var(--lf-card-bg); /* fallback: color-mix-in-gradient drops entirely without support */
   background:

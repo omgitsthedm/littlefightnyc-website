@@ -27,7 +27,6 @@ export default function CaseStudyDetail() {
   const { slug } = useParams();
   const study = caseStudies.find((s) => s.slug === slug);
 
-  const figureRef = useScrollReveal<HTMLElement>({ threshold: 0.2 });
   const arcRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
 
   if (!study) return <Navigate to="/examples/#studies" replace />;
@@ -53,41 +52,12 @@ export default function CaseStudyDetail() {
       <PageHero
         eyebrow={`Case Study · ${study.type}`}
         icon={Award}
-        title={<>{study.client}</>}
+        title={<span className="lf-em">{study.client}</span>}
         dek={study.title}
+        backdrop={{ src: study.image, alt: "" }}
       />
 
       <article className="lf-case">
-        {/* Full-bleed moment — the work, given room to land. */}
-        <figure ref={figureRef} className="lf-case__cover" data-reveal>
-          <div className="lf-case__cover-frame">
-            <img
-              src={study.image}
-              alt={`${study.client} — ${study.title}`}
-              width={1800}
-              height={1200}
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-            />
-          </div>
-          <figcaption className="lf-case__cover-cap">
-            <span className="lf-mono">{study.client}</span>
-            <span className="lf-case__cover-dot" aria-hidden="true">·</span>
-            <span>{study.type}</span>
-            {study.url && (
-              <a
-                className="lf-case__cover-live"
-                href={study.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Visit site <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
-              </a>
-            )}
-          </figcaption>
-        </figure>
-
         <div className="lf-case__inner">
           {/* Meta rail — the credits block of the feature. */}
           <aside className="lf-case__meta" aria-label="Project details">
@@ -99,6 +69,21 @@ export default function CaseStudyDetail() {
               <p className="lf-case__meta-label">Type</p>
               <p className="lf-case__meta-value">{study.type}</p>
             </div>
+            {study.url && (
+              <div className="lf-case__meta-item">
+                <p className="lf-case__meta-label">Live</p>
+                <p className="lf-case__meta-value">
+                  <a
+                    className="lf-case__service-link"
+                    href={study.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Visit site <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
+                  </a>
+                </p>
+              </div>
+            )}
             {serviceLinks.length > 0 && (
               <div className="lf-case__meta-item">
                 <p className="lf-case__meta-label">Services</p>
@@ -187,7 +172,10 @@ export default function CaseStudyDetail() {
         </section>
       )}
 
-      <QuietContact />
+      <QuietContact
+        heading="Want a build like this?"
+        lede="Tell us about your shop. We will tell you what a build like this looks like for you. The first talk is free."
+      />
     </>
   );
 }

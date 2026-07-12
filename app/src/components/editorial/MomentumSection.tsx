@@ -17,7 +17,7 @@ const CAPABILITIES = [
     icon: Globe,
     label: "Websites",
     title: "A site that earns its keep",
-    line: "Fast, findable, built to convert — not a template you fight with.",
+    line: "Fast, easy to find, and built to bring calls. Not a template you fight with.",
     to: "/services/custom-local-websites/",
   },
   {
@@ -29,9 +29,9 @@ const CAPABILITIES = [
   },
   {
     icon: MapPin,
-    label: "Local Visibility",
+    label: "Consulting + Local Visibility",
     title: "Found on your block",
-    line: "Maps, reviews, and search dialed in for the neighborhood you serve.",
+    line: "We read your whole setup first. Then we tune Maps, reviews, and search for the blocks you serve.",
     to: "/services/tech-consulting/",
   },
   {
@@ -129,10 +129,10 @@ export default function MomentumSection() {
             Not sure what you need?
           </h3>
           <p className="lf-momentum__card-line">
-            Take the Fit Check. Two minutes, three useful outcomes, no pitch.
+            Take the Tech Audit. Two minutes, three useful outcomes, no pitch.
           </p>
-          <Link to="/fit-check/" viewTransition className="lf-momentum__cta-button">
-            Start the Fit Check
+          <Link to="/tech-audit/" viewTransition className="lf-momentum__cta-button">
+            Start the Tech Audit
             <ArrowUpRight size={18} strokeWidth={2} />
           </Link>
         </article>

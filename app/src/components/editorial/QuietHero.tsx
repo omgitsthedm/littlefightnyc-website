@@ -59,9 +59,9 @@ const MARQUEE_ITEMS: { label: string; to: string }[] = [
   { label: "Failed payment processor", to: "/services/it-support/" },
   { label: "Unverified listing", to: "/answers/business-not-showing-on-google-maps/" },
   { label: "Duplicate software tools", to: "/journal/keep-connect-replace-build-framework/" },
-  { label: "Missed callbacks", to: "/fit-check/" },
+  { label: "Missed callbacks", to: "/tech-audit/" },
   { label: "Booking link dead", to: "/answers/website-form-not-working-small-business/" },
-  { label: "Website timing out", to: "/fit-check/" },
+  { label: "Website timing out", to: "/tech-audit/" },
   { label: "Wi-Fi down at the counter", to: "/services/it-support/" },
   { label: "Printer offline", to: "/services/it-support/" },
   { label: "Lead form sending to nobody", to: "/answers/website-form-not-working-small-business/" },
@@ -73,6 +73,7 @@ const CONTACT_CHANNELS = [
     icon: Phone,
     label: "Call",
     detail: "(646) 360-0318",
+    shortDetail: "Call us",
     note: "If something is broken",
     href: "tel:+16463600318",
   },
@@ -93,9 +94,9 @@ const CONTACT_CHANNELS = [
   {
     icon: ClipboardCheck,
     label: "Form",
-    detail: "Fit Check",
+    detail: "Tech Audit",
     note: "When it has parts",
-    to: "/fit-check/",
+    to: "/tech-audit/",
     primary: true,
   },
 ] as const;
@@ -161,9 +162,9 @@ export default function QuietHero() {
 
         <div className="lf-hero__brief">
           <p>
-            Websites, IT help, Google visibility, software cleanup, and
-            cleaner systems for NYC shops, salons, bars, clinics, restaurants,
-            and owner-run teams.
+            Websites, IT help, Google visibility, software cleanup, and cleaner
+            systems for NYC bars, salons, law firms, clinics, restaurants,
+            clothing brands, and every owner-run shop.
           </p>
           <p className="lf-hero__promise">
             Tell us what's broken. We'll fix it or tell you who can. No ticket maze.
@@ -183,7 +184,18 @@ export default function QuietHero() {
                   <span className="lf-hero__channel-label">{channel.label}</span>
                   <ArrowUpRight className="lf-hero__channel-go" size={15} strokeWidth={2} aria-hidden="true" />
                 </span>
-                <span className="lf-hero__channel-detail">{channel.detail}</span>
+                <span
+                  className={`lf-hero__channel-detail${
+                    "shortDetail" in channel ? " lf-hero__channel-detail--full" : ""
+                  }`}
+                >
+                  {channel.detail}
+                </span>
+                {"shortDetail" in channel && (
+                  <span className="lf-hero__channel-detail lf-hero__channel-detail--short">
+                    {channel.shortDetail}
+                  </span>
+                )}
                 <span className="lf-hero__channel-note">{channel.note}</span>
               </>
             );

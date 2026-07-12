@@ -225,3 +225,73 @@
   color: var(--lf-fight);
   flex: none;
 }
+
+/* ============================================================
+   Phone footer: link groups fold into <details> accordions.
+   ============================================================ */
+
+@media (max-width: 639px) {
+  .lf-quiet-foot__nav {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.lf-quiet-foot__group--fold {
+  border-bottom: 1px solid color-mix(in srgb, var(--lf-bone) 10%, transparent);
+}
+
+.lf-quiet-foot__group--fold summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lf-space-3);
+  min-height: 48px;
+  padding: var(--lf-space-3) 0;
+  cursor: pointer;
+  list-style: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lf-quiet-foot__group--fold summary::-webkit-details-marker {
+  display: none;
+}
+
+.lf-quiet-foot__group--fold summary h2 {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.lf-quiet-foot__group--fold summary:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.lf-quiet-foot__fold-chevron {
+  color: var(--lf-bone-dim);
+  flex: none;
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-quiet-foot__group--fold[open] .lf-quiet-foot__fold-chevron {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-quiet-foot__fold-chevron {
+    transition: none;
+  }
+}
+
+.lf-quiet-foot__group--fold ul {
+  padding-bottom: var(--lf-space-4);
+}
+
+.lf-quiet-foot__group--fold ul a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+}

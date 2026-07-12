@@ -15,263 +15,263 @@
     {
       "path": "/",
       "title": "Little Fight NYC | Websites, IT Support, Local SEO & Systems",
-      "description": "Little Fight NYC helps New York small businesses build better websites, fix IT issues, improve Google visibility, and cut software waste.",
+      "description": "Little Fight NYC helps New York small businesses get better websites, fix broken tech, show up on Google, and cut software waste.",
       "h1": "Better tech. Fewer bills. More customers.",
-      "shortAnswer": "Short answer: Little Fight NYC helps local businesses with the four digital areas that affect money every day: websites, IT support, local search, and business systems.",
+      "shortAnswer": "Short answer: Little Fight NYC helps local businesses with the four tech areas that touch money every day. Websites, IT support, local search, and business systems.",
       "type": "WebPage",
       "image": "/assets/local-business-base.webp",
       "faq": [
         {
           "question": "What does Little Fight NYC do?",
-          "answer": "Little Fight NYC helps small businesses with websites, IT support, local Google visibility, software cleanup, and right-sized business systems."
+          "answer": "Little Fight NYC helps small businesses with websites, IT support, Google visibility, software cleanup, and right-sized business systems."
         },
         {
           "question": "Who does Little Fight NYC help?",
-          "answer": "Little Fight NYC helps New York shops, salons, pharmacies, restaurants, studios, service businesses, and teams under 50."
+          "answer": "Little Fight NYC helps New York law firms, bars, restaurants, clothing brands, salons, barbershops, clinics, pharmacies, shops, gyms, studios, and service teams under 50."
         }
       ]
     },
     {
       "path": "/services/",
       "title": "NYC Small Business Tech Services | Little Fight NYC",
-      "description": "Tech consulting, IT support, custom local websites, and business systems for NYC small businesses that need a practical first move.",
+      "description": "Tech consulting, IT support, custom local websites, and business systems for NYC small businesses that need a clear first move.",
       "h1": "Four services. One agency.",
-      "shortAnswer": "Short answer: Little Fight NYC works across four connected areas: the website people see, the tech that has to work, the way customers find you, and the system behind the work.",
+      "shortAnswer": "Short answer: Little Fight NYC works across four connected areas. The website people see. The tech that has to work. The way customers find you. And the system behind the work.",
       "type": "CollectionPage",
       "image": "/assets/hero-laptop.webp"
     },
     {
       "path": "/services/custom-local-websites/",
       "title": "Custom Local Websites NYC | Little Fight NYC",
-      "description": "Custom-coded websites built for your NYC business and your block — no templates, no themes, no Squarespace skins. Ships in 14 days.",
+      "description": "Custom-coded websites built for your NYC business and your block. No templates, no themes, no Squarespace skins. Ships in 14 days.",
       "h1": "Built — not picked from a template menu.",
-      "shortAnswer": "Short answer: Little Fight builds custom, locally-optimized websites for NYC small businesses — coded from scratch, written for the neighborhood, structured for how Google ranks local businesses in 2026, and shipped in 14 days.",
+      "shortAnswer": "Short answer: Little Fight builds custom local websites for NYC small businesses. Coded from scratch. Written for the neighborhood. Built for how Google ranks local businesses in 2026. Shipped in 14 days.",
       "type": "Service",
       "serviceName": "Custom local websites for NYC small businesses",
       "image": "/assets/hero-laptop.webp",
       "faq": [
         {
           "question": "Do I need a new website, or just a cleanup?",
-          "answer": "Often a cleanup. If the platform still works and customers can use it, start with the message, mobile layout, forms, and booking path before rebuilding. The consult will tell you which."
+          "answer": "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. The free consult tells you which."
         },
         {
           "question": "Can you connect the site to booking or payments?",
-          "answer": "Yes. The website should connect to the action that makes the business money: booking, calls, forms, estimates, purchases, follow-up."
+          "answer": "Yes. The site should connect to what makes you money: booking, calls, forms, payments, and follow-up."
         },
         {
           "question": "What if you miss the 14-day window?",
-          "answer": "If we miss the date because of our side, you don't pay. We schedule launches around your availability."
+          "answer": "If we miss the date on our side, you do not pay. We plan the launch around you."
         }
       ]
     },
     {
       "path": "/services/it-support/",
       "title": "Small Business IT Support NYC | Little Fight NYC",
-      "description": "Practical IT support for NYC small businesses with email, domains, Wi-Fi, POS, booking, payments, devices, and account access.",
+      "description": "Real local IT help for NYC small businesses. Email, domains, Wi-Fi, POS, booking, payments, devices, and locked accounts, fixed fast.",
       "h1": "Fast help when the basics break.",
-      "shortAnswer": "Short answer: Little Fight provides practical IT support for NYC small businesses when email, domains, devices, Wi-Fi, POS, booking, or payment tools stop cooperating.",
+      "shortAnswer": "Short answer: Little Fight gives NYC small businesses real local IT help. When email, Wi-Fi, POS, booking, payments, or devices stop working, we fix them.",
       "type": "Service",
       "serviceName": "Small business IT support",
       "image": "/assets/typing.webp",
       "faq": [
         {
           "question": "Do you help when something is broken today?",
-          "answer": "Yes. If customers, payments, bookings, email, or access are affected, call first so the immediate issue can be separated from any larger cleanup."
+          "answer": "Yes. Call first if customers, payments, bookings, email, or access are hurting now. We stop the bleeding before we talk about any bigger cleanup."
         },
         {
           "question": "Do you need passwords on the first call?",
-          "answer": "No. Do not share sensitive information on a call or form. If access is needed, Little Fight will use a safer handoff."
+          "answer": "No. Never share passwords on a call or in a form. If we need access, we use a safer handoff."
         }
       ]
     },
     {
       "path": "/services/tech-consulting/",
       "title": "NYC Tech Consulting for Small Business | Little Fight NYC",
-      "description": "Free, plain-English audit of your tools, costs, website, Google presence, and workflow — so you know what's earning its place and what's leaking money.",
+      "description": "A free, plain-English look at your tools, bills, website, Google presence, and workflow. Learn what earns its place and what wastes money.",
       "h1": "An honest read on your tech, before you spend another dollar.",
-      "shortAnswer": "Short answer: Little Fight provides free, plain-English technology consulting for NYC small businesses — auditing tools, websites, Google presence, and workflows to show owners exactly where money is leaking and what to fix first.",
+      "shortAnswer": "Short answer: Little Fight gives NYC small businesses free, plain-English tech consulting. We check your tools, website, Google presence, and workflow. You learn where money leaks and what to fix first.",
       "type": "Service",
       "serviceName": "Tech consulting for NYC small businesses",
       "image": "/assets/local-business-base.webp",
       "faq": [
         {
           "question": "How long does a consult take?",
-          "answer": "A first call is usually 20–30 minutes. A full audit, depending on how messy the stack is, takes one to two weeks of background work and ends with a written report and a conversation to walk through it."
+          "answer": "A first call takes 20 to 30 minutes. A full audit takes one to two weeks of background work. It ends with a written report and a talk to walk through it."
         },
         {
           "question": "Does an audit mean I'm getting sold something at the end?",
-          "answer": "No. The consult is free and ends with a written punch list you can take anywhere. We charge for the work, not the conversation. If the right move is 'don't hire anyone yet,' that's what we'll say."
+          "answer": "No. The consult is free. It ends with a written list you can take anywhere. We charge for the work, not the talk. If the right move is 'do not hire anyone yet,' we say that."
         }
       ]
     },
     {
       "path": "/services/business-systems/",
       "title": "Business Systems for NYC Small Businesses | Little Fight NYC",
-      "description": "Right-sized business systems for NYC teams: lead intake, follow-up, dashboards, tool cleanup, workflow automation, and software cost reduction.",
+      "description": "Right-sized business systems for NYC teams. Lead tracking, follow-up, dashboards, tool cleanup, automation, and lower software bills.",
       "h1": "Less spreadsheet. Less memory. Less waste.",
-      "shortAnswer": "Short answer: Little Fight builds right-sized business systems for NYC teams that are losing time to spreadsheets, scattered leads, duplicate entry, and monthly software waste.",
+      "shortAnswer": "Short answer: Little Fight builds right-sized systems for NYC teams. For anyone losing time to spreadsheets, scattered leads, double typing, and monthly software waste.",
       "type": "Service",
       "serviceName": "Business systems and workflow cleanup",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "Is custom always better than software?",
-          "answer": "No. Good tools stay. The right move may be to keep, connect, replace, or build, depending on the workflow and monthly cost."
+          "answer": "No. Good tools stay. The right move may be keep, connect, replace, or build. It depends on the work and the monthly cost."
         },
         {
           "question": "What can a small business system include?",
-          "answer": "It can include lead intake, follow-up, dashboards, forms, booking or payment handoffs, staff notifications, and simple reporting."
+          "answer": "Lead tracking, follow-up, dashboards, forms, booking or payment handoffs, staff alerts, and simple reports."
         }
       ]
     },
     {
-      "path": "/fit-check/",
-      "title": "Business System Fit Check NYC | Little Fight NYC",
-      "description": "Start with a Fit Check to find out whether your issue is urgent support, website cleanup, software waste, local visibility, or workflow cleanup.",
+      "path": "/tech-audit/",
+      "title": "Free Tech Audit for NYC Small Businesses | Little Fight NYC",
+      "description": "Book a free Tech Audit. A real person reads your website, tools, Google presence, and monthly software costs — then tells you what to fix first. Callback within 2 hours, 9am–9pm ET.",
       "h1": "Show us the moving parts.",
-      "shortAnswer": "Short answer: the Fit Check helps place a messy business tech problem before anyone sells you a rebuild, platform, or giant project.",
+      "shortAnswer": "Short answer: the Tech Audit is a free, human review of your business tech — website, tools, Google, and monthly costs. You get a straight answer, not a pitch.",
       "type": "ContactPage",
       "image": "/assets/og-image.jpg",
       "faq": [
         {
-          "question": "Is the Fit Check a quote?",
-          "answer": "No. It is a fast first read so Little Fight NYC can review the website, tools, search visibility, and workflow before scope or pricing is confirmed."
+          "question": "Is the Tech Audit a quote?",
+          "answer": "No. It is a fast first read. Little Fight NYC reviews the website, tools, search visibility, and workflow before any scope or price is set."
         },
         {
-          "question": "Should I share passwords in the Fit Check?",
-          "answer": "No. Do not share sensitive information in the Fit Check or on a call."
+          "question": "Should I share passwords in the Tech Audit?",
+          "answer": "No. Never share passwords or private details in the Tech Audit or on a call."
         }
       ]
     },
     {
       "path": "/examples/",
       "title": "Examples: Real NYC Small Business Work & Plain Answers | Little Fight NYC",
-      "description": "Real examples of our NYC work, business-type maps, and plain-English answers on websites, IT support, local SEO, and software costs.",
+      "description": "Real examples of our NYC work, plus plain answers on websites, IT support, local SEO, and software costs.",
       "h1": "Proof, maps, and plain answers.",
-      "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most — before any pitch.",
+      "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
       "type": "CollectionPage",
       "image": "/assets/storefront-shop-deli.webp"
     },
     {
       "path": "/answers/",
       "title": "Owner Answers: NYC Small Business Tech Questions | Little Fight NYC",
-      "description": "Plain-English answers to the questions NYC owners actually ask — websites, Google visibility, software costs, POS, email, and urgent fixes. Short, direct, and not trying to make a sale.",
+      "description": "Plain answers to the questions NYC owners actually ask. Websites, Google visibility, software costs, POS, email, and urgent fixes. Short, direct, no selling.",
       "h1": "Plain answers, no selling.",
-      "shortAnswer": "Short answer: a library of plain-English answers to real NYC small-business tech questions — what to check, what it usually is, and when to get help.",
+      "shortAnswer": "Short answer: a library of plain answers to real NYC small-business tech questions. What to check, what it usually is, and when to get help.",
       "type": "CollectionPage",
       "image": "/assets/nyc-street.webp"
     },
     {
       "path": "/answers/website-form-not-working-small-business/",
       "title": "Website Form Not Working? | Little Fight NYC",
-      "description": "Website form messages go missing when routing, spam filters, plugins, or domain email records break. Here is what NYC small businesses should check first.",
+      "description": "Form messages go missing when the email path, spam filters, plugins, or domain records break. Here is what NYC small businesses should check first.",
       "h1": "Why are website form messages not reaching my small business?",
-      "shortAnswer": "Short answer: start with the form settings, email routing, spam filters, and domain records. If people say they submitted a form but nothing arrives, treat it as an active revenue leak before redesigning the site.",
+      "shortAnswer": "Short answer: check the form settings, email path, spam filters, and domain records first. If people say they sent a form and nothing arrived, you are losing money right now. Fix that before any redesign.",
       "type": "Article",
       "image": "/assets/hero-laptop.webp",
       "faq": [
         {
           "question": "What should I check first when website forms stop arriving?",
-          "answer": "Start with the form notification address, spam folder, plugin or platform settings, domain email records, and a real test submission from mobile."
+          "answer": "Check the address the form sends to, the spam folder, the plugin settings, and the domain email records. Then do a real test from your phone."
         },
         {
           "question": "Is a broken form a website redesign problem?",
-          "answer": "Usually no. A missing form message is normally a routing, email, spam, or configuration issue that should be fixed before any redesign is scoped."
+          "answer": "Usually no. A missing form message is normally an email, spam, or settings issue. Fix that before any redesign is scoped."
         }
       ]
     },
     {
       "path": "/answers/reduce-monthly-software-costs-small-business/",
       "title": "Cut Small Business Software Costs | Little Fight NYC",
-      "description": "A practical way for small businesses to cut monthly software waste, reduce duplicate tools, keep what works, and replace only the pieces that drag.",
+      "description": "A simple way for small businesses to cut monthly software waste. Drop duplicate tools, keep what works, and replace only what drags.",
       "h1": "How can a small business cut monthly software costs?",
-      "shortAnswer": "Short answer: list every tool, what it costs, who uses it, and what work still happens outside it. Keep the useful tools, connect the gaps, replace the waste, and build only what off-the-shelf software does badly.",
+      "shortAnswer": "Short answer: list every tool, what it costs, and who uses it. Keep the useful tools. Connect the gaps. Cut the waste. Build only what store-bought software does badly.",
       "type": "Article",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "What is the safest way to cut software costs?",
-          "answer": "Inventory every paid tool, confirm who uses it, compare overlapping features, and remove or downgrade only after the daily workflow is mapped."
+          "answer": "List every paid tool. Confirm who uses it. Compare overlaps. Cancel or downgrade only after you map the daily work."
         },
         {
           "question": "Should small businesses replace every SaaS tool with custom software?",
-          "answer": "No. Useful tools should stay. Custom work only makes sense when the workaround around the tool is more expensive than the tool itself."
+          "answer": "No. Useful tools stay. Custom only makes sense when the workaround costs more than the tool itself."
         }
       ]
     },
     {
       "path": "/answers/business-not-showing-on-google-maps/",
       "title": "Business Not Showing on Google Maps NYC | Little Fight NYC",
-      "description": "Why a local NYC business may not appear on Google Maps and what to fix across profile, website, reviews, and service pages.",
+      "description": "Why a real NYC business may not show on Google Maps, and what to fix across the profile, website, reviews, and service pages.",
       "h1": "Why is my NYC business not showing on Google Maps?",
-      "shortAnswer": "Short answer: Google needs a complete business profile, consistent contact details, real reviews, relevant service pages, and local proof that matches how customers search nearby.",
+      "shortAnswer": "Short answer: Google needs a complete profile, matching contact details, real reviews, and clear service pages. It has to see proof that matches how people search nearby.",
       "type": "Article",
       "image": "/assets/local-business-base.webp",
       "faq": [
         {
           "question": "Why would a real business not appear on Google Maps?",
-          "answer": "The profile may be incomplete, unverified, inconsistent with the website, missing reviews, using the wrong category, or lacking local service proof."
+          "answer": "The profile may be incomplete or unverified. It may not match the website. It may be missing reviews, using the wrong category, or short on local proof."
         },
         {
           "question": "Does the website affect Google Maps visibility?",
-          "answer": "Yes. Google compares the business profile with the website, service pages, contact details, local language, and trust signals."
+          "answer": "Yes. Google compares the profile with the website, service pages, contact details, and trust signals."
         }
       ]
     },
     {
       "path": "/answers/hair-salon-save-money-software/",
       "title": "Save Money on Salon Booking Software NYC | Little Fight NYC",
-      "description": "How NYC salons can reduce booking software costs while keeping appointments, payments, reminders, and client follow-up simple.",
+      "description": "How NYC salons can cut booking software costs while keeping appointments, payments, reminders, and follow-up simple.",
       "h1": "How can an NYC hair salon save money on booking software?",
-      "shortAnswer": "Short answer: keep the booking tool if staff and clients actually use it. Cut costs by removing duplicate tools, cleaning service menus, connecting follow-up, and replacing spreadsheets only where they create real drag.",
+      "shortAnswer": "Short answer: keep the booking tool if staff and clients really use it. Save by cutting duplicate tools, cleaning the service menu, and connecting follow-up. Replace spreadsheets only where they slow you down.",
       "type": "Article",
       "image": "/assets/local-business-base.webp",
       "faq": [
         {
           "question": "Should a salon cancel its booking platform to save money?",
-          "answer": "Not unless staff and clients can still book, pay, reschedule, receive reminders, and follow up without confusion."
+          "answer": "Not unless staff and clients can still book, pay, reschedule, and get reminders without confusion."
         },
         {
           "question": "Where do salon software costs usually hide?",
-          "answer": "Costs usually hide in duplicate marketing tools, unused add-ons, manual spreadsheet work, payment fees, and messy service menus."
+          "answer": "In duplicate marketing tools, unused add-ons, hand-kept spreadsheets, payment fees, and messy service menus."
         }
       ]
     },
     {
       "path": "/answers/local-pharmacy-website-community-support/",
       "title": "Local Pharmacy Website Support NYC | Little Fight NYC",
-      "description": "How a local pharmacy website can make hours, services, refills, phone actions, insurance notes, and community support easier to find.",
+      "description": "How a local pharmacy website can make hours, services, refills, insurance notes, and the phone number easier to find.",
       "h1": "How can a local pharmacy website better support its community?",
-      "shortAnswer": "Short answer: make hours, services, refills, insurance notes, phone actions, local help, and trust signals easy to find. A pharmacy site should reduce confusion before the customer calls or walks in.",
+      "shortAnswer": "Short answer: make hours, services, refills, insurance notes, and the phone number easy to find. A pharmacy site should clear up confusion before the customer calls or walks in.",
       "type": "Article",
       "image": "/assets/nyc-street.webp",
       "faq": [
         {
           "question": "What matters most on a local pharmacy website?",
-          "answer": "Hours, phone actions, refills, services, insurance notes, location, accessibility details, and clear community support should be easy to find."
+          "answer": "Hours, the phone number, refills, services, insurance notes, and the location. All easy to find."
         },
         {
           "question": "Should a pharmacy website push customers into a portal first?",
-          "answer": "Only when the portal is the clearest path. Many pharmacy visitors need quick trust, a phone number, refill instructions, or service confirmation first."
+          "answer": "Only when the portal is the clearest path. Many visitors need quick trust, a phone number, or refill steps first."
         }
       ]
     },
     {
       "path": "/answers/when-custom-business-system-beats-saas/",
       "title": "Custom Business Systems vs SaaS | Little Fight NYC",
-      "description": "When a right-sized custom business system can beat another SaaS subscription for small teams stuck with spreadsheets and manual follow-up.",
+      "description": "When a right-sized custom system beats another SaaS subscription for small teams stuck with spreadsheets and hand-done follow-up.",
       "h1": "When does a custom business system beat another subscription?",
-      "shortAnswer": "Short answer: custom may make sense when a business pays for a big platform but still relies on spreadsheets, duplicate entry, manual follow-up, or reports nobody trusts.",
+      "shortAnswer": "Short answer: custom may make sense when you pay for a big platform but still lean on spreadsheets, double typing, hand-done follow-up, or reports nobody trusts.",
       "type": "Article",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "When does custom software make sense for a small business?",
-          "answer": "It makes sense when the business already pays for tools but still loses time to duplicate entry, manual follow-up, spreadsheet gaps, or untrusted reports."
+          "answer": "When you already pay for tools but still lose time to double typing, hand-done follow-up, spreadsheet gaps, or reports nobody trusts."
         },
         {
           "question": "What should happen before building a custom system?",
-          "answer": "Map the workflow, confirm the real cost of the current workaround, keep useful tools, and define the smallest system that removes the drag."
+          "answer": "Map the work. Add up the real cost of the workaround. Keep the useful tools. Then define the smallest system that removes the drag."
         }
       ]
     },
@@ -761,9 +761,9 @@
     {
       "path": "/about/",
       "title": "About Little Fight NYC | NYC Small Business Tech",
-      "description": "Little Fight NYC helps New York small business owners get working websites, reliable IT, stronger Google visibility, and right-sized systems that fit.",
+      "description": "Little Fight NYC helps New York small business owners get working websites, reliable IT, stronger Google visibility, and systems that fit.",
       "h1": "Built for small business fights.",
-      "shortAnswer": "Short answer: Little Fight NYC helps local businesses get better websites, working tech, stronger Google visibility, and practical systems. Call (646) 360-0318 or use the Fit Check.",
+      "shortAnswer": "Short answer: Little Fight NYC helps local businesses get better websites, working tech, stronger Google visibility, and practical systems. Call (646) 360-0318 or use the Tech Audit.",
       "type": "AboutPage",
       "image": "/assets/owner.webp",
       "faq": [
@@ -773,22 +773,22 @@
         },
         {
           "question": "How do I contact Little Fight NYC?",
-          "answer": "Call or text (646) 360-0318, email hello@littlefightnyc.com, or start a Fit Check when the problem has moving parts."
+          "answer": "Call or text (646) 360-0318. Email hello@littlefightnyc.com. Or start a Tech Audit when the problem has moving parts."
         }
       ]
     },
     {
       "path": "/audit/",
-      "title": "Website Audit for Small Business | Little Fight NYC",
-      "description": "Run the Little Fight website audit to check visibility, trust, performance, page structure, local signals, and conversion paths for a small business site.",
+      "title": "Instant Website Scan for NYC Small Businesses | Little Fight NYC",
+      "description": "Run a free instant scan of your website. It checks page structure, copy, local signals, speed, and contact paths — then shows what to fix. No waiting, no sales call.",
       "h1": "See what your site is leaking.",
-      "shortAnswer": "Short answer: the Little Fight audit checks whether a business website is clear, trustworthy, fast, visible, and easy for customers to act on.",
+      "shortAnswer": "Short answer: the Instant Website Scan is a free, automated first read of your website. For a human review of your whole setup, book the free Tech Audit.",
       "type": "WebPage",
       "image": "/assets/coworking-laptops.webp",
       "faq": [
         {
           "question": "What does the Little Fight website audit check?",
-          "answer": "It checks clarity, trust, mobile usability, local signals, technical basics, page structure, and whether customers can act without friction."
+          "answer": "It checks clarity, trust, mobile use, local signals, technical basics, and whether customers can act without friction."
         },
         {
           "question": "Where does the audit run?",
@@ -799,36 +799,36 @@
     {
       "path": "/legal/",
       "title": "Privacy and Terms | Little Fight NYC",
-      "description": "Little Fight NYC privacy and terms covering forms, sensitive information, safe account access, scope, quotes, and project commitments.",
+      "description": "Little Fight NYC privacy and terms. Forms, private information, safe account access, scope, quotes, and project promises.",
       "h1": "Privacy and terms, plain.",
-      "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue, scopes work before quoting it, and uses safer handoffs for account access.",
+      "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Work is scoped before it is quoted. Account access uses safer handoffs.",
       "type": "WebPage",
       "image": "/assets/og-image.jpg"
     },
     {
       "path": "/contact/",
       "title": "Contact Little Fight NYC | Call, Text, Email, Form",
-      "description": "Call, text, email, or use the Fit Check to reach Little Fight NYC for websites, IT support, local visibility, software cleanup, and business systems.",
+      "description": "Call, text, email, or use the Tech Audit to reach Little Fight NYC. Websites, IT support, local visibility, software cleanup, and business systems.",
       "h1": "Tell us what's going on.",
-      "shortAnswer": "Short answer: call or text (646) 360-0318, email hello@littlefightnyc.com, or start a Fit Check when the problem has moving parts.",
+      "shortAnswer": "Short answer: call or text (646) 360-0318. Email hello@littlefightnyc.com. Or start a Tech Audit when the problem has moving parts.",
       "type": "ContactPage",
       "image": "/assets/nyc-stickys-steam.webp"
     },
     {
       "path": "/privacy/",
       "title": "Privacy Policy | Little Fight NYC",
-      "description": "Little Fight NYC privacy policy for forms, sensitive information, contact details, safe account access, and data handling.",
+      "description": "Little Fight NYC privacy policy. Forms, private information, contact details, safe account access, and data handling.",
       "h1": "Privacy, plain.",
-      "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue and uses safer handoffs for account access.",
+      "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Account access uses safer handoffs.",
       "type": "WebPage",
       "image": "/assets/og-image.jpg"
     },
     {
       "path": "/terms/",
       "title": "Terms and Work Scope | Little Fight NYC",
-      "description": "Little Fight NYC terms covering scope, quotes, project commitments, safe account access, and written approvals before work begins.",
+      "description": "Little Fight NYC terms. Scope, quotes, project promises, safe account access, and written approvals before work begins.",
       "h1": "Terms and scope, plain.",
-      "shortAnswer": "Short answer: Little Fight confirms scope, pricing, access needs, and timelines in writing before work begins.",
+      "shortAnswer": "Short answer: Little Fight confirms scope, price, access needs, and timelines in writing before work begins.",
       "type": "WebPage",
       "image": "/assets/og-image.jpg"
     },
@@ -837,53 +837,53 @@
       "title": "NYC Neighborhoods We Serve | Little Fight NYC",
       "description": "Little Fight NYC works across New York City, with on-site help usually within 24 hours. See the Manhattan neighborhoods we serve most: Lower East Side, East Village, SoHo, Chelsea, Midtown, and more.",
       "h1": "The neighborhoods we show up in.",
-      "shortAnswer": "Little Fight NYC serves shops, salons, restaurants, and owner-run teams across Manhattan — with on-site visits usually within 24 hours and callbacks within 2 hours, 9am–9pm ET.",
+      "shortAnswer": "Little Fight NYC serves law firms, bars, shops, salons, restaurants, and owner-run teams across Manhattan. On-site visits usually within 24 hours. Callbacks within 2 hours, 9am to 9pm ET.",
       "type": "WebPage",
       "image": "/assets/nyc-street-crowd.webp"
     },
     {
       "path": "/areas/lower-east-side/",
       "title": "Lower East Side Website & IT Support | Little Fight NYC",
-      "description": "Websites, IT support, Google visibility, and business systems for Lower East Side shops, restaurants, bars, galleries, and local teams.",
+      "description": "Websites, IT support, Google visibility, and business systems for Lower East Side bars, restaurants, shops, galleries, and local teams.",
       "h1": "Tech support, websites, and local search for Lower East Side businesses.",
-      "shortAnswer": "Short answer: Lower East Side businesses need fast mobile websites, clear local search signals, and tools that keep up with busy nights, small teams, and quick decisions.",
+      "shortAnswer": "Short answer: Lower East Side businesses need fast mobile websites, clear local search signals, and tools that keep up with busy nights and small teams.",
       "type": "PlacePage",
       "image": "/assets/nyc-street.webp",
       "faq": [
         {
           "question": "My bar gets found on Maps, not Google search. Does a website still matter?",
-          "answer": "Yes, because the Maps listing links straight to it. When someone taps your profile for hours, the menu, or a reservation, a slow or broken page sends them to the next pin. The website is what closes the visit Maps started."
+          "answer": "Yes, because the Maps listing links straight to it. Someone taps your profile for hours, the menu, or a table. A slow or broken page sends them to the next pin. The website closes the visit Maps started."
         },
         {
           "question": "Delivery apps take a big cut. Can you help me push people to order direct?",
-          "answer": "We set up a direct order and reservation path on your own site and profile so regulars have a reason to skip the app. We do not rip out what works overnight — we give you a channel you actually own alongside it."
+          "answer": "Yes. We set up a direct order and reservation path on your own site and profile. Regulars get a reason to skip the app. We do not rip out what works overnight. We give you a channel you actually own next to it."
         },
         {
           "question": "I run vintage and most of my sales start on Instagram. Where does a website fit?",
-          "answer": "Instagram starts the conversation; a simple site and an accurate Google profile close it for the people who search your name later or want your address and hours. It also keeps you findable when a post disappears down the feed."
+          "answer": "Instagram starts the conversation. A simple site and a correct Google profile close it. That is where people go when they search your name later or need your hours. It also keeps you findable when a post sinks down the feed."
         }
       ]
     },
     {
       "path": "/areas/east-village/",
       "title": "East Village Websites & Systems | Little Fight NYC",
-      "description": "Right-sized websites, local search, IT support, and workflow cleanup for East Village local businesses that need clearer customer paths.",
+      "description": "Right-sized websites, local search, IT support, and workflow cleanup for East Village businesses that need clearer customer paths.",
       "h1": "Right-sized websites and systems for East Village local businesses.",
-      "shortAnswer": "Short answer: East Village businesses win when locals can find them, understand the offer fast, and take action without chasing broken links or confusing booking paths.",
+      "shortAnswer": "Short answer: East Village businesses win when locals can find them, get the offer fast, and act without chasing broken links or confusing booking paths.",
       "type": "PlacePage",
       "image": "/assets/nyc-street.webp",
       "faq": [
         {
           "question": "I pay for a booking platform already. Do I need a website too?",
-          "answer": "The booking platform handles the transaction, but it does not help people find or trust you first. A simple site plus an accurate Google profile is what turns a 'near me' search into someone opening that booking link. They work together."
+          "answer": "The booking platform handles the sale. It does not help people find or trust you first. A simple site plus a correct Google profile turns a 'near me' search into someone opening that booking link. They work together."
         },
         {
           "question": "My salon lives on Instagram. Is that enough?",
-          "answer": "Instagram shows your work, but it does not answer hours, address, and pricing for the person deciding right now. Those questions get asked on Google, and if the answer is missing or wrong, they book the shop that answered. We make sure both point to the same clear truth."
+          "answer": "Instagram shows your work. But it does not answer hours, address, and pricing for the person deciding right now. Those questions get asked on Google. If the answer is missing or wrong, they book the shop that answered. We make both point to the same clear truth."
         },
         {
           "question": "How do I compete with the chain pharmacy or gym that moved in?",
-          "answer": "You will not out-spend them, so we make you easier to find and faster to act on for the people who want a local, owner-run option. Accurate search presence, real reviews, and a booking or contact path that just works is where independents actually win here."
+          "answer": "You will not out-spend them. So we make you easier to find and faster to act on for people who want a local, owner-run option. Correct search presence, real reviews, and a booking path that just works. That is where independents win here."
         }
       ]
     },
@@ -892,67 +892,67 @@
       "title": "SoHo Website Design & Business Systems | Little Fight NYC",
       "description": "Premium websites, local SEO, IT support, and simple business systems for SoHo shops, galleries, studios, and service businesses.",
       "h1": "Premium websites and business systems for SoHo shops and studios.",
-      "shortAnswer": "Short answer: SoHo businesses need polished public-facing pages and simple behind-the-scenes systems that protect leads, appointments, payments, and follow-up.",
+      "shortAnswer": "Short answer: SoHo businesses need polished public pages and simple back-office systems that protect leads, appointments, payments, and follow-up.",
       "type": "PlacePage",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "My rent is already brutal. Why invest in the website?",
-          "answer": "Because in SoHo the website is often the first impression, and a thin one makes an expensive store look less credible than it is. It is the cheapest part of your presence to fix and the one comparison shoppers judge you on before they ever walk in."
+          "answer": "Because in SoHo the website is often the first impression. A thin one makes an expensive store look less credible than it is. It is the cheapest part of your presence to fix. And it is what comparison shoppers judge before they ever walk in."
         },
         {
           "question": "I sell in-store, not online. Do I need e-commerce?",
-          "answer": "Not necessarily. Many SoHo shops do better with a beautiful, fast site that drives visits, appointments, and private-shopping requests rather than a full store. We build for how you actually sell instead of adding a platform you will resent."
+          "answer": "Not always. Many SoHo shops do better with a beautiful, fast site that drives visits, appointments, and private-shopping requests. We build for how you actually sell. Not a platform you will resent."
         },
         {
           "question": "We're a small studio competing against firms with real marketing teams. Can we look as legit?",
-          "answer": "Yes. A focused site with strong work, clear contact, and a tidy Google presence closes the credibility gap without a marketing department. Clients judge the work and the ease of reaching you, and both of those we can make excellent."
+          "answer": "Yes. A focused site with strong work, clear contact, and a tidy Google presence closes the gap. No marketing department needed. Clients judge the work and how easy you are to reach. We can make both excellent."
         }
       ]
     },
     {
       "path": "/areas/chelsea/",
       "title": "Chelsea Local SEO, Websites & IT Support | Little Fight NYC",
-      "description": "Website, local SEO, IT support, and workflow cleanup help for Chelsea studios, salons, galleries, restaurants, and service businesses.",
+      "description": "Websites, local SEO, IT support, and workflow cleanup for Chelsea studios, salons, galleries, restaurants, and service businesses.",
       "h1": "Websites, local SEO, and workflow cleanup for Chelsea businesses.",
-      "shortAnswer": "Short answer: Chelsea businesses need strong search visibility, sharp service pages, and systems that make inquiries, bookings, and follow-up easy to see.",
+      "shortAnswer": "Short answer: Chelsea businesses need strong search visibility, sharp service pages, and systems that keep inquiries, bookings, and follow-up easy to see.",
       "type": "PlacePage",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "Hudson Yards and the chains pulled attention west. How do I stay found?",
-          "answer": "By owning the neighborhood searches they don't care about — your specific service plus Chelsea, plus the blocks around the High Line. Tight local search presence and current reviews keep you visible to the people already near your door, which is who actually converts."
+          "answer": "Own the neighborhood searches they do not care about. Your specific service plus Chelsea, plus the blocks around the High Line. Tight local search and current reviews keep you visible to people already near your door. Those are the people who actually buy."
         },
         {
           "question": "I run a studio on a national booking app. Isn't that enough visibility?",
-          "answer": "The app captures people who already picked you; it does not win the person still deciding. That decision happens on Google and Maps, and if your profile and site are weak there, the chain studio gets the search. We strengthen the front door the app can't."
+          "answer": "The app catches people who already picked you. It does not win the person still deciding. That decision happens on Google and Maps. If your profile and site are weak there, the chain studio gets the search. We strengthen the front door the app cannot."
         },
         {
           "question": "We're a gallery — collectors already know us. Why worry about the website?",
-          "answer": "New collectors, visitors, and press check the site for the current show and hours before they walk over, and a stale page reads as a stale program. Keeping the exhibition and hours effortless to update is a small fix that protects a serious reputation."
+          "answer": "New collectors, visitors, and press check the site for the current show and hours before they walk over. A stale page reads as a stale program. Making the show and hours easy to update is a small fix that protects a serious reputation."
         }
       ]
     },
     {
       "path": "/areas/midtown/",
       "title": "Midtown IT Support & Websites | Little Fight NYC",
-      "description": "Practical IT support, websites, local search, and business systems for Midtown small businesses and professional teams under daily pressure.",
+      "description": "Practical IT support, websites, local search, and business systems for Midtown small businesses, law firms, and busy teams.",
       "h1": "IT support and digital systems for Midtown small businesses.",
-      "shortAnswer": "Short answer: Midtown businesses need reliable daily tech, fast website actions, and workflows that reduce interruptions for teams already moving under pressure.",
+      "shortAnswer": "Short answer: Midtown businesses need tech that works every day, fast website actions, and workflows that cut interruptions for busy teams.",
       "type": "PlacePage",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "My customers are office workers whose schedules changed. How does that affect my setup?",
-          "answer": "It means your hours, your busiest windows, and your order-ahead options all have to match the new hybrid reality, or you miss the rush you still have. We tune your profile and site to when the office crowd is actually here instead of the old five-day pattern."
+          "answer": "Your hours, your busiest windows, and your order-ahead options have to match the new hybrid week. Otherwise you miss the rush you still have. We tune your profile and site to when the office crowd is actually here. Not the old five-day pattern."
         },
         {
           "question": "The chains have apps for ordering ahead. Can a small shop offer that?",
-          "answer": "Yes, without a custom app. A clean order-ahead or pickup link on your site and Google profile gives the office worker the same one-tap convenience. You keep the margin and the relationship instead of renting both from a platform."
+          "answer": "Yes, and without a custom app. A clean order-ahead or pickup link on your site and Google profile gives the office worker the same one-tap ease. You keep the margin and the relationship. No renting both from a platform."
         },
         {
           "question": "My biggest issue is tech that breaks mid-day. Do you handle that?",
-          "answer": "Yes. Midtown support is often less about marketing and more about the POS, phone, or logins that stall the shop during the rush. We fix what's blocking the day first, then look at visibility, because a shop that can't take an order can't grow."
+          "answer": "Yes. Midtown support is often less about marketing and more about the POS, phone, or logins that stall the shop during the rush. We fix what is blocking the day first. Then we look at visibility. A shop that cannot take an order cannot grow."
         }
       ]
     },
@@ -961,21 +961,21 @@
       "title": "Upper East Side Websites & Local SEO | Little Fight NYC",
       "description": "Local search, websites, IT support, and business systems for Upper East Side salons, shops, practices, and service teams.",
       "h1": "Local search, websites, and support for Upper East Side businesses.",
-      "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, accurate Google visibility, and simple systems that make appointments and follow-up easy.",
+      "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, correct Google visibility, and simple systems that make appointments and follow-up easy.",
       "type": "PlacePage",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
           "question": "A dental group backed by investors opened nearby. How do I compete as an independent?",
-          "answer": "You lead with what they can't fake: a credible site, real patient reviews, and a booking path as easy as theirs. Patients here choose the practice that looks trustworthy and is simple to reach, and an independent can win both without a corporate marketing budget."
+          "answer": "Lead with what they cannot fake. A credible site, real patient reviews, and a booking path as easy as theirs. Patients here pick the practice that looks trustworthy and is simple to reach. An independent can win both without a corporate budget."
         },
         {
           "question": "My patients are older and call to book. Do I still need online booking?",
-          "answer": "Keep the phone — but add an online request option, because the family members and newer patients who research you expect it. Offering both captures the caller and the researcher instead of forcing everyone through the channel that's convenient for you."
+          "answer": "Keep the phone. But add an online request option too. The family members and newer patients who research you expect it. Offering both captures the caller and the researcher. Nobody gets forced through one channel."
         },
         {
           "question": "Isn't a professional practice above worrying about Google reviews?",
-          "answer": "Not on the Upper East Side, where clients quietly check reviews before anything personal or medical. A handful of recent, genuine reviews and an owner who responds signals a practice that's present and cared-for, which is exactly what this clientele is looking for."
+          "answer": "Not on the Upper East Side. Clients here quietly check reviews before anything personal or medical. A few recent, genuine reviews and an owner who replies signal a practice that is present and cared for. That is exactly what this clientele looks for."
         }
       ]
     },
@@ -984,21 +984,21 @@
       "title": "Upper West Side Websites & Tech Help | Little Fight NYC",
       "description": "Better websites, IT support, Google visibility, and practical business systems for Upper West Side local businesses that need clear next steps.",
       "h1": "Better websites and practical tech help for Upper West Side businesses.",
-      "shortAnswer": "Short answer: Upper West Side local businesses need clear websites, reliable support, and search visibility that helps nearby customers choose them.",
+      "shortAnswer": "Short answer: Upper West Side businesses need clear websites, reliable support, and search visibility that helps nearby customers pick them.",
       "type": "PlacePage",
       "image": "/assets/nyc-street.webp",
       "faq": [
         {
           "question": "Most of my customers are regulars. Why does search visibility matter?",
-          "answer": "Because the neighborhood keeps turning over — new families arrive constantly, and they find you by searching before they ever walk in. Strong local presence protects the flow of new regulars that keeps a relationship business healthy over time."
+          "answer": "Because the neighborhood keeps turning over. New families arrive all the time. They search before they ever walk in. A strong local presence keeps the flow of new regulars coming. That is what keeps a relationship business healthy."
         },
         {
           "question": "I run a kids' program and registration is a mess. Can you simplify it?",
-          "answer": "Yes. We make the schedule easy to find and the sign-up path clean, so parents can register in a couple of taps instead of emailing back and forth. Less friction there usually means fewer dropped enrollments and far fewer admin headaches for you."
+          "answer": "Yes. We make the schedule easy to find and the sign-up path clean. Parents register in a couple of taps instead of emailing back and forth. Less friction means fewer dropped sign-ups and far fewer admin headaches for you."
         },
         {
           "question": "I feel like I'm paying for software I don't use. Can you help?",
-          "answer": "That's common up here, and often the fix is fewer tools, not more. We look at what you actually use, cut what drags, and connect what's left so the shop runs cleaner and the monthly bill stops creeping."
+          "answer": "That is common up here. Often the fix is fewer tools, not more. We look at what you actually use, cut what drags, and connect what is left. The shop runs cleaner and the monthly bill stops creeping."
         }
       ]
     },
@@ -1007,30 +1007,30 @@
       "title": "West Village Websites & Systems | Little Fight NYC",
       "description": "Premium local websites, Google visibility, IT support, and right-sized business systems for West Village businesses that depend on trust.",
       "h1": "Premium local websites and systems for West Village businesses.",
-      "shortAnswer": "Short answer: West Village businesses need elegant, fast websites and practical systems that help customers act without adding another expensive platform.",
+      "shortAnswer": "Short answer: West Village businesses need elegant, fast websites and practical systems that help customers act. No new expensive platform required.",
       "type": "PlacePage",
       "image": "/assets/nyc-street.webp",
       "faq": [
         {
           "question": "My spot is beloved locally. Why does the website matter?",
-          "answer": "Because the tourists and date-nighters who fill your tables don't know you yet — they find you by searching while they wander. A site and profile that match how good the place actually is turns that search into a reservation instead of a scroll-past."
+          "answer": "Because the tourists and date-nighters who fill your tables do not know you yet. They find you by searching while they wander. A site and profile that match how good the place really is turn that search into a reservation. Not a scroll-past."
         },
         {
           "question": "Reservations come through an app I pay for. Isn't that covered?",
-          "answer": "The app takes the booking, but the person still has to choose you first, and that choice happens on Google, Maps, and your site. If those look weak, the reservation app never gets the chance. We strengthen the step that comes before it."
+          "answer": "The app takes the booking. But the person still has to pick you first. That choice happens on Google, Maps, and your site. If those look weak, the reservation app never gets the chance. We strengthen the step before it."
         },
         {
           "question": "Rents here are brutal and I'm watching costs. Will this add another bill?",
-          "answer": "Usually the opposite. We often find overlapping subscriptions we can cut, then build a lean site and clean local presence that does more for less. The goal is fewer tools that actually work, not another platform on the pile."
+          "answer": "Usually the opposite. We often find overlapping subscriptions to cut. Then we build a lean site and a clean local presence that does more for less. Fewer tools that actually work. Not another platform on the pile."
         }
       ]
     },
     {
       "path": "/thanks/",
       "title": "Thanks for Reaching Out | Little Fight NYC",
-      "description": "Thanks for reaching out to Little Fight NYC. Here is what happens next after a Fit Check, urgent support note, or contact request.",
+      "description": "Thanks for reaching out to Little Fight NYC. Here is what happens next after a Tech Audit, urgent support note, or contact request.",
       "h1": "Thanks. We have the messy setup.",
-      "shortAnswer": "Short answer: Little Fight will review what you sent and look for the clearest next move: what to keep, connect, replace, or build.",
+      "shortAnswer": "Short answer: Little Fight will review what you sent and find the clearest next move. What to keep, connect, replace, or build.",
       "type": "WebPage",
       "image": "/assets/og-image.jpg",
       "noindex": true
@@ -1038,16 +1038,16 @@
     {
       "path": "/case-studies/",
       "title": "Case Studies: Real NYC Small Business Work | Little Fight NYC",
-      "description": "Eight named engagements — websites, IT, and business systems for NYC shops, salons, brands, and studios. What we kept, what we changed, and what shipped, with honest facts per project.",
+      "description": "Eight named projects. Websites, IT, and business systems for NYC shops, salons, brands, and studios. What we kept, what we changed, and what shipped.",
       "h1": "Real shops. Real work.",
-      "shortAnswer": "Short answer: Little Fight publishes named case studies — real client work with honest, verifiable facts: what we kept, what we changed, and what shipped.",
+      "shortAnswer": "Short answer: Little Fight publishes named case studies. Real client work with honest, checkable facts. What we kept, what we changed, and what shipped.",
       "type": "CollectionPage",
       "image": "/assets/storefront-shop-deli.webp"
     },
     {
       "path": "/case-studies/cc-films/",
       "title": "CC Films — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC modernized ccfilms.net into a clearer official home for Marrow, with stronger film proof, press paths, schema, and crawler context.",
+      "description": "How Little Fight NYC turned ccfilms.net into a clearer official home for Marrow. Stronger film proof, better press paths, and cleaner search signals.",
       "h1": "CC Films",
       "shortAnswer": "A clearer official home for a debut horror feature.",
       "type": "Article",
@@ -1058,7 +1058,7 @@
     {
       "path": "/case-studies/deckspace/",
       "title": "DeckSpace — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC shaped getdeckspace.com into a clearer product story for a nostalgic, low-latency cruise social network.",
+      "description": "How Little Fight NYC shaped getdeckspace.com into a clear product story. A nostalgic, fast social network for life on a cruise ship.",
       "h1": "DeckSpace",
       "shortAnswer": "A nostalgic onboard social layer for life at sea.",
       "type": "Article",
@@ -1069,7 +1069,7 @@
     {
       "path": "/case-studies/hair-by-rachel-charles/",
       "title": "Hair By Rachel Charles — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC helped Hair By Rachel Charles move from Instagram-only visibility to a clearer public site and real booking flow.",
+      "description": "How Little Fight NYC helped Hair By Rachel Charles go from Instagram-only to a real public site and a working booking flow.",
       "h1": "Hair By Rachel Charles",
       "shortAnswer": "From Instagram-only to a real booking flow.",
       "type": "Article",
@@ -1078,7 +1078,7 @@
     {
       "path": "/case-studies/after-hours-agenda/",
       "title": "After Hours Agenda — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC built After Hours Agenda a custom Next.js storefront with Square payments and Printful fulfillment — e-commerce that keeps the brand's voice instead of a theme's.",
+      "description": "How Little Fight NYC built After Hours Agenda a custom Next.js storefront with Square payments and Printful shipping. E-commerce that keeps the brand's voice.",
       "h1": "After Hours Agenda",
       "shortAnswer": "E-commerce that doesn't drown the brand.",
       "type": "Article",
@@ -1087,7 +1087,7 @@
     {
       "path": "/case-studies/clearhelp/",
       "title": "ClearHelp — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC worked with ClearHelp on a multi-site setup with a real backend, cleaner ownership, and less brittle operations.",
+      "description": "How Little Fight NYC built ClearHelp a three-site setup with one real backend, cleaner ownership, and fewer breakable parts.",
       "h1": "ClearHelp",
       "shortAnswer": "Multi-site setup with a real backend.",
       "type": "Article",
@@ -1096,7 +1096,7 @@
     {
       "path": "/case-studies/public-house-creative/",
       "title": "Public House Creative — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC built Cockpit for Public House Creative — an internal estimating system where documents come in, rooms get classified, the math reconciles, and the report exports. In production on real bids.",
+      "description": "How Little Fight NYC built Cockpit for Public House Creative. Documents in, rooms sorted, math checked, report out. In production on real bids.",
       "h1": "Public House Creative",
       "shortAnswer": "An internal cockpit for the work they actually run.",
       "type": "Article",
@@ -1105,7 +1105,7 @@
     {
       "path": "/case-studies/grand-funding-llc/",
       "title": "Grand Funding LLC — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC worked with Grand Funding LLC on a cleaner public face for a finance business that needed trust fast.",
+      "description": "How Little Fight NYC gave Grand Funding LLC a cleaner public face. A finance business that needed trust fast, without the cliches.",
       "h1": "Grand Funding LLC",
       "shortAnswer": "A clean public face for a finance business.",
       "type": "Article",
@@ -1114,36 +1114,36 @@
     {
       "path": "/case-studies/venuecircuit/",
       "title": "VenueCircuit: A Financial OS for Venues — Case Study | Little Fight NYC",
-      "description": "How Little Fight built and shipped VenueCircuit — a live financial operating system for independent venues where the night closes in about 90 seconds and every number drills to its receipt.",
+      "description": "How Little Fight built and shipped VenueCircuit. A live financial OS for independent venues. The night closes in about 90 seconds. Every number drills to its receipt.",
       "h1": "VenueCircuit",
-      "shortAnswer": "Short answer: VenueCircuit is Little Fight's own shipped software product — a financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
+      "shortAnswer": "Short answer: VenueCircuit is Little Fight's own shipped software product. A financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
       "type": "Article",
       "image": "/assets/case-venuecircuit.webp"
     },
     {
       "path": "/studio/dakota/",
       "title": "Dakota — From the Studio | Little Fight NYC",
-      "description": "An AI agent that finds leads, drafts cold outreach, routes responses, and keeps owner review close while running on a Mac in the office.",
+      "description": "An AI agent that finds leads, drafts cold outreach, and routes replies. It runs on a Mac in the office, with the owner reviewing close by.",
       "h1": "Dakota",
-      "shortAnswer": "An AI agent that finds leads, drafts cold outreach, and routes responses — running on a Mac in the office.",
+      "shortAnswer": "An AI agent that finds leads, drafts cold outreach, and routes replies. It runs on a Mac in the office.",
       "type": "Article",
       "image": "/assets/coworking-laptops.webp"
     },
     {
       "path": "/studio/cockpit/",
       "title": "Estimator's Cockpit — From the Studio | Little Fight NYC",
-      "description": "A long-running build for a paint-and-finish company that brings discovery, classification, validation, and reporting into one premium UI.",
+      "description": "A long-running build for a paint-and-finish company. Discovery, sorting, checking, and reporting in one premium UI.",
       "h1": "Estimator's Cockpit",
-      "shortAnswer": "A long-running build for a paint-and-finish company — discovery, classification, and reporting in one premium UI.",
+      "shortAnswer": "A long-running build for a paint-and-finish company. Discovery, sorting, and reporting in one premium UI.",
       "type": "Article",
       "image": "/assets/hero-laptop.webp"
     },
     {
       "path": "/studio/venuecircuit/",
       "title": "VenueCircuit — From the Studio | Little Fight NYC",
-      "description": "A full software product Little Fight shipped to the public: the financial operating system for independent live-event venues. Close the night in 90 seconds.",
+      "description": "A full software product Little Fight shipped to the public. The financial operating system for independent live-event venues. Close the night in 90 seconds.",
       "h1": "VenueCircuit",
-      "shortAnswer": "The operating system for independent live-event venues — close the night in 90 seconds and know every number down to the receipt.",
+      "shortAnswer": "The operating system for independent live-event venues. Close the night in 90 seconds and know every number down to the receipt.",
       "type": "Article",
       "image": "/assets/case-venuecircuit.webp"
     }
@@ -1274,7 +1274,7 @@
     {
       "slug": "business-system",
       "term": "Business system",
-      "definition": "A connected set of pages, tools, handoffs, reminders, records, and reports that helps the business move work from first contact to finished job.",
+      "definition": "The connected set of pages, tools, reminders, and records that moves work from first hello to finished job.",
       "plain": "The way the work actually moves, not just the software you bought.",
       "faq": [
         {
@@ -1290,7 +1290,7 @@
     {
       "slug": "crm",
       "term": "CRM",
-      "definition": "A customer relationship management system, usually the place where leads, customers, notes, follow-up, and sales history should live.",
+      "definition": "One place where leads, customers, notes, follow-up, and sales history live.",
       "plain": "The list of people who asked for help, bought something, or need a reply.",
       "faq": [
         {
@@ -1322,23 +1322,23 @@
     {
       "slug": "local-search",
       "term": "Local search",
-      "definition": "The work that helps nearby customers find, trust, and choose a business through Google, Maps, service pages, reviews, and neighborhood signals.",
+      "definition": "The work that helps nearby customers find, trust, and pick your business on Google and Maps.",
       "plain": "Showing up when someone nearby is already looking.",
       "faq": [
         {
           "question": "How long until local search actually helps me?",
-          "answer": "The quick wins, fixing your profile and correcting wrong details, can help within weeks. The steadier gains from reviews and good pages build over a few months, so it's a habit, not a one-time switch."
+          "answer": "Quick wins like fixing your profile can help within weeks. Reviews and good pages build over a few months. It is a habit, not a one-time switch."
         },
         {
           "question": "Do I need to pay Google for ads to show up nearby?",
-          "answer": "Not to appear in the regular map and search results, that part is earned, not bought. Ads can add reach on top, but a well-kept profile and honest pages do most of the heavy lifting for free."
+          "answer": "No. The regular map and search results are earned, not bought. Ads can add reach on top. A well-kept profile and honest pages do most of the work for free."
         }
       ]
     },
     {
       "slug": "software-stack",
       "term": "Software stack",
-      "definition": "The group of tools a business uses to run daily work, such as website platforms, booking tools, POS, payments, email, spreadsheets, CRMs, and reporting.",
+      "definition": "All the tools a business uses to run the day. Website, booking, POS, payments, email, spreadsheets, and reports.",
       "plain": "All the apps you pay for, plus the work people still do around them.",
       "faq": [
         {
@@ -1354,16 +1354,16 @@
     {
       "slug": "workflow-automation",
       "term": "Workflow automation",
-      "definition": "A rule or system that moves routine work forward automatically, such as sending a lead to the right place, creating a follow-up task, or updating a dashboard.",
+      "definition": "A rule that moves routine work forward on its own. It can send a lead to the right place, make a follow-up task, or update a dashboard.",
       "plain": "The boring repeatable step happens without someone remembering to do it.",
       "faq": [
         {
           "question": "Will automation make my business feel cold or robotic to customers?",
-          "answer": "Done right, it does the opposite, customers get faster replies and never get forgotten, which feels more attentive, not less. You automate the reminder to follow up; the actual relationship stays human."
+          "answer": "Done right, it does the opposite. Customers get faster replies and never get forgotten. That feels more caring, not less. You automate the reminder. The relationship stays human."
         },
         {
           "question": "Is this only for big companies with tech teams?",
-          "answer": "No. The most useful automations for a small shop are small and cheap, one confirmation text, one follow-up reminder. You don't need a tech team, just the right rule set up once."
+          "answer": "No. The best automations for a small shop are small and cheap. One confirmation text. One follow-up reminder. You do not need a tech team. Just the right rule, set up once."
         }
       ]
     }

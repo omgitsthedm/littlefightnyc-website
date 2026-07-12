@@ -12,7 +12,7 @@ type FieldName = "name" | "business" | "contact" | "message";
 
 const OUTCOMES = [
   "An urgent fix plan",
-  "A cleanup punch list, ranked",
+  "A fix list, ranked by what hurts most",
   "An honest “you don’t need us yet”",
 ];
 
@@ -71,7 +71,7 @@ export default function FitCheck() {
   return (
     <>
       <PageHero
-        eyebrow="Fit Check"
+        eyebrow="Tech Audit"
         icon={ClipboardCheck}
         title={
           <>
@@ -134,8 +134,8 @@ export default function FitCheck() {
             noValidate
           >
             <input type="hidden" name="form-name" value="fit-check-scratch" />
-            <input type="hidden" name="subject" value="New Little Fight NYC Fit Check" />
-            <input type="hidden" name="source" value="littlefightnyc.com/fit-check" />
+            <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
+            <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
             {symptom && <input type="hidden" name="symptom" value={symptom} />}
             {Object.entries(attribution).map(([key, value]) => (
               <input key={key} type="hidden" name={key} value={value} />
@@ -248,7 +248,7 @@ export default function FitCheck() {
                 </>
               ) : (
                 <>
-                  Send my Fit Check <span aria-hidden="true">→</span>
+                  Book my free Tech Audit <span aria-hidden="true">→</span>
                 </>
               )}
             </button>
@@ -274,10 +274,10 @@ export default function FitCheck() {
             <TimelineStrip
               vertical
               className="lf-fit__next"
-              label="What happens after you send the Fit Check"
-              summary="After you send the Fit Check: you get a callback within 2 hours between 9am and 9pm Eastern, then a free consult — no pitch."
+              label="What happens after you book the Tech Audit"
+              summary="After you book the Tech Audit: you get a callback within 2 hours between 9am and 9pm Eastern, then a free consult — no pitch."
               beats={[
-                { label: "Send the Fit Check" },
+                { label: "Book the Tech Audit" },
                 { label: "Callback within 2 hours", sub: "9am–9pm ET", marker: true },
                 { label: "Free consult", sub: "No pitch" },
               ]}

@@ -233,3 +233,208 @@
     100% { transform: scale(1.06); }
   }
 }
+
+/* ============================================================
+   Hero archetypes — variety by page type, one base component.
+   ============================================================ */
+
+/* --- Case archetype: the work IS the hero. Full-bleed screenshot
+   behind the title under a dark scrim; title stays readable (AA). --- */
+.lf-pagehero--case {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: min(78vh, 46rem);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-pagehero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.lf-pagehero__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.92) brightness(0.9);
+  will-change: transform;
+}
+
+/* Slow scroll drift on the backdrop — transform only, 60fps. */
+@supports (animation-timeline: view()) {
+  .lf-pagehero--case .lf-pagehero__backdrop img {
+    animation: lf-pagehero-backdrop linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes lf-pagehero-backdrop {
+    0% { transform: scale(1.04); }
+    100% { transform: scale(1.12); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-pagehero--case .lf-pagehero__backdrop img {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Dark scrim: heavy at the text edge, lighter up top so the work shows. */
+.lf-pagehero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(5, 5, 7, 0.96) 0%,
+      rgba(5, 5, 7, 0.82) 34%,
+      rgba(5, 5, 7, 0.45) 62%,
+      rgba(5, 5, 7, 0.30) 100%
+    );
+}
+
+.lf-pagehero--case .lf-pagehero__inner {
+  width: 100%;
+  padding-top: clamp(6rem, 18vh, 12rem);
+}
+
+.lf-pagehero--case .lf-pagehero__title {
+  font-size: clamp(3.2rem, 9vw, 8.6rem);
+  max-width: 14ch;
+  text-shadow: 0 2px 24px rgba(5, 5, 7, 0.6);
+}
+
+.lf-pagehero--case .lf-pagehero__dek {
+  color: var(--lf-bone);
+  text-shadow: 0 1px 12px rgba(5, 5, 7, 0.7);
+}
+
+/* --- Answer archetype: pure type + an orange quick-answer card.
+   AEO pages should LOOK like answers. --- */
+.lf-pagehero--answer .lf-pagehero__title {
+  /* Questions run long — scale down so the whole question stays a headline. */
+  font-size: clamp(2.2rem, 5.4vw, 4.6rem);
+  line-height: 1.02;
+  max-width: 22ch;
+}
+
+.lf-pagehero__quick {
+  position: relative;
+  max-width: 46rem;
+  margin-top: clamp(0.5rem, 1.5vw, 1rem);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 2rem);
+  border-radius: var(--lf-radius-sm);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 38%, transparent);
+  border-left: 4px solid var(--lf-fight);
+  background:
+    linear-gradient(135deg, rgba(249, 115, 22, 0.10), rgba(249, 115, 22, 0.03) 60%),
+    var(--lf-paper);
+}
+
+.lf-pagehero__quick-label {
+  display: block;
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin-bottom: 0.6em;
+}
+
+.lf-editorial .lf-pagehero__quick-body {
+  margin: 0;
+  font-size: var(--lf-text-md);
+  line-height: 1.5;
+  color: var(--lf-bone);
+  letter-spacing: -0.005em;
+}
+
+/* Stagger the quick card in with the rest of the entrance. */
+.lf-pagehero__quick {
+  opacity: 1;
+  transform: translateY(0);
+}
+.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__quick {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__quick {
+  animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 270ms both;
+}
+
+/* --- Area archetype: neighborhood name at display scale + ZIP chips. --- */
+.lf-editorial .lf-pagehero__display {
+  margin: 0;
+  font-family: var(--lf-serif);
+  font-weight: 700;
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--lf-fight);
+}
+
+.lf-pagehero__display em {
+  font-style: italic;
+}
+
+.lf-pagehero--area .lf-pagehero__title {
+  /* The neighborhood name carries the display weight; the h1 reads as the
+     working line under it. Text unchanged — only the scale moves. */
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  max-width: 26ch;
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-pagehero__chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: clamp(0.25rem, 1vw, 0.75rem) 0 0;
+  padding: 0;
+}
+
+.lf-pagehero__chip {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--lf-bone-soft);
+  padding: 6px 12px;
+  border-radius: var(--lf-radius-pill);
+  border: 1px solid var(--lf-hairline);
+  background: color-mix(in srgb, var(--lf-paper) 72%, transparent);
+}
+
+/* Entrance stagger for display name + chips */
+.lf-pagehero__display,
+.lf-pagehero__chips {
+  opacity: 1;
+  transform: translateY(0);
+}
+.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__display,
+.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__chips {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__display { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 60ms both; }
+.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__chips   { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 260ms both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-pagehero__quick,
+  .lf-pagehero__display,
+  .lf-pagehero__chips {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}

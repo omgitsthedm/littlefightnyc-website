@@ -70,7 +70,10 @@ export default function App() {
           <Route path="consulting" element={<Navigate to="/services/tech-consulting/" replace />} />
           <Route path="it-support" element={<Navigate to="/services/it-support/" replace />} />
           <Route path="lifetime-cost" element={<Navigate to="/answers/reduce-monthly-software-costs-small-business/" replace />} />
-          <Route path="fit-check" element={route(FitCheck)} />
+          <Route path="tech-audit" element={route(FitCheck)} />
+          {/* Fit Check renamed to Tech Audit (2026-07-12) — SPA-side backup
+              for the _redirects 301 so in-app history links never dead-end. */}
+          <Route path="fit-check" element={<Navigate to="/tech-audit/" replace />} />
           <Route path="examples" element={route(FieldGuide)} />
           <Route path="audit" element={route(Audit)} />
           <Route path="answers" element={route(Answers)} />

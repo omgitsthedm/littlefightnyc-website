@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { BookOpenText, FileText, ListChecks, Workflow, Newspaper } from "lucide-react";
+import { ArrowUpRight, Newspaper } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
-import VisualIndex from "@/components/editorial/VisualIndex";
 import QuietContact from "@/components/editorial/QuietContact";
+import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import journal from "@/data/journal.json";
 import "@/styles/editorial/journal.css";
 
@@ -32,13 +33,6 @@ const CATEGORY_LABEL: Record<Post["category"], string> = {
   blog: "Notebook",
   guide: "Software Guide",
 };
-
-const CATEGORY_ICON = {
-  howto: ListChecks,
-  essay: BookOpenText,
-  blog: FileText,
-  guide: Workflow,
-} satisfies Record<Post["category"], typeof ListChecks>;
 
 const CATEGORY_IMAGE: Record<Post["category"], string> = {
   howto: "/assets/typing.webp",
@@ -71,11 +65,23 @@ const CATEGORY_ORDER: Post["category"][] = ["howto", "essay", "blog", "guide"];
 
 type Filter = Post["category"] | "all";
 
+// journal.json dates are already human-readable ("February 7, 2026").
+function postTime(published: string): number {
+  const t = new Date(published).getTime();
+  return Number.isNaN(t) ? 0 : t;
+}
+
 export default function Journal() {
   const posts = journal as unknown as Post[];
   const [filter, setFilter] = useState<Filter>("all");
   const minutes = useMemo(
     () => Object.fromEntries(posts.map((p) => [p.slug, readMinutes(p.html)])),
+    [posts],
+  );
+
+  // Newest first — one list, one presentation.
+  const sorted = useMemo(
+    () => [...posts].sort((a, b) => postTime(b.published) - postTime(a.published)),
     [posts],
   );
 
@@ -85,23 +91,12 @@ export default function Journal() {
     count: posts.filter((p) => p.category === cat).length,
   })).filter((c) => c.count > 0);
 
-  const visible = filter === "all" ? posts : posts.filter((p) => p.category === filter);
+  const visible = filter === "all" ? sorted : sorted.filter((p) => p.category === filter);
+  const featured = visible[0];
+  const rows = visible.slice(1);
 
-  // Group by category for the index, in priority order.
-  const grouped = CATEGORY_ORDER.map((cat) => ({
-    category: cat,
-    label: CATEGORY_LABEL[cat],
-    posts: visible.filter((p) => p.category === cat),
-  })).filter((g) => g.posts.length > 0);
-  const overview = visible.map((post) => ({
-    body: post.description,
-    eyebrow: CATEGORY_LABEL[post.category],
-    icon: CATEGORY_ICON[post.category],
-    image: POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category],
-    meta: `~${minutes[post.slug]} min read`,
-    title: post.title,
-    to: `/journal/${post.slug}/`,
-  }));
+  const featuredRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+  const listRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
 
   return (
     <>
@@ -115,7 +110,7 @@ export default function Journal() {
             <span className="lf-em">writing about.</span>
           </>
         }
-        dek="How-tos, essays, software comparisons, and field notes from working with NYC small businesses. Plain English, no upsell, occasionally cheeky."
+        dek="How-tos, essays, software comparisons, and notes from working with NYC small businesses. Plain words, no upsell, occasionally cheeky."
         image={{
           src: "/assets/sign-groceries-snacks.webp",
           alt: "Hand-painted Groceries Snacks sign",
@@ -150,43 +145,78 @@ export default function Journal() {
         </div>
       </div>
 
-      <VisualIndex
-        eyebrow="Browse"
-        title="Pick the kind of decision you're making."
-        dek="How-tos when you're doing it yourself, software comparisons when you're choosing a tool, and essays when you're deciding which direction to take. Filter by type above, or scan them all."
-        items={overview}
-        variant="compact"
-      />
+      {/* Latest post, full width — the newest thing we wrote leads. */}
+      {featured && (
+        <section className="lf-journal-featured" aria-label="Latest post">
+          <div ref={featuredRef} className="lf-journal-featured__inner" data-reveal>
+            <Link
+              to={`/journal/${featured.slug}/`}
+              viewTransition
+              className="lf-journal-featured__card"
+            >
+              <span className="lf-journal-featured__media" aria-hidden="true">
+                <img
+                  src={POST_IMAGE[featured.slug] ?? CATEGORY_IMAGE[featured.category]}
+                  alt=""
+                  {...responsiveImageProps(
+                    POST_IMAGE[featured.slug] ?? CATEGORY_IMAGE[featured.category],
+                    "(min-width: 1024px) 52vw, 100vw",
+                    [640, 900],
+                  )}
+                  width={1600}
+                  height={1200}
+                  loading="eager"
+                  decoding="async"
+                />
+              </span>
+              <span className="lf-journal-featured__copy">
+                <span className="lf-journal-featured__flag">Latest</span>
+                <span className="lf-journal-featured__chips">
+                  <span className="lf-journal__cat">{CATEGORY_LABEL[featured.category]}</span>
+                  <span className="lf-journal__read">~{minutes[featured.slug]} min read</span>
+                </span>
+                <span className="lf-journal-featured__title">{featured.title}</span>
+                <span className="lf-journal-featured__desc">{featured.description}</span>
+                <span className="lf-journal-featured__meta">{featured.published}</span>
+                <span className="lf-journal-featured__cta">
+                  Read the entry
+                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+                </span>
+              </span>
+            </Link>
+          </div>
+        </section>
+      )}
 
-      <section className="lf-journal">
-        <div className="lf-journal__inner">
-          {grouped.map((group) => (
-            <section key={group.category} className="lf-journal__group">
-              <p className="lf-journal__group-label">{group.label}</p>
-              <ol className="lf-journal__list">
-                {group.posts.map((post, i) => (
-                  <li key={post.slug} className="lf-journal__item">
-                    <Link to={`/journal/${post.slug}/`} className="lf-journal__link">
-                      <span className="lf-journal__num">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <span className="lf-journal__body">
-                        <span className="lf-journal__title">
-                          {post.title}
-                          <span className="lf-journal__read">
-                            ~{minutes[post.slug]} min read
-                          </span>
+      {/* Everything else — compact editorial rows. One list, no repeats. */}
+      {rows.length > 0 && (
+        <section className="lf-journal">
+          <div ref={listRef} className="lf-journal__inner" data-reveal>
+            <p className="lf-journal__group-label">All entries</p>
+            <ol className="lf-journal__list">
+              {rows.map((post, i) => (
+                <li key={post.slug} className="lf-journal__item">
+                  <Link to={`/journal/${post.slug}/`} viewTransition className="lf-journal__link">
+                    <span className="lf-journal__num">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="lf-journal__body">
+                      <span className="lf-journal__title">
+                        {post.title}
+                        <span className="lf-journal__chips">
+                          <span className="lf-journal__cat">{CATEGORY_LABEL[post.category]}</span>
+                          <span className="lf-journal__read">~{minutes[post.slug]} min read</span>
                         </span>
-                        <span className="lf-journal__desc">{post.description}</span>
                       </span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          ))}
-        </div>
-      </section>
+                      <span className="lf-journal__desc">{post.description}</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
 
       <QuietContact />
     </>

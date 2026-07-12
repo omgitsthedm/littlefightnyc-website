@@ -24,7 +24,7 @@ export default function Legal() {
           <EditorialBody>
             <h2 id="privacy">What forms collect</h2>
             <p>
-              Fit Check and contact paths may collect your name, business
+              Tech Audit and contact paths may collect your name, business
               name, contact information, follow-up preference, and a plain
               description of the issue. That is the minimum needed to reply
               usefully.
@@ -39,7 +39,7 @@ export default function Legal() {
             <p>
               These tools may record page views, approximate device/browser
               details, referral information, and events such as phone clicks,
-              email clicks, Fit Check or contact button clicks, and form
+              email clicks, Tech Audit or contact button clicks, and form
               submits. Little Fight uses this information for measurement,
               reporting, and improving marketing, not to sell personal
               information.

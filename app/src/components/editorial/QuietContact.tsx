@@ -28,8 +28,8 @@ const CONTACT_CHANNELS = [
   {
     icon: ClipboardCheck,
     label: "Form",
-    detail: "Fit Check",
-    to: "/fit-check/",
+    detail: "Tech Audit",
+    to: "/tech-audit/",
     note: "When the problem has parts",
     primary: true,
   },
@@ -41,7 +41,17 @@ function openTextMessage() {
   window.location.href = SMS_URL;
 }
 
-export default function QuietContact() {
+type Props = {
+  /** Per-page closing line — e.g. "Want a build like this?" on a case page. */
+  heading?: string;
+  /** Per-page support line under the heading. */
+  lede?: string;
+};
+
+export default function QuietContact({
+  heading = "Tell us what's broken.",
+  lede = "9am-9pm Eastern: a human answers. After hours: AI takes the message and David calls back.",
+}: Props) {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
 
   return (
@@ -49,11 +59,8 @@ export default function QuietContact() {
       <div className="lf-contact-block__inner">
         <div className="lf-contact-block__head">
           <p className="lf-contact-block__eyebrow">Call. Text. Email. Form.</p>
-          <h2 className="lf-contact-block__title">Tell us what's broken.</h2>
-          <p className="lf-contact-block__dek">
-            9am-9pm Eastern: a human answers. After hours: AI takes the
-            message and David calls back.
-          </p>
+          <h2 className="lf-contact-block__title">{heading}</h2>
+          <p className="lf-contact-block__dek">{lede}</p>
         </div>
 
         <ul className="lf-contact-block__channels" aria-label="Contact options">

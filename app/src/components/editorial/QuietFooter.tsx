@@ -1,7 +1,26 @@
+import { useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
-import { Award, BookOpen, HelpCircle, Layers, MapPin } from "lucide-react";
+import { Award, BookOpen, ChevronDown, HelpCircle, Layers, MapPin } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import "./QuietFooter.css";
+
+// Hydration-safe mobile check: server snapshot says desktop (plain lists),
+// the client corrects to accordions right after mount on small screens.
+const MOBILE_QUERY = "(max-width: 639px)";
+
+function subscribeMobile(onChange: () => void) {
+  const mq = window.matchMedia(MOBILE_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function useIsMobile(): boolean {
+  return useSyncExternalStore(
+    subscribeMobile,
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false,
+  );
+}
 
 const footerGroups: Array<{ title: string; icon: LucideIcon; links: Array<{ label: string; to: string }> }> = [
   {
@@ -13,7 +32,7 @@ const footerGroups: Array<{ title: string; icon: LucideIcon; links: Array<{ labe
       { label: "Custom Local Websites", to: "/services/custom-local-websites/" },
       { label: "Business Systems", to: "/services/business-systems/" },
       { label: "Studio", to: "/services/#studio" },
-      { label: "Website Audit", to: "/audit/" },
+      { label: "Instant Website Scan", to: "/audit/" },
     ],
   },
   {
@@ -74,6 +93,7 @@ const footerGroups: Array<{ title: string; icon: LucideIcon; links: Array<{ labe
 
 export default function QuietFooter() {
   const year = new Date().getFullYear();
+  const isMobile = useIsMobile();
 
   return (
     <footer className="lf-quiet-foot" role="contentinfo">
@@ -84,7 +104,7 @@ export default function QuietFooter() {
             <p>Manhattan, New York · Since 2012 · Still picking up the phone</p>
           </div>
           <nav className="lf-quiet-foot__company" aria-label="Company and legal">
-            <Link to="/fit-check/">Fit Check</Link>
+            <Link to="/tech-audit/">Tech Audit</Link>
             <Link to="/about/">About</Link>
             <Link to="/contact/">Contact</Link>
             <Link to="/privacy/">Privacy</Link>
@@ -93,12 +113,8 @@ export default function QuietFooter() {
         </div>
 
         <nav className="lf-quiet-foot__nav" aria-label="Footer">
-          {footerGroups.map((group) => (
-            <div className="lf-quiet-foot__group" key={group.title}>
-              <h2>
-                <group.icon size={14} strokeWidth={2} aria-hidden="true" />
-                {group.title}
-              </h2>
+          {footerGroups.map((group) => {
+            const links = (
               <ul>
                 {group.links.map((link) => (
                   <li key={link.to}>
@@ -106,8 +122,36 @@ export default function QuietFooter() {
                   </li>
                 ))}
               </ul>
-            </div>
-          ))}
+            );
+
+            // Phones: each group folds into an accordion so the footer stops
+            // being a five-screen scroll. Desktop keeps the open site map.
+            return isMobile ? (
+              <details className="lf-quiet-foot__group lf-quiet-foot__group--fold" key={group.title}>
+                <summary>
+                  <h2>
+                    <group.icon size={14} strokeWidth={2} aria-hidden="true" />
+                    {group.title}
+                  </h2>
+                  <ChevronDown
+                    className="lf-quiet-foot__fold-chevron"
+                    size={16}
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </summary>
+                {links}
+              </details>
+            ) : (
+              <div className="lf-quiet-foot__group" key={group.title}>
+                <h2>
+                  <group.icon size={14} strokeWidth={2} aria-hidden="true" />
+                  {group.title}
+                </h2>
+                {links}
+              </div>
+            );
+          })}
         </nav>
 
         <div className="lf-quiet-foot__bottom">
