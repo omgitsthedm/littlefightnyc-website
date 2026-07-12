@@ -4,6 +4,7 @@ import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import StatBlock from "@/components/editorial/StatBlock";
 import QuietContact from "@/components/editorial/QuietContact";
+import CaseDiagram from "@/components/dataviz/CaseDiagram";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
@@ -134,6 +135,8 @@ export default function CaseStudyDetail() {
             {study.metrics && study.metrics.length > 0 && (
               <StatBlock eyebrow="Project at a glance" icon={Gauge} items={study.metrics} />
             )}
+
+            <CaseDiagram slug={study.slug} />
           </div>
         </div>
 

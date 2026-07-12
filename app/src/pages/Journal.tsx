@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { BookOpenText, FileText, ListChecks, Workflow, Newspaper } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
@@ -14,7 +14,17 @@ type Post = {
   description: string;
   published: string;
   updated: string;
+  html: string;
 };
+
+// Honest reading time, computed from the post's own word count at render.
+function readMinutes(html: string): number {
+  const words = html
+    .replace(/<[^>]+>/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
 
 const CATEGORY_LABEL: Record<Post["category"], string> = {
   howto: "How To",
@@ -64,6 +74,10 @@ type Filter = Post["category"] | "all";
 export default function Journal() {
   const posts = journal as unknown as Post[];
   const [filter, setFilter] = useState<Filter>("all");
+  const minutes = useMemo(
+    () => Object.fromEntries(posts.map((p) => [p.slug, readMinutes(p.html)])),
+    [posts],
+  );
 
   const counts = CATEGORY_ORDER.map((cat) => ({
     category: cat,
@@ -84,6 +98,7 @@ export default function Journal() {
     eyebrow: CATEGORY_LABEL[post.category],
     icon: CATEGORY_ICON[post.category],
     image: POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category],
+    meta: `~${minutes[post.slug]} min read`,
     title: post.title,
     to: `/journal/${post.slug}/`,
   }));
@@ -156,7 +171,12 @@ export default function Journal() {
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="lf-journal__body">
-                        <span className="lf-journal__title">{post.title}</span>
+                        <span className="lf-journal__title">
+                          {post.title}
+                          <span className="lf-journal__read">
+                            ~{minutes[post.slug]} min read
+                          </span>
+                        </span>
                         <span className="lf-journal__desc">{post.description}</span>
                       </span>
                     </Link>

@@ -2,6 +2,7 @@ import { MapPin } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import VisualIndex from "@/components/editorial/VisualIndex";
+import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 import { areaPages } from "@/data/site";
 
 // Same per-area frames the detail pages use, so hub and detail agree.
@@ -37,6 +38,15 @@ export default function Areas() {
           height: 1200,
         }}
       />
+
+      <section
+        aria-label="Coverage map"
+        style={{ padding: "var(--lf-space-6) var(--lf-margin-mobile) 0" }}
+      >
+        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+          <MiniMapNYC />
+        </div>
+      </section>
 
       <VisualIndex
         eyebrow="Neighborhoods"

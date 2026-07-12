@@ -397,3 +397,14 @@
   margin: 0;
   max-width: 36ch;
 }
+
+/* "What happens next" strip in the aside (Wave 4 — visual data). */
+.lf-fit__aside-label--next {
+  margin-top: var(--lf-space-7);
+  padding-top: var(--lf-space-5);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-fit__aside .lf-fit__next {
+  margin: var(--lf-space-4) 0 0;
+}

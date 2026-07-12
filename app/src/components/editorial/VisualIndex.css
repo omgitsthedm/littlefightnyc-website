@@ -281,3 +281,17 @@
     transform: none;
   }
 }
+
+/* Optional mono meta chip beside the eyebrow (e.g. reading time). */
+.lf-visual-index__meta {
+  display: inline-block;
+  margin-left: var(--lf-space-3);
+  padding: 2px 8px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--lf-bone-dim);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  vertical-align: middle;
+  white-space: nowrap;
+}

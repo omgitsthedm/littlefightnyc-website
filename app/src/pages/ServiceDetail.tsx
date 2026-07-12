@@ -5,6 +5,7 @@ import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
+import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
 import "@/styles/editorial/service-detail.css";
 
 const FIGURE_CAPTION: Record<string, string> = {
@@ -66,6 +67,7 @@ export default function ServiceDetail() {
           <EditorialBody dropcap>
             <p>{service.plain}</p>
             <PullQuote cite="What you can count on">{service.outcome}</PullQuote>
+            <ServiceDiagram slug={service.slug} />
           </EditorialBody>
 
           <aside className="lf-sd__aside">

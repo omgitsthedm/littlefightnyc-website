@@ -5,6 +5,7 @@ import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
 import FaqList from "@/components/editorial/FaqList";
 import QuietContact from "@/components/editorial/QuietContact";
+import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 import { areaPages, services } from "@/data/site";
 
 const AREA_ROUTE_SLUG: Record<string, string> = {
@@ -55,6 +56,8 @@ export default function AreaDetail() {
 
       <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile)" }}>
         <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+          <MiniMapNYC current={area.slug} />
+
           <EditorialBody dropcap>
             <p>{area.intro}</p>
             <h2>The businesses here</h2>

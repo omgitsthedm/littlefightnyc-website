@@ -123,3 +123,23 @@
     transform: none;
   }
 }
+
+/* "What the read covers" — empty outline gauges (Wave 4 — visual data). */
+.lf-audit-page__gauges {
+  margin-top: var(--lf-space-7);
+  padding-top: var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-audit-page__gauges .lf-audit-page__gauges-label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0;
+}
+
+.lf-audit-page__gauges .lf-rings {
+  margin: var(--lf-space-5) 0 0;
+}

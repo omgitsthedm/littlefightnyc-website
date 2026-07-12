@@ -6,6 +6,7 @@ import PullQuote from "@/components/editorial/PullQuote";
 import StatBlock from "@/components/editorial/StatBlock";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
 import QuietContact from "@/components/editorial/QuietContact";
+import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 
 const PROMISES = [
   { value: "Free", label: "Every consult — always" },
@@ -82,6 +83,8 @@ export default function About() {
               After hours, AI takes the message and David calls back.
             </p>
           </EditorialBody>
+
+          <MiniMapNYC compact />
 
           <EditorialFigure
             src="/assets/owner.webp"

@@ -843,3 +843,11 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 @media (prefers-reduced-motion: reduce) {
   .lf-case__beat { opacity: 1; transform: none; transition: none; }
 }
+
+/* Dakota funnel inside the metrics card (Wave 4 — visual data). */
+.lf-studio-detail__metrics .lf-studio-detail__funnel {
+  margin: 0;
+}
+.lf-studio-detail__metrics .lf-funnel .lf-funnel__eyebrow {
+  color: var(--lf-fight);
+}

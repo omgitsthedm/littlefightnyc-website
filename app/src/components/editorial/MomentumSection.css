@@ -131,6 +131,21 @@ a.lf-momentum__card:focus-visible {
   z-index: -1;
   pointer-events: none;
 }
+/* Two halves: the statement + keycaps left, the One System diagram right. */
+.lf-momentum__feature-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: var(--lf-space-6) var(--lf-space-7);
+  align-items: center;
+}
+.lf-momentum__feature-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-5);
+}
+.lf-momentum__feature-viz {
+  min-width: 0;
+}
 .lf-momentum__feature-body {
   display: flex;
   flex-direction: column;
@@ -265,6 +280,9 @@ a.lf-momentum__card:focus-visible .lf-momentum__card-go {
   .lf-momentum__card--feature,
   .lf-momentum__card--cta { grid-column: span 1; }
   .lf-momentum__card--feature { padding: var(--lf-space-6); }
+}
+@media (max-width: 900px) {
+  .lf-momentum__feature-cols { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Globe, LifeBuoy, MapPin, Workflow, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import AmbientField from "./AmbientField";
+import OneSystemDiagram from "@/components/dataviz/OneSystemDiagram";
 import "./MomentumSection.css";
 
 /**
@@ -72,22 +73,29 @@ export default function MomentumSection() {
         {/* Feature tile — the operating-system statement */}
         <article className="lf-momentum__card lf-momentum__card--feature" style={{ ["--i" as string]: 0 }}>
           <div className="lf-momentum__glow" aria-hidden="true" />
-          <div className="lf-momentum__feature-body">
-            <span className="lf-mono lf-momentum__card-label">Operating system</span>
-            <h3 className="lf-display lf-momentum__feature-title">
-              Right-sized tech for the shops that built New York.
-            </h3>
-            <p className="lf-momentum__feature-line">
-              No bloated stack. No monthly tool you never open. One team that
-              knows your setup end to end.
-            </p>
-          </div>
-          <div className="lf-momentum__keycaps" aria-hidden="true">
-            {KEYCAPS.map((cap, i) => (
-              <span key={i} className="lf-momentum__keycap">
-                {cap}
-              </span>
-            ))}
+          <div className="lf-momentum__feature-cols">
+            <div className="lf-momentum__feature-main">
+              <div className="lf-momentum__feature-body">
+                <span className="lf-mono lf-momentum__card-label">Operating system</span>
+                <h3 className="lf-display lf-momentum__feature-title">
+                  Right-sized tech for the shops that built New York.
+                </h3>
+                <p className="lf-momentum__feature-line">
+                  No bloated stack. No monthly tool you never open. One team that
+                  knows your setup end to end.
+                </p>
+              </div>
+              <div className="lf-momentum__keycaps" aria-hidden="true">
+                {KEYCAPS.map((cap, i) => (
+                  <span key={i} className="lf-momentum__keycap">
+                    {cap}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="lf-momentum__feature-viz">
+              <OneSystemDiagram />
+            </div>
           </div>
         </article>
 

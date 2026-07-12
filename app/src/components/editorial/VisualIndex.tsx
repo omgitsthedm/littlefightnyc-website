@@ -10,6 +10,8 @@ export type VisualIndexItem = {
   image: string;
   title: string;
   to: string;
+  /** Optional mono chip next to the eyebrow (e.g. "~4 min read"). */
+  meta?: string;
 };
 
 type Props = {
@@ -86,6 +88,9 @@ export default function VisualIndex({
                 <span className="lf-visual-index__copy">
                   <span className="lf-visual-index__item-eyebrow">
                     {item.eyebrow}
+                    {item.meta && (
+                      <span className="lf-visual-index__meta">{item.meta}</span>
+                    )}
                   </span>
                   <span className="lf-visual-index__item-title">
                     {item.title}

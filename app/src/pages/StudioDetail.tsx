@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
+import FunnelBars from "@/components/dataviz/FunnelBars";
 import { studioProjects } from "@/data/site";
 import "@/styles/editorial/studio.css";
 
@@ -75,22 +76,50 @@ export default function StudioDetail() {
               {project.body?.map((p, i) => <p key={i}>{p}</p>)}
             </EditorialBody>
 
-            {/* Measured-snapshot metrics — currently only Dakota has them. */}
+            {/* Measured-snapshot metrics — currently only Dakota has them.
+                Dakota's counts render as a proportional funnel; the latency
+                metric rides along as a chip. Values come straight from the
+                project's own metrics in site.ts. */}
             {project.metrics && project.metrics.length > 0 && (
               <section className="lf-studio-detail__metrics" aria-label="Measured metrics">
-                <div className="lf-studio-detail__metrics-head">
-                  <p className="lf-studio-detail__metrics-label">
-                    {project.metricsEyebrow ?? "By the numbers"}
-                  </p>
-                </div>
-                <dl className="lf-studio-detail__metrics-grid">
-                  {project.metrics.map((m) => (
-                    <div key={m.label} className="lf-studio-detail__metric">
-                      <dt>{m.label}</dt>
-                      <dd>{m.value}</dd>
-                    </div>
-                  ))}
-                </dl>
+                {(() => {
+                  const funnel = project.metrics.filter((m) => /^\d+$/.test(m.value));
+                  const extras = project.metrics.filter((m) => !/^\d+$/.test(m.value));
+                  if (project.slug === "dakota" && funnel.length >= 2) {
+                    return (
+                      <FunnelBars
+                        className="lf-studio-detail__funnel"
+                        label="Dakota's one measured week"
+                        summary={`${project.metricsEyebrow ?? "By the numbers"}: ${project.metrics
+                          .map((m) => `${m.label} ${m.value}`)
+                          .join(", ")}.`}
+                        eyebrow={project.metricsEyebrow ?? "By the numbers"}
+                        items={funnel.map((m) => ({
+                          label: m.label,
+                          value: parseInt(m.value, 10),
+                        }))}
+                        chip={extras.map((m) => `${m.label}: ${m.value}`).join(" · ") || undefined}
+                      />
+                    );
+                  }
+                  return (
+                    <>
+                      <div className="lf-studio-detail__metrics-head">
+                        <p className="lf-studio-detail__metrics-label">
+                          {project.metricsEyebrow ?? "By the numbers"}
+                        </p>
+                      </div>
+                      <dl className="lf-studio-detail__metrics-grid">
+                        {project.metrics.map((m) => (
+                          <div key={m.label} className="lf-studio-detail__metric">
+                            <dt>{m.label}</dt>
+                            <dd>{m.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </>
+                  );
+                })()}
                 <p className="lf-studio-detail__metrics-note">
                   A snapshot from one week of the agent's local run log — not a live feed.
                 </p>

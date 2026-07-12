@@ -267,6 +267,489 @@
       ]
     },
     {
+      "path": "/answers/best-web-designer-nyc-reddit/",
+      "title": "Best Web Designer NYC? What Reddit Actually Says",
+      "description": "Reddit says check portfolios, vet the person, get scope in writing. Here is what that advice misses for NYC small businesses — and how to actually choose.",
+      "h1": "Best Web Designer NYC? What Reddit Actually Says",
+      "shortAnswer": "Short answer: Reddit's advice is to check real portfolios, ask who actually does the work, and walk away from anyone who talks in jargon. That holds up. What it misses is fit: the right designer for a Midtown law firm is the wrong one for a Bushwick coffee shop.",
+      "type": "Article",
+      "image": "/assets/hero-soho-crosswalk.webp",
+      "faq": [
+        {
+          "question": "How do I check if a web designer is legit?",
+          "answer": "Ask for live sites they built, contact one past client, and confirm the domain and hosting will be in your name. Anyone solid welcomes all three requests."
+        },
+        {
+          "question": "Should I hire a freelancer or an agency?",
+          "answer": "Neither label guarantees anything. Judge the actual person doing the work, their real portfolio, and whether the scope and timeline are in writing."
+        },
+        {
+          "question": "What should I bring to a first conversation?",
+          "answer": "One sentence on what the site must do, a few sites you like, and your current logins situation. That is enough for an honest scoping talk."
+        }
+      ]
+    },
+    {
+      "path": "/answers/best-web-design-agency-nyc-reddit/",
+      "title": "Best Web Design Agency NYC — a Reddit Roundup",
+      "description": "Reddit says most small businesses skip the big agency — mostly right. When an NYC agency is worth it, when a small studio wins, and the questions to ask.",
+      "h1": "Best Web Design Agency NYC — a Reddit Roundup",
+      "shortAnswer": "Short answer: Reddit says most small businesses do not need a big agency, and that is mostly right. Agencies earn their keep on large scopes. For a storefront or small team, what matters is who personally does your work and what they promise in writing.",
+      "type": "Article",
+      "image": "/assets/coworking-laptops.webp",
+      "faq": [
+        {
+          "question": "Do agencies have minimum budgets?",
+          "answer": "Many do, formally or not. If your project is under their usual scope, you risk becoming the account nobody prioritizes. Ask directly before signing anything."
+        },
+        {
+          "question": "How do I know who will actually build my site?",
+          "answer": "Ask for names and roles of everyone touching the project, and whether any work is subcontracted. A trustworthy shop answers plainly."
+        },
+        {
+          "question": "Is a small studio riskier than a big agency?",
+          "answer": "Not inherently. The risk in both cases is the same: unclear scope, no written timeline, and accounts not in your name. Fix those and size matters much less."
+        }
+      ]
+    },
+    {
+      "path": "/answers/small-business-it-support-nyc-reddit-recommendations/",
+      "title": "Small Business IT Support NYC: Reddit Recommendations, Vetted",
+      "description": "Reddit's IT support advice — local, responsive, no long contracts — vetted for NYC storefronts, where response time and on-site help decide everything.",
+      "h1": "Small Business IT Support NYC: Reddit Recommendations, Vetted",
+      "shortAnswer": "Short answer: Reddit's standard advice — find responsive local help, avoid long contracts, keep your own passwords — is solid. The part it undersells: in NYC, response time is everything. A remote-only provider cannot fix the dead router in your basement.",
+      "type": "Article",
+      "image": "/assets/storefront-beauty-supply.webp",
+      "faq": [
+        {
+          "question": "Do I need managed IT support for a small shop?",
+          "answer": "Usually not the enterprise version. Most NYC storefronts need reliable on-call help, documented accounts, and fast on-site response — not a full managed contract."
+        },
+        {
+          "question": "What response time should I expect from IT support?",
+          "answer": "Get it in writing. Ours is a two-hour callback between 9am and 9pm ET and on-site within twenty-four hours. Vague promises like fast response mean nothing."
+        },
+        {
+          "question": "What should I do before switching IT providers?",
+          "answer": "Collect every password, account, and renewal into a list the business owns. Never switch while your only copy of the keys lives with the old provider."
+        }
+      ]
+    },
+    {
+      "path": "/answers/how-to-find-good-it-guy-reddit/",
+      "title": "How to Find a Good IT Guy — What Reddit Gets Right (and Wrong)",
+      "description": "Reddit is right about referrals and test jobs, wrong to stop there. The real tests: accounts in your name, written response times, plain-English answers.",
+      "h1": "How to Find a Good IT Guy — What Reddit Gets Right (and Wrong)",
+      "shortAnswer": "Short answer: Reddit is right that referrals and a small test job beat any directory. It is wrong to stop there. The real test of an IT person is whether your accounts stay in your name and whether they explain things you can repeat back.",
+      "type": "Article",
+      "image": "/assets/interior-spice-shop.webp",
+      "faq": [
+        {
+          "question": "Is a solo IT person riskier than an IT company?",
+          "answer": "Only if they are a single point of failure. Documentation, accounts in your name, and written response times matter more than headcount."
+        },
+        {
+          "question": "What if my old IT guy controls my accounts?",
+          "answer": "Start recovery now, while things are calm. Domains, email, and hosting can usually be reclaimed with proof of ownership, but it takes longer under pressure."
+        },
+        {
+          "question": "How should I test a new IT provider?",
+          "answer": "Give them one small paid job and watch three things: how fast they respond, whether the fix holds, and whether you understood their explanation."
+        }
+      ]
+    },
+    {
+      "path": "/answers/squarespace-vs-hiring-web-designer-reddit/",
+      "title": "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly",
+      "description": "Reddit's Squarespace-vs-designer debate, settled honestly: when DIY is genuinely enough, when hiring pays, and why owner time is the real budget in NYC.",
+      "h1": "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly",
+      "shortAnswer": "Short answer: Reddit is right that Squarespace is enough for many simple businesses — and right that most owners never finish the DIY site they start. The honest question is not which tool wins. It is whether your evenings are the budget.",
+      "type": "Article",
+      "image": "/assets/websites.webp",
+      "faq": [
+        {
+          "question": "Is Squarespace good enough for a small business website?",
+          "answer": "Often yes — if your needs are simple and you will actually finish and maintain it. The tool is rarely the bottleneck; owner time is."
+        },
+        {
+          "question": "When is hiring a designer worth it?",
+          "answer": "When the site must generate revenue and you would rather run your business than build web pages. A stalled DIY site has a real cost in missed customers."
+        },
+        {
+          "question": "Can a designer build on Squarespace so I can edit it later?",
+          "answer": "Yes, and it is a fair middle path: professional structure and local search setup, with day-to-day edits staying easy and in your hands."
+        }
+      ]
+    },
+    {
+      "path": "/answers/wix-vs-custom-website-reddit/",
+      "title": "Wix vs Custom Website — Reddit's Take vs Ours",
+      "description": "Reddit is right: the Wix-hurts-SEO claim is outdated, but the lock-in is real. When Wix is enough for an NYC business and when a custom site earns its cost.",
+      "h1": "Wix vs Custom Website — Reddit's Take vs Ours",
+      "shortAnswer": "Short answer: Reddit is right that the old Wix-is-bad-for-Google claim is outdated, and right that you cannot take a Wix site with you when you leave. Wix is fine as a starting point. Custom earns its cost when the website is a revenue channel.",
+      "type": "Article",
+      "image": "/assets/hero-laptop.webp",
+      "faq": [
+        {
+          "question": "Is Wix bad for SEO?",
+          "answer": "Not anymore in the way old threads claim. The platform basics are fine. Rankings depend far more on your content, local proof, and Google profile than the builder."
+        },
+        {
+          "question": "Can I move my Wix site somewhere else later?",
+          "answer": "Not really — content can be copied out by hand, but the site itself does not export. Leaving Wix means rebuilding, so factor that into the decision."
+        },
+        {
+          "question": "When is a custom website worth it for a small business?",
+          "answer": "When the site drives real revenue and a template is measurably costing you — slow pages, weak local visibility, or integrations that fight you."
+        }
+      ]
+    },
+    {
+      "path": "/answers/is-local-seo-worth-it-reddit/",
+      "title": "Is Local SEO Worth It? Reddit's Verdict for NYC",
+      "description": "Reddit's verdict — SEO agencies often waste money, local SEO is real — holds up. What NYC owners can do themselves and where paid help actually earns it.",
+      "h1": "Is Local SEO Worth It? Reddit's Verdict for NYC",
+      "shortAnswer": "Short answer: Reddit's verdict is that SEO agencies are often a waste but local SEO itself is real — and that is basically correct. For NYC businesses, showing up in map results and neighborhood searches is worth serious effort. Much of it you can do yourself.",
+      "type": "Article",
+      "image": "/assets/sign-more-shops.webp",
+      "faq": [
+        {
+          "question": "Can I do local SEO myself?",
+          "answer": "Most of it, yes: complete your Google Business Profile, gather steady real reviews, use real photos, and describe your services and neighborhood plainly on your site."
+        },
+        {
+          "question": "How long does local SEO take to show results?",
+          "answer": "Profile fixes can move map visibility within weeks; content and review momentum builds over months. Anyone promising instant rankings is selling something."
+        },
+        {
+          "question": "How do I know if an SEO provider is legit?",
+          "answer": "They tie work to outcomes you can see — calls, direction requests, ranking for named searches — and can explain every task in plain English."
+        }
+      ]
+    },
+    {
+      "path": "/answers/google-business-profile-tips-reddit/",
+      "title": "Google Business Profile Tips Reddit Swears By — Checked by a Pro",
+      "description": "Reddit's favorite Google Business Profile tips, checked by a pro: what actually moves NYC map rankings, what barely matters, and what risks suspension.",
+      "h1": "Google Business Profile Tips Reddit Swears By — Checked by a Pro",
+      "shortAnswer": "Short answer: Reddit's favorite tips — complete every field, real photos, steady reviews, right category — are correct. The one it undersells: your primary category and review replies matter more than posting frequency. And keyword-stuffing your business name can get you suspended.",
+      "type": "Article",
+      "image": "/assets/storefront-blue-gift-shop.webp",
+      "faq": [
+        {
+          "question": "Do Google Business Profile posts help ranking?",
+          "answer": "Barely, in our experience. They are worth doing for customers who read them, but category, reviews, and profile completeness matter far more."
+        },
+        {
+          "question": "Is adding keywords to my business name a good idea?",
+          "answer": "No. It violates Google's guidelines and is a common suspension trigger. Use your real business name and put keywords in your description and services instead."
+        },
+        {
+          "question": "How many reviews do I need to compete in NYC?",
+          "answer": "There is no magic number — steady pace beats totals. A profile gaining a few genuine reviews every month with replies outperforms a stale pile."
+        }
+      ]
+    },
+    {
+      "path": "/answers/web-developer-ghosted-me-reddit/",
+      "title": "Web Developer Ghosted You? Reddit's Advice, Improved",
+      "description": "Reddit says document and dispute. Better: secure your domain, hosting, and email first, then recover the project. A calm triage plan for stranded sites.",
+      "h1": "Web Developer Ghosted You? Reddit's Advice, Improved",
+      "shortAnswer": "Short answer: Reddit says document everything, dispute the payment, and warn others. Fair — but the first move is different: secure what you own. Get control of your domain, hosting, and email today, before you spend one minute on blame.",
+      "type": "Article",
+      "image": "/assets/owner.webp",
+      "faq": [
+        {
+          "question": "My developer owns my domain. Can I get it back?",
+          "answer": "Usually yes, with patience — registrars have transfer and dispute processes, and proof like business registration and payment records helps. Start before it becomes urgent."
+        },
+        {
+          "question": "Should I dispute the payment right away?",
+          "answer": "Not before securing access. If the developer still controls your hosting or domain, a dispute can escalate into your site going dark. Secure first."
+        },
+        {
+          "question": "How do I stop this happening next time?",
+          "answer": "Milestone payments, accounts registered in your name from day one, and your own copies of files and credentials. Our Journal guide covers the early warning signs."
+        }
+      ]
+    },
+    {
+      "path": "/answers/best-pos-system-small-business-reddit/",
+      "title": "Best POS for a Small Business: What Reddit Recommends",
+      "description": "Reddit recommends Square for simplicity and Toast for restaurants — fair. What the threads miss: the right POS is the one that connects to everything else.",
+      "h1": "Best POS for a Small Business: What Reddit Recommends",
+      "shortAnswer": "Short answer: Reddit's shorthand — Square for simplicity, Toast for restaurants, read the processing terms before signing anything — is a fine starting point. What the threads miss: the right POS depends on what it must connect to, not the logo on the terminal.",
+      "type": "Article",
+      "image": "/assets/interior-grocery.webp",
+      "faq": [
+        {
+          "question": "Is Square good enough for a small business?",
+          "answer": "For many, yes — simple setup, predictable fees, solid basics. Its limits show in complex restaurant service and deep inventory needs, where specialized systems earn their cost."
+        },
+        {
+          "question": "What POS contract terms should I watch for?",
+          "answer": "Early-termination fees, leased hardware you never own, and processing rates that can rise after an introductory period. Get every number in writing before signing."
+        },
+        {
+          "question": "Should my POS connect to my website?",
+          "answer": "If you sell online or take orders, yes — one inventory, one sales record. Running the website and register as separate worlds creates daily manual work."
+        }
+      ]
+    },
+    {
+      "path": "/answers/square-vs-toast-reddit/",
+      "title": "Square vs Toast — the Reddit Threads, Summarized",
+      "description": "Reddit's Square vs Toast verdict summarized — counters lean Square, full service leans Toast — plus the NYC restaurant realities the threads leave out.",
+      "h1": "Square vs Toast — the Reddit Threads, Summarized",
+      "shortAnswer": "Short answer: Reddit's split decision is consistent — Square for counters, cafes, and simple service; Toast for full-service restaurants that live and die by kitchen flow. Both verdicts hold up. The contract terms and your service style decide it, not the brand.",
+      "type": "Article",
+      "image": "/assets/pizza-menu-chalkboard.webp",
+      "faq": [
+        {
+          "question": "Is Toast overkill for a small cafe?",
+          "answer": "Often, yes. Counter-service spots rarely use the kitchen and table features that justify Toast's weight. Square-style simplicity usually fits better."
+        },
+        {
+          "question": "Can Square handle a full-service restaurant?",
+          "answer": "Up to a point. It has restaurant features, but busy full-service spots with coursing and kitchen timing tend to outgrow it — which is where Toast earns its case."
+        },
+        {
+          "question": "What should NYC restaurants check before committing?",
+          "answer": "Total fee math at your real volume, contract exit terms, offline mode behavior, and whether the hardware suits your building. Our Journal comparison covers each."
+        }
+      ]
+    },
+    {
+      "path": "/answers/glossgenius-vs-square-appointments-reddit/",
+      "title": "GlossGenius vs Square Appointments: the Reddit Roundup",
+      "description": "Reddit's take: solo stylists lean GlossGenius, staffed salons lean Square Appointments. The roundup, checked against real NYC salon setups and no-shows.",
+      "h1": "GlossGenius vs Square Appointments: the Reddit Roundup",
+      "shortAnswer": "Short answer: Reddit's pattern is clear — solo stylists and chair renters lean GlossGenius for the polish and flat pricing; salons with staff and retail lean Square Appointments for the free tier and ecosystem. Both readings hold up in practice.",
+      "type": "Article",
+      "image": "/assets/nyc-hair-salon-street.webp",
+      "faq": [
+        {
+          "question": "Is GlossGenius worth it for a solo stylist?",
+          "answer": "Often yes — polished client-facing booking and predictable flat pricing suit independents. Do the fee math at your real volume before deciding."
+        },
+        {
+          "question": "Is Square Appointments really free?",
+          "answer": "The solo tier is, with processing fees per payment. Costs appear as you add staff and features — reasonable, but read the tier list before building your book on it."
+        },
+        {
+          "question": "What matters more than which booking app I pick?",
+          "answer": "Deposits, reminder settings, and a booking link connected to your Google profile. Misconfigured settings cost NYC stylists more than platform choice does."
+        }
+      ]
+    },
+    {
+      "path": "/answers/shopify-vs-squarespace-reddit/",
+      "title": "Shopify vs Squarespace — Reddit's Answers for NYC Retail",
+      "description": "Reddit says Shopify when selling is the business, Squarespace when it is presence. For NYC retail the tiebreaker is inventory sync between floor and web.",
+      "h1": "Shopify vs Squarespace — Reddit's Answers for NYC Retail",
+      "shortAnswer": "Short answer: Reddit's rule of thumb — Shopify when selling is the business, Squarespace when the site is mostly presence with some selling — is right. For NYC retail the deciding question is inventory: if the shop floor and the website must share stock, Shopify pulls ahead.",
+      "type": "Article",
+      "image": "/assets/interior-jeans-rack.webp",
+      "faq": [
+        {
+          "question": "Is Shopify too much for a small NYC boutique?",
+          "answer": "Not if the floor and website share inventory — that sync is Shopify's strength. If online is a side channel, Squarespace's simplicity may serve you better."
+        },
+        {
+          "question": "Why do Shopify costs keep growing?",
+          "answer": "Apps. The base platform is predictable, but features often live in paid add-ons. Audit your app list quarterly and cut what the business stopped using."
+        },
+        {
+          "question": "Can Squarespace handle in-store pickup?",
+          "answer": "At a basic level, yes. If pickup, local delivery, and live stock visibility are core to your shop, that is the point where Shopify starts earning its complexity."
+        }
+      ]
+    },
+    {
+      "path": "/answers/does-my-small-business-need-a-website-reddit/",
+      "title": "Do I Even Need a Website? Reddit vs Reality in 2026",
+      "description": "Reddit is split on whether small businesses need websites. In 2026, search engines and AI assistants answer customers by reading them. The honest call.",
+      "h1": "Do I Even Need a Website? Reddit vs Reality in 2026",
+      "shortAnswer": "Short answer: Reddit is split — half say a Google profile and Instagram are enough, half say own your own ground. In 2026 the tiebreaker is that search engines and AI assistants answer customers by reading websites. If you are not there, someone else is the answer.",
+      "type": "Article",
+      "image": "/assets/storefront-shop-deli.webp",
+      "faq": [
+        {
+          "question": "Is a Google Business Profile enough without a website?",
+          "answer": "It is the minimum, and for some full-book businesses it suffices. But profiles backed by real websites tend to rank better and give AI search something to cite."
+        },
+        {
+          "question": "Do people still visit small business websites?",
+          "answer": "Less as destinations, more as sources — search engines and AI assistants read them to answer customers. The site works even when nobody browses it."
+        },
+        {
+          "question": "What is the smallest useful website?",
+          "answer": "A fast page stating what you do, where, your hours, prices context, photos, and a way to call or book. Five sections done well beats twenty done badly."
+        }
+      ]
+    },
+    {
+      "path": "/answers/airtable-vs-notion-reddit-small-business/",
+      "title": "Airtable vs Notion for Small Business: Reddit Roundup",
+      "description": "Reddit's rule — Notion for docs, Airtable for records — is right. The harder small-business question: which tool will your least techy employee open?",
+      "h1": "Airtable vs Notion for Small Business: Reddit Roundup",
+      "shortAnswer": "Short answer: Reddit's rule — Notion for documents and wikis, Airtable for structured records — is correct, and most fights start when someone forces one tool to do the other's job. For a small business the harder question is simpler: which one will your least techy person actually open?",
+      "type": "Article",
+      "image": "/assets/manhattan.webp",
+      "faq": [
+        {
+          "question": "Can I run my whole business in Notion?",
+          "answer": "You can, but structured records — orders, clients, inventory — get fragile in it. Most teams do better with Notion for docs and something table-shaped for data."
+        },
+        {
+          "question": "Is Airtable worth paying for over a spreadsheet?",
+          "answer": "When multiple people update the same records and you need views, filters, and forms — yes. For one person's simple list, a spreadsheet is honestly fine."
+        },
+        {
+          "question": "Why do our workspaces always turn into junk drawers?",
+          "answer": "No owner and no pruning. Someone must be in charge of structure, and anything nobody updated in a quarter should be archived without ceremony."
+        }
+      ]
+    },
+    {
+      "path": "/answers/nyc-small-business-tech-help-reddit/",
+      "title": "Where NYC Owners Actually Get Tech Help (Reddit Included)",
+      "description": "Where NYC small business owners really find tech help — referrals, Reddit, neighborhood groups, free city programs — and how to vet whoever you choose.",
+      "h1": "Where NYC Owners Actually Get Tech Help (Reddit Included)",
+      "shortAnswer": "Short answer: NYC owners get tech help from referrals, neighborhood groups, Reddit threads, city small-business programs, and whoever built the last thing that worked. Referrals are the best of these — and even they only work if you know what to ask for.",
+      "type": "Article",
+      "image": "/assets/nyc-street-crowd.webp",
+      "faq": [
+        {
+          "question": "Are the city's free small-business resources worth using?",
+          "answer": "Yes — NYC Small Business Services runs free courses and advising that are genuinely useful for planning. They are not built for urgent technical fixes."
+        },
+        {
+          "question": "How do I vet a tech provider a friend recommended?",
+          "answer": "Ask what they will do in plain English, what response times they put in writing, and whether every account ends up owned by your business. Then test with one small job."
+        },
+        {
+          "question": "Is asking on Reddit or neighborhood groups a bad idea?",
+          "answer": "It is a fine way to gather names, not a way to vet them. Treat every group-chat recommendation as a lead that still needs the same three questions."
+        }
+      ]
+    },
+    {
+      "path": "/answers/google-business-profile-suspended/",
+      "title": "Google Business Profile Suspended? What to Do (NYC Guide)",
+      "description": "Suspended Google Business Profile? Do not create a new one. Find the trigger, fix it fully, and file one complete reinstatement request. NYC recovery guide.",
+      "h1": "Google Business Profile Suspended? What to Do (NYC Guide)",
+      "shortAnswer": "Short answer: do not panic-edit and do not create a new profile. Figure out which rule you tripped, fix it fully, then file one complete reinstatement request with proof your business is real. Most suspensions are recoverable — repeat appeals without fixes are not.",
+      "type": "Article",
+      "image": "/assets/nyc-chinatown-night.webp",
+      "faq": [
+        {
+          "question": "How long does Google Business Profile reinstatement take?",
+          "answer": "Typically several days to a few weeks. One complete request with strong proof moves fastest; repeated thin appeals can slow everything down."
+        },
+        {
+          "question": "Will I lose my reviews after a suspension?",
+          "answer": "Usually no — reviews and photos normally return when the profile is reinstated. That is one more reason not to start a new profile from scratch."
+        },
+        {
+          "question": "Can I just create a new profile instead of appealing?",
+          "answer": "No. Duplicate profiles violate Google's rules and can get both listings removed, turning a recoverable problem into a much longer one."
+        }
+      ]
+    },
+    {
+      "path": "/answers/website-down-emergency-nyc/",
+      "title": "Website Down? An Emergency Checklist for NYC Businesses",
+      "description": "Website down? Check domain expiry, hosting billing, and SSL first — most outages are lapsed renewals, not hacks. An emergency checklist for NYC businesses.",
+      "h1": "Website Down? An Emergency Checklist for NYC Businesses",
+      "shortAnswer": "Short answer: first confirm it is down for everyone, not just you. Then check the three usual suspects in order — domain expiry, hosting billing, SSL certificate — before touching anything else. Most outages are a lapsed renewal, not a hack.",
+      "type": "Article",
+      "image": "/assets/nyc-stickys-steam.webp",
+      "faq": [
+        {
+          "question": "How do I know if my website is down for everyone or just me?",
+          "answer": "Load it on your phone with wifi off, or ask someone outside your building to try. If it loads for them, the issue is your network, not the website."
+        },
+        {
+          "question": "My domain expired. Is the website gone forever?",
+          "answer": "Almost never. Recently expired domains can usually be renewed and restored within hours. Act fast though — long-lapsed domains can be resold."
+        },
+        {
+          "question": "Was my site hacked?",
+          "answer": "Probably not — billing lapses and expired certificates cause far more outages than attacks. But if you see defaced pages or strange redirects, treat it as a hack and get help."
+        }
+      ]
+    },
+    {
+      "path": "/answers/pos-system-down-restaurant-nyc/",
+      "title": "POS Down During Service? A Restaurant Triage Guide",
+      "description": "POS down mid-service? Sixty-second triage — internet, provider, or hardware — then offline mode or paper to keep serving. An NYC restaurant recovery guide.",
+      "h1": "POS Down During Service? A Restaurant Triage Guide",
+      "shortAnswer": "Short answer: figure out in sixty seconds whether it is your internet, your POS provider, or one dead device — the fixes are completely different. Then switch to offline mode or paper, keep serving, and do the real diagnosis after the rush, not during it.",
+      "type": "Article",
+      "image": "/assets/pos.webp",
+      "faq": [
+        {
+          "question": "Can I take card payments when the internet is down?",
+          "answer": "Usually yes, through your POS's offline mode — payments queue and sync later, with some risk on declines. Enable and test it before the night you need it."
+        },
+        {
+          "question": "Should I switch POS providers after an outage?",
+          "answer": "Not in anger. Every provider has outages. Switch for repeated failures your setup cannot absorb, and only after checking whether the real weakness was your internet."
+        },
+        {
+          "question": "What backup gear should a small restaurant keep?",
+          "answer": "A charged hotspot or second internet source, a spare card reader and receipt printer, a battery backup on the router, and a printed what-to-do sheet for staff."
+        }
+      ]
+    },
+    {
+      "path": "/answers/business-email-going-to-spam/",
+      "title": "Your Business Email Is Going to Spam — Here's Why",
+      "description": "Business email landing in spam? Your domain is likely missing SPF, DKIM, and DMARC — the ID papers inbox providers now require. Plain-English fix guide.",
+      "h1": "Your Business Email Is Going to Spam — Here's Why",
+      "shortAnswer": "Short answer: your domain is probably missing its ID papers — three DNS records called SPF, DKIM, and DMARC that prove your email is really from you. Since inbox providers tightened rules in 2024, mail without them lands in spam even when it is perfectly legitimate.",
+      "type": "Article",
+      "image": "/assets/typing.webp",
+      "faq": [
+        {
+          "question": "What are SPF, DKIM, and DMARC in plain English?",
+          "answer": "Three small settings on your domain that prove your email really comes from you. Inbox providers treat mail without them as suspicious, no matter how legitimate it is."
+        },
+        {
+          "question": "Why did my email suddenly start going to spam in 2024?",
+          "answer": "Google and Yahoo tightened requirements for senders — authentication records, low complaint rates, easy unsubscribe. Mail that misses the bar now gets filtered much harder."
+        },
+        {
+          "question": "Can I send my newsletter from my regular inbox?",
+          "answer": "You should not. Bulk mail from a normal inbox hurts your domain's reputation. Use a proper email service and keep your day-to-day address for conversations."
+        }
+      ]
+    },
+    {
+      "path": "/answers/google-reviews-not-showing-up/",
+      "title": "Google Reviews Not Showing Up? The Honest Reasons",
+      "description": "Google reviews not showing up? Most were filtered, not lost — bursts, new accounts, and incentives trip the filter. The honest reasons and the real fixes.",
+      "h1": "Google Reviews Not Showing Up? The Honest Reasons",
+      "shortAnswer": "Short answer: Google's filter removes or hides reviews it finds suspicious — bursts from one location, brand-new accounts, anything that smells incentivized — and it catches honest ones in the net. Most missing reviews were filtered, not lost, and prevention beats appeal.",
+      "type": "Article",
+      "image": "/assets/storefront-health-foods.webp",
+      "faq": [
+        {
+          "question": "Why did a real five-star review disappear?",
+          "answer": "Most likely Google's filter — new reviewer account, same-network posting, or a burst pattern. The reviewer reposting later from their own connection often works."
+        },
+        {
+          "question": "Can filtered reviews be restored?",
+          "answer": "Rarely. Support can look into clearly missing legitimate reviews, but the filter's decisions mostly stand. Prevention — steady, unprompted-looking asks — is the real fix."
+        },
+        {
+          "question": "Are QR codes asking for reviews against the rules?",
+          "answer": "QR codes are fine. The trouble starts when many customers post from the same location and network in a burst, or when only happy customers get the code."
+        }
+      ]
+    },
+    {
       "path": "/about/",
       "title": "About Little Fight NYC | NYC Small Business Tech",
       "description": "Little Fight NYC helps New York small business owners get working websites, reliable IT, stronger Google visibility, and right-sized systems that fit.",

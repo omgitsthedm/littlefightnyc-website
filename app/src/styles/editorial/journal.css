@@ -381,3 +381,20 @@
 .lf-editorial .lf-journal-filter__chip[data-active="true"] .lf-journal-filter__count {
   opacity: 0.85;
 }
+
+/* Reading-time chip on list rows (Wave 4 — visual data). */
+.lf-journal__read {
+  display: inline-block;
+  margin-left: var(--lf-space-3);
+  padding: 2px 8px;
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  vertical-align: middle;
+  white-space: nowrap;
+}

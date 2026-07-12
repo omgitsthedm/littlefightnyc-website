@@ -3,6 +3,7 @@ import { ClipboardCheck } from "lucide-react";
 import type { FormEvent } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
+import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import { fitRoutes } from "@/data/site";
 import { readAttribution } from "@/lib/attribution";
 import "@/styles/editorial/fitcheck.css";
@@ -266,6 +267,21 @@ export default function FitCheck() {
               9am-9pm Eastern. A human picks up when available. After hours,
               AI takes the message and David calls back.
             </p>
+
+            <p className="lf-fit__aside-label lf-fit__aside-label--next">
+              What happens next
+            </p>
+            <TimelineStrip
+              vertical
+              className="lf-fit__next"
+              label="What happens after you send the Fit Check"
+              summary="After you send the Fit Check: you get a callback within 2 hours between 9am and 9pm Eastern, then a free consult — no pitch."
+              beats={[
+                { label: "Send the Fit Check" },
+                { label: "Callback within 2 hours", sub: "9am–9pm ET", marker: true },
+                { label: "Free consult", sub: "No pitch" },
+              ]}
+            />
           </aside>
         </div>
       </section>
