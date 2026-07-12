@@ -52,7 +52,7 @@ export default function ServiceDetail() {
         eyebrow={`Service · ${service.verb}`}
         icon={service.icon}
         title={<>{service.headline}</>}
-        dek={service.shortAnswer}
+        dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
         image={{
           src: FEATURE_IMAGE[service.slug] ?? service.image,
           alt: `${service.eyebrow} for New York small businesses`,

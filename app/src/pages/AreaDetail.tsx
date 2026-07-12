@@ -44,7 +44,7 @@ export default function AreaDetail() {
         eyebrow={`Neighborhood · ${area.name}`}
         icon={MapPin}
         title={<>{area.headline}</>}
-        dek={area.shortAnswer}
+        dek={area.shortAnswer.replace(/^Short answer:\s*/i, "")}
         image={{
           src: AREA_IMAGE[area.slug] ?? "/assets/nyc-street-crowd.webp",
           alt: `${area.name}, New York`,

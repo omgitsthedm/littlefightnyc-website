@@ -35,7 +35,7 @@
       "path": "/services/",
       "title": "NYC Small Business Tech Services | Little Fight NYC",
       "description": "Tech consulting, IT support, custom local websites, and business systems for NYC small businesses that need a practical first move.",
-      "h1": "Four areas. One operating partner.",
+      "h1": "Four services. One agency.",
       "shortAnswer": "Short answer: Little Fight NYC works across four connected areas: the website people see, the tech that has to work, the way customers find you, and the system behind the work.",
       "type": "CollectionPage",
       "image": "/assets/hero-laptop.webp"
@@ -128,7 +128,7 @@
       "path": "/fit-check/",
       "title": "Business System Fit Check NYC | Little Fight NYC",
       "description": "Start with a Fit Check to find out whether your issue is urgent support, website cleanup, software waste, local visibility, or workflow cleanup.",
-      "h1": "Start here if the setup feels off.",
+      "h1": "Show us the moving parts.",
       "shortAnswer": "Short answer: the Fit Check helps place a messy business tech problem before anyone sells you a rebuild, platform, or giant project.",
       "type": "ContactPage",
       "image": "/assets/og-image.jpg",
@@ -326,7 +326,7 @@
       "path": "/privacy/",
       "title": "Privacy Policy | Little Fight NYC",
       "description": "Little Fight NYC privacy policy for forms, sensitive information, contact details, safe account access, and data handling.",
-      "h1": "Privacy and terms, plain.",
+      "h1": "Privacy, plain.",
       "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue and uses safer handoffs for account access.",
       "type": "WebPage",
       "image": "/assets/og-image.jpg"
@@ -335,7 +335,7 @@
       "path": "/terms/",
       "title": "Terms and Work Scope | Little Fight NYC",
       "description": "Little Fight NYC terms covering scope, quotes, project commitments, safe account access, and written approvals before work begins.",
-      "h1": "Privacy and terms, plain.",
+      "h1": "Terms and scope, plain.",
       "shortAnswer": "Short answer: Little Fight confirms scope, pricing, access needs, and timelines in writing before work begins.",
       "type": "WebPage",
       "image": "/assets/og-image.jpg"
