@@ -2453,14 +2453,9 @@ export const studioProjects: StudioProject[] = [
       "The point is not scale. It is discovery. What does good outreach look like when nobody is chasing a quota? When the agent knows exactly what Little Fight does and does not do? When the only measure that matters is 'did this person have a real conversation?'",
       "Less volume than a normal cold-outreach setup. But the conversations that do start tend to be real, not transactional. Dakota stays a sandbox until that ratio gets boring. It has not happened yet.",
     ],
-    metricsEyebrow: "One measured week, from the agent's own log",
-    metrics: [
-      { label: "Candidate leads sourced", value: "84" },
-      { label: "Outreach emails drafted", value: "29" },
-      { label: "Emails sent", value: "14" },
-      { label: "Real conversations started", value: "2" },
-      { label: "Average reply latency", value: "47 min" },
-    ],
+    // Internal ops telemetry (weekly funnel counts, reply latency) removed
+    // from the public site 2026-07-12 — David: "nothing internal should
+    // show." The story stays; the log numbers don't.
   },
   {
     slug: "cockpit",
