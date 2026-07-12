@@ -2443,13 +2443,13 @@ export const studioProjects: StudioProject[] = [
     name: "Dakota",
     kind: "AI client finder",
     status: "Active",
-    oneline: "An AI agent that finds leads, drafts cold outreach, and routes replies. It runs on a Mac in the office.",
+    oneline: "Our own AI that finds the right businesses to talk to, writes to them like a person, and hands real conversations to the team.",
     description:
-      "Dakota is an experiment. Can a small services business replace old-style cold outreach with an AI agent? It runs on a Mac in the office. It finds likely leads, drafts emails that fit each one, sends through Resend, and routes replies to Little Fight NYC. The point is not scale. It is learning what good outreach looks like when nobody is rushing.",
-    stack: ["Anthropic", "Resend", "TypeScript", "Mac mini", "LaunchAgent"],
+      "Dakota is an experiment. Can a small services business reach new clients the way a big sales team does, without hiring a sales team? Dakota finds likely businesses, writes to each one like a person, and hands real replies to the team. The point is not scale. It is learning what good outreach looks like when nobody is rushing.",
+    stack: ["AI", "Custom build"],
     image: "/assets/coworking-laptops.webp",
     body: [
-      "Dakota answers a question. Can a small services business run outreach the way a big sales team does, without hiring a sales team? The setup is a Mac on a desk in the office. A LaunchAgent fires the agent on a schedule. The agent finds candidate businesses, drafts emails that fit each one using Claude, sends them through Resend, and routes replies back to the team.",
+      "Dakota answers a question. Can a small services business reach new clients the way a big sales team does, without hiring a sales team? Dakota studies a business first, writes to it like a person would, and hands any real reply straight to the team.",
       "The point is not scale. It is discovery. What does good outreach look like when nobody is chasing a quota? When the agent knows exactly what Little Fight does and does not do? When the only measure that matters is 'did this person have a real conversation?'",
       "Less volume than a normal cold-outreach setup. But the conversations that do start tend to be real, not transactional. Dakota stays a sandbox until that ratio gets boring. It has not happened yet.",
     ],

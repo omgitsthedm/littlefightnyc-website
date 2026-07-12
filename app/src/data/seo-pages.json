@@ -1123,9 +1123,9 @@
     {
       "path": "/studio/dakota/",
       "title": "Dakota — From the Studio | Little Fight NYC",
-      "description": "An AI agent that finds leads, drafts cold outreach, and routes replies. It runs on a Mac in the office, with the owner reviewing close by.",
+      "description": "Dakota is Little Fight NYC's own AI client finder. It finds the right businesses, writes to them like a person, and hands real conversations to the team. Built in-house.",
       "h1": "Dakota",
-      "shortAnswer": "An AI agent that finds leads, drafts cold outreach, and routes replies. It runs on a Mac in the office.",
+      "shortAnswer": "Short answer: Dakota is our own AI client finder. It finds the right businesses to talk to and hands real conversations to the team.",
       "type": "Article",
       "image": "/assets/coworking-laptops.webp"
     },
