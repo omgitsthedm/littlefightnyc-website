@@ -111,6 +111,30 @@ a.lf-momentum__card:focus-visible {
   outline-offset: 3px;
 }
 
+/* A faint fixed radial warmth from the tile's top-left corner on hover —
+   pure CSS, no cursor tracking. Desktop pointers only. */
+@media (hover: hover) {
+  a.lf-momentum__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      120% 90% at 18% 0%,
+      rgba(249, 115, 22, 0.09),
+      transparent 55%
+    );
+    opacity: 0;
+    transition: opacity var(--lf-time-snappy) var(--lf-ease-standard);
+    pointer-events: none;
+  }
+  a.lf-momentum__card:hover::before,
+  a.lf-momentum__card:focus-visible::before {
+    opacity: 1;
+  }
+}
+
 /* ---- Feature tile ---- */
 .lf-momentum__card--feature {
   grid-column: span 6;

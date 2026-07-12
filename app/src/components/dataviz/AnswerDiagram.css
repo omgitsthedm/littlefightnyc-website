@@ -30,6 +30,16 @@
   margin-top: var(--lf-space-6);
 }
 
+/* Phone: the orange break nodes read as branches off the main pipeline —
+   indented right, so the spine stays clean and the failure states hang off
+   it instead of blending into the sequence. */
+@media (max-width: 640px) {
+  .lf-answer-diagram .lf-flow__node[data-tone="signal"] {
+    width: 86%;
+    margin-left: auto;
+  }
+}
+
 /* ---- The hidden bill — stacked layers, qualitative only ---- */
 
 .lf-bill {
@@ -54,10 +64,10 @@
   border-radius: var(--lf-radius-sm);
   width: var(--lf-bill-w, 100%);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(10px) scale(0.97);
   transition:
     opacity var(--lf-time-base) var(--lf-ease-out),
-    transform var(--lf-time-base) var(--lf-ease-out);
+    transform var(--lf-time-slow) var(--lf-ease-spring);
   transition-delay: calc(var(--lf-i, 0) * 110ms);
 }
 [data-revealed="true"] .lf-bill__layer {
@@ -75,6 +85,8 @@
 .lf-bill__layer[data-tone="hidden"] {
   border-left: 3px solid var(--lf-fight);
   background: var(--lf-paper);
+  /* Soft signal glow bleeding off the orange edge. */
+  box-shadow: -6px 0 16px -10px rgba(249, 115, 22, 0.55);
 }
 
 .lf-bill__name {

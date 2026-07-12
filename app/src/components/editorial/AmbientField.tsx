@@ -1,10 +1,15 @@
 import { useEffect, useRef } from "react";
+import "./AmbientField.css";
 
 /**
  * AmbientField — a living blue constellation behind a section. Drifting nodes
  * with faint links, a signature "atmosphere" moment. Cross-device (auto-drift,
  * no pointer dependency), capped + paused off-screen for performance, and it
  * never renders under prefers-reduced-motion (the section keeps its static wash).
+ *
+ * Underneath the canvas sits a second, slower CSS-only depth layer (two blue
+ * washes shearing past each other at ~1/10th the node speed) so the field
+ * reads deep instead of flat. It holds still under reduced motion.
  */
 export default function AmbientField() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -128,5 +133,10 @@ export default function AmbientField() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="lf-ambient" aria-hidden="true" />;
+  return (
+    <>
+      <div className="lf-ambient-depth" aria-hidden="true" />
+      <canvas ref={canvasRef} className="lf-ambient" aria-hidden="true" />
+    </>
+  );
 }

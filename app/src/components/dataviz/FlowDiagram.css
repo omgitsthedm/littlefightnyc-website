@@ -47,10 +47,11 @@
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-sm);
   opacity: 0;
-  transform: translateY(10px);
+  /* Spring pop-in: opacity decelerates cleanly, transform overshoots a hair. */
+  transform: translateY(10px) scale(0.96);
   transition:
     opacity var(--lf-time-base) var(--lf-ease-out),
-    transform var(--lf-time-base) var(--lf-ease-out);
+    transform var(--lf-time-slow) var(--lf-ease-spring);
   transition-delay: calc(var(--lf-i, 0) * 90ms);
 }
 [data-revealed="true"] .lf-flow__node {
@@ -114,6 +115,15 @@
   align-self: center;
   min-width: min(200px, 100%);
 }
+/* The hub breathes once the diagram has resolved — same pulse language as
+   OneSystemDiagram's hub. */
+[data-revealed="true"] .lf-flow__node[data-tone="hub"] {
+  animation: lf-flow-hub-pulse 3200ms var(--lf-ease-standard) 1600ms infinite;
+}
+@keyframes lf-flow-hub-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--lf-fight) 10%, transparent); }
+  50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--lf-fight) 16%, transparent), 0 0 22px rgba(249, 115, 22, 0.22); }
+}
 .lf-flow__node[data-tone="signal"] .lf-flow__node-label,
 .lf-flow__node[data-tone="hub"] .lf-flow__node-label {
   color: var(--lf-fight);
@@ -136,9 +146,13 @@
   transition: stroke-dashoffset var(--lf-time-cinematic) var(--lf-ease-out);
   transition-delay: calc(160ms + var(--lf-i, 0) * 110ms);
 }
+/* The signal path is the premium beat: 2px orange with a soft glow, same
+   treatment as OneSystemDiagram's spokes. Muted context lines stay hairline. */
 .lf-flow__wire[data-tone="signal"] {
   stroke: var(--lf-fight);
-  opacity: 0.85;
+  stroke-width: 2;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.45));
 }
 .lf-flow__wire[data-tone="muted"] {
   stroke: var(--lf-hairline);
@@ -150,6 +164,7 @@
 .lf-flow__pulse {
   fill: var(--lf-fight);
   opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.6));
   transition: opacity var(--lf-time-base) var(--lf-ease-out) 900ms;
 }
 [data-revealed="true"] .lf-flow__pulse {
@@ -188,22 +203,34 @@
   color: var(--lf-bone-dim);
 }
 
-/* ---- Mobile: columns stack, connectors flip vertical ---- */
+/* ---- Phone composition (≤640px) ----
+   The desktop columns used to become centered wrap-rows, which squeezed
+   nodes against each other at 390px. Phones now get a single vertical spine:
+   every node runs full-width, top to bottom, and the measured connectors
+   (the component's ResizeObserver re-measures) draw straight down the center
+   with real air between beats. */
 @media (max-width: 640px) {
   .lf-flow__grid {
     grid-auto-flow: row;
     grid-auto-columns: unset;
     grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--lf-space-7);
+    row-gap: var(--lf-space-6);
   }
   .lf-flow__col {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--lf-space-3);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--lf-space-6);
   }
   .lf-flow__node {
-    flex: 0 1 auto;
+    flex: none;
+  }
+  .lf-flow__node[data-tone="hub"] {
+    align-self: stretch;
+    min-width: 0;
+  }
+  .lf-flow__node-label {
+    white-space: normal;
   }
 }
 
@@ -213,6 +240,9 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+  .lf-flow__node[data-tone="hub"] {
+    animation: none !important;
   }
   .lf-flow__wire {
     stroke-dashoffset: 0 !important;

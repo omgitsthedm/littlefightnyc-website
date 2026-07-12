@@ -71,11 +71,26 @@
   background: var(--lf-paper);
   border: 2px solid var(--lf-bone-dim);
   flex: none;
+  /* Dots pop onto the track with a spring, a beat after their label. */
+  transform: scale(0.4);
+  transition: transform 420ms var(--lf-ease-spring);
+  transition-delay: calc(280ms + var(--lf-i, 0) * 140ms);
+}
+[data-revealed="true"] .lf-tls__dot {
+  transform: scale(1);
 }
 .lf-tls__beat[data-marker] .lf-tls__dot {
   background: var(--lf-fight);
   border-color: var(--lf-fight);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--lf-fight) 18%, transparent);
+}
+/* The promise beat breathes once the strip has drawn. */
+[data-revealed="true"] .lf-tls__beat[data-marker] .lf-tls__dot {
+  animation: lf-tls-marker-pulse 3200ms var(--lf-ease-standard) 1800ms infinite;
+}
+@keyframes lf-tls-marker-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--lf-fight) 18%, transparent); }
+  50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--lf-fight) 24%, transparent), 0 0 14px rgba(249, 115, 22, 0.35); }
 }
 
 .lf-tls__beat-label {
@@ -210,5 +225,10 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+  .lf-tls__dot {
+    transform: scale(1) !important;
+    transition: none !important;
+    animation: none !important;
   }
 }

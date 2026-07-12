@@ -50,6 +50,8 @@
 }
 .lf-respwin__seg--live {
   background: var(--lf-fight);
+  /* Signal glow — the live window reads lit against the off-hours segments. */
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.3);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--lf-time-cinematic) var(--lf-ease-out) 200ms;

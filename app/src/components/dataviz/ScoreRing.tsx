@@ -1,4 +1,5 @@
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import { useCountUp } from "./useCountUp";
 import "./ScoreRing.css";
 
 /**
@@ -10,6 +11,15 @@ import "./ScoreRing.css";
 
 const R = 40;
 const C = 2 * Math.PI * R;
+
+/** Center numeral — counts 0 → value in step with the ring's stroke fill. */
+function RingValue({ value, delay }: { value: number; delay: number }) {
+  const { ref, value: shown } = useCountUp<HTMLSpanElement>(value, {
+    duration: 1100,
+    delay,
+  });
+  return <span ref={ref}>{shown}</span>;
+}
 
 export type Ring = {
   label: string;
@@ -43,6 +53,7 @@ export default function ScoreRing({
       className={`lf-rings${className ? ` ${className}` : ""}`}
       role="group"
       aria-label={label}
+      data-revealed="false"
     >
       <p className="lf-viz-sr">{summary}</p>
       <div className="lf-rings__cluster" aria-hidden="true">
@@ -71,7 +82,16 @@ export default function ScoreRing({
                   )}
                 </svg>
                 <span className="lf-rings__value">
-                  {empty ? (ring.display ?? "—") : (ring.display ?? String(ring.value))}
+                  {empty ? (
+                    ring.display ?? "—"
+                  ) : (
+                    ring.display ?? (
+                      <RingValue
+                        value={ring.value as number}
+                        delay={180 + i * 110}
+                      />
+                    )
+                  )}
                 </span>
               </div>
               <span className="lf-rings__label">{ring.label}</span>

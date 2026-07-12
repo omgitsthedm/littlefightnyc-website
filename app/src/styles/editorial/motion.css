@@ -83,6 +83,44 @@
   }
 }
 
+/* ---- CTA sheen ------------------------------------------------------------ */
+/* Primary orange CTAs get one restrained light sweep on hover-enter — plays
+ * once per hover, never loops. Desktop pointers only; reduced-motion never
+ * sees it (whole block is gated). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lf-editorial .lf-momentum__cta-button,
+  .lf-editorial .lf-fight__cta,
+  .lf-editorial .lf-fit__submit {
+    position: relative;
+    overflow: hidden;
+  }
+  .lf-editorial .lf-momentum__cta-button::after,
+  .lf-editorial .lf-fight__cta::after,
+  .lf-editorial .lf-fit__submit::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      115deg,
+      transparent 32%,
+      rgba(255, 255, 255, 0.32) 50%,
+      transparent 64%
+    );
+    transform: translateX(-130%);
+    pointer-events: none;
+  }
+  .lf-editorial .lf-momentum__cta-button:hover::after,
+  .lf-editorial .lf-fight__cta:hover::after,
+  .lf-editorial .lf-fit__submit:hover:not(:disabled)::after {
+    animation: lf-cta-sheen 700ms var(--lf-ease-out) 1 both;
+  }
+}
+@keyframes lf-cta-sheen {
+  to {
+    transform: translateX(130%);
+  }
+}
+
 /* ---- Scroll-aware nav ---------------------------------------------------- */
 /* Chrome condenses + gains a glass floor once the page scrolls past the hero. */
 .lf-nav {

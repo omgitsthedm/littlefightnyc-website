@@ -36,11 +36,38 @@
   align-items: center;
   gap: var(--lf-space-3);
   opacity: 0;
-  transition: opacity var(--lf-time-base) var(--lf-ease-out);
+  transform: translateY(8px);
+  transition:
+    opacity var(--lf-time-base) var(--lf-ease-out),
+    transform var(--lf-time-base) var(--lf-ease-out);
   transition-delay: calc(var(--lf-i, 0) * 120ms);
 }
 [data-revealed="true"] .lf-funnel__row {
   opacity: 1;
+  transform: none;
+}
+
+/* Desktop hover: the row you're reading answers back — label and count
+   sharpen, the bar warms. Informative, not decorative. */
+@media (hover: hover) {
+  .lf-funnel__label,
+  .lf-funnel__count {
+    transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+  }
+  .lf-funnel__bar {
+    transition:
+      transform var(--lf-time-cinematic) var(--lf-ease-out),
+      filter var(--lf-time-snappy) var(--lf-ease-standard);
+  }
+  .lf-funnel__row:hover .lf-funnel__label {
+    color: var(--lf-bone);
+  }
+  .lf-funnel__row:hover .lf-funnel__count {
+    color: var(--lf-fight);
+  }
+  .lf-funnel__row:hover .lf-funnel__bar {
+    filter: brightness(1.12);
+  }
 }
 
 .lf-funnel__label {
@@ -64,6 +91,8 @@
   height: 100%;
   background: var(--lf-fight);
   border-radius: inherit;
+  /* Soft signal glow so the bars read lit, not flat. */
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.28);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--lf-time-cinematic) var(--lf-ease-out);
@@ -117,6 +146,7 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-funnel__row {
     opacity: 1 !important;
+    transform: none !important;
     transition: none !important;
   }
   .lf-funnel__bar {

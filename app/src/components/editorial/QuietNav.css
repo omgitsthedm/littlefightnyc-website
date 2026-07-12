@@ -90,7 +90,9 @@
   color: var(--lf-bone);
 }
 
-.lf-nav__link--active::after {
+/* Sliding underline: every link carries the rail; it slides in from the left
+   on hover (snappy) and stays planted on the active route. */
+.lf-nav__link::after {
   content: "";
   position: absolute;
   left: var(--lf-space-3);
@@ -99,6 +101,26 @@
   height: 2px;
   border-radius: var(--lf-radius-pill);
   background: var(--lf-fight);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+@media (hover: hover) {
+  .lf-nav__link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.lf-nav__link:focus-visible::after,
+.lf-nav__link--active::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-nav__link::after {
+    transition: none;
+  }
 }
 
 .lf-nav__link:focus-visible {

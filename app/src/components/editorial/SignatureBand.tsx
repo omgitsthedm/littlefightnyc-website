@@ -1,4 +1,5 @@
 import AmbientField from "./AmbientField";
+import { useCountUp } from "@/components/dataviz/useCountUp";
 import { useScrollReveal } from "./useScrollReveal";
 import "./SignatureBand.css";
 
@@ -7,13 +8,25 @@ import "./SignatureBand.css";
  * the living blue constellation, with four honest facts revealing in sequence.
  * Orange is the signal (eyebrow + accent); the burst behind is blue. The
  * ambient canvas pauses off-screen and never runs under reduced-motion.
+ *
+ * Only "14-day" counts up — a year counting up ("2012") reads gimmicky, and
+ * "Free"/"Custom" are words. Judgment call, on purpose.
  */
-const STATS = [
+const STATS: Array<{
+  value: string;
+  label: string;
+  count?: { n: number; suffix: string };
+}> = [
   { value: "2012", label: "In New York's corner since" },
-  { value: "14-day", label: "Typical website ship" },
+  { value: "14-day", label: "Typical website ship", count: { n: 14, suffix: "-day" } },
   { value: "Free", label: "Every first consult" },
   { value: "Custom", label: "Coded, never templated" },
 ];
+
+function BandCount({ n, delay }: { n: number; delay: number }) {
+  const { ref, value } = useCountUp<HTMLSpanElement>(n, { duration: 900, delay });
+  return <span ref={ref}>{value}</span>;
+}
 
 export default function SignatureBand() {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.25 });
@@ -36,7 +49,16 @@ export default function SignatureBand() {
               className="lf-signature__stat"
               style={{ ["--lf-i" as string]: i }}
             >
-              <dt className="lf-signature__value">{s.value}</dt>
+              <dt className="lf-signature__value">
+                {s.count ? (
+                  <>
+                    <BandCount n={s.count.n} delay={i * 90} />
+                    {s.count.suffix}
+                  </>
+                ) : (
+                  s.value
+                )}
+              </dt>
               <dd className="lf-signature__label">{s.label}</dd>
             </div>
           ))}

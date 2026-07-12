@@ -94,6 +94,9 @@
   /* Axiom snappy layer — hovers, bento reveals, interactive feedback */
   --lf-time-snappy: 180ms;
   --lf-ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* Spring — a restrained physical overshoot for diagram node pop-ins.
+   * Transform-only; never used on opacity (overshoot > 1 would clip). */
+  --lf-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Z-index */
   --lf-z-content: 1;

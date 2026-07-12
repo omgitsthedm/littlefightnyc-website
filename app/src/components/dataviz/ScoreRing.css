@@ -28,10 +28,10 @@
   align-items: center;
   gap: var(--lf-space-2);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(10px) scale(0.95);
   transition:
     opacity var(--lf-time-base) var(--lf-ease-out),
-    transform var(--lf-time-base) var(--lf-ease-out);
+    transform var(--lf-time-slow) var(--lf-ease-spring);
   transition-delay: calc(var(--lf-i, 0) * 110ms);
 }
 [data-revealed="true"] .lf-rings__item {
@@ -65,6 +65,8 @@
   stroke: var(--lf-fight);
   stroke-width: 6;
   stroke-linecap: round;
+  /* Signal glow — same soft orange halo as the diagram spokes. */
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.4));
   stroke-dashoffset: calc(2 * 3.14159 * 40); /* full circumference = empty */
   transition: stroke-dashoffset 1100ms var(--lf-ease-out);
   transition-delay: calc(180ms + var(--lf-i, 0) * 110ms);

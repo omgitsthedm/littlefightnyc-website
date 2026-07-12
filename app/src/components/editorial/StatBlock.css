@@ -62,3 +62,17 @@
   line-height: 1.4;
   color: var(--lf-bone-soft);
 }
+
+/* Phone: two columns means ~165px cells — the display scale broke words
+   mid-glyph ("2 week / s", "Squar / e"). Step the whole tier down so every
+   value sits on one or two clean lines with air. */
+@media (max-width: 640px) {
+  .lf-stats__value {
+    font-size: var(--lf-text-xl);
+    line-height: 1.05;
+  }
+  .lf-stats__value[data-long] {
+    font-size: var(--lf-text-lg);
+    line-height: 1.15;
+  }
+}

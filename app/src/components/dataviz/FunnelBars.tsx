@@ -1,4 +1,5 @@
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import { useCountUp } from "./useCountUp";
 import "./FunnelBars.css";
 
 /**
@@ -6,6 +7,15 @@ import "./FunnelBars.css";
  * from zero on scroll, staggered. Optional mono chip row underneath for a
  * companion fact. Zero dependencies, tokens only. Reduced motion: final state.
  */
+
+/** Row count — counts 0 → value while its bar grows. */
+function FunnelCount({ value, delay }: { value: number; delay: number }) {
+  const { ref, value: shown } = useCountUp<HTMLSpanElement>(value, {
+    duration: 750,
+    delay,
+  });
+  return <span ref={ref}>{shown}</span>;
+}
 
 export type FunnelItem = {
   label: string;
@@ -43,6 +53,7 @@ export default function FunnelBars({
       className={`lf-funnel${className ? ` ${className}` : ""}`}
       role="group"
       aria-label={label}
+      data-revealed="false"
     >
       <p className="lf-viz-sr">{summary}</p>
       {eyebrow && <p className="lf-funnel__eyebrow">{eyebrow}</p>}
@@ -56,7 +67,9 @@ export default function FunnelBars({
                 style={{ width: `${Math.max((item.value / max) * 100, 1.5)}%` }}
               />
             </span>
-            <span className="lf-funnel__count">{item.display ?? item.value}</span>
+            <span className="lf-funnel__count">
+              {item.display ?? <FunnelCount value={item.value} delay={120 + i * 120} />}
+            </span>
           </div>
         ))}
       </div>
