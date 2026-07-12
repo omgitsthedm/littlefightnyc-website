@@ -164,8 +164,21 @@ a.lf-momentum__card:focus-visible {
 }
 .lf-momentum__keycaps {
   display: flex;
-  flex-wrap: wrap;
+  /* Never wrap — an orphaned keycap on line two read as broken (David's
+     iPhone catch, 2026-07-12). Keys shrink on phones instead. */
+  flex-wrap: nowrap;
   gap: var(--lf-space-2);
+}
+
+@media (max-width: 640px) {
+  .lf-momentum__keycaps {
+    gap: 6px;
+  }
+  .lf-momentum__keycap {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 6px;
+  }
 }
 .lf-momentum__keycap {
   display: inline-flex;

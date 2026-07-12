@@ -39,15 +39,17 @@
   }
 }
 
-/* The after-state: clean orange connectors feeding the hub. */
+/* The after-state: clean orange connectors feeding the hub — thicker, with a
+   soft glow so the "signal" reads premium instead of hairline-thin. */
 .lf-onesys__spoke {
   fill: none;
   stroke: var(--lf-fight);
-  stroke-width: 1.5;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  opacity: 0.9;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.45));
   transition: stroke-dashoffset var(--lf-time-cinematic) var(--lf-ease-out);
   transition-delay: calc(750ms + var(--lf-i, 0) * 90ms);
 }
@@ -136,6 +138,12 @@
 [data-revealed="true"] .lf-onesys__hub {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+  animation: lf-onesys-hub-pulse 3200ms var(--lf-ease-standard) 2000ms infinite;
+}
+
+@keyframes lf-onesys-hub-pulse {
+  0%, 100% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--lf-fight) 10%, transparent); }
+  50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--lf-fight) 16%, transparent), 0 0 24px rgba(249, 115, 22, 0.25); }
 }
 
 .lf-onesys__hub-label {
@@ -155,6 +163,36 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
+}
+
+/* ---- Phone composition (David's iPhone catch, 2026-07-12) ----
+   The desktop scatter squeezed at 340px: nodes collided with the hub and the
+   card read broken. Phones get their own geometry — a taller canvas and a
+   clean orbit with real air. Inline desktop coords are overridden here
+   (!important is deliberate: the component sets left/right/top inline).
+   The ResizeObserver in the component re-measures, so the wires follow. */
+@media (max-width: 640px) {
+  .lf-onesys__canvas {
+    aspect-ratio: 340 / 430;
+    min-height: 380px;
+  }
+  .lf-onesys__node {
+    padding: 7px 9px;
+    gap: 3px;
+  }
+  .lf-onesys__node-label {
+    font-size: 9px;
+    letter-spacing: 0.05em;
+  }
+  .lf-onesys__node[data-os-node="booking"] { left: 2% !important; right: auto !important; top: 3% !important; }
+  .lf-onesys__node[data-os-node="pos"] { right: 2% !important; left: auto !important; top: 3% !important; }
+  .lf-onesys__node[data-os-node="sheet"] { left: 2% !important; right: auto !important; top: 70% !important; }
+  .lf-onesys__node[data-os-node="google"] { right: 2% !important; left: auto !important; top: 68% !important; }
+  .lf-onesys__node[data-os-node="inbox"] { left: 32% !important; right: auto !important; top: 88% !important; }
+  .lf-onesys__hub {
+    top: 40%;
+    padding: 11px 14px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -179,5 +217,6 @@
   }
   .lf-onesys__hub {
     transform: translate(-50%, -50%) scale(1) !important;
+    animation: none !important;
   }
 }
