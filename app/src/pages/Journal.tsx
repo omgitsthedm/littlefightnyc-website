@@ -7,6 +7,7 @@ import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { useViewTransitionNav } from "@/lib/viewTransition";
 import journal from "@/data/journal.json";
+import { POST_IMAGE } from "@/data/journalArt";
 import "@/styles/editorial/journal.css";
 
 // Warm the post chunk before the morph so the new snapshot is the real page.
@@ -45,8 +46,8 @@ const CATEGORY_IMAGE: Record<Post["category"], string> = {
   guide: "/assets/journal-cat-software-guide.webp",
 };
 
-// Branded category art carries every card — stock photos retired 2026-07-12.
-const POST_IMAGE: Record<string, string> = {};
+// Branded art carries every card (per-post where it exists, category art
+// otherwise) — stock photos retired 2026-07-12.
 
 const CATEGORY_ORDER: Post["category"][] = ["howto", "essay", "blog", "guide"];
 

@@ -3,6 +3,7 @@ import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import journal from "@/data/journal.json";
+import { POST_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
 import "@/styles/editorial/journal.css";
 
@@ -30,9 +31,8 @@ const CATEGORY_IMAGE: Record<Post["category"], string> = {
   guide: "/assets/journal-cat-software-guide.webp",
 };
 
-// Branded category art carries every post — per-post stock photos retired
-// 2026-07-12 (the donut-on-a-ghosting-article era is over).
-const POST_IMAGE: Record<string, string> = {};
+// Branded per-post art (same visual language as the category art) — per-post
+// stock photos retired 2026-07-12 (the donut-on-a-ghosting-article era is over).
 
 function displayDate(post: Post) {
   return post.published || post.updated || "May 7, 2026";

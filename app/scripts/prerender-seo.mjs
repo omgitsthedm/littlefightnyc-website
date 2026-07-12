@@ -1,4 +1,5 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { build as esbuildBundle } from "esbuild";
@@ -228,7 +229,14 @@ async function journalPages() {
     shortAnswer: journalDescription(post),
     h1: post.title,
     type: "Article",
-    image: journalImages[post.slug] ?? "/assets/manhattan.webp",
+    // Per-post branded art wins when it exists on disk (kept in lockstep
+    // with src/data/journalArt.ts), then the legacy slug map, then default.
+    image: existsSync(path.join(appRoot, "public/assets", `journal-${post.slug}.webp`))
+      ? `/assets/journal-${post.slug}.webp`
+      : (journalImages[post.slug] ?? "/assets/manhattan.webp"),
+    // Authored FAQ ships as FAQPage rich-results schema (same emit path the
+    // answers/glossary pages use).
+    faq: post.faq,
     journalPost: post,
   }));
 
