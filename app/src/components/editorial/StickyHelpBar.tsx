@@ -25,7 +25,7 @@ function fitCta(pathname: string): FitCta {
     }
   }
   if (p.startsWith("/services")) {
-    return { label: "Start", detail: "Free Tech Audit · no pitch", contextual: true };
+    return { label: "Start", detail: "Free Tech Audit · no pitch", contextual: true };
   }
   if (p.startsWith("/journal") || p.startsWith("/answers")) {
     return { label: "Tech Audit", detail: "Have this problem? We fix it.", contextual: true };
@@ -59,7 +59,7 @@ export default function StickyHelpBar() {
             cta.contextual ? " lf-sticky-help__detail--ctx" : ""
           }`}
         >
-          {cta.detail} <span aria-hidden="true">→</span>
+          {cta.detail}&nbsp;<span aria-hidden="true">→</span>
         </span>
       </Link>
     </div>
