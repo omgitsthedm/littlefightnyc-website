@@ -466,7 +466,9 @@
   to { transform: translateX(-50%); }
 }
 
-.lf-hero__marquee:hover .lf-hero__marquee-track {
+.lf-hero__marquee:hover .lf-hero__marquee-track,
+.lf-hero__marquee:focus-within .lf-hero__marquee-track,
+.lf-hero__marquee:active .lf-hero__marquee-track {
   animation-play-state: paused;
 }
 

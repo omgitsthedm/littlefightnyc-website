@@ -79,6 +79,7 @@ export type StudioProject = {
   image: string;
   external?: string;
   body?: string[];
+  metricsEyebrow?: string;
   metrics?: { label: string; value: string }[];
 };
 
@@ -102,6 +103,8 @@ export type AnswerGuide = {
   slug: string;
   question: string;
   short: string;
+  published: string;
+  updated: string;
   sections: Array<{ heading: string; body: string }>;
   faq: Array<{ question: string; answer: string }>;
 };
@@ -564,6 +567,8 @@ export const ownerAnswers: Answer[] = [
 export const answerGuides: AnswerGuide[] = [
   {
     slug: "website-form-not-working-small-business",
+    published: "2026-05-13",
+    updated: "2026-07-07",
     question: "Why are website form messages not reaching my small business?",
     short:
       "Short answer: start with the form settings, email routing, spam filters, and domain records. If people say they submitted a form but nothing arrives, treat it as an active revenue leak before redesigning the site.",
@@ -602,6 +607,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     slug: "reduce-monthly-software-costs-small-business",
+    published: "2026-05-13",
+    updated: "2026-07-07",
     question: "How can a small business cut monthly software costs?",
     short:
       "Short answer: list every tool, what it costs, who uses it, and what work still happens outside it. Keep the useful tools, connect the gaps, replace the waste, and build only what off-the-shelf software does badly.",
@@ -640,6 +647,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     slug: "business-not-showing-on-google-maps",
+    published: "2026-05-13",
+    updated: "2026-07-07",
     question: "Why is my NYC business not showing on Google Maps?",
     short:
       "Short answer: Google needs a complete business profile, consistent contact details, real reviews, relevant service pages, and local proof that matches how customers search nearby.",
@@ -678,6 +687,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     slug: "hair-salon-save-money-software",
+    published: "2026-05-13",
+    updated: "2026-07-07",
     question: "How can an NYC hair salon save money on booking software?",
     short:
       "Short answer: keep the booking tool if staff and clients actually use it. Cut costs by removing duplicate tools, cleaning service menus, connecting follow-up, and replacing spreadsheets only where they create real drag.",
@@ -716,6 +727,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     slug: "local-pharmacy-website-community-support",
+    published: "2026-05-13",
+    updated: "2026-07-07",
     question: "How can a local pharmacy website better support its community?",
     short:
       "Short answer: make hours, services, refills, insurance notes, phone actions, local help, and trust signals easy to find. A pharmacy site should reduce confusion before the customer calls or walks in.",
@@ -754,6 +767,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     slug: "when-custom-business-system-beats-saas",
+    published: "2026-05-13",
+    updated: "2026-07-07",
     question: "When does a custom business system beat another subscription?",
     short:
       "Short answer: custom may make sense when a business pays for a big platform but still relies on spreadsheets, duplicate entry, manual follow-up, or reports nobody trusts.",
@@ -806,7 +821,7 @@ export const caseStudies: CaseStudy[] = [
     image: "/assets/case-cc-films.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
-    updated: "2026-05-13",
+    updated: "2026-07-07",
     title: "A clearer official home for a debut horror feature.",
     problem: "CC Films had a live site for Marrow, but the page needed to read as the film's official source: fast, structured, credible, and useful to press, festival audiences, and search systems.",
     kept: "The analog horror mood, Marrow poster and trailer, premiere photography, review coverage, core credits, and existing Netlify/GitHub setup.",
@@ -831,7 +846,7 @@ export const caseStudies: CaseStudy[] = [
     image: "/assets/case-deckspace.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
-    updated: "2026-05-13",
+    updated: "2026-07-07",
     title: "A nostalgic onboard social layer for life at sea.",
     problem: "DeckSpace needed to explain an internal cruise social network without making it feel like a generic travel app: guests need to find events, venue hours, shops, bars, restaurants, voyage details, photos, profiles, and each other while they are already moving around the ship.",
     kept: "The emotional center of cruising: shared plans, temporary community, onboard discovery, and the feeling of a trip people want to remember after they get home.",
@@ -855,6 +870,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     image: "/assets/case-hair-by-rachel-charles.webp",
     services: ["custom-local-websites", "tech-consulting"],
+    published: "2026-05-13",
+    updated: "2026-07-07",
     title: "From Instagram-only to a real booking flow.",
     problem: "A solo stylist running her whole business through Instagram and word-of-mouth — no website, no Google profile, no obvious way to book.",
     kept: "The existing Square Appointments setup the clients already knew.",
@@ -863,7 +880,7 @@ export const caseStudies: CaseStudy[] = [
     body: [
       "The first time we sat down with Rachel, her entire business was running through Instagram DMs. She had built a client base purely through word of mouth and showing up — but every booking required a back-and-forth in messages, every appointment confirmation lived in her thumbs, and Google had no idea she existed. The site started as a question: what if every potential client could find her, see the work, and book without a single message?",
       "We kept the part that was already working — her existing Square Appointments setup, which her clients already knew. The site became the front door: a mobile-first page with the portfolio, the location, a Square booking embed, and a clear path to the studio. We set up the Google Business Profile from scratch — address, hours, categories, photos, FAQs — and wired the site metadata to reinforce it. The whole engagement took two weeks.",
-      "Three months in, bookings were arriving from searches like 'hair color near East Village' without any social mention. Lighthouse scores landed at 100 across the board. Rachel kept her DMs for client relationships, but the booking funnel moved off her phone.",
+      "Bookings now arrive through the site — found in search instead of tagged in DMs. Lighthouse scores landed at 100 across the board. Rachel kept her DMs for client relationships, but the booking funnel moved off her phone.",
     ],
   },
   {
@@ -878,15 +895,17 @@ export const caseStudies: CaseStudy[] = [
     ],
     image: "/assets/case-after-hours-agenda.webp",
     services: ["custom-local-websites", "business-systems"],
-    title: "End-to-end e-commerce that doesn't drown the brand.",
+    published: "2026-05-13",
+    updated: "2026-07-07",
+    title: "E-commerce that doesn't drown the brand.",
     problem: "A streetwear brand with a real point of view needed a real storefront — but Shopify's templates were going to flatten everything that made the brand interesting.",
     kept: "Brand identity, product designs, and the NYC nightlife voice.",
     changed: "Custom Next.js 14 build with Square handling payments and Printful handling fulfillment. Product catalog wired through a JSON master, no hardcoded prices, no platform lock-in.",
-    result: "A storefront that looks like the brand instead of like a Shopify theme. Cart-to-checkout-to-confirmation works end-to-end. Owner can ship a new drop in a day.",
+    result: "A storefront that looks like the brand instead of like a Shopify theme. Square payments and Printful fulfillment wired in. Owner can ship a new drop in a day.",
     body: [
       "After Hours Agenda is Little Fight NYC's own streetwear experiment — the rare case where the agency is also the client, with all the dangers that come with it. The brand was tight, the designs were ready, the audience was building, but the storefront was Shopify, and Shopify was flattening the brand. Every product page looked like every other Shopify product page, regardless of what we put on it.",
       "The decision was: rebuild on Shopify with a custom theme, or rebuild off Shopify entirely. We rebuilt off — Next.js 14 with the App Router, Square for payments, Printful for fulfillment, the whole catalog wired through a single JSON master so nothing is hardcoded. No platform lock-in. No theme template gravity.",
-      "The result is a storefront that looks like the brand instead of the platform. Cart-to-checkout-to-confirmation works end-to-end. Payment flows through Square; orders go to Printful for shipping. New product drops take a day, not a sprint. The site is the brand.",
+      "The result is a storefront that looks like the brand instead of the platform. Payment flows through Square; orders go to Printful for shipping. New product drops take a day, not a sprint. The site is the brand.",
     ],
   },
   {
@@ -901,6 +920,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     image: "/assets/case-clearhelp.webp",
     services: ["custom-local-websites", "business-systems"],
+    published: "2026-05-13",
+    updated: "2026-07-07",
     title: "Multi-site setup with a real backend.",
     problem: "A help service that needed three connected sites — public-facing, intake, and admin — all sharing live data, all deploying independently.",
     kept: "The team's existing intake categories and naming.",
@@ -920,19 +941,21 @@ export const caseStudies: CaseStudy[] = [
     metrics: [
       { value: "3 tools → 1", label: "Estimates in one source of truth" },
       { value: "Every number", label: "Audits back to its source" },
-      { value: "Active build", label: "Runs on real estimates" },
+      { value: "In production", label: "Runs on the team's real bids" },
     ],
     image: "/assets/case-public-house-cockpit.webp",
     services: ["business-systems"],
+    published: "2026-05-13",
+    updated: "2026-07-07",
     title: "An internal cockpit for the work they actually run.",
     problem: "Public House Creative needed a single internal system to run their estimating, classification, and reporting work — replacing a stack of spreadsheets, documents, and tribal knowledge with one source of truth.",
     kept: "The estimator's judgment and the workflow categories the team already used.",
     changed: "Built Cockpit — a private web application where documents come in, rooms and drivers get classified, the math reconciles, and the report exports cleanly. Field-precision UI, dense without being condensed.",
-    result: "The team runs the work through Cockpit. Estimates that used to live across three tools live in one. The math is honest. The team can audit any number back to its source. Currently active build.",
+    result: "The team runs the work through Cockpit. Estimates that used to live across three tools live in one. The math is honest. The team can audit any number back to its source. In production and in daily use.",
     body: [
       "Public House Creative came to Little Fight with a real internal-systems problem. The estimating work — the part that determines whether a job is profitable before it starts — was spread across documents, spreadsheets, email threads, and the head of the senior estimator. Every project re-discovered the same context. Every quote took longer than it should have. The team had outgrown the tools and was starting to feel it.",
       "We built Cockpit. It is a private web application that turns the messy first pass of an estimate — site photos, blueprints, hand-drawn notes, scope emails — into a structured, reconcilable artifact. Documents come in. Rooms get classified. Drivers (the variables that move the math) get resolved. The report exports. The interface is field-precision: dense data, never condensed, never lying about confidence. The estimator's judgment makes the final call; the system makes the call cheap.",
-      "Cockpit is in active build. The team uses it on real estimates. The math is honest. New scope items, new room types, new export formats land in days, not sprints. The system is becoming what the senior estimator's head used to hold — but now it scales beyond one person."
+      "Cockpit is in production. The team uses it on real estimates. The math is honest. New scope items, new room types, new export formats land in days, not sprints. The system is becoming what the senior estimator's head used to hold — but now it scales beyond one person."
     ],
   },
   {
@@ -947,6 +970,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     image: "/assets/case-grand-funding-llc.webp",
     services: ["custom-local-websites"],
+    published: "2026-05-13",
+    updated: "2026-07-07",
     title: "A clean public face for a finance business.",
     problem: "A funding LLC that needed a credible public landing — investor-grade presentation, clear product summary, easy contact path — without any of the boilerplate finance-site clichés.",
     kept: "The team's positioning and the calls-to-action they already use.",
@@ -1502,13 +1527,13 @@ export const studioProjects: StudioProject[] = [
       "The point is not scale — it is discovery. What does good outreach look like when nobody is rushing to hit a quota? When the agent has access to the full context of what Little Fight does and does not do? When the only metric that matters is 'did this person have a real conversation?'",
       "Less volume than a traditional cold-outreach setup. But the conversations that do start tend to be qualified, not transactional. Dakota stays a sandbox until that ratio gets boring — which has not happened yet.",
     ],
+    metricsEyebrow: "One measured week, from the agent's own log",
     metrics: [
-      { label: "Candidate leads sourced (week)", value: "84" },
-      { label: "Outreach emails drafted (week)", value: "29" },
-      { label: "Emails sent (week)", value: "14" },
-      { label: "Real conversations started (week)", value: "2" },
+      { label: "Candidate leads sourced", value: "84" },
+      { label: "Outreach emails drafted", value: "29" },
+      { label: "Emails sent", value: "14" },
+      { label: "Real conversations started", value: "2" },
       { label: "Average reply latency", value: "47 min" },
-      { label: "Last agent run", value: "earlier today" },
     ],
   },
   {

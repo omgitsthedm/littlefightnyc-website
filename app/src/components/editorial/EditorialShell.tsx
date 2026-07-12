@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import "@/styles/editorial/fonts.css";
@@ -6,6 +7,7 @@ import "@/styles/editorial/base.css";
 import "@/styles/editorial/legacy-overrides.css";
 
 import RouteMeta from "@/components/RouteMeta";
+import { watchListReveals } from "@/lib/listReveal";
 import QuietNav from "./QuietNav";
 import QuietFooter from "./QuietFooter";
 import StickyHelpBar from "./StickyHelpBar";
@@ -13,8 +15,15 @@ import CommandPalette from "./CommandPalette";
 
 export default function EditorialShell() {
   const location = useLocation();
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!rootRef.current) return;
+    return watchListReveals(rootRef.current);
+  }, []);
+
   return (
-    <div className="lf-editorial" id="top">
+    <div className="lf-editorial" id="top" ref={rootRef}>
       <RouteMeta />
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />

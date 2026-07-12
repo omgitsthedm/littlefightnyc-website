@@ -7,6 +7,10 @@ const INTERNAL_LINK_REWRITES: Array<[RegExp, string]> = [
   [/href=(["'])\/it-support\/?\1/gi, 'href="/services/it-support/"'],
   [/href=(["'])\/fixes\/?\1/gi, 'href="/services/"'],
   [/href=(["'])\/software-guides\/([^/"']+)\/?\1/gi, 'href="/journal/$2/"'],
+  [/href=(["'])\/ai-google-broke-the-internet-websites-survive\/?\1/gi, 'href="/journal/ai-google-broke-the-internet-websites-survive/"'],
+  [/href=(["'])\/what-google-looks-for-business-website\/?\1/gi, 'href="/journal/what-google-looks-for-business-website/"'],
+  [/href=(["'])\/why-business-websites-will-be-invisible\/?\1/gi, 'href="/journal/why-business-websites-will-be-invisible/"'],
+  [/href=(["'])\/services\/website-design-small-business-nyc\/?\1/gi, 'href="/services/custom-local-websites/"'],
 ];
 
 const SMS_LINK_REWRITE = new RegExp(

@@ -32,8 +32,8 @@ export default function CaseStudyDetail() {
   if (!study) return <Navigate to="/examples/#studies" replace />;
 
   const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 3);
-  const published = study.published ?? "2026-05-07";
-  const updated = study.updated ?? "2026-05-12";
+  const published = study.published;
+  const updated = study.updated;
 
   // The four-beat arc — setup → tension → resolution, argued not listed.
   const arc = [
@@ -110,15 +110,19 @@ export default function CaseStudyDetail() {
                 </p>
               </div>
             )}
-            <div className="lf-case__meta-item">
-              <p className="lf-case__meta-label">Published</p>
-              <p className="lf-case__meta-value">
-                <time dateTime={published}>{displayDate(published)}</time>
-                <span className="lf-case__meta-updated">
-                  Updated <time dateTime={updated}>{displayDate(updated)}</time>
-                </span>
-              </p>
-            </div>
+            {published && (
+              <div className="lf-case__meta-item">
+                <p className="lf-case__meta-label">Published</p>
+                <p className="lf-case__meta-value">
+                  <time dateTime={published}>{displayDate(published)}</time>
+                  {updated && (
+                    <span className="lf-case__meta-updated">
+                      Updated <time dateTime={updated}>{displayDate(updated)}</time>
+                    </span>
+                  )}
+                </p>
+              </div>
+            )}
           </aside>
 
           {/* The story. */}

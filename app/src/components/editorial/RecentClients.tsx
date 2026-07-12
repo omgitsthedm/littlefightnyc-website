@@ -51,7 +51,7 @@ export default function RecentClients() {
                   alt=""
                   width={1600}
                   height={1200}
-                  loading="lazy"
+                  loading={i === 0 ? "eager" : "lazy"}
                   decoding="async"
                 />
               </span>

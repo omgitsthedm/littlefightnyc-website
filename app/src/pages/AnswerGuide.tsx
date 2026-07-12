@@ -15,6 +15,16 @@ const ANSWER_IMAGE: Record<string, string> = {
   "when-custom-business-system-beats-saas": "/assets/coworking-laptops.webp",
 };
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+
+function displayDate(date: string) {
+  return dateFormatter.format(new Date(`${date}T00:00:00`));
+}
+
 export default function AnswerGuide() {
   const { slug } = useParams();
   const guide = answerGuides.find((item) => item.slug === slug);
@@ -43,10 +53,10 @@ export default function AnswerGuide() {
             <span>Little Fight NYC</span>
             <span aria-hidden="true"> · </span>
             <span>Published </span>
-            <time dateTime="2026-05-07">May 7, 2026</time>
+            <time dateTime={guide.published}>{displayDate(guide.published)}</time>
             <span aria-hidden="true"> · </span>
             <span>Updated </span>
-            <time dateTime="2026-05-12">May 12, 2026</time>
+            <time dateTime={guide.updated}>{displayDate(guide.updated)}</time>
           </p>
 
           {guide.sections.map((section) => (

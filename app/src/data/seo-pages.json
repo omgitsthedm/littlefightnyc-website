@@ -341,6 +341,15 @@
       "image": "/assets/og-image.jpg"
     },
     {
+      "path": "/areas/",
+      "title": "NYC Neighborhoods We Serve | Little Fight NYC",
+      "description": "Little Fight NYC works across New York City, with on-site help usually within 24 hours. See the Manhattan neighborhoods we serve most: Lower East Side, East Village, SoHo, Chelsea, Midtown, and more.",
+      "h1": "The neighborhoods we show up in.",
+      "shortAnswer": "Little Fight NYC serves shops, salons, restaurants, and owner-run teams across Manhattan — with on-site visits usually within 24 hours and callbacks within 2 hours, 9am–9pm ET.",
+      "type": "WebPage",
+      "image": "/assets/nyc-street-crowd.webp"
+    },
+    {
       "path": "/areas/lower-east-side/",
       "title": "Lower East Side Website & IT Support | Little Fight NYC",
       "description": "Websites, IT support, Google visibility, and business systems for Lower East Side shops, restaurants, bars, galleries, and local teams.",
@@ -531,7 +540,8 @@
       "h1": "Thanks. We have the messy setup.",
       "shortAnswer": "Short answer: Little Fight will review what you sent and look for the clearest next move: what to keep, connect, replace, or build.",
       "type": "WebPage",
-      "image": "/assets/og-image.jpg"
+      "image": "/assets/og-image.jpg",
+      "noindex": true
     },
     {
       "path": "/case-studies/cc-films/",
@@ -562,16 +572,16 @@
       "h1": "Hair By Rachel Charles",
       "shortAnswer": "From Instagram-only to a real booking flow.",
       "type": "Article",
-      "image": "/assets/storefront-beauty-supply.webp"
+      "image": "/assets/case-hair-by-rachel-charles.webp"
     },
     {
       "path": "/case-studies/after-hours-agenda/",
       "title": "After Hours Agenda — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC worked with After Hours Agenda on end-to-end e-commerce that preserves the brand while making buying easier.",
+      "description": "How Little Fight NYC built After Hours Agenda a custom Next.js storefront with Square payments and Printful fulfillment — e-commerce that keeps the brand's voice instead of a theme's.",
       "h1": "After Hours Agenda",
-      "shortAnswer": "End-to-end e-commerce that doesn't drown the brand.",
+      "shortAnswer": "E-commerce that doesn't drown the brand.",
       "type": "Article",
-      "image": "/assets/interior-jeans-rack.webp"
+      "image": "/assets/case-after-hours-agenda.webp"
     },
     {
       "path": "/case-studies/clearhelp/",
@@ -580,16 +590,16 @@
       "h1": "ClearHelp",
       "shortAnswer": "Multi-site setup with a real backend.",
       "type": "Article",
-      "image": "/assets/storefront-health-foods.webp"
+      "image": "/assets/case-clearhelp.webp"
     },
     {
       "path": "/case-studies/public-house-creative/",
       "title": "Public House Creative — Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC worked with Public House Creative on a portfolio site that keeps the studio's voice and avoids template gravity.",
+      "description": "How Little Fight NYC built Cockpit for Public House Creative — an internal estimating system where documents come in, rooms get classified, the math reconciles, and the report exports. In production on real bids.",
       "h1": "Public House Creative",
-      "shortAnswer": "A portfolio site that doesn't look like a portfolio template.",
+      "shortAnswer": "An internal cockpit for the work they actually run.",
       "type": "Article",
-      "image": "/assets/sign-groceries-snacks.webp"
+      "image": "/assets/case-public-house-cockpit.webp"
     },
     {
       "path": "/case-studies/grand-funding-llc/",
@@ -598,7 +608,7 @@
       "h1": "Grand Funding LLC",
       "shortAnswer": "A clean public face for a finance business.",
       "type": "Article",
-      "image": "/assets/coworking-laptops.webp"
+      "image": "/assets/case-grand-funding-llc.webp"
     },
     {
       "path": "/studio/dakota/",

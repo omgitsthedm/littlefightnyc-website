@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Sparkles } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
@@ -7,35 +6,13 @@ import QuietContact from "@/components/editorial/QuietContact";
 import { studioProjects } from "@/data/site";
 import "@/styles/editorial/studio.css";
 
-function useLiveTimestamp() {
-  const [now, setNow] = useState<Date>(() => new Date());
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 60_000);
-    return () => clearInterval(t);
-  }, []);
-  return now;
-}
-
-function formatTime(d: Date) {
-  return d.toLocaleString("en-US", {
-    timeZone: "America/New_York",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-    month: "short",
-    day: "numeric",
-  });
-}
-
 export default function StudioDetail() {
   const { slug } = useParams();
   const project = studioProjects.find((p) => p.slug === slug);
-  const now = useLiveTimestamp();
 
   if (!project) return <Navigate to="/services/#studio" replace />;
 
   const related = studioProjects.filter((p) => p.slug !== project.slug).slice(0, 3);
-  const isDakota = project.slug === "dakota";
 
   return (
     <>
@@ -91,26 +68,19 @@ export default function StudioDetail() {
             <p className="lf-case-detail__byline">
               <span>Little Fight NYC</span>
               <span aria-hidden="true"> · </span>
-              <span>Published </span>
-              <time dateTime="2026-05-07">May 7, 2026</time>
-              <span aria-hidden="true"> · </span>
-              <span>Updated </span>
-              <time dateTime="2026-05-12">May 12, 2026</time>
+              <span>From the Studio</span>
             </p>
 
             <EditorialBody dropcap>
               {project.body?.map((p, i) => <p key={i}>{p}</p>)}
             </EditorialBody>
 
-            {/* Live metrics block — currently only Dakota has metrics. */}
+            {/* Measured-snapshot metrics — currently only Dakota has them. */}
             {project.metrics && project.metrics.length > 0 && (
-              <section className="lf-studio-detail__metrics" aria-label="Live metrics">
+              <section className="lf-studio-detail__metrics" aria-label="Measured metrics">
                 <div className="lf-studio-detail__metrics-head">
                   <p className="lf-studio-detail__metrics-label">
-                    {isDakota ? "What Dakota's been doing this week" : "Live metrics"}
-                  </p>
-                  <p className="lf-studio-detail__metrics-time">
-                    <span className="lf-studio-detail__pulse" aria-hidden="true" /> Synced {formatTime(now)} ET
+                    {project.metricsEyebrow ?? "By the numbers"}
                   </p>
                 </div>
                 <dl className="lf-studio-detail__metrics-grid">
@@ -122,8 +92,7 @@ export default function StudioDetail() {
                   ))}
                 </dl>
                 <p className="lf-studio-detail__metrics-note">
-                  Numbers are last sync'd from Dakota's local log. The agent runs on a Mac
-                  in the office; metrics update on each run.
+                  A snapshot from one week of the agent's local run log — not a live feed.
                 </p>
               </section>
             )}

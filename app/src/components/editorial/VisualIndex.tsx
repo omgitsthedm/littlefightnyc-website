@@ -30,6 +30,7 @@ const CTA_BY_SECTION: Record<string, string> = {
   "case-studies": "See the study",
   industries: "See the playbook",
   journal: "Read the entry",
+  areas: "See the neighborhood",
 };
 
 function ctaLabel(to: string): string {

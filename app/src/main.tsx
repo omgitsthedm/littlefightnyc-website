@@ -4,8 +4,10 @@ import './index.css'
 import './styles/editorial/motion.css'
 import App from './App.tsx'
 import { installAnalyticsHooks } from './lib/analytics'
+import { captureAttribution } from './lib/attribution'
 
 if (typeof window !== "undefined") {
+  captureAttribution();
   if (window.requestIdleCallback) {
     window.requestIdleCallback(installAnalyticsHooks);
   } else {

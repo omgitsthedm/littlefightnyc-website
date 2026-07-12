@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ClipboardCheck } from "lucide-react";
 import type { FormEvent } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
+import { fitRoutes } from "@/data/site";
+import { readAttribution } from "@/lib/attribution";
 import "@/styles/editorial/fitcheck.css";
 
 type FieldName = "name" | "business" | "contact" | "message";
+
+const OUTCOMES = [
+  "An urgent fix plan",
+  "A cleanup punch list, ranked",
+  "An honest “you don’t need us yet”",
+];
 
 const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
@@ -17,6 +25,18 @@ const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
 export default function FitCheck() {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [symptom, setSymptom] = useState<string | null>(null);
+  const messageRef = useRef<HTMLTextAreaElement | null>(null);
+  const attribution = readAttribution();
+
+  function pickSymptom(label: string, copy: string) {
+    setSymptom(label);
+    const el = messageRef.current;
+    if (el && el.value.trim() === "") {
+      el.value = `${label} — ${copy}`;
+    }
+    el?.focus();
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     const form = event.currentTarget;
@@ -59,7 +79,7 @@ export default function FitCheck() {
             <span className="lf-em">moving parts.</span>
           </>
         }
-        dek="Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. The consult is free. Do not share passwords or private customer data."
+        dek="Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. The consult is free."
         image={{
           src: "/assets/manhattan.webp",
           alt: "Manhattan rooftops at golden hour",
@@ -70,6 +90,38 @@ export default function FitCheck() {
 
       <section className="lf-fit">
         <div className="lf-fit__inner">
+          <div className="lf-fit__router" aria-label="Where does it hurt?">
+            <p className="lf-fit__router-label">Start from the symptom</p>
+            <div className="lf-fit__chips" role="group" aria-label="Pick what fits">
+              {fitRoutes.map((route) => {
+                const Icon = route.icon;
+                const active = symptom === route.label;
+                return (
+                  <button
+                    key={route.label}
+                    type="button"
+                    className={`lf-fit__chip${active ? " is-active" : ""}`}
+                    aria-pressed={active}
+                    onClick={() => pickSymptom(route.label, route.copy)}
+                  >
+                    <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+                    {route.label}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="lf-fit__outcomes">
+              You’ll get one of three answers:{" "}
+              {OUTCOMES.map((o, i) => (
+                <span key={o}>
+                  <strong>{o}</strong>
+                  {i < OUTCOMES.length - 1 ? " · " : "."}
+                </span>
+              ))}
+              {" "}No pitch either way.
+            </p>
+          </div>
+
           <form
             className="lf-fit__form"
             name="fit-check-scratch"
@@ -83,6 +135,10 @@ export default function FitCheck() {
             <input type="hidden" name="form-name" value="fit-check-scratch" />
             <input type="hidden" name="subject" value="New Little Fight NYC Fit Check" />
             <input type="hidden" name="source" value="littlefightnyc.com/fit-check" />
+            {symptom && <input type="hidden" name="symptom" value={symptom} />}
+            {Object.entries(attribution).map(([key, value]) => (
+              <input key={key} type="hidden" name={key} value={value} />
+            ))}
             <p className="lf-fit__honeypot" aria-hidden="true">
               <label htmlFor="bot-field">Do not fill this out</label>
               <input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
@@ -163,10 +219,14 @@ export default function FitCheck() {
                 name="message"
                 rows={5}
                 required
+                ref={messageRef}
                 placeholder="A short sentence is fine. We'll ask the rest on the call."
                 aria-invalid={errors.message ? true : undefined}
-                aria-describedby={errors.message ? "fit-message-error" : undefined}
+                aria-describedby={errors.message ? "fit-message-error" : "fit-message-note"}
               />
+              <p className="lf-fit__note" id="fit-message-note">
+                No passwords or private customer data here — we never need them to scope.
+              </p>
               {errors.message && (
                 <p className="lf-fit__error" id="fit-message-error">
                   {errors.message}
@@ -187,10 +247,14 @@ export default function FitCheck() {
                 </>
               ) : (
                 <>
-                  Send it over <span aria-hidden="true">→</span>
+                  Send my Fit Check <span aria-hidden="true">→</span>
                 </>
               )}
             </button>
+            <p className="lf-fit__assurance">
+              Free consult · We reply within 2 hours, 9am–9pm ET · Urgent? Call{" "}
+              <a href="tel:+16463600318">(646) 360-0318</a>
+            </p>
           </form>
 
           <aside className="lf-fit__aside">

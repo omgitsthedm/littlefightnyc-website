@@ -31,7 +31,9 @@ export default function StatBlock({
       <dl className="lf-stats__grid" data-count={items.length}>
         {items.map((s) => (
           <div key={s.label} className="lf-stats__item">
-            <dt className="lf-stats__value">{s.value}</dt>
+            <dt className="lf-stats__value" data-long={s.value.length > 7 || undefined}>
+              {s.value}
+            </dt>
             <dd className="lf-stats__label">{s.label}</dd>
           </div>
         ))}

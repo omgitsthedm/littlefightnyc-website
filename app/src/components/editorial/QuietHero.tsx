@@ -145,13 +145,17 @@ export default function QuietHero() {
       </div>
 
       <div ref={claimRef} className="lf-hero__content">
-        <h1 className="lf-hero__claim">
-          <span className="lf-hero__line">{cascade("Tech for the shops", 0, "a")}</span>
-          {" "}
-          <span className="lf-hero__line">{cascade("that built", 20, "b")}</span>
-          {" "}
-          <span className="lf-hero__line lf-hero__claim-em">
-            {cascade("New York.", 32, "c")}
+        {/* The letter-split spans garble screen-reader output ("T e c h f o r…"),
+            so the real sentence lives on the h1 and the visual letters are hidden. */}
+        <h1 className="lf-hero__claim" aria-label="Tech for the shops that built New York.">
+          <span aria-hidden="true">
+            <span className="lf-hero__line">{cascade("Tech for the shops", 0, "a")}</span>
+            {" "}
+            <span className="lf-hero__line">{cascade("that built", 20, "b")}</span>
+            {" "}
+            <span className="lf-hero__line lf-hero__claim-em">
+              {cascade("New York.", 32, "c")}
+            </span>
           </span>
         </h1>
 
@@ -203,7 +207,7 @@ export default function QuietHero() {
         <div className="lf-hero__marquee-track">
           {[0, 1].map((dup) => (
             <ul key={dup} className="lf-hero__marquee-list" aria-hidden={dup === 1}>
-              <li className="lf-hero__marquee-label">Today we're fixing</li>
+              <li className="lf-hero__marquee-label">The kind of thing we fix</li>
               {MARQUEE_ITEMS.map((item) => (
                 <li key={`${dup}-${item.label}`} className="lf-hero__marquee-item">
                   <Link

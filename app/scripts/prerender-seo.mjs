@@ -188,7 +188,9 @@ async function journalPages() {
 
   const indexJournal = {
     path: "/journal/",
-    title: "Little Fight Journal for NYC Operators | Little Fight NYC",
+    // Must match RouteMeta's /journal/ entry — a mismatch makes the tab title
+    // visibly swap after hydration and splits what crawlers vs users index.
+    title: "Journal for NYC Small Business Operators | Little Fight NYC",
     description:
       "Plain-English field notes on websites, IT support, software bills, local search, and business systems for New York small business owners.",
     shortAnswer:
@@ -458,12 +460,9 @@ function foundationSchemas(page) {
     "@id": `${siteUrl}/#website`,
     "url": siteUrl,
     "name": site.name,
-    "publisher": { "@id": `${siteUrl}/#organization` },
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": `${siteUrl}/examples/?q={search_term_string}`,
-      "query-input": "required name=search_term_string"
-    }
+    "publisher": { "@id": `${siteUrl}/#organization` }
+    // No SearchAction: /examples/ has no ?q= handler, and Google fetches the
+    // declared target. Re-add only when a real on-site search ships.
   };
 
   const publishedDate = publishedDateFor(page);
@@ -1082,7 +1081,7 @@ async function writeRoute(page) {
 }
 
 function sitemap() {
-  const urls = pages.map((page) => {
+  const urls = pages.filter((page) => !page.noindex).map((page) => {
     return [
       "  <url>",
       `    <loc>${absoluteUrl(page.path)}</loc>`,
@@ -1097,7 +1096,7 @@ function sitemap() {
 }
 
 function imageSitemap() {
-  const urls = pages.map((page) => {
+  const urls = pages.filter((page) => !page.noindex).map((page) => {
     return [
       "  <url>",
       `    <loc>${absoluteUrl(page.path)}</loc>`,

@@ -1,4 +1,13 @@
-# Service-slug renames (May 2026 — four-category restructure)
+# ============================================================
+# SINGLE SOURCE OF REDIRECT TRUTH.
+# Netlify processes this file BEFORE netlify.toml — a rule that
+# only lives in the toml is dead the moment a catch-all exists
+# here (this exact bug hard-404'd ~30 legacy URLs until 2026-07-12).
+# Keep ALL redirects in this file, most-specific first, the 404
+# catch-all LAST. netlify.toml carries no [[redirects]] anymore.
+# ============================================================
+
+# --- Service-slug renames (May 2026 — four-category restructure)
 /services/websites/      /services/custom-local-websites/  301
 /services/websites       /services/custom-local-websites/  301
 /services/local-search/  /services/tech-consulting/        301
@@ -11,22 +20,84 @@
 /consulting              /services/tech-consulting/        301
 /it-support/             /services/it-support/             301
 /it-support              /services/it-support/             301
+/local-search/           /services/tech-consulting/        301
+/local-search            /services/tech-consulting/        301
+/business-systems/       /services/business-systems/       301
+/business-systems        /services/business-systems/       301
 /lifetime-cost/          /answers/reduce-monthly-software-costs-small-business/  301
 /lifetime-cost           /answers/reduce-monthly-software-costs-small-business/  301
 
-# Information architecture consolidation (May 2026)
+# --- Old service URLs mapped into current routes
+/website-design-small-business-nyc/*           /services/custom-local-websites/  301
+/services/website-design-small-business-nyc/*  /services/custom-local-websites/  301
+/on-site-it-support-nyc/*                      /services/it-support/             301
+/services/on-site-it-support-nyc/*             /services/it-support/             301
+/local-seo-and-google-ads-nyc/*                /services/tech-consulting/        301
+/services/local-seo-and-google-ads-nyc/*       /services/tech-consulting/        301
+/tech-consulting-small-business/*              /services/business-systems/       301
+/services/tech-consulting-small-business/*     /services/business-systems/       301
+
+# --- Information architecture consolidation (May 2026)
 /work/           /services/                 301
 /work            /services/                 301
+/answers/        /examples/#answers         301
+/answers         /examples/#answers         301
+/industries/     /examples/#industries      301
+/industries      /examples/#industries      301
+/case-studies/   /examples/#studies         301
+/case-studies    /examples/#studies         301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301
-/answers/        /examples/#answers      301
-/answers         /examples/#answers      301
-/industries/     /examples/#industries   301
-/industries      /examples/#industries   301
-/case-studies/   /examples/#studies      301
-/case-studies    /examples/#studies      301
-# Field Guide renamed to Examples (2026-07-07) — preserve the indexed URL
+
+# --- Field Guide renamed to Examples (2026-07-07) — preserve the indexed URL
 /field-guide/    /examples/                 301
 /field-guide     /examples/                 301
-# Default SPA fallback
+
+# --- Legacy article URLs — each legacy slug now lives at /journal/{slug}/
+/blog/cybersecurity-for-small-business.html  /journal/cybersecurity-for-small-business/  301
+/blog/nyc-small-business-digital.html        /journal/nyc-small-business-digital/        301
+/blog/protecting-kids-from-ai.html           /journal/protecting-kids-from-ai/           301
+/blog/*                                      /journal/                                   301
+
+/software-guides/airtable-vs-notion-vs-monday-small-business/*      /journal/airtable-vs-notion-vs-monday-small-business/      301
+/software-guides/custom-business-system-vs-saas-subscriptions/*     /journal/custom-business-system-vs-saas-subscriptions/     301
+/software-guides/shopify-vs-squarespace-nyc-retail/*                /journal/shopify-vs-squarespace-nyc-retail/                301
+/software-guides/square-appointments-vs-glossgenius-nyc-salons/*    /journal/square-appointments-vs-glossgenius-nyc-salons/    301
+/software-guides/square-vs-toast-manhattan-restaurants/*            /journal/square-vs-toast-manhattan-restaurants/            301
+/software-guides/webflow-vs-squarespace-manhattan-small-business/*  /journal/webflow-vs-squarespace-manhattan-small-business/  301
+/software-guides/*                                                  /journal/                                                  301
+
+# --- Legacy top-level long-form essays
+/ai-google-broke-the-internet-websites-survive/*  /journal/ai-google-broke-the-internet-websites-survive/  301
+/what-google-looks-for-business-website/*         /journal/what-google-looks-for-business-website/         301
+/why-business-websites-will-be-invisible/*        /journal/why-business-websites-will-be-invisible/        301
+
+# --- Retired sections + legal file URLs
+/solutions/*     /services/   301
+/privacy.html    /legal/      301
+/terms.html      /legal/      301
+
+# --- Canonical trailing-slash hygiene (only fires when no file matches)
+/services        /services/         301
+/fit-check       /fit-check/        301
+/about           /about/            301
+/audit           /audit/            301
+/glossary        /glossary/         301
+/thanks          /thanks/           301
+/legal           /legal/            301
+/areas           /areas/            301
+/journal         /journal/          301
+/examples        /examples/         301
+/contact         /contact/          301
+/services/:slug  /services/:slug/   301
+/answers/:slug   /answers/:slug/    301
+/areas/:area/:service  /areas/:area/:service/  301
+/areas/:slug     /areas/:slug/      301
+/glossary/:slug  /glossary/:slug/   301
+/industries/:slug  /industries/:slug/  301
+/case-studies/:slug  /case-studies/:slug/  301
+/studio/:slug    /studio/:slug/     301
+/journal/:slug   /journal/:slug/    301
+
+# --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404

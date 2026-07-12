@@ -2,11 +2,13 @@ import "@/styles/editorial/fonts.css";
 import "@/styles/editorial/tokens.css";
 import "@/styles/editorial/base.css";
 
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
+import { watchListReveals } from "@/lib/listReveal";
 
 const RouteMeta = lazy(() => import("@/components/RouteMeta"));
+const FaqList = lazy(() => import("@/components/editorial/FaqList"));
 const TheFight = lazy(() => import("@/components/editorial/TheFight"));
 const WorkGrid = lazy(() => import("@/components/editorial/WorkGrid"));
 const MomentumSection = lazy(() => import("@/components/editorial/MomentumSection"));
@@ -17,6 +19,21 @@ const QuietContact = lazy(() => import("@/components/editorial/QuietContact"));
 const QuietFooter = lazy(() => import("@/components/editorial/QuietFooter"));
 const StickyHelpBar = lazy(() => import("@/components/editorial/StickyHelpBar"));
 const CommandPalette = lazy(() => import("@/components/editorial/CommandPalette"));
+
+/* Mirrors the FAQPage JSON-LD for "/" in seo-pages.json — marked-up content
+ * must be visible on the page (Google guideline). Keep the two in sync. */
+const HOME_FAQ = [
+  {
+    question: "What does Little Fight NYC do?",
+    answer:
+      "Little Fight NYC helps small businesses with websites, IT support, local Google visibility, software cleanup, and right-sized business systems.",
+  },
+  {
+    question: "Who does Little Fight NYC help?",
+    answer:
+      "Little Fight NYC helps New York shops, salons, pharmacies, restaurants, studios, service businesses, and teams under 50.",
+  },
+];
 
 function useDeferredSections() {
   const [ready, setReady] = useState(false);
@@ -44,9 +61,15 @@ function useDeferredSections() {
 
 export default function Home() {
   const showDeferred = useDeferredSections();
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!rootRef.current) return;
+    return watchListReveals(rootRef.current);
+  }, []);
 
   return (
-    <div className="lf-editorial" id="top">
+    <div className="lf-editorial" id="top" ref={rootRef}>
       {showDeferred && (
         <Suspense fallback={null}>
           <RouteMeta />
@@ -64,6 +87,9 @@ export default function Home() {
             <RecentClients />
             <SignatureBand />
             <BrandLine />
+            <div className="lf-home-faq">
+              <FaqList title="Quick answers" items={HOME_FAQ} />
+            </div>
             <QuietContact />
           </Suspense>
         )}

@@ -7,6 +7,7 @@ const EditorialShell = lazy(() => import("@/components/editorial/EditorialShell"
 const AnswerGuide = lazy(() => import("@/pages/AnswerGuide"));
 const About = lazy(() => import("@/pages/About"));
 const AreaDetail = lazy(() => import("@/pages/AreaDetail"));
+const Areas = lazy(() => import("@/pages/Areas"));
 const Audit = lazy(() => import("@/pages/Audit"));
 const CaseStudyDetail = lazy(() => import("@/pages/CaseStudyDetail"));
 const Contact = lazy(() => import("@/pages/Contact"));
@@ -84,6 +85,7 @@ export default function App() {
           <Route path="studio/:slug" element={route(StudioDetail)} />
           <Route path="about" element={route(About)} />
           <Route path="contact" element={route(Contact)} />
+          <Route path="areas" element={route(Areas)} />
           <Route path="areas/:areaSlug/:serviceSlug" element={route(ServiceAreaDetail)} />
           <Route path="areas/:slug" element={route(AreaDetail)} />
           <Route path="thanks" element={route(Thanks)} />
