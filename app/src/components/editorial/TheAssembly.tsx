@@ -174,11 +174,11 @@ export default function TheAssembly() {
                 Build
               </span>
             </div>
-
-            <p className="lf-assembly__sub">
-              You keep the shop. We keep it running.
-            </p>
           </div>
+
+          <p className="lf-assembly__sub" aria-hidden="true">
+            You keep the shop. We keep it running.
+          </p>
 
           <div className="lf-assembly__cta-row">
             <Link to="/tech-audit/" viewTransition className="lf-assembly__cta">

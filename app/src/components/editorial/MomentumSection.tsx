@@ -43,7 +43,6 @@ const CAPABILITIES = [
   },
 ] as const;
 
-const KEYCAPS = ["K", "E", "E", "P", "·", "F", "I", "T"] as const;
 
 export default function MomentumSection() {
   const headRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
@@ -84,13 +83,6 @@ export default function MomentumSection() {
                   No bloated stack. No monthly tool you never open. One team that
                   knows your setup end to end.
                 </p>
-              </div>
-              <div className="lf-momentum__keycaps" aria-hidden="true">
-                {KEYCAPS.map((cap, i) => (
-                  <span key={i} className="lf-momentum__keycap">
-                    {cap}
-                  </span>
-                ))}
               </div>
             </div>
             <div className="lf-momentum__feature-viz">

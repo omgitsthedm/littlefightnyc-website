@@ -297,8 +297,8 @@
 .lf-assembly__sub {
   position: absolute;
   z-index: 3;
-  left: 0;
-  top: calc(72px * var(--lf-as-scale));
+  left: 50%;
+  top: calc(var(--lf-as-center) + 72px * var(--lf-as-scale));
   transform: translateX(-50%);
   width: max-content;
   max-width: min(76vw, 460px);

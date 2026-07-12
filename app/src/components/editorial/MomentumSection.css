@@ -186,38 +186,6 @@ a.lf-momentum__card:focus-visible {
   line-height: 1.5;
   color: var(--lf-bone-soft);
 }
-.lf-momentum__keycaps {
-  display: flex;
-  /* Never wrap — an orphaned keycap on line two read as broken (David's
-     iPhone catch, 2026-07-12). Keys shrink on phones instead. */
-  flex-wrap: nowrap;
-  gap: var(--lf-space-2);
-}
-
-@media (max-width: 640px) {
-  .lf-momentum__keycaps {
-    gap: 6px;
-  }
-  .lf-momentum__keycap {
-    min-width: 28px;
-    height: 28px;
-    padding: 0 6px;
-  }
-}
-.lf-momentum__keycap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 34px;
-  height: 34px;
-  padding: 0 8px;
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-xs);
-  color: var(--lf-bone-soft);
-  background: var(--lf-paper-2);
-  border: 1px solid var(--lf-hairline);
-  border-radius: 10px;
-}
 
 /* ---- Capability tiles ---- */
 .lf-momentum__card--cap { grid-column: span 3; }
