@@ -1383,8 +1383,11 @@ function snapshot(page) {
     </article>
   `;
 
+  // Collapse the authoring whitespace — this style block ships on every page.
+  const minifiedStyles = inlineStyles.replace(/\s+/g, " ").replace(/\s*([{};:,])\s*/g, "$1").trim();
+
   return `
-    <style>${inlineStyles}</style>
+    <style>${minifiedStyles}</style>
     <div class="lf-seo" aria-label="${escapeAttr(page.h1)}">
       <header class="lf-seo__nav">
         <a class="lf-seo__brand" href="/">Little Fight NYC</a>
