@@ -846,6 +846,63 @@
   display: none;
 }
 
+/* Comparison tables — journal software guides (.lf-compare).
+ * Compact decision matrix: hairline row rules, mono column heads,
+ * answer-first caption. Horizontal scroll under 640px. */
+.lf-editorial .lf-compare {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: var(--lf-space-5) var(--lf-space-6);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+}
+
+.lf-editorial .lf-compare caption {
+  caption-side: top;
+  text-align: left;
+  font-style: italic;
+  color: var(--lf-bone-soft);
+  margin-bottom: var(--lf-space-3);
+}
+
+.lf-editorial .lf-compare th,
+.lf-editorial .lf-compare td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--lf-space-3) var(--lf-space-4) var(--lf-space-3) 0;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-compare th {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-editorial .lf-compare td {
+  color: var(--lf-bone-soft);
+}
+
+.lf-editorial .lf-compare tbody tr:hover {
+  background: var(--lf-paper-2);
+}
+
+@media (max-width: 640px) {
+  .lf-editorial .lf-compare {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lf-editorial .lf-compare th,
+  .lf-editorial .lf-compare td {
+    min-width: 9em;
+  }
+}
+
 /* Reduced-motion: hold the Momentum card lift flat, keep the hairline cue */
 @media (prefers-reduced-motion: reduce) {
   .lf-editorial .soft-card,

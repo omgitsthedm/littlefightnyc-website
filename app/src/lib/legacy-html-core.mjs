@@ -25,6 +25,13 @@ const SMS_LINK_REWRITE = new RegExp(
 
 export function prepareLegacyHtml(html) {
   let prepared = html
+    // The legacy source writes CLOSERS as OPENERS: table ends appear as
+    // "<tr><tbody><table>" and sections "close" by opening the next one.
+    // Browsers visually recover but the DOM nests 30+ levels deep and AI
+    // extractors mangle it. Repair structurally before anything else.
+    .replace(/<tr>\s*<tbody>\s*<table>/gi, "</tr></tbody></table>")
+    .replace(/<section>/gi, "</section><section>")
+    .replace(/<section>\s*<\/section>/gi, "")
     .replace(/<h1(\s[^>]*)?>/gi, '<h2 class="lf-post__legacy-title">')
     .replace(/<\/h1>/gi, "</h2>")
     .replace(/\s*<svg\b[^>]*>[\s\S]*?<svg>/gi, " ")
@@ -41,6 +48,13 @@ export function prepareLegacyHtml(html) {
   if (!/<h2\b/i.test(prepared) && /<h3\b/i.test(prepared)) {
     prepared = prepared.replace(/<h3(\s[^>]*)?>/gi, "<h2$1>").replace(/<\/h3>/gi, "</h2>");
   }
+
+  // Balance the section repair: drop the leading orphan closer the separator
+  // transform creates, and close whatever the source left open at the end.
+  prepared = prepared.replace(/^(\s*)<\/section>/, "$1");
+  const opens = (prepared.match(/<section\b/gi) || []).length;
+  const closes = (prepared.match(/<\/section>/gi) || []).length;
+  if (opens > closes) prepared += "</section>".repeat(opens - closes);
 
   return prepared;
 }
