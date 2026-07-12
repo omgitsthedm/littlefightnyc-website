@@ -85,7 +85,7 @@ export default function About() {
             </p>
           </EditorialBody>
 
-          <FounderCard />
+          <FounderCard photoSrc="/assets/founder-david-marsh.webp" />
 
           <MiniMapNYC compact />
 
