@@ -38,14 +38,13 @@
 /services/tech-consulting-small-business/*     /services/business-systems/       301
 
 # --- Information architecture consolidation (May 2026)
+# (/answers/ and /case-studies/ are REAL hub pages again as of 2026-07-12.)
 /work/           /services/                 301
 /work            /services/                 301
-/answers/        /examples/#answers         301
-/answers         /examples/#answers         301
+/answers         /answers/                  301
 /industries/     /examples/#industries      301
 /industries      /examples/#industries      301
-/case-studies/   /examples/#studies         301
-/case-studies    /examples/#studies         301
+/case-studies    /case-studies/             301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301
 

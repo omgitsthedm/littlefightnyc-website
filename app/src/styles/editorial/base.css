@@ -313,6 +313,28 @@ body:has(.lf-editorial) {
   }
 }
 
+/* ─── Breathing room (David, 2026-07-12: "everything is too close and
+   running into each other — needs a slight, small aspect of separation
+   to make context more digestible.") ─────────────────────────────────
+   One consistent rhythm for major in-page blocks: every data moment
+   (diagram, timeline, funnel, rings, map) separates from prose with a
+   generous margin and a soft top hairline, so it reads as its own beat. */
+.lf-editorial .lf-flow,
+.lf-editorial .lf-tls,
+.lf-editorial .lf-respwin,
+.lf-editorial .lf-funnel,
+.lf-editorial .lf-rings,
+.lf-editorial .lf-minimap {
+  margin-block: var(--lf-space-8);
+  padding-top: var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+/* Prose sections keep a slightly larger gap from whatever follows them. */
+.lf-editorial .lf-answer-page__section {
+  margin-bottom: var(--lf-space-8);
+}
+
 /* Home "Quick answers" wrapper — gives the shared FaqList the page margins
    the standalone home layout doesn't otherwise provide. */
 .lf-editorial .lf-home-faq {

@@ -5,9 +5,11 @@ import Home from "@/pages/Home";
 
 const EditorialShell = lazy(() => import("@/components/editorial/EditorialShell"));
 const AnswerGuide = lazy(() => import("@/pages/AnswerGuide"));
+const Answers = lazy(() => import("@/pages/Answers"));
 const About = lazy(() => import("@/pages/About"));
 const AreaDetail = lazy(() => import("@/pages/AreaDetail"));
 const Areas = lazy(() => import("@/pages/Areas"));
+const CaseStudies = lazy(() => import("@/pages/CaseStudies"));
 const Audit = lazy(() => import("@/pages/Audit"));
 const CaseStudyDetail = lazy(() => import("@/pages/CaseStudyDetail"));
 const Contact = lazy(() => import("@/pages/Contact"));
@@ -71,7 +73,7 @@ export default function App() {
           <Route path="fit-check" element={route(FitCheck)} />
           <Route path="examples" element={route(FieldGuide)} />
           <Route path="audit" element={route(Audit)} />
-          <Route path="answers" element={<Navigate to="/examples/#answers" replace />} />
+          <Route path="answers" element={route(Answers)} />
           <Route path="answers/:slug" element={route(AnswerGuide)} />
           <Route path="glossary" element={route(Glossary)} />
           <Route path="glossary/:slug" element={route(GlossaryTerm)} />
@@ -79,7 +81,7 @@ export default function App() {
           <Route path="journal/:slug" element={route(JournalPost)} />
           <Route path="industries" element={<Navigate to="/examples/#industries" replace />} />
           <Route path="industries/:slug" element={route(IndustryDetail)} />
-          <Route path="case-studies" element={<Navigate to="/examples/#studies" replace />} />
+          <Route path="case-studies" element={route(CaseStudies)} />
           <Route path="case-studies/:slug" element={route(CaseStudyDetail)} />
           <Route path="studio" element={<Navigate to="/services/#studio" replace />} />
           <Route path="studio/:slug" element={route(StudioDetail)} />

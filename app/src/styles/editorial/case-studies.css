@@ -851,3 +851,40 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 .lf-studio-detail__metrics .lf-funnel .lf-funnel__eyebrow {
   color: var(--lf-fight);
 }
+
+/* ---- Case hub metric chips (2026-07-12 hub resurrection) ---- */
+.lf-cases__chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin: var(--lf-space-4) 0 0;
+  padding: 0;
+}
+
+.lf-cases__chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 14px;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
+}
+
+.lf-cases__chip-value {
+  font-family: var(--lf-display);
+  font-weight: 700;
+  font-size: var(--lf-text-base);
+  letter-spacing: -0.01em;
+  color: var(--lf-fight);
+  line-height: 1.1;
+}
+
+.lf-cases__chip-label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}

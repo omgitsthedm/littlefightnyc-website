@@ -10,7 +10,10 @@ function serviceLabel(slug: string): string | undefined {
   return services.find((s) => s.slug === slug)?.eyebrow;
 }
 
+const COUNT_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
+
 export default function CaseStudies() {
+  const countWord = COUNT_WORDS[caseStudies.length] ?? String(caseStudies.length);
   return (
     <>
       <PageHero
@@ -22,7 +25,7 @@ export default function CaseStudies() {
             <span className="lf-em">Real work.</span>
           </>
         }
-        dek="Seven engagements, named with permission. Each one shows the pattern: what we kept, what we changed, and what shipped."
+        dek={`${countWord} engagements, named with permission. Each one shows the pattern: what we kept, what we changed, and what shipped.`}
         image={{
           src: "/assets/storefront-shop-deli.webp",
           alt: "New York shopfront at street level",
@@ -53,24 +56,30 @@ export default function CaseStudies() {
                 </h2>
                 <p className="lf-cases__deck">{study.title}</p>
 
+                {/* Outcome-led: the result headline + honest metric chips.
+                    The full Problem/Kept/Changed/Result arc lives on the
+                    detail page — the hub's job is to make you click. */}
                 <dl className="lf-cases__dl">
                   <div>
                     <dt>Problem</dt>
                     <dd>{study.problem}</dd>
                   </div>
                   <div>
-                    <dt>Kept</dt>
-                    <dd>{study.kept}</dd>
-                  </div>
-                  <div>
-                    <dt>Changed</dt>
-                    <dd>{study.changed}</dd>
-                  </div>
-                  <div>
                     <dt>Result</dt>
                     <dd>{study.result}</dd>
                   </div>
                 </dl>
+
+                {study.metrics && study.metrics.length > 0 && (
+                  <ul className="lf-cases__chips" aria-label="Project facts">
+                    {study.metrics.map((m) => (
+                      <li key={m.label} className="lf-cases__chip">
+                        <span className="lf-cases__chip-value">{m.value}</span>
+                        <span className="lf-cases__chip-label">{m.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <div className="lf-cases__foot">
                   <div className="lf-cases__services">

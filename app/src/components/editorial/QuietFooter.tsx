@@ -21,6 +21,8 @@ const footerGroups: Array<{ title: string; icon: LucideIcon; links: Array<{ labe
     icon: Award,
     links: [
       { label: "Examples", to: "/examples/" },
+      { label: "All Case Studies", to: "/case-studies/" },
+      { label: "VenueCircuit", to: "/case-studies/venuecircuit/" },
       { label: "CC Films", to: "/case-studies/cc-films/" },
       { label: "DeckSpace", to: "/case-studies/deckspace/" },
       { label: "Hair By Rachel Charles", to: "/case-studies/hair-by-rachel-charles/" },

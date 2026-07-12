@@ -1730,9 +1730,9 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.getdeckspace.com",
     slug: "deckspace",
     metrics: [
-      { value: "Low-latency", label: "Speed treated as a core feature" },
-      { value: "3-in-1", label: "Onboard guide · social · memory layer" },
       { value: "Live", label: "getdeckspace.com" },
+      { value: "3 jobs", label: "Onboard guide · social · memory layer" },
+      { value: "Kept", label: "The nostalgic heart of cruising" },
     ],
     image: "/assets/case-deckspace.webp",
     services: ["custom-local-websites", "business-systems"],
@@ -1742,7 +1742,7 @@ export const caseStudies: CaseStudy[] = [
     problem: "DeckSpace needed to explain an internal cruise social network without making it feel like a generic travel app: guests need to find events, venue hours, shops, bars, restaurants, voyage details, photos, profiles, and each other while they are already moving around the ship.",
     kept: "The emotional center of cruising: shared plans, temporary community, onboard discovery, and the feeling of a trip people want to remember after they get home.",
     changed: "Framed the product around nostalgia, shipboard wayfinding, guest profiles, event discovery, venue context, and ultra-premium low-latency performance so the experience feels immediate instead of like another portal.",
-    result: "A clearer product story for getdeckspace.com: part onboard guide, part social network, part cruise memory layer, with speed and atmosphere treated as core features.",
+    result: "getdeckspace.com now tells the whole product in one pass — part onboard guide, part social network, part cruise memory layer — on a public site built to the same low-latency bar the product itself promises.",
     body: [
       "DeckSpace is built for a strange, high-stakes little environment: a cruise ship. Guests are relaxed, distracted, moving between decks, and constantly asking the same questions. What is happening tonight? Where is the bar? What is open? Who else is on board? Where did that photo go? The site needed to make the product feel like a guest companion instead of a software dashboard.",
       "We kept the nostalgic heart of the idea. A cruise is part schedule, part wayfinding problem, and part temporary social world. DeckSpace turns that into a shared sailing page where guests can follow events, check venue context, keep up with the voyage, make a profile, find people, share photos, and leave with a short-lived archive of the trip.",
@@ -1869,9 +1869,37 @@ export const caseStudies: CaseStudy[] = [
     changed: "Built a quiet, type-led landing with a single clear lead capture, structured contact info, and meta + schema configured for trust signals.",
     result: "A site partners and prospects can actually share. Professional without sounding generic.",
     body: [
-      "Grand Funding is a financial funding business. The needs were specific: investor-grade public presentation, clear product summary, professional contact path, real schema for trust signals — and none of the boilerplate finance-site decoration that signals 'we built this on a template at a different agency.'",
-      "We kept the team's positioning and the way they describe what they do. We built a quiet, type-led landing page with a single clear lead capture, structured contact information, and schema markup configured for credibility (Organization, FinancialService, Person for the founder).",
-      "The result is a public landing partners and prospects can share without a second thought. Professional, restrained, and intentional — without sounding like every other LLC website on the internet.",
+      "Grand Funding is a financial funding business, and finance sites have a template-gravity problem: glass towers, stock handshakes, the word 'solutions.' Those defaults exist because trust is hard to signal — but to the exact partners this site has to convince, template reads as risk. The brief was to be credible without a single borrowed cliché.",
+      "We kept the team's positioning and the way they describe what they do — no invented mission statement. The design carries the trust load with typography instead of decoration: a quiet, type-led landing with one clear lead capture, structured contact information, and schema markup configured for credibility (Organization, FinancialService, Person for the founder).",
+      "The result is a public landing partners and prospects can share without a second thought — professional, restrained, and intentional, without sounding like every other LLC website on the internet.",
+    ],
+  },
+  {
+    type: "Live-event venue platform",
+    client: "VenueCircuit",
+    url: "https://venuecircuit.app",
+    slug: "venuecircuit",
+    metrics: [
+      { value: "Live", label: "venuecircuit.app · open beta" },
+      { value: "~90 seconds", label: "To close a night" },
+      { value: "Every number", label: "Drills to the receipt behind it" },
+    ],
+    image: "/assets/case-venuecircuit.webp",
+    services: ["business-systems", "custom-local-websites"],
+    published: "2026-07-12",
+    updated: "2026-07-12",
+    title: "Our own product: a financial OS for independent venues.",
+    problem:
+      "Independent music venues and event spaces close their nights in spreadsheets the next morning — bar, door, staff, and promoter splits scattered across systems, with the venue's money and the promoter's money blurring together.",
+    kept: "The way GMs actually run a night — bar, door, staff, splits — modeled as it happens, not as software wishes it happened.",
+    changed:
+      "Built the whole product: a nightly close that takes about 90 seconds, split tracking that keeps venue money and promoter money separate, and reporting where every number drills down to the receipt behind it.",
+    result:
+      "Live to the public at venuecircuit.app in open beta. The GM closes the night in about 90 seconds instead of a spreadsheet marathon, and the owner can trust the quarter without a forensic audit.",
+    body: [
+      "VenueCircuit is the most ambitious thing Little Fight has shipped — not a website or an internal tool, but a complete software product, live to the public. Like After Hours Agenda, the agency is also the client here, with all the dangers that come with it: nobody to blame for scope, no one else's deadline to hide behind.",
+      "The product answers a question independent venue owners live with every night: where did the money actually go? Bar, door, staff, promoter splits, and payouts all land in one place. The core rule is that the venue's money and the promoter's money never blur together — every number drills down to the receipt behind it, so a GM can answer a question at midnight and the owner can trust the quarter.",
+      "It's live at venuecircuit.app in open beta. For a prospective client, this is the useful part: it's the same range Little Fight brings to a client's business systems, turned all the way up — proof the team can carry a system from first sketch to a public product people run their money through.",
     ],
   },
 ];

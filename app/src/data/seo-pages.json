@@ -153,6 +153,15 @@
       "image": "/assets/storefront-shop-deli.webp"
     },
     {
+      "path": "/answers/",
+      "title": "Owner Answers: NYC Small Business Tech Questions | Little Fight NYC",
+      "description": "Plain-English answers to the questions NYC owners actually ask — websites, Google visibility, software costs, POS, email, and urgent fixes. Short, direct, and not trying to make a sale.",
+      "h1": "Plain answers, no selling.",
+      "shortAnswer": "Short answer: a library of plain-English answers to real NYC small-business tech questions — what to check, what it usually is, and when to get help.",
+      "type": "CollectionPage",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
       "path": "/answers/website-form-not-working-small-business/",
       "title": "Website Form Not Working? | Little Fight NYC",
       "description": "Website form messages go missing when routing, spam filters, plugins, or domain email records break. Here is what NYC small businesses should check first.",
@@ -1027,6 +1036,15 @@
       "noindex": true
     },
     {
+      "path": "/case-studies/",
+      "title": "Case Studies: Real NYC Small Business Work | Little Fight NYC",
+      "description": "Eight named engagements — websites, IT, and business systems for NYC shops, salons, brands, and studios. What we kept, what we changed, and what shipped, with honest facts per project.",
+      "h1": "Real shops. Real work.",
+      "shortAnswer": "Short answer: Little Fight publishes named case studies — real client work with honest, verifiable facts: what we kept, what we changed, and what shipped.",
+      "type": "CollectionPage",
+      "image": "/assets/storefront-shop-deli.webp"
+    },
+    {
       "path": "/case-studies/cc-films/",
       "title": "CC Films — Case Study | Little Fight NYC",
       "description": "How Little Fight NYC modernized ccfilms.net into a clearer official home for Marrow, with stronger film proof, press paths, schema, and crawler context.",
@@ -1092,6 +1110,15 @@
       "shortAnswer": "A clean public face for a finance business.",
       "type": "Article",
       "image": "/assets/case-grand-funding-llc.webp"
+    },
+    {
+      "path": "/case-studies/venuecircuit/",
+      "title": "VenueCircuit: A Financial OS for Venues — Case Study | Little Fight NYC",
+      "description": "How Little Fight built and shipped VenueCircuit — a live financial operating system for independent venues where the night closes in about 90 seconds and every number drills to its receipt.",
+      "h1": "VenueCircuit",
+      "shortAnswer": "Short answer: VenueCircuit is Little Fight's own shipped software product — a financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
+      "type": "Article",
+      "image": "/assets/case-venuecircuit.webp"
     },
     {
       "path": "/studio/dakota/",
