@@ -215,6 +215,7 @@ a.lf-momentum__card:focus-visible .lf-momentum__card-go {
 .lf-momentum__card--cta {
   grid-column: span 6;
   gap: var(--lf-space-4);
+  background: var(--lf-card-bg); /* fallback: color-mix-in-gradient drops entirely without support */
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--lf-blue) 10%, var(--lf-card-bg)), var(--lf-card-bg));
   border-color: color-mix(in srgb, var(--lf-blue) 30%, var(--lf-hairline));

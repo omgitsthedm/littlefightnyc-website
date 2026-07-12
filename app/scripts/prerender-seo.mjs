@@ -640,13 +640,20 @@ function routeImagePreload(page) {
   if (!asset?.endsWith(".webp")) return "";
 
   if (page.path === "/") {
-    // Mirror the first-paint home hero <img> in snapshot() exactly (same
-    // src/srcset/sizes) so the preload picks the identical candidate the LCP
-    // image uses — the link is guaranteed-used, never a wasted second fetch.
-    const heroSrcSet =
-      "/assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w";
-    const heroSizes = "(min-width: 1024px) 40vw, 100vw";
-    return `<link rel="preload" href="/assets/hero-soho-crosswalk-640.webp" imagesrcset="${escapeAttr(heroSrcSet)}" imagesizes="${escapeAttr(heroSizes)}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+    // Mirror QuietHero's <picture> art-direction EXACTLY (same media splits,
+    // same candidate sets, sizes=100vw). The snapshot hero uses the same
+    // <picture>, so preload → snapshot paint → hydrated hero all resolve to
+    // ONE identical asset. (The old single-srcset preload disagreed with the
+    // hydrated picture and the LCP image downloaded twice.)
+    const b = "/assets/hero-soho-crosswalk";
+    const sets = [
+      { media: "(max-width: 767px)", srcset: `${b}-480.webp 480w, ${b}-640.webp 640w` },
+      { media: "(min-width: 768px) and (max-width: 1279px)", srcset: `${b}-640.webp 640w, ${b}-900.webp 900w, ${b}-1200.webp 1200w` },
+      { media: "(min-width: 1280px)", srcset: `${b}-900.webp 900w, ${b}-1200.webp 1200w, ${b}-1600.webp 1600w` },
+    ];
+    return sets
+      .map((s) => `<link rel="preload" media="${escapeAttr(s.media)}" imagesrcset="${escapeAttr(s.srcset)}" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`)
+      .join("\n    ");
   }
 
   // Inner pages: page.image is the OG/social image, which is NOT reliably the
@@ -682,6 +689,17 @@ function routeModulePreload(page) {
   return `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`;
 }
 
+// Display weights paint the H1/headlines — preload the latin woff2 subsets so
+// big type doesn't swap in after CSS parse. Hashed names resolved from the
+// built assets dir at prerender time.
+function fontPreloads() {
+  return ["inter-latin-700-normal-", "inter-latin-400-normal-"]
+    .map((prefix) => assetFiles.find((f) => f.startsWith(prefix) && f.endsWith(".woff2")))
+    .filter(Boolean)
+    .map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`)
+    .join("\n    ");
+}
+
 function managedHead(page) {
   const canonical = absoluteUrl(page.path);
   const image = absoluteAsset(page.image);
@@ -696,6 +714,7 @@ function managedHead(page) {
     isArticle ? `<meta name="author" content="David Marsh">` : "",
     `<meta name="robots" content="${page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large"}">`,
     `<link rel="canonical" href="${escapeAttr(canonical)}">`,
+    fontPreloads(),
     routeImagePreload(page),
     routeExtraImagePreloads(page),
     routeModulePreload(page),
@@ -953,42 +972,53 @@ function snapshot(page) {
   // Brand-aligned first-paint snapshot. Editorial colors/type inlined so
   // crawlers see brand-correct content and visitors see something on-brand
   // for the ~150ms before React hydrates.
+  // Axiom Momentum tokens (tokens.css v6): #050507 ground, #F97316 signal,
+  // blue ambient, Inter-metric sans stack. The old snapshot painted the
+  // RETIRED brand (Georgia serif / #0A0A0A / #FF6F1F) — every first paint
+  // looked like a different, older site before hard-swapping to Momentum.
+  const sans = `Inter, -apple-system, "Segoe UI", system-ui, sans-serif`;
+  const mono = `"JetBrains Mono", ui-monospace, Menlo, monospace`;
   const inlineStyles = `
-    .lf-seo { background: #0A0A0A; color: #F5F1E8; font-family: ui-serif, Georgia, serif; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
-    .lf-seo a { color: #FF6F1F; text-decoration: none; }
-    .lf-seo .lf-seo__nav { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 16px; border-bottom: 1px solid #1F1F1F; margin-bottom: 32px; }
-    .lf-seo .lf-seo__brand { font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
-    .lf-seo .lf-seo__phone { font-size: 16px; }
+    .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
+    .lf-seo a { color: #F97316; text-decoration: none; }
+    .lf-seo .lf-seo__nav { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
+    .lf-seo .lf-seo__brand { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: #FFFFFF; }
+    .lf-seo .lf-seo__phone { font-size: 16px; color: #FFFFFF; }
     .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; display: flex; align-items: flex-end; isolation: isolate; }
     .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: -2; }
-    .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 0% 100%, rgba(254, 88, 0, 0.18) 0%, transparent 55%), linear-gradient(180deg, rgba(10, 10, 10, 0.05) 0%, rgba(10, 10, 10, 0.45) 60%, rgba(10, 10, 10, 0.88) 100%); }
+    .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.16) 0%, transparent 55%), linear-gradient(180deg, rgba(5, 5, 7, 0.05) 0%, rgba(5, 5, 7, 0.45) 60%, rgba(5, 5, 7, 0.88) 100%); }
     .lf-seo .lf-seo__home-hero-copy { padding: 96px 20px 120px; }
-    .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.92; letter-spacing: -0.03em; font-weight: 600; margin: 32px 0 24px; color: #F5F1E8; max-width: 18ch; }
-    .lf-seo h1 em { color: #FF6F1F; font-style: italic; font-weight: 600; }
-    .lf-seo h2 { font-size: 24px; line-height: 1.15; margin: 40px 0 14px; color: #F5F1E8; max-width: 24ch; }
-    .lf-seo p { font-size: 18px; line-height: 1.6; color: #B8B1A0; max-width: 68ch; margin: 0 0 18px; }
-    .lf-seo .lf-seo__byline { font-family: ui-monospace, Menlo, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #B8B1A0; }
+    .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.94; letter-spacing: -0.03em; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
+    .lf-seo h1 em { color: #F97316; font-style: italic; font-weight: 700; }
+    .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
+    .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
+    .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
     .lf-seo .lf-seo__links { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 980px; }
-    .lf-seo .lf-seo__links li { border-top: 1px solid #1F1F1F; padding-top: 10px; }
+    .lf-seo .lf-seo__links li { border-top: 1px solid #27272A; padding-top: 10px; }
     .lf-seo .lf-seo__refs { display: flex; flex-wrap: wrap; gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 860px; }
-    .lf-seo .lf-seo__cta { font-family: ui-monospace, Menlo, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #6B6457; margin-top: 32px; }
-    .lf-seo .lf-seo__cta-number { display: block; font-family: ui-serif, Georgia, serif; font-size: clamp(1.5rem, 3vw, 2rem); color: #F5F1E8; margin-top: 8px; letter-spacing: -0.025em; }
-    .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #1F1F1F; color: #B8B1A0; }
+    .lf-seo .lf-seo__cta { font-family: ${mono}; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #71717A; margin-top: 32px; }
+    .lf-seo .lf-seo__cta-number { display: block; font-family: ${sans}; font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem); color: #FFFFFF; margin-top: 8px; letter-spacing: -0.025em; }
+    .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #A1A1AA; }
     .lf-seo footer nav { display: flex; flex-wrap: wrap; gap: 12px 18px; }
   `;
 
   const homeBody = `
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC">
-      <img
-        src="/assets/hero-soho-crosswalk-640.webp"
-        srcset="/assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w"
-        sizes="(min-width: 1024px) 40vw, 100vw"
-        alt="SoHo crosswalk and storefronts at street level in New York City"
-        width="2200"
-        height="1467"
-        fetchpriority="high"
-        decoding="async"
-      />
+      <picture>
+        <source media="(max-width: 767px)" srcset="/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w" sizes="100vw" type="image/webp" />
+        <source media="(max-width: 1279px)" srcset="/assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w" sizes="100vw" type="image/webp" />
+        <source srcset="/assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w, /assets/hero-soho-crosswalk-1600.webp 1600w" sizes="100vw" type="image/webp" />
+        <img
+          src="/assets/hero-soho-crosswalk-480.webp"
+          srcset="/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w, /assets/hero-soho-crosswalk-1600.webp 1600w"
+          sizes="100vw"
+          alt="SoHo crosswalk and storefronts at street level in New York City"
+          width="1600"
+          height="1200"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
       <div class="lf-seo__home-hero-copy">
         <h1>Tech for the shops that built <em>New York.</em></h1>
         <p>Websites, IT support, Google visibility, and business systems — sized for what a corner shop can afford. Founded 2012. Manhattan, New York.</p>
@@ -1182,5 +1212,15 @@ await writeFile(path.join(distRoot, "sitemap-index.xml"), sitemapIndex());
 await writeFile(path.join(distRoot, "robots.txt"), robots());
 await writeFile(path.join(distRoot, "llms.txt"), llmsTxt());
 await writeFile(path.join(distRoot, "site.webmanifest"), manifest());
+
+// Stamp the service-worker cache name per build. The name was frozen at a
+// May 2026 literal, so every hashed asset ever fetched piled up in one
+// never-pruned Cache Storage bucket on repeat visitors' devices.
+{
+  const swPath = path.join(distRoot, "sw.js");
+  const sw = await readFile(swPath, "utf8");
+  const stamp = new Date().toISOString().replace(/[-:TZ.]/g, "").slice(0, 12);
+  await writeFile(swPath, sw.replace(/const CACHE_NAME = "[^"]+";/, `const CACHE_NAME = "littlefightnyc-${stamp}";`));
+}
 
 console.log(`Prerendered ${pages.length} SEO/AEO routes.`);

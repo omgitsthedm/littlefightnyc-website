@@ -207,6 +207,7 @@
 
 /* Primary door — the Fit Check form, flagged with the blue accent */
 .lf-editorial .lf-contact-block__channel--primary {
+  background: var(--lf-card-bg); /* fallback: color-mix-in-gradient drops entirely without support */
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--lf-blue) 12%, var(--lf-card-bg)), var(--lf-card-bg));
   border-color: color-mix(in srgb, var(--lf-blue) 34%, var(--lf-hairline));

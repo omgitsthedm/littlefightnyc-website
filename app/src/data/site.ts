@@ -20,11 +20,6 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export type RouteItem = {
-  label: string;
-  path: string;
-};
-
 export type Service = {
   slug: string;
   eyebrow: string;
@@ -121,13 +116,6 @@ export type GlossaryTerm = {
   related: string[];
   faq: Array<{ question: string; answer: string }>;
 };
-
-export const navItems: RouteItem[] = [
-  { label: "Work", path: "/services/" },
-  { label: "Examples", path: "/examples/" },
-  { label: "Audit", path: "/audit/" },
-  { label: "Fit Check", path: "/fit-check/" },
-];
 
 export const services: Service[] = [
   {

@@ -2,6 +2,10 @@
 
 .lf-service-spread {
   padding: var(--lf-space-8) var(--lf-margin-mobile);
+  /* Solid fallback FIRST — browsers without color-mix() drop the gradient
+     line entirely and this light section would render near-black text on
+     the near-black page (AGENTS.md CSS gotcha #3). */
+  background: var(--lf-bone);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--lf-bone) 96%, var(--lf-fight) 4%), var(--lf-bone));
   color: var(--lf-ink);

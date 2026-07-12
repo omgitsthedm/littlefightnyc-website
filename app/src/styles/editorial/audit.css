@@ -27,6 +27,7 @@
   gap: var(--lf-space-5);
   padding: var(--lf-space-5);
   color: var(--lf-bone);
+  background: var(--lf-paper); /* fallback: color-mix-in-gradient drops entirely without support */
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--lf-paper) 94%, var(--lf-bone) 6%), var(--lf-paper));
   border: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);

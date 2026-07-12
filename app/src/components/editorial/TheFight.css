@@ -72,6 +72,7 @@
 .lf-fight__side--them { background: var(--lf-paper-2); }
 .lf-fight__side--them { transition-delay: 0ms; }
 .lf-fight__side--you {
+  background: var(--lf-card-bg); /* fallback: color-mix-in-gradient drops entirely without support */
   background:
     linear-gradient(160deg, color-mix(in srgb, var(--lf-fight) 9%, var(--lf-card-bg)), var(--lf-card-bg));
   border-color: color-mix(in srgb, var(--lf-fight) 34%, var(--lf-hairline));
