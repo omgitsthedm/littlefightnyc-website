@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CalendarDays, ClipboardCheck, Clock, Flame } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, ClipboardCheck, Clock, Flame } from "lucide-react";
 import type { FormEvent } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
@@ -12,6 +12,7 @@ type FieldName = "name" | "business" | "contact" | "message";
 type Step = 1 | 2 | 3;
 
 const OUTCOMES = [
+  "A clear website scope",
   "An urgent fix plan",
   "A fix list, ranked by what hurts most",
   "An honest “you don’t need us yet”",
@@ -21,13 +22,13 @@ const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
   { name: "business", message: "Add your business name." },
   { name: "contact", message: "Add a phone or email so we can reply." },
-  { name: "message", message: "Tell us what feels broken." },
+  { name: "message", message: "Tell us what you want to improve or build." },
 ];
 
 const URGENCY_OPTIONS = [
   {
     label: "It's hurting customers right now",
-    copy: "Broken checkout, dead site, missed calls — today.",
+    copy: "Broken checkout, dead site, or missed calls today.",
     icon: Flame,
   },
   {
@@ -51,7 +52,7 @@ const STEP_TITLES: Record<Step, string> = {
 function composeMessage(symptom: string | null, urgency: string | null): string {
   const lines: string[] = [];
   const route = fitRoutes.find((r) => r.label === symptom);
-  if (route) lines.push(`${route.label} — ${route.copy}`);
+  if (route) lines.push(`${route.label}: ${route.copy}`);
   if (urgency) lines.push(`Timing: ${urgency}.`);
   return lines.join("\n");
 }
@@ -267,7 +268,7 @@ export default function FitCheck() {
           <div className="lf-fit__flow">
             <div className="lf-fit__progress">
               <p className="lf-fit__progress-label" aria-live="polite">
-                Step {step} of 3 <span className="lf-fit__sr">— {STEP_TITLES[step]}</span>
+                Step {step} of 3 <span className="lf-fit__sr"> - {STEP_TITLES[step]}</span>
               </p>
               <div
                 className={`lf-fit__progress-bar${payoff ? " is-payoff" : ""}`}
@@ -293,7 +294,7 @@ export default function FitCheck() {
                   {STEP_TITLES[1]}
                 </h2>
                 <p className="lf-fit__step-sub">
-                  Pick the closest fit. It helps us prep — you can say more later.
+                  Pick the closest fit. It helps us prep. You can say more later.
                 </p>
                 <div
                   className="lf-fit__cards"
@@ -326,7 +327,7 @@ export default function FitCheck() {
                     className="lf-fit__skip"
                     onClick={() => setStep(3)}
                   >
-                    Skip to the form <span aria-hidden="true">→</span>
+                    Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -376,14 +377,14 @@ export default function FitCheck() {
                     className="lf-fit__back"
                     onClick={() => setStep(1)}
                   >
-                    <span aria-hidden="true">←</span> Back
+                    <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
                   </button>
                   <button
                     type="button"
                     className="lf-fit__skip"
                     onClick={() => setStep(3)}
                   >
-                    Skip to the form <span aria-hidden="true">→</span>
+                    Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -540,7 +541,7 @@ export default function FitCheck() {
                       }
                     />
                     <p className="lf-fit__note" id="fit-message-note">
-                      No passwords or private customer data here — we never need them to scope.
+                      No passwords or private customer data here. We never need them to scope.
                     </p>
                     {errors.message && (
                       <p className="lf-fit__error" id="fit-message-error">
@@ -562,16 +563,16 @@ export default function FitCheck() {
                       </>
                     ) : (
                       <>
-                        Book my free Tech Audit <span aria-hidden="true">→</span>
+                        Book my free Tech Audit <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
                   </button>
                   <p className="lf-fit__assurance">
-                    Free consult · No pitch · We reply within 2 hours, 9am–9pm ET ·
+                    Free consult / No pitch / We reply within 2 hours, 9am-9pm ET /
                     Urgent? Call <a href="tel:+16463600318">(646) 360-0318</a>
                   </p>
                   <p className="lf-fit__assurance lf-fit__assurance--data">
-                    What you send here goes to David to prep your callback — never
+                    What you send here goes to David to prep your callback. It is never
                     sold, never spammed.
                   </p>
                 </form>
@@ -582,18 +583,18 @@ export default function FitCheck() {
                     className="lf-fit__back"
                     onClick={() => setStep(2)}
                   >
-                    <span aria-hidden="true">←</span> Back
+                    <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
                   </button>
                 </div>
               </div>
             )}
 
             <p className="lf-fit__outcomes">
-              You’ll get one of three answers:{" "}
+              You’ll get one of four answers:{" "}
               {OUTCOMES.map((o, i) => (
                 <span key={o}>
                   <strong>{o}</strong>
-                  {i < OUTCOMES.length - 1 ? " · " : "."}
+                  {i < OUTCOMES.length - 1 ? "; " : "."}
                 </span>
               ))}
               {" "}No pitch either way.
@@ -617,10 +618,10 @@ export default function FitCheck() {
               vertical
               className="lf-fit__next"
               label="What happens after you book the Tech Audit"
-              summary="After you book the Tech Audit: you get a callback within 2 hours between 9am and 9pm Eastern, then a free consult — no pitch."
+              summary="After you book the Tech Audit: you get a callback within 2 hours between 9am and 9pm Eastern, then a free consult with no pitch."
               beats={[
                 { label: "Book the Tech Audit" },
-                { label: "Callback within 2 hours", sub: "9am–9pm ET", marker: true },
+                { label: "Callback within 2 hours", sub: "9am-9pm ET", marker: true },
                 { label: "Free consult", sub: "No pitch" },
               ]}
             />

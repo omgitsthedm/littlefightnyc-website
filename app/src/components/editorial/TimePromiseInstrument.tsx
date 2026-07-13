@@ -14,7 +14,7 @@ import "./TimePromiseInstrument.css";
  */
 
 const PROMISES = [
-  { value: "Free", label: "First consult", note: "Always" },
+  { value: "Free", label: "Consulting", note: "Always" },
   { value: "14 days", label: "Website ship", note: "Typical build" },
   { value: "24 hrs", label: "Urgent on-site", note: "When it's critical" },
   { value: "2 hrs", label: "Callback", note: "9am–9pm ET" },

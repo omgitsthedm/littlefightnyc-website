@@ -19,7 +19,7 @@ const STATS: Array<{
 }> = [
   { value: "2012", label: "In New York's corner since" },
   { value: "14-day", label: "Typical website ship", count: { n: 14, suffix: "-day" } },
-  { value: "Free", label: "Every first consult" },
+  { value: "Free", label: "Every consult" },
   { value: "Custom", label: "Coded, never templated" },
 ];
 

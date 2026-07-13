@@ -48,6 +48,20 @@ system. The look is product-OS, not marketing-brochure: near-black ground, Inter
 display scale, a single orange lead signal, blue as a genuine second accent, generously
 rounded (32px) surface cards, and restrained motion.
 
+## Commercial hierarchy
+
+The visual system must make the business ladder visible, not flatten it into four equal
+services. Custom local websites are the acquisition front door. Urgent remote or on-site
+support is the second path. Consulting is always free and removes uncertainty before paid
+work. Focused custom software is the premium destination when a small business should own
+the tool instead of renting another bloated platform. Do not publish base website pricing
+or support rates without an explicit business decision.
+
+On marketing pages, show shipped website proof immediately after the hero, keep the website
+action visually dominant, preserve a direct urgent-help path, and disclose owned software as
+the higher-value continuation. The customer-facing phrase is **software you own**; the stable
+route remains `/services/business-systems/`.
+
 **Tokens are the source of truth** — every color, type, radius, and motion value lives in
 `src/styles/editorial/tokens.css` under `.lf-editorial`. Components consume `var(--lf-*)`;
 they never hardcode hex. Changing a token cascades site-wide.

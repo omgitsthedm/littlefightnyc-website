@@ -19,12 +19,38 @@
 
 .lf-clients__head {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: var(--lf-space-4);
-  margin-bottom: var(--lf-space-6);
+  gap: var(--lf-space-5);
+  margin-bottom: var(--lf-space-7);
 }
-.lf-clients__label { color: var(--lf-fight); }
+@media (min-width: 840px) {
+  .lf-clients__head {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+.lf-clients__label {
+  color: var(--lf-fight);
+  margin-bottom: var(--lf-space-3);
+}
+.lf-clients__heading {
+  max-width: 16ch;
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-2xl);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--lf-bone);
+}
+.lf-clients__lede {
+  max-width: 48ch;
+  margin-top: var(--lf-space-4);
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+}
 .lf-clients__all {
   display: inline-flex;
   align-items: center;
@@ -36,6 +62,10 @@
   transition: color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 .lf-clients__all:hover { color: var(--lf-fight); }
+.lf-clients__all:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
+}
 
 /* ---- Grid: featured card wide, the rest 2-up ---- */
 .lf-clients__grid {

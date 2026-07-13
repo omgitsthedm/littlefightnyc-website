@@ -3,13 +3,18 @@ import { services } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "./ServiceEditorialSpread.css";
 
-const ROMAN = ["I.", "II.", "III.", "IV."] as const;
+const SERVICE_ORDER = [
+  "custom-local-websites",
+  "it-support",
+  "tech-consulting",
+  "business-systems",
+] as const;
 
 const SERVICE_IMAGES: Record<string, { src: string; alt: string; caption: string }> = {
   "tech-consulting": {
     src: "/assets/interior-grocery.webp",
     alt: "A compact New York grocery interior with shelves and counter traffic",
-    caption: "Audit the tools, bills, website, Google profile, and handoffs.",
+    caption: "Get a free second opinion on the tools, bills, website, and handoffs.",
   },
   "it-support": {
     src: "/assets/pos.webp",
@@ -19,12 +24,12 @@ const SERVICE_IMAGES: Record<string, { src: string; alt: string; caption: string
   "custom-local-websites": {
     src: "/assets/storefront-blue-gift-shop.webp",
     alt: "A bright blue New York storefront at street level",
-    caption: "Build a local site around the block, the offer, and the next call.",
+    caption: "Build the place customers call, book, buy, and learn to trust you.",
   },
   "business-systems": {
     src: "/assets/case-public-house-cockpit.webp",
     alt: "A custom estimating cockpit interface for a creative fabrication studio",
-    caption: "Clean up the business behind the counter with right-sized systems.",
+    caption: "Replace bloated subscriptions with focused software your business owns.",
   },
 };
 
@@ -33,14 +38,13 @@ export default function ServiceEditorialSpread() {
     <section className="lf-service-spread" aria-labelledby="lf-service-spread-title">
       <div className="lf-service-spread__inner">
         <header className="lf-service-spread__head">
-          <p className="lf-service-spread__kicker">Work Desk · Issue 04</p>
+          <p className="lf-service-spread__kicker">How the work fits together</p>
           <h2 id="lf-service-spread-title" className="lf-service-spread__title">
-            Four services under one agency.
+            One front door. A whole tech team behind it.
           </h2>
           <p className="lf-service-spread__dek">
-            Website, support, search, and systems problems do not arrive in neat
-            departments. The service shape changes, but the operating idea stays
-            the same: name the leak, fix the path, document the setup.
+            The website wins attention. Support protects the day. Free consulting
+            names the right next move. Custom software removes the monthly drag.
           </p>
         </header>
 
@@ -51,7 +55,7 @@ export default function ServiceEditorialSpread() {
               alt="A New York deli storefront with street-level signage"
               width={1600}
               height={1200}
-              fetchPriority="high"
+              loading="lazy"
               decoding="async"
               {...responsiveImageProps(
                 "/assets/storefront-shop-deli.webp",
@@ -65,7 +69,9 @@ export default function ServiceEditorialSpread() {
           </figure>
 
           <ol className="lf-service-spread__list">
-            {services.map((service, index) => {
+            {SERVICE_ORDER.map((slug) => {
+              const service = services.find((item) => item.slug === slug);
+              if (!service) return null;
               const Icon = service.icon;
               const image = SERVICE_IMAGES[service.slug] ?? {
                 src: service.image,
@@ -76,9 +82,6 @@ export default function ServiceEditorialSpread() {
               return (
                 <li key={service.slug} className="lf-service-spread__item">
                   <Link to={`/services/${service.slug}/`} className="lf-service-spread__link">
-                    <span className="lf-service-spread__num" aria-hidden="true">
-                      {ROMAN[index]}
-                    </span>
                     <span className="lf-service-spread__icon" aria-hidden="true">
                       <Icon size={24} strokeWidth={1.75} />
                     </span>

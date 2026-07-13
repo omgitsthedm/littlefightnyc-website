@@ -120,7 +120,7 @@
   letter-spacing: -0.04em;
   color: var(--lf-bone);
   margin: 0;
-  max-width: 22ch;
+  max-width: 24ch;
 }
 
 .lf-hero__brief {
@@ -137,11 +137,6 @@
   letter-spacing: -0.006em;
 }
 
-.lf-hero__promise {
-  color: var(--lf-bone);
-  font-style: italic;
-}
-
 .lf-hero__claim .lf-hero__char {
   color: var(--lf-bone);
 }
@@ -155,8 +150,8 @@
 
 @media (min-width: 1280px) {
   .lf-hero__claim {
-    font-size: clamp(5.25rem, 7.2vw, 8.75rem);
-    max-width: 17ch;
+    font-size: clamp(4.8rem, 6vw, 7.5rem);
+    max-width: 24ch;
   }
 }
 
@@ -204,16 +199,14 @@ html[data-snap="1"] .lf-hero__char {
   }
 }
 
-/* Italic orange emphasis — same cascade, color forced, matched weight */
+/* Orange resolution line: same face and weight, one decisive brand signal. */
 .lf-hero__claim-em {
   color: var(--lf-fight);
-  font-style: italic;
   font-weight: 700;
 }
 
 .lf-hero__claim-em .lf-hero__char {
   color: var(--lf-fight);
-  font-style: italic;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -230,118 +223,100 @@ html[data-snap="1"] .lf-hero__char {
   }
 }
 
-.lf-hero__channels {
-  list-style: none;
-  margin: var(--lf-space-3) 0 0;
-  padding: 0;
+.lf-hero__actions {
+  margin-top: var(--lf-space-3);
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--lf-space-3);
-  max-width: 68rem;
+  max-width: 54rem;
   animation: lf-hero-cta-in 500ms cubic-bezier(0.22, 1, 0.36, 1) 260ms backwards;
 }
 
-@media (min-width: 900px) {
-  .lf-hero__channels {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+@media (min-width: 680px) {
+  .lf-hero__actions {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
   }
 }
 
-.lf-hero__channels li {
-  min-width: 0;
-  display: flex;
-}
-
-/* Hero channel = glass card-button (Axiom Momentum language, over the photo).
- * Scoped under .lf-editorial to win over the base `button` reset
- * (background/border/padding) for the Text channel's <button>. Panels are kept
- * opaque enough to read consistently over any part of the hero photograph. */
-.lf-editorial .lf-hero__channel {
-  min-height: 118px;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--lf-space-2);
-  align-items: stretch;
-  padding: var(--lf-space-4);
-  border-radius: var(--lf-radius-card);
-  border: 1px solid color-mix(in srgb, var(--lf-bone) 16%, transparent);
-  background: color-mix(in srgb, var(--lf-paper) 88%, transparent);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+/* Two clear doors, not four equal contact cards. The website action leads;
+ * urgent support stays visible without competing with the main business path. */
+.lf-editorial .lf-hero__action {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--lf-space-3);
+  padding: var(--lf-space-3) var(--lf-space-4);
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 18%, transparent);
+  border-radius: var(--lf-radius-control);
   text-decoration: none;
-  appearance: none;
   color: var(--lf-bone);
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
   transition:
     transform var(--lf-time-snappy) var(--lf-ease-standard),
     border-color var(--lf-time-snappy) var(--lf-ease-standard),
-    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-hero__channel:hover,
-.lf-editorial .lf-hero__channel:focus-visible {
+.lf-editorial .lf-hero__action:hover,
+.lf-editorial .lf-hero__action:focus-visible {
   transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--lf-fight) 55%, transparent);
-  background: color-mix(in srgb, var(--lf-fight) 12%, color-mix(in srgb, var(--lf-paper) 90%, transparent));
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.42);
 }
-.lf-hero__channel:focus-visible {
+.lf-hero__action:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }
 
-.lf-hero__channel-top {
-  display: flex;
-  align-items: center;
-  gap: var(--lf-space-2);
+.lf-editorial .lf-hero__action--website {
+  color: var(--lf-ink);
+  border-color: var(--lf-fight);
+  background: var(--lf-fight);
 }
-.lf-hero__channel-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex: none;
-  border-radius: var(--lf-radius-sm);
-  color: var(--lf-fight);
-  background: color-mix(in srgb, var(--lf-fight) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lf-fight) 32%, transparent);
-}
-.lf-hero__channel-go {
-  margin-left: auto;
-  color: var(--lf-bone-soft);
-  transition:
-    transform var(--lf-time-snappy) var(--lf-ease-standard),
-    color var(--lf-time-snappy) var(--lf-ease-standard);
-}
-.lf-hero__channel:hover .lf-hero__channel-go,
-.lf-hero__channel:focus-visible .lf-hero__channel-go {
-  color: var(--lf-fight);
-  transform: translate(2px, -2px);
+.lf-editorial .lf-hero__action--website:hover,
+.lf-editorial .lf-hero__action--website:focus-visible {
+  color: var(--lf-ink);
+  border-color: var(--lf-ember);
+  background: var(--lf-ember);
 }
 
-/* Primary door — Tech Audit, blue accent */
-.lf-editorial .lf-hero__channel--primary {
-  border-color: color-mix(in srgb, var(--lf-blue) 44%, transparent);
-  background: color-mix(in srgb, var(--lf-blue) 16%, color-mix(in srgb, var(--lf-paper) 88%, transparent));
+.lf-editorial .lf-hero__action--support {
+  background: color-mix(in srgb, var(--lf-paper) 92%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
-.lf-hero__channel--primary .lf-hero__channel-icon {
-  color: var(--lf-blue);
-  background: color-mix(in srgb, var(--lf-blue) 16%, transparent);
-  border-color: color-mix(in srgb, var(--lf-blue) 36%, transparent);
+.lf-editorial .lf-hero__action--support:hover,
+.lf-editorial .lf-hero__action--support:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 58%, transparent);
+  background: color-mix(in srgb, var(--lf-fight) 10%, color-mix(in srgb, var(--lf-paper) 92%, transparent));
 }
-.lf-editorial .lf-hero__channel--primary:hover,
-.lf-editorial .lf-hero__channel--primary:focus-visible {
-  border-color: color-mix(in srgb, var(--lf-blue) 62%, transparent);
-  background: color-mix(in srgb, var(--lf-blue) 20%, color-mix(in srgb, var(--lf-paper) 88%, transparent));
+
+.lf-hero__action-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
 }
-.lf-hero__channel--primary:hover .lf-hero__channel-go,
-.lf-hero__channel--primary:focus-visible .lf-hero__channel-go {
-  color: var(--lf-blue);
+.lf-hero__action-copy strong {
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-base);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+}
+.lf-hero__action-copy span {
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-xs);
+  line-height: 1.35;
+  opacity: 0.78;
+}
+.lf-hero__action > svg:last-child {
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-hero__action:hover > svg:last-child,
+.lf-hero__action:focus-visible > svg:last-child {
+  transform: translate(2px, -2px);
 }
 
 @keyframes lf-hero-cta-in {
@@ -356,110 +331,13 @@ html[data-snap="1"] .lf-hero__char {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-hero__channels {
+  .lf-hero__actions,
+  .lf-hero__action,
+  .lf-hero__action > svg:last-child {
     animation: none;
     opacity: 1;
     transform: none;
-  }
-}
-
-.lf-hero__channel-label {
-  font-family: var(--lf-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--lf-bone-soft);
-}
-
-.lf-hero__channel-detail {
-  margin-top: auto;
-  font-family: var(--lf-display);
-  font-weight: 600;
-  font-size: var(--lf-text-base);
-  letter-spacing: -0.01em;
-  color: var(--lf-bone);
-  line-height: 1.12;
-  /* Keep contact values (esp. the email) from breaking mid-address in this
-   * top-of-page conversion card. Break only between whole words, never inside. */
-  overflow-wrap: normal;
-  word-break: normal;
-}
-
-@media (min-width: 1024px) {
-  .lf-hero__channel-detail {
-    font-size: clamp(1.05rem, 0.9rem + 0.35vw, 1.2rem);
-  }
-}
-
-.lf-hero__channel-note {
-  font-family: var(--lf-sans);
-  font-size: var(--lf-text-sm);
-  color: var(--lf-bone-soft);
-  line-height: 1.3;
-}
-
-/* Long value (the phone number) on wide screens, short verb on phones. */
-.lf-hero__channel-detail--short {
-  display: none;
-}
-
-/* Phones: two compact doors only — Call + Tech Audit. Text and email live in
- * the sticky help bar, so the hero stops repeating the phone number and
- * "The Fight" arrives a full viewport sooner. */
-@media (max-width: 639px) {
-  .lf-hero__channels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--lf-space-2);
-  }
-
-  /* Order is Call · Text · Email · Form — keep the first and last. */
-  .lf-hero__channels li:nth-child(2),
-  .lf-hero__channels li:nth-child(3) {
-    display: none;
-  }
-
-  /* Compact horizontal door: icon beside the words, one line each. */
-  .lf-editorial .lf-hero__channel {
-    min-height: 64px;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--lf-space-3);
-    padding: var(--lf-space-3);
-  }
-
-  .lf-hero__channel-top {
-    flex: none;
-  }
-
-  .lf-hero__channel-icon {
-    width: 34px;
-    height: 34px;
-  }
-
-  .lf-hero__channel-label {
-    display: none;
-  }
-
-  .lf-hero__channel-go {
-    display: none;
-  }
-
-  .lf-hero__channel-detail {
-    margin-top: 0;
-    font-size: 0.95rem;
-    white-space: nowrap;
-  }
-
-  .lf-hero__channel-detail--full {
-    display: none;
-  }
-
-  .lf-hero__channel-detail--short {
-    display: block;
-  }
-
-  .lf-hero__channel-note {
-    display: none;
+    transition: none;
   }
 }
 

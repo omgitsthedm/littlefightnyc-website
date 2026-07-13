@@ -14,8 +14,6 @@ const FEATURED_SLUGS = [
   "grand-funding-llc",
   "hair-by-rachel-charles",
   "cc-films",
-  "public-house-creative",
-  "deckspace",
 ] as const;
 
 export default function RecentClients() {
@@ -29,9 +27,15 @@ export default function RecentClients() {
     <section className="lf-clients" aria-label="Recent work">
       <div className="lf-clients__inner">
         <div className="lf-clients__head">
-          <p className="lf-mono lf-clients__label">Recent work</p>
+          <div>
+            <p className="lf-mono lf-clients__label">Recent work</p>
+            <h2 className="lf-clients__heading">Websites already doing the work.</h2>
+            <p className="lf-clients__lede">
+              Real businesses, real launches, and a clear path from first look to next action.
+            </p>
+          </div>
           <Link to="/case-studies/" viewTransition className="lf-clients__all">
-            All case studies <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
+            See every result <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>
 
@@ -51,7 +55,7 @@ export default function RecentClients() {
                   alt=""
                   width={1600}
                   height={1200}
-                  loading={i === 0 ? "eager" : "lazy"}
+                  loading="lazy"
                   decoding="async"
                 />
               </span>

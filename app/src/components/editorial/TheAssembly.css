@@ -1,6 +1,6 @@
 /* TheAssembly — the homepage signature cinematic. Tokens only.
  *
- * A 300vh runway (200vh ≤640px) reserves height in normal flow (zero CLS)
+ * A 260vh runway (180vh ≤640px) reserves height in normal flow (zero CLS)
  * and pins a 100svh stage. JS writes scroll progress 0→1 to `--p` on the
  * stage; every move below derives from --p via calc()+clamp() on
  * transform/opacity/filter only — deterministic, cross-engine, and it
@@ -41,7 +41,7 @@
 }
 
 .lf-assembly__runway {
-  height: 300vh;
+  height: 260vh;
 }
 
 .lf-assembly__stage {
@@ -372,7 +372,7 @@
    the group centers as one composition. Cards keep their --p math but
    anchor to the canvas box center. */
 @media (max-width: 640px) {
-  .lf-assembly__runway { height: 200vh; }
+  .lf-assembly__runway { height: 180vh; }
   .lf-assembly__stage {
     --lf-as-scale: 1; /* phone poses are authored 1:1 */
     display: flex;

@@ -11,7 +11,7 @@ import "./TheAssembly.css";
  * scroll, the mess assembles itself into one clean running system and ends on
  * "Put us in your corner." The brand thesis, animated.
  *
- * Mechanics: a ~300vh runway (200vh on phones) holds a sticky 100svh stage.
+ * Mechanics: a ~260vh runway (180vh on phones) holds a sticky 100svh stage.
  * One passive scroll listener + rAF throttle writes progress 0→1 as `--p` on
  * the stage; ALL motion derives from --p in CSS (transform/opacity/filter
  * only), so scrubbing backward reverses perfectly. CSS default is --p: 1, so
@@ -102,7 +102,7 @@ export default function TheAssembly() {
         A normal Tuesday for a small shop: the register app is down, the
         contact form goes nowhere, Google shows the wrong hours, three
         spreadsheets tell three different stories, DMs pile up, and email lands
-        in spam. We take that mess and pull it into one clean system — we keep
+        in spam. We take that mess and pull it into one clean system. We keep
         what works, connect what matters, replace what drags, and build what
         fits. You keep the shop. We keep it running.
       </p>
@@ -182,7 +182,7 @@ export default function TheAssembly() {
 
           <div className="lf-assembly__cta-row">
             <Link to="/tech-audit/" viewTransition className="lf-assembly__cta">
-              Put us in your corner
+              Get a free second opinion
               <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
             </Link>
           </div>

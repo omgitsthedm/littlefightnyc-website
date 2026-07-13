@@ -14,16 +14,16 @@
   "pages": [
     {
       "path": "/",
-      "title": "Little Fight NYC | Websites, IT Support, Local SEO & Systems",
-      "description": "Little Fight NYC helps New York small businesses get better websites, fix broken tech, show up on Google, and cut software waste.",
-      "h1": "Better tech. Fewer bills. More customers.",
-      "shortAnswer": "Short answer: Little Fight NYC helps local businesses with the four tech areas that touch money every day. Websites, IT support, local search, and business systems.",
+      "title": "Little Fight NYC | Websites, IT Support & Custom Software",
+      "description": "Little Fight NYC builds websites that bring in business, fixes urgent tech, gives free consulting, and creates custom software small businesses own.",
+      "h1": "Websites bring business. We keep it running.",
+      "shortAnswer": "Short answer: Little Fight NYC builds websites for New York small businesses, fixes urgent tech, gives free consulting, and replaces bloated subscriptions with focused software clients own.",
       "type": "WebPage",
       "image": "/assets/local-business-base.webp",
       "faq": [
         {
           "question": "What does Little Fight NYC do?",
-          "answer": "Little Fight NYC helps small businesses with websites, IT support, Google visibility, software cleanup, and right-sized business systems."
+          "answer": "Little Fight NYC builds websites for small businesses, fixes urgent tech, gives free consulting, and creates focused software clients own."
         },
         {
           "question": "Who does Little Fight NYC help?",
@@ -33,10 +33,10 @@
     },
     {
       "path": "/services/",
-      "title": "NYC Small Business Tech Services | Little Fight NYC",
-      "description": "Tech consulting, IT support, custom local websites, and business systems for NYC small businesses that need a clear first move.",
-      "h1": "Four services. One agency.",
-      "shortAnswer": "Short answer: Little Fight NYC works across four connected areas. The website people see. The tech that has to work. The way customers find you. And the system behind the work.",
+      "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
+      "description": "Website design, urgent IT support, free tech consulting, and custom software for NYC small businesses that need a clear first move.",
+      "h1": "Bring in business. Keep it running.",
+      "shortAnswer": "Short answer: Little Fight NYC starts with the website, supports the tech behind it, gives free consulting, and builds focused software the business owns when generic tools no longer fit.",
       "type": "CollectionPage",
       "image": "/assets/hero-laptop.webp"
     },
@@ -44,8 +44,8 @@
       "path": "/services/custom-local-websites/",
       "title": "Custom Local Websites NYC | Little Fight NYC",
       "description": "Custom-coded websites built for your NYC business and your block. No templates, no themes, no Squarespace skins. Ships in 14 days.",
-      "h1": "A local website people can understand and use.",
-      "shortAnswer": "Short answer: Little Fight builds custom local websites for NYC small businesses. Coded from scratch. Written for the neighborhood. Built for how Google ranks local businesses in 2026. Shipped in 14 days.",
+      "h1": "Make the next customer action obvious.",
+      "shortAnswer": "Short answer: Little Fight builds custom local websites for NYC small businesses. Each site is coded for the business, written for the neighborhood, and built to turn attention into calls, bookings, payments, and trust.",
       "type": "Service",
       "serviceName": "Custom local websites for NYC small businesses",
       "image": "/assets/hero-laptop.webp",
@@ -88,7 +88,7 @@
       "path": "/services/tech-consulting/",
       "title": "NYC Tech Consulting for Small Business | Little Fight NYC",
       "description": "A free, plain-English look at your tools, bills, website, Google presence, and workflow. Learn what earns its place and what wastes money.",
-      "h1": "Before you spend another dollar, let us read the setup.",
+      "h1": "Know what to keep, cut, fix, or build.",
       "shortAnswer": "Short answer: Little Fight gives NYC small businesses free, plain-English tech consulting. We check your tools, website, Google presence, and workflow. You learn where money leaks and what to fix first.",
       "type": "Service",
       "serviceName": "Tech consulting for NYC small businesses",
@@ -106,12 +106,12 @@
     },
     {
       "path": "/services/business-systems/",
-      "title": "Business Systems for NYC Small Businesses | Little Fight NYC",
-      "description": "Right-sized business systems for NYC teams. Lead tracking, follow-up, dashboards, tool cleanup, automation, and lower software bills.",
-      "h1": "Less spreadsheet. Less memory. Less monthly waste.",
-      "shortAnswer": "Short answer: Little Fight builds right-sized systems for NYC teams. For anyone losing time to spreadsheets, scattered leads, double typing, and monthly software waste.",
+      "title": "Custom Business Software NYC | Little Fight NYC",
+      "description": "Focused custom software for NYC small businesses. Replace bloated subscriptions with workflow tools you own, including the code, data, hosting, and docs.",
+      "h1": "Stop renting software that fights the way you work.",
+      "shortAnswer": "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
       "type": "Service",
-      "serviceName": "Business systems and workflow cleanup",
+      "serviceName": "Custom software for NYC small businesses",
       "image": "/assets/manhattan.webp",
       "faq": [
         {
@@ -1314,7 +1314,7 @@
       },
       {
         "slug": "business-systems",
-        "label": "Business Systems",
+        "label": "Software You Own",
         "serviceName": "Business systems and workflow cleanup",
         "plain": "lead intake, follow-up, dashboards, tool cleanup, and fewer expensive software workarounds",
         "description": "Right-sized business systems, lead intake, follow-up, dashboards, workflow cleanup, and software cost reduction.",

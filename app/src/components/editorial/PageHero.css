@@ -168,6 +168,10 @@
   font-weight: 600;
 }
 
+.lf-pagehero__title .lf-accent {
+  color: var(--lf-fight);
+}
+
 .lf-pagehero__dek {
   font-family: var(--lf-serif);
   font-style: italic;

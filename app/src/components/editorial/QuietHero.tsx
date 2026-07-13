@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe2, Phone } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietHero.css";
 
@@ -68,45 +68,6 @@ const MARQUEE_ITEMS: { label: string; to: string }[] = [
   { label: "Monthly bill creep", to: "/journal/read-your-monthly-software-bill/" },
 ];
 
-const CONTACT_CHANNELS = [
-  {
-    icon: Phone,
-    label: "Call",
-    detail: "(646) 360-0318",
-    shortDetail: "Call us",
-    note: "If something is broken",
-    href: "tel:+16463600318",
-  },
-  {
-    icon: MessageSquare,
-    label: "Text",
-    detail: "(646) 360-0318",
-    note: "Quick at the counter",
-    action: "text",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    detail: "hello@littlefightnyc.com",
-    note: "For the longer version",
-    href: "mailto:hello@littlefightnyc.com",
-  },
-  {
-    icon: ClipboardCheck,
-    label: "Form",
-    detail: "Tech Audit",
-    note: "When it has parts",
-    to: "/tech-audit/",
-    primary: true,
-  },
-] as const;
-
-const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}+16463600318`;
-
-function openTextMessage() {
-  window.location.href = SMS_URL;
-}
-
 export default function QuietHero() {
   const claimRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
 
@@ -148,71 +109,41 @@ export default function QuietHero() {
       <div ref={claimRef} className="lf-hero__content">
         {/* The letter-split spans garble screen-reader output ("T e c h f o r…"),
             so the real sentence lives on the h1 and the visual letters are hidden. */}
-        <h1 className="lf-hero__claim" aria-label="Tech for the shops that built New York.">
+        <h1 className="lf-hero__claim" aria-label="Websites bring business. We keep it running.">
           <span aria-hidden="true">
-            <span className="lf-hero__line">{cascade("Tech for the shops", 0, "a")}</span>
-            {" "}
-            <span className="lf-hero__line">{cascade("that built", 20, "b")}</span>
+            <span className="lf-hero__line">{cascade("Websites bring business.", 0, "a")}</span>
             {" "}
             <span className="lf-hero__line lf-hero__claim-em">
-              {cascade("New York.", 32, "c")}
+              {cascade("We keep it running.", 26, "b")}
             </span>
           </span>
         </h1>
 
         <div className="lf-hero__brief">
           <p>
-            Websites, IT help, Google visibility, software cleanup, and cleaner
-            systems for NYC bars, salons, law firms, clinics, restaurants,
-            clothing brands, and every owner-run shop.
-          </p>
-          <p className="lf-hero__promise">
-            Tell us what's broken. We'll fix it or tell you who can. No ticket maze.
+            We build local websites, fix urgent tech, and replace bloated software
+            with tools your business owns.
           </p>
         </div>
 
-        <ul className="lf-hero__channels" aria-label="Contact Little Fight NYC">
-          {CONTACT_CHANNELS.map((channel) => {
-            const Icon = channel.icon;
-            const isPrimary = "primary" in channel && channel.primary;
-            const inner = (
-              <>
-                <span className="lf-hero__channel-top">
-                  <span className="lf-hero__channel-icon" aria-hidden="true">
-                    <Icon size={18} strokeWidth={1.75} />
-                  </span>
-                  <span className="lf-hero__channel-label">{channel.label}</span>
-                  <ArrowUpRight className="lf-hero__channel-go" size={15} strokeWidth={2} aria-hidden="true" />
-                </span>
-                <span
-                  className={`lf-hero__channel-detail${
-                    "shortDetail" in channel ? " lf-hero__channel-detail--full" : ""
-                  }`}
-                >
-                  {channel.detail}
-                </span>
-                {"shortDetail" in channel && (
-                  <span className="lf-hero__channel-detail lf-hero__channel-detail--short">
-                    {channel.shortDetail}
-                  </span>
-                )}
-                <span className="lf-hero__channel-note">{channel.note}</span>
-              </>
-            );
-            const cls = `lf-hero__channel${isPrimary ? " lf-hero__channel--primary" : ""}`;
-            return (
-              <li key={channel.label}>
-                {"to" in channel ? (
-                  <Link className={cls} to={channel.to}>{inner}</Link>
-                ) : "action" in channel ? (
-                  <button className={cls} type="button" onClick={openTextMessage}>{inner}</button>
-                ) : (
-                  <a className={cls} href={channel.href}>{inner}</a>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        <div className="lf-hero__actions" aria-label="Choose how to start">
+          <Link className="lf-hero__action lf-hero__action--website" to="/tech-audit/" viewTransition>
+            <Globe2 size={22} strokeWidth={1.75} aria-hidden="true" />
+            <span className="lf-hero__action-copy">
+              <strong>Plan my website</strong>
+              <span>Free consult, then a clear scope</span>
+            </span>
+            <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
+          </Link>
+          <a className="lf-hero__action lf-hero__action--support" href="tel:+16463600318">
+            <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
+            <span className="lf-hero__action-copy">
+              <strong>Get urgent tech help</strong>
+              <span>Call (646) 360-0318</span>
+            </span>
+            <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
+          </a>
+        </div>
       </div>
 
       <div className="lf-hero__marquee" aria-label="A sample of what we fix">

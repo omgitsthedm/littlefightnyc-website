@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { LucideIcon } from "lucide-react";
+import { ArrowUpRight, type LucideIcon } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "./VisualIndex.css";
 
@@ -58,7 +58,7 @@ export default function VisualIndex({
         </header>
 
         <div className="lf-visual-index__grid">
-          {items.map((item, index) => {
+          {items.map((item) => {
             const Icon = item.icon;
 
             return (
@@ -76,8 +76,7 @@ export default function VisualIndex({
                       item.image,
                       "(min-width: 1180px) 34vw, (min-width: 720px) 48vw, 100vw",
                     )}
-                    loading={index < 2 ? "eager" : "lazy"}
-                    fetchPriority={index === 0 ? "high" : "auto"}
+                    loading="lazy"
                     decoding="async"
                   />
                   <span className="lf-visual-index__icon">
@@ -97,7 +96,8 @@ export default function VisualIndex({
                   </span>
                   <span className="lf-visual-index__body">{item.body}</span>
                   <span className="lf-visual-index__open">
-                    {ctaLabel(item.to)} <span aria-hidden="true">→</span>
+                    {ctaLabel(item.to)}
+                    <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
                   </span>
                 </span>
               </Link>

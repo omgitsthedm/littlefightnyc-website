@@ -1,11 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 import PhoneAction from "./PhoneAction";
 import { areaPages } from "@/data/site"; // read-only
 import "./StickyHelpBar.css";
 
 type FitCta = { label: string; detail: string; contextual: boolean };
 
-const DEFAULT_CTA: FitCta = { label: "Start", detail: "Tech Audit", contextual: false };
+const DEFAULT_CTA: FitCta = { label: "Plan", detail: "My website", contextual: false };
 
 /**
  * The bar reads the room: the Tech Audit cell's detail line speaks to the
@@ -25,7 +26,7 @@ function fitCta(pathname: string): FitCta {
     }
   }
   if (p.startsWith("/services")) {
-    return { label: "Start", detail: "Free Tech Audit · no pitch", contextual: true };
+    return { label: "Free consult", detail: "No pitch", contextual: true };
   }
   if (p.startsWith("/journal") || p.startsWith("/answers")) {
     return { label: "Tech Audit", detail: "Have this problem? We fix it.", contextual: true };
@@ -59,7 +60,8 @@ export default function StickyHelpBar() {
             cta.contextual ? " lf-sticky-help__detail--ctx" : ""
           }`}
         >
-          {cta.detail}&nbsp;<span aria-hidden="true">→</span>
+          {cta.detail}
+          <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
         </span>
       </Link>
     </div>

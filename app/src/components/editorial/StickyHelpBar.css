@@ -62,6 +62,9 @@
 }
 
 .lf-sticky-help__detail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
   font-family: var(--lf-sans);
   font-size: var(--lf-text-base);
   font-weight: 600;

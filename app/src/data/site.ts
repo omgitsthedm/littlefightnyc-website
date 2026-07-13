@@ -5,7 +5,6 @@ import {
   Globe2,
   HeartHandshake,
   Laptop,
-  MapPin,
   MessagesSquare,
   MousePointerClick,
   Phone,
@@ -124,10 +123,10 @@ export const services: Service[] = [
     slug: "tech-consulting",
     eyebrow: "Tech Consulting",
     verb: "Audit",
-    title: "Know what to keep, cut, fix, or build",
-    headline: "Before you spend another dollar, let us read the setup.",
+    title: "A free second opinion before you spend",
+    headline: "Know what to keep, cut, fix, or build.",
     plain: "We look at your website, Google listing, tools, bills, and how the day runs. Then we tell you what is fine, what wastes money, and what to fix first.",
-    outcome: "First hour free. If you do not need us, we say so.",
+    outcome: "Consulting is always free. If you do not need us, we say so.",
     includes: [
       "A list of every tool and what it costs",
       "Website, Google profile, and lead path check",
@@ -295,8 +294,8 @@ export const services: Service[] = [
     slug: "custom-local-websites",
     eyebrow: "Custom Local Websites",
     verb: "Build",
-    title: "A site that makes the next action obvious",
-    headline: "A local website people can understand and use.",
+    title: "A website built to bring business",
+    headline: "Make the next customer action obvious.",
     plain: "Custom websites for NYC businesses. Calls, booking, forms, maps, payments, and Google signals, all working together.",
     outcome: "Usually ships in 14 days. If we miss the date, you do not pay.",
     includes: [
@@ -391,24 +390,24 @@ export const services: Service[] = [
   },
   {
     slug: "business-systems",
-    eyebrow: "Business Systems",
-    verb: "Clean up",
-    title: "The internal tools that keep the day moving",
-    headline: "Less spreadsheet. Less memory. Less monthly waste.",
-    plain: "Custom internal tools, lead tracking, follow-up, dashboards, and tool cleanup. Built around the work your business actually does.",
-    outcome: "Sized to the business. Good tools stay. Bad fits go.",
+    eyebrow: "Software You Own",
+    verb: "Build",
+    title: "A focused tool built around your business",
+    headline: "Stop renting software that fights the way you work.",
+    plain: "Custom software, lead tracking, follow-up, dashboards, and workflow tools. Built around the work your business actually does, then handed over to you.",
+    outcome: "One focused build. You own the code, data, hosting, domain, and docs.",
     includes: [
-      "Lead tracking and simple CRM setup",
-      "Tool cleanup and cost cuts",
-      "Dashboards and reports",
-      "Automatic follow-up and reminders",
-      "Custom internal apps when nothing fits",
+      "A workflow and software cost read",
+      "Custom lead tracking and internal tools",
+      "Dashboards, reports, and automatic follow-up",
+      "Standard technology another developer can maintain",
+      "Full ownership of the code, data, and docs",
     ],
     image: "/assets/case-public-house-cockpit.webp",
     accent: "green",
     icon: ClipboardCheck,
     shortAnswer:
-      "Short answer: Little Fight cleans up and builds right-sized systems for NYC teams. For anyone losing time to spreadsheets, scattered leads, double typing, and software bills that earn nothing.",
+      "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
     whatItDoes: [
       "Business systems are the work behind the storefront. The lead list. The job board. The quote path. The owner's view of the week.",
       "Most small businesses run that layer on spreadsheets, inboxes, sticky notes, and memory. The work gets done, but the owner becomes the memory for the whole business.",
@@ -513,6 +512,11 @@ export const agencyProcess = [
 
 export const fitRoutes = [
   {
+    label: "I need a website that brings in business",
+    copy: "The current site is missing, dated, hard to find, or not turning attention into calls and bookings.",
+    icon: Globe2,
+  },
+  {
     label: "Something is broken",
     copy: "Website, email, booking, payment, POS, or logins are hurting customers right now.",
     icon: Phone,
@@ -526,11 +530,6 @@ export const fitRoutes = [
     label: "The monthly bill hurts",
     copy: "You pay for software your team does not really use.",
     icon: CreditCard,
-  },
-  {
-    label: "People cannot find us",
-    copy: "Google, Maps, and reviews are not doing enough work.",
-    icon: MapPin,
   },
 ];
 

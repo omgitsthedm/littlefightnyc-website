@@ -253,6 +253,9 @@
 .lf-visual-index__open {
   margin-top: auto;
   padding-top: var(--lf-space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
 }
 
 .lf-visual-index__item:hover,

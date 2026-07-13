@@ -33,7 +33,7 @@ const footerGroups: Array<{ title: string; links: Array<{ label: string; to: str
       { label: "Custom Local Websites", to: "/services/custom-local-websites/" },
       { label: "IT Support", to: "/services/it-support/" },
       { label: "Tech Consulting", to: "/services/tech-consulting/" },
-      { label: "Business Systems", to: "/services/business-systems/" },
+      { label: "Software You Own", to: "/services/business-systems/" },
       { label: "Free Website Scan", to: "/audit/" },
     ],
   },

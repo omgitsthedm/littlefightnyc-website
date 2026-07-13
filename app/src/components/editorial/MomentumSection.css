@@ -46,8 +46,6 @@
   color: var(--lf-fight);
   margin-bottom: var(--lf-space-5);
 }
-.lf-momentum__eyebrow-num { color: var(--lf-bone-dim); }
-.lf-momentum__eyebrow-divider { color: var(--lf-bone-dim); }
 
 .lf-momentum__title {
   font-size: var(--lf-text-2xl);
@@ -202,13 +200,9 @@ a.lf-momentum__card:focus-visible {
 .lf-momentum__icon {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--lf-radius-sm);
+  width: fit-content;
   color: var(--lf-fight);
-  background: color-mix(in srgb, var(--lf-fight) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lf-fight) 30%, transparent);
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 .lf-momentum__card-label {
   color: var(--lf-bone-dim);
@@ -227,18 +221,9 @@ a.lf-momentum__card:focus-visible {
   line-height: 1.5;
   color: var(--lf-bone-soft);
 }
-.lf-momentum__card-go {
-  position: absolute;
-  top: var(--lf-space-6);
-  right: var(--lf-space-6);
-  color: var(--lf-bone-dim);
-  transition: transform var(--lf-time-snappy) var(--lf-ease-standard),
-    color var(--lf-time-snappy) var(--lf-ease-standard);
-}
-a.lf-momentum__card:hover .lf-momentum__card-go,
-a.lf-momentum__card:focus-visible .lf-momentum__card-go {
-  color: var(--lf-fight);
-  transform: translate(2px, -2px);
+
+.lf-momentum__card--cap:hover .lf-momentum__icon {
+  transform: translateY(-2px) rotate(3deg);
 }
 
 /* ---- Accent CTA tile ---- */
@@ -302,7 +287,8 @@ a.lf-momentum__card:focus-visible .lf-momentum__card-go {
 
 @media (prefers-reduced-motion: reduce) {
   .lf-momentum__head,
-  .lf-momentum__card {
+  .lf-momentum__card,
+  .lf-momentum__icon {
     opacity: 1 !important;
     transform: none !important;
     transition: none;

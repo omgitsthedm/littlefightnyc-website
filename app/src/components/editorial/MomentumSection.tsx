@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Globe, LifeBuoy, MapPin, Workflow, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BadgeDollarSign, FileText, ShieldCheck, Workflow } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import AmbientField from "./AmbientField";
 import OneSystemDiagram from "@/components/dataviz/OneSystemDiagram";
@@ -14,32 +14,28 @@ import "./MomentumSection.css";
 
 const CAPABILITIES = [
   {
-    icon: Globe,
-    label: "Websites",
-    title: "A site that earns its keep",
-    line: "Fast, easy to find, and built to bring calls. Not a template you fight with.",
-    to: "/services/custom-local-websites/",
-  },
-  {
-    icon: LifeBuoy,
-    label: "IT Support",
-    title: "Someone who picks up",
-    line: "When the register, Wi-Fi, or email goes down, you reach a human.",
-    to: "/services/it-support/",
-  },
-  {
-    icon: MapPin,
-    label: "Consulting + Local Visibility",
-    title: "Found on your block",
-    line: "We read your whole setup first. Then we tune Maps, reviews, and search for the blocks you serve.",
-    to: "/services/tech-consulting/",
-  },
-  {
     icon: Workflow,
-    label: "Business Systems",
-    title: "The busywork, handled",
-    line: "Connect the tools you keep, replace the ones that drag, automate the rest.",
-    to: "/services/business-systems/",
+    label: "Workflow",
+    title: "Built around the work",
+    line: "The tool follows the way your staff quotes, books, tracks, and follows up.",
+  },
+  {
+    icon: BadgeDollarSign,
+    label: "Cost",
+    title: "Replace the monthly drag",
+    line: "A focused build can beat years of paying for features your team never opens.",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Ownership",
+    title: "The keys stay with you",
+    line: "Your code, data, hosting, domain, and documentation belong to the business.",
+  },
+  {
+    icon: FileText,
+    label: "Handoff",
+    title: "Built to outlive the builder",
+    line: "Standard technology and plain documentation let another good developer take over.",
   },
 ] as const;
 
@@ -53,18 +49,14 @@ export default function MomentumSection() {
       <AmbientField />
       <div ref={headRef} className="lf-container lf-momentum__head">
         <p className="lf-mono lf-momentum__eyebrow">
-          <span className="lf-momentum__eyebrow-num">II.</span>
-          <span className="lf-momentum__eyebrow-divider" aria-hidden="true">·</span>
-          The System
+          Software you own
         </p>
         <h2 id="lf-momentum-heading" className="lf-display lf-momentum__title">
-          Everything your shop runs on.
-          <br />
-          <span className="lf-momentum__title-em">One system.</span>
+          Stop renting the wrong software.
         </h2>
         <p className="lf-momentum__lede">
-          Keep what works. Connect what matters. Replace what drags. Build what
-          fits. Little Fight runs the tech so you can run the shop.
+          When a generic platform is too bloated or the workflow is too specific,
+          we build the missing tool and hand over the keys.
         </p>
       </div>
 
@@ -75,13 +67,13 @@ export default function MomentumSection() {
           <div className="lf-momentum__feature-cols">
             <div className="lf-momentum__feature-main">
               <div className="lf-momentum__feature-body">
-                <span className="lf-mono lf-momentum__card-label">Operating system</span>
+                <span className="lf-mono lf-momentum__card-label">Ownership, not lock-in</span>
                 <h3 className="lf-display lf-momentum__feature-title">
-                  Right-sized tech for the shops that built New York.
+                  Software your business owns.
                 </h3>
                 <p className="lf-momentum__feature-line">
-                  No bloated stack. No monthly tool you never open. One team that
-                  knows your setup end to end.
+                  One focused build, paid across development. No hostage pricing,
+                  and no endless rent for the same workflow.
                 </p>
               </div>
             </div>
@@ -92,39 +84,34 @@ export default function MomentumSection() {
         </article>
 
         {/* Capability tiles */}
-        {CAPABILITIES.map(({ icon: Icon, label, title, line, to }, index) => (
-          <Link
+        {CAPABILITIES.map(({ icon: Icon, label, title, line }, index) => (
+          <article
             key={label}
-            to={to}
-            viewTransition
             className="lf-momentum__card lf-momentum__card--cap"
             style={{ ["--i" as string]: index + 1 }}
           >
             <span className="lf-momentum__icon" aria-hidden="true">
-              <Icon size={22} strokeWidth={1.75} />
+              <Icon size={30} strokeWidth={1.5} />
             </span>
             <span className="lf-mono lf-momentum__card-label">{label}</span>
             <h3 className="lf-momentum__card-title">{title}</h3>
             <p className="lf-momentum__card-line">{line}</p>
-            <span className="lf-momentum__card-go" aria-hidden="true">
-              <ArrowUpRight size={16} strokeWidth={2} />
-            </span>
-          </Link>
+          </article>
         ))}
 
         {/* Accent CTA tile — blue as the second signal */}
         <article className="lf-momentum__card lf-momentum__card--cta" style={{ ["--i" as string]: 5 }}>
           <span className="lf-mono lf-momentum__card-label lf-momentum__card-label--blue">
-            Start here
+            Free consulting
           </span>
           <h3 className="lf-display lf-momentum__cta-title">
-            Not sure what you need?
+            Do the math before you build.
           </h3>
           <p className="lf-momentum__card-line">
-            Take the Tech Audit. Two minutes, three useful outcomes, no pitch.
+            We compare the software bill and the staff time around it at no cost.
           </p>
           <Link to="/tech-audit/" viewTransition className="lf-momentum__cta-button">
-            Start the Tech Audit
+            Review my software
             <ArrowUpRight size={18} strokeWidth={2} />
           </Link>
         </article>

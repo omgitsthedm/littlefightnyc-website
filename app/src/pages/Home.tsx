@@ -29,7 +29,7 @@ const HOME_FAQ = [
   {
     question: "What does Little Fight NYC do?",
     answer:
-      "Little Fight NYC helps small businesses with websites, IT support, local Google visibility, software cleanup, and right-sized business systems.",
+      "Little Fight NYC builds websites for small businesses, fixes urgent tech, gives free consulting, and creates focused software clients own.",
   },
   {
     question: "Who does Little Fight NYC help?",
@@ -87,21 +87,21 @@ export default function Home() {
             {/* BlueprintFrame = opt-in drafting marginalia on the major
                 section boundaries (corner ticks + SEC. NN margin notes,
                 ≥1280px only — see BlueprintFrame.css). */}
-            <BlueprintFrame index={1} label="The assembly">
-              <TheAssembly />
+            <BlueprintFrame index={1} label="Recent work">
+              <RecentClients />
             </BlueprintFrame>
-            <BlueprintFrame index={2} label="The fight">
-              <TheFight />
-            </BlueprintFrame>
-            <BlueprintFrame index={3} label="The work">
+            <BlueprintFrame index={2} label="Ways to start">
               <WorkGrid />
             </BlueprintFrame>
-            <BlueprintFrame index={4} label="The system">
+            <BlueprintFrame index={3} label="The assembly">
+              <TheAssembly />
+            </BlueprintFrame>
+            <BlueprintFrame index={4} label="The fight">
+              <TheFight />
+            </BlueprintFrame>
+            <BlueprintFrame index={5} label="Software you own">
               <MomentumSection />
               <MomentumCursorGlow />
-            </BlueprintFrame>
-            <BlueprintFrame index={5} label="The clients">
-              <RecentClients />
             </BlueprintFrame>
             <BlueprintFrame index={6} label="The record">
               <SignatureBand />

@@ -45,7 +45,7 @@ export default function TheFight() {
           </h2>
           <p className="lf-fight__lede">
             Whole Foods, Great Clips, the delivery apps skimming a cut off every
-            order — they didn&rsquo;t out-work your block. They out-<em>tooled</em> it.
+            order did not out-work your block. They out-<em>tooled</em> it.
             Closing that gap is the whole reason we&rsquo;re called Little Fight.
           </p>
         </div>
@@ -75,21 +75,20 @@ export default function TheFight() {
               ))}
             </ul>
             <p className="lf-fight__side-note">
-              The places that make a block worth living on — now with a tech team of their own.
+              The places that make a block worth living on, now with a tech team of their own.
             </p>
           </div>
         </div>
 
         <div className="lf-fight__answer">
           <p>
-            We build the systems the big guys have — for a fraction of what a big
-            firm charges. Keep what works, kill the pen-and-paper and the endless
-            spreadsheets, and fit the tech to how you already run. New York is our
-            home and our attitude. But the fight travels. Anyone worth
-            fighting for can call.
+            We start where small businesses get the best return: a website that
+            brings in calls, bookings, and trust. Then we stay useful when tech
+            breaks or software bills pile up. No corporate stack. Just the right
+            tool, owned by the business when we build it.
           </p>
-          <Link to="/tech-audit/" viewTransition className="lf-fight__cta">
-            Put us in your corner
+          <Link to="/services/custom-local-websites/" viewTransition className="lf-fight__cta">
+            See the website service
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>

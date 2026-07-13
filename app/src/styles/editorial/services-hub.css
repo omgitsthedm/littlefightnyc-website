@@ -56,11 +56,14 @@
   .lf-svc-router__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .lf-svc-router__item:first-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (min-width: 1180px) {
   .lf-svc-router__list {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -73,7 +76,7 @@
   flex-direction: column;
   gap: var(--lf-space-2);
   width: 100%;
-  min-height: 108px;
+  min-height: 124px;
   padding: var(--lf-space-4) var(--lf-space-5);
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-card);
@@ -84,6 +87,22 @@
     transform var(--lf-time-snappy) var(--lf-ease-standard),
     border-color var(--lf-time-snappy) var(--lf-ease-standard),
     background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-svc-router__link--primary {
+  min-height: 176px;
+  justify-content: flex-end;
+  border-color: color-mix(in srgb, var(--lf-fight) 44%, var(--lf-hairline));
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(59, 130, 246, 0.12), transparent 62%),
+    color-mix(in srgb, var(--lf-fight) 7%, var(--lf-paper-2));
+}
+
+.lf-svc-router__link--primary .lf-svc-router__symptom {
+  max-width: 24ch;
+  font-size: var(--lf-text-lg);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
 .lf-editorial .lf-svc-router__link:hover,
@@ -114,6 +133,10 @@
 
 .lf-svc-router__service {
   margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lf-space-3);
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.1em;
@@ -121,7 +144,24 @@
   color: var(--lf-bone-dim);
 }
 
+.lf-svc-router__service svg {
+  flex: none;
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
 .lf-editorial .lf-svc-router__link:hover .lf-svc-router__service,
 .lf-editorial .lf-svc-router__link:focus-visible .lf-svc-router__service {
   color: var(--lf-fight);
+}
+
+.lf-editorial .lf-svc-router__link:hover .lf-svc-router__service svg,
+.lf-editorial .lf-svc-router__link:focus-visible .lf-svc-router__service svg {
+  transform: translate(2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-svc-router__link,
+  .lf-svc-router__service svg {
+    transition: none;
+  }
 }

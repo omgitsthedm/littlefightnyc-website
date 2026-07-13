@@ -1,27 +1,56 @@
-import { Layers, Sparkles, Waypoints } from "lucide-react";
+import {
+  ArrowUpRight,
+  Boxes,
+  Globe2,
+  Headphones,
+  Layers,
+  Search,
+  Waypoints,
+  Workflow,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
 import ServiceEditorialSpread from "@/components/editorial/ServiceEditorialSpread";
 import QuietContact from "@/components/editorial/QuietContact";
-import { fitRoutes, services, studioProjects } from "@/data/site";
+import { services, studioProjects } from "@/data/site";
 import "@/styles/editorial/services-hub.css";
 
 /* Symptom → service. Owners arrive with a feeling, not a service name —
    route from the feeling. (Replaces the old 2×2 card grid: the page used
    to state the same four services three times in a row.) */
-const SYMPTOM_TO_SERVICE: Record<string, string> = {
-  "Something is broken": "it-support",
-  "The setup is messy": "business-systems",
-  "The monthly bill hurts": "tech-consulting",
-  "People cannot find us": "custom-local-websites",
-};
+const ENTRY_ROUTES = [
+  {
+    label: "I need a website that brings in business",
+    slug: "custom-local-websites",
+    icon: Globe2,
+    priority: "primary",
+  },
+  {
+    label: "Something is broken today",
+    slug: "it-support",
+    icon: Headphones,
+    priority: "support",
+  },
+  {
+    label: "I want a free second opinion",
+    slug: "tech-consulting",
+    icon: Search,
+    priority: "consulting",
+  },
+  {
+    label: "Our software costs too much",
+    slug: "business-systems",
+    icon: Workflow,
+    priority: "software",
+  },
+] as const;
 
 export default function Services() {
   const studioOverview = studioProjects.map((project) => ({
     body: project.oneline,
-    eyebrow: `${project.kind} · ${project.status}`,
-    icon: Sparkles,
+    eyebrow: `${project.kind} / ${project.status}`,
+    icon: Boxes,
     image: project.image,
     title: project.name,
     to: `/studio/${project.slug}/`,
@@ -30,19 +59,18 @@ export default function Services() {
   return (
     <>
       <PageHero
-        eyebrow="The Work"
+        eyebrow="Websites first"
         icon={Layers}
         title={
           <>
-            Four services.<br />
-            {" "}
-            <span className="lf-em">One agency.</span>
+            Bring in business.<br />
+            <span className="lf-accent">Keep it running.</span>
           </>
         }
-        dek="Most owners only need one or two. Each engagement is scoped to the actual problem — never to a menu, never on a hunch. The consult is always free, and we'll tell you straight if you don't need us yet."
+        dek="Start with a website that earns attention. Add urgent support, free consulting, or owned software only when the business needs it."
         image={{
-          src: "/assets/coworking-laptops.webp",
-          alt: "Open laptops in a Brooklyn workspace",
+          src: "/assets/storefront-blue-gift-shop.webp",
+          alt: "A bright blue New York storefront at street level",
           width: 1600,
           height: 1200,
         }}
@@ -52,12 +80,11 @@ export default function Services() {
         <div className="lf-svc-router__inner">
           <p className="lf-svc-router__label">
             <Waypoints size={14} strokeWidth={2} aria-hidden="true" />
-            Start from what you feel, not from a service name
+            Choose your next move
           </p>
           <ul className="lf-svc-router__list">
-            {fitRoutes.map((route) => {
-              const serviceSlug = SYMPTOM_TO_SERVICE[route.label];
-              const service = services.find((s) => s.slug === serviceSlug);
+            {ENTRY_ROUTES.map((route) => {
+              const service = services.find((s) => s.slug === route.slug);
               if (!service) return null;
               const Icon = route.icon;
               return (
@@ -65,14 +92,15 @@ export default function Services() {
                   <Link
                     to={`/services/${service.slug}/`}
                     viewTransition
-                    className="lf-svc-router__link"
+                    className={`lf-svc-router__link lf-svc-router__link--${route.priority}`}
                   >
                     <span className="lf-svc-router__symptom">
                       <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
                       {route.label}
                     </span>
                     <span className="lf-svc-router__service">
-                      → {service.eyebrow}
+                      {service.eyebrow}
+                      <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
                     </span>
                   </Link>
                 </li>
@@ -87,8 +115,8 @@ export default function Services() {
       <VisualIndex
         id="studio"
         eyebrow="Studio"
-        title="Systems, not just sites."
-        dek="Some fights need more than a website. Dakota is our own AI that finds and qualifies new business overnight. The Estimator's Cockpit turns a contractor's messiest paperwork into a clean, structured bid. VenueCircuit is a full financial platform we shipped for independent venues. Real tools, running in production — the same range we bring to your systems."
+        title="The software can be yours."
+        dek="When subscriptions are expensive and the workflow is too specific, we build the missing tool. You own the code, data, hosting, and docs."
         items={studioOverview}
         variant="compact"
       />

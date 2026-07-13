@@ -17,7 +17,7 @@ const CONTACT_FAQ = [
   {
     question: "Does the first talk cost money?",
     answer:
-      "No. The first consult is always free. If you do not need us, we will say so and point you the right way.",
+      "No. Consulting is always free. If you do not need us, we will say so and point you the right way.",
   },
   {
     question: "What happens after I write to you?",
@@ -63,13 +63,13 @@ export default function Contact() {
 
           <TimelineStrip
             label="What happens after you contact Little Fight NYC"
-            summary="You call, text, email, or send the form. From 9am to 9pm New York time a real person answers. If you leave a message, we call back within 2 hours. The first consult is free."
+            summary="You call, text, email, or send the form. From 9am to 9pm New York time a real person answers. If you leave a message, we call back within 2 hours. Consulting is always free."
             beats={[
               { label: "You reach out", sub: "Call, text, email, or form" },
               { label: "A human answers", sub: "9am-9pm ET" },
               { label: "Callback in 2 hours", sub: "If we miss you", marker: true },
             ]}
-            badge="First consult free"
+            badge="Consulting is free"
           />
 
           <p className="lf-contact-window__note">
