@@ -270,3 +270,15 @@
   letter-spacing: -0.005em;
   line-height: 1.3;
 }
+
+/* Data-respect fine print — reassurance in context (§2.5), right under the
+   channels and promises rather than buried in a FAQ. Scoped under
+   .lf-editorial so the base `.lf-editorial p` rule (0,1,1) can't out-rank it. */
+.lf-editorial .lf-contact-block__fine {
+  margin: var(--lf-space-4) 0 0;
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--lf-bone-dim);
+  text-align: left;
+}

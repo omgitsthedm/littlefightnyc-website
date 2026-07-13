@@ -62,6 +62,8 @@ function composeMessage(symptom: string | null, urgency: string | null): string 
  * All storage access is guarded — private modes that throw just degrade to
  * the old behavior. */
 
+/* Cleared by /thanks/ on confirmed success (Thanks.tsx uses the literal key
+ * to avoid importing this chunk) — keep the two in sync. */
 const DRAFT_KEY = "lf_tech_audit_draft";
 
 type ContactFields = {
@@ -116,14 +118,6 @@ function writeDraft(draft: Draft): void {
   }
 }
 
-function clearDraft(): void {
-  try {
-    window.sessionStorage.removeItem(DRAFT_KEY);
-  } catch {
-    /* ignore */
-  }
-}
-
 export default function FitCheck() {
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
@@ -164,8 +158,42 @@ export default function FitCheck() {
     return () => window.clearTimeout(id);
   }, [payoff]);
 
+  // If the page is restored from the back/forward cache (e.g. the user hit
+  // Back after a failed native POST), un-stick the loading state so the
+  // submit button works again and the preserved draft can be re-sent.
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) setSubmitting(false);
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, []);
+
   function setField(name: keyof ContactFields, value: string) {
     setFields((prev) => ({ ...prev, [name]: value }));
+  }
+
+  /* Inline validation (§6.2): check a required field when the user leaves it,
+   * and clear its error the moment they fix it — never wait for submit. */
+  function validateField(name: FieldName, value: string) {
+    const rule = REQUIRED_FIELDS.find((f) => f.name === name);
+    if (!rule) return;
+    setErrors((prev) => {
+      const next = { ...prev };
+      if (value.trim() === "") next[name] = rule.message;
+      else delete next[name];
+      return next;
+    });
+  }
+
+  function clearErrorIfFilled(name: FieldName, value: string) {
+    if (value.trim() === "") return;
+    setErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   }
 
   function pickSymptom(label: string) {
@@ -206,8 +234,9 @@ export default function FitCheck() {
     }
 
     // Valid — let the native Netlify POST proceed, show the loading state.
-    // The draft is done its job; a returning visitor starts fresh.
-    clearDraft();
+    // The draft is deliberately NOT cleared here: if the POST fails (offline,
+    // server error) the user's answers survive a Back navigation. /thanks/
+    // clears it on confirmed success instead.
     setErrors({});
     setSubmitting(true);
   }
@@ -407,7 +436,11 @@ export default function FitCheck() {
                       autoComplete="name"
                       required
                       value={fields.name}
-                      onChange={(e) => setField("name", e.target.value)}
+                      onChange={(e) => {
+                        setField("name", e.target.value);
+                        clearErrorIfFilled("name", e.target.value);
+                      }}
+                      onBlur={(e) => validateField("name", e.target.value)}
                       aria-invalid={errors.name ? true : undefined}
                       aria-describedby={errors.name ? "fit-name-error" : undefined}
                     />
@@ -426,7 +459,11 @@ export default function FitCheck() {
                       autoComplete="organization"
                       required
                       value={fields.business}
-                      onChange={(e) => setField("business", e.target.value)}
+                      onChange={(e) => {
+                        setField("business", e.target.value);
+                        clearErrorIfFilled("business", e.target.value);
+                      }}
+                      onBlur={(e) => validateField("business", e.target.value)}
                       aria-invalid={errors.business ? true : undefined}
                       aria-describedby={errors.business ? "fit-business-error" : undefined}
                     />
@@ -446,7 +483,11 @@ export default function FitCheck() {
                       required
                       placeholder="(646) 555-0118 or hello@yourshop.com"
                       value={fields.contact}
-                      onChange={(e) => setField("contact", e.target.value)}
+                      onChange={(e) => {
+                        setField("contact", e.target.value);
+                        clearErrorIfFilled("contact", e.target.value);
+                      }}
+                      onBlur={(e) => validateField("contact", e.target.value)}
                       aria-invalid={errors.contact ? true : undefined}
                       aria-describedby={errors.contact ? "fit-contact-error" : undefined}
                     />
@@ -489,7 +530,9 @@ export default function FitCheck() {
                       onChange={(e) => {
                         setMessage(e.target.value);
                         setMessageDirty(true);
+                        clearErrorIfFilled("message", e.target.value);
                       }}
+                      onBlur={(e) => validateField("message", e.target.value)}
                       placeholder="A short sentence is fine. We'll ask the rest on the call."
                       aria-invalid={errors.message ? true : undefined}
                       aria-describedby={
@@ -524,8 +567,12 @@ export default function FitCheck() {
                     )}
                   </button>
                   <p className="lf-fit__assurance">
-                    Free consult · We reply within 2 hours, 9am–9pm ET · Urgent? Call{" "}
-                    <a href="tel:+16463600318">(646) 360-0318</a>
+                    Free consult · No pitch · We reply within 2 hours, 9am–9pm ET ·
+                    Urgent? Call <a href="tel:+16463600318">(646) 360-0318</a>
+                  </p>
+                  <p className="lf-fit__assurance lf-fit__assurance--data">
+                    What you send here goes to David to prep your callback — never
+                    sold, never spammed.
                   </p>
                 </form>
 

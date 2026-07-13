@@ -106,6 +106,11 @@ export default function QuietContact({
           <li><span>24-hour on-sites</span><em>When something breaks</em></li>
           <li><span>2-hour callbacks</span><em>9am-9pm Eastern</em></li>
         </ul>
+
+        <p className="lf-contact-block__fine">
+          No pitch, no spam. Whatever you send goes straight to the person who
+          does the work — never to a list.
+        </p>
       </div>
     </section>
   );

@@ -459,6 +459,13 @@
   margin: 0;
 }
 
+/* The data-respect sentence — quieter than the mono promise strip above it. */
+.lf-fit__assurance--data {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  margin-top: -2px;
+}
+
 .lf-editorial .lf-fit__assurance a {
   color: var(--lf-fight);
   text-decoration: none;

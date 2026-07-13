@@ -87,6 +87,13 @@
   .lf-editorial {
     padding-bottom: 80px;
   }
+
+  /* Focus not obscured (WCAG 2.2 / doctrine §10): when the browser scrolls a
+     keyboard-focused control or #anchor into view, keep it clear of the fixed
+     bar. Matches the 80px reservation above plus the iPhone home indicator. */
+  html {
+    scroll-padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
 }
 
 /* PhoneAction wrapper needs to fill its grid cell on the sticky bar.

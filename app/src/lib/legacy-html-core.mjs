@@ -16,6 +16,12 @@ const INTERNAL_LINK_REWRITES = [
   [/href=(["'])\/what-google-looks-for-business-website\/?\1/gi, 'href="/journal/what-google-looks-for-business-website/"'],
   [/href=(["'])\/why-business-websites-will-be-invisible\/?\1/gi, 'href="/journal/why-business-websites-will-be-invisible/"'],
   [/href=(["'])\/services\/website-design-small-business-nyc\/?\1/gi, 'href="/services/custom-local-websites/"'],
+  // Retired old-site hubs still linked from legacy industry bodies. The NYC
+  // hub's pitch ("websites, IT support, Google help, software cleanup") is
+  // exactly the current services overview; the calculator's job ("estimate
+  // software drag") lives in the software-cost answer guide.
+  [/href=(["'])\/nyc-websites-it-support\/?\1/gi, 'href="/services/"'],
+  [/href=(["'])\/software-cost-calculator\/?\1/gi, 'href="/answers/reduce-monthly-software-costs-small-business/"'],
 ];
 
 const SMS_LINK_REWRITE = new RegExp(

@@ -12,6 +12,10 @@ export default function Thanks() {
       cameFromFitCheck = window.sessionStorage.getItem("lf_fit_check_submitted") === "true";
       if (cameFromFitCheck) {
         window.sessionStorage.removeItem("lf_fit_check_submitted");
+        // Confirmed success — retire the Tech Audit draft. (FitCheck keeps it
+        // through submit so a failed POST + Back never loses the answers.
+        // Literal key mirrors DRAFT_KEY in FitCheck.tsx — keep in sync.)
+        window.sessionStorage.removeItem("lf_tech_audit_draft");
       }
     } catch {
       cameFromFitCheck = false;

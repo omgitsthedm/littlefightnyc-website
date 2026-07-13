@@ -110,6 +110,14 @@ export default function CommandPalette() {
         setOpen((v) => !v);
         return;
       }
+      // Escape must close the dialog even when focus sits OUTSIDE it (the
+      // input grabs focus on a short timer; a fast Esc — or focus falling to
+      // body after a backdrop interaction — otherwise leaves it stuck open).
+      if (e.key === "Escape" && open) {
+        e.preventDefault();
+        close();
+        return;
+      }
       if (e.key === "/" && !open) {
         const el = document.activeElement;
         const tag = el?.tagName;
@@ -124,7 +132,7 @@ export default function CommandPalette() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, close]);
 
   // Chrome-initiated open (the ⌘K chip in QuietNav dispatches CMDK_OPEN_EVENT).
   // The pending check covers Home, where the palette mounts deferred — a chip

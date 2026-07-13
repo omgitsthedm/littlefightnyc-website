@@ -78,16 +78,20 @@ export default function QuietNav() {
         return;
       }
       if (e.key === "Tab" && focusables.length > 0) {
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        const active = document.activeElement;
-        if (e.shiftKey && active === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && active === last) {
-          e.preventDefault();
-          first.focus();
-        }
+        // Cycle manually instead of only intercepting at the edges: Safari
+        // keeps links OUT of the native Tab order (macOS Full Keyboard
+        // Access is off by default), so relying on native tabbing between
+        // the edges lets focus escape the open drawer entirely.
+        e.preventDefault();
+        const active = document.activeElement as HTMLElement | null;
+        const idx = active ? focusables.indexOf(active) : -1;
+        const next =
+          idx === -1
+            ? e.shiftKey
+              ? focusables.length - 1
+              : 0
+            : (idx + (e.shiftKey ? -1 : 1) + focusables.length) % focusables.length;
+        focusables[next].focus();
       }
     };
 

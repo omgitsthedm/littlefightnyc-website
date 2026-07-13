@@ -82,7 +82,7 @@ export default function Audit() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Open Audit
+              Run my free scan
               <ExternalLink size={18} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </div>

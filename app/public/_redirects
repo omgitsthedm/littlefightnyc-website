@@ -36,6 +36,8 @@
 /services/local-seo-and-google-ads-nyc/*       /services/tech-consulting/        301
 /tech-consulting-small-business/*              /services/business-systems/       301
 /services/tech-consulting-small-business/*     /services/business-systems/       301
+/nyc-websites-it-support/*                     /services/                        301
+/software-cost-calculator/*                    /answers/reduce-monthly-software-costs-small-business/  301
 
 # --- Information architecture consolidation (May 2026)
 # (/answers/ and /case-studies/ are REAL hub pages again as of 2026-07-12.)
