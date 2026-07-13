@@ -47,16 +47,19 @@ export default function Audit() {
 
           <div className="lf-audit-page__gauges">
             <p className="lf-audit-page__gauges-label">What the read covers</p>
+            {/* Sample values are ILLUSTRATIVE only — a made-up mid-tier site,
+                flagged as a sample in the badge, caption, and summary. */}
             <ScoreRing
-              label="What the scan measures"
-              summary="The scan reads five things: page structure, copy, local signals, performance, and contact paths. The gauges start empty — your numbers get filled in when the scan runs."
-              caption="Your numbers get filled in"
+              label="What the scan measures — sample read"
+              summary="The scan scores five things out of 100: page structure, copy, local signals, performance, and contact paths. The gauges here show a made-up sample read for illustration only — running the scan replaces them with your site's real numbers."
+              badge="Sample"
+              caption="Sample read — your numbers will differ"
               items={[
-                { label: "Structure", value: null },
-                { label: "Copy", value: null },
-                { label: "Local signals", value: null },
-                { label: "Performance", value: null },
-                { label: "Contact paths", value: null },
+                { label: "Structure", value: 74 },
+                { label: "Copy", value: 58 },
+                { label: "Local signals", value: 41 },
+                { label: "Performance", value: 86 },
+                { label: "Contact paths", value: 63 },
               ]}
             />
           </div>

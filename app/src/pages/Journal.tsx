@@ -4,6 +4,8 @@ import { ArrowUpRight, Newspaper } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import PublishingHeatmap from "@/components/dataviz/PublishingHeatmap";
+import { READ_MINUTES } from "@/components/dataviz/journalStats";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { useViewTransitionNav } from "@/lib/viewTransition";
 import journal from "@/data/journal.json";
@@ -23,14 +25,8 @@ type Post = {
   html: string;
 };
 
-// Honest reading time, computed from the post's own word count at render.
-function readMinutes(html: string): number {
-  const words = html
-    .replace(/<[^>]+>/g, " ")
-    .split(/\s+/)
-    .filter(Boolean).length;
-  return Math.max(1, Math.round(words / 200));
-}
+// Reading time comes from the shared journalStats module (words / 200,
+// computed once at module scope from the real post html).
 
 const CATEGORY_LABEL: Record<Post["category"], string> = {
   howto: "How To",
@@ -62,10 +58,6 @@ function postTime(published: string): number {
 export default function Journal() {
   const posts = journal as unknown as Post[];
   const [filter, setFilter] = useState<Filter>("all");
-  const minutes = useMemo(
-    () => Object.fromEntries(posts.map((p) => [p.slug, readMinutes(p.html)])),
-    [posts],
-  );
 
   // Newest first — one list, one presentation.
   const sorted = useMemo(
@@ -107,6 +99,9 @@ export default function Journal() {
           height: 1200,
         }}
       />
+
+      {/* Real publishing cadence, straight from journal.json dates. */}
+      <PublishingHeatmap />
 
       <div className="lf-journal-filter">
         <div className="lf-journal-filter__inner" role="group" aria-label="Filter journal by type">
@@ -179,7 +174,7 @@ export default function Journal() {
                 <span className="lf-journal-featured__flag">Latest</span>
                 <span className="lf-journal-featured__chips">
                   <span className="lf-journal__cat">{CATEGORY_LABEL[featured.category]}</span>
-                  <span className="lf-journal__read">~{minutes[featured.slug]} min read</span>
+                  <span className="lf-journal__read">~{READ_MINUTES[featured.slug]} min read</span>
                 </span>
                 <span
                   className="lf-journal-featured__title"
@@ -210,11 +205,26 @@ export default function Journal() {
                   <Link
                     to={`/journal/${post.slug}/`}
                     viewTransition
-                    className="lf-journal__link"
+                    className="lf-journal__link lf-journal__link--thumb"
                     onClick={vtNav(`/journal/${post.slug}/`, preloadPost)}
                   >
                     <span className="lf-journal__num">
                       {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="lf-journal__thumb" aria-hidden="true">
+                      <img
+                        src={POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category]}
+                        alt=""
+                        {...responsiveImageProps(
+                          POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category],
+                          "(min-width: 768px) 72px, 56px",
+                          [480],
+                        )}
+                        width={120}
+                        height={120}
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </span>
                     <span className="lf-journal__body">
                       <span className="lf-journal__title">
@@ -223,7 +233,7 @@ export default function Journal() {
                         </span>
                         <span className="lf-journal__chips">
                           <span className="lf-journal__cat">{CATEGORY_LABEL[post.category]}</span>
-                          <span className="lf-journal__read">~{minutes[post.slug]} min read</span>
+                          <span className="lf-journal__read">~{READ_MINUTES[post.slug]} min read</span>
                         </span>
                       </span>
                       <span className="lf-journal__desc">{post.description}</span>

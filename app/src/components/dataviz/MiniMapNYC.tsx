@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { MapPin } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { areaPages } from "@/data/site";
@@ -53,7 +54,11 @@ export default function MiniMapNYC({
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.2 });
   const mapRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+  // failed: Leaflet itself couldn't boot. tilesFailed: Leaflet runs but the
+  // Carto tiles error (offline, blocked CDN). Either way the branded ghost
+  // grid stays visible — the container must NEVER read as a white box.
   const [failed, setFailed] = useState(false);
+  const [tilesFailed, setTilesFailed] = useState(false);
 
   const currentArea = current ? areaPages.find((a) => a.slug === current) : undefined;
   const nearbySlugs = new Set(currentArea?.nearby ?? []);
@@ -68,6 +73,10 @@ export default function MiniMapNYC({
     let disposed = false;
     let map: import("leaflet").Map | undefined;
     let observer: IntersectionObserver | undefined;
+
+    // Fresh page (re-keyed by `current`) — clear any stale failure state.
+    setFailed(false);
+    setTilesFailed(false);
 
     const boot = async () => {
       try {
@@ -87,11 +96,22 @@ export default function MiniMapNYC({
         });
         map.attributionControl.setPrefix(false);
 
-        L.tileLayer(TILE_URL, {
+        const tiles = L.tileLayer(TILE_URL, {
           attribution: TILE_ATTRIBUTION,
           subdomains: "abcd",
           maxZoom: 15,
-        }).addTo(map);
+        });
+        // Tile-network failure (offline, blocked CDN): surface the branded
+        // ghost instead of an empty pane. One successful tile clears it.
+        let sawTile = false;
+        tiles.on("tileload", () => {
+          sawTile = true;
+          if (!disposed) setTilesFailed(false);
+        });
+        tiles.on("tileerror", () => {
+          if (!disposed && !sawTile) setTilesFailed(true);
+        });
+        tiles.addTo(map);
 
         const nearby = currentArea
           ? [currentArea.slug, ...currentArea.nearby.filter((s) => AREA_CENTER[s])]
@@ -123,8 +143,8 @@ export default function MiniMapNYC({
           marker.on("click", () => navigate(`/areas/${area.slug}/`));
         }
       } catch {
-        // Leaflet or tiles unavailable (offline, blocked) — hide the canvas;
-        // the chip list beside it already carries every fact and link.
+        // Leaflet unavailable (chunk blocked, offline) — the branded ghost
+        // grid stands in; the chip list carries every fact and link.
         if (!disposed) setFailed(true);
       }
     };
@@ -168,7 +188,18 @@ export default function MiniMapNYC({
     >
       <p className="lf-viz-sr">{summary}</p>
       <div className="lf-minimap__layout">
-        <div className="lf-minimap__map" data-failed={failed || undefined}>
+        <div
+          className="lf-minimap__map"
+          data-failed={failed || undefined}
+          data-tiles-failed={tilesFailed || undefined}
+        >
+          {/* Branded ghost — dark grid + pin, always painted UNDER the tile
+              pane so a tile/CDN failure never exposes a white box. */}
+          <div className="lf-minimap__ghost" aria-hidden="true">
+            <MapPin size={20} strokeWidth={1.8} />
+            <span className="lf-minimap__ghost-title">Manhattan</span>
+            <span className="lf-minimap__ghost-note">Map tiles unavailable</span>
+          </div>
           <div ref={mapRef} className="lf-minimap__canvas" aria-hidden="true" />
         </div>
 

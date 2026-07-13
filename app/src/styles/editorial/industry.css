@@ -103,6 +103,15 @@
   max-width: none;
 }
 
+/* Loose prose inside a card-grid section (the eyebrow <p>, the <h2>, the
+ * intro <p>) must span the full grid — auto-placement was squeezing them
+ * into single cells next to the cards. */
+.lf-post--industry section:has(> article) > p,
+.lf-post--industry section:has(> article) > h2 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
 .lf-post--industry article {
   display: flex;
   flex-direction: column;
@@ -156,10 +165,21 @@
   gap: var(--lf-space-2);
 }
 
-/* ---- Comparison / link lists in prose sections ---- */
+/* ---- Links in prose sections — brand ink, orange signal (was default-blue
+ * over the journal chip background: two half-applied styles at once) ---- */
 .lf-post--industry .lf-post__body a:not(.lf-post__cta-row a) {
-  color: var(--lf-blue);
-  text-underline-offset: 3px;
+  color: var(--lf-bone);
+  background: none;
+  text-decoration: underline;
+  text-decoration-color: var(--lf-fight);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-post--industry .lf-post__body a:not(.lf-post__cta-row a):hover,
+.lf-post--industry .lf-post__body a:not(.lf-post__cta-row a):focus-visible {
+  color: var(--lf-fight);
+  background: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

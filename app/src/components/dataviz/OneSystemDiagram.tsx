@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CalendarCheck, CreditCard, Mail, MapPin, Table2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
@@ -11,6 +11,9 @@ import "./OneSystemDiagram.css";
  * into clean orange connectors feeding a single hub node. Each tool wears its
  * Keep / Connect / Replace verdict chip (labels from proofSignals); the hub
  * wears Build. Draws in on scroll; reduced motion renders the final state.
+ * After the draw-in, small orange packets travel each connector into the hub
+ * on a slow loop (CSS offset-path; paused off-viewport; none under
+ * prefers-reduced-motion — the composed final state stands on its own).
  */
 
 const VERDICT = Object.fromEntries(proofSignals.map((s) => [s.label, s.label])) as Record<
@@ -44,6 +47,27 @@ export default function OneSystemDiagram() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
   const [centers, setCenters] = useState<Record<string, Pt>>({});
+
+  // Pause the packet loop whenever the diagram is off-viewport (the packets
+  // only run while `data-inview="true"` — see OneSystemDiagram.css).
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof window === "undefined") return;
+    if (typeof IntersectionObserver === "undefined") {
+      el.setAttribute("data-inview", "true");
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          el.setAttribute("data-inview", entry.isIntersecting ? "true" : "false");
+        }
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
 
   useLayoutEffect(() => {
     const el = canvasRef.current;
@@ -102,6 +126,22 @@ export default function OneSystemDiagram() {
                 ),
             )}
         </svg>
+
+        {/* Living packets — one per spoke, travelling tool → hub. */}
+        {hub &&
+          TOOLS.map(
+            (t, i) =>
+              centers[t.id] && (
+                <span
+                  key={`p-${t.id}`}
+                  className="lf-onesys__packet"
+                  style={{
+                    offsetPath: `path("M ${centers[t.id].x} ${centers[t.id].y} L ${hub.x} ${hub.y}")`,
+                    ["--lf-i" as string]: i,
+                  }}
+                />
+              ),
+          )}
 
         {TOOLS.map((t, i) => (
           <div

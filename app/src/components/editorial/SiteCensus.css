@@ -1,0 +1,133 @@
+/* Site census — honest build-derived counters on /about/.
+ * Mono chips between hairlines; hover/tap a counter and the readout lane
+ * below states exactly what was counted. Chip <button>s are scoped under
+ * .lf-editorial to beat the base button reset. */
+
+.lf-census {
+  padding: var(--lf-space-7) var(--lf-margin-mobile);
+  border-block: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-census {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-census {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-census__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-5);
+}
+
+.lf-census__eyebrow {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+.lf-census__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--lf-space-3);
+}
+
+@media (max-width: 900px) {
+  .lf-census__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Scoped under .lf-editorial: the base `.lf-editorial button` reset strips
+   background/border/padding at (0,1,1) — this wins at (0,2,0). */
+.lf-editorial .lf-census__chip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--lf-space-1);
+  padding: var(--lf-space-4);
+  min-height: 44px;
+  text-align: left;
+  background: var(--lf-paper-2);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  cursor: help;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-census__chip:hover,
+.lf-editorial .lf-census__chip:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
+  background: var(--lf-paper);
+}
+
+.lf-editorial .lf-census__chip:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-census__value {
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  font-size: var(--lf-text-xl);
+  line-height: 1;
+  color: var(--lf-bone);
+  font-variant-numeric: tabular-nums;
+}
+
+.lf-census__label {
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+/* Visually hidden full reading — real text for readers and crawlers. */
+.lf-census__vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Fixed readout lane — swaps text on hover/focus, never shifts layout. */
+.lf-census__readout {
+  margin: 0;
+  min-height: 2.9em;
+  max-width: 72ch;
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  color: var(--lf-bone-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-census__chip {
+    transition: none;
+  }
+}

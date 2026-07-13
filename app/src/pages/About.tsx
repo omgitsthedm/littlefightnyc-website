@@ -6,6 +6,8 @@ import PullQuote from "@/components/editorial/PullQuote";
 import StatBlock from "@/components/editorial/StatBlock";
 import FounderCard from "@/components/editorial/FounderCard";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
+import BlueprintFrame from "@/components/editorial/BlueprintFrame";
+import SiteCensus from "@/components/editorial/SiteCensus";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 
@@ -113,6 +115,11 @@ export default function About() {
           </EditorialBody>
         </div>
       </section>
+
+      {/* Site census — honest build-derived counts (see SiteCensus.tsx). */}
+      <BlueprintFrame index={3} label="Site census">
+        <SiteCensus />
+      </BlueprintFrame>
 
       <ProcessFlow />
 

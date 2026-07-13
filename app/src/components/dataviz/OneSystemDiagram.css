@@ -36,6 +36,38 @@
   stroke-dashoffset: 0;
 }
 
+/* ---- Living packets ----
+   One small orange dot per spoke, travelling tool → hub on a slow loop after
+   the draw-in settles. Runs only while revealed AND in the viewport (the
+   component keeps `data-inview` fresh via IntersectionObserver). */
+.lf-onesys__packet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lf-fight);
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.75);
+  opacity: 0;
+  pointer-events: none;
+  offset-rotate: 0deg;
+  animation: lf-onesys-packet 5600ms linear infinite;
+  animation-delay: calc(2400ms + var(--lf-i, 0) * 1120ms);
+  animation-play-state: paused;
+}
+[data-revealed="true"][data-inview="true"] .lf-onesys__packet {
+  animation-play-state: running;
+}
+
+@keyframes lf-onesys-packet {
+  0% { offset-distance: 0%; opacity: 0; }
+  6% { opacity: 0.9; }
+  36% { opacity: 0.9; }
+  44% { offset-distance: 100%; opacity: 0; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+
 /* ---- Tool nodes ---- */
 .lf-onesys__node {
   position: absolute;
@@ -189,6 +221,11 @@
   .lf-onesys__spoke {
     stroke-dashoffset: 0 !important;
     transition: none !important;
+  }
+  /* No transient motion — the composed final state IS the diagram. */
+  .lf-onesys__packet {
+    display: none !important;
+    animation: none !important;
   }
   .lf-onesys__node,
   .lf-onesys__chip,

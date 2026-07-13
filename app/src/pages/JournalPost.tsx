@@ -2,6 +2,8 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import MiniToc, { type TocItem } from "@/components/dataviz/MiniToc";
+import { READ_MINUTES, WORD_COUNT } from "@/components/dataviz/journalStats";
 import journal from "@/data/journal.json";
 import { POST_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
@@ -43,6 +45,42 @@ function dateTimeValue(value: string) {
   return Number.isNaN(parsed.getTime()) ? "2026-05-07" : parsed.toISOString().slice(0, 10);
 }
 
+/** Long-post threshold for the sticky mini-TOC (real word count). */
+const TOC_MIN_WORDS = 1200;
+
+/**
+ * Prepare the legacy body for render:
+ * - howto posts: tag the FIRST <ol> so CSS can style it as the stepper rail
+ *   (pure string pass — un-flagged regex replaces the first match only);
+ * - long posts (> TOC_MIN_WORDS words): give each <h2> a stable id and
+ *   collect the mini-TOC items from the real headings in the html.
+ */
+function preparePostBody(post: Post): { html: string; toc: TocItem[] } {
+  let html = prepareLegacyHtml(post.html);
+  const toc: TocItem[] = [];
+
+  if (post.category === "howto") {
+    html = html.replace(/<ol(?=[\s>])/i, '<ol data-lf-steps=""');
+  }
+
+  if ((WORD_COUNT[post.slug] ?? 0) > TOC_MIN_WORDS) {
+    let n = 0;
+    html = html.replace(
+      /<h2(\s[^>]*)?>([\s\S]*?)<\/h2>/gi,
+      (match, attrs: string | undefined, inner: string) => {
+        const label = inner.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+        if (!label) return match;
+        n += 1;
+        const id = `post-section-${n}`;
+        toc.push({ id, label });
+        return `<h2 id="${id}"${attrs ?? ""}>${inner}</h2>`;
+      },
+    );
+  }
+
+  return { html, toc };
+}
+
 export default function JournalPost() {
   const { slug } = useParams();
   const posts = journal as unknown as Post[];
@@ -52,6 +90,8 @@ export default function JournalPost() {
 
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
   const published = displayDate(post);
+  const { html: bodyHtml, toc } = preparePostBody(post);
+  const hasToc = toc.length >= 2;
 
   return (
     <>
@@ -80,7 +120,9 @@ export default function JournalPost() {
         itemScope
         itemType="https://schema.org/Article"
       >
-        <div className="lf-post__inner">
+        <div className="lf-post__inner" data-toc={hasToc ? "true" : undefined}>
+          {hasToc && <MiniToc items={toc} />}
+          <div className="lf-post__main">
           <p className="lf-post__byline byline">
             <span className="lf-post__byline-by">By</span>{" "}
             <Link
@@ -103,12 +145,18 @@ export default function JournalPost() {
                 <time itemProp="dateModified" dateTime={dateTimeValue(post.updated)}>{post.updated}</time>
               </>
             )}
+            <span aria-hidden="true"> · </span>
+            <span className="lf-journal__read lf-post__byline-read">
+              ~{READ_MINUTES[post.slug]} min read
+            </span>
           </p>
 
           <div
             className="lf-post__body"
-            dangerouslySetInnerHTML={{ __html: prepareLegacyHtml(post.html) }}
+            data-post-category={post.category}
+            dangerouslySetInnerHTML={{ __html: bodyHtml }}
           />
+          </div>
         </div>
       </article>
 

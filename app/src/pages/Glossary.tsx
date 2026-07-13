@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import TermMap from "@/components/dataviz/TermMap";
 import { glossaryTerms } from "@/data/site";
 
 export default function Glossary() {
@@ -32,6 +33,7 @@ export default function Glossary() {
         }}
       >
         <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+          <TermMap />
           <ul
             style={{
               listStyle: "none",

@@ -1,0 +1,86 @@
+/* Studio status strip — a thin instrument line atop the footer.
+ * One row of mono readings: NYC time, open state, temperature.
+ * Reads like a gauge, not a widget: hairline separators, tabular digits,
+ * a single orange signal when the callback window is open. */
+
+.lf-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-2) var(--lf-space-3);
+  padding-bottom: var(--lf-space-5);
+  border-bottom: 1px solid color-mix(in oklch, var(--lf-bone) 12%, transparent);
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.lf-status__site {
+  color: var(--lf-bone-soft);
+}
+
+/* Hairline dial separators between readings. */
+.lf-status__sep {
+  flex: none;
+  width: 1px;
+  height: 11px;
+  background: var(--lf-hairline);
+}
+
+.lf-status__clock {
+  color: var(--lf-bone-soft);
+  white-space: nowrap;
+}
+
+.lf-status__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.lf-status__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lf-bone-dim);
+  opacity: 0.55;
+}
+
+.lf-status[data-open="true"] .lf-status__dot {
+  background: var(--lf-fight);
+  opacity: 1;
+}
+
+.lf-status[data-open="true"] .lf-status__state {
+  color: var(--lf-fight);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lf-status[data-open="true"] .lf-status__dot {
+    animation: lf-status-pulse 2.6s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+}
+
+@keyframes lf-status-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(249, 115, 22, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
+}
+
+.lf-status__temp {
+  white-space: nowrap;
+}
+
+/* Narrow phones: same instrument, wraps into two clean mono rows. */
+@media (max-width: 419px) {
+  .lf-status {
+    gap: var(--lf-space-2) var(--lf-space-3);
+    row-gap: var(--lf-space-2);
+  }
+}

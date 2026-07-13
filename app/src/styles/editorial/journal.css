@@ -110,6 +110,44 @@
   letter-spacing: -0.005em;
 }
 
+/* Hub rows with art: num · square thumb · body. Scoped to a modifier so the
+   2-column related-posts rows on post pages keep the base template. */
+.lf-journal__link--thumb {
+  grid-template-columns: auto auto 1fr;
+  gap: var(--lf-space-3);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .lf-journal__link--thumb {
+    gap: var(--lf-space-5);
+  }
+}
+
+.lf-journal__thumb {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--lf-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  background: var(--lf-paper-2);
+}
+
+@media (min-width: 768px) {
+  .lf-journal__thumb {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.lf-journal__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ============================================================
    Single post — long-form editorial body
    ============================================================ */
@@ -135,6 +173,23 @@
   margin-inline: auto;
 }
 
+.lf-post__main {
+  min-width: 0;
+}
+
+/* Long posts (>1200 words) get the sticky mini-TOC rail on desktop — a
+   two-column grid so the rail can NEVER overlap the copy (minmax(0, 68ch)
+   lets the text column give way at 1024-1280px). Below 1024px the rail is
+   display:none (MiniToc.css) and the base 68ch column stands. */
+@media (min-width: 1024px) {
+  .lf-post__inner[data-toc="true"] {
+    display: grid;
+    grid-template-columns: minmax(150px, 190px) minmax(0, 68ch);
+    column-gap: var(--lf-space-7);
+    max-width: calc(190px + var(--lf-space-7) + 68ch);
+  }
+}
+
 .lf-post__byline {
   display: inline-flex;
   flex-wrap: wrap;
@@ -157,6 +212,13 @@
 .lf-post__byline-name {
   color: var(--lf-fight);
   text-decoration: none;
+}
+
+/* Reading-time chip in the post byline — same chip as the hub rows, minus
+   the hub's leading margin (the byline's own gap spaces it). */
+.lf-post__byline-read {
+  margin-left: 0;
+  letter-spacing: 0.08em;
 }
 
 /* HTML body — applies editorial type to imported article content */
@@ -186,6 +248,9 @@
   letter-spacing: -0.025em;
   color: var(--lf-bone);
   margin: var(--lf-space-7) 0 var(--lf-space-4);
+  /* Mini-TOC anchor jumps land clear of the glass nav (which wraps taller
+     in the 1024-1279 band). */
+  scroll-margin-top: 148px;
 }
 
 .lf-post__body h3 {
@@ -263,6 +328,82 @@
 
 .lf-post__body article {
   display: block;
+}
+
+/* ============================================================
+   How-to stepper rail — the FIRST <ol> of category=howto posts
+   (JournalPost tags it with data-lf-steps; the body wrapper carries
+   data-post-category). Orange step nodes on a hairline connector.
+   Pure CSS, static — nothing for reduced-motion to collapse.
+   ============================================================ */
+
+.lf-post__body[data-post-category="howto"] ol[data-lf-steps] {
+  list-style: none;
+  counter-reset: lf-step;
+  margin: var(--lf-space-6) 0;
+  padding-left: 0;
+}
+
+.lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li {
+  counter-increment: lf-step;
+  position: relative;
+  margin: 0;
+  padding: 0 0 var(--lf-space-5) 44px;
+}
+
+.lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li:last-child {
+  padding-bottom: 0;
+}
+
+/* Step node — numbered orange ring, mono. */
+.lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li::before {
+  content: counter(lf-step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  font-family: var(--lf-mono);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
+  border-radius: var(--lf-radius-pill);
+}
+
+/* Hairline connector between nodes. */
+.lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 33px;
+  bottom: 3px;
+  width: 1px;
+  background: color-mix(in srgb, var(--lf-fight) 28%, var(--lf-hairline));
+}
+
+.lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li:last-child::after {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li {
+    padding-left: 52px;
+  }
+
+  .lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li::before {
+    width: 32px;
+    height: 32px;
+  }
+
+  .lf-post__body[data-post-category="howto"] ol[data-lf-steps] > li::after {
+    left: 16px;
+    top: 37px;
+  }
 }
 
 /* Topic-tag rows: prepareLegacyHtml wraps the legacy bare-<span> runs in

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Award, BookOpen, ChevronDown, HelpCircle, Layers, MapPin } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
+import StudioStatusStrip from "./StudioStatusStrip";
 import "./QuietFooter.css";
 
 // Hydration-safe mobile check: server snapshot says desktop (plain lists),
@@ -99,6 +100,7 @@ export default function QuietFooter() {
   return (
     <footer className="lf-quiet-foot" role="contentinfo">
       <div className="lf-quiet-foot__inner">
+        <StudioStatusStrip />
         <div className="lf-quiet-foot__top">
           <div className="lf-quiet-foot__brand">
             <Link to="/" className="lf-quiet-foot__brand-link">Little Fight NYC</Link>

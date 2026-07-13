@@ -3,7 +3,15 @@ import { HelpCircle } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
+import AnswerStepper from "@/components/dataviz/AnswerStepper";
+import AnswerVerdict from "@/components/dataviz/AnswerVerdict";
 import { answerGuides } from "@/data/site";
+import {
+  ANSWER_CLUSTERS,
+  ANSWER_VERDICTS,
+  answerArt,
+  isTriageGuide,
+} from "@/data/answersArt";
 import "@/styles/editorial/answers.css";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -16,12 +24,26 @@ function displayDate(date: string) {
   return dateFormatter.format(new Date(`${date}T00:00:00`));
 }
 
+/** Same-cluster guides first (same symptom family), then the rest. */
+function relatedGuides(slug: string) {
+  const cluster = ANSWER_CLUSTERS.find((c) => c.slugs.includes(slug));
+  const siblings = cluster ? cluster.slugs.filter((s) => s !== slug) : [];
+  const rank = (s: string) => (siblings.includes(s) ? 0 : 1);
+  return answerGuides
+    .filter((item) => item.slug !== slug)
+    .sort((a, b) => rank(a.slug) - rank(b.slug))
+    .slice(0, 3);
+}
+
 export default function AnswerGuide() {
   const { slug } = useParams();
   const guide = answerGuides.find((item) => item.slug === slug);
-  const related = answerGuides.filter((item) => item.slug !== guide?.slug).slice(0, 3);
 
   if (!guide) return <Navigate to="/examples/#answers" replace />;
+
+  const related = relatedGuides(guide.slug);
+  const triage = isTriageGuide(guide.sections);
+  const verdict = ANSWER_VERDICTS[guide.slug];
 
   return (
     <>
@@ -30,6 +52,12 @@ export default function AnswerGuide() {
         icon={HelpCircle}
         title={<>{guide.question}</>}
         quickAnswer={guide.short.replace(/^Short answer:\s*/i, "")}
+        image={{
+          src: answerArt(guide.slug),
+          alt: "",
+          width: 1600,
+          height: 1200,
+        }}
       />
 
       <section className="lf-answer-page">
@@ -44,12 +72,18 @@ export default function AnswerGuide() {
             <time dateTime={guide.updated}>{displayDate(guide.updated)}</time>
           </p>
 
-          {guide.sections.map((section) => (
-            <article key={section.heading} className="lf-answer-page__section">
-              <h2>{section.heading}</h2>
-              <p>{section.body}</p>
-            </article>
-          ))}
+          {triage ? (
+            <AnswerStepper sections={guide.sections} />
+          ) : (
+            guide.sections.map((section) => (
+              <article key={section.heading} className="lf-answer-page__section">
+                <h2>{section.heading}</h2>
+                <p>{section.body}</p>
+              </article>
+            ))
+          )}
+
+          {verdict && <AnswerVerdict verdict={verdict} />}
 
           <AnswerDiagram slug={guide.slug} />
 
@@ -68,26 +102,9 @@ export default function AnswerGuide() {
           )}
 
           {related.length > 0 && (
-            <section
-              style={{
-                marginTop: "var(--lf-space-9)",
-                paddingTop: "var(--lf-space-7)",
-                borderTop: "1px solid var(--lf-hairline)",
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "var(--lf-mono)",
-                  fontSize: "11px",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "var(--lf-bone-dim)",
-                  margin: "0 0 var(--lf-space-5)",
-                }}
-              >
-                Related reading
-              </p>
-              <ul className="lf-answers-index__list" style={{ borderTop: "1px solid var(--lf-hairline)" }}>
+            <section className="lf-answer-page__related">
+              <p className="lf-answer-page__related-title">Related reading</p>
+              <ul className="lf-answers-index__list lf-answer-page__related-list">
                 {related.map((item, i) => (
                   <li key={item.slug} className="lf-answers-index__item">
                     <Link to={`/answers/${item.slug}/`} className="lf-answers-index__link">

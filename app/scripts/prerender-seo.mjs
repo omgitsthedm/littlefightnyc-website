@@ -27,6 +27,19 @@ await esbuildBundle({
   logLevel: "silent",
 });
 const siteContent = await import(pathToFileURL(siteDataOut).href);
+
+// Same treatment for the answers art map, so the /answers/ og:image stays in
+// lockstep with the archetype each guide renders in the app.
+const answersArtOut = path.join(appRoot, "node_modules", ".prerender", "answers-art.mjs");
+await esbuildBundle({
+  entryPoints: [path.join(appRoot, "src/data/answersArt.ts")],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: answersArtOut,
+  logLevel: "silent",
+});
+const answersArtContent = await import(pathToFileURL(answersArtOut).href);
 const lastmod = new Date().toISOString().slice(0, 10);
 const site = seoData.site;
 const siteUrl = site.url.replace(/\/$/, "");
@@ -290,6 +303,12 @@ const pages = [
       page.published ??= guide.published;
       page.updated ??= guide.updated;
       page.answerGuide = guide;
+      // Branded archetype art wins when it exists on disk (kept in lockstep
+      // with src/data/answersArt.ts — same pattern as the journal art above).
+      const answerArtFile = `answers-${answersArtContent.answerArchetype(guide.slug)}.webp`;
+      if (existsSync(path.join(appRoot, "public/assets", answerArtFile))) {
+        page.image = `/assets/${answerArtFile}`;
+      }
       if (page.h1 && page.h1 !== guide.question) {
         console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${guide.question}" — using rendered`);
         page.h1 = guide.question;

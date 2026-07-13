@@ -5,6 +5,7 @@ import "@/styles/editorial/base.css";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
+import BlueprintFrame from "@/components/editorial/BlueprintFrame";
 import { watchListReveals } from "@/lib/listReveal";
 
 const RouteMeta = lazy(() => import("@/components/RouteMeta"));
@@ -13,6 +14,7 @@ const FaqList = lazy(() => import("@/components/editorial/FaqList"));
 const TheFight = lazy(() => import("@/components/editorial/TheFight"));
 const WorkGrid = lazy(() => import("@/components/editorial/WorkGrid"));
 const MomentumSection = lazy(() => import("@/components/editorial/MomentumSection"));
+const MomentumCursorGlow = lazy(() => import("@/components/editorial/MomentumCursorGlow"));
 const RecentClients = lazy(() => import("@/components/editorial/RecentClients"));
 const BrandLine = lazy(() => import("@/components/editorial/BrandLine"));
 const SignatureBand = lazy(() => import("@/components/editorial/SignatureBand"));
@@ -82,12 +84,28 @@ export default function Home() {
         <QuietHero />
         {showDeferred && (
           <Suspense fallback={null}>
-            <TheAssembly />
-            <TheFight />
-            <WorkGrid />
-            <MomentumSection />
-            <RecentClients />
-            <SignatureBand />
+            {/* BlueprintFrame = opt-in drafting marginalia on the major
+                section boundaries (corner ticks + SEC. NN margin notes,
+                ≥1280px only — see BlueprintFrame.css). */}
+            <BlueprintFrame index={1} label="The assembly">
+              <TheAssembly />
+            </BlueprintFrame>
+            <BlueprintFrame index={2} label="The fight">
+              <TheFight />
+            </BlueprintFrame>
+            <BlueprintFrame index={3} label="The work">
+              <WorkGrid />
+            </BlueprintFrame>
+            <BlueprintFrame index={4} label="The system">
+              <MomentumSection />
+              <MomentumCursorGlow />
+            </BlueprintFrame>
+            <BlueprintFrame index={5} label="The clients">
+              <RecentClients />
+            </BlueprintFrame>
+            <BlueprintFrame index={6} label="The record">
+              <SignatureBand />
+            </BlueprintFrame>
             <BrandLine />
             <div className="lf-home-faq">
               <FaqList title="Quick answers" items={HOME_FAQ} />

@@ -1,0 +1,151 @@
+/* AnswerVerdict — two-road good-if / skip-if card table. Tokens only.
+ * No winner is styled: both roads get the same weight; orange marks the
+ * "good if" signal on each, dim marks the "skip if". */
+
+.lf-verdict {
+  margin-top: var(--lf-space-8);
+  padding-top: var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-verdict__kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 var(--lf-space-6);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-verdict__kicker::before {
+  content: "";
+  width: 22px;
+  height: 3px;
+  background: var(--lf-fight);
+}
+
+.lf-verdict__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--lf-space-4);
+  max-width: 880px;
+}
+
+@media (max-width: 767px) {
+  .lf-verdict__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lf-verdict__card {
+  background: var(--lf-paper);
+  border: var(--lf-card-border);
+  border-radius: var(--lf-radius-card);
+  padding: var(--lf-card-padding);
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--lf-time-base) var(--lf-ease-out),
+    transform var(--lf-time-base) var(--lf-ease-out);
+  transition-delay: calc(var(--lf-i, 0) * 110ms);
+}
+
+[data-revealed="true"] .lf-verdict__card {
+  opacity: 1;
+  transform: none;
+}
+
+.lf-verdict__name {
+  font-family: var(--lf-serif);
+  font-weight: 700;
+  font-size: var(--lf-text-md);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-5);
+  padding-bottom: var(--lf-space-4);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-verdict__rule {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0 0 var(--lf-space-3);
+}
+
+.lf-verdict__rule--good {
+  color: var(--lf-fight);
+}
+
+.lf-verdict__rule--skip {
+  color: var(--lf-bone-dim);
+  margin-top: var(--lf-space-5);
+}
+
+.lf-verdict__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+}
+
+.lf-verdict__line {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-sm);
+  line-height: 1.55;
+  color: var(--lf-bone);
+  letter-spacing: -0.003em;
+}
+
+.lf-verdict__line--skip {
+  color: var(--lf-bone-soft);
+}
+
+.lf-verdict__mark {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: var(--lf-radius-pill);
+}
+
+.lf-verdict__mark--good {
+  background: rgba(249, 115, 22, 0.14);
+  color: var(--lf-fight);
+}
+
+.lf-verdict__mark--skip {
+  background: rgba(161, 161, 170, 0.1);
+  color: var(--lf-bone-dim);
+}
+
+.lf-verdict__note {
+  max-width: 880px;
+  margin: var(--lf-space-5) 0 0;
+  font-family: var(--lf-serif);
+  font-style: italic;
+  font-size: var(--lf-text-base);
+  line-height: 1.6;
+  color: var(--lf-bone-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-verdict__card {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

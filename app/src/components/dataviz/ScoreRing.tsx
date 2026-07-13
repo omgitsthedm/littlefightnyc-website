@@ -34,6 +34,7 @@ export default function ScoreRing({
   label,
   summary,
   caption,
+  badge,
   items,
   className,
 }: {
@@ -42,6 +43,8 @@ export default function ScoreRing({
   /** Full text equivalent — visually hidden, same facts. */
   summary: string;
   caption?: string;
+  /** Small mono flag above the cluster (e.g. "Sample" for illustrative data). */
+  badge?: string;
   items: Ring[];
   className?: string;
 }) {
@@ -56,6 +59,12 @@ export default function ScoreRing({
       data-revealed="false"
     >
       <p className="lf-viz-sr">{summary}</p>
+      {badge && (
+        // aria-hidden: the sample-ness is already stated in summary + caption.
+        <span className="lf-rings__badge" aria-hidden="true">
+          {badge}
+        </span>
+      )}
       <div className="lf-rings__cluster" aria-hidden="true">
         {items.map((ring, i) => {
           const empty = ring.value == null;

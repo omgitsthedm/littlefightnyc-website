@@ -1,0 +1,58 @@
+/* Blueprint marginalia — faint drafting marks on major section boundaries.
+ * Corner crosshairs + a vertical "SEC. NN" annotation in the outer margin.
+ * ≥1280px only; hairline color at low opacity; pointer-events: none;
+ * positioned inside the section's own margins — never over text,
+ * never creating overflow. */
+
+.lf-blueprint {
+  position: relative;
+}
+
+.lf-blueprint__layer {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .lf-blueprint__layer {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2; /* over section backgrounds; corners + margins only */
+  }
+
+  /* Crosshair tick: two hairlines crossing. Solid var() stops only —
+     color-mix() inside gradients renders `none` on some browsers. */
+  .lf-blueprint__tick {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    opacity: 0.55;
+    background:
+      linear-gradient(var(--lf-hairline), var(--lf-hairline)) center / 1px 100% no-repeat,
+      linear-gradient(var(--lf-hairline), var(--lf-hairline)) center / 100% 1px no-repeat;
+  }
+
+  .lf-blueprint__tick--tl { top: 14px; left: 14px; }
+  .lf-blueprint__tick--tr { top: 14px; right: 14px; }
+  .lf-blueprint__tick--bl { bottom: 14px; left: 14px; }
+  .lf-blueprint__tick--br { bottom: 14px; right: 14px; }
+
+  /* Section index annotation, reading upward along the left margin.
+     Sits at left: 21px — well inside the 64px desktop page margin. */
+  .lf-blueprint__sec {
+    position: absolute;
+    top: 56px;
+    left: 21px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--lf-mono);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--lf-bone-dim);
+    opacity: 0.5;
+  }
+}

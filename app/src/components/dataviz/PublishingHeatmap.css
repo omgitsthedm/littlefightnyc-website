@@ -1,0 +1,177 @@
+/* PublishingHeatmap — compact publishing-activity band on the Journal hub.
+ * Orange intensity on the near-black ground, tokens only. Static (no
+ * animation), so reduced-motion needs nothing to collapse. */
+
+/* Scoped copy of the dataviz SR utility — FlowDiagram.css (where the global
+ * lives) ships with OTHER route chunks, never with the Journal chunk. */
+.lf-pulse .lf-viz-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lf-pulse {
+  --pulse-cell: 8px;
+  --pulse-gap: 3px;
+  padding: var(--lf-space-6) var(--lf-margin-mobile) 0;
+}
+
+@media (min-width: 768px) {
+  .lf-pulse {
+    --pulse-cell: 10px;
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-pulse {
+    --pulse-cell: 11px;
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-pulse__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  padding: var(--lf-space-5) var(--lf-card-padding);
+  background: var(--lf-paper-2);
+  border: var(--lf-card-border);
+  border-radius: var(--lf-radius-card);
+}
+
+.lf-pulse__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--lf-space-2) var(--lf-space-4);
+  margin-bottom: var(--lf-space-4);
+}
+
+/* Scoped under .lf-editorial (0,2,0) so the labels beat the global
+   `.lf-editorial p` body-type rule (0,1,1) — the button-reset gotcha's
+   paragraph cousin. */
+.lf-editorial .lf-pulse__label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0;
+  max-width: none;
+}
+
+.lf-editorial .lf-pulse__count {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0;
+  max-width: none;
+}
+
+/* The grid overflows sideways on phones — scroll inside the band, never the page. */
+.lf-pulse__scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Fluid grid: cells stretch to fill the band on wide screens; below the
+   min-width the band scrolls internally (never the page). */
+.lf-pulse__chart {
+  width: 100%;
+  min-width: 580px;
+}
+
+.lf-pulse__months {
+  display: grid;
+  grid-template-columns: repeat(var(--pulse-weeks), minmax(0, 1fr));
+  column-gap: var(--pulse-gap);
+  margin-bottom: 6px;
+}
+
+.lf-pulse__months span {
+  grid-row: 1;
+  font-family: var(--lf-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  white-space: nowrap;
+}
+
+.lf-pulse__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--pulse-weeks), minmax(0, 1fr));
+  column-gap: var(--pulse-gap);
+}
+
+.lf-pulse__week {
+  display: grid;
+  row-gap: var(--pulse-gap);
+}
+
+.lf-pulse__cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 18%;
+  background: color-mix(in srgb, var(--lf-bone) 5%, transparent);
+}
+
+/* Legend swatches keep a fixed footprint. */
+.lf-pulse__legend .lf-pulse__cell {
+  width: var(--pulse-cell);
+  height: var(--pulse-cell);
+  border-radius: 2px;
+}
+
+.lf-pulse__cell[data-out] {
+  visibility: hidden;
+}
+
+.lf-pulse__cell[data-level="1"] {
+  background: color-mix(in srgb, var(--lf-fight) 24%, var(--lf-paper-2));
+}
+
+.lf-pulse__cell[data-level="2"] {
+  background: color-mix(in srgb, var(--lf-fight) 48%, var(--lf-paper-2));
+}
+
+.lf-pulse__cell[data-level="3"] {
+  background: color-mix(in srgb, var(--lf-fight) 72%, var(--lf-paper-2));
+}
+
+.lf-pulse__cell[data-level="4"] {
+  background: var(--lf-fight);
+}
+
+.lf-pulse__legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--pulse-gap);
+  margin-top: var(--lf-space-3);
+  font-family: var(--lf-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-pulse__legend span:first-child {
+  margin-right: 4px;
+}
+
+.lf-pulse__legend span:last-child {
+  margin-left: 4px;
+}

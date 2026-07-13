@@ -206,3 +206,203 @@
   color: var(--lf-bone-soft);
   margin: 0;
 }
+
+/* Related reading (was inline styles) */
+.lf-answer-page__related {
+  margin-top: var(--lf-space-9);
+  padding-top: var(--lf-space-7);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-answer-page__related-title {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-answer-page__related-list {
+  border-top: 1px solid var(--lf-hairline);
+}
+
+/* ---- Answers hub — symptom clusters -------------------------------------
+ * The 27 answers grouped by what an owner notices first. Mono cluster labels,
+ * archetype-art thumbnails, tighter card rhythm than the big VisualIndex. */
+
+.lf-answers-hub {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+@media (min-width: 768px) {
+  .lf-answers-hub {
+    padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-answers-hub {
+    padding: var(--lf-space-8) var(--lf-margin-desktop) var(--lf-space-10);
+  }
+}
+
+.lf-answers-hub__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-8);
+}
+
+.lf-answers-hub__head {
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-answers-hub__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 var(--lf-space-3);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+.lf-answers-hub__label::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-answers-hub__title {
+  font-family: var(--lf-serif);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-lg);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  margin: 0;
+  max-width: 34ch;
+}
+
+.lf-answers-hub__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-4);
+}
+
+@media (min-width: 720px) {
+  .lf-answers-hub__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1180px) {
+  .lf-answers-hub__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.lf-answers-hub__card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: var(--lf-space-4);
+  align-items: start;
+  padding: var(--lf-space-4);
+  background: var(--lf-paper);
+  border: var(--lf-card-border);
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--lf-bone);
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-answers-hub__card:hover {
+  border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
+  transform: translateY(var(--lf-lift));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-answers-hub__card,
+  .lf-answers-hub__card:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+.lf-answers-hub__thumb {
+  display: block;
+  width: 96px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--lf-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  background: var(--lf-ink);
+}
+
+.lf-answers-hub__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Zoom the crop into the art's motif (drawn at ~67% / 47% of the canvas)
+   * so the archetype mark reads clearly at thumbnail size. */
+  transform: scale(2.1);
+  transform-origin: 67% 47%;
+}
+
+.lf-answers-hub__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+  min-width: 0;
+}
+
+.lf-answers-hub__q {
+  font-family: var(--lf-serif);
+  font-weight: 600;
+  font-size: var(--lf-text-base);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--lf-bone);
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-answers-hub__card:hover .lf-answers-hub__q {
+  color: var(--lf-fight);
+}
+
+.lf-answers-hub__short {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-sm);
+  line-height: 1.55;
+  color: var(--lf-bone-soft);
+  letter-spacing: -0.003em;
+}
+
+.lf-answers-hub__open {
+  margin-top: var(--lf-space-1);
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+@media (max-width: 479px) {
+  .lf-answers-hub__card {
+    grid-template-columns: 72px 1fr;
+    gap: var(--lf-space-3);
+  }
+
+  .lf-answers-hub__thumb {
+    width: 72px;
+  }
+}

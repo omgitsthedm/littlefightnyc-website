@@ -111,27 +111,37 @@ a.lf-momentum__card:focus-visible {
   outline-offset: 3px;
 }
 
-/* A faint fixed radial warmth from the tile's top-left corner on hover —
-   pure CSS, no cursor tracking. Desktop pointers only. */
+/* Cursor-proximity warmth — MomentumCursorGlow (mounted with the section on
+   the home page) drives --lf-mx / --lf-my / --lf-glow from ONE rAF-throttled
+   pointermove listener. The radial tracks the pointer inside each card and
+   wakes as it approaches. Touch + reduced-motion never set the vars, so the
+   hover rule below stays the only (static) warmth for them. rgba, never
+   color-mix, inside the gradient. */
 @media (hover: hover) {
-  a.lf-momentum__card::before {
+  .lf-momentum__card::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
     border-radius: inherit;
     background: radial-gradient(
-      120% 90% at 18% 0%,
-      rgba(249, 115, 22, 0.09),
-      transparent 55%
+      240px circle at var(--lf-mx, 18%) var(--lf-my, 0%),
+      rgba(249, 115, 22, 0.1),
+      transparent 65%
     );
-    opacity: 0;
+    opacity: var(--lf-glow, 0);
     transition: opacity var(--lf-time-snappy) var(--lf-ease-standard);
     pointer-events: none;
   }
+  /* No-JS / no-glow fallback: linked tiles still warm fully on hover. */
   a.lf-momentum__card:hover::before,
   a.lf-momentum__card:focus-visible::before {
     opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-momentum__card::before {
+    transition: none;
   }
 }
 

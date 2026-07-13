@@ -1,0 +1,212 @@
+/* Time-promise instrument — /contact/.
+ * Four doctrine chips + a 24h track: shaded callback window, live now-marker.
+ * Mono readings, hairline rails, orange as the one signal. Tokens only;
+ * rgba (never color-mix) anywhere near a gradient. */
+
+.lf-tpi {
+  padding: clamp(2.5rem, 6vw, 5rem) var(--lf-margin-mobile);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+@media (min-width: 768px) {
+  .lf-tpi {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-tpi {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-tpi__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* ---- Promise chips ---- */
+.lf-tpi__chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--lf-space-3);
+}
+
+@media (max-width: 900px) {
+  .lf-tpi__chips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.lf-tpi__chip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-1);
+  padding: var(--lf-space-4) var(--lf-space-4) var(--lf-space-3);
+  background: var(--lf-paper-2);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  min-width: 0;
+}
+
+.lf-tpi__chip-value {
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: var(--lf-text-lg);
+  letter-spacing: -0.02em;
+  color: var(--lf-fight);
+  white-space: nowrap;
+}
+
+.lf-tpi__chip-label {
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lf-bone);
+}
+
+.lf-tpi__chip-note {
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+/* ---- 24h track ---- */
+.lf-tpi__track {
+  padding-top: var(--lf-space-6); /* headroom for the NOW label */
+}
+
+.lf-tpi__rail {
+  position: relative;
+  height: 56px;
+  border-bottom: 1px solid var(--lf-hairline);
+  /* Label lane below the rail. */
+  margin-bottom: var(--lf-space-6);
+}
+
+.lf-tpi__mark {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+}
+
+.lf-tpi__mark-tick {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 10px;
+  background: var(--lf-hairline);
+}
+
+.lf-tpi__mark-label {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  transform: translateX(-50%);
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--lf-bone-dim);
+  white-space: nowrap;
+}
+
+/* Edge labels hug their edge instead of centering — no overflow, ever. */
+.lf-tpi__mark:first-child .lf-tpi__mark-label {
+  transform: none;
+}
+
+.lf-tpi__mark:nth-child(5) .lf-tpi__mark-label {
+  transform: translateX(-100%);
+}
+
+/* Shaded callback window — the standing 9am–9pm ET promise. */
+.lf-tpi__window {
+  position: absolute;
+  top: 14px;
+  bottom: 0;
+  background: rgba(249, 115, 22, 0.09);
+  border-inline: 1px solid rgba(249, 115, 22, 0.45);
+}
+
+.lf-tpi__window-label {
+  position: absolute;
+  left: var(--lf-space-3);
+  bottom: var(--lf-space-2);
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  /* The chips carry the window copy on phones — the shading stays. */
+  .lf-tpi__window-label {
+    display: none;
+  }
+}
+
+/* Live now-marker — same clock as the footer strip. */
+.lf-tpi__now {
+  position: absolute;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--lf-bone);
+  opacity: 0.85;
+}
+
+.lf-tpi__now::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lf-bone-dim);
+}
+
+.lf-tpi__track[data-open="true"] .lf-tpi__now::after {
+  background: var(--lf-fight);
+}
+
+.lf-tpi__now-label {
+  position: absolute;
+  top: -22px;
+  transform: translateX(-50%);
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--lf-bone-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Honesty line ---- */
+.lf-tpi__note {
+  margin: 0;
+  max-width: 62ch;
+  font-family: var(--lf-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  color: var(--lf-bone-dim);
+}

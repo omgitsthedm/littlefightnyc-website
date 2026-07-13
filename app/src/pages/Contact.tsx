@@ -4,6 +4,7 @@ import QuietContact from "@/components/editorial/QuietContact";
 import FaqList from "@/components/editorial/FaqList";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
+import TimePromiseInstrument from "@/components/editorial/TimePromiseInstrument";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import "@/styles/editorial/contact.css";
 
@@ -77,6 +78,9 @@ export default function Contact() {
           </p>
         </div>
       </section>
+
+      {/* The four promises against a live 24h NYC clock. */}
+      <TimePromiseInstrument />
 
       {/* Where we work — the coverage map. */}
       <section className="lf-contact-map" aria-labelledby="lf-contact-map-title">

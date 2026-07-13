@@ -13,6 +13,7 @@ import type { LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import CoverageMatrix from "@/components/dataviz/CoverageMatrix";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { answerGuides, caseStudies } from "@/data/site";
@@ -207,6 +208,7 @@ export default function FieldGuide() {
               );
             })}
           </ul>
+          <CoverageMatrix />
         </div>
       </section>
 

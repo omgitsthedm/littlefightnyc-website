@@ -1,0 +1,82 @@
+/* MiniToc — sticky mini table of contents. Hidden below 1024px; the post
+ * layout grid that makes room for it lives in journal.css
+ * (.lf-post__inner[data-toc]). Tokens only. */
+
+.lf-post-toc {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .lf-post-toc {
+    display: block;
+    min-width: 0;
+  }
+
+  .lf-post-toc__rail {
+    /* The glass nav wraps taller in the 1024-1279 band — stay clear of it. */
+    position: sticky;
+    top: 148px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-post-toc__rail {
+    top: 112px;
+  }
+}
+
+/* Scoped under .lf-editorial so the label beats the global `.lf-editorial p`
+   body-type rule (0,1,1 > 0,1,0). */
+.lf-editorial .lf-post-toc__label {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0 0 var(--lf-space-4);
+  max-width: none;
+}
+
+.lf-post-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--lf-hairline);
+}
+
+.lf-post-toc__link {
+  display: block;
+  padding: 6px 0 6px 14px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-family: var(--lf-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--lf-bone-dim);
+  text-decoration: none;
+  transition:
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-post-toc__link:hover {
+  color: var(--lf-bone);
+}
+
+.lf-post-toc__link[aria-current="true"] {
+  color: var(--lf-fight);
+  border-left-color: var(--lf-fight);
+}
+
+.lf-post-toc__link:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-post-toc__link {
+    transition: none;
+  }
+}

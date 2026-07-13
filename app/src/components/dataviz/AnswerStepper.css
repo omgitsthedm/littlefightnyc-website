@@ -1,0 +1,137 @@
+/* AnswerStepper — numbered triage rail for the urgent answers. Tokens only.
+ * Orange = the signal nodes; the connector stays hairline-quiet. */
+
+.lf-triage {
+  list-style: none;
+  margin: 0 0 var(--lf-space-7);
+  padding: 0;
+  max-width: 64ch;
+}
+
+.lf-triage__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: var(--lf-space-4);
+  padding-bottom: var(--lf-space-7);
+  /* Reveal: fade + rise, staggered down the rail. */
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity var(--lf-time-base) var(--lf-ease-out),
+    transform var(--lf-time-base) var(--lf-ease-out);
+  transition-delay: calc(var(--lf-i, 0) * 110ms);
+}
+
+.lf-triage__step:last-child {
+  padding-bottom: 0;
+}
+
+[data-revealed="true"] .lf-triage__step {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hairline connector, drawn in after the nodes land. */
+.lf-triage__step::before {
+  content: "";
+  position: absolute;
+  left: 21.5px;
+  top: 52px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--lf-hairline);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--lf-time-slow) var(--lf-ease-out);
+  transition-delay: calc(var(--lf-i, 0) * 110ms + 160ms);
+}
+
+.lf-triage__step:last-child::before {
+  display: none;
+}
+
+[data-revealed="true"] .lf-triage__step::before {
+  transform: scaleY(1);
+}
+
+.lf-triage__node {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transform: scale(0.6);
+  transition: transform var(--lf-time-base) var(--lf-ease-spring);
+  transition-delay: calc(var(--lf-i, 0) * 110ms + 60ms);
+}
+
+[data-revealed="true"] .lf-triage__node {
+  transform: scale(1);
+}
+
+/* The final step is the handoff — "when to call" — mark it as the exit. */
+.lf-triage__step:last-child .lf-triage__node {
+  background: transparent;
+  border: 2px solid var(--lf-fight);
+  color: var(--lf-fight);
+}
+
+.lf-triage__body {
+  min-width: 0;
+  padding-top: 6px;
+}
+
+.lf-triage__heading {
+  font-family: var(--lf-serif);
+  font-weight: 600;
+  font-size: var(--lf-text-lg);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-3);
+}
+
+.lf-triage__text {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-md);
+  line-height: 1.7;
+  color: var(--lf-bone);
+  letter-spacing: -0.003em;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .lf-triage__step {
+    grid-template-columns: 38px 1fr;
+    gap: var(--lf-space-3);
+    padding-bottom: var(--lf-space-6);
+  }
+
+  .lf-triage__node {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+  }
+
+  .lf-triage__step::before {
+    left: 18.5px;
+    top: 46px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-triage__step,
+  .lf-triage__node,
+  .lf-triage__step::before {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,204 @@
+/* FitMapDiagram — industry customer path as a subway-style line. Tokens only.
+   Horizontal stations on desktop, a vertical rail under 640px. */
+
+.lf-fitmap {
+  margin-block: var(--lf-space-8);
+}
+
+.lf-fitmap__kicker {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+  margin: 0 0 var(--lf-space-4);
+}
+
+.lf-fitmap__heading {
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  font-size: var(--lf-text-lg);
+  line-height: 1.08;
+  color: var(--lf-bone);
+  margin: 0 0 var(--lf-space-4);
+  max-width: 64ch;
+}
+
+.lf-fitmap__prose p {
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-md);
+  line-height: 1.7;
+  letter-spacing: -0.003em;
+  color: var(--lf-bone);
+  max-width: 64ch;
+  margin: 0 0 var(--lf-space-4);
+}
+
+/* ---- The map panel — a real, visible container ---- */
+.lf-fitmap__map {
+  position: relative;
+  margin-block: var(--lf-space-6);
+  padding: var(--lf-space-6) var(--lf-space-5);
+  background: var(--lf-paper-2);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+}
+
+.lf-fitmap__rail {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.lf-fitmap__rail-path {
+  fill: none;
+  stroke: var(--lf-fight);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.35));
+  transition: stroke-dashoffset var(--lf-time-cinematic) var(--lf-ease-out) 200ms;
+}
+.lf-fitmap[data-revealed="true"] .lf-fitmap__rail-path {
+  stroke-dashoffset: 0;
+}
+
+.lf-fitmap__stations {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--lf-space-2);
+}
+
+.lf-fitmap__station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--lf-time-base) var(--lf-ease-out),
+    transform var(--lf-time-base) var(--lf-ease-out);
+  transition-delay: calc(280ms + var(--lf-i, 0) * 110ms);
+}
+.lf-fitmap[data-revealed="true"] .lf-fitmap__station {
+  opacity: 1;
+  transform: none;
+}
+
+/* Station = subway ring; the terminal station is filled — the path ends
+   somewhere that pays. */
+.lf-fitmap__dot {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--lf-ink);
+  border: 2px solid var(--lf-fight);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lf-fight) 16%, transparent);
+}
+.lf-fitmap__station:last-child .lf-fitmap__dot {
+  background: var(--lf-fight);
+}
+
+.lf-fitmap__label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--lf-bone-soft);
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* ---- Next-step links — brand chips, not raw blue anchors ---- */
+.lf-fitmap__links {
+  list-style: none;
+  margin: var(--lf-space-5) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+}
+
+.lf-fitmap__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: var(--lf-radius-pill);
+  border: 1px solid var(--lf-hairline);
+  background: transparent;
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-fitmap__link svg {
+  color: var(--lf-fight);
+  flex: none;
+}
+.lf-fitmap__link:hover,
+.lf-fitmap__link:focus-visible {
+  border-color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
+}
+.lf-fitmap__link:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* ---- Phone geometry: vertical rail, stations stacked ---- */
+@media (max-width: 639px) {
+  .lf-fitmap__map {
+    padding: var(--lf-space-5) var(--lf-space-4);
+  }
+  .lf-fitmap__stations {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--lf-space-4);
+  }
+  .lf-fitmap__station {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    flex: none;
+  }
+  .lf-fitmap__label {
+    text-align: left;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-fitmap__rail-path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+  .lf-fitmap__station {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .lf-fitmap__link {
+    transition: none !important;
+  }
+}

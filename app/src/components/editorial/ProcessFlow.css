@@ -43,6 +43,49 @@
 }
 .lf-process__flow[data-revealed="true"] .lf-process__line { transform: scaleX(1); }
 
+/* Living packets — two orange dots travelling the drawn line on a slow loop.
+   Same track geometry as the line; container units (cqw) resolve the travel
+   distance to the track's own width. Runs only while revealed AND in view. */
+.lf-process__packets {
+  position: absolute;
+  top: 22px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 2px;
+  container-type: inline-size;
+  display: none;
+  pointer-events: none;
+}
+@media (min-width: 720px) {
+  .lf-process__packets { display: block; }
+}
+.lf-process__packet {
+  position: absolute;
+  top: 1px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lf-fight);
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.7);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: lf-process-packet 7200ms linear infinite;
+  animation-delay: 1600ms; /* after the 1000ms line draw settles */
+  animation-play-state: paused;
+}
+.lf-process__packet--late { animation-delay: 5200ms; }
+.lf-process__flow[data-revealed="true"][data-inview="true"] .lf-process__packet {
+  animation-play-state: running;
+}
+@keyframes lf-process-packet {
+  0% { transform: translate(-50%, -50%) translateX(0cqw); opacity: 0; }
+  5% { opacity: 0.9; }
+  48% { opacity: 0.9; }
+  55% { transform: translate(-50%, -50%) translateX(100cqw); opacity: 0; }
+  100% { transform: translate(-50%, -50%) translateX(100cqw); opacity: 0; }
+}
+
 .lf-process__steps {
   list-style: none;
   margin: 0;
@@ -110,4 +153,6 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-process__line { transform: scaleX(1); transition: none; }
   .lf-process__step { opacity: 1; transform: none; transition: none; }
+  /* No transient motion — the drawn line is the final composed state. */
+  .lf-process__packets { display: none !important; }
 }
