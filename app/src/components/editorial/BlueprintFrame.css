@@ -52,7 +52,10 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     white-space: nowrap;
+    /* full-opacity dim token: 0.5 opacity failed WCAG AA contrast —
+       visible text must pass even inside an aria-hidden decorative layer
+       (low-vision users still read it). Whisper-quiet comes from size +
+       letterspacing, not sub-AA color. */
     color: var(--lf-bone-dim);
-    opacity: 0.5;
   }
 }

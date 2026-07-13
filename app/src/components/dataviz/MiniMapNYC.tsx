@@ -119,11 +119,18 @@ export default function MiniMapNYC({
         });
         tiles.addTo(map);
         // The canvas is aria-hidden (decorative wayfinding); Leaflet's
-        // attribution link (injected with the tile layer) must not be
-        // tab-reachable inside it (axe: aria-hidden-focus).
-        mapRef.current
-          .querySelectorAll("a")
-          .forEach((a) => a.setAttribute("tabindex", "-1"));
+        // attribution link must not be tab-reachable inside it
+        // (axe: aria-hidden-focus). Leaflet recreates the attribution DOM
+        // whenever layers change, so sweep on every layeradd + whenReady,
+        // not once.
+        const unfocusLinks = () => {
+          mapRef.current
+            ?.querySelectorAll("a")
+            .forEach((a) => a.setAttribute("tabindex", "-1"));
+        };
+        map.on("layeradd", unfocusLinks);
+        map.whenReady(unfocusLinks);
+        unfocusLinks();
 
         const nearby = currentArea
           ? [currentArea.slug, ...currentArea.nearby.filter((s) => AREA_CENTER[s])]
