@@ -8,12 +8,14 @@ import {
   Scissors,
   ShoppingBag,
   Utensils,
+  Scale,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import CoverageMatrix from "@/components/dataviz/CoverageMatrix";
+import { useCountUp } from "@/components/dataviz/useCountUp";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { answerGuides, caseStudies } from "@/data/site";
@@ -28,6 +30,7 @@ type Industry = {
 };
 
 const INDUSTRY_ICONS: Record<string, LucideIcon> = {
+  "law-firms": Scale,
   "galleries-creative-studios": Palette,
   "medical-wellness-practices": HeartPulse,
   "professional-services": BriefcaseBusiness,
@@ -36,12 +39,41 @@ const INDUSTRY_ICONS: Record<string, LucideIcon> = {
   "salons-wellness": Scissors,
 };
 
+/* Record-wall chip value. Purely numeric values ("100") count up on reveal;
+ * string values ("3 tools → 1", "Next.js 14") render static. The hook is
+ * called unconditionally (rules of hooks); non-numeric targets never animate. */
+function RecordValue({ value, delay }: { value: string; delay: number }) {
+  const numeric = /^\d+$/.test(value.trim());
+  const target = numeric ? Number(value.trim()) : 0;
+  const { ref, value: shown } = useCountUp<HTMLSpanElement>(target, {
+    duration: 900,
+    delay,
+  });
+  if (!numeric) return <span className="lf-ex-record__value">{value}</span>;
+  return (
+    <span ref={ref} className="lf-ex-record__value">
+      {shown}
+    </span>
+  );
+}
+
 export default function FieldGuide() {
   const featured = caseStudies[0];
   const rest = caseStudies.slice(1);
 
+  // The record wall — every vetted metric chip across all case studies,
+  // flattened straight from site.ts. No new claims, no rewording.
+  const record = caseStudies.flatMap((study) =>
+    (study.metrics ?? []).map((m) => ({
+      ...m,
+      client: study.client,
+      slug: study.slug,
+    })),
+  );
+
   const featuredRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
   const rowsRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
+  const recordRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
   const industriesRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
   const answersRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
 
@@ -169,6 +201,50 @@ export default function FieldGuide() {
           </ul>
         </div>
       </section>
+
+      {/* The record wall — every published metric, one dense proof grid. */}
+      {record.length > 0 && (
+        <section id="record" className="lf-ex-record" aria-labelledby="lf-ex-record-title">
+          <div
+            ref={recordRef}
+            className="lf-ex-record__inner"
+            data-reveal
+            data-revealed="false"
+          >
+            <header className="lf-ex-head">
+              <p className="lf-ex-head__eyebrow">The record</p>
+              <h2 id="lf-ex-record-title" className="lf-ex-head__title">
+                Every claim, on the wall.
+              </h2>
+              <p className="lf-ex-head__dek">
+                Each fact below comes straight from a shipped build — nothing
+                projected, nothing rounded up. Tap a name to read where it
+                came from.
+              </p>
+            </header>
+            <ul className="lf-ex-record__grid">
+              {record.map((entry, i) => (
+                <li
+                  key={`${entry.slug}-${entry.label}`}
+                  className="lf-ex-record__cell"
+                  style={{ ["--lf-i" as string]: i }}
+                >
+                  <RecordValue value={entry.value} delay={Math.min(i * 40, 560)} />
+                  <span className="lf-ex-record__label">{entry.label}</span>
+                  <Link
+                    to={`/case-studies/${entry.slug}/`}
+                    viewTransition
+                    className="lf-ex-record__client"
+                  >
+                    {entry.client}
+                    <span aria-hidden="true"> →</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* Industries — a compact icon band, not six photo cards. */}
       <section id="industries" className="lf-ex-industries" aria-labelledby="lf-ex-ind-title">

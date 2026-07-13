@@ -105,7 +105,20 @@ export default function PageHero({
             </p>
           )}
           {displayName && (
-            <p className="lf-pagehero__display" aria-hidden="true">
+            <p
+              className="lf-pagehero__display"
+              aria-hidden="true"
+              // Longest unbreakable word drives the fit cap (see PageHero.css):
+              // long names like "Williamsburg." would otherwise clip against
+              // the hero image column at every viewport.
+              style={
+                {
+                  "--lf-display-ch": Math.max(
+                    ...displayName.split(/\s+/).map((w) => w.length)
+                  ),
+                } as React.CSSProperties
+              }
+            >
               <em>{displayName}</em>
             </p>
           )}

@@ -5,13 +5,24 @@ import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import StatBlock from "@/components/editorial/StatBlock";
 import QuietContact from "@/components/editorial/QuietContact";
+import DeviceFrame from "@/components/editorial/DeviceFrame";
 import CaseDiagram from "@/components/dataviz/CaseDiagram";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
 
 function serviceLabel(slug: string): string | undefined {
   return services.find((s) => s.slug === slug)?.eyebrow;
+}
+
+/** "https://www.ccfilms.net" → "ccfilms.net" for the drawn URL bar + caption. */
+function displayDomain(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -29,6 +40,8 @@ export default function CaseStudyDetail() {
   const study = caseStudies.find((s) => s.slug === slug);
 
   const arcRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
+  const shipRef = useScrollReveal<HTMLElement>({ threshold: 0.2 });
+  const resultRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
 
   // Shared-element morph: pair this hero's backdrop image with the hub card
   // image (`case-${slug}` — see CaseStudies.tsx + lib/viewTransition.ts).
@@ -60,6 +73,14 @@ export default function CaseStudyDetail() {
     { label: "What we changed", body: study.changed },
     { label: "What they got back", body: study.result },
   ].filter((beat) => beat.body);
+
+  // The payoff beat: after problem → kept → changed, show the shipped thing
+  // itself — full width, in drawn browser chrome — then land the result.
+  const resultBeat =
+    arc.length > 0 && arc[arc.length - 1].label === "What they got back"
+      ? arc[arc.length - 1]
+      : null;
+  const leadBeats = resultBeat ? arc.slice(0, -1) : arc;
 
   const serviceLinks = study.services
     .map((s) => ({ slug: s, label: serviceLabel(s) }))
@@ -149,7 +170,7 @@ export default function CaseStudyDetail() {
             <div className="lf-case__arc-inner">
               <p className="lf-mono lf-case__arc-kicker">The shape of the work</p>
               <ol ref={arcRef} className="lf-case__arc-list">
-                {arc.map((beat, i) => (
+                {leadBeats.map((beat, i) => (
                   <li
                     key={beat.label}
                     className="lf-case__beat"
@@ -164,6 +185,55 @@ export default function CaseStudyDetail() {
                 ))}
               </ol>
             </div>
+
+            {/* The shipped thing, full width — the evidence before the verdict. */}
+            <figure ref={shipRef} className="lf-case__ship">
+              <div className="lf-case__ship-frame">
+                <DeviceFrame domain={displayDomain(study.url)}>
+                  <img
+                    src={study.image}
+                    {...responsiveImageProps(
+                      study.image,
+                      "(max-width: 767px) 100vw, min(100vw - 128px, 1312px)",
+                      [480, 900],
+                    )}
+                    alt={`The ${study.client} site as it shipped`}
+                    width={1600}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </DeviceFrame>
+              </div>
+              <figcaption className="lf-mono lf-case__ship-cap">
+                <span className="lf-case__ship-cap-flag">Shipped</span>
+                <a
+                  href={study.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lf-case__ship-cap-link"
+                >
+                  {displayDomain(study.url)}
+                  <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
+                </a>
+              </figcaption>
+            </figure>
+
+            {resultBeat && (
+              <div className="lf-case__arc-inner">
+                <ol ref={resultRef} className="lf-case__arc-list" aria-label="The result">
+                  <li className="lf-case__beat" style={{ ["--lf-i" as string]: 0 }}>
+                    <span className="lf-mono lf-case__beat-num">
+                      {String(leadBeats.length + 1).padStart(2, "0")}
+                    </span>
+                    <div className="lf-case__beat-body">
+                      <h2 className="lf-case__beat-label">{resultBeat.label}</h2>
+                      <p className="lf-case__beat-text">{resultBeat.body}</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            )}
           </section>
         )}
       </article>

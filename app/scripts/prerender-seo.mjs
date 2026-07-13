@@ -40,6 +40,19 @@ await esbuildBundle({
   logLevel: "silent",
 });
 const answersArtContent = await import(pathToFileURL(answersArtOut).href);
+
+// And the fit-map station paths, so the crawler HTML carries the same
+// customer-path list the FitMapDiagram draws for users.
+const fitPathsOut = path.join(appRoot, "node_modules", ".prerender", "fit-map-paths.mjs");
+await esbuildBundle({
+  entryPoints: [path.join(appRoot, "src/data/fitMapPaths.ts")],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: fitPathsOut,
+  logLevel: "silent",
+});
+const { FIT_MAP_PATHS, GENERIC_FIT_PATH } = await import(pathToFileURL(fitPathsOut).href);
 const lastmod = new Date().toISOString().slice(0, 10);
 const site = seoData.site;
 const siteUrl = site.url.replace(/\/$/, "");
@@ -1209,7 +1222,18 @@ function authoredContentHtml(page) {
     // prepareLegacyHtml) — the app's IndustryDetail flattens the card
     // <article>s and lifts the duplicate <h1>; rendering the snapshot through
     // anything else re-introduces the drift this file exists to prevent.
-    return prepareIndustryHtml(page.industry.html).body;
+    let body = prepareIndustryHtml(page.industry.html).body;
+    // Crawler parity with FitMapDiagram: the app draws the customer path as
+    // a diagram; bots get the same stations as a semantic ordered list,
+    // inserted right after the Fit map section's heading. No match → body
+    // ships unchanged (never risk breaking authored markup).
+    const stations = FIT_MAP_PATHS[page.industry.slug] ?? GENERIC_FIT_PATH;
+    const pathOl = `<p>The customer path we map:</p>\n<ol>${stations.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
+    body = body.replace(
+      /(<p[^>]*>\s*Fit map\s*<\/p>\s*<h2[^>]*>[\s\S]*?<\/h2>)/i,
+      `$1\n${pathOl}`
+    );
+    return body;
   }
 
   return "";

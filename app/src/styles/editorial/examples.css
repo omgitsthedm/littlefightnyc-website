@@ -490,3 +490,123 @@
 .lf-ex-answers__more a:hover {
   text-decoration: underline;
 }
+
+/* ---------- The record wall — every vetted metric, one dense grid ---------- */
+.lf-ex-record {
+  padding: clamp(3rem, 7vw, 6rem) var(--lf-margin-mobile);
+  border-bottom: 1px solid var(--lf-hairline);
+  background:
+    radial-gradient(90% 70% at 0% 0%, rgba(59, 130, 246, 0.07), transparent 60%),
+    var(--lf-ink);
+}
+
+@media (min-width: 768px) {
+  .lf-ex-record {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-ex-record {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-ex-record__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+/* Hairline-grid wall: 1px gaps over the hairline color read as drawn rules. */
+.lf-ex-record__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--lf-hairline);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  overflow: hidden;
+}
+
+@media (min-width: 720px) {
+  .lf-ex-record__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1080px) {
+  .lf-ex-record__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.lf-ex-record__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: clamp(1rem, 2.2vw, 1.6rem);
+  background: var(--lf-paper-2);
+  /* Staggered reveal off the container's data-revealed flip. */
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 600ms var(--lf-ease-out-quart),
+    transform 600ms var(--lf-ease-out-quart);
+  transition-delay: calc(var(--lf-i, 0) * 40ms);
+}
+
+[data-reveal]:not([data-revealed="true"]) .lf-ex-record__cell {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-ex-record__cell {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+  }
+}
+
+.lf-ex-record__value {
+  font-family: var(--lf-display);
+  font-weight: 700;
+  font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--lf-fight);
+  overflow-wrap: break-word;
+}
+
+.lf-ex-record__label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.55;
+  color: var(--lf-bone-dim);
+}
+
+.lf-ex-record__client {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.35em;
+  min-height: 44px;
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  color: var(--lf-bone-soft);
+  text-decoration: none;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-ex-record__client:hover,
+.lf-ex-record__client:focus-visible {
+  color: var(--lf-fight);
+}

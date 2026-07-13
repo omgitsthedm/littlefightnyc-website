@@ -835,9 +835,9 @@
     {
       "path": "/areas/",
       "title": "NYC Neighborhoods We Serve | Little Fight NYC",
-      "description": "Little Fight NYC works across New York City, with on-site help usually within 24 hours. See the Manhattan neighborhoods we serve most: Lower East Side, East Village, SoHo, Chelsea, Midtown, and more.",
+      "description": "Little Fight NYC works across New York City, with on-site help usually within 24 hours. See the Manhattan, Brooklyn, and Queens neighborhoods we serve most: Lower East Side, SoHo, Williamsburg, Astoria, Long Island City, and more.",
       "h1": "The neighborhoods we show up in.",
-      "shortAnswer": "Little Fight NYC serves law firms, bars, shops, salons, restaurants, and owner-run teams across Manhattan. On-site visits usually within 24 hours. Callbacks within 2 hours, 9am to 9pm ET.",
+      "shortAnswer": "Little Fight NYC serves law firms, bars, shops, salons, restaurants, and owner-run teams across Manhattan, Brooklyn, and Queens. On-site visits usually within 24 hours. Callbacks within 2 hours, 9am to 9pm ET.",
       "type": "WebPage",
       "image": "/assets/nyc-street-crowd.webp"
     },
@@ -1022,6 +1022,144 @@
         {
           "question": "Rents here are brutal and I'm watching costs. Will this add another bill?",
           "answer": "Usually the opposite. We often find overlapping subscriptions to cut. Then we build a lean site and a clean local presence that does more for less. Fewer tools that actually work. Not another platform on the pile."
+        }
+      ]
+    },
+    {
+      "path": "/areas/williamsburg/",
+      "title": "Williamsburg Websites & Local Search | Little Fight NYC",
+      "description": "Websites, Google visibility, IT support, and business systems for Williamsburg boutiques, restaurants, bars, venues, and studios in Brooklyn.",
+      "h1": "Websites, local search, and weekend-proof systems for Williamsburg businesses.",
+      "shortAnswer": "Short answer: Williamsburg businesses need fast mobile pages, correct Google listings, and booking and ordering paths that hold up when the weekend crowd arrives.",
+      "type": "PlacePage",
+      "image": "/assets/interior-jeans-rack.webp",
+      "faq": [
+        {
+          "question": "My shop lives or dies on the weekend. What does that change?",
+          "answer": "It means your online setup has to be strongest exactly when you are busiest. We check that the site stays fast, the hours are right, and the booking or order link works on a phone on a Saturday. A weekday test is not enough here."
+        },
+        {
+          "question": "I run a venue. People find shows on Instagram and ticket apps. Why fix the rest?",
+          "answer": "Because the person deciding tonight searches your name to check the address, the time, and what the room is like. If Google shows old info or the site buries the ticket link, they stall and pick something else. We make the search answer match the post."
+        },
+        {
+          "question": "Big brands moved onto my block. How does a small shop stay visible?",
+          "answer": "You will not outspend them, so we make you easier to find and act on for people who want the independent option. A correct profile, recent photos, real reviews, and a fast site. That is how the small shop stays on the map next to the flagship."
+        }
+      ]
+    },
+    {
+      "path": "/areas/bushwick/",
+      "title": "Bushwick Websites & Google Visibility | Little Fight NYC",
+      "description": "Websites, Google visibility, IT support, and simple systems for Bushwick studios, bars, music spots, food counters, and family shops in Brooklyn.",
+      "h1": "Websites, Google visibility, and simple systems for Bushwick businesses.",
+      "shortAnswer": "Short answer: Bushwick businesses need to be easy to find at night, easy to check on a phone, and easy to book or order from without a big platform bill.",
+      "type": "PlacePage",
+      "image": "/assets/pizza-menu-chalkboard.webp",
+      "faq": [
+        {
+          "question": "My crowd finds us by word of mouth and Instagram. Why does Google matter?",
+          "answer": "Because the person who heard about you still searches your name before coming. They want the address, the hours, and proof it is open. If Google shows nothing or something stale, some of them quietly give up. We make the search confirm what the word of mouth started."
+        },
+        {
+          "question": "I have run my shop for twenty years without a website. Why now?",
+          "answer": "Your longtime customers know you. The new people moving in do not. They pick shops from their phone. A simple page and a correct Google listing let the new neighbors find what everyone else already knows. It does not have to be fancy or expensive."
+        },
+        {
+          "question": "Most of my sales happen Friday to Sunday nights. Can you work around that?",
+          "answer": "Yes. We test the setup the way your customers use it. At night, on a phone. And we do not change anything during your busy window. Fixes land on the quiet days, so the weekend is never at risk."
+        }
+      ]
+    },
+    {
+      "path": "/areas/park-slope/",
+      "title": "Park Slope Websites & Family-Business Tech | Little Fight NYC",
+      "description": "Websites, Google visibility, booking paths, and reliable systems for Park Slope practices, kids' programs, boutiques, and cafes in Brooklyn.",
+      "h1": "Clear websites and reliable systems for Park Slope's family businesses.",
+      "shortAnswer": "Short answer: Park Slope businesses need correct hours, easy booking, and pages that answer a parent's questions fast, because families here research before they walk in.",
+      "type": "PlacePage",
+      "image": "/assets/storefront-blue-gift-shop.webp",
+      "faq": [
+        {
+          "question": "My business runs on neighborhood word of mouth. Why invest online?",
+          "answer": "Because the recommendation now gets checked. A parent hears your name, then searches it. If the site is confusing or the reviews are thin, the recommendation loses power. A clear site and a healthy profile make every word-of-mouth mention count."
+        },
+        {
+          "question": "Registration for my kids' program is a mess of emails. Can that be simpler?",
+          "answer": "Yes. We put the schedule where parents can find it and make sign-up a couple of taps instead of an email chain. Fewer dropped registrations, fewer repeated questions, and much less admin time for you."
+        },
+        {
+          "question": "A big practice group opened nearby. How does a solo practice compete?",
+          "answer": "With trust and ease. Your site has to look as credible as theirs, your reviews have to be real and recent, and booking has to be just as easy. Families here often prefer the independent option. We make sure choosing you is not the harder path."
+        }
+      ]
+    },
+    {
+      "path": "/areas/dumbo/",
+      "title": "DUMBO Websites for Studios & Brands | Little Fight NYC",
+      "description": "Polished websites, local search, and clean systems for DUMBO galleries, design studios, product brands, cafes, and shops in Brooklyn.",
+      "h1": "Polished websites and clean systems for DUMBO studios, galleries, and brands.",
+      "shortAnswer": "Short answer: DUMBO businesses need an online presence as sharp as the neighborhood, because the offices, galleries, and shops here get judged on polish fast.",
+      "type": "PlacePage",
+      "image": "/assets/coworking-laptops.webp",
+      "faq": [
+        {
+          "question": "Our clients come by referral. Does the website really matter?",
+          "answer": "Yes, because every referral checks the site before replying. In DUMBO the bar is set by your neighbors, and clients notice. A site that matches the quality of your work makes the referral land. A stale one plants doubt you never hear about."
+        },
+        {
+          "question": "We are a small brand with an office here, not a storefront. What applies to us?",
+          "answer": "The same fight at a different door. Your customers judge the site, the search results, and how fast you respond. We tighten the pages, the product story, and the follow-up path so the brand looks as considered online as the product is."
+        },
+        {
+          "question": "Weekend tourists walk past my shop all day. How do I turn that into business?",
+          "answer": "Be the answer when they search. Correct pins and hours on Maps, fresh photos, and a page that loads instantly on a phone. Visitors decide in seconds. The shop that shows up clean gets the walk-in."
+        }
+      ]
+    },
+    {
+      "path": "/areas/astoria/",
+      "title": "Astoria Websites & Google Listings | Little Fight NYC",
+      "description": "Websites, Google listings, and plain-language tech help for Astoria restaurants, bakeries, groceries, family shops, and medical offices in Queens.",
+      "h1": "Websites, Google listings, and honest tech help for Astoria's family businesses.",
+      "shortAnswer": "Short answer: Astoria businesses need correct listings, simple websites, and help in plain language, so loyal neighborhood customers and new arrivals can both find them.",
+      "type": "PlacePage",
+      "image": "/assets/interior-spice-shop.webp",
+      "faq": [
+        {
+          "question": "My customers have come here for decades. Do I really need this?",
+          "answer": "Your regulars will keep coming. This is about the people moving in who have never heard of you. They pick by phone. A correct listing and a simple page put you in front of them the same way your storefront always has. It protects the next twenty years, not the last."
+        },
+        {
+          "question": "English is not my first language. Is working with you going to be hard?",
+          "answer": "No. We explain everything in plain words, show you instead of lecturing you, and never bury anything in contracts or jargon. You will understand what we are doing and why before we do it. Bring a family member to translate if that is more comfortable. That is normal for us."
+        },
+        {
+          "question": "I do not want a fancy website. Just customers finding the right information.",
+          "answer": "That is the right instinct. Most Astoria businesses need a correct Google listing, real photos, current hours and menu, and a simple page that loads fast. We start there. Nobody sells you a big platform you do not need."
+        }
+      ]
+    },
+    {
+      "path": "/areas/long-island-city/",
+      "title": "Long Island City Local Search & Websites | Little Fight NYC",
+      "description": "Local search, websites, and systems for Long Island City gyms, vets, daycares, cafes, and ground-floor services under the new towers in Queens.",
+      "h1": "Local search, websites, and systems for Long Island City businesses.",
+      "shortAnswer": "Short answer: Long Island City businesses serve thousands of brand-new residents who have no habits yet. Whoever shows up best in search wins them first.",
+      "type": "PlacePage",
+      "image": "/assets/interior-grocery.webp",
+      "faq": [
+        {
+          "question": "My storefront faces heavy foot traffic. Isn't that enough?",
+          "answer": "Foot traffic helps, but new residents here decide by phone before they walk. They search, compare, and read reviews from the couch. The storefront closes the deal that search starts. If you are weak online, they walk past you to the place they already picked."
+        },
+        {
+          "question": "Everyone in my building seems to use the big chain gym. How do I compete?",
+          "answer": "The chain wins on default, not on fit. We make you the easy alternative to find. A sharp profile, real reviews, a clear schedule, and a trial sign-up that takes one minute. New residents want a place that knows their name. They just have to find it."
+        },
+        {
+          "question": "My customers move away and new ones arrive constantly. How do I keep up?",
+          "answer": "Turnover means winning new people has to be a system, not luck. We make sure every wave of arrivals finds you, and we set up simple follow-up so a first visit becomes a routine. In LIC, the setup that welcomes newcomers best owns the block."
         }
       ]
     },
@@ -1267,6 +1405,67 @@
         ],
         "shortNeed": "elegant fast websites and practical systems without another oversized platform",
         "image": "/assets/nyc-street.webp"
+      },
+      {
+        "slug": "williamsburg",
+        "name": "Williamsburg",
+        "zipCodes": [
+          "11211",
+          "11249"
+        ],
+        "shortNeed": "fast mobile pages, correct listings, and booking paths that survive the weekend crowd",
+        "image": "/assets/interior-jeans-rack.webp"
+      },
+      {
+        "slug": "bushwick",
+        "name": "Bushwick",
+        "zipCodes": [
+          "11221",
+          "11237"
+        ],
+        "shortNeed": "listings that look alive at night and simple ways to book or order without a platform bill",
+        "image": "/assets/pizza-menu-chalkboard.webp"
+      },
+      {
+        "slug": "park-slope",
+        "name": "Park Slope",
+        "zipCodes": [
+          "11215",
+          "11217"
+        ],
+        "shortNeed": "correct hours, easy booking, and pages that answer a parent's questions fast",
+        "image": "/assets/storefront-blue-gift-shop.webp"
+      },
+      {
+        "slug": "dumbo",
+        "name": "DUMBO",
+        "zipCodes": [
+          "11201"
+        ],
+        "shortNeed": "an online presence as polished as the neighborhood and a clean path from lead to reply",
+        "image": "/assets/coworking-laptops.webp"
+      },
+      {
+        "slug": "astoria",
+        "name": "Astoria",
+        "zipCodes": [
+          "11102",
+          "11103",
+          "11105",
+          "11106"
+        ],
+        "shortNeed": "correct listings, simple pages, and plain-language help that new arrivals can find",
+        "image": "/assets/interior-spice-shop.webp"
+      },
+      {
+        "slug": "long-island-city",
+        "name": "Long Island City",
+        "zipCodes": [
+          "11101",
+          "11109"
+        ],
+        "shortNeed": "strong search visibility and easy first visits for thousands of brand-new residents",
+        "image": "/assets/interior-grocery.webp"
       }
     ]
   },

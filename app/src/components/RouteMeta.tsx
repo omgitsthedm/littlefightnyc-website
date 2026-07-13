@@ -144,6 +144,12 @@ const industryMeta: Industry[] = [
     image: "/assets/sign-groceries-snacks.webp",
   },
   {
+    slug: "law-firms",
+    title: "Law Firms Help",
+    description: "Website, consult scheduling, intake, email on your own domain, referral tracking, and document flow for solo and small law firms across New York City.",
+    image: "/assets/typing.webp",
+  },
+  {
     slug: "medical-wellness-practices",
     title: "Medical and Wellness Help",
     description: "Trust, booking, intake, local visibility, and workflow systems for small medical and wellness practices that need cleaner digital operations.",

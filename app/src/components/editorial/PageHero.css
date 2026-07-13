@@ -370,11 +370,21 @@
 }
 
 /* --- Area archetype: neighborhood name at display scale + ZIP chips. --- */
+/* The text column is a fixed grid track (never content-sized), so inline-size
+   containment is safe here; it lets the display name measure its real column
+   via cqi instead of guessing from vw. */
+.lf-pagehero--area .lf-pagehero__text {
+  container-type: inline-size;
+}
+
 .lf-editorial .lf-pagehero__display {
   margin: 0;
   font-family: var(--lf-serif);
   font-weight: 700;
-  font-size: clamp(4rem, 12vw, 11rem);
+  /* Second min() term: fit cap for long single-word names ("Williamsburg.").
+     ~0.49em avg glyph width at this weight/tracking → 204cqi/ch fills the
+     column with a small safety margin. Short names still hit the clamp. */
+  font-size: min(clamp(4rem, 12vw, 11rem), calc(204cqi / var(--lf-display-ch, 8)));
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--lf-fight);

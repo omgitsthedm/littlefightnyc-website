@@ -24,6 +24,12 @@ const AREA_CENTER: Record<string, [number, number]> = {
   "upper-east-side": [40.7736, -73.9566],
   "upper-west-side": [40.787, -73.9754],
   "west-village": [40.7358, -74.0036],
+  williamsburg: [40.7081, -73.9571],
+  bushwick: [40.6944, -73.9213],
+  "park-slope": [40.671, -73.9814],
+  dumbo: [40.7033, -73.9881],
+  astoria: [40.7644, -73.9235],
+  "long-island-city": [40.7447, -73.9485],
 };
 
 const TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
@@ -174,17 +180,17 @@ export default function MiniMapNYC({
   }, [current, compact]);
 
   const summary = currentArea
-    ? `Map of Manhattan centered on ${currentArea.name} (ZIP ${currentArea.zipCodes.join(", ")}), marked in orange, with nearby neighborhoods ${(currentArea.nearby
+    ? `Map of New York City centered on ${currentArea.name} (ZIP ${currentArea.zipCodes.join(", ")}), marked in orange, with nearby neighborhoods ${(currentArea.nearby
         .map((s) => areaPages.find((a) => a.slug === s)?.name)
-        .filter(Boolean) as string[]).join(", ")} in blue. All eight served neighborhoods are listed with their ZIP codes beside the map.`
-    : "Map of Manhattan showing the eight neighborhoods Little Fight serves, each listed with its ZIP codes beside the map.";
+        .filter(Boolean) as string[]).join(", ")} in blue. All ${areaPages.length} served neighborhoods are listed with their ZIP codes beside the map.`
+    : `Map of New York City showing the ${areaPages.length} neighborhoods Little Fight serves, each listed with its ZIP codes beside the map.`;
 
   return (
     <figure
       ref={ref}
       className={`lf-minimap${compact ? " lf-minimap--compact" : ""}${className ? ` ${className}` : ""}`}
       role="group"
-      aria-label="Where we work — Manhattan coverage map"
+      aria-label="Where we work — New York City coverage map"
     >
       <p className="lf-viz-sr">{summary}</p>
       <div className="lf-minimap__layout">

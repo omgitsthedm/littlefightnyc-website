@@ -2139,7 +2139,7 @@ export const areaPages: AreaPage[] = [
           "Instagram starts the conversation. A simple site and a correct Google profile close it. That is where people go when they search your name later or need your hours. It also keeps you findable when a post sinks down the feed.",
       },
     ],
-    nearby: ["east-village", "soho", "west-village"],
+    nearby: ["east-village", "soho", "west-village", "williamsburg"],
   },
   {
     slug: "east-village",
@@ -2181,7 +2181,7 @@ export const areaPages: AreaPage[] = [
           "You will not out-spend them. So we make you easier to find and faster to act on for people who want a local, owner-run option. Correct search presence, real reviews, and a booking path that just works. That is where independents win here.",
       },
     ],
-    nearby: ["lower-east-side", "soho", "chelsea"],
+    nearby: ["lower-east-side", "soho", "chelsea", "williamsburg"],
   },
   {
     slug: "soho",
@@ -2307,7 +2307,7 @@ export const areaPages: AreaPage[] = [
           "Yes. Midtown support is often less about marketing and more about the POS, phone, or logins that stall the shop during the rush. We fix what is blocking the day first. Then we look at visibility. A shop that cannot take an order cannot grow.",
       },
     ],
-    nearby: ["chelsea", "upper-east-side", "upper-west-side"],
+    nearby: ["chelsea", "upper-east-side", "upper-west-side", "long-island-city"],
   },
   {
     slug: "upper-east-side",
@@ -2434,6 +2434,258 @@ export const areaPages: AreaPage[] = [
       },
     ],
     nearby: ["soho", "chelsea", "lower-east-side"],
+  },
+  {
+    slug: "williamsburg",
+    name: "Williamsburg",
+    zipCodes: ["11211", "11249"],
+    headline: "Websites, local search, and weekend-proof systems for Williamsburg businesses.",
+    shortAnswer:
+      "Short answer: Williamsburg businesses need fast mobile pages, correct Google listings, and booking and ordering paths that hold up when the weekend crowd arrives.",
+    localPattern:
+      "Boutiques, restaurants, bars, venues, and studios ride heavy weekend foot traffic and compete for people who decide on their phones mid-walk.",
+    firstMove: "Check the website on a phone, the Google profile, the reservation or ticket link, and what breaks when the weekend rush hits.",
+    intro:
+      "Williamsburg is Brooklyn's busiest small-business strip. Bedford Avenue, North 6th, Grand Street, and the waterfront around Domino Park. The L train drops a crowd at Bedford Avenue all day, and the ferry adds more. Most businesses here are owner-run. The person who picked the records, hung the clothes, or built the menu is usually in the room.",
+    businessLandscape:
+      "This is boutiques, vintage shops, record stores, restaurants, bars, music venues, coffee roasters, and small design studios. The pressure is heavy. National brands took storefronts on Bedford and North 6th, so an independent shop now sits next to a flagship with a whole marketing team. Delivery apps take a cut of every busy kitchen. Vintage sellers compete with online resale apps that never pay Brooklyn rent. And the week is lopsided. A huge share of the money walks in between Friday night and Sunday evening. If something online is broken on a Saturday, the week is hurt.",
+    localSearchReality:
+      "People decide here with a phone in hand. Standing on Bedford, off the L, or walking up from the ferry. 'Brunch near me.' 'Vintage Williamsburg.' 'Tickets tonight.' The weekend crush means hundreds of these little searches happen at once, and the spot with correct hours, fresh photos, and a one-tap reservation or ticket link wins the group. A menu that loads slowly or a listing with old hours loses the table to the place next door. Locals check Instagram. Visitors check Maps. Both have to say the same, current thing.",
+    whatWeFixHere: [
+      "A website that slows down or breaks on phones exactly when Saturday traffic peaks",
+      "A Google profile with old hours, so weekend visitors think the shop is closed",
+      "A ticket, reservation, or waitlist link buried three taps deep instead of one tap from Maps",
+      "A boutique whose Instagram looks great while its Google listing looks abandoned",
+      "Delivery apps taking a cut of every order with no direct path for regulars",
+    ],
+    faq: [
+      {
+        question: "My shop lives or dies on the weekend. What does that change?",
+        answer:
+          "It means your online setup has to be strongest exactly when you are busiest. We check that the site stays fast, the hours are right, and the booking or order link works on a phone on a Saturday. A weekday test is not enough here.",
+      },
+      {
+        question: "I run a venue. People find shows on Instagram and ticket apps. Why fix the rest?",
+        answer:
+          "Because the person deciding tonight searches your name to check the address, the time, and what the room is like. If Google shows old info or the site buries the ticket link, they stall and pick something else. We make the search answer match the post.",
+      },
+      {
+        question: "Big brands moved onto my block. How does a small shop stay visible?",
+        answer:
+          "You will not outspend them, so we make you easier to find and act on for people who want the independent option. A correct profile, recent photos, real reviews, and a fast site. That is how the small shop stays on the map next to the flagship.",
+      },
+    ],
+    nearby: ["bushwick", "dumbo", "lower-east-side"],
+  },
+  {
+    slug: "bushwick",
+    name: "Bushwick",
+    zipCodes: ["11221", "11237"],
+    headline: "Websites, Google visibility, and simple systems for Bushwick businesses.",
+    shortAnswer:
+      "Short answer: Bushwick businesses need to be easy to find at night, easy to check on a phone, and easy to book or order from without a big platform bill.",
+    localPattern:
+      "Art studios, bars, music spots, food counters, and family shops draw a crowd that looks everything up on a phone first, often after dark.",
+    firstMove: "Check how the business looks in a late-night search, then the hours, the photos, and the way people order or book.",
+    intro:
+      "Bushwick grew around the L train stops at Jefferson Street, Morgan Avenue, and DeKalb Avenue. Warehouses became art studios and music rooms. Blocks are covered in murals. New bars and food spots opened next to family businesses that have served the neighborhood for decades. Almost everything here is independent, and the owner is usually working the counter.",
+    businessLandscape:
+      "This is artist studios and small galleries, bars and late-night music spots, tacos and food counters, coffee shops, tattoo studios, and longtime family-run groceries, bakeries, and botanicas. The pressure is uneven. The new crowd arrives mostly at night and on weekends, so a bar or venue earns its week in a few hours. Delivery apps skim the kitchens. Event platforms and ticket apps own the customer list for shows. Rents climb as the neighborhood gets discovered. A studio or bar here competes for attention with all of Brooklyn, on a phone screen, without a marketing budget.",
+    localSearchReality:
+      "Search here is night-heavy. 'Bars open late Bushwick.' 'Tacos near me.' 'Shows tonight.' People plan a whole night out from a phone on the L. They check Maps for what is open and Instagram for what it feels like, and both have to look alive. A place with no recent photos or an unclaimed listing reads as closed, even with a line out the door. Daytime, the searches turn practical. Groceries, laundry, a haircut. The family businesses that never needed a website now lose new neighbors to whichever listing looks complete.",
+    whatWeFixHere: [
+      "A bar or venue whose Google listing looks dead while the room is full every weekend",
+      "Late-night hours that are wrong online, so 'open now' searches skip the place",
+      "A food counter losing margin to delivery apps with no direct way to order",
+      "A studio or gallery with no simple page showing what is on and how to visit",
+      "A longtime family shop that new neighbors cannot find because it was never put online",
+    ],
+    faq: [
+      {
+        question: "My crowd finds us by word of mouth and Instagram. Why does Google matter?",
+        answer:
+          "Because the person who heard about you still searches your name before coming. They want the address, the hours, and proof it is open. If Google shows nothing or something stale, some of them quietly give up. We make the search confirm what the word of mouth started.",
+      },
+      {
+        question: "I have run my shop for twenty years without a website. Why now?",
+        answer:
+          "Your longtime customers know you. The new people moving in do not. They pick shops from their phone. A simple page and a correct Google listing let the new neighbors find what everyone else already knows. It does not have to be fancy or expensive.",
+      },
+      {
+        question: "Most of my sales happen Friday to Sunday nights. Can you work around that?",
+        answer:
+          "Yes. We test the setup the way your customers use it. At night, on a phone. And we do not change anything during your busy window. Fixes land on the quiet days, so the weekend is never at risk.",
+      },
+    ],
+    nearby: ["williamsburg", "east-village"],
+  },
+  {
+    slug: "park-slope",
+    name: "Park Slope",
+    zipCodes: ["11215", "11217"],
+    headline: "Clear websites and reliable systems for Park Slope's family businesses.",
+    shortAnswer:
+      "Short answer: Park Slope businesses need correct hours, easy booking, and pages that answer a parent's questions fast, because families here research before they walk in.",
+    localPattern:
+      "Family-facing services, medical and dental practices, kids' programs, boutiques, and cafes serve parents who check everything online first.",
+    firstMove: "Check the schedule, the booking path, the Google reviews, and whether a parent can get every answer on a phone in one minute.",
+    intro:
+      "Park Slope is brownstone Brooklyn at its most family-heavy. The shopping runs along Fifth Avenue and Seventh Avenue, with Prospect Park at the top of the hill. The customers are mostly households within a few blocks. Strollers, school pickups, weekend errands. The businesses are owner-run, and many have served the same families for years.",
+    businessLandscape:
+      "This is pediatric, dental, and therapy practices, kids' classes and enrichment programs, boutiques, bookshops, toy stores, cafes and restaurants, vets, and salons. The pressure is quiet but constant. Chains and investor-backed practice groups chase the same family dollar. Delivery and booking apps put themselves between the shop and the customer. And the customers here are researchers. Parents compare, read reviews, and ask other parents online before trying anywhere new. A great local business with a thin online presence loses to a weaker one that simply answers questions better.",
+    localSearchReality:
+      "Search here is a parent solving a problem. 'Pediatric dentist Park Slope.' 'Toddler music class near me.' 'Vet open Saturday.' It happens from home, the playground, or mid-errand, and it ends in a booking or a visit. Reviews carry serious weight, because recommendations are how this neighborhood decides. A wrong opening time is expensive here. Nobody re-walks a stroller twice. The businesses that win make the schedule, the booking, and the reviews all easy to check in one quick look, with nothing hidden.",
+    whatWeFixHere: [
+      "A class or program schedule that parents cannot find or read on a phone",
+      "Booking that requires a phone call when half the neighborhood books everything online",
+      "A practice site that looks less trustworthy than the investor-backed group nearby",
+      "Google hours that miss the real weekend and school-holiday pattern",
+      "A sign-up or intake form that quietly fails, so inquiries never reach the owner",
+    ],
+    faq: [
+      {
+        question: "My business runs on neighborhood word of mouth. Why invest online?",
+        answer:
+          "Because the recommendation now gets checked. A parent hears your name, then searches it. If the site is confusing or the reviews are thin, the recommendation loses power. A clear site and a healthy profile make every word-of-mouth mention count.",
+      },
+      {
+        question: "Registration for my kids' program is a mess of emails. Can that be simpler?",
+        answer:
+          "Yes. We put the schedule where parents can find it and make sign-up a couple of taps instead of an email chain. Fewer dropped registrations, fewer repeated questions, and much less admin time for you.",
+      },
+      {
+        question: "A big practice group opened nearby. How does a solo practice compete?",
+        answer:
+          "With trust and ease. Your site has to look as credible as theirs, your reviews have to be real and recent, and booking has to be just as easy. Families here often prefer the independent option. We make sure choosing you is not the harder path.",
+      },
+    ],
+    nearby: ["dumbo", "williamsburg"],
+  },
+  {
+    slug: "dumbo",
+    name: "DUMBO",
+    zipCodes: ["11201"],
+    headline: "Polished websites and clean systems for DUMBO studios, galleries, and brands.",
+    shortAnswer:
+      "Short answer: DUMBO businesses need an online presence as sharp as the neighborhood, because the offices, galleries, and shops here get judged on polish fast.",
+    localPattern:
+      "Galleries, design studios, small product brands, and cafes serve a mix of office workers, clients, and weekend visitors who all judge on the first screen.",
+    firstMove: "Review the website against the neighborhood's standard, then the Google profile, the contact path, and how leads are tracked.",
+    intro:
+      "DUMBO is cobblestone streets and converted warehouses between the Brooklyn and Manhattan bridges. Brooklyn Bridge Park wraps the waterfront. Tech companies and design studios fill the lofts. Weekends bring crowds to photograph the bridge down Washington Street. It is one of the few neighborhoods where a small business's customers might be a Fortune 500 client and a tourist in the same hour.",
+    businessLandscape:
+      "This is art galleries, design and creative studios, small direct-to-consumer product brands with office space, photographers, event spaces, cafes, and a handful of shops and restaurants serving both office workers and visitors. The pressure is the standard. The neighbors are funded startups and established studios with real design budgets, so a thin website stands out here the way a broken window would. Studios and brands compete for clients citywide, not just on the block. And the foot traffic splits in two. Weekday office people, weekend tourists. A cafe or shop has to be findable and current for both.",
+    localSearchReality:
+      "Two kinds of search happen here. Visitors search on the spot. 'Coffee near Brooklyn Bridge Park.' 'Galleries open today.' They pick from Maps in seconds, standing on the cobblestones. Clients search from a desk. They look up a studio or brand by name, read the site, and judge whether it looks like the level they want to hire. Both searches are won or lost on polish and correctness. A gallery whose site does not show the current show, or a studio whose portfolio is a year stale, reads as less serious than it is.",
+    whatWeFixHere: [
+      "A studio or brand site that looks below the level of the work it shows",
+      "A gallery page that does not say what is on view right now or when to come",
+      "A portfolio or case page that takes too long to load and loses the busy client",
+      "A cafe or shop invisible on Maps while thousands walk past on a Saturday",
+      "Leads from the site landing in an inbox with no owner and no follow-up",
+    ],
+    faq: [
+      {
+        question: "Our clients come by referral. Does the website really matter?",
+        answer:
+          "Yes, because every referral checks the site before replying. In DUMBO the bar is set by your neighbors, and clients notice. A site that matches the quality of your work makes the referral land. A stale one plants doubt you never hear about.",
+      },
+      {
+        question: "We are a small brand with an office here, not a storefront. What applies to us?",
+        answer:
+          "The same fight at a different door. Your customers judge the site, the search results, and how fast you respond. We tighten the pages, the product story, and the follow-up path so the brand looks as considered online as the product is.",
+      },
+      {
+        question: "Weekend tourists walk past my shop all day. How do I turn that into business?",
+        answer:
+          "Be the answer when they search. Correct pins and hours on Maps, fresh photos, and a page that loads instantly on a phone. Visitors decide in seconds. The shop that shows up clean gets the walk-in.",
+      },
+    ],
+    nearby: ["williamsburg", "park-slope", "lower-east-side"],
+  },
+  {
+    slug: "astoria",
+    name: "Astoria",
+    zipCodes: ["11102", "11103", "11105", "11106"],
+    headline: "Websites, Google listings, and honest tech help for Astoria's family businesses.",
+    shortAnswer:
+      "Short answer: Astoria businesses need correct listings, simple websites, and help in plain language, so loyal neighborhood customers and new arrivals can both find them.",
+    localPattern:
+      "Greek and Middle Eastern restaurants, bakeries, groceries, family shops, and medical offices run on loyalty but win new customers through search.",
+    firstMove: "Check what a new neighbor sees when they search, then the hours, the menu or services, and the phone number on every listing.",
+    intro:
+      "Astoria runs along 30th Avenue, Broadway, Ditmars Boulevard, and Steinway Street, at the ends of the N and W trains. It is one of the most mixed neighborhoods in the country. Greek tavernas and bakeries, Middle Eastern restaurants and groceries along Steinway, and family businesses from everywhere in between. Many shops here are second- or third-generation, and the owner's family is often behind the counter.",
+    businessLandscape:
+      "This is restaurants and tavernas, bakeries, butchers and groceries, barbershops and salons, hardware stores, tailors, and a solid layer of medical, dental, and pharmacy offices serving the neighborhood. The pressure comes from two directions. Chains and delivery apps squeeze the food businesses the same way they do everywhere. And the neighborhood itself is changing. New residents arrive every year who do not know the old names. They find everything by phone. A beloved taverna with a wrong phone number online, or a bakery with no listing at all, is invisible to the exact people who would become its next regulars.",
+    localSearchReality:
+      "The old customers do not need Google. The new ones use nothing else. 'Greek food Astoria.' 'Halal butcher near me.' 'Dentist 11103.' Searches here happen in more than one language, and the results decide which family business the new neighbor tries first. Reviews matter because the new arrival has no history here to lean on. The chains win when their listing is complete and the local legend's is empty. Not because anyone prefers the chain. Getting the listing right is how a forty-year-old business introduces itself to someone who moved in last month.",
+    whatWeFixHere: [
+      "A restaurant or bakery whose Google listing has a wrong number, old hours, or no menu",
+      "A family shop with no website at all, invisible to new neighbors who search first",
+      "A listing with no recent photos, so a busy, loved place looks closed or forgotten",
+      "A medical or dental office with no simple way to request an appointment online",
+      "Delivery apps taking a cut from kitchens that could take direct orders",
+    ],
+    faq: [
+      {
+        question: "My customers have come here for decades. Do I really need this?",
+        answer:
+          "Your regulars will keep coming. This is about the people moving in who have never heard of you. They pick by phone. A correct listing and a simple page put you in front of them the same way your storefront always has. It protects the next twenty years, not the last.",
+      },
+      {
+        question: "English is not my first language. Is working with you going to be hard?",
+        answer:
+          "No. We explain everything in plain words, show you instead of lecturing you, and never bury anything in contracts or jargon. You will understand what we are doing and why before we do it. Bring a family member to translate if that is more comfortable. That is normal for us.",
+      },
+      {
+        question: "I do not want a fancy website. Just customers finding the right information.",
+        answer:
+          "That is the right instinct. Most Astoria businesses need a correct Google listing, real photos, current hours and menu, and a simple page that loads fast. We start there. Nobody sells you a big platform you do not need.",
+      },
+    ],
+    nearby: ["long-island-city"],
+  },
+  {
+    slug: "long-island-city",
+    name: "Long Island City",
+    zipCodes: ["11101", "11109"],
+    headline: "Local search, websites, and systems for Long Island City businesses.",
+    shortAnswer:
+      "Short answer: Long Island City businesses serve thousands of brand-new residents who have no habits yet. Whoever shows up best in search wins them first.",
+    localPattern:
+      "Gyms, vets, daycares, cafes, and ground-floor services under new towers compete for residents who pick everything by phone because everything is new to them.",
+    firstMove: "Check how the business ranks in a 'near me' search, then the reviews, the booking path, and whether new residents can become regulars in one visit.",
+    intro:
+      "Long Island City grew a skyline in a decade. Towers rose around Court Square, Queens Plaza, and the Hunters Point waterfront by Gantry Plaza State Park, and the ground floors filled in with the businesses a new neighborhood needs. The 7, E, M, and G trains make it one stop from Manhattan. Most customers here are new. So are most of the businesses serving them.",
+    businessLandscape:
+      "This is gyms and fitness studios, vets and groomers, daycares, dental and medical offices, cafes and restaurants, dry cleaners, and salons. The ground-floor service layer of a tower neighborhood. The pressure is unusual. There is little old word of mouth, because almost everyone arrived recently. National chains take the prime tower retail with corporate budgets. And every new lease nearby is another wave of residents choosing a gym, a vet, and a coffee spot from scratch. The independents that win are the ones a new arrival finds first and trusts fast.",
+    localSearchReality:
+      "Search is the front door here more than anywhere else we work. A new resident unpacks and searches. 'Gym near me.' 'Vet Long Island City.' 'Daycare 11101.' They have no neighbor to ask yet, so reviews and photos carry all the trust. The results of those first-week searches turn into habits that last for years. A business that is hard to find online is not losing one sale. It is losing a resident's entire routine to whoever showed up first and looked credible.",
+    whatWeFixHere: [
+      "A business invisible in 'near me' searches while new towers fill up around it",
+      "Thin or old reviews, when reviews are the only trust signal new residents have",
+      "A gym, studio, or daycare with no clear schedule, pricing path, or trial sign-up online",
+      "A vet or medical office where booking means a phone call during work hours",
+      "No follow-up after a first visit, in a neighborhood where routines are still forming",
+    ],
+    faq: [
+      {
+        question: "My storefront faces heavy foot traffic. Isn't that enough?",
+        answer:
+          "Foot traffic helps, but new residents here decide by phone before they walk. They search, compare, and read reviews from the couch. The storefront closes the deal that search starts. If you are weak online, they walk past you to the place they already picked.",
+      },
+      {
+        question: "Everyone in my building seems to use the big chain gym. How do I compete?",
+        answer:
+          "The chain wins on default, not on fit. We make you the easy alternative to find. A sharp profile, real reviews, a clear schedule, and a trial sign-up that takes one minute. New residents want a place that knows their name. They just have to find it.",
+      },
+      {
+        question: "My customers move away and new ones arrive constantly. How do I keep up?",
+        answer:
+          "Turnover means winning new people has to be a system, not luck. We make sure every wave of arrivals finds you, and we set up simple follow-up so a first visit becomes a routine. In LIC, the setup that welcomes newcomers best owns the block.",
+      },
+    ],
+    nearby: ["astoria", "midtown", "williamsburg"],
   },
 ];
 

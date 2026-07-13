@@ -29,6 +29,14 @@ const COVERAGE: Record<string, Record<string, string | null>> = {
     "local-search": "Local visibility",
     "business-systems": "Lightweight workflow",
   },
+  // "Website, consult scheduling, intake, email on your own domain, referral
+  //  tracking, and document flow for solo and small law firms"
+  "law-firms": {
+    websites: "Site & consult form",
+    "it-support": "Firm email & documents",
+    "local-search": "Search presence",
+    "business-systems": "Intake & referrals",
+  },
   // "Trust, booking, intake, local visibility, and workflow systems"
   "medical-wellness-practices": {
     websites: "Trust pages",

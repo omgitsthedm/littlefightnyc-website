@@ -888,3 +888,219 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   text-transform: uppercase;
   color: var(--lf-bone-dim);
 }
+
+/* ============================================================
+   Hub metric interludes — slim dark bands that break the
+   alternating-card rhythm every ~3rd position. One study's
+   vetted metric trio, pointing forward into that study.
+   ============================================================ */
+
+.lf-cases__interlude-link {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-5);
+  align-items: center;
+  padding: var(--lf-space-5) var(--lf-space-5);
+  background:
+    radial-gradient(120% 160% at 100% 0%, rgba(59, 130, 246, 0.09), transparent 55%),
+    var(--lf-paper-2);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  text-decoration: none;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+@media (min-width: 1024px) {
+  .lf-cases__interlude-link {
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr) auto;
+    gap: var(--lf-space-6);
+    padding: var(--lf-space-5) var(--lf-space-6);
+  }
+}
+
+.lf-cases__interlude-link:hover,
+.lf-cases__interlude-link:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
+  transform: translateY(var(--lf-lift));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-cases__interlude-link {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+.lf-cases__interlude-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-2);
+  min-width: 0;
+}
+
+.lf-cases__interlude-kicker {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-blue-soft);
+}
+
+.lf-cases__interlude-client {
+  font-family: var(--lf-display);
+  font-weight: 700;
+  font-size: var(--lf-text-lg);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--lf-bone);
+}
+
+.lf-cases__interlude-chips {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-4);
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .lf-cases__interlude-chips {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--lf-space-5);
+  }
+}
+
+.lf-cases__interlude-chip {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-1);
+  padding-left: var(--lf-space-4);
+  border-left: 1px solid var(--lf-hairline);
+  min-width: 0;
+}
+
+.lf-cases__interlude-value {
+  font-family: var(--lf-display);
+  font-weight: 700;
+  font-size: var(--lf-text-md);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--lf-fight);
+  overflow-wrap: break-word;
+}
+
+.lf-cases__interlude-label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--lf-bone-dim);
+}
+
+.lf-cases__interlude-cta {
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--lf-bone) 84%, var(--lf-fight) 16%);
+  background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
+  padding: var(--lf-space-2) var(--lf-space-3);
+  border-radius: var(--lf-radius-pill);
+  justify-self: start;
+  white-space: nowrap;
+  transition:
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-cases__interlude-link:hover .lf-cases__interlude-cta {
+  color: var(--lf-bone);
+  background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
+}
+
+/* ============================================================
+   The shipped thing — in-body full-bleed browser moment on the
+   detail page: problem → kept → changed → [the work] → result.
+   ============================================================ */
+
+.lf-case__ship {
+  max-width: var(--lf-max-w);
+  margin: var(--lf-space-8) auto;
+  padding-inline: var(--lf-margin-mobile);
+  /* Reveal — quiet rise as the evidence enters. */
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms var(--lf-ease-out),
+    transform 600ms var(--lf-ease-out);
+}
+
+.lf-case__ship[data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-case__ship {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .lf-case__ship {
+    padding-inline: var(--lf-margin-tablet);
+    margin-block: var(--lf-space-9);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-case__ship {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+.lf-case__ship-frame {
+  aspect-ratio: 4 / 3;
+  border-radius: var(--lf-radius-card);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 768px) {
+  .lf-case__ship-frame {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.lf-case__ship-cap {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-4);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.lf-case__ship-cap-flag {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--lf-bone-dim);
+}
+
+.lf-case__ship-cap-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  color: var(--lf-fight);
+  text-decoration: none;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-case__ship-cap-link:hover {
+  color: var(--lf-ember);
+}

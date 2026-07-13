@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Award } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
@@ -26,6 +27,14 @@ function displayDomain(url: string): string {
 
 const COUNT_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve"];
 
+/* Rhythm breaks: after every ~3rd card, a slim dark band lifts one study's
+ * existing metric trio (site.ts data only — no new claims) and points forward
+ * into that study. Keys are the card index the band follows. */
+const INTERLUDE_AFTER: Record<number, string> = {
+  2: "public-house-creative",
+  5: "venuecircuit",
+};
+
 export default function CaseStudies() {
   const countWord = COUNT_WORDS[caseStudies.length] ?? String(caseStudies.length);
   const vtNav = useViewTransitionNav();
@@ -51,8 +60,14 @@ export default function CaseStudies() {
 
       <section className="lf-cases">
         <div className="lf-cases__inner">
-          {caseStudies.map((study, i) => (
-            <article key={study.slug} className="lf-cases__item">
+          {caseStudies.map((study, i) => {
+            const interludeSlug = INTERLUDE_AFTER[i];
+            const interlude = interludeSlug
+              ? caseStudies.find((s) => s.slug === interludeSlug)
+              : undefined;
+            return (
+            <Fragment key={study.slug}>
+            <article className="lf-cases__item">
               <Link
                 to={`/case-studies/${study.slug}/`}
                 className="lf-cases__image lf-cases__image-link"
@@ -152,7 +167,40 @@ export default function CaseStudies() {
                 </div>
               </div>
             </article>
-          ))}
+
+            {/* Metric interlude — one study's proof trio, straight from site.ts. */}
+            {interlude?.metrics && interlude.metrics.length > 0 && (
+              <aside
+                className="lf-cases__interlude"
+                aria-label={`From the record: ${interlude.client}`}
+              >
+                <Link
+                  to={`/case-studies/${interlude.slug}/`}
+                  className="lf-cases__interlude-link"
+                  onClick={vtNav(`/case-studies/${interlude.slug}/`, preloadDetail)}
+                >
+                  <span className="lf-cases__interlude-head">
+                    <span className="lf-cases__interlude-kicker">From the record</span>
+                    <span className="lf-cases__interlude-client">{interlude.client}</span>
+                  </span>
+                  <span className="lf-cases__interlude-chips">
+                    {interlude.metrics.map((m) => (
+                      <span key={m.label} className="lf-cases__interlude-chip">
+                        <span className="lf-cases__interlude-value">{m.value}</span>
+                        <span className="lf-cases__interlude-label">{m.label}</span>
+                      </span>
+                    ))}
+                  </span>
+                  <span className="lf-cases__interlude-cta">
+                    Read the case
+                    <span aria-hidden="true"> →</span>
+                  </span>
+                </Link>
+              </aside>
+            )}
+            </Fragment>
+            );
+          })}
         </div>
       </section>
 

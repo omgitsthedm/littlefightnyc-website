@@ -23,6 +23,12 @@ const AREA_IMAGE: Record<string, string> = {
   "upper-east-side": "/assets/nyc-hair-salon-street.webp",
   "upper-west-side": "/assets/storefront-shop-deli.webp",
   "west-village": "/assets/nyc-street.webp",
+  williamsburg: "/assets/interior-jeans-rack.webp",
+  bushwick: "/assets/pizza-menu-chalkboard.webp",
+  "park-slope": "/assets/storefront-blue-gift-shop.webp",
+  dumbo: "/assets/coworking-laptops.webp",
+  astoria: "/assets/interior-spice-shop.webp",
+  "long-island-city": "/assets/interior-grocery.webp",
 };
 
 function areaRouteSlug(serviceSlug: string) {

@@ -15,6 +15,12 @@ const AREA_IMAGE: Record<string, string> = {
   "upper-east-side": "/assets/nyc-hair-salon-street.webp",
   "upper-west-side": "/assets/storefront-shop-deli.webp",
   "west-village": "/assets/nyc-street.webp",
+  williamsburg: "/assets/interior-jeans-rack.webp",
+  bushwick: "/assets/pizza-menu-chalkboard.webp",
+  "park-slope": "/assets/storefront-blue-gift-shop.webp",
+  dumbo: "/assets/coworking-laptops.webp",
+  astoria: "/assets/interior-spice-shop.webp",
+  "long-island-city": "/assets/interior-grocery.webp",
 };
 
 export default function Areas() {
@@ -30,7 +36,7 @@ export default function Areas() {
             <span className="lf-em">we show up in.</span>
           </>
         }
-        dek="Little Fight works across New York City, with on-site visits usually within 24 hours. These are the Manhattan neighborhoods where we're in the most shops, salons, bars, and back offices."
+        dek="Little Fight works across New York City, with on-site visits usually within 24 hours. These are the Manhattan, Brooklyn, and Queens neighborhoods where we're in the most shops, salons, bars, and back offices."
         image={{
           src: "/assets/nyc-street-crowd.webp",
           alt: "A busy New York street at dusk",
@@ -50,7 +56,7 @@ export default function Areas() {
 
       <VisualIndex
         eyebrow="Neighborhoods"
-        title="Eight patches of the same fight."
+        title="Fourteen patches of the same fight."
         dek="Every neighborhood breaks in its own way. Pick yours to see what we usually walk into there."
         variant="grid"
         items={areaPages.map((area) => ({
