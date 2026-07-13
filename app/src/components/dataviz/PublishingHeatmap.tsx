@@ -52,7 +52,15 @@ export default function PublishingHeatmap() {
           </p>
         </div>
         <p className="lf-viz-sr">{summary}</p>
-        <div ref={scrollRef} className="lf-pulse__scroll">
+        <div
+          ref={scrollRef}
+          className="lf-pulse__scroll"
+          /* scrollable region must be keyboard-reachable (axe:
+             scrollable-region-focusable) */
+          tabIndex={0}
+          role="region"
+          aria-label="Publishing activity grid (scrollable)"
+        >
           <div
             className="lf-pulse__chart"
             role="img"

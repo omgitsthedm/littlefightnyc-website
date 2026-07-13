@@ -105,9 +105,12 @@ export default function StudioStatusStrip() {
         {clock ? `${clock.hms} ${clock.zone}` : "--:--:-- ET"}
       </span>
       <span className="lf-status__sep" aria-hidden="true" />
-      <span className="lf-status__state" aria-label={openNow.sentence}>
+      {/* aria-label is prohibited on a generic span (axe: aria-prohibited-attr)
+          — screen readers get the full sentence via visually-hidden text. */}
+      <span className="lf-status__state">
         <span className="lf-status__dot" aria-hidden="true" />
         <span aria-hidden="true">{openNow.open ? "Open now" : "Closed"}</span>
+        <span className="lf-status__sr">{openNow.sentence}</span>
       </span>
       {tempF !== null && (
         <>

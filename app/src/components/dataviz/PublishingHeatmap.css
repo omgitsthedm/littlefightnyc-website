@@ -175,3 +175,9 @@
 .lf-pulse__legend span:last-child {
   margin-left: 4px;
 }
+
+.lf-pulse__scroll:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

@@ -92,15 +92,12 @@
 /journal         /journal/          301
 /examples        /examples/         301
 /contact         /contact/          301
-/services/:slug  /services/:slug/   301
-/answers/:slug   /answers/:slug/    301
-/areas/:area/:service  /areas/:area/:service/  301
-/areas/:slug     /areas/:slug/      301
-/glossary/:slug  /glossary/:slug/   301
-/industries/:slug  /industries/:slug/  301
-/case-studies/:slug  /case-studies/:slug/  301
-/studio/:slug    /studio/:slug/     301
-/journal/:slug   /journal/:slug/    301
+# NOTE (2026-07-13): the old per-section `/x/:slug -> /x/:slug/` rules are
+# GONE deliberately. They also matched URLs that already had the trailing
+# slash — real pages were shadowed by their files, but every UNKNOWN slug
+# 301'd to itself in an infinite loop instead of reaching the 404 catch-all.
+# Netlify normalizes no-slash -> slash for existing directories natively,
+# so the dynamic rules were pure downside. Do not reintroduce them.
 
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404

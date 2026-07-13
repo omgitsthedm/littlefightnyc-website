@@ -592,7 +592,8 @@
 .lf-journal-filter__count {
   font-family: var(--lf-mono);
   font-size: 11px;
-  opacity: 0.65;
+  /* 0.85 min — 0.65 failed WCAG AA contrast at this size (axe, 2026-07-13) */
+  opacity: 0.85;
 }
 .lf-editorial .lf-journal-filter__chip[data-active="true"] .lf-journal-filter__count {
   opacity: 0.85;
