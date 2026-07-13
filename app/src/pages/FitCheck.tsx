@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, CalendarDays, ClipboardCheck, Clock, Flame } from "lucide-react";
 import type { FormEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import { fitRoutes } from "@/data/site";
+import { trackEvent } from "@/lib/analytics";
 import { readAttribution } from "@/lib/attribution";
 import "@/styles/editorial/fitcheck.css";
 
@@ -66,6 +68,38 @@ function composeMessage(symptom: string | null, urgency: string | null): string 
 /* Cleared by /thanks/ on confirmed success (Thanks.tsx uses the literal key
  * to avoid importing this chunk) — keep the two in sync. */
 const DRAFT_KEY = "lf_tech_audit_draft";
+const WEBSITE_INTENT = "website";
+const WEBSITE_ROUTE = fitRoutes[0];
+
+function queryValue(params: URLSearchParams, key: string, maxLength: number): string {
+  return (params.get(key) ?? "").trim().slice(0, maxLength);
+}
+
+function reportValue(params: URLSearchParams): string {
+  const value = queryValue(params, "report", 120).toLowerCase();
+  return /^[a-z0-9-]+$/.test(value) ? value : "";
+}
+
+function composeContextMessage(
+  symptom: string | null,
+  urgency: string | null,
+  websiteUrl: string,
+  reportId: string,
+): string {
+  const lines = [composeMessage(symptom, urgency)];
+  if (websiteUrl) lines.push(`Website: ${websiteUrl}`);
+  if (reportId) lines.push(`Free scan: https://audit.littlefightnyc.com/report/${reportId}/`);
+  return lines.filter(Boolean).join("\n");
+}
+
+function appendAuditContext(message: string, websiteUrl: string, reportId: string): string {
+  const lines = [message];
+  if (websiteUrl && !message.includes("Website:")) lines.push(`Website: ${websiteUrl}`);
+  if (reportId && !message.includes("Free scan:")) {
+    lines.push(`Free scan: https://audit.littlefightnyc.com/report/${reportId}/`);
+  }
+  return lines.filter(Boolean).join("\n");
+}
 
 type ContactFields = {
   name: string;
@@ -120,12 +154,23 @@ function writeDraft(draft: Draft): void {
 }
 
 export default function FitCheck() {
+  const [searchParams] = useSearchParams();
+  const websiteIntent = searchParams.get("intent") === WEBSITE_INTENT;
+  const websiteUrl = queryValue(searchParams, "url", 2048);
+  const reportId = reportValue(searchParams);
+  const leadOrigin = queryValue(searchParams, "source", 80) || "littlefightnyc.com";
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
+  const initialSymptom = draft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
+  const initialMessage = appendAuditContext(
+    draft?.message || composeMessage(initialSymptom, draft?.urgency ?? null),
+    websiteUrl,
+    reportId,
+  );
   const [step, setStep] = useState<Step>(draft?.step ?? 1);
-  const [symptom, setSymptom] = useState<string | null>(draft?.symptom ?? null);
+  const [symptom, setSymptom] = useState<string | null>(initialSymptom);
   const [urgency, setUrgency] = useState<string | null>(draft?.urgency ?? null);
-  const [message, setMessage] = useState(draft?.message ?? "");
+  const [message, setMessage] = useState(initialMessage);
   const [messageDirty, setMessageDirty] = useState(draft?.messageDirty ?? false);
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
@@ -136,6 +181,18 @@ export default function FitCheck() {
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
   const attribution = readAttribution();
+  const stepTitle = websiteIntent && step === 1
+    ? "What does your website need?"
+    : STEP_TITLES[step];
+
+  useEffect(() => {
+    if (!reportId) return;
+    trackEvent("audit_scan_completed", {
+      report_id: reportId,
+      website_url: websiteUrl,
+      page_path: "/tech-audit/",
+    });
+  }, [reportId, websiteUrl]);
 
   // Move focus to the step heading on step change (not on first paint).
   useEffect(() => {
@@ -198,15 +255,35 @@ export default function FitCheck() {
   }
 
   function pickSymptom(label: string) {
+    trackEvent("intake_step_1", {
+      selection: label,
+      intent: websiteIntent ? WEBSITE_INTENT : "general",
+    });
     setSymptom(label);
-    if (!messageDirty) setMessage(composeMessage(label, urgency));
+    if (!messageDirty) {
+      setMessage(composeContextMessage(label, urgency, websiteUrl, reportId));
+    }
     setStep(2);
   }
 
   function pickUrgency(label: string) {
+    trackEvent("intake_step_2", {
+      selection: label,
+      intent: websiteIntent ? WEBSITE_INTENT : "general",
+    });
     setUrgency(label);
-    if (!messageDirty) setMessage(composeMessage(symptom, label));
+    if (!messageDirty) {
+      setMessage(composeContextMessage(symptom, label, websiteUrl, reportId));
+    }
     if (symptom) setPayoff(true);
+    setStep(3);
+  }
+
+  function skipToForm(fromStep: 1 | 2) {
+    trackEvent(`intake_step_${fromStep}`, {
+      skipped: true,
+      intent: websiteIntent ? WEBSITE_INTENT : "general",
+    });
     setStep(3);
   }
 
@@ -239,6 +316,14 @@ export default function FitCheck() {
     // server error) the user's answers survive a Back navigation. /thanks/
     // clears it on confirmed success instead.
     setErrors({});
+    try {
+      window.sessionStorage.setItem(
+        "lf_lead_intent",
+        websiteIntent ? WEBSITE_INTENT : "general",
+      );
+    } catch {
+      /* Storage can be unavailable; submission still proceeds. */
+    }
     setSubmitting(true);
   }
 
@@ -247,14 +332,21 @@ export default function FitCheck() {
       <PageHero
         eyebrow="Tech Audit"
         icon={ClipboardCheck}
-        title={
+        title={websiteIntent ? (
+          <>
+            Plan the website<br />
+            <span className="lf-em">your business needs.</span>
+          </>
+        ) : (
           <>
             Show us the<br />
             {" "}
             <span className="lf-em">moving parts.</span>
           </>
-        }
-        dek="Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. The consult is free."
+        )}
+        dek={websiteIntent
+          ? "Tell us what you have, what customers should do next, and what is getting in the way. David will reply with the smallest useful next step. Consulting is always free."
+          : "Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. Consulting is always free."}
         image={{
           src: "/assets/manhattan.webp",
           alt: "Manhattan rooftops at golden hour",
@@ -268,7 +360,7 @@ export default function FitCheck() {
           <div className="lf-fit__flow">
             <div className="lf-fit__progress">
               <p className="lf-fit__progress-label" aria-live="polite">
-                Step {step} of 3 <span className="lf-fit__sr"> - {STEP_TITLES[step]}</span>
+                Step {step} of 3 <span className="lf-fit__sr"> - {stepTitle}</span>
               </p>
               <div
                 className={`lf-fit__progress-bar${payoff ? " is-payoff" : ""}`}
@@ -291,10 +383,12 @@ export default function FitCheck() {
                   tabIndex={-1}
                   ref={headingRef}
                 >
-                  {STEP_TITLES[1]}
+                  {websiteIntent ? "What does your website need?" : STEP_TITLES[1]}
                 </h2>
                 <p className="lf-fit__step-sub">
-                  Pick the closest fit. It helps us prep. You can say more later.
+                  {websiteIntent
+                    ? "We selected the website path for you. Choose it to continue, or pick a closer fit."
+                    : "Pick the closest fit. It helps us prep. You can say more later."}
                 </p>
                 <div
                   className="lf-fit__cards"
@@ -325,7 +419,7 @@ export default function FitCheck() {
                   <button
                     type="button"
                     className="lf-fit__skip"
-                    onClick={() => setStep(3)}
+                    onClick={() => skipToForm(1)}
                   >
                     Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
@@ -382,7 +476,7 @@ export default function FitCheck() {
                   <button
                     type="button"
                     className="lf-fit__skip"
-                    onClick={() => setStep(3)}
+                    onClick={() => skipToForm(2)}
                   >
                     Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
@@ -419,6 +513,10 @@ export default function FitCheck() {
                   <input type="hidden" name="form-name" value="fit-check-scratch" />
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
+                  <input type="hidden" name="intent" value={websiteIntent ? WEBSITE_INTENT : "general"} />
+                  <input type="hidden" name="lead_origin" value={leadOrigin} />
+                  {websiteUrl && <input type="hidden" name="website_url" value={websiteUrl} />}
+                  {reportId && <input type="hidden" name="report_id" value={reportId} />}
                   {symptom && <input type="hidden" name="symptom" value={symptom} />}
                   {urgency && <input type="hidden" name="urgency" value={urgency} />}
                   {Object.entries(attribution).map(([key, value]) => (
@@ -563,7 +661,8 @@ export default function FitCheck() {
                       </>
                     ) : (
                       <>
-                        Book my free Tech Audit <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+                        {websiteIntent ? "Plan my website with David" : "Book my free Tech Audit"}{" "}
+                        <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
                   </button>

@@ -173,6 +173,19 @@
   font-weight: 500;
   font-size: var(--lf-text-base);
   letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+
+/* Preserve the phone as a one-line action on 320px devices. */
+@media (max-width: 380px) {
+  .lf-nav__inner {
+    gap: var(--lf-space-1);
+    padding-inline: var(--lf-space-3);
+  }
+  .lf-nav__brand,
+  .lf-nav__phone-number { font-size: var(--lf-text-sm); }
+  .lf-nav__phone { padding-inline: 0; }
+  .lf-nav__toggle { margin-inline-start: 0; }
 }
 
 @media (min-width: 768px) {

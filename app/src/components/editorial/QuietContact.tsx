@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
+import { trackEvent } from "@/lib/analytics";
 import "./QuietContact.css";
 
 const CONTACT_CHANNELS = [
@@ -38,6 +39,7 @@ const CONTACT_CHANNELS = [
 const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}+16463600318`;
 
 function openTextMessage() {
+  trackEvent("sms_click", { placement: "contact_block", link_url: SMS_URL });
   window.location.href = SMS_URL;
 }
 

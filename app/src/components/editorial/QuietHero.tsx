@@ -127,7 +127,13 @@ export default function QuietHero() {
         </div>
 
         <div className="lf-hero__actions" aria-label="Choose how to start">
-          <Link className="lf-hero__action lf-hero__action--website" to="/tech-audit/" viewTransition>
+          <Link
+            className="lf-hero__action lf-hero__action--website"
+            to="/tech-audit/?intent=website"
+            data-lf-event="website_plan_intent"
+            data-lf-label="home_hero"
+            viewTransition
+          >
             <Globe2 size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
               <strong>Plan my website</strong>

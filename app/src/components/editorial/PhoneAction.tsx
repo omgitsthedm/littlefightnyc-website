@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { trackEvent } from "@/lib/analytics";
 import "./PhoneAction.css";
 
 const TEL = "+16463600318";
@@ -26,6 +27,7 @@ export default function PhoneAction({
   const panelId = useId();
   const openText = () => {
     setOpen(false);
+    trackEvent("sms_click", { placement: "phone_action", link_url: SMS_URL });
     window.location.href = SMS_URL;
   };
 

@@ -444,6 +444,17 @@ html[data-snap="1"] .lf-hero__char {
   color: var(--lf-fight);
 }
 
+/* The moving problem list stays a real 44px target on touch devices without
+   making the ticker taller than it needs to be for mouse/keyboard users. */
+@media (pointer: coarse) {
+  .lf-hero__marquee { padding-block: 0; }
+  .lf-hero__marquee-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
 .lf-hero__marquee-item::after {
   content: "·";
   position: absolute;

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ScanSearch } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { useScrollReveal } from "./useScrollReveal";
 import { caseStudies } from "@/data/site";
@@ -68,6 +68,26 @@ export default function RecentClients() {
             </Link>
           ))}
         </div>
+
+        <aside className="lf-clients__scan" aria-label="Free website scan">
+          <span className="lf-clients__scan-icon" aria-hidden="true">
+            <ScanSearch size={24} strokeWidth={1.75} />
+          </span>
+          <div className="lf-clients__scan-copy">
+            <p className="lf-mono lf-clients__scan-label">Not ready to talk?</p>
+            <h3>See what your current website is costing you.</h3>
+            <p>Run a free public-page scan for speed, mobile, search, and lost-customer friction. No account or access needed.</p>
+          </div>
+          <a
+            className="lf-clients__scan-cta"
+            href="https://audit.littlefightnyc.com/?source=homepage"
+            data-lf-event="audit_scan_started"
+            data-lf-label="home_proof_band"
+          >
+            Scan my website
+            <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+          </a>
+        </aside>
       </div>
     </section>
   );

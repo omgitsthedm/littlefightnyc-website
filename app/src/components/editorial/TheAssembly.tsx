@@ -11,7 +11,7 @@ import "./TheAssembly.css";
  * scroll, the mess assembles itself into one clean running system and ends on
  * "Put us in your corner." The brand thesis, animated.
  *
- * Mechanics: a ~260vh runway (180vh on phones) holds a sticky 100svh stage.
+ * Mechanics: a ~260vh runway (160vh on phones) holds a sticky 100svh stage.
  * One passive scroll listener + rAF throttle writes progress 0→1 as `--p` on
  * the stage; ALL motion derives from --p in CSS (transform/opacity/filter
  * only), so scrubbing backward reverses perfectly. CSS default is --p: 1, so

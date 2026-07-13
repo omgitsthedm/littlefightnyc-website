@@ -6,22 +6,24 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
+import FounderCard from "@/components/editorial/FounderCard";
+import { importWithRetry } from "@/lib/importWithRetry";
 import { watchListReveals } from "@/lib/listReveal";
 
-const RouteMeta = lazy(() => import("@/components/RouteMeta"));
-const TheAssembly = lazy(() => import("@/components/editorial/TheAssembly"));
-const FaqList = lazy(() => import("@/components/editorial/FaqList"));
-const TheFight = lazy(() => import("@/components/editorial/TheFight"));
-const WorkGrid = lazy(() => import("@/components/editorial/WorkGrid"));
-const MomentumSection = lazy(() => import("@/components/editorial/MomentumSection"));
-const MomentumCursorGlow = lazy(() => import("@/components/editorial/MomentumCursorGlow"));
-const RecentClients = lazy(() => import("@/components/editorial/RecentClients"));
-const BrandLine = lazy(() => import("@/components/editorial/BrandLine"));
-const SignatureBand = lazy(() => import("@/components/editorial/SignatureBand"));
-const QuietContact = lazy(() => import("@/components/editorial/QuietContact"));
-const QuietFooter = lazy(() => import("@/components/editorial/QuietFooter"));
-const StickyHelpBar = lazy(() => import("@/components/editorial/StickyHelpBar"));
-const CommandPalette = lazy(() => import("@/components/editorial/CommandPalette"));
+const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMeta")));
+const TheAssembly = lazy(() => importWithRetry(() => import("@/components/editorial/TheAssembly")));
+const FaqList = lazy(() => importWithRetry(() => import("@/components/editorial/FaqList")));
+const TheFight = lazy(() => importWithRetry(() => import("@/components/editorial/TheFight")));
+const WorkGrid = lazy(() => importWithRetry(() => import("@/components/editorial/WorkGrid")));
+const MomentumSection = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumSection")));
+const MomentumCursorGlow = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumCursorGlow")));
+const RecentClients = lazy(() => importWithRetry(() => import("@/components/editorial/RecentClients")));
+const BrandLine = lazy(() => importWithRetry(() => import("@/components/editorial/BrandLine")));
+const SignatureBand = lazy(() => importWithRetry(() => import("@/components/editorial/SignatureBand")));
+const QuietContact = lazy(() => importWithRetry(() => import("@/components/editorial/QuietContact")));
+const QuietFooter = lazy(() => importWithRetry(() => import("@/components/editorial/QuietFooter")));
+const StickyHelpBar = lazy(() => importWithRetry(() => import("@/components/editorial/StickyHelpBar")));
+const CommandPalette = lazy(() => importWithRetry(() => import("@/components/editorial/CommandPalette")));
 
 /* Mirrors the FAQPage JSON-LD for "/" in seo-pages.json — marked-up content
  * must be visible on the page (Google guideline). Keep the two in sync. */
@@ -110,6 +112,9 @@ export default function Home() {
             <div className="lf-home-faq">
               <FaqList title="Quick answers" items={HOME_FAQ} />
             </div>
+            <section className="lf-home-founder" aria-label="Meet the founder">
+              <FounderCard photoSrc="/assets/founder-david-marsh.webp" />
+            </section>
             <QuietContact />
           </Suspense>
         )}

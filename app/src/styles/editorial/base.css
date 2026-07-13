@@ -345,6 +345,25 @@ body:has(.lf-editorial) {
   padding: 0 var(--lf-margin-mobile) var(--lf-space-8);
 }
 
+/* Real-human proof before the final contact decision on the standalone home. */
+.lf-editorial .lf-home-founder {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  padding: 0 var(--lf-margin-mobile) var(--lf-space-8);
+}
+
+@media (min-width: 768px) {
+  .lf-editorial .lf-home-founder {
+    padding: 0 var(--lf-margin-tablet) var(--lf-space-9);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-editorial .lf-home-founder {
+    padding: 0 var(--lf-margin-desktop) var(--lf-space-9);
+  }
+}
+
 @media (min-width: 768px) {
   .lf-editorial .lf-home-faq {
     padding: 0 var(--lf-margin-tablet) var(--lf-space-9);

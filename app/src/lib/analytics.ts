@@ -238,11 +238,11 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
     return;
   }
 
-  if (eventName === "phone_click" || eventName === "email_click") {
+  if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") {
     sendTikTokEvent("Contact", { ...page, content_name: eventName, ...parameters });
-  } else if (eventName === "fit_check_intent") {
-    sendTikTokEvent("ClickButton", { ...page, content_name: "fit_check_intent", ...parameters });
-  } else if (eventName === "fit_check_submit" || eventName === "form_submit") {
+  } else if (eventName === "fit_check_intent" || eventName === "website_plan_intent" || eventName === "audit_scan_started") {
+    sendTikTokEvent("ClickButton", { ...page, content_name: eventName, ...parameters });
+  } else if (eventName === "fit_check_submit" || eventName === "form_submit" || eventName === "lead_success") {
     sendTikTokEvent("SubmitForm", { ...page, content_name: eventName, ...parameters });
   }
 }
@@ -280,8 +280,21 @@ export function installAnalyticsHooks() {
   let scrollTracked = false;
 
   const onClick = (event: MouseEvent) => {
-    const target = event.target instanceof Element ? event.target.closest("a") : null;
+    const target = event.target instanceof Element
+      ? event.target.closest<HTMLElement>("a, button")
+      : null;
     if (!target) return;
+
+    const namedEvent = target.dataset.lfEvent;
+    if (namedEvent) {
+      track(namedEvent, {
+        placement: target.dataset.lfLabel ?? "unknown",
+        link_text: target.textContent?.trim(),
+        page_path: window.location.pathname,
+      });
+    }
+
+    if (!(target instanceof HTMLAnchorElement)) return;
 
     const href = target.getAttribute("href") ?? "";
 
@@ -289,6 +302,8 @@ export function installAnalyticsHooks() {
       track("phone_click", { link_url: href, link_text: target.textContent?.trim() });
     } else if (href.startsWith("mailto:")) {
       track("email_click", { link_url: href, link_text: target.textContent?.trim() });
+    } else if (href.startsWith("sms:")) {
+      track("sms_click", { link_url: href, link_text: target.textContent?.trim() });
     } else if (target.hostname && target.hostname !== window.location.hostname) {
       track("external_link_click", { link_url: target.href, link_text: target.textContent?.trim() });
     } else if (href.includes("fit-check") || href.includes("tech-audit")) {

@@ -262,7 +262,7 @@ export default function CaseStudyDetail() {
 
       <QuietContact
         heading="Want a build like this?"
-        lede="Tell us about your shop. We will tell you what a build like this looks like for you. The first talk is free."
+        lede="Tell us about your shop. We will tell you what a build like this looks like for you. Consulting is always free."
       />
     </>
   );

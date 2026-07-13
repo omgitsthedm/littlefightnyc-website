@@ -201,7 +201,7 @@ export default function ServiceDetail() {
 
       <section className="lf-sd-related">
         <div className="lf-sd-related__inner">
-          <p className="lf-sd-related__label">The other three services</p>
+          <p className="lf-sd-related__label">Other ways we help</p>
           <ul className="lf-sd-related__list">
             {related.map((item) => (
               <li key={item.slug}>

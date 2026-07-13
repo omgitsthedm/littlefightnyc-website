@@ -187,12 +187,14 @@ export default function QuietNav() {
               </p>
               <div className="lf-nav__panel-actions">
                 <Link
-                  to="/tech-audit/"
+                  to="/tech-audit/?intent=website"
+                  data-lf-event="website_plan_intent"
+                  data-lf-label="mobile_menu"
                   viewTransition
                   onClick={() => setOpen(false)}
                   className="lf-nav__panel-fit"
                 >
-                  Start the Tech Audit
+                  Plan my website
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
                 </Link>
                 <div className="lf-nav__panel-reach">

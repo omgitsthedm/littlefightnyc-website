@@ -178,7 +178,83 @@
   transform: translate(2px, -2px);
 }
 
+/* Lower-commitment conversion step, deliberately placed after real proof. */
+.lf-clients__scan {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--lf-space-4);
+  align-items: center;
+  margin-top: var(--lf-space-6);
+  padding: var(--lf-space-5);
+  border: 1px solid color-mix(in srgb, var(--lf-blue) 38%, var(--lf-hairline));
+  border-radius: var(--lf-radius-card);
+  background: color-mix(in srgb, var(--lf-blue) 8%, var(--lf-card-bg));
+}
+
+.lf-clients__scan-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--lf-blue-soft);
+  border: 1px solid color-mix(in srgb, var(--lf-blue) 34%, transparent);
+  border-radius: var(--lf-radius-sm);
+  background: color-mix(in srgb, var(--lf-blue) 14%, transparent);
+}
+.lf-clients__scan-copy { min-width: 0; }
+.lf-clients__scan-label { color: var(--lf-blue-soft); }
+.lf-clients__scan-copy h3 {
+  margin-top: var(--lf-space-2);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-lg);
+  line-height: 1.1;
+  letter-spacing: var(--lf-display-tracking);
+  color: var(--lf-bone);
+}
+.lf-clients__scan-copy > p:last-child {
+  max-width: 62ch;
+  margin-top: var(--lf-space-2);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+}
+.lf-editorial .lf-clients__scan-cta {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lf-space-2);
+  min-height: 48px;
+  padding-inline: var(--lf-space-5);
+  color: var(--lf-bone);
+  background: var(--lf-blue);
+  border-radius: var(--lf-radius-control);
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    transform var(--lf-time-snappy) var(--lf-ease-standard),
+    background var(--lf-time-snappy) var(--lf-ease-standard);
+}
+.lf-editorial .lf-clients__scan-cta:hover {
+  transform: translateY(var(--lf-lift));
+  background: var(--lf-blue-soft);
+}
+.lf-editorial .lf-clients__scan-cta:focus-visible {
+  outline: 2px solid var(--lf-blue-soft);
+  outline-offset: 3px;
+}
+
+@media (min-width: 820px) {
+  .lf-clients__scan {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: var(--lf-space-6);
+  }
+  .lf-editorial .lf-clients__scan-cta { grid-column: auto; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lf-clients__card { opacity: 1; transform: none; transition: none; }
   .lf-clients__shot img { transition: none; }
+  .lf-editorial .lf-clients__scan-cta { transition: none; }
 }
