@@ -23,7 +23,7 @@ function useIsMobile(): boolean {
   );
 }
 
-/* Curated, not exhaustive (cleaned up 2026-07-13 per David): the hubs carry
+/* Curated, not exhaustive (cleaned up 2026-07-13): the hubs carry
  * the long lists — the footer names the four services and points at hubs.
  * No per-case-study, per-term, or full-neighborhood enumerations here. */
 const footerGroups: Array<{ title: string; links: Array<{ label: string; to: string }> }> = [

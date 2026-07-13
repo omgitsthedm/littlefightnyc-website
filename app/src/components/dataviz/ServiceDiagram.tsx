@@ -10,8 +10,8 @@ import "./ServiceDiagram.css";
  * data layer stays untouched.
  */
 
-/** it-support — the response-window strip. Facts: 2-hour callbacks 9am–9pm ET,
- * on-site within 24 hours when needed, after hours AI takes the message. */
+/** it-support response-window strip. Facts: 2-hour callbacks 9am-9pm ET,
+ * on-site within 24 hours when needed, with next-business-day follow-up after hours. */
 function ResponseWindow() {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.3 });
   return (
@@ -23,8 +23,8 @@ function ResponseWindow() {
     >
       <p className="lf-viz-sr">
         From 9am to 9pm Eastern, calls get a callback within 2 hours. After
-        hours, AI takes the message and David calls back. When the fix needs
-        hands on hardware, we're on-site within 24 hours.
+        hours, leave a message and Little Fight NYC will follow up. When the fix
+        needs hands on hardware, we are on-site within 24 hours.
       </p>
       <div className="lf-respwin__body" aria-hidden="true">
         <div className="lf-respwin__row">
@@ -43,7 +43,7 @@ function ResponseWindow() {
             <span className="lf-respwin__scale-end">12am</span>
           </div>
           <p className="lf-respwin__note">
-            After hours — AI takes the message, David calls back.
+            After hours: leave a message and we will follow up.
           </p>
         </div>
         <div className="lf-respwin__row">

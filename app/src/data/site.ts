@@ -2705,7 +2705,7 @@ export const studioProjects: StudioProject[] = [
       "Less volume than a normal cold-outreach setup. But the conversations that do start tend to be real, not transactional. Dakota stays a sandbox until that ratio gets boring. It has not happened yet.",
     ],
     // Internal ops telemetry (weekly funnel counts, reply latency) removed
-    // from the public site 2026-07-12 — David: "nothing internal should
+    // from the public site 2026-07-12 - editorial directive: "nothing internal should
     // show." The story stays; the log numbers don't.
   },
   {

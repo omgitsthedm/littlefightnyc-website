@@ -6,7 +6,6 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
-import FounderCard from "@/components/editorial/FounderCard";
 import { importWithRetry } from "@/lib/importWithRetry";
 import { watchListReveals } from "@/lib/listReveal";
 
@@ -112,9 +111,6 @@ export default function Home() {
             <div className="lf-home-faq">
               <FaqList title="Quick answers" items={HOME_FAQ} />
             </div>
-            <section className="lf-home-founder" aria-label="Meet the founder">
-              <FounderCard photoSrc="/assets/founder-david-marsh.webp" />
-            </section>
             <QuietContact />
           </Suspense>
         )}

@@ -65,8 +65,8 @@ export default function Thanks() {
           </>
         )}
         dek={websiteIntent
-          ? "David is reading what you sent and will reply with a clear next step, usually within two hours from 9am-9pm Eastern. The consultation is free. No pitch, and no project starts until the scope makes sense to you."
-          : "Little Fight NYC is reading what you sent right now (or first thing tomorrow if it's after hours). Urgent issues get a same-day call. Planned work gets a written reply by morning at the latest. If it just turned into a fire, call (646) 360-0318 — we'll bump everything else."}
+          ? "Little Fight NYC is reviewing the context and will return a clear recommended next step, normally within two hours during 9am-9pm Eastern. The consultation is free, and nothing moves forward until the scope makes sense."
+          : "Little Fight NYC is reviewing the request. If it is urgent, call (646) 360-0318 and we will triage the immediate issue before planning any larger cleanup."}
       />
 
       <QuietContact />

@@ -83,7 +83,7 @@ export default function About() {
           <StatBlock eyebrow="The promises" icon={BadgeCheck} items={PROMISES} />
           <EditorialBody>
             <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
-              After hours, AI takes the message and David calls back.
+              After hours, leave a message and Little Fight NYC will follow up.
             </p>
           </EditorialBody>
 

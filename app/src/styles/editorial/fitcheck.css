@@ -281,7 +281,8 @@
 }
 
 .lf-editorial .lf-fit__back,
-.lf-editorial .lf-fit__skip {
+.lf-editorial .lf-fit__skip,
+.lf-editorial .lf-fit__continue {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
@@ -302,13 +303,36 @@
   margin-left: auto;
 }
 
+.lf-editorial .lf-fit__continue {
+  min-height: 48px;
+  padding: 0 var(--lf-space-5);
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  transition:
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
 .lf-editorial .lf-fit__back:hover,
 .lf-editorial .lf-fit__skip:hover {
   color: var(--lf-fight);
 }
 
+.lf-editorial .lf-fit__continue:hover {
+  color: var(--lf-ink);
+  background: var(--lf-ember);
+  transform: translateY(-2px);
+}
+
 .lf-editorial .lf-fit__back:focus-visible,
-.lf-editorial .lf-fit__skip:focus-visible {
+.lf-editorial .lf-fit__skip:focus-visible,
+.lf-editorial .lf-fit__continue:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
   border-radius: 2px;
@@ -319,6 +343,12 @@
   .lf-editorial .lf-fit__card,
   .lf-editorial .lf-fit__card:hover,
   .lf-editorial .lf-fit__card:active {
+    transition: none;
+    transform: none;
+  }
+
+  .lf-editorial .lf-fit__continue,
+  .lf-editorial .lf-fit__continue:hover {
     transition: none;
     transform: none;
   }

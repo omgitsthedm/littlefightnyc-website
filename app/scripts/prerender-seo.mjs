@@ -663,36 +663,12 @@ function foundationSchemas(page) {
 
   if (isArticlePage(page)) {
     webPage.author = {
-      "@type": "Person",
-      "@id": `${siteUrl}/#david-marsh`,
-      "name": "David Marsh",
-      "url": `${siteUrl}/about/`,
-      "description": "Founder of Little Fight NYC, working directly with New York small businesses on websites, IT support, local search visibility, and right-sized business systems."
+      "@id": `${siteUrl}/#organization`
     };
     webPage.mainEntityOfPage = canonical;
   }
 
   const graph = [organization, localBusiness, website, breadcrumbFor(page), primaryImage, webPage];
-
-  if (isArticlePage(page)) {
-    graph.push({
-      "@type": "Person",
-      "@id": `${siteUrl}/#david-marsh`,
-      "name": "David Marsh",
-      "url": `${siteUrl}/about/`,
-      "jobTitle": "Founder",
-      "description": "Founder of Little Fight NYC, working directly with New York small businesses on websites, IT support, local search visibility, and right-sized business systems.",
-      "worksFor": { "@id": `${siteUrl}/#organization` },
-      "knowsAbout": [
-        "small business websites",
-        "IT support",
-        "local search",
-        "business systems",
-        "workflow automation",
-        "software cost reduction"
-      ]
-    });
-  }
 
   if (page.type === "Service") {
     graph.push({
@@ -867,7 +843,7 @@ function managedHead(page) {
   return [
     `<title>${escapeHtml(page.title)}</title>`,
     `<meta name="description" content="${escapeAttr(page.description)}">`,
-    isArticle ? `<meta name="author" content="David Marsh">` : "",
+    isArticle ? `<meta name="author" content="Little Fight NYC">` : "",
     `<meta name="robots" content="${page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large"}">`,
     `<link rel="canonical" href="${escapeAttr(canonical)}">`,
     fontPreloads(),
@@ -889,8 +865,8 @@ function managedHead(page) {
     `<meta name="twitter:title" content="${escapeAttr(page.title)}">`,
     `<meta name="twitter:description" content="${escapeAttr(page.description)}">`,
     `<meta name="twitter:image" content="${escapeAttr(image)}">`,
-    isArticle ? `<link rel="author" href="${siteUrl}/about/">` : "",
-    isArticle ? `<meta property="article:author" content="David Marsh">` : "",
+    isArticle ? `<link rel="author" href="${siteUrl}/">` : "",
+    isArticle ? `<meta property="article:author" content="Little Fight NYC">` : "",
     isArticle ? `<meta property="article:published_time" content="${pagePublished}">` : "",
     isArticle ? `<meta property="article:modified_time" content="${pageModified}">` : "",
     `<meta name="datePublished" content="${pagePublished}">`,
@@ -1288,8 +1264,8 @@ function articleMeta(page) {
   }
 
   return `
-    <p class="lf-seo__byline byline" itemprop="author" itemscope itemtype="https://schema.org/Person">
-      By <a rel="author" class="author" href="/about/"><span itemprop="name">David Marsh</span></a>
+    <p class="lf-seo__byline byline" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+      By <span class="author" itemprop="name">Little Fight NYC</span>
       · Published <time itemprop="datePublished" datetime="${published}">${published}</time>
       · Updated <time itemprop="dateModified" datetime="${modified}">${modified}</time>
     </p>

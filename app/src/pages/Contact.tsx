@@ -57,16 +57,16 @@ export default function Contact() {
           <header className="lf-contact-window__head">
             <p className="lf-contact-window__eyebrow">What happens next</p>
             <h2 id="lf-contact-window-title" className="lf-contact-window__title">
-              You reach out. We answer. That's it.
+              You reach out. We set the next move.
             </h2>
           </header>
 
           <TimelineStrip
             label="What happens after you contact Little Fight NYC"
-            summary="You call, text, email, or send the form. From 9am to 9pm New York time a real person answers. If you leave a message, we call back within 2 hours. Consulting is always free."
+            summary="You call, text, email, or send the form. From 9am to 9pm New York time, Little Fight NYC reviews the situation and follows up. If you leave a message, we return it within 2 hours. Consulting is always free."
             beats={[
               { label: "You reach out", sub: "Call, text, email, or form" },
-              { label: "A human answers", sub: "9am-9pm ET" },
+              { label: "Context reviewed", sub: "9am-9pm ET" },
               { label: "Callback in 2 hours", sub: "If we miss you", marker: true },
             ]}
             badge="Consulting is free"
@@ -74,7 +74,7 @@ export default function Contact() {
 
           <p className="lf-contact-window__note">
             <UserRound size={16} strokeWidth={2} aria-hidden="true" />
-            No phone tree. No ticket maze. You talk to the person who does the work.
+            No phone tree. No ticket maze. Start with the problem and get a clear path forward.
           </p>
         </div>
       </section>

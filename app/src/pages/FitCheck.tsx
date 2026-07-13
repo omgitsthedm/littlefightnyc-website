@@ -14,10 +14,10 @@ type FieldName = "name" | "business" | "contact" | "message";
 type Step = 1 | 2 | 3;
 
 const OUTCOMES = [
-  "A clear website scope",
-  "An urgent fix plan",
-  "A fix list, ranked by what hurts most",
-  "An honest “you don’t need us yet”",
+  "An initial website scope",
+  "An urgent recovery plan",
+  "A ranked list of what to fix first",
+  "A clear recommendation if a project can wait",
 ];
 
 const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
@@ -46,9 +46,9 @@ const URGENCY_OPTIONS = [
 ];
 
 const STEP_TITLES: Record<Step, string> = {
-  1: "What's going on?",
+  1: "What needs attention?",
   2: "How urgent is it?",
-  3: "How do we reach you?",
+  3: "Where should we respond?",
 };
 
 function composeMessage(symptom: string | null, urgency: string | null): string {
@@ -182,7 +182,7 @@ export default function FitCheck() {
   const mountedRef = useRef(false);
   const attribution = readAttribution();
   const stepTitle = websiteIntent && step === 1
-    ? "What does your website need?"
+    ? "What needs to change on your website?"
     : STEP_TITLES[step];
 
   useEffect(() => {
@@ -334,7 +334,7 @@ export default function FitCheck() {
         icon={ClipboardCheck}
         title={websiteIntent ? (
           <>
-            Plan the website<br />
+            Build the website<br />
             <span className="lf-em">your business needs.</span>
           </>
         ) : (
@@ -345,11 +345,11 @@ export default function FitCheck() {
           </>
         )}
         dek={websiteIntent
-          ? "Tell us what you have, what customers should do next, and what is getting in the way. David will reply with the smallest useful next step. Consulting is always free."
+          ? "Tell us where the current site is losing calls, bookings, or trust. Little Fight NYC will review the context and return a clear recommended next step. Consulting is always free."
           : "Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. Consulting is always free."}
         image={{
-          src: "/assets/manhattan.webp",
-          alt: "Manhattan rooftops at golden hour",
+          src: "/assets/case-after-hours-agenda.webp",
+          alt: "Homepage built for After Hours Agenda",
           width: 1600,
           height: 1200,
         }}
@@ -383,11 +383,11 @@ export default function FitCheck() {
                   tabIndex={-1}
                   ref={headingRef}
                 >
-                  {websiteIntent ? "What does your website need?" : STEP_TITLES[1]}
+                  {websiteIntent ? "What needs to change on your website?" : STEP_TITLES[1]}
                 </h2>
                 <p className="lf-fit__step-sub">
                   {websiteIntent
-                    ? "We selected the website path for you. Choose it to continue, or pick a closer fit."
+                    ? "We opened the website path. Confirm it, or choose the issue closest to the work ahead."
                     : "Pick the closest fit. It helps us prep. You can say more later."}
                 </p>
                 <div
@@ -416,12 +416,21 @@ export default function FitCheck() {
                   })}
                 </div>
                 <div className="lf-fit__step-nav">
+                  {websiteIntent && symptom && (
+                    <button
+                      type="button"
+                      className="lf-fit__continue"
+                      onClick={() => pickSymptom(symptom)}
+                    >
+                      Continue <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
+                    </button>
+                  )}
                   <button
                     type="button"
                     className="lf-fit__skip"
                     onClick={() => skipToForm(1)}
                   >
-                    Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
+                    Write a brief instead <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -618,7 +627,9 @@ export default function FitCheck() {
                     }`}
                   >
                     <label htmlFor="fit-message">
-                      What feels broken, expensive, slow, or disconnected?
+                      {websiteIntent
+                        ? "What should your website do better?"
+                        : "What feels broken, expensive, slow, or disconnected?"}
                     </label>
                     <textarea
                       id="fit-message"
@@ -632,7 +643,9 @@ export default function FitCheck() {
                         clearErrorIfFilled("message", e.target.value);
                       }}
                       onBlur={(e) => validateField("message", e.target.value)}
-                      placeholder="A short sentence is fine. We'll ask the rest on the call."
+                      placeholder={websiteIntent
+                        ? "For example: customers cannot find what we offer, we need online booking, or the current site no longer reflects the business."
+                        : "A short sentence is fine. We will ask the rest on the call."}
                       aria-invalid={errors.message ? true : undefined}
                       aria-describedby={
                         errors.message ? "fit-message-error" : "fit-message-note"
@@ -661,18 +674,18 @@ export default function FitCheck() {
                       </>
                     ) : (
                       <>
-                        {websiteIntent ? "Plan my website with David" : "Book my free Tech Audit"}{" "}
+                        {websiteIntent ? "Send website brief" : "Send Tech Audit brief"}{" "}
                         <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
                   </button>
                   <p className="lf-fit__assurance">
-                    Free consult / No pitch / We reply within 2 hours, 9am-9pm ET /
+                    Free consultation / No obligation / Response window: 9am-9pm Eastern /
                     Urgent? Call <a href="tel:+16463600318">(646) 360-0318</a>
                   </p>
                   <p className="lf-fit__assurance lf-fit__assurance--data">
-                    What you send here goes to David to prep your callback. It is never
-                    sold, never spammed.
+                    Your details stay with Little Fight NYC. We use them only to understand
+                    the request and prepare the right response.
                   </p>
                 </form>
 
@@ -689,25 +702,24 @@ export default function FitCheck() {
             )}
 
             <p className="lf-fit__outcomes">
-              You’ll get one of four answers:{" "}
+              Here is what we will give you:{" "}
               {OUTCOMES.map((o, i) => (
                 <span key={o}>
                   <strong>{o}</strong>
                   {i < OUTCOMES.length - 1 ? "; " : "."}
                 </span>
               ))}
-              {" "}No pitch either way.
             </p>
           </div>
 
           <aside className="lf-fit__aside">
-            <p className="lf-fit__aside-label">Or reach us now</p>
+            <p className="lf-fit__aside-label">Direct line</p>
             <PhoneAction className="lf-fit__aside-phone">
               (646) 360-0318
             </PhoneAction>
             <p className="lf-fit__aside-note">
-              9am-9pm Eastern. A human picks up when available. After hours,
-              AI takes the message and David calls back.
+              9am-9pm Eastern. Call or text Little Fight NYC about urgent support, a
+              new website, or a complicated setup. After hours, leave a message and we will follow up.
             </p>
 
             <p className="lf-fit__aside-label lf-fit__aside-label--next">
@@ -716,12 +728,12 @@ export default function FitCheck() {
             <TimelineStrip
               vertical
               className="lf-fit__next"
-              label="What happens after you book the Tech Audit"
-              summary="After you book the Tech Audit: you get a callback within 2 hours between 9am and 9pm Eastern, then a free consult with no pitch."
+              label="What happens after you send a Tech Audit brief"
+              summary="Little Fight NYC reviews the request, confirms the context, and returns a clear recommended next step."
               beats={[
-                { label: "Book the Tech Audit" },
-                { label: "Callback within 2 hours", sub: "9am-9pm ET", marker: true },
-                { label: "Free consult", sub: "No pitch" },
+                { label: "Send the brief" },
+                { label: "We review the context", sub: "9am-9pm ET", marker: true },
+                { label: "Clear next step", sub: "Free consultation" },
               ]}
             />
           </aside>

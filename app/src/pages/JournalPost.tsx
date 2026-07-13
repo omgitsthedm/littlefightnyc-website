@@ -125,16 +125,14 @@ export default function JournalPost() {
           <div className="lf-post__main">
           <p className="lf-post__byline byline">
             <span className="lf-post__byline-by">By</span>{" "}
-            <Link
-              rel="author"
-              to="/about/"
+            <span
               className="lf-post__byline-name author"
               itemProp="author"
               itemScope
-              itemType="https://schema.org/Person"
+              itemType="https://schema.org/Organization"
             >
-              <span itemProp="name">David Marsh</span>
-            </Link>
+              <span itemProp="name">Little Fight NYC</span>
+            </span>
             <span aria-hidden="true"> · </span>
             <span>Published </span>
             <time itemProp="datePublished" dateTime={dateTimeValue(published)}>{published}</time>

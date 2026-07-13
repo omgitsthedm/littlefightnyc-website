@@ -40,7 +40,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "it-support": {
     heading: "Something broken right now?",
-    lede: "Call. A human answers, 9am-9pm New York time. If it needs hands, we can be on site within 24 hours.",
+    lede: "Call, 9am-9pm New York time. We will assess the immediate issue and confirm the next step. If it needs hands, we can be on site within 24 hours.",
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",

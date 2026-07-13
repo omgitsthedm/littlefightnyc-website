@@ -51,8 +51,8 @@ type Props = {
 };
 
 export default function QuietContact({
-  heading = "Tell us what's broken.",
-  lede = "9am-9pm Eastern: a human answers. After hours: AI takes the message and David calls back.",
+  heading = "Start with the right next step.",
+  lede = "Call, text, email, or send a brief. Little Fight NYC will review the context and come back with a clear next step.",
 }: Props) {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
 

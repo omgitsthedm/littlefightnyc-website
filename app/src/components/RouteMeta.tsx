@@ -405,7 +405,7 @@ export default function RouteMeta() {
     document.title = page.title;
     setMeta("description", page.description);
     if (isArticle) {
-      setMeta("author", "David Marsh");
+      setMeta("author", "Little Fight NYC");
     } else {
       removeMeta("author");
     }

@@ -208,7 +208,7 @@ export default function QuietNav() {
                   </a>
                 </div>
                 <p className="lf-nav__panel-note">
-                  A human answers, 9am-9pm New York time.
+                  Available 9am-9pm New York time.
                 </p>
               </div>
             </nav>

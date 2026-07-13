@@ -81,7 +81,7 @@ export default function StudioDetail() {
             </EditorialBody>
 
             {/* Internal ops telemetry removed from the public site 2026-07-12 —
-                David: "nothing internal should show." */}
+                editorial directive: "nothing internal should show." */}
           </div>
         </div>
       </article>

@@ -251,7 +251,7 @@ export default function AreaDetail() {
 
       <QuietContact
         heading={`Near ${area.name}? We're close.`}
-        lede="We work in your neighborhood. Call or text and a real person answers, 9am-9pm New York time."
+        lede="We work in your neighborhood. Call or text 9am-9pm New York time and we will set the right next move."
       />
     </>
   );
