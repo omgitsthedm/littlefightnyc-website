@@ -56,9 +56,9 @@
   color: var(--lf-fight);
 }
 
-.lf-quiet-foot__brand p,
-.lf-quiet-foot__legal,
-.lf-quiet-foot__contact {
+.lf-quiet-foot .lf-quiet-foot__brand p,
+.lf-quiet-foot .lf-quiet-foot__legal,
+.lf-quiet-foot .lf-quiet-foot__contact {
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.08em;
@@ -105,7 +105,10 @@
   min-width: 0;
 }
 
-.lf-quiet-foot__group h2 {
+ /* .lf-quiet-foot prefix: (0,2,1) — the global .lf-editorial h2 (0,1,1)
+    bundles later and WON the tie; footer titles shipped as 44px display
+    type until 2026-07-13. Same class of bug as the button reset. */
+.lf-quiet-foot .lf-quiet-foot__group h2 {
   font-family: var(--lf-mono);
   font-size: 10px;
   letter-spacing: 0.14em;

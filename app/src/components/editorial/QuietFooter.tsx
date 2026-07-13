@@ -1,7 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
-import { Award, BookOpen, ChevronDown, HelpCircle, Layers, MapPin } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
 import StudioStatusStrip from "./StudioStatusStrip";
 import "./QuietFooter.css";
@@ -24,71 +23,52 @@ function useIsMobile(): boolean {
   );
 }
 
-const footerGroups: Array<{ title: string; icon: LucideIcon; links: Array<{ label: string; to: string }> }> = [
+/* Curated, not exhaustive (cleaned up 2026-07-13 per David): the hubs carry
+ * the long lists — the footer names the four services and points at hubs.
+ * No per-case-study, per-term, or full-neighborhood enumerations here. */
+const footerGroups: Array<{ title: string; links: Array<{ label: string; to: string }> }> = [
   {
     title: "Work",
-    icon: Layers,
     links: [
-      { label: "Tech Consulting", to: "/services/tech-consulting/" },
-      { label: "IT Support", to: "/services/it-support/" },
       { label: "Custom Local Websites", to: "/services/custom-local-websites/" },
+      { label: "IT Support", to: "/services/it-support/" },
+      { label: "Tech Consulting", to: "/services/tech-consulting/" },
       { label: "Business Systems", to: "/services/business-systems/" },
-      { label: "Studio", to: "/services/#studio" },
-      { label: "Instant Website Scan", to: "/audit/" },
+      { label: "Free Website Scan", to: "/audit/" },
     ],
   },
   {
     title: "Proof",
-    icon: Award,
     links: [
       { label: "Examples", to: "/examples/" },
-      { label: "All Case Studies", to: "/case-studies/" },
-      { label: "VenueCircuit", to: "/case-studies/venuecircuit/" },
-      { label: "CC Films", to: "/case-studies/cc-films/" },
-      { label: "DeckSpace", to: "/case-studies/deckspace/" },
-      { label: "Hair By Rachel Charles", to: "/case-studies/hair-by-rachel-charles/" },
-      { label: "Grand Funding LLC", to: "/case-studies/grand-funding-llc/" },
-      { label: "Public House Creative", to: "/case-studies/public-house-creative/" },
-      { label: "After Hours Agenda", to: "/case-studies/after-hours-agenda/" },
-      { label: "ClearHelp", to: "/case-studies/clearhelp/" },
+      { label: "Case Studies", to: "/case-studies/" },
+      { label: "The Studio", to: "/services/#studio" },
     ],
   },
   {
     title: "Answers",
-    icon: HelpCircle,
     links: [
-      { label: "Form Not Working", to: "/answers/website-form-not-working-small-business/" },
+      { label: "All Answers", to: "/answers/" },
       { label: "Cut Software Costs", to: "/answers/reduce-monthly-software-costs-small-business/" },
-      { label: "Google Maps Visibility", to: "/answers/business-not-showing-on-google-maps/" },
-      { label: "Salon Booking Costs", to: "/answers/hair-salon-save-money-software/" },
-      { label: "Pharmacy Website Support", to: "/answers/local-pharmacy-website-community-support/" },
-      { label: "Custom System vs SaaS", to: "/answers/when-custom-business-system-beats-saas/" },
+      { label: "Not Showing on Google", to: "/answers/business-not-showing-on-google-maps/" },
+      { label: "Website Down?", to: "/answers/website-down-emergency-nyc/" },
     ],
   },
   {
     title: "Local",
-    icon: MapPin,
     links: [
-      { label: "Lower East Side", to: "/areas/lower-east-side/" },
-      { label: "East Village", to: "/areas/east-village/" },
+      { label: "All 14 Neighborhoods", to: "/areas/" },
       { label: "SoHo", to: "/areas/soho/" },
-      { label: "Chelsea", to: "/areas/chelsea/" },
       { label: "Midtown", to: "/areas/midtown/" },
-      { label: "Upper East Side", to: "/areas/upper-east-side/" },
-      { label: "Upper West Side", to: "/areas/upper-west-side/" },
-      { label: "West Village", to: "/areas/west-village/" },
+      { label: "Williamsburg", to: "/areas/williamsburg/" },
+      { label: "Astoria", to: "/areas/astoria/" },
     ],
   },
   {
     title: "Library",
-    icon: BookOpen,
     links: [
       { label: "Journal", to: "/journal/" },
       { label: "Glossary", to: "/glossary/" },
-      { label: "Business System", to: "/glossary/business-system/" },
-      { label: "Google Business Profile", to: "/glossary/google-business-profile/" },
-      { label: "Local Search", to: "/glossary/local-search/" },
-      { label: "Workflow Automation", to: "/glossary/workflow-automation/" },
     ],
   },
 ];
@@ -104,7 +84,7 @@ export default function QuietFooter() {
         <div className="lf-quiet-foot__top">
           <div className="lf-quiet-foot__brand">
             <Link to="/" className="lf-quiet-foot__brand-link">Little Fight NYC</Link>
-            <p>Manhattan, New York · Since 2012 · Still picking up the phone</p>
+            <p>New York City · Since 2012 · Still picking up the phone</p>
           </div>
           <nav className="lf-quiet-foot__company" aria-label="Company and legal">
             <Link to="/tech-audit/">Tech Audit</Link>
@@ -132,10 +112,7 @@ export default function QuietFooter() {
             return isMobile ? (
               <details className="lf-quiet-foot__group lf-quiet-foot__group--fold" key={group.title}>
                 <summary>
-                  <h2>
-                    <group.icon size={14} strokeWidth={2} aria-hidden="true" />
-                    {group.title}
-                  </h2>
+                  <h2>{group.title}</h2>
                   <ChevronDown
                     className="lf-quiet-foot__fold-chevron"
                     size={16}
@@ -147,10 +124,7 @@ export default function QuietFooter() {
               </details>
             ) : (
               <div className="lf-quiet-foot__group" key={group.title}>
-                <h2>
-                  <group.icon size={14} strokeWidth={2} aria-hidden="true" />
-                  {group.title}
-                </h2>
+                <h2>{group.title}</h2>
                 {links}
               </div>
             );

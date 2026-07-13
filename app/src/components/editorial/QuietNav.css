@@ -153,9 +153,6 @@
 }
 
 /* Keep the mono label and the number on a shared baseline where both show. */
-.lf-nav__phone-label {
-  transform: translateY(1px);
-}
 
 .lf-nav__phone:hover {
   color: var(--lf-fight);
@@ -167,19 +164,8 @@
   border-radius: var(--lf-radius-sm);
 }
 
-.lf-nav__phone-label {
-  display: none;
-  font-family: var(--lf-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--lf-bone-dim);
-}
 
 @media (min-width: 768px) {
-  .lf-nav__phone-label {
-    display: inline;
-  }
 }
 
 .lf-nav__phone-number {
@@ -494,59 +480,15 @@
 
 /* Nav placement: the full chip needs room — below 900px the dot alone sits
    by the phone number (the aria sentence stays complete). */
-.lf-open--nav {
-  padding-inline: var(--lf-space-1);
-}
 
 @media (max-width: 899px) {
-  .lf-open--nav .lf-open__label {
-    display: none;
-  }
 }
 
 /* ---- Command palette chip (⌘K) ------------------------------------------- */
 /* Desktop pointer devices only — hidden wherever hover doesn't exist. Scoped
    under .lf-editorial to beat the base button reset (the 3×-hit gotcha). */
-.lf-editorial .lf-nav__cmdk {
-  display: none;
-}
 
 @media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-  .lf-editorial .lf-nav__cmdk {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 44px;
-    min-height: 44px;
-    padding: 0;
-    background: none;
-    border: 0;
-    cursor: pointer;
-  }
 
-  .lf-editorial .lf-nav__cmdk kbd {
-    font-family: var(--lf-mono);
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    line-height: 1;
-    color: var(--lf-bone-dim);
-    padding: 6px 8px;
-    background: none;
-    border: 1px solid var(--lf-hairline);
-    border-radius: var(--lf-radius-sm);
-    transition:
-      color var(--lf-time-snappy) var(--lf-ease-standard),
-      border-color var(--lf-time-snappy) var(--lf-ease-standard);
-  }
 
-  .lf-editorial .lf-nav__cmdk:hover kbd {
-    color: var(--lf-bone);
-    border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
-  }
-
-  .lf-editorial .lf-nav__cmdk:focus-visible {
-    outline: 2px solid var(--lf-fight);
-    outline-offset: 2px;
-    border-radius: var(--lf-radius-sm);
-  }
 }

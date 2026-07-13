@@ -3,7 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
 import PhoneAction from "./PhoneAction";
 import { useOpenNow } from "@/lib/openNow";
-import { openCommandPalette } from "@/lib/palette";
 import "./QuietNav.css";
 
 const NAV_LINKS = [
@@ -121,22 +120,18 @@ export default function QuietNav() {
           ))}
         </nav>
 
+        {/* Kept deliberately quiet: brand, links, one phone line, menu.
+            The ⌘K chip and the open-now pill were chrome clutter — the
+            palette still opens from the keyboard, and the footer status
+            strip carries the open/closed reading. */}
         <div className="lf-nav__actions">
-          <OpenNowBadge className="lf-open--nav" />
-
-          <PhoneAction className="lf-nav__phone" align="right">
-            <span className="lf-nav__phone-label">Call or text</span>
+          <PhoneAction
+            className="lf-nav__phone"
+            align="right"
+            ariaLabel="Call or text (646) 360-0318"
+          >
             <span className="lf-nav__phone-number">(646) 360-0318</span>
           </PhoneAction>
-
-          <button
-            type="button"
-            className="lf-nav__cmdk"
-            aria-label="Open quick navigation (Command K)"
-            onClick={openCommandPalette}
-          >
-            <kbd aria-hidden="true">⌘K</kbd>
-          </button>
 
           <button
             ref={toggleRef}
