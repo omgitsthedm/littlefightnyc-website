@@ -515,7 +515,7 @@ section[aria-label="Template trap"] ul li::before {
   z-index: 1;
 }
 
-/* ---------- 11. Fit-check band (final CTA) ---------- */
+/* ---------- 11. Tech-audit band (final CTA) ---------- */
 .tech-audit-band {
   position: relative;
   background: linear-gradient(135deg, rgba(254, 88, 0, 0.08) 0%, rgba(8, 11, 20, 0.6) 100%) !important;

@@ -81,7 +81,7 @@
       ballpark: "Level 4: Project build",
     },
     "Tool / Software Decision": {
-      short: "The monthly bill needs a fit check.",
+      short: "The monthly bill needs a tech audit.",
       early:
         "This sounds like a software cost question. The useful question is not whether the software is good in general. It is whether it helps enough to justify the bill.",
       firstCheck: [
