@@ -1,10 +1,18 @@
 {
+  "id": "/",
   "name": "Little Fight NYC",
   "short_name": "Little Fight",
   "description": "Websites, IT support, Google visibility, and better systems for New York small businesses.",
+  "dir": "ltr",
+  "lang": "en",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
   "background_color": "#050507",
   "theme_color": "#050507",
   "orientation": "portrait-primary",
@@ -24,6 +32,103 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-monochrome-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "monochrome"
+    },
+    {
+      "src": "/icon-monochrome-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "monochrome"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-home-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Little Fight NYC home"
+    },
+    {
+      "src": "/screenshot-services-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Services overview"
+    },
+    {
+      "src": "/screenshot-audit-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tech Audit intake"
+    },
+    {
+      "src": "/screenshot-home-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Little Fight NYC home"
+    },
+    {
+      "src": "/screenshot-services-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Services overview"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tech Audit",
+      "short_name": "Audit",
+      "description": "Get a fast first read on what to fix",
+      "url": "/tech-audit/",
+      "icons": [
+        {
+          "src": "/icon-monochrome-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "description": "See how we help NYC small businesses",
+      "url": "/services/",
+      "icons": [
+        {
+          "src": "/icon-monochrome-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Call, text, or message Little Fight",
+      "url": "/contact/",
+      "icons": [
+        {
+          "src": "/icon-monochrome-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/tech-audit/",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }

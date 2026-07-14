@@ -39,7 +39,7 @@ POS, network, email, computer, smart-home support. $200/hour on-location after p
 
 ## How to start
 
-The Fit Check is our universal intake — 60-second conversational form (web) or voice (phone). Real human reply within 2 hours, NYC business hours. https://littlefightnyc.com/fit-check/
+The Tech Audit is our universal intake — 60-second conversational form (web) or voice (phone). Real human reply within 2 hours, NYC business hours. https://littlefightnyc.com/tech-audit/
 
 ## Who we serve
 
@@ -48,7 +48,7 @@ Owner-operated NYC businesses and teams under 50, including restaurants, bars, s
 ## Key pages
 
 - Homepage: https://littlefightnyc.com/
-- Fit Check intake: https://littlefightnyc.com/fit-check/
+- Tech Audit intake: https://littlefightnyc.com/tech-audit/
 - Websites: https://littlefightnyc.com/websites/
 - Custom Systems: https://littlefightnyc.com/systems/
 - Consulting: https://littlefightnyc.com/consulting/
@@ -184,9 +184,9 @@ Owner-operated NYC businesses and teams under 50, including restaurants, bars, s
 
 - Phone: (646) 360-0318
 - Email: hello@littlefightnyc.com
-- Voice + web Fit Check: https://littlefightnyc.com/fit-check/
+- Voice + web Tech Audit: https://littlefightnyc.com/tech-audit/
 - AI assistant: https://littlefightnyc.com/ask/
 
 ## Technology
 
-Static HTML/CSS/JS website on Netlify. Twilio voice + web Fit Check intake. Anthropic-powered Ask Little Fight assistant. Schema: Organization, LocalBusiness, Service (per quadrant), FAQPage, Person (David Marsh), Article, BreadcrumbList. No tracking beyond consent-first GA4.
+Static HTML/CSS/JS website on Netlify. Twilio voice + web Tech Audit intake. Anthropic-powered Ask Little Fight assistant. Schema: Organization, LocalBusiness, Service (per quadrant), FAQPage, Person (David Marsh), Article, BreadcrumbList. No tracking beyond consent-first GA4.

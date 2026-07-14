@@ -120,11 +120,9 @@ export default function QuietNav() {
           ))}
         </nav>
 
-        {/* Kept deliberately quiet: brand, links, one phone line, menu.
-            The ⌘K chip and the open-now pill were chrome clutter — the
-            palette still opens from the keyboard, and the footer status
-            strip carries the open/closed reading. */}
         <div className="lf-nav__actions">
+          <OpenNowBadge className="lf-nav__open" />
+
           <PhoneAction
             className="lf-nav__phone"
             align="right"
@@ -132,6 +130,17 @@ export default function QuietNav() {
           >
             <span className="lf-nav__phone-number">(646) 360-0318</span>
           </PhoneAction>
+
+          <Link
+            to="/tech-audit/?intent=website"
+            className="lf-nav__start"
+            data-lf-event="website_plan_intent"
+            data-lf-label="nav_desktop"
+            viewTransition
+          >
+            Start a project
+            <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
+          </Link>
 
           <button
             ref={toggleRef}

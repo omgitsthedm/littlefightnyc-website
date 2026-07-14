@@ -510,7 +510,7 @@ export const agencyProcess = [
   },
 ];
 
-export const fitRoutes = [
+export const auditRoutes = [
   {
     label: "I need a website that brings in business",
     copy: "The current site is missing, dated, hard to find, or not turning attention into calls and bookings.",

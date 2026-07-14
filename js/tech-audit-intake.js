@@ -1,8 +1,8 @@
 (() => {
-  const app = document.querySelector("[data-fit-check-app]");
+  const app = document.querySelector("[data-tech-audit-app]");
   if (!app) return;
 
-  const form = document.getElementById("fit-check-intake");
+  const form = document.getElementById("tech-audit-intake");
   if (!form) return;
 
   const CATEGORIES = [
@@ -486,7 +486,7 @@
       window.setTimeout(() => focusable.focus({ preventScroll: true }), 80);
     }
 
-    track(`fit_check_${name}_shown`, {
+    track(`tech_audit_${name}_shown`, {
       primary_category: state.primaryCategory,
       urgency_level: state.urgencyLevel,
     });
@@ -562,9 +562,9 @@
       return "Website review";
     }
     if (category === "Tool / Software Decision") return "Software savings review";
-    if (category === "Business System Build") return "Fit Check call";
+    if (category === "Business System Build") return "Tech Audit call";
     if (category === "Local Search / Visibility") return "Google visibility review";
-    return "Fit Check call";
+    return "Tech Audit call";
   }
 
   function inferKcrb(type) {
@@ -680,7 +680,7 @@
     classify();
     updateSensitiveWarning();
     updateLiveBrief();
-    track("fit_check_started", {
+    track("tech_audit_started", {
       selected_entry: state.selectedEntry,
       primary_category: state.primaryCategory,
       plain_text_entered: Boolean(state.initialProblem),
@@ -693,7 +693,7 @@
     classify();
     updateLiveBrief();
     buildQuestionQueue();
-    track("fit_check_urgency_selected", {
+    track("tech_audit_urgency_selected", {
       urgency_level: value,
       primary_category: state.primaryCategory,
     });
@@ -777,7 +777,7 @@
     }
 
     if (value) state.answers[question.id] = value;
-    track("fit_check_question_answered", {
+    track("tech_audit_question_answered", {
       question_id: question.id,
       skipped: !value,
       primary_category: state.primaryCategory,
@@ -831,7 +831,7 @@
         </div>
       `;
     }
-    track("fit_check_result_generated", {
+    track("tech_audit_result_generated", {
       primary_category: result.primary_category,
       urgency_level: result.urgency_level,
       ballpark_type: result.ballpark_type,
@@ -881,7 +881,7 @@
   function buildPayload() {
     return {
       intake_mode: "website",
-      source: "fit-check-page",
+      source: "tech-audit-page",
       page_url: window.location.href,
       selected_entry: state.selectedEntry,
       initial_problem: state.initialProblem,
@@ -960,7 +960,7 @@
   async function submitNetlifyBackup(payload, result) {
     syncHiddenFields(payload, result);
     const formData = new FormData(form);
-    formData.set("form-name", form.getAttribute("name") || "fit-check");
+    formData.set("form-name", form.getAttribute("name") || "tech-audit");
     formData.set("ai_result_json", JSON.stringify(result));
     try {
       await fetch("/", {
@@ -993,7 +993,7 @@
         tool_opportunity: state.primaryCategory === "Tool / Software Decision" ? 5 : 2,
       },
       follow_up_email: {
-        subject: "Re: Little Fight Fit Check",
+        subject: "Re: Little Fight Tech Audit",
         body: "Thanks for walking through the setup. David should review the site, tools, and daily work before confirming scope.",
       },
       human_review_flags: ["Fallback local result used"],
@@ -1001,7 +1001,7 @@
     };
   }
 
-  async function submitFitCheck() {
+  async function submitTechAudit() {
     if (!validateContact()) return;
 
     const payload = buildPayload();
@@ -1012,13 +1012,13 @@
       submitButton.textContent = "Building the brief...";
     }
 
-    track("fit_check_contact_submitted", {
+    track("tech_audit_contact_submitted", {
       primary_category: state.primaryCategory,
       urgency_level: state.urgencyLevel,
     });
 
     try {
-      const response = await postJson("/api/fit-check/submit", payload);
+      const response = await postJson("/api/tech-audit/submit", payload);
       if (response?.ok && response.result) {
         result = response.result;
       }
@@ -1032,7 +1032,7 @@
     state.result = result;
     await submitNetlifyBackup(payload, result);
     renderFinalResult(result);
-    track("fit_check_lead_saved", {
+    track("tech_audit_lead_saved", {
       primary_category: result.primary_category,
       urgency_level: result.urgency_level,
       ballpark_type: result.ballpark_type,
@@ -1070,7 +1070,7 @@
         </article>
         <article>
           <h3>What happens next</h3>
-          <p>David will review this Fit Check brief before recommending the next move.</p>
+          <p>David will review this Tech Audit brief before recommending the next move.</p>
           <p class="fit-disclaimer">${escapeHtml(result.disclaimer || "This is not a quote.")}</p>
         </article>
       </div>
@@ -1121,11 +1121,11 @@
   app.querySelector("[data-fit-readback-next]")?.addEventListener("click", () => {
     setScreen("contact");
   });
-  submitButton?.addEventListener("click", submitFitCheck);
+  submitButton?.addEventListener("click", submitTechAudit);
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    submitFitCheck();
+    submitTechAudit();
   });
 
   updateLiveBrief(fallbackResult());

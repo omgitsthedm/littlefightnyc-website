@@ -1,9 +1,10 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniToc, { type TocItem } from "@/components/dataviz/MiniToc";
 import { READ_MINUTES, WORD_COUNT } from "@/components/dataviz/journalStats";
+import ShareButton from "@/components/ShareButton";
 import journal from "@/data/journal.json";
 import { POST_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
@@ -83,6 +84,7 @@ function preparePostBody(post: Post): { html: string; toc: TocItem[] } {
 
 export default function JournalPost() {
   const { slug } = useParams();
+  const { pathname } = useLocation();
   const posts = journal as unknown as Post[];
   const post = posts.find((p) => p.slug === slug);
 
@@ -147,6 +149,13 @@ export default function JournalPost() {
             <span className="lf-journal__read lf-post__byline-read">
               ~{READ_MINUTES[post.slug]} min read
             </span>
+            <span aria-hidden="true"> · </span>
+            <ShareButton
+              title={post.title}
+              text={post.description}
+              url={`https://littlefightnyc.com${pathname}`}
+              label="Share"
+            />
           </p>
 
           <div

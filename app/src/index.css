@@ -34,8 +34,62 @@ canvas {
 
 /* Route-transition fallback rendered by App.tsx <RouteLoading>. */
 .route-loading {
-  min-height: calc(100svh - 96px);
-  padding: clamp(64px, 12vw, 140px) 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: clamp(64px, 12vw, 140px) 24px;
+  background: #050507;
+  color: #f0f0ec;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  text-align: center;
+}
+
+.route-loading__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.route-loading__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f97316;
+  opacity: 0.35;
+  animation: route-loading-pulse 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+.route-loading__dot:nth-child(2) { animation-delay: 0.15s; }
+.route-loading__dot:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes route-loading-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.route-loading__label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f97316;
+}
+
+.route-loading__line {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #a1a1aa;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loading__dot {
+    animation: none;
+    opacity: 0.8;
+  }
 }
 
 /* Keyboard skip link (live editorial shells restyle within .lf-editorial). */

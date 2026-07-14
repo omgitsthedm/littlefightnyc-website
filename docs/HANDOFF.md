@@ -6,7 +6,7 @@
 
 Little Fight NYC is now positioned around right-sized websites, tools, local visibility, and business systems for New York businesses. On-demand support remains part of the offer, but it is no longer the headline identity.
 
-The live site is a multi-page static HTML/CSS/JS website deployed to Netlify. The current conversion path centers on `/fit-check/`, plus a short Twilio-compatible Fit Check voice intake at `/api/fit-check/voice`.
+The live site is a multi-page static HTML/CSS/JS website deployed to Netlify. The current conversion path centers on `/tech-audit/`, plus a short Twilio-compatible Tech Audit voice intake at `/api/tech-audit/voice`.
 
 For the newest operational handoff, use `CLAUDE.md` in the repo root first. This document is older project context and should be treated as secondary.
 
@@ -32,9 +32,9 @@ For the newest operational handoff, use `CLAUDE.md` in the repo root first. This
 
 ### Homepage (`/index.html`)
 
-The homepage now leads with the right-sized systems positioning, the Keep / Connect / Replace / Build framework, the Fit Check offer, software guides, and the routing-to-revenue model.
+The homepage now leads with the right-sized systems positioning, the Keep / Connect / Replace / Build framework, the Tech Audit offer, software guides, and the routing-to-revenue model.
 
-The old hash-route homepage notes are no longer current. The acquisition paths now live as crawlable page routes such as `/fit-check/`, `/business-systems/`, `/websites/`, `/local-search/`, `/software-guides/`, `/services/`, and `/solutions/`.
+The old hash-route homepage notes are no longer current. The acquisition paths now live as crawlable page routes such as `/tech-audit/`, `/business-systems/`, `/websites/`, `/local-search/`, `/software-guides/`, `/services/`, and `/solutions/`.
 
 ### Standalone Pages (directory-based pretty URLs)
 

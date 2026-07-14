@@ -61,7 +61,7 @@ David: "every page needs to be real and have context and visuals — more than 2
 
 David: the site had no "wow / connect-the-dots" moment and the Services page was "a mess" with misrepresented work. Shipped `925d1b2` + `a169a97`, live-verified desktop + mobile.
 
-- **New home section "The Fight"** (`components/editorial/TheFight.tsx/.css`, first in the deferred block right after the hero). The mission, told as an argument: *"The chains brought a tech team. The corner store never got one."* → a muted **WHAT THEY BROUGHT** card (Whole Foods / Great Clips / Uber Eats / DoorDash / PE roll-ups) **vs** an orange-championed **WHO WE'RE IN THE CORNER FOR** card (laundromat / hardware store / mom-and-pop diner / dental practice / corner florist) → the answer (systems the big guys have for a fraction of a big firm's bill; kill the pen-and-paper + spreadsheets; adapt to how you run; NYC ethos but the fight travels) → CTA "Put us in your corner" → /fit-check/.
+- **New home section "The Fight"** (`components/editorial/TheFight.tsx/.css`, first in the deferred block right after the hero). The mission, told as an argument: *"The chains brought a tech team. The corner store never got one."* → a muted **WHAT THEY BROUGHT** card (Whole Foods / Great Clips / Uber Eats / DoorDash / PE roll-ups) **vs** an orange-championed **WHO WE'RE IN THE CORNER FOR** card (laundromat / hardware store / mom-and-pop diner / dental practice / corner florist) → the answer (systems the big guys have for a fraction of a big firm's bill; kill the pen-and-paper + spreadsheets; adapt to how you run; NYC ethos but the fight travels) → CTA "Put us in your corner" → /tech-audit/.
 - **VERA removed entirely** (studioProjects + `/studio/vera/` prerender; both 404 live). It was fabricated on-site as a "listing intelligence pipeline" powering Local Search — in reality a killed NYC apartment-hunter that never shipped. False claim + dead → cannot be a "true win."
 - **3D Schematics removed** from the Services/Studio surface — an explicitly-unproven sandbox ("the bet is not proven"), fails the true-wins bar for the flagship shopfront.
 - **Dakota relabeled** `kind` → **"AI client finder"** (was "Autonomous sales agent"), per David's exact framing.
@@ -86,7 +86,7 @@ Netlify project:
 Read `SOURCE_OF_TRUTH.md` before major edits.
 
 ## Latest Handoff
-Read `HANDOFF.md` before making major edits. It contains the May 6, 2026 Claude Code handoff with the current live deploy, completed overhaul work, Fit Check/phone intake state, SEO/AEO answer engine, case studies, verification results, concerns, and next work queue.
+Read `HANDOFF.md` before making major edits. It contains the May 6, 2026 Claude Code handoff with the current live deploy, completed overhaul work, Tech Audit/phone intake state, SEO/AEO answer engine, case studies, verification results, concerns, and next work queue.
 
 ## Client
 Little Fight NYC
@@ -126,7 +126,7 @@ Premium midnight blue base, Little Fight orange as the lead signal, animated ora
 **Design system — Axiom Momentum (product-OS soul).** David approved: scope = "formalize + evolve"; soul = "go Axiom product-OS."
 - Tokens refactored to v6 in `src/styles/editorial/tokens.css`: bg `#050507`, surface `#1A1C23`, orange `#F97316` (was `#FF6F1F`), blue `#3B82F6` accent (now prominent), white/`#A1A1AA` text, border `#27272A`; added 32px radius tokens + snappy `180ms` motion. This SUPERSEDES the old midnight-blue/`#FE5800` palette FOR THIS SITE (a deliberate pivot from the agency default; documented in `app/DESIGN.md`).
 - Fraunces retired → **Inter** carries display + body (weights 700/800 + italic added); dropped ~80KB from first paint. `--lf-serif` now points to Inter.
-- New `MomentumSection` bento feature section on the home page (32px cards, orange icon chips, mono labels, blue Fit Check CTA, staggered reveal, reduced-motion safe).
+- New `MomentumSection` bento feature section on the home page (32px cards, orange icon chips, mono labels, blue Tech Audit CTA, staggered reveal, reduced-motion safe).
 - Full system documented in `app/DESIGN.md` (Aura frontmatter format).
 - Verified: `npm run build` green (tsc + vite + prerender), local render check (bg `#050507`, Inter h1, 0 console errors, no overflow, tap targets ≥48px on the new CTA).
 
@@ -141,17 +141,17 @@ Multi-agent audit (design/copy/code) + a 26-agent polish workflow, shipped to ma
 - **Core problem fixed:** the site was mid-migration — Momentum on 3 surfaces vs old editorial-magazine on ~90%. Converged all 24 inner-page heroes (`PageHero`) off the brown ground onto `#050507`, and VisualIndex + `legacy-overrides.css` cards to the 32px Momentum language.
 - **Foundation:** deleted dead `index.css` (1280→74 lines) + 22 dead component files + Fraunces dep; swept 103 no-op `opsz` declarations; `--lf-bone-dim` → `#8A8A94` (WCAG AA); added `--lf-chip`/`--lf-lift` tokens; loaded Inter 900.
 - **Chrome:** added the primary nav (`QuietNav`, desktop links + accessible mobile drawer) and the **mandated LiFi footer signature line** (both were missing).
-- **FitCheck:** submit is now a Momentum orange pill with focus/error/success/disabled/loading states + client validation.
+- **TechAudit:** submit is now a Momentum orange pill with focus/error/success/disabled/loading states + client validation.
 - **Copy/SEO/perf:** fixed 2 user-facing leaks, meta/voice/microcopy rewrites, Services/Studio/CaseStudies srcset (~400KB mobile), home hero preload, `/blog`→`/journal` links, LocalBusiness `postalCode` (streetAddress omitted — service-area business, no public street; add real registered address later if wanted).
-- **⚠️ Button-reset gotcha (hit 3×):** `.lf-editorial button` reset (`background/border/padding: none`, specificity 0,1,1) silently strips any custom `<button>` styling (pill fill, card bg) unless the rule is scoped under `.lf-editorial` (→ 0,2,0). QuietContact/QuietHero channels and the FitCheck submit all needed this. Any NEW styled `<button>` must scope its base rule under `.lf-editorial`.
-- Verified live: `/services/`, `/fit-check/`, home — hero `#050507`, nav/footer/pill correct, 32px cards, no overflow, 0 console errors; security headers + schema live.
+- **⚠️ Button-reset gotcha (hit 3×):** `.lf-editorial button` reset (`background/border/padding: none`, specificity 0,1,1) silently strips any custom `<button>` styling (pill fill, card bg) unless the rule is scoped under `.lf-editorial` (→ 0,2,0). QuietContact/QuietHero channels and the TechAudit submit all needed this. Any NEW styled `<button>` must scope its base rule under `.lf-editorial`.
+- Verified live: `/services/`, `/tech-audit/`, home — hero `#050507`, nav/footer/pill correct, 32px cards, no overflow, 0 console errors; security headers + schema live.
 
 ## 2026-07-07 — Tool-augmented pass (reconciled) + real imagery (LIVE)
 
 A "TOOL RUNBOOK" (Firecrawl/OpenSEO/Immich/agent-browser, Astro rebuild) was handed over. **Reconciled: the runbook targets an OLDER site state** — the current React site already has real photos (136 assets), a real og-image, no CSS-shape hero, and today's polish. David chose "tools on the current site, no rebuild." Skipped Firecrawl (inventory redundant — not migrating) and the heavy Immich stack (image optimization done directly with cwebp/magick).
 
 - **Real imagery shipped (commit `2c5963b`):** og-image → composited 1200×630 of the real Little Fight NYC coaster-at-a-bar ("Your website called. It needs us." + QR) on brand-black — every social share is now an authentic branded artifact. About hero → real Empire Diner NYC-night photo (was generic `local-business.webp` stock), responsive webp 480/640/900/1200. Verified live.
-- **Form-capture QA PASSED:** live Fit Check submit (`fit-check-scratch`) → Netlify capture → `/thanks/` redirect works end-to-end. Used Playwright (not agent-browser — same outcome, no redundant tooling). A QA test lead was submitted (obvious "QA TEST — please ignore" markers).
+- **Form-capture QA PASSED:** live Tech Audit submit (`tech-audit-scratch`) → Netlify capture → `/thanks/` redirect works end-to-end. Used Playwright (not agent-browser — same outcome, no redundant tooling). A QA test lead was submitted (obvious "QA TEST — please ignore" markers).
 ## 2026-07-07 — Premium elevation (Apple-tier), waves shipping
 
 Standing bar set by David: littlefightnyc.com is the flagship shopfront — Apple-designed-a-service-site premium, proactively elevated, never just patched. **Orange = signal (text/buttons/accents); background bursts = blue.** Editorial inspiration (do NOT integrate the cyan/magenta/Bodoni portfolio template — mine its *principles*): sequence-as-argument, white-space-as-punctuation, full-bleed moments earn drama, case-studies-as-narrative, asymmetric grids, restrained motion. Plus visual data explainers + premium cross-device scroll.

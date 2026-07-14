@@ -107,6 +107,10 @@ function env(key: string): string {
   return typeof process !== "undefined" ? process.env[key] || "" : "";
 }
 
+function auditEnv(key: string): string {
+  return env(key);
+}
+
 function cleanText(value: unknown, limit = 900): string {
   if (value === null || value === undefined) return "";
   return String(value)
@@ -160,11 +164,11 @@ function twiml(parts: string[]): string {
 
 function absoluteUrl(req: Request, query: string): string {
   const url = new URL(req.url);
-  return `${url.origin}/api/fit-check/voice${query}`;
+  return `${url.origin}/api/tech-audit/voice${query}`;
 }
 
-function publicFitCheckUrl(): string {
-  return cleanText(env("FIT_CHECK_URL") || "https://littlefightnyc.com/fit-check/", 500);
+function publicTechAuditUrl(): string {
+  return cleanText(auditEnv("TECH_AUDIT_URL") || "https://littlefightnyc.com/tech-audit/", 500);
 }
 
 function gather(req: Request, prompt: string, step: string, state: VoiceState, options: {
@@ -346,9 +350,9 @@ function buildPayload(state: VoiceState, params: URLSearchParams): JsonRecord {
   };
 }
 
-async function submitFitCheck(req: Request, payload: JsonRecord): Promise<JsonRecord | null> {
+async function submitTechAudit(req: Request, payload: JsonRecord): Promise<JsonRecord | null> {
   const url = new URL(req.url);
-  const endpoint = `${url.origin}/api/fit-check/submit`;
+  const endpoint = `${url.origin}/api/tech-audit/submit`;
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -369,9 +373,9 @@ async function submitBackupForm(req: Request, state: VoiceState, result: JsonRec
     : {}) as JsonRecord;
 
   const form = new URLSearchParams();
-  form.set("form-name", "fit-check");
+  form.set("form-name", "tech-audit");
   form.set("name", cleanText(state.contact) || "Voice caller");
-  form.set("business_name", cleanText(state.contact) || "Voice Fit Check");
+  form.set("business_name", cleanText(state.contact) || "Voice Tech Audit");
   form.set("phone", cleanText(state.caller));
   form.set("email", "");
   form.set("business_type", "");
@@ -455,7 +459,7 @@ async function sendTwilioSms(to: string, body: string): Promise<{
 }
 
 async function notifyTeamBySms(subject: string, state: VoiceState, details: string[] = []) {
-  const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
+  const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || auditEnv("TECH_AUDIT_URGENT_FORWARD_NUMBER"), 80);
   if (!notifyTo) return { configured: false, sent: false };
 
   const lines = [
@@ -475,9 +479,9 @@ function businessHoursState(now = new Date()): {
   open: boolean;
   label: string;
 } {
-  const timeZone = env("FIT_CHECK_BUSINESS_TIMEZONE") || "America/New_York";
-  const startHour = Number(env("FIT_CHECK_BUSINESS_START_HOUR") || 9);
-  const endHour = Number(env("FIT_CHECK_BUSINESS_END_HOUR") || 18);
+  const timeZone = auditEnv("TECH_AUDIT_BUSINESS_TIMEZONE") || "America/New_York";
+  const startHour = Number(auditEnv("TECH_AUDIT_BUSINESS_START_HOUR") || 9);
+  const endHour = Number(auditEnv("TECH_AUDIT_BUSINESS_END_HOUR") || 18);
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone,
     weekday: "short",
@@ -496,7 +500,7 @@ function businessHoursState(now = new Date()): {
 }
 
 function conversionPathForVoice(result: JsonRecord | null, state: VoiceState): {
-  stage: "urgent_support" | "fit_check" | "light_review";
+  stage: "urgent_support" | "tech_audit" | "light_review";
   label: string;
   url: string;
 } {
@@ -505,9 +509,9 @@ function conversionPathForVoice(result: JsonRecord | null, state: VoiceState): {
     : null;
   const category = cleanText(resultRecord?.primary_category) || categoryNames[state.selectedEntry || "unsure"];
   const urgency = cleanText(resultRecord?.urgency_level) || state.urgencyLevel || "planned_improvement";
-  const urgentUrl = cleanText(env("FIT_CHECK_URGENT_SUPPORT_URL") || env("URGENT_SUPPORT_PAYMENT_URL"), 500);
-  const fitCheckUrl = cleanText(env("FIT_CHECK_BOOKING_URL") || env("FIT_CHECK_PAYMENT_URL"), 500);
-  const fallbackUrl = publicFitCheckUrl();
+  const urgentUrl = cleanText(auditEnv("TECH_AUDIT_URGENT_SUPPORT_URL") || auditEnv("URGENT_SUPPORT_PAYMENT_URL"), 500);
+  const techAuditUrl = cleanText(auditEnv("TECH_AUDIT_BOOKING_URL") || auditEnv("TECH_AUDIT_PAYMENT_URL"), 500);
+  const fallbackUrl = publicTechAuditUrl();
 
   if (urgency === "emergency" || category === "Quick Fix") {
     return {
@@ -526,20 +530,20 @@ function conversionPathForVoice(result: JsonRecord | null, state: VoiceState): {
   }
 
   return {
-    stage: "fit_check",
-    label: fitCheckUrl ? "Book a Fit Check" : "Fit Check follow-up",
-    url: fitCheckUrl || fallbackUrl,
+    stage: "tech_audit",
+    label: techAuditUrl ? "Book a Tech Audit" : "Tech Audit follow-up",
+    url: techAuditUrl || fallbackUrl,
   };
 }
 
 async function sendCallRecoverySms(params: URLSearchParams): Promise<void> {
-  if (env("FIT_CHECK_RECOVERY_SMS_ENABLED") !== "true") return;
+  if (auditEnv("TECH_AUDIT_RECOVERY_SMS_ENABLED") !== "true") return;
   const caller = cleanText(paramValue(params, "From") || paramValue(params, "Caller"), 80);
   if (!isE164(caller)) return;
 
   await sendTwilioSms(
     caller,
-    `Little Fight NYC: looks like the call dropped. Finish the Fit Check here: ${publicFitCheckUrl()}`,
+    `Little Fight NYC: looks like the call dropped. Finish the Tech Audit here: ${publicTechAuditUrl()}`,
   );
 }
 
@@ -586,7 +590,7 @@ function candidateSignatureUrls(req: Request): string[] {
   const urls = new Set<string>([req.url]);
   const forwardedHost = headerValue(req, "x-forwarded-host") || headerValue(req, "host");
   const forwardedProto = headerValue(req, "x-forwarded-proto") || "https";
-  const publicVoiceUrl = env("TWILIO_PUBLIC_VOICE_URL") || "https://littlefightnyc.com/api/fit-check/voice";
+  const publicVoiceUrl = env("TWILIO_PUBLIC_VOICE_URL") || "https://littlefightnyc.com/api/tech-audit/voice";
 
   if (forwardedHost) {
     urls.add(`${forwardedProto}://${forwardedHost}${url.pathname}${url.search}`);
@@ -665,7 +669,7 @@ function finalClientLine(result: JsonRecord | null, state: VoiceState): string {
     "Not Sure Yet";
 
   const conversion = conversionPathForVoice(result, state);
-  const callerSmsEnabled = env("FIT_CHECK_CALLER_SMS_ENABLED") === "true" && isE164(cleanText(state.caller));
+  const callerSmsEnabled = auditEnv("TECH_AUDIT_CALLER_SMS_ENABLED") === "true" && isE164(cleanText(state.caller));
 
   if (conversion.stage === "urgent_support") {
     return callerSmsEnabled
@@ -673,10 +677,10 @@ function finalClientLine(result: JsonRecord | null, state: VoiceState): string {
       : `Got it. This sounds urgent. I am alerting Little Fight NYC now. This is not a quote.`;
   }
 
-  if (conversion.stage === "fit_check") {
+  if (conversion.stage === "tech_audit") {
     return callerSmsEnabled
-      ? `This sounds like a Fit Check. I am texting you the next step and sending Little Fight NYC the useful version. This is not a quote.`
-      : `This sounds like a Fit Check. I am sending Little Fight NYC the useful version. This is not a quote.`;
+      ? `This sounds like a Tech Audit. I am texting you the next step and sending Little Fight NYC the useful version. This is not a quote.`
+      : `This sounds like a Tech Audit. I am sending Little Fight NYC the useful version. This is not a quote.`;
   }
 
   if (cleanText(resultRecord?.client_facing_summary)) {
@@ -688,10 +692,10 @@ function finalClientLine(result: JsonRecord | null, state: VoiceState): string {
 
 function urgentDial(req: Request, state: VoiceState): string {
   if (state.urgencyLevel !== "emergency") return "";
-  const forwardNumber = cleanText(env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
+  const forwardNumber = cleanText(auditEnv("TECH_AUDIT_URGENT_FORWARD_NUMBER"), 80);
   if (!forwardNumber) return "";
   const hours = businessHoursState();
-  const transferAfterHours = env("FIT_CHECK_TRANSFER_AFTER_HOURS") === "true";
+  const transferAfterHours = auditEnv("TECH_AUDIT_TRANSFER_AFTER_HOURS") === "true";
   if (!hours.open && !transferAfterHours) {
     return say("It is outside normal hours, so I am sending the urgent alert instead of transferring the call.");
   }
@@ -712,11 +716,11 @@ async function handleStatusCallback(params: URLSearchParams): Promise<Response> 
   const duration = Number(paramValue(params, "CallDuration") || paramValue(params, "Duration") || 0);
   const statusLabel = callStatus || "status";
 
-  await notifyTeamBySms(`Fit Check call ${statusLabel}`, state, [
+  await notifyTeamBySms(`Tech Audit call ${statusLabel}`, state, [
     Number.isFinite(duration) && duration > 0 ? `Duration: ${duration}s` : "",
   ]);
 
-  const recoveryThreshold = Number(env("FIT_CHECK_RECOVERY_THRESHOLD_SECONDS") || 35);
+  const recoveryThreshold = Number(auditEnv("TECH_AUDIT_RECOVERY_THRESHOLD_SECONDS") || 35);
   if (
     callStatus === "completed" &&
     Number.isFinite(duration) &&
@@ -738,7 +742,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   state.callSid = cleanText(state.callSid || paramValue(params, "CallSid"), 100);
 
   if (step === "health") {
-    return new Response(JSON.stringify({ ok: true, endpoint: "fit-check-voice" }), {
+    return new Response(JSON.stringify({ ok: true, endpoint: "tech-audit-voice" }), {
       headers: jsonHeaders,
     });
   }
@@ -748,7 +752,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   }
 
   if (step === "start") {
-    await notifyTeamBySms("Incoming Fit Check call", state);
+    await notifyTeamBySms("Incoming Tech Audit call", state);
 
     return response(
       twiml([
@@ -810,7 +814,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   if (step === "no_ai_message") {
     state.problem = input || "Caller declined AI summary and did not leave a clear message.";
     await submitNoAiMessage(req, state);
-    await notifyTeamBySms("Fit Check caller left a message", state);
+    await notifyTeamBySms("Tech Audit caller left a message", state);
     return response(
       twiml([
         say("Thanks. I have the short message and caller ID if available. Little Fight NYC can follow up from there."),
@@ -908,7 +912,7 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   if (step === "contact") {
     state.contact = input;
     const payload = buildPayload(state, params);
-    const result = await submitFitCheck(req, payload);
+    const result = await submitTechAudit(req, payload);
     await submitBackupForm(req, state, result);
 
     return response(
@@ -924,10 +928,10 @@ async function handleStep(req: Request, params: URLSearchParams): Promise<Respon
   }
 
   if (step === "dial_done") {
-    return response(twiml([say("The Fit Check brief has been captured. Thanks for calling Little Fight NYC."), hangup()]));
+    return response(twiml([say("The Tech Audit brief has been captured. Thanks for calling Little Fight NYC."), hangup()]));
   }
 
-  return response(twiml([say("I hit a routing issue, so this needs human review. Please call Little Fight again or use the Fit Check page."), hangup()]));
+  return response(twiml([say("I hit a routing issue, so this needs human review. Please call Little Fight again or use the Tech Audit page."), hangup()]));
 }
 
 export default async (req: Request) => {
@@ -942,7 +946,7 @@ export default async (req: Request) => {
   }
 
   if (url.searchParams.get("step") === "health") {
-    return new Response(JSON.stringify({ ok: true, endpoint: "fit-check-voice" }), {
+    return new Response(JSON.stringify({ ok: true, endpoint: "tech-audit-voice" }), {
       headers: jsonHeaders,
     });
   }
@@ -956,6 +960,6 @@ export default async (req: Request) => {
 };
 
 export const config = {
-  path: "/api/fit-check/voice",
+  path: "/api/tech-audit/voice",
   method: ["GET", "POST", "OPTIONS"],
 };

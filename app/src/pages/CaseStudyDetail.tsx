@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { ArrowUpRight, Award, Gauge } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
@@ -7,6 +7,7 @@ import StatBlock from "@/components/editorial/StatBlock";
 import QuietContact from "@/components/editorial/QuietContact";
 import DeviceFrame from "@/components/editorial/DeviceFrame";
 import CaseDiagram from "@/components/dataviz/CaseDiagram";
+import ShareButton from "@/components/ShareButton";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { caseStudies, services } from "@/data/site";
@@ -37,6 +38,7 @@ function displayDate(date: string) {
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
+  const { pathname } = useLocation();
   const study = caseStudies.find((s) => s.slug === slug);
 
   const arcRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
@@ -62,6 +64,7 @@ export default function CaseStudyDetail() {
 
   if (!study) return <Navigate to="/examples/#studies" replace />;
 
+  const studyIndex = caseStudies.findIndex((s) => s.slug === study.slug);
   const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 3);
   const published = study.published;
   const updated = study.updated;
@@ -95,6 +98,35 @@ export default function CaseStudyDetail() {
         dek={study.title}
         backdrop={{ src: study.image, alt: "" }}
       />
+
+      <div className="lf-case__hero-band">
+        <div className="lf-case__hero-band-inner">
+          <span className="lf-case__hero-index" aria-hidden="true">
+            {String(studyIndex + 1).padStart(2, "0")}
+          </span>
+          <span className="lf-case__hero-badge">
+            <span className="lf-case__hero-dot" aria-hidden="true" />
+            Shipped
+          </span>
+          <span className="lf-case__hero-actions">
+            <a
+              className="lf-case__hero-live"
+              href={study.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {displayDomain(study.url)}
+              <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
+            </a>
+            <ShareButton
+              title={`${study.client}: ${study.title}`}
+              text={study.title}
+              url={`https://littlefightnyc.com${pathname}`}
+              label="Share"
+            />
+          </span>
+        </div>
+      </div>
 
       <article className="lf-case">
         <div className="lf-case__inner">

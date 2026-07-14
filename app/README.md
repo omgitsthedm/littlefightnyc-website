@@ -6,12 +6,12 @@ It intentionally starts smaller than the current live static site:
 
 - Home
 - Services
-- Fit Check
+- Tech Audit
 - Owner Answers
 - Case Studies
 - Contact
 
-The goal is to establish a clean visual/product foundation before migrating the full SEO/AEO surface, Fit Check backend, phone conversion, schema, sitemap, and Netlify production config.
+The goal is to establish a clean visual/product foundation before migrating the full SEO/AEO surface, Tech Audit backend, phone conversion, schema, sitemap, and Netlify production config.
 
 ## Commands
 
@@ -36,7 +36,7 @@ npm audit --audit-level=moderate
 
 ## Known Next Work
 
-- Wire the Fit Check form to the existing Netlify Function or confirmed Netlify Forms flow.
+- Wire the Tech Audit form to the existing Netlify Function or confirmed Netlify Forms flow.
 - Add real SEO route generation before replacing the static production site.
 - Add schema, sitemap, robots, llms, and OG image handling.
 - Migrate or rebuild the answer engine and case studies.

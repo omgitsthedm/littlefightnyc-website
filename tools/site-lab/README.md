@@ -43,7 +43,7 @@ The custom scanner intentionally combines mechanical and creative signals:
 
 - **Foundation:** title, description, H1, horizontal overflow, load errors.
 - **Access:** axe violations, missing image alt text, tap/call routes.
-- **Conversion:** Fit Check, call, audit, or contact actions above the fold.
+- **Conversion:** Tech Audit, call, audit, or contact actions above the fold.
 - **Visual power:** screenshot edge density, colorfulness, saturation, image density.
 - **Dead-zone risk:** very dark, low-edge, low-color areas that can read as empty black space.
 
@@ -78,12 +78,12 @@ Highest-leverage families from the first run:
 - `industries`: duplicate H1s, contrast, and one weak visual route.
 - `journal`: duplicate H1s on older articles, several dark/dead-zone routes.
 - `glossary`: visually thin term pages.
-- `fit-check`: low visual power and dark-space risk.
+- `tech-audit`: low visual power and dark-space risk.
 - `services`, `field-guide`, and `journal`: image alt text and performance pressure.
 
 Priority performance findings:
 
-- Lighthouse CI warnings: `/services/` 0.80, `/field-guide/` 0.80, `/fit-check/` 0.84, `/journal/read-your-monthly-software-bill/` 0.81.
+- Lighthouse CI warnings: `/services/` 0.80, `/field-guide/` 0.80, `/tech-audit/` 0.84, `/journal/read-your-monthly-software-bill/` 0.81.
 - Unlighthouse priority run passed overall budget scores above 0.84 but failed the strict 80 performance category budget on the same priority routes.
 
 Backstop baseline:

@@ -90,10 +90,12 @@ html[data-vt-route] .lf-page-enter {
 /* Every primary interactive surface presses in slightly when tapped. */
 @media (prefers-reduced-motion: no-preference) {
   .lf-editorial .lf-momentum__cta-button:active,
-  .lf-editorial .lf-fit__submit:active,
+  .lf-editorial .lf-audit__submit:active,
   .lf-editorial .lf-post__cta-row a:active,
   .lf-editorial .lf-contact-block__channel:active,
   .lf-editorial .lf-hero__channel:active,
+  .lf-editorial .lf-hero__action:active,
+  .lf-editorial .lf-nav__start:active,
   .lf-editorial .lf-momentum__card--cap:active,
   .lf-editorial .lf-visual-index__item:active,
   .lf-editorial .lf-work__tile:active {
@@ -109,13 +111,19 @@ html[data-vt-route] .lf-page-enter {
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .lf-editorial .lf-momentum__cta-button,
   .lf-editorial .lf-fight__cta,
-  .lf-editorial .lf-fit__submit {
+  .lf-editorial .lf-audit__submit,
+  .lf-editorial .lf-hero__action--website,
+  .lf-editorial .lf-nav__start,
+  .lf-editorial .lf-nav__panel-fit {
     position: relative;
     overflow: hidden;
   }
   .lf-editorial .lf-momentum__cta-button::after,
   .lf-editorial .lf-fight__cta::after,
-  .lf-editorial .lf-fit__submit::after {
+  .lf-editorial .lf-audit__submit::after,
+  .lf-editorial .lf-hero__action--website::after,
+  .lf-editorial .lf-nav__start::after,
+  .lf-editorial .lf-nav__panel-fit::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -130,7 +138,10 @@ html[data-vt-route] .lf-page-enter {
   }
   .lf-editorial .lf-momentum__cta-button:hover::after,
   .lf-editorial .lf-fight__cta:hover::after,
-  .lf-editorial .lf-fit__submit:hover:not(:disabled)::after {
+  .lf-editorial .lf-audit__submit:hover:not(:disabled)::after,
+  .lf-editorial .lf-hero__action--website:hover::after,
+  .lf-editorial .lf-nav__start:hover::after,
+  .lf-editorial .lf-nav__panel-fit:hover::after {
     animation: lf-cta-sheen 700ms var(--lf-ease-out) 1 both;
   }
 }

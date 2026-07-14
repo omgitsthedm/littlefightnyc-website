@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Globe2, Phone } from "lucide-react";
+import { ArrowUpRight, Globe2, MapPin, Phone, ShieldCheck, Clock } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietHero.css";
 
@@ -150,6 +150,21 @@ export default function QuietHero() {
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </a>
         </div>
+
+        <ul className="lf-hero__trust" aria-label="Why owners choose us">
+          <li>
+            <MapPin size={16} strokeWidth={1.75} aria-hidden="true" />
+            <span>NYC-based, on-site when needed</span>
+          </li>
+          <li>
+            <Clock size={16} strokeWidth={1.75} aria-hidden="true" />
+            <span>2-hour callback window</span>
+          </li>
+          <li>
+            <ShieldCheck size={16} strokeWidth={1.75} aria-hidden="true" />
+            <span>Own your code and data</span>
+          </li>
+        </ul>
       </div>
 
       <div className="lf-hero__marquee" aria-label="A sample of what we fix">

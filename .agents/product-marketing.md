@@ -17,7 +17,7 @@ Small business websites, local IT support, local SEO/AEO, software cleanup, cust
 Service business / local technology agency / founder-led consultancy with custom build capability.
 
 **Business model:**
-Free first consult / Fit Check. Paid scoped work after diagnosis. Approved site proof includes free consult, websites usually shipping within 14 days, 24-hour on-site support when needed, and 2-hour callbacks from 9am-9pm Eastern.
+Free first consult / Tech Audit. Paid scoped work after diagnosis. Approved site proof includes free consult, websites usually shipping within 14 days, 24-hour on-site support when needed, and 2-hour callbacks from 9am-9pm Eastern.
 
 ## Target Audience
 
@@ -87,7 +87,7 @@ Doing nothing, asking a nephew, keeping the spreadsheet, calling platform suppor
 ## Differentiation
 
 **Key differentiators:**
-- Founder-led contact path: call, text, email, or Fit Check.
+- Founder-led contact path: call, text, email, or Tech Audit.
 - Free consult and honest scoping.
 - Local NYC context for owner-run businesses.
 - Practical mix of websites, IT support, local visibility, and systems work.
@@ -154,7 +154,7 @@ They worry the fix will be expensive, disruptive, embarrassing, jargon-heavy, or
 - "Local help that can also build."
 
 **Words to use:**
-Call, text, email, form, tell us what is broken, first hour free, Fit Check, corner shop, small business, NYC, Manhattan, tools the chains use, sized for the corner shop, keep what works, connect what matters, replace what drags, build what fits, fix the path, lower the bill, get found, keep the shop running.
+Call, text, email, form, tell us what is broken, first hour free, Tech Audit, corner shop, small business, NYC, Manhattan, tools the chains use, sized for the corner shop, keep what works, connect what matters, replace what drags, build what fits, fix the path, lower the bill, get found, keep the shop running.
 
 **Words to avoid:**
 Reach out, we'd love to, don't hesitate, trusted partner, best-in-class, industry-leading, unlock, transform, empower, journey, bespoke, curated, tailored, solutions, strategic technology partner, digital transformation, operational optimization, AI-powered synergy, world-class, full-service agency.
@@ -163,7 +163,7 @@ Reach out, we'd love to, don't hesitate, trusted partner, best-in-class, industr
 
 | Term | Meaning |
 |------|---------|
-| Fit Check | Short intake that routes a messy, broken, expensive, or unclear setup to the right next step |
+| Tech Audit | Short intake that routes a messy, broken, expensive, or unclear setup to the right next step |
 | Four channels | Call, text, email, and form shown with equal weight |
 | Keep / connect / replace / build | The decision order for any tech stack or workflow |
 | Local visibility | Google Business Profile, Maps, service pages, reviews, NAP consistency, and answer-engine content |
@@ -214,7 +214,7 @@ No attributed testimonials are approved in this context. Do not write testimonia
 Make Little Fight NYC the differentiated NYC small business tech resource for owners who need the website, tools, support path, Google visibility, or workflow fixed.
 
 **Conversion action:**
-Primary: call or text `(646) 360-0318` for urgent or simple problems. Secondary: start `/fit-check/` when the problem has parts. Also support email to `hello@littlefightnyc.com`.
+Primary: call or text `(646) 360-0318` for urgent or simple problems. Secondary: start `/tech-audit/` when the problem has parts. Also support email to `hello@littlefightnyc.com`.
 
 **Current metrics:**
 Unknown in this context. Do not infer traffic, lead volume, conversion rate, or revenue without analytics access and current data.

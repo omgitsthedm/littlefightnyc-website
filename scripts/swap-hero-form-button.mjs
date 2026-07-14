@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Swap the "Send a message" → /fit-check/ button in hero contact rows
+ * Swap the "Send a message" → /tech-audit/ button in hero contact rows
  * to "Contact form" → /contact/ to keep the 4-channel pattern consistent.
  */
 
@@ -11,7 +11,7 @@ import { join, dirname } from "node:path";
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const SKIP_DIRS = new Set(["dist", "backup", "tmp", "node_modules", ".netlify", ".git"]);
 
-const FROM = '<a href="/fit-check/" class="btn btn-outline" style="text-align:center;">📝 Send a message</a>';
+const FROM = '<a href="/tech-audit/" class="btn btn-outline" style="text-align:center;">📝 Send a message</a>';
 const TO = '<a href="/contact/" class="btn btn-outline" style="text-align:center;">📝 Contact form</a>';
 
 async function* walk(dir, rel = "") {

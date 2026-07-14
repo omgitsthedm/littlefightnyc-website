@@ -88,7 +88,12 @@ export default function CaseStudies() {
                 </DeviceFrame>
               </Link>
               <div className="lf-cases__copy">
-                <p className="lf-cases__type">{study.type}</p>
+                <div className="lf-cases__copy-head">
+                  <p className="lf-cases__type">{study.type}</p>
+                  <span className="lf-cases__index" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
                 <h2 className="lf-cases__title">
                   <Link
                     to={`/case-studies/${study.slug}/`}
@@ -99,6 +104,7 @@ export default function CaseStudies() {
                   </Link>
                 </h2>
                 <p className="lf-cases__deck">{study.title}</p>
+                <span className="lf-cases__result-flag">Shipped</span>
 
                 {/* Outcome-led: the result headline + honest metric chips.
                     The full Problem/Kept/Changed/Result arc lives on the

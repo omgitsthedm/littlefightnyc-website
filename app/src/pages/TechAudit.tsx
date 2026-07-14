@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, CalendarDays, ClipboardCheck, Clock, Flame } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame } from "lucide-react";
 import type { FormEvent } from "react";
 import { useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
-import { fitRoutes } from "@/data/site";
+import { auditRoutes } from "@/data/site";
 import { trackEvent } from "@/lib/analytics";
 import { readAttribution } from "@/lib/attribution";
-import "@/styles/editorial/fitcheck.css";
+import "@/styles/editorial/tech-audit.css";
 
 type FieldName = "name" | "business" | "contact" | "message";
 type Step = 1 | 2 | 3;
@@ -53,7 +53,7 @@ const STEP_TITLES: Record<Step, string> = {
 
 function composeMessage(symptom: string | null, urgency: string | null): string {
   const lines: string[] = [];
-  const route = fitRoutes.find((r) => r.label === symptom);
+  const route = auditRoutes.find((r) => r.label === symptom);
   if (route) lines.push(`${route.label}: ${route.copy}`);
   if (urgency) lines.push(`Timing: ${urgency}.`);
   return lines.join("\n");
@@ -69,7 +69,7 @@ function composeMessage(symptom: string | null, urgency: string | null): string 
  * to avoid importing this chunk) — keep the two in sync. */
 const DRAFT_KEY = "lf_tech_audit_draft";
 const WEBSITE_INTENT = "website";
-const WEBSITE_ROUTE = fitRoutes[0];
+const WEBSITE_ROUTE = auditRoutes[0];
 
 function queryValue(params: URLSearchParams, key: string, maxLength: number): string {
   return (params.get(key) ?? "").trim().slice(0, maxLength);
@@ -153,7 +153,7 @@ function writeDraft(draft: Draft): void {
   }
 }
 
-export default function FitCheck() {
+export default function TechAudit() {
   const [searchParams] = useSearchParams();
   const websiteIntent = searchParams.get("intent") === WEBSITE_INTENT;
   const websiteUrl = queryValue(searchParams, "url", 2048);
@@ -252,6 +252,12 @@ export default function FitCheck() {
       delete next[name];
       return next;
     });
+  }
+
+  function fieldClass(name: FieldName, value: string) {
+    if (errors[name]) return " is-error";
+    if (value.trim()) return " is-valid";
+    return "";
   }
 
   function pickSymptom(label: string) {
@@ -355,71 +361,74 @@ export default function FitCheck() {
         }}
       />
 
-      <section className="lf-fit">
-        <div className="lf-fit__inner">
-          <div className="lf-fit__flow">
-            <div className="lf-fit__progress">
-              <p className="lf-fit__progress-label" aria-live="polite">
-                Step {step} of 3 <span className="lf-fit__sr"> - {stepTitle}</span>
+      <section className="lf-audit">
+        <div className="lf-audit__inner">
+          <div className="lf-audit__flow">
+            <div className="lf-audit__progress">
+              <p className="lf-audit__progress-label" aria-live="polite">
+                Step {step} of 3 <span className="lf-audit__sr"> - {stepTitle}</span>
               </p>
               <div
-                className={`lf-fit__progress-bar${payoff ? " is-payoff" : ""}`}
+                className={`lf-audit__progress-bar${payoff ? " is-payoff" : ""}`}
                 aria-hidden="true"
               >
                 {([1, 2, 3] as const).map((s) => (
                   <span
                     key={s}
-                    className={`lf-fit__progress-seg${s <= step ? " is-done" : ""}`}
+                    className={`lf-audit__progress-seg${s <= step ? " is-done" : ""}`}
                   />
                 ))}
               </div>
             </div>
 
             {step === 1 && (
-              <div className="lf-fit__step">
+              <div className="lf-audit__step">
                 <h2
-                  className="lf-fit__step-title"
+                  className="lf-audit__step-title"
                   id="fit-step-title"
                   tabIndex={-1}
                   ref={headingRef}
                 >
                   {websiteIntent ? "What needs to change on your website?" : STEP_TITLES[1]}
                 </h2>
-                <p className="lf-fit__step-sub">
+                <p className="lf-audit__step-sub">
                   {websiteIntent
                     ? "We opened the website path. Confirm it, or choose the issue closest to the work ahead."
                     : "Pick the closest fit. It helps us prep. You can say more later."}
                 </p>
                 <div
-                  className="lf-fit__cards"
+                  className="lf-audit__cards"
                   role="group"
                   aria-labelledby="fit-step-title"
                 >
-                  {fitRoutes.map((route) => {
+                  {auditRoutes.map((route) => {
                     const Icon = route.icon;
                     const active = symptom === route.label;
                     return (
                       <button
                         key={route.label}
                         type="button"
-                        className={`lf-fit__card${active ? " is-active" : ""}`}
+                        className={`lf-audit__card${active ? " is-active" : ""}`}
                         aria-pressed={active}
                         onClick={() => pickSymptom(route.label)}
                       >
-                        <span className="lf-fit__card-chip" aria-hidden="true">
+                        <span className="lf-audit__card-chip" aria-hidden="true">
                           <Icon size={20} strokeWidth={1.75} />
                         </span>
-                        <span className="lf-fit__card-label">{route.label}</span>
-                        <span className="lf-fit__card-copy">{route.copy}</span>
+                        <span className="lf-audit__card-label">{route.label}</span>
+                        <span className="lf-audit__card-check" aria-hidden="true">
+                          <Check size={14} strokeWidth={2.5} />
+                        </span>
+                        <span className="lf-audit__card-copy">{route.copy}</span>
                       </button>
                     );
                   })}
                 </div>
-                <div className="lf-fit__step-nav">
+                <div className="lf-audit__step-nav">
                   {websiteIntent && symptom && (
                     <button
                       type="button"
-                      className="lf-fit__continue"
+                      className="lf-audit__continue"
                       onClick={() => pickSymptom(symptom)}
                     >
                       Continue <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
@@ -427,7 +436,7 @@ export default function FitCheck() {
                   )}
                   <button
                     type="button"
-                    className="lf-fit__skip"
+                    className="lf-audit__skip"
                     onClick={() => skipToForm(1)}
                   >
                     Write a brief instead <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
@@ -437,20 +446,20 @@ export default function FitCheck() {
             )}
 
             {step === 2 && (
-              <div className="lf-fit__step">
+              <div className="lf-audit__step">
                 <h2
-                  className="lf-fit__step-title"
+                  className="lf-audit__step-title"
                   id="fit-step-title"
                   tabIndex={-1}
                   ref={headingRef}
                 >
                   {STEP_TITLES[2]}
                 </h2>
-                <p className="lf-fit__step-sub">
+                <p className="lf-audit__step-sub">
                   An honest answer is fine. It sets how fast we move.
                 </p>
                 <div
-                  className="lf-fit__cards lf-fit__cards--three"
+                  className="lf-audit__cards lf-audit__cards--three"
                   role="group"
                   aria-labelledby="fit-step-title"
                 >
@@ -461,30 +470,33 @@ export default function FitCheck() {
                       <button
                         key={option.label}
                         type="button"
-                        className={`lf-fit__card${active ? " is-active" : ""}`}
+                        className={`lf-audit__card${active ? " is-active" : ""}`}
                         aria-pressed={active}
                         onClick={() => pickUrgency(option.label)}
                       >
-                        <span className="lf-fit__card-chip" aria-hidden="true">
+                        <span className="lf-audit__card-chip" aria-hidden="true">
                           <Icon size={20} strokeWidth={1.75} />
                         </span>
-                        <span className="lf-fit__card-label">{option.label}</span>
-                        <span className="lf-fit__card-copy">{option.copy}</span>
+                        <span className="lf-audit__card-label">{option.label}</span>
+                        <span className="lf-audit__card-check" aria-hidden="true">
+                          <Check size={14} strokeWidth={2.5} />
+                        </span>
+                        <span className="lf-audit__card-copy">{option.copy}</span>
                       </button>
                     );
                   })}
                 </div>
-                <div className="lf-fit__step-nav">
+                <div className="lf-audit__step-nav">
                   <button
                     type="button"
-                    className="lf-fit__back"
+                    className="lf-audit__back"
                     onClick={() => setStep(1)}
                   >
                     <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
                   </button>
                   <button
                     type="button"
-                    className="lf-fit__skip"
+                    className="lf-audit__skip"
                     onClick={() => skipToForm(2)}
                   >
                     Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
@@ -494,10 +506,10 @@ export default function FitCheck() {
             )}
 
             {step === 3 && (
-              <div className="lf-fit__step">
+              <div className="lf-audit__step">
                 <h2
-                  className={`lf-fit__step-title${
-                    payoff ? " lf-fit__step-title--payoff" : ""
+                  className={`lf-audit__step-title${
+                    payoff ? " lf-audit__step-title--payoff" : ""
                   }`}
                   id="fit-step-title"
                   tabIndex={-1}
@@ -505,13 +517,13 @@ export default function FitCheck() {
                 >
                   {STEP_TITLES[3]}
                 </h2>
-                <p className="lf-fit__step-sub">
+                <p className="lf-audit__step-sub">
                   We only need enough to reply. The rest happens on the call.
                 </p>
 
                 <form
-                  className="lf-fit__form"
-                  name="fit-check-scratch"
+                  className="lf-audit__form"
+                  name="tech-audit-scratch"
                   method="POST"
                   action="/thanks/"
                   data-netlify="true"
@@ -519,7 +531,7 @@ export default function FitCheck() {
                   onSubmit={handleSubmit}
                   noValidate
                 >
-                  <input type="hidden" name="form-name" value="fit-check-scratch" />
+                  <input type="hidden" name="form-name" value="tech-audit-scratch" />
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
                   <input type="hidden" name="intent" value={websiteIntent ? WEBSITE_INTENT : "general"} />
@@ -531,12 +543,12 @@ export default function FitCheck() {
                   {Object.entries(attribution).map(([key, value]) => (
                     <input key={key} type="hidden" name={key} value={value} />
                   ))}
-                  <p className="lf-fit__honeypot" aria-hidden="true">
+                  <p className="lf-audit__honeypot" aria-hidden="true">
                     <label htmlFor="bot-field">Do not fill this out</label>
                     <input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
                   </p>
 
-                  <div className={`lf-fit__field${errors.name ? " is-error" : ""}`}>
+                  <div className={`lf-audit__field${fieldClass("name", fields.name)}`}>
                     <label htmlFor="fit-name">Your name</label>
                     <input
                       id="fit-name"
@@ -553,13 +565,13 @@ export default function FitCheck() {
                       aria-describedby={errors.name ? "fit-name-error" : undefined}
                     />
                     {errors.name && (
-                      <p className="lf-fit__error" id="fit-name-error">
+                      <p className="lf-audit__error" id="fit-name-error">
                         {errors.name}
                       </p>
                     )}
                   </div>
 
-                  <div className={`lf-fit__field${errors.business ? " is-error" : ""}`}>
+                  <div className={`lf-audit__field${fieldClass("business", fields.business)}`}>
                     <label htmlFor="fit-business">Business</label>
                     <input
                       id="fit-business"
@@ -576,13 +588,13 @@ export default function FitCheck() {
                       aria-describedby={errors.business ? "fit-business-error" : undefined}
                     />
                     {errors.business && (
-                      <p className="lf-fit__error" id="fit-business-error">
+                      <p className="lf-audit__error" id="fit-business-error">
                         {errors.business}
                       </p>
                     )}
                   </div>
 
-                  <div className={`lf-fit__field${errors.contact ? " is-error" : ""}`}>
+                  <div className={`lf-audit__field${fieldClass("contact", fields.contact)}`}>
                     <label htmlFor="fit-contact">Phone or email</label>
                     <input
                       id="fit-contact"
@@ -600,13 +612,13 @@ export default function FitCheck() {
                       aria-describedby={errors.contact ? "fit-contact-error" : undefined}
                     />
                     {errors.contact && (
-                      <p className="lf-fit__error" id="fit-contact-error">
+                      <p className="lf-audit__error" id="fit-contact-error">
                         {errors.contact}
                       </p>
                     )}
                   </div>
 
-                  <div className="lf-fit__field">
+                  <div className="lf-audit__field">
                     <label htmlFor="fit-follow-up">Best way to reach you</label>
                     <select
                       id="fit-follow-up"
@@ -622,8 +634,8 @@ export default function FitCheck() {
                   </div>
 
                   <div
-                    className={`lf-fit__field lf-fit__field--full${
-                      errors.message ? " is-error" : ""
+                    className={`lf-audit__field lf-audit__field--full${
+                      fieldClass("message", message)
                     }`}
                   >
                     <label htmlFor="fit-message">
@@ -651,25 +663,25 @@ export default function FitCheck() {
                         errors.message ? "fit-message-error" : "fit-message-note"
                       }
                     />
-                    <p className="lf-fit__note" id="fit-message-note">
+                    <p className="lf-audit__note" id="fit-message-note">
                       No passwords or private customer data here. We never need them to scope.
                     </p>
                     {errors.message && (
-                      <p className="lf-fit__error" id="fit-message-error">
+                      <p className="lf-audit__error" id="fit-message-error">
                         {errors.message}
                       </p>
                     )}
                   </div>
 
                   <button
-                    className="lf-fit__submit"
+                    className="lf-audit__submit"
                     type="submit"
                     disabled={submitting}
                     aria-busy={submitting ? true : undefined}
                   >
                     {submitting ? (
                       <>
-                        <span className="lf-fit__spinner" aria-hidden="true" />
+                        <span className="lf-audit__spinner" aria-hidden="true" />
                         Sending…
                       </>
                     ) : (
@@ -679,20 +691,20 @@ export default function FitCheck() {
                       </>
                     )}
                   </button>
-                  <p className="lf-fit__assurance">
+                  <p className="lf-audit__assurance">
                     Free consultation / No obligation / Response window: 9am-9pm Eastern /
                     Urgent? Call <a href="tel:+16463600318">(646) 360-0318</a>
                   </p>
-                  <p className="lf-fit__assurance lf-fit__assurance--data">
+                  <p className="lf-audit__assurance lf-audit__assurance--data">
                     Your details stay with Little Fight NYC. We use them only to understand
                     the request and prepare the right response.
                   </p>
                 </form>
 
-                <div className="lf-fit__step-nav lf-fit__step-nav--below">
+                <div className="lf-audit__step-nav lf-audit__step-nav--below">
                   <button
                     type="button"
-                    className="lf-fit__back"
+                    className="lf-audit__back"
                     onClick={() => setStep(2)}
                   >
                     <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
@@ -701,7 +713,7 @@ export default function FitCheck() {
               </div>
             )}
 
-            <p className="lf-fit__outcomes">
+            <p className="lf-audit__outcomes">
               Here is what we will give you:{" "}
               {OUTCOMES.map((o, i) => (
                 <span key={o}>
@@ -712,22 +724,22 @@ export default function FitCheck() {
             </p>
           </div>
 
-          <aside className="lf-fit__aside">
-            <p className="lf-fit__aside-label">Direct line</p>
-            <PhoneAction className="lf-fit__aside-phone">
+          <aside className="lf-audit__aside">
+            <p className="lf-audit__aside-label">Direct line</p>
+            <PhoneAction className="lf-audit__aside-phone">
               (646) 360-0318
             </PhoneAction>
-            <p className="lf-fit__aside-note">
+            <p className="lf-audit__aside-note">
               9am-9pm Eastern. Call or text Little Fight NYC about urgent support, a
               new website, or a complicated setup. After hours, leave a message and we will follow up.
             </p>
 
-            <p className="lf-fit__aside-label lf-fit__aside-label--next">
+            <p className="lf-audit__aside-label lf-audit__aside-label--next">
               What happens next
             </p>
             <TimelineStrip
               vertical
-              className="lf-fit__next"
+              className="lf-audit__next"
               label="What happens after you send a Tech Audit brief"
               summary="Little Fight NYC reviews the request, confirms the context, and returns a clear recommended next step."
               beats={[

@@ -37,7 +37,7 @@ COMMON OWNER QUESTIONS WE'VE WRITTEN ABOUT:
 - Spreadsheet to dashboard: yes we build these. Usually $4,000-$8,000 for a focused owner-view. Replaces 2-3 tools shops were paying for.
 - Lead capture: every form, call, DM should land in one inbox. Email + SMS notify owner. Auto-reply within 5 minutes. We've seen 30%+ revenue lift from lead-capture cleanup alone.
 
-THE FIT CHECK is our intake — 60-second conversational form (web) or voice (phone). Real human reply within 2 hours, NYC business hours.
+THE TECH AUDIT is our intake — a short conversational form. A real person replies within 2 hours, NYC business hours.
 
 WE DO NOT do: pay-per-click ads, social media management, content marketing, paid SEO link-building, vague "growth marketing." We do tech. We refer paid-media work elsewhere.
 `.trim();
@@ -53,11 +53,11 @@ VOICE RULES:
 - Use US English. Use real numbers when you have them.
 
 ANSWERING RULES:
-- Answer ONLY from the corpus below. If the corpus doesn't cover the question, say so plainly: "I don't know that one yet. Want to start a Fit Check at /fit-check/?"
+- Answer ONLY from the corpus below. If the corpus doesn't cover the question, say so plainly: "I don't know that one yet. Want to start a Tech Audit at /tech-audit/?"
 - Keep answers under 200 words. Most under 80.
-- For pricing questions about a specific shop's situation, give a range from the corpus and route to Fit Check for an exact number.
-- For urgent technical issues (POS down, website down, payment broken): keep it brief and route to (646) 360-0318 or /fit-check/.
-- End with a soft pointer to Fit Check or the relevant quadrant page when it makes sense, not on every reply.
+- For pricing questions about a specific shop's situation, give a range from the corpus and route to Tech Audit for an exact number.
+- For urgent technical issues (POS down, website down, payment broken): keep it brief and route to (646) 360-0318 or /tech-audit/.
+- End with a soft pointer to Tech Audit or the relevant quadrant page when it makes sense, not on every reply.
 - Never invent client names, specific case-study numbers, or testimonials.
 - Never give legal, tax, financial, or HR advice. Route to a real professional.
 
@@ -70,7 +70,7 @@ interface AskRequest {
 
 function fallbackAnswer(): string {
   return (
-    "Couldn't reach the assistant just now. Want a real answer? Start a Fit Check at /fit-check/ — Little Fight NYC replies directly, usually within 2 hours during NYC business hours. Or call (646) 360-0318."
+    "Couldn't reach the assistant just now. Want a real answer? Start a Tech Audit at /tech-audit/ — Little Fight NYC replies directly, usually within 2 hours during NYC business hours. Or call (646) 360-0318."
   );
 }
 
@@ -84,12 +84,12 @@ function quickRouteFallback(question: string): string {
     q.includes("broken") ||
     q.includes("not working")
   ) {
-    return "Sounds urgent. Call (646) 360-0318 or start a Fit Check at /fit-check/ and mark it urgent — Little Fight NYC will pick it up in under 2 hours during NYC business hours.";
+    return "Sounds urgent. Call (646) 360-0318 or start a Tech Audit at /tech-audit/ and mark it urgent — Little Fight NYC will pick it up in under 2 hours during NYC business hours.";
   }
   if (q.includes("how much") || q.includes("cost") || q.includes("price")) {
-    return "Pricing depends on the shop. Ranges from the site: Websites from $2,400, Custom Systems from $4,000, Consulting walkthrough $1,500 flat, IT Support $150/hr or $500/mo retainer. For a real number for your situation, start a Fit Check at /fit-check/.";
+    return "Pricing depends on the shop. Ranges from the site: Websites from $2,400, Custom Systems from $4,000, Consulting walkthrough $1,500 flat, IT Support $150/hr or $500/mo retainer. For a real number for your situation, start a Tech Audit at /tech-audit/.";
   }
-  return "I don't have a great answer for that one. Want Little Fight NYC to reply directly? Start a Fit Check at /fit-check/ or call (646) 360-0318.";
+  return "I don't have a great answer for that one. Want Little Fight NYC to reply directly? Start a Tech Audit at /tech-audit/ or call (646) 360-0318.";
 }
 
 export default async (req: Request): Promise<Response> => {

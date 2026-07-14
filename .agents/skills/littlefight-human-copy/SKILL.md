@@ -23,7 +23,7 @@ Little Fight NYC helps New York small and mid-sized businesses with:
 - Software cleanup
 - Custom business systems
 - Practical consulting
-- Fit Check intake and routing
+- Tech Audit intake and routing
 
 The live promise is:
 "Tech for the shops that built New York."
@@ -131,12 +131,12 @@ Every major page should make four contact paths obvious:
 1. Call: `(646) 360-0318`
 2. Text: `(646) 360-0318`
 3. Email: `hello@littlefightnyc.com`
-4. Form: `/fit-check/` or `/contact/`
+4. Form: `/tech-audit/` or `/contact/`
 
 Use this hours line where appropriate:
 "9am-9pm Eastern: a human answers. After hours: AI takes the message and David calls back."
 
-Do not hide everything behind Fit Check.
+Do not hide everything behind Tech Audit.
 Do not force every visitor through a form.
 Let people pick the channel that fits their urgency.
 
@@ -220,7 +220,7 @@ Use:
 - We pick up
 - David
 - First hour free
-- Fit Check
+- Tech Audit
 - Corner shop
 - Small business
 - NYC
@@ -272,7 +272,7 @@ Better CTAs:
 - Call David
 - Text the problem
 - Tell us what's broken
-- Start a Fit Check
+- Start a Tech Audit
 - Send the messy setup
 - Ask what to fix first
 - Get the first hour free

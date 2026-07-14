@@ -29,7 +29,7 @@ Important: GitHub `main` is not guaranteed to match the current live site. The l
 
 See `SOURCE_OF_TRUTH.md` for the short operational version.
 
-The older May 6 handoff remains below as historical context for strategy, Fit Check, phone intake, SEO/AEO expansion, and known concerns.
+The older May 6 handoff remains below as historical context for strategy, Tech Audit, phone intake, SEO/AEO expansion, and known concerns.
 
 ## Current State
 
@@ -125,7 +125,7 @@ Preserved:
 Shifted:
 
 - "Concierge tech support" is no longer the primary identity.
-- The main conversion path is `Start Here` / `Fit Check`, not passive contact.
+- The main conversion path is `Start Here` / `Tech Audit`, not passive contact.
 - The brand now speaks to local businesses fighting large-company advantages and monthly software waste.
 
 ### 2. Copy Direction
@@ -186,7 +186,7 @@ Do not remove the orange dot atmosphere or midnight blue base unless David expli
 The site now has a stronger acquisition architecture:
 
 - `/` - homepage
-- `/fit-check/` - main conversion route
+- `/tech-audit/` - main conversion route
 - `/business-systems/` - saving money, software cleanup, workflow systems
 - `/websites/` - websites for local business
 - `/it-support/` - urgent and practical IT support
@@ -204,24 +204,24 @@ The site now has a stronger acquisition architecture:
 
 The smart-home service path has been retired from public acquisition and redirects to `/business-systems/`.
 
-### 5. Fit Check Web Intake
+### 5. Tech Audit Web Intake
 
-The Fit Check is the primary lead qualification and conversion system.
+The Tech Audit is the primary lead qualification and conversion system.
 
 Public route:
 
-`/fit-check/`
+`/tech-audit/`
 
 Frontend:
 
-- `fit-check/index.html`
-- `js/fit-check-intake.js`
-- `js/fit-check-intake.min.js`
+- `tech-audit/index.html`
+- `js/tech-audit-intake.js`
+- `js/tech-audit-intake.min.js`
 
 Backend:
 
-- `netlify/functions/fit-check-submit.mts`
-- Public endpoint: `/api/fit-check/submit`
+- `netlify/functions/tech-audit-submit.mts`
+- Public endpoint: `/api/tech-audit/submit`
 
 Purpose:
 
@@ -240,7 +240,7 @@ Important UX/copy decisions:
 - Do not give firm quotes.
 - Always preserve human review before scope or pricing.
 
-Fit Check backend behavior:
+Tech Audit backend behavior:
 
 - Deterministic local/server classification exists as a fallback.
 - OpenAI classification can be enabled with `OPENAI_API_KEY`.
@@ -253,15 +253,15 @@ Critical bug fix already made:
 
 Explicit user choices like `planned_improvement`, `exploratory`, and `urgent_but_not_emergency` override keyword urgency detection, so words like "booking" do not automatically create emergency routing.
 
-### 6. Fit Check Phone Intake
+### 6. Tech Audit Phone Intake
 
 Phone intake was added as a Twilio Voice webhook.
 
 Backend:
 
-- `netlify/functions/fit-check-voice.mts`
-- Public webhook: `/api/fit-check/voice`
-- Status callback: `/api/fit-check/voice?step=status`
+- `netlify/functions/tech-audit-voice.mts`
+- Public webhook: `/api/tech-audit/voice`
+- Status callback: `/api/tech-audit/voice?step=status`
 
 Twilio voice flow direction:
 
@@ -275,7 +275,7 @@ Twilio voice flow direction:
 Phone intake routes to:
 
 - Urgent support
-- Paid Fit Check / business system review
+- Paid Tech Audit / business system review
 - Light review / not-fit capture
 
 Current conversion gap:
@@ -299,17 +299,17 @@ Important env names:
 - `TWILIO_TTS_RATE`
 - `TWILIO_TTS_VOICE`
 - `TWILIO_ALLOW_SIGNATURE_FALLBACK`
-- `FIT_CHECK_BOOKING_URL`
-- `FIT_CHECK_PAYMENT_URL`
-- `FIT_CHECK_URL`
-- `FIT_CHECK_CALLER_SMS_ENABLED`
-- `FIT_CHECK_RECOVERY_SMS_ENABLED`
-- `FIT_CHECK_URGENT_FORWARD_NUMBER`
-- `FIT_CHECK_URGENT_SUPPORT_URL`
+- `TECH_AUDIT_BOOKING_URL`
+- `TECH_AUDIT_PAYMENT_URL`
+- `TECH_AUDIT_URL`
+- `TECH_AUDIT_CALLER_SMS_ENABLED`
+- `TECH_AUDIT_RECOVERY_SMS_ENABLED`
+- `TECH_AUDIT_URGENT_FORWARD_NUMBER`
+- `TECH_AUDIT_URGENT_SUPPORT_URL`
 - `URGENT_SUPPORT_PAYMENT_URL`
-- `FIT_CHECK_TRANSFER_NUMBER`
-- `FIT_CHECK_TRANSFER_AFTER_HOURS`
-- `FIT_CHECK_BUSINESS_TIMEZONE`
+- `TECH_AUDIT_TRANSFER_NUMBER`
+- `TECH_AUDIT_TRANSFER_AFTER_HOURS`
+- `TECH_AUDIT_BUSINESS_TIMEZONE`
 
 Do not print, commit, or paste actual secret values.
 
@@ -352,11 +352,11 @@ Canonical local audit source found during work:
 
 `/Users/davidmarsh/Desktop/LiFi NYC/Brand/Internal/Audits/site/index.html`
 
-The audit app copy was synced to support the new Fit Check positioning:
+The audit app copy was synced to support the new Tech Audit positioning:
 
-- Website audit is a feeder into Business System Fit Check.
+- Website audit is a feeder into Business System Tech Audit.
 - It keeps midnight blue/orange styling.
-- It links into `https://littlefightnyc.com/fit-check/`.
+- It links into `https://littlefightnyc.com/tech-audit/`.
 
 Concern:
 
@@ -535,7 +535,7 @@ Local checks that passed:
 - `node --check scripts/submit-indexnow.mjs`
 - `node --check scripts/build-netlify-publish.mjs`
 - `node --check js/main.js`
-- `node --check js/fit-check-intake.js`
+- `node --check js/tech-audit-intake.js`
 - `node scripts/build-netlify-publish.mjs`
 - `npx netlify functions:build --src netlify/functions --functions tmp/functions-build`
 - `xmllint --noout sitemap.xml`
@@ -550,12 +550,12 @@ Local checks that passed:
 Squirrel warnings:
 
 - CSP still allows `unsafe-inline`.
-- The public Fit Check form has no CAPTCHA/Turnstile yet.
+- The public Tech Audit form has no CAPTCHA/Turnstile yet.
 - HTTP to HTTPS redirect warnings appear for HTTP URLs.
 
 Recommended next security work:
 
-- Add Turnstile or another low-friction anti-spam layer to Fit Check.
+- Add Turnstile or another low-friction anti-spam layer to Tech Audit.
 - Tighten CSP after inline dependencies are reduced.
 - Keep HSTS and existing security headers.
 
@@ -580,9 +580,9 @@ The phone flow captures and routes leads, but it does not yet fully convert to p
 
 Next steps:
 
-- Configure a real paid Fit Check booking link.
+- Configure a real paid Tech Audit booking link.
 - Configure a real urgent support payment/deposit link.
-- Set `FIT_CHECK_URGENT_SUPPORT_URL` or `URGENT_SUPPORT_PAYMENT_URL`.
+- Set `TECH_AUDIT_URGENT_SUPPORT_URL` or `URGENT_SUPPORT_PAYMENT_URL`.
 - Confirm whether urgent calls should live-transfer to David during business hours.
 - Upgrade off Twilio trial if this becomes production-facing.
 
@@ -595,8 +595,8 @@ Function-sent email alerts are not live unless Resend env vars are configured.
 Set:
 
 - `RESEND_API_KEY`
-- `FIT_CHECK_NOTIFY_EMAIL`
-- `FIT_CHECK_EMAIL_FROM`
+- `TECH_AUDIT_NOTIFY_EMAIL`
+- `TECH_AUDIT_EMAIL_FROM`
 
 Netlify Forms backup exists, but real inbox arrival should still be confirmed.
 
@@ -606,7 +606,7 @@ Supabase storage is optional and may not be fully configured in production.
 
 Relevant schema:
 
-`docs/fit-check-schema.sql`
+`docs/tech-audit-schema.sql`
 
 Set only if database storage should be enabled:
 
@@ -620,7 +620,7 @@ Current scores are strong, but not finished forever.
 Remaining SEO/AEO opportunities:
 
 - Add more first-party proof.
-- Convert real repeated Fit Check phrases into answer pages.
+- Convert real repeated Tech Audit phrases into answer pages.
 - Build service-city matrix pages carefully, not spammy.
 - Add real neighborhood pages only when they contain specific local context.
 - Add comparison tables where useful.
@@ -760,12 +760,12 @@ Stage deliberately. Do not bulk-add `tmp/`, `backup/`, old deploy zips, screensh
 ## Recommended Next Work Order
 
 1. Rotate Twilio credentials and remove temporary signature fallback when safe.
-2. Configure paid conversion links for Fit Check and urgent support.
-3. Add Turnstile/CAPTCHA to Fit Check without making the intake feel like paperwork.
-4. Configure Resend email alerts if David wants email for every Fit Check/call.
+2. Configure paid conversion links for Tech Audit and urgent support.
+3. Add Turnstile/CAPTCHA to Tech Audit without making the intake feel like paperwork.
+4. Configure Resend email alerts if David wants email for every Tech Audit/call.
 5. Confirm Netlify Forms notification delivery in the real inbox.
 6. Add real scheduling/payment handoff inside the phone SMS follow-up path.
-7. Add more answer pages from real owner questions and Fit Check phrases.
+7. Add more answer pages from real owner questions and Tech Audit phrases.
 8. Replace anonymized case-study patterns with approved named proof when available.
 9. Add more visual proof assets: screenshots, dashboard mockups, tool maps, before/after paths.
 10. Tighten CSP and reduce render-blocking CSS only after ensuring visual regressions do not appear.

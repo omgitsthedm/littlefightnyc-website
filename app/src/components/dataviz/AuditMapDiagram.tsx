@@ -2,11 +2,11 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
-import { FIT_MAP_PATHS as PATHS, GENERIC_FIT_PATH as GENERIC_PATH } from "@/data/fitMapPaths";
-import "./FitMapDiagram.css";
+import { AUDIT_MAP_PATHS as PATHS, GENERIC_AUDIT_PATH as GENERIC_PATH } from "@/data/auditMapPaths";
+import "./AuditMapDiagram.css";
 
 /**
- * FitMapDiagram — the "Fit map" section on industry pages, rebuilt as a real
+ * AuditMapDiagram — the "Audit map" section on industry pages, rebuilt as a real
  * customer-path diagram: the industry page's own authored customer path drawn
  * as a subway-style line with orange station nodes and mono labels. The rail
  * draws in on scroll (stroke-dashoffset); stations stagger up; reduced motion
@@ -17,7 +17,7 @@ import "./FitMapDiagram.css";
  */
 
 
-type FitLink = { href: string; label: string };
+type AuditLink = { href: string; label: string };
 type Pt = { x: number; y: number };
 
 type Props = {
@@ -25,10 +25,10 @@ type Props = {
   heading: string;
   /** Inner HTML of the section's authored paragraphs, in order. */
   paragraphs: string[];
-  links: FitLink[];
+  links: AuditLink[];
 };
 
-export default function FitMapDiagram({ slug, heading, paragraphs, links }: Props) {
+export default function AuditMapDiagram({ slug, heading, paragraphs, links }: Props) {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.15 });
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [size, setSize] = useState({ w: 0, h: 0 });
@@ -61,49 +61,49 @@ export default function FitMapDiagram({ slug, heading, paragraphs, links }: Prop
     pts.length > 1 ? "M " + pts.map((p) => `${p.x} ${p.y}`).join(" L ") : "";
 
   return (
-    <section ref={ref} className="lf-fitmap" aria-labelledby="lf-fitmap-heading">
-      <p className="lf-fitmap__kicker">Fit map</p>
+    <section ref={ref} className="lf-auditmap" aria-labelledby="lf-auditmap-heading">
+      <p className="lf-auditmap__kicker">Audit map</p>
       <h2
-        id="lf-fitmap-heading"
-        className="lf-fitmap__heading"
+        id="lf-auditmap-heading"
+        className="lf-auditmap__heading"
         dangerouslySetInnerHTML={{ __html: heading }}
       />
-      <div className="lf-fitmap__prose">
+      <div className="lf-auditmap__prose">
         {paragraphs.map((p, i) => (
           <p key={i} dangerouslySetInnerHTML={{ __html: p }} />
         ))}
       </div>
 
-      <div ref={mapRef} className="lf-fitmap__map">
+      <div ref={mapRef} className="lf-auditmap__map">
         <svg
-          className="lf-fitmap__rail"
+          className="lf-auditmap__rail"
           width={size.w}
           height={size.h}
           viewBox={`0 0 ${size.w || 1} ${size.h || 1}`}
           aria-hidden="true"
           focusable="false"
         >
-          {rail && <path className="lf-fitmap__rail-path" d={rail} pathLength={1} />}
+          {rail && <path className="lf-auditmap__rail-path" d={rail} pathLength={1} />}
         </svg>
-        <ol className="lf-fitmap__stations">
+        <ol className="lf-auditmap__stations">
           {stations.map((station, i) => (
             <li
               key={station}
-              className="lf-fitmap__station"
+              className="lf-auditmap__station"
               style={{ ["--lf-i" as string]: i }}
             >
-              <span className="lf-fitmap__dot" data-fm-dot aria-hidden="true" />
-              <span className="lf-fitmap__label">{station}</span>
+              <span className="lf-auditmap__dot" data-fm-dot aria-hidden="true" />
+              <span className="lf-auditmap__label">{station}</span>
             </li>
           ))}
         </ol>
       </div>
 
       {links.length > 0 && (
-        <ul className="lf-fitmap__links">
+        <ul className="lf-auditmap__links">
           {links.map((link) => (
             <li key={link.href + link.label}>
-              <Link to={link.href} className="lf-fitmap__link">
+              <Link to={link.href} className="lf-auditmap__link">
                 {link.label}
                 <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
               </Link>

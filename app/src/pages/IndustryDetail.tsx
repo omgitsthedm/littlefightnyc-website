@@ -2,7 +2,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { Building2 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
-import FitMapDiagram from "@/components/dataviz/FitMapDiagram";
+import AuditMapDiagram from "@/components/dataviz/AuditMapDiagram";
 import industries from "@/data/industries.json";
 import { prepareIndustryHtml } from "@/lib/legacyHtml";
 import "@/styles/editorial/journal.css";
@@ -16,22 +16,22 @@ type Industry = {
   image?: string;
 };
 
-type FitMapPieces = {
+type AuditMapPieces = {
   heading: string;
   paragraphs: string[];
   links: { href: string; label: string }[];
 };
 
 /**
- * Lift the authored "Fit map" section out of the legacy body so it can render
- * as a real customer-path diagram (FitMapDiagram) instead of borderless prose.
+ * Lift the authored "Audit map" section out of the legacy body so it can render
+ * as a real customer-path diagram (AuditMapDiagram) instead of borderless prose.
  * Splits at the section boundary, so both remaining chunks stay balanced.
  * Returns null when the section is missing — the body then renders untouched.
  */
-function extractFitMap(
+function extractAuditMap(
   body: string,
-): { before: string; after: string; pieces: FitMapPieces } | null {
-  const match = body.match(/<section>\s*<p>\s*Fit map\s*<\/p>([\s\S]*?)<\/section>/i);
+): { before: string; after: string; pieces: AuditMapPieces } | null {
+  const match = body.match(/<section>\s*<p>\s*Audit map\s*<\/p>([\s\S]*?)<\/section>/i);
   if (!match || match.index === undefined) return null;
 
   const inner = match[1];
@@ -105,13 +105,13 @@ export default function IndustryDetail() {
 
   const { headline, body } = prepareIndustryHtml(entry.html);
   const heroTitle = headline || entry.title.replace(" Help", "");
-  // Extract FIRST — tidyLegacyBody rewrites the <p>Fit map</p> marker into a
+  // Extract FIRST — tidyLegacyBody rewrites the <p>Audit map</p> marker into a
   // kicker, which would hide the section from the extractor.
-  const rawFit = extractFitMap(body);
-  const fit = rawFit && {
-    ...rawFit,
-    before: tidyLegacyBody(rawFit.before),
-    after: tidyLegacyBody(rawFit.after),
+  const rawAudit = extractAuditMap(body);
+  const audit = rawAudit && {
+    ...rawAudit,
+    before: tidyLegacyBody(rawAudit.before),
+    after: tidyLegacyBody(rawAudit.after),
   };
   const tidied = tidyLegacyBody(body);
 
@@ -132,21 +132,21 @@ export default function IndustryDetail() {
 
       <article className="lf-post lf-post--industry">
         <div className="lf-post__inner">
-          {fit ? (
+          {audit ? (
             <>
               <div
                 className="lf-post__body"
-                dangerouslySetInnerHTML={{ __html: fit.before }}
+                dangerouslySetInnerHTML={{ __html: audit.before }}
               />
-              <FitMapDiagram
+              <AuditMapDiagram
                 slug={entry.slug}
-                heading={fit.pieces.heading}
-                paragraphs={fit.pieces.paragraphs}
-                links={fit.pieces.links}
+                heading={audit.pieces.heading}
+                paragraphs={audit.pieces.paragraphs}
+                links={audit.pieces.links}
               />
               <div
                 className="lf-post__body"
-                dangerouslySetInnerHTML={{ __html: fit.after }}
+                dangerouslySetInnerHTML={{ __html: audit.after }}
               />
             </>
           ) : (

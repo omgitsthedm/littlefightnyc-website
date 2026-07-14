@@ -13,7 +13,7 @@
     "backstop:reference": "node scripts/run-backstop.cjs reference --config=backstop.config.cjs",
     "backstop:test": "node scripts/run-backstop.cjs test --config=backstop.config.cjs",
     "links": "linkinator https://littlefightnyc.com --recurse --skip \"^mailto:|^tel:\" --verbosity error",
-    "unlighthouse": "unlighthouse-ci --site https://littlefightnyc.com --urls /,/services/,/field-guide/,/fit-check/,/journal/read-your-monthly-software-bill/",
+    "unlighthouse": "unlighthouse-ci --site https://littlefightnyc.com --urls /,/services/,/field-guide/,/tech-audit/,/journal/read-your-monthly-software-bill/",
     "lhci": "lhci autorun --config=./lighthouserc.cjs",
     "ultraship": "node scripts/ultraship-suite.mjs"
   },

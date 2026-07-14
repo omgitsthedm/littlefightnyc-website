@@ -28,7 +28,7 @@ const URGENCY_LEVELS = [
 const NEXT_STEPS = [
   "Human follow-up",
   "Emergency support",
-  "Fit Check call",
+  "Tech Audit call",
   "Website review",
   "Software savings review",
   "Google visibility review",
@@ -50,7 +50,7 @@ type LeadScore = {
   tool_opportunity: number;
 };
 
-type FitCheckResult = {
+type TechAuditResult = {
   primary_category: ApprovedCategory;
   secondary_categories: ApprovedCategory[];
   urgency_level: UrgencyLevel;
@@ -290,6 +290,10 @@ function env(key: string): string {
   return typeof process !== "undefined" ? process.env[key] || "" : "";
 }
 
+function auditEnv(key: string): string {
+  return env(key);
+}
+
 function cleanText(value: unknown, limit = 2000): string {
   if (value === null || value === undefined) return "";
   return String(value)
@@ -375,7 +379,7 @@ function flattenPayload(payload: JsonRecord): JsonRecord {
     industry: cleanText(contact.industry || payload.industry, 180),
     location: cleanText(contact.location || payload.location, 180),
     team_size: cleanText(contact.team_size || payload.team_size, 80),
-    source: cleanText(payload.source || campaign.source || "fit-check-page", 120),
+    source: cleanText(payload.source || campaign.source || "tech-audit-page", 120),
     answers,
     campaign,
     events: Array.isArray(payload.events) ? payload.events.slice(0, 120) : [],
@@ -708,7 +712,7 @@ function recommendedNextStep(primary: ApprovedCategory, urgency: UrgencyLevel): 
   if (primary === "Tool / Software Decision") return "Software savings review";
   if (primary === "Business System Build") return "Lead and follow-up review";
   if (primary === "Local Search / Visibility") return "Google visibility review";
-  return "Fit Check call";
+  return "Tech Audit call";
 }
 
 function whatToCheckFirst(primary: ApprovedCategory, secondary: ApprovedCategory[]): string[] {
@@ -734,7 +738,7 @@ function whatToCheckFirst(primary: ApprovedCategory, secondary: ApprovedCategory
   return Array.from(checks).slice(0, 5);
 }
 
-function makeInternalBrief(lead: JsonRecord, result: FitCheckResult): string {
+function makeInternalBrief(lead: JsonRecord, result: TechAuditResult): string {
   const answers = asRecord(lead.answers);
   const lines = [
     "Lead Summary",
@@ -790,18 +794,18 @@ function makeInternalBrief(lead: JsonRecord, result: FitCheckResult): string {
   return lines.join("\n");
 }
 
-function makeFollowUpEmail(lead: JsonRecord, result: FitCheckResult): {
+function makeFollowUpEmail(lead: JsonRecord, result: TechAuditResult): {
   subject: string;
   body: string;
 } {
   const firstName = cleanText(lead.lead_name).split(" ")[0] || "there";
   const business = cleanText(lead.business_name) || "your business";
-  const subject = `Re: Little Fight Fit Check for ${business}`;
+  const subject = `Re: Little Fight Tech Audit for ${business}`;
 
   const body = [
     `Hi ${firstName},`,
     "",
-    "Thanks for walking through the setup. Based on what you shared, this looks like a Fit Check problem worth reviewing before we talk scope.",
+    "Thanks for walking through the setup. Based on what you shared, this looks like a Tech Audit problem worth reviewing before we talk scope.",
     "",
     `Right now I would classify it as ${result.primary_category.toLowerCase()}${
       result.secondary_categories.length
@@ -818,7 +822,7 @@ function makeFollowUpEmail(lead: JsonRecord, result: FitCheckResult): {
   return { subject, body: body.join("\n") };
 }
 
-function buildDeterministicResult(lead: JsonRecord): FitCheckResult {
+function buildDeterministicResult(lead: JsonRecord): TechAuditResult {
   const text = allUserText(lead);
   const answers = asRecord(lead.answers);
   const urgency = detectUrgency(lead, text);
@@ -844,7 +848,7 @@ function buildDeterministicResult(lead: JsonRecord): FitCheckResult {
     .filter(Boolean)
     .join(" ");
 
-  const result: FitCheckResult = {
+  const result: TechAuditResult = {
     primary_category: primary,
     secondary_categories: secondary,
     urgency_level: urgency,
@@ -903,7 +907,7 @@ function missingInfo(lead: JsonRecord): string[] {
   return missing;
 }
 
-function normalizeAiResult(raw: JsonRecord, fallback: FitCheckResult): FitCheckResult {
+function normalizeAiResult(raw: JsonRecord, fallback: TechAuditResult): TechAuditResult {
   let primary = APPROVED_CATEGORIES.includes(raw.primary_category as ApprovedCategory)
     ? (raw.primary_category as ApprovedCategory)
     : fallback.primary_category;
@@ -950,7 +954,7 @@ function normalizeAiResult(raw: JsonRecord, fallback: FitCheckResult): FitCheckR
   }
 
   const leadScoreRaw = asRecord(raw.lead_score);
-  const result: FitCheckResult = {
+  const result: TechAuditResult = {
     ...fallback,
     primary_category: primary,
     secondary_categories: secondary.filter((category) => category !== primary).slice(0, 3),
@@ -961,7 +965,7 @@ function normalizeAiResult(raw: JsonRecord, fallback: FitCheckResult): FitCheckR
     business_snapshot: {
       ...fallback.business_snapshot,
       ...asRecord(raw.business_snapshot),
-    } as FitCheckResult["business_snapshot"],
+    } as TechAuditResult["business_snapshot"],
     tools_mentioned: cleanArray(raw.tools_mentioned).length
       ? cleanArray(raw.tools_mentioned)
       : fallback.tools_mentioned,
@@ -1038,7 +1042,7 @@ function normalizeAiResult(raw: JsonRecord, fallback: FitCheckResult): FitCheckR
   return result;
 }
 
-async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<FitCheckResult | null> {
+async function callOpenAi(lead: JsonRecord, fallback: TechAuditResult): Promise<TechAuditResult | null> {
   const apiKey = env("OPENAI_API_KEY");
   const model = env("OPENAI_MODEL") || "gpt-4.1-mini";
   if (!apiKey) return null;
@@ -1061,12 +1065,12 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
           {
             role: "system",
             content:
-              "You are the Little Fight NYC Fit Check assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the owner used the term first. Focus on money saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be an individual founder. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
+              "You are the Little Fight NYC Tech Audit assistant. You help New York business owners quickly understand whether their issue is urgent support, a website problem, a monthly software cost problem, a Google visibility problem, or a lead/follow-up problem. Be direct, warm, practical, and human. Avoid jargon unless the owner used the term first. Focus on money saved, customers won, time saved, trust earned, and the smallest useful next move. Never provide firm quotes. Never ask for sensitive access information. If the user mentions credentials, say: 'Please do not share sensitive information here.' Never pretend to be an individual founder. Always preserve uncertainty and say human review is required before scope, timeline, or pricing can be confirmed. Map every issue to Keep / Cut / Connect / Build in plain English.",
           },
           {
             role: "user",
             content: JSON.stringify({
-              task: "Return only valid JSON using the Fit Check output contract.",
+              task: "Return only valid JSON using the Tech Audit output contract.",
               approved_categories: APPROVED_CATEGORIES,
               urgency_levels: URGENCY_LEVELS,
               required_shape: {
@@ -1097,7 +1101,7 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
                   search_opportunity: 1,
                   tool_opportunity: 1,
                 },
-                recommended_next_step: "Fit Check call",
+                recommended_next_step: "Tech Audit call",
                 ballpark_type: "Level 2: First Look",
                 disclaimer: "This is not a quote.",
                 follow_up_email: { subject: "", body: "" },
@@ -1128,14 +1132,14 @@ async function callOpenAi(lead: JsonRecord, fallback: FitCheckResult): Promise<F
   }
 }
 
-function supabaseLeadRecord(lead: JsonRecord, result: FitCheckResult, id: string, now: string) {
+function supabaseLeadRecord(lead: JsonRecord, result: TechAuditResult, id: string, now: string) {
   const status = result.urgency_level === "emergency" ? "new_urgent" : "new";
   return {
     id,
     created_at: now,
     updated_at: now,
     status,
-    source: cleanText(lead.source) || "fit-check-page",
+    source: cleanText(lead.source) || "tech-audit-page",
     intake_mode: cleanText(lead.intake_mode) || "website",
     lead_name: cleanText(lead.lead_name),
     business_name: cleanText(lead.business_name),
@@ -1169,13 +1173,13 @@ function supabaseLeadRecord(lead: JsonRecord, result: FitCheckResult, id: string
   };
 }
 
-async function saveToSupabase(lead: JsonRecord, result: FitCheckResult, id: string, now: string) {
+async function saveToSupabase(lead: JsonRecord, result: TechAuditResult, id: string, now: string) {
   const url = env("SUPABASE_URL").replace(/\/$/, "");
   const serviceKey = env("SUPABASE_SERVICE_ROLE_KEY");
   if (!url || !serviceKey) return { configured: false, saved: false };
 
   const record = supabaseLeadRecord(lead, result, id, now);
-  const response = await fetch(`${url}/rest/v1/fit_check_leads`, {
+  const response = await fetch(`${url}/rest/v1/tech_audit_leads`, {
     method: "POST",
     headers: {
       apikey: serviceKey,
@@ -1210,7 +1214,7 @@ async function saveEventToSupabase(
   eventPayload: JsonRecord,
 ) {
   try {
-    await fetch(`${url}/rest/v1/fit_check_events`, {
+    await fetch(`${url}/rest/v1/tech_audit_events`, {
       method: "POST",
       headers: {
         apikey: serviceKey,
@@ -1229,7 +1233,7 @@ async function saveEventToSupabase(
   }
 }
 
-function emailText(lead: JsonRecord, result: FitCheckResult): string {
+function emailText(lead: JsonRecord, result: TechAuditResult): string {
   const answers = asRecord(lead.answers);
   return [
     `Primary category: ${result.primary_category}`,
@@ -1257,14 +1261,14 @@ function emailText(lead: JsonRecord, result: FitCheckResult): string {
   ].join("\n");
 }
 
-function conversionPath(lead: JsonRecord, result: FitCheckResult): {
+function conversionPath(lead: JsonRecord, result: TechAuditResult): {
   label: string;
   url: string;
   stage: string;
 } {
-  const urgentUrl = cleanText(env("FIT_CHECK_URGENT_SUPPORT_URL") || env("URGENT_SUPPORT_PAYMENT_URL"), 500);
-  const fitCheckUrl = cleanText(env("FIT_CHECK_BOOKING_URL") || env("FIT_CHECK_PAYMENT_URL"), 500);
-  const fallbackUrl = cleanText(env("FIT_CHECK_URL") || "https://littlefightnyc.com/fit-check/", 500);
+  const urgentUrl = cleanText(auditEnv("TECH_AUDIT_URGENT_SUPPORT_URL") || env("URGENT_SUPPORT_PAYMENT_URL"), 500);
+  const techAuditUrl = cleanText(auditEnv("TECH_AUDIT_BOOKING_URL") || auditEnv("TECH_AUDIT_PAYMENT_URL"), 500);
+  const fallbackUrl = cleanText(auditEnv("TECH_AUDIT_URL") || "https://littlefightnyc.com/tech-audit/", 500);
 
   if (result.urgency_level === "emergency" || result.primary_category === "Quick Fix") {
     return {
@@ -1284,9 +1288,9 @@ function conversionPath(lead: JsonRecord, result: FitCheckResult): {
   }
 
   return {
-    label: fitCheckUrl ? "Book a Fit Check" : "Fit Check follow-up",
-    url: fitCheckUrl || fallbackUrl,
-    stage: "fit_check",
+    label: techAuditUrl ? "Book a Tech Audit" : "Tech Audit follow-up",
+    url: techAuditUrl || fallbackUrl,
+    stage: "tech_audit",
   };
 }
 
@@ -1331,8 +1335,8 @@ async function sendTwilioSms(to: string, body: string) {
   }
 }
 
-async function sendSmsNotifications(lead: JsonRecord, result: FitCheckResult) {
-  const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || env("FIT_CHECK_URGENT_FORWARD_NUMBER"), 80);
+async function sendSmsNotifications(lead: JsonRecord, result: TechAuditResult) {
+  const notifyTo = cleanText(env("TWILIO_NOTIFY_TO") || auditEnv("TECH_AUDIT_URGENT_FORWARD_NUMBER"), 80);
   const answers = asRecord(lead.answers);
   const conversion = conversionPath(lead, result);
   const business = cleanText(lead.business_name) || "Unknown business";
@@ -1340,7 +1344,7 @@ async function sendSmsNotifications(lead: JsonRecord, result: FitCheckResult) {
   const preferredFollowUp = cleanText(answers.preferred_follow_up) || "Unknown";
   const urgencyPrefix = result.urgency_level === "emergency" ? "URGENT " : "";
   const internalBody = [
-    `${urgencyPrefix}Fit Check: ${business}`,
+    `${urgencyPrefix}Tech Audit: ${business}`,
     `${result.primary_category} / ${result.urgency_level}`,
     `Follow-up: ${preferredFollowUp}`,
     callerPhone ? `Caller: ${callerPhone}` : "",
@@ -1364,28 +1368,28 @@ async function sendSmsNotifications(lead: JsonRecord, result: FitCheckResult) {
   if (
     cleanText(lead.intake_mode) === "voice" &&
     isE164(callerPhone) &&
-    env("FIT_CHECK_CALLER_SMS_ENABLED") === "true"
+    auditEnv("TECH_AUDIT_CALLER_SMS_ENABLED") === "true"
   ) {
     const body =
       conversion.stage === "urgent_support"
-        ? `Little Fight NYC: got your urgent Fit Check. The team has the brief. ${conversion.label}: ${conversion.url}`
-        : `Little Fight NYC: got your Fit Check. Next step: ${conversion.label}: ${conversion.url}`;
+        ? `Little Fight NYC: got your urgent Tech Audit. The team has the brief. ${conversion.label}: ${conversion.url}`
+        : `Little Fight NYC: got your Tech Audit. Next step: ${conversion.label}: ${conversion.url}`;
     caller = await sendTwilioSms(callerPhone, body);
   }
 
   return { internal, caller, conversion };
 }
 
-async function sendNotification(lead: JsonRecord, result: FitCheckResult) {
+async function sendNotification(lead: JsonRecord, result: TechAuditResult) {
   const apiKey = env("RESEND_API_KEY");
   if (!apiKey) return { configured: false, sent: false };
 
-  const notifyTo = env("FIT_CHECK_NOTIFY_EMAIL") || "hello@littlefightnyc.com";
+  const notifyTo = auditEnv("TECH_AUDIT_NOTIFY_EMAIL") || "hello@littlefightnyc.com";
   const from =
-    env("FIT_CHECK_EMAIL_FROM") || "Little Fight Fit Check <onboarding@resend.dev>";
+    auditEnv("TECH_AUDIT_EMAIL_FROM") || "Little Fight Tech Audit <onboarding@resend.dev>";
   const business = cleanText(lead.business_name) || "Unknown business";
   const urgentPrefix = result.urgency_level === "emergency" ? "URGENT " : "";
-  const subject = `${urgentPrefix}Fit Check: ${business} - ${result.primary_category}`;
+  const subject = `${urgentPrefix}Tech Audit: ${business} - ${result.primary_category}`;
   const text = emailText(lead, result);
   const html = `<pre style="font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;line-height:1.55">${escapeHtml(
     text,
@@ -1496,7 +1500,7 @@ export default async (req: Request) => {
     return new Response(
       JSON.stringify({
         ok: false,
-        error: "The Fit Check could not be processed cleanly. A human review is needed.",
+        error: "The Tech Audit could not be processed cleanly. A human review is needed.",
         detail: cleanText((error as Error).message, 160),
       }),
       { status: 500, headers: jsonHeaders },
@@ -1505,6 +1509,6 @@ export default async (req: Request) => {
 };
 
 export const config = {
-  path: "/api/fit-check/submit",
+  path: "/api/tech-audit/submit",
   method: ["POST", "OPTIONS"],
 };

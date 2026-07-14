@@ -1,12 +1,12 @@
 /**
- * fitMapPaths — the per-industry customer-path stations drawn by
- * FitMapDiagram AND emitted as a semantic ordered list in the prerendered
+ * auditMapPaths — the per-industry customer-path stations drawn by
+ * AuditMapDiagram AND emitted as a semantic ordered list in the prerendered
  * crawler HTML (scripts/prerender-seo.mjs bundles this module), so bots see
  * the same path users see. Every label quotes the industry's OWN page copy
  * in industries.json — the authored source is cited above each entry.
  * Nothing is invented.
  */
-export const FIT_MAP_PATHS: Record<string, string[]> = {
+export const AUDIT_MAP_PATHS: Record<string, string[]> = {
   // "trace one real customer path: search, menu, booking or order, payment,
   //  reminder, review, and follow-up" — restaurants-bars fit-map copy.
   "restaurants-bars": ["Search", "Menu", "Book / order", "Payment", "Reminder", "Review", "Follow-up"],
@@ -33,4 +33,4 @@ export const FIT_MAP_PATHS: Record<string, string[]> = {
 
 /* The shared read every industry page ends on: search → visit → book or buy →
  * return. Used only if a future industry ships without an authored path. */
-export const GENERIC_FIT_PATH = ["Search", "Visit", "Book or buy", "Return"];
+export const GENERIC_AUDIT_PATH = ["Search", "Visit", "Book or buy", "Return"];

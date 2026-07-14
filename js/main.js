@@ -259,18 +259,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.querySelector(".site-conversion-rail")) return;
 
     const path = window.location.pathname.replace(/index\.html$/, "");
-    const isFitCheck = path.startsWith("/fit-check/");
+    const isTechAudit = path.startsWith("/tech-audit/");
     const isContact = path.startsWith("/contact/");
-    const primaryHref = isFitCheck ? "#fit-check-intake" : "/fit-check/";
+    const primaryHref = isTechAudit ? "#tech-audit-intake" : "/tech-audit/";
     const primaryText = "Start Here";
     const note = isContact
       ? "Want the fastest path?"
-      : isFitCheck
+      : isTechAudit
         ? "Something costing you money right now?"
         : "Paying for tools that do not pay you back?";
     const detail = isContact
       ? "Tell us what is expensive, broken, slow, or unfair."
-      : isFitCheck
+      : isTechAudit
         ? "Call if customers, payments, bookings, email, or access are blocked."
         : "Tell us what is broken, slow, expensive, or annoying. We will find the smallest useful next move.";
 

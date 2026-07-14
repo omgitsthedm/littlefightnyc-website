@@ -24,6 +24,8 @@
   margin-inline: auto;
   display: grid;
   gap: var(--lf-space-5);
+  container-type: inline-size;
+  container-name: svc-router;
 }
 
 .lf-svc-router__label {
@@ -52,7 +54,7 @@
   gap: var(--lf-space-3);
 }
 
-@media (min-width: 720px) {
+@container svc-router (min-width: 680px) {
   .lf-svc-router__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -61,7 +63,7 @@
   }
 }
 
-@media (min-width: 1180px) {
+@container svc-router (min-width: 1040px) {
   .lf-svc-router__list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -80,13 +82,18 @@
   padding: var(--lf-space-4) var(--lf-space-5);
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lf-paper-2) 100%, transparent) 0%, var(--lf-paper) 100%);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--lf-bone) 8%, transparent) inset,
+    0 14px 40px -14px rgba(0, 0, 0, 0.3);
   text-decoration: none;
   color: var(--lf-bone);
   transition:
     transform var(--lf-time-snappy) var(--lf-ease-standard),
     border-color var(--lf-time-snappy) var(--lf-ease-standard),
-    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-editorial .lf-svc-router__link--primary {
@@ -94,8 +101,11 @@
   justify-content: flex-end;
   border-color: color-mix(in srgb, var(--lf-fight) 44%, var(--lf-hairline));
   background:
-    radial-gradient(90% 120% at 100% 0%, rgba(59, 130, 246, 0.12), transparent 62%),
-    color-mix(in srgb, var(--lf-fight) 7%, var(--lf-paper-2));
+    radial-gradient(90% 120% at 100% 0%, rgba(59, 130, 246, 0.14), transparent 62%),
+    linear-gradient(180deg, color-mix(in srgb, var(--lf-fight) 9%, var(--lf-paper-2)) 0%, color-mix(in srgb, var(--lf-fight) 5%, var(--lf-paper)) 100%);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--lf-bone) 10%, transparent) inset,
+    0 18px 50px -16px rgba(0, 0, 0, 0.38);
 }
 
 .lf-svc-router__link--primary .lf-svc-router__symptom {
@@ -107,9 +117,19 @@
 
 .lf-editorial .lf-svc-router__link:hover,
 .lf-editorial .lf-svc-router__link:focus-visible {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
-  background: color-mix(in srgb, var(--lf-fight) 6%, var(--lf-paper-2));
+  background: color-mix(in srgb, var(--lf-fight) 7%, var(--lf-paper-2));
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--lf-bone) 10%, transparent) inset,
+    0 22px 56px -18px rgba(0, 0, 0, 0.42);
+}
+
+.lf-editorial .lf-svc-router__link--primary:hover,
+.lf-editorial .lf-svc-router__link--primary:focus-visible {
+  background:
+    radial-gradient(90% 120% at 100% 0%, rgba(59, 130, 246, 0.18), transparent 62%),
+    color-mix(in srgb, var(--lf-fight) 10%, var(--lf-paper-2));
 }
 
 .lf-editorial .lf-svc-router__link:focus-visible {

@@ -41,18 +41,18 @@ await esbuildBundle({
 });
 const answersArtContent = await import(pathToFileURL(answersArtOut).href);
 
-// And the fit-map station paths, so the crawler HTML carries the same
-// customer-path list the FitMapDiagram draws for users.
-const fitPathsOut = path.join(appRoot, "node_modules", ".prerender", "fit-map-paths.mjs");
+// And the audit-map station paths, so the crawler HTML carries the same
+// customer-path list the AuditMapDiagram draws for users.
+const auditPathsOut = path.join(appRoot, "node_modules", ".prerender", "audit-map-paths.mjs");
 await esbuildBundle({
-  entryPoints: [path.join(appRoot, "src/data/fitMapPaths.ts")],
+  entryPoints: [path.join(appRoot, "src/data/auditMapPaths.ts")],
   bundle: true,
   format: "esm",
   platform: "node",
-  outfile: fitPathsOut,
+  outfile: auditPathsOut,
   logLevel: "silent",
 });
-const { FIT_MAP_PATHS, GENERIC_FIT_PATH } = await import(pathToFileURL(fitPathsOut).href);
+const { AUDIT_MAP_PATHS, GENERIC_AUDIT_PATH } = await import(pathToFileURL(auditPathsOut).href);
 const lastmod = new Date().toISOString().slice(0, 10);
 const site = seoData.site;
 const siteUrl = site.url.replace(/\/$/, "");
@@ -719,7 +719,7 @@ function foundationSchemas(page) {
     });
   }
 
-  if (page.path === "/tech-audit/" || page.path === "/fit-check/") {
+  if (page.path === "/tech-audit/" || page.path === "/tech-audit/") {
     graph.push({
       "@type": "HowTo",
       "@id": `${canonical}#howto`,
@@ -806,7 +806,7 @@ function routeExtraImagePreloads(page) {
 function routeChunkPrefix(page) {
   if (page.path === "/services/") return "Services-";
   if (page.path === "/examples/") return "Examples-";
-  if (page.path === "/tech-audit/" || page.path === "/fit-check/") return "FitCheck-";
+  if (page.path === "/tech-audit/" || page.path === "/tech-audit/") return "TechAudit-";
   if (page.path.startsWith("/journal/") && page.path !== "/journal/") return "JournalPost-";
   return "";
 }
@@ -1199,14 +1199,14 @@ function authoredContentHtml(page) {
     // <article>s and lifts the duplicate <h1>; rendering the snapshot through
     // anything else re-introduces the drift this file exists to prevent.
     let body = prepareIndustryHtml(page.industry.html).body;
-    // Crawler parity with FitMapDiagram: the app draws the customer path as
+    // Crawler parity with AuditMapDiagram: the app draws the customer path as
     // a diagram; bots get the same stations as a semantic ordered list,
-    // inserted right after the Fit map section's heading. No match → body
+    // inserted right after the Audit map section's heading. No match → body
     // ships unchanged (never risk breaking authored markup).
-    const stations = FIT_MAP_PATHS[page.industry.slug] ?? GENERIC_FIT_PATH;
+    const stations = AUDIT_MAP_PATHS[page.industry.slug] ?? GENERIC_AUDIT_PATH;
     const pathOl = `<p>The customer path we map:</p>\n<ol>${stations.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
     body = body.replace(
-      /(<p[^>]*>\s*Fit map\s*<\/p>\s*<h2[^>]*>[\s\S]*?<\/h2>)/i,
+      /(<p[^>]*>\s*Audit map\s*<\/p>\s*<h2[^>]*>[\s\S]*?<\/h2>)/i,
       `$1\n${pathOl}`
     );
     return body;
@@ -1217,14 +1217,14 @@ function authoredContentHtml(page) {
 
 // The Tech Audit intake form itself, statically — the #1 conversion page previously
 // had ZERO form markup before hydration (no-JS visitors couldn't submit).
-function fitCheckFormHtml(page) {
-  if (page.path !== "/tech-audit/" && page.path !== "/fit-check/") return "";
+function techAuditFormHtml(page) {
+  if (page.path !== "/tech-audit/" && page.path !== "/tech-audit/") return "";
   return `
     <h2>Book your free Tech Audit</h2>
-    <form name="fit-check-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="fit-check-scratch" />
+    <form name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="tech-audit-scratch" />
       <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
-      <input type="hidden" name="source" value="littlefightnyc.com/fit-check" />
+      <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
       <p hidden><label>Do not fill this out <input name="bot-field" /></label></p>
       <p><label>Your name <input name="name" autocomplete="name" required /></label></p>
       <p><label>Business <input name="business" autocomplete="organization" required /></label></p>
@@ -1280,7 +1280,7 @@ function methodSubject(page) {
   if (page.service) return `a ${page.service.eyebrow ? page.service.eyebrow.toLowerCase() : "service"} engagement`;
   if (page.area) return `a ${page.area.name} business`;
   if (page.answerGuide || page.path.startsWith("/answers/")) return "a question like this";
-  if (page.path === "/tech-audit/" || page.path === "/fit-check/") return "a Tech Audit";
+  if (page.path === "/tech-audit/" || page.path === "/tech-audit/") return "a Tech Audit";
   if (page.path.startsWith("/industries/")) return "a business in this industry";
   if (page.path.startsWith("/glossary/")) return "the setup behind this term";
   return "a problem like this";
@@ -1296,13 +1296,14 @@ function methodBlock(page) {
   `;
 }
 
-// The human behind the phone — E-E-A-T signal, crawler-visible on /about/
-// (the FounderCard component only exists after hydration).
+// How Little Fight works — E-E-A-T signal, crawler-visible on /about/
+// (the FounderCard component only exists after hydration). Company-first
+// operating model with David attributed as founder, not a one-person help line.
 function founderBlock(page) {
   if (page.path !== "/about/") return "";
   return `
-    <h2>Who answers the phone</h2>
-    <p>David Marsh, founder. When you call, you get David. Not a call center. Not a ticket queue. Little Fight has been in New York's corner since 2012.</p>
+    <h2>How we work</h2>
+    <p>Founded by David Marsh in 2012, Little Fight NYC runs on a real standard: one accountable owner on every project, a two-hour callback window, and on-site help within a day when it's urgent. We're building the tech service company New York's small businesses deserve — the one the chains never sent.</p>
   `;
 }
 
@@ -1392,7 +1393,7 @@ function snapshot(page) {
   const referenceBlock = isJournalArticle(page)
     ? `<h2>Useful outside references</h2>${linkList(officialReferenceLinks, "lf-seo__refs")}`
     : "";
-  const ctaCopy = (page.path === "/tech-audit/" || page.path === "/fit-check/")
+  const ctaCopy = (page.path === "/tech-audit/" || page.path === "/tech-audit/")
     ? { label: "Call or start the review", link: "Start the review" }
     : { label: "Call or book your free Tech Audit", link: "Book your free Tech Audit" };
   const articleAttrs = isJournalArticle(page) ? ' itemscope itemtype="https://schema.org/Article"' : "";
@@ -1401,7 +1402,7 @@ function snapshot(page) {
   // The method block earns its place on decision pages; on content pages the
   // authored writing is the story and the block was pure duplication.
   const wantsMethod = Boolean(
-    (page.path === "/tech-audit/" || page.path === "/fit-check/") || page.service || page.area || page.answerGuide
+    (page.path === "/tech-audit/" || page.path === "/tech-audit/") || page.service || page.area || page.answerGuide
   );
 
   const innerBody = `
@@ -1411,7 +1412,7 @@ function snapshot(page) {
     ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
     ${authored}
     ${founderBlock(page)}
-    ${fitCheckFormHtml(page)}
+    ${techAuditFormHtml(page)}
     ${wantsMethod ? methodBlock(page) : ""}
     ${promisesBlock()}
     <h2>Useful Little Fight paths</h2>

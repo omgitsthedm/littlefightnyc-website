@@ -5,7 +5,7 @@ module.exports = {
         "https://littlefightnyc.com/",
         "https://littlefightnyc.com/services/",
         "https://littlefightnyc.com/field-guide/",
-        "https://littlefightnyc.com/fit-check/",
+        "https://littlefightnyc.com/tech-audit/",
         "https://littlefightnyc.com/journal/read-your-monthly-software-bill/",
       ],
       numberOfRuns: 1,

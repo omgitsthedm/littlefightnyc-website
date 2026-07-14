@@ -1,27 +1,27 @@
-/* Fit Check — the conversion form. Sleek, hairline-only, no boxes. */
+/* Tech Audit — the conversion form. Sleek, hairline-only, no boxes. */
 
-.lf-fit {
+.lf-audit {
   padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
   background: var(--lf-ink);
 
   /* Local state hues (not brand colors) — warn + confirm signals. */
-  --lf-fit-warn: #F87171;   /* soft red for invalid fields */
-  --lf-fit-ok: #4ADE80;     /* soft green for confirmed fields */
+  --lf-audit-warn: #F87171;   /* soft red for invalid fields */
+  --lf-audit-ok: #4ADE80;     /* soft green for confirmed fields */
 }
 
 @media (min-width: 768px) {
-  .lf-fit {
+  .lf-audit {
     padding: var(--lf-space-8) var(--lf-margin-tablet) var(--lf-space-10);
   }
 }
 
 @media (min-width: 1280px) {
-  .lf-fit {
+  .lf-audit {
     padding: var(--lf-space-9) var(--lf-margin-desktop) var(--lf-space-10);
   }
 }
 
-.lf-fit__inner {
+.lf-audit__inner {
   max-width: var(--lf-max-w);
   margin-inline: auto;
   display: grid;
@@ -30,7 +30,7 @@
 }
 
 @media (min-width: 1024px) {
-  .lf-fit__inner {
+  .lf-audit__inner {
     grid-template-columns: 1.6fr 1fr;
     gap: var(--lf-space-9);
     align-items: start;
@@ -39,14 +39,14 @@
 
 /* ---- Guided three-step flow ---- */
 
-.lf-fit__flow {
+.lf-audit__flow {
   display: grid;
   gap: var(--lf-space-6);
   align-content: start;
 }
 
 /* Screen-reader-only text (step announcements). */
-.lf-fit__sr {
+.lf-audit__sr {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -59,12 +59,12 @@
 }
 
 /* Progress — mono step count + 3-segment bar with orange fill. */
-.lf-fit__progress {
+.lf-audit__progress {
   display: grid;
   gap: var(--lf-space-3);
 }
 
-.lf-fit__progress-label {
+.lf-audit__progress-label {
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.16em;
@@ -73,34 +73,37 @@
   margin: 0;
 }
 
-.lf-fit__progress-bar {
+.lf-audit__progress-bar {
   display: flex;
   gap: var(--lf-space-2);
-  max-width: 320px;
+  max-width: 360px;
 }
 
-.lf-fit__progress-seg {
+.lf-audit__progress-seg {
   flex: 1;
-  height: 4px;
+  height: 5px;
   border-radius: var(--lf-radius-pill);
   background: var(--lf-hairline);
-  transition: background-color var(--lf-time-snappy) var(--lf-ease-standard);
+  transition:
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-fit__progress-seg.is-done {
+.lf-audit__progress-seg.is-done {
   background: var(--lf-fight);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--lf-fight) 45%, transparent);
 }
 
 /* ---- Step-3 payoff beat --------------------------------------------------
  * When both choices are made and step 3 arrives, the three segments connect:
  * one orange line draws across the bar and lets go, then the step heading
- * gets a single underline sweep. One-shot (FitCheck.tsx disarms the class),
+ * gets a single underline sweep. One-shot (TechAudit.tsx disarms the class),
  * no loops, and reduced-motion never sees either overlay. */
-.lf-fit__progress-bar {
+.lf-audit__progress-bar {
   position: relative;
 }
 
-.lf-fit__progress-bar.is-payoff::after {
+.lf-audit__progress-bar.is-payoff::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -108,20 +111,20 @@
   background: var(--lf-fight);
   transform-origin: left center;
   pointer-events: none;
-  animation: lf-fit-connect 620ms var(--lf-ease-out-quart) both;
+  animation: lf-audit-connect 620ms var(--lf-ease-out-quart) both;
 }
 
-@keyframes lf-fit-connect {
+@keyframes lf-audit-connect {
   from { transform: scaleX(0); opacity: 1; }
   62%  { transform: scaleX(1); opacity: 1; }
   to   { transform: scaleX(1); opacity: 0; }
 }
 
-.lf-fit__step-title--payoff {
+.lf-audit__step-title--payoff {
   position: relative;
 }
 
-.lf-fit__step-title--payoff::after {
+.lf-audit__step-title--payoff::after {
   content: "";
   position: absolute;
   left: 0;
@@ -132,29 +135,47 @@
   background: var(--lf-fight);
   transform-origin: left center;
   pointer-events: none;
-  animation: lf-fit-underline 700ms var(--lf-ease-out-quart) 280ms both;
+  animation: lf-audit-underline 700ms var(--lf-ease-out-quart) 280ms both;
 }
 
-@keyframes lf-fit-underline {
+@keyframes lf-audit-underline {
   from { transform: scaleX(0); opacity: 1; }
   70%  { transform: scaleX(1); opacity: 1; }
   to   { transform: scaleX(1); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-fit__progress-bar.is-payoff::after,
-  .lf-fit__step-title--payoff::after {
+  .lf-audit__progress-bar.is-payoff::after,
+  .lf-audit__step-title--payoff::after {
     animation: none;
     opacity: 0;
   }
 }
 
-.lf-fit__step {
+.lf-audit__step {
   display: grid;
   gap: var(--lf-space-5);
+  animation: lf-audit-step-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.lf-fit__step-title {
+@keyframes lf-audit-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-audit__step {
+    animation: none;
+  }
+}
+
+.lf-audit__step-title {
   font-family: var(--lf-serif);
   font-weight: 700;
   font-size: var(--lf-text-xl);
@@ -164,11 +185,11 @@
   margin: 0;
 }
 
-.lf-fit__step-title:focus {
+.lf-audit__step-title:focus {
   outline: none;
 }
 
-.lf-fit__step-sub {
+.lf-audit__step-sub {
   font-family: var(--lf-serif);
   font-style: italic;
   font-size: var(--lf-text-base);
@@ -179,28 +200,29 @@
 }
 
 /* Symptom / urgency cards — big tappable entry points. */
-.lf-fit__cards {
+.lf-audit__cards {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--lf-space-4);
 }
 
 @media (min-width: 640px) {
-  .lf-fit__cards {
+  .lf-audit__cards {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 1024px) {
-  .lf-fit__cards--three {
+  .lf-audit__cards--three {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 /* Scoped under .lf-editorial to win over the base `button` reset. */
-.lf-editorial .lf-fit__card {
+.lf-editorial .lf-audit__card {
+  position: relative;
   display: grid;
-  grid-template-columns: var(--lf-chip) 1fr;
+  grid-template-columns: var(--lf-chip) 1fr auto;
   grid-template-rows: auto auto;
   column-gap: var(--lf-space-4);
   row-gap: var(--lf-space-2);
@@ -216,29 +238,69 @@
   transition:
     border-color var(--lf-time-snappy) var(--lf-ease-standard),
     background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    box-shadow var(--lf-time-snappy) var(--lf-ease-standard),
     transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-fit__card:hover {
-  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
-  transform: translateY(-2px);
+.lf-editorial .lf-audit__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0) 40%);
+  opacity: 0;
+  transition: opacity var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-fit__card:active {
+.lf-editorial .lf-audit__card:hover {
+  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.55);
+}
+
+.lf-editorial .lf-audit__card:hover::before {
+  opacity: 1;
+}
+
+.lf-editorial .lf-audit__card:active {
   transform: translateY(0);
 }
 
-.lf-editorial .lf-fit__card:focus-visible {
+.lf-editorial .lf-audit__card:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }
 
-.lf-editorial .lf-fit__card.is-active {
+.lf-editorial .lf-audit__card.is-active {
   background: color-mix(in srgb, var(--lf-fight) 12%, var(--lf-paper-2));
   border-color: var(--lf-fight);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--lf-fight) 25%, transparent);
 }
 
-.lf-fit__card-chip {
+.lf-audit__card-check {
+  grid-row: 1 / 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-spring);
+}
+
+.lf-editorial .lf-audit__card.is-active .lf-audit__card-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.lf-audit__card-chip {
   grid-row: 1 / 3;
   display: inline-flex;
   align-items: center;
@@ -251,7 +313,7 @@
   flex: none;
 }
 
-.lf-fit__card-label {
+.lf-audit__card-label {
   font-family: var(--lf-sans);
   font-size: var(--lf-text-md);
   font-weight: 600;
@@ -260,7 +322,7 @@
   align-self: end;
 }
 
-.lf-fit__card-copy {
+.lf-audit__card-copy {
   font-family: var(--lf-sans);
   font-size: var(--lf-text-sm);
   line-height: 1.45;
@@ -269,20 +331,20 @@
 }
 
 /* Back / skip — quiet mono controls under each step. */
-.lf-fit__step-nav {
+.lf-audit__step-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--lf-space-4);
 }
 
-.lf-fit__step-nav--below {
+.lf-audit__step-nav--below {
   justify-content: flex-start;
 }
 
-.lf-editorial .lf-fit__back,
-.lf-editorial .lf-fit__skip,
-.lf-editorial .lf-fit__continue {
+.lf-editorial .lf-audit__back,
+.lf-editorial .lf-audit__skip,
+.lf-editorial .lf-audit__continue {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
@@ -299,11 +361,11 @@
   transition: color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-fit__skip {
+.lf-editorial .lf-audit__skip {
   margin-left: auto;
 }
 
-.lf-editorial .lf-fit__continue {
+.lf-editorial .lf-audit__continue {
   min-height: 48px;
   padding: 0 var(--lf-space-5);
   border-radius: var(--lf-radius-pill);
@@ -319,42 +381,42 @@
     transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-fit__back:hover,
-.lf-editorial .lf-fit__skip:hover {
+.lf-editorial .lf-audit__back:hover,
+.lf-editorial .lf-audit__skip:hover {
   color: var(--lf-fight);
 }
 
-.lf-editorial .lf-fit__continue:hover {
+.lf-editorial .lf-audit__continue:hover {
   color: var(--lf-ink);
   background: var(--lf-ember);
   transform: translateY(-2px);
 }
 
-.lf-editorial .lf-fit__back:focus-visible,
-.lf-editorial .lf-fit__skip:focus-visible,
-.lf-editorial .lf-fit__continue:focus-visible {
+.lf-editorial .lf-audit__back:focus-visible,
+.lf-editorial .lf-audit__skip:focus-visible,
+.lf-editorial .lf-audit__continue:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-fit__progress-seg,
-  .lf-editorial .lf-fit__card,
-  .lf-editorial .lf-fit__card:hover,
-  .lf-editorial .lf-fit__card:active {
+  .lf-audit__progress-seg,
+  .lf-editorial .lf-audit__card,
+  .lf-editorial .lf-audit__card:hover,
+  .lf-editorial .lf-audit__card:active {
     transition: none;
     transform: none;
   }
 
-  .lf-editorial .lf-fit__continue,
-  .lf-editorial .lf-fit__continue:hover {
+  .lf-editorial .lf-audit__continue,
+  .lf-editorial .lf-audit__continue:hover {
     transition: none;
     transform: none;
   }
 }
 
-.lf-fit__outcomes {
+.lf-audit__outcomes {
   font-family: var(--lf-serif);
   font-style: italic;
   font-size: var(--lf-text-base);
@@ -364,41 +426,41 @@
   max-width: 62ch;
 }
 
-.lf-fit__outcomes strong {
+.lf-audit__outcomes strong {
   color: var(--lf-bone);
   font-weight: 600;
   font-style: normal;
 }
 
-.lf-fit__form {
+.lf-audit__form {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--lf-space-6);
 }
 
 @media (min-width: 640px) {
-  .lf-fit__form {
+  .lf-audit__form {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-.lf-fit__honeypot {
+.lf-audit__honeypot {
   position: absolute;
   left: -9999px;
   opacity: 0;
 }
 
-.lf-fit__field {
+.lf-audit__field {
   display: flex;
   flex-direction: column;
   gap: var(--lf-space-2);
 }
 
-.lf-fit__field--full {
+.lf-audit__field--full {
   grid-column: 1 / -1;
 }
 
-.lf-fit__field label {
+.lf-audit__field label {
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.16em;
@@ -406,9 +468,9 @@
   color: var(--lf-bone-soft);
 }
 
-.lf-fit__field input,
-.lf-fit__field select,
-.lf-fit__field textarea {
+.lf-audit__field input,
+.lf-audit__field select,
+.lf-audit__field textarea {
   background: transparent;
   border: 0;
   border-bottom: 1px solid var(--lf-hairline);
@@ -423,54 +485,55 @@
   transition: border-color var(--lf-time-fast) var(--lf-ease-out-quart);
 }
 
-.lf-fit__field input::placeholder,
-.lf-fit__field textarea::placeholder {
+.lf-audit__field input::placeholder,
+.lf-audit__field textarea::placeholder {
   color: var(--lf-bone-dim);
   opacity: 0.7;
   font-style: italic;
 }
 
-.lf-fit__field input:focus,
-.lf-fit__field select:focus,
-.lf-fit__field textarea:focus {
+.lf-audit__field input:focus,
+.lf-audit__field select:focus,
+.lf-audit__field textarea:focus {
   border-bottom-color: var(--lf-fight);
   border-bottom-width: 2px;
-  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--lf-fight) 60%, transparent),
-              0 0.65rem 1.65rem color-mix(in srgb, var(--lf-fight) 12%, transparent);
+  box-shadow:
+    0 2px 0 0 color-mix(in srgb, var(--lf-fight) 70%, transparent),
+    0 10px 28px -8px color-mix(in srgb, var(--lf-fight) 22%, transparent);
 }
 
 /* Error state — invalid / flagged field. */
-.lf-fit__field input[aria-invalid="true"],
-.lf-fit__field select[aria-invalid="true"],
-.lf-fit__field textarea[aria-invalid="true"],
-.lf-fit__field.is-error input,
-.lf-fit__field.is-error select,
-.lf-fit__field.is-error textarea {
-  border-bottom-color: var(--lf-fit-warn);
+.lf-audit__field input[aria-invalid="true"],
+.lf-audit__field select[aria-invalid="true"],
+.lf-audit__field textarea[aria-invalid="true"],
+.lf-audit__field.is-error input,
+.lf-audit__field.is-error select,
+.lf-audit__field.is-error textarea {
+  border-bottom-color: var(--lf-audit-warn);
   border-bottom-width: 2px;
 }
 
-.lf-fit__field input[aria-invalid="true"]:focus,
-.lf-fit__field select[aria-invalid="true"]:focus,
-.lf-fit__field textarea[aria-invalid="true"]:focus,
-.lf-fit__field.is-error input:focus,
-.lf-fit__field.is-error select:focus,
-.lf-fit__field.is-error textarea:focus {
-  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--lf-fit-warn) 60%, transparent),
-              0 0.65rem 1.65rem color-mix(in srgb, var(--lf-fit-warn) 12%, transparent);
+.lf-audit__field input[aria-invalid="true"]:focus,
+.lf-audit__field select[aria-invalid="true"]:focus,
+.lf-audit__field textarea[aria-invalid="true"]:focus,
+.lf-audit__field.is-error input:focus,
+.lf-audit__field.is-error select:focus,
+.lf-audit__field.is-error textarea:focus {
+  box-shadow: 0 2px 0 0 color-mix(in srgb, var(--lf-audit-warn) 60%, transparent),
+              0 0.65rem 1.65rem color-mix(in srgb, var(--lf-audit-warn) 12%, transparent);
 }
 
-.lf-fit__error {
+.lf-audit__error {
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
-  color: var(--lf-fit-warn);
+  color: var(--lf-audit-warn);
   margin: 0;
   min-height: 0;
 }
 
 /* Quiet guidance beside the field it applies to (the no-secrets note). */
-.lf-fit__note {
+.lf-audit__note {
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
@@ -479,7 +542,7 @@
 }
 
 /* Reassurance beside the decision — lives directly under the submit. */
-.lf-fit__assurance {
+.lf-audit__assurance {
   grid-column: 1 / -1;
   font-family: var(--lf-mono);
   font-size: 11px;
@@ -490,35 +553,44 @@
 }
 
 /* The data-respect sentence — quieter than the mono promise strip above it. */
-.lf-fit__assurance--data {
+.lf-audit__assurance--data {
   text-transform: none;
   letter-spacing: 0.02em;
   margin-top: -2px;
 }
 
-.lf-editorial .lf-fit__assurance a {
+.lf-editorial .lf-audit__assurance a {
   color: var(--lf-fight);
   text-decoration: none;
 }
 
-.lf-editorial .lf-fit__assurance a:hover {
+.lf-editorial .lf-audit__assurance a:hover {
   color: var(--lf-ember);
 }
 
 /* Success state — a confirmed / validated field. */
-.lf-fit__field.is-valid input,
-.lf-fit__field.is-valid select,
-.lf-fit__field.is-valid textarea {
-  border-bottom-color: color-mix(in srgb, var(--lf-fit-ok) 70%, var(--lf-hairline));
+.lf-audit__field.is-valid input,
+.lf-audit__field.is-valid select,
+.lf-audit__field.is-valid textarea {
+  border-bottom-color: color-mix(in srgb, var(--lf-audit-ok) 70%, var(--lf-hairline));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%234ADE80' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  background-size: 18px 18px;
+  padding-right: 28px;
 }
 
-.lf-fit__field textarea {
+.lf-audit__field.is-valid textarea {
+  background-position: right 8px top 12px;
+}
+
+.lf-audit__field textarea {
   resize: vertical;
   min-height: 120px;
   line-height: 1.5;
 }
 
-.lf-fit__field select {
+.lf-audit__field select {
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, var(--lf-bone-dim) 50%),
                     linear-gradient(135deg, var(--lf-bone-dim) 50%, transparent 50%);
@@ -530,7 +602,7 @@
 
 /* Scoped under .lf-editorial to win over the base `button` reset
  * (background/border/padding: none) — otherwise the pill renders as bare text. */
-.lf-editorial .lf-fit__submit {
+.lf-editorial .lf-audit__submit {
   grid-column: 1 / -1;
   justify-self: start;
   display: inline-flex;
@@ -554,62 +626,62 @@
               transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-fit__submit:hover {
+.lf-audit__submit:hover {
   background: var(--lf-ember);
   transform: translateY(-2px);
 }
 
-.lf-fit__submit:active {
+.lf-audit__submit:active {
   transform: translateY(0);
 }
 
-.lf-fit__submit:focus-visible {
+.lf-audit__submit:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }
 
 /* Disabled / loading state. */
-.lf-fit__submit:disabled,
-.lf-fit__submit[aria-busy="true"] {
+.lf-audit__submit:disabled,
+.lf-audit__submit[aria-busy="true"] {
   cursor: not-allowed;
   background: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-paper));
   color: color-mix(in srgb, var(--lf-ink) 70%, var(--lf-bone));
   transform: none;
 }
 
-.lf-fit__submit[aria-busy="true"] .lf-fit__spinner {
+.lf-audit__submit[aria-busy="true"] .lf-audit__spinner {
   display: inline-block;
   width: 1em;
   height: 1em;
   border: 2px solid color-mix(in srgb, var(--lf-ink) 40%, transparent);
   border-top-color: var(--lf-ink);
   border-radius: var(--lf-radius-pill);
-  animation: lf-fit-spin 0.7s linear infinite;
+  animation: lf-audit-spin 0.7s linear infinite;
 }
 
-@keyframes lf-fit-spin {
+@keyframes lf-audit-spin {
   to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-fit__submit,
-  .lf-fit__submit:hover,
-  .lf-fit__submit:active {
+  .lf-audit__submit,
+  .lf-audit__submit:hover,
+  .lf-audit__submit:active {
     transition: background-color var(--lf-time-snappy) var(--lf-ease-standard);
     transform: none;
   }
-  .lf-fit__submit[aria-busy="true"] .lf-fit__spinner {
+  .lf-audit__submit[aria-busy="true"] .lf-audit__spinner {
     animation: none;
   }
 }
 
-.lf-fit__aside {
+.lf-audit__aside {
   padding-top: var(--lf-space-5);
   border-top: 1px solid var(--lf-hairline);
 }
 
 @media (min-width: 1024px) {
-  .lf-fit__aside {
+  .lf-audit__aside {
     border-top: 0;
     padding-top: 0;
     padding-left: var(--lf-space-6);
@@ -617,7 +689,7 @@
   }
 }
 
-.lf-fit__aside-label {
+.lf-audit__aside-label {
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.16em;
@@ -626,7 +698,7 @@
   margin: 0 0 var(--lf-space-3);
 }
 
-.lf-fit__aside-phone {
+.lf-audit__aside-phone {
   display: block;
   font-family: var(--lf-serif);
   font-weight: 600;
@@ -640,16 +712,16 @@
 }
 
 @media (min-width: 1024px) {
-  .lf-fit__aside-phone {
+  .lf-audit__aside-phone {
     font-size: var(--lf-text-2xl);
   }
 }
 
-.lf-fit__aside-phone:hover {
+.lf-audit__aside-phone:hover {
   color: var(--lf-fight);
 }
 
-.lf-fit__aside-note {
+.lf-audit__aside-note {
   font-family: var(--lf-serif);
   font-style: italic;
   font-size: var(--lf-text-base);
@@ -660,12 +732,12 @@
 }
 
 /* "What happens next" strip in the aside (Wave 4 — visual data). */
-.lf-fit__aside-label--next {
+.lf-audit__aside-label--next {
   margin-top: var(--lf-space-7);
   padding-top: var(--lf-space-5);
   border-top: 1px solid var(--lf-hairline);
 }
 
-.lf-fit__aside .lf-fit__next {
+.lf-audit__aside .lf-audit__next {
   margin: var(--lf-space-4) 0 0;
 }

@@ -240,9 +240,9 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
 
   if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") {
     sendTikTokEvent("Contact", { ...page, content_name: eventName, ...parameters });
-  } else if (eventName === "fit_check_intent" || eventName === "website_plan_intent" || eventName === "audit_scan_started") {
+  } else if (eventName === "tech_audit_intent" || eventName === "website_plan_intent" || eventName === "audit_scan_started") {
     sendTikTokEvent("ClickButton", { ...page, content_name: eventName, ...parameters });
-  } else if (eventName === "fit_check_submit" || eventName === "form_submit" || eventName === "lead_success") {
+  } else if (eventName === "tech_audit_submit" || eventName === "form_submit" || eventName === "lead_success") {
     sendTikTokEvent("SubmitForm", { ...page, content_name: eventName, ...parameters });
   }
 }
@@ -306,10 +306,10 @@ export function installAnalyticsHooks() {
       track("sms_click", { link_url: href, link_text: target.textContent?.trim() });
     } else if (target.hostname && target.hostname !== window.location.hostname) {
       track("external_link_click", { link_url: target.href, link_text: target.textContent?.trim() });
-    } else if (href.includes("fit-check") || href.includes("tech-audit")) {
-      // Event name stays fit_check_intent for analytics continuity — the
+    } else if (href.includes("tech-audit")) {
+      // Event name stays tech_audit_intent for analytics continuity — the
       // user-facing offer was renamed to "Tech Audit" on 2026-07-12.
-      track("fit_check_intent", { link_url: href, link_text: target.textContent?.trim() });
+      track("tech_audit_intent", { link_url: href, link_text: target.textContent?.trim() });
     }
   };
 
@@ -320,14 +320,14 @@ export function installAnalyticsHooks() {
     const formName = form.getAttribute("name") ?? "unknown";
     track("form_submit", { form_name: formName, page_path: window.location.pathname });
 
-    if (formName === "fit-check-scratch") {
+    if (formName === "tech-audit-scratch") {
       try {
-        window.sessionStorage.setItem("lf_fit_check_submitted", "true");
+        window.sessionStorage.setItem("lf_tech_audit_submitted", "true");
       } catch {
         // Storage can be unavailable in hardened browsers; the generic submit event still fires.
       }
 
-      track("fit_check_submit", {
+      track("tech_audit_submit", {
         form_name: formName,
         page_path: window.location.pathname,
       });

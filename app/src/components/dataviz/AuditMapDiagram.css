@@ -1,11 +1,11 @@
-/* FitMapDiagram — industry customer path as a subway-style line. Tokens only.
+/* AuditMapDiagram — industry customer path as a subway-style line. Tokens only.
    Horizontal stations on desktop, a vertical rail under 640px. */
 
-.lf-fitmap {
+.lf-auditmap {
   margin-block: var(--lf-space-8);
 }
 
-.lf-fitmap__kicker {
+.lf-auditmap__kicker {
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
   letter-spacing: 0.14em;
@@ -14,7 +14,7 @@
   margin: 0 0 var(--lf-space-4);
 }
 
-.lf-fitmap__heading {
+.lf-auditmap__heading {
   font-family: var(--lf-display);
   font-weight: var(--lf-display-weight);
   letter-spacing: var(--lf-display-tracking);
@@ -25,7 +25,7 @@
   max-width: 64ch;
 }
 
-.lf-fitmap__prose p {
+.lf-auditmap__prose p {
   font-family: var(--lf-serif);
   font-size: var(--lf-text-md);
   line-height: 1.7;
@@ -36,7 +36,7 @@
 }
 
 /* ---- The map panel — a real, visible container ---- */
-.lf-fitmap__map {
+.lf-auditmap__map {
   position: relative;
   margin-block: var(--lf-space-6);
   padding: var(--lf-space-6) var(--lf-space-5);
@@ -45,14 +45,14 @@
   border-radius: var(--lf-radius-sm);
 }
 
-.lf-fitmap__rail {
+.lf-auditmap__rail {
   position: absolute;
   inset: 0;
   overflow: visible;
   pointer-events: none;
 }
 
-.lf-fitmap__rail-path {
+.lf-auditmap__rail-path {
   fill: none;
   stroke: var(--lf-fight);
   stroke-width: 2;
@@ -64,11 +64,11 @@
   filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.35));
   transition: stroke-dashoffset var(--lf-time-cinematic) var(--lf-ease-out) 200ms;
 }
-.lf-fitmap[data-revealed="true"] .lf-fitmap__rail-path {
+.lf-auditmap[data-revealed="true"] .lf-auditmap__rail-path {
   stroke-dashoffset: 0;
 }
 
-.lf-fitmap__stations {
+.lf-auditmap__stations {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -78,7 +78,7 @@
   gap: var(--lf-space-2);
 }
 
-.lf-fitmap__station {
+.lf-auditmap__station {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,14 +92,14 @@
     transform var(--lf-time-base) var(--lf-ease-out);
   transition-delay: calc(280ms + var(--lf-i, 0) * 110ms);
 }
-.lf-fitmap[data-revealed="true"] .lf-fitmap__station {
+.lf-auditmap[data-revealed="true"] .lf-auditmap__station {
   opacity: 1;
   transform: none;
 }
 
 /* Station = subway ring; the terminal station is filled — the path ends
    somewhere that pays. */
-.lf-fitmap__dot {
+.lf-auditmap__dot {
   flex: none;
   width: 12px;
   height: 12px;
@@ -108,11 +108,11 @@
   border: 2px solid var(--lf-fight);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--lf-fight) 16%, transparent);
 }
-.lf-fitmap__station:last-child .lf-fitmap__dot {
+.lf-auditmap__station:last-child .lf-auditmap__dot {
   background: var(--lf-fight);
 }
 
-.lf-fitmap__label {
+.lf-auditmap__label {
   font-family: var(--lf-mono);
   font-size: 10px;
   font-weight: 500;
@@ -124,7 +124,7 @@
 }
 
 /* ---- Next-step links — brand chips, not raw blue anchors ---- */
-.lf-fitmap__links {
+.lf-auditmap__links {
   list-style: none;
   margin: var(--lf-space-5) 0 0;
   padding: 0;
@@ -133,7 +133,7 @@
   gap: var(--lf-space-3);
 }
 
-.lf-fitmap__link {
+.lf-auditmap__link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -151,54 +151,54 @@
     border-color var(--lf-time-snappy) var(--lf-ease-standard),
     background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
-.lf-fitmap__link svg {
+.lf-auditmap__link svg {
   color: var(--lf-fight);
   flex: none;
 }
-.lf-fitmap__link:hover,
-.lf-fitmap__link:focus-visible {
+.lf-auditmap__link:hover,
+.lf-auditmap__link:focus-visible {
   border-color: var(--lf-fight);
   background: color-mix(in srgb, var(--lf-fight) 10%, transparent);
 }
-.lf-fitmap__link:focus-visible {
+.lf-auditmap__link:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }
 
 /* ---- Phone geometry: vertical rail, stations stacked ---- */
 @media (max-width: 639px) {
-  .lf-fitmap__map {
+  .lf-auditmap__map {
     padding: var(--lf-space-5) var(--lf-space-4);
   }
-  .lf-fitmap__stations {
+  .lf-auditmap__stations {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: var(--lf-space-4);
   }
-  .lf-fitmap__station {
+  .lf-auditmap__station {
     flex-direction: row;
     align-items: center;
     gap: 14px;
     flex: none;
   }
-  .lf-fitmap__label {
+  .lf-auditmap__label {
     text-align: left;
     font-size: 11px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-fitmap__rail-path {
+  .lf-auditmap__rail-path {
     stroke-dashoffset: 0 !important;
     transition: none !important;
   }
-  .lf-fitmap__station {
+  .lf-auditmap__station {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }
-  .lf-fitmap__link {
+  .lf-auditmap__link {
     transition: none !important;
   }
 }

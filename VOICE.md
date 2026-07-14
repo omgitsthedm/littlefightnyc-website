@@ -135,7 +135,7 @@ Every page must show all four, side-by-side, equal visual weight:
 1. **Call** — `(646) 360-0318` — `tel:+16463600318`
 2. **Text** — same number — `sms:+16463600318`
 3. **Email** — `hello@littlefightnyc.com` — `mailto:`
-4. **Form** — `/fit-check/`
+4. **Form** — `/tech-audit/`
 
 **Hours line under them:** "9am–9pm Eastern: a human answers. After hours: AI takes the message and David calls back."
 

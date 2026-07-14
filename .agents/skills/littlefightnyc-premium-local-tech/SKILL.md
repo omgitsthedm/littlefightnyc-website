@@ -58,7 +58,7 @@ Do not remove:
 - Orange signal
 - Founder-led tone
 - Four-channel contact pattern
-- Fit Check route
+- Tech Audit route
 - Phone/text/email/form clarity
 ## Color rules
 Primary:
@@ -114,11 +114,11 @@ Every major page should make these four contact routes easy to find:
 1. Call: `(646) 360-0318`
 2. Text: same number
 3. Email: `hello@littlefightnyc.com`
-4. Form: `/fit-check/` or `/contact/`, depending on context
+4. Form: `/tech-audit/` or `/contact/`, depending on context
 Use the hours line where appropriate:
 “9am-9pm Eastern: a human answers. After hours: AI takes the message and David calls back.”
 Do not hide all contact behind a single form.
-Do not over-gate visitors with Fit Check.
+Do not over-gate visitors with Tech Audit.
 Let people pick their channel.
 ## Copy rules
 Use:
@@ -192,7 +192,7 @@ Avoid:
 - Too many cards with equal weight
 - Long paragraphs
 - Hidden phone number
-- Fit Check as the only path
+- Tech Audit as the only path
 - Unsupported guarantees
 - Invented case study metrics
 - Unapproved client names
@@ -217,7 +217,7 @@ If editing CSS:
 5. Run the build after changes.
 If editing JS:
 1. Keep `js/main.js` and minified JS in sync if minified file exists.
-2. Verify nav, drawer, conversion rail, Fit Check, forms, and tracking still work.
+2. Verify nav, drawer, conversion rail, Tech Audit, forms, and tracking still work.
 3. Do not alter function routes unless explicitly required.
 If editing generated answer pages:
 1. Update the generator data, not just generated output.
@@ -227,13 +227,13 @@ If editing generated answer pages:
 Run:
 - `node scripts/build-netlify-publish.mjs`
 - `node --check js/main.js`
-- `node --check js/fit-check-intake.js`
+- `node --check js/tech-audit-intake.js`
 - `npx netlify functions:build --src netlify/functions --functions tmp/functions-build`
 - `xmllint --noout sitemap.xml`
 - `git diff --check`
 Check routes:
 - `/`
-- `/fit-check/`
+- `/tech-audit/`
 - `/contact/`
 - `/websites/`
 - `/systems/`

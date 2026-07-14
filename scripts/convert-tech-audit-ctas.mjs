@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * Convert Fit Check gating CTAs to the 4-channel contact pattern.
+ * Convert Tech Audit gating CTAs to the 4-channel contact pattern.
  *
  * Pattern matched (with optional sibling btn-ghost link):
- *   <a class="btn-fit" href="/fit-check/">...Fit Check...</a>
+ *   <a class="btn-fit" href="/tech-audit/">...Tech Audit...</a>
  *
  * Replacement: 4-channel grid (Call/Text/Email/Form).
  *
  * SKIPS:
- *  - /fit-check/index.html (the actual Fit Check page)
+ *  - /tech-audit/index.html (the actual Tech Audit page)
  *  - dist/, backup/, tmp/, .netlify/, .git/, node_modules/
  *  - Any link explicitly inside a <nav> (handled separately)
  */
@@ -19,7 +19,7 @@ import { join, dirname } from "node:path";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const SKIP_DIRS = new Set(["dist", "backup", "tmp", "node_modules", ".netlify", ".git"]);
-const SKIP_FILES = new Set(["fit-check/index.html", "fit-check/thanks/index.html"]);
+const SKIP_FILES = new Set(["tech-audit/index.html", "tech-audit/thanks/index.html"]);
 
 const FOUR_CHANNEL = `<div class="hero-contact-row" style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:1.2em 0; max-width:560px;">
         <a href="tel:+16463600318" class="btn btn-orange" style="text-align:center;">📞 Call (646) 360-0318</a>
@@ -28,14 +28,14 @@ const FOUR_CHANNEL = `<div class="hero-contact-row" style="display:grid; grid-te
         <a href="/contact/" class="btn btn-outline" style="text-align:center;">📝 Contact form</a>
       </div>`;
 
-// Match an .overhaul-actions block that contains a btn-fit link to /fit-check/
+// Match an .overhaul-actions block that contains a btn-fit link to /tech-audit/
 // — possibly with siblings — and replace with our 4-channel block.
 //
 // Examples it should catch:
-//   <div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">...</a></div>
-//   <div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">...</a><a class="btn-ghost" href="...">...</a></div>
-//   <div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">...</a><a class="btn-ghost" href="...">...</a><a class="btn-ghost" href="...">...</a></div>
-const OVERHAUL_ACTIONS = /<div class="overhaul-actions">\s*<a class="btn-fit" href="\/fit-check\/[^"]*"[^>]*>[\s\S]*?<\/a>(?:\s*<a class="btn-ghost"[^>]*>[\s\S]*?<\/a>)*\s*<\/div>/g;
+//   <div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">...</a></div>
+//   <div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">...</a><a class="btn-ghost" href="...">...</a></div>
+//   <div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">...</a><a class="btn-ghost" href="...">...</a><a class="btn-ghost" href="...">...</a></div>
+const OVERHAUL_ACTIONS = /<div class="overhaul-actions">\s*<a class="btn-fit" href="\/tech-audit\/[^"]*"[^>]*>[\s\S]*?<\/a>(?:\s*<a class="btn-ghost"[^>]*>[\s\S]*?<\/a>)*\s*<\/div>/g;
 
 async function* walk(dir, rel = "") {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -73,4 +73,4 @@ for await (const { abs, rel } of walk(ROOT)) {
   }
 }
 
-console.log(`\nDone — updated: ${updated}, no-fitcheck-pattern: ${noMatch}, skipped: ${skipped}`);
+console.log(`\nDone — updated: ${updated}, no-techaudit-pattern: ${noMatch}, skipped: ${skipped}`);

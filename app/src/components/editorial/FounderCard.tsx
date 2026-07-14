@@ -3,16 +3,18 @@ import { useScrollReveal } from "./useScrollReveal";
 import "./FounderCard.css";
 
 /**
- * FounderCard — the "a human answers the phone" block. No fake photo:
- * a branded monogram panel (display Inter over an orange-to-blue ambient
- * wash) sits beside honest copy and the real phone number. When a real
- * founder photo exists, pass `photoSrc` and it drops into the same slot.
+ * FounderCard — the "how we work" block (About page only). Leads with the
+ * operating standard and the company's ambition, with David attributed as
+ * founder rather than positioned as a one-person help line. A branded
+ * monogram panel (display Inter over an orange-to-blue ambient wash) sits
+ * beside the copy and the real phone number. When a real founder photo
+ * exists, pass `photoSrc` and it drops into the same slot.
  */
 export default function FounderCard({ photoSrc }: { photoSrc?: string }) {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.2 });
 
   return (
-    <aside ref={ref} className="lf-founder" aria-label="Who answers the phone">
+    <aside ref={ref} className="lf-founder" aria-label="How Little Fight NYC works">
       <div className="lf-founder__panel" aria-hidden={photoSrc ? undefined : true}>
         {photoSrc ? (
           <img
@@ -31,13 +33,16 @@ export default function FounderCard({ photoSrc }: { photoSrc?: string }) {
       </div>
 
       <div className="lf-founder__body">
-        <p className="lf-founder__eyebrow">Who answers</p>
+        <p className="lf-founder__eyebrow">How we work</p>
         <p className="lf-founder__name">
           David Marsh
           <span className="lf-founder__role"> · Founder</span>
         </p>
         <p className="lf-founder__line">
-          When you call, you get David. Not a call center. Not a ticket queue.
+          Little Fight runs on a real standard: one accountable owner on every
+          project, a two-hour callback window, and on-site help within a day
+          when it's urgent. We're building the tech service company New York's
+          small businesses deserve — the one the chains never sent.
         </p>
         <p className="lf-founder__meta">
           <a className="lf-founder__tel" href="tel:+16463600318">

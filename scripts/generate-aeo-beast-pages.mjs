@@ -46,9 +46,9 @@ const localBusiness = {
   image: "https://littlefightnyc.com/images/og-image.jpg",
 };
 
-const nav = `<nav role="navigation" aria-label="Main navigation"><div class="nav-bg"></div><div class="nav-container"><a href="/" class="nav-brand"><div class="logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div><div class="nav-brand-text"><span class="nav-brand-name">Little Fight NYC</span><span class="nav-brand-tagline">Local Business Advantage</span></div></a><div class="nav-links" id="nav-links"><a href="/business-systems/">Save Money</a><a href="/websites/">Websites</a><a href="/it-support/">IT Support</a><a href="/local-search/">Get Found</a><a href="/answers/">Answers</a><a href="/software-guides/">Guides</a><a href="/work/">Work</a><a href="/fit-check/">Start Here</a></div><div class="nav-right"><a href="tel:+16463600318" class="nav-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="nav-phone-dot"></span>(646) 360-0318</a><div class="nav-divider"></div><a href="/fit-check/" class="nav-cta-btn">Start Here &rarr;</a><button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button></div></div></nav>`;
+const nav = `<nav role="navigation" aria-label="Main navigation"><div class="nav-bg"></div><div class="nav-container"><a href="/" class="nav-brand"><div class="logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div><div class="nav-brand-text"><span class="nav-brand-name">Little Fight NYC</span><span class="nav-brand-tagline">Local Business Advantage</span></div></a><div class="nav-links" id="nav-links"><a href="/business-systems/">Save Money</a><a href="/websites/">Websites</a><a href="/it-support/">IT Support</a><a href="/local-search/">Get Found</a><a href="/answers/">Answers</a><a href="/software-guides/">Guides</a><a href="/work/">Work</a><a href="/tech-audit/">Start Here</a></div><div class="nav-right"><a href="tel:+16463600318" class="nav-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><span class="nav-phone-dot"></span>(646) 360-0318</a><div class="nav-divider"></div><a href="/tech-audit/" class="nav-cta-btn">Start Here &rarr;</a><button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button></div></div></nav>`;
 
-const footer = `<footer role="contentinfo"><div class="footer-grid"><div class="footer-column"><div class="footer-logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div><h3>Little Fight NYC</h3><p>Better tech. Fewer bills. More customers.</p><p>Built for New York businesses that cannot waste time or money.</p></div><div class="footer-column"><h3>How We Help</h3><ul><li><a href="/nyc-websites-it-support/">NYC Websites and IT</a></li><li><a href="/business-systems/">Save Money</a></li><li><a href="/websites/">Websites</a></li><li><a href="/it-support/">IT Support</a></li><li><a href="/local-search/">Get Found</a></li><li><a href="/answers/">Owner Answers</a></li><li><a href="/software-guides/">Software Guides</a></li><li><a href="/software-cost-calculator/">Cost Calculator</a></li><li><a href="/pricing/">Pricing</a></li></ul></div><div class="footer-column"><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/work/">Work</a></li><li><a href="/case-studies/">Case Studies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/solutions/">Method</a></li><li><a href="/fit-check/">Start Here</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms</a></li></ul></div><div class="footer-column"><h3>Contact</h3><ul><li><a href="tel:+16463600318" style="color:#fe5800;font-weight:700">(646) 360-0318</a></li><li><a href="mailto:hello@littlefightnyc.com" style="color:#fe5800;font-weight:700">hello@littlefightnyc.com</a></li></ul><p style="color:#8a8ea0;font-size:13px;margin-top:8px">New York City<br>Websites, IT support, and practical systems</p></div></div><div class="footer-bottom"><p>&copy; 2026 Little Fight NYC. Built in New York for local businesses with bills to lower and customers to win.</p><p style="margin-top:8px"><a href="https://littlefightnyc.com">Designed, hosted, and cared for by LittleFightNYC.com</a></p></div></footer>`;
+const footer = `<footer role="contentinfo"><div class="footer-grid"><div class="footer-column"><div class="footer-logo"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50" y="28" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">LITTLE</text><text x="50" y="56" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="26" letter-spacing="-1">FIGHT</text><text x="50" y="82" text-anchor="middle" fill="white" font-family="'Lexend',sans-serif" font-weight="800" font-size="24" letter-spacing="-1">NYC</text></svg></div><h3>Little Fight NYC</h3><p>Better tech. Fewer bills. More customers.</p><p>Built for New York businesses that cannot waste time or money.</p></div><div class="footer-column"><h3>How We Help</h3><ul><li><a href="/nyc-websites-it-support/">NYC Websites and IT</a></li><li><a href="/business-systems/">Save Money</a></li><li><a href="/websites/">Websites</a></li><li><a href="/it-support/">IT Support</a></li><li><a href="/local-search/">Get Found</a></li><li><a href="/answers/">Owner Answers</a></li><li><a href="/software-guides/">Software Guides</a></li><li><a href="/software-cost-calculator/">Cost Calculator</a></li><li><a href="/pricing/">Pricing</a></li></ul></div><div class="footer-column"><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/work/">Work</a></li><li><a href="/case-studies/">Case Studies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/solutions/">Method</a></li><li><a href="/tech-audit/">Start Here</a></li><li><a href="/contact/">Contact</a></li><li><a href="/privacy/">Privacy Policy</a></li><li><a href="/terms/">Terms</a></li></ul></div><div class="footer-column"><h3>Contact</h3><ul><li><a href="tel:+16463600318" style="color:#fe5800;font-weight:700">(646) 360-0318</a></li><li><a href="mailto:hello@littlefightnyc.com" style="color:#fe5800;font-weight:700">hello@littlefightnyc.com</a></li></ul><p style="color:#8a8ea0;font-size:13px;margin-top:8px">New York City<br>Websites, IT support, and practical systems</p></div></div><div class="footer-bottom"><p>&copy; 2026 Little Fight NYC. Built in New York for local businesses with bills to lower and customers to win.</p><p style="margin-top:8px"><a href="https://littlefightnyc.com">Designed, hosted, and cared for by LittleFightNYC.com</a></p></div></footer>`;
 
 function escapeHtml(value) {
   return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
@@ -186,8 +186,8 @@ const answers = [
     connect: "Connect the form to email and a simple lead log.",
     replace: "Replace form plugins or widgets that fail quietly.",
     build: "Build a backup lead capture path with owner notification.",
-    cta: "If customers say they filled out the form and nobody got it, call or start a Fit Check.",
-    links: [["/websites/", "Website help"], ["/fit-check/", "Start a Fit Check"], ["/answers/connect-website-form-to-crm/", "Connect forms to a lead list"]],
+    cta: "If customers say they filled out the form and nobody got it, call or start a Tech Audit.",
+    links: [["/websites/", "Website help"], ["/tech-audit/", "Start a Tech Audit"], ["/answers/connect-website-form-to-crm/", "Connect forms to a lead list"]],
   },
   {
     slug: "business-not-showing-on-google-maps",
@@ -205,7 +205,7 @@ const answers = [
     replace: "Replace vague website pages that do not mention the real service.",
     build: "Build neighborhood and service answers customers actually search.",
     cta: "Start with local search help if Google is where customers should find you.",
-    links: [["/local-search/", "Local search help"], ["/answers/google-business-profile-suspended-nyc/", "Profile suspended?"], ["/fit-check/", "Start a Fit Check"]],
+    links: [["/local-search/", "Local search help"], ["/answers/google-business-profile-suspended-nyc/", "Profile suspended?"], ["/tech-audit/", "Start a Tech Audit"]],
   },
   {
     slug: "small-business-website-cost-nyc",
@@ -222,7 +222,7 @@ const answers = [
     connect: "Connect calls, forms, booking, payments, and lead tracking.",
     replace: "Replace unclear copy, weak mobile layouts, and dead-end CTAs.",
     build: "Build only the pages and paths customers need to act.",
-    cta: "Use a Fit Check before paying for a rebuild you may not need.",
+    cta: "Use a Tech Audit before paying for a rebuild you may not need.",
     links: [["/websites/", "Website services"], ["/pricing/", "Starting points"], ["/software-cost-calculator/", "Cost calculator"]],
   },
   {
@@ -240,7 +240,7 @@ const answers = [
     connect: "Connect tools that work but do not share the right information.",
     replace: "Replace oversized subscriptions with smaller fit-for-purpose tools.",
     build: "Build lightweight dashboards or workflows when the paid platform is mostly unused.",
-    cta: "Start with the software cost calculator or Fit Check.",
+    cta: "Start with the software cost calculator or Tech Audit.",
     links: [["/business-systems/", "Save money"], ["/software-cost-calculator/", "Cost calculator"], ["/software-guides/custom-business-system-vs-saas-subscriptions/", "Custom vs SaaS"]],
   },
   {
@@ -259,7 +259,7 @@ const answers = [
     replace: "Replace a POS that breaks service or costs too much for unused features.",
     build: "Build a lighter owner view if the POS has data but not clarity.",
     cta: "Read the full Square vs Toast guide or start with a tool review.",
-    links: [["/software-guides/square-vs-toast-manhattan-restaurants/", "Full Square vs Toast guide"], ["/services/pos-and-register-setup-nyc/", "POS setup"], ["/fit-check/", "Tool review"]],
+    links: [["/software-guides/square-vs-toast-manhattan-restaurants/", "Full Square vs Toast guide"], ["/services/pos-and-register-setup-nyc/", "POS setup"], ["/tech-audit/", "Tool review"]],
   },
   {
     slug: "best-booking-software-nyc-salons",
@@ -277,7 +277,7 @@ const answers = [
     replace: "Replace tools that charge for features the salon does not use.",
     build: "Build a simple lead and rebooking view if the tool does not show what matters.",
     cta: "Compare the salon booking guide before switching platforms.",
-    links: [["/software-guides/square-appointments-vs-glossgenius-nyc-salons/", "Salon booking guide"], ["/industries/salons-wellness/", "Salon systems"], ["/fit-check/", "Start a Fit Check"]],
+    links: [["/software-guides/square-appointments-vs-glossgenius-nyc-salons/", "Salon booking guide"], ["/industries/salons-wellness/", "Salon systems"], ["/tech-audit/", "Start a Tech Audit"]],
   },
   {
     slug: "connect-website-form-to-crm",
@@ -294,8 +294,8 @@ const answers = [
     connect: "Connect submissions to a lead table and owner notification.",
     replace: "Replace forms that fail silently or ask too much.",
     build: "Build a simple lead dashboard with status and source.",
-    cta: "Start with a Fit Check if leads are scattered across email, phone, and DMs.",
-    links: [["/business-systems/", "Lead systems"], ["/answers/website-form-not-working-small-business/", "Form not working"], ["/fit-check/", "Start Here"]],
+    cta: "Start with a Tech Audit if leads are scattered across email, phone, and DMs.",
+    links: [["/business-systems/", "Lead systems"], ["/answers/website-form-not-working-small-business/", "Form not working"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "replace-spreadsheet-with-business-dashboard",
@@ -312,8 +312,8 @@ const answers = [
     connect: "Connect forms, tasks, status, and notifications.",
     replace: "Replace manual copy-paste and unclear ownership.",
     build: "Build a simple dashboard that shows open loops.",
-    cta: "Use a systems Fit Check before buying a giant platform.",
-    links: [["/business-systems/", "Business systems"], ["/software-guides/airtable-vs-notion-vs-monday-small-business/", "Airtable vs Notion vs Monday"], ["/fit-check/", "Start Here"]],
+    cta: "Use a systems Tech Audit before buying a giant platform.",
+    links: [["/business-systems/", "Business systems"], ["/software-guides/airtable-vs-notion-vs-monday-small-business/", "Airtable vs Notion vs Monday"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "pos-system-keeps-freezing",
@@ -331,7 +331,7 @@ const answers = [
     replace: "Replace failing devices or setups that break repeatedly.",
     build: "Build a support checklist so staff know what to do first.",
     cta: "Call if payments or service are affected now.",
-    links: [["/it-support/", "IT support"], ["/services/pos-and-register-setup-nyc/", "POS setup"], ["/fit-check/", "Start Here"]],
+    links: [["/it-support/", "IT support"], ["/services/pos-and-register-setup-nyc/", "POS setup"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "business-email-not-working",
@@ -349,7 +349,7 @@ const answers = [
     replace: "Replace risky forwarding chains and old account ownership.",
     build: "Build a clean admin handoff and recovery path.",
     cta: "Call if email is actively blocking customers or staff.",
-    links: [["/it-support/", "IT support"], ["/answers/domain-dns-help-small-business/", "DNS help"], ["/fit-check/", "Start Here"]],
+    links: [["/it-support/", "IT support"], ["/answers/domain-dns-help-small-business/", "DNS help"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "domain-dns-help-small-business",
@@ -367,7 +367,7 @@ const answers = [
     replace: "Replace old vendors or inaccessible accounts when ownership is risky.",
     build: "Build a safe access and recovery record for the business.",
     cta: "Do not share sensitive information on the call. David can explain safe access if needed.",
-    links: [["/it-support/", "IT support"], ["/answers/business-email-not-working/", "Email help"], ["/fit-check/", "Start Here"]],
+    links: [["/it-support/", "IT support"], ["/answers/business-email-not-working/", "Email help"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "google-business-profile-suspended-nyc",
@@ -384,8 +384,8 @@ const answers = [
     connect: "Connect website, phone, services, and profile details.",
     replace: "Replace keyword-stuffed names or confusing categories.",
     build: "Build a clean appeal packet before submitting.",
-    cta: "Start a local visibility Fit Check if Maps visibility matters.",
-    links: [["/local-search/", "Local search"], ["/answers/business-not-showing-on-google-maps/", "Maps help"], ["/fit-check/", "Start Here"]],
+    cta: "Start a local visibility Tech Audit if Maps visibility matters.",
+    links: [["/local-search/", "Local search"], ["/answers/business-not-showing-on-google-maps/", "Maps help"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "local-pharmacy-website-community-support",
@@ -402,8 +402,8 @@ const answers = [
     connect: "Connect website, Google profile, phone, refill path, and reviews.",
     replace: "Replace thin pages that say less than the storefront sign.",
     build: "Build service pages for the questions customers already ask.",
-    cta: "Start with a website and local search Fit Check for pharmacy visibility.",
-    links: [["/websites/", "Website help"], ["/local-search/", "Google visibility"], ["/fit-check/", "Start Here"]],
+    cta: "Start with a website and local search Tech Audit for pharmacy visibility.",
+    links: [["/websites/", "Website help"], ["/local-search/", "Google visibility"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "hair-salon-save-money-software",
@@ -421,7 +421,7 @@ const answers = [
     replace: "Replace tools that cost too much for basic scheduling.",
     build: "Build a small owner view for leads, rebooking, and follow-up.",
     cta: "Compare booking tools before switching.",
-    links: [["/industries/salons-wellness/", "Salon systems"], ["/software-guides/square-appointments-vs-glossgenius-nyc-salons/", "Booking guide"], ["/fit-check/", "Start Here"]],
+    links: [["/industries/salons-wellness/", "Salon systems"], ["/software-guides/square-appointments-vs-glossgenius-nyc-salons/", "Booking guide"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "restaurant-website-booking-payments",
@@ -439,7 +439,7 @@ const answers = [
     replace: "Replace PDF-only menus or confusing third-party dead ends.",
     build: "Build clean event, catering, or service pages when they drive revenue.",
     cta: "Start with restaurant website or POS help if the path leaks.",
-    links: [["/industries/restaurants-bars/", "Restaurant systems"], ["/software-guides/square-vs-toast-manhattan-restaurants/", "POS guide"], ["/fit-check/", "Start Here"]],
+    links: [["/industries/restaurants-bars/", "Restaurant systems"], ["/software-guides/square-vs-toast-manhattan-restaurants/", "POS guide"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "service-business-lead-tracking-nyc",
@@ -456,8 +456,8 @@ const answers = [
     connect: "Connect Google, website forms, phone notes, email, and referrals into one view.",
     replace: "Replace scattered lists and inbox-only tracking.",
     build: "Build a lightweight lead dashboard with source and status.",
-    cta: "Start with a lead tracking Fit Check.",
-    links: [["/business-systems/", "Business systems"], ["/answers/connect-website-form-to-crm/", "Form to CRM"], ["/fit-check/", "Start Here"]],
+    cta: "Start with a lead tracking Tech Audit.",
+    links: [["/business-systems/", "Business systems"], ["/answers/connect-website-form-to-crm/", "Form to CRM"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "shopify-vs-squarespace-local-retail",
@@ -475,7 +475,7 @@ const answers = [
     replace: "Replace platforms that are too hard for the team to maintain.",
     build: "Build local landing pages around profitable categories or neighborhoods.",
     cta: "Read the full retail platform guide before rebuilding.",
-    links: [["/software-guides/shopify-vs-squarespace-nyc-retail/", "Full retail guide"], ["/industries/retail-ecommerce/", "Retail systems"], ["/fit-check/", "Start Here"]],
+    links: [["/software-guides/shopify-vs-squarespace-nyc-retail/", "Full retail guide"], ["/industries/retail-ecommerce/", "Retail systems"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "webflow-vs-squarespace-small-business",
@@ -493,7 +493,7 @@ const answers = [
     replace: "Replace platforms that block updates, speed, or clear page structure.",
     build: "Build a page system that can grow without turning messy.",
     cta: "Read the full Webflow vs Squarespace guide.",
-    links: [["/software-guides/webflow-vs-squarespace-manhattan-small-business/", "Full website platform guide"], ["/websites/", "Website services"], ["/fit-check/", "Start Here"]],
+    links: [["/software-guides/webflow-vs-squarespace-manhattan-small-business/", "Full website platform guide"], ["/websites/", "Website services"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "when-custom-business-system-beats-saas",
@@ -529,7 +529,7 @@ const answers = [
     replace: "Replace failing devices, plugins, or brittle account chains when needed.",
     build: "Build a prevention checklist after the fire is out.",
     cta: "If it is active, call Little Fight now.",
-    links: [["/it-support/", "IT support"], ["tel:+16463600318", "Call Little Fight"], ["/fit-check/", "Start Here"]],
+    links: [["/it-support/", "IT support"], ["tel:+16463600318", "Call Little Fight"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "google-business-profile-help-nyc-small-business",
@@ -547,7 +547,7 @@ const answers = [
     replace: "Replace vague categories, outdated photos, and mismatched phone or URL details.",
     build: "Build service and neighborhood pages that support the profile.",
     cta: "Start with local search help if Maps should bring customers.",
-    links: [["/local-search/", "Local search"], ["/answers/business-not-showing-on-google-maps/", "Maps visibility"], ["/fit-check/", "Start Here"]],
+    links: [["/local-search/", "Local search"], ["/answers/business-not-showing-on-google-maps/", "Maps visibility"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "website-designer-disappeared-what-now",
@@ -564,8 +564,8 @@ const answers = [
     connect: "Connect accounts to business-owned email and clean admin access.",
     replace: "Replace vendor-controlled hosting or risky login chains.",
     build: "Build a cleaner site only after control is clear.",
-    cta: "Start with a recovery Fit Check before paying for a rebuild.",
-    links: [["/websites/", "Website help"], ["/answers/domain-dns-help-small-business/", "Domain help"], ["/fit-check/", "Start Here"]],
+    cta: "Start with a recovery Tech Audit before paying for a rebuild.",
+    links: [["/websites/", "Website help"], ["/answers/domain-dns-help-small-business/", "Domain help"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "local-seo-for-neighborhood-businesses-nyc",
@@ -583,7 +583,7 @@ const answers = [
     replace: "Replace thin pages that only repeat city names.",
     build: "Build useful neighborhood and service answers over time.",
     cta: "Start with local search if Google should drive customers.",
-    links: [["/local-search/", "Local search"], ["/answers/google-business-profile-help-nyc-small-business/", "Google profile help"], ["/fit-check/", "Start Here"]],
+    links: [["/local-search/", "Local search"], ["/answers/google-business-profile-help-nyc-small-business/", "Google profile help"], ["/tech-audit/", "Start Here"]],
   },
   {
     slug: "small-business-ai-tools-worth-it",
@@ -600,8 +600,8 @@ const answers = [
     connect: "Connect AI output to intake, follow-up, drafts, or notes.",
     replace: "Replace generic AI subscriptions that nobody uses.",
     build: "Build AI-assisted steps only where human review stays clear.",
-    cta: "Start with a workflow Fit Check before adding AI tools.",
-    links: [["/business-systems/", "Business systems"], ["/fit-check/", "Start Here"], ["/answers/service-business-lead-tracking-nyc/", "Lead tracking"]],
+    cta: "Start with a workflow Tech Audit before adding AI tools.",
+    links: [["/business-systems/", "Business systems"], ["/tech-audit/", "Start Here"], ["/answers/service-business-lead-tracking-nyc/", "Lead tracking"]],
   },
 ];
 
@@ -731,7 +731,7 @@ function answerPage(answer, index) {
   const previous = answers[(index - 1 + answers.length) % answers.length];
   const next = answers[(index + 1) % answers.length];
 
-  const body = `<section class="page-hero overhaul-page-hero"><div class="container"><p class="overhaul-kicker">${answer.category}</p><h1 class="overhaul-title">${answer.h1}</h1><p class="overhaul-deck">${answer.deck}</p><div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="tel:+16463600318">Call if it is broken</a></div><div class="page-updated content-meta">By <a class="author" rel="author" href="/about/">David Marsh</a> · Published <time class="published" itemprop="datePublished" datetime="${today}">${displayDate}</time></div></div></section>
+  const body = `<section class="page-hero overhaul-page-hero"><div class="container"><p class="overhaul-kicker">${answer.category}</p><h1 class="overhaul-title">${answer.h1}</h1><p class="overhaul-deck">${answer.deck}</p><div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">Start Here</a><a class="btn-ghost" href="tel:+16463600318">Call if it is broken</a></div><div class="page-updated content-meta">By <a class="author" rel="author" href="/about/">David Marsh</a> · Published <time class="published" itemprop="datePublished" datetime="${today}">${displayDate}</time></div></div></section>
 <article class="overhaul-section"><div class="container"><div class="pain-strip"><div><p class="overhaul-kicker">Direct answer</p><h2 class="overhaul-title sm">${answer.answer}</h2></div><ul class="mess-list">${answer.checks.map((item) => `<li>${item}</li>`).join("")}</ul></div></div></article>
 <section class="overhaul-section method-band"><div class="container"><p class="overhaul-kicker">Money leak</p><h2 class="overhaul-title sm">${answer.moneyLeak}</h2><div class="overhaul-grid"><article class="method-step"><strong>Keep</strong><p>${answer.keep}</p></article><article class="method-step"><strong>Connect</strong><p>${answer.connect}</p></article><article class="method-step"><strong>Replace</strong><p>${answer.replace}</p></article><article class="method-step"><strong>Build</strong><p>${answer.build}</p></article></div></div></section>
 <section class="overhaul-section tight"><div class="container"><p class="overhaul-kicker">Related paths</p><h2 class="overhaul-title sm">Go deeper from here.</h2><div class="overhaul-grid three">${answer.links.map(([href, label]) => `<article class="system-card"><h3><a href="${href}">${label}</a></h3><p>${href.startsWith("tel:") ? "Use this when the issue is actively blocking customers, payments, access, or staff." : "Open this next if that sounds like the problem behind the problem."}</p></article>`).join("")}</div></div></section>
@@ -742,7 +742,7 @@ ${faqMarkup([
     { q: "What should I check first?", a: answer.checks.join(" ") },
     { q: "When should I call Little Fight?", a: answer.cta },
   ])}
-<section class="overhaul-section tight"><div class="container"><div class="fit-check-band"><p class="overhaul-kicker">Next move</p><h2 class="overhaul-title sm">${answer.cta}</h2><p class="overhaul-deck">Tell us what is broken, expensive, slow, or hard to explain. We will find the smallest useful next step.</p><div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/answers/">Back to answers</a></div></div></div></section>`;
+<section class="overhaul-section tight"><div class="container"><div class="tech-audit-band"><p class="overhaul-kicker">Next move</p><h2 class="overhaul-title sm">${answer.cta}</h2><p class="overhaul-deck">Tell us what is broken, expensive, slow, or hard to explain. We will find the smallest useful next step.</p><div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">Start Here</a><a class="btn-ghost" href="/answers/">Back to answers</a></div></div></div></section>`;
 
   return shell(page, answerSchema(page, answer), body);
 }
@@ -768,7 +768,7 @@ function answersHub() {
       a: "Call Little Fight if the issue is actively affecting customers, payments, bookings, email, website access, POS, or staff access.",
     },
   ];
-  const body = `<section class="page-hero overhaul-page-hero"><div class="container"><p class="overhaul-kicker">Owner answers</p><h1 class="overhaul-title">Fast answers for expensive little problems.</h1><p class="overhaul-deck">Websites, Google, booking, payments, email, POS, software bills, and leads. Plain English first. Sales pitch never.</p><div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="tel:+16463600318">Call if it is broken</a></div><div class="page-updated content-meta">By <a class="author" rel="author" href="/about/">David Marsh</a> · Published <time class="published" itemprop="datePublished" datetime="${today}">${displayDate}</time></div></div></section>
+  const body = `<section class="page-hero overhaul-page-hero"><div class="container"><p class="overhaul-kicker">Owner answers</p><h1 class="overhaul-title">Fast answers for expensive little problems.</h1><p class="overhaul-deck">Websites, Google, booking, payments, email, POS, software bills, and leads. Plain English first. Sales pitch never.</p><div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">Start Here</a><a class="btn-ghost" href="tel:+16463600318">Call if it is broken</a></div><div class="page-updated content-meta">By <a class="author" rel="author" href="/about/">David Marsh</a> · Published <time class="published" itemprop="datePublished" datetime="${today}">${displayDate}</time></div></div></section>
 <section class="overhaul-section tight"><div class="container"><div class="pain-strip"><div><p class="overhaul-kicker">Direct answer</p><h2 class="overhaul-title sm">If a tool, page, form, payment path, or Google listing is costing customers or staff time, it deserves a clear first read.</h2><p class="overhaul-deck">These pages are built for owners who know the symptom, not the software category.</p></div><ul class="mess-list"><li>What is broken?</li><li>What is costing money?</li><li>What should customers do next?</li><li>What should staff stop doing by hand?</li></ul></div></div></section>
 <section class="overhaul-section"><div class="container"><p class="overhaul-kicker">Answer library</p><h2 class="overhaul-title sm">Start with the sentence already in your head.</h2><div class="overhaul-grid three">${answers
     .map(
@@ -777,7 +777,7 @@ function answersHub() {
     )
     .join("")}</div></div></section>
 ${faqMarkup(faqItems)}
-<section class="overhaul-section tight"><div class="container"><div class="fit-check-band"><p class="overhaul-kicker">Not sure?</p><h2 class="overhaul-title sm">Bring us the messy setup.</h2><p class="overhaul-deck">You do not need the right tech term. Tell us what is slow, expensive, broken, confusing, or disconnected.</p><div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start a Fit Check</a><a class="btn-ghost" href="/case-studies/">See case studies</a></div></div></div></section>`;
+<section class="overhaul-section tight"><div class="container"><div class="tech-audit-band"><p class="overhaul-kicker">Not sure?</p><h2 class="overhaul-title sm">Bring us the messy setup.</h2><p class="overhaul-deck">You do not need the right tech term. Tell us what is slow, expensive, broken, confusing, or disconnected.</p><div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">Start a Tech Audit</a><a class="btn-ghost" href="/case-studies/">See case studies</a></div></div></div></section>`;
 
   return shell(page, pageGraph(page, [faqSchema(faqItems), breadcrumb(page.url, [{ name: "Home", url: "https://littlefightnyc.com/" }, { name: "Answers", url: page.url }])]), body);
 }
@@ -793,7 +793,7 @@ function caseStudiesPage() {
       "Anonymized Little Fight NYC case studies showing website cleanup, software savings, local search, IT support, lead capture, and business systems work.",
     url: "https://littlefightnyc.com/case-studies/",
   };
-  const body = `<section class="page-hero overhaul-page-hero"><div class="container"><p class="overhaul-kicker">Case studies</p><h1 class="overhaul-title">Proof without the victory-lap fog.</h1><p class="overhaul-deck">Names stay private until clients approve. The work does not need fake numbers: fewer leaks, clearer paths, better trust, and owners who can see what is happening.</p><div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/work/">Open work overview</a></div><div class="page-updated content-meta">By <a class="author" rel="author" href="/about/">David Marsh</a> · Published <time class="published" itemprop="datePublished" datetime="${today}">${displayDate}</time></div></div></section>
+  const body = `<section class="page-hero overhaul-page-hero"><div class="container"><p class="overhaul-kicker">Case studies</p><h1 class="overhaul-title">Proof without the victory-lap fog.</h1><p class="overhaul-deck">Names stay private until clients approve. The work does not need fake numbers: fewer leaks, clearer paths, better trust, and owners who can see what is happening.</p><div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">Start Here</a><a class="btn-ghost" href="/work/">Open work overview</a></div><div class="page-updated content-meta">By <a class="author" rel="author" href="/about/">David Marsh</a> · Published <time class="published" itemprop="datePublished" datetime="${today}">${displayDate}</time></div></div></section>
 <section class="overhaul-section tight"><div class="container"><div class="pain-strip"><div><p class="overhaul-kicker">How to read these</p><h2 class="overhaul-title sm">Every case is framed around business relief.</h2><p class="overhaul-deck">What was costing time, money, customers, or trust? What stayed? What got connected? What was replaced? What got built?</p></div><ul class="mess-list"><li>No unsupported percentage claims.</li><li>No pretend enterprise transformation.</li><li>No client names without permission.</li><li>Just the work pattern and the practical result.</li></ul></div></div></section>
 <section class="overhaul-section"><div class="container"><p class="overhaul-kicker">Project library</p><h2 class="overhaul-title sm">Six ways the money leaks.</h2><div class="overhaul-grid three">${caseStudies
     .map(
@@ -802,7 +802,7 @@ function caseStudiesPage() {
     )
     .join("")}</div></div></section>
 <section class="overhaul-section method-band"><div class="container"><p class="overhaul-kicker">The case notes</p><h2 class="overhaul-title sm">Specific beats loud.</h2><div class="overhaul-grid">${caseStudies.map(caseStudyMarkup).join("")}</div></div></section>
-<section class="overhaul-section tight"><div class="container"><div class="fit-check-band"><p class="overhaul-kicker">Next move</p><h2 class="overhaul-title sm">Have a version of one of these problems?</h2><p class="overhaul-deck">Bring the messy setup. We will sort what to keep, connect, replace, or build.</p><div class="overhaul-actions"><a class="btn-fit" href="/fit-check/">Start Here</a><a class="btn-ghost" href="/answers/">Read owner answers</a></div></div></div></section>`;
+<section class="overhaul-section tight"><div class="container"><div class="tech-audit-band"><p class="overhaul-kicker">Next move</p><h2 class="overhaul-title sm">Have a version of one of these problems?</h2><p class="overhaul-deck">Bring the messy setup. We will sort what to keep, connect, replace, or build.</p><div class="overhaul-actions"><a class="btn-fit" href="/tech-audit/">Start Here</a><a class="btn-ghost" href="/answers/">Read owner answers</a></div></div></div></section>`;
 
   const creativeWork = caseStudies.map((study) => ({
     "@type": "CreativeWork",
@@ -870,8 +870,8 @@ async function wireExistingPages() {
       '<a tabindex="-1" href="/answers/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">05</span><span class="drawer-link-text">Answers</span></a><a tabindex="-1" href="/software-guides/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">06</span><span class="drawer-link-text">Guides</span></a>',
     );
     html = html.replaceAll(
-      '<a tabindex="-1" href="/work/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">06</span><span class="drawer-link-text">Work</span></a><a tabindex="-1" href="/fit-check/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">07</span><span class="drawer-link-text">Start Here</span></a>',
-      '<a tabindex="-1" href="/work/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">07</span><span class="drawer-link-text">Work</span></a><a tabindex="-1" href="/fit-check/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">08</span><span class="drawer-link-text">Start Here</span></a>',
+      '<a tabindex="-1" href="/work/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">06</span><span class="drawer-link-text">Work</span></a><a tabindex="-1" href="/tech-audit/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">07</span><span class="drawer-link-text">Start Here</span></a>',
+      '<a tabindex="-1" href="/work/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">07</span><span class="drawer-link-text">Work</span></a><a tabindex="-1" href="/tech-audit/" onclick="toggleDrawer()"><span class="drawer-icon" aria-hidden="true">08</span><span class="drawer-link-text">Start Here</span></a>',
     );
 
     if (file.endsWith(path.join("index.html")) && !file.includes(`${path.sep}answers${path.sep}`) && !html.includes('href="/answers/" class="btn btn-outline">Owner Answers</a>')) {

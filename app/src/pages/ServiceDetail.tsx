@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { areaPages, services } from "@/data/site";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
@@ -6,6 +6,7 @@ import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
+import ShareButton from "@/components/ShareButton";
 import "@/styles/editorial/service-detail.css";
 
 const FIGURE_CAPTION: Record<string, string> = {
@@ -58,6 +59,7 @@ function areaRouteSlug(serviceSlug: string) {
 
 export default function ServiceDetail() {
   const { slug } = useParams();
+  const { pathname } = useLocation();
   const resolved = slug && LEGACY_SLUG_MAP[slug] ? LEGACY_SLUG_MAP[slug] : slug;
   if (slug && LEGACY_SLUG_MAP[slug]) {
     return <Navigate to={`/services/${resolved}/`} replace />;
@@ -215,6 +217,14 @@ export default function ServiceDetail() {
           </ul>
         </div>
       </section>
+
+      <div className="lf-sd-share">
+        <ShareButton
+          title={service.headline}
+          text={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
+          url={`https://littlefightnyc.com${pathname}`}
+        />
+      </div>
 
       <QuietContact
         heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what's broken."}

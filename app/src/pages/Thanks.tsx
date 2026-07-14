@@ -15,33 +15,33 @@ export default function Thanks() {
   const websiteIntent = leadIntent === "website";
 
   useEffect(() => {
-    let cameFromFitCheck = false;
+    let cameFromTechAudit = false;
 
     try {
-      cameFromFitCheck = window.sessionStorage.getItem("lf_fit_check_submitted") === "true";
-      if (cameFromFitCheck) {
-        window.sessionStorage.removeItem("lf_fit_check_submitted");
-        // Confirmed success — retire the Tech Audit draft. (FitCheck keeps it
+      cameFromTechAudit = window.sessionStorage.getItem("lf_tech_audit_submitted") === "true";
+      if (cameFromTechAudit) {
+        window.sessionStorage.removeItem("lf_tech_audit_submitted");
+        // Confirmed success — retire the Tech Audit draft. (TechAudit keeps it
         // through submit so a failed POST + Back never loses the answers.
-        // Literal key mirrors DRAFT_KEY in FitCheck.tsx — keep in sync.)
+        // Literal key mirrors DRAFT_KEY in TechAudit.tsx — keep in sync.)
         window.sessionStorage.removeItem("lf_tech_audit_draft");
         window.sessionStorage.removeItem("lf_lead_intent");
       }
     } catch {
-      cameFromFitCheck = false;
+      cameFromTechAudit = false;
     }
 
-    if (!cameFromFitCheck) return;
+    if (!cameFromTechAudit) return;
 
     trackEvent("generate_lead", {
-      method: "fit_check_form",
-      form_name: "fit-check-scratch",
+      method: "tech_audit_form",
+      form_name: "tech-audit-scratch",
       page_path: "/thanks/",
       intent: leadIntent,
     });
     trackEvent("lead_success", {
-      method: "fit_check_form",
-      form_name: "fit-check-scratch",
+      method: "tech_audit_form",
+      form_name: "tech-audit-scratch",
       page_path: "/thanks/",
       intent: leadIntent,
     });

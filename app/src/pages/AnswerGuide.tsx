@@ -1,10 +1,11 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { HelpCircle } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
 import AnswerStepper from "@/components/dataviz/AnswerStepper";
 import AnswerVerdict from "@/components/dataviz/AnswerVerdict";
+import ShareButton from "@/components/ShareButton";
 import { answerGuides } from "@/data/site";
 import {
   ANSWER_CLUSTERS,
@@ -37,6 +38,7 @@ function relatedGuides(slug: string) {
 
 export default function AnswerGuide() {
   const { slug } = useParams();
+  const { pathname } = useLocation();
   const guide = answerGuides.find((item) => item.slug === slug);
 
   if (!guide) return <Navigate to="/examples/#answers" replace />;
@@ -70,6 +72,13 @@ export default function AnswerGuide() {
             <span aria-hidden="true"> · </span>
             <span>Updated </span>
             <time dateTime={guide.updated}>{displayDate(guide.updated)}</time>
+            <span aria-hidden="true"> · </span>
+            <ShareButton
+              title={guide.question}
+              text={guide.short}
+              url={`https://littlefightnyc.com${pathname}`}
+              label="Share"
+            />
           </p>
 
           {triage ? (

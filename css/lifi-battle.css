@@ -516,7 +516,7 @@ section[aria-label="Template trap"] ul li::before {
 }
 
 /* ---------- 11. Fit-check band (final CTA) ---------- */
-.fit-check-band {
+.tech-audit-band {
   position: relative;
   background: linear-gradient(135deg, rgba(254, 88, 0, 0.08) 0%, rgba(8, 11, 20, 0.6) 100%) !important;
   border: 1px solid var(--brand-line-orange) !important;
@@ -525,7 +525,7 @@ section[aria-label="Template trap"] ul li::before {
   overflow: hidden;
 }
 
-.fit-check-band::before {
+.tech-audit-band::before {
   content: "";
   position: absolute;
   z-index: 0;
@@ -542,12 +542,12 @@ section[aria-label="Template trap"] ul li::before {
   animation: lf-glow-breathe 8s ease-in-out infinite alternate;
 }
 
-.fit-check-band > * {
+.tech-audit-band > * {
   position: relative;
   z-index: 1;
 }
 
-.fit-check-band .btn-fit {
+.tech-audit-band .btn-fit {
   background: linear-gradient(135deg, #fe5800 0%, #ff7a35 100%);
   color: #fff !important;
   padding: 14px 28px;
@@ -561,12 +561,12 @@ section[aria-label="Template trap"] ul li::before {
   transition: transform 220ms var(--motion-snap), box-shadow 220ms ease;
 }
 
-.fit-check-band .btn-fit:hover {
+.tech-audit-band .btn-fit:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 36px rgba(254, 88, 0, 0.5);
 }
 
-.fit-check-band .btn-ghost {
+.tech-audit-band .btn-ghost {
   color: var(--brand-cream) !important;
   text-decoration: none;
   padding: 14px 22px;
@@ -578,7 +578,7 @@ section[aria-label="Template trap"] ul li::before {
   transition: border-color 200ms, background 200ms;
 }
 
-.fit-check-band .btn-ghost:hover {
+.tech-audit-band .btn-ghost:hover {
   border-color: var(--brand-orange);
   background: rgba(254, 88, 0, 0.08);
 }

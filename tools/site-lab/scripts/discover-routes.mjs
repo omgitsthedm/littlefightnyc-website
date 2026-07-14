@@ -8,7 +8,7 @@ const fallbackRoutes = [
   "/services/",
   "/field-guide/",
   "/audit/",
-  "/fit-check/",
+  "/tech-audit/",
   "/about/",
   "/journal/",
 ];

@@ -1,5 +1,7 @@
 import { lazy, Suspense, type ComponentType } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import PwaInstallPrompt from "@/components/PwaInstallPrompt";
+import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
 import Home from "@/pages/Home";
 
@@ -14,7 +16,7 @@ const Audit = lazy(() => import("@/pages/Audit"));
 const CaseStudyDetail = lazy(() => import("@/pages/CaseStudyDetail"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const FieldGuide = lazy(() => import("@/pages/FieldGuide"));
-const FitCheck = lazy(() => import("@/pages/FitCheck"));
+const TechAudit = lazy(() => import("@/pages/TechAudit"));
 const Glossary = lazy(() => import("@/pages/Glossary"));
 const GlossaryTerm = lazy(() => import("@/pages/GlossaryTerm"));
 const IndustryDetail = lazy(() => import("@/pages/IndustryDetail"));
@@ -31,6 +33,11 @@ const Thanks = lazy(() => import("@/pages/Thanks"));
 function RouteLoading() {
   return (
     <div className="route-loading" role="status" aria-live="polite">
+      <span className="route-loading__mark" aria-hidden="true">
+        <span className="route-loading__dot" />
+        <span className="route-loading__dot" />
+        <span className="route-loading__dot" />
+      </span>
       <span className="route-loading__label">Little Fight NYC</span>
       <span className="route-loading__line">Preparing the right page.</span>
     </div>
@@ -48,7 +55,9 @@ function route(Component: ComponentType) {
 export default function App() {
   return (
     <>
+      <RouteMetaManager />
       <RouteScrollManager />
+      <PwaInstallPrompt />
       <Routes>
         {/* Home: custom layout with the full Press Strike masthead - the
             magazine cover. Everything else inherits EditorialShell with the
@@ -70,7 +79,7 @@ export default function App() {
           <Route path="consulting" element={<Navigate to="/services/tech-consulting/" replace />} />
           <Route path="it-support" element={<Navigate to="/services/it-support/" replace />} />
           <Route path="lifetime-cost" element={<Navigate to="/answers/reduce-monthly-software-costs-small-business/" replace />} />
-          <Route path="tech-audit" element={route(FitCheck)} />
+          <Route path="tech-audit" element={route(TechAudit)} />
           {/* Fit Check renamed to Tech Audit (2026-07-12) — SPA-side backup
               for the _redirects 301 so in-app history links never dead-end. */}
           <Route path="fit-check" element={<Navigate to="/tech-audit/" replace />} />

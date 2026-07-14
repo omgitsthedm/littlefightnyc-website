@@ -1450,7 +1450,7 @@ body > * {
   white-space: nowrap;
 }
 
-.fit-check-band {
+.tech-audit-band {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
@@ -1463,7 +1463,7 @@ body > * {
   box-shadow: var(--lf-shadow);
 }
 
-.fit-check-band::after {
+.tech-audit-band::after {
   content: "";
   position: absolute;
   inset: 18px;
@@ -1472,7 +1472,7 @@ body > * {
   border: 1px dashed rgba(254, 88, 0, 0.22);
 }
 
-.fit-check-band > * {
+.tech-audit-band > * {
   position: relative;
   z-index: 1;
 }
@@ -2389,7 +2389,7 @@ textarea.fit-input {
   }
 
   .pain-strip,
-  .fit-check-band {
+  .tech-audit-band {
     padding: 24px;
     border-radius: 8px;
   }

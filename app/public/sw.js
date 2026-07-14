@@ -1,5 +1,13 @@
-const CACHE_NAME = "littlefightnyc-20260513";
-const SHELL_URLS = ["/", "/favicon.svg", "/site.webmanifest", "/icon-192.png", "/icon-512.png"];
+const CACHE_NAME = "littlefightnyc-20260713";
+const SHELL_URLS = [
+  "/",
+  "/favicon.svg",
+  "/site.webmanifest",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/icon-monochrome-192.png",
+  "/icon-monochrome-512.png",
+];
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -13,6 +21,12 @@ self.addEventListener("activate", (event) => {
       .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
       .then(() => self.clients.claim()),
   );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("fetch", (event) => {

@@ -1,0 +1,32 @@
+.lf-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-share:hover,
+.lf-share:focus-visible {
+  border-color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 2px;
+}
+
+.lf-share svg {
+  flex: none;
+  color: var(--lf-fight);
+}
