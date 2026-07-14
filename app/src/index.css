@@ -92,6 +92,56 @@ canvas {
   }
 }
 
+/* Shown by ErrorBoundary when a chunk fails and a reload has not recovered it. */
+.route-error {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: clamp(64px, 12vw, 140px) 24px;
+  background: #050507;
+  color: #f0f0ec;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  text-align: center;
+}
+
+.route-error__title {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.route-error__line {
+  font-size: 1rem;
+  color: #a1a1aa;
+  margin: 0;
+  max-width: 34ch;
+}
+
+.route-error__button {
+  margin-top: 6px;
+  padding: 12px 28px;
+  border: 0;
+  border-radius: var(--lf-radius-pill, 9999px);
+  background: #f97316;
+  color: #050507;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.route-error__button:hover { filter: brightness(1.06); }
+.route-error__button:active { transform: scale(0.97); }
+.route-error__button:focus-visible {
+  outline: 2px solid #f97316;
+  outline-offset: 3px;
+}
+
 /* Keyboard skip link (live editorial shells restyle within .lf-editorial). */
 .lf-skip-link {
   position: fixed;

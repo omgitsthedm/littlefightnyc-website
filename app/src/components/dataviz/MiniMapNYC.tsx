@@ -133,7 +133,7 @@ export default function MiniMapNYC({
         unfocusLinks();
 
         const nearby = currentArea
-          ? [currentArea.slug, ...currentArea.nearby.filter((s) => AREA_CENTER[s])]
+          ? [currentArea.slug, ...currentArea.nearby].filter((s) => AREA_CENTER[s])
           : Object.keys(AREA_CENTER);
         const bounds = L.latLngBounds(nearby.map((s) => AREA_CENTER[s]));
         map.fitBounds(bounds, { padding: compact ? [18, 18] : [34, 34] });

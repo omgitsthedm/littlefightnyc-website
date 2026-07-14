@@ -42,8 +42,21 @@ function hasRealClarityId() {
   return /^[a-z0-9]{6,}$/i.test(CLARITY_ID) && CLARITY_ID !== "CLARITY_ID";
 }
 
+function isProdHost() {
+  // The TikTok pixel id is hardcoded (so prod works without env config), which
+  // means it would otherwise fire on localhost, deploy-previews, and branch
+  // deploys and pollute the dataset. Only boot it on the canonical domain.
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname;
+  return host === "littlefightnyc.com" || host === "www.littlefightnyc.com";
+}
+
 function hasRealTikTokPixelId() {
-  return /^[A-Z0-9]{12,}$/i.test(TIKTOK_PIXEL_ID) && TIKTOK_PIXEL_ID !== "TIKTOK_PIXEL_ID";
+  return (
+    isProdHost() &&
+    /^[A-Z0-9]{12,}$/i.test(TIKTOK_PIXEL_ID) &&
+    TIKTOK_PIXEL_ID !== "TIKTOK_PIXEL_ID"
+  );
 }
 
 function ensureGtag() {
@@ -231,7 +244,9 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
   };
 
   if (eventName === "page_view") {
-    if (tikTokBooted && !tikTokPageTracked) {
+    // Fire on every SPA navigation, not just the first — otherwise TikTok
+    // records one pageview per session while GA4 records each route change.
+    if (tikTokBooted) {
       window.ttq?.page?.();
       tikTokPageTracked = true;
     }

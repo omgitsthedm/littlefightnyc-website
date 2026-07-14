@@ -1,37 +1,48 @@
 import { lazy, Suspense, type ComponentType } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
+import { importWithRetry } from "@/lib/importWithRetry";
 import Home from "@/pages/Home";
+
+// All route chunks retry once on a transient load failure; the ErrorBoundary
+// below force-reloads on a stale-hash failure so a returning visitor on an old
+// index.html self-heals instead of seeing a blank screen.
+function lazyRoute<T extends ComponentType<unknown>>(
+  importer: () => Promise<{ default: T }>,
+) {
+  return lazy(() => importWithRetry(importer));
+}
 
 // The install prompt only surfaces ~1200ms after load (and only on iOS/Chrome),
 // so keep it (and its lucide icons + CSS) out of the eager first-paint bundle.
-const PwaInstallPrompt = lazy(() => import("@/components/PwaInstallPrompt"));
+const PwaInstallPrompt = lazyRoute(() => import("@/components/PwaInstallPrompt"));
 
-const EditorialShell = lazy(() => import("@/components/editorial/EditorialShell"));
-const AnswerGuide = lazy(() => import("@/pages/AnswerGuide"));
-const Answers = lazy(() => import("@/pages/Answers"));
-const About = lazy(() => import("@/pages/About"));
-const AreaDetail = lazy(() => import("@/pages/AreaDetail"));
-const Areas = lazy(() => import("@/pages/Areas"));
-const CaseStudies = lazy(() => import("@/pages/CaseStudies"));
-const Audit = lazy(() => import("@/pages/Audit"));
-const CaseStudyDetail = lazy(() => import("@/pages/CaseStudyDetail"));
-const Contact = lazy(() => import("@/pages/Contact"));
-const FieldGuide = lazy(() => import("@/pages/FieldGuide"));
-const TechAudit = lazy(() => import("@/pages/TechAudit"));
-const Glossary = lazy(() => import("@/pages/Glossary"));
-const GlossaryTerm = lazy(() => import("@/pages/GlossaryTerm"));
-const IndustryDetail = lazy(() => import("@/pages/IndustryDetail"));
-const Journal = lazy(() => import("@/pages/Journal"));
-const JournalPost = lazy(() => import("@/pages/JournalPost"));
-const Legal = lazy(() => import("@/pages/Legal"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
-const ServiceAreaDetail = lazy(() => import("@/pages/ServiceAreaDetail"));
-const ServiceDetail = lazy(() => import("@/pages/ServiceDetail"));
-const Services = lazy(() => import("@/pages/Services"));
-const StudioDetail = lazy(() => import("@/pages/StudioDetail"));
-const Thanks = lazy(() => import("@/pages/Thanks"));
+const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
+const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
+const Answers = lazyRoute(() => import("@/pages/Answers"));
+const About = lazyRoute(() => import("@/pages/About"));
+const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
+const Areas = lazyRoute(() => import("@/pages/Areas"));
+const CaseStudies = lazyRoute(() => import("@/pages/CaseStudies"));
+const Audit = lazyRoute(() => import("@/pages/Audit"));
+const CaseStudyDetail = lazyRoute(() => import("@/pages/CaseStudyDetail"));
+const Contact = lazyRoute(() => import("@/pages/Contact"));
+const FieldGuide = lazyRoute(() => import("@/pages/FieldGuide"));
+const TechAudit = lazyRoute(() => import("@/pages/TechAudit"));
+const Glossary = lazyRoute(() => import("@/pages/Glossary"));
+const GlossaryTerm = lazyRoute(() => import("@/pages/GlossaryTerm"));
+const IndustryDetail = lazyRoute(() => import("@/pages/IndustryDetail"));
+const Journal = lazyRoute(() => import("@/pages/Journal"));
+const JournalPost = lazyRoute(() => import("@/pages/JournalPost"));
+const Legal = lazyRoute(() => import("@/pages/Legal"));
+const NotFound = lazyRoute(() => import("@/pages/NotFound"));
+const ServiceAreaDetail = lazyRoute(() => import("@/pages/ServiceAreaDetail"));
+const ServiceDetail = lazyRoute(() => import("@/pages/ServiceDetail"));
+const Services = lazyRoute(() => import("@/pages/Services"));
+const StudioDetail = lazyRoute(() => import("@/pages/StudioDetail"));
+const Thanks = lazyRoute(() => import("@/pages/Thanks"));
 
 function RouteLoading() {
   return (
@@ -63,6 +74,7 @@ export default function App() {
       <Suspense fallback={null}>
         <PwaInstallPrompt />
       </Suspense>
+      <ErrorBoundary>
       <Routes>
         {/* Home: custom layout with the full Press Strike masthead - the
             magazine cover. Everything else inherits EditorialShell with the
@@ -114,6 +126,7 @@ export default function App() {
           <Route path="*" element={route(NotFound)} />
         </Route>
       </Routes>
+      </ErrorBoundary>
     </>
   );
 }

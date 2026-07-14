@@ -60,7 +60,13 @@ export default function StatBlock({
       <dl className="lf-stats__grid" data-count={items.length}>
         {items.map((s, i) => (
           <div key={s.label} className="lf-stats__item">
-            <dt className="lf-stats__value" data-long={s.value.length > 7 || undefined}>
+            <dt
+              className="lf-stats__value"
+              // Word-shaped values (contain a letter or a space — "Square",
+              // "2 weeks", "Next.js 14") step down a size so they sit on clean
+              // lines; pure numbers ("100", "2012") keep the big display scale.
+              data-long={/[a-zA-Z]/.test(s.value) || /\s/.test(s.value) || undefined}
+            >
               <StatValue value={s.value} delay={i * 90} />
             </dt>
             <dd className="lf-stats__label">{s.label}</dd>

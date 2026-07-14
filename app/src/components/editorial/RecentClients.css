@@ -229,7 +229,10 @@
   min-height: 48px;
   padding-inline: var(--lf-space-5);
   color: var(--lf-bone);
-  background: var(--lf-blue);
+  /* --lf-blue (#3B82F6) gave light text only 3.68:1 (fails WCAG AA), and the
+     old hover (--lf-blue-soft) is LIGHTER so it failed harder. Deep blue-600/700
+     keeps a prominent solid CTA while clearing AA with light text both states. */
+  background: #2563eb;
   border-radius: var(--lf-radius-control);
   text-decoration: none;
   font-weight: 700;
@@ -239,7 +242,7 @@
 }
 .lf-editorial .lf-clients__scan-cta:hover {
   transform: translateY(var(--lf-lift));
-  background: var(--lf-blue-soft);
+  background: #1d4ed8;
 }
 .lf-editorial .lf-clients__scan-cta:focus-visible {
   outline: 2px solid var(--lf-blue-soft);

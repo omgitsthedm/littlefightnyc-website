@@ -45,7 +45,11 @@
   letter-spacing: -0.02em;
   color: var(--lf-fight);
   min-width: 0;
-  overflow-wrap: break-word;
+  /* Never break inside a word ("Squa/re", "2 wee/ks"): wrap only between words,
+     no hyphenation. Word-shaped values step down via [data-long] so they fit. */
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 /* Word-shaped values ("Next.js 14", "Square + Printful") step down a size so

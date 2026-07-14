@@ -254,6 +254,16 @@
   outline-offset: 2px;
 }
 
+/* The global `.lf-editorial a` color rule (specificity 0,1,1) outranks the
+   `.lf-nav__start` base (0,1,0) and dragged this pill back to light text on
+   orange — 2.8:1, fails WCAG AA. Type-qualify + scope to (0,2,1) so the dark
+   ink wins (7.26:1 on --lf-fight, and higher on the --lf-ember hover). */
+.lf-editorial a.lf-nav__start,
+.lf-editorial a.lf-nav__start:hover,
+.lf-editorial a.lf-nav__start:focus-visible {
+  color: var(--lf-ink);
+}
+
 /* ---- Mobile disclosure toggle ---- */
 .lf-nav__toggle {
   display: inline-flex;
