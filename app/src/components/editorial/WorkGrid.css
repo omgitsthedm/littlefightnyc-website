@@ -3,16 +3,19 @@
 
 .lf-work {
   padding: var(--lf-space-9) var(--lf-margin-mobile);
+  /* RecentClients above already supplies a full section pad; halve this top so
+     the two same-background sections share one gap, not a stacked double. */
+  padding-top: var(--lf-space-7);
   background: var(--lf-ink);
   border-bottom: 1px solid var(--lf-hairline);
 }
 
 @media (min-width: 768px) {
-  .lf-work { padding: var(--lf-space-10) var(--lf-margin-tablet); }
+  .lf-work { padding: var(--lf-space-10) var(--lf-margin-tablet); padding-top: var(--lf-space-8); }
 }
 
 @media (min-width: 1280px) {
-  .lf-work { padding: var(--lf-space-10) var(--lf-margin-desktop); }
+  .lf-work { padding: var(--lf-space-10) var(--lf-margin-desktop); padding-top: var(--lf-space-8); }
 }
 
 .lf-work__inner {

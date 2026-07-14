@@ -2,6 +2,11 @@
 
 .lf-contact-block {
   padding: var(--lf-space-10) var(--lf-margin-mobile);
+  /* The preceding section already supplies a full bottom pad on the SAME dark
+     ground, so the block's "deliberate pause" top stacked into a 250-320px
+     void on every page. Halve the top; keep the generous bottom before the
+     footer. */
+  padding-top: var(--lf-space-7);
   background: var(--lf-ink);
   display: flex;
   justify-content: center;
@@ -10,12 +15,14 @@
 @media (min-width: 768px) {
   .lf-contact-block {
     padding: var(--lf-space-11) var(--lf-margin-tablet);
+    padding-top: var(--lf-space-8);
   }
 }
 
 @media (min-width: 1280px) {
   .lf-contact-block {
     padding: var(--lf-space-12) var(--lf-margin-desktop);
+    padding-top: var(--lf-space-8);
   }
 }
 

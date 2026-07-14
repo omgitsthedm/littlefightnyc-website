@@ -2,14 +2,17 @@
 
 .lf-clients {
   padding: var(--lf-space-9) var(--lf-margin-mobile);
+  /* The scan CTA leaves this section's bottom padding empty; halve it so it
+     shares one gap with WorkGrid below instead of stacking a double void. */
+  padding-bottom: var(--lf-space-7);
   background: var(--lf-ink);
   border-top: 1px solid var(--lf-hairline);
 }
 @media (min-width: 768px) {
-  .lf-clients { padding: var(--lf-space-10) var(--lf-margin-tablet); }
+  .lf-clients { padding: var(--lf-space-10) var(--lf-margin-tablet); padding-bottom: var(--lf-space-8); }
 }
 @media (min-width: 1280px) {
-  .lf-clients { padding: var(--lf-space-10) var(--lf-margin-desktop); }
+  .lf-clients { padding: var(--lf-space-10) var(--lf-margin-desktop); padding-bottom: var(--lf-space-8); }
 }
 
 .lf-clients__inner {
