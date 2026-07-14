@@ -9,7 +9,6 @@
   const isIPad = /iPad/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   const isAndroid = /Android/.test(ua);
   const isSafari = /Safari/.test(ua) && !/Chrome|Chromium|CriOS|Edg/.test(ua);
-  const isChrome = /Chrome|Chromium|CriOS/.test(ua) && !/Edg/.test(ua);
   const isStandalone =
     window.matchMedia("(display-mode: standalone)").matches ||
     (navigator.standalone === true);
@@ -19,7 +18,6 @@
   if (isIPad) classes.push("is-ipad");
   if (isAndroid) classes.push("is-android");
   if (isSafari) classes.push("is-safari");
-  if (isChrome) classes.push("is-chrome");
   if (isStandalone) classes.push("is-standalone");
 
   const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;

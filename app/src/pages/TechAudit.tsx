@@ -6,6 +6,7 @@ import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import { auditRoutes } from "@/data/site";
+import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analytics";
 import { readAttribution } from "@/lib/attribution";
 import "@/styles/editorial/tech-audit.css";
@@ -73,6 +74,22 @@ const WEBSITE_ROUTE = auditRoutes[0];
 
 function queryValue(params: URLSearchParams, key: string, maxLength: number): string {
   return (params.get(key) ?? "").trim().slice(0, maxLength);
+}
+
+/**
+ * The installed PWA is a Web Share Target (see site.webmanifest): when an owner
+ * shares their site to the app it lands here as `?url=&text=&title=`. Share
+ * sheets are inconsistent about which field carries the link — Safari often
+ * puts it in `url`, others bundle it into `text` or `title` — so read `url`
+ * first, then pull the first http(s) link out of the other two. Whatever the
+ * owner shared is exactly the site they want us to look at.
+ */
+function sharedWebsiteUrl(params: URLSearchParams): string {
+  const direct = queryValue(params, "url", 2048);
+  if (direct) return direct;
+  const blob = `${params.get("text") ?? ""} ${params.get("title") ?? ""}`;
+  const match = blob.match(/https?:\/\/[^\s]+/i);
+  return match ? match[0].slice(0, 2048) : "";
 }
 
 function reportValue(params: URLSearchParams): string {
@@ -155,10 +172,20 @@ function writeDraft(draft: Draft): void {
 
 export default function TechAudit() {
   const [searchParams] = useSearchParams();
-  const websiteIntent = searchParams.get("intent") === WEBSITE_INTENT;
-  const websiteUrl = queryValue(searchParams, "url", 2048);
+  const websiteUrl = sharedWebsiteUrl(searchParams);
+  // A shared URL (from the PWA share target) is, by definition, a website the
+  // owner wants us to look at — so it drops the form into website mode too.
+  const websiteIntent =
+    searchParams.get("intent") === WEBSITE_INTENT || Boolean(websiteUrl);
   const reportId = reportValue(searchParams);
-  const leadOrigin = queryValue(searchParams, "source", 80) || "littlefightnyc.com";
+  // Attribute a lead that arrived via the PWA share target (no explicit source,
+  // but the share sheet passed text/title) so shares are measurable.
+  const explicitSource = queryValue(searchParams, "source", 80);
+  const leadOrigin =
+    explicitSource ||
+    (websiteUrl && (searchParams.has("text") || searchParams.has("title"))
+      ? "pwa_share"
+      : "littlefightnyc.com");
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
   const initialSymptom = draft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
@@ -181,6 +208,12 @@ export default function TechAudit() {
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
   const attribution = readAttribution();
+  // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
+  // tap as each step advances, a confident triple on a clean submit, a longer
+  // buzz when validation blocks it.
+  const hapticStep = useHaptic(8);
+  const hapticSubmit = useHaptic([12, 40, 12]);
+  const hapticError = useHaptic([26, 40, 26]);
   const stepTitle = websiteIntent && step === 1
     ? "What needs to change on your website?"
     : STEP_TITLES[step];
@@ -269,6 +302,7 @@ export default function TechAudit() {
     if (!messageDirty) {
       setMessage(composeContextMessage(label, urgency, websiteUrl, reportId));
     }
+    hapticStep();
     setStep(2);
   }
 
@@ -282,6 +316,7 @@ export default function TechAudit() {
       setMessage(composeContextMessage(symptom, label, websiteUrl, reportId));
     }
     if (symptom) setPayoff(true);
+    hapticStep();
     setStep(3);
   }
 
@@ -290,6 +325,7 @@ export default function TechAudit() {
       skipped: true,
       intent: websiteIntent ? WEBSITE_INTENT : "general",
     });
+    hapticStep();
     setStep(3);
   }
 
@@ -310,12 +346,15 @@ export default function TechAudit() {
     if (Object.keys(nextErrors).length > 0) {
       event.preventDefault();
       setErrors(nextErrors);
+      hapticError();
       const first = form.elements.namedItem(
         Object.keys(nextErrors)[0],
       ) as HTMLElement | null;
       first?.focus();
       return;
     }
+
+    hapticSubmit();
 
     // Valid — let the native Netlify POST proceed, show the loading state.
     // The draft is deliberately NOT cleared here: if the POST fails (offline,
