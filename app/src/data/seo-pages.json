@@ -127,7 +127,7 @@
     {
       "path": "/tech-audit/",
       "title": "Free Tech Audit for NYC Small Businesses | Little Fight NYC",
-      "description": "Book a free Tech Audit. A real person reads your website, tools, Google presence, and monthly software costs — then tells you what to fix first. Callback within 2 hours, 9am–9pm ET.",
+      "description": "Book a free Tech Audit. A real person reads your website, tools, Google presence, and monthly costs — then tells you what to fix first.",
       "h1": "Show us the moving parts.",
       "shortAnswer": "Short answer: the Tech Audit is a free, human review of your business tech — website, tools, Google, and monthly costs. You get a straight answer, not a pitch.",
       "type": "ContactPage",
@@ -780,7 +780,7 @@
     {
       "path": "/audit/",
       "title": "Instant Website Scan for NYC Small Businesses | Little Fight NYC",
-      "description": "Run a free instant scan of your website. It checks page structure, copy, local signals, speed, and contact paths — then shows what to fix. No waiting, no sales call.",
+      "description": "Run a free instant scan of your website. It checks structure, copy, local signals, speed, and contact paths — then shows what to fix.",
       "h1": "See what your site is leaking.",
       "shortAnswer": "Short answer: the Instant Website Scan is a free, automated first read of your website. For a human review of your whole setup, book the free Tech Audit.",
       "type": "WebPage",
@@ -835,7 +835,7 @@
     {
       "path": "/areas/",
       "title": "NYC Neighborhoods We Serve | Little Fight NYC",
-      "description": "Little Fight NYC works across New York City, with on-site help usually within 24 hours. See the Manhattan, Brooklyn, and Queens neighborhoods we serve most: Lower East Side, SoHo, Williamsburg, Astoria, Long Island City, and more.",
+      "description": "Little Fight NYC works across New York City. See the Manhattan, Brooklyn, and Queens neighborhoods we serve most.",
       "h1": "The neighborhoods we show up in.",
       "shortAnswer": "Little Fight NYC serves law firms, bars, shops, salons, restaurants, and owner-run teams across Manhattan, Brooklyn, and Queens. On-site visits usually within 24 hours. Callbacks within 2 hours, 9am to 9pm ET.",
       "type": "WebPage",
@@ -1252,7 +1252,7 @@
     {
       "path": "/case-studies/venuecircuit/",
       "title": "VenueCircuit: A Financial OS for Venues — Case Study | Little Fight NYC",
-      "description": "How Little Fight built and shipped VenueCircuit. A live financial OS for independent venues. The night closes in about 90 seconds. Every number drills to its receipt.",
+      "description": "How Little Fight built and shipped VenueCircuit. A live financial OS for independent venues. Close the night in 90 seconds.",
       "h1": "VenueCircuit",
       "shortAnswer": "Short answer: VenueCircuit is Little Fight's own shipped software product. A financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
       "type": "Article",
@@ -1261,7 +1261,7 @@
     {
       "path": "/studio/dakota/",
       "title": "Dakota — From the Studio | Little Fight NYC",
-      "description": "Dakota is Little Fight NYC's own AI client finder. It finds the right businesses, writes to them like a person, and hands real conversations to the team. Built in-house.",
+      "description": "Dakota is Little Fight NYC's own AI client finder. It finds the right businesses and hands real conversations to the team.",
       "h1": "Dakota",
       "shortAnswer": "Short answer: Dakota is our own AI client finder. It finds the right businesses to talk to and hands real conversations to the team.",
       "type": "Article",

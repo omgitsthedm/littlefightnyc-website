@@ -57,7 +57,7 @@ const TOC_MIN_WORDS = 1200;
  *   collect the mini-TOC items from the real headings in the html.
  */
 function preparePostBody(post: Post): { html: string; toc: TocItem[] } {
-  let html = prepareLegacyHtml(post.html);
+  let html = prepareLegacyHtml(post.html, { title: post.title });
   const toc: TocItem[] = [];
 
   if (post.category === "howto") {

@@ -663,7 +663,10 @@ function foundationSchemas(page) {
 
   if (isArticlePage(page)) {
     webPage.author = {
-      "@id": `${siteUrl}/#organization`
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      "name": site.name,
+      "url": siteUrl
     };
     webPage.mainEntityOfPage = canonical;
   }
@@ -1190,7 +1193,7 @@ function authoredContentHtml(page) {
 
   if (page.journalPost?.html) {
     // Same pipeline the app uses — full article, links already rewritten.
-    return prepareLegacyHtml(page.journalPost.html);
+    return prepareLegacyHtml(page.journalPost.html, { title: page.h1 });
   }
 
   if (page.industry?.html) {

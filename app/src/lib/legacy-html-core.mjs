@@ -54,7 +54,34 @@ function balanceTag(html, tag) {
   return out;
 }
 
-export function prepareLegacyHtml(html) {
+function tableCaptionFromHeaders(tableHtml) {
+  const theadMatch = tableHtml.match(/<thead[^>]*>([\s\S]*?)<\/thead>/i);
+  const firstRow = theadMatch ? theadMatch[1] : tableHtml;
+  const cells = firstRow.match(/<th\b[^>]*>([\s\S]*?)<\/th>/gi) || [];
+  if (!cells.length) return "";
+  const text = cells
+    .map((c) => c.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .join(", ");
+  return text ? `Table: ${text}` : "";
+}
+
+function addTableCaptions(html, fallbackTitle) {
+  return html.replace(/<table\b([^>]*)>(?!\s*<caption)/gi, (match, attrs) => {
+    const end = html.indexOf("</table>", html.indexOf(match));
+    const tableBody = end === -1 ? "" : html.slice(html.indexOf(match) + match.length, end);
+    const caption = tableCaptionFromHeaders(tableBody) || (fallbackTitle ? `Table from ${fallbackTitle}` : "Data table");
+    return `<table${attrs}><caption class="lf-table-caption">${caption}</caption>`;
+  });
+}
+
+/**
+ * @param {string} html
+ * @param {{ title?: string }} [options]
+ * @returns {string}
+ */
+export function prepareLegacyHtml(html, options = {}) {
+  const { title } = options;
   const countOpens = (t) => (html.match(new RegExp("<" + t + "(?:\\s|>)", "gi")) || []).length;
   const countCloses = (t) => (html.match(new RegExp("</" + t + ">", "gi")) || []).length;
   // The legacy source writes CLOSERS as OPENERS: table ends appear as
@@ -103,8 +130,22 @@ export function prepareLegacyHtml(html) {
     prepared = prepared.replace(pattern, replacement);
   }
 
+  // Tables need an accessible name. Derive it from the first header row, or
+  // fall back to the post title, so every comparison / symptom / checklist
+  // table is announced by screen readers instead of "table, X rows by Y columns".
+  prepared = addTableCaptions(prepared, title);
+
   if (!/<h2\b/i.test(prepared) && /<h3\b/i.test(prepared)) {
     prepared = prepared.replace(/<h3(\s[^>]*)?>/gi, "<h2$1>").replace(/<\/h3>/gi, "</h2>");
+  }
+
+  // Heading-order repair: legacy industry bodies drop straight from <h1> to <h3>,
+  // which breaks the outline and confuses screen-reader navigation. Promote any
+  // <h3> that appears before the first <h2> to <h2> so the document outline is
+  // h1 → h2 → h2 instead of h1 → h3 → h2.
+  const firstH2Index = prepared.search(/<h2\b/i);
+  if (firstH2Index > -1 && /<h3\b/i.test(prepared.slice(0, firstH2Index))) {
+    prepared = prepared.slice(0, firstH2Index).replace(/<h3(\s[^>]*)?>/gi, "<h2$1>").replace(/<\/h3>/gi, "</h2>") + prepared.slice(firstH2Index);
   }
 
   // The Call/Text/Email/Contact anchors + byline render as one mashed run
@@ -186,6 +227,10 @@ function decodeEntities(text) {
  * blocks, and relabels the scaffolding heading. The card grid + button styling
  * are handled in industry.css via the `.lf-post--industry` scope.
  */
+/**
+ * @param {string} html
+ * @returns {{ headline: string; body: string }}
+ */
 export function prepareIndustryHtml(html) {
   const titleMatch = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   const headline = titleMatch ? decodeEntities(titleMatch[1]) : "";
@@ -204,6 +249,16 @@ export function prepareIndustryHtml(html) {
     /<h2[^>]*>\s*Page sections\s*<\/h2>/i,
     '<p class="lf-post__kicker">On this page</p>'
   );
+
+  // Industry pages: the first real heading in the rendered body is sometimes an
+  // <h3> because the first <h2> lives inside the extracted Audit Map diagram,
+  // or because the only preceding <h2> was the "Page sections" scaffolding
+  // label above (now a <p>). Promote leading <h3>s to <h2> so the document
+  // outline is never h1 → h3.
+  const firstHeadingMatch = body.match(/<h([23])\b/i);
+  if (firstHeadingMatch && firstHeadingMatch[1] === "3") {
+    body = body.replace(/<h3(\s[^>]*)?>/gi, "<h2$1>").replace(/<\/h3>/gi, "</h2>");
+  }
 
   return { headline, body };
 }
