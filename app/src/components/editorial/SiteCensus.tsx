@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCountUp } from "@/components/dataviz/useCountUp";
 import { useScrollReveal } from "./useScrollReveal";
-import journal from "@/data/journal.json";
+import journal from "@/data/journal-index.json";
 import industries from "@/data/industries.json";
 import {
   answerGuides,

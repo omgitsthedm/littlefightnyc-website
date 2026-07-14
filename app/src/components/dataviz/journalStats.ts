@@ -3,13 +3,13 @@
  * the actual post html; dates come from the authored published/updated
  * strings and are parsed DEFENSIVELY (a malformed date yields null, never a
  * crash — there was a prior prod incident from naive date parsing). */
-import journal from "@/data/journal.json";
+import journal from "@/data/journal-index.json";
 
 type JournalEntry = {
   slug: string;
   published?: string;
   updated?: string;
-  html?: string;
+  wordCount?: number;
 };
 
 const posts = journal as unknown as JournalEntry[];
@@ -78,22 +78,16 @@ export function parseProseDate(value: unknown): Date | null {
   return year >= 1990 && year <= 2100 ? date : null;
 }
 
-function countWords(html: unknown): number {
-  if (typeof html !== "string") return 0;
-  return html
-    .replace(/<[^>]+>/g, " ")
-    .split(/\s+/)
-    .filter(Boolean).length;
-}
-
-/** Real word count per post slug, from the post's own html. */
+/** Real word count per post slug — precomputed from the post's own html by
+ * scripts/split-journal.mjs (same logic, so reading times are unchanged) and
+ * baked into journal-index.json to keep the ~250KB of bodies off this chunk. */
 export const WORD_COUNT: Record<string, number> = {};
 
 /** Honest reading time per post slug: max(1, round(words / 200)). */
 export const READ_MINUTES: Record<string, number> = {};
 
 for (const post of posts) {
-  const words = countWords(post.html);
+  const words = typeof post.wordCount === "number" ? post.wordCount : 0;
   WORD_COUNT[post.slug] = words;
   READ_MINUTES[post.slug] = Math.max(1, Math.round(words / 200));
 }

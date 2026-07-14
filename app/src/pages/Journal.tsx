@@ -8,7 +8,7 @@ import PublishingHeatmap from "@/components/dataviz/PublishingHeatmap";
 import { READ_MINUTES } from "@/components/dataviz/journalStats";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { useViewTransitionNav } from "@/lib/viewTransition";
-import journal from "@/data/journal.json";
+import journal from "@/data/journal-index.json";
 import { POST_IMAGE } from "@/data/journalArt";
 import "@/styles/editorial/journal.css";
 

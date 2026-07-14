@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import journal from "@/data/journal.json";
+import journal from "@/data/journal-index.json";
 import { buildPulseModel, type PulseCellLevel } from "./journalStats";
 import "./PublishingHeatmap.css";
 
