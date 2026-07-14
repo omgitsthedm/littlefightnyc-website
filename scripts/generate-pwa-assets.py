@@ -168,11 +168,16 @@ def make_ios_splash(width, height, filename):
 
 def main_splashes():
     splashes = [
+        # iPhone portrait
         (1170, 2532, "apple-touch-startup-image-1170x2532.png"),
         (1290, 2796, "apple-touch-startup-image-1290x2796.png"),
         (750, 1334, "apple-touch-startup-image-750x1334.png"),
+        # iPad portrait
         (1668, 2388, "apple-touch-startup-image-1668x2388.png"),
         (2048, 2732, "apple-touch-startup-image-2048x2732.png"),
+        # iPad landscape (Home Screen app launch from landscape)
+        (2732, 2048, "apple-touch-startup-image-2732x2048.png"),
+        (2388, 1668, "apple-touch-startup-image-2388x1668.png"),
     ]
     for w, h, name in splashes:
         make_ios_splash(w, h, name)

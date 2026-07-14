@@ -3,6 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <script>
+      // Platform classes applied before first paint so CSS can tailor the
+      // experience per engine / form-factor without waiting for React.
+      (function () {
+        const ua = navigator.userAgent;
+        const html = document.documentElement;
+        const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+        const isIPad = /iPad/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        const isAndroid = /Android/.test(ua);
+        const isSafari = /Safari/.test(ua) && !/Chrome|Chromium|CriOS|Edg/.test(ua);
+        const isChrome = /Chrome|Chromium|CriOS/.test(ua) && !/Edg/.test(ua);
+        const isStandalone =
+          window.matchMedia("(display-mode: standalone)").matches ||
+          (navigator.standalone === true);
+
+        const classes = [];
+        if (isIOS) classes.push("is-ios");
+        if (isIPad) classes.push("is-ipad");
+        if (isAndroid) classes.push("is-android");
+        if (isSafari) classes.push("is-safari");
+        if (isChrome) classes.push("is-chrome");
+        if (isStandalone) classes.push("is-standalone");
+
+        if (classes.length) html.classList.add(...classes);
+      })();
+    </script>
     <title>Little Fight NYC | Websites, IT Support, and Better Systems</title>
     <meta
       name="description"
@@ -21,11 +47,14 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#F97316" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Little Fight" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-2048x2732.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-2732x2048.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" />
     <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-1668x2388.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />
+    <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-2388x1668.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)" />
     <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-1290x2796.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
     <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-1170x2532.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" />
     <link rel="apple-touch-startup-image" href="/apple-touch-startup-image-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" />

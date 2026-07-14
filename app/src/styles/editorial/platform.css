@@ -1,0 +1,74 @@
+/* Little Fight NYC — Platform-specific polish
+ * Tiny per-engine / per-form-factor adjustments that make the site feel
+ * native to the device it is running on. Classes are stamped on <html>
+ * by the inline detector in app/index.html before first paint.
+ */
+
+/* ─── iOS / iPadOS ───────────────────────────────────────────────
+ * Suppress the default grey flash on tap so buttons and links feel
+ * instantly responsive. Keep focus-visible intact for accessibility.
+ */
+html.is-ios .lf-editorial,
+html.is-ipad .lf-editorial {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure any horizontally scrolling rail (e.g. mobile case-study strip)
+ * uses the platform's momentum scrolling on iOS. */
+html.is-ios .lf-editorial [class*="__rail"],
+html.is-ios .lf-editorial [class*="__scroll"],
+html.is-ipad .lf-editorial [class*="__rail"],
+html.is-ipad .lf-editorial [class*="__scroll"] {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+/* ─── Installed PWA / standalone ─────────────────────────────────
+ * When the site is launched from the home screen, the browser chrome is
+ * gone and the notch/island/dynamic-island/safe-area matters more.
+ * Increase top/bottom breathing room on fixed UI and the shell.
+ */
+html.is-standalone .lf-editorial {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* The install prompt should never ride over the home indicator. */
+html.is-standalone .lf-install-prompt {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ─── iPad ───────────────────────────────────────────────────────
+ * iPad is a hybrid: pointer precision is higher than phone, but touch is
+ * still primary. Keep tap targets generous and only enable hover-only
+ * micro-interactions when a fine pointer is actually present.
+ */
+html.is-ipad .lf-editorial a,
+html.is-ipad .lf-editorial button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.is-ipad .lf-editorial a:hover > span[aria-hidden="true"]:not([class]):last-child {
+    transform: translateX(4px);
+  }
+}
+
+/* ─── Android / Chrome ───────────────────────────────────────────
+ * Chrome/Android already vibrates via navigator.vibrate in our haptic hook.
+ * Keep the default touch feedback fast; avoid custom outlines that fight
+ * the native ripple.
+ */
+html.is-android .lf-editorial a,
+html.is-android .lf-editorial button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─── Safari desktop pinned-tab / tab hover polish ────────────────
+ * mask-icon is shipped; here we just make sure no inline theme-color
+ * override fights the pinned-tab tint.
+ */
+html.is-safari .lf-editorial :focus-visible {
+  outline-color: var(--lf-fight);
+}

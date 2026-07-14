@@ -3,6 +3,7 @@
  */
 
 @import "./texture.css"; /* film grain (::after) + .lf-seam utility */
+@import "./platform.css"; /* per-platform engine / form-factor polish */
 
 .lf-editorial {
   background: var(--lf-ink);
@@ -38,6 +39,7 @@ body:has(.lf-editorial) {
   overflow-x: clip;
   max-width: 100vw;
   background: var(--lf-ink);
+  color-scheme: dark;
 }
 
 @media (prefers-contrast: more) {
