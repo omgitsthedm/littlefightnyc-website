@@ -83,7 +83,7 @@
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-card);
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--lf-paper-2) 100%, transparent) 0%, var(--lf-paper) 100%);
+    linear-gradient(180deg, var(--lf-paper-2) 0%, var(--lf-paper) 100%);
   box-shadow:
     0 1px 0 color-mix(in srgb, var(--lf-bone) 8%, transparent) inset,
     0 14px 40px -14px rgba(0, 0, 0, 0.3);
@@ -100,6 +100,7 @@
   min-height: 176px;
   justify-content: flex-end;
   border-color: color-mix(in srgb, var(--lf-fight) 44%, var(--lf-hairline));
+  background: var(--lf-paper-2); /* solid fallback: keeps the card filled if color-mix drops on Safari <16.2 */
   background:
     radial-gradient(90% 120% at 100% 0%, rgba(59, 130, 246, 0.14), transparent 62%),
     linear-gradient(180deg, color-mix(in srgb, var(--lf-fight) 9%, var(--lf-paper-2)) 0%, color-mix(in srgb, var(--lf-fight) 5%, var(--lf-paper)) 100%);

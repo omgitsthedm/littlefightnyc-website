@@ -72,7 +72,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--lf-space-6) var(--lf-space-4);
   padding-top: var(--lf-space-6);
-  border-top: 1px solid color-mix(in oklch, var(--lf-bone) 12%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
 }
 
 @media (min-width: 768px) {
@@ -168,7 +168,7 @@
 
 .lf-quiet-foot__bottom {
   padding-top: var(--lf-space-5);
-  border-top: 1px solid color-mix(in oklch, var(--lf-bone) 12%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
 }
 
 .lf-quiet-foot__contact {
@@ -193,7 +193,7 @@
 .lf-quiet-foot__signature {
   margin: 0;
   padding-top: var(--lf-space-5);
-  border-top: 1px solid color-mix(in oklch, var(--lf-bone) 12%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.08em;

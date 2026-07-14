@@ -9,7 +9,7 @@
   align-items: center;
   gap: var(--lf-space-2) var(--lf-space-3);
   padding-bottom: var(--lf-space-5);
-  border-bottom: 1px solid color-mix(in oklch, var(--lf-bone) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
   font-family: var(--lf-mono);
   font-weight: 500;
   font-size: 11px;
