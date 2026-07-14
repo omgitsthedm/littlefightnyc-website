@@ -39,7 +39,7 @@ export function computeOpenNow(now: Date = new Date()): OpenNow {
       }
     : {
         open: false,
-        label: "BACK 9AM ET",
+        label: "REPLIES AT 9AM ET",
         sentence:
           "Closed right now. We answer calls and texts again at 9am Eastern.",
       };

@@ -565,7 +565,7 @@ export default function TechAudit() {
                       aria-describedby={errors.name ? "fit-name-error" : undefined}
                     />
                     {errors.name && (
-                      <p className="lf-audit__error" id="fit-name-error">
+                      <p className="lf-audit__error" role="alert" id="fit-name-error">
                         {errors.name}
                       </p>
                     )}
@@ -588,7 +588,7 @@ export default function TechAudit() {
                       aria-describedby={errors.business ? "fit-business-error" : undefined}
                     />
                     {errors.business && (
-                      <p className="lf-audit__error" id="fit-business-error">
+                      <p className="lf-audit__error" role="alert" id="fit-business-error">
                         {errors.business}
                       </p>
                     )}
@@ -612,7 +612,7 @@ export default function TechAudit() {
                       aria-describedby={errors.contact ? "fit-contact-error" : undefined}
                     />
                     {errors.contact && (
-                      <p className="lf-audit__error" id="fit-contact-error">
+                      <p className="lf-audit__error" role="alert" id="fit-contact-error">
                         {errors.contact}
                       </p>
                     )}
@@ -667,7 +667,7 @@ export default function TechAudit() {
                       No passwords or private customer data here. We never need them to scope.
                     </p>
                     {errors.message && (
-                      <p className="lf-audit__error" id="fit-message-error">
+                      <p className="lf-audit__error" role="alert" id="fit-message-error">
                         {errors.message}
                       </p>
                     )}

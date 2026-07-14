@@ -699,7 +699,9 @@
 }
 
 .lf-audit__aside-phone {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* WCAG 2.5.8 tap target — was ~20px tall */
   font-family: var(--lf-serif);
   font-weight: 600;
   font-size: var(--lf-text-xl);

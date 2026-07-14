@@ -59,6 +59,10 @@ export default function QuietNav() {
   useEffect(() => {
     if (!open) return;
 
+    // Lock background scroll so the page behind the modal drawer can't move.
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const panel = panelRef.current;
     const focusables = panel
       ? Array.from(
@@ -95,7 +99,10 @@ export default function QuietNav() {
     };
 
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [open]);
 
   return (
@@ -173,6 +180,9 @@ export default function QuietNav() {
             ref={panelRef}
             id={panelId}
             className="lf-nav__panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
           >
             <nav className="lf-nav__panel-nav" aria-label="Primary mobile">
               <p className="lf-nav__panel-label" aria-hidden="true">Go to</p>
