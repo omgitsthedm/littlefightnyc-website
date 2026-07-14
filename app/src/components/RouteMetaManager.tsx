@@ -1,15 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const DEFAULT_THEME = "#050507";
-
-function getThemeColor(pathname: string): string {
-  // Keep the dark brand as the default; allow per-route accents if desired.
-  if (pathname.startsWith("/tech-audit")) return "#050507";
-  if (pathname.startsWith("/services")) return "#050507";
-  if (pathname.startsWith("/journal")) return "#080b14";
-  return DEFAULT_THEME;
-}
+// Brand-forward browser chrome: the LiFi orange "overtakes" the title bar /
+// address bar wherever theme-color is honored (iOS + macOS Safari 15+, Chrome/
+// Android, installed PWA). A near-black theme-color was invisible against the
+// default dark toolbar; orange makes the chrome read as the brand.
+const THEME_COLOR = "#F97316";
 
 export default function RouteMetaManager() {
   const { pathname } = useLocation();
@@ -17,7 +13,6 @@ export default function RouteMetaManager() {
   useEffect(() => {
     if (typeof document === "undefined") return;
 
-    const themeColor = getThemeColor(pathname);
     let meta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
 
     if (!meta) {
@@ -26,7 +21,7 @@ export default function RouteMetaManager() {
       document.head.appendChild(meta);
     }
 
-    meta.content = themeColor;
+    meta.content = THEME_COLOR;
   }, [pathname]);
 
   return null;
