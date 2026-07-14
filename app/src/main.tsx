@@ -5,6 +5,7 @@ import './styles/editorial/motion.css'
 import App from './App.tsx'
 import { installAnalyticsHooks } from './lib/analytics'
 import { captureAttribution } from './lib/attribution'
+import { initHeroParallax } from './lib/heroParallax'
 
 if (typeof window !== "undefined") {
   captureAttribution();
@@ -26,3 +27,14 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </BrowserRouter>,
 )
+
+// Safari has no scroll-driven CSS animations, so restore the hero zoom drift
+// with a rAF-throttled JS fallback (no-op on Chromium). Deferred to idle so it
+// never competes with first paint.
+if (typeof window !== "undefined") {
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(() => initHeroParallax());
+  } else {
+    window.setTimeout(() => initHeroParallax(), 200);
+  }
+}
