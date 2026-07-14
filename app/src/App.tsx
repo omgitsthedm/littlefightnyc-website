@@ -1,9 +1,12 @@
 import { lazy, Suspense, type ComponentType } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import PwaInstallPrompt from "@/components/PwaInstallPrompt";
 import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
 import Home from "@/pages/Home";
+
+// The install prompt only surfaces ~1200ms after load (and only on iOS/Chrome),
+// so keep it (and its lucide icons + CSS) out of the eager first-paint bundle.
+const PwaInstallPrompt = lazy(() => import("@/components/PwaInstallPrompt"));
 
 const EditorialShell = lazy(() => import("@/components/editorial/EditorialShell"));
 const AnswerGuide = lazy(() => import("@/pages/AnswerGuide"));
@@ -57,7 +60,9 @@ export default function App() {
     <>
       <RouteMetaManager />
       <RouteScrollManager />
-      <PwaInstallPrompt />
+      <Suspense fallback={null}>
+        <PwaInstallPrompt />
+      </Suspense>
       <Routes>
         {/* Home: custom layout with the full Press Strike masthead - the
             magazine cover. Everything else inherits EditorialShell with the
