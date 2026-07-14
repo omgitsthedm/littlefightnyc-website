@@ -27,12 +27,18 @@ export default function AmbientField() {
     let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
+    // The link pass is O(n²); on touch devices (where it competes with scroll
+    // compositing on iOS Safari) cap the node count much lower — 28 nodes is
+    // ~5× less work per frame than 64, keeping the field alive without janking scroll.
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const NODE_CAP = coarse ? 28 : 64;
+
     type Node = { x: number; y: number; vx: number; vy: number; r: number };
     let nodes: Node[] = [];
 
     function seed() {
       // Density scales with area but stays capped for perf.
-      const count = Math.min(64, Math.round((width * height) / 22000));
+      const count = Math.min(NODE_CAP, Math.round((width * height) / 22000));
       nodes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,

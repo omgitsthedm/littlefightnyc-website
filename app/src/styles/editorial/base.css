@@ -179,6 +179,17 @@ body:has(.lf-editorial) {
   background-size: 200px 200px;
 }
 
+/* A `position: fixed` layer with `mix-blend-mode` forces the compositor to
+   re-blend the whole viewport against scrolling content every frame — the
+   leading cause of janky, non-buttery scroll on iOS/iPadOS Safari. The grain
+   is barely visible (0.05 opacity); drop it on touch devices where smooth
+   scroll matters far more than a texture you can't see. */
+@media (pointer: coarse) {
+  .lf-editorial::before {
+    display: none;
+  }
+}
+
 /* Page container */
 .lf-editorial .lf-container {
   width: 100%;

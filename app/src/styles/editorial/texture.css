@@ -31,6 +31,14 @@
   }
 }
 
+/* Same rationale as the ::before grain in base.css: a fixed mix-blend-mode
+   layer janks scroll on iOS/iPadOS Safari. Drop it on touch devices. */
+@media (pointer: coarse) {
+  .lf-editorial::after {
+    content: none;
+  }
+}
+
 /* ─── .lf-seam — section seam utility ─────────────────────────────
  * A soft 1px gradient horizon between major page sections: hairline
  * at the center, dissolving to nothing at both edges, so adjoining
