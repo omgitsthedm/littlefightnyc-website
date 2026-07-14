@@ -41,8 +41,8 @@ export default function GlossaryTerm() {
         }}
       />
 
-      <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9)" }}>
-        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+      <section style={{ paddingBlock: "var(--lf-space-7) var(--lf-space-9)" }}>
+        <div className="lf-container">
           <EditorialBody dropcap>
             <h2>What it means</h2>
             <p>{term.definition}</p>

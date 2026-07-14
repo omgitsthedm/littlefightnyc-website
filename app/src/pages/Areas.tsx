@@ -47,9 +47,9 @@ export default function Areas() {
 
       <section
         aria-label="Coverage map"
-        style={{ padding: "var(--lf-space-6) var(--lf-margin-mobile) 0" }}
+        style={{ paddingBlock: "var(--lf-space-6) 0" }}
       >
-        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+        <div className="lf-container">
           <MiniMapNYC />
         </div>
       </section>

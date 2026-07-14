@@ -19,8 +19,8 @@ export default function Legal() {
         dek="Little Fight collects only what it needs to understand the issue, scopes work before quoting it, measures what is working, and handles account access through safer handoffs."
       />
 
-      <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9)" }}>
-        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+      <section style={{ paddingBlock: "var(--lf-space-7) var(--lf-space-9)" }}>
+        <div className="lf-container">
           <EditorialBody>
             <h2 id="privacy">What forms collect</h2>
             <p>

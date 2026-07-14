@@ -62,8 +62,8 @@ export default function AreaDetail() {
         }}
       />
 
-      <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile)" }}>
-        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+      <section style={{ paddingBlock: "var(--lf-space-7)" }}>
+        <div className="lf-container">
           <MiniMapNYC current={area.slug} />
 
           <EditorialBody dropcap>

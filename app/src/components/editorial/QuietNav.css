@@ -211,7 +211,7 @@
   display: none;
   align-items: center;
   gap: 0.4em;
-  min-height: 40px;
+  min-height: 44px; /* WCAG 2.5.8 / doctrine 6.1 minimum for the nav's primary action */
   padding: 0 18px;
   border-radius: var(--lf-radius-pill);
   background: var(--lf-fight);

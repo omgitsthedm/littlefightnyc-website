@@ -40,8 +40,8 @@ export default function About() {
         }}
       />
 
-      <section style={{ padding: "var(--lf-space-8) var(--lf-margin-mobile)" }}>
-        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+      <section style={{ paddingBlock: "var(--lf-space-8)" }}>
+        <div className="lf-container">
           <EditorialBody dropcap>
             <p>
               Most of the businesses that keep a neighborhood worth living in

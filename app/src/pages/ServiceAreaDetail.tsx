@@ -53,8 +53,8 @@ export default function ServiceAreaDetail() {
         }}
       />
 
-      <section style={{ padding: "var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-8)" }}>
-        <div style={{ maxWidth: "var(--lf-max-w)", marginInline: "auto" }}>
+      <section style={{ paddingBlock: "var(--lf-space-7) var(--lf-space-8)" }}>
+        <div className="lf-container">
           <EditorialBody>
             <p>{area.localPattern}</p>
             <p>{service.outcome}</p>
