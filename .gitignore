@@ -4,11 +4,11 @@ node_modules/
 .superpowers/
 .playwright-mcp/
 *.png
-# ...but the PWA / apple-touch icons in public/ MUST deploy (Netlify builds from
-# git, so blanket-ignoring these caused a 404 on the live manifest icons).
-!app/public/apple-touch-icon.png
-!app/public/icon-192.png
-!app/public/icon-512.png
+# ...but EVERY PWA / apple-touch / startup / screenshot PNG in public/ MUST
+# deploy (Netlify builds from git, so blanket-ignoring these 404s the live
+# manifest icons, iOS startup images, and install-dialog screenshots).
+# Directory-level negation so new public deploy PNGs are never missed again.
+!app/public/*.png
 *.bak
 docs/
 firebase-debug.log
