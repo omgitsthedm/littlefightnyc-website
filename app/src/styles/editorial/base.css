@@ -15,10 +15,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "kern", "liga", "calt";
-  /* Editorial hanging punctuation — quote marks and bullets extend into the
-     margin so the optical text edge stays clean. Currently Safari-only;
-     gracefully ignored elsewhere. */
-  hanging-punctuation: first allow-end last;
+  /* hanging-punctuation was removed (2026-07-14): it's Safari-only, and applied
+     globally it pulled the first quote/bullet of any block into the margin on
+     Safari ONLY — so text starting with punctuation broke the left edge on Safari
+     while sitting flush on Chrome. Cross-browser alignment beats a Safari-only
+     optical touch. Reintroduce per-element (e.g. a pull-quote) if ever wanted. */
   /* Proportional lining figures in the sans body — switches to tabular
      where explicitly needed (mono class, promise strip). */
   font-variant-numeric: lining-nums proportional-nums;
