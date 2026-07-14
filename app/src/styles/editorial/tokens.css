@@ -20,6 +20,7 @@
   --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
 
   /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
+  --lf-text-2xs: 0.6875rem;                                   /* 11px — mono label tier (was hardcoded 10/11/12px sitewide) */
   --lf-text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);     /* 12-14px */
   --lf-text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 1rem);      /* 14-16px */
   --lf-text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);     /* 16-18px */

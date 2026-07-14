@@ -177,10 +177,6 @@
   border-radius: var(--lf-radius-sm);
 }
 
-
-@media (min-width: 768px) {
-}
-
 .lf-nav__phone-number {
   font-family: var(--lf-serif);
   font-weight: 500;
@@ -558,14 +554,3 @@
 /* Nav placement: the full chip needs room — below 900px the dot alone sits
    by the phone number (the aria sentence stays complete). */
 
-@media (max-width: 899px) {
-}
-
-/* ---- Command palette chip (⌘K) ------------------------------------------- */
-/* Desktop pointer devices only — hidden wherever hover doesn't exist. Scoped
-   under .lf-editorial to beat the base button reset (the 3×-hit gotcha). */
-
-@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
-
-
-}

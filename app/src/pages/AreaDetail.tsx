@@ -89,7 +89,7 @@ export default function AreaDetail() {
                 alignItems: "center",
                 gap: "0.55em",
                 fontFamily: "var(--lf-mono)",
-                fontSize: "11px",
+                fontSize: "var(--lf-text-2xs)",
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 color: "var(--lf-bone-dim)",
@@ -131,7 +131,7 @@ export default function AreaDetail() {
             <p
               style={{
                 fontFamily: "var(--lf-mono)",
-                fontSize: "11px",
+                fontSize: "var(--lf-text-2xs)",
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 color: "var(--lf-bone-dim)",
@@ -170,7 +170,7 @@ export default function AreaDetail() {
                     <span
                       style={{
                         fontFamily: "var(--lf-mono)",
-                        fontSize: "11px",
+                        fontSize: "var(--lf-text-2xs)",
                         letterSpacing: "0.16em",
                         color: "var(--lf-fight)",
                         paddingTop: "var(--lf-space-1)",
@@ -181,7 +181,6 @@ export default function AreaDetail() {
                     <span
                       style={{
                         fontFamily: "var(--lf-serif)",
-                        fontVariationSettings: '"opsz" 72',
                         fontWeight: 600,
                         fontSize: "var(--lf-text-lg)",
                         lineHeight: 1.1,
@@ -211,7 +210,7 @@ export default function AreaDetail() {
                   alignItems: "center",
                   gap: "0.55em",
                   fontFamily: "var(--lf-mono)",
-                  fontSize: "11px",
+                  fontSize: "var(--lf-text-2xs)",
                   letterSpacing: "0.16em",
                   textTransform: "uppercase",
                   color: "var(--lf-bone-dim)",

@@ -61,7 +61,6 @@ export default function Glossary() {
                   <span
                     style={{
                       fontFamily: "var(--lf-serif)",
-                      fontVariationSettings: '"opsz" 72',
                       fontWeight: 600,
                       fontSize: "var(--lf-text-lg)",
                       lineHeight: 1.1,
@@ -74,7 +73,6 @@ export default function Glossary() {
                     style={{
                       fontFamily: "var(--lf-serif)",
                       fontStyle: "italic",
-                      fontVariationSettings: '"opsz" 14',
                       fontSize: "var(--lf-text-base)",
                       color: "var(--lf-bone-soft)",
                       letterSpacing: "-0.005em",

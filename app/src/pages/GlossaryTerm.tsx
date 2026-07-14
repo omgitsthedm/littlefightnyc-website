@@ -75,7 +75,7 @@ export default function GlossaryTerm() {
                   alignItems: "center",
                   gap: "0.55em",
                   fontFamily: "var(--lf-mono)",
-                  fontSize: "11px",
+                  fontSize: "var(--lf-text-2xs)",
                   letterSpacing: "0.16em",
                   textTransform: "uppercase",
                   color: "var(--lf-bone-dim)",
