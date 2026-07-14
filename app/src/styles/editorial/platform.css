@@ -72,3 +72,44 @@ html.is-android .lf-editorial button {
 html.is-safari .lf-editorial :focus-visible {
   outline-color: var(--lf-fight);
 }
+
+/* ─── Slow connections / data-saver ───────────────────────────────
+ * On slow networks the priority is readable text and usable CTAs, not
+ * motion. Disable expensive animations, backdrop blurs, and continuous
+ * marquee movement so the page paints and settles immediately.
+ */
+html.is-slow-connection .lf-editorial,
+html.is-save-data .lf-editorial {
+  --lf-motion-scale: 0;
+}
+
+html.is-slow-connection .lf-editorial *,
+html.is-save-data .lf-editorial *,
+html.is-slow-connection .lf-editorial *::before,
+html.is-save-data .lf-editorial *::before,
+html.is-slow-connection .lf-editorial *::after,
+html.is-save-data .lf-editorial *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+html.is-slow-connection .lf-hero__marquee-track,
+html.is-save-data .lf-hero__marquee-track {
+  animation: none !important;
+}
+
+html.is-slow-connection .lf-editorial [class*="parallax"],
+html.is-save-data .lf-editorial [class*="parallax"],
+html.is-slow-connection .lf-editorial [class*="cursor-glow"],
+html.is-save-data .lf-editorial [class*="cursor-glow"] {
+  transform: none !important;
+  opacity: 0 !important;
+}
+
+html.is-slow-connection .lf-editorial [class*="backdrop-blur"],
+html.is-save-data .lf-editorial [class*="backdrop-blur"],
+html.is-slow-connection .lf-editorial [class*="blur("],
+html.is-save-data .lf-editorial [class*="blur("] {
+  backdrop-filter: none !important;
+}

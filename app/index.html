@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <script>
-      // Platform classes applied before first paint so CSS can tailor the
-      // experience per engine / form-factor without waiting for React.
+      // Platform + connection classes applied before first paint so CSS can
+      // tailor the experience per engine, form-factor, and network quality
+      // without waiting for React.
       (function () {
         const ua = navigator.userAgent;
         const html = document.documentElement;
@@ -25,6 +26,17 @@
         if (isSafari) classes.push("is-safari");
         if (isChrome) classes.push("is-chrome");
         if (isStandalone) classes.push("is-standalone");
+
+        const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (conn) {
+          const ect = conn.effectiveType;
+          const saveData = conn.saveData;
+          if (saveData || ect === "slow-2g" || ect === "2g" || ect === "3g") {
+            classes.push("is-slow-connection");
+          }
+          if (saveData) classes.push("is-save-data");
+          if (ect) classes.push("is-ect-" + ect);
+        }
 
         if (classes.length) html.classList.add(...classes);
       })();
