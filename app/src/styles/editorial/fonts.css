@@ -4,6 +4,10 @@
  * Dropping the two Fraunces variable faces removes ~80KB from first paint.
  */
 
+/* Bricolage Grotesque (variable, wght 200-800) — the DISPLAY / heading face:
+   a humanist grotesque with editorial character, still highly legible. Body
+   stays Inter (see tokens: --lf-sans). */
+@import "@fontsource-variable/bricolage-grotesque/index.css";
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
 @import "@fontsource/inter/600.css";

@@ -32,18 +32,21 @@
   --lf-text-4xl: clamp(5rem, 3rem + 9vw, 13rem);              /* 80-208px */
   --lf-text-5xl: clamp(6rem, 4rem + 12vw, 18rem);             /* 96-288px — Press Strike scale */
 
-  /* Type families — Inter for display + body (Fraunces retired), mono for labels.
-   * --lf-serif is kept as the DISPLAY token name so the 37 heading consumers
-   * switch to Inter without a rename; display distinction now comes from
-   * weight + tighter tracking (see --lf-display-* below), not a serif face. */
-  --lf-serif: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --lf-display: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Type families — Bricolage Grotesque for DISPLAY/headings (humanist
+   * grotesque with editorial character), Inter for body, mono for labels.
+   * --lf-serif is the historical DISPLAY token name (the 37 heading consumers);
+   * both it and --lf-display carry Bricolage now, with Inter as the fallback so
+   * headings stay solid if the display face hasn't loaded. --lf-sans stays
+   * Inter for readable body text. */
+  --lf-serif: "Bricolage Grotesque Variable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lf-display: "Bricolage Grotesque Variable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* Display tuning — Inter needs weight + negative tracking to read as display. */
+  /* Display tuning — Bricolage reads as display at 700; slightly less negative
+   * tracking than Inter needed since it's a touch warmer/wider. */
   --lf-display-weight: 700;
-  --lf-display-tracking: -0.03em;
+  --lf-display-tracking: -0.02em;
 
   /* Spacing — editorial rhythm */
   --lf-space-1: 4px;

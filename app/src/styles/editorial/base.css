@@ -248,6 +248,34 @@ body:has(.lf-editorial) {
   line-height: 1.55;
 }
 
+/* --lf-serif/--lf-display now carry Bricolage (the display face) — great for
+   headings/titles/deks, but LONG-FORM reading prose and italics must stay Inter
+   for legibility (Bricolage is display-only, with no true italic). One
+   higher-specificity override keeps every article/prose body + italic on Inter
+   without touching the ~15 component files that render them. */
+.lf-editorial .lf-body p,
+.lf-editorial .lf-body li,
+.lf-editorial .lf-post__body p,
+.lf-editorial .lf-post__body li,
+.lf-editorial .lf-about__paragraph,
+.lf-editorial .lf-sd-deep__prose,
+.lf-editorial .lf-sd-deep__prose p,
+.lf-editorial .lf-sd-issues__body,
+.lf-editorial .lf-auditmap__prose,
+.lf-editorial .lf-triage__text,
+.lf-editorial .lf-contact__locale-body,
+.lf-editorial .lf-serif-body,
+.lf-editorial .lf-italic,
+/* deks / supporting subheads read as body too — keep them Inter so the
+   Bricolage personality stays on the headings themselves */
+.lf-editorial .lf-hero__brief p,
+.lf-editorial .lf-pagehero__dek,
+.lf-editorial .lf-contact-block__dek,
+.lf-editorial .lf-contact-block__promises,
+.lf-editorial .lf-service-spread__dek {
+  font-family: var(--lf-sans);
+}
+
 /* Reduced motion respect */
 @media (prefers-reduced-motion: reduce) {
   .lf-editorial *,
