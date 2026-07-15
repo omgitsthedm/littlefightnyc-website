@@ -49,7 +49,8 @@
 }
 .lf-clients__lede {
   max-width: 48ch;
-  margin-top: var(--lf-space-4);
+  /* Clear the Oswald heading's descenders — space-4 read as almost touching. */
+  margin-top: var(--lf-space-5);
   font-size: var(--lf-text-base);
   line-height: 1.5;
   color: var(--lf-bone-soft);
@@ -68,6 +69,10 @@
 .lf-clients__all:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 4px;
+}
+/* Full 44px touch target on real touch devices. */
+@media (pointer: coarse) {
+  .lf-clients__all { min-height: 44px; }
 }
 
 /* ---- Grid: featured card wide, the rest 2-up ---- */

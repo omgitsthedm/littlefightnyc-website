@@ -39,7 +39,7 @@
    * reads Barlow, never an unreadable display face. --lf-display is the poster
    * headline stack; Barlow is the fallback so headings stay solid pre-load. */
   --lf-serif: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --lf-display: "Oswald Variable", "Oswald", "Barlow", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --lf-display: "Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --lf-sans: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 

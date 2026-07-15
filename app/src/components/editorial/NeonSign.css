@@ -184,6 +184,9 @@
   .lf-neon__tube, .lf-neon__hours { opacity: 1; transition: none; }
   .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
   .lf-neon__draw { stroke-dashoffset: 0; animation: none; }
+  /* Match the revealed rule's specificity (.lf-neon[data-revealed] .lf-neon__word,
+     0,3,0) or the ignite+hum loop keeps running under reduced-motion. */
+  .lf-neon[data-revealed="true"] .lf-neon__word,
   .lf-neon__word { animation: none; opacity: var(--tube-op); }
   .lf-neon__reflection, .lf-neon__bloom { transition: none; }
 }

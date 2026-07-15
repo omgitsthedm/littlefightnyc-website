@@ -141,11 +141,14 @@
   gap: var(--lf-space-5);
 }
 .lf-fight__answer p {
-  font-family: var(--lf-display);
+  /* A multi-line statement reads hard in CONDENSED Oswald at this size across a
+     ~68ch measure — set it in Barlow (still large + medium weight, so it keeps
+     its rhetorical weight without taxing the eye). Headlines stay Oswald. */
+  font-family: var(--lf-serif);
   font-weight: 500;
   font-size: var(--lf-text-lg);
-  line-height: 1.4;
-  letter-spacing: -0.01em;
+  line-height: 1.45;
+  letter-spacing: 0;
   color: var(--lf-bone);
 }
 .lf-fight__cta {

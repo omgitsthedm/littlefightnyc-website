@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-import "@/styles/editorial/fonts.css";
-import "@/styles/editorial/tokens.css";
-import "@/styles/editorial/base.css";
+// fonts/tokens/base are imported once at the entry (src/main.tsx). Only the
+// shell-specific overrides stay here.
 import "@/styles/editorial/legacy-overrides.css";
 
-import RouteMeta from "@/components/RouteMeta";
+// RouteMeta keeps <head> in sync on client-side navigation. The prerendered
+// HTML already carries correct per-page meta on first paint, so it's not on the
+// critical path — lazy-load it off the shell's eager chunk.
+const RouteMeta = lazy(() => import("@/components/RouteMeta"));
 import { watchListReveals } from "@/lib/listReveal";
 import QuietNav from "./QuietNav";
 import QuietFooter from "./QuietFooter";
@@ -24,7 +26,9 @@ export default function EditorialShell() {
 
   return (
     <div className="lf-editorial" id="top" ref={rootRef}>
-      <RouteMeta />
+      <Suspense fallback={null}>
+        <RouteMeta />
+      </Suspense>
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />
       <main id="main-content" className="lf-page">

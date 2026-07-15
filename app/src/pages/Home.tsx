@@ -1,6 +1,5 @@
-import "@/styles/editorial/fonts.css";
-import "@/styles/editorial/tokens.css";
-import "@/styles/editorial/base.css";
+// fonts/tokens/base are imported once at the entry (src/main.tsx) so their
+// @font-face rules live in a single stylesheet (no duplicate font downloads).
 
 import { lazy, Suspense, useEffect, useRef } from "react";
 import QuietNav from "@/components/editorial/QuietNav";

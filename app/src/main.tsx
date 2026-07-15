@@ -1,6 +1,14 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
+// The editorial foundation (fonts/tokens/base) is imported ONCE here, at the
+// single entry, so it lands in the one global stylesheet. Previously both
+// Home.tsx AND EditorialShell.tsx imported these, and both stylesheets load on
+// the home route — so every @font-face was declared twice and each woff2 was
+// fetched TWICE (~160KB of duplicate font transfer on first paint).
+import './styles/editorial/fonts.css'
+import './styles/editorial/tokens.css'
+import './styles/editorial/base.css'
 import './styles/editorial/motion.css'
 import App from './App.tsx'
 
@@ -42,5 +50,13 @@ root.render(
 // with a rAF-throttled JS fallback (no-op on Chromium). Dynamically imported at
 // idle so it neither competes with first paint nor sits in the entry chunk.
 onIdle(() => {
-  void import("./lib/heroParallax").then((m) => m.initHeroParallax());
+  // WebKit intermittently rejects this dynamic import with "Importing a module
+  // script failed" when the modulepreload hint and the import() race on cold
+  // loads (~1 in 3 Safari first-visits). The parallax is a progressive
+  // enhancement, so swallow the rejection (one silent retry) instead of leaking
+  // an uncaught TypeError into the console / error monitoring.
+  const loadParallax = () => import("./lib/heroParallax").then((m) => m.initHeroParallax());
+  loadParallax().catch(() => {
+    window.setTimeout(() => { void loadParallax().catch(() => {}); }, 300);
+  });
 }, 200);

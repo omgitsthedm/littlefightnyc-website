@@ -22,3 +22,19 @@
 @import "@fontsource/barlow/600-italic.css";
 
 @import "@fontsource/jetbrains-mono/500.css";
+
+/* Metric-matched display fallback. Before Oswald (a CONDENSED face) loads, the
+   headline would otherwise paint in a normal-width fallback (Barlow/system) and
+   then RE-WRAP when Oswald arrives — the most visible "not seamless" load
+   moment. This face maps a condensed system font (Arial Narrow / Roboto
+   Condensed) to Oswald's advance width (measured: Oswald ≈ Arial Narrow ×1.029)
+   so the pre-swap paint already occupies Oswald's width → the swap is a
+   near-zero-reflow settle. Sits between "Oswald" and "Barlow" in --lf-display.
+   font-weight range so it matches the 700 headlines (default 400-only would not). */
+@font-face {
+  font-family: "Oswald Fallback";
+  src: local("Arial Narrow"), local("Roboto Condensed"), local("Liberation Sans Narrow");
+  font-weight: 100 900;
+  font-style: normal;
+  size-adjust: 103%;
+}

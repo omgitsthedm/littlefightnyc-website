@@ -76,7 +76,10 @@
 
 @media (min-width: 1280px) {
   .lf-contact-block__title {
-    font-size: var(--lf-text-4xl);
+    /* text-4xl (up to 208px) over-scaled — the "step." descender collided with
+       the dek. text-3xl is still a big statement with room to breathe. */
+    font-size: var(--lf-text-3xl);
+    padding-bottom: 0.08em;
   }
 }
 

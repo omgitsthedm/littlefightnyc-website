@@ -159,9 +159,13 @@
   top: 0;
   width: 176px;
   padding: 10px 12px;
-  background: var(--lf-paper-2);
-  border: 1px solid var(--lf-hairline);
+  /* Read as physical cards against the #050507 ground: a lighter fill than the
+     near-black paper-2 + a light hairline (dark --lf-hairline on near-black was
+     invisible, so the chips "floated" as bare gray text). */
+  background: var(--lf-paper);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--lf-radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
   will-change: transform;
 
   /* Per-phase progress: travel, then chip stamp. */

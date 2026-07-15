@@ -14,6 +14,10 @@ export default defineConfig({
       output: {
         manualChunks: {
           "react-vendor": ["react", "react-dom", "react-router-dom"],
+          // Co-locate the used lucide icons into one cached chunk instead of ~15
+          // separate 0.2–0.4KB micro-chunks (fewer HTTP requests). Tree-shaking
+          // still drops unused icons — only imported ones enter the graph.
+          "icons": ["lucide-react"],
         },
       },
     },

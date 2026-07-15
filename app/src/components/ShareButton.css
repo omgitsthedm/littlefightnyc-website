@@ -30,3 +30,8 @@
   flex: none;
   color: var(--lf-fight);
 }
+
+/* Full 44px touch target on real touch devices (kept compact for mouse). */
+@media (pointer: coarse) {
+  .lf-share { min-height: 44px; padding-inline: 16px; }
+}

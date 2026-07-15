@@ -824,15 +824,29 @@ function routeModulePreload(page) {
   return `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`;
 }
 
-// Display weights paint the H1/headlines — preload the latin woff2 subsets so
-// big type doesn't swap in after CSS parse. Hashed names resolved from the
-// built assets dir at prerender time.
+// The two fonts that paint first — Oswald (all headlines) and Barlow 400 (all
+// body) — preloaded as their latin woff2 subsets so they land WITH the CSS
+// instead of being discovered after it parses. Otherwise the big Oswald H1
+// swaps in late and re-wraps. Hashed names resolved from the built assets dir
+// at prerender time. (Was pinned to the retired inter-* filenames → matched
+// nothing after the Oswald/Barlow swap, so nothing preloaded.)
 function fontPreloads() {
-  return ["inter-latin-700-normal-", "inter-latin-400-normal-"]
+  return ["oswald-latin-wght-normal-", "barlow-latin-400-normal-"]
     .map((prefix) => assetFiles.find((f) => f.startsWith(prefix) && f.endsWith(".woff2")))
     .filter(Boolean)
     .map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`)
     .join("\n    ");
+}
+
+// The `site` data chunk (~64KB gz) is imported by content routes across the
+// whole site but is a Vite lazy dep, so the browser only discovers it AFTER
+// index.js parses — one extra serial round-trip before the page can render. It's
+// universal, so modulepreload it up front to collapse that waterfall.
+function siteModulePreload() {
+  const chunk = assetFiles.find((f) => f.startsWith("site-") && f.endsWith(".js"));
+  return chunk
+    ? `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`
+    : "";
 }
 
 function managedHead(page) {
@@ -850,6 +864,7 @@ function managedHead(page) {
     `<meta name="robots" content="${page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large"}">`,
     `<link rel="canonical" href="${escapeAttr(canonical)}">`,
     fontPreloads(),
+    siteModulePreload(),
     routeImagePreload(page),
     routeExtraImagePreloads(page),
     routeModulePreload(page),
@@ -1328,21 +1343,28 @@ function snapshot(page) {
   // RETIRED brand (Georgia serif / #0A0A0A / #FF6F1F) — every first paint
   // looked like a different, older site before hard-swapping to Momentum.
   const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
-  const display = `"Oswald Variable", "Oswald", "Barlow", sans-serif`;
+  const display = `"Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", sans-serif`;
   const mono = `"JetBrains Mono", ui-monospace, Menlo, monospace`;
   const inlineStyles = `
     .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
     .lf-seo h1, .lf-seo h2 { font-family: ${display}; font-weight: 700; letter-spacing: 0; }
     .lf-seo a { color: #F97316; text-decoration: none; }
-    .lf-seo .lf-seo__nav { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
-    .lf-seo .lf-seo__brand { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: #FFFFFF; }
-    .lf-seo .lf-seo__phone { font-size: 16px; color: #FFFFFF; }
+    .lf-seo .lf-seo__nav { display: flex; align-items: center; gap: 22px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
+    .lf-seo .lf-seo__brand { font-family: ${display}; font-weight: 700; font-size: 20px; letter-spacing: 0; color: #FFFFFF; }
+    .lf-seo .lf-seo__nav-links { display: flex; gap: 20px; align-items: center; }
+    .lf-seo .lf-seo__nav-links a { color: #A1A1AA; font-size: 15px; font-weight: 500; }
+    .lf-seo .lf-seo__nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+    .lf-seo .lf-seo__replies { font-family: ${mono}; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8A94; }
+    .lf-seo .lf-seo__phone { font-size: 15px; font-weight: 600; color: #FFFFFF; }
+    .lf-seo .lf-seo__nav-cta { background: #F97316; color: #050507; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
+    @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
     .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; display: flex; align-items: flex-end; isolation: isolate; }
     .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: 0; }
     .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.16) 0%, transparent 55%), linear-gradient(180deg, rgba(5, 5, 7, 0.05) 0%, rgba(5, 5, 7, 0.45) 60%, rgba(5, 5, 7, 0.88) 100%); }
     .lf-seo .lf-seo__home-hero-copy { position: relative; z-index: 2; padding: 96px 20px 120px; }
     .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98; letter-spacing: 0; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
     .lf-seo h1 em { color: #F97316; font-style: italic; font-weight: 700; }
+    .lf-seo .lf-seo__home-hero h1 { max-width: none; }
     .lf-seo .lf-seo__home-hero h1 em { font-style: normal; display: block; }
     .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 30px; }
     .lf-seo .lf-seo__home-cta { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 30px; }
@@ -1457,7 +1479,18 @@ function snapshot(page) {
     <div class="lf-seo" aria-label="${escapeAttr(page.h1)}">
       <header class="lf-seo__nav">
         <a class="lf-seo__brand" href="/">Little Fight NYC</a>
-        <a class="lf-seo__phone" href="tel:+16463600318">${site.phoneDisplay}</a>
+        <nav class="lf-seo__nav-links" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/examples/">Examples</a>
+          <a href="/about/">About</a>
+          <a href="/journal/">Journal</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <span class="lf-seo__nav-right">
+          <span class="lf-seo__replies">Replies at 9am ET</span>
+          <a class="lf-seo__phone" href="tel:+16463600318">${site.phoneDisplay}</a>
+          <a class="lf-seo__nav-cta" href="/tech-audit/?intent=website">Start a project</a>
+        </span>
       </header>
       <main id="main-content">
         ${page.path === "/" ? homeBody : innerBody}

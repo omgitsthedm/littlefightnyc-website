@@ -42,6 +42,11 @@
   }
 }
 
+/* Scroll-linked parallax is still motion — quiet it for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .lf-line__image img { animation: none; transform: none; }
+}
+
 .lf-line::after {
   content: "";
   position: absolute;
