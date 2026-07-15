@@ -136,6 +136,69 @@ function level(count: number): PulseCellLevel {
   return 4;
 }
 
+/* ============================================================
+   Monthly publishing cadence — a per-day contribution grid reads
+   as "dead" when posts are batch-published (this journal has real
+   activity on only ~5 days), so the /journal band shows entries per
+   month instead: honest counts, and the rhythm building to the
+   relaunch actually reads as an active publication.
+   ============================================================ */
+
+export type MonthBar = { key: string; label: string; count: number; peak: boolean };
+
+export type MonthlyModel = {
+  year: number;
+  totalDated: number;
+  undated: number;
+  months: MonthBar[];
+  peakLabel: string;
+};
+
+export function buildMonthlyModel(entries: PulseEntry[]): MonthlyModel {
+  // One bucket per entry, keyed by its published month (updated as fallback).
+  const byMonth = new Map<number, number>();
+  let undated = 0;
+  let totalDated = 0;
+  let minMonth = Infinity;
+  let maxMonth = -Infinity;
+  let year = 0;
+
+  for (const entry of entries) {
+    const date = parseProseDate(entry.published) ?? parseProseDate(entry.updated);
+    if (!date) {
+      undated += 1;
+      continue;
+    }
+    totalDated += 1;
+    const m = date.getMonth();
+    byMonth.set(m, (byMonth.get(m) ?? 0) + 1);
+    if (m < minMonth) minMonth = m;
+    if (m > maxMonth) maxMonth = m;
+    if (date.getFullYear() > year) year = date.getFullYear();
+  }
+
+  if (maxMonth < 0) {
+    return { year: year || new Date(2026, 0, 1).getFullYear(), totalDated: 0, undated, months: [], peakLabel: "" };
+  }
+
+  // Show from the first active month through the last (the real window), so
+  // the bars form a cadence instead of a mostly-empty 12-slot axis.
+  const months: MonthBar[] = [];
+  let peak = -1;
+  let peakLabel = "";
+  for (let m = minMonth; m <= maxMonth; m += 1) {
+    const count = byMonth.get(m) ?? 0;
+    if (count > peak) {
+      peak = count;
+      peakLabel = MONTH_ABBR[m];
+    }
+    months.push({ key: `${year}-${m}`, label: MONTH_ABBR[m], count, peak: false });
+  }
+  for (const bar of months) bar.peak = bar.label === peakLabel && bar.count === peak;
+
+  return { year, totalDated, undated, months, peakLabel };
+}
+
 export function buildPulseModel(entries: PulseEntry[]): PulseModel {
   const byDay = new Map<number, DayActivity>();
   let undated = 0;

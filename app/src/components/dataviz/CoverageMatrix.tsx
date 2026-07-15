@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
-import seoPages from "@/data/seo-pages.json";
+import matrixServices from "@/data/matrix-services.json";
 import industriesData from "@/data/industries.json";
 import "./CoverageMatrix.css";
 
@@ -16,7 +16,7 @@ import "./CoverageMatrix.css";
 type MatrixService = { slug: string; label: string };
 type IndustryRow = { slug: string; title: string };
 
-const SERVICES = (seoPages as { matrix: { services: MatrixService[] } }).matrix.services;
+const SERVICES = matrixServices as MatrixService[];
 const INDUSTRIES = industriesData as unknown as IndustryRow[];
 
 /* Each noun below quotes the industry's authored description/body copy in

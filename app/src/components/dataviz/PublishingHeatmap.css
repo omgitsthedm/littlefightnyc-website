@@ -78,106 +78,66 @@
   max-width: none;
 }
 
-/* The grid overflows sideways on phones — scroll inside the band, never the page. */
-.lf-pulse__scroll {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+/* Monthly cadence bars — one per active month, aligned to a shared baseline. */
+.lf-pulse__bars {
+  display: flex;
+  align-items: stretch;
+  gap: var(--lf-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Fluid grid: cells stretch to fill the band on wide screens; below the
-   min-width the band scrolls internally (never the page). */
-.lf-pulse__chart {
-  width: 100%;
-  min-width: 580px;
+.lf-pulse__bar-cell {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
-.lf-pulse__months {
-  display: grid;
-  grid-template-columns: repeat(var(--pulse-weeks), minmax(0, 1fr));
-  column-gap: var(--pulse-gap);
-  margin-bottom: 6px;
-}
-
-.lf-pulse__months span {
-  grid-row: 1;
+.lf-pulse__bar-count {
   font-family: var(--lf-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--lf-bone-dim);
+}
+
+.lf-pulse__bar-track {
+  width: 100%;
+  height: 96px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .lf-pulse__bar-track { height: 118px; }
+}
+
+.lf-pulse__bar {
+  width: 100%;
+  max-width: 54px;
+  height: var(--h);
+  min-height: 4px;
+  border-radius: 6px 6px 2px 2px;
+  background: color-mix(in srgb, var(--lf-fight) 30%, var(--lf-paper-2));
+}
+
+.lf-pulse__bar-label {
+  font-family: var(--lf-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
-  white-space: nowrap;
 }
 
-.lf-pulse__grid {
-  display: grid;
-  grid-template-columns: repeat(var(--pulse-weeks), minmax(0, 1fr));
-  column-gap: var(--pulse-gap);
-}
-
-.lf-pulse__week {
-  display: grid;
-  row-gap: var(--pulse-gap);
-}
-
-.lf-pulse__cell {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 18%;
-  background: color-mix(in srgb, var(--lf-bone) 5%, transparent);
-}
-
-/* Legend swatches keep a fixed footprint. */
-.lf-pulse__legend .lf-pulse__cell {
-  width: var(--pulse-cell);
-  height: var(--pulse-cell);
-  border-radius: 2px;
-}
-
-.lf-pulse__cell[data-out] {
-  visibility: hidden;
-}
-
-.lf-pulse__cell[data-level="1"] {
-  background: color-mix(in srgb, var(--lf-fight) 24%, var(--lf-paper-2));
-}
-
-.lf-pulse__cell[data-level="2"] {
-  background: color-mix(in srgb, var(--lf-fight) 48%, var(--lf-paper-2));
-}
-
-.lf-pulse__cell[data-level="3"] {
-  background: color-mix(in srgb, var(--lf-fight) 72%, var(--lf-paper-2));
-}
-
-.lf-pulse__cell[data-level="4"] {
+/* The peak month (the relaunch burst) carries full orange + emphasised count. */
+.lf-pulse__bar-cell[data-peak] .lf-pulse__bar {
   background: var(--lf-fight);
 }
-
-.lf-pulse__legend {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--pulse-gap);
-  margin-top: var(--lf-space-3);
-  font-family: var(--lf-mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--lf-bone-dim);
-}
-
-.lf-pulse__legend span:first-child {
-  margin-right: 4px;
-}
-
-.lf-pulse__legend span:last-child {
-  margin-left: 4px;
-}
-
-.lf-pulse__scroll:focus-visible {
-  outline: 2px solid var(--lf-fight);
-  outline-offset: 2px;
-  border-radius: 4px;
+.lf-pulse__bar-cell[data-peak] .lf-pulse__bar-count,
+.lf-pulse__bar-cell[data-peak] .lf-pulse__bar-label {
+  color: var(--lf-fight);
 }

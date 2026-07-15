@@ -171,3 +171,9 @@ const out = {
 
 writeFileSync(join(dataDir, "route-meta.json"), JSON.stringify(out) + "\n");
 console.log(`route-meta.json: ${pages.length} routes (flat meta, seo-pages.json stripped from the client)`);
+
+// CoverageMatrix only needs the {slug,label} service columns — emit them alone
+// so it doesn't pull the whole 97KB seo-pages.json into its chunk.
+const matrixServices = (seoData.matrix?.services ?? []).map((s) => ({ slug: s.slug, label: s.label }));
+writeFileSync(join(dataDir, "matrix-services.json"), JSON.stringify(matrixServices) + "\n");
+console.log(`matrix-services.json: ${matrixServices.length} service columns`);
