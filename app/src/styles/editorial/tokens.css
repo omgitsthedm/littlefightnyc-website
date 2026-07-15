@@ -38,7 +38,7 @@
    * both it and --lf-display carry Bricolage now, with Inter as the fallback so
    * headings stay solid if the display face hasn't loaded. --lf-sans stays
    * Inter for readable body text. */
-  --lf-serif: "Bricolage Grotesque Variable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lf-serif: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-display: "Bricolage Grotesque Variable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;

@@ -248,32 +248,46 @@ body:has(.lf-editorial) {
   line-height: 1.55;
 }
 
-/* --lf-serif/--lf-display now carry Bricolage (the display face) — great for
-   headings/titles/deks, but LONG-FORM reading prose and italics must stay Inter
-   for legibility (Bricolage is display-only, with no true italic). One
-   higher-specificity override keeps every article/prose body + italic on Inter
-   without touching the ~15 component files that render them. */
-.lf-editorial .lf-body p,
-.lf-editorial .lf-body li,
-.lf-editorial .lf-post__body p,
-.lf-editorial .lf-post__body li,
-.lf-editorial .lf-about__paragraph,
-.lf-editorial .lf-sd-deep__prose,
-.lf-editorial .lf-sd-deep__prose p,
-.lf-editorial .lf-sd-issues__body,
-.lf-editorial .lf-auditmap__prose,
-.lf-editorial .lf-triage__text,
-.lf-editorial .lf-contact__locale-body,
-.lf-editorial .lf-serif-body,
-.lf-editorial .lf-italic,
-/* deks / supporting subheads read as body too — keep them Inter so the
-   Bricolage personality stays on the headings themselves */
-.lf-editorial .lf-hero__brief p,
-.lf-editorial .lf-pagehero__dek,
-.lf-editorial .lf-contact-block__dek,
-.lf-editorial .lf-contact-block__promises,
-.lf-editorial .lf-service-spread__dek {
-  font-family: var(--lf-sans);
+/* Typeface split, done safely. --lf-serif is back to Inter (so ALL body prose,
+   deks, and italics stay Inter by default — a missed selector just reads Inter,
+   never unreadable display type). The Bricolage display face lands ONLY on the
+   headings / titles / prominent names listed here, forced with !important so it
+   wins over each component's own --lf-serif rule without editing ~35 files. The
+   neon sign uses --lf-display directly, so it's Bricolage regardless. */
+.lf-editorial h1,
+.lf-editorial h2,
+.lf-editorial h3,
+.lf-editorial h4,
+.lf-editorial .lf-hero__claim,
+.lf-editorial .lf-nav__brand,
+.lf-editorial .lf-pagehero__title,
+.lf-editorial .lf-pagehero__display,
+.lf-editorial .lf-cases__title,
+.lf-editorial .lf-case-detail__summary-title,
+.lf-editorial .lf-case-detail-related__title,
+.lf-editorial .lf-case-detail-related__client,
+.lf-editorial .lf-ex-head__title,
+.lf-editorial .lf-ex-feature__client,
+.lf-editorial .lf-ex-rows__client,
+.lf-editorial .lf-journal__title,
+.lf-editorial .lf-journal-featured__title,
+.lf-editorial .lf-answers-hub__title,
+.lf-editorial .lf-audit__step-title,
+.lf-editorial .lf-audit-page__title,
+.lf-editorial .lf-contact-block__title,
+.lf-editorial .lf-contact-window__title,
+.lf-editorial .lf-sd-fallacies__title,
+.lf-editorial .lf-sd-faq__title,
+.lf-editorial .lf-sd-issues__title,
+.lf-editorial .lf-sd-issues__item-title,
+.lf-editorial .lf-service-spread__title,
+.lf-editorial .lf-studio__name,
+.lf-editorial .lf-triage__heading,
+.lf-editorial .lf-verdict__name,
+.lf-editorial .lf-visual-index__title,
+.lf-editorial .lf-visual-index__item-title,
+.lf-editorial .lf-line__text {
+  font-family: var(--lf-display) !important;
 }
 
 /* Image load-in skeleton: a subtle shimmer fills the image's (already
