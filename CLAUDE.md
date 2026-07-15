@@ -1,5 +1,9 @@
 # Little Fight NYC Website Config
 
+## 2026-07-15 — Browser-chrome brand color completed (LIVE, `ecc67d6`)
+
+Orange browser chrome is now complete across every platform surface. `theme-color`, manifest `theme_color`, and Safari `mask-icon` already carried **`#F97316`**; added `msapplication-TileColor` + `msapplication-navbutton-color` (`#F97316`) in `app/index.html` so Edge/Windows tiles match. `RouteMetaManager.tsx` re-asserts `theme-color=#F97316` on every route (add-or-update, never removes) — so the tab bar stays orange through SPA nav. Verified live: chromium + webkit × iPhone/iPad/desktop × light/dark all resolve `#F97316` (one webkit read caught the head mid-hydration → transient, self-heals). Orange chrome is intentional and matches the orange-as-signal doctrine; do not revert to a dark/default bar.
+
 ## 2026-07-15 — Type system, loading/butter, premium audit, perf split (LIVE, `fbe3b2f`)
 
 Multi-session push continuing the Kimi pickup. Everything below is LIVE on `main` (Netlify auto-deploy) and verified; local ↔ GitHub ↔ Netlify all in sync at `fbe3b2f`.
