@@ -1,0 +1,148 @@
+/* NeonSign — orange neon "OPEN" shopfront, powers on when scrolled into view.
+   Colours from brand tokens; glow via layered drop-shadows (GPU-cheap). */
+
+.lf-neon {
+  --neon: var(--lf-fight, #f97316);
+  --neon-core: #ffd9a8;
+  --neon-deep: var(--lf-ember, #ea580c);
+  padding: clamp(3rem, 9vw, 7rem) var(--lf-margin-mobile);
+  background: var(--lf-ink, #050507);
+  display: flex;
+  justify-content: center;
+}
+@media (min-width: 768px) { .lf-neon { padding-inline: var(--lf-margin-tablet); } }
+@media (min-width: 1280px) { .lf-neon { padding-inline: var(--lf-margin-desktop); } }
+
+.lf-neon__stage {
+  position: relative;
+  width: min(100%, 720px);
+  aspect-ratio: 8 / 5;
+}
+/* warm pool of light spilling under the sign */
+.lf-neon__stage::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -7%;
+  height: 28%;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(249, 115, 22, 0.22), transparent 70%);
+  filter: blur(16px);
+  opacity: 0;
+  transition: opacity 0.8s ease 0.9s;
+  pointer-events: none;
+}
+.lf-neon[data-revealed="true"] .lf-neon__stage::after { opacity: 0.75; }
+
+.lf-neon__svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* ---- tube + text base colours ---- */
+.lf-neon__tube {
+  fill: none;
+  stroke: var(--neon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lf-neon__frame { stroke-width: 4; }
+.lf-neon__underline { stroke-width: 5; }
+
+.lf-neon__word {
+  font-family: var(--lf-display, Inter, sans-serif);
+  font-weight: 900;
+  font-size: 128px;
+  letter-spacing: 0.01em;
+  fill: var(--neon-core);
+  stroke: var(--neon);
+  stroke-width: 1.2;
+  paint-order: stroke fill;
+}
+.lf-neon__brand {
+  font-family: var(--lf-display, Inter, sans-serif);
+  font-weight: 800;
+  font-size: 52px;
+  letter-spacing: 0.06em;
+  fill: var(--neon);
+  stroke: var(--neon-deep);
+  stroke-width: 0.6;
+  paint-order: stroke fill;
+}
+.lf-neon__mono {
+  font-family: var(--lf-mono, ui-monospace, monospace);
+  font-size: 24px;
+  letter-spacing: 0.26em;
+  fill: var(--neon);
+}
+.lf-neon__dot { fill: var(--neon-core); }
+.lf-neon__screw { fill: #2a2a2e; stroke: #000; stroke-width: 1; }
+
+/* ---- unlit state (before reveal): dim tubes, no glow ---- */
+.lf-neon__lit,
+.lf-neon__tube {
+  opacity: 0.09;
+  filter: none;
+  transition: opacity 0.45s ease var(--on, 0s);
+}
+.lf-neon__draw {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+}
+
+/* ---- powered on ---- */
+.lf-neon[data-revealed="true"] .lf-neon__lit { opacity: 1; }
+
+.lf-neon[data-revealed="true"] .lf-neon__tube {
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 2px var(--neon-core))
+    drop-shadow(0 0 6px var(--neon))
+    drop-shadow(0 0 16px var(--neon))
+    drop-shadow(0 0 32px var(--neon-deep));
+}
+.lf-neon[data-revealed="true"] .lf-neon__draw {
+  animation: lf-neon-draw 1s ease-out var(--on, 0.15s) forwards;
+}
+@keyframes lf-neon-draw { to { stroke-dashoffset: 0; } }
+
+.lf-neon[data-revealed="true"] .lf-neon__word,
+.lf-neon[data-revealed="true"] .lf-neon__brand,
+.lf-neon[data-revealed="true"] .lf-neon__dot {
+  filter:
+    drop-shadow(0 0 2px #ffffffaa)
+    drop-shadow(0 0 9px var(--neon))
+    drop-shadow(0 0 22px var(--neon-deep));
+}
+.lf-neon[data-revealed="true"] .lf-neon__mono {
+  filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 12px var(--neon-deep));
+}
+
+/* the OPEN group flickers to life, then a slow buzz + rare blip */
+.lf-neon[data-revealed="true"] .lf-neon__flicker {
+  animation: lf-neon-flicker 5s steps(1) 1.2s infinite;
+}
+@keyframes lf-neon-flicker {
+  0%, 2%, 4%, 9%, 100% { opacity: 1; }
+  1% { opacity: 0.35; }
+  3% { opacity: 0.7; }
+  6% { opacity: 0.55; }
+  7% { opacity: 1; }
+  62% { opacity: 1; }
+  62.5% { opacity: 0.5; }
+  63% { opacity: 1; } /* one lazy blip */
+}
+
+/* reduced motion: everything on, steady, no draw / flicker / spill delay */
+@media (prefers-reduced-motion: reduce) {
+  .lf-neon__lit, .lf-neon__tube { opacity: 1; transition: none; }
+  .lf-neon__draw { stroke-dashoffset: 0; animation: none; }
+  .lf-neon__flicker { animation: none; }
+  .lf-neon__stage::after { transition: none; }
+  .lf-neon__tube {
+    filter:
+      drop-shadow(0 0 2px var(--neon-core))
+      drop-shadow(0 0 6px var(--neon))
+      drop-shadow(0 0 16px var(--neon));
+  }
+  .lf-neon__word, .lf-neon__brand, .lf-neon__dot {
+    filter: drop-shadow(0 0 9px var(--neon)) drop-shadow(0 0 22px var(--neon-deep));
+  }
+}

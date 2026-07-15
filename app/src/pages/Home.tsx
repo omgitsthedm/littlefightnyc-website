@@ -17,6 +17,7 @@ const WorkGrid = lazy(() => importWithRetry(() => import("@/components/editorial
 const MomentumSection = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumSection")));
 const MomentumCursorGlow = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumCursorGlow")));
 const RecentClients = lazy(() => importWithRetry(() => import("@/components/editorial/RecentClients")));
+const NeonSign = lazy(() => importWithRetry(() => import("@/components/editorial/NeonSign")));
 const BrandLine = lazy(() => importWithRetry(() => import("@/components/editorial/BrandLine")));
 const SignatureBand = lazy(() => importWithRetry(() => import("@/components/editorial/SignatureBand")));
 const QuietContact = lazy(() => importWithRetry(() => import("@/components/editorial/QuietContact")));
@@ -106,6 +107,9 @@ export default function Home() {
             </BlueprintFrame>
             <BlueprintFrame index={6} label="The record">
               <SignatureBand />
+            </BlueprintFrame>
+            <BlueprintFrame index={7} label="Open for business">
+              <NeonSign />
             </BlueprintFrame>
             <BrandLine />
             <div className="lf-home-faq">
