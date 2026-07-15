@@ -303,6 +303,13 @@ img[data-img-skel] {
 img[data-img-skel][data-loaded] { background: none; animation: none; }
 @media (prefers-reduced-motion: reduce) { img[data-img-skel] { animation: none; } }
 
+/* No app-entrance fade: the prerendered .lf-seo snapshot is now built to mirror
+   the client hero 1:1 (same image, headline, subhead, CTA pills, trust row —
+   see scripts/prerender-seo.mjs), so createRoot swaps the snapshot for a visually
+   identical app. Any opacity-0 entrance would only flash a blank between two
+   matching frames (and re-fire on the route re-key). The seamless swap IS the
+   premium load — nothing to fade in over. */
+
 /* Reduced motion respect */
 @media (prefers-reduced-motion: reduce) {
   .lf-editorial *,

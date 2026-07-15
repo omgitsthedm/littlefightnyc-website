@@ -2,7 +2,7 @@ import "@/styles/editorial/fonts.css";
 import "@/styles/editorial/tokens.css";
 import "@/styles/editorial/base.css";
 
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
@@ -40,32 +40,7 @@ const HOME_FAQ = [
   },
 ];
 
-function useDeferredSections() {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
-
-    // Mount the below-the-fold sections as soon as the main thread is idle
-    // after the hero paints — no artificial delay. (The old 2.2s setTimeout made
-    // the whole page appear broken/blank below the hero for seconds.)
-    const ric = window.requestIdleCallback;
-    if (typeof ric === "function") {
-      const id = ric(() => setReady(true), { timeout: 250 });
-      return () => window.cancelIdleCallback?.(id);
-    }
-
-    const id = globalThis.setTimeout(() => setReady(true), 50);
-    return () => globalThis.clearTimeout(id);
-  }, []);
-
-  return ready;
-}
-
 export default function Home() {
-  const showDeferred = useDeferredSections();
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -75,17 +50,14 @@ export default function Home() {
 
   return (
     <div className="lf-editorial" id="top" ref={rootRef}>
-      {showDeferred && (
-        <Suspense fallback={null}>
-          <RouteMeta />
-        </Suspense>
-      )}
+      <Suspense fallback={null}>
+        <RouteMeta />
+      </Suspense>
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />
       <main id="main-content">
         <QuietHero />
-        {showDeferred && (
-          <Suspense fallback={null}>
+        <Suspense fallback={null}>
             {/* BlueprintFrame = opt-in drafting marginalia on the major
                 section boundaries (corner ticks + SEC. NN margin notes,
                 ≥1280px only — see BlueprintFrame.css). */}
@@ -116,16 +88,13 @@ export default function Home() {
               <FaqList title="Quick answers" items={HOME_FAQ} />
             </div>
             <QuietContact />
-          </Suspense>
-        )}
-      </main>
-      {showDeferred && (
-        <Suspense fallback={null}>
-          <StickyHelpBar />
-          <QuietFooter />
-          <CommandPalette />
         </Suspense>
-      )}
+      </main>
+      <Suspense fallback={null}>
+        <StickyHelpBar />
+        <QuietFooter />
+        <CommandPalette />
+      </Suspense>
     </div>
   );
 }

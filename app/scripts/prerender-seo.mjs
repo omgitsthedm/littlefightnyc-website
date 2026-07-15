@@ -1336,11 +1336,20 @@ function snapshot(page) {
     .lf-seo .lf-seo__brand { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: #FFFFFF; }
     .lf-seo .lf-seo__phone { font-size: 16px; color: #FFFFFF; }
     .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; display: flex; align-items: flex-end; isolation: isolate; }
-    .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: -2; }
-    .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.16) 0%, transparent 55%), linear-gradient(180deg, rgba(5, 5, 7, 0.05) 0%, rgba(5, 5, 7, 0.45) 60%, rgba(5, 5, 7, 0.88) 100%); }
-    .lf-seo .lf-seo__home-hero-copy { padding: 96px 20px 120px; }
+    .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: 0; }
+    .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.16) 0%, transparent 55%), linear-gradient(180deg, rgba(5, 5, 7, 0.05) 0%, rgba(5, 5, 7, 0.45) 60%, rgba(5, 5, 7, 0.88) 100%); }
+    .lf-seo .lf-seo__home-hero-copy { position: relative; z-index: 2; padding: 96px 20px 120px; }
     .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.94; letter-spacing: -0.03em; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
     .lf-seo h1 em { color: #F97316; font-style: italic; font-weight: 700; }
+    .lf-seo .lf-seo__home-hero h1 em { font-style: normal; display: block; }
+    .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 30px; }
+    .lf-seo .lf-seo__home-cta { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 30px; }
+    .lf-seo .lf-seo__pill { display: flex; flex-direction: column; gap: 3px; padding: 17px 26px; border-radius: 18px; background: rgba(20, 22, 28, 0.72); border: 1px solid #27272A; color: #FFFFFF; font-weight: 700; font-size: 18px; min-width: 240px; text-decoration: none; }
+    .lf-seo .lf-seo__pill span { font-weight: 400; font-size: 14px; color: #A1A1AA; }
+    .lf-seo .lf-seo__pill--primary { background: #F97316; border-color: #F97316; color: #050507; }
+    .lf-seo .lf-seo__pill--primary span { color: rgba(5, 5, 7, 0.72); }
+    .lf-seo .lf-seo__home-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; list-style: none; padding: 0; margin: 0; }
+    .lf-seo .lf-seo__home-trust li { font-family: ${mono}; font-size: 13px; letter-spacing: 0.02em; color: #A1A1AA; }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
@@ -1371,11 +1380,20 @@ function snapshot(page) {
         />
       </picture>
       <div class="lf-seo__home-hero-copy">
-        <h1>Tech for the shops that built <em>New York.</em></h1>
-        <p>Websites, IT support, Google visibility, and business systems — sized for what a corner shop can afford. Founded 2012. Manhattan, New York.</p>
+        <h1>Websites bring business. <em>We keep it running.</em></h1>
+        <p class="lf-seo__home-sub">We build local websites, fix urgent tech, and replace bloated software with tools your business owns.</p>
+        <div class="lf-seo__home-cta">
+          <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free consult, then a clear scope</span></a>
+          <a class="lf-seo__pill" href="tel:+16463600318">Get urgent tech help<span>Call ${site.phoneDisplay}</span></a>
+        </div>
+        <ul class="lf-seo__home-trust">
+          <li>NYC-based, on-site when needed</li>
+          <li>2-hour callback window</li>
+          <li>Own your code and data</li>
+        </ul>
       </div>
     </section>
-    <p>Little Fight helps owner-operated teams keep what works, connect what matters, replace what drags, and build only what actually fits.</p>
+    <p>Websites, IT support, Google visibility, and business systems — sized for what a corner shop can afford. Founded 2012. Manhattan, New York. Little Fight helps owner-operated teams keep what works, connect what matters, replace what drags, and build only what actually fits.</p>
     <p>If something is hurting customers right now, call first. If the setup is messy, expensive, slow, or unclear, book the free Tech Audit so the first move is based on your real website, tools, search presence, and workflow.</p>
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
