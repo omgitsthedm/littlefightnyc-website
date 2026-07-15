@@ -126,14 +126,14 @@ export default function ServiceEditorialSpread() {
             </figure>
             <figure>
               <img {...skelImg}
-                src="/assets/coworking-laptops.webp"
-                alt="Open laptops on a working table"
+                src="/assets/shop-interior.webp"
+                alt="Inside a small independent shop — a rail of jeans by the counter"
                 width={1600}
                 height={1200}
                 loading="lazy"
                 decoding="async"
                 {...responsiveImageProps(
-                  "/assets/coworking-laptops.webp",
+                  "/assets/shop-interior.webp",
                   "(max-width: 720px) 100vw, 50vw",
                 )}
               />
