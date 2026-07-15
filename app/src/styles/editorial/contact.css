@@ -29,7 +29,7 @@
 
 .lf-contact__headline {
   font-size: var(--lf-text-xl);
-  line-height: 0.95;
+  line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 700;
   color: var(--lf-bone);

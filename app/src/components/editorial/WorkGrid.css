@@ -33,7 +33,7 @@
   font-family: var(--lf-display);
   font-size: var(--lf-text-2xl);
   font-weight: 700;
-  line-height: 0.98;
+  line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--lf-bone);
 }

@@ -237,7 +237,7 @@ body:has(.lf-editorial) {
 .lf-editorial .lf-display {
   font-family: var(--lf-display);
   font-weight: var(--lf-display-weight);
-  line-height: 0.95;
+  line-height: 1.05;
   /* Inter needs negative tracking at display sizes to read as display. */
   letter-spacing: var(--lf-display-tracking);
 }

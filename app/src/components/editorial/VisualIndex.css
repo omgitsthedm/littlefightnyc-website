@@ -68,7 +68,7 @@
   font-family: var(--lf-serif);
   font-weight: 600;
   font-size: var(--lf-text-2xl);
-  line-height: 0.96;
+  line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--lf-bone);
   max-width: 12ch;

@@ -226,7 +226,7 @@
 .lf-editorial .hero h1 {
   font-size: var(--lf-text-2xl);
   letter-spacing: -0.03em;
-  line-height: 0.95;
+  line-height: 1.05;
   margin-bottom: var(--lf-space-4);
   color: var(--lf-bone);
 }
@@ -425,7 +425,7 @@
 .lf-editorial .page-hero h1 {
   font-size: var(--lf-text-2xl);
   letter-spacing: -0.03em;
-  line-height: 0.95;
+  line-height: 1.05;
   color: var(--lf-bone);
   margin-bottom: var(--lf-space-4);
   max-width: 24ch;

@@ -60,7 +60,7 @@
   font-family: var(--lf-serif);
   font-weight: 750;
   font-size: clamp(3rem, 8vw, 8.5rem);
-  line-height: 0.88;
+  line-height: 1.0;
   letter-spacing: 0;
   color: var(--lf-ink) !important;
   opacity: 1 !important;
@@ -204,7 +204,7 @@
   font-family: var(--lf-serif);
   font-weight: 650;
   font-size: var(--lf-text-xl);
-  line-height: 0.98;
+  line-height: 1.05;
 }
 
 .lf-service-spread__copy span:last-child {

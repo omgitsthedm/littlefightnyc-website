@@ -141,7 +141,7 @@
   font-family: var(--lf-serif);
   font-weight: 600;
   font-size: clamp(3rem, 7.5vw, 6.8rem);
-  line-height: 0.94;
+  line-height: 1.02;
   letter-spacing: -0.032em;
   color: var(--lf-bone);
   margin: 0;
@@ -389,7 +389,7 @@
      ~0.49em avg glyph width at this weight/tracking → 204cqi/ch fills the
      column with a small safety margin. Short names still hit the clamp. */
   font-size: min(clamp(4rem, 12vw, 11rem), calc(204cqi / var(--lf-display-ch, 8)));
-  line-height: 0.9;
+  line-height: 1.02;
   letter-spacing: -0.04em;
   color: var(--lf-fight);
 }

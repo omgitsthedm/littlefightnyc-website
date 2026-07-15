@@ -29,7 +29,7 @@
 
 .lf-about__headline {
   font-size: var(--lf-text-xl);
-  line-height: 0.92;
+  line-height: 1.02;
   letter-spacing: -0.03em;
   font-weight: 700;
   color: var(--lf-bone);
@@ -114,7 +114,7 @@
   float: left;
   font-family: var(--lf-serif);
   font-size: 5.5em;
-  line-height: 0.85;
+  line-height: 1.0;
   padding-top: 0.06em;
   padding-right: 0.08em;
   color: var(--lf-fight);

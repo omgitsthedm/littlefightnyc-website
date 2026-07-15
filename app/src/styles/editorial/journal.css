@@ -234,7 +234,7 @@
   font-family: var(--lf-serif);
   font-weight: 600;
   font-size: var(--lf-text-2xl);
-  line-height: 0.95;
+  line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--lf-bone);
   margin: 0 0 var(--lf-space-5);

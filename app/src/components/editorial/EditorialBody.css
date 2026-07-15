@@ -105,7 +105,7 @@
   float: left;
   font-family: var(--lf-serif);
   font-size: 5.5em;
-  line-height: 0.85;
+  line-height: 1.0;
   padding-top: 0.06em;
   padding-right: 0.1em;
   color: var(--lf-fight);

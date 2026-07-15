@@ -116,7 +116,7 @@
    * wght 700 instead of 600 — more presence on a dark hero. */
   font-weight: 700;
   font-size: var(--lf-text-2xl);
-  line-height: 0.94;
+  line-height: 1.02;
   letter-spacing: -0.04em;
   color: var(--lf-bone);
   margin: 0;
@@ -251,6 +251,8 @@ html[data-snap="1"] .lf-hero__char {
   border-radius: var(--lf-radius-control);
   text-decoration: none;
   color: var(--lf-bone);
+  /* Explicit — WebKit left these CTAs on the default `auto` cursor. */
+  cursor: pointer;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.34);
   transition:
     transform var(--lf-time-snappy) var(--lf-ease-standard),
