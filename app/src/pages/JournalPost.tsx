@@ -109,17 +109,28 @@ export default function JournalPost() {
   // Tagged with its slug so a stale result from the previous post never renders
   // under the new one (and so we needn't reset state synchronously in the effect).
   const [prepared, setPrepared] = useState<{ slug: string; html: string; toc: TocItem[] } | null>(null);
+  // The body chunk is modulepreloaded in the prerendered head (see
+  // journalBodyModulePreload in prerender-seo.mjs), so on a fresh direct load it
+  // resolves within a frame or two — faster than this timer. The skeleton then
+  // never paints, avoiding a text→skeleton→text flash where the snapshot already
+  // showed the article. It only appears on genuinely slow (SPA) fetches.
+  const [showSkeleton, setShowSkeleton] = useState(false);
 
   useEffect(() => {
     if (!post) return;
     let alive = true;
+    const skelTimer = window.setTimeout(() => {
+      if (alive) setShowSkeleton(true);
+    }, 220);
     loadBody(post.slug).then((raw) => {
       if (!alive) return;
+      window.clearTimeout(skelTimer);
       const body = preparePostBody(post, raw);
       setPrepared({ slug: post.slug, html: body.html, toc: body.toc });
     });
     return () => {
       alive = false;
+      window.clearTimeout(skelTimer);
     };
   }, [post]);
 
@@ -201,7 +212,7 @@ export default function JournalPost() {
               data-post-category={post.category}
               dangerouslySetInnerHTML={{ __html: ready.html }}
             />
-          ) : (
+          ) : showSkeleton ? (
             <div className="lf-post__body lf-post__body--loading" aria-hidden="true">
               <span className="lf-post__skel-line" />
               <span className="lf-post__skel-line" />
@@ -209,6 +220,10 @@ export default function JournalPost() {
               <span className="lf-post__skel-line" />
               <span className="lf-post__skel-line lf-post__skel-line--short" />
             </div>
+          ) : (
+            // Body resolving (preloaded chunk, ~1 frame). Render nothing rather
+            // than a skeleton so a fast load never flashes text→skeleton→text.
+            <div className="lf-post__body" aria-hidden="true" />
           )}
           </div>
         </div>

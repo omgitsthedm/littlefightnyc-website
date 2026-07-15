@@ -849,6 +849,24 @@ function siteModulePreload() {
     : "";
 }
 
+// Journal post bodies are lazy-loaded from a per-slug chunk (import.meta.glob in
+// JournalPost.tsx). Preload the EXACT body chunk for this post so it lands with
+// the route chunk and is ready by the time the component mounts — the loading
+// skeleton then never flashes over the snapshot's already-painted article. The
+// chunk is named "<slug>-<hash>.js"; the hash segment is alphanumeric/underscore
+// (no dash), so this won't mis-match a longer slug that starts with this one.
+// If naming ever changes and no match is found, we simply skip the hint (the
+// component's 220ms skeleton delay still prevents the flash on fast loads).
+function journalBodyModulePreload(page) {
+  const m = page.path.match(/^\/journal\/([^/]+)\/$/);
+  if (!m) return "";
+  const re = new RegExp("^" + m[1].replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "-[A-Za-z0-9_]+\\.js$");
+  const chunk = assetFiles.find((f) => re.test(f));
+  return chunk
+    ? `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`
+    : "";
+}
+
 function managedHead(page) {
   const canonical = absoluteUrl(page.path);
   const image = absoluteAsset(page.image);
@@ -868,6 +886,7 @@ function managedHead(page) {
     routeImagePreload(page),
     routeExtraImagePreloads(page),
     routeModulePreload(page),
+    journalBodyModulePreload(page),
     `<link rel="alternate" hreflang="en-US" href="${escapeAttr(canonical)}">`,
     `<link rel="alternate" hreflang="x-default" href="${escapeAttr(canonical)}">`,
     `<meta name="geo.region" content="US-NY">`,
