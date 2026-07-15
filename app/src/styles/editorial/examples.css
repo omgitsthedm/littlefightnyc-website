@@ -577,8 +577,11 @@
   font-weight: 700;
   font-size: clamp(1.2rem, 1rem + 1vw, 1.8rem);
   line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: var(--lf-fight);
+  letter-spacing: 0;
+  /* Was all-orange across ~13 cells — a wall of orange reads as decoration and
+     dilutes the "orange = signal" discipline. White keeps the proof prominent
+     (big Oswald) and calm; orange stays a signal on CTAs/eyebrows elsewhere. */
+  color: var(--lf-bone);
   overflow-wrap: break-word;
 }
 
