@@ -32,21 +32,21 @@
   --lf-text-4xl: clamp(5rem, 3rem + 9vw, 13rem);              /* 80-208px */
   --lf-text-5xl: clamp(6rem, 4rem + 12vw, 18rem);             /* 96-288px — Press Strike scale */
 
-  /* Type families — Bricolage Grotesque for DISPLAY/headings (humanist
-   * grotesque with editorial character), Inter for body, mono for labels.
-   * --lf-serif is the historical DISPLAY token name (the 37 heading consumers);
-   * both it and --lf-display carry Bricolage now, with Inter as the fallback so
-   * headings stay solid if the display face hasn't loaded. --lf-sans stays
-   * Inter for readable body text. */
-  --lf-serif: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --lf-display: "Bricolage Grotesque Variable", "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --lf-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Type families — v7 "Boxing Poster": Oswald (condensed grotesque) carries
+   * ALL display/headings at 700; Barlow carries body/lists/paragraphs at 400;
+   * JetBrains Mono for small labels. --lf-serif is the historical DISPLAY token
+   * name but is now the BODY face (Barlow) — a missed heading selector just
+   * reads Barlow, never an unreadable display face. --lf-display is the poster
+   * headline stack; Barlow is the fallback so headings stay solid pre-load. */
+  --lf-serif: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lf-display: "Oswald Variable", "Oswald", "Barlow", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --lf-sans: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  /* Display tuning — Bricolage reads as display at 700; slightly less negative
-   * tracking than Inter needed since it's a touch warmer/wider. */
+  /* Display tuning — Oswald is CONDENSED, so it wants ~0 tracking (negative
+   * tracking makes a condensed face's letters touch/overlap). Poster weight 700. */
   --lf-display-weight: 700;
-  --lf-display-tracking: -0.02em;
+  --lf-display-tracking: 0em;
 
   /* Spacing — editorial rhythm */
   --lf-space-1: 4px;

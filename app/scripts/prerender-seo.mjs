@@ -1327,10 +1327,12 @@ function snapshot(page) {
   // blue ambient, Inter-metric sans stack. The old snapshot painted the
   // RETIRED brand (Georgia serif / #0A0A0A / #FF6F1F) — every first paint
   // looked like a different, older site before hard-swapping to Momentum.
-  const sans = `Inter, -apple-system, "Segoe UI", system-ui, sans-serif`;
+  const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
+  const display = `"Oswald Variable", "Oswald", "Barlow", sans-serif`;
   const mono = `"JetBrains Mono", ui-monospace, Menlo, monospace`;
   const inlineStyles = `
     .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
+    .lf-seo h1, .lf-seo h2 { font-family: ${display}; font-weight: 700; letter-spacing: 0; }
     .lf-seo a { color: #F97316; text-decoration: none; }
     .lf-seo .lf-seo__nav { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
     .lf-seo .lf-seo__brand { font-weight: 700; font-size: 18px; letter-spacing: -0.01em; color: #FFFFFF; }
@@ -1339,7 +1341,7 @@ function snapshot(page) {
     .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: 0; }
     .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.16) 0%, transparent 55%), linear-gradient(180deg, rgba(5, 5, 7, 0.05) 0%, rgba(5, 5, 7, 0.45) 60%, rgba(5, 5, 7, 0.88) 100%); }
     .lf-seo .lf-seo__home-hero-copy { position: relative; z-index: 2; padding: 96px 20px 120px; }
-    .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.94; letter-spacing: -0.03em; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
+    .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98; letter-spacing: 0; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
     .lf-seo h1 em { color: #F97316; font-style: italic; font-weight: 700; }
     .lf-seo .lf-seo__home-hero h1 em { font-style: normal; display: block; }
     .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 30px; }
@@ -1350,7 +1352,7 @@ function snapshot(page) {
     .lf-seo .lf-seo__pill--primary span { color: rgba(5, 5, 7, 0.72); }
     .lf-seo .lf-seo__home-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; list-style: none; padding: 0; margin: 0; }
     .lf-seo .lf-seo__home-trust li { font-family: ${mono}; font-size: 13px; letter-spacing: 0.02em; color: #A1A1AA; }
-    .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
+    .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
     .lf-seo .lf-seo__links { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 980px; }

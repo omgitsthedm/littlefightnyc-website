@@ -288,6 +288,12 @@ body:has(.lf-editorial) {
 .lf-editorial .lf-visual-index__item-title,
 .lf-editorial .lf-line__text {
   font-family: var(--lf-display) !important;
+  /* Oswald is CONDENSED: the negative tracking these headings inherited from
+     the old Inter/Bricolage era (tuned as tight as -0.04em across ~110 rules)
+     makes a condensed face's letters touch. Neutralize tracking on the display
+     group only — Barlow body/labels keep their own (fine on a non-condensed
+     face). One rule beats editing every component sheet. */
+  letter-spacing: 0 !important;
 }
 
 /* Image load-in skeleton: a subtle shimmer fills the image's (already

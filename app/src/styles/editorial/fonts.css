@@ -1,18 +1,24 @@
-/* Self-hosted fonts via @fontsource. No external network on first paint.
- * v6 (Axiom Momentum): Fraunces retired — Inter now carries both display and
- * body. Inter 700/800 added for display headlines; JetBrains Mono for labels.
- * Dropping the two Fraunces variable faces removes ~80KB from first paint.
+/* Self-hosted fonts via @fontsource. No external network on first paint (the
+ * site CSP blocks remote font hosts anyway).
+ *
+ * v7 — "Boxing Poster" utilitarian type system:
+ *   DISPLAY / headlines → Oswald (condensed grotesque), used at 700. Punchy,
+ *   high-contrast, poster-grade. ("Knockout" is the premium reference; Oswald
+ *   is the free, self-hostable stand-in.)
+ *   BODY / paragraphs / lists → Barlow, used at 400. Rugged, grotesque
+ *   readability at text sizes.
+ *   Small mono labels / eyebrows → JetBrains Mono (unchanged UI accent).
  */
 
-/* Bricolage Grotesque (variable, wght 200-800) — the DISPLAY / heading face:
-   a humanist grotesque with editorial character, still highly legible. Body
-   stays Inter (see tokens: --lf-sans). */
-@import "@fontsource-variable/bricolage-grotesque/index.css";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
-@import "@fontsource/inter/800.css";
-@import "@fontsource/inter/400-italic.css";
-@import "@fontsource/inter/600-italic.css";
+/* Oswald — variable, wght 200-700 (family "Oswald Variable"): the DISPLAY face. */
+@import "@fontsource-variable/oswald/index.css";
+
+/* Barlow — the BODY face (static weights: 400 body, 500/600/700 UI + italics). */
+@import "@fontsource/barlow/400.css";
+@import "@fontsource/barlow/500.css";
+@import "@fontsource/barlow/600.css";
+@import "@fontsource/barlow/700.css";
+@import "@fontsource/barlow/400-italic.css";
+@import "@fontsource/barlow/600-italic.css";
+
 @import "@fontsource/jetbrains-mono/500.css";
