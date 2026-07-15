@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useScrollReveal } from "./useScrollReveal";
 import { useOpenNow } from "@/lib/openNow";
 import "./NeonSign.css";
@@ -22,6 +23,46 @@ export default function NeonSign() {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.35 });
   const openNow = useOpenNow();
 
+  // "Easy exciting moments": on desktop the glow leans toward the cursor; a
+  // tap/click surges the sign and fires a transformer-buzz haptic (Android;
+  // a no-op on iOS, which has no web vibrate). All progressive enhancement.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof window === "undefined") return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    let raf = 0;
+    const onMove = (e: PointerEvent) => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", ((e.clientX - r.left) / r.width).toFixed(3));
+        el.style.setProperty("--my", ((e.clientY - r.top) / r.height).toFixed(3));
+      });
+    };
+
+    let surgeT = 0;
+    const onDown = () => {
+      el.dataset.surge = "1";
+      window.clearTimeout(surgeT);
+      surgeT = window.setTimeout(() => delete el.dataset.surge, 620);
+      if (navigator.vibrate) {
+        try { navigator.vibrate([16, 26, 10, 42, 20]); } catch { /* ignore */ }
+      }
+    };
+
+    if (canHover && !reduced) el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerdown", onDown);
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerdown", onDown);
+      cancelAnimationFrame(raf);
+      window.clearTimeout(surgeT);
+    };
+  }, [ref]);
+
   return (
     <section
       ref={ref}
@@ -30,6 +71,7 @@ export default function NeonSign() {
       data-open={openNow.open ? "true" : "false"}
       aria-label={`Little Fight NYC. ${openNow.sentence}`}
     >
+      <span className="lf-neon__glint" aria-hidden="true" />
       <div className="lf-neon__stage">
         <svg className="lf-neon__svg" viewBox="0 0 760 470" role="img" aria-hidden="true">
           <defs>

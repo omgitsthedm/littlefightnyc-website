@@ -17,8 +17,11 @@
   --tube-op: 1;
   --pool: 0.16;
   --refl-op: 0.16;
+  --mx: 0.5;
+  --my: 0.42;
 
   position: relative;
+  cursor: pointer;
   isolation: isolate;
   overflow: hidden;
   padding: clamp(4rem, 11vw, 9rem) var(--lf-margin-mobile);
@@ -64,7 +67,23 @@
   --refl-op: 0.08;
 }
 
-.lf-neon__stage { position: relative; width: min(100%, 660px); aspect-ratio: 760 / 470; }
+/* cursor-following warm glint — the sign lights the wall you point at (desktop) */
+.lf-neon__glint {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(240px 240px at calc(var(--mx) * 100%) calc(var(--my) * 100%),
+    rgba(249, 115, 22, 0.14), transparent 66%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .lf-neon[data-revealed="true"]:hover .lf-neon__glint { opacity: 1; }
+}
+
+.lf-neon__stage { position: relative; z-index: 1; width: min(100%, 660px); aspect-ratio: 760 / 470; }
 .lf-neon__svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
 /* ---- glass tubes: casing (glow) + hot core, stacked ---- */
@@ -139,7 +158,33 @@
   48.5% { opacity: calc(var(--tube-op) * 0.72); }
 }
 
+/* cinematic ignition: a brief power-flash bloom as the tubes strike, once.
+   Applied to the stage (a CSS filter on the HTML box, so the wide SVG glows
+   aren't clipped to an SVG filter region). */
+.lf-neon[data-revealed="true"] .lf-neon__stage {
+  animation: lf-neon-powerflash 1.5s ease-out 0.85s 1;
+}
+@keyframes lf-neon-powerflash {
+  0% { filter: brightness(1); }
+  7% { filter: brightness(2.1) saturate(1.12); }
+  26% { filter: brightness(1); }
+  100% { filter: brightness(1); }
+}
+
+/* tap / click surge — the sign pulses brighter (with a haptic buzz on Android) */
+.lf-neon[data-surge] .lf-neon__stage {
+  animation: lf-neon-surge 0.55s ease-out 1;
+}
+@keyframes lf-neon-surge {
+  0% { filter: brightness(1); }
+  16% { filter: brightness(1.85) saturate(1.18); }
+  100% { filter: brightness(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .lf-neon__glint { display: none; }
+  .lf-neon[data-revealed="true"] .lf-neon__stage,
+  .lf-neon[data-surge] .lf-neon__stage { animation: none; }
   .lf-neon__tube, .lf-neon__hours { opacity: 1; transition: none; }
   .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
   .lf-neon__draw { stroke-dashoffset: 0; animation: none; }
