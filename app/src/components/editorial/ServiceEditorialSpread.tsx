@@ -22,8 +22,8 @@ const SERVICE_IMAGES: Record<string, { src: string; alt: string; caption: string
     caption: "Repair email, POS, Wi-Fi, domains, devices, booking, and access.",
   },
   "custom-local-websites": {
-    src: "/assets/storefront-blue-gift-shop.webp",
-    alt: "A bright blue New York storefront at street level",
+    src: "/assets/nyc-hair-salon-street.webp",
+    alt: "A New York hair salon storefront with a barber pole, a skyscraper rising behind it",
     caption: "Build the place customers call, book, buy, and learn to trust you.",
   },
   "business-systems": {
@@ -51,14 +51,14 @@ export default function ServiceEditorialSpread() {
         <div className="lf-service-spread__layout">
           <figure className="lf-service-spread__lead">
             <img
-              src="/assets/storefront-shop-deli.webp"
-              alt="A New York deli storefront with street-level signage"
+              src="/assets/nyc-street.webp"
+              alt="A New York street corner at dusk, a lit pharmacy and a small restaurant on the block"
               width={1600}
               height={1200}
               loading="lazy"
               decoding="async"
               {...responsiveImageProps(
-                "/assets/storefront-shop-deli.webp",
+                "/assets/nyc-street.webp",
                 "(max-width: 720px) 100vw, 50vw",
               )}
             />

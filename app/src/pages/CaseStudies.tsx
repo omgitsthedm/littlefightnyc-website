@@ -51,8 +51,8 @@ export default function CaseStudies() {
         }
         dek={`${countWord} engagements, named with permission. Each one shows the pattern: what we kept, what we changed, and what shipped.`}
         image={{
-          src: "/assets/storefront-shop-deli.webp",
-          alt: "New York shopfront at street level",
+          src: "/assets/nyc-street.webp",
+          alt: "A New York street corner at dusk with local storefronts",
           width: 1600,
           height: 1200,
         }}

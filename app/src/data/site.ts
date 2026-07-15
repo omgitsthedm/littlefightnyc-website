@@ -305,7 +305,7 @@ export const services: Service[] = [
       "Service and neighborhood pages",
       "Hosting, backups, and ongoing care",
     ],
-    image: "/assets/storefront-blue-gift-shop.webp",
+    image: "/assets/nyc-hair-salon-street.webp",
     accent: "orange",
     icon: Laptop,
     shortAnswer:

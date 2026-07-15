@@ -150,7 +150,7 @@
       "h1": "Proof, maps, and plain answers.",
       "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
       "type": "CollectionPage",
-      "image": "/assets/storefront-shop-deli.webp"
+      "image": "/assets/nyc-street.webp"
     },
     {
       "path": "/answers/",
@@ -443,7 +443,7 @@
       "h1": "Google Business Profile Tips Reddit Swears By — Checked by a Pro",
       "shortAnswer": "Short answer: Reddit's favorite tips are correct. Complete every field, use real photos, keep reviews steady, and pick the right category. The one it undersells: your primary category and review replies matter more than posting frequency. And keyword-stuffing your business name can get you suspended.",
       "type": "Article",
-      "image": "/assets/storefront-blue-gift-shop.webp",
+      "image": "/assets/nyc-hair-salon-street.webp",
       "faq": [
         {
           "question": "Do Google Business Profile posts help ranking?",
@@ -581,7 +581,7 @@
       "h1": "Do I Even Need a Website? Reddit vs Reality in 2026",
       "shortAnswer": "Short answer: Reddit is split — half say a Google profile and Instagram are enough, half say own your own ground. In 2026 the tiebreaker is that search engines and AI assistants answer customers by reading websites. If you are not there, someone else is the answer.",
       "type": "Article",
-      "image": "/assets/storefront-shop-deli.webp",
+      "image": "/assets/nyc-street.webp",
       "faq": [
         {
           "question": "Is a Google Business Profile enough without a website?",
@@ -1078,7 +1078,7 @@
       "h1": "Clear websites and reliable systems for Park Slope's family businesses.",
       "shortAnswer": "Short answer: Park Slope businesses need correct hours, easy booking, and pages that answer a parent's questions fast, because families here research before they walk in.",
       "type": "PlacePage",
-      "image": "/assets/storefront-blue-gift-shop.webp",
+      "image": "/assets/nyc-hair-salon-street.webp",
       "faq": [
         {
           "question": "My business runs on neighborhood word of mouth. Why invest online?",
@@ -1180,7 +1180,7 @@
       "h1": "Real shops. Real work.",
       "shortAnswer": "Short answer: Little Fight publishes named case studies. Real client work with honest, checkable facts. What we kept, what we changed, and what shipped.",
       "type": "CollectionPage",
-      "image": "/assets/storefront-shop-deli.webp"
+      "image": "/assets/nyc-street.webp"
     },
     {
       "path": "/case-studies/cc-films/",
@@ -1434,7 +1434,7 @@
           "11217"
         ],
         "shortNeed": "correct hours, easy booking, and pages that answer a parent's questions fast",
-        "image": "/assets/storefront-blue-gift-shop.webp"
+        "image": "/assets/nyc-hair-salon-street.webp"
       },
       {
         "slug": "dumbo",

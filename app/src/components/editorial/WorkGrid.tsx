@@ -10,7 +10,7 @@ const TILES = [
     label: "Websites that bring in business",
     verb: "Build",
     line: "Calls, bookings, payments, and local search, built around the next customer.",
-    image: "/assets/storefront-blue-gift-shop.webp",
+    image: "/assets/nyc-street.webp",
     icon: Globe2,
     priority: "primary",
   },
