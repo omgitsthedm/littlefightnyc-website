@@ -783,3 +783,30 @@
 .lf-journal-featured__card:hover .lf-journal-featured__cta {
   background: var(--lf-ember);
 }
+
+/* Body-load skeleton: the post body streams in from its own per-slug chunk
+   (split out of the JournalPost bundle). Hero + byline render instantly from
+   the index; this fills the body box for the ~one-beat cold fetch so there's no
+   blank jump. Reuses the image-skeleton shimmer keyframe from base.css. */
+.lf-post__body--loading {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 6px;
+}
+.lf-post__skel-line {
+  height: 1.05em;
+  border-radius: 6px;
+  background: linear-gradient(
+      90deg,
+      var(--lf-paper-2) 0%,
+      var(--lf-hairline) 50%,
+      var(--lf-paper-2) 100%
+    )
+    0 0 / 200% 100%;
+  animation: lf-img-skel 1.4s linear infinite;
+}
+.lf-post__skel-line--short { width: 62%; }
+@media (prefers-reduced-motion: reduce) {
+  .lf-post__skel-line { animation: none; }
+}

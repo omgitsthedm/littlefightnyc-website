@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
@@ -5,29 +6,44 @@ import QuietContact from "@/components/editorial/QuietContact";
 import MiniToc, { type TocItem } from "@/components/dataviz/MiniToc";
 import { READ_MINUTES, WORD_COUNT } from "@/components/dataviz/journalStats";
 import ShareButton from "@/components/ShareButton";
-import journal from "@/data/journal.json";
+import journalIndex from "@/data/journal-index.json";
 import { POST_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
 import "@/styles/editorial/journal.css";
 
-type Post = {
+// Meta only (no html) — the ~250KB of post bodies is split OUT of this chunk.
+type PostMeta = {
   slug: string;
   category: "blog" | "guide" | "essay" | "howto";
   title: string;
   description: string;
   published: string;
   updated: string;
-  html: string;
+  wordCount?: number;
 };
 
-const CATEGORY_LABEL: Record<Post["category"], string> = {
+// Each post body is its own chunk (scripts/split-journal.mjs writes one JSON per
+// slug into src/data/journal-bodies/). Vite turns this glob into per-slug lazy
+// imports, so a reader downloads only the body of the post they opened.
+const BODY_LOADERS = import.meta.glob("../data/journal-bodies/*.json") as Record<
+  string,
+  () => Promise<{ default: { html: string } }>
+>;
+
+function loadBody(slug: string): Promise<string> {
+  const loader = BODY_LOADERS[`../data/journal-bodies/${slug}.json`];
+  if (!loader) return Promise.resolve("");
+  return loader().then((m) => m.default?.html ?? "");
+}
+
+const CATEGORY_LABEL: Record<PostMeta["category"], string> = {
   howto: "How To",
   essay: "Essay",
   blog: "Notebook",
   guide: "Software Guide",
 };
 
-const CATEGORY_IMAGE: Record<Post["category"], string> = {
+const CATEGORY_IMAGE: Record<PostMeta["category"], string> = {
   howto: "/assets/journal-cat-how-to.webp",
   essay: "/assets/journal-cat-essay.webp",
   blog: "/assets/journal-cat-notebook.webp",
@@ -37,7 +53,7 @@ const CATEGORY_IMAGE: Record<Post["category"], string> = {
 // Branded per-post art (same visual language as the category art) — per-post
 // stock photos retired 2026-07-12 (the donut-on-a-ghosting-article era is over).
 
-function displayDate(post: Post) {
+function displayDate(post: PostMeta) {
   return post.published || post.updated || "May 7, 2026";
 }
 
@@ -56,8 +72,8 @@ const TOC_MIN_WORDS = 1200;
  * - long posts (> TOC_MIN_WORDS words): give each <h2> a stable id and
  *   collect the mini-TOC items from the real headings in the html.
  */
-function preparePostBody(post: Post): { html: string; toc: TocItem[] } {
-  let html = prepareLegacyHtml(post.html, { title: post.title });
+function preparePostBody(post: PostMeta, rawHtml: string): { html: string; toc: TocItem[] } {
+  let html = prepareLegacyHtml(rawHtml, { title: post.title });
   const toc: TocItem[] = [];
 
   if (post.category === "howto") {
@@ -85,14 +101,35 @@ function preparePostBody(post: Post): { html: string; toc: TocItem[] } {
 export default function JournalPost() {
   const { slug } = useParams();
   const { pathname } = useLocation();
-  const posts = journal as unknown as Post[];
+  const posts = journalIndex as unknown as PostMeta[];
   const post = posts.find((p) => p.slug === slug);
+
+  // Body streams in from its own chunk. Meta (hero, byline, read-time) renders
+  // instantly from the index; the body is a beat behind on a cold chunk fetch.
+  // Tagged with its slug so a stale result from the previous post never renders
+  // under the new one (and so we needn't reset state synchronously in the effect).
+  const [prepared, setPrepared] = useState<{ slug: string; html: string; toc: TocItem[] } | null>(null);
+
+  useEffect(() => {
+    if (!post) return;
+    let alive = true;
+    loadBody(post.slug).then((raw) => {
+      if (!alive) return;
+      const body = preparePostBody(post, raw);
+      setPrepared({ slug: post.slug, html: body.html, toc: body.toc });
+    });
+    return () => {
+      alive = false;
+    };
+  }, [post]);
 
   if (!post) return <Navigate to="/journal/" replace />;
 
+  // Only trust `prepared` when it belongs to the post currently on screen.
+  const ready = prepared && prepared.slug === post.slug ? prepared : null;
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
   const published = displayDate(post);
-  const { html: bodyHtml, toc } = preparePostBody(post);
+  const toc = ready?.toc ?? [];
   const hasToc = toc.length >= 2;
 
   return (
@@ -158,11 +195,21 @@ export default function JournalPost() {
             />
           </p>
 
-          <div
-            className="lf-post__body"
-            data-post-category={post.category}
-            dangerouslySetInnerHTML={{ __html: bodyHtml }}
-          />
+          {ready ? (
+            <div
+              className="lf-post__body"
+              data-post-category={post.category}
+              dangerouslySetInnerHTML={{ __html: ready.html }}
+            />
+          ) : (
+            <div className="lf-post__body lf-post__body--loading" aria-hidden="true">
+              <span className="lf-post__skel-line" />
+              <span className="lf-post__skel-line" />
+              <span className="lf-post__skel-line lf-post__skel-line--short" />
+              <span className="lf-post__skel-line" />
+              <span className="lf-post__skel-line lf-post__skel-line--short" />
+            </div>
+          )}
           </div>
         </div>
       </article>

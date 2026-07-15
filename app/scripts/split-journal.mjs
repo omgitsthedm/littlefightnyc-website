@@ -10,7 +10,7 @@
  * run at runtime, so reading times are byte-for-byte identical — no fabricated
  * numbers, no behavior change.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -43,3 +43,28 @@ writeFileSync(
 );
 
 console.log(`journal-index.json: ${index.length} posts (meta only, bodies stripped)`);
+
+/* Per-slug body files → each post's ~4-9KB of HTML becomes its OWN chunk, so the
+ * JournalPost route lazy-loads only the body of the post being read instead of
+ * bundling all 37 (~250KB / 84KB gz). JournalPost.tsx pulls these via
+ * import.meta.glob keyed by slug. Regenerated at build/predev; committed so
+ * `npm run dev` and Vite's glob both see the files. */
+const bodiesDir = join(dataDir, "journal-bodies");
+mkdirSync(bodiesDir, { recursive: true });
+
+const wanted = new Set(posts.map((p) => `${p.slug}.json`));
+// Prune stale bodies (a renamed/removed post must not linger as a dead chunk).
+for (const file of readdirSync(bodiesDir)) {
+  if (file.endsWith(".json") && !wanted.has(file)) {
+    rmSync(join(bodiesDir, file));
+  }
+}
+
+for (const p of posts) {
+  writeFileSync(
+    join(bodiesDir, `${p.slug}.json`),
+    JSON.stringify({ html: typeof p.html === "string" ? p.html : "" }) + "\n",
+  );
+}
+
+console.log(`journal-bodies/: ${posts.length} per-slug body files`);
