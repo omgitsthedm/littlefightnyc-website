@@ -91,8 +91,8 @@ export default function FieldGuide() {
         }
         dek="Real work with real names on it. Look before you talk to anyone. See the builds, find your business type, and get straight answers."
         image={{
-          src: "/assets/storefront-shop-deli.webp",
-          alt: "A New York shopfront at street level",
+          src: "/assets/nyc-chinatown-night.webp",
+          alt: "A Manhattan Chinatown restaurant storefront lit up at night near the Manhattan Bridge",
           width: 1600,
           height: 1200,
         }}

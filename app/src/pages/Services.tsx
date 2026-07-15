@@ -69,8 +69,8 @@ export default function Services() {
         }
         dek="Start with a website that earns attention. Add urgent support, free consulting, or owned software only when the business needs it."
         image={{
-          src: "/assets/storefront-blue-gift-shop.webp",
-          alt: "A bright blue New York storefront at street level",
+          src: "/assets/nyc-street-crowd.webp",
+          alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",
           width: 1600,
           height: 1200,
         }}

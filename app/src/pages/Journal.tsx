@@ -93,8 +93,8 @@ export default function Journal() {
         }
         dek="How-tos, essays, software comparisons, and notes from working with NYC small businesses. Plain words, no upsell, occasionally cheeky."
         image={{
-          src: "/assets/sign-groceries-snacks.webp",
-          alt: "Hand-painted Groceries Snacks sign",
+          src: "/assets/manhattan.webp",
+          alt: "The Manhattan skyline at night seen from above, city lights stretching to the horizon",
           width: 1800,
           height: 1200,
         }}
