@@ -16,17 +16,22 @@ import {
   Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import {
-  answerGuides,
-  areaPages,
-  caseStudies,
-  glossaryTerms,
-  services,
-} from "@/data/site";
+import navIndex from "@/data/nav-index.json";
 import { CMDK_OPEN_EVENT, consumePendingPaletteOpen } from "@/lib/palette";
 import "./CommandPalette.css";
 
 type Item = { label: string; to: string; group: string; icon: LucideIcon };
+
+// The destination list is generated at build (scripts/build-nav-index.mjs) so
+// the palette no longer drags the whole site.ts data chunk onto every page.
+// Icons are per-group (the palette never needed per-service icons).
+const GROUP_ICON: Record<string, LucideIcon> = {
+  Services: Layers,
+  "Case studies": Award,
+  Answers: HelpCircle,
+  Glossary: BookOpen,
+  Neighborhoods: MapPin,
+};
 
 function buildItems(): Item[] {
   const primary: Item[] = [
@@ -40,37 +45,13 @@ function buildItems(): Item[] {
     { label: "Contact", to: "/contact/", group: "Go to", icon: MessageSquare },
     { label: "Tech Audit", to: "/tech-audit/", group: "Go to", icon: ClipboardCheck },
   ];
-  const svc: Item[] = services.map((s) => ({
-    label: s.eyebrow,
-    to: `/services/${s.slug}/`,
-    group: "Services",
-    icon: s.icon,
+  const derived: Item[] = (navIndex as { label: string; to: string; group: string }[]).map((n) => ({
+    label: n.label,
+    to: n.to,
+    group: n.group,
+    icon: GROUP_ICON[n.group] ?? Search,
   }));
-  const work: Item[] = caseStudies.map((c) => ({
-    label: c.client,
-    to: `/case-studies/${c.slug}/`,
-    group: "Case studies",
-    icon: Award,
-  }));
-  const ans: Item[] = answerGuides.map((a) => ({
-    label: a.question,
-    to: `/answers/${a.slug}/`,
-    group: "Answers",
-    icon: HelpCircle,
-  }));
-  const gl: Item[] = glossaryTerms.map((t) => ({
-    label: t.term,
-    to: `/glossary/${t.slug}/`,
-    group: "Glossary",
-    icon: BookOpen,
-  }));
-  const ar: Item[] = areaPages.map((a) => ({
-    label: a.name,
-    to: `/areas/${a.slug}/`,
-    group: "Neighborhoods",
-    icon: MapPin,
-  }));
-  return [...primary, ...svc, ...work, ...ans, ...gl, ...ar];
+  return [...primary, ...derived];
 }
 
 /**

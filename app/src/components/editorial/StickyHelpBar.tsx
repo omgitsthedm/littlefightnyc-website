@@ -1,8 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import PhoneAction from "./PhoneAction";
-import { areaPages } from "@/data/site"; // read-only
+// Slim nav-index (built from site.ts) instead of the whole site data chunk —
+// this bar renders in EDITORIAL SHELL on every page, so it must stay light.
+import navIndex from "@/data/nav-index.json";
 import "./StickyHelpBar.css";
+
+const AREA_NAME: Record<string, string> = Object.fromEntries(
+  (navIndex as { label: string; to: string; group: string }[])
+    .filter((n) => n.group === "Neighborhoods")
+    .map((n) => [n.to.replace(/^\/areas\/|\/$/g, ""), n.label]),
+);
 
 type FitCta = { label: string; detail: string; contextual: boolean; to: string };
 
@@ -25,9 +33,9 @@ function fitCta(pathname: string): FitCta {
   }
   const areaSlug = p.match(/^\/areas\/([^/]+)/)?.[1];
   if (areaSlug) {
-    const area = areaPages.find((a) => a.slug === areaSlug);
-    if (area) {
-      return { label: "Tech Audit", detail: `Near ${area.name}? We're close.`, contextual: true, to: "/tech-audit/" };
+    const name = AREA_NAME[areaSlug];
+    if (name) {
+      return { label: "Tech Audit", detail: `Near ${name}? We're close.`, contextual: true, to: "/tech-audit/" };
     }
   }
   if (p === "/services/custom-local-websites") {
