@@ -1,12 +1,21 @@
-/* NeonSign — hand-bent orange neon "OPEN", powers on when scrolled into view.
-   Letters are hollow glass TUBES (stroke, not fill) with a bright core + wide
-   bloom. Colours from brand tokens; glow via layered drop-shadows. */
+/* NeonSign — frameless hand-bent orange neon. Letters are hollow glass TUBES
+   (stroke, not fill), bright gas core + wide bloom. Runs DIM while we're open
+   (daytime) and blazes bright after hours, like a real night sign. */
 
 .lf-neon {
   --neon: var(--lf-fight, #f97316);
-  --neon-core: #fff1dd; /* hot inner gas */
+  --neon-core: #fff1dd;
   --neon-deep: var(--lf-ember, #ea580c);
-  padding: clamp(3rem, 9vw, 7rem) var(--lf-margin-mobile);
+  /* glow intensity — BRIGHT default (after hours / closed) */
+  --g-core: 4px;
+  --g1: 11px;
+  --g2: 24px;
+  --g3: 46px;
+  --core-col: var(--neon-core);
+  --tube-op: 1;
+  --spill: 0.82;
+
+  padding: clamp(3.5rem, 10vw, 8rem) var(--lf-margin-mobile);
   background: var(--lf-ink, #050507);
   display: flex;
   justify-content: center;
@@ -14,55 +23,56 @@
 @media (min-width: 768px) { .lf-neon { padding-inline: var(--lf-margin-tablet); } }
 @media (min-width: 1280px) { .lf-neon { padding-inline: var(--lf-margin-desktop); } }
 
+/* DIM — while we're reachable (9am-9pm ET, daytime): a low-power hum */
+.lf-neon[data-open="true"] {
+  --g-core: 2px;
+  --g1: 5px;
+  --g2: 10px;
+  --g3: 18px;
+  --core-col: #ffcfa3;
+  --tube-op: 0.82;
+  --spill: 0.34;
+}
+
 .lf-neon__stage {
   position: relative;
-  width: min(100%, 680px);
-  aspect-ratio: 760 / 520;
+  width: min(100%, 640px);
+  aspect-ratio: 760 / 400;
 }
-/* warm pool of light thrown onto the wall beneath the sign */
 .lf-neon__stage::after {
   content: "";
   position: absolute;
-  left: 6%; right: 6%; bottom: -9%; height: 34%;
-  background: radial-gradient(58% 100% at 50% 0%, rgba(249, 115, 22, 0.28), transparent 72%);
-  filter: blur(20px);
+  left: 2%; right: 2%; bottom: -14%; height: 40%;
+  background: radial-gradient(56% 100% at 50% 0%, rgba(249, 115, 22, 0.30), transparent 72%);
+  filter: blur(22px);
   opacity: 0;
   transition: opacity 0.9s ease 0.9s;
   pointer-events: none;
 }
-.lf-neon[data-revealed="true"] .lf-neon__stage::after { opacity: 0.8; }
+.lf-neon[data-revealed="true"] .lf-neon__stage::after { opacity: var(--spill); }
 
 .lf-neon__svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
-/* dark backing panel the tubes are mounted on */
-.lf-neon__panel {
-  fill: #0a0a0d;
-  stroke: #17171b;
-  stroke-width: 1;
-}
-
-/* ---- glass tubes: hollow, rounded, bright core stroke ---- */
+/* ---- glass tubes ---- */
 .lf-neon__tube {
   fill: none;
-  stroke: var(--neon-core);
+  stroke: var(--core-col);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.lf-neon__frame { stroke-width: 5; stroke: var(--neon); }
 .lf-neon__underline { stroke-width: 4; }
-
 .lf-neon__word {
   font-family: var(--lf-display, Inter, sans-serif);
   font-weight: 600;
-  font-size: 128px;
+  font-size: 132px;
   letter-spacing: 0.02em;
   stroke-width: 2.6;
 }
 .lf-neon__brand {
   font-family: var(--lf-display, Inter, sans-serif);
   font-weight: 600;
-  font-size: 46px;
-  letter-spacing: 0.08em;
+  font-size: 47px;
+  letter-spacing: 0.09em;
   stroke-width: 2;
 }
 .lf-neon__hours {
@@ -72,41 +82,34 @@
   fill: var(--neon);
   stroke: none;
 }
-.lf-neon__joint { fill: var(--neon-core); }
 
-/* ---- unlit (before reveal): faint dark glass, no glow ---- */
+/* ---- unlit (before reveal) ---- */
 .lf-neon__tube,
-.lf-neon__hours,
-.lf-neon__joint {
+.lf-neon__hours {
   opacity: 0.1;
   filter: none;
-  transition: opacity 0.5s ease var(--on, 0s), filter 0.6s ease var(--on, 0s);
+  transition:
+    opacity 0.5s ease var(--on, 0s),
+    filter 0.8s ease;
 }
-.lf-neon__draw {
-  stroke-dasharray: var(--len);
-  stroke-dashoffset: var(--len);
-}
+.lf-neon__draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
 
-/* ---- powered on ---- */
-.lf-neon[data-revealed="true"] .lf-neon__tube,
-.lf-neon[data-revealed="true"] .lf-neon__hours,
-.lf-neon[data-revealed="true"] .lf-neon__joint { opacity: 1; }
+/* ---- powered on: settle to the current state's glow ---- */
+.lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
+.lf-neon[data-revealed="true"] .lf-neon__hours { opacity: 1; }
 
-/* the glow: tight bright halo + wide saturated bloom */
 .lf-neon[data-revealed="true"] .lf-neon__word,
 .lf-neon[data-revealed="true"] .lf-neon__brand,
-.lf-neon[data-revealed="true"] .lf-neon__frame,
-.lf-neon[data-revealed="true"] .lf-neon__underline,
-.lf-neon[data-revealed="true"] .lf-neon__joint {
+.lf-neon[data-revealed="true"] .lf-neon__underline {
   filter:
-    drop-shadow(0 0 1px var(--neon-core))
-    drop-shadow(0 0 4px var(--neon-core))
-    drop-shadow(0 0 10px var(--neon))
-    drop-shadow(0 0 22px var(--neon))
-    drop-shadow(0 0 44px var(--neon-deep));
+    drop-shadow(0 0 1px var(--core-col))
+    drop-shadow(0 0 var(--g-core) var(--core-col))
+    drop-shadow(0 0 var(--g1) var(--neon))
+    drop-shadow(0 0 var(--g2) var(--neon))
+    drop-shadow(0 0 var(--g3) var(--neon-deep));
 }
 .lf-neon[data-revealed="true"] .lf-neon__hours {
-  filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 14px var(--neon-deep));
+  filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 12px var(--neon-deep));
 }
 
 .lf-neon[data-revealed="true"] .lf-neon__draw {
@@ -114,37 +117,36 @@
 }
 @keyframes lf-neon-draw { to { stroke-dashoffset: 0; } }
 
-/* startup: OPEN stutters to life once, then holds with a slow buzz + rare blip.
-   Mostly steady — a shop sign hums, it doesn't strobe. */
+/* OPEN stutters to life once, then a barely-there opacity hum keeps it alive
+   without touching the state-driven glow. Mostly steady — a sign hums. */
 .lf-neon[data-revealed="true"] .lf-neon__word {
-  animation: lf-neon-ignite 0.9s steps(1) 0.9s both, lf-neon-hum 6s ease-in-out 1.8s infinite;
+  animation: lf-neon-ignite 0.9s steps(1) 0.6s both, lf-neon-hum 7s ease-in-out 1.6s infinite;
 }
 @keyframes lf-neon-ignite {
-  0% { opacity: 0.15; }
-  8% { opacity: 1; } 12% { opacity: 0.3; } 16% { opacity: 1; }
-  22% { opacity: 0.5; } 26% { opacity: 1; }
-  100% { opacity: 1; }
+  0% { opacity: 0.12; }
+  8% { opacity: var(--tube-op); } 12% { opacity: 0.25; } 16% { opacity: var(--tube-op); }
+  22% { opacity: 0.45; } 26% { opacity: var(--tube-op); }
+  100% { opacity: var(--tube-op); }
 }
 @keyframes lf-neon-hum {
-  0%, 100% { filter:
-    drop-shadow(0 0 1px var(--neon-core)) drop-shadow(0 0 4px var(--neon-core))
-    drop-shadow(0 0 10px var(--neon)) drop-shadow(0 0 22px var(--neon)) drop-shadow(0 0 44px var(--neon-deep)); }
-  50% { filter:
-    drop-shadow(0 0 1px var(--neon-core)) drop-shadow(0 0 5px var(--neon-core))
-    drop-shadow(0 0 13px var(--neon)) drop-shadow(0 0 28px var(--neon)) drop-shadow(0 0 52px var(--neon-deep)); }
-  71%, 72.5% { opacity: 1; } 71.6% { opacity: 0.62; } /* one lazy blip */
+  0%, 100% { opacity: var(--tube-op); }
+  48% { opacity: var(--tube-op); }
+  49% { opacity: calc(var(--tube-op) * 0.72); } /* one lazy blip */
+  50% { opacity: var(--tube-op); }
 }
 
-/* reduced motion: steady-lit, no draw / flicker / delayed spill */
+/* reduced motion: steady on, no draw / ignite / delayed spill */
 @media (prefers-reduced-motion: reduce) {
-  .lf-neon__tube, .lf-neon__hours, .lf-neon__joint { opacity: 1; transition: none; }
+  .lf-neon__tube, .lf-neon__hours { opacity: 1; transition: none; }
+  .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
   .lf-neon__draw { stroke-dashoffset: 0; animation: none; }
-  .lf-neon__word { animation: none; }
+  .lf-neon__word { animation: none; opacity: var(--tube-op); }
   .lf-neon__stage::after { transition: none; }
-  .lf-neon__word, .lf-neon__brand, .lf-neon__frame, .lf-neon__underline, .lf-neon__joint {
+  .lf-neon__word, .lf-neon__brand, .lf-neon__underline {
     filter:
-      drop-shadow(0 0 1px var(--neon-core)) drop-shadow(0 0 4px var(--neon-core))
-      drop-shadow(0 0 10px var(--neon)) drop-shadow(0 0 22px var(--neon)) drop-shadow(0 0 44px var(--neon-deep));
+      drop-shadow(0 0 1px var(--core-col)) drop-shadow(0 0 var(--g-core) var(--core-col))
+      drop-shadow(0 0 var(--g1) var(--neon)) drop-shadow(0 0 var(--g2) var(--neon))
+      drop-shadow(0 0 var(--g3) var(--neon-deep));
   }
-  .lf-neon__hours { filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 14px var(--neon-deep)); }
+  .lf-neon__hours { filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 12px var(--neon-deep)); }
 }
