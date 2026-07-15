@@ -7,6 +7,7 @@ import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import PublishingHeatmap from "@/components/dataviz/PublishingHeatmap";
 import { READ_MINUTES } from "@/components/dataviz/journalStats";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import { useViewTransitionNav } from "@/lib/viewTransition";
 import journal from "@/data/journal-index.json";
 import { POST_IMAGE } from "@/data/journalArt";
@@ -156,7 +157,7 @@ export default function Journal() {
               onClick={vtNav(`/journal/${featured.slug}/`, preloadPost)}
             >
               <span className="lf-journal-featured__media" aria-hidden="true">
-                <img
+                <img {...skelImg}
                   src={POST_IMAGE[featured.slug] ?? CATEGORY_IMAGE[featured.category]}
                   alt=""
                   {...responsiveImageProps(
@@ -212,7 +213,7 @@ export default function Journal() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="lf-journal__thumb" aria-hidden="true">
-                      <img
+                      <img {...skelImg}
                         src={POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category]}
                         alt=""
                         {...responsiveImageProps(

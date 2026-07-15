@@ -6,6 +6,7 @@ import QuietContact from "@/components/editorial/QuietContact";
 import DeviceFrame from "@/components/editorial/DeviceFrame";
 import { caseStudies, services } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import { useViewTransitionNav } from "@/lib/viewTransition";
 import "@/styles/editorial/case-studies.css";
 
@@ -75,7 +76,7 @@ export default function CaseStudies() {
                 onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
               >
                 <DeviceFrame domain={displayDomain(study.url)}>
-                  <img
+                  <img {...skelImg}
                     src={study.image}
                     {...responsiveImageProps(study.image, "(max-width: 720px) 100vw, 50vw")}
                     alt=""

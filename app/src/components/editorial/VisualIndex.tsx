@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, type LucideIcon } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "./VisualIndex.css";
 
 export type VisualIndexItem = {
@@ -69,7 +70,7 @@ export default function VisualIndex({
                 className="lf-visual-index__item"
               >
                 <span className="lf-visual-index__media" aria-hidden="true">
-                  <img
+                  <img {...skelImg}
                     src={item.image}
                     alt=""
                     {...responsiveImageProps(

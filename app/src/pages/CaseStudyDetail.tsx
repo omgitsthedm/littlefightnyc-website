@@ -10,6 +10,7 @@ import CaseDiagram from "@/components/dataviz/CaseDiagram";
 import ShareButton from "@/components/ShareButton";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
 
@@ -222,7 +223,7 @@ export default function CaseStudyDetail() {
             <figure ref={shipRef} className="lf-case__ship">
               <div className="lf-case__ship-frame">
                 <DeviceFrame domain={displayDomain(study.url)}>
-                  <img
+                  <img {...skelImg}
                     src={study.image}
                     {...responsiveImageProps(
                       study.image,

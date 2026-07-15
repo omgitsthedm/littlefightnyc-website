@@ -18,6 +18,7 @@ import CoverageMatrix from "@/components/dataviz/CoverageMatrix";
 import { useCountUp } from "@/components/dataviz/useCountUp";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import { answerGuides, caseStudies } from "@/data/site";
 import industries from "@/data/industries.json";
 import "@/styles/editorial/examples.css";
@@ -119,7 +120,7 @@ export default function FieldGuide() {
               className="lf-ex-feature__card"
             >
               <span className="lf-ex-feature__media" aria-hidden="true">
-                <img
+                <img {...skelImg}
                   src={featured.image}
                   alt=""
                   {...responsiveImageProps(
@@ -173,7 +174,7 @@ export default function FieldGuide() {
                   className="lf-ex-rows__card"
                 >
                   <span className="lf-ex-rows__media" aria-hidden="true">
-                    <img
+                    <img {...skelImg}
                       src={study.image}
                       alt=""
                       {...responsiveImageProps(

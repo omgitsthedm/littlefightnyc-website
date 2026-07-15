@@ -1,4 +1,5 @@
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "./EditorialFigure.css";
 
 type Props = {
@@ -26,6 +27,7 @@ export default function EditorialFigure({
     <figure className={`lf-fig ${className}`}>
       <div className="lf-fig__frame">
         <img
+          {...skelImg}
           src={src}
           alt={alt}
           width={width}

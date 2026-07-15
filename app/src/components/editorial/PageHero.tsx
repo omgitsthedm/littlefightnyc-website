@@ -1,6 +1,7 @@
 import type { LucideIcon } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "./PageHero.css";
 
 type Props = {
@@ -144,6 +145,7 @@ export default function PageHero({
         {image && (
           <div className="lf-pagehero__image">
             <img
+              {...skelImg}
               src={image.src}
               alt={image.alt}
               width={image.width}

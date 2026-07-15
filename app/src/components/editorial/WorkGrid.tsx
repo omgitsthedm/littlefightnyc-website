@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Globe2, Headphones, Search, Workflow } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import { useScrollReveal } from "./useScrollReveal";
 import "./WorkGrid.css";
 
@@ -71,6 +72,7 @@ export default function WorkGrid() {
           >
             <div className="lf-work__tile-image" aria-hidden="true">
               <img
+                {...skelImg}
                 src={tile.image}
                 {...responsiveImageProps(
                   tile.image,

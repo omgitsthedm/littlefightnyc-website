@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { services } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "./ServiceEditorialSpread.css";
 
 const SERVICE_ORDER = [
@@ -50,7 +51,7 @@ export default function ServiceEditorialSpread() {
 
         <div className="lf-service-spread__layout">
           <figure className="lf-service-spread__lead">
-            <img
+            <img {...skelImg}
               src="/assets/nyc-street.webp"
               alt="A New York street corner at dusk, a lit pharmacy and a small restaurant on the block"
               width={1600}
@@ -91,7 +92,7 @@ export default function ServiceEditorialSpread() {
                       <span>{image.caption}</span>
                     </span>
                     <span className="lf-service-spread__thumb" aria-hidden="true">
-                      <img
+                      <img {...skelImg}
                         src={image.src}
                         alt=""
                         width={1600}
@@ -109,7 +110,7 @@ export default function ServiceEditorialSpread() {
 
           <aside className="lf-service-spread__marginal" aria-label="What the work touches">
             <figure>
-              <img
+              <img {...skelImg}
                 src="/assets/nyc-stickys-steam.webp"
                 alt="Steam rising from a New York street food counter"
                 width={1200}
@@ -124,7 +125,7 @@ export default function ServiceEditorialSpread() {
               <figcaption>Customer path</figcaption>
             </figure>
             <figure>
-              <img
+              <img {...skelImg}
                 src="/assets/coworking-laptops.webp"
                 alt="Open laptops on a working table"
                 width={1600}

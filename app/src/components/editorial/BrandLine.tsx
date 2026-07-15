@@ -1,5 +1,6 @@
 import { useScrollReveal } from "./useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "./BrandLine.css";
 
 /**
@@ -11,7 +12,7 @@ export default function BrandLine() {
   return (
     <section className="lf-line" aria-label="Brand statement">
       <div className="lf-line__image" aria-hidden="true">
-        <img
+        <img {...skelImg}
           src="/assets/nyc-chinatown-night.webp"
           {...responsiveImageProps(
             "/assets/nyc-chinatown-night.webp",

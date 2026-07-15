@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ScanSearch } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import { useScrollReveal } from "./useScrollReveal";
 import { caseStudies } from "@/data/site";
 import "./RecentClients.css";
@@ -49,7 +50,7 @@ export default function RecentClients() {
               style={{ ["--lf-i" as string]: i }}
             >
               <span className="lf-clients__shot" aria-hidden="true">
-                <img
+                <img {...skelImg}
                   src={study.image}
                   {...responsiveImageProps(study.image, "(min-width: 1024px) 42vw, 100vw", [480, 640, 900])}
                   alt=""
