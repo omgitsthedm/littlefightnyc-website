@@ -1,112 +1,120 @@
-/* NeonSign — frameless hand-bent orange neon. Letters are hollow glass TUBES
-   (stroke, not fill), bright gas core + wide bloom. Runs DIM while we're open
-   (daytime) and blazes bright after hours, like a real night sign. */
+/* NeonSign — hand-bent orange neon on a wall. Hot-core glass TUBES (a saturated
+   casing + a white-hot gas core), light pooling on the wall, a reflection
+   below. Display-P3 orange where supported so the glow is more vivid on Apple /
+   modern screens. Runs DIM while we're open (daytime), blazes bright after
+   hours. Pure SVG + CSS. */
 
 .lf-neon {
-  --neon: var(--lf-fight, #f97316);
+  --neon: #f97316;
+  --neon-deep: #ea580c;
   --neon-core: #fff1dd;
-  --neon-deep: var(--lf-ember, #ea580c);
-  /* glow intensity — BRIGHT default (after hours / closed) */
+  /* glow radii — BRIGHT default (closed / after hours) */
   --g-core: 4px;
-  --g1: 11px;
-  --g2: 24px;
-  --g3: 46px;
+  --g1: 12px;
+  --g2: 26px;
+  --g3: 50px;
   --core-col: var(--neon-core);
   --tube-op: 1;
-  --spill: 0.82;
+  --pool: 0.16;
+  --refl-op: 0.16;
 
-  padding: clamp(3.5rem, 10vw, 8rem) var(--lf-margin-mobile);
-  background: var(--lf-ink, #050507);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(4rem, 11vw, 9rem) var(--lf-margin-mobile);
+  background:
+    radial-gradient(130% 95% at 50% 40%, rgba(249, 115, 22, var(--pool)) 0%, transparent 52%),
+    repeating-linear-gradient(0deg, #08080b 0 33px, #060609 33px 34px),
+    repeating-linear-gradient(90deg, #090a0d 0 96px, #060609 96px 98px),
+    #050507;
   display: flex;
   justify-content: center;
 }
 @media (min-width: 768px) { .lf-neon { padding-inline: var(--lf-margin-tablet); } }
 @media (min-width: 1280px) { .lf-neon { padding-inline: var(--lf-margin-desktop); } }
 
-/* DIM — while we're reachable (9am-9pm ET, daytime): a low-power hum */
+/* wide-gamut: a more saturated orange that visibly glows harder on P3 displays */
+@supports (color: color(display-p3 1 1 1)) {
+  .lf-neon {
+    --neon: color(display-p3 0.98 0.42 0.05);
+    --neon-deep: color(display-p3 0.85 0.29 0);
+    --neon-core: color(display-p3 1 0.95 0.86);
+  }
+}
+
+/* night vignette — darkens the wall edges so the sign is the light source */
+.lf-neon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 120% at 50% 46%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+  pointer-events: none;
+}
+
+/* DIM — while we're reachable (daytime): a low-power hum */
 .lf-neon[data-open="true"] {
   --g-core: 2px;
   --g1: 5px;
-  --g2: 10px;
-  --g3: 18px;
+  --g2: 11px;
+  --g3: 20px;
   --core-col: #ffcfa3;
   --tube-op: 0.82;
-  --spill: 0.34;
+  --pool: 0.06;
+  --refl-op: 0.08;
 }
 
-.lf-neon__stage {
-  position: relative;
-  width: min(100%, 640px);
-  aspect-ratio: 760 / 400;
-}
-.lf-neon__stage::after {
-  content: "";
-  position: absolute;
-  left: 2%; right: 2%; bottom: -14%; height: 40%;
-  background: radial-gradient(56% 100% at 50% 0%, rgba(249, 115, 22, 0.30), transparent 72%);
-  filter: blur(22px);
-  opacity: 0;
-  transition: opacity 0.9s ease 0.9s;
-  pointer-events: none;
-}
-.lf-neon[data-revealed="true"] .lf-neon__stage::after { opacity: var(--spill); }
-
+.lf-neon__stage { position: relative; width: min(100%, 660px); aspect-ratio: 760 / 470; }
 .lf-neon__svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
-/* ---- glass tubes ---- */
-.lf-neon__tube {
-  fill: none;
-  stroke: var(--core-col);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.lf-neon__underline { stroke-width: 4; }
-.lf-neon__word {
-  font-family: var(--lf-display, Inter, sans-serif);
-  font-weight: 600;
-  font-size: 132px;
-  letter-spacing: 0.02em;
-  stroke-width: 2.6;
-}
-.lf-neon__brand {
-  font-family: var(--lf-display, Inter, sans-serif);
-  font-weight: 600;
-  font-size: 47px;
-  letter-spacing: 0.09em;
-  stroke-width: 2;
-}
+/* ---- glass tubes: casing (glow) + hot core, stacked ---- */
+.lf-neon__tube { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.lf-neon__glow { stroke: var(--neon); }
+.lf-neon__core { stroke: var(--core-col); }
+
+.lf-neon__word { font-family: var(--lf-display, Inter, sans-serif); font-weight: 600; font-size: 134px; letter-spacing: 0.02em; }
+.lf-neon__word.lf-neon__glow { stroke-width: 6.5; }
+.lf-neon__word.lf-neon__core { stroke-width: 2; }
+
+.lf-neon__brand { font-family: var(--lf-display, Inter, sans-serif); font-weight: 600; font-size: 47px; letter-spacing: 0.09em; }
+.lf-neon__brand.lf-neon__glow { stroke-width: 5; }
+.lf-neon__brand.lf-neon__core { stroke-width: 1.6; }
+
+.lf-neon__underline.lf-neon__glow { stroke-width: 6; }
+.lf-neon__underline.lf-neon__core { stroke-width: 2; }
+
 .lf-neon__hours {
   font-family: var(--lf-mono, ui-monospace, monospace);
-  font-size: 21px;
-  letter-spacing: 0.26em;
-  fill: var(--neon);
-  stroke: none;
+  font-size: 21px; letter-spacing: 0.26em; fill: var(--neon); stroke: none;
 }
 
+.lf-neon__reflection { opacity: 0; transition: opacity 1s ease 1s; }
+.lf-neon[data-revealed="true"] .lf-neon__reflection { opacity: var(--refl-op); }
+
 /* ---- unlit (before reveal) ---- */
-.lf-neon__tube,
-.lf-neon__hours {
-  opacity: 0.1;
+.lf-neon__tube, .lf-neon__hours {
+  opacity: 0.09;
   filter: none;
-  transition:
-    opacity 0.5s ease var(--on, 0s),
-    filter 0.8s ease;
+  transition: opacity 0.5s ease var(--on, 0s), filter 0.8s ease;
 }
 .lf-neon__draw { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); }
 
-/* ---- powered on: settle to the current state's glow ---- */
+/* ---- powered on ---- */
 .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
 .lf-neon[data-revealed="true"] .lf-neon__hours { opacity: 1; }
 
-.lf-neon[data-revealed="true"] .lf-neon__word,
-.lf-neon[data-revealed="true"] .lf-neon__brand,
-.lf-neon[data-revealed="true"] .lf-neon__underline {
+/* the casing carries the wide bloom; the core stays tight + white-hot */
+.lf-neon[data-revealed="true"] .lf-neon__glow {
   filter:
-    drop-shadow(0 0 1px var(--core-col))
-    drop-shadow(0 0 var(--g-core) var(--core-col))
     drop-shadow(0 0 var(--g1) var(--neon))
     drop-shadow(0 0 var(--g2) var(--neon))
     drop-shadow(0 0 var(--g3) var(--neon-deep));
+}
+.lf-neon[data-revealed="true"] .lf-neon__core {
+  filter:
+    drop-shadow(0 0 1px var(--core-col))
+    drop-shadow(0 0 var(--g-core) var(--core-col))
+    drop-shadow(0 0 calc(var(--g1) * 0.7) var(--neon));
 }
 .lf-neon[data-revealed="true"] .lf-neon__hours {
   filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 12px var(--neon-deep));
@@ -117,36 +125,30 @@
 }
 @keyframes lf-neon-draw { to { stroke-dashoffset: 0; } }
 
-/* OPEN stutters to life once, then a barely-there opacity hum keeps it alive
-   without touching the state-driven glow. Mostly steady — a sign hums. */
+/* OPEN stutters to life once, then a barely-there opacity hum */
 .lf-neon[data-revealed="true"] .lf-neon__word {
   animation: lf-neon-ignite 0.9s steps(1) 0.6s both, lf-neon-hum 7s ease-in-out 1.6s infinite;
 }
 @keyframes lf-neon-ignite {
   0% { opacity: 0.12; }
   8% { opacity: var(--tube-op); } 12% { opacity: 0.25; } 16% { opacity: var(--tube-op); }
-  22% { opacity: 0.45; } 26% { opacity: var(--tube-op); }
-  100% { opacity: var(--tube-op); }
+  22% { opacity: 0.45; } 26% { opacity: var(--tube-op); } 100% { opacity: var(--tube-op); }
 }
 @keyframes lf-neon-hum {
-  0%, 100% { opacity: var(--tube-op); }
-  48% { opacity: var(--tube-op); }
-  49% { opacity: calc(var(--tube-op) * 0.72); } /* one lazy blip */
-  50% { opacity: var(--tube-op); }
+  0%, 47%, 50%, 100% { opacity: var(--tube-op); }
+  48.5% { opacity: calc(var(--tube-op) * 0.72); }
 }
 
-/* reduced motion: steady on, no draw / ignite / delayed spill */
 @media (prefers-reduced-motion: reduce) {
   .lf-neon__tube, .lf-neon__hours { opacity: 1; transition: none; }
   .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
   .lf-neon__draw { stroke-dashoffset: 0; animation: none; }
   .lf-neon__word { animation: none; opacity: var(--tube-op); }
-  .lf-neon__stage::after { transition: none; }
-  .lf-neon__word, .lf-neon__brand, .lf-neon__underline {
-    filter:
-      drop-shadow(0 0 1px var(--core-col)) drop-shadow(0 0 var(--g-core) var(--core-col))
-      drop-shadow(0 0 var(--g1) var(--neon)) drop-shadow(0 0 var(--g2) var(--neon))
-      drop-shadow(0 0 var(--g3) var(--neon-deep));
+  .lf-neon__reflection { transition: none; }
+  .lf-neon[data-revealed="true"] .lf-neon__glow {
+    filter: drop-shadow(0 0 var(--g1) var(--neon)) drop-shadow(0 0 var(--g2) var(--neon)) drop-shadow(0 0 var(--g3) var(--neon-deep));
   }
-  .lf-neon__hours { filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 12px var(--neon-deep)); }
+  .lf-neon[data-revealed="true"] .lf-neon__core {
+    filter: drop-shadow(0 0 1px var(--core-col)) drop-shadow(0 0 var(--g-core) var(--core-col));
+  }
 }
