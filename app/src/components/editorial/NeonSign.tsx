@@ -75,6 +75,23 @@ export default function NeonSign() {
       <div className="lf-neon__stage">
         <svg className="lf-neon__svg" viewBox="0 0 760 470" role="img" aria-hidden="true">
           <defs>
+            {/* orange bloom — a true gaussian glow that renders the SAME on
+                Chromium and WebKit (CSS drop-shadow blur is clamped on WebKit,
+                so the halo was weaker on Safari/iOS). Blur the shape's alpha at
+                three scales, flood it orange, composite → wide consistent glow. */}
+            <filter id="lf-neon-bloom" x="-70%" y="-70%" width="240%" height="240%" colorInterpolationFilters="sRGB">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b1" />
+              <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="b2" />
+              <feGaussianBlur in="SourceAlpha" stdDeviation="24" result="b3" />
+              <feMerge result="blur">
+                <feMergeNode in="b3" />
+                <feMergeNode in="b3" />
+                <feMergeNode in="b2" />
+                <feMergeNode in="b1" />
+              </feMerge>
+              <feFlood floodColor="#f97316" result="tint" />
+              <feComposite in="tint" in2="blur" operator="in" />
+            </filter>
             {/* reflection: soft, wavering, fading down */}
             <filter id="lf-neon-refl" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="5" />
@@ -87,6 +104,9 @@ export default function NeonSign() {
               <rect x="0" y="330" width="760" height="140" fill="url(#lf-neon-refl-fade)" />
             </mask>
           </defs>
+
+          {/* wide orange bloom behind the tubes (consistent cross-browser) */}
+          <use className="lf-neon__bloom" href="#lf-neon-glyphs" filter="url(#lf-neon-bloom)" />
 
           {/* the tubes */}
           <g id="lf-neon-glyphs">

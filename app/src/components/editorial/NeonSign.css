@@ -15,6 +15,7 @@
   --g3: 50px;
   --core-col: var(--neon-core);
   --tube-op: 1;
+  --bloom-op: 1;
   --pool: 0.16;
   --refl-op: 0.16;
   --mx: 0.5;
@@ -57,12 +58,9 @@
 
 /* DIM — while we're reachable (daytime): a low-power hum */
 .lf-neon[data-open="true"] {
-  --g-core: 2px;
-  --g1: 5px;
-  --g2: 11px;
-  --g3: 20px;
   --core-col: #ffcfa3;
   --tube-op: 0.82;
+  --bloom-op: 0.38;
   --pool: 0.06;
   --refl-op: 0.08;
 }
@@ -122,18 +120,16 @@
 .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
 .lf-neon[data-revealed="true"] .lf-neon__hours { opacity: 1; }
 
-/* the casing carries the wide bloom; the core stays tight + white-hot */
+/* tight near-tube glow (consistent on both engines); the WIDE halo is the SVG
+   bloom layer behind, so Safari/iOS blooms as hard as Chrome. */
+.lf-neon__bloom { opacity: 0; transition: opacity 0.8s ease 0.2s; }
+.lf-neon[data-revealed="true"] .lf-neon__bloom { opacity: var(--bloom-op); }
+
 .lf-neon[data-revealed="true"] .lf-neon__glow {
-  filter:
-    drop-shadow(0 0 var(--g1) var(--neon))
-    drop-shadow(0 0 var(--g2) var(--neon))
-    drop-shadow(0 0 var(--g3) var(--neon-deep));
+  filter: drop-shadow(0 0 2px var(--neon)) drop-shadow(0 0 7px var(--neon-deep));
 }
 .lf-neon[data-revealed="true"] .lf-neon__core {
-  filter:
-    drop-shadow(0 0 1px var(--core-col))
-    drop-shadow(0 0 var(--g-core) var(--core-col))
-    drop-shadow(0 0 calc(var(--g1) * 0.7) var(--neon));
+  filter: drop-shadow(0 0 1px var(--core-col)) drop-shadow(0 0 4px var(--core-col));
 }
 .lf-neon[data-revealed="true"] .lf-neon__hours {
   filter: drop-shadow(0 0 4px var(--neon)) drop-shadow(0 0 12px var(--neon-deep));
@@ -189,11 +185,5 @@
   .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
   .lf-neon__draw { stroke-dashoffset: 0; animation: none; }
   .lf-neon__word { animation: none; opacity: var(--tube-op); }
-  .lf-neon__reflection { transition: none; }
-  .lf-neon[data-revealed="true"] .lf-neon__glow {
-    filter: drop-shadow(0 0 var(--g1) var(--neon)) drop-shadow(0 0 var(--g2) var(--neon)) drop-shadow(0 0 var(--g3) var(--neon-deep));
-  }
-  .lf-neon[data-revealed="true"] .lf-neon__core {
-    filter: drop-shadow(0 0 1px var(--core-col)) drop-shadow(0 0 var(--g-core) var(--core-col));
-  }
+  .lf-neon__reflection, .lf-neon__bloom { transition: none; }
 }
