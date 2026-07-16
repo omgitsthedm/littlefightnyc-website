@@ -159,7 +159,7 @@
   top: 0;
   width: 176px;
   padding: 10px 12px;
-  /* Read as physical cards against the #050507 ground: a lighter fill than the
+  /* Read as physical cards against the #06080F ground: a lighter fill than the
      near-black paper-2 + a light hairline (dark --lf-hairline on near-black was
      invisible, so the chips "floated" as bare gray text). */
   background: var(--lf-paper);

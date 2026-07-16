@@ -30,7 +30,7 @@
     radial-gradient(130% 95% at 50% 40%, rgba(249, 115, 22, var(--pool)) 0%, transparent 52%),
     repeating-linear-gradient(0deg, #08080b 0 33px, #060609 33px 34px),
     repeating-linear-gradient(90deg, #090a0d 0 96px, #060609 96px 98px),
-    #050507;
+    #06080F;
   display: flex;
   justify-content: center;
 }

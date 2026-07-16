@@ -1,5 +1,5 @@
 // Per-post branded hero art (journal-<slug>.webp, generated in the
-// journal-cat art language: #050507 ground, grid, blue glow, orange motif).
+// journal-cat art language: #06080F ground, grid, blue glow, orange motif).
 // Posts absent from this map fall back to their category art — keep the map
 // and public/assets/journal-<slug>{,-900,-640,-480}.webp in lockstep.
 export const POST_IMAGE: Record<string, string> = {

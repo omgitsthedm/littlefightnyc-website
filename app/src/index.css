@@ -41,7 +41,7 @@ canvas {
   justify-content: center;
   gap: 18px;
   padding: clamp(64px, 12vw, 140px) 24px;
-  background: #050507;
+  background: #06080F;
   color: #f0f0ec;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   text-align: center;
@@ -101,7 +101,7 @@ canvas {
   justify-content: center;
   gap: 14px;
   padding: clamp(64px, 12vw, 140px) 24px;
-  background: #050507;
+  background: #06080F;
   color: #f0f0ec;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   text-align: center;
@@ -127,7 +127,7 @@ canvas {
   border: 0;
   border-radius: var(--lf-radius-pill, 9999px);
   background: #f97316;
-  color: #050507;
+  color: #06080F;
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -151,7 +151,7 @@ canvas {
   padding: 10px 14px;
   border-radius: var(--lf-radius-pill, 9999px);
   background: var(--lf-fight, #f97316);
-  color: var(--lf-ink, #050507);
+  color: var(--lf-ink, #06080F);
   font-weight: 700;
   transform: translateY(-140%);
   transition: transform 160ms ease;
@@ -168,7 +168,7 @@ canvas {
 
 ::selection {
   background: var(--lf-fight, #f97316);
-  color: var(--lf-ink, #050507);
+  color: var(--lf-ink, #06080F);
 }
 
 @media (prefers-reduced-motion: reduce) {
