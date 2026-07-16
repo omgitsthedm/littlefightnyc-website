@@ -34,6 +34,22 @@ function revealNow(el: Element) {
   el.setAttribute(REVEAL_ATTR, "in");
 }
 
+/** Reveal instantly, no entrance animation — for content already on screen at load. */
+function revealInstant(el: HTMLElement) {
+  const prev = el.style.transition;
+  el.style.transition = "none";
+  el.setAttribute(REVEAL_ATTR, "in");
+  requestAnimationFrame(() => {
+    el.style.transition = prev;
+  });
+}
+
+function inViewport(el: HTMLElement): boolean {
+  const r = el.getBoundingClientRect();
+  const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+  return r.top < vh && r.bottom > 0;
+}
+
 function staggerIndex(el: HTMLElement): number {
   const parent = el.parentElement;
   if (!parent) return 0;
@@ -73,6 +89,11 @@ export function refreshListReveals(): void {
   const armed: HTMLElement[] = [];
   els.forEach((el) => {
     if (el.hasAttribute(REVEAL_ATTR)) return;
+    // On screen at load → composed instantly, no assembling animation.
+    if (inViewport(el)) {
+      revealInstant(el);
+      return;
+    }
     el.setAttribute(REVEAL_ATTR, "pending");
     el.style.setProperty("--lf-i", String(staggerIndex(el) % 8));
     observer?.observe(el);

@@ -34,6 +34,21 @@ export function useScrollReveal<T extends HTMLElement>({
       return;
     }
 
+    // Content already on screen at load should look HELD — composed and stable,
+    // not assembling. Reveal it instantly with no entrance animation; only
+    // below-the-fold content animates in as it scrolls into view.
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+    if (rect.top < vh && rect.bottom > 0) {
+      const prevTransition = el.style.transition;
+      el.style.transition = "none";
+      el.setAttribute("data-revealed", "true");
+      requestAnimationFrame(() => {
+        el.style.transition = prevTransition;
+      });
+      return;
+    }
+
     if (revealOnMount) {
       el.setAttribute("data-revealed", "true");
       return;
