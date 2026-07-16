@@ -5,19 +5,22 @@
  */
 
 .lf-editorial {
-  /* Palette — Axiom product-OS. Roles kept distinct for contrast parity. */
-  --lf-ink: #050507;          /* primary ground / background (Axiom bg) */
-  --lf-paper: #1A1C23;        /* elevated surface — cards, panels (Axiom surface) */
-  --lf-paper-2: #12141A;      /* recessed surface, one step under paper */
-  --lf-hairline: #27272A;     /* rules, dividers, borders (Axiom border) */
+  /* Palette — canonical Little Fight "midnight" system (brand-kit source of truth,
+   * brandkit.littlefightnyc.com). Aligned 2026-07-16 so the flagship, the Lab, the
+   * brand kit and the book all share ONE palette. Roles kept distinct for contrast parity. */
+  --lf-ink: #06080F;          /* primary ground / background — canonical Midnight */
+  --lf-paper: #0E1220;        /* elevated surface — cards, panels (canonical Panel) */
+  --lf-paper-2: #0A0D18;      /* recessed surface, one step under paper (canonical Panel-2) */
+  --lf-hairline: #1B2233;     /* rules, dividers, borders (canonical Line) */
   --lf-hairline-warm: #2A1C12; /* hairlines under fight-orange ink */
-  --lf-bone: #FFFFFF;         /* primary type — product-OS white */
-  --lf-bone-soft: #A1A1AA;    /* secondary type (Axiom text-secondary) */
+  --lf-bone: #F0F2F8;         /* primary type — canonical Ink (18.6:1 on Midnight) */
+  --lf-bone-soft: #A1A1AA;    /* secondary type — canonical Muted (7.4:1 on Midnight) */
   --lf-bone-dim: #8A8A94;     /* tertiary type — captions, marginalia (AA-safe on --lf-ink, ~5.9:1) */
-  --lf-fight: #F97316;        /* THE orange — Axiom lead signal */
-  --lf-ember: #FB8B3C;        /* hover / active warmth */
-  --lf-blue: #3B82F6;         /* accent — Axiom blue, now a real second signal */
+  --lf-fight: #F97316;        /* THE orange — canonical lead signal */
+  --lf-ember: #FB923C;        /* hover / active warmth — canonical Soft Orange */
+  --lf-blue: #3B82F6;         /* interactive blue accent — links, data highlights */
   --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
+  --lf-burst: #2058AF;        /* ambient background blue burst — never competes with orange */
 
   /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
   --lf-text-2xs: 0.6875rem;                                   /* 11px — mono label tier (was hardcoded 10/11/12px sitewide) */
