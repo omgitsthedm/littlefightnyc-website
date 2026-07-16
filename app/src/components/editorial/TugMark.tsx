@@ -48,6 +48,7 @@ export default function TugMark({ className }: { className?: string }) {
   return (
     <svg
       className={className}
+      data-tug=""
       viewBox="0 0 838.016418 562.406218"
       role="img"
       aria-hidden="true"

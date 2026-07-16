@@ -1,0 +1,45 @@
+/* Little Fight NYC — shared EXPERIENCE layer (motion + personality).
+ * Canonical source: brand-system/experience.css (pairs with experience.js).
+ * Mirrors the brand kit so every surface feels like one system.
+ * Drop in: <link experience.css> + <script experience.js>. Then:
+ *   - add  data-tug        to a tugboat <svg>  → it bobs on the water & toots on tap
+ *   - add  data-reveal     to any element      → it settles in on scroll
+ *   - add  data-press (or class lf-press)      → satisfying press-bounce
+ * Uses canonical brand values (orange #F97316) with safe fallbacks — no token coupling. */
+
+/* scroll progress */
+.lf-prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:70;
+  background:linear-gradient(90deg,#f97316,#fb923c);box-shadow:0 0 14px rgba(249,115,22,.55)}
+/* cursor ambient glow — the brand's orange-dot atmosphere */
+.lf-glow{position:fixed;top:0;left:0;width:540px;height:540px;border-radius:50%;pointer-events:none;z-index:1;
+  transform:translate(-50%,-50%);opacity:0;transition:opacity .6s;mix-blend-mode:screen;
+  background:radial-gradient(circle,rgba(249,115,22,.13),transparent 62%)}
+@media(hover:hover){.lf-glow.on{opacity:1}}
+
+/* the tugboat has a personality */
+[data-tug]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+@media(prefers-reduced-motion:no-preference){
+  [data-tug]{animation:lf-bob 4.4s ease-in-out infinite}   /* CSS-driven so it survives React re-renders */
+  @keyframes lf-bob{0%,100%{transform:translateY(0) rotate(-1.3deg)}50%{transform:translateY(-7px) rotate(1.3deg)}}
+}
+[data-tug].lf-toot{animation:lf-toot .62s cubic-bezier(.2,.7,.2,1)}
+@keyframes lf-toot{0%{transform:none}28%{transform:translateY(-14px) scale(1.06,.93)}55%{transform:translateY(3px) scale(.97,1.04)}78%{transform:translateY(-3px)}100%{transform:none}}
+.lf-bubble{position:absolute;left:50%;bottom:calc(100% + 5px);z-index:6;font-family:"Oswald",system-ui,sans-serif;font-weight:700;letter-spacing:.02em;
+  color:#0a0a0a;background:#f97316;padding:.22rem .62rem;border-radius:999px;font-size:.9rem;white-space:nowrap;
+  opacity:0;pointer-events:none;transform:translate(-50%,8px) scale(.7);transition:.28s cubic-bezier(.2,.7,.2,1);box-shadow:0 10px 24px rgba(249,115,22,.45)}
+.lf-bubble.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.lf-bubble::after{content:"";position:absolute;left:50%;margin-left:-5px;bottom:-5px;width:10px;height:10px;background:#f97316;transform:rotate(45deg)}
+/* flip below the mark when it sits near the top (nav tugs) so it never clips */
+.lf-bubble.lf-below{bottom:auto;top:calc(100% + 5px)}
+.lf-bubble.lf-below::after{bottom:auto;top:-5px}
+
+/* scroll reveal — CSS scroll-driven, flash-free, degrades to no-op */
+@media(prefers-reduced-motion:no-preference){@supports(animation-timeline:view()){
+  [data-reveal]{animation:lf-rv linear both;animation-timeline:view();animation-range:entry 0% entry 42%}
+  @keyframes lf-rv{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+}}
+
+/* micro press-bounce */
+[data-press]:active,.lf-press:active{transform:scale(.95)}
+
+@media(prefers-reduced-motion:reduce){.lf-glow{display:none}}
