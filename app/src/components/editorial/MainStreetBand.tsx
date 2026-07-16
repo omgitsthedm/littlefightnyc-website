@@ -24,11 +24,11 @@ export default function MainStreetBand() {
       <div className="lf-mainstreet__inner">
         <p className="lf-mainstreet__eyebrow">Main Street</p>
         <h2 className="lf-mainstreet__title" id="lf-mainstreet-title">
-          The people we're <span>in the corner for</span>.
+          The people we <span>build for</span>.
         </h2>
         <p className="lf-mainstreet__lead">
           Not Amazon. Not Walmart. The shop with the hand-lettered sign, the owner who knows your
-          order, the fix that has to work by Saturday. That's who we build for.
+          order, the fix that has to work by Saturday.
         </p>
         <div className="lf-mainstreet__grid">
           {SHOTS.map((s) => (

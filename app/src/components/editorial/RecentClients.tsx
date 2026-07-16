@@ -32,7 +32,7 @@ export default function RecentClients() {
             <p className="lf-mono lf-clients__label">Recent work</p>
             <h2 className="lf-clients__heading">Websites already doing the work.</h2>
             <p className="lf-clients__lede">
-              Real businesses, real launches, and a clear path from first look to next action.
+              Real businesses, real launches — sites that turn a first visit into a phone call.
             </p>
           </div>
           <Link to="/case-studies/" viewTransition className="lf-clients__all">
@@ -77,7 +77,7 @@ export default function RecentClients() {
           <div className="lf-clients__scan-copy">
             <p className="lf-mono lf-clients__scan-label">Not ready to talk?</p>
             <h3>See what your current website is costing you.</h3>
-            <p>Run a free public-page scan for speed, mobile, search, and lost-customer friction. No account or access needed.</p>
+            <p>Run a free public-page scan for speed, mobile, search, and where you're losing customers. No account or access needed.</p>
           </div>
           <a
             className="lf-clients__scan-cta"

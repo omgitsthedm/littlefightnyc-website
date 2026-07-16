@@ -37,7 +37,7 @@ export default function ProcessFlow() {
   return (
     <section className="lf-process" aria-labelledby="lf-process-heading">
       <div className="lf-process__inner">
-        <p className="lf-mono lf-process__kicker">How the work goes</p>
+        <p className="lf-mono lf-process__kicker">The four moves</p>
         <h2 id="lf-process-heading" className="lf-display lf-process__title">
           The order is always the same.
         </h2>

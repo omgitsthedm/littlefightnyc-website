@@ -43,7 +43,7 @@
   font-size: var(--lf-text-2xl);
   line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--lf-fight);
+  color: var(--lf-bone);
   min-width: 0;
   /* Never break inside a word ("Squa/re", "2 wee/ks"): wrap only between words,
      no hyphenation. Word-shaped values step down via [data-long] so they fit. */

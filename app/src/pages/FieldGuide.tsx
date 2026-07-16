@@ -256,8 +256,7 @@ export default function FieldGuide() {
               Find your business type.
             </h2>
             <p className="lf-ex-head__dek">
-              Law office, bar, clothing brand, salon, restaurant, clinic, gym,
-              gallery — pick the one that looks like yours.
+              Law office, bar, clothing brand, salon, restaurant, clinic, gallery — pick the one that looks like yours.
             </p>
           </header>
           <ul className="lf-ex-industries__band">

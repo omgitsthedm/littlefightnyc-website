@@ -1,7 +1,7 @@
-/* Little Fight NYC — Design Tokens (v6 — Axiom Momentum)
- * Product-OS soul: near-black ground, Inter display, one orange lead,
- * blue as a real accent. Evolved from the Axiom "Momentum" system and
- * reconciled with the Little Fight brand. See app/DESIGN.md.
+/* Little Fight NYC — Design Tokens (v7 — "Boxing Poster")
+ * Canonical midnight system: Midnight #06080F ground, Oswald-700 display /
+ * Barlow-400 body / JetBrains Mono labels, one orange lead #F97316 (signal
+ * only), blue #3B82F6 subordinate. Single source: brand-system/brand.tokens.json.
  */
 
 .lf-editorial {

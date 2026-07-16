@@ -69,7 +69,7 @@
   font-size: var(--lf-text-base);
   font-weight: 600;
   letter-spacing: -0.005em;
-  color: var(--lf-fight);
+  color: var(--lf-bone);
 }
 
 .lf-sticky-help__cell--fit .lf-sticky-help__detail {

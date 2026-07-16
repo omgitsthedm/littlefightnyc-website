@@ -34,8 +34,6 @@ export default function TheFight() {
       <div className="lf-fight__inner">
         <div ref={headRef} className="lf-fight__head" data-reveal>
           <p className="lf-mono lf-fight__eyebrow">
-            <span className="lf-fight__eyebrow-num">I.</span>
-            <span className="lf-fight__eyebrow-divider" aria-hidden="true">·</span>
             The fight
           </p>
           <h2 id="lf-fight-heading" className="lf-display lf-fight__title">
@@ -45,7 +43,7 @@ export default function TheFight() {
           </h2>
           <p className="lf-fight__lede">
             Whole Foods, Great Clips, the delivery apps skimming a cut off every
-            order did not out-work your block. They out-<em>tooled</em> it.
+            order didn't out-work your block. They out-<em>tooled</em> it.
             Closing that gap is the whole reason we&rsquo;re called Little Fight.
           </p>
         </div>

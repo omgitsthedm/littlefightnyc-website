@@ -166,7 +166,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     howItWorks:
       "Automation is a simple 'when this happens, do that' rule that runs on its own. When a form comes in, add the person to your list and send a thank-you. When a job is marked done, set a reminder to ask for a review a week later. You decide the rule once. Then it happens every single time without anyone thinking about it. Aim it at the small, boring, repeatable steps. Those are the ones humans forget, exactly because they are dull.",
     example:
-      "A dog groomer used to text every client the night before to confirm. When she remembered. Now a reminder goes out the evening before each appointment. A 'we'd love a review' note goes out the morning after. She did not hire anyone. She set two rules once. No-shows dropped and reviews went up.",
+      "A dog groomer used to text every client the night before to confirm. When she remembered. Now a reminder goes out the evening before each appointment. A 'mind leaving a review?' note goes out the morning after. She did not hire anyone. She set two rules once. No-shows dropped and reviews went up.",
     costOfIgnoring:
       "Doing the boring steps by hand costs you twice. First, the hours spent copying and reminding. Second, the times a human forgets and a customer slips away. Those lost bookings never show up as a bill, so the leak stays hidden. Meanwhile your best people spend the day on busywork a rule could handle, instead of on the customers in front of them.",
     related: ["business-system", "crm", "software-stack"],

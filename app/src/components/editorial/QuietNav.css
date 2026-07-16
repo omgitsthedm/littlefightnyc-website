@@ -3,7 +3,7 @@
   top: 0;
   z-index: var(--lf-z-ticker);
   padding-top: env(safe-area-inset-top);
-  background: rgba(5, 7, 12, 0.85); /* solid fallback: --lf-ink @85% so the sticky header keeps its plate on Safari <16.2 */
+  background: rgba(6, 8, 15, 0.85); /* solid fallback: --lf-ink @85% so the sticky header keeps its plate on Safari <16.2 */
   background: color-mix(in srgb, var(--lf-ink) 85%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   backdrop-filter: blur(20px) saturate(140%);

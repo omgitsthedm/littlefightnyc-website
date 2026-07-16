@@ -402,7 +402,7 @@
 
 .lf-ex-industries__icon {
   display: inline-flex;
-  color: var(--lf-fight);
+  color: var(--lf-bone-dim);
 }
 
 .lf-ex-industries__go {
@@ -613,3 +613,5 @@
 .lf-ex-record__client:focus-visible {
   color: var(--lf-fight);
 }
+
+.lf-editorial .lf-ex-industries__pill:hover .lf-ex-industries__icon,.lf-editorial .lf-ex-industries__pill:hover .lf-ex-industries__go{color:var(--lf-fight)}

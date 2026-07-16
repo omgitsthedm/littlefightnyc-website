@@ -1,22 +1,14 @@
 import PageHero from "@/components/editorial/PageHero";
-import { BadgeCheck, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
-import StatBlock from "@/components/editorial/StatBlock";
 import FounderCard from "@/components/editorial/FounderCard";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
 import SiteCensus from "@/components/editorial/SiteCensus";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
-
-const PROMISES = [
-  { value: "Free", label: "Every consult — always" },
-  { value: "14 days", label: "Typical website ship" },
-  { value: "24 hrs", label: "On-site when it's urgent" },
-  { value: "2 hrs", label: "Callback, 9am–9pm ET" },
-];
 
 export default function About() {
   return (
@@ -31,7 +23,7 @@ export default function About() {
             <span className="lf-em">business fights.</span>
           </>
         }
-        dek="Little Fight NYC helps NYC small businesses outwork billion-dollar competitors. The work is practical, the scope is honest, and the consult is always free."
+        dek="Little Fight NYC helps small shops outwork billion-dollar chains. The work is practical, the scope is honest, and the consult is always free."
         image={{
           src: "/assets/about-empire-diner.webp",
           alt: "The chrome-clad Empire Diner glowing on a Manhattan corner at night",
@@ -53,7 +45,7 @@ export default function About() {
             </p>
             <p>
               Little Fight closes that gap. Not by selling more software. Not
-              by pitching a giant overhaul. By doing the practical work - sites
+              by pitching a giant overhaul. By doing the practical work — sites
               that explain the business plainly, support that picks up when
               something breaks, search visibility that tells the truth, and
               small systems that make the day move.
@@ -69,21 +61,13 @@ export default function About() {
             height={1067}
           />
 
-          <EditorialBody>
-            <p>
-              The order is always the same. Keep what works. Connect what
-              matters. Replace what drags. Build only what fits.
-            </p>
-          </EditorialBody>
-
-          <PullQuote cite="How the work usually starts">
+          <PullQuote cite="Before you spend on a rebuild">
             Most owners assume the answer is a rebuild. It almost never is.
           </PullQuote>
 
-          <StatBlock eyebrow="The promises" icon={BadgeCheck} items={PROMISES} />
           <EditorialBody>
             <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
-              After hours, leave a message and Little Fight NYC will follow up.
+              After hours, leave a message and we'll follow up.
             </p>
           </EditorialBody>
 

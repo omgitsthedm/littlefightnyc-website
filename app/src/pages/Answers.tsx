@@ -38,7 +38,7 @@ export default function Answers() {
             <span className="lf-em">no selling.</span>
           </>
         }
-        dek="Real questions NYC owners ask us. Each answer is short, direct, and not trying to make a sale. Start with the symptom — the kind of thing you actually notice first."
+        dek="Real questions NYC owners ask us. Short, direct answers — start with the symptom you notice first."
         image={{
           src: "/assets/nyc-street.webp",
           alt: "A New York side street at human scale",

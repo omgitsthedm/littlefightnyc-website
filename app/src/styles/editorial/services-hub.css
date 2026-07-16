@@ -148,9 +148,10 @@
 }
 
 .lf-svc-router__symptom svg {
-  color: var(--lf-fight);
+  color: var(--lf-bone-soft);
   flex: none;
 }
+.lf-svc-router__link--primary .lf-svc-router__symptom svg { color: var(--lf-fight); }
 
 .lf-svc-router__service {
   margin-top: auto;

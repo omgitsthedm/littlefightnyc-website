@@ -393,7 +393,7 @@
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--lf-fight);
+  color: var(--lf-bone);
 }
 
 @media (max-width: 479px) {
@@ -406,3 +406,5 @@
     width: 72px;
   }
 }
+
+.lf-editorial .lf-answers-hub__card:hover .lf-answers-hub__open{color:var(--lf-fight)}

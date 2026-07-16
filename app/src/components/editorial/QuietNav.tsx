@@ -147,7 +147,7 @@ export default function QuietNav() {
             data-lf-label="nav_desktop"
             viewTransition
           >
-            Start a project
+            Plan my website
             <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
           </Link>
 

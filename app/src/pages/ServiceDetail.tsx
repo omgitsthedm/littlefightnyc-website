@@ -37,7 +37,7 @@ const AREA_ROUTE_SLUG: Record<string, string> = {
 const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   "tech-consulting": {
     heading: "Want us to read your setup?",
-    lede: "The first hour is free. We tell you what to keep, what to cut, and what to fix first. If you do not need us, we say so.",
+    lede: "The consult is free. We tell you what to keep, what to cut, and what to fix first. If you do not need us, we say so.",
   },
   "it-support": {
     heading: "Something broken right now?",

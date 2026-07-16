@@ -69,7 +69,7 @@
   font-family: var(--lf-mono);
   font-size: 11px;
   letter-spacing: 0.16em;
-  color: var(--lf-fight);
+  color: var(--lf-bone-dim);
   align-self: start;
   padding-top: var(--lf-space-1);
   min-width: 2em;
@@ -629,8 +629,8 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--lf-fight);
-  border: 1px solid color-mix(in srgb, var(--lf-fight) 40%, transparent);
+  color: var(--lf-bone-dim);
+  border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-pill);
   vertical-align: middle;
 }
