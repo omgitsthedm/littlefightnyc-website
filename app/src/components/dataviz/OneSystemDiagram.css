@@ -113,7 +113,7 @@
 
 .lf-onesys__chip {
   font-family: var(--lf-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -203,7 +203,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 0.05em;
   }
   .lf-onesys__node[data-os-node="booking"] { left: 2% !important; right: auto !important; top: 3% !important; }

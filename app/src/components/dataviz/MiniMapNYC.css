@@ -118,7 +118,7 @@
   background: color-mix(in srgb, var(--lf-ink) 72%, transparent);
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 0.02em;
 }
 .lf-minimap__canvas .leaflet-control-attribution a {

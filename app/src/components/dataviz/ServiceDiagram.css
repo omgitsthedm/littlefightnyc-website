@@ -98,7 +98,7 @@
   top: 0;
   transform: translateX(-50%);
   font-family: var(--lf-mono);
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -133,10 +133,10 @@
 
 @media (max-width: 640px) {
   .lf-respwin__seg--live .lf-respwin__bracket {
-    font-size: 9px;
+    font-size: 10px;
   }
   .lf-respwin__seg--onsite .lf-respwin__bracket {
-    font-size: 9px;
+    font-size: 10px;
   }
 }
 
