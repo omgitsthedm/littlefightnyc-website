@@ -1,6 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 838.016418 562.406218">
-<g transform="translate(-297.159815,611.589160) scale(0.100000,-0.100000)"
-fill="#06080f" stroke="none">
+/**
+ * Little Fight NYC — the Tugboat logomark (v1 2026).
+ * Faithful vector of the approved concept: bold, chunky, rounded, friendly silhouette.
+ * Single-color (currentColor) → reverses on any ground. Source: LiFi Branding Kit Start.
+ * Brand kit: brandkit.littlefightnyc.com
+ */
+const INNER = `<g transform="translate(-297.159815,611.589160) scale(0.100000,-0.100000)"
+fill="currentColor" stroke="none">
 <path d="M6050 6114 c-317 -39 -527 -140 -620 -299 -42 -70 -38 -357 6 -506
 17 -57 20 -58 111 -24 189 70 312 107 448 136 128 27 475 30 623 5 51 -8 99
 -13 107 -9 18 6 20 85 5 195 -5 40 -14 105 -19 145 -30 230 -198 349 -506 358
@@ -38,5 +43,16 @@ fill="#06080f" stroke="none">
 m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
 -136 -333 -47 -29 -55 -31 -155 -31 -100 0 -108 2 -155 31 -209 128 -187 444
 38 549 71 33 163 34 232 1z"/>
-</g>
-</svg>
+</g>`;
+export default function TugMark({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 838.016418 562.406218"
+      role="img"
+      aria-hidden="true"
+      focusable="false"
+      dangerouslySetInnerHTML={{ __html: INNER }}
+    />
+  );
+}

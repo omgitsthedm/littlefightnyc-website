@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
 import PhoneAction from "./PhoneAction";
+import TugMark from "./TugMark";
 import { useOpenNow } from "@/lib/openNow";
 import "./QuietNav.css";
 
@@ -118,7 +119,8 @@ export default function QuietNav() {
     <header className="lf-nav" data-scrolled={scrolled}>
       <div className="lf-nav__inner">
         <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home" viewTransition>
-          Little Fight NYC
+          <TugMark className="lf-nav__mark" />
+          <span>Little Fight NYC</span>
         </Link>
 
         <nav className="lf-nav__primary" aria-label="Primary">
