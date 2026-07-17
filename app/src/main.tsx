@@ -9,6 +9,7 @@ import './index.css'
 import './styles/editorial/fonts.css'
 import './styles/editorial/tokens.css'
 import './styles/editorial/base.css'
+import './styles/editorial/presentation.css'
 import './styles/editorial/motion.css'
 import App from './App.tsx'
 
