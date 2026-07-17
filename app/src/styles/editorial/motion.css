@@ -69,7 +69,7 @@ html[data-vt-route] .lf-page-enter {
  * reveal that can get stuck (which left blank sections = "random sections all
  * over the place"). The page still gets one gentle whole-page fade on load via
  * .lf-page-enter; per-element scroll reveals are retired for robustness.
- * useScrollReveal/listReveal still set their attributes (harmless no-ops). */
+ * useScrollReveal still sets its data-revealed attribute (harmless no-op). */
 .lf-editorial [data-reveal],
 .lf-editorial [data-reveal][data-revealed="true"] {
   opacity: 1;

@@ -1,12 +1,11 @@
 // fonts/tokens/base are imported once at the entry (src/main.tsx) so their
 // @font-face rules live in a single stylesheet (no duplicate font downloads).
 
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
 import { importWithRetry } from "@/lib/importWithRetry";
-import { watchListReveals } from "@/lib/listReveal";
 
 const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMeta")));
 const TheAssembly = lazy(() => importWithRetry(() => import("@/components/editorial/TheAssembly")));
@@ -40,15 +39,8 @@ const HOME_FAQ = [
 ];
 
 export default function Home() {
-  const rootRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!rootRef.current) return;
-    return watchListReveals(rootRef.current);
-  }, []);
-
   return (
-    <div className="lf-editorial" id="top" ref={rootRef}>
+    <div className="lf-editorial" id="top">
       <Suspense fallback={null}>
         <RouteMeta />
       </Suspense>
