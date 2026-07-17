@@ -42,14 +42,7 @@ export default function Contact() {
             <span className="lf-em">going on.</span>
           </>
         }
-        dek={
-          <>
-            Broken today?{" "}
-            <a href="tel:+16463600318" className="lf-em">Call (646)&nbsp;360-0318</a>. Messy
-            but not urgent? Start a Tech Audit. Not sure what it is called? Call
-            anyway. There are no dumb questions here.
-          </>
-        }
+        dek="Broken today? Call. Messy but not urgent? Start a Tech Audit. Not sure what it is called? Call anyway. There are no dumb questions here."
         image={{
           src: "/assets/nyc-stickys-steam.webp",
           alt: "Steam from a Manhattan grate at street level",
@@ -64,15 +57,15 @@ export default function Contact() {
           <header className="lf-contact-window__head">
             <p className="lf-contact-window__eyebrow">What happens next</p>
             <h2 id="lf-contact-window-title" className="lf-contact-window__title">
-              You tell us. We set the next move.
+              You reach out. We set the next move.
             </h2>
           </header>
 
           <TimelineStrip
             label="What happens after you contact Little Fight NYC"
-            summary="You call, text, email, or send the form. From 9am to 9pm New York time, we review it and follow up. If you leave a message, we return it within 2 hours. Consulting is always free."
+            summary="You call, text, email, or send the form. From 9am to 9pm New York time, Little Fight NYC reviews the situation and follows up. If you leave a message, we return it within 2 hours. Consulting is always free."
             beats={[
-              { label: "You tell us", sub: "Call, text, email, or form" },
+              { label: "You reach out", sub: "Call, text, email, or form" },
               { label: "Context reviewed", sub: "9am-9pm ET" },
               { label: "Callback in 2 hours", sub: "If we miss you", marker: true },
             ]}

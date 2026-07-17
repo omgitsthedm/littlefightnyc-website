@@ -1,15 +1,14 @@
 // fonts/tokens/base are imported once at the entry (src/main.tsx) so their
 // @font-face rules live in a single stylesheet (no duplicate font downloads).
 
-import { lazy, Suspense, useEffect } from "react";
-import { markAppReady } from "@/lib/appReady";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
 import { importWithRetry } from "@/lib/importWithRetry";
+import { watchListReveals } from "@/lib/listReveal";
 
 const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMeta")));
-const TheAssembly = lazy(() => importWithRetry(() => import("@/components/editorial/TheAssembly")));
 const FaqList = lazy(() => importWithRetry(() => import("@/components/editorial/FaqList")));
 const TheFight = lazy(() => importWithRetry(() => import("@/components/editorial/TheFight")));
 const WorkGrid = lazy(() => importWithRetry(() => import("@/components/editorial/WorkGrid")));
@@ -35,18 +34,20 @@ const HOME_FAQ = [
   {
     question: "Who does Little Fight NYC help?",
     answer:
-      "Little Fight NYC helps New York law firms, bars, restaurants, clothing brands, salons, barbershops, clinics, pharmacies, shops, gyms, studios, and service teams under 50.",
+      "Little Fight NYC helps New York shops, salons, pharmacies, restaurants, studios, service businesses, and teams under 50.",
   },
 ];
 
 export default function Home() {
-  // Home renders outside EditorialShell, so it signals the splash itself.
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    markAppReady();
+    if (!rootRef.current) return;
+    return watchListReveals(rootRef.current);
   }, []);
 
   return (
-    <div className="lf-editorial" id="top">
+    <div className="lf-editorial" id="top" ref={rootRef}>
       <Suspense fallback={null}>
         <RouteMeta />
       </Suspense>
@@ -64,20 +65,17 @@ export default function Home() {
             <BlueprintFrame index={2} label="Ways to start">
               <WorkGrid />
             </BlueprintFrame>
-            <BlueprintFrame index={3} label="The assembly">
-              <TheAssembly />
-            </BlueprintFrame>
-            <BlueprintFrame index={4} label="The fight">
+            <BlueprintFrame index={3} label="The fight">
               <TheFight />
             </BlueprintFrame>
-            <BlueprintFrame index={5} label="Software you own">
+            <BlueprintFrame index={4} label="Software you own">
               <MomentumSection />
               <MomentumCursorGlow />
             </BlueprintFrame>
-            <BlueprintFrame index={6} label="The record">
+            <BlueprintFrame index={5} label="The record">
               <SignatureBand />
             </BlueprintFrame>
-            <BlueprintFrame index={7} label="Open for business">
+            <BlueprintFrame index={6} label="Open for business">
               <NeonSign />
             </BlueprintFrame>
             <BrandLine />

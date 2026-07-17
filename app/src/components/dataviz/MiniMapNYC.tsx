@@ -242,7 +242,7 @@ export default function MiniMapNYC({
       <figcaption className="lf-minimap__caption">
         {currentArea
           ? `${currentArea.name} in orange · nearby in blue`
-          : "The 14 neighborhoods we serve across Manhattan, Brooklyn, and Queens"}
+          : "The eight Manhattan neighborhoods we serve"}
       </figcaption>
     </figure>
   );

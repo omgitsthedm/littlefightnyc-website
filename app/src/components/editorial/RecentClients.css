@@ -237,10 +237,10 @@
   min-height: 48px;
   padding-inline: var(--lf-space-5);
   color: var(--lf-bone);
-  /* --lf-blue (#3B82F6) gave light text only 3.68:1 (fails WCAG AA). The canonical
-     ambient burst (--lf-burst #2058AF) is darker still: light text clears AA at
-     ~6.8:1 AND it's a brand-system token (no one-off blue). Hover darkens it. */
-  background: var(--lf-burst);
+  /* --lf-blue (#3B82F6) gave light text only 3.68:1 (fails WCAG AA), and the
+     old hover (--lf-blue-soft) is LIGHTER so it failed harder. Deep blue-600/700
+     keeps a prominent solid CTA while clearing AA with light text both states. */
+  background: #2563eb;
   border-radius: var(--lf-radius-control);
   text-decoration: none;
   font-weight: 700;
@@ -250,7 +250,7 @@
 }
 .lf-editorial .lf-clients__scan-cta:hover {
   transform: translateY(var(--lf-lift));
-  background: color-mix(in srgb, var(--lf-burst) 84%, #000);
+  background: #1d4ed8;
 }
 .lf-editorial .lf-clients__scan-cta:focus-visible {
   outline: 2px solid var(--lf-blue-soft);

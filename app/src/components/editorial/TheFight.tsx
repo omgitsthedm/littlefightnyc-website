@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
-import EditorialFigure from "./EditorialFigure";
 import "./TheFight.css";
 
 /**
@@ -27,36 +26,28 @@ const YOU = [
 ];
 
 export default function TheFight() {
+  const headRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
   const vsRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
 
   return (
     <section className="lf-fight" aria-labelledby="lf-fight-heading">
       <div className="lf-fight__inner">
-        <div className="lf-fight__intro">
-          <div className="lf-fight__head">
-            <p className="lf-mono lf-fight__eyebrow">
-              The fight
-            </p>
-            <h2 id="lf-fight-heading" className="lf-display lf-fight__title">
-              The chains brought a tech team.
-              <br />
-              <span className="lf-fight__title-em">The corner store never got one.</span>
-            </h2>
-            <p className="lf-fight__lede">
-              Whole Foods, Great Clips, the delivery apps skimming a cut off every
-              order didn't out-work your block. They out-<em>tooled</em> it.
-              Closing that gap is the whole reason we&rsquo;re called Little Fight.
-            </p>
-          </div>
-
-          <EditorialFigure
-            className="lf-fight__figure"
-            src="/assets/mainstreet-cafe-owner.webp"
-            alt="A small-shop owner working the counter of his store"
-            caption="The corner store never got the tech team. That's the whole fight."
-            width={1600}
-            height={1067}
-          />
+        <div ref={headRef} className="lf-fight__head" data-reveal>
+          <p className="lf-mono lf-fight__eyebrow">
+            <span className="lf-fight__eyebrow-num">I.</span>
+            <span className="lf-fight__eyebrow-divider" aria-hidden="true">·</span>
+            The fight
+          </p>
+          <h2 id="lf-fight-heading" className="lf-display lf-fight__title">
+            The chains brought a tech team.
+            <br />
+            <span className="lf-fight__title-em">The corner store never got one.</span>
+          </h2>
+          <p className="lf-fight__lede">
+            Whole Foods, Great Clips, the delivery apps skimming a cut off every
+            order did not out-work your block. They out-<em>tooled</em> it.
+            Closing that gap is the whole reason we&rsquo;re called Little Fight.
+          </p>
         </div>
 
         <div ref={vsRef} className="lf-fight__vs" data-revealed="false">

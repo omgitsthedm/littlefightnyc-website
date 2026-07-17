@@ -129,10 +129,10 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__type {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lf-bone-dim);
+  color: var(--lf-fight);
   margin: 0;
 }
 
@@ -184,7 +184,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__dl dt {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -255,7 +255,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__foot-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -281,7 +281,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__live {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -373,7 +373,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 .lf-case-detail__meta-label,
 .lf-studio-detail__meta-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -403,7 +403,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-case-detail__live {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -429,7 +429,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 .lf-case-detail__byline {
   margin: 0;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -496,7 +496,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-studio-detail__metrics-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -607,7 +607,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-case-detail-related__label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -646,7 +646,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-case-detail-related__num {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   color: var(--lf-fight);
   padding-top: var(--lf-space-1);
@@ -713,7 +713,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__read {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--lf-bone) 84%, var(--lf-fight) 16%);
@@ -799,7 +799,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   align-items: center;
   gap: 0.5em;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -823,7 +823,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   align-items: center;
   gap: 0.35em;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.08em;
   color: var(--lf-fight);
   text-decoration: none;
@@ -1102,7 +1102,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   font-weight: 700;
   font-size: var(--lf-text-base);
   letter-spacing: -0.01em;
-  color: var(--lf-bone);
+  color: var(--lf-fight);
   line-height: 1.1;
 }
 
@@ -1167,7 +1167,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__interlude-kicker {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-blue-soft);
@@ -1211,7 +1211,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   font-size: var(--lf-text-md);
   line-height: 1.1;
   letter-spacing: -0.015em;
-  color: var(--lf-bone);
+  color: var(--lf-fight);
   overflow-wrap: break-word;
 }
 
@@ -1226,7 +1226,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-cases__interlude-cta {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--lf-bone) 84%, var(--lf-fight) 16%);
@@ -1317,7 +1317,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   align-items: center;
   gap: var(--lf-space-3);
   margin-top: var(--lf-space-4);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.08em;
 }
 

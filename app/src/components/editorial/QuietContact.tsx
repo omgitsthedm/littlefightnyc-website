@@ -17,7 +17,7 @@ const CONTACT_CHANNELS = [
     label: "Text",
     detail: "(646) 360-0318",
     action: "text",
-    note: "When you're at the counter",
+    note: "When you are at the counter",
   },
   {
     icon: Mail,
@@ -52,7 +52,7 @@ type Props = {
 
 export default function QuietContact({
   heading = "Start with the right next step.",
-  lede = "Call, text, email, or send the details. We read every one and come back with a clear next step — what to fix now, what can wait.",
+  lede = "Call, text, email, or send a brief. Little Fight NYC will review the context and come back with a clear next step.",
 }: Props) {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
 
@@ -110,7 +110,8 @@ export default function QuietContact({
         </ul>
 
         <p className="lf-contact-block__fine">
-          No pitch, no spam. Whatever you send goes straight to David, the person doing the work — never to a list.
+          No pitch, no spam. Whatever you send goes straight to the person who
+          does the work — never to a list.
         </p>
       </div>
     </section>

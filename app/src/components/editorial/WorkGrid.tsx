@@ -28,7 +28,7 @@ const TILES = [
     slug: "tech-consulting",
     label: "A clear answer before you spend",
     verb: "Consult",
-    line: "Consulting is always free. Keep what works, fix what matters, and skip what you don't need.",
+    line: "Consulting is always free. Keep what works, fix what matters, and skip what you do not need.",
     image: "/assets/nyc-hair-salon-street.webp",
     icon: Search,
     priority: "consulting",

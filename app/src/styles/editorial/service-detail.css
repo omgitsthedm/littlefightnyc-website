@@ -48,7 +48,7 @@
 
 .lf-sd__aside-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -102,9 +102,8 @@
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--lf-bone);
-  margin: 0 auto var(--lf-space-7);
-  max-width: 28ch;
-  text-align: center;
+  margin: 0 0 var(--lf-space-7);
+  max-width: 24ch;
 }
 
 @media (min-width: 1024px) {
@@ -179,7 +178,7 @@
 
 .lf-sd-local__label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -260,55 +259,40 @@
 
 .lf-sd-related__label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
   margin: 0 0 var(--lf-space-5);
-  text-align: center;
 }
 
-/* The other services sit side by side as cards so the row fills the width
-   instead of stacking as a left-hugging list with a dead right half. */
 .lf-sd-related__list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--lf-space-4);
-}
-
-@media (min-width: 720px) {
-  .lf-sd-related__list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  border-top: 1px solid var(--lf-hairline);
 }
 
 .lf-sd-related__link {
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-2);
-  height: 100%;
-  padding: var(--lf-space-5);
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
+  gap: var(--lf-space-1);
+  padding: var(--lf-space-5) 0;
+  border-bottom: 1px solid var(--lf-hairline);
   text-decoration: none;
   color: var(--lf-bone);
   transition: color var(--lf-time-snappy) var(--lf-ease-standard),
-              border-color var(--lf-time-snappy) var(--lf-ease-standard),
-              transform var(--lf-time-snappy) var(--lf-ease-standard);
+              padding-left var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-sd-related__link:hover {
   color: var(--lf-fight);
-  border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
-  transform: translateY(-2px);
+  padding-left: var(--lf-space-3);
 }
 
 .lf-sd-related__name {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -345,7 +329,7 @@
 }
 .lf-sd-deep__label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -382,8 +366,6 @@
 .lf-sd-issues__head {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   gap: var(--lf-space-3);
   margin-bottom: var(--lf-space-7);
   padding-bottom: var(--lf-space-5);
@@ -391,7 +373,7 @@
 }
 .lf-sd-issues__label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -471,8 +453,6 @@
 .lf-sd-fallacies__head {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
   gap: var(--lf-space-3);
   margin-bottom: var(--lf-space-7);
   padding-bottom: var(--lf-space-5);
@@ -480,7 +460,7 @@
 }
 .lf-sd-fallacies__label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-fight);

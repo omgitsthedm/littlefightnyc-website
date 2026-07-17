@@ -53,7 +53,7 @@
 .lf-visual-index__item-eyebrow,
 .lf-visual-index__open {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -181,7 +181,7 @@
   position: absolute;
   inset: 0;
   /* rgba (not color-mix/var) — color-mix in a gradient stop can resolve to
-   * `none`. Values track the tokens: ink #06080F, fight #F97316, blue #3B82F6. */
+   * `none`. Values track the tokens: ink #050507, fight #F97316, blue #3B82F6. */
   background:
     linear-gradient(180deg, rgba(5, 5, 7, 0.02), rgba(5, 5, 7, 0.42)),
     linear-gradient(90deg, rgba(249, 115, 22, 0.12), rgba(59, 130, 246, 0.1));

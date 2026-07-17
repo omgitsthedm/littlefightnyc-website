@@ -15,28 +15,6 @@
 @media (min-width: 768px) { .lf-fight__inner { padding-inline: var(--lf-margin-tablet); } }
 @media (min-width: 1280px) { .lf-fight__inner { padding-inline: var(--lf-margin-desktop); } }
 
-/* ---- Intro: a two-column editorial spread that fills the width.
-   Text (eyebrow + headline + lede) lives left; the human photo is pulled up
-   into the right column so the section reads as one deliberate composition
-   instead of a left-hugging column over a dead right half. Stacks < 900px. */
-.lf-fight__intro {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--lf-space-7);
-  align-items: center;
-}
-@media (min-width: 900px) {
-  .lf-fight__intro {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: var(--lf-space-9);
-  }
-}
-
-.lf-fight__head {
-  display: flex;
-  flex-direction: column;
-}
-
 /* ---- Head ---- */
 .lf-fight__eyebrow {
   display: inline-flex;
@@ -52,6 +30,7 @@
   font-size: var(--lf-text-2xl);
   color: var(--lf-bone);
   margin-bottom: var(--lf-space-5);
+  max-width: 20ch;
 }
 .lf-fight__title-em { color: var(--lf-fight); }
 
@@ -59,7 +38,7 @@
   font-size: var(--lf-text-md);
   line-height: 1.5;
   color: var(--lf-bone-soft);
-  max-width: 52ch;
+  max-width: 60ch;
 }
 .lf-fight__lede em { color: var(--lf-bone); font-style: italic; }
 
@@ -198,19 +177,4 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-fight__side { opacity: 1; transform: none; transition: none; }
   .lf-fight__cta { transition: none; }
-}
-
-/* Mission visual aid — the human face of who we build for. Sits in the right
-   column of the intro grid; fills it, no stray auto-margins. */
-.lf-fight__figure { margin: 0; width: 100%; }
-@media (min-width: 900px) {
-  .lf-fight__figure .lf-fig__frame {
-    aspect-ratio: 5 / 4;
-    overflow: hidden;
-  }
-  .lf-fight__figure .lf-fig__frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 }

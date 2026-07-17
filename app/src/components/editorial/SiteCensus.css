@@ -32,11 +32,10 @@
   margin: 0;
   font-family: var(--lf-mono);
   font-weight: 500;
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
-  text-align: center;
 }
 
 .lf-census__grid {
@@ -121,7 +120,7 @@
   max-width: 72ch;
   font-family: var(--lf-mono);
   font-weight: 500;
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.04em;
   line-height: 1.45;
   color: var(--lf-bone-dim);

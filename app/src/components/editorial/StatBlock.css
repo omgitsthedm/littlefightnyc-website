@@ -12,7 +12,7 @@
   align-items: center;
   gap: 0.55em;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -43,7 +43,7 @@
   font-size: var(--lf-text-2xl);
   line-height: 1;
   letter-spacing: -0.02em;
-  color: var(--lf-bone);
+  color: var(--lf-fight);
   min-width: 0;
   /* Never break inside a word ("Squa/re", "2 wee/ks"): wrap only between words,
      no hyphenation. Word-shaped values step down via [data-long] so they fit. */

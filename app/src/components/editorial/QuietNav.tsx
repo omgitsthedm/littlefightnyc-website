@@ -1,9 +1,8 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ArrowUpRight, Menu, MessageSquare, Phone, Search, X } from "lucide-react";
-import TugMark from "./TugMark";
+import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
+import PhoneAction from "./PhoneAction";
 import { useOpenNow } from "@/lib/openNow";
-import { openCommandPalette } from "@/lib/palette";
 import "./QuietNav.css";
 
 const NAV_LINKS = [
@@ -64,14 +63,6 @@ export default function QuietNav() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    // Hide the page behind the modal from assistive tech (the scroll lock +
-    // focus trap handle sighted/keyboard users; `inert` handles AT swipe-nav).
-    const behind = [
-      document.getElementById("main-content"),
-      document.querySelector("footer"),
-    ].filter(Boolean) as HTMLElement[];
-    behind.forEach((el) => el.setAttribute("inert", ""));
-
     const panel = panelRef.current;
     const focusables = panel
       ? Array.from(
@@ -111,7 +102,6 @@ export default function QuietNav() {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
-      behind.forEach((el) => el.removeAttribute("inert"));
     };
   }, [open]);
 
@@ -119,8 +109,7 @@ export default function QuietNav() {
     <header className="lf-nav" data-scrolled={scrolled}>
       <div className="lf-nav__inner">
         <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home" viewTransition>
-          <TugMark className="lf-nav__mark" />
-          <span>Little Fight NYC</span>
+          Little Fight NYC
         </Link>
 
         <nav className="lf-nav__primary" aria-label="Primary">
@@ -139,18 +128,15 @@ export default function QuietNav() {
         </nav>
 
         <div className="lf-nav__actions">
-          <button
-            type="button"
-            className="lf-nav__cmdk"
-            onClick={() => openCommandPalette()}
-            aria-label="Search and jump to any page"
+          <OpenNowBadge className="lf-nav__open" />
+
+          <PhoneAction
+            className="lf-nav__phone"
+            align="right"
+            ariaLabel="Call or text (646) 360-0318"
           >
-            <Search size={15} strokeWidth={2} aria-hidden="true" />
-            <span className="lf-nav__cmdk-keys" aria-hidden="true">
-              <kbd>⌘</kbd>
-              <kbd>K</kbd>
-            </span>
-          </button>
+            <span className="lf-nav__phone-number">(646) 360-0318</span>
+          </PhoneAction>
 
           <Link
             to="/tech-audit/?intent=website"
@@ -159,7 +145,7 @@ export default function QuietNav() {
             data-lf-label="nav_desktop"
             viewTransition
           >
-            Plan my website
+            Start a project
             <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
           </Link>
 
@@ -168,7 +154,7 @@ export default function QuietNav() {
             type="button"
             className="lf-nav__toggle"
             aria-expanded={open}
-            aria-controls={open ? panelId : undefined}
+            aria-controls={panelId}
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
           >

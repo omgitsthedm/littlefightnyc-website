@@ -46,7 +46,7 @@
 .lf-service-spread__lead figcaption,
 .lf-service-spread__marginal figcaption {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -274,7 +274,7 @@
   .lf-service-spread__link:hover .lf-service-spread__icon {
     background: var(--lf-fight);
     border-color: var(--lf-fight);
-    color: var(--lf-ink); /* dark ink on orange (7.14:1) — bone-on-orange was 2.51:1, failed WCAG */
+    color: var(--lf-bone);
   }
 
   .lf-service-spread__link:hover .lf-service-spread__copy strong {

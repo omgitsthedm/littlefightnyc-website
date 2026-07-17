@@ -108,7 +108,7 @@
 
 .lf-phone-action__verb {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-fight);

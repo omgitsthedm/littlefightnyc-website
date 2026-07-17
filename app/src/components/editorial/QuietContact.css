@@ -48,13 +48,11 @@
   display: grid;
   gap: var(--lf-space-3);
   max-width: 56rem;
-  margin-inline: auto;
-  text-align: center;
 }
 
 .lf-contact-block__eyebrow {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -86,8 +84,7 @@
 }
 
 .lf-contact-block__dek {
-  max-width: 52ch;
-  margin-inline: auto;
+  max-width: 54ch;
   font-family: var(--lf-serif);
   font-size: var(--lf-text-md);
   line-height: 1.42;
@@ -180,7 +177,7 @@
 
 .lf-contact-block__channel-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -269,7 +266,7 @@
 
 .lf-contact-block__promises span {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -290,7 +287,7 @@
 .lf-editorial .lf-contact-block__fine {
   margin: var(--lf-space-4) 0 0;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.04em;
   color: var(--lf-bone-dim);
   text-align: left;

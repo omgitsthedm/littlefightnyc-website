@@ -108,10 +108,10 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10012", "10013"],
     headline: "Premium websites and business systems for SoHo shops and studios.",
     shortAnswer:
-      "Short answer: SoHo businesses need public pages that look as good as the block and simple back-office systems that protect leads, appointments, payments, and follow-up.",
+      "Short answer: SoHo businesses need polished public pages and simple back-office systems that protect leads, appointments, payments, and follow-up.",
     localPattern:
       "Retail, galleries, design studios, and premium services need trust fast. Customers compare several options in one walk or one search.",
-    firstMove: "Review the website, the Google reviews and photos, the contact path, and whether staff still run on memory and spreadsheets.",
+    firstMove: "Review the website, the local proof, the contact path, and whether staff still run on memory and spreadsheets.",
     intro:
       "SoHo's cast-iron blocks went from artists' lofts to the most expensive retail corridor in the country. But between the global flagships, founder-run boutiques, galleries, showrooms, and design studios are still here. In SoHo, the bar for how a business looks is set by the Prada and Chanel windows next door. Whether the small operator likes it or not.",
     businessLandscape:
@@ -367,7 +367,7 @@ export const areaPages: AreaPage[] = [
     intro:
       "Williamsburg is Brooklyn's busiest small-business strip. Bedford Avenue, North 6th, Grand Street, and the waterfront around Domino Park. The L train drops a crowd at Bedford Avenue all day, and the ferry adds more. Most businesses here are owner-run. The person who picked the records, hung the clothes, or built the menu is usually in the room.",
     businessLandscape:
-      "This is boutiques, vintage shops, record stores, restaurants, bars, music venues, coffee roasters, and small design studios. The pressure is heavy. National brands took storefronts on Bedford and North 6th, so an independent shop now sits next to a flagship with a whole marketing team. Delivery apps take a cut of every busy kitchen. Vintage sellers compete with online resale apps that never pay Brooklyn rent. And the week is lopsided. A huge share of the money walks in between Friday night and Sunday evening. If something breaks online on a Saturday, the whole week takes the hit.",
+      "This is boutiques, vintage shops, record stores, restaurants, bars, music venues, coffee roasters, and small design studios. The pressure is heavy. National brands took storefronts on Bedford and North 6th, so an independent shop now sits next to a flagship with a whole marketing team. Delivery apps take a cut of every busy kitchen. Vintage sellers compete with online resale apps that never pay Brooklyn rent. And the week is lopsided. A huge share of the money walks in between Friday night and Sunday evening. If something online is broken on a Saturday, the week is hurt.",
     localSearchReality:
       "People decide here with a phone in hand. Standing on Bedford, off the L, or walking up from the ferry. 'Brunch near me.' 'Vintage Williamsburg.' 'Tickets tonight.' The weekend crush means hundreds of these little searches happen at once, and the spot with correct hours, fresh photos, and a one-tap reservation or ticket link wins the group. A menu that loads slowly or a listing with old hours loses the table to the place next door. Locals check Instagram. Visitors check Maps. Both have to say the same, current thing.",
     whatWeFixHere: [
@@ -391,7 +391,7 @@ export const areaPages: AreaPage[] = [
       {
         question: "Big brands moved onto my block. How does a small shop stay visible?",
         answer:
-          "A chain has an ad budget; you have the block. When the neighborhood searches for what you do, we make sure your reviews, your recent photos, and a claimed Google profile put you right next to the flagship.",
+          "You will not outspend them, so we make you easier to find and act on for people who want the independent option. A correct profile, recent photos, real reviews, and a fast site. That is how the small shop stays on the map next to the flagship.",
       },
     ],
     nearby: ["bushwick", "dumbo", "lower-east-side"],

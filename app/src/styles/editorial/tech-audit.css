@@ -5,8 +5,8 @@
   background: var(--lf-ink);
 
   /* Local state hues (not brand colors) — warn + confirm signals. */
-  --lf-audit-warn: var(--lf-error);   /* soft red for invalid fields */
-  --lf-audit-ok: var(--lf-success);     /* soft green for confirmed fields */
+  --lf-audit-warn: #F87171;   /* soft red for invalid fields */
+  --lf-audit-ok: #4ADE80;     /* soft green for confirmed fields */
 }
 
 @media (min-width: 768px) {
@@ -66,7 +66,7 @@
 
 .lf-audit__progress-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -353,7 +353,7 @@
   background: transparent;
   border: 0;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -462,7 +462,7 @@
 
 .lf-audit__field label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -525,7 +525,7 @@
 
 .lf-audit__error {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.04em;
   color: var(--lf-audit-warn);
   margin: 0;
@@ -535,7 +535,7 @@
 /* Quiet guidance beside the field it applies to (the no-secrets note). */
 .lf-audit__note {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.04em;
   color: var(--lf-bone-dim);
   margin: 0;
@@ -545,7 +545,7 @@
 .lf-audit__assurance {
   grid-column: 1 / -1;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -691,7 +691,7 @@
 
 .lf-audit__aside-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);

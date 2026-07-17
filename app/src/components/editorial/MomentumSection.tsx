@@ -69,7 +69,7 @@ export default function MomentumSection() {
               <div className="lf-momentum__feature-body">
                 <span className="lf-mono lf-momentum__card-label">Ownership, not lock-in</span>
                 <h3 className="lf-display lf-momentum__feature-title">
-                  You own what we build.
+                  Software your business owns.
                 </h3>
                 <p className="lf-momentum__feature-line">
                   One focused build, paid across development. No hostage pricing,

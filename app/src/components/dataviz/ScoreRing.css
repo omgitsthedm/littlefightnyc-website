@@ -119,7 +119,7 @@
 .lf-rings__caption {
   margin-top: var(--lf-space-4);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);

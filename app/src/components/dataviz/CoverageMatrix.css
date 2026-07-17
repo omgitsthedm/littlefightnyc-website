@@ -64,7 +64,7 @@
 }
 
 .lf-covmatrix__table tbody th {
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -144,7 +144,7 @@
     padding: 10px 12px;
   }
   .lf-covmatrix__table thead th {
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.08em;
     white-space: nowrap;
   }

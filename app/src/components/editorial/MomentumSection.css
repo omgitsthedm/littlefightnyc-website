@@ -28,8 +28,6 @@
 /* ---- Head ---- */
 .lf-momentum__head {
   max-width: 62ch;
-  margin-inline: auto;
-  text-align: center;
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -60,8 +58,7 @@
   font-size: var(--lf-text-md);
   line-height: 1.5;
   color: var(--lf-bone-soft);
-  max-width: 50ch;
-  margin-inline: auto;
+  max-width: 54ch;
 }
 
 /* ---- Bento grid ---- */

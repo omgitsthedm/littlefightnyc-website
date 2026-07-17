@@ -112,7 +112,7 @@ export default function AreaDetail() {
                     color: "var(--lf-bone-soft)",
                   }}
                 >
-                  <span aria-hidden="true" style={{ color: "var(--lf-bone-dim)", fontWeight: 700 }}>—</span>
+                  <span aria-hidden="true" style={{ color: "var(--lf-fight)", fontWeight: 700 }}>—</span>
                   <span>{fix}</span>
                 </li>
               ))}
@@ -172,7 +172,7 @@ export default function AreaDetail() {
                         fontFamily: "var(--lf-mono)",
                         fontSize: "var(--lf-text-2xs)",
                         letterSpacing: "0.16em",
-                        color: "var(--lf-bone-dim)",
+                        color: "var(--lf-fight)",
                         paddingTop: "var(--lf-space-1)",
                       }}
                     >

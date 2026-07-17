@@ -134,12 +134,6 @@ function serviceAreaPages() {
   return areas.flatMap((area) =>
     services.map((service) => ({
       path: `/areas/${area.slug}/${service.slug}/`,
-      // Thin/recombined programmatic pages (14 areas × 4 services share the same
-      // FAQ + a lead-in that reuses area + service copy). noindex protects the
-      // site's quality signal — the substantial /areas/<hub>/ pages and the four
-      // /services/ pages carry the local SEO. Enriching these into genuinely
-      // differentiated, indexable pages is a future content project.
-      noindex: true,
       title: `${service.label} in ${area.name} | Little Fight NYC`,
       description: `${service.label} help for ${area.name} businesses. Little Fight fixes websites, tools, Google signals, and handoffs that slow daily work.`,
       h1: `${service.label} for ${area.name} businesses.`,
@@ -728,7 +722,7 @@ function foundationSchemas(page) {
     });
   }
 
-  if (page.path === "/tech-audit/") {
+  if (page.path === "/tech-audit/" || page.path === "/tech-audit/") {
     graph.push({
       "@type": "HowTo",
       "@id": `${canonical}#howto`,
@@ -815,7 +809,7 @@ function routeExtraImagePreloads(page) {
 function routeChunkPrefix(page) {
   if (page.path === "/services/") return "Services-";
   if (page.path === "/examples/") return "Examples-";
-  if (page.path === "/tech-audit/") return "TechAudit-";
+  if (page.path === "/tech-audit/" || page.path === "/tech-audit/") return "TechAudit-";
   if (page.path.startsWith("/journal/") && page.path !== "/journal/") return "JournalPost-";
   return "";
 }
@@ -1323,7 +1317,7 @@ function methodSubject(page) {
   if (page.service) return `a ${page.service.eyebrow ? page.service.eyebrow.toLowerCase() : "service"} engagement`;
   if (page.area) return `a ${page.area.name} business`;
   if (page.answerGuide || page.path.startsWith("/answers/")) return "a question like this";
-  if (page.path === "/tech-audit/") return "a Tech Audit";
+  if (page.path === "/tech-audit/" || page.path === "/tech-audit/") return "a Tech Audit";
   if (page.path.startsWith("/industries/")) return "a business in this industry";
   if (page.path.startsWith("/glossary/")) return "the setup behind this term";
   return "a problem like this";
@@ -1463,7 +1457,7 @@ function snapshot(page) {
   const referenceBlock = isJournalArticle(page)
     ? `<h2>Useful outside references</h2>${linkList(officialReferenceLinks, "lf-seo__refs")}`
     : "";
-  const ctaCopy = (page.path === "/tech-audit/")
+  const ctaCopy = (page.path === "/tech-audit/" || page.path === "/tech-audit/")
     ? { label: "Call or start the review", link: "Start the review" }
     : { label: "Call or book your free Tech Audit", link: "Book your free Tech Audit" };
   const articleAttrs = isJournalArticle(page) ? ' itemscope itemtype="https://schema.org/Article"' : "";
@@ -1472,7 +1466,7 @@ function snapshot(page) {
   // The method block earns its place on decision pages; on content pages the
   // authored writing is the story and the block was pure duplication.
   const wantsMethod = Boolean(
-    (page.path === "/tech-audit/") || page.service || page.area || page.answerGuide
+    (page.path === "/tech-audit/" || page.path === "/tech-audit/") || page.service || page.area || page.answerGuide
   );
 
   const innerBody = `

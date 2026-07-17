@@ -50,7 +50,7 @@ export default function CaseStudies() {
             <span className="lf-em">Real work.</span>
           </>
         }
-        dek={`${countWord} projects, named with permission. Each one shows the pattern: what we kept, what we changed, and what shipped.`}
+        dek={`${countWord} engagements, named with permission. Each one shows the pattern: what we kept, what we changed, and what shipped.`}
         image={{
           src: "/assets/nyc-street.webp",
           alt: "A New York street corner at dusk with local storefronts",

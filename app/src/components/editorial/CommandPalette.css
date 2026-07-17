@@ -92,7 +92,7 @@
   min-height: 44px;
   padding: 10px var(--lf-space-3);
   border: none;
-  border-radius: var(--lf-radius-sm);
+  border-radius: 12px;
   background: transparent;
   color: var(--lf-bone);
   text-align: left;

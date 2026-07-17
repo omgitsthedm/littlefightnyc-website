@@ -1,28 +1,23 @@
-/* Little Fight NYC — Design Tokens (v7 — "Boxing Poster")
- * Canonical midnight system: Midnight #06080F ground, Oswald-700 display /
- * Barlow-400 body / JetBrains Mono labels, one orange lead #F97316 (signal
- * only), blue #3B82F6 subordinate. Single source: brand-system/brand.tokens.json.
+/* Little Fight NYC — Design Tokens (v6 — Axiom Momentum)
+ * Product-OS soul: near-black ground, Inter display, one orange lead,
+ * blue as a real accent. Evolved from the Axiom "Momentum" system and
+ * reconciled with the Little Fight brand. See app/DESIGN.md.
  */
 
 .lf-editorial {
-  /* Palette — canonical Little Fight "midnight" system (brand-kit source of truth,
-   * brandkit.littlefightnyc.com). Aligned 2026-07-16 so the flagship, the Lab, the
-   * brand kit and the book all share ONE palette. Roles kept distinct for contrast parity. */
-  --lf-ink: #06080F;          /* primary ground / background — canonical Midnight */
-  --lf-paper: #0E1220;        /* elevated surface — cards, panels (canonical Panel) */
-  --lf-paper-2: #0A0D18;      /* recessed surface, one step under paper (canonical Panel-2) */
-  --lf-hairline: #1B2233;     /* rules, dividers, borders (canonical Line) */
+  /* Palette — Axiom product-OS. Roles kept distinct for contrast parity. */
+  --lf-ink: #050507;          /* primary ground / background (Axiom bg) */
+  --lf-paper: #1A1C23;        /* elevated surface — cards, panels (Axiom surface) */
+  --lf-paper-2: #12141A;      /* recessed surface, one step under paper */
+  --lf-hairline: #27272A;     /* rules, dividers, borders (Axiom border) */
   --lf-hairline-warm: #2A1C12; /* hairlines under fight-orange ink */
-  --lf-bone: #F0F2F8;         /* primary type — canonical Ink (18.6:1 on Midnight) */
-  --lf-bone-soft: #A1A1AA;    /* secondary type — canonical Muted (7.4:1 on Midnight) */
+  --lf-bone: #FFFFFF;         /* primary type — product-OS white */
+  --lf-bone-soft: #A1A1AA;    /* secondary type (Axiom text-secondary) */
   --lf-bone-dim: #8A8A94;     /* tertiary type — captions, marginalia (AA-safe on --lf-ink, ~5.9:1) */
-  --lf-fight: #F97316;        /* THE orange — canonical lead signal */
-  --lf-ember: #FB923C;        /* hover / active warmth — canonical Soft Orange */
-  --lf-blue: #3B82F6;         /* interactive blue accent — links, data highlights */
+  --lf-fight: #F97316;        /* THE orange — Axiom lead signal */
+  --lf-ember: #FB8B3C;        /* hover / active warmth */
+  --lf-blue: #3B82F6;         /* accent — Axiom blue, now a real second signal */
   --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
-  --lf-burst: #2058AF;        /* ambient background blue burst — never competes with orange */
-  --lf-error: #F87171;        /* semantic red — invalid / failed states */
-  --lf-success: #4ADE80;      /* semantic green — confirmed / valid states */
 
   /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
   --lf-text-2xs: 0.6875rem;                                   /* 11px — mono label tier (was hardcoded 10/11/12px sitewide) */
@@ -73,20 +68,6 @@
   --lf-margin-desktop: 64px;
   --lf-column-gap: 32px;
   --lf-max-w: 1440px;
-
-  /* ── Presentation system (Apple-tier section rhythm) ──────────────────────
-     ONE content column, THREE section rhythms, ONE section-title size. Every
-     section consumes these so content edges align down the page, spacing is a
-     deliberate rhythm (not 8 ad-hoc paddings), and a section title is the same
-     size everywhere. See presentation.css for the anatomy classes. */
-  --lf-content: 1200px;                                  /* the one content column */
-  --lf-sec-y: clamp(4.5rem, 3rem + 6vw, 8rem);           /* 72→128px standard section rhythm */
-  --lf-sec-y-tight: clamp(3rem, 2rem + 4vw, 5.5rem);     /* 48→88px dense/utility */
-  --lf-sec-y-hero: clamp(6rem, 4rem + 8vw, 11rem);       /* 96→176px first-section breathing */
-  --lf-eyebrow-size: var(--lf-text-2xs);                 /* one eyebrow size */
-  --lf-section-title: clamp(2rem, 1.3rem + 2.7vw, 3.25rem); /* 32→52px — the ONE section-title size */
-  --lf-section-lede: var(--lf-text-md);                  /* one supporting-line size */
-  --lf-measure: 62ch;                                    /* max reading measure */
   --lf-chip: 44px;             /* standard icon-chip square (Axiom tap target) */
   --lf-lift: -4px;            /* standard hover translateY lift for cards/controls */
 

@@ -33,7 +33,7 @@
   align-items: center;
   gap: 0.55em;
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -148,10 +148,9 @@
 }
 
 .lf-svc-router__symptom svg {
-  color: var(--lf-bone-soft);
+  color: var(--lf-fight);
   flex: none;
 }
-.lf-svc-router__link--primary .lf-svc-router__symptom svg { color: var(--lf-fight); }
 
 .lf-svc-router__service {
   margin-top: auto;
@@ -160,7 +159,7 @@
   justify-content: space-between;
   gap: var(--lf-space-3);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
