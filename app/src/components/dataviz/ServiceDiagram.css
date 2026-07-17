@@ -23,7 +23,7 @@
 
 .lf-respwin .lf-respwin__row-label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -125,7 +125,7 @@
 .lf-respwin__caption {
   margin-top: var(--lf-space-5);
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);

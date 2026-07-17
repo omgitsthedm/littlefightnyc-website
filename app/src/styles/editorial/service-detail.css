@@ -48,7 +48,7 @@
 
 .lf-sd__aside-label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -178,7 +178,7 @@
 
 .lf-sd-local__label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -259,7 +259,7 @@
 
 .lf-sd-related__label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -292,7 +292,7 @@
 
 .lf-sd-related__name {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -329,7 +329,7 @@
 }
 .lf-sd-deep__label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -373,7 +373,7 @@
 }
 .lf-sd-issues__label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -460,7 +460,7 @@
 }
 .lf-sd-fallacies__label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lf-fight);

@@ -184,7 +184,7 @@
   }
   .lf-auditmap__label {
     text-align: left;
-    font-size: 11px;
+    font-size: var(--lf-text-2xs);
   }
 }
 

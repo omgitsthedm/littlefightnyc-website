@@ -60,7 +60,7 @@
 .lf-quiet-foot .lf-quiet-foot__legal,
 .lf-quiet-foot .lf-quiet-foot__contact {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -183,7 +183,7 @@
   align-items: center;
   min-height: 44px;
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -195,7 +195,7 @@
   padding-top: var(--lf-space-5);
   border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-fight);

@@ -197,7 +197,7 @@
 .lf-flow__caption {
   margin-top: var(--lf-space-4);
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);

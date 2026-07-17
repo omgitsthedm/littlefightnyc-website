@@ -107,7 +107,7 @@
 
 .lf-studio__kind {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
@@ -169,7 +169,7 @@
 
 .lf-studio__foot-label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -186,7 +186,7 @@
 
 .lf-studio__live {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);

@@ -16,11 +16,13 @@ const FIGURE_CAPTION: Record<string, string> = {
   "business-systems": "One source of truth instead of a stack of spreadsheets and memory.",
 };
 
+// Human faces lead each service — real small-business owners at work, not
+// object/laptop stock. (mainstreet-* photos; landscape crops for the hero.)
 const FEATURE_IMAGE: Record<string, string> = {
-  "tech-consulting": "/assets/local-business.webp",
-  "it-support": "/assets/typing.webp",
-  "custom-local-websites": "/assets/hero-laptop.webp",
-  "business-systems": "/assets/pos.webp",
+  "tech-consulting": "/assets/mainstreet-shopkeeper.webp",
+  "it-support": "/assets/mainstreet-service.webp",
+  "custom-local-websites": "/assets/mainstreet-shop-women.webp",
+  "business-systems": "/assets/mainstreet-coffee.webp",
 };
 
 const LEGACY_SLUG_MAP: Record<string, string> = {

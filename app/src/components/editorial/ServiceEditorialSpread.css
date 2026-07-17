@@ -46,7 +46,7 @@
 .lf-service-spread__lead figcaption,
 .lf-service-spread__marginal figcaption {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
