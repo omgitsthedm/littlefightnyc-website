@@ -405,7 +405,6 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
 .lf-editorial .lf-flow,
 .lf-editorial .lf-tls,
 .lf-editorial .lf-respwin,
-.lf-editorial .lf-funnel,
 .lf-editorial .lf-rings,
 .lf-editorial .lf-minimap {
   margin-block: var(--lf-space-8);

@@ -274,7 +274,7 @@
   .lf-service-spread__link:hover .lf-service-spread__icon {
     background: var(--lf-fight);
     border-color: var(--lf-fight);
-    color: var(--lf-bone);
+    color: var(--lf-ink); /* dark ink on orange (7.14:1) — bone-on-orange was 2.51:1, failed WCAG */
   }
 
   .lf-service-spread__link:hover .lf-service-spread__copy strong {

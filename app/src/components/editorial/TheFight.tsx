@@ -27,13 +27,12 @@ const YOU = [
 ];
 
 export default function TheFight() {
-  const headRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
   const vsRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
 
   return (
     <section className="lf-fight" aria-labelledby="lf-fight-heading">
       <div className="lf-fight__inner">
-        <div ref={headRef} className="lf-fight__head" data-reveal>
+        <div className="lf-fight__head">
           <p className="lf-mono lf-fight__eyebrow">
             The fight
           </p>
