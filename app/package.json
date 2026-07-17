@@ -19,10 +19,12 @@
     "@fontsource-variable/oswald": "^5.2.8",
     "@fontsource/barlow": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
+    "i18next": "^26.3.6",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-i18next": "^17.0.10",
     "react-router-dom": "^7.15.0"
   },
   "devDependencies": {
