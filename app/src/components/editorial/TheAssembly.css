@@ -265,9 +265,9 @@
   gap: 6px;
   padding: 16px 22px;
   background: var(--lf-paper);
-  border: 1px solid rgba(249, 115, 22, 0.6);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 60%, transparent);
   border-radius: var(--lf-radius-sm);
-  box-shadow: 0 0 0 5px rgba(249, 115, 22, 0.1);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--lf-fight) 10%, transparent);
   --th: clamp(0, calc((var(--p) - 0.70) / 0.12), 1);
   opacity: var(--th);
   transform: translate(-50%, -50%) scale(calc(0.6 + 0.4 * var(--th)));

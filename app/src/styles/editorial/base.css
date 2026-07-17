@@ -305,8 +305,8 @@ body:has(.lf-editorial) {
 @keyframes lf-img-skel { to { background-position: -200% 0; } }
 img[data-img-skel] {
   background:
-    linear-gradient(100deg, #0f0f14 28%, #1c1c24 48%, #0f0f14 68%) 0 0 / 200% 100% no-repeat,
-    #0d0d11;
+    linear-gradient(100deg, var(--lf-paper) 28%, #1c1c24 48%, var(--lf-paper) 68%) 0 0 / 200% 100% no-repeat,
+    var(--lf-paper-2);
   animation: lf-img-skel 1.5s ease-in-out infinite;
 }
 img[data-img-skel][data-loaded] { background: none; animation: none; }

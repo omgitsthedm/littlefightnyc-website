@@ -21,6 +21,8 @@
   --lf-blue: #3B82F6;         /* interactive blue accent — links, data highlights */
   --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
   --lf-burst: #2058AF;        /* ambient background blue burst — never competes with orange */
+  --lf-error: #F87171;        /* semantic red — invalid / failed states */
+  --lf-success: #4ADE80;      /* semantic green — confirmed / valid states */
 
   /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
   --lf-text-2xs: 0.6875rem;                                   /* 11px — mono label tier (was hardcoded 10/11/12px sitewide) */

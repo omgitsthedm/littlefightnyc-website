@@ -35,33 +35,11 @@
       document.addEventListener('mouseleave', function () { glow.classList.remove('on'); });
     }
 
-    // ---- tugboat personality: idle bob + tap-to-toot ----
-    var TOOTS = ['toot toot!', 'honk!', 'all aboard', 'beep beep', 'pulling weight', '⚓ ahoy', '🚤 vroom'];
-    document.querySelectorAll('[data-tug]').forEach(function (tug) {
-      // every tug bobs on the water via CSS (survives React re-renders).
-      // only toot on tap when the tug isn't inside a link/button (else the tap navigates)
-      if (tug.closest('a, button')) return;
-      var host = tug.parentElement || tug;
-      if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
-      var bubble = document.createElement('span');
-      bubble.className = 'lf-bubble';
-      host.appendChild(bubble);
-      var ti = 0;
-      tug.addEventListener('click', function () {
-        bubble.classList.toggle('lf-below', tug.getBoundingClientRect().top < 150);
-        bubble.textContent = TOOTS[ti++ % TOOTS.length];
-        bubble.classList.add('show');
-        clearTimeout(tug._tb);
-        tug._tb = setTimeout(function () { bubble.classList.remove('show'); }, 1150);
-        if (reduce) return;
-        // toot overrides the idle bob (higher specificity), then bob resumes automatically
-        tug.classList.remove('lf-toot'); void tug.offsetWidth; tug.classList.add('lf-toot');
-        tug.addEventListener('animationend', function h() {
-          tug.classList.remove('lf-toot');
-          tug.removeEventListener('animationend', h);
-        }, { once: true });
-      });
-    });
+    // The tugboat's idle bob is CSS-only (see experience.css [data-tug]) and
+    // survives React re-renders. The former tap-to-"toot" easter-egg was removed:
+    // this script runs at DOMContentLoaded, before React mounts the [data-tug]
+    // marks, so the handler never attached (dead code) — and it put a misleading
+    // pointer cursor on marks that are aria-hidden + decorative.
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();

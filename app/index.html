@@ -50,8 +50,11 @@
     <meta name="twitter:title" content="Little Fight NYC" />
     <meta name="twitter:description" content="Better tech, fewer bills, and more customers for New York small businesses." />
     <meta name="twitter:image" content="/assets/og-image.jpg" />
-    <link rel="stylesheet" href="/experience.css">
-  <script defer src="/experience.js"></script>
+    <!-- Shared experience layer (progress bar, cursor glow, tug bob, press) —
+         inlined from brand-system/experience.css (2.3KB) so it needs no separate
+         render-blocking request. Keep in sync with that source if it changes. -->
+    <style>.lf-prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:70;background:linear-gradient(90deg,#f97316,#fb923c);box-shadow:0 0 14px rgba(249,115,22,.55)}.lf-glow{position:fixed;top:0;left:0;width:540px;height:540px;border-radius:50%;pointer-events:none;z-index:1;transform:translate(-50%,-50%);opacity:0;transition:opacity .6s;mix-blend-mode:screen;background:radial-gradient(circle,rgba(249,115,22,.13),transparent 62%)}@media(hover:hover){.lf-glow.on{opacity:1}}@media(prefers-reduced-motion:no-preference){[data-tug]{animation:lf-bob 4.4s ease-in-out infinite}@keyframes lf-bob{0%,100%{transform:translateY(0) rotate(-1.3deg)}50%{transform:translateY(-7px) rotate(1.3deg)}}}[data-press]:active,.lf-press:active{transform:scale(.95)}@media(prefers-reduced-motion:reduce){.lf-glow{display:none}}</style>
+    <script defer src="/experience.js"></script>
 </head>
   <body>
     <div id="root"></div>

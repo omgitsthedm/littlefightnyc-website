@@ -42,7 +42,14 @@ export default function Contact() {
             <span className="lf-em">going on.</span>
           </>
         }
-        dek="Broken today? Call. Messy but not urgent? Start a Tech Audit. Not sure what it is called? Call anyway. There are no dumb questions here."
+        dek={
+          <>
+            Broken today?{" "}
+            <a href="tel:+16463600318" className="lf-em">Call (646)&nbsp;360-0318</a>. Messy
+            but not urgent? Start a Tech Audit. Not sure what it is called? Call
+            anyway. There are no dumb questions here.
+          </>
+        }
         image={{
           src: "/assets/nyc-stickys-steam.webp",
           alt: "Steam from a Manhattan grate at street level",

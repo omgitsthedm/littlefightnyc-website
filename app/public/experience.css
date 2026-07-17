@@ -16,22 +16,14 @@
   background:radial-gradient(circle,rgba(249,115,22,.13),transparent 62%)}
 @media(hover:hover){.lf-glow.on{opacity:1}}
 
-/* the tugboat has a personality */
-[data-tug]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+/* The tugboat has a personality: a gentle idle bob (CSS-only, so it survives
+   React re-renders and needs no JS). No cursor:pointer — the marks are
+   decorative + aria-hidden; the former tap-to-"toot" easter-egg was removed
+   (it never wired up: the script runs before React mounts the marks). */
 @media(prefers-reduced-motion:no-preference){
-  [data-tug]{animation:lf-bob 4.4s ease-in-out infinite}   /* CSS-driven so it survives React re-renders */
+  [data-tug]{animation:lf-bob 4.4s ease-in-out infinite}
   @keyframes lf-bob{0%,100%{transform:translateY(0) rotate(-1.3deg)}50%{transform:translateY(-7px) rotate(1.3deg)}}
 }
-[data-tug].lf-toot{animation:lf-toot .62s cubic-bezier(.2,.7,.2,1)}
-@keyframes lf-toot{0%{transform:none}28%{transform:translateY(-14px) scale(1.06,.93)}55%{transform:translateY(3px) scale(.97,1.04)}78%{transform:translateY(-3px)}100%{transform:none}}
-.lf-bubble{position:absolute;left:50%;bottom:calc(100% + 5px);z-index:6;font-family:"Oswald",system-ui,sans-serif;font-weight:700;letter-spacing:.02em;
-  color:#0a0a0a;background:#f97316;padding:.22rem .62rem;border-radius:999px;font-size:.9rem;white-space:nowrap;
-  opacity:0;pointer-events:none;transform:translate(-50%,8px) scale(.7);transition:.28s cubic-bezier(.2,.7,.2,1);box-shadow:0 10px 24px rgba(249,115,22,.45)}
-.lf-bubble.show{opacity:1;transform:translate(-50%,0) scale(1)}
-.lf-bubble::after{content:"";position:absolute;left:50%;margin-left:-5px;bottom:-5px;width:10px;height:10px;background:#f97316;transform:rotate(45deg)}
-/* flip below the mark when it sits near the top (nav tugs) so it never clips */
-.lf-bubble.lf-below{bottom:auto;top:calc(100% + 5px)}
-.lf-bubble.lf-below::after{bottom:auto;top:-5px}
 
 /* NOTE: no [data-reveal] scroll-reveal here. That collided with host sites that
  * already use the [data-reveal] attribute for their own reveal system (the React

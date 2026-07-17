@@ -137,8 +137,8 @@
   position: absolute;
   top: 14px;
   bottom: 0;
-  background: rgba(249, 115, 22, 0.09);
-  border-inline: 1px solid rgba(249, 115, 22, 0.45);
+  background: color-mix(in srgb, var(--lf-fight) 9%, transparent);
+  border-inline: 1px solid color-mix(in srgb, var(--lf-fight) 45%, transparent);
 }
 
 .lf-tpi__window-label {

@@ -134,6 +134,12 @@ function serviceAreaPages() {
   return areas.flatMap((area) =>
     services.map((service) => ({
       path: `/areas/${area.slug}/${service.slug}/`,
+      // Thin/recombined programmatic pages (14 areas × 4 services share the same
+      // FAQ + a lead-in that reuses area + service copy). noindex protects the
+      // site's quality signal — the substantial /areas/<hub>/ pages and the four
+      // /services/ pages carry the local SEO. Enriching these into genuinely
+      // differentiated, indexable pages is a future content project.
+      noindex: true,
       title: `${service.label} in ${area.name} | Little Fight NYC`,
       description: `${service.label} help for ${area.name} businesses. Little Fight fixes websites, tools, Google signals, and handoffs that slow daily work.`,
       h1: `${service.label} for ${area.name} businesses.`,
