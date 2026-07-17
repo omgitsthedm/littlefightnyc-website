@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
 import StudioStatusStrip from "./StudioStatusStrip";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import "./QuietFooter.css";
 
 // Hydration-safe mobile check: server snapshot says desktop (plain lists),
@@ -149,6 +150,8 @@ export default function QuietFooter() {
           <p className="lf-quiet-foot__legal">
             © {year} Little Fight NYC. All rights reserved.
           </p>
+          {/* Renders null until a second language bundle exists — see src/i18n. */}
+          <LanguageSwitcher />
         </div>
 
         <p className="lf-quiet-foot__signature">
