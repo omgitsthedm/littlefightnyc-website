@@ -1,5 +1,23 @@
 # Little Fight NYC Website Config
 
+## 2026-07-17 (later) — Careful re-land, wave by wave (LIVE, `272b904`)
+
+After the rollback below, the reverted work was re-landed **one wave at a time, each re-verified against THIS tree instead of replayed**. That mattered — half the old commits were false in the rolled-back tree. Waves live: `21e98ef` → `0650769` → `a1e5e90` → `8468177` → `272b904`.
+
+**The brand kit was NOT what broke the site.** Its entire visible footprint is the nav mark + a palette shift. The centering (`1abf6a7`/`1f8e71a`) landed **~20 hours later** and is unrelated — the rollback just bundled them. So the Tugboat came back on its own.
+
+**Landed:** the live `--lf-radius-md` bug (defined nowhere → square install card); ServiceEditorialSpread hover icon bone→ink on orange (**2.51:1 → 7.14:1**, a real WCAG failure); proven-dead code; a **10px legibility floor** on 9 sub-10px dataviz labels (the ONE SYSTEM chips were 8px mono — unreadable); the area×service dek (was lowercasing `plain` → "for **nyc** businesses… **google** signals", mangled + run-on, on 56 pages); `noindex` on the thin combos (hubs/services/home stay indexable, sitemap 121 urls / 0 combos); drawer `inert` + non-dangling `aria-controls`; `--lf-error`/`--lf-success`; Tugboat mark + full favicon set; the compose-held splash.
+
+### ⛔ Standing rules this session established — do not relearn these
+
+- **PALETTE IS NEUTRAL BLACK. David's explicit call (2026-07-17).** `--lf-ink #050507` / `--lf-paper #1A1C23` / `--lf-bone #FFFFFF`. Do **not** re-land the midnight navy (`#06080F`/`#0E1220`/`#F0F2F8`) from `3f3837d`/`ac1a629`. Anything palette-coupled stays out with it — notably `451fd9c`'s skeleton-shimmer tokenization, which swaps `#0f0f14`/`#0d0d11` for `var(--lf-paper)`/`var(--lf-paper-2)` and only holds under navy.
+- **`git checkout <ref> -- app/` does NOT delete files added after `<ref>`.** That's what broke the first rollback deploy: `package.json` reverted (dropping `i18next`) while the i18n sources stayed → Netlify's clean `npm ci && npm run build` died on `TS2307`. **The local build passed on stale `node_modules`.** Always verify in a throwaway worktree with a real `npm ci`.
+- **The splash ground is hardcoded `#050507` on purpose.** It paints before any stylesheet, so it cannot read a token. The upstream version hardcodes `#06080F` — re-landing that flashes navy then snaps to black.
+- **`markAppReady()` must fire from BOTH `EditorialShell` AND `Home`.** Home renders outside the shell, so the shell's signal never fires on `/` — the splash would sit until the 6s cap on the most important page.
+- **RHYTHM IS DELIBERATE — the "8 different paddings" diagnosis was wrong.** Measured live: home has **2** distinct `padTop` values, and they pair (`clients` closes 64 + `work` opens 64 = 128px gap between related sections; `work` closes 128 + `fight` opens 128 = 256px break between groups). `innerW` 1440 vs 1312 is full-bleed moments vs contained columns — the asymmetric grid. Titles are already uniform 80px; contact-block's 126px is the intentional closer (same class as SignatureBand). **Flattening this to 128/128 + one column is what produced the monotony David rejected.** Do not "normalize" it.
+- **Verify a claim against the tree you're in, not the commit message.** Three old claims were false here: `2a731d8` calls `listReveal` "inert" — in this tree `data-lf-reveal` is styled all over `base.css`, so deleting it strands sections blank (the exact bug `5f3d433` later fixed). `e4e573c`'s "label sizing standard" is **not** a legibility fix — it tokenizes 11px → an 11px token, explicitly zero-visual-change. `7c15a6e` deletes files that no longer exist here.
+- **Your own QA lies too.** An overflow detector flags `__sr`/`lf-viz-sr` (sr-only, clipped to 1px *by design*) and Leaflet's OSM attribution. A contrast checker reports 1.00:1 on `color: transparent` gradient-clipped text. Settle asset "failures" with **never-recovered** (did the aborted URL also 200 in that load?), not abort count.
+
 ## 2026-07-17 — ⛔ ROLLED BACK: `app/` reset to `92287ec` + TheAssembly cut (LIVE)
 
 **David's verdict on the Jul 16–17 work: "literally it's so much worse… it was so much better before the lab and brand kit."** He was right. `app/` is now restored to `92287ec` (Jul 16 08:40 — the last state before the Tugboat/brand-kit work), and TheAssembly is deleted. Everything between `cc9f3a9` and `d1b7fa6` is reverted **in the tree** (history kept; safety tag `pre-rollback-20260717`).
