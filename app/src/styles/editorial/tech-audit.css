@@ -5,8 +5,8 @@
   background: var(--lf-ink);
 
   /* Local state hues (not brand colors) — warn + confirm signals. */
-  --lf-audit-warn: #F87171;   /* soft red for invalid fields */
-  --lf-audit-ok: #4ADE80;     /* soft green for confirmed fields */
+  --lf-audit-warn: var(--lf-error);   /* soft red for invalid fields */
+  --lf-audit-ok: var(--lf-success);     /* soft green for confirmed fields */
 }
 
 @media (min-width: 768px) {

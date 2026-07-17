@@ -63,6 +63,14 @@ export default function QuietNav() {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
+    // Hide the page behind the modal from assistive tech (the scroll lock +
+    // focus trap handle sighted/keyboard users; `inert` handles AT swipe-nav).
+    const behind = [
+      document.getElementById("main-content"),
+      document.querySelector("footer"),
+    ].filter(Boolean) as HTMLElement[];
+    behind.forEach((el) => el.setAttribute("inert", ""));
+
     const panel = panelRef.current;
     const focusables = panel
       ? Array.from(
@@ -102,6 +110,7 @@ export default function QuietNav() {
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      behind.forEach((el) => el.removeAttribute("inert"));
     };
   }, [open]);
 
@@ -154,7 +163,7 @@ export default function QuietNav() {
             type="button"
             className="lf-nav__toggle"
             aria-expanded={open}
-            aria-controls={panelId}
+            aria-controls={open ? panelId : undefined}
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
           >
