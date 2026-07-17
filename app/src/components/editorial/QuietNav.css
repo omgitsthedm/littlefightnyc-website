@@ -1,13 +1,33 @@
+/* Editorial-minimalist chrome: at the top the bar floats near-borderless over
+   the hero; once the page scrolls it settles onto a brighter glass plate with
+   a precision hairline + a whisper of a floor. (data-scrolled set in JS.) */
 .lf-nav {
   position: sticky;
   top: 0;
   z-index: var(--lf-z-ticker);
   padding-top: env(safe-area-inset-top);
-  background: rgba(6, 8, 15, 0.85); /* solid fallback: --lf-ink @85% so the sticky header keeps its plate on Safari <16.2 */
-  background: color-mix(in srgb, var(--lf-ink) 85%, transparent);
+  background: rgba(6, 8, 15, 0.72); /* solid fallback: --lf-ink @72% so the sticky header keeps its plate on Safari <16.2 */
+  background: color-mix(in srgb, var(--lf-ink) 72%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   backdrop-filter: blur(20px) saturate(140%);
-  border-bottom: 1px solid var(--lf-hairline);
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 220ms var(--lf-ease-standard),
+    border-color 220ms var(--lf-ease-standard),
+    box-shadow 220ms var(--lf-ease-standard);
+}
+
+.lf-nav[data-scrolled="true"] {
+  background: rgba(6, 8, 15, 0.9);
+  background: color-mix(in srgb, var(--lf-ink) 90%, transparent);
+  border-bottom-color: var(--lf-hairline);
+  box-shadow:
+    0 1px 0 0 color-mix(in srgb, var(--lf-bone) 6%, transparent),
+    0 14px 32px -26px rgba(0, 0, 0, 0.85);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-nav { transition: none; }
 }
 
 .lf-nav__inner {
@@ -150,73 +170,67 @@
 .lf-nav__actions {
   display: flex;
   align-items: center;
-  gap: var(--lf-space-1);
+  gap: var(--lf-space-2);
 }
 
-.lf-nav__actions .lf-nav__open {
+/* ⌘K quick-nav trigger — a quiet, kbd-styled utility that opens the command
+   palette. Desktop only (no hardware ⌘ on touch); phones use the drawer. */
+.lf-nav__cmdk {
   display: none;
-}
-
-@media (min-width: 1100px) {
-  .lf-nav__actions .lf-nav__open {
-    display: inline-flex;
-    margin-inline-end: var(--lf-space-1);
-  }
-}
-
-.lf-nav__phone {
-  display: inline-flex;
-  /* center, not baseline: the label is display:none on mobile, and baseline
-     alignment inside the 44px hit-box floated the number above the brand —
-     the row read visibly uneven (David caught it on iPhone, 2026-07-12). */
   align-items: center;
   gap: var(--lf-space-2);
-  min-height: 44px;
-  padding-inline: var(--lf-space-2);
-  color: var(--lf-bone);
-  text-decoration: none;
-  background: none;
-  border: 0;
+  height: 38px;
+  padding-inline: var(--lf-space-3);
+  color: var(--lf-bone-soft);
+  background: color-mix(in srgb, var(--lf-bone) 4%, transparent);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
   cursor: pointer;
-  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition:
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-/* Keep the mono label and the number on a shared baseline where both show. */
-
-.lf-nav__phone:hover {
-  color: var(--lf-fight);
+@media (min-width: 1024px) {
+  .lf-nav__cmdk { display: inline-flex; }
 }
 
-.lf-nav__phone:focus-visible {
+.lf-nav__cmdk:hover {
+  color: var(--lf-bone);
+  border-color: color-mix(in srgb, var(--lf-bone) 22%, transparent);
+  background: color-mix(in srgb, var(--lf-bone) 7%, transparent);
+}
+
+.lf-nav__cmdk:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 2px;
-  border-radius: var(--lf-radius-sm);
 }
 
-.lf-nav__phone-number {
-  font-family: var(--lf-serif);
-  font-weight: 500;
-  font-size: var(--lf-text-base);
-  letter-spacing: -0.005em;
-  white-space: nowrap;
+.lf-nav__cmdk-keys {
+  display: inline-flex;
+  gap: 2px;
 }
 
-/* Preserve the phone as a one-line action on 320px devices. */
+.lf-nav__cmdk kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 15px;
+  font-family: var(--lf-mono);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--lf-bone-dim);
+}
+
+/* One-line chrome on the smallest phones. */
 @media (max-width: 380px) {
   .lf-nav__inner {
     gap: var(--lf-space-1);
     padding-inline: var(--lf-space-3);
   }
-  .lf-nav__brand,
-  .lf-nav__phone-number { font-size: var(--lf-text-sm); }
-  .lf-nav__phone { padding-inline: 0; }
+  .lf-nav__brand { font-size: var(--lf-text-sm); }
   .lf-nav__toggle { margin-inline-start: 0; }
-}
-
-@media (min-width: 768px) {
-  .lf-nav__phone-number {
-    font-size: var(--lf-text-md);
-  }
 }
 
 .lf-nav__start {

@@ -23,7 +23,66 @@
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-6);
+  gap: var(--lf-space-7);
+}
+
+/* Closing sign-off — the footer opens on a confident brand line (Oswald
+   display) instead of a bare link farm. This is the magazine's back cover. */
+.lf-quiet-foot__closing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-3);
+  padding-bottom: var(--lf-space-2);
+}
+
+.lf-quiet-foot__closing-eyebrow {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-quiet-foot__closing-line {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-4);
+  max-width: 22ch;
+  font-family: var(--lf-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: var(--lf-bone);
+  text-decoration: none;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-quiet-foot__closing-line svg {
+  flex: none;
+  color: var(--lf-fight);
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-quiet-foot__closing-line:hover {
+  color: var(--lf-fight);
+}
+
+@media (hover: hover) {
+  .lf-editorial .lf-quiet-foot__closing-line:hover svg {
+    transform: translate(5px, -5px);
+  }
+}
+
+.lf-quiet-foot__closing-line:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
+  border-radius: var(--lf-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-quiet-foot__closing-line svg { transition: none; }
 }
 
 @media (min-width: 768px) {
@@ -108,12 +167,14 @@
  /* .lf-quiet-foot prefix: (0,2,1) — the global .lf-editorial h2 (0,1,1)
     bundles later and WON the tie; footer titles shipped as 44px display
     type until 2026-07-13. Same class of bug as the button reset. */
+/* Group headers sit in dim mono, not orange — orange stays a signal (the
+   closing line + signature), not decoration on all five columns. */
 .lf-quiet-foot .lf-quiet-foot__group h2 {
   font-family: var(--lf-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--lf-fight);
+  color: var(--lf-bone-dim);
   margin: 0 0 var(--lf-space-3);
 }
 
@@ -189,11 +250,11 @@
   color: var(--lf-bone-soft);
 }
 
-/* Mandated Little Fight signature line. */
+/* Mandated Little Fight signature line. Sits on spacing, not a third stacked
+   hairline — the colophon reads calm. */
 .lf-quiet-foot__signature {
   margin: 0;
-  padding-top: var(--lf-space-5);
-  border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
+  padding-top: var(--lf-space-2);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;

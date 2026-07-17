@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
 import StudioStatusStrip from "./StudioStatusStrip";
 import "./QuietFooter.css";
@@ -80,6 +80,14 @@ export default function QuietFooter() {
   return (
     <footer className="lf-quiet-foot" role="contentinfo">
       <div className="lf-quiet-foot__inner">
+        <div className="lf-quiet-foot__closing">
+          <p className="lf-quiet-foot__closing-eyebrow">Still in your corner</p>
+          <Link to="/contact/" className="lf-quiet-foot__closing-line">
+            <span>Let&rsquo;s build your little fight.</span>
+            <ArrowUpRight size={30} strokeWidth={1.6} aria-hidden="true" />
+          </Link>
+        </div>
+
         <StudioStatusStrip />
         <div className="lf-quiet-foot__top">
           <div className="lf-quiet-foot__brand">

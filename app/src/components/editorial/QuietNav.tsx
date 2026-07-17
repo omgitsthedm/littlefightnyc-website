@@ -1,9 +1,9 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
-import PhoneAction from "./PhoneAction";
+import { ArrowUpRight, Menu, MessageSquare, Phone, Search, X } from "lucide-react";
 import TugMark from "./TugMark";
 import { useOpenNow } from "@/lib/openNow";
+import { openCommandPalette } from "@/lib/palette";
 import "./QuietNav.css";
 
 const NAV_LINKS = [
@@ -130,15 +130,18 @@ export default function QuietNav() {
         </nav>
 
         <div className="lf-nav__actions">
-          <OpenNowBadge className="lf-nav__open" />
-
-          <PhoneAction
-            className="lf-nav__phone"
-            align="right"
-            ariaLabel="Call or text (646) 360-0318"
+          <button
+            type="button"
+            className="lf-nav__cmdk"
+            onClick={() => openCommandPalette()}
+            aria-label="Search and jump to any page"
           >
-            <span className="lf-nav__phone-number">(646) 360-0318</span>
-          </PhoneAction>
+            <Search size={15} strokeWidth={2} aria-hidden="true" />
+            <span className="lf-nav__cmdk-keys" aria-hidden="true">
+              <kbd>⌘</kbd>
+              <kbd>K</kbd>
+            </span>
+          </button>
 
           <Link
             to="/tech-audit/?intent=website"
