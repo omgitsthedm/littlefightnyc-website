@@ -7,6 +7,7 @@ import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
 import { importWithRetry } from "@/lib/importWithRetry";
 import { watchListReveals } from "@/lib/listReveal";
+import { markAppReady } from "@/lib/appReady";
 
 const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMeta")));
 const FaqList = lazy(() => importWithRetry(() => import("@/components/editorial/FaqList")));
@@ -44,6 +45,12 @@ export default function Home() {
   useEffect(() => {
     if (!rootRef.current) return;
     return watchListReveals(rootRef.current);
+  }, []);
+
+  // Home renders OUTSIDE EditorialShell, so it must signal the splash itself —
+  // the shell's markAppReady never runs on "/". (See lib/appReady.)
+  useEffect(() => {
+    markAppReady();
   }, []);
 
   return (

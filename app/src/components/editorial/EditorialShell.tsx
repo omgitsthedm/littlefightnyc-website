@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { markAppReady } from "@/lib/appReady";
 
 // fonts/tokens/base are imported once at the entry (src/main.tsx). Only the
 // shell-specific overrides stay here.
@@ -18,6 +19,12 @@ import CommandPalette from "./CommandPalette";
 export default function EditorialShell() {
   const location = useLocation();
   const rootRef = useRef<HTMLDivElement | null>(null);
+
+  // Signals the tugboat splash that real content has composed (see lib/appReady).
+  // Fires after this subtree — nav, footer, and the route in <Outlet> — commits.
+  useEffect(() => {
+    markAppReady();
+  }, []);
 
   useEffect(() => {
     if (!rootRef.current) return;
