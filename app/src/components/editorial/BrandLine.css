@@ -98,14 +98,15 @@
   line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--lf-bone);
-  margin: 0;
-  max-width: 22ch;
+  margin: 0 auto;
+  max-width: 24ch;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .lf-line__text {
     font-size: var(--lf-text-3xl);
-    max-width: 26ch;
+    max-width: 28ch;
   }
 }
 
