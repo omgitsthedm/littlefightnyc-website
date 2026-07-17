@@ -346,16 +346,8 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
    stamped by lib/listReveal (IntersectionObserver, reveal-once).
    Items without the stamp yet stay put; the old view() timeline
    approach re-hid content on scroll-up and voided print/capture. */
-.lf-editorial .lf-cases__item[data-lf-reveal="pending"],
-.lf-editorial .lf-studio__item[data-lf-reveal="pending"],
-.lf-editorial .lf-sd-issues__item[data-lf-reveal="pending"],
-.lf-editorial .lf-sd-fallacies__item[data-lf-reveal="pending"],
-.lf-editorial .lf-answers-index__item[data-lf-reveal="pending"],
-.lf-editorial .lf-archive__entry[data-lf-reveal="pending"],
-.lf-editorial .lf-svc__card[data-lf-reveal="pending"] {
-  opacity: 0; /* fade only — no slide, so cards don't snap into place */
-}
-
+/* List items are always visible/composed — no JS-gated hide that can strand a
+ * card blank. (Retired the per-item scroll reveal for robustness.) */
 .lf-editorial .lf-cases__item[data-lf-reveal],
 .lf-editorial .lf-studio__item[data-lf-reveal],
 .lf-editorial .lf-sd-issues__item[data-lf-reveal],
@@ -363,8 +355,7 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
 .lf-editorial .lf-answers-index__item[data-lf-reveal],
 .lf-editorial .lf-archive__entry[data-lf-reveal],
 .lf-editorial .lf-svc__card[data-lf-reveal] {
-  transition: opacity 560ms cubic-bezier(0.25, 1, 0.5, 1);
-  transition-delay: calc(var(--lf-i, 0) * 40ms);
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -385,21 +376,13 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
    For figures/images inside long-form content. Subtle clip-path
    reveal from bottom plus slight scale settle, stamped once by
    lib/listReveal so it never repeats or re-hides. */
-/* Images already load smoothly via the skelImg shimmer skeleton — so the
- * scroll-reveal here is just a soft opacity settle, not a clip-path wipe on
- * top (which read as the image "building" and fought the skeleton). */
-.lf-editorial .lf-post__inner img[data-lf-reveal="pending"],
-.lf-editorial .lf-answer-page img[data-lf-reveal="pending"],
-.lf-editorial figure img[data-lf-reveal="pending"],
-.lf-editorial .lf-img-reveal[data-lf-reveal="pending"] {
-  opacity: 0;
-}
-
+/* Images load smoothly via the skelImg shimmer skeleton already — no separate
+ * JS-gated opacity reveal on top (which could strand an image blank). */
 .lf-editorial .lf-post__inner img[data-lf-reveal],
 .lf-editorial .lf-answer-page img[data-lf-reveal],
 .lf-editorial figure img[data-lf-reveal],
 .lf-editorial .lf-img-reveal[data-lf-reveal] {
-  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {

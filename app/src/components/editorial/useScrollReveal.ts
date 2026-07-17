@@ -18,7 +18,7 @@ export function useScrollReveal<T extends HTMLElement>({
   rootMargin = "0px 0px -10% 0px",
   once = true,
   revealOnMount = false,
-  fallbackMs = 1800,
+  fallbackMs = 260,
 }: Options = {}) {
   const ref = useRef<T | null>(null);
 

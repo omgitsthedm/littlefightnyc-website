@@ -26,7 +26,7 @@ const SELECTOR = [...LIST_SELECTORS, ...IMAGE_SELECTORS]
   .join(", ");
 
 const REVEAL_ATTR = "data-lf-reveal";
-const FALLBACK_MS = 1800;
+const FALLBACK_MS = 260;
 
 let observer: IntersectionObserver | null = null;
 

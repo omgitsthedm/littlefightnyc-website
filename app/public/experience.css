@@ -33,11 +33,11 @@
 .lf-bubble.lf-below{bottom:auto;top:calc(100% + 5px)}
 .lf-bubble.lf-below::after{bottom:auto;top:-5px}
 
-/* scroll reveal — CSS scroll-driven, flash-free, degrades to no-op */
-@media(prefers-reduced-motion:no-preference){@supports(animation-timeline:view()){
-  [data-reveal]{animation:lf-rv linear both;animation-timeline:view();animation-range:entry 0% entry 42%}
-  @keyframes lf-rv{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-}}
+/* NOTE: no [data-reveal] scroll-reveal here. That collided with host sites that
+ * already use the [data-reveal] attribute for their own reveal system (the React
+ * flagship), hijacking it with a scroll-timeline animation that stranded content
+ * at opacity:0. Reveals are each site's own concern; this module stays scoped to
+ * chrome (progress, glow, tug personality, press-bounce). */
 
 /* micro press-bounce */
 [data-press]:active,.lf-press:active{transform:scale(.95)}
