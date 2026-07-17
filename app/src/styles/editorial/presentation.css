@@ -111,3 +111,41 @@
   .lf-clients__heading, .lf-work__head h2, .lf-fight__title,
   .lf-momentum__title, .lf-contact-block__title
 ) { font-size: var(--lf-section-title); }
+
+/* ── INNER PAGES normalized onto the system ──────────────────────────────────
+   Every content column → the one --lf-content width so edges align across the
+   whole site. Full-bleed case-study hero/cover elements are intentionally
+   excluded (they earn the drama). Section rhythm + title size follow. */
+
+/* One content column, site-wide. */
+.lf-editorial :is(
+  .lf-pagehero__inner,
+  .lf-sd__inner, .lf-sd-issues__inner, .lf-sd-fallacies__inner,
+  .lf-sd-faq__inner, .lf-sd-local__inner, .lf-sd-related__inner, .lf-sd-share,
+  .lf-svc-router__inner, .lf-service-spread__inner, .lf-visual-index__inner,
+  .lf-cases__inner, .lf-case-detail__inner, .lf-studio-detail__inner,
+  .lf-case-detail-related__inner, .lf-case__inner, .lf-case__arc-inner,
+  .lf-journal__inner, .lf-journal-filter__inner, .lf-journal-featured__inner,
+  .lf-post-related__inner,
+  .lf-answers-index__inner, .lf-answer-page__inner, .lf-answers-hub__inner,
+  .lf-post--industry .lf-post__inner,
+  .lf-audit__inner, .lf-audit-page__inner,
+  .lf-contact-window__inner, .lf-contact-map__inner,
+  .lf-process__inner, .lf-census__inner,
+  .lf-ex-industries__inner, .lf-ex-answers__inner, .lf-ex-record__inner
+) { max-width: var(--lf-content); }
+
+/* One section rhythm for the main content-section groups. */
+.lf-editorial :is(
+  .lf-service-spread, .lf-visual-index,
+  .lf-sd, .lf-sd-issues, .lf-sd-fallacies, .lf-sd-faq, .lf-sd-local, .lf-sd-related,
+  .lf-process, .lf-census,
+  .lf-answer-page, .lf-answers-hub
+) { padding-block: var(--lf-sec-y); }
+
+/* One section-title size for inner-page content sections (page-hero H1 and
+   full-bleed statements keep their own scale). */
+.lf-editorial :is(
+  .lf-sd-issues__title, .lf-sd-fallacies__title, .lf-sd-faq__title,
+  .lf-process__title, .lf-service-spread__title, .lf-visual-index__title
+) { font-size: var(--lf-section-title); }
