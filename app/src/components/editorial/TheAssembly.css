@@ -41,7 +41,10 @@
 }
 
 .lf-assembly__runway {
-  height: 260vh;
+  /* Scrub distance = runway − 100svh pinned stage. 200vh → the whole
+     chaos→assembly sequence completes in ~one screen of scroll, so it reads
+     as a tight cinematic beat instead of a long stretch of empty scroll. */
+  height: 200vh;
 }
 
 .lf-assembly__stage {
@@ -376,7 +379,7 @@
    the group centers as one composition. Cards keep their --p math but
    anchor to the canvas box center. */
 @media (max-width: 640px) {
-  .lf-assembly__runway { height: 160vh; }
+  .lf-assembly__runway { height: 145vh; }
   .lf-assembly__stage {
     --lf-as-scale: 1; /* phone poses are authored 1:1 */
     display: flex;

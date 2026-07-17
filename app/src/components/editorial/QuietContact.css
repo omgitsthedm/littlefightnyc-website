@@ -48,6 +48,8 @@
   display: grid;
   gap: var(--lf-space-3);
   max-width: 56rem;
+  margin-inline: auto;
+  text-align: center;
 }
 
 .lf-contact-block__eyebrow {
@@ -84,7 +86,8 @@
 }
 
 .lf-contact-block__dek {
-  max-width: 54ch;
+  max-width: 52ch;
+  margin-inline: auto;
   font-family: var(--lf-serif);
   font-size: var(--lf-text-md);
   line-height: 1.42;

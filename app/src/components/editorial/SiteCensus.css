@@ -36,6 +36,7 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
+  text-align: center;
 }
 
 .lf-census__grid {
