@@ -25,7 +25,7 @@
   padding: var(--lf-space-5);
   background: var(--lf-paper);
   border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-md);
+  border-radius: var(--lf-radius-card);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 

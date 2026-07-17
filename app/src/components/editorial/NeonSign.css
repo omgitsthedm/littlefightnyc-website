@@ -89,11 +89,11 @@
 .lf-neon__glow { stroke: var(--neon); }
 .lf-neon__core { stroke: var(--core-col); }
 
-.lf-neon__word { font-family: var(--lf-display, Inter, sans-serif); font-weight: 600; font-size: 134px; letter-spacing: 0.02em; }
+.lf-neon__word { font-family: var(--lf-display, 'Barlow', sans-serif); font-weight: 600; font-size: 134px; letter-spacing: 0.02em; }
 .lf-neon__word.lf-neon__glow { stroke-width: 6.5; }
 .lf-neon__word.lf-neon__core { stroke-width: 2; }
 
-.lf-neon__brand { font-family: var(--lf-display, Inter, sans-serif); font-weight: 600; font-size: 47px; letter-spacing: 0.09em; }
+.lf-neon__brand { font-family: var(--lf-display, 'Barlow', sans-serif); font-weight: 600; font-size: 47px; letter-spacing: 0.09em; }
 .lf-neon__brand.lf-neon__glow { stroke-width: 5; }
 .lf-neon__brand.lf-neon__core { stroke-width: 1.6; }
 

@@ -18,7 +18,6 @@
   "dependencies": {
     "@fontsource-variable/oswald": "^5.2.8",
     "@fontsource/barlow": "^5.2.8",
-    "@fontsource/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.562.0",
