@@ -46,22 +46,48 @@ root.render(
   </BrowserRouter>,
 );
 
-// Dismiss the tugboat splash (index.html) once the app has painted its first
-// frame. Lives here in the bundle — the site CSP is `script-src 'self'`, so no
-// inline handler could do it. A ~450ms floor keeps it a graceful beat rather
-// than a jarring flash on fast loads; the CSS safety-dismiss is the backstop if
-// this never runs.
+// Dismiss the tugboat splash (index.html) only once the site is actually
+// COMPOSED — not at React's first render() call. We hold it until fonts are
+// ready (no post-reveal text reflow) AND the real content has mounted
+// (markAppReady, fired from the shell/Home effect after their route subtree
+// commits), then let two frames settle so the reveal is one clean motion
+// instead of the header/footer-then-content assembly you'd otherwise watch
+// (worst in Safari, which schedules the lazy chunks independently).
+//
+// Lives in the bundle — the CSP is `script-src 'self'`, so no inline handler
+// could do it. A MIN floor keeps it a graceful beat; a MAX cap guarantees it
+// never hangs on a stalled resource; and index.html's CSS safety-dismiss is the
+// last-resort backstop if this code never runs at all.
 if (typeof document !== "undefined") {
-  const dismissBoot = () => {
-    const el = document.getElementById("lf-boot");
-    if (!el) return;
-    const wait = Math.max(0, 450 - performance.now());
-    window.setTimeout(() => {
-      el.classList.add("lf-boot--out");
-      window.setTimeout(() => el.remove(), 460);
-    }, wait);
-  };
-  requestAnimationFrame(() => requestAnimationFrame(dismissBoot));
+  const MIN_MS = 500;
+  // Cap the wait so a stalled asset can't trap the splash. Kept just under the
+  // 6.5s CSS safety-dismiss so JS stays in control on any real (even slow) load.
+  const MAX_MS = 6000;
+  const start = performance.now();
+
+  const twoFrames = () =>
+    new Promise<void>((res) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => res())),
+    );
+  const timeout = (ms: number) =>
+    new Promise<void>((res) => window.setTimeout(res, ms));
+  const fontsReady =
+    "fonts" in document ? document.fonts.ready.then(() => undefined) : Promise.resolve();
+
+  void import("./lib/appReady").then(({ appReady }) => {
+    // Composed = fonts loaded + content mounted; capped so a stalled asset can't
+    // trap the splash.
+    const composed = Promise.all([fontsReady, appReady]).then(() => undefined);
+    Promise.race([composed, timeout(MAX_MS)])
+      .then(twoFrames)
+      .then(() => timeout(Math.max(0, MIN_MS - (performance.now() - start))))
+      .then(() => {
+        const el = document.getElementById("lf-boot");
+        if (!el) return;
+        el.classList.add("lf-boot--out");
+        window.setTimeout(() => el.remove(), 460);
+      });
+  });
 }
 
 // Safari has no scroll-driven CSS animations, so restore the hero zoom drift

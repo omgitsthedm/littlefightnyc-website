@@ -1,7 +1,8 @@
 // fonts/tokens/base are imported once at the entry (src/main.tsx) so their
 // @font-face rules live in a single stylesheet (no duplicate font downloads).
 
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import { markAppReady } from "@/lib/appReady";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import BlueprintFrame from "@/components/editorial/BlueprintFrame";
@@ -34,11 +35,16 @@ const HOME_FAQ = [
   {
     question: "Who does Little Fight NYC help?",
     answer:
-      "Little Fight NYC helps New York shops, salons, pharmacies, restaurants, studios, service businesses, and teams under 50.",
+      "Little Fight NYC helps New York law firms, bars, restaurants, clothing brands, salons, barbershops, clinics, pharmacies, shops, gyms, studios, and service teams under 50.",
   },
 ];
 
 export default function Home() {
+  // Home renders outside EditorialShell, so it signals the splash itself.
+  useEffect(() => {
+    markAppReady();
+  }, []);
+
   return (
     <div className="lf-editorial" id="top">
       <Suspense fallback={null}>

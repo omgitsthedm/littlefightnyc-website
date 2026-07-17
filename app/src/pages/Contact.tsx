@@ -63,7 +63,7 @@ export default function Contact() {
 
           <TimelineStrip
             label="What happens after you contact Little Fight NYC"
-            summary="You call, text, email, or send the form. From 9am to 9pm New York time, we review it and follows up. If you leave a message, we return it within 2 hours. Consulting is always free."
+            summary="You call, text, email, or send the form. From 9am to 9pm New York time, we review it and follow up. If you leave a message, we return it within 2 hours. Consulting is always free."
             beats={[
               { label: "You tell us", sub: "Call, text, email, or form" },
               { label: "Context reviewed", sub: "9am-9pm ET" },

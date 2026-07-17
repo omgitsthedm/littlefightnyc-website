@@ -145,7 +145,7 @@
     },
     {
       "path": "/examples/",
-      "title": "Examples: Real NYC Small Business Work & Plain Answers | Little Fight NYC",
+      "title": "NYC Small Business Work & Examples | Little Fight NYC",
       "description": "Real examples of our NYC work, plus plain answers on websites, IT support, local SEO, and software costs.",
       "h1": "Proof, maps, and plain answers.",
       "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
@@ -154,7 +154,7 @@
     },
     {
       "path": "/answers/",
-      "title": "Owner Answers: NYC Small Business Tech Questions | Little Fight NYC",
+      "title": "NYC Small Business Tech Answers | Little Fight NYC",
       "description": "Plain answers to the questions NYC owners actually ask. Websites, Google visibility, software costs, POS, email, and urgent fixes. Short, direct, no selling.",
       "h1": "Plain answers, no selling.",
       "shortAnswer": "Short answer: a library of plain answers to real NYC small-business tech questions. What to check, what it usually is, and when to get help.",
@@ -369,9 +369,9 @@
     },
     {
       "path": "/answers/squarespace-vs-hiring-web-designer-reddit/",
-      "title": "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly",
+      "title": "Squarespace vs Hiring a Web Designer: Reddit, Settled",
       "description": "Reddit's Squarespace-vs-designer debate, settled honestly: when DIY is genuinely enough, when hiring pays, and why owner time is the real budget in NYC.",
-      "h1": "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly",
+      "h1": "Squarespace vs Hiring a Web Designer: Reddit, Settled",
       "shortAnswer": "Short answer: Reddit is right that Squarespace is enough for many simple businesses — and right that most owners never finish the DIY site they start. The honest question is not which tool wins. It is whether your evenings are the budget.",
       "type": "Article",
       "image": "/assets/websites.webp",
@@ -438,9 +438,9 @@
     },
     {
       "path": "/answers/google-business-profile-tips-reddit/",
-      "title": "Google Business Profile Tips Reddit Swears By — Checked by a Pro",
+      "title": "Google Business Profile Tips From Reddit, Pro-Checked",
       "description": "Reddit's favorite Google Business Profile tips, checked by a pro: what actually moves NYC map rankings, what barely matters, and what risks suspension.",
-      "h1": "Google Business Profile Tips Reddit Swears By — Checked by a Pro",
+      "h1": "Google Business Profile Tips From Reddit, Pro-Checked",
       "shortAnswer": "Short answer: Reddit's favorite tips are correct. Complete every field, use real photos, keep reviews steady, and pick the right category. The one it undersells: your primary category and review replies matter more than posting frequency. And keyword-stuffing your business name can get you suspended.",
       "type": "Article",
       "image": "/assets/nyc-hair-salon-street.webp",
@@ -779,7 +779,7 @@
     },
     {
       "path": "/audit/",
-      "title": "Instant Website Scan for NYC Small Businesses | Little Fight NYC",
+      "title": "Instant Website Scan for NYC Business | Little Fight NYC",
       "description": "Run a free instant scan of your website. It checks structure, copy, local signals, speed, and contact paths — then shows what to fix.",
       "h1": "See what your site is leaking.",
       "shortAnswer": "Short answer: the Instant Website Scan is a free, automated first read of your website. For a human review of your whole setup, book the free Tech Audit.",
@@ -1251,7 +1251,7 @@
     },
     {
       "path": "/case-studies/venuecircuit/",
-      "title": "VenueCircuit: A Financial OS for Venues — Case Study | Little Fight NYC",
+      "title": "VenueCircuit: Financial OS for Venues | Little Fight NYC",
       "description": "How Little Fight built and shipped VenueCircuit. A live financial OS for independent venues. Close the night in 90 seconds.",
       "h1": "VenueCircuit",
       "shortAnswer": "Short answer: VenueCircuit is Little Fight's own shipped software product. A financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
