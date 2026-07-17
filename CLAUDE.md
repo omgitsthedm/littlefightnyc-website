@@ -1,8 +1,10 @@
 # Little Fight NYC Website Config
 
-## 2026-07-17 (later) — Careful re-land, wave by wave (LIVE, `272b904`)
+## 2026-07-17 (later) — Careful re-land, wave by wave (LIVE, `1ad20c4`)
 
-After the rollback below, the reverted work was re-landed **one wave at a time, each re-verified against THIS tree instead of replayed**. That mattered — half the old commits were false in the rolled-back tree. Waves live: `21e98ef` → `0650769` → `a1e5e90` → `8468177` → `272b904`.
+After the rollback below, the reverted work was re-landed **one wave at a time, each re-verified against THIS tree instead of replayed**. That mattered — half the old commits were false in the rolled-back tree. Waves live: `21e98ef` (dead code + radius bug + WCAG icon) → `0650769` (10px dataviz floor) → `a1e5e90` (a11y/SEO/dek) → `8468177` (Tugboat) → `272b904` (splash) → `1ad20c4` (i18n scaffolding). Final sweep: **18/18 pass** across 9 routes × desktop/mobile — splash clears, tugboat present, one h1, no sub-10px dataviz, palette `#050507`, no lost assets, no overflow, no console errors.
+
+**i18n is landed but inert, and that's the point.** `available.ts` reads a NON-eager `import.meta.glob` (keys only), so `HAS_TRANSLATIONS` is build-time and neither the JSON nor i18next enters the bundle; `LanguageSwitcher` renders null and never lazy-imports the inner component. Verified: i18next is isolated to one lazy chunk, the eager `index` chunk stayed **byte-identical (221.47 kB)**, and a real load downloads **0** i18n chunks even at the footer. Drop a second `src/i18n/locales/<code>/common.json` and it activates itself. **Land deps WITH their sources** — splitting them is what broke the rollback deploy.
 
 **The brand kit was NOT what broke the site.** Its entire visible footprint is the nav mark + a palette shift. The centering (`1abf6a7`/`1f8e71a`) landed **~20 hours later** and is unrelated — the rollback just bundled them. So the Tugboat came back on its own.
 
