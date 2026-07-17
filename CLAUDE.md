@@ -1,5 +1,22 @@
 # Little Fight NYC Website Config
 
+## 2026-07-17 — Splash + i18n + audit batch + the presentation system (LIVE, `cc04604`)
+
+Four waves shipped and live-verified on the canonical domain (fresh cache, 9 page types × desktop 1440 / mobile 390).
+
+- **Tugboat splash (`cddfdef`, timing fixed `5c07b7e`):** zero-network inline splash for worst-connection loads. It now holds until fonts + content have actually composed, so the reveal is one clean cut instead of a flash of half-built page (the Safari case). Splash removes on compose — verified gone on every route.
+- **i18n scaffolding (`cc09d9b`):** capability only, lazy-loaded — **no translations exist yet**. Don't treat the presence of the i18n layer as a shipped multilingual site.
+- **Audit remediation (`451fd9c`):** drawer inerts the page behind it; home FAQ matches its FAQPage schema; 6 over-long titles shortened; **the 56 thin area × service combo pages are now `noindex`** (they were diluting the quality signal — area hubs + service pages carry local SEO, this is deliberate, don't "fix" it back); hardcoded orange → `color-mix(var(--lf-fight))`; dataviz labels floored at 10px; `experience.css` inlined to drop a render-blocking request.
+- **The presentation system (`479802b` foundation → `cc04604` sitewide):** the site read as sloppy because sections used **8 different vertical paddings**, inner widths jumped 1312/1440/732/1526 so no two section edges lined up, and the same-tier title was 80px on home vs 44px on inner pages. Now: ONE column (`--lf-content` 1200), THREE rhythms (`--lf-sec-y` / `-tight` / `-hero`), ONE section-title size (`--lf-section-title`). Home was the reference, then rolled across every inner page.
+
+**How the rollout works (important before you touch a section):** it's a **centralized `:is()` retrofit in `presentation.css`**, not per-component rewrites — the components still carry their own bespoke classes and the retrofit normalizes them from above. So editing a section's own padding/width/title-size locally may silently lose to the retrofit. Full-bleed case-study hero/cover elements are **intentionally excluded** so they keep their drama; `SignatureBand` keeps 80px as an intentional statement moment. **The tokens are scoped on `.lf-editorial`, not `:root`** — reading `--lf-content` off `document.documentElement` returns empty and will fool a measurement probe.
+
+**Live-verified `cc04604`:** desktop resolves 1200 / 128px / 52px and mobile 350 / 72px / 32px uniformly across home, services hub, service detail, about, case studies, journal, contact, tech-audit, examples. Zero document overflow, zero console errors, `h1`=1 everywhere, cold-cache asset load 52/52 × 200, zero broken images.
+
+**Myth busted (don't re-chase):** a Playwright pass appeared to show route chunks failing (`ERR_ABORTED`) on every desktop page. They're **preload/import dedupe + teardown aborts** — the same asset returns 200 and the page renders. A harness that prints its `requestfailed` list after `browser.close()` will attribute teardown aborts to the site. Cold-cache run: 0 failures, 0 orphans.
+
+**Next (stated, not done):** fold the `presentation.css` retrofit into the components themselves so sections own their anatomy and the `:is()` override layer can retire.
+
 ## 2026-07-15 — Browser-chrome brand color completed (LIVE, `ecc67d6`)
 
 Orange browser chrome is now complete across every platform surface. `theme-color`, manifest `theme_color`, and Safari `mask-icon` already carried **`#F97316`**; added `msapplication-TileColor` + `msapplication-navbutton-color` (`#F97316`) in `app/index.html` so Edge/Windows tiles match. `RouteMetaManager.tsx` re-asserts `theme-color=#F97316` on every route (add-or-update, never removes) — so the tab bar stays orange through SPA nav. Verified live: chromium + webkit × iPhone/iPad/desktop × light/dark all resolve `#F97316` (one webkit read caught the head mid-hydration → transient, self-heals). Orange chrome is intentional and matches the orange-as-signal doctrine; do not revert to a dark/default bar.
