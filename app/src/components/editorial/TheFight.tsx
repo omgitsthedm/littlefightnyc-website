@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
+import EditorialFigure from "./EditorialFigure";
 import "./TheFight.css";
 
 /**
@@ -47,6 +48,15 @@ export default function TheFight() {
             Closing that gap is the whole reason we&rsquo;re called Little Fight.
           </p>
         </div>
+
+        <EditorialFigure
+          className="lf-fight__figure"
+          src="/assets/mainstreet-cafe-owner.webp"
+          alt="A small-shop owner working the counter of his store"
+          caption="The corner store never got the tech team. That's the whole fight."
+          width={1600}
+          height={1067}
+        />
 
         <div ref={vsRef} className="lf-fight__vs" data-revealed="false">
           <div className="lf-fight__side lf-fight__side--them">

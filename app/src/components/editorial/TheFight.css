@@ -178,3 +178,7 @@
   .lf-fight__side { opacity: 1; transform: none; transition: none; }
   .lf-fight__cta { transition: none; }
 }
+
+/* Mission visual aid — the human face of who we build for. */
+.lf-fight__figure { margin: var(--lf-space-8) auto; max-width: 100%; }
+@media (min-width: 768px) { .lf-fight__figure { margin: var(--lf-space-9) auto; } }

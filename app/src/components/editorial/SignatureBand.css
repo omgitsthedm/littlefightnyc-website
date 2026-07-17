@@ -53,10 +53,13 @@
 .lf-signature__em { color: var(--lf-fight); }
 
 .lf-signature__stats {
-  margin: 0;
+  margin: var(--lf-space-8) 0 0;   /* guaranteed gap below the headline (title margin was collapsing to 0 on mobile) */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--lf-space-8) var(--lf-space-5);
+  gap: var(--lf-space-7) var(--lf-space-5);
+}
+@media (min-width: 768px) {
+  .lf-signature__stats { margin-top: var(--lf-space-9); }
 }
 @media (min-width: 860px) {
   .lf-signature__stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
