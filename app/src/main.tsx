@@ -46,6 +46,24 @@ root.render(
   </BrowserRouter>,
 );
 
+// Dismiss the tugboat splash (index.html) once the app has painted its first
+// frame. Lives here in the bundle — the site CSP is `script-src 'self'`, so no
+// inline handler could do it. A ~450ms floor keeps it a graceful beat rather
+// than a jarring flash on fast loads; the CSS safety-dismiss is the backstop if
+// this never runs.
+if (typeof document !== "undefined") {
+  const dismissBoot = () => {
+    const el = document.getElementById("lf-boot");
+    if (!el) return;
+    const wait = Math.max(0, 450 - performance.now());
+    window.setTimeout(() => {
+      el.classList.add("lf-boot--out");
+      window.setTimeout(() => el.remove(), 460);
+    }, wait);
+  };
+  requestAnimationFrame(() => requestAnimationFrame(dismissBoot));
+}
+
 // Safari has no scroll-driven CSS animations, so restore the hero zoom drift
 // with a rAF-throttled JS fallback (no-op on Chromium). Dynamically imported at
 // idle so it neither competes with first paint nor sits in the entry chunk.
