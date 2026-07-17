@@ -13,7 +13,12 @@ Four waves shipped and live-verified on the canonical domain (fresh cache, 9 pag
 
 **Live-verified `cc04604`:** desktop resolves 1200 / 128px / 52px and mobile 350 / 72px / 32px uniformly across home, services hub, service detail, about, case studies, journal, contact, tech-audit, examples. Zero document overflow, zero console errors, `h1`=1 everywhere, cold-cache asset load 52/52 × 200, zero broken images.
 
-**Myth busted (don't re-chase):** a Playwright pass appeared to show route chunks failing (`ERR_ABORTED`) on every desktop page. They're **preload/import dedupe + teardown aborts** — the same asset returns 200 and the page renders. A harness that prints its `requestfailed` list after `browser.close()` will attribute teardown aborts to the site. Cold-cache run: 0 failures, 0 orphans.
+**`ERR_ABORTED` on `/assets/` is expected here — don't re-chase it.** A QA pass will show aborted asset requests on desktop and it looks like the site failing to load its chunks. It isn't. Two separate causes, both benign:
+
+1. **Responsive-image `srcset` candidate cancellation** (the reproducible one): the browser starts a candidate, picks a different width, and cancels the first. Always an `-NNN.webp`, and **the same URL also returns 200 in the same load**. Measured across 6 routes: 6 aborts, **0 never-recovered**.
+2. **Harness teardown**: a script that prints its `requestfailed` list after `browser.close()` attributes teardown aborts of in-flight/prefetched chunks to the site. That's what made it look like route chunks (`ServiceDetail-*.js`, `ShareButton-*.css`) were failing.
+
+**The metric that matters is never-recovered, not abort count** — i.e. for each aborted URL, did that same URL also get a 200 in that load? Assert on that, and on rendered health (`h1`, stylesheet count, broken images, console errors). Cold-cache control run: **52/52 assets × 200, 0 aborts, 0 orphans, 0 broken images**. A genuinely lost chunk would blank the route or throw, not render clean.
 
 **Next (stated, not done):** fold the `presentation.css` retrofit into the components themselves so sections own their anatomy and the `:is()` override layer can retire.
 
