@@ -12,6 +12,7 @@ const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMet
 const FaqList = lazy(() => importWithRetry(() => import("@/components/editorial/FaqList")));
 const TheFight = lazy(() => importWithRetry(() => import("@/components/editorial/TheFight")));
 const WorkGrid = lazy(() => importWithRetry(() => import("@/components/editorial/WorkGrid")));
+const SystemVerbs = lazy(() => importWithRetry(() => import("@/components/editorial/SystemVerbs")));
 const MomentumSection = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumSection")));
 const MomentumCursorGlow = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumCursorGlow")));
 const RecentClients = lazy(() => importWithRetry(() => import("@/components/editorial/RecentClients")));
@@ -65,17 +66,20 @@ export default function Home() {
             <BlueprintFrame index={2} label="Ways to start">
               <WorkGrid />
             </BlueprintFrame>
-            <BlueprintFrame index={3} label="Software you own">
+            <BlueprintFrame index={3} label="How we work">
+              <SystemVerbs />
+            </BlueprintFrame>
+            <BlueprintFrame index={4} label="Software you own">
               <MomentumSection />
               <MomentumCursorGlow />
             </BlueprintFrame>
-            <BlueprintFrame index={4} label="The fight">
+            <BlueprintFrame index={5} label="The fight">
               <TheFight />
             </BlueprintFrame>
-            <BlueprintFrame index={5} label="The record">
+            <BlueprintFrame index={6} label="The record">
               <SignatureBand />
             </BlueprintFrame>
-            <BlueprintFrame index={6} label="Open for business">
+            <BlueprintFrame index={7} label="Open for business">
               <NeonSign />
             </BlueprintFrame>
             <BrandLine />
