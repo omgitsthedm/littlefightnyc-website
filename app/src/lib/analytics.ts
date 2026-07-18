@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-const GA_ID = import.meta.env.VITE_GA_ID?.trim() ?? "";
+const GA_ID = import.meta.env.VITE_GA_ID?.trim() ?? "G-0Q1TGWH0HL";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`;
 const CLARITY_ID = import.meta.env.VITE_CLARITY_ID?.trim() ?? "";
 const CLARITY_SRC = `https://www.clarity.ms/tag/${encodeURIComponent(CLARITY_ID)}`;
