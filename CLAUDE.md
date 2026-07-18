@@ -1,5 +1,26 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — OKLCH signal ramp (LIVE, `5469181`)
+
+The interactive orange states are now a perceptually-uniform OKLCH ramp
+(#F97316 ≈ oklch(0.705 0.187 47.6); hover/active step only in lightness at fixed
+hue+chroma). **Resting `--lf-fight` is untouched — verified pixel-identical
+(token + live CTA both = rgb(249,115,22)).**
+
+- New tokens `--lf-fight-hover` / `--lf-fight-active` / `--lf-fight-ring`; hex
+  fallbacks in `.lf-editorial`, upgraded by an `@supports (color: oklch())` block.
+  **⚠️ Gotcha:** a plain two-line `hex; oklch;` fallback does NOT work for
+  custom-PROPERTY values — custom props parse permissively so the invalid oklch
+  wins and resolves to nothing at use-time. Must gate the oklch on `@supports`
+  (or the hex fallback is dead). This is different from normal properties.
+- `--lf-ember` (legacy hover token) now aliases the ramp. All 25 of its uses are
+  inside `:hover/:active/:focus` (verified with a block-parser — ZERO resting
+  uses), so only interactive states shift, subtly (hover a touch more vivid than
+  the old pastel `#FB8B3C`).
+- `:focus-visible` gained a soft OKLCH halo (`box-shadow: 0 0 0 4px
+  var(--lf-fight-ring)`) over the existing outline — additive keyboard-a11y win.
+- Ratchet unaffected (tokens.css excluded; base.css uses the token var).
+
 ## 2026-07-18 — Per-page instruments: 3 of 4 service ServiceDiagrams (LIVE, `de68c6c`/`0381b67`/`1729621`)
 
 The service pages' static diagrams became bespoke canvas instruments in the
