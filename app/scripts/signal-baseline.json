@@ -11,6 +11,7 @@
   "src/components/dataviz/MiniMapNYC.tsx": 1,
   "src/components/dataviz/ScoreRing.css": 1,
   "src/components/dataviz/ServiceDiagram.css": 1,
+  "src/components/dataviz/SiteInFourteen.tsx": 3,
   "src/components/dataviz/TermMap.css": 1,
   "src/components/dataviz/TimelineStrip.css": 1,
   "src/components/dataviz/WhoAnswers.tsx": 2,

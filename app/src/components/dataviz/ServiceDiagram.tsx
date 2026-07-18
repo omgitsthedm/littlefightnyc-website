@@ -1,7 +1,7 @@
 import FlowDiagram from "./FlowDiagram";
-import TimelineStrip from "./TimelineStrip";
 import LeadsCaught from "./LeadsCaught";
 import WhoAnswers from "./WhoAnswers";
+import SiteInFourteen from "./SiteInFourteen";
 import "./ServiceDiagram.css";
 
 /**
@@ -12,19 +12,9 @@ import "./ServiceDiagram.css";
  */
 
 const DIAGRAMS: Record<string, () => React.ReactElement> = {
-  "custom-local-websites": () => (
-    <TimelineStrip
-      label="How a website build runs"
-      summary="The build runs in three beats — build, review, ship — and usually ships by day 14. If our side misses the date, you don't pay. Pacing shown is typical."
-      caption="Typical pacing — most builds ship within 14 days"
-      beats={[
-        { label: "Build", sub: "typical" },
-        { label: "Review", sub: "typical" },
-        { label: "Ship", sub: "≤ day 14", marker: true },
-      ]}
-      badge="Miss the date on our side = you don't pay"
-    />
-  ),
+  // The 14-day build, drawn as an instrument: a site assembles in a browser
+  // frame as the day counter climbs to 14, then ships LIVE.
+  "custom-local-websites": () => <SiteInFourteen />,
 
   // The before/after intake story, drawn as an instrument (leads slip away →
   // one intake layer catches every one) rather than a static node diagram.
