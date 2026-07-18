@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useForce } from "@/kernel/force-context";
 import "./AmbientField.css";
 
 /**
@@ -13,6 +14,9 @@ import "./AmbientField.css";
  */
 export default function AmbientField() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // Subscribe to the one physics (Small Craft Law 1). The field no longer wires
+  // its own pointer listener — it reads the shared force and leans toward it.
+  const getForces = useForce();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -62,8 +66,19 @@ export default function AmbientField() {
     }
 
     const LINK = 132;
+    // Smoothed parallax offset driven by the shared pointer force. Zero at rest
+    // (pointer-center → 0) and under reduced motion (forces sit neutral), so the
+    // field is byte-identical when the visitor isn't moving — reward, never tax.
+    let ox = 0;
+    let oy = 0;
     function frame() {
+      const f = getForces();
+      const AMP = 14; // px of lean at the viewport edge
+      ox += ((f.ptrX - 0.5) * 2 * AMP - ox) * 0.06;
+      oy += ((f.ptrY - 0.5) * 2 * AMP - oy) * 0.06;
       ctx!.clearRect(0, 0, width, height);
+      ctx!.save();
+      ctx!.translate(ox, oy);
       for (const n of nodes) {
         n.x += n.vx;
         n.y += n.vy;
@@ -96,6 +111,7 @@ export default function AmbientField() {
         ctx!.fillStyle = "rgba(96, 165, 250, 0.55)";
         ctx!.fill();
       }
+      ctx!.restore();
       raf = requestAnimationFrame(frame);
     }
 
@@ -137,6 +153,8 @@ export default function AmbientField() {
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
     };
+    // getForces is a stable context getter; the canvas loop reads it live.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

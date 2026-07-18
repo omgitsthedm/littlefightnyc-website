@@ -14,6 +14,7 @@ import './styles/editorial/motion.css'
 // "all at once" (see reveal-static.css). Imported after base/motion so it wins.
 import './styles/editorial/reveal-static.css'
 import App from './App.tsx'
+import { ForceFieldProvider } from './kernel/ForceField'
 
 /** Run at idle, or ASAP where requestIdleCallback is unavailable. */
 function onIdle(fn: () => void, timeout = 1) {
@@ -45,7 +46,9 @@ const rootEl = document.getElementById('root')!;
 const root = createRoot(rootEl);
 root.render(
   <BrowserRouter>
-    <App />
+    <ForceFieldProvider>
+      <App />
+    </ForceFieldProvider>
   </BrowserRouter>,
 );
 
