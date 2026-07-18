@@ -34,12 +34,19 @@
 @media (min-width: 768px) { .lf-signature__inner { padding-inline: var(--lf-margin-tablet); } }
 @media (min-width: 1280px) { .lf-signature__inner { padding-inline: var(--lf-margin-desktop); } }
 
-.lf-signature__eyebrow {
+/* Scoped under .lf-editorial (→ specificity 0,2,0) so these margins beat the
+   base.css `.lf-editorial h1,h2,…,p { margin: 0 }` reset (0,1,1). A bare
+   `.lf-signature__eyebrow`/`__title` (0,1,0) LOSES to that reset — which zeroed
+   the title's bottom margin and dropped "small businesses." straight onto the
+   stat row. This is the heading form of the documented `.lf-editorial` reset
+   gotcha; every other section title already out-specifies it via a descendant
+   selector. */
+.lf-editorial .lf-signature__eyebrow {
   color: var(--lf-fight);
   margin: 0 0 var(--lf-space-5);
 }
 
-.lf-signature__title {
+.lf-editorial .lf-signature__title {
   font-family: var(--lf-display);
   font-weight: 700;
   font-size: var(--lf-text-2xl);
