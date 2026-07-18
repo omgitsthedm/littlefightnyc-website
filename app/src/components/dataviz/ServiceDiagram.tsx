@@ -1,7 +1,7 @@
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import FlowDiagram from "./FlowDiagram";
 import TimelineStrip from "./TimelineStrip";
 import LeadsCaught from "./LeadsCaught";
+import WhoAnswers from "./WhoAnswers";
 import "./ServiceDiagram.css";
 
 /**
@@ -10,58 +10,6 @@ import "./ServiceDiagram.css";
  * (outcome promises, includes[], commonIssues nouns). Map lives here so the
  * data layer stays untouched.
  */
-
-/** it-support response-window strip. Facts: 2-hour callbacks 9am-9pm ET,
- * on-site within 24 hours when needed, with next-business-day follow-up after hours. */
-function ResponseWindow() {
-  const ref = useScrollReveal<HTMLElement>({ threshold: 0.3 });
-  return (
-    <figure
-      ref={ref}
-      className="lf-respwin"
-      role="group"
-      aria-label="Response windows"
-    >
-      <p className="lf-viz-sr">
-        From 9am to 9pm Eastern, calls get a callback within 2 hours. After
-        hours, leave a message and Little Fight NYC will follow up. When the fix
-        needs hands on hardware, we are on-site within 24 hours.
-      </p>
-      <div className="lf-respwin__body" aria-hidden="true">
-        <div className="lf-respwin__row">
-          <p className="lf-respwin__row-label">Callback window</p>
-          <div className="lf-respwin__band">
-            <span className="lf-respwin__seg lf-respwin__seg--off" style={{ width: "37.5%" }} />
-            <span className="lf-respwin__seg lf-respwin__seg--live" style={{ width: "50%" }}>
-              <span className="lf-respwin__bracket">2-hour callback</span>
-            </span>
-            <span className="lf-respwin__seg lf-respwin__seg--off" style={{ width: "12.5%" }} />
-          </div>
-          <div className="lf-respwin__scale">
-            <span>12am</span>
-            <span style={{ left: "37.5%" }}>9am</span>
-            <span style={{ left: "87.5%" }}>9pm</span>
-            <span className="lf-respwin__scale-end">12am</span>
-          </div>
-          <p className="lf-respwin__note">
-            After hours: leave a message and we will follow up.
-          </p>
-        </div>
-        <div className="lf-respwin__row">
-          <p className="lf-respwin__row-label">On-site</p>
-          <div className="lf-respwin__band lf-respwin__band--onsite">
-            <span className="lf-respwin__seg lf-respwin__seg--onsite" style={{ width: "100%" }}>
-              <span className="lf-respwin__bracket">within 24 hours, when needed</span>
-            </span>
-          </div>
-        </div>
-      </div>
-      <figcaption className="lf-respwin__caption">
-        Callbacks within 2 hours, 9am–9pm ET · on-site within 24 hours
-      </figcaption>
-    </figure>
-  );
-}
 
 const DIAGRAMS: Record<string, () => React.ReactElement> = {
   "custom-local-websites": () => (
@@ -82,7 +30,8 @@ const DIAGRAMS: Record<string, () => React.ReactElement> = {
   // one intake layer catches every one) rather than a static node diagram.
   "business-systems": () => <LeadsCaught />,
 
-  "it-support": () => <ResponseWindow />,
+  // "It breaks → a human answers on a real timeline", drawn as an instrument.
+  "it-support": () => <WhoAnswers />,
 
   "tech-consulting": () => (
     <FlowDiagram
