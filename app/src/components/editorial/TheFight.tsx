@@ -50,7 +50,7 @@ export default function TheFight() {
           </p>
         </div>
 
-        <div ref={vsRef} className="lf-fight__vs" data-revealed="false">
+        <div ref={vsRef} className="lf-fight__vs" data-revealed="true">
           <div className="lf-fight__side lf-fight__side--them">
             <p className="lf-mono lf-fight__side-label">What they brought</p>
             <ul className="lf-fight__list">

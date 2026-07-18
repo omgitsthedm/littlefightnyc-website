@@ -48,7 +48,7 @@ export default function StatBlock({
       ref={ref}
       className="lf-stats"
       data-reveal
-      data-revealed="false"
+      data-revealed="true"
       aria-label={eyebrow ?? "By the numbers"}
     >
       {eyebrow && (

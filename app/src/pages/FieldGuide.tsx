@@ -210,7 +210,7 @@ export default function FieldGuide() {
             ref={recordRef}
             className="lf-ex-record__inner"
             data-reveal
-            data-revealed="false"
+            data-revealed="true"
           >
             <header className="lf-ex-head">
               <p className="lf-ex-head__eyebrow">The record</p>

@@ -36,7 +36,7 @@ export default function SignatureBand() {
       <div className="lf-signature__ambient" aria-hidden="true">
         <AmbientField />
       </div>
-      <div ref={ref} className="lf-signature__inner" data-revealed="false">
+      <div ref={ref} className="lf-signature__inner" data-revealed="true">
         <p className="lf-mono lf-signature__eyebrow">The record</p>
         <h2 className="lf-signature__title">
           Punching above our weight for New York&rsquo;s{" "}

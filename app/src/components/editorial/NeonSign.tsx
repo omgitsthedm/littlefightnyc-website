@@ -67,7 +67,7 @@ export default function NeonSign() {
     <section
       ref={ref}
       className="lf-neon"
-      data-revealed="false"
+      data-revealed="true"
       data-open={openNow.open ? "true" : "false"}
       aria-label={`Little Fight NYC. ${openNow.sentence}`}
     >

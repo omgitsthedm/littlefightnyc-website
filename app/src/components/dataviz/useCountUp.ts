@@ -41,7 +41,7 @@ export function useCountUp<T extends HTMLElement>(
     // number is never trapped at 0 (SSR, reduced motion, no reveal host).
     if (!Number.isFinite(target) || target < 0) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // The reveal host must exist at mount (components render data-revealed="false").
+    // The reveal host must exist at mount (components render data-revealed="true").
     const host = el.closest("[data-revealed]");
     if (!host) return;
 

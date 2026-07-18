@@ -56,7 +56,7 @@ export default function ScoreRing({
       className={`lf-rings${className ? ` ${className}` : ""}`}
       role="group"
       aria-label={label}
-      data-revealed="false"
+      data-revealed="true"
     >
       <p className="lf-viz-sr">{summary}</p>
       {badge && (
