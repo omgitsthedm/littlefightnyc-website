@@ -86,6 +86,15 @@
 }
 .lf-clients__card--feature { grid-column: 1 / -1; }
 
+/* Desktop: all three proofs sit in ONE equal row so the proof lands fast
+   instead of a full-width feature stacked over a second row (~1 screen tighter).
+   The feature card drops its full-bleed span and matches the others' ratio. */
+@media (min-width: 960px) {
+  .lf-clients__grid { grid-template-columns: repeat(3, 1fr); }
+  .lf-clients__card--feature { grid-column: auto; }
+  .lf-clients__card--feature .lf-clients__shot { aspect-ratio: 16 / 10; }
+}
+
 /* ---- Card ---- */
 .lf-clients__card {
   position: relative;

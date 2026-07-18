@@ -65,12 +65,12 @@ export default function Home() {
             <BlueprintFrame index={2} label="Ways to start">
               <WorkGrid />
             </BlueprintFrame>
-            <BlueprintFrame index={3} label="The fight">
-              <TheFight />
-            </BlueprintFrame>
-            <BlueprintFrame index={4} label="Software you own">
+            <BlueprintFrame index={3} label="Software you own">
               <MomentumSection />
               <MomentumCursorGlow />
+            </BlueprintFrame>
+            <BlueprintFrame index={4} label="The fight">
+              <TheFight />
             </BlueprintFrame>
             <BlueprintFrame index={5} label="The record">
               <SignatureBand />
