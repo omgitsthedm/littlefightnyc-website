@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
+import GlobalViewTransitions from "@/components/GlobalViewTransitions";
 import { importWithRetry } from "@/lib/importWithRetry";
 import Home from "@/pages/Home";
 
@@ -71,6 +72,7 @@ export default function App() {
     <>
       <RouteMetaManager />
       <RouteScrollManager />
+      <GlobalViewTransitions />
       <Suspense fallback={null}>
         <PwaInstallPrompt />
       </Suspense>
