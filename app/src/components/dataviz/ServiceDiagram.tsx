@@ -1,6 +1,7 @@
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import FlowDiagram from "./FlowDiagram";
 import TimelineStrip from "./TimelineStrip";
+import LeadsCaught from "./LeadsCaught";
 import "./ServiceDiagram.css";
 
 /**
@@ -77,32 +78,9 @@ const DIAGRAMS: Record<string, () => React.ReactElement> = {
     />
   ),
 
-  "business-systems": () => (
-    <FlowDiagram
-      label="Lead intake, before and after"
-      summary="Before: phone calls, contact forms, Instagram DMs, and walk-ins — four channels tracked in zero places. After: one intake layer routes every lead to follow-up, a dashboard, and the owner view."
-      caption="4 channels tracked in 0 → one intake layer"
-      nodes={[
-        { id: "phone", label: "Phone calls", tone: "muted", col: 0 },
-        { id: "forms", label: "Contact forms", tone: "muted", col: 0 },
-        { id: "dms", label: "Instagram DMs", tone: "muted", col: 0 },
-        { id: "walkins", label: "Walk-ins", tone: "muted", col: 0 },
-        { id: "intake", label: "One intake layer", tone: "hub", col: 1 },
-        { id: "follow", label: "Follow-up", col: 2 },
-        { id: "dash", label: "Dashboard", col: 2 },
-        { id: "owner", label: "Owner view", col: 2 },
-      ]}
-      edges={[
-        { from: "phone", to: "intake", tone: "muted" },
-        { from: "forms", to: "intake", tone: "muted" },
-        { from: "dms", to: "intake", tone: "muted" },
-        { from: "walkins", to: "intake", tone: "muted" },
-        { from: "intake", to: "follow", tone: "signal", pulse: true },
-        { from: "intake", to: "dash", tone: "signal" },
-        { from: "intake", to: "owner", tone: "signal" },
-      ]}
-    />
-  ),
+  // The before/after intake story, drawn as an instrument (leads slip away →
+  // one intake layer catches every one) rather than a static node diagram.
+  "business-systems": () => <LeadsCaught />,
 
   "it-support": () => <ResponseWindow />,
 
