@@ -4,6 +4,14 @@
   background: var(--lf-ink);
   border-top: 1px solid var(--lf-hairline);
   padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-8);
+  /* Below the fold on every one of the 178 pages: skip its layout + paint
+     while off-screen (content stays in the DOM — crawlable + accessible, this
+     is `auto`, not `hidden`). `auto <length>` records the real rendered height
+     after first layout, so scrolling it into view never jumps. Nothing renders
+     below the footer, so any intrinsic-size slack only nudges the scroll thumb,
+     never shifts visible content. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 @media (min-width: 768px) {

@@ -10,6 +10,11 @@
   background: var(--lf-ink);
   display: flex;
   justify-content: center;
+  /* Terminal CTA (only the footer sits below it): skip off-screen layout+paint.
+     `auto <length>` stores the real height after first layout so reveal never
+     jumps; any slack only moves the footer/scroll-thumb, not visible content. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
 }
 
 @media (min-width: 768px) {
