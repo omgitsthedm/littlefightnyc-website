@@ -101,7 +101,7 @@ export const services: Service[] = [
       "The consult is the first read. We walk through your tools, bills, website, Google profile, and how leads reach you. Then we name what earns its place, what wastes money, and what can wait.",
       "It works the same for any trade. A bar's POS. A law firm's intake email. A clothing brand's online store. A salon's booking page. The tools change, the read is the same.",
       "You leave with a written fix list. It is ranked by what hurts customers and what costs money. You can hand it to your own vendor, another developer, or back to us.",
-      "The consult is free on purpose. We are checking if there is real work to do. If the answer is no, we tell you before you spend more.",
+      "The consult is a real read of your tools and bills. We are checking whether there is work worth doing, or whether you are already fine as you are.",
     ],
     commonIssues: [
       {
@@ -273,7 +273,7 @@ export const services: Service[] = [
       "The site works for people first, then for search. A visitor should know what you do, where you are, and what to do next. No hunting.",
       "The local search work is part of the build. Service pages, Maps signals, reviews, booking links, and your Google profile should all agree.",
       "It works for any trade. A bar. A law firm. A clothing brand. A salon. A hardware store. The look changes. The job is the same: make the next step obvious.",
-      "The process is tight. Build, review, ship. Most sites go live in 14 days. If we miss the date, you do not pay.",
+      "The process is tight. Build, review, ship — no months-long agency runway.",
       "Hosting and care come with it. The site stays fast, backed up, and easy to update when hours, offers, or tools change.",
     ],
     commonIssues: [
