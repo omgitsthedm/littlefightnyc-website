@@ -1,0 +1,34 @@
+/* force-field.css — typed force channels for the ForceField provider.
+ *
+ * 2026 Platform Baseline (doctrine §10.1): registering the force vars with
+ * @property makes them typed <number>s the compositor can interpolate, and gives
+ * every component a defined resting value even before the provider mounts or when
+ * JavaScript never runs (progressive-enhancement / resilience law). Browsers
+ * without @property simply treat these as ordinary custom properties — no harm.
+ */
+
+@property --ptr-x {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+@property --ptr-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+@property --ptr-active {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --scroll-vel {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --scroll-progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}

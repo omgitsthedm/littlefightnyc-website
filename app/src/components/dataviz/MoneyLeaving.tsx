@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import { clamp, lerp, eoc, eoBack } from "@/kernel/motion";
 import "./MoneyLeaving.css";
 
 /**
@@ -35,13 +36,6 @@ const T = { perBill: 640, stop: 640, own: 3000 };
 const DISP = '"Oswald Variable", "Oswald", "Barlow", system-ui, sans-serif';
 const MONO = '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace';
 
-const clamp = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const eoc = (t: number) => 1 - Math.pow(1 - t, 3);
-const eoBack = (t: number) => {
-  const c = 1.5;
-  return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
-};
 const money = (v: number) => "$" + Math.round(v).toLocaleString("en-US");
 
 function rr(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {

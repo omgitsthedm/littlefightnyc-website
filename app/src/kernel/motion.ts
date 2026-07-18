@@ -1,0 +1,74 @@
+/**
+ * motion.ts — the closed motion grammar (Small Craft doctrine, Part Four).
+ *
+ * One vocabulary for the whole site, named by INTENT, never by raw numbers.
+ * Each intent carries both a CSS `cubic-bezier(...)` string (for DOM transitions)
+ * and a matching JS easing `fn` (for canvas instruments) so the same feeling
+ * governs every surface — "learn it once, feel it everywhere."
+ *
+ * Law 1 (one machine): components pull curves/durations from here, never invent
+ * their own. Raw physics *internal* to a single instrument (gravity, springs)
+ * may stay local; anything that crosses components speaks this grammar.
+ *
+ * The math helpers (clamp/lerp/easings) are the shared primitives the instrument
+ * family is built from — extracted so every instrument uses identical curves.
+ */
+
+export const clamp = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
+export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+// --- easing functions (canvas / JS side) ---
+export const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+export const easeInCubic = (t: number) => t * t * t;
+export const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+export const easeOutBack = (t: number) => {
+  const c = 1.5;
+  return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
+};
+
+// Doctrine aliases (short names used inside instruments).
+export const eoc = easeOutCubic;
+export const eic = easeInCubic;
+export const eio = easeInOutCubic;
+export const eoBack = easeOutBack;
+
+/** A named motion intent — the atom of the grammar. */
+export type Intent = {
+  /** duration in ms */
+  ms: number;
+  /** CSS timing function for DOM transitions/animations */
+  css: string;
+  /** matching JS easing for canvas instruments (domain 0..1 → 0..1) */
+  fn: (t: number) => number;
+};
+
+/**
+ * THE GRAMMAR. Five intents, and only five.
+ * - settle:      things coming to rest (reveals, hovers releasing)
+ * - consolidate: the house motion — Many → One (the brand made physical)
+ * - signal:      a decisive, snappy state change (act-here moments)
+ * - reveal:      arrivals with a touch of weight/overshoot (an object landing)
+ * - weenie:      a slow, quiet lead — a visual magnet inviting the eye onward
+ */
+export const motion: Record<"settle" | "consolidate" | "signal" | "reveal" | "weenie", Intent> = {
+  settle: { ms: 640, css: "cubic-bezier(0.22, 1, 0.36, 1)", fn: easeOutCubic },
+  consolidate: { ms: 900, css: "cubic-bezier(0.22, 1, 0.36, 1)", fn: easeOutCubic },
+  signal: { ms: 180, css: "cubic-bezier(0.4, 0, 0.2, 1)", fn: easeInOutCubic },
+  reveal: { ms: 520, css: "cubic-bezier(0.34, 1.3, 0.64, 1)", fn: easeOutBack },
+  weenie: { ms: 1200, css: "cubic-bezier(0.65, 0, 0.35, 1)", fn: easeInOutCubic },
+};
+
+/** CSS custom properties for the grammar, injected once at the root so DOM and
+ *  canvas share the exact same numbers. Consumed by ForceField's provider. */
+export const motionVars: Record<string, string> = {
+  "--m-settle-ms": `${motion.settle.ms}ms`,
+  "--m-settle-ease": motion.settle.css,
+  "--m-consolidate-ms": `${motion.consolidate.ms}ms`,
+  "--m-consolidate-ease": motion.consolidate.css,
+  "--m-signal-ms": `${motion.signal.ms}ms`,
+  "--m-signal-ease": motion.signal.css,
+  "--m-reveal-ms": `${motion.reveal.ms}ms`,
+  "--m-reveal-ease": motion.reveal.css,
+  "--m-weenie-ms": `${motion.weenie.ms}ms`,
+  "--m-weenie-ease": motion.weenie.css,
+};
