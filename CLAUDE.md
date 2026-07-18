@@ -1,7 +1,43 @@
 # Little Fight NYC Website Config
 
-## 2026-07-18 — Per-page instrument: LeadsCaught on business-systems (LIVE, `de68c6c`)
+## 2026-07-18 — Per-page instruments: 3 of 4 service ServiceDiagrams (LIVE, `de68c6c`/`0381b67`/`1729621`)
 
+The service pages' static diagrams became bespoke canvas instruments in the
+MoneyLeaving/AuditBench mold (argue the pitch, don't diagram it):
+
+- **business-systems → `LeadsCaught.tsx`** (`de68c6c`): leads fall from the four
+  channels (phone/form/DM/walk-in); untracked they slip past a dashed line
+  ("N slipped away"); then one orange INTAKE LAYER catches every one → FOLLOW-UP
+  ("N routed · 0 lost"). Replaced the FlowDiagram.
+- **it-support → `WhoAnswers.tsx`** (`0381b67`): the tools the day runs on
+  (register/card-reader/wifi/website) sit healthy; one goes DOWN (red); an orange
+  response travels a real-SLA timeline — person 9am–9pm ET, callback ≤2 hrs,
+  on-site ≤24 hrs — to BACK UP. Replaced the ResponseWindow strip.
+- **custom-local-websites → `SiteInFourteen.tsx`** (`1729621`): a site assembles
+  in a browser frame as a day counter climbs 1→14 (orange build-sweep), then goes
+  LIVE (green, "● yourshop.com LIVE") — "Live in 14 days. Or you don't pay."
+  Replaced the TimelineStrip (TimelineStrip stays — CaseDiagram/Contact/TechAudit
+  still use it).
+- **tech-consulting keeps its FlowDiagram** deliberately: its "free read → ranked
+  punch list" is already embodied as an instrument by AuditBench on the sibling
+  tech-audit page; a second would be redundant.
+
+All three share the reference craft + signal law (see the MoneyLeaving entry —
+DPR canvas, cached additive glow sprites, LITERAL font families, ResizeObserver
+container-shape layout, IO pause, settled reduced-motion frame; orange = the
+working system only). Each is honest — counts/facts come from the animation
+itself or the page copy, no fabricated stats. Signal ratchet re-based deliberately
+per instrument (canvas needs literal hex; 24 → 27 files, 61 occurrences).
+
+**Verify-by-eye method for these canvases (recurring):** element screenshots
+re-trigger the IntersectionObserver scroll-reset → capture a blank/first frame.
+Read the canvas pixels back via `toDataURL` composited over `#050507` instead.
+Bugs it caught + fixed across the three: sparse fix-phase column (raised density),
+a label covered by a token (moved above the bar), tall-layout readout/source-rail
++ milestone-label collisions, and a tall-layout readout clip. All verified legible
++ populated at desktop 1024 and mobile 390, both phases.
+
+Older single-instrument note (kept for the mechanism detail):
 The business-systems `ServiceDiagram` went from a static `FlowDiagram` to a
 bespoke canvas instrument (`LeadsCaught.tsx`) — argues the pitch instead of
 diagramming it, in the MoneyLeaving/AuditBench mold. Leads fall from the four
