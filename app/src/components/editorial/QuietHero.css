@@ -49,8 +49,11 @@
   inset: 0;
   z-index: 1;
   background:
-    /* Deep blue burst, expanding from the lower-left across the frame. */
-    radial-gradient(135% 120% at 15% 92%,
+    /* Deep blue burst, expanding from the lower-left across the frame. It drifts
+       subtly toward the pointer via the shared ForceField vars — 0 at rest
+       (--ptr = 0.5), identical to the tuned position; still under reduced motion.
+       The harbor at rest, quietly alive (Law 1: one machine, no per-hero JS). */
+    radial-gradient(135% 120% at calc(15% + (var(--ptr-x, 0.5) - 0.5) * 8%) calc(92% + (var(--ptr-y, 0.5) - 0.5) * 6%),
       rgba(37, 99, 235, 0.40) 0%,
       rgba(37, 99, 235, 0.16) 46%,
       transparent 82%),
@@ -66,7 +69,7 @@
 @media (max-width: 767px) {
   .lf-hero::after {
     background:
-      radial-gradient(150% 120% at 15% 92%,
+      radial-gradient(150% 120% at calc(15% + (var(--ptr-x, 0.5) - 0.5) * 8%) calc(92% + (var(--ptr-y, 0.5) - 0.5) * 6%),
         rgba(37, 99, 235, 0.40) 0%,
         rgba(37, 99, 235, 0.16) 46%,
         transparent 82%),
