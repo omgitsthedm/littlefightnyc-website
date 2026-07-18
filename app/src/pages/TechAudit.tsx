@@ -5,6 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
+import AuditBench from "@/components/dataviz/AuditBench";
 import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analytics";
@@ -401,6 +402,9 @@ export default function TechAudit() {
       />
 
       <section className="lf-audit">
+        <div className="lf-audit__bench">
+          <AuditBench />
+        </div>
         <div className="lf-audit__inner">
           <div className="lf-audit__flow">
             <div className="lf-audit__progress">
