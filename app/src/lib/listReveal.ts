@@ -26,71 +26,20 @@ const SELECTOR = [...LIST_SELECTORS, ...IMAGE_SELECTORS]
   .join(", ");
 
 const REVEAL_ATTR = "data-lf-reveal";
-const FALLBACK_MS = 1800;
-
-let observer: IntersectionObserver | null = null;
 
 function revealNow(el: Element) {
   el.setAttribute(REVEAL_ATTR, "in");
 }
 
-function staggerIndex(el: HTMLElement): number {
-  const parent = el.parentElement;
-  if (!parent) return 0;
-  let i = 0;
-  for (const child of Array.from(parent.children)) {
-    if (child === el) return i;
-    if (child.matches(SELECTOR)) i += 1;
-  }
-  return i;
-}
-
-/** Scan for unseen reveal targets and arm them. Safe to call repeatedly. */
+/** Reveal every list/image target immediately. The site loads "all at once":
+ * items are present the instant they're in the DOM, never scroll-gated. This
+ * only ever sets the "in" (shown) state — it never sets "pending", so the
+ * base.css `[data-lf-reveal="pending"]` opacity:0 entrance never applies and
+ * nothing waits to fade in. Safe to call repeatedly (idempotent per element). */
 export function refreshListReveals(): void {
   if (typeof window === "undefined" || typeof document === "undefined") return;
-
   const els = document.querySelectorAll<HTMLElement>(SELECTOR);
-  if (els.length === 0) return;
-
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced || typeof IntersectionObserver === "undefined") {
-    els.forEach(revealNow);
-    return;
-  }
-
-  observer ??= new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          revealNow(entry.target);
-          observer?.unobserve(entry.target);
-        }
-      }
-    },
-    { threshold: 0.08, rootMargin: "0px 0px -8% 0px" }
-  );
-
-  const armed: HTMLElement[] = [];
-  els.forEach((el) => {
-    if (el.hasAttribute(REVEAL_ATTR)) return;
-    el.setAttribute(REVEAL_ATTR, "pending");
-    el.style.setProperty("--lf-i", String(staggerIndex(el) % 8));
-    observer?.observe(el);
-    armed.push(el);
-  });
-
-  if (armed.length > 0) {
-    // Same guarantee the useScrollReveal hook makes: nothing stays trapped
-    // invisible (print, capture, odd viewports).
-    window.setTimeout(() => {
-      armed.forEach((el) => {
-        if (el.getAttribute(REVEAL_ATTR) === "pending") {
-          revealNow(el);
-          observer?.unobserve(el);
-        }
-      });
-    }, FALLBACK_MS);
-  }
+  els.forEach(revealNow);
 }
 
 /** Watch a container for late-mounting content (lazy routes, fetched HTML). */

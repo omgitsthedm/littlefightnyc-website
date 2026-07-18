@@ -9,66 +9,28 @@ type Options = {
 };
 
 /**
- * Adds a `data-revealed="true"` attribute to the element when it enters the
- * viewport, or on mount when requested. Components style their reveal off this
- * attribute. Respects prefers-reduced-motion by revealing immediately.
+ * Attaches a ref and marks the element `data-revealed="true"` — the attribute
+ * components style their reveal off — IMMEDIATELY on mount, before paint.
+ *
+ * The site loads "all at once": every section is present the instant it's in
+ * the DOM, no scroll-gated entrance. Because this runs in useLayoutEffect it
+ * fires before the browser paints, so the element never renders in its
+ * opacity:0 entrance state on the client — no fade, no pop-in, no flash. This
+ * is the permanent form of what prefers-reduced-motion always did here.
+ *
+ * The Options (threshold/rootMargin/once/revealOnMount/fallbackMs) are kept so
+ * the 30+ call sites don't need to change; they're now no-ops.
  */
-export function useScrollReveal<T extends HTMLElement>({
-  threshold = 0.15,
-  rootMargin = "0px 0px -10% 0px",
-  once = true,
-  revealOnMount = false,
-  fallbackMs = 1800,
-}: Options = {}) {
+// Options kept for call-site compatibility (30+ consumers pass them); no-op now.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function useScrollReveal<T extends HTMLElement>(_options: Options = {}) {
   const ref = useRef<T | null>(null);
 
   useLayoutEffect(() => {
     const el = ref.current;
-    if (!el) return;
-
-    if (typeof window === "undefined") return;
-
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      el.setAttribute("data-revealed", "true");
-      return;
-    }
-
-    if (revealOnMount) {
-      el.setAttribute("data-revealed", "true");
-      return;
-    }
-
-    if (typeof IntersectionObserver === "undefined") {
-      el.setAttribute("data-revealed", "true");
-      return;
-    }
-
-    const fallback = window.setTimeout(() => {
-      el.setAttribute("data-revealed", "true");
-    }, fallbackMs);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            el.setAttribute("data-revealed", "true");
-            window.clearTimeout(fallback);
-            if (once) observer.unobserve(entry.target);
-          } else if (!once) {
-            el.setAttribute("data-revealed", "false");
-          }
-        }
-      },
-      { threshold, rootMargin }
-    );
-
-    observer.observe(el);
-    return () => {
-      window.clearTimeout(fallback);
-      observer.disconnect();
-    };
-  }, [threshold, rootMargin, once, revealOnMount, fallbackMs]);
+    if (!el || typeof window === "undefined") return;
+    el.setAttribute("data-revealed", "true");
+  }, []);
 
   return ref;
 }
