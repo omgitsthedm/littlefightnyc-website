@@ -131,8 +131,11 @@ body:has(.lf-editorial) {
    plus a subtle inset glow so the focused element looks intentional. */
 .lf-editorial :focus-visible {
   outline: 2px solid var(--lf-fight);
-  outline-offset: 4px;
+  outline-offset: 3px;
   border-radius: 2px;
+  /* Soft signal halo from the OKLCH ramp — makes keyboard focus unmistakable
+     without going gaudy. Additive: only paints on :focus-visible. */
+  box-shadow: 0 0 0 4px var(--lf-fight-ring);
 }
 
 /* Press feedback — every link and button gets a hair of press inertia.

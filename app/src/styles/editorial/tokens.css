@@ -14,8 +14,17 @@
   --lf-bone: #FFFFFF;         /* primary type — product-OS white */
   --lf-bone-soft: #A1A1AA;    /* secondary type (Axiom text-secondary) */
   --lf-bone-dim: #8A8A94;     /* tertiary type — captions, marginalia (AA-safe on --lf-ink, ~5.9:1) */
-  --lf-fight: #F97316;        /* THE orange — Axiom lead signal */
-  --lf-ember: #FB8B3C;        /* hover / active warmth */
+  --lf-fight: #F97316;        /* THE orange — Axiom lead signal (resting) */
+  /* Perceptually-uniform OKLCH signal ramp. #F97316 ≈ oklch(0.705 0.187 47.6);
+     the interactive states step ONLY in lightness at the same hue + chroma, so
+     hover/active read as one signal at different energies (equal ΔL = equal
+     perceived step — sRGB hex steps don't give you that). These hex values are
+     the pre-OKLCH fallback; the @supports block below upgrades them to oklch on
+     engines that have it. The resting --lf-fight stays the exact hex, untouched. */
+  --lf-fight-hover: #ff8330;  /* +L — brighter on hover */
+  --lf-fight-active: #e05f00; /* −L — pressed / held */
+  --lf-fight-ring: rgba(249, 115, 22, 0.5); /* focus halo — the signal itself */
+  --lf-ember: var(--lf-fight-hover); /* legacy hover token → the ramp */
   --lf-blue: #3B82F6;         /* accent — Axiom blue, now a real second signal */
   --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
   --lf-error: #F87171;        /* semantic red — invalid / failed states */
@@ -109,4 +118,19 @@
   --lf-z-ticker: 100;
   --lf-z-drawer: 500;
   --lf-z-flash: 999;
+}
+
+/* OKLCH signal ramp — upgrades the interactive orange states to
+   perceptually-uniform space where the engine supports it (all current
+   browsers). Custom-property values are permissive at parse time, so a plain
+   two-line hex→oklch fallback would NOT hold on pre-OKLCH engines (the invalid
+   oklch wins and resolves to nothing at use-time); gating the override on
+   @supports is the correct way to keep the hex fallback above intact. Resting
+   --lf-fight is never redefined here — it stays exactly #F97316. */
+@supports (color: oklch(0.7 0.18 48)) {
+  .lf-editorial {
+    --lf-fight-hover: oklch(0.752 0.185 48);
+    --lf-fight-active: oklch(0.638 0.182 47);
+    --lf-fight-ring: oklch(0.705 0.187 47.6 / 0.5);
+  }
 }
