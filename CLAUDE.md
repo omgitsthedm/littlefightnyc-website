@@ -1,5 +1,51 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — MoneyLeaving canvas replaces the ONE SYSTEM diagram (LIVE, `6600e9e`)
+
+The Momentum "software you own" card's viz is now `MoneyLeaving.tsx` — a
+`<canvas>` animation that argues the pitch instead of diagramming it. David's
+brief across many iterations: make it emotional ("you're losing money, there's
+an easier way"), understood in ONE look by a 65-yo barbershop owner or a 78-yo
+vet (incl. non-native English), Pixar-grade craft (real physics, restrained
+emotion), identical on iPhone/iPad/desktop, and rendered in JS/canvas not
+DOM/CSS. We tried a spoke-wheel (rejected "2008"), then money-burning DOM
+concepts (rejected), then a piggy-bank character (rejected "chinese knock off /
+lose the living object") → landed on **business objects showing lossage**.
+David picked "combine #1 draining balance + #2 invoice pile."
+
+Final design: an owner's **monthly software bill climbs** in real time as
+recognizable, specifically-priced invoices stack on a desk — BOOKING $69,
+PAYMENTS $149, WEBSITE $39, EMAIL & TEXTS $99, PAYROLL $189, on **AUTO-PAY**,
+totalling **$545/mo = $6,540/yr**. A hard stop collapses the pile into ONE
+owned invoice (PAID ONCE, $0); the monthly bill turns green **$0**, "$6,540
+back a year." Each stacked invoice shows its category + price so the itemization
+is legible — David's bar: "something someone can instantly identify with — hey
+that's what I'm experiencing." (The $ figures are the *incumbent SaaS* bill, not
+our pricing — consistent with the no-published-prices doctrine.)
+
+- **Canvas craft that carries over to any future viz here:** two-role text —
+  crisp UI cleared each frame; additive glow via cached radial-gradient sprites
+  (`globalCompositeOperation='lighter'`). **`ctx.font` CANNOT parse CSS `var()`
+  — it silently falls back to 10px.** Use literal families:
+  `'"Oswald Variable","Oswald",…'` / `'"JetBrains Mono",…'`. Oswald Variable
+  caps at wght 700; JetBrains Mono is loaded at 500 only — don't ask for 800.
+- **Responsive by container shape, not breakpoint:** the component reads its box
+  via ResizeObserver — wide card → number LEFT / pile RIGHT; tall phone → number
+  over pile. Same content, laid out for the shape (mirrors how the old diagram
+  repositioned nodes per breakpoint).
+- **SSR/prerender-safe:** all DOM/canvas work is inside `useEffect`; module
+  scope is pure (glow sprites built client-side). IntersectionObserver pauses
+  the rAF off-viewport and **restarts the story from the top on re-entry**;
+  `prefers-reduced-motion` paints a single settled "full pile" frame, no rAF.
+- Removed the now-dead `OneSystemDiagram` (.tsx + .css) in the same commit —
+  nothing imported it after the swap (`FlowDiagram.css` only names it in
+  comments). Verified: tsc + eslint clean, build prerenders 178 routes, and the
+  **live production** page renders it desktop + mobile with 0 console errors.
+- **Home is prerendered as a hero-only snapshot** (the "Loading = butter" mirror
+  of QuietHero), so the Momentum section — and this canvas — exist only after
+  hydration. A `curl` of `/` will NOT contain `.lf-moneyleaving`; verify home
+  components in a hydrated browser, not the static HTML.
+
 ## 2026-07-17 (later) — Full-site security + error audit (LIVE, `a0cf04f`)
 
 Whole-site sweep. **One real finding, now fixed; everything else verified clean.**
