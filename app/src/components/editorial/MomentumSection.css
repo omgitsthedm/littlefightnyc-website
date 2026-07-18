@@ -19,46 +19,9 @@
   -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%);
   mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%);
 }
-.lf-momentum__head,
 .lf-momentum__grid {
   position: relative;
   z-index: 1;
-}
-
-/* ---- Head ---- */
-.lf-momentum__head {
-  max-width: 62ch;
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity var(--lf-time-slow) var(--lf-ease-out),
-    transform var(--lf-time-slow) var(--lf-ease-out);
-}
-.lf-momentum__head[data-revealed="true"] {
-  opacity: 1;
-  transform: none;
-}
-
-.lf-momentum__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  color: var(--lf-fight);
-  margin-bottom: var(--lf-space-5);
-}
-
-.lf-momentum__title {
-  font-size: var(--lf-text-2xl);
-  color: var(--lf-bone);
-  margin-bottom: var(--lf-space-5);
-}
-.lf-momentum__title-em { color: var(--lf-fight); }
-
-.lf-momentum__lede {
-  font-size: var(--lf-text-md);
-  line-height: 1.5;
-  color: var(--lf-bone-soft);
-  max-width: 54ch;
 }
 
 /* ---- Bento grid ---- */
@@ -195,35 +158,14 @@ a.lf-momentum__card:focus-visible {
   color: var(--lf-bone-soft);
 }
 
-/* ---- Capability tiles ---- */
-.lf-momentum__card--cap { grid-column: span 3; }
-.lf-momentum__icon {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  color: var(--lf-fight);
-  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
-}
 .lf-momentum__card-label {
   color: var(--lf-bone-dim);
 }
 .lf-momentum__card-label--blue { color: var(--lf-blue); }
-.lf-momentum__card-title {
-  font-family: var(--lf-display);
-  font-weight: 600;
-  font-size: var(--lf-text-md);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--lf-bone);
-}
 .lf-momentum__card-line {
   font-size: var(--lf-text-sm);
   line-height: 1.5;
   color: var(--lf-bone-soft);
-}
-
-.lf-momentum__card--cap:hover .lf-momentum__icon {
-  transform: translateY(-2px) rotate(3deg);
 }
 
 /* ---- Accent CTA tile ---- */
@@ -269,14 +211,9 @@ a.lf-momentum__card:focus-visible {
 }
 
 /* ---- Responsive ---- */
-@media (max-width: 900px) {
-  .lf-momentum__card,
-  .lf-momentum__card--cap { grid-column: span 3; }
-}
 @media (max-width: 640px) {
   .lf-momentum__grid { grid-template-columns: 1fr; gap: var(--lf-space-3); }
   .lf-momentum__card,
-  .lf-momentum__card--cap,
   .lf-momentum__card--feature,
   .lf-momentum__card--cta { grid-column: span 1; }
   .lf-momentum__card--feature { padding: var(--lf-space-6); }
@@ -286,9 +223,7 @@ a.lf-momentum__card:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-momentum__head,
-  .lf-momentum__card,
-  .lf-momentum__icon {
+  .lf-momentum__card {
     opacity: 1 !important;
     transform: none !important;
     transition: none;

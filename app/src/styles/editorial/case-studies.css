@@ -841,52 +841,6 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   margin-left: auto;
 }
 
-/* ---- Full-bleed moment — the work, given room ---- */
-.lf-case__cover {
-  max-width: var(--lf-max-w);
-  margin: var(--lf-space-8) auto 0;
-  padding-inline: var(--lf-margin-mobile);
-}
-@media (min-width: 768px) {
-  .lf-case__cover { padding-inline: var(--lf-margin-tablet); margin-top: var(--lf-space-9); }
-}
-@media (min-width: 1280px) {
-  .lf-case__cover { padding-inline: var(--lf-margin-desktop); }
-}
-.lf-case__cover-frame {
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
-}
-.lf-case__cover-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.lf-case__cover-cap {
-  display: flex;
-  align-items: center;
-  gap: var(--lf-space-3);
-  margin-top: var(--lf-space-4);
-  font-size: var(--lf-text-sm);
-  color: var(--lf-bone-soft);
-}
-.lf-case__cover-dot { color: var(--lf-bone-dim); }
-.lf-case__cover-live {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35em;
-  margin-left: auto;
-  color: var(--lf-fight);
-  text-decoration: none;
-  font-weight: 600;
-}
-.lf-case__cover-live:hover { color: var(--lf-ember); }
-
 /* ---- Asymmetric meta rail + story ---- */
 .lf-case__inner {
   max-width: var(--lf-max-w);
@@ -1063,9 +1017,6 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 /* Dakota funnel inside the metrics card (Wave 4 — visual data). */
 .lf-studio-detail__metrics .lf-studio-detail__funnel {
   margin: 0;
-}
-.lf-studio-detail__metrics .lf-funnel .lf-funnel__eyebrow {
-  color: var(--lf-fight);
 }
 
 /* ---- Case hub metric chips (2026-07-12 hub resurrection) ---- */
