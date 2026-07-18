@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import AmbientField from "./AmbientField";
-import OneSystemDiagram from "@/components/dataviz/OneSystemDiagram";
+import MoneyLeaving from "@/components/dataviz/MoneyLeaving";
 import "./MomentumSection.css";
 
 /**
  * The "software you own" payoff — the close of the what-we-do sequence that
  * begins with WorkGrid's service ladder. WorkGrid already names the four
  * services (one of them "Software your business owns"); this beat shows what
- * owning the system actually looks like — the ONE SYSTEM diagram — and offers
+ * owning the system actually looks like — the MoneyLeaving canvas: the balance
+ * draining to monthly software bills, resolving to one owned build — and offers
  * the free before-you-build math. Deliberately compact: the four capability
  * details live on /services/business-systems/, not the home page, so the pitch
  * isn't made twice. Reduced-motion safe via useScrollReveal.
@@ -38,7 +39,7 @@ export default function MomentumSection() {
               </div>
             </div>
             <div className="lf-momentum__feature-viz">
-              <OneSystemDiagram />
+              <MoneyLeaving />
             </div>
           </div>
         </article>
