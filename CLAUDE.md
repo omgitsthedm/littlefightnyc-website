@@ -1,5 +1,44 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — No-seam nav: one native View Transition on every route (LIVE, `a1d698d`)
+
+All 178 route changes now run through ONE scripted native View Transition —
+the exact crossfade the case-study/journal shared-element morphs already used,
+now universal. New component `src/components/GlobalViewTransitions.tsx` (mounted
+in `App.tsx` beside RouteScrollManager); nothing else changed.
+
+- **⛔ Confirmed in RR v7.15: the `<Link viewTransition>` prop is a NO-OP under
+  `<BrowserRouter>`/`<Routes>`.** Verified live by patching `document.start
+  ViewTransition` — a `viewTransition`-prop nav fires it **0×**; the scripted
+  `useViewTransitionNav` path fires it **1×**. So the ~34 `viewTransition` props
+  scattered on QuietNav etc. do nothing. Do NOT "fix" nav by adding that prop —
+  it will not fire. The only mechanisms that work here are the scripted
+  `navigateWithViewTransition` (native VT) and the `.lf-page-enter` re-key fade
+  (baseline, every nav).
+- **The mechanism = one capture-phase document click listener** that routes
+  every same-origin, same-tab link through `navigateWithViewTransition`. Key
+  design (don't undo): **`preventDefault` but NOT `stopPropagation`.** RR `<Link>`
+  only navigates `if (!event.defaultPrevented)`, so the capture-phase
+  preventDefault suppresses its duplicate nav (verified: 1 startViewTransition +
+  1 history push per click). Leaving propagation alone means every other onClick
+  still runs — critically the **mobile drawer still auto-closes** via its own
+  `setOpen(false)` (QuietNav relies on that, not a route effect; verified), and
+  the tuned case-study/journal handlers early-return on the already-prevented
+  event and cede to this path.
+- **Fallbacks inherited from `navigateWithViewTransition`:** no VT API or
+  `prefers-reduced-motion` → plain SPA nav + re-key fade (verified: reduced-motion
+  → 0 view transitions, nav still works). Escapes left native: modifier/non-left
+  clicks, `target!=_self`, `download`, `rel="external"`, cross-origin,
+  `mailto:`/`tel:`, in-page `#hash`, and a `data-no-vt` opt-out (all 9 verified).
+- **Cost of unification:** the two tuned journeys lose their chunk *preload*
+  warming (my generic path has no preload), but `settled()` still waits for the
+  committed page (450ms cap) so the snapshot never captures the loader. Shared-
+  element morphs are unaffected — they're driven by `view-transition-name` CSS +
+  the `data-vt-route` attr (which this path sets on every nav), not by which
+  onClick fired. Verified: 5-route sweep = 0 JS errors, `data-vt-route` self-
+  clears each time; tsc+eslint clean; build prerenders 178; signal ratchet OK;
+  **live littlefightnyc.com plain nav link now fires 1 native VT.**
+
 ## 2026-07-18 — MoneyLeaving canvas replaces the ONE SYSTEM diagram (LIVE, `6600e9e`)
 
 The Momentum "software you own" card's viz is now `MoneyLeaving.tsx` — a
