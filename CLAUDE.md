@@ -1,5 +1,36 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — Per-page instrument: LeadsCaught on business-systems (LIVE, `de68c6c`)
+
+The business-systems `ServiceDiagram` went from a static `FlowDiagram` to a
+bespoke canvas instrument (`LeadsCaught.tsx`) — argues the pitch instead of
+diagramming it, in the MoneyLeaving/AuditBench mold. Leads fall from the four
+real channels (phone/form/DM/walk-in); untracked, they slip past a dashed empty
+line ("N leads slipped away"); then one orange INTAKE LAYER slides in and catches
+every falling lead, routing each to FOLLOW-UP ("N routed · 0 lost").
+
+- **Honest by construction:** the counts are the leads THIS animation drops vs.
+  catches — no fabricated stat (VERA guardrail). Mirrors facts already in the
+  service copy.
+- **Reuses the reference craft** (see the MoneyLeaving entry below — all of it
+  applies): DPR-scaled 2D canvas, cached additive orange glow sprite, LITERAL
+  font families (`ctx.font` can't parse `var()`), ResizeObserver container-shape
+  layout (wide: readout left/collector right; tall: readout top/collector below),
+  IntersectionObserver pause + restart-from-top, settled reduced-motion frame.
+- **Signal law holds:** orange appears ONLY on the working system (the intake bar
+  + follow-up); channels/lost leads are neutral. Canvas needs literal hex, so the
+  signal ratchet was re-based deliberately (+4 → 56, 25 files) — same precedent as
+  AuditBench: canvas signal-orange is real signal, not decoration.
+- **Verify-by-eye gotcha (recurring):** element screenshots re-trigger the IO
+  scroll-reset → capture a blank/first frame. Read the canvas pixels back via
+  `toDataURL` composited over `#050507` instead. Two bugs it caught + fixed: a
+  tall-layout readout/source-rail collision, and a landed token covering the
+  "ONE INTAKE LAYER" label (moved the label above the bar). Both phases verified
+  legible + populated at desktop 1024 and mobile 390.
+- The other three service diagrams (it-support ResponseWindow, tech-consulting +
+  the FlowDiagram, custom-local-websites TimelineStrip) are still competent DOM
+  diagrams — left as-is; converting them to instruments is a taste call.
+
 ## 2026-07-18 — No-seam nav: one native View Transition on every route (LIVE, `a1d698d`)
 
 All 178 route changes now run through ONE scripted native View Transition —
