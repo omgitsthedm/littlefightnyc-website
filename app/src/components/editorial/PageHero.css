@@ -7,9 +7,14 @@
      orange headline pops instead of muddying orange-on-orange. rgba (not
      color-mix) so the gradient never degrades to `none` on some browsers; the
      solid var(--lf-ink) base sits LAST as the guaranteed floor. */
+  /* The two blue washes drift subtly toward the pointer via the shared
+     ForceField vars (--ptr-x/y, published on :root). Opposite signs give a hint
+     of parallax depth. At rest --ptr-x/y = 0.5, so the offset is exactly 0 —
+     byte-identical to the tuned positions; under reduced motion the field never
+     ticks, so it stays put. One machine (Law 1), no per-hero JS. */
   background:
-    radial-gradient(120% 92% at 0% 0%, rgba(59, 130, 246, 0.10), transparent 58%),
-    radial-gradient(96% 82% at 100% 6%, rgba(59, 130, 246, 0.06), transparent 62%),
+    radial-gradient(120% 92% at calc(0% + (var(--ptr-x, 0.5) - 0.5) * 9%) calc(0% + (var(--ptr-y, 0.5) - 0.5) * 7%), rgba(59, 130, 246, 0.10), transparent 58%),
+    radial-gradient(96% 82% at calc(100% + (var(--ptr-x, 0.5) - 0.5) * -9%) calc(6% + (var(--ptr-y, 0.5) - 0.5) * 7%), rgba(59, 130, 246, 0.06), transparent 62%),
     var(--lf-ink);
   border-bottom: 1px solid var(--lf-hairline);
 }
