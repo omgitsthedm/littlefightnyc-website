@@ -21,7 +21,14 @@ hue+chroma). **Resting `--lf-fight` is untouched — verified pixel-identical
   var(--lf-fight-ring)`) over the existing outline — additive keyboard-a11y win.
 - Ratchet unaffected (tokens.css excluded; base.css uses the token var).
 
-## 2026-07-18 — Per-page instruments: 3 of 4 service ServiceDiagrams (LIVE, `de68c6c`/`0381b67`/`1729621`)
+## 2026-07-18 — Per-page instruments: all 4 service ServiceDiagrams (LIVE, `de68c6c`/`0381b67`/`1729621`/`6a81392`)
+
+Update: tech-consulting also became an instrument (`TheFreeRead.tsx`, `6a81392`)
+— four lanes → "THE READ" → findings that SORT THEMSELVES into a ranked punch
+list (mechanic = prioritisation, deliberately distinct from AuditBench's
+consolidation). So it's now 4/4 service pages, not 3/4. FlowDiagram stays —
+AnswerDiagram + CaseDiagram still use it.
+
 
 The service pages' static diagrams became bespoke canvas instruments in the
 MoneyLeaving/AuditBench mold (argue the pitch, don't diagram it):
