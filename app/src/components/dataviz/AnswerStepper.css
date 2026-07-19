@@ -1,7 +1,7 @@
 /* AnswerStepper — numbered triage rail for the urgent answers. Tokens only.
  * Orange = the signal nodes; the connector stays hairline-quiet. */
 
-.lf-triage {
+.lf-editorial .lf-triage {
   list-style: none;
   margin: 0 0 var(--lf-space-7);
   padding: 0;

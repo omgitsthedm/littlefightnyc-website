@@ -34,7 +34,7 @@
     align-items: flex-end;
   }
 }
-.lf-clients__label {
+.lf-editorial .lf-clients__label {
   color: var(--lf-fight);
   margin-bottom: var(--lf-space-3);
 }
@@ -47,7 +47,7 @@
   letter-spacing: -0.035em;
   color: var(--lf-bone);
 }
-.lf-clients__lede {
+.lf-editorial .lf-clients__lede {
   max-width: 48ch;
   /* Clear the Oswald heading's descenders — space-4 read as almost touching. */
   margin-top: var(--lf-space-5);

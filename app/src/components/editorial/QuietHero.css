@@ -335,7 +335,7 @@ html[data-snap="1"] .lf-hero__char {
   }
 }
 
-.lf-hero__trust {
+.lf-editorial .lf-hero__trust {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -347,7 +347,7 @@ html[data-snap="1"] .lf-hero__char {
 }
 
 @media (min-width: 768px) {
-  .lf-hero__trust {
+  .lf-editorial .lf-hero__trust {
     margin-top: var(--lf-space-5);
   }
 }
@@ -371,7 +371,7 @@ html[data-snap="1"] .lf-hero__char {
   .lf-hero__actions,
   .lf-hero__action,
   .lf-hero__action > svg:last-child,
-  .lf-hero__trust {
+  .lf-editorial .lf-hero__trust {
     animation: none;
     opacity: 1;
     transform: none;

@@ -1,7 +1,7 @@
 /* PullQuote — a call-out beat lifted from body copy. Appearance only;
    the reveal is handled by the global `.lf-editorial [data-reveal]` rule. */
 
-.lf-pullquote {
+.lf-editorial .lf-pullquote {
   margin: var(--lf-space-8) 0;
   padding: var(--lf-space-2) 0 var(--lf-space-2) var(--lf-space-6);
   border-left: 3px solid var(--lf-fight);

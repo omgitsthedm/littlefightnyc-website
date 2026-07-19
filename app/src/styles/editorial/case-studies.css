@@ -1020,7 +1020,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 /* ---- Case hub metric chips (2026-07-12 hub resurrection) ---- */
-.lf-cases__chips {
+.lf-editorial .lf-cases__chips {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
