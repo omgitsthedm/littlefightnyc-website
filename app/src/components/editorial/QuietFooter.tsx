@@ -27,7 +27,10 @@ function useIsMobile(): boolean {
 /* Curated, not exhaustive (cleaned up 2026-07-13): the hubs carry
  * the long lists — the footer names the four services and points at hubs.
  * No per-case-study, per-term, or full-neighborhood enumerations here. */
-const footerGroups: Array<{ title: string; links: Array<{ label: string; to: string }> }> = [
+const footerGroups: Array<{
+  title: string;
+  links: Array<{ label: string; to: string; external?: boolean }>;
+}> = [
   {
     title: "Work",
     links: [
@@ -44,6 +47,7 @@ const footerGroups: Array<{ title: string; links: Array<{ label: string; to: str
       { label: "Examples", to: "/examples/" },
       { label: "Case Studies", to: "/case-studies/" },
       { label: "The Studio", to: "/services/#studio" },
+      { label: "The Lab", to: "https://lab.littlefightnyc.com", external: true },
     ],
   },
   {
@@ -93,6 +97,9 @@ export default function QuietFooter() {
             <Link to="/contact/">Contact</Link>
             <Link to="/privacy/">Privacy</Link>
             <Link to="/terms/">Terms</Link>
+            <Link to="/es/" lang="es">
+              En español
+            </Link>
           </nav>
         </div>
 
@@ -102,7 +109,13 @@ export default function QuietFooter() {
               <ul>
                 {group.links.map((link) => (
                   <li key={link.to}>
-                    <Link to={link.to}>{link.label}</Link>
+                    {link.external ? (
+                      <a href={link.to} rel="external">
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link to={link.to}>{link.label}</Link>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -613,3 +613,61 @@
 .lf-ex-record__client:focus-visible {
   color: var(--lf-fight);
 }
+
+/* ─── The Lab band ─────────────────────────────────────────────── */
+
+.lf-ex-lab {
+  padding: var(--lf-space-8) var(--lf-margin-mobile);
+}
+
+.lf-ex-lab__inner {
+  max-width: 1312px;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lf-space-5);
+  padding: var(--lf-space-6);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-ex-lab__title {
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-lg);
+  color: var(--lf-bone);
+  margin: var(--lf-space-2) 0;
+}
+
+.lf-editorial .lf-ex-lab__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 0 var(--lf-space-6);
+  border-radius: var(--lf-radius-control);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-ex-lab__link:hover {
+  background: var(--lf-fight-hover);
+}
+
+@media (min-width: 768px) {
+  .lf-ex-lab {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-ex-lab {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}

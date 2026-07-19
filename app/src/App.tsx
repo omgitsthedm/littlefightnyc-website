@@ -17,6 +17,7 @@ function lazyRoute<T extends ComponentType<unknown>>(
 }
 
 const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
+const Espanol = lazyRoute(() => import("@/pages/Espanol"));
 const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
 const Answers = lazyRoute(() => import("@/pages/Answers"));
 const About = lazyRoute(() => import("@/pages/About"));
@@ -75,6 +76,10 @@ export default function App() {
             magazine cover. Everything else inherits EditorialShell with the
             compact running masthead. */}
         <Route index element={<Home />} />
+
+        {/* The complete pitch in Spanish — standalone, fully-Spanish chrome
+            (an English nav/footer around Spanish content would be half a page). */}
+        <Route path="es" element={route(Espanol)} />
 
         <Route
           element={

@@ -25,6 +25,17 @@ for = "/*"
   Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "DENY"
+  # Speculation Rules via header (not inline <script>) — no CSP change needed.
+  # Conservative: prefetch-on-hover of page HTML only; helps hard navigations
+  # (new-tab/cmd-clicks, post-deploy reloads) — in-SPA navs are already instant.
+  Speculation-Rules = '"/speculation-rules.json"'
+
+[[headers]]
+for = "/speculation-rules.json"
+
+  [headers.values]
+  Content-Type = "application/speculationrules+json"
+  Cache-Control = "public, max-age=300"
 
 [[headers]]
 for = "/assets/*"

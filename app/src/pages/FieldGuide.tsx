@@ -244,6 +244,24 @@ export default function FieldGuide() {
         </section>
       )}
 
+      {/* The Lab — the demo-build showcase on its own subdomain. */}
+      <section className="lf-ex-lab" aria-label="The Lab demo builds">
+        <div className="lf-ex-lab__inner">
+          <div>
+            <p className="lf-ex-head__eyebrow">The Lab</p>
+            <h2 className="lf-ex-lab__title">Fifteen sites we built to prove it.</h2>
+            <p className="lf-ex-head__dek">
+              Demo builds for barbershops, diners, gyms, florists — real working
+              sites, not mockups. Poke around. Break nothing.
+            </p>
+          </div>
+          <a className="lf-ex-lab__link" href="https://lab.littlefightnyc.com" rel="external">
+            Visit The Lab
+            <span aria-hidden="true"> ↗</span>
+          </a>
+        </div>
+      </section>
+
       {/* Industries — a compact icon band, not six photo cards. */}
       <section id="industries" className="lf-ex-industries" aria-labelledby="lf-ex-ind-title">
         <div ref={industriesRef} className="lf-ex-industries__inner" data-reveal>

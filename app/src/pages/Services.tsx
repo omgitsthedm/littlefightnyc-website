@@ -63,8 +63,8 @@ export default function Services() {
         icon={Layers}
         title={
           <>
-            Bring in business.<br />
-            <span className="lf-accent">Keep it running.</span>
+            Pick what's broken.<br />
+            <span className="lf-accent">We take it from there.</span>
           </>
         }
         dek="Start with a website that pulls in customers. Add the rest only when you actually need it. Nobody upsells you here."

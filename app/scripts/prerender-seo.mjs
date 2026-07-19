@@ -291,6 +291,19 @@ const pages = [
   ...serviceAreaPages(),
   ...glossaryPages(),
   ...(await journalPages()),
+  // The complete pitch in Spanish — custom snapshot + hreflang pair with home.
+  {
+    path: "/es/",
+    locale: "es",
+    title: "Little Fight NYC en español | Páginas web y tecnología para su negocio",
+    description:
+      "Hacemos su página web, arreglamos la tecnología cuando falla, y acabamos con las cuotas mensuales que se comen su ganancia. Nueva York, desde 2012. La consulta es gratis.",
+    h1: "Su página web trae clientes. Nosotros la mantenemos andando.",
+    shortAnswer:
+      "Little Fight NYC en español: páginas web, soporte técnico, consultoría gratis y software propio para negocios pequeños de Nueva York.",
+    type: "WebPage",
+    image: "/assets/og-image.jpg",
+  },
 ];
 
 // Enrich pages with authored data from site.ts: real dates for freshness
@@ -893,8 +906,17 @@ function managedHead(page) {
     routeExtraImagePreloads(page),
     routeModulePreload(page),
     journalBodyModulePreload(page),
-    `<link rel="alternate" hreflang="en-US" href="${escapeAttr(canonical)}">`,
-    `<link rel="alternate" hreflang="x-default" href="${escapeAttr(canonical)}">`,
+    // hreflang: home ↔ /es/ are language alternates of the same pitch; every
+    // other page is English-only (self-referential en + x-default).
+    page.locale === "es"
+      ? `<link rel="alternate" hreflang="es" href="${escapeAttr(canonical)}">`
+      : `<link rel="alternate" hreflang="en-US" href="${escapeAttr(canonical)}">`,
+    page.locale === "es"
+      ? `<link rel="alternate" hreflang="en-US" href="${siteUrl}/">`
+      : page.path === "/"
+        ? `<link rel="alternate" hreflang="es" href="${siteUrl}/es/">`
+        : "",
+    `<link rel="alternate" hreflang="x-default" href="${page.locale === "es" ? `${siteUrl}/` : escapeAttr(canonical)}">`,
     `<meta name="geo.region" content="US-NY">`,
     `<meta name="geo.placename" content="New York">`,
     `<meta name="geo.position" content="${site.latitude};${site.longitude}">`,
@@ -1359,7 +1381,73 @@ function promisesBlock() {
   `;
 }
 
+// Fully-Spanish first-paint snapshot for /es/ — mirrors src/pages/Espanol.tsx
+// (same content, same order) so hydration settles without a visible rewrite.
+// lang="es" on the wrapper so crawlers and screen readers get the right tongue.
+function esSnapshot() {
+  const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
+  const display = `"Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", sans-serif`;
+  return `
+    <div class="lf-seo" lang="es">
+      <style>
+        .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
+        .lf-seo h1, .lf-seo h2, .lf-seo h3 { font-family: ${display}; font-weight: 700; letter-spacing: 0; }
+        .lf-seo h1 { font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.05; margin: 40px 0 20px; }
+        .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
+        .lf-seo a { color: #F97316; text-decoration: none; }
+        .lf-seo .es-sub { color: #A1A1AA; font-size: 1.15rem; max-width: 56ch; }
+        .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 28px; border-radius: 32px; margin: 18px 12px 0 0; }
+        .lf-seo ul { list-style: none; padding: 0; }
+        .lf-seo .es-cards li { border: 1px solid #27272A; border-radius: 12px; padding: 20px; margin: 12px 0; background: #12141A; }
+        .lf-seo .es-cards h3 { color: #F97316; margin: 0 0 6px; }
+        .lf-seo .es-cards p { color: #A1A1AA; margin: 0; }
+        .lf-seo .es-fight { border-left: 3px solid #F97316; padding-left: 20px; font-size: 1.3rem; max-width: 34em; margin: 40px 0; }
+        .lf-seo .es-promises li { border-top: 1px solid #27272A; padding: 10px 0; font-weight: 600; }
+        .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
+      </style>
+      <header>
+        <strong style="font-family:${display};font-size:20px;">Little Fight NYC</strong>
+        · <a href="tel:+16463600318">${site.phoneDisplay}</a>
+      </header>
+      <main>
+        <h1>Su página web trae clientes. <em>Nosotros la mantenemos andando.</em></h1>
+        <p class="es-sub">Hacemos su página web, contestamos cuando la tecnología falla, y acabamos con las cuotas mensuales que se comen su ganancia. Lo que construimos, es suyo.</p>
+        <p>
+          <a class="es-cta" href="tel:+16463600318">Llámenos: ${site.phoneDisplay}</a>
+          <a href="mailto:${site.email}">${site.email}</a>
+        </p>
+        <h2>Qué hacemos</h2>
+        <ul class="es-cards">
+          <li><h3>Páginas web</h3><p>Una página que hace sonar el teléfono. Llamadas, citas, pagos y Google — todo funcionando junto.</p></li>
+          <li><h3>Soporte técnico</h3><p>El internet, la caja, el correo, los pagos. Cuando algo falla, lo arregla una persona de verdad.</p></li>
+          <li><h3>Consultoría gratis</h3><p>Le decimos qué sirve, qué sobra y qué arreglar primero. Si no nos necesita, también se lo decimos.</p></li>
+          <li><h3>Software propio</h3><p>Deje de rentar programas. Construimos su herramienta una vez — y es suya para siempre.</p></li>
+        </ul>
+        <p class="es-fight">Las cadenas grandes llegaron con equipos de tecnología. La tienda de la esquina nunca tuvo uno. Por eso existimos: para darle al negocio pequeño las mismas herramientas — sin las facturas de empresa grande.</p>
+        <h2>Lo que puede esperar</h2>
+        <ul class="es-promises">
+          <li>La consulta siempre es gratis.</li>
+          <li>Su página web en 14 días — o no paga.</li>
+          <li>Llamamos de vuelta en 2 horas, de 9am a 9pm.</li>
+          <li>El código, los datos, todo: suyo.</li>
+        </ul>
+        <h2>Hablemos</h2>
+        <p class="es-sub">Llame, mande un texto o escriba un correo — en el idioma que le quede cómodo. Le contesta una persona de verdad. Sin robots, sin número de ticket.</p>
+        <p><a class="es-cta" href="tel:+16463600318">${site.phoneDisplay}</a></p>
+      </main>
+      <footer>
+        <p>Little Fight NYC · Nueva York · Desde 2012 · Todavía contestamos el teléfono</p>
+        <p><a href="/">Ver el sitio completo en inglés</a></p>
+      </footer>
+    </div>
+  `;
+}
+
 function snapshot(page) {
+  // The Spanish page gets a fully-Spanish snapshot — the standard shell wraps
+  // content in the English nav/footer, which would make /es/ a mixed-language
+  // page for crawlers and for the pre-hydration paint.
+  if (page.locale === "es") return esSnapshot();
   // Brand-aligned first-paint snapshot. Editorial colors/type inlined so
   // crawlers see brand-correct content and visitors see something on-brand
   // for the ~150ms before React hydrates.
@@ -1534,9 +1622,14 @@ function snapshot(page) {
 }
 
 function renderPage(page) {
-  const html = asyncStyles(stripManagedHead(template))
+  let html = asyncStyles(stripManagedHead(template))
     .replace("</head>", () => `    ${managedHead(page)}\n  </head>`)
     .replace('<div id="root"></div>', () => `<div id="root">${snapshot(page)}</div>`);
+
+  // The Spanish page declares its language at the document level too.
+  if (page.locale === "es") {
+    html = html.replace('<html lang="en"', '<html lang="es"');
+  }
 
   return html;
 }
