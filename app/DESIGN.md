@@ -5,7 +5,7 @@ description: "The Little Fight NYC design system, evolved to a product-OS soul f
 mode: dark
 colors:
   primary: "#F97316"      # orange — the lead signal (--lf-fight)
-  ember: "#FB8B3C"        # hover / active warmth (--lf-ember)
+  hover: "oklch(0.752 0.185 48)"   # OKLCH ramp (--lf-fight-hover; --lf-ember retired 2026-07-18)
   accent: "#3B82F6"       # blue — the real second signal (--lf-blue)
   accent-soft: "#60A5FA"  # lighter blue (--lf-blue-soft)
   background: "#050507"   # primary ground (--lf-ink)
@@ -16,8 +16,8 @@ colors:
   text-secondary: "#A1A1AA" # (--lf-bone-soft)
   text-tertiary: "#71717A"  # captions, marginalia (--lf-bone-dim)
 typography:
-  display: "Inter"        # weight 700, tracking -0.03em (--lf-display)
-  body: "Inter"           # 400/500/600
+  display: "Oswald"       # Boxing Poster v7 (2026-07-15) — weight 700, 0 tracking (--lf-display)
+  body: "Barlow"          # 400/500/600 (--lf-serif/--lf-sans); JetBrains Mono for labels
   label: "JetBrains Mono" # 500, uppercase, 0.08em (--lf-mono)
 spacing:
   base: "8px"
@@ -113,3 +113,41 @@ stagger (`calc(var(--i) * 70ms)`). Everything collapses instantly under
 - Keep cards on the 32px radius language; editorial hairline rules stay sharp (`0`).
 - Never hardcode color/spacing/radius in a component — add or use a token.
 - Preserve the LiFi footer line ("Designed, Hosted and Cared For by LittleFightNYC.com").
+
+---
+
+## The Small Craft Doctrine — distilled (2026-07-18)
+
+The full philosophy document served its purpose and was retired once the site
+embodied it. These are the standing laws it left behind; the code enforces most
+of them (kernel/, instrument.ts, motion.ts, scripts/audit-signal.mjs).
+
+**The one line:** Fewer surfaces, deeper systems. The site practices what it
+sells — not more tools, one owned system where the parts talk to each other.
+
+**The Nine Laws**
+1. One machine — all interactivity descends from the shared kernel (ForceField,
+   motion.ts, instrument harness). No component invents its own physics.
+2. Signal is sacred — orange means act/live/the-point, never decoration
+   (ratchet-enforced). Blue is ambient only. Red = fault, green = confirmed.
+3. Many → One is the house motion (MoneyLeaving is canonical).
+4. Weight before flash — mass, settle, follow-through; nothing teleports.
+5. No seams — complete first paint, silent enhancement, no spinners, NO SPLASH.
+6. Honest instruments — anything that looks like data IS data (counts come from
+   the animation itself or the page's real promises). No invented metrics.
+7. One-look legibility — visually AND verbally, for a 65-year-old non-technical
+   owner. Type floor 16px; body 18-20px; reading tier 20-23px; inputs ≥16px.
+8. Reward, never tax — reduced-motion and low-power paths are first-class.
+9. Owned, not rented — hand-built primitives, no template DNA, no widget chrome.
+
+**Hard budgets:** complete first paint on "/" ≤400ms (never regress) · LCP ≤2s ·
+CLS ≤0.02 · instruments 60fps at DPR ≤2. A feature that breaks the budget gets
+simplified — never the budget.
+
+**Refused on sight:** bento feature walls · decorative gradients/blobs · logo
+walls & vanity counters · scroll-jacking · fake urgency · spinners on complete
+content · cursor followers · AI faces · orange as decoration · corporate jargon
+(leverage/seamless/solutions/etc.) · anything failing the one-look test.
+
+**Mission storytelling pattern:** poster type + a living instrument (the fight
+card), never parallel bullet lists.
