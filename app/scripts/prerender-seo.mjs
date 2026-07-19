@@ -821,12 +821,19 @@ function routeImagePreload(page) {
       .join("\n    ");
   }
 
-  // Inner pages: page.image is the OG/social image, which is NOT reliably the
-  // rendered LCP (the PageHero image differs), so preloading it fetches an asset
-  // the page never uses ("preloaded but not used" + wasted bytes). A wrong
-  // preload is worse than none — only the home hero (above) is guaranteed-used.
-  // Genuinely-used inner-page hero preloads are added explicitly in
-  // routeExtraImagePreloads().
+  // Inner pages whose og image IS the rendered PageHero hero (the hero-*
+  // naming convention — og and PageHero were synced in the 2026-07-19 photo
+  // waves): preload with EXACTLY PageHero's srcset/sizes so the preload and
+  // the hydrated <img> resolve to one identical candidate (the home-hero
+  // lesson: a disagreeing preload double-downloads the LCP).
+  if (/\/assets\/hero-[a-z0-9-]+\.webp$/.test(asset)) {
+    const base = asset.slice(0, -".webp".length);
+    const srcset = [480, 640, 900].map((w) => `${base}-${w}.webp ${w}w`).join(", ");
+    return `<link rel="preload" href="${escapeAttr(`${base}-900.webp`)}" imagesrcset="${escapeAttr(srcset)}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  }
+
+  // Other inner pages: page.image is the OG/social image, which is NOT
+  // reliably the rendered LCP — a wrong preload is worse than none.
   return "";
 }
 

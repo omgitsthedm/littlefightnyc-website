@@ -31,9 +31,15 @@ if ("serviceWorker" in navigator) {
         // Service worker registration is progressive enhancement only.
       });
 
-    // When the active controller changes, reload once so the new shell runs.
+    // When the active controller CHANGES OVER from a previous one, reload once
+    // so the new shell runs. Guard: on the very FIRST install there was no
+    // controller — clients.claim() fires controllerchange on a page that is
+    // already fresh, and reloading it made every first-time visitor pay for
+    // the page twice (Lighthouse: ~4.5s of "redirect" cost on mobile).
+    const hadController = !!navigator.serviceWorker.controller;
     let refreshing = false;
     navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (!hadController) return;
       if (refreshing) return;
       refreshing = true;
       window.location.reload();
