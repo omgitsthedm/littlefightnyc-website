@@ -1443,6 +1443,7 @@ function zhSnapshot() {
         .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
       </style>
       <header><strong>Little Fight NYC</strong> · <a href="tel:+16463600318">(646) 360-0318</a></header>
+      <main>
       <h1>您的网站带来顾客。<em>我们让它一直好用。</em></h1>
       <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
       <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a></p>
@@ -1464,6 +1465,7 @@ function zhSnapshot() {
       <h2>聊聊吧</h2>
       <p class="es-sub">打电话、发短信、发邮件都行——用您最习惯的语言写。回复您的是真人。没有机器人，没有工单号。</p>
       <p><a class="es-cta" href="tel:+16463600318">(646) 360-0318</a></p>
+      </main>
       <footer>Little Fight NYC · 纽约 · 始于2021 · 依然有人接电话 · <a href="/">查看完整英文网站</a></footer>
     </div>`;
 }
