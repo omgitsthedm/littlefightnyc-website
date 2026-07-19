@@ -61,12 +61,12 @@ export default function About() {
           </EditorialBody>
 
           <EditorialFigure
-            src="/assets/interior-spice-shop.webp"
-            alt="Inside an owner-run specialty shop in New York"
+            src="/assets/figure-bagel-counter.webp"
+            alt="A bagel shop counterman mid-shift, racks of plain, whole wheat, and cinnamon raisin behind him"
             number="01"
             caption="The places that make a block worth living on — usually the ones with the least time and the smallest tech budget."
             width={1600}
-            height={1067}
+            height={1200}
           />
 
           <EditorialBody>
@@ -97,7 +97,7 @@ export default function About() {
             number="02"
             caption="Most calls start with “I don't know if this is a stupid question.” It almost never is — it's the business."
             width={1600}
-            height={1067}
+            height={1200}
           />
 
           <EditorialBody>

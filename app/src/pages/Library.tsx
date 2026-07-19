@@ -111,8 +111,8 @@ export default function Library() {
         }
         dek="Straight answers to the questions NYC owners actually ask, plus how-tos, essays, and software comparisons from the field. Short, plain, and not trying to sell you a thing."
         image={{
-          src: "/assets/manhattan.webp",
-          alt: "The Manhattan skyline at night seen from above, city lights stretching to the horizon",
+          src: "/assets/hero-library-avenue.webp",
+          alt: "A New York avenue at golden hour, streetlights just coming on down the corridor",
           width: 1800,
           height: 1200,
         }}

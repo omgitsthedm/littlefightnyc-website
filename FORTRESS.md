@@ -236,7 +236,16 @@ lost-but-safe (404 ✅), no-translation-needed (/es/ ✅), reading-companion
    now? Skip the reading." Research doors keep it after the reading
 6. ✅ ~~Door→call measurement~~ — door_bridge event with per-door slug label
    on every bridge; watchtower reads it alongside GSC
-7. **Photo integration** — as David's Unsplash batch lands (shot list below)
+7. ✅ ~~Photo integration wave 1~~ — 10 of the 55 real frames live: 5 area
+   heroes (EV Holy-Cow night, Midtown market, UES lit trees, UWS 72nd St
+   station, WV corner café), 4 hub heroes (Contact = the warm open door,
+   Examples = fish market, Services = Wall St crossing, Library = golden-hour
+   avenue), About bagel-counter figure. og images synced. **Bench (45 frames,
+   source: ~/Desktop/LiFi NYC/New York Neighborhoods): Radio City neon, wet-neon
+   Times Sq pavement, amber fountain, ice-cream-truck sunset, LOVE-graffiti
+   gate, FISH sign, juice-counter staff, UES boutique interior, diner night,
+   Washington Sq Arch + WTC (fuel for Greenwich/FiDi pages #15/#16), and more —
+   cast into body figures + future doors as pages get their doctrine pass.**
 8. ✅ ~~GSC push phase~~ — run 2026-07-19 (see GSC log); re-run after next
    content wave; coverage re-check when the report refreshes (was 10 days stale)
 9. ✅ ~~AI-engine presence test~~ — verdict: NOT PRESENT. Zero Bing-index

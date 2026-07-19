@@ -8,13 +8,13 @@ import { areaPages } from "@/data/site";
 // Same per-area frames the detail pages use, so hub and detail agree.
 const AREA_IMAGE: Record<string, string> = {
   "lower-east-side": "/assets/nyc-chinatown-night.webp",
-  "east-village": "/assets/nyc-stickys-steam.webp",
+  "east-village": "/assets/hero-east-village-night.webp",
   soho: "/assets/hero-soho-crosswalk.webp",
   chelsea: "/assets/manhattan.webp",
-  midtown: "/assets/nyc-street-crowd.webp",
-  "upper-east-side": "/assets/nyc-hair-salon-street.webp",
-  "upper-west-side": "/assets/nyc-street.webp",
-  "west-village": "/assets/storefront-health-foods.webp",
+  midtown: "/assets/hero-midtown-market.webp",
+  "upper-east-side": "/assets/hero-ues-lights.webp",
+  "upper-west-side": "/assets/hero-uws-72nd.webp",
+  "west-village": "/assets/hero-west-village-cafe.webp",
   williamsburg: "/assets/interior-jeans-rack.webp",
   bushwick: "/assets/pizza-menu-chalkboard.webp",
   "park-slope": "/assets/storefront-beauty-supply.webp",

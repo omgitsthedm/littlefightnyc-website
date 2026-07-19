@@ -45,8 +45,8 @@ export default function Contact() {
         }
         dek="Broken today? Call. Messy but not urgent? Start a Tech Audit. Not sure what it is called? Call anyway. There are no dumb questions here."
         image={{
-          src: "/assets/nyc-stickys-steam.webp",
-          alt: "Steam from a Manhattan grate at street level",
+          src: "/assets/hero-contact-door.webp",
+          alt: "A warm-lit shop doorway glowing at dusk in New York — the door is open",
           width: 1600,
           height: 1200,
         }}

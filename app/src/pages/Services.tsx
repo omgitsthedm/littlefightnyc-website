@@ -69,7 +69,7 @@ export default function Services() {
         }
         dek="Start with a website that pulls in customers. Add the rest only when you actually need it. Nobody upsells you here."
         image={{
-          src: "/assets/nyc-street-crowd.webp",
+          src: "/assets/hero-services-crossing.webp",
           alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",
           width: 1600,
           height: 1200,

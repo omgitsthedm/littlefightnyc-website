@@ -30,7 +30,7 @@
       "h1": "Pick what's broken. We take it from there.",
       "shortAnswer": "Short answer: Little Fight NYC starts with the website, supports the tech behind it, gives free consulting, and builds focused software the business owns when generic tools no longer fit.",
       "type": "CollectionPage",
-      "image": "/assets/hero-laptop.webp"
+      "image": "/assets/hero-services-crossing.webp"
     },
     {
       "path": "/services/custom-local-websites/",
@@ -142,7 +142,7 @@
       "h1": "Proof, maps, and plain answers.",
       "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
       "type": "CollectionPage",
-      "image": "/assets/nyc-street.webp"
+      "image": "/assets/hero-examples-market.webp"
     },
     {
       "path": "/library/",
@@ -151,7 +151,7 @@
       "h1": "Everything we know. Free.",
       "shortAnswer": "Short answer: the Library is every answer and field note Little Fight NYC has published — owner questions answered plainly, plus how-tos, essays, and software comparisons. Free, no selling.",
       "type": "CollectionPage",
-      "image": "/assets/manhattan.webp"
+      "image": "/assets/hero-library-avenue.webp"
     },
     {
       "path": "/answers/website-form-not-working-small-business/",
@@ -785,7 +785,7 @@
       "h1": "Tell us what's going on.",
       "shortAnswer": "Short answer: call or text (646) 360-0318. Email hello@littlefightnyc.com. Or start a Tech Audit when the problem has moving parts.",
       "type": "ContactPage",
-      "image": "/assets/nyc-stickys-steam.webp"
+      "image": "/assets/hero-contact-door.webp"
     },
     {
       "path": "/privacy/",
@@ -844,7 +844,7 @@
       "h1": "Right-sized websites and systems for East Village local businesses.",
       "shortAnswer": "Short answer: East Village businesses win when locals can find them, get the offer fast, and act without chasing broken links or confusing booking paths.",
       "type": "PlacePage",
-      "image": "/assets/nyc-street.webp",
+      "image": "/assets/hero-east-village-night.webp",
       "faq": [
         {
           "question": "I pay for a booking platform already. Do I need a website too?",
@@ -913,7 +913,7 @@
       "h1": "IT support and digital systems for Midtown small businesses.",
       "shortAnswer": "Short answer: Midtown businesses need tech that works every day, fast website actions, and workflows that cut interruptions for busy teams.",
       "type": "PlacePage",
-      "image": "/assets/manhattan.webp",
+      "image": "/assets/hero-midtown-market.webp",
       "faq": [
         {
           "question": "My customers are office workers whose schedules changed. How does that affect my setup?",
@@ -936,7 +936,7 @@
       "h1": "Local SEO, websites, and support for Upper East Side businesses.",
       "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, local SEO that keeps Google correct, and simple systems that make appointments and follow-up easy.",
       "type": "PlacePage",
-      "image": "/assets/manhattan.webp",
+      "image": "/assets/hero-ues-lights.webp",
       "faq": [
         {
           "question": "A dental group backed by investors opened nearby. How do I compete as an independent?",
@@ -967,7 +967,7 @@
       "h1": "Better websites and practical tech help for Upper West Side businesses.",
       "shortAnswer": "Short answer: Upper West Side businesses need clear websites, reliable support, and search visibility that helps nearby customers pick them.",
       "type": "PlacePage",
-      "image": "/assets/nyc-street.webp",
+      "image": "/assets/hero-uws-72nd.webp",
       "faq": [
         {
           "question": "Most of my customers are regulars. Why does search visibility matter?",
@@ -990,7 +990,7 @@
       "h1": "Premium local websites and systems for West Village businesses.",
       "shortAnswer": "Short answer: West Village businesses need elegant, fast websites and practical systems that help customers act. No new expensive platform required.",
       "type": "PlacePage",
-      "image": "/assets/storefront-health-foods.webp",
+      "image": "/assets/hero-west-village-cafe.webp",
       "faq": [
         {
           "question": "My spot is beloved locally. Why does the website matter?",
