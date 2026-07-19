@@ -217,14 +217,11 @@ Rendered review at 1440px, funnel order. Results:
 
 - Standing gates every ship: signal ratchet, jargon sweep, margin audit,
   16px floor, **reading-grade audit (target ≤8, hard ceiling 9)**
-- **📖 ELI5 DEBT (measured 2026-07-19: 60 docs, avg grade 7.5, 0 jargon;
-  11 docs over grade 9 — fix in register, preserve facts/schema):**
-  journal/cybersecurity-for-small-business (11.6), journal/nyc-small-business-
-  digital (11.1), industry/professional-services (10.4), journal/why-business-
-  websites-will-be-invisible (10.2), industry/galleries (10.2), industry/retail
-  (10.1), industry/salons-wellness (10.1), industry/medical-wellness (9.9),
-  journal/ai-google-broke-the-internet (9.5), journal/shopify-vs-squarespace-
-  nyc-retail (9.5), ~~area/financial-district (9.3)~~ ✅ fixed → 4.8
+- **📖 ELI5 DEBT: ✅ PAID (2026-07-19).** Re-audit: 62 docs, avg grade 6.8,
+  zero over the hard-9 ceiling. The five journal posts (11.6→6.6, 11.1→7.6,
+  10.2→6.5, 9.5→7.0, 9.5→7.2) and five industry pages (all ~10→6-7.4)
+  rewritten in register, facts preserved. Tail: 9 docs sit 8-9 (inside
+  ceiling, above target) — tighten opportunistically, not urgent
 - New-page rule: funnel station + ledger check + template contract, or it
   doesn't ship
 
