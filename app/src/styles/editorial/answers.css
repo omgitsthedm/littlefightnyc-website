@@ -445,3 +445,10 @@
 .lf-editorial .lf-answer-page__bridge-link:hover .lf-answer-page__bridge-name {
   color: var(--lf-fight-hover);
 }
+
+/* Emergency tempo: the bridge leads the page and reads hotter. */
+.lf-editorial .lf-answer-page__bridge[data-urgent] {
+  margin-top: 0;
+  margin-bottom: var(--lf-space-6);
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+}

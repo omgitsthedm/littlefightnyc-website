@@ -230,10 +230,11 @@ lost-but-safe (404 ✅), no-translation-needed (/es/ ✅), reading-companion
 4. ⏸ **HELD (David): all neighborhood/area pages frozen until his real-photo
    batch lands.** Then: reference door build — UES to the full Door-Doctrine arc (recognition
    viewport, tempo, wow, path, bridge); becomes the template others inherit
-5. **Tempo classification** — tag all 27 answers emergency/dream/research;
-   emergency doors get the ER-nurse treatment (path FIRST, wow minimal)
-6. **Door→call measurement** — data-lf-event on every bridge + tel: click,
-   per-door attribution into the watchtower
+5. ✅ ~~Tempo classification~~ — 5 emergency doors (website-down, POS-down,
+   email-spam, GBP-suspended, form-broken) lead with the bridge: "Down right
+   now? Skip the reading." Research doors keep it after the reading
+6. ✅ ~~Door→call measurement~~ — door_bridge event with per-door slug label
+   on every bridge; watchtower reads it alongside GSC
 7. **Photo integration** — as David's Unsplash batch lands (shot list below)
 8. **GSC push phase** (David's sequenced finale): sitemap resubmit, request
    indexing on changed doors, coverage/CWV/mobile reports worked to zero

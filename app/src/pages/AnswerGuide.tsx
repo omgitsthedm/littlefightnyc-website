@@ -28,6 +28,37 @@ function displayDate(date: string) {
 /** Same-cluster guides first (same symptom family), then the rest. */
 
 
+/** Emergency-tempo doors (Door Doctrine): someone mid-crisis gets the way
+ *  out FIRST — the service bridge renders above the reading, not after it. */
+const EMERGENCY = new Set([
+  "website-down-emergency-nyc",
+  "pos-system-down-restaurant-nyc",
+  "business-email-going-to-spam",
+  "google-business-profile-suspended",
+  "website-form-not-working-small-business",
+]);
+
+function ServiceBridge({ slug, urgent }: { slug: string; urgent?: boolean }) {
+  const bridge = answerServiceBridge[slug];
+  if (!bridge) return null;
+  return (
+    <aside className="lf-answer-page__bridge" data-urgent={urgent || undefined}>
+      <p className="lf-answer-page__bridge-eyebrow">
+        {urgent ? "Down right now? Skip the reading." : "Reading done. Want it handled?"}
+      </p>
+      <Link
+        to={bridge.to}
+        className="lf-answer-page__bridge-link"
+        data-lf-event="door_bridge"
+        data-lf-label={slug}
+      >
+        <span className="lf-answer-page__bridge-name">{bridge.name}</span>
+        <span className="lf-answer-page__bridge-line">{bridge.line}</span>
+      </Link>
+    </aside>
+  );
+}
+
 function relatedGuides(slug: string) {
   const cluster = ANSWER_CLUSTERS.find((c) => c.slugs.includes(slug));
   const siblings = cluster ? cluster.slugs.filter((s) => s !== slug) : [];
@@ -83,6 +114,8 @@ export default function AnswerGuide() {
             />
           </p>
 
+          {EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} urgent />}
+
           {triage ? (
             <AnswerStepper sections={guide.sections} />
           ) : (
@@ -112,15 +145,7 @@ export default function AnswerGuide() {
             </section>
           )}
 
-          {answerServiceBridge[guide.slug] && (
-            <aside className="lf-answer-page__bridge">
-              <p className="lf-answer-page__bridge-eyebrow">Reading done. Want it handled?</p>
-              <Link to={answerServiceBridge[guide.slug].to} className="lf-answer-page__bridge-link">
-                <span className="lf-answer-page__bridge-name">{answerServiceBridge[guide.slug].name}</span>
-                <span className="lf-answer-page__bridge-line">{answerServiceBridge[guide.slug].line}</span>
-              </Link>
-            </aside>
-          )}
+          {!EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} />}
 
           {related.length > 0 && (
             <section className="lf-answer-page__related">
