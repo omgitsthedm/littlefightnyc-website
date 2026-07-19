@@ -102,7 +102,7 @@ export default function RouteMeta() {
     const path = routePath(location.pathname);
     const page = pages.find((item) => item.path === path) ?? fallbackPage(path) ?? pages[0];
     const canonical = absoluteUrl(page.path);
-    const image = page.image?.startsWith("http") ? page.image : absoluteUrl(page.image ?? "/assets/og-image.jpg");
+    const image = page.image?.startsWith("http") ? page.image : absoluteUrl(page.image ?? "/assets/og-tugboat.jpg");
     const isArticle = page.title.includes(" | Little Fight NYC") && (
       page.path.startsWith("/journal/") ||
       page.path.startsWith("/answers/") ||

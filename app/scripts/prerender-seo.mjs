@@ -297,7 +297,7 @@ const pages = [
     shortAnswer:
       "Little Fight NYC en español: páginas web, soporte técnico, consultoría gratis y software propio para negocios pequeños de Nueva York.",
     type: "WebPage",
-    image: "/assets/og-image.jpg",
+    image: "/assets/og-tugboat.jpg",
   },
   // The complete pitch in Simplified Chinese — same model as /es/.
   {
@@ -310,7 +310,7 @@ const pages = [
     shortAnswer:
       "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码归您。",
     type: "WebPage",
-    image: "/assets/og-image.jpg",
+    image: "/assets/og-tugboat.jpg",
   },
 ];
 
@@ -411,7 +411,7 @@ function absoluteUrl(routePath = "/") {
   return `${siteUrl}${routePath === "/" ? "/" : routePath}`;
 }
 
-function absoluteAsset(asset = "/assets/og-image.jpg") {
+function absoluteAsset(asset = "/assets/og-tugboat.jpg") {
   return asset.startsWith("http") ? asset : `${siteUrl}${asset}`;
 }
 
@@ -1817,7 +1817,7 @@ const notFound = {
   h1: "This page moved.",
   shortAnswer: "Short answer: start with the messy setup and Little Fight will route you to the right help.",
   type: "WebPage",
-  image: "/assets/og-image.jpg",
+  image: "/assets/og-tugboat.jpg",
   noindex: true
 };
 

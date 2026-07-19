@@ -8,7 +8,7 @@
     "location": "New York, NY",
     "latitude": 40.7128,
     "longitude": -74.006,
-    "image": "https://littlefightnyc.com/assets/og-image.jpg",
+    "image": "https://littlefightnyc.com/assets/og-tugboat.jpg",
     "sameAs": [
       "https://www.instagram.com/littlefightnyc"
     ]
@@ -21,7 +21,7 @@
       "h1": "Websites bring business. We keep it running.",
       "shortAnswer": "Short answer: Little Fight NYC builds websites for New York small businesses, fixes urgent tech, gives free consulting, and replaces bloated subscriptions with focused software clients own.",
       "type": "WebPage",
-      "image": "/assets/local-business-base.webp"
+      "image": "/assets/og-tugboat.jpg"
     },
     {
       "path": "/services/",
@@ -155,7 +155,7 @@
       "h1": "Show us the moving parts.",
       "shortAnswer": "Short answer: the Tech Audit is a free, human review of your business tech — website, tools, Google, and monthly costs. You get a straight answer, not a pitch.",
       "type": "ContactPage",
-      "image": "/assets/og-image.jpg",
+      "image": "/assets/og-tugboat.jpg",
       "faq": [
         {
           "question": "Is the Tech Audit a quote?",
@@ -808,7 +808,7 @@
       "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Work is scoped before it is quoted. Account access uses safer handoffs.",
       "type": "WebPage",
-      "image": "/assets/og-image.jpg"
+      "image": "/assets/og-tugboat.jpg"
     },
     {
       "path": "/contact/",
@@ -826,7 +826,7 @@
       "h1": "Privacy, plain.",
       "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Account access uses safer handoffs.",
       "type": "WebPage",
-      "image": "/assets/og-image.jpg"
+      "image": "/assets/og-tugboat.jpg"
     },
     {
       "path": "/terms/",
@@ -835,7 +835,7 @@
       "h1": "Terms and scope, plain.",
       "shortAnswer": "Short answer: Little Fight confirms scope, price, access needs, and timelines in writing before work begins.",
       "type": "WebPage",
-      "image": "/assets/og-image.jpg"
+      "image": "/assets/og-tugboat.jpg"
     },
     {
       "path": "/areas/",
@@ -1275,7 +1275,7 @@
       "h1": "We've got it from here.",
       "shortAnswer": "Short answer: you did the hard part. A real person at Little Fight NYC reads what you sent today and calls back within two hours, 9am to 9pm Eastern. Nothing moves until the next step makes sense to you.",
       "type": "WebPage",
-      "image": "/assets/og-image.jpg",
+      "image": "/assets/og-tugboat.jpg",
       "noindex": true
     },
     {
