@@ -188,7 +188,7 @@
 
 .lf-ex-feature__metric {
   font-family: var(--lf-mono);
-  font-size: 12px;
+  font-size: var(--lf-text-2xs);
   line-height: 1.5;
   letter-spacing: 0.04em;
   color: var(--lf-bone-soft);

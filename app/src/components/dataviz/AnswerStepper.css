@@ -64,7 +64,7 @@
   background: var(--lf-fight);
   color: var(--lf-ink);
   font-family: var(--lf-mono);
-  font-size: 13px;
+  font-size: var(--lf-text-2xs);
   font-weight: 700;
   letter-spacing: 0.04em;
   transform: scale(0.6);
@@ -117,7 +117,7 @@
   .lf-triage__node {
     width: 38px;
     height: 38px;
-    font-size: 12px;
+    font-size: var(--lf-text-2xs);
   }
 
   .lf-triage__step::before {

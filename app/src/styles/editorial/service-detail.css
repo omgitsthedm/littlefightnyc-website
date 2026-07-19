@@ -410,7 +410,7 @@
 .lf-sd-issues__item:last-child { border-bottom: 0; }
 .lf-sd-issues__numeral {
   font-family: var(--lf-mono);
-  font-size: 12px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.12em;
   color: var(--lf-fight);
   align-self: start;

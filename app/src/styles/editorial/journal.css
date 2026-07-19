@@ -366,7 +366,7 @@
   display: grid;
   place-items: center;
   font-family: var(--lf-mono);
-  font-size: 12px;
+  font-size: var(--lf-text-2xs);
   font-weight: 500;
   line-height: 1;
   color: var(--lf-fight);

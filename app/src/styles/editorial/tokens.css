@@ -30,13 +30,15 @@
   --lf-success: #4ADE80;      /* semantic green — confirmed / valid states */
 
   /* Type scale — fluid clamp() throughout, BIGGER on the cover tier.
-   * Legibility floor raised 2026-07-18 (David: a 65-year-old New Yorker has
-   * to be able to read every label) — smallest tier is now 12px, never 11. */
-  --lf-text-2xs: 0.75rem;                                     /* 12px — mono label tier floor */
-  --lf-text-xs: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem); /* 13-15px */
-  --lf-text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 1rem);      /* 14-16px */
-  --lf-text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);     /* 16-18px */
-  --lf-text-md: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);   /* 18-22px */
+   * Legibility standard (David, 2026-07-18, optometrist-backed): the ABSOLUTE
+   * floor for any text is 16px (12pt) — presbyopia hits everyone 50+. Body
+   * baseline is 18-20px (≥14pt), main reading tier up to ~23px (~17pt).
+   * 16px also clears iOS Safari's input auto-zoom threshold. */
+  --lf-text-2xs: 1rem;                                        /* 16px — the floor. Nothing renders smaller. */
+  --lf-text-xs: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);     /* 16-17px */
+  --lf-text-sm: clamp(1rem, 0.97rem + 0.2vw, 1.0625rem);      /* 16-17px */
+  --lf-text-base: clamp(1.125rem, 1.06rem + 0.35vw, 1.25rem); /* 18-20px — body baseline */
+  --lf-text-md: clamp(1.25rem, 1.16rem + 0.5vw, 1.4375rem);   /* 20-23px — main reading tier */
   --lf-text-lg: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);     /* 22-28px */
   --lf-text-xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.75rem);     /* 30-44px */
   --lf-text-2xl: clamp(2.75rem, 2rem + 3.5vw, 5rem);          /* 44-80px */

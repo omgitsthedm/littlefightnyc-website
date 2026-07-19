@@ -115,7 +115,7 @@
 }
 
 .lf-phone-action__number {
-  font-size: 15px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: -0.005em;
   color: var(--lf-bone);
 }

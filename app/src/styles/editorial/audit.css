@@ -95,7 +95,7 @@
   padding: 0 var(--lf-space-5);
   width: fit-content;
   font-family: var(--lf-mono);
-  font-size: 12px;
+  font-size: var(--lf-text-2xs);
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;

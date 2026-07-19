@@ -51,7 +51,7 @@
   margin-left: -1px;
   border-left: 2px solid transparent;
   font-family: var(--lf-sans);
-  font-size: 13px;
+  font-size: var(--lf-text-2xs);
   line-height: 1.45;
   color: var(--lf-bone-dim);
   text-decoration: none;

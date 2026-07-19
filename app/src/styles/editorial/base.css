@@ -500,7 +500,7 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
   background: var(--lf-fight);
   color: var(--lf-ink);
   font-family: var(--lf-mono);
-  font-size: 12px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;

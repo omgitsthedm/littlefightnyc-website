@@ -206,8 +206,9 @@
   font-family: var(--lf-display);
   font-weight: 600;
   /* Sized so the longest value (the email) fits the 4-up card on one line;
-   * break-word is only a safety net so it can never clip. */
-  font-size: clamp(0.95rem, 0.82rem + 0.5vw, 1.1rem);
+   * break-word is only a safety net so it can never clip. Floor 1rem — the
+   * 16px legibility minimum (mobile cards are full-width, the email fits). */
+  font-size: clamp(1rem, 0.86rem + 0.5vw, 1.1rem);
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--lf-bone);
