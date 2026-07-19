@@ -1,5 +1,18 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — Tugboat avatar on the 404 (LIVE, `e7ebd4b`)
+
+The doctrine's tugboat-avatar tier, realized as an ADDITIVE, low-stakes brand
+moment — `TugAvatar.tsx` between the 404 hero and the contact CTA. **Deliberately
+does NOT touch the editorial layout** (that's what got rolled back Jul-17, not the
+tugboat itself). Reuses the approved `TugMark` silhouette in muted steel
+(`--lf-bone-soft`), gently bobbing on a waterline with a wake; the ONE orange
+thing is a pulsing beacon via `var(--lf-fight)` (signal law holds, ratchet
+unaffected). Reduced-motion-safe (all animation stops → static mark, steady
+light), `aria-hidden`. Reversible — one component + one import. **⚠️ If David
+wants the tugboat avatar elsewhere / more literal / different, this is the first
+take on a low-stakes surface, meant to be reacted to — not a final placement.**
+
 ## 2026-07-18 — OKLCH signal ramp (LIVE, `5469181`)
 
 The interactive orange states are now a perceptually-uniform OKLCH ramp
