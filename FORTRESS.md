@@ -48,6 +48,71 @@ Marketing narrative = AIDA. Dramatics top, work bottom (David's directive):
 6. **Neon sign** — the lights-are-on close
 7. **BrandLine → Contact** — one door
 
+## The Door Doctrine (2026-07-19, David's brief: "a beacon of hope")
+
+Who arrives at a door: someone broken, hurt, desperate, angry, frustrated —
+mid-crisis or mid-dream, usually on a phone. Every door serves three readers
+at once, and they all want the SAME thing expressed three ways:
+
+| Reader | What they need | How it's delivered |
+|---|---|---|
+| The human | To feel RECOGNIZED, then given hope and a path | The emotional arc below |
+| Google | Comparative usefulness, expertise, trust (May-2026 core update) | Same arc: specific h1, structured answer, local evidence, schema |
+| AI engines | An extractable, citable, attributed answer | Same arc: the short-answer block, clean claims, FAQ schema, llms.txt |
+
+**The arc every door follows (Pixar spine, NY accent):**
+1. **RECOGNITION** — name their exact situation in their words, first viewport,
+   before any animation. "Your card reader died mid-rush." Not "IT solutions."
+   Recognition is the empathy beat AND the search-intent match AND the AI
+   answer target. Speed is part of it: performance IS empathy — a panicking
+   person gets the recognition line in under a second or we've failed them.
+2. **HOPE** — the short answer: "This is fixable. Usually today." Confidence
+   without corporate polish. (Already our shortAnswer field — keep it.)
+3. **PROOF** — the wow: one earned dramatic visual that dramatizes THEIR
+   problem being solved (the instruments). Show, never claim.
+4. **THE PATH** — numbered, plain, honest — INCLUDING the free/DIY step.
+   Generosity is neighbor behavior, and it's what AI engines cite.
+5. **THE DOOR OUT** — one warm CTA, zero pressure. "No phone tree. A person."
+
+**One voice, three tempos** (same grit, different pacing):
+- Emergency doors (down/broken/urgent) → ER-nurse tempo: calm, immediate,
+  action-first, wow minimal.
+- Dream doors (new website, own your software) → hope tempo: vision, bigger
+  wow, warmth forward.
+- Research doors (glossary, comparisons, answers) → patient-teacher tempo:
+  generous, complete, zero sell until the end.
+
+**The ship-gate for any door:** it must contain something ONLY Little Fight
+could write — real neighborhood knowledge, a real case detail, a real
+opinion. If a competitor could publish the same page by swapping the logo,
+it's a doorway page and it doesn't ship. (This is also exactly Google's
+scaled-content line.)
+
+**Blind spots named 2026-07-19 (the "what are we not considering" list):**
+1. **Reviews are the biggest untapped asset** — 50+ reviews correlates with
+   40× revenue (Wix 310M-site data). We have zero on-site review surface and
+   the GBP has none. Bigger lever than any page polish. → David collects;
+   then we build the reviews surface + aggregateRating schema.
+2. **We've never tested what AI engines actually say about us.** AEO isn't
+   just structure — it's being the source ChatGPT/Perplexity cite for "tech
+   help small business NYC." Run the real queries, see if we appear, optimize
+   toward citation. Unmeasured = unknown.
+3. **Photography is trust evidence, not decoration** — stock interiors say
+   "template"; David on-site in a real shop says "neighbor." E-E-A-T + human
+   trust + AI entity confirmation, one asset.
+4. **The promise after the click** — 2-hr callback is the hope the site
+   sells; the system behind it is where hope is confirmed or betrayed. The
+   /thanks/ page is currently utility — it should be the warmest page on the
+   site (you just asked a stranger for help; answer THAT).
+5. **Emotion isn't measured** — impressions/clicks miss "did it feel right."
+   Watchtower should grow door→call conversion, scroll-to-CTA, per-door.
+6. **Dead-end doors** — a door must walk the visitor to the next right room
+   in-context (related service + related proof), never strand them.
+7. **Scaling warmth without templating it hollow** — 121 doors can't all be
+   hand-authored at once. One reference door built to this standard, then
+   replicate with REAL variation, evidence-led (watchtower data picks which
+   door gets authored next).
+
 ## The waves
 
 ### Wave 1 — One Door Per Job (redundancy kill) — IN PROGRESS
