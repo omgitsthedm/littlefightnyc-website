@@ -20,7 +20,7 @@ A page that doesn't serve a station gets merged or killed.
 - ~130 impressions = "seo company upper east side" variants → `/areas/upper-east-side/`,
   positions 5–20. This is the #1 growth lever on the whole site.
 - Brand queries ("little fight", "little fights", 16 imp) land `/about/`, not home.
-- Estate (updated Jul-19 late): 180 prerendered routes, 121 sitemap URLs. 16 area
+- Estate (updated Jul-19 late): 178 prerendered routes, 121 sitemap URLs. 16 area
   pages (10 Manhattan incl. Greenwich Village + FiDi added `30009cd`, 6 BK/Queens),
   56 noindexed area×service combos, 37 journal posts, 28 answers, 7 case
   studies, 3 studio, 6 glossary, 4 services + hub.
@@ -209,7 +209,15 @@ Rendered review at 1440px, funnel order. Results:
 | 2026-07-19 (push) | — | — | — | GSC PUSH RUN: sitemap-index resubmitted; indexing requested /library/ + /areas/upper-east-side/. Page-indexing report (stale, 7/9): only 17 indexed / 24 not (6 redirect + 2 404 + 16 crawled-not-indexed — mostly April-era ghost URLs of the old static site, plus /services/ from May 9). Google is drip-crawling a young domain; sitemap ping + requests are the levers. **🚨 AI-PRESENCE TEST: site:littlefightnyc.com = ZERO results on DuckDuckGo/Bing — absent from the entire Bing index → invisible to ChatGPT search, Copilot, DDG. BING WEBMASTER TOOLS = DAVID'S #1 URGENT ITEM.** (Bing direct search blocked by CAPTCHA — human-only.) |
 
 - Standing gates every ship: signal ratchet, jargon sweep, margin audit,
-  16px floor
+  16px floor, **reading-grade audit (target ≤8, hard ceiling 9)**
+- **📖 ELI5 DEBT (measured 2026-07-19: 60 docs, avg grade 7.5, 0 jargon;
+  11 docs over grade 9 — fix in register, preserve facts/schema):**
+  journal/cybersecurity-for-small-business (11.6), journal/nyc-small-business-
+  digital (11.1), industry/professional-services (10.4), journal/why-business-
+  websites-will-be-invisible (10.2), industry/galleries (10.2), industry/retail
+  (10.1), industry/salons-wellness (10.1), industry/medical-wellness (9.9),
+  journal/ai-google-broke-the-internet (9.5), journal/shopify-vs-squarespace-
+  nyc-retail (9.5), ~~area/financial-district (9.3)~~ ✅ fixed → 4.8
 - New-page rule: funnel station + ledger check + template contract, or it
   doesn't ship
 
