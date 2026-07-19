@@ -1,5 +1,22 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — Margin-reset gotcha: SITEWIDE audit done (LIVE, `8623e90` + `52567f7`)
+
+The `.lf-editorial h1,h2,h3,h4,p,ul,ol,figure { margin:0 }` reset (0,1,1) beats
+ANY bare single-class rule (0,1,0) that sets margins on those tags — including
+`margin: 0 auto` centering (the box silently left-anchors). Bit the new fight
+card ("disorganized and not centered" — lede sat 292px off-center) AND six
+long-standing rules found by a full DOM-measured audit (123 candidate classes ×
+26 template routes): `.lf-pullquote` (64px breathing room dead on 6 pages),
+`.lf-hero__trust`, `.lf-clients__lede/label`, `.lf-cases__chips`, `.lf-triage`.
+All scoped under `.lf-editorial`; re-audit = zero flags.
+
+**Standing rules:** (1) any margin-bearing rule for h1-h4/p/ul/ol/figure must be
+written `.lf-editorial .cls { }` from the start; (2) when scoping a base rule,
+scope its media-query siblings AND modifiers too — a scoped base out-ranks its
+own unscoped `--modifier`/@media overrides (this un-oranged YOUR BLOCK once and
+would have flattened the trust row's responsive gap).
+
 ## 2026-07-18 — THE FIGHT = a fight card; animations scaled up (LIVE, `952d076`)
 
 TheFight is now a **boxing fight card** (David: the two-list version was "lame
