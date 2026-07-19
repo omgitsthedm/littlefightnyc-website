@@ -1,7 +1,7 @@
-import FlowDiagram from "./FlowDiagram";
 import LeadsCaught from "./LeadsCaught";
 import WhoAnswers from "./WhoAnswers";
 import SiteInFourteen from "./SiteInFourteen";
+import TheFreeRead from "./TheFreeRead";
 import "./ServiceDiagram.css";
 
 /**
@@ -23,33 +23,9 @@ const DIAGRAMS: Record<string, () => React.ReactElement> = {
   // "It breaks → a human answers on a real timeline", drawn as an instrument.
   "it-support": () => <WhoAnswers />,
 
-  "tech-consulting": () => (
-    <FlowDiagram
-      label="Anatomy of the free read"
-      summary="Four lanes go into the free read — the tool stack and monthly costs, the website, the Google profile and lead path, and the workflow walkthrough. Out comes one written punch list, ranked by customer impact, cost, and what can wait."
-      caption="The free read → one ranked punch list"
-      nodes={[
-        { id: "stack", label: "Tool stack + costs", col: 0 },
-        { id: "site", label: "Website", col: 0 },
-        { id: "google", label: "Google profile + lead path", col: 0 },
-        { id: "workflow", label: "Workflow walkthrough", col: 0 },
-        {
-          id: "punchlist",
-          label: "Written punch list",
-          sub: "ranked",
-          tone: "hub",
-          chips: ["customer impact", "cost", "can wait"],
-          col: 1,
-        },
-      ]}
-      edges={[
-        { from: "stack", to: "punchlist", tone: "signal" },
-        { from: "site", to: "punchlist", tone: "signal" },
-        { from: "google", to: "punchlist", tone: "signal" },
-        { from: "workflow", to: "punchlist", tone: "signal" },
-      ]}
-    />
-  ),
+  // The free read → self-ranking punch list, drawn as an instrument. Its
+  // mechanic is PRIORITISATION (the list sorts itself), distinct from AuditBench.
+  "tech-consulting": () => <TheFreeRead />,
 };
 
 export default function ServiceDiagram({ slug }: { slug: string }) {

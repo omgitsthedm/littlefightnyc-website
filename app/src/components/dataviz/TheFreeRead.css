@@ -1,0 +1,45 @@
+/* TheFreeRead — the "four lanes → free read → self-ranking punch list" canvas on
+   the tech-consulting page. The canvas sizes itself to this box; the component
+   reads the box via ResizeObserver and lays out wide (lanes left, read mid, list
+   right) vs. tall (lanes top, read mid, list bottom). */
+
+.lf-freeread {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 620 / 340;
+  min-height: 260px;
+  margin-block: var(--lf-space-4, 1.5rem);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 640ms var(--lf-ease-standard, ease),
+    transform 640ms var(--lf-ease-standard, ease);
+}
+
+[data-revealed="true"].lf-freeread {
+  opacity: 1;
+  transform: none;
+}
+
+.lf-freeread__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .lf-freeread {
+    aspect-ratio: 360 / 430;
+    min-height: 410px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-freeread {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
