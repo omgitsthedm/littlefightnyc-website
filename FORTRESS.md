@@ -61,14 +61,37 @@ Marketing narrative = AIDA. Dramatics top, work bottom (David's directive):
       `netlify deploy --prod --dir <scratchpad>/audit-retire --site 6588401d-53d4-42a3-a4f8-89fb3b937446`
 - [ ] Sweep for any other duplicate-job surfaces (old subdomains vs lab.)
 
-### Wave 2 — Template Law (everything looks + functions the same)
-One contract per template, verified page-by-page:
-- PageHero (eyebrow + icon + title + dek + distinct image) on EVERY inner page
-- Same section rhythm tokens, same CTA close (QuietContact), same FAQ block
-- Copy register: gritty, plain, 5th-grade clear, zero jargon (sweep = 0 hits)
-- 16px floor / 18-20 body everywhere (already tokenized — verify per page)
-- Every page gets its "wow": an instrument or one earned dramatic moment
-- Checklist artifact: one row per route family, pass/fail per contract item
+### Wave 2 — Template Law (everything looks + functions the same) — AUDITED 2026-07-19
+
+**Contract matrix (26 page templates, static + rendered audit):**
+- PageHero + QuietContact close: **26/26 pass** (by-design exceptions: Home =
+  QuietHero standalone; /es/ = own Spanish chrome; TechAudit = no contact close
+  because the page IS the contact action).
+- Copy register jargon sweep: **0 hits** in site copy (journal "optimized" /
+  "end-to-end encryption" = topical technical terms, correct usage).
+- 16px floor: **0 hardcoded sub-16px font-sizes** in CSS.
+- Wow/instrument coverage: strong on Home, all 4 services, Contact, TechAudit,
+  Answers detail, Journal, Examples (RECORD wall + coverage matrix), Areas
+  (MiniMapNYC), 404/es (TugAvatar). Hubs carry their content grids by design.
+- Estate more consolidated than feared: `/studio/` → `/services/#studio` and
+  `/industries/` → `/examples/#industries` already redirect. One-door logic
+  was partially in place; the audit surfaces were the real stragglers.
+- [x] Same-family hero dupes fixed: west-village → `storefront-health-foods`,
+  park-slope → `storefront-beauty-supply` (synced AreaDetail + Areas +
+  seo-pages/og; all 14 area heroes now unique).
+
+**📸 PHOTOGRAPHY PUNCH LIST (needs David's real photos — cross-family hero
+dupes that redistribution can't fix; the 73-asset library is 100% allocated):**
+- `nyc-street.webp` carries Answers hub + CaseStudies hub + a glossary term
+  (+ spreads) — the most-reused photo on the site
+- Contact shares East Village's hero (`nyc-stickys-steam`); Journal hub shares
+  Chelsea's (`manhattan`); Examples shares LES's (`nyc-chinatown-night`);
+  Services hub shares Midtown's (`nyc-street-crowd`); About shares Astoria's
+  (`interior-spice-shop`)
+- BK/Queens area heroes are generic interiors, not neighborhood frames
+- Services right-column thumbnails mismatched (pre-existing note)
+Priority order for a photo batch: hubs first (Answers, Case Studies, Journal,
+Contact), then 6 BK/Queens neighborhood frames.
 
 ### Wave 3 — The Front Line (GSC-driven, highest ROI)
 - `/areas/upper-east-side/`: push pos ~8–16 → top 5. Deepen content, internal
