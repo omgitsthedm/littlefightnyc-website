@@ -42,21 +42,23 @@ export default function Home() {
                 section boundaries (corner ticks + SEC. NN margin notes,
                 ≥1280px only — see BlueprintFrame.css).
 
-                The page is FOUR ITEMS OF FOCUS (David's brief): Web Design,
-                Tech Support, Consulting, Personalized Software — each proven
-                by its living instrument — then proof, the record, the mission,
-                the sign, the door. No repeated pitches. */}
-            <BlueprintFrame index={1} label="What we do">
-              <TheFour />
+                Stacking law (David, 2026-07-19): dramatics at the top, the
+                work at the bottom above the door. Hook (hero) → why we exist
+                (the fight card) → FOUR ITEMS OF FOCUS: Web Design, Tech
+                Support, Consulting, Personalized Software, each proven by its
+                living instrument → the record → recent work as closing proof →
+                the sign → the door. No repeated pitches. */}
+            <BlueprintFrame index={1} label="The fight">
+              <TheFight />
             </BlueprintFrame>
-            <BlueprintFrame index={2} label="Recent work">
-              <RecentClients />
+            <BlueprintFrame index={2} label="What we do">
+              <TheFour />
             </BlueprintFrame>
             <BlueprintFrame index={3} label="The record">
               <SignatureBand />
             </BlueprintFrame>
-            <BlueprintFrame index={4} label="The fight">
-              <TheFight />
+            <BlueprintFrame index={4} label="Recent work">
+              <RecentClients />
             </BlueprintFrame>
             <BlueprintFrame index={5} label="Open for business">
               <NeonSign />
