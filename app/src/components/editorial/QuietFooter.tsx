@@ -44,7 +44,6 @@ const footerGroups: Array<{
     title: "Proof",
     links: [
       { label: "Examples", to: "/examples/" },
-      { label: "Case Studies", to: "/case-studies/" },
       { label: "The Studio", to: "/services/#studio" },
       { label: "The Lab", to: "https://lab.littlefightnyc.com", external: true },
     ],

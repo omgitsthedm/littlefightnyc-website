@@ -27,6 +27,10 @@
 /lifetime-cost/          /answers/reduce-monthly-software-costs-small-business/  301
 /lifetime-cost           /answers/reduce-monthly-software-costs-small-business/  301
 
+# --- Case-studies hub fold (2026-07-19): examples IS the proof wall
+/case-studies/           /examples/                        301
+/case-studies            /examples/                        301
+
 # --- Library consolidation (2026-07-19): journal + answers hubs -> one door
 /journal/                /library/                         301
 /journal                 /library/                         301

@@ -1060,7 +1060,7 @@ function contextualLinksFor(page) {
         .filter((p) => /^\/case-studies\/[^/]+\/$/.test(p.path) && p.path !== page.path)
         .slice(0, 3)
         .map((p) => ({ href: p.path, label: pageLinkLabel(p) })),
-      { href: "/case-studies/", label: "All case studies" }
+      { href: "/examples/", label: "All the work, on the record" }
     );
   } else if (page.path.startsWith("/journal/") && page.path !== "/journal/") {
     links.push(

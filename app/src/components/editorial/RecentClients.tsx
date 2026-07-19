@@ -35,7 +35,7 @@ export default function RecentClients() {
               Real businesses, real launches, and a clear path from first look to next action.
             </p>
           </div>
-          <Link to="/case-studies/" className="lf-clients__all">
+          <Link to="/examples/" className="lf-clients__all">
             See every result <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>

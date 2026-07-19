@@ -1155,15 +1155,6 @@
       "noindex": true
     },
     {
-      "path": "/case-studies/",
-      "title": "Case Studies: Real NYC Small Business Work | Little Fight NYC",
-      "description": "Eight named projects. Websites, IT, and business systems for NYC shops, salons, brands, and studios. What we kept, what we changed, and what shipped.",
-      "h1": "Real shops. Real work.",
-      "shortAnswer": "Short answer: Little Fight publishes named case studies. Real client work with honest, checkable facts. What we kept, what we changed, and what shipped.",
-      "type": "CollectionPage",
-      "image": "/assets/nyc-street.webp"
-    },
-    {
       "path": "/case-studies/cc-films/",
       "title": "CC Films — Case Study | Little Fight NYC",
       "description": "How Little Fight NYC turned ccfilms.net into a clearer official home for Marrow. Stronger film proof, better press paths, and cleaner search signals.",

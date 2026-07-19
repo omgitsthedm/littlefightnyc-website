@@ -22,7 +22,6 @@ const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
 const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
 const Areas = lazyRoute(() => import("@/pages/Areas"));
-const CaseStudies = lazyRoute(() => import("@/pages/CaseStudies"));
 const CaseStudyDetail = lazyRoute(() => import("@/pages/CaseStudyDetail"));
 const Contact = lazyRoute(() => import("@/pages/Contact"));
 const FieldGuide = lazyRoute(() => import("@/pages/FieldGuide"));
@@ -109,7 +108,7 @@ export default function App() {
           <Route path="journal/:slug" element={route(JournalPost)} />
           <Route path="industries" element={<Navigate to="/examples/#industries" replace />} />
           <Route path="industries/:slug" element={route(IndustryDetail)} />
-          <Route path="case-studies" element={route(CaseStudies)} />
+          <Route path="case-studies" element={<Navigate to="/examples/" replace />} />
           <Route path="case-studies/:slug" element={route(CaseStudyDetail)} />
           <Route path="studio" element={<Navigate to="/services/#studio" replace />} />
           <Route path="studio/:slug" element={route(StudioDetail)} />
