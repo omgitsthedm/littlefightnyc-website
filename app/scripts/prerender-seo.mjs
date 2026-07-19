@@ -299,6 +299,19 @@ const pages = [
     type: "WebPage",
     image: "/assets/og-image.jpg",
   },
+  // The complete pitch in Simplified Chinese — same model as /es/.
+  {
+    path: "/zh/",
+    locale: "zh",
+    title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
+    description:
+      "我们做网站、修技术、砍掉每月的软件订阅费。纽约，始于2021。咨询免费，回复您的是真人。",
+    h1: "您的网站带来顾客。我们让它一直好用。",
+    shortAnswer:
+      "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码归您。",
+    type: "WebPage",
+    image: "/assets/og-image.jpg",
+  },
 ];
 
 // Enrich pages with authored data from site.ts: real dates for freshness
@@ -906,15 +919,17 @@ function managedHead(page) {
     journalBodyModulePreload(page),
     // hreflang: home ↔ /es/ are language alternates of the same pitch; every
     // other page is English-only (self-referential en + x-default).
-    page.locale === "es"
-      ? `<link rel="alternate" hreflang="es" href="${escapeAttr(canonical)}">`
+    page.locale
+      ? `<link rel="alternate" hreflang="${page.locale}" href="${escapeAttr(canonical)}">`
       : `<link rel="alternate" hreflang="en-US" href="${escapeAttr(canonical)}">`,
-    page.locale === "es"
-      ? `<link rel="alternate" hreflang="en-US" href="${siteUrl}/">`
-      : page.path === "/"
-        ? `<link rel="alternate" hreflang="es" href="${siteUrl}/es/">`
-        : "",
-    `<link rel="alternate" hreflang="x-default" href="${page.locale === "es" ? `${siteUrl}/` : escapeAttr(canonical)}">`,
+    page.locale || page.path === "/"
+      ? [
+          page.locale ? `<link rel="alternate" hreflang="en-US" href="${siteUrl}/">` : "",
+          page.locale !== "es" ? `<link rel="alternate" hreflang="es" href="${siteUrl}/es/">` : "",
+          page.locale !== "zh" ? `<link rel="alternate" hreflang="zh" href="${siteUrl}/zh/">` : "",
+        ].filter(Boolean).join("\n  ")
+      : "",
+    `<link rel="alternate" hreflang="x-default" href="${page.locale ? `${siteUrl}/` : escapeAttr(canonical)}">`,
     `<meta name="geo.region" content="US-NY">`,
     `<meta name="geo.placename" content="New York">`,
     `<meta name="geo.position" content="${site.latitude};${site.longitude}">`,
@@ -1408,6 +1423,51 @@ function promisesBlock() {
 // Fully-Spanish first-paint snapshot for /es/ — mirrors src/pages/Espanol.tsx
 // (same content, same order) so hydration settles without a visible rewrite.
 // lang="es" on the wrapper so crawlers and screen readers get the right tongue.
+function zhSnapshot() {
+  const sans = `"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, system-ui, sans-serif`;
+  return `
+    <div class="lf-seo" lang="zh">
+      <style>
+        .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
+        .lf-seo h1 { font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.15; margin: 40px 0 20px; font-weight: 700; }
+        .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
+        .lf-seo a { color: #F97316; text-decoration: none; }
+        .lf-seo .es-sub { color: #A1A1AA; font-size: 1.15rem; max-width: 40em; }
+        .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 28px; border-radius: 32px; margin: 18px 12px 0 0; }
+        .lf-seo ul { list-style: none; padding: 0; }
+        .lf-seo .es-cards li { border: 1px solid #27272A; border-radius: 12px; padding: 20px; margin: 12px 0; background: #12141A; }
+        .lf-seo .es-cards h3 { color: #F97316; margin: 0 0 6px; }
+        .lf-seo .es-cards p { color: #A1A1AA; margin: 0; }
+        .lf-seo .es-fight { border-left: 3px solid #F97316; padding-left: 20px; font-size: 1.25rem; max-width: 30em; margin: 40px 0; }
+        .lf-seo .es-promises li { border-top: 1px solid #27272A; padding: 10px 0; font-weight: 600; }
+        .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
+      </style>
+      <header><strong>Little Fight NYC</strong> · <a href="tel:+16463600318">(646) 360-0318</a></header>
+      <h1>您的网站带来顾客。<em>我们让它一直好用。</em></h1>
+      <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
+      <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a></p>
+      <h2>我们做什么</h2>
+      <ul class="es-cards">
+        <li><h3>网站建设</h3><p>一个能让电话响起来的网站。电话、预约、收款、谷歌——全都好用，连在一起。</p></li>
+        <li><h3>技术支持</h3><p>网络、收银机、邮箱、收款出了问题？接电话的是真人，帮您修好。</p></li>
+        <li><h3>免费咨询</h3><p>我们告诉您哪些有用、哪些多余、先修哪个。如果您不需要我们，我们也会直说。</p></li>
+        <li><h3>自有软件</h3><p>别再按月租软件了。我们为您做一次工具——永远属于您。</p></li>
+      </ul>
+      <p class="es-fight">连锁大店来的时候带着技术团队。街角小店从来没有过。所以有了我们：让小生意用上同样的工具——没有大公司的账单。</p>
+      <h2>您可以放心的事</h2>
+      <ul class="es-promises">
+        <li>咨询永远免费。</li>
+        <li>14天上线您的网站——否则分文不收。</li>
+        <li>早9点到晚9点，2小时内回电。</li>
+        <li>代码、数据、一切：都归您。</li>
+      </ul>
+      <h2>聊聊吧</h2>
+      <p class="es-sub">打电话、发短信、发邮件都行——用您最习惯的语言写。回复您的是真人。没有机器人，没有工单号。</p>
+      <p><a class="es-cta" href="tel:+16463600318">(646) 360-0318</a></p>
+      <footer>Little Fight NYC · 纽约 · 始于2021 · 依然有人接电话 · <a href="/">查看完整英文网站</a></footer>
+    </div>`;
+}
+
 function esSnapshot() {
   const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
   const display = `"Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", sans-serif`;
@@ -1472,6 +1532,7 @@ function snapshot(page) {
   // content in the English nav/footer, which would make /es/ a mixed-language
   // page for crawlers and for the pre-hydration paint.
   if (page.locale === "es") return esSnapshot();
+  if (page.locale === "zh") return zhSnapshot();
   // Brand-aligned first-paint snapshot. Editorial colors/type inlined so
   // crawlers see brand-correct content and visitors see something on-brand
   // for the ~150ms before React hydrates.
@@ -1649,9 +1710,9 @@ function renderPage(page) {
     .replace("</head>", () => `    ${managedHead(page)}\n  </head>`)
     .replace('<div id="root"></div>', () => `<div id="root">${snapshot(page)}</div>`);
 
-  // The Spanish page declares its language at the document level too.
-  if (page.locale === "es") {
-    html = html.replace('<html lang="en"', '<html lang="es"');
+  // Locale pages declare their language at the document level too.
+  if (page.locale) {
+    html = html.replace('<html lang="en"', `<html lang="${page.locale}"`);
   }
 
   return html;

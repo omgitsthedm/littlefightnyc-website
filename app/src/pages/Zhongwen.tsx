@@ -1,0 +1,158 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUpRight } from "lucide-react";
+import TugMark from "@/components/editorial/TugMark";
+import TugAvatar from "@/components/editorial/TugAvatar";
+import "./Espanol.css";
+
+/**
+ * /zh/ — the complete pitch in Simplified Chinese, on the proven /es/ model:
+ * ONE fully-translated standalone page (own chrome) rather than a half-
+ * translated site switcher. ~600k Chinese speakers in NYC and thousands of
+ * Chinese-owned small businesses — exactly our customer, almost never spoken
+ * to by web shops. Every promise here is the same real promise the English
+ * site makes. No claim of Chinese-speaking staff: the contact line says write
+ * in whichever language is comfortable (same honest pattern as /es/).
+ * Reuses Espanol.css wholesale — same visual language, zero new CSS.
+ */
+
+const SERVICES = [
+  {
+    title: "网站建设",
+    line: "一个能让电话响起来的网站。电话、预约、收款、谷歌——全都好用，连在一起。",
+  },
+  {
+    title: "技术支持",
+    line: "网络、收银机、邮箱、收款出了问题？接电话的是真人，帮您修好。",
+  },
+  {
+    title: "免费咨询",
+    line: "我们告诉您哪些有用、哪些多余、先修哪个。如果您不需要我们，我们也会直说。",
+  },
+  {
+    title: "自有软件",
+    line: "别再按月租软件了。我们为您做一次工具——永远属于您。",
+  },
+];
+
+const PROMISES = [
+  "咨询永远免费。",
+  "14天上线您的网站——否则分文不收。",
+  "早9点到晚9点，2小时内回电。",
+  "代码、数据、一切：都归您。",
+];
+
+export default function Zhongwen() {
+  useEffect(() => {
+    const prevLang = document.documentElement.lang;
+    const prevTitle = document.title;
+    document.documentElement.lang = "zh";
+    document.title = "Little Fight NYC 中文 | 纽约小生意的网站与技术支持";
+    return () => {
+      document.documentElement.lang = prevLang || "en";
+      document.title = prevTitle;
+    };
+  }, []);
+
+  return (
+    <div className="lf-editorial lf-es" lang="zh">
+      <header className="lf-es__top">
+        <span className="lf-es__brand">
+          <TugMark className="lf-es__mark" />
+          Little Fight NYC
+        </span>
+        <a className="lf-es__top-phone" href="tel:+16463600318">
+          (646) 360-0318
+        </a>
+      </header>
+
+      <main className="lf-es__main">
+        <section className="lf-es__hero">
+          <h1>
+            您的网站带来顾客。
+            <br />
+            <span className="lf-es__em">我们让它一直好用。</span>
+          </h1>
+          <p className="lf-es__sub">
+            我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。
+          </p>
+
+          <div className="lf-es__actions">
+            <a className="lf-es__cta lf-es__cta--primary" href="tel:+16463600318">
+              <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
+              打电话：(646) 360-0318
+            </a>
+            <a className="lf-es__cta" href="mailto:hello@littlefightnyc.com">
+              <Mail size={20} strokeWidth={1.75} aria-hidden="true" />
+              hello@littlefightnyc.com
+            </a>
+          </div>
+
+          <ul className="lf-es__trust">
+            <li>
+              <MapPin size={16} strokeWidth={1.75} aria-hidden="true" />
+              纽约。我们上门服务。
+            </li>
+            <li>
+              <Clock size={16} strokeWidth={1.75} aria-hidden="true" />
+              2小时内回电
+            </li>
+            <li>
+              <ShieldCheck size={16} strokeWidth={1.75} aria-hidden="true" />
+              我们做的，归您所有
+            </li>
+          </ul>
+        </section>
+
+        <section className="lf-es__services" aria-label="我们做什么">
+          <h2>我们做什么</h2>
+          <ul>
+            {SERVICES.map((s) => (
+              <li key={s.title}>
+                <h3>{s.title}</h3>
+                <p>{s.line}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="lf-es__fight">
+          <p>
+            连锁大店来的时候带着技术团队。街角小店从来没有过。所以有了我们：让小生意用上同样的工具——没有大公司的账单。
+          </p>
+        </section>
+
+        <section className="lf-es__promises" aria-label="我们的承诺">
+          <h2>您可以放心的事</h2>
+          <ul>
+            {PROMISES.map((p) => (
+              <li key={p}>{p}</li>
+            ))}
+          </ul>
+        </section>
+
+        {/* The tug — text-free brand moment, no translation compromise. */}
+        <TugAvatar />
+
+        <section className="lf-es__contact">
+          <h2>聊聊吧</h2>
+          <p>
+            打电话、发短信、发邮件都行——用您最习惯的语言写。回复您的是真人。没有机器人，没有工单号。
+          </p>
+          <a className="lf-es__cta lf-es__cta--primary lf-es__cta--big" href="tel:+16463600318">
+            <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
+            (646) 360-0318
+          </a>
+        </section>
+      </main>
+
+      <footer className="lf-es__foot">
+        <p>Little Fight NYC · 纽约 · 始于2021 · 依然有人接电话</p>
+        <Link to="/" className="lf-es__foot-link">
+          查看完整英文网站
+          <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
+        </Link>
+      </footer>
+    </div>
+  );
+}

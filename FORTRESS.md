@@ -28,7 +28,7 @@ A page that doesn't serve a station gets merged or killed.
 - Brand queries ("little fight", "little fights", 16 imp) land `/about/`, not home.
 - Estate (updated Jul-19 late): 181 prerendered routes, 124 sitemap URLs.
   **18 areas — ALL FIVE BOROUGHS** (10 Manhattan, 4 Brooklyn, 2 Queens, The
-  Bronx + Staten Island added with wave-2 photos), /nationwide/ door live,
+  Bronx + Staten Island added with wave-2 photos), /nationwide/ + /zh/ doors live,
   56 noindexed area×service combos, 37 journal posts, 28 answers, 7 case
   studies, 3 studio, 6 glossary, 4 services + hub.
 - OpenSEO dashboard: `localhost:3001` (`~/creative-tools/open-seo`, docker).

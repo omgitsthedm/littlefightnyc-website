@@ -92,7 +92,7 @@ export default function QuietFooter() {
             <Link to="/privacy/">Privacy</Link>
             <Link to="/terms/">Terms</Link>
             <Link to="/es/" lang="es">
-              En español
+              En español</Link>{" · "}<Link to="/zh/">中文
             </Link>
           </nav>
         </div>

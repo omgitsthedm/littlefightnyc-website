@@ -19,6 +19,7 @@ function lazyRoute<T extends ComponentType<unknown>>(
 
 const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
 const Espanol = lazyRoute(() => import("@/pages/Espanol"));
+const Zhongwen = lazyRoute(() => import("@/pages/Zhongwen"));
 const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
 const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
@@ -80,6 +81,7 @@ export default function App() {
         {/* The complete pitch in Spanish — standalone, fully-Spanish chrome
             (an English nav/footer around Spanish content would be half a page). */}
         <Route path="es" element={route(Espanol)} />
+        <Route path="zh" element={route(Zhongwen)} />
 
         <Route
           element={
