@@ -1,5 +1,27 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — Reach wave: /es/, The Lab links, Speculation Rules (LIVE, `4771866`, 179 routes)
+
+- **`/es/` — the complete pitch in Spanish** (standalone page, own chrome,
+  hand-written LatAm-neutral Spanish, same factual promises). **Deliberately NOT
+  the i18n switcher**: activating `es/common.json` would surface a toggle that
+  translates ~15 chrome keys while all content stays English — a half-translated
+  flagship. The scaffolding stays inert until someone funds full content
+  translation. Custom prerender branch (`esSnapshot` in prerender-seo.mjs — the
+  standard shell wraps snapshots in the ENGLISH nav), `<html lang="es">` swap in
+  `renderPage`, hreflang pair home↔/es/, sitemap. Footer "En español" link.
+  **No claim of Spanish-speaking staff** — the contact line says write in
+  whichever language is comfortable. ⚠️ If David can't service Spanish
+  inquiries, removing /es/ is one revert of this commit.
+- **The Lab cross-linked** — footer Proof group + an /examples/ band. External
+  (`rel=external`) so the VT interceptor leaves it native.
+- **Speculation Rules** — delivered via the `Speculation-Rules` HTTP header +
+  `public/speculation-rules.json` (header delivery = NO CSP change needed;
+  inline rules would need 'inline-speculation-rules' in script-src). Scope is
+  honest: prefetch-on-hover of page HTML for hard navigations only.
+- **Services hub h1** de-echoed from the home hero: "Pick what's broken. We take
+  it from there." (site + seo-pages.json h1 in lockstep).
+
 ## 2026-07-18 — Cleanup wave: no install prompt, ember retired, NY copy voice, 2026 CSS (LIVE, `c5de3d3`)
 
 - **⛔ NO PWA INSTALL PROMPT. Ever. David's exact reasoning: "we're a service
