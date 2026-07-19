@@ -152,12 +152,6 @@ const pages = [
   ...glossaryPages(),
   ...journalPages(),
   ...industryPages(),
-  {
-    path: "/journal/",
-    title: "Journal for NYC Small Business Operators | Little Fight NYC",
-    description: "Plain-English field notes on websites, IT support, software bills, local search, and business systems for New York small business owners.",
-    image: "/assets/manhattan.webp",
-  },
 ];
 
 const out = {

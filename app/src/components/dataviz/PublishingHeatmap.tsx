@@ -34,9 +34,9 @@ export default function PublishingHeatmap() {
           </p>
         </div>
         <p className="lf-viz-sr">{summary}</p>
-        <ol className="lf-pulse__bars" role="img" aria-label={summary}>
+        <div className="lf-pulse__bars" role="img" aria-label={summary}>
           {MODEL.months.map((m) => (
-            <li
+            <span
               key={m.key}
               className="lf-pulse__bar-cell"
               data-peak={m.peak || undefined}
@@ -54,9 +54,9 @@ export default function PublishingHeatmap() {
               <span className="lf-pulse__bar-label" aria-hidden="true">
                 {m.label}
               </span>
-            </li>
+            </span>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ import TugMark from "@/components/editorial/TugMark";
 import { READ_MINUTES, WORD_COUNT } from "@/components/dataviz/journalStats";
 import ShareButton from "@/components/ShareButton";
 import journalIndex from "@/data/journal-index.json";
-import { POST_IMAGE } from "@/data/journalArt";
+import { POST_IMAGE, CATEGORY_LABEL, CATEGORY_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
 import "@/styles/editorial/journal.css";
 
@@ -36,20 +36,6 @@ function loadBody(slug: string): Promise<string> {
   if (!loader) return Promise.resolve("");
   return loader().then((m) => m.default?.html ?? "");
 }
-
-const CATEGORY_LABEL: Record<PostMeta["category"], string> = {
-  howto: "How To",
-  essay: "Essay",
-  blog: "Notebook",
-  guide: "Software Guide",
-};
-
-const CATEGORY_IMAGE: Record<PostMeta["category"], string> = {
-  howto: "/assets/journal-cat-how-to.webp",
-  essay: "/assets/journal-cat-essay.webp",
-  blog: "/assets/journal-cat-notebook.webp",
-  guide: "/assets/journal-cat-software-guide.webp",
-};
 
 // Branded per-post art (same visual language as the category art) — per-post
 // stock photos retired 2026-07-12 (the donut-on-a-ghosting-article era is over).

@@ -24,3 +24,20 @@ export const POST_IMAGE: Record<string, string> = {
   "wordpress-vs-webflow-vs-custom-nyc": "/assets/journal-wordpress-vs-webflow-vs-custom-nyc.webp",
   "toast-vs-clover-nyc-bars": "/assets/journal-toast-vs-clover-nyc-bars.webp",
 };
+
+/** Canonical journal category labels + art (was duplicated in Library + JournalPost). */
+export type JournalCategory = "blog" | "guide" | "essay" | "howto";
+
+export const CATEGORY_LABEL: Record<JournalCategory, string> = {
+  howto: "How To",
+  essay: "Essay",
+  blog: "Notebook",
+  guide: "Software Guide",
+};
+
+export const CATEGORY_IMAGE: Record<JournalCategory, string> = {
+  howto: "/assets/journal-cat-how-to.webp",
+  essay: "/assets/journal-cat-essay.webp",
+  blog: "/assets/journal-cat-notebook.webp",
+  guide: "/assets/journal-cat-software-guide.webp",
+};

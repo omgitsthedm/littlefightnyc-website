@@ -9,7 +9,7 @@ import { READ_MINUTES } from "@/components/dataviz/journalStats";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import journal from "@/data/journal-index.json";
-import { POST_IMAGE } from "@/data/journalArt";
+import { POST_IMAGE, CATEGORY_LABEL, CATEGORY_IMAGE } from "@/data/journalArt";
 import { answerGuides } from "@/data/site";
 import { ANSWER_CLUSTERS, answerArt } from "@/data/answersArt";
 import "@/styles/editorial/journal.css";
@@ -30,20 +30,6 @@ type Post = {
   description: string;
   published: string;
   updated: string;
-};
-
-const CATEGORY_LABEL: Record<Post["category"], string> = {
-  howto: "How To",
-  essay: "Essay",
-  blog: "Notebook",
-  guide: "Software Guide",
-};
-
-const CATEGORY_IMAGE: Record<Post["category"], string> = {
-  howto: "/assets/journal-cat-how-to.webp",
-  essay: "/assets/journal-cat-essay.webp",
-  blog: "/assets/journal-cat-notebook.webp",
-  guide: "/assets/journal-cat-software-guide.webp",
 };
 
 const CATEGORY_ORDER: Post["category"][] = ["howto", "essay", "blog", "guide"];
