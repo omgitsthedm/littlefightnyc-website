@@ -1,5 +1,29 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — Cleanup wave: no install prompt, ember retired, NY copy voice, 2026 CSS (LIVE, `c5de3d3`)
+
+- **⛔ NO PWA INSTALL PROMPT. Ever. David's exact reasoning: "we're a service
+  company — if someone needs to install our website on their device, they got
+  bigger issues than us."** The component, CSS, and usePwaInstall hook are
+  deleted. Do not re-add an install UI. The manifest/theme-color PWA basics stay.
+- **`--lf-ember` is gone.** All hover/active styles read `--lf-fight-hover`
+  directly. One name per concept; don't reintroduce the alias.
+- **Copy voice (standing bar): gritty, plain, 5th-grade-clear, straight to the
+  owner, zero corporate/sales jargon.** Shipped examples of the register: hero
+  sub "…kill the monthly software bills bleeding you dry. What we build, you
+  own."; trust row "NYC. We show up."; momentum "Own it. Don't rent it." /
+  "Nobody holds your own tools over your head."; contact "No phone tree, no
+  ticket number."; websites h1 "A website that makes the phone ring."; hub dek
+  "Nobody upsells you here." Promises stay factual (14-day, free consult, 2-hr
+  callbacks, ownership); no-pricing doctrine intact. **Any new copy must match
+  this register — a jargon sweep (leverage/seamless/robust/etc.) must stay at 0
+  hits.** ⚠️ Hero copy changes require the prerender snapshot in
+  `prerender-seo.mjs` (~line 1432) updated 1:1 — the "Loading = butter" parity.
+- **2026 CSS baseline additions** (all progressive): `scrollbar-gutter: stable`
+  (html), `interpolate-size: allow-keywords` (html) + `::details-content` height
+  transition (mobile footer folds glide open), `field-sizing: content` on the
+  tech-audit textarea (3lh–14lh). text-wrap balance/pretty were already in.
+
 ## 2026-07-18 — Instrument harness consolidation + dead-VT cleanup (LIVE, `f2cc4e2`, net −1,048 lines)
 
 Thermo-nuclear review pass. **All seven canvas instruments now share ONE
