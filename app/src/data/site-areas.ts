@@ -617,4 +617,88 @@ export const areaPages: AreaPage[] = [
     ],
     nearby: ["astoria", "midtown", "williamsburg"],
   },
+  {
+    slug: "greenwich-village",
+    name: "Greenwich Village",
+    zipCodes: ["10003", "10011", "10012"],
+    headline: "Websites, tech help, and local search for Greenwich Village businesses.",
+    shortAnswer:
+      "Short answer: Greenwich Village businesses live on foot traffic, students, and reputation. They need websites that load mid-walk, hours that are never wrong, and booking that works at midnight.",
+    localPattern:
+      "Cafés, comedy rooms, music venues, bookshops, and student-serving services compete for a crowd that decides on the sidewalk.",
+    firstMove: "Check what a first-time visitor sees: the Google profile, the hours, the menu or ticket link, and whether any of it works on a phone at night.",
+    intro:
+      "Greenwich Village runs on layers. Washington Square Park in the middle, NYU wrapped around it, MacDougal Street's comedy rooms and late-night counters, Bleecker's storefronts, and the quiet blocks in between where the neighborhood actually lives. Tourists come for the arch. Students come for four years. The regulars have been at the same café table for twenty. A Village business serves all three crowds at once, every single day.",
+    businessLandscape:
+      "This is café and venue country — comedy cellars, jazz rooms, indie theaters, late-night slices, bookshops, chess shops, and record stores that survived every era. Around NYU: tutors, therapists, test-prep, quick food, and every service a student needs. The pressure is real. Eighth Street keeps flipping to chains, NYU keeps expanding, and rents make every mediocre month dangerous. A room that seats sixty competes for attention with the entire internet. The Village institutions that last are the ones people can still FIND — the moment someone asks their phone where to go tonight.",
+    localSearchReality:
+      "Village search happens standing up. 'Comedy tonight.' 'Cafe near Washington Square open now.' 'Best slice MacDougal.' Tourists search mid-walk and pick from the map. Students search everything and trust reviews over signs. The crowd is already here — the only question is whose door they walk through. Wrong hours kill a Village business faster than anything, because the person standing outside a dark window at 9pm does not come back. Ticket links that break on a phone quietly empty a room that would have filled itself.",
+    whatWeFixHere: [
+      "Hours on Google that don't match the door — fatal in a walk-up neighborhood",
+      "A ticket or reservation link that fails on a phone at 11pm",
+      "A menu that lives in a blurry photo instead of a page Google can read",
+      "A venue site that ranks below three aggregators for its own name",
+      "Student-crowd reviews going unanswered while the room next door replies to every one",
+    ],
+    faq: [
+      {
+        question: "Half my customers are tourists who will never come back. Does local search even matter?",
+        answer:
+          "More, not less. A tourist has zero history with the neighborhood — the map IS their memory. Whoever looks best in that search wins the walk-in. Regulars forgive a stale listing; strangers never see you at all.",
+      },
+      {
+        question: "My venue fills through word of mouth and Instagram. Why do I need a website?",
+        answer:
+          "Because word of mouth ends at a search box. Someone hears about you, looks you up, and finds either a real page with tonight's lineup — or a dead link and a competitor's ad. Instagram warms them up. The website closes.",
+      },
+      {
+        question: "NYU students find everything themselves. What is there to fix?",
+        answer:
+          "Students find everything — including the fastest reason to pick somewhere else. Slow site, no online booking, unanswered reviews: each one is a swipe to the next option. Being findable isn't enough here. You have to be frictionless.",
+      },
+    ],
+    nearby: ["west-village", "east-village", "soho"],
+  },
+  {
+    slug: "financial-district",
+    name: "Financial District",
+    zipCodes: ["10004", "10005", "10006", "10007", "10038"],
+    headline: "Websites, tech help, and local search for Financial District businesses.",
+    shortAnswer:
+      "Short answer: FiDi businesses serve two different neighborhoods — office workers on a clock and a residential boom that never leaves. They need search visibility and systems that work for both.",
+    localPattern:
+      "Delis, barbers, tailors, gyms, and street-level services survive on the lunch rush while a new residential crowd changes what the neighborhood needs.",
+    firstMove: "Check when customers actually search — the 11:45am lunch scramble and the 8pm resident scroll — and whether the business shows up for either.",
+    intro:
+      "The Financial District is two neighborhoods wearing one zip code. By day: office towers, badge lanyards, and a lunch rush that decides in ninety seconds. By night and weekend: one of the fastest-growing residential neighborhoods in Manhattan, families on Stone Street, strollers by the Seaport. The businesses at street level — the delis, barbers, tailors, dry cleaners, gyms — were built for the first crowd and are learning to serve the second.",
+    businessLandscape:
+      "Under the towers it's counter businesses: delis and salad lines, shoe repair, tailors, barbers, quick pharmacies — the services an office block runs on. Stone Street and the Seaport carry the restaurants. The Oculus filled with chains, and the chains have apps, loyalty programs, and preorder lines. The independents got squeezed twice: hybrid work thinned the weekday crowd that sustained them, and the residential boom brought customers they've never marketed to. The FiDi shop that adapts to the evening-and-weekend neighborhood is the one that stops depending on Tuesday lunch.",
+    localSearchReality:
+      "FiDi search runs on a schedule. At 11:45am it's 'lunch near me' from ten thousand desks at once — a race won by whoever loads fastest with the menu one tap away. Nights and weekends it's the residents: 'barber financial district,' 'dry cleaner water street,' 'kids haircut fidi.' Two completely different searches, same storefront. Most street-level businesses here only show up for the first one — if they show up at all — and never see the second crowd searching from apartments two blocks away.",
+    whatWeFixHere: [
+      "A lunch spot invisible at 11:45am because the menu is a PDF nobody can load",
+      "A Google profile that says nothing about weekend hours — while ten thousand residents search from upstairs",
+      "Preorder and pickup flows that lose the race against the chains in the Oculus",
+      "A services business still marketing to office workers a neighborhood of families moved in around",
+      "Listings that say 'temporarily closed' since 2021 — quietly killing walk-ins every day",
+    ],
+    faq: [
+      {
+        question: "My deli lives on the lunch rush. Hybrid work cut it in half. What now?",
+        answer:
+          "The neighborhood that replaced your Tuesday crowd lives upstairs — 60,000-plus residents who need dinner, weekend coffee, and everything a household runs on. Most FiDi counters have never said one word to them online. That is the growth sitting on your block.",
+      },
+      {
+        question: "The chains in the Oculus have apps and preorder. How does an independent compete?",
+        answer:
+          "You don't out-app a chain — you out-neighbor it. Correct hours, a menu that loads instantly, online ordering that works, and reviews from people who actually know your name. The chain wins the tourist. You win the block, and blocks are loyal.",
+      },
+      {
+        question: "Do weekends even matter down here anymore?",
+        answer:
+          "FiDi weekends stopped being dead years ago. Families on Stone Street, tourists at the Seaport, residents doing errands. If your hours, your listing, and your website still assume a Monday-to-Friday neighborhood, you're closed for the part of the week that's growing.",
+      },
+    ],
+    nearby: ["soho", "lower-east-side"],
+  },
 ];

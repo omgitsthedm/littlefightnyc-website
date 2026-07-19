@@ -21,6 +21,8 @@ const AREA_IMAGE: Record<string, string> = {
   dumbo: "/assets/coworking-laptops.webp",
   astoria: "/assets/interior-spice-shop.webp",
   "long-island-city": "/assets/interior-grocery.webp",
+  "greenwich-village": "/assets/hero-greenwich-arch.webp",
+  "financial-district": "/assets/hero-fidi-love-gate.webp",
 };
 
 export default function Areas() {

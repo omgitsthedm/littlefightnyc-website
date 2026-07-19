@@ -6,6 +6,7 @@ import PullQuote from "@/components/editorial/PullQuote";
 import FaqList from "@/components/editorial/FaqList";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
+import EditorialFigure from "@/components/editorial/EditorialFigure";
 import { areaPages, services } from "@/data/site";
 
 const AREA_ROUTE_SLUG: Record<string, string> = {
@@ -29,6 +30,48 @@ const AREA_IMAGE: Record<string, string> = {
   dumbo: "/assets/coworking-laptops.webp",
   astoria: "/assets/interior-spice-shop.webp",
   "long-island-city": "/assets/interior-grocery.webp",
+  "greenwich-village": "/assets/hero-greenwich-arch.webp",
+  "financial-district": "/assets/hero-fidi-love-gate.webp",
+};
+
+/* A second real frame per neighborhood — map-driven, so areas without a
+ * photo simply skip it. Captions carry local truth, not decoration. */
+const AREA_FIGURE: Record<string, { src: string; alt: string; caption: string }> = {
+  "east-village": {
+    src: "/assets/figure-ev-vendor.webp",
+    alt: "A street vendor's clothes hung along an East Village fence, safety barriers in front",
+    caption: "Half the commerce here still happens right on the sidewalk. The other half happens on a phone.",
+  },
+  midtown: {
+    src: "/assets/figure-midtown-neon-pavement.webp",
+    alt: "Wet Midtown pavement at night reflecting pink and purple neon",
+    caption: "Eight million people walk past. The ones who walk in searched first.",
+  },
+  "upper-east-side": {
+    src: "/assets/figure-ues-diner.webp",
+    alt: "An Upper East Side corner diner glowing warm at night",
+    caption: "The neighborhood spots that outlast every chain have one thing in common: people can find them.",
+  },
+  "upper-west-side": {
+    src: "/assets/figure-uws-icecream.webp",
+    alt: "An ice cream truck at Central Park West, golden-hour sun flaring down the cross street",
+    caption: "Season by season, block by block — the Upper West Side rewards the businesses that show up.",
+  },
+  "west-village": {
+    src: "/assets/figure-wv-bistro.webp",
+    alt: "A red-brick West Village corner bistro with sidewalk tables",
+    caption: "Corner rooms and sidewalk regulars. The Village runs on places like this.",
+  },
+  "greenwich-village": {
+    src: "/assets/figure-greenwich-pizza.webp",
+    alt: "A busy Greenwich Village pizza corner seen from above, people crossing toward it",
+    caption: "The line out the door didn't happen by accident.",
+  },
+  "financial-district": {
+    src: "/assets/figure-fidi-corner.webp",
+    alt: "An ornate Financial District building corner above a street-level storefront",
+    caption: "Old-money architecture upstairs. Small businesses keeping the lights on at street level.",
+  },
 };
 
 function areaRouteSlug(serviceSlug: string) {
@@ -70,6 +113,19 @@ export default function AreaDetail() {
             <p>{area.intro}</p>
             <h2>The businesses here</h2>
             <p>{area.businessLandscape}</p>
+          </EditorialBody>
+
+          {AREA_FIGURE[area.slug] && (
+            <EditorialFigure
+              src={AREA_FIGURE[area.slug].src}
+              alt={AREA_FIGURE[area.slug].alt}
+              caption={AREA_FIGURE[area.slug].caption}
+              width={1600}
+              height={1200}
+            />
+          )}
+
+          <EditorialBody>
             <h2>How customers find you</h2>
             <p>{area.localSearchReality}</p>
           </EditorialBody>

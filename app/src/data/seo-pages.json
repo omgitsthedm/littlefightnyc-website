@@ -961,6 +961,52 @@
       ]
     },
     {
+      "path": "/areas/greenwich-village/",
+      "title": "Greenwich Village Web Design & Tech Support | Little Fight NYC",
+      "description": "Websites, tech help, and local search for Greenwich Village cafés, venues, shops, and student-serving businesses. Real help from a NYC team that shows up.",
+      "h1": "Websites, tech help, and local search for Greenwich Village businesses.",
+      "shortAnswer": "Short answer: Greenwich Village businesses live on foot traffic, students, and reputation. They need websites that load mid-walk, hours that are never wrong, and booking that works at midnight.",
+      "type": "WebPage",
+      "image": "/assets/hero-greenwich-arch.webp",
+      "faq": [
+        {
+          "question": "Half my customers are tourists who will never come back. Does local search even matter?",
+          "answer": "More, not less. A tourist has zero history with the neighborhood — the map IS their memory. Whoever looks best in that search wins the walk-in. Regulars forgive a stale listing; strangers never see you at all."
+        },
+        {
+          "question": "My venue fills through word of mouth and Instagram. Why do I need a website?",
+          "answer": "Because word of mouth ends at a search box. Someone hears about you, looks you up, and finds either a real page with tonight's lineup — or a dead link and a competitor's ad. Instagram warms them up. The website closes."
+        },
+        {
+          "question": "NYU students find everything themselves. What is there to fix?",
+          "answer": "Students find everything — including the fastest reason to pick somewhere else. Slow site, no online booking, unanswered reviews: each one is a swipe to the next option. Being findable isn't enough here. You have to be frictionless."
+        }
+      ]
+    },
+    {
+      "path": "/areas/financial-district/",
+      "title": "Financial District (FiDi) Websites & IT Support | Little Fight NYC",
+      "description": "Websites, local search, and tech support for FiDi delis, barbers, gyms, and street-level businesses serving the lunch rush and the residential boom.",
+      "h1": "Websites, tech help, and local search for Financial District businesses.",
+      "shortAnswer": "Short answer: FiDi businesses serve two different neighborhoods — office workers on a clock and a residential boom that never leaves. They need search visibility and systems that work for both.",
+      "type": "WebPage",
+      "image": "/assets/hero-fidi-love-gate.webp",
+      "faq": [
+        {
+          "question": "My deli lives on the lunch rush. Hybrid work cut it in half. What now?",
+          "answer": "The neighborhood that replaced your Tuesday crowd lives upstairs — 60,000-plus residents who need dinner, weekend coffee, and everything a household runs on. Most FiDi counters have never said one word to them online. That is the growth sitting on your block."
+        },
+        {
+          "question": "The chains in the Oculus have apps and preorder. How does an independent compete?",
+          "answer": "You don't out-app a chain — you out-neighbor it. Correct hours, a menu that loads instantly, online ordering that works, and reviews from people who actually know your name. The chain wins the tourist. You win the block, and blocks are loyal."
+        },
+        {
+          "question": "Do weekends even matter down here anymore?",
+          "answer": "FiDi weekends stopped being dead years ago. Families on Stone Street, tourists at the Seaport, residents doing errands. If your hours, your listing, and your website still assume a Monday-to-Friday neighborhood, you're closed for the part of the week that's growing."
+        }
+      ]
+    },
+    {
       "path": "/areas/upper-west-side/",
       "title": "Upper West Side Websites & Tech Help | Little Fight NYC",
       "description": "Better websites, IT support, Google visibility, and practical business systems for Upper West Side local businesses that need clear next steps.",
