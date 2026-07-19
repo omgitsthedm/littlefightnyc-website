@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUpRight } from "lucide-react";
 import TugMark from "@/components/editorial/TugMark";
+import TugAvatar from "@/components/editorial/TugAvatar";
 import "./Espanol.css";
 
 /**
@@ -133,6 +134,9 @@ export default function Espanol() {
             ))}
           </ul>
         </section>
+
+        {/* The tug — text-free brand moment, no translation compromise. */}
+        <TugAvatar />
 
         <section className="lf-es__contact">
           <h2>Hablemos</h2>

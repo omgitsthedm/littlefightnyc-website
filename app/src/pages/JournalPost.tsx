@@ -4,6 +4,7 @@ import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniToc, { type TocItem } from "@/components/dataviz/MiniToc";
+import TugMark from "@/components/editorial/TugMark";
 import { READ_MINUTES, WORD_COUNT } from "@/components/dataviz/journalStats";
 import ShareButton from "@/components/ShareButton";
 import journalIndex from "@/data/journal-index.json";
@@ -170,6 +171,15 @@ export default function JournalPost() {
         itemScope
         itemType="https://schema.org/Article"
       >
+        {/* The reading tug: sails down the article's left rail as you read —
+            pure CSS scroll-driven animation (journal.css), desktop-only,
+            decorative. Rail (sized container) > runner (scroll-driven
+            translate) > mark (idle bob). */}
+        <span className="lf-post__sail" aria-hidden="true">
+          <span className="lf-post__sail-run">
+            <TugMark className="lf-post__sail-mark" />
+          </span>
+        </span>
         <div className="lf-post__inner" data-toc={hasToc ? "true" : undefined}>
           {hasToc && <MiniToc items={toc} />}
           <div className="lf-post__main">

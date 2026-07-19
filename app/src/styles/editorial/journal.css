@@ -810,3 +810,64 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-post__skel-line { animation: none; }
 }
+
+/* ─── The reading tug ──────────────────────────────────────────────
+   A small tugboat sails down the article's left rail as you read — progress
+   as personality. Native scroll-driven animation + container-query units:
+   zero JS, compositor-only. The rail is an absolutely-positioned sized
+   container spanning the article; the runner translates 0 → rail height
+   (100cqh) on the root scroll timeline; the mark bobs idly on its own layer.
+   NOTE: position:fixed is impossible here — .lf-page-enter keeps an identity
+   transform (route-entrance fill), which makes it the containing block.
+   Hidden <1280px, without support, and under reduced-motion. Decorative. */
+
+.lf-post__sail {
+  display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+    .lf-post {
+      position: relative;
+      /* Named view-timeline: progress = the article's own traversal of the
+         viewport — the tug tracks the READER, not the whole page scroll. */
+      view-timeline: --lf-post block;
+    }
+    .lf-post__sail {
+      display: block;
+      position: absolute;
+      left: calc(var(--lf-margin-desktop) * 0.25);
+      top: 0;
+      bottom: 0;
+      width: 34px;
+      pointer-events: none;
+      container-type: size;
+      z-index: 5;
+    }
+    .lf-post__sail-run {
+      display: block;
+      animation: lf-post-sail linear both;
+      animation-timeline: --lf-post;
+      animation-range: contain;
+    }
+    .lf-post__sail-mark {
+      display: block;
+      width: 38px;
+      height: auto;
+      color: var(--lf-bone-soft);
+      opacity: 0.9;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+      animation: lf-post-sail-bob 3.2s var(--lf-ease-standard) infinite;
+    }
+  }
+}
+
+@keyframes lf-post-sail {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(100cqh - 44px)); }
+}
+
+@keyframes lf-post-sail-bob {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-3px) rotate(2deg); }
+}

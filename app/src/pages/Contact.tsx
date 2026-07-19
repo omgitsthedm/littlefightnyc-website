@@ -3,6 +3,7 @@ import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import FaqList from "@/components/editorial/FaqList";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
+import TheDirectLine from "@/components/dataviz/TheDirectLine";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import TimePromiseInstrument from "@/components/editorial/TimePromiseInstrument";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
@@ -50,6 +51,14 @@ export default function Contact() {
           height: 1200,
         }}
       />
+
+      {/* The page's promise, drawn as a race: their phone maze vs our one
+          straight orange line. */}
+      <section className="lf-contact-line" aria-label="No phone tree — a real person answers">
+        <div className="lf-contact-line__inner">
+          <TheDirectLine />
+        </div>
+      </section>
 
       {/* What happens when you reach out — the response window, drawn. */}
       <section className="lf-contact-window" aria-labelledby="lf-contact-window-title">
