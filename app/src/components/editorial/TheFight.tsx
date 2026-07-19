@@ -1,97 +1,56 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
+import TaleOfTheTape from "@/components/dataviz/TaleOfTheTape";
 import "./TheFight.css";
 
 /**
- * The Fight — the mission. Why "Little Fight" exists: the chains and roll-ups
- * brought a tech team; the corner store never got one. This section connects
- * the threat → the stakes → the answer, so a small owner understands what the
- * investment is actually fighting.
+ * TheFight — the mission as a FIGHT CARD (rebuilt 2026-07-18; David: the old
+ * two-list version was "lame and boring and I don't even understand it").
+ *
+ * Boxing-poster structure any New Yorker reads in one look:
+ *   THE CHAINS vs YOUR BLOCK — giant poster type —
+ * then the TaleOfTheTape instrument punches the tape even, row by row, and
+ * the closer CTA puts us in their corner. One idea, told once, with teeth.
  */
-const THEM = [
-  "Whole Foods",
-  "Great Clips",
-  "Uber Eats",
-  "DoorDash",
-  "Private-equity buyers",
-];
-
-const YOU = [
-  "The neighborhood law firm",
-  "The corner bar",
-  "The local clothing brand",
-  "The hardware store",
-  "The family clinic",
-];
-
 export default function TheFight() {
-  const headRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
-  const vsRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
+  const headRef = useScrollReveal<HTMLElement>({ threshold: 0.25 });
+  const closeRef = useScrollReveal<HTMLDivElement>({ threshold: 0.4 });
 
   return (
-    <section className="lf-fight" aria-labelledby="lf-fight-heading">
-      <div className="lf-fight__inner">
-        <div ref={headRef} className="lf-fight__head" data-reveal>
-          <p className="lf-mono lf-fight__eyebrow">
-            <span className="lf-fight__eyebrow-num">I.</span>
-            <span className="lf-fight__eyebrow-divider" aria-hidden="true">·</span>
-            The fight
-          </p>
-          <h2 id="lf-fight-heading" className="lf-display lf-fight__title">
-            The chains brought a tech team.
-            <br />
-            <span className="lf-fight__title-em">The corner store never got one.</span>
-          </h2>
-          <p className="lf-fight__lede">
-            Whole Foods, Great Clips, the delivery apps skimming a cut off every
-            order did not out-work your block. They out-<em>tooled</em> it.
-            Closing that gap is the whole reason we&rsquo;re called Little Fight.
-          </p>
-        </div>
+    <section className="lf-fight" aria-labelledby="lf-fight-title">
+      <header ref={headRef} className="lf-fight__head" data-reveal>
+        <p className="lf-fight__eyebrow">The fight · every day in New York</p>
+        <h2 id="lf-fight-title" className="lf-fight__title">
+          <span className="lf-fight__fighter">The chains</span>
+          <span className="lf-fight__vs" aria-hidden="true">vs</span>
+          <span className="lf-fight__fighter lf-fight__fighter--us">your block</span>
+        </h2>
+        <p className="lf-fight__lede">
+          Whole Foods didn't out-work your block — it out-tooled it. The
+          delivery apps skim every order. The chains walked in with a tech
+          team. So that's what we are: <strong>yours.</strong>
+        </p>
+      </header>
 
-        <div ref={vsRef} className="lf-fight__vs" data-revealed="true">
-          <div className="lf-fight__side lf-fight__side--them">
-            <p className="lf-mono lf-fight__side-label">What they brought</p>
-            <ul className="lf-fight__list">
-              {THEM.map((name) => (
-                <li key={name}>{name}</li>
-              ))}
-            </ul>
-            <p className="lf-fight__side-note">
-              National chains and investor-owned groups with full tech teams and big budgets.
-            </p>
-          </div>
+      <div className="lf-fight__tape">
+        <TaleOfTheTape />
+      </div>
 
-          <div className="lf-fight__divider" aria-hidden="true">
-            <span className="lf-fight__divider-word">vs</span>
-          </div>
-
-          <div className="lf-fight__side lf-fight__side--you">
-            <p className="lf-mono lf-fight__side-label">Who we&rsquo;re in the corner for</p>
-            <ul className="lf-fight__list">
-              {YOU.map((name) => (
-                <li key={name}>{name}</li>
-              ))}
-            </ul>
-            <p className="lf-fight__side-note">
-              The places that make a block worth living on, now with a tech team of their own.
-            </p>
-          </div>
-        </div>
-
-        <div className="lf-fight__answer">
-          <p>
-            We start where small businesses get the best return: a website that
-            brings in calls, bookings, and trust. Then we stay useful when tech
-            breaks or software bills pile up. No corporate stack. Just the right
-            tool, owned by the business when we build it.
-          </p>
-          <Link to="/services/custom-local-websites/" className="lf-fight__cta">
-            See the website service
-            <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
-          </Link>
-        </div>
+      <div ref={closeRef} className="lf-fight__close" data-reveal>
+        <p className="lf-fight__close-line">
+          The bar. The clinic. The hardware store. The law firm. The places
+          that make a block worth living on — with a tech team of their own.
+        </p>
+        <Link
+          to="/tech-audit/"
+          className="lf-fight__cta"
+          data-lf-event="website_plan_intent"
+          data-lf-label="home_fight"
+        >
+          Put us in your corner
+          <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );

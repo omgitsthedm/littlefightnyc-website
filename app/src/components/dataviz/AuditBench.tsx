@@ -202,11 +202,11 @@ export default function AuditBench() {
       className="lf-instrument lf-auditbench"
       style={
         {
-          "--lf-instrument-ratio": "640 / 260",
-          "--lf-instrument-minh": "200px",
+          "--lf-instrument-ratio": "680 / 330",
+          "--lf-instrument-minh": "260px",
           "--lf-instrument-ratio-m": "360 / 260",
           "--lf-instrument-minh-m": "240px",
-          maxWidth: 720,
+          maxWidth: 880,
           marginInline: "auto",
         } as React.CSSProperties
       }

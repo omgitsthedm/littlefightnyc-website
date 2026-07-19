@@ -38,7 +38,7 @@ const PILLARS = [
   {
     num: "02",
     name: "Tech Support",
-    line: "When the register, Wi-Fi, or email breaks, a real person picks up and fixes it.",
+    line: "Register down? Wi-Fi dead? A real person picks up — and gets it fixed.",
     to: "/services/it-support/",
     cta: "See how support works",
     Viz: WhoAnswers,
@@ -105,8 +105,8 @@ export default function TheFour() {
           Four things. <span className="lf-four__em">Done right.</span>
         </h2>
         <p className="lf-four__dek">
-          For New York shops, offices, and practices — the whole tech side of
-          your business, handled by people who pick up the phone.
+          The bar, the clinic, the shop, the firm — we're the tech team your
+          block never got. And we pick up the phone.
         </p>
       </header>
       <div className="lf-four__list">

@@ -6,8 +6,8 @@
 .lf-instrument {
   position: relative;
   width: 100%;
-  aspect-ratio: var(--lf-instrument-ratio, 620 / 340);
-  min-height: var(--lf-instrument-minh, 260px);
+  aspect-ratio: var(--lf-instrument-ratio, 620 / 390);
+  min-height: var(--lf-instrument-minh, 300px);
   margin-block: var(--lf-instrument-mb, 0);
   opacity: 0;
   transform: translateY(12px);
@@ -31,8 +31,8 @@
 
 @media (max-width: 720px) {
   .lf-instrument {
-    aspect-ratio: var(--lf-instrument-ratio-m, var(--lf-instrument-ratio, 620 / 340));
-    min-height: var(--lf-instrument-minh-m, var(--lf-instrument-minh, 260px));
+    aspect-ratio: var(--lf-instrument-ratio-m, var(--lf-instrument-ratio, 620 / 390));
+    min-height: var(--lf-instrument-minh-m, var(--lf-instrument-minh, 300px));
   }
 }
 

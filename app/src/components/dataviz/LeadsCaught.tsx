@@ -32,7 +32,7 @@ const TOKEN: Record<(typeof SOURCES)[number], string> = {
 
 // Phase timing (ms). painMs → the beat → fixMs → hold → loop. Emission is dense
 // and continuous (incl. through the beat) so the fall column is never empty.
-const T = { pain: 3400, beat: 500, fix: 4400, hold: 1300, emit: 230 };
+const T = { pain: 3400, beat: 500, fix: 4400, hold: 1300, emit: 180 };
 
 type Lead = {
   src: number;
