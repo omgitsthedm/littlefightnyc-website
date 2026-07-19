@@ -87,7 +87,7 @@ export default function TheFight() {
             breaks or software bills pile up. No corporate stack. Just the right
             tool, owned by the business when we build it.
           </p>
-          <Link to="/services/custom-local-websites/" viewTransition className="lf-fight__cta">
+          <Link to="/services/custom-local-websites/" className="lf-fight__cta">
             See the website service
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>

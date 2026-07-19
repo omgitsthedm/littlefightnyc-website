@@ -55,7 +55,7 @@ export default function MomentumSection() {
           <p className="lf-momentum__card-line">
             We compare the software bill and the staff time around it at no cost.
           </p>
-          <Link to="/tech-audit/" viewTransition className="lf-momentum__cta-button">
+          <Link to="/tech-audit/" className="lf-momentum__cta-button">
             Review my software
             <ArrowUpRight size={18} strokeWidth={2} />
           </Link>

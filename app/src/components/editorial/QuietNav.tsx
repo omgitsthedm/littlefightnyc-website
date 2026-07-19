@@ -118,7 +118,7 @@ export default function QuietNav() {
   return (
     <header className="lf-nav" data-scrolled={scrolled}>
       <div className="lf-nav__inner">
-        <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home" viewTransition>
+        <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home">
           <TugMark className="lf-nav__mark" />
           <span>Little Fight NYC</span>
         </Link>
@@ -128,7 +128,6 @@ export default function QuietNav() {
             <NavLink
               key={link.to}
               to={link.to}
-              viewTransition
               className={({ isActive }) =>
                 `lf-nav__link${isActive ? " lf-nav__link--active" : ""}`
               }
@@ -154,7 +153,6 @@ export default function QuietNav() {
             className="lf-nav__start"
             data-lf-event="website_plan_intent"
             data-lf-label="nav_desktop"
-            viewTransition
           >
             Start a project
             <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
@@ -201,7 +199,6 @@ export default function QuietNav() {
                 <NavLink
                   key={link.to}
                   to={link.to}
-                  viewTransition
                   onClick={() => setOpen(false)}
                   style={{ ["--lf-i" as string]: i }}
                   className={({ isActive }) =>
@@ -220,7 +217,6 @@ export default function QuietNav() {
                   to="/tech-audit/?intent=website"
                   data-lf-event="website_plan_intent"
                   data-lf-label="mobile_menu"
-                  viewTransition
                   onClick={() => setOpen(false)}
                   className="lf-nav__panel-fit"
                 >

@@ -1,23 +1,22 @@
-import { useCallback } from "react";
 import { flushSync } from "react-dom";
-import { useNavigate } from "react-router-dom";
-import type { MouseEvent } from "react";
 
 /**
- * Shared-element route transitions (progressive).
+ * Native route transitions (progressive).
  *
  * The app's baseline navigation is the `.lf-page-enter` re-key fade in
  * motion.css — it plays on every route change and must keep working
- * everywhere. This module ADDS a scripted `document.startViewTransition`
- * around specific navigations (case-study card → detail hero, journal title
- * → post h1) so paired elements sharing a `view-transition-name` morph.
+ * everywhere. On top of that, GlobalViewTransitions (the app-wide capture-phase
+ * click interceptor — the ONLY caller of this module) runs every same-origin
+ * navigation through `document.startViewTransition`, so all routes share one
+ * native crossfade and elements with paired `view-transition-name`s (case-study
+ * card → detail hero, journal title → post h1) morph.
  *
  * Progressive rules:
- * - No View Transitions API, or prefers-reduced-motion → we do nothing and
- *   the plain <Link> navigation (with the re-key fade) runs untouched.
- * - While a scripted transition drives a navigation we stamp
- *   `data-vt-route` on <html>; motion.css uses it to suppress the re-key
- *   fade for that one navigation so the page never double-animates.
+ * - No View Transitions API, or prefers-reduced-motion → plain navigation with
+ *   the re-key fade, untouched.
+ * - While a scripted transition drives a navigation we stamp `data-vt-route`
+ *   on <html>; motion.css uses it to suppress the re-key fade for that one
+ *   navigation so the page never double-animates.
  * - Same-document SPA navigations only.
  */
 
@@ -74,72 +73,33 @@ function settled(before: Element | null, timeoutMs = 450): Promise<void> {
   });
 }
 
-/**
- * Run `navigateFn(to)` inside a view transition. `preload` (usually
- * `() => import("...")` of the destination page chunk) is awaited first —
- * briefly, capped — so the new snapshot captures the real page, not the
- * route loader.
- */
+/** Run `navigateFn(to)` inside a native view transition. */
 export function navigateWithViewTransition(
   navigateFn: (to: string) => void,
   to: string,
-  preload?: () => Promise<unknown>,
 ): void {
   if (!supportsViewTransitions()) {
     navigateFn(to);
     return;
   }
 
-  const go = () => {
-    const doc = document as DocumentWithVT;
-    const root = document.documentElement;
-    root.dataset.vtRoute = "1";
-    const clear = () => {
-      delete root.dataset.vtRoute;
-    };
-    let vt: ViewTransitionLike;
-    try {
-      vt = doc.startViewTransition!(async () => {
-        const before = document.querySelector(".lf-page-enter");
-        flushSync(() => navigateFn(to));
-        await settled(before);
-      });
-    } catch {
-      clear();
-      navigateFn(to);
-      return;
-    }
-    vt.finished.then(clear, clear);
+  const doc = document as DocumentWithVT;
+  const root = document.documentElement;
+  root.dataset.vtRoute = "1";
+  const clear = () => {
+    delete root.dataset.vtRoute;
   };
-
-  if (preload) {
-    // Warm the destination chunk, capped — never block the tap on a slow net.
-    Promise.race([
-      preload().catch(() => undefined),
-      new Promise((resolve) => window.setTimeout(resolve, 350)),
-    ]).then(go, go);
-  } else {
-    go();
+  let vt: ViewTransitionLike;
+  try {
+    vt = doc.startViewTransition!(async () => {
+      const before = document.querySelector(".lf-page-enter");
+      flushSync(() => navigateFn(to));
+      await settled(before);
+    });
+  } catch {
+    clear();
+    navigateFn(to);
+    return;
   }
-}
-
-/**
- * Click-handler factory for <Link>s that should morph. Returns an onClick
- * that, when the API is available, takes over the navigation; otherwise it
- * does nothing and the <Link> behaves exactly as before (re-key fade).
- */
-export function useViewTransitionNav() {
-  const navigate = useNavigate();
-  return useCallback(
-    (to: string, preload?: () => Promise<unknown>) =>
-      (event: MouseEvent<HTMLAnchorElement>) => {
-        if (!supportsViewTransitions()) return; // plain Link + re-key fade
-        if (event.defaultPrevented || event.button !== 0) return;
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
-          return;
-        event.preventDefault();
-        navigateWithViewTransition((t) => navigate(t), to, preload);
-      },
-    [navigate],
-  );
+  vt.finished.then(clear, clear);
 }

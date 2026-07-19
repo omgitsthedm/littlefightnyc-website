@@ -20,9 +20,9 @@ import { navigateWithViewTransition } from "@/lib/viewTransition";
  *   double-nav — without us having to stop the event.
  * - We deliberately do NOT stopPropagation, so every other onClick still runs:
  *   the mobile-drawer NavLinks close via their own `onClick={() => setOpen(false)}`
- *   (QuietNav relies on that, not a route-change effect), and the tuned
- *   case-study / journal `useViewTransitionNav` handlers simply early-return on
- *   the already-defaultPrevented event, ceding the navigation to this one path.
+ *   (QuietNav relies on that, not a route-change effect). Shared-element morphs
+ *   (case-study card → detail hero, journal title → post h1) need no per-link
+ *   wiring — their paired `view-transition-name`s morph inside this transition.
  *
  * Fallbacks are inherited from navigateWithViewTransition: no View Transitions
  * API, or prefers-reduced-motion → plain SPA navigation with the `.lf-page-enter`

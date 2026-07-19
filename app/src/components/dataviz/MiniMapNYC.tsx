@@ -227,7 +227,6 @@ export default function MiniMapNYC({
             <li key={area.slug}>
               <Link
                 to={`/areas/${area.slug}/`}
-                viewTransition
                 className="lf-minimap__chip"
                 data-state={stateOf(area.slug)}
                 aria-current={area.slug === current ? "page" : undefined}

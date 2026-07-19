@@ -132,7 +132,6 @@ export default function QuietHero() {
             to="/tech-audit/?intent=website"
             data-lf-event="website_plan_intent"
             data-lf-label="home_hero"
-            viewTransition
           >
             <Globe2 size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">

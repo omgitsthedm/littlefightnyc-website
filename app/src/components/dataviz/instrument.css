@@ -1,0 +1,45 @@
+/* Shared instrument wrapper — every canvas instrument uses this one block.
+   Per-instrument sizing comes in via custom properties set inline on the
+   wrapper (--lf-instrument-ratio / -minh, with -m variants for ≤720px):
+   the media query below reads whichever variant applies. */
+
+.lf-instrument {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--lf-instrument-ratio, 620 / 340);
+  min-height: var(--lf-instrument-minh, 260px);
+  margin-block: var(--lf-instrument-mb, 0);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 640ms var(--lf-ease-standard, ease),
+    transform 640ms var(--lf-ease-standard, ease);
+}
+
+[data-revealed="true"].lf-instrument {
+  opacity: 1;
+  transform: none;
+}
+
+.lf-instrument__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .lf-instrument {
+    aspect-ratio: var(--lf-instrument-ratio-m, var(--lf-instrument-ratio, 620 / 340));
+    min-height: var(--lf-instrument-minh-m, var(--lf-instrument-minh, 260px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-instrument {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

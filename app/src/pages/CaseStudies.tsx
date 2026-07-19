@@ -7,11 +7,9 @@ import DeviceFrame from "@/components/editorial/DeviceFrame";
 import { caseStudies, services } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
-import { useViewTransitionNav } from "@/lib/viewTransition";
 import "@/styles/editorial/case-studies.css";
 
 // Warm the detail chunk before the morph so the new snapshot is the real page.
-const preloadDetail = () => import("@/pages/CaseStudyDetail");
 
 function serviceLabel(slug: string): string | undefined {
   return services.find((s) => s.slug === slug)?.eyebrow;
@@ -38,7 +36,6 @@ const INTERLUDE_AFTER: Record<number, string> = {
 
 export default function CaseStudies() {
   const countWord = COUNT_WORDS[caseStudies.length] ?? String(caseStudies.length);
-  const vtNav = useViewTransitionNav();
   return (
     <>
       <PageHero
@@ -73,7 +70,6 @@ export default function CaseStudies() {
                 to={`/case-studies/${study.slug}/`}
                 className="lf-cases__image lf-cases__image-link"
                 aria-label={`Read the ${study.client} case study`}
-                onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
               >
                 <DeviceFrame domain={displayDomain(study.url)}>
                   <img {...skelImg}
@@ -99,7 +95,6 @@ export default function CaseStudies() {
                   <Link
                     to={`/case-studies/${study.slug}/`}
                     className="lf-cases__title-link"
-                    onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
                   >
                     {study.client}
                   </Link>
@@ -156,7 +151,6 @@ export default function CaseStudies() {
                     <Link
                       to={`/case-studies/${study.slug}/`}
                       className="lf-cases__read"
-                      onClick={vtNav(`/case-studies/${study.slug}/`, preloadDetail)}
                     >
                       Read the case
                       <span aria-hidden="true"> →</span>
@@ -184,7 +178,6 @@ export default function CaseStudies() {
                 <Link
                   to={`/case-studies/${interlude.slug}/`}
                   className="lf-cases__interlude-link"
-                  onClick={vtNav(`/case-studies/${interlude.slug}/`, preloadDetail)}
                 >
                   <span className="lf-cases__interlude-head">
                     <span className="lf-cases__interlude-kicker">From the record</span>

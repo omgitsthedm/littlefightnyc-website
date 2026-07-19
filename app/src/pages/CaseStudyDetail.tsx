@@ -161,7 +161,7 @@ export default function CaseStudyDetail() {
                 <p className="lf-case__meta-label">Services</p>
                 <p className="lf-case__meta-value lf-case__meta-services">
                   {serviceLinks.map((s) => (
-                    <Link key={s.slug} to={`/services/${s.slug}/`} viewTransition className="lf-case__service-link">
+                    <Link key={s.slug} to={`/services/${s.slug}/`} className="lf-case__service-link">
                       {s.label}
                     </Link>
                   ))}
@@ -278,7 +278,7 @@ export default function CaseStudyDetail() {
             <ol className="lf-case-detail-related__list">
               {related.map((r, i) => (
                 <li key={r.slug}>
-                  <Link to={`/case-studies/${r.slug}/`} viewTransition className="lf-case-detail-related__link">
+                  <Link to={`/case-studies/${r.slug}/`} className="lf-case-detail-related__link">
                     <span className="lf-case-detail-related__num">{String(i + 1).padStart(2, "0")}</span>
                     <span className="lf-case-detail-related__body">
                       <span className="lf-case-detail-related__type">{r.type}</span>

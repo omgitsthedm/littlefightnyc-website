@@ -8,13 +8,11 @@ import PublishingHeatmap from "@/components/dataviz/PublishingHeatmap";
 import { READ_MINUTES } from "@/components/dataviz/journalStats";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
-import { useViewTransitionNav } from "@/lib/viewTransition";
 import journal from "@/data/journal-index.json";
 import { POST_IMAGE } from "@/data/journalArt";
 import "@/styles/editorial/journal.css";
 
 // Warm the post chunk before the morph so the new snapshot is the real page.
-const preloadPost = () => import("@/pages/JournalPost");
 
 type Post = {
   slug: string;
@@ -78,7 +76,6 @@ export default function Journal() {
 
   const featuredRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
   const listRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
-  const vtNav = useViewTransitionNav();
 
   return (
     <>
@@ -152,9 +149,7 @@ export default function Journal() {
           <div ref={featuredRef} className="lf-journal-featured__inner" data-reveal>
             <Link
               to={`/journal/${featured.slug}/`}
-              viewTransition
               className="lf-journal-featured__card"
-              onClick={vtNav(`/journal/${featured.slug}/`, preloadPost)}
             >
               <span className="lf-journal-featured__media" aria-hidden="true">
                 <img {...skelImg}
@@ -205,9 +200,7 @@ export default function Journal() {
                 <li key={post.slug} className="lf-journal__item">
                   <Link
                     to={`/journal/${post.slug}/`}
-                    viewTransition
                     className="lf-journal__link lf-journal__link--thumb"
-                    onClick={vtNav(`/journal/${post.slug}/`, preloadPost)}
                   >
                     <span className="lf-journal__num">
                       {String(i + 1).padStart(2, "0")}

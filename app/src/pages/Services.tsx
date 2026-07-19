@@ -91,7 +91,6 @@ export default function Services() {
                 <li key={route.label} className="lf-svc-router__item">
                   <Link
                     to={`/services/${service.slug}/`}
-                    viewTransition
                     className={`lf-svc-router__link lf-svc-router__link--${route.priority}`}
                   >
                     <span className="lf-svc-router__symptom">

@@ -1,7 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { clamp, lerp, eoc, eic } from "@/kernel/motion";
-import "./KeepConnectReplaceBuild.css";
+import { rr, glow, DISP, MONO, useInstrumentCanvas } from "./instrument";
 
 /**
  * KeepConnectReplaceBuild — the systemic verbs (Small Craft doctrine, Part Five).
@@ -33,9 +31,6 @@ const ORDER = ["intro", "keep", "connect", "replace", "build", "hold"] as const;
 type Phase = (typeof ORDER)[number];
 const TOTAL = ORDER.reduce((s, k) => s + T[k], 0);
 
-const DISP = '"Oswald Variable", "Oswald", "Barlow", system-ui, sans-serif';
-const MONO = '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace';
-
 function phaseAt(pt: number): [Phase, number] {
   let acc = 0;
   for (const k of ORDER) {
@@ -43,32 +38,6 @@ function phaseAt(pt: number): [Phase, number] {
     acc += T[k];
   }
   return ["hold", 1];
-}
-
-function rr(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  r = Math.min(r, w / 2, h / 2);
-  c.beginPath();
-  c.moveTo(x + r, y);
-  c.arcTo(x + w, y, x + w, y + h, r);
-  c.arcTo(x + w, y + h, x, y + h, r);
-  c.arcTo(x, y + h, x, y, r);
-  c.arcTo(x, y, x + w, y, r);
-  c.closePath();
-}
-
-function glow(col: string, sz: number): HTMLCanvasElement {
-  const s = document.createElement("canvas");
-  s.width = s.height = sz;
-  const g = s.getContext("2d")!;
-  const rd = g.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, sz / 2);
-  rd.addColorStop(0, col);
-  rd.addColorStop(0.4, col.replace("1)", ".5)"));
-  rd.addColorStop(1, "rgba(0,0,0,0)");
-  g.fillStyle = rd;
-  g.beginPath();
-  g.arc(sz / 2, sz / 2, sz / 2, 0, 7);
-  g.fill();
-  return s;
 }
 
 type Pos = { x: number; y: number; rot: number };
@@ -296,100 +265,38 @@ function draw(
 }
 
 export default function KeepConnectReplaceBuild() {
-  const wrapRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    const canvas = canvasRef.current;
-    if (!wrap || !canvas || typeof window === "undefined") return;
-    const cx = canvas.getContext("2d");
-    if (!cx) return;
-
-    const DPR = Math.min(2, window.devicePixelRatio || 1);
+  const { wrapRef, canvasRef } = useInstrumentCanvas((cx) => {
     const GO = glow("rgba(249,115,22,1)", 40);
-    let sc = layout(0, 0);
-
-    const resize = () => {
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      canvas.width = r.width * DPR;
-      canvas.height = r.height * DPR;
-      cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      sc = layout(r.width, r.height);
-    };
-
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    const drawStatic = () => {
-      resize();
-      if (!sc.W) return;
-      // the owned end-state (hold): one system, "you own it."
-      draw(sc, cx, TOTAL - 200, GO);
-    };
-
-    const ro = new ResizeObserver(() => {
-      resize();
-      if (reduced) drawStatic();
-    });
-    ro.observe(wrap);
-    void (document.fonts?.ready ?? Promise.resolve()).then(() => {
-      if (reduced) drawStatic();
-    });
-
-    if (reduced) {
-      resize();
-      drawStatic();
-      return () => ro.disconnect();
-    }
-
-    let raf = 0;
-    let running = false;
+    let sc: Scene | null = null;
+    const scene = (W: number, H: number) =>
+      sc && sc.W === W && sc.H === H ? sc : (sc = layout(W, H));
     let t0 = performance.now();
-    const frame = (now: number) => {
-      draw(sc, cx, (now - t0) % TOTAL, GO);
-      raf = requestAnimationFrame(frame);
-    };
-    const start = () => {
-      if (running) return;
-      resize();
-      if (!sc.W) return;
-      running = true;
-      t0 = performance.now(); // replay from the top on (re)entry
-      raf = requestAnimationFrame(frame);
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    drawStatic();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) start();
-          else stop();
-        }
+    return {
+      reset: (now) => {
+        t0 = now; // replay from the top on (re)entry
       },
-      { threshold: 0.15 },
-    );
-    io.observe(wrap);
-
-    return () => {
-      io.disconnect();
-      ro.disconnect();
-      stop();
+      frame: (now, W, H) => draw(scene(W, H), cx, (now - t0) % TOTAL, GO),
+      // the owned end-state (hold): one system, "you own it."
+      still: (_now, W, H) => draw(scene(W, H), cx, TOTAL - 200, GO),
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div
       ref={wrapRef}
-      className="lf-kcrb"
+      className="lf-instrument lf-kcrb"
+      style={
+        {
+          "--lf-instrument-ratio": "460 / 340",
+          "--lf-instrument-minh": "260px",
+          "--lf-instrument-ratio-m": "340 / 430",
+          "--lf-instrument-minh-m": "400px",
+        } as React.CSSProperties
+      }
       role="img"
       aria-label="Animation: a shop's scattered tools resolve through four verbs — keep what works, connect what matters, replace what drags, build what fits — consolidating into one owned system."
     >
-      <canvas ref={canvasRef} className="lf-kcrb__canvas" aria-hidden="true" />
+      <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>
   );
 }

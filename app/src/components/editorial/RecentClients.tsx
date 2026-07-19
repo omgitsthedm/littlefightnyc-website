@@ -35,7 +35,7 @@ export default function RecentClients() {
               Real businesses, real launches, and a clear path from first look to next action.
             </p>
           </div>
-          <Link to="/case-studies/" viewTransition className="lf-clients__all">
+          <Link to="/case-studies/" className="lf-clients__all">
             See every result <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>
@@ -45,7 +45,6 @@ export default function RecentClients() {
             <Link
               key={study.slug}
               to={`/case-studies/${study.slug}/`}
-              viewTransition
               className={`lf-clients__card${i === 0 ? " lf-clients__card--feature" : ""}`}
               style={{ ["--lf-i" as string]: i }}
             >

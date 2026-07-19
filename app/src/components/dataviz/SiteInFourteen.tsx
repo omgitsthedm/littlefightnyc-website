@@ -1,15 +1,13 @@
-import { useEffect, useRef } from "react";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { clamp, lerp, eoc } from "@/kernel/motion";
-import "./SiteInFourteen.css";
+import { rr, glow, DISP, MONO, ORANGE, GREEN, useInstrumentCanvas } from "./instrument";
 
 /**
  * SiteInFourteen — the "custom local websites" argument, drawn.
  *
- * A site assembles in a browser frame while a day counter climbs 1 → 14: nav,
- * hero, then the content rows snap into place, a review sweep passes, and on day
- * 14 it goes LIVE — "in 14 days, or you don't pay." One causal image: a real
- * custom build, coming together on a clock you can hold us to.
+ * A site assembles in a browser frame while a day counter climbs 1 → 14 — hero,
+ * content rows and footer snap into place behind an orange build-sweep line —
+ * and on day 14 it goes LIVE — "in 14 days, or you don't pay." One causal image:
+ * a real custom build, coming together on a clock you can hold us to.
  *
  * Every fact drawn (ships by day 14, miss-the-date-you-don't-pay) is already in
  * the custom-local-websites copy — no invented numbers.
@@ -29,23 +27,6 @@ const BLOCKS = [
 ] as const;
 
 const T = { build: 4200, ship: 1600, hold: 1500 };
-
-const DISP = '"Oswald Variable", "Oswald", "Barlow", system-ui, sans-serif';
-const MONO = '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace';
-
-const ORANGE = "#F97316";
-const GREEN = "#4ADE80";
-
-function rr(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  r = Math.min(r, w / 2, h / 2);
-  c.beginPath();
-  c.moveTo(x + r, y);
-  c.arcTo(x + w, y, x + w, y + h, r);
-  c.arcTo(x + w, y + h, x, y + h, r);
-  c.arcTo(x, y + h, x, y, r);
-  c.arcTo(x, y, x + w, y, r);
-  c.closePath();
-}
 
 type Sim = {
   t0: number;
@@ -126,7 +107,7 @@ function draw(
   cx.fillText("DAY " + String(dayNum).padStart(2, "0"), dayX, dayY + H * (wide ? 0.15 : 0.11));
   cx.fillStyle = "rgba(160,164,174,.8)";
   cx.font = "500 " + Math.max(10, (H * 0.04) | 0) + "px " + DISP;
-  cx.fillText("of 14", dayX + (dayAlign === "center" ? 0 : 0), dayY + H * (wide ? 0.22 : 0.16));
+  cx.fillText("of 14", dayX, dayY + H * (wide ? 0.22 : 0.16));
 
   // --- browser frame ---
   const barH = clamp(frH * 0.1, 16, 26);
@@ -262,128 +243,47 @@ function draw(
   }
 }
 
-function glow(col: string, sz: number): HTMLCanvasElement {
-  const s = document.createElement("canvas");
-  s.width = s.height = sz;
-  const g = s.getContext("2d")!;
-  const rad = g.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, sz / 2);
-  rad.addColorStop(0, col);
-  rad.addColorStop(0.4, col.replace("1)", ".5)"));
-  rad.addColorStop(1, "rgba(0,0,0,0)");
-  g.fillStyle = rad;
-  g.beginPath();
-  g.arc(sz / 2, sz / 2, sz / 2, 0, 7);
-  g.fill();
-  return s;
+// Settled "shipped" frame: the finished site, LIVE on day 14.
+function settledSim(now: number): Sim {
+  const S = freshSim(now);
+  S.phase = 2;
+  S.day = 14;
+  S.live = 1;
+  return S;
 }
 
 export default function SiteInFourteen() {
-  const wrapRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    const canvas = canvasRef.current;
-    if (!wrap || !canvas || typeof window === "undefined") return;
-    const cx = canvas.getContext("2d");
-    if (!cx) return;
-
-    const DPR = Math.min(2, window.devicePixelRatio || 1);
+  const { wrapRef, canvasRef } = useInstrumentCanvas((cx) => {
     const GO = glow("rgba(249,115,22,1)", 30);
     const GG = glow("rgba(74,222,128,1)", 30);
-    let W = 0;
-    let H = 0;
-
-    const resize = () => {
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      W = r.width;
-      H = r.height;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    };
-
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-
-    // Settled "shipped" frame: the finished site, LIVE on day 14.
-    const drawStatic = () => {
-      resize();
-      if (!W) return;
-      const now = performance.now();
-      const S = freshSim(now);
-      S.phase = 2;
-      S.day = 14;
-      S.live = 1;
-      draw(S, cx, W, H, GO, GG);
-    };
-
-    const ro = new ResizeObserver(() => {
-      resize();
-      if (reduced) drawStatic();
-    });
-    ro.observe(wrap);
-
-    void (document.fonts?.ready ?? Promise.resolve()).then(() => {
-      if (reduced) drawStatic();
-    });
-
-    if (reduced) {
-      resize();
-      drawStatic();
-      return () => ro.disconnect();
-    }
-
-    let raf = 0;
-    let running = false;
     let S = freshSim(performance.now());
-    const frame = (now: number) => {
-      step(S, now);
-      draw(S, cx, W, H, GO, GG);
-      raf = requestAnimationFrame(frame);
-    };
-    const start = () => {
-      if (running) return;
-      resize();
-      if (!W) return;
-      running = true;
-      S = freshSim(performance.now());
-      raf = requestAnimationFrame(frame);
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    drawStatic();
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) start();
-          else stop();
-        }
+    return {
+      reset: (now) => {
+        S = freshSim(now);
       },
-      { threshold: 0.15 },
-    );
-    io.observe(wrap);
-
-    return () => {
-      io.disconnect();
-      ro.disconnect();
-      stop();
+      frame: (now, W, H) => {
+        step(S, now);
+        draw(S, cx, W, H, GO, GG);
+      },
+      still: (now, W, H) => draw(settledSim(now), cx, W, H, GO, GG),
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div
       ref={wrapRef}
-      className="lf-site14"
+      className="lf-instrument lf-site14"
+      style={
+        {
+          "--lf-instrument-mb": "var(--lf-space-4, 1.5rem)",
+          "--lf-instrument-ratio-m": "360 / 420",
+          "--lf-instrument-minh-m": "400px",
+        } as React.CSSProperties
+      }
       role="img"
       aria-label="Animation: a custom website assembles in a browser frame while a day counter climbs from 1 to 14 — navigation, hero, content rows and footer snap into place — then on day 14 it goes live at yourshop.com. Live in 14 days, or you don't pay."
     >
-      <canvas ref={canvasRef} className="lf-site14__canvas" aria-hidden="true" />
+      <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>
   );
 }

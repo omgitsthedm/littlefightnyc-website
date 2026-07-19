@@ -116,7 +116,6 @@ export default function FieldGuide() {
           {featured && (
             <Link
               to={`/case-studies/${featured.slug}/`}
-              viewTransition
               className="lf-ex-feature__card"
             >
               <span className="lf-ex-feature__media" aria-hidden="true">
@@ -170,7 +169,6 @@ export default function FieldGuide() {
               >
                 <Link
                   to={`/case-studies/${study.slug}/`}
-                  viewTransition
                   className="lf-ex-rows__card"
                 >
                   <span className="lf-ex-rows__media" aria-hidden="true">
@@ -234,7 +232,6 @@ export default function FieldGuide() {
                   <span className="lf-ex-record__label">{entry.label}</span>
                   <Link
                     to={`/case-studies/${entry.slug}/`}
-                    viewTransition
                     className="lf-ex-record__client"
                   >
                     {entry.client}
@@ -267,7 +264,6 @@ export default function FieldGuide() {
                 <li key={entry.slug}>
                   <Link
                     to={`/industries/${entry.slug}/`}
-                    viewTransition
                     className="lf-ex-industries__pill"
                   >
                     <span className="lf-ex-industries__icon" aria-hidden="true">
@@ -311,7 +307,6 @@ export default function FieldGuide() {
               >
                 <Link
                   to={`/answers/${guide.slug}/`}
-                  viewTransition
                   className="lf-ex-answers__card"
                 >
                   <span className="lf-ex-answers__label" aria-hidden="true">
@@ -330,7 +325,7 @@ export default function FieldGuide() {
             ))}
           </ul>
           <p className="lf-ex-answers__more">
-            <Link to="/answers/" viewTransition>
+            <Link to="/answers/">
               See all the answers <span aria-hidden="true">→</span>
             </Link>
           </p>

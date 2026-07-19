@@ -1,7 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { clamp, lerp, eoc } from "@/kernel/motion";
-import "./WhoAnswers.css";
+import { rr, glow, DISP, MONO, ORANGE, RED, GREEN, useInstrumentCanvas } from "./instrument";
 
 /**
  * WhoAnswers — the "IT support" argument, drawn.
@@ -30,24 +28,6 @@ const MARKS = [
 ];
 
 const T = { calm: 1500, brk: 1100, respond: 3400, fixed: 1500 };
-
-const DISP = '"Oswald Variable", "Oswald", "Barlow", system-ui, sans-serif';
-const MONO = '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace';
-
-const ORANGE = "#F97316";
-const RED = "#F87171";
-const GREEN = "#4ADE80";
-
-function rr(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  r = Math.min(r, w / 2, h / 2);
-  c.beginPath();
-  c.moveTo(x + r, y);
-  c.arcTo(x + w, y, x + w, y + h, r);
-  c.arcTo(x + w, y + h, x, y + h, r);
-  c.arcTo(x, y + h, x, y, r);
-  c.arcTo(x, y, x + w, y, r);
-  c.closePath();
-}
 
 type Sim = {
   t0: number;
@@ -112,6 +92,7 @@ function draw(
   H: number,
   GO: HTMLCanvasElement,
   GG: HTMLCanvasElement,
+  GR: HTMLCanvasElement,
   now: number,
 ) {
   cx.clearRect(0, 0, W, H);
@@ -147,9 +128,10 @@ function draw(
     // status dot
     const dotX = -pw / 2 + ph * 0.5;
     if (isDown) {
+      // Red glow on the fault — signal law: orange is reserved for the response.
       cx.globalCompositeOperation = "lighter";
       cx.globalAlpha = 0.5 + S.shake * 0.4;
-      cx.drawImage(GO, dotX - 16, -16, 32, 32); // reuse orange glow tinted? use red glow via fill
+      cx.drawImage(GR, dotX - 16, -16, 32, 32);
       cx.globalAlpha = 1;
       cx.globalCompositeOperation = "source-over";
       cx.fillStyle = RED;
@@ -305,129 +287,49 @@ function draw(
   cx.fillText(line, rx, ry + H * 0.065);
 }
 
-function glow(col: string, sz: number): HTMLCanvasElement {
-  const s = document.createElement("canvas");
-  s.width = s.height = sz;
-  const g = s.getContext("2d")!;
-  const rad = g.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, sz / 2);
-  rad.addColorStop(0, col);
-  rad.addColorStop(0.4, col.replace("1)", ".5)"));
-  rad.addColorStop(1, "rgba(0,0,0,0)");
-  g.fillStyle = rad;
-  g.beginPath();
-  g.arc(sz / 2, sz / 2, sz / 2, 0, 7);
-  g.fill();
-  return s;
+// Settled "resolved" frame: the response arrived, the tool back up.
+function settledSim(now: number): Sim {
+  const S = freshSim(now);
+  S.phase = 3;
+  S.t0 = now - 200;
+  S.travel = 1;
+  S.passed = MARKS.map(() => true);
+  return S;
 }
 
 export default function WhoAnswers() {
-  const wrapRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    const canvas = canvasRef.current;
-    if (!wrap || !canvas || typeof window === "undefined") return;
-    const cx = canvas.getContext("2d");
-    if (!cx) return;
-
-    const DPR = Math.min(2, window.devicePixelRatio || 1);
+  const { wrapRef, canvasRef } = useInstrumentCanvas((cx) => {
     const GO = glow("rgba(249,115,22,1)", 30);
     const GG = glow("rgba(74,222,128,1)", 30);
-    let W = 0;
-    let H = 0;
-
-    const resize = () => {
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      W = r.width;
-      H = r.height;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    };
-
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-
-    // Settled "resolved" frame: the response arrived, the tool back up.
-    const drawStatic = () => {
-      resize();
-      if (!W) return;
-      const now = performance.now();
-      const S = freshSim(now);
-      S.phase = 3;
-      S.t0 = now - 200;
-      S.travel = 1;
-      S.passed = MARKS.map(() => true);
-      draw(S, cx, W, H, GO, GG, now);
-    };
-
-    const ro = new ResizeObserver(() => {
-      resize();
-      if (reduced) drawStatic();
-    });
-    ro.observe(wrap);
-
-    void (document.fonts?.ready ?? Promise.resolve()).then(() => {
-      if (reduced) drawStatic();
-    });
-
-    if (reduced) {
-      resize();
-      drawStatic();
-      return () => ro.disconnect();
-    }
-
-    let raf = 0;
-    let running = false;
+    const GR = glow("rgba(248,113,113,1)", 30);
     let S = freshSim(performance.now());
-    const frame = (now: number) => {
-      step(S, now);
-      draw(S, cx, W, H, GO, GG, now);
-      raf = requestAnimationFrame(frame);
-    };
-    const start = () => {
-      if (running) return;
-      resize();
-      if (!W) return;
-      running = true;
-      S = freshSim(performance.now());
-      raf = requestAnimationFrame(frame);
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    drawStatic();
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) start();
-          else stop();
-        }
+    return {
+      reset: (now) => {
+        S = freshSim(now);
       },
-      { threshold: 0.15 },
-    );
-    io.observe(wrap);
-
-    return () => {
-      io.disconnect();
-      ro.disconnect();
-      stop();
+      frame: (now, W, H) => {
+        step(S, now);
+        draw(S, cx, W, H, GO, GG, GR, now);
+      },
+      still: (now, W, H) => draw(settledSim(now), cx, W, H, GO, GG, GR, now),
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div
       ref={wrapRef}
-      className="lf-whoanswers"
+      className="lf-instrument lf-whoanswers"
+      style={
+        {
+          "--lf-instrument-mb": "var(--lf-space-4, 1.5rem)",
+          "--lf-instrument-ratio-m": "360 / 400",
+          "--lf-instrument-minh-m": "380px",
+        } as React.CSSProperties
+      }
       role="img"
       aria-label="Animation: the tools a shop runs on — register, card reader, Wi-Fi, website — sit healthy; then one goes down mid-day. Instead of a ticket into the void, an orange response moves along a timeline: a real person picks up 9am to 9pm Eastern, a callback within 2 hours, on-site within 24 hours when it needs hands — until the tool is back up."
     >
-      <canvas ref={canvasRef} className="lf-whoanswers__canvas" aria-hidden="true" />
+      <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>
   );
 }

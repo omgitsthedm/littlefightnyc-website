@@ -743,3 +743,11 @@
 .lf-audit__aside .lf-audit__next {
   margin: var(--lf-space-4) 0 0;
 }
+
+/* Full-width wrapper for the AuditBench instrument above the audit's
+   two-column grid (not a grid cell). Moved here from AuditBench.css when the
+   instruments consolidated onto the shared .lf-instrument harness. */
+.lf-audit__bench {
+  padding-inline: clamp(16px, 5vw, 40px);
+  padding-block: clamp(24px, 4vw, 48px) 0;
+}

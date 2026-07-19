@@ -66,7 +66,6 @@ export default function WorkGrid() {
           <Link
             key={tile.slug}
             to={`/services/${tile.slug}/`}
-            viewTransition
             className={`lf-work__tile lf-work__tile--${tile.priority}`}
             style={{ ["--lf-i" as string]: index }}
           >

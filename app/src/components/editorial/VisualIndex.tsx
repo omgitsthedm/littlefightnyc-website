@@ -66,7 +66,6 @@ export default function VisualIndex({
               <Link
                 key={item.to}
                 to={item.to}
-                viewTransition
                 className="lf-visual-index__item"
               >
                 <span className="lf-visual-index__media" aria-hidden="true">

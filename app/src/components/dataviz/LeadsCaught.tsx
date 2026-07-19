@@ -1,7 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { clamp, lerp, eoc } from "@/kernel/motion";
-import "./LeadsCaught.css";
+import { rr, glow, DISP, MONO, ORANGE, useInstrumentCanvas } from "./instrument";
 
 /**
  * LeadsCaught — the "business systems" argument, drawn.
@@ -35,23 +33,6 @@ const TOKEN: Record<(typeof SOURCES)[number], string> = {
 // Phase timing (ms). painMs → the beat → fixMs → hold → loop. Emission is dense
 // and continuous (incl. through the beat) so the fall column is never empty.
 const T = { pain: 3400, beat: 500, fix: 4400, hold: 1300, emit: 230 };
-
-// Oswald Variable tops out at 700; JetBrains Mono is loaded at 500.
-const DISP = '"Oswald Variable", "Oswald", "Barlow", system-ui, sans-serif';
-const MONO = '"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace';
-
-const ORANGE = "#F97316";
-
-function rr(c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  r = Math.min(r, w / 2, h / 2);
-  c.beginPath();
-  c.moveTo(x + r, y);
-  c.arcTo(x + w, y, x + w, y + h, r);
-  c.arcTo(x + w, y + h, x, y + h, r);
-  c.arcTo(x, y + h, x, y, r);
-  c.arcTo(x, y, x + w, y, r);
-  c.closePath();
-}
 
 type Lead = {
   src: number;
@@ -335,138 +316,57 @@ function draw(
   }
 }
 
-function glow(col: string, sz: number): HTMLCanvasElement {
-  const s = document.createElement("canvas");
-  s.width = s.height = sz;
-  const g = s.getContext("2d")!;
-  const rad = g.createRadialGradient(sz / 2, sz / 2, 0, sz / 2, sz / 2, sz / 2);
-  rad.addColorStop(0, col);
-  rad.addColorStop(0.4, col.replace("1)", ".5)"));
-  rad.addColorStop(1, "rgba(0,0,0,0)");
-  g.fillStyle = rad;
-  g.beginPath();
-  g.arc(sz / 2, sz / 2, sz / 2, 0, 7);
-  g.fill();
-  return s;
+// Settled "resolved" frame: the intake layer up, catching every lead — a few
+// leads mid-slide toward follow-up plus a couple falling into the bar.
+function settledSim(now: number): Sim {
+  const S = freshSim(now);
+  S.phase = 2;
+  S.t0 = now - 400;
+  S.barIn = 1;
+  S.caught = 6;
+  S.leads = [0, 1, 2, 3, 4].map((n) => ({
+    src: n % SOURCES.length,
+    x0: 0.16 + ((n * 3) % 4) * 0.22,
+    born: now - 700 - n * 120,
+    drift: driftFor(n),
+    fate: n < 3 ? "caught" : "falling",
+    catchAt: now - 300,
+    slide: n < 3 ? 0.3 + n * 0.22 : 0,
+  }));
+  return S;
 }
 
 export default function LeadsCaught() {
-  const wrapRef = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const wrap = wrapRef.current;
-    const canvas = canvasRef.current;
-    if (!wrap || !canvas || typeof window === "undefined") return;
-    const cx = canvas.getContext("2d");
-    if (!cx) return;
-
-    const DPR = Math.min(2, window.devicePixelRatio || 1);
+  const { wrapRef, canvasRef } = useInstrumentCanvas((cx) => {
     const GO = glow("rgba(249,115,22,1)", 30);
-    let W = 0;
-    let H = 0;
-
-    const resize = () => {
-      const r = wrap.getBoundingClientRect();
-      if (!r.width || !r.height) return;
-      W = r.width;
-      H = r.height;
-      canvas.width = W * DPR;
-      canvas.height = H * DPR;
-      cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    };
-
-    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-
-    // Settled "resolved" frame: the intake layer up, catching every lead.
-    const drawStatic = () => {
-      resize();
-      if (!W) return;
-      const now = performance.now();
-      const S = freshSim(now);
-      S.phase = 2;
-      S.t0 = now - 400;
-      S.barIn = 1;
-      S.caught = 6;
-      // a few leads mid-slide toward follow-up + a couple falling into the bar
-      S.leads = [0, 1, 2, 3, 4].map((n) => ({
-        src: n % SOURCES.length,
-        x0: 0.16 + ((n * 3) % 4) * 0.22,
-        born: now - 700 - n * 120,
-        drift: driftFor(n),
-        fate: n < 3 ? "caught" : "falling",
-        catchAt: now - 300,
-        slide: n < 3 ? 0.3 + n * 0.22 : 0,
-      }));
-      draw(S, cx, W, H, GO, now);
-    };
-
-    const ro = new ResizeObserver(() => {
-      resize();
-      if (reduced) drawStatic();
-    });
-    ro.observe(wrap);
-
-    void (document.fonts?.ready ?? Promise.resolve()).then(() => {
-      if (reduced) drawStatic();
-    });
-
-    if (reduced) {
-      resize();
-      drawStatic();
-      return () => ro.disconnect();
-    }
-
-    let raf = 0;
-    let running = false;
     let S = freshSim(performance.now());
-    const frame = (now: number) => {
-      step(S, now);
-      draw(S, cx, W, H, GO, now);
-      raf = requestAnimationFrame(frame);
-    };
-    const start = () => {
-      if (running) return;
-      resize();
-      if (!W) return;
-      running = true;
-      S = freshSim(performance.now());
-      raf = requestAnimationFrame(frame);
-    };
-    const stop = () => {
-      running = false;
-      cancelAnimationFrame(raf);
-    };
-
-    drawStatic();
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) start();
-          else stop();
-        }
+    return {
+      reset: (now) => {
+        S = freshSim(now);
       },
-      { threshold: 0.15 },
-    );
-    io.observe(wrap);
-
-    return () => {
-      io.disconnect();
-      ro.disconnect();
-      stop();
+      frame: (now, W, H) => {
+        step(S, now);
+        draw(S, cx, W, H, GO, now);
+      },
+      still: (now, W, H) => draw(settledSim(now), cx, W, H, GO, now),
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div
       ref={wrapRef}
-      className="lf-leadscaught"
+      className="lf-instrument lf-leadscaught"
+      style={
+        {
+          "--lf-instrument-mb": "var(--lf-space-4, 1.5rem)",
+          "--lf-instrument-ratio-m": "360 / 420",
+          "--lf-instrument-minh-m": "400px",
+        } as React.CSSProperties
+      }
       role="img"
       aria-label="Animation: leads arrive from four channels — a phone call, a contact form, an Instagram DM, a Saturday walk-in — and, with nothing tracking them, fall straight past and slip away; then one orange intake layer slides in across the bottom and catches every falling lead, routing each to follow-up with none lost."
     >
-      <canvas ref={canvasRef} className="lf-leadscaught__canvas" aria-hidden="true" />
+      <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>
   );
 }
