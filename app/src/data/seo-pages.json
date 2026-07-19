@@ -1039,6 +1039,52 @@
       ]
     },
     {
+      "path": "/areas/the-bronx/",
+      "title": "Bronx Web Design & Tech Support for Small Business | Little Fight NYC",
+      "description": "Websites, local search, and real tech help for Bronx family businesses — auto shops, restaurants, barbershops, and the trades. Bilingual-friendly. We show up.",
+      "h1": "Websites, tech help, and local search for Bronx businesses.",
+      "shortAnswer": "Short answer: Bronx businesses have the most loyal customers in the city and the least tech help. A correct Google profile, a fast website, and simple tools change everything here.",
+      "type": "WebPage",
+      "image": "/assets/hero-bronx-stadium.webp",
+      "faq": [
+        {
+          "question": "My shop runs on regulars and word of mouth. Why would I need a website?",
+          "answer": "Word of mouth built your business. But when someone hears about you, they look you up before they come in. No website means that recommendation dies in a search box. One page with your hours, your prices, and your phone keeps every referral you earn."
+        },
+        {
+          "question": "My customers speak Spanish. Can the website work in both languages?",
+          "answer": "Yes. We build pages that work in Spanish and English, and we help you answer reviews in both. Your customers already live in two languages. Your website should too."
+        },
+        {
+          "question": "The chains on Fordham Road have apps and ads. How do I compete?",
+          "answer": "You don't need their budget. You need your block. A correct profile, real photos, reviews from your actual customers, and a site that loads fast on a phone. The chains can't fake forty years on the avenue. Make sure Google knows about yours."
+        }
+      ]
+    },
+    {
+      "path": "/areas/staten-island/",
+      "title": "Staten Island Websites & Local SEO for Trades & Shops | Little Fight NYC",
+      "description": "Websites, Google profiles, and review help for Staten Island contractors, pizzerias, salons, and family businesses. Turn referrals into calls.",
+      "h1": "Websites, tech help, and local search for Staten Island businesses.",
+      "shortAnswer": "Short answer: Staten Island runs on trades, family restaurants, and referrals. The businesses that win put their reputation online — correct profile, real reviews, a site that turns a referral into a call.",
+      "type": "WebPage",
+      "image": "/assets/hero-si-ferry-terminal.webp",
+      "faq": [
+        {
+          "question": "I get all my work through referrals. Why put money into a website?",
+          "answer": "Because referrals check you out first. Somebody gives your name at a barbecue, and that night the homeowner looks you up. A real site with your work, your reviews, and your number turns that referral into a call. No site, and the referral quietly goes to the next name."
+        },
+        {
+          "question": "I run a service business with no storefront. Does local search still work?",
+          "answer": "Yes — Google has a setup for exactly that, called a service-area business. Done right, you show up across the island without publishing your home address. Done wrong, you show up nowhere. It's one of the most common things we fix."
+        },
+        {
+          "question": "Do you actually come to Staten Island?",
+          "answer": "Yes. Phone and remote cover most days, and when a job needs hands on site, we show up — same as the rest of the city. The ferry and the bridge both work fine."
+        }
+      ]
+    },
+    {
       "path": "/areas/upper-west-side/",
       "title": "Upper West Side Websites & Tech Help | Little Fight NYC",
       "description": "Better websites, IT support, Google visibility, and practical business systems for Upper West Side local businesses that need clear next steps.",

@@ -701,4 +701,88 @@ export const areaPages: AreaPage[] = [
     ],
     nearby: ["soho", "lower-east-side"],
   },
+  {
+    slug: "the-bronx",
+    name: "The Bronx",
+    zipCodes: ["10451", "10453", "10458", "10462", "10467"],
+    headline: "Websites, tech help, and local search for Bronx businesses.",
+    shortAnswer:
+      "Short answer: Bronx businesses have the most loyal customers in the city and the least tech help. A correct Google profile, a fast website, and simple tools change everything here.",
+    localPattern:
+      "Auto shops, bodegas, barbershops, bakeries, and family restaurants run on loyalty and word of mouth — and go digital late.",
+    firstMove: "Check the Google profile first. Wrong hours and old phone numbers cost Bronx businesses more walk-ins than anything else.",
+    intro:
+      "The Bronx runs on family businesses. Fordham Road is one of the busiest shopping strips in the city. Arthur Avenue is the real Little Italy — butchers, pasta makers, and bakeries that go back four generations. Hunts Point feeds half of New York. And on every block in between: auto shops, barbershops, botánicas, and kitchens run by the same families for decades. The customers here are the most loyal in the city. The tech help never showed up.",
+    businessLandscape:
+      "This is the borough the agencies skip. Auto repair on Jerome Avenue. Dominican and Puerto Rican restaurants. West African markets. Albanian bakeries in Belmont. Most run cash-first, book by phone, and live on repeat customers. That loyalty is real power — but it doesn't reach new customers on its own. The chains on Fordham Road have apps and ad budgets. The family spots have better food, better service, and no website. That gap is the whole problem. It is also the whole opportunity.",
+    localSearchReality:
+      "Bronx search is mobile and it is bilingual. 'Mecánico cerca de mí.' 'Barbershop open now.' 'Dominican food grand concourse.' People search in Spanish and English, sometimes in the same sentence — and they call, they don't fill out forms. A business with a correct profile, real photos, and reviews in both languages owns its block. Most don't have any of that. Which means the first family business on each strip that gets it right wins big, fast.",
+    whatWeFixHere: [
+      "A Google profile with the old phone number — while the shop loses calls every day",
+      "No website at all, so the chains take customers the family spot earned",
+      "Reviews in Spanish going unanswered because nobody told the owner they matter",
+      "A menu or price list that lives on paper only, invisible to every search",
+      "Booking that only works by phone during work hours — when customers are also at work",
+    ],
+    faq: [
+      {
+        question: "My shop runs on regulars and word of mouth. Why would I need a website?",
+        answer:
+          "Word of mouth built your business. But when someone hears about you, they look you up before they come in. No website means that recommendation dies in a search box. One page with your hours, your prices, and your phone keeps every referral you earn.",
+      },
+      {
+        question: "My customers speak Spanish. Can the website work in both languages?",
+        answer:
+          "Yes. We build pages that work in Spanish and English, and we help you answer reviews in both. Your customers already live in two languages. Your website should too.",
+      },
+      {
+        question: "The chains on Fordham Road have apps and ads. How do I compete?",
+        answer:
+          "You don't need their budget. You need your block. A correct profile, real photos, reviews from your actual customers, and a site that loads fast on a phone. The chains can't fake forty years on the avenue. Make sure Google knows about yours.",
+      },
+    ],
+    nearby: ["upper-west-side", "upper-east-side", "astoria"],
+  },
+  {
+    slug: "staten-island",
+    name: "Staten Island",
+    zipCodes: ["10301", "10304", "10306", "10312", "10314"],
+    headline: "Websites, tech help, and local search for Staten Island businesses.",
+    shortAnswer:
+      "Short answer: Staten Island runs on trades, family restaurants, and referrals. The businesses that win put their reputation online — correct profile, real reviews, a site that turns a referral into a call.",
+    localPattern:
+      "Contractors, plumbers, landscapers, pizzerias, salons, and family shops serve a borough that searches first and drives second.",
+    firstMove: "Check what a referral sees: the Google profile, the reviews, and whether the website makes calling easy from a phone.",
+    intro:
+      "Staten Island is trades country. Vans with ladders, crews that start at seven, family names painted on truck doors. Hylan Boulevard is one of the longest commercial strips in the city. Victory and Forest carry the shops, the salons, and pizzerias people argue about at weddings. The ferry hauls commuters to Manhattan every morning, but the businesses here serve the island — house by house, job by job, referral by referral.",
+    businessLandscape:
+      "Contractors, plumbers, electricians, landscapers, HVAC crews — the borough practically runs on them. Add the pizzerias and Italian delis with lines out the door, the salons, the auto shops, the family restaurants that have fed three generations. Almost all of it is referral business. Somebody's cousin knows a guy. That system works — until the cousin's recommendation meets an empty Google profile with two reviews and no photos. On Staten Island, your reputation is your business. The only question is whether the internet can see it.",
+    localSearchReality:
+      "This is a car borough. People search, then drive. 'Plumber Staten Island.' 'Pizza near me.' 'Nail salon New Dorp.' For the trades, the search happens at the worst moment — a burst pipe, a dead furnace — and whoever looks trustworthy and answerable gets the call. Reviews decide it. Fifty good reviews with an owner who replies beats a bigger crew with silence. For shops and restaurants, the profile is the storefront: hours, photos, and a menu that loads before the light changes.",
+    whatWeFixHere: [
+      "A contractor doing $500K a year in work with a Google profile that shows two reviews",
+      "Referrals that die because the recommendation leads to no website at all",
+      "A 'service area' setup done wrong, so the business shows up in the wrong towns",
+      "Booking and estimates that live on one phone — the owner's — and nowhere else",
+      "Great work with zero photos online, while a worse crew posts every job",
+    ],
+    faq: [
+      {
+        question: "I get all my work through referrals. Why put money into a website?",
+        answer:
+          "Because referrals check you out first. Somebody gives your name at a barbecue, and that night the homeowner looks you up. A real site with your work, your reviews, and your number turns that referral into a call. No site, and the referral quietly goes to the next name.",
+      },
+      {
+        question: "I run a service business with no storefront. Does local search still work?",
+        answer:
+          "Yes — Google has a setup for exactly that, called a service-area business. Done right, you show up across the island without publishing your home address. Done wrong, you show up nowhere. It's one of the most common things we fix.",
+      },
+      {
+        question: "Do you actually come to Staten Island?",
+        answer:
+          "Yes. Phone and remote cover most days, and when a job needs hands on site, we show up — same as the rest of the city. The ferry and the bridge both work fine.",
+      },
+    ],
+    nearby: ["financial-district", "west-village"],
+  },
 ];

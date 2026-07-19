@@ -23,6 +23,8 @@ const AREA_IMAGE: Record<string, string> = {
   "long-island-city": "/assets/interior-grocery.webp",
   "greenwich-village": "/assets/hero-greenwich-arch.webp",
   "financial-district": "/assets/hero-fidi-love-gate.webp",
+  "the-bronx": "/assets/hero-bronx-stadium.webp",
+  "staten-island": "/assets/hero-si-ferry-terminal.webp",
 };
 
 export default function Areas() {

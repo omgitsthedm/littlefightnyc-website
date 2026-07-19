@@ -26,8 +26,9 @@ A page that doesn't serve a station gets merged or killed.
 - ~130 impressions = "seo company upper east side" variants → `/areas/upper-east-side/`,
   positions 5–20. This is the #1 growth lever on the whole site.
 - Brand queries ("little fight", "little fights", 16 imp) land `/about/`, not home.
-- Estate (updated Jul-19 late): 178 prerendered routes, 121 sitemap URLs. 16 area
-  pages (10 Manhattan incl. Greenwich Village + FiDi added `30009cd`, 6 BK/Queens),
+- Estate (updated Jul-19 late): 181 prerendered routes, 124 sitemap URLs.
+  **18 areas — ALL FIVE BOROUGHS** (10 Manhattan, 4 Brooklyn, 2 Queens, The
+  Bronx + Staten Island added with wave-2 photos), /nationwide/ door live,
   56 noindexed area×service combos, 37 journal posts, 28 answers, 7 case
   studies, 3 studio, 6 glossary, 4 services + hub.
 - OpenSEO dashboard: `localhost:3001` (`~/creative-tools/open-seo`, docker).

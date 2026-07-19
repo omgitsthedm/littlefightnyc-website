@@ -62,7 +62,7 @@ const footerGroups: Array<{
   {
     title: "Local",
     links: [
-      { label: "All 16 Neighborhoods", to: "/areas/" },
+      { label: "All 18 Neighborhoods", to: "/areas/" },
       { label: "Upper East Side", to: "/areas/upper-east-side/" },
       { label: "SoHo", to: "/areas/soho/" },
       { label: "Midtown", to: "/areas/midtown/" },

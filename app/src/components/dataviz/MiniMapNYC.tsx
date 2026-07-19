@@ -25,6 +25,8 @@ const AREA_CENTER: Record<string, [number, number]> = {
   "upper-west-side": [40.787, -73.9754],
   "greenwich-village": [40.7317, -73.9976],
   "financial-district": [40.7075, -74.0089],
+  "the-bronx": [40.8618, -73.8904],
+  "staten-island": [40.6437, -74.0765],
   "west-village": [40.7358, -74.0036],
   williamsburg: [40.7081, -73.9571],
   bushwick: [40.6944, -73.9213],
@@ -243,7 +245,7 @@ export default function MiniMapNYC({
       <figcaption className="lf-minimap__caption">
         {currentArea
           ? `${currentArea.name} in orange · nearby in blue`
-          : "The 16 neighborhoods we serve across Manhattan, Brooklyn, and Queens"}
+          : "The 18 neighborhoods we serve across all five boroughs"}
       </figcaption>
     </figure>
   );

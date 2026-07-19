@@ -32,6 +32,8 @@ const AREA_IMAGE: Record<string, string> = {
   "long-island-city": "/assets/interior-grocery.webp",
   "greenwich-village": "/assets/hero-greenwich-arch.webp",
   "financial-district": "/assets/hero-fidi-love-gate.webp",
+  "the-bronx": "/assets/hero-bronx-stadium.webp",
+  "staten-island": "/assets/hero-si-ferry-terminal.webp",
 };
 
 /* A second real frame per neighborhood — map-driven, so areas without a
@@ -66,6 +68,51 @@ const AREA_FIGURE: Record<string, { src: string; alt: string; caption: string }>
     src: "/assets/figure-greenwich-pizza.webp",
     alt: "A busy Greenwich Village pizza corner seen from above, people crossing toward it",
     caption: "The line out the door didn't happen by accident.",
+  },
+  "the-bronx": {
+    src: "/assets/figure-bronx-pizza.webp",
+    alt: "A Bronx pizzeria storefront, counter glowing behind the window",
+    caption: "Four generations of regulars — and every new customer starts with a search.",
+  },
+  "staten-island": {
+    src: "/assets/figure-si-houses.webp",
+    alt: "A row of Staten Island houses with tidy lawns and a front-yard fountain",
+    caption: "Every one of these houses needs a plumber, a landscaper, a contractor. They all search first.",
+  },
+  chelsea: {
+    src: "/assets/figure-chelsea-florist.webp",
+    alt: "Chelsea Florist's storefront glowing pink at night, gate half open",
+    caption: "Open late, lit up, easy to find. That's the whole playbook.",
+  },
+  "lower-east-side": {
+    src: "/assets/figure-les-bottleshop.webp",
+    alt: "A Lower East Side bottle shop at night, shelves glowing through the doorway",
+    caption: "The night crowd decides mid-walk. The listing has to be right before they look up.",
+  },
+  soho: {
+    src: "/assets/figure-soho-balloons.webp",
+    alt: "Bright balloons over a SoHo sidewalk, a shopper passing below",
+    caption: "Foot traffic is the easy part here. Turning it into customers is the fight.",
+  },
+  williamsburg: {
+    src: "/assets/figure-wburg-kitchen.webp",
+    alt: "A late-night kitchen window with an OPEN neon sign, two cooks at work",
+    caption: "The kitchen's still on. The lights say open. Google better agree.",
+  },
+  bushwick: {
+    src: "/assets/figure-bushwick-market.webp",
+    alt: "A produce market on a corner, seen from above, shoppers crossing toward it",
+    caption: "Real commerce, cash and all. The block knows. The internet should too.",
+  },
+  "park-slope": {
+    src: "/assets/figure-ps-cafe-table.webp",
+    alt: "A café table with the newspaper, coffee, and a pastry",
+    caption: "Slow mornings, loyal regulars — and every new family checks the reviews first.",
+  },
+  astoria: {
+    src: "/assets/figure-astoria-market.webp",
+    alt: "A shopper in a yellow coat choosing fruit at a neighborhood market",
+    caption: "Great produce never needed marketing. Being findable is another story.",
   },
   "financial-district": {
     src: "/assets/figure-fidi-corner.webp",
