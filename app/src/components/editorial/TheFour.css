@@ -7,12 +7,12 @@
   background: var(--lf-ink);
 }
 
-.lf-four__head {
+.lf-editorial .lf-four__head {
   max-width: 1312px;
   margin: 0 auto var(--lf-space-8);
 }
 
-.lf-four__eyebrow {
+.lf-editorial .lf-four__eyebrow {
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
   letter-spacing: 0.18em;
@@ -21,7 +21,7 @@
   margin: 0 0 var(--lf-space-3);
 }
 
-.lf-four__title {
+.lf-editorial .lf-four__title {
   font-family: var(--lf-display);
   font-weight: var(--lf-display-weight);
   font-size: var(--lf-text-2xl);
@@ -29,25 +29,25 @@
   margin: 0 0 var(--lf-space-4);
 }
 
-.lf-four__em {
+.lf-editorial .lf-four__em {
   color: var(--lf-fight);
 }
 
-.lf-four__dek {
+.lf-editorial .lf-four__dek {
   font-size: var(--lf-text-md);
   color: var(--lf-bone-soft);
   max-width: 52ch;
   margin: 0;
 }
 
-.lf-four__list {
+.lf-editorial .lf-four__list {
   max-width: 1312px;
   margin-inline: auto;
   display: grid;
   gap: var(--lf-space-8);
 }
 
-.lf-four__pillar {
+.lf-editorial .lf-four__pillar {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--lf-space-5);
@@ -56,7 +56,7 @@
   padding-top: var(--lf-space-7);
 }
 
-.lf-four__num {
+.lf-editorial .lf-four__num {
   display: block;
   font-family: var(--lf-mono);
   font-size: var(--lf-text-sm);
@@ -65,7 +65,7 @@
   margin-bottom: var(--lf-space-3);
 }
 
-.lf-four__name {
+.lf-editorial .lf-four__name {
   font-family: var(--lf-display);
   font-weight: var(--lf-display-weight);
   font-size: var(--lf-text-xl);
@@ -73,7 +73,7 @@
   margin: 0 0 var(--lf-space-3);
 }
 
-.lf-four__line {
+.lf-editorial .lf-four__line {
   font-size: var(--lf-text-md);
   color: var(--lf-bone-soft);
   max-width: 44ch;
@@ -98,7 +98,7 @@
   background: var(--lf-fight-hover);
 }
 
-.lf-four__viz {
+.lf-editorial .lf-four__viz {
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-card);
   background: var(--lf-paper-2);
@@ -111,14 +111,14 @@
   .lf-four {
     padding-inline: var(--lf-margin-desktop);
   }
-  .lf-four__pillar {
+  .lf-editorial .lf-four__pillar {
     grid-template-columns: minmax(320px, 5fr) 7fr;
     gap: var(--lf-space-8);
   }
-  .lf-four__pillar--flip .lf-four__copy {
+  .lf-editorial .lf-four__pillar--flip .lf-four__copy {
     order: 2;
   }
-  .lf-four__pillar--flip .lf-four__viz {
+  .lf-editorial .lf-four__pillar--flip .lf-four__viz {
     order: 1;
   }
 }

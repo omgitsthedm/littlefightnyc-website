@@ -62,7 +62,7 @@
   color: var(--lf-fight);
 }
 
-.lf-es__sub {
+.lf-editorial .lf-es__sub {
   font-size: var(--lf-text-md);
   color: var(--lf-bone-soft);
   max-width: 56ch;

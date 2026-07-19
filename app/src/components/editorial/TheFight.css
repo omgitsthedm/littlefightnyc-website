@@ -10,13 +10,13 @@
   overflow: clip;
 }
 
-.lf-fight__head {
+.lf-editorial .lf-fight__head {
   max-width: 1312px;
   margin: 0 auto var(--lf-space-7);
   text-align: center;
 }
 
-.lf-fight__eyebrow {
+.lf-editorial .lf-fight__eyebrow {
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
   letter-spacing: 0.2em;
@@ -26,7 +26,7 @@
 }
 
 /* Poster type — the biggest words on the page after the hero. */
-.lf-fight__title {
+.lf-editorial .lf-fight__title {
   font-family: var(--lf-display);
   font-weight: var(--lf-display-weight);
   text-transform: uppercase;
@@ -38,18 +38,18 @@
   gap: 0.05em;
 }
 
-.lf-fight__fighter {
+.lf-editorial .lf-fight__fighter {
   font-size: var(--lf-text-3xl);
   letter-spacing: 0.01em;
   color: var(--lf-bone);
 }
 
-.lf-fight__fighter--us {
+.lf-editorial .lf-fight__fighter--us {
   color: var(--lf-fight);
   text-shadow: 0 0 34px rgba(249, 115, 22, 0.35);
 }
 
-.lf-fight__vs {
+.lf-editorial .lf-fight__vs {
   font-size: var(--lf-text-lg);
   color: var(--lf-fight);
   font-style: italic;
@@ -57,19 +57,19 @@
   padding-left: 0.3em; /* optically recenter the tracked caps */
 }
 
-.lf-fight__lede {
+.lf-editorial .lf-fight__lede {
   font-size: var(--lf-text-md);
   color: var(--lf-bone-soft);
   max-width: 56ch;
   margin: 0 auto;
 }
 
-.lf-fight__lede strong {
+.lf-editorial .lf-fight__lede strong {
   color: var(--lf-fight);
   font-weight: 700;
 }
 
-.lf-fight__tape {
+.lf-editorial .lf-fight__tape {
   max-width: 1080px;
   margin: 0 auto;
   border: 1px solid var(--lf-hairline);
@@ -78,13 +78,13 @@
   padding: var(--lf-space-5) var(--lf-space-5) var(--lf-space-4);
 }
 
-.lf-fight__close {
+.lf-editorial .lf-fight__close {
   max-width: 1312px;
   margin: var(--lf-space-7) auto 0;
   text-align: center;
 }
 
-.lf-fight__close-line {
+.lf-editorial .lf-fight__close-line {
   font-size: var(--lf-text-md);
   color: var(--lf-bone-soft);
   max-width: 56ch;

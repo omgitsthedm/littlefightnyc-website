@@ -21,7 +21,7 @@
   margin: 0;
 }
 
-.lf-ex-head__title {
+.lf-editorial .lf-ex-head__title {
   font-family: var(--lf-serif);
   font-weight: var(--lf-display-weight);
   letter-spacing: var(--lf-display-tracking);
@@ -634,7 +634,7 @@
   background: var(--lf-paper-2);
 }
 
-.lf-ex-lab__title {
+.lf-editorial .lf-ex-lab__title {
   font-family: var(--lf-display);
   font-weight: var(--lf-display-weight);
   font-size: var(--lf-text-lg);
