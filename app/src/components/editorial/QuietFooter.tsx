@@ -89,7 +89,7 @@ export default function QuietFooter() {
         <div className="lf-quiet-foot__top">
           <div className="lf-quiet-foot__brand">
             <Link to="/" className="lf-quiet-foot__brand-link">Little Fight NYC</Link>
-            <p>New York City · Since 2012 · Still picking up the phone</p>
+            <p>New York City · Since 2021 · Still picking up the phone</p>
           </div>
           <nav className="lf-quiet-foot__company" aria-label="Company and legal">
             <Link to="/tech-audit/">Tech Audit</Link>

@@ -138,8 +138,9 @@ export default function QuietNav() {
         </nav>
 
         <div className="lf-nav__actions">
-          <OpenNowBadge className="lf-nav__open" />
-
+          {/* The open/replies chip moved out of the bar (2026-07-18, David:
+              desktop header was cramped) — availability lives in the hero
+              trust row, the neon sign, and the footer. */}
           <PhoneAction
             className="lf-nav__phone"
             align="right"

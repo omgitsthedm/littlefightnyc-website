@@ -149,7 +149,7 @@ export default function Espanol() {
       </main>
 
       <footer className="lf-es__foot">
-        <p>Little Fight NYC · Nueva York · Desde 2012 · Todavía contestamos el teléfono</p>
+        <p>Little Fight NYC · Nueva York · Desde 2021 · Todavía contestamos el teléfono</p>
         <Link to="/" className="lf-es__foot-link">
           Ver el sitio completo en inglés
           <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />

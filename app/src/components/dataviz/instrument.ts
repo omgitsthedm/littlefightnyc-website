@@ -5,7 +5,7 @@ import "./instrument.css";
 /**
  * instrument — the shared canvas-instrument harness (Small Craft doctrine).
  *
- * Every instrument (MoneyLeaving, KeepConnectReplaceBuild, AuditBench,
+ * Every instrument (MoneyLeaving, AuditBench,
  * LeadsCaught, WhoAnswers, SiteInFourteen, TheFreeRead) is a 2D-canvas story
  * with the same physical contract:
  *

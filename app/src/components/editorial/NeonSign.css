@@ -56,11 +56,13 @@
   pointer-events: none;
 }
 
-/* DIM — while we're reachable (daytime): a low-power hum */
-.lf-neon[data-open="true"] {
+/* Like a real shopfront sign (David, 2026-07-18): FULL BLAZE while we're
+   open/reachable; banked down to a low ember after hours. (The old inversion —
+   dim while open — was clever but backwards: a lit OPEN sign means open.) */
+.lf-neon[data-open="false"] {
   --core-col: #ffcfa3;
-  --tube-op: 0.82;
-  --bloom-op: 0.38;
+  --tube-op: 0.62;
+  --bloom-op: 0.3;
   --pool: 0.06;
   --refl-op: 0.08;
 }
@@ -81,7 +83,9 @@
   .lf-neon[data-revealed="true"]:hover .lf-neon__glint { opacity: 1; }
 }
 
-.lf-neon__stage { position: relative; z-index: 1; width: min(100%, 660px); aspect-ratio: 760 / 470; }
+/* Commanding scale — the sign owns the section (was capped at 660px and read
+   as small glowing text on desktop; David, 2026-07-18). */
+.lf-neon__stage { position: relative; z-index: 1; width: min(100%, 1080px); aspect-ratio: 760 / 470; }
 .lf-neon__svg { width: 100%; height: 100%; display: block; overflow: visible; }
 
 /* ---- glass tubes: casing (glow) + hot core, stacked ---- */
@@ -140,6 +144,22 @@
 }
 @keyframes lf-neon-draw { to { stroke-dashoffset: 0; } }
 
+/* Aging-tube sputter — every so often the underline swash stutters like a
+   real old neon with a tired transformer. One element only, so the words
+   stay legible; the words keep their gentle hum. */
+.lf-neon[data-revealed="true"] .lf-neon__underline.lf-neon__draw {
+  animation:
+    lf-neon-draw 1.1s ease-out var(--on, 0.1s) forwards,
+    lf-neon-sputter 12s steps(1, end) 5s infinite;
+}
+@keyframes lf-neon-sputter {
+  0%, 90.5%, 93.8%, 100% { opacity: var(--tube-op); }
+  91% { opacity: 0.3; }
+  91.8% { opacity: var(--tube-op); }
+  92.6% { opacity: 0.55; }
+  93.2% { opacity: var(--tube-op); }
+}
+
 /* OPEN stutters to life once, then a barely-there opacity hum */
 .lf-neon[data-revealed="true"] .lf-neon__word {
   animation: lf-neon-ignite 0.9s steps(1) 0.6s both, lf-neon-hum 7s ease-in-out 1.6s infinite;
@@ -181,6 +201,9 @@
   .lf-neon__glint { display: none; }
   .lf-neon[data-revealed="true"] .lf-neon__stage,
   .lf-neon[data-surge] .lf-neon__stage { animation: none; }
+  .lf-neon[data-revealed="true"] .lf-neon__underline.lf-neon__draw {
+    animation: lf-neon-draw 0.01s linear forwards;
+  }
   .lf-neon__tube, .lf-neon__hours { opacity: 1; transition: none; }
   .lf-neon[data-revealed="true"] .lf-neon__tube { opacity: var(--tube-op); }
   .lf-neon__draw { stroke-dashoffset: 0; animation: none; }

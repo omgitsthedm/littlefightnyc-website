@@ -9,12 +9,8 @@ import { importWithRetry } from "@/lib/importWithRetry";
 import { watchListReveals } from "@/lib/listReveal";
 
 const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMeta")));
-const FaqList = lazy(() => importWithRetry(() => import("@/components/editorial/FaqList")));
 const TheFight = lazy(() => importWithRetry(() => import("@/components/editorial/TheFight")));
-const WorkGrid = lazy(() => importWithRetry(() => import("@/components/editorial/WorkGrid")));
-const SystemVerbs = lazy(() => importWithRetry(() => import("@/components/editorial/SystemVerbs")));
-const MomentumSection = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumSection")));
-const MomentumCursorGlow = lazy(() => importWithRetry(() => import("@/components/editorial/MomentumCursorGlow")));
+const TheFour = lazy(() => importWithRetry(() => import("@/components/editorial/TheFour")));
 const RecentClients = lazy(() => importWithRetry(() => import("@/components/editorial/RecentClients")));
 const NeonSign = lazy(() => importWithRetry(() => import("@/components/editorial/NeonSign")));
 const BrandLine = lazy(() => importWithRetry(() => import("@/components/editorial/BrandLine")));
@@ -23,21 +19,6 @@ const QuietContact = lazy(() => importWithRetry(() => import("@/components/edito
 const QuietFooter = lazy(() => importWithRetry(() => import("@/components/editorial/QuietFooter")));
 const StickyHelpBar = lazy(() => importWithRetry(() => import("@/components/editorial/StickyHelpBar")));
 const CommandPalette = lazy(() => importWithRetry(() => import("@/components/editorial/CommandPalette")));
-
-/* Mirrors the FAQPage JSON-LD for "/" in seo-pages.json — marked-up content
- * must be visible on the page (Google guideline). Keep the two in sync. */
-const HOME_FAQ = [
-  {
-    question: "What does Little Fight NYC do?",
-    answer:
-      "Little Fight NYC builds websites for small businesses, fixes urgent tech, gives free consulting, and creates focused software clients own.",
-  },
-  {
-    question: "Who does Little Fight NYC help?",
-    answer:
-      "Little Fight NYC helps New York shops, salons, pharmacies, restaurants, studios, service businesses, and teams under 50.",
-  },
-];
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -59,33 +40,28 @@ export default function Home() {
         <Suspense fallback={null}>
             {/* BlueprintFrame = opt-in drafting marginalia on the major
                 section boundaries (corner ticks + SEC. NN margin notes,
-                ≥1280px only — see BlueprintFrame.css). */}
-            <BlueprintFrame index={1} label="Recent work">
+                ≥1280px only — see BlueprintFrame.css).
+
+                The page is FOUR ITEMS OF FOCUS (David's brief): Web Design,
+                Tech Support, Consulting, Personalized Software — each proven
+                by its living instrument — then proof, the record, the mission,
+                the sign, the door. No repeated pitches. */}
+            <BlueprintFrame index={1} label="What we do">
+              <TheFour />
+            </BlueprintFrame>
+            <BlueprintFrame index={2} label="Recent work">
               <RecentClients />
             </BlueprintFrame>
-            <BlueprintFrame index={2} label="Ways to start">
-              <WorkGrid />
-            </BlueprintFrame>
-            <BlueprintFrame index={3} label="How we work">
-              <SystemVerbs />
-            </BlueprintFrame>
-            <BlueprintFrame index={4} label="Software you own">
-              <MomentumSection />
-              <MomentumCursorGlow />
-            </BlueprintFrame>
-            <BlueprintFrame index={5} label="The fight">
-              <TheFight />
-            </BlueprintFrame>
-            <BlueprintFrame index={6} label="The record">
+            <BlueprintFrame index={3} label="The record">
               <SignatureBand />
             </BlueprintFrame>
-            <BlueprintFrame index={7} label="Open for business">
+            <BlueprintFrame index={4} label="The fight">
+              <TheFight />
+            </BlueprintFrame>
+            <BlueprintFrame index={5} label="Open for business">
               <NeonSign />
             </BlueprintFrame>
             <BrandLine />
-            <div className="lf-home-faq">
-              <FaqList title="Quick answers" items={HOME_FAQ} />
-            </div>
             <QuietContact />
         </Suspense>
       </main>

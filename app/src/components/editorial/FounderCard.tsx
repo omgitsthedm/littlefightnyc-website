@@ -49,7 +49,7 @@ export default function FounderCard({ photoSrc }: { photoSrc?: string }) {
             <Phone size={15} strokeWidth={2} aria-hidden="true" />
             (646) 360-0318
           </a>
-          <span className="lf-founder__since">Since 2012</span>
+          <span className="lf-founder__since">Since 2021</span>
         </p>
       </div>
     </aside>

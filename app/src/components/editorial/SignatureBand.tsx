@@ -17,7 +17,7 @@ const STATS: Array<{
   label: string;
   count?: { n: number; suffix: string };
 }> = [
-  { value: "2012", label: "In New York's corner since" },
+  { value: "2021", label: "In New York's corner since" },
   { value: "14-day", label: "Typical website ship", count: { n: 14, suffix: "-day" } },
   { value: "Free", label: "Every consult" },
   { value: "Custom", label: "Coded, never templated" },

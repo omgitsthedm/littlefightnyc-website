@@ -1,0 +1,130 @@
+/* TheFour — the four items of focus, each proven by its instrument.
+   Editorial asymmetry: rows alternate copy/instrument sides on desktop.
+   Signal law: orange = the number, the em, and the CTA (acts) — nothing else. */
+
+.lf-four {
+  padding: var(--lf-space-10) var(--lf-margin-mobile);
+  background: var(--lf-ink);
+}
+
+.lf-four__head {
+  max-width: 1312px;
+  margin: 0 auto var(--lf-space-8);
+}
+
+.lf-four__eyebrow {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+  margin: 0 0 var(--lf-space-3);
+}
+
+.lf-four__title {
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-2xl);
+  line-height: 1.0;
+  margin: 0 0 var(--lf-space-4);
+}
+
+.lf-four__em {
+  color: var(--lf-fight);
+}
+
+.lf-four__dek {
+  font-size: var(--lf-text-md);
+  color: var(--lf-bone-soft);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.lf-four__list {
+  max-width: 1312px;
+  margin-inline: auto;
+  display: grid;
+  gap: var(--lf-space-8);
+}
+
+.lf-four__pillar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-5);
+  align-items: center;
+  border-top: 1px solid var(--lf-hairline);
+  padding-top: var(--lf-space-7);
+}
+
+.lf-four__num {
+  display: block;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-sm);
+  color: var(--lf-fight);
+  letter-spacing: 0.14em;
+  margin-bottom: var(--lf-space-3);
+}
+
+.lf-four__name {
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-xl);
+  line-height: 1.02;
+  margin: 0 0 var(--lf-space-3);
+}
+
+.lf-four__line {
+  font-size: var(--lf-text-md);
+  color: var(--lf-bone-soft);
+  max-width: 44ch;
+  margin: 0 0 var(--lf-space-5);
+}
+
+.lf-editorial .lf-four__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 var(--lf-space-6);
+  border-radius: var(--lf-radius-control);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-four__cta:hover {
+  background: var(--lf-fight-hover);
+}
+
+.lf-four__viz {
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+  padding: var(--lf-space-4) var(--lf-space-5);
+  overflow: hidden;
+}
+
+/* Desktop: alternate sides — the editorial asymmetry doctrine. */
+@media (min-width: 960px) {
+  .lf-four {
+    padding-inline: var(--lf-margin-desktop);
+  }
+  .lf-four__pillar {
+    grid-template-columns: minmax(320px, 5fr) 7fr;
+    gap: var(--lf-space-8);
+  }
+  .lf-four__pillar--flip .lf-four__copy {
+    order: 2;
+  }
+  .lf-four__pillar--flip .lf-four__viz {
+    order: 1;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 959px) {
+  .lf-four {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}

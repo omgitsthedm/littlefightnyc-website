@@ -29,9 +29,11 @@
   --lf-error: #F87171;        /* semantic red — invalid / failed states */
   --lf-success: #4ADE80;      /* semantic green — confirmed / valid states */
 
-  /* Type scale — fluid clamp() throughout, BIGGER on the cover tier */
-  --lf-text-2xs: 0.6875rem;                                   /* 11px — mono label tier (was hardcoded 10/11/12px sitewide) */
-  --lf-text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);     /* 12-14px */
+  /* Type scale — fluid clamp() throughout, BIGGER on the cover tier.
+   * Legibility floor raised 2026-07-18 (David: a 65-year-old New Yorker has
+   * to be able to read every label) — smallest tier is now 12px, never 11. */
+  --lf-text-2xs: 0.75rem;                                     /* 12px — mono label tier floor */
+  --lf-text-xs: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem); /* 13-15px */
   --lf-text-sm: clamp(0.875rem, 0.82rem + 0.25vw, 1rem);      /* 14-16px */
   --lf-text-base: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);     /* 16-18px */
   --lf-text-md: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);   /* 18-22px */

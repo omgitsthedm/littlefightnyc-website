@@ -9,7 +9,9 @@
     "latitude": 40.7128,
     "longitude": -74.006,
     "image": "https://littlefightnyc.com/assets/og-image.jpg",
-    "sameAs": ["https://www.instagram.com/littlefightnyc"]
+    "sameAs": [
+      "https://www.instagram.com/littlefightnyc"
+    ]
   },
   "pages": [
     {
@@ -19,17 +21,7 @@
       "h1": "Websites bring business. We keep it running.",
       "shortAnswer": "Short answer: Little Fight NYC builds websites for New York small businesses, fixes urgent tech, gives free consulting, and replaces bloated subscriptions with focused software clients own.",
       "type": "WebPage",
-      "image": "/assets/local-business-base.webp",
-      "faq": [
-        {
-          "question": "What does Little Fight NYC do?",
-          "answer": "Little Fight NYC builds websites for small businesses, fixes urgent tech, gives free consulting, and creates focused software clients own."
-        },
-        {
-          "question": "Who does Little Fight NYC help?",
-          "answer": "Little Fight NYC helps New York law firms, bars, restaurants, clothing brands, salons, barbershops, clinics, pharmacies, shops, gyms, studios, and service teams under 50."
-        }
-      ]
+      "image": "/assets/local-business-base.webp"
     },
     {
       "path": "/services/",
