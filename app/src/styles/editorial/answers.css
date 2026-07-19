@@ -452,3 +452,15 @@
   margin-bottom: var(--lf-space-6);
   background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
 }
+
+/* Micro-interaction: answer-card art leans in on hover. */
+.lf-answers-hub__thumb img {
+  transition: scale 600ms var(--lf-ease-out-quart, ease);
+}
+.lf-answers-hub__card:hover .lf-answers-hub__thumb img {
+  scale: 1.045;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-answers-hub__thumb img { transition: none; }
+  .lf-answers-hub__card:hover .lf-answers-hub__thumb img { scale: none; }
+}

@@ -671,3 +671,17 @@
     padding-inline: var(--lf-margin-desktop);
   }
 }
+
+/* Micro-interaction: case-wall art leans in on hover. */
+.lf-ex-feature__media img,
+.lf-ex-rows__media img {
+  transition: scale 600ms var(--lf-ease-out-quart, ease);
+}
+a:hover .lf-ex-feature__media img,
+a:hover .lf-ex-rows__media img {
+  scale: 1.045;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-ex-feature__media img, .lf-ex-rows__media img { transition: none; }
+  a:hover .lf-ex-feature__media img, a:hover .lf-ex-rows__media img { scale: none; }
+}

@@ -871,3 +871,19 @@
   0%, 100% { transform: translateY(0) rotate(-2deg); }
   50% { transform: translateY(-3px) rotate(2deg); }
 }
+
+/* Micro-interaction: card art leans in on hover. Wrappers already clip. */
+.lf-journal-featured__media img,
+.lf-journal__thumb img {
+  transition: scale 600ms var(--lf-ease-out-quart, ease);
+}
+.lf-journal-featured__card:hover .lf-journal-featured__media img,
+.lf-journal__link:hover .lf-journal__thumb img {
+  scale: 1.045;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-journal-featured__media img,
+  .lf-journal__thumb img { transition: none; }
+  .lf-journal-featured__card:hover .lf-journal-featured__media img,
+  .lf-journal__link:hover .lf-journal__thumb img { scale: none; }
+}

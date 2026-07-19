@@ -46,3 +46,23 @@
 .lf-fig__text {
   flex: 1;
 }
+
+/* Micro-interaction: the photo settles as it enters the viewport — a slow
+   1.06→1 scale driven by scroll position (no JS, no observers). The frame
+   clips it; reduced-motion gets a still image. */
+.lf-fig__frame { overflow: hidden; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lf-fig__frame img {
+      animation: lf-fig-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+  }
+}
+
+@keyframes lf-fig-settle {
+  from { scale: 1.06; }
+  to { scale: 1; }
+}

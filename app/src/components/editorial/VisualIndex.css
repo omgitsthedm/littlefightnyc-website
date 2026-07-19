@@ -298,3 +298,17 @@
   vertical-align: middle;
   white-space: nowrap;
 }
+
+/* Micro-interaction: index card art leans in on hover. */
+.lf-visual-index__media img {
+  transition: scale 600ms var(--lf-ease-out-quart, ease);
+}
+a:hover > .lf-visual-index__media img,
+.lf-visual-index__card:hover .lf-visual-index__media img {
+  scale: 1.045;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lf-visual-index__media img { transition: none; }
+  a:hover > .lf-visual-index__media img,
+  .lf-visual-index__card:hover .lf-visual-index__media img { scale: none; }
+}
