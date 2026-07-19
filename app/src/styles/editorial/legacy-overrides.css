@@ -217,9 +217,17 @@
   min-height: 0;
 }
 
+/* ⚠️ Scope the canvas kill to the LEGACY hero treatments only. A previous
+   bare `.lf-editorial canvas[aria-hidden="true"]` here silently display:none'd
+   EVERY modern canvas instrument (AuditBench, WhoAnswers, TheDirectLine, the
+   fight card…) on any page that loaded this sheet — found 2026-07-19. Pixel
+   readback (toDataURL) does NOT catch this class of bug: the canvas paints
+   off-screen while hidden. Visibility must be asserted via computed display +
+   offsetHeight. */
 .lf-editorial .hero-vignette,
 .lf-editorial .hero-canvas,
-.lf-editorial canvas[aria-hidden="true"] {
+.lf-editorial .hero canvas[aria-hidden="true"],
+.lf-editorial .cinematic-hero canvas[aria-hidden="true"] {
   display: none !important;
 }
 
