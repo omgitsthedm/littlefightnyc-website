@@ -205,6 +205,7 @@ Rendered review at 1440px, funnel order. Results:
 | Date | Impressions (28d) | Clicks | Avg pos | Notes |
 |---|---|---|---|---|
 | 2026-07-19 | 306 (+70%) | 0 | 16.7 | Baseline. UES "seo company" cluster ~130 imp, pos 5–20. Brand queries land /about/. UES title/content experiment shipped this day. |
+| 2026-07-19 (push) | — | — | — | GSC PUSH RUN: sitemap-index resubmitted; indexing requested /library/ + /areas/upper-east-side/. Page-indexing report (stale, 7/9): only 17 indexed / 24 not (6 redirect + 2 404 + 16 crawled-not-indexed — mostly April-era ghost URLs of the old static site, plus /services/ from May 9). Google is drip-crawling a young domain; sitemap ping + requests are the levers. **🚨 AI-PRESENCE TEST: site:littlefightnyc.com = ZERO results on DuckDuckGo/Bing — absent from the entire Bing index → invisible to ChatGPT search, Copilot, DDG. BING WEBMASTER TOOLS = DAVID'S #1 URGENT ITEM.** (Bing direct search blocked by CAPTCHA — human-only.) |
 
 - Standing gates every ship: signal ratchet, jargon sweep, margin audit,
   16px floor
@@ -236,10 +237,12 @@ lost-but-safe (404 ✅), no-translation-needed (/es/ ✅), reading-companion
 6. ✅ ~~Door→call measurement~~ — door_bridge event with per-door slug label
    on every bridge; watchtower reads it alongside GSC
 7. **Photo integration** — as David's Unsplash batch lands (shot list below)
-8. **GSC push phase** (David's sequenced finale): sitemap resubmit, request
-   indexing on changed doors, coverage/CWV/mobile reports worked to zero
-9. **AI-engine presence test** — ask the actual engines who fixes NYC small-biz
-   tech; log citations in watchtower; optimize toward being the quoted source
+8. ✅ ~~GSC push phase~~ — run 2026-07-19 (see GSC log); re-run after next
+   content wave; coverage re-check when the report refreshes (was 10 days stale)
+9. ✅ ~~AI-engine presence test~~ — verdict: NOT PRESENT. Zero Bing-index
+   results → invisible to ChatGPT/Copilot/DDG. Root cause is index absence,
+   not markup (robots/llms.txt/schema all correct). Fix = Bing Webmaster Tools
+   (David) + IndexNow ping (Claude can wire into deploys after registration)
 
 ### David's list (nothing here blocks Claude's list)
 - **Reviews — the 40× lever.** Ask every happy client (Rachel, PHC, CC Films,
@@ -253,6 +256,13 @@ lost-but-safe (404 ✅), no-translation-needed (/es/ ✅), reading-companion
   ChatGPT/Copilot, Apple feeds Siri/Maps — the non-Google AI surface)
 - Unsplash batch (shot list below) + any real shop/on-site photos
 - iOS device pass; decide Spanish-inquiry servicing
+
+**📸 PHOTO BATCH 1 LANDED (2026-07-19): `~/Desktop/LiFi NYC/New York Neighborhoods` —
+55 real frames: Midtown 13, West Village 9, UES 9, UWS 7, Greenwich 6, FiDi 6,
+East Village 5 (mixed orientation, up to 6000px). Covers 5 existing area pages
++ hub/contact dupes; Greenwich Village + FiDi = candidate area pages #15/#16
+(ledger check before creating). Still wanted: Brooklyn/Queens 6 (Williamsburg,
+Bushwick, Park Slope, DUMBO, Astoria, LIC) + the 4 hub-mood shots below.**
 
 ### 📸 The shot list (Unsplash, search terms included — landscape ≥1600px)
 | Slot | Direction | Search |
