@@ -301,6 +301,35 @@ Bushwick, Park Slope, DUMBO, Astoria, LIC) + the 4 hub-mood shots below.**
 | Long Island City | waterfront + industrial | "long island city street queens" |
 | UWS or West Village | replace the shared `nyc-street` | "west village nyc corner cafe street" |
 
+## Final QA campaign (2026-07-19 late) — the button-up
+
+- **Thermo review:** stale /journal/ route-meta entry killed; dead selector out
+  of base.css (first attempt nearly removed the display-typeface rule — caught
+  by diff review; ⛔ lesson: never script-remove CSS rules by brace-hunting);
+  journal CATEGORY maps deduped into journalArt.ts. site-answers.ts at 1,196
+  lines = WAIVED (pure content data).
+- **Web-app chrome:** VERIFIED COMPLETE — #F97316 theme-color/msapplication/
+  mask-icon/apple-touch + standalone manifest + black-translucent iOS bar. No
+  changes needed.
+- **Axe:** ZERO critical/serious across 12 routes (fixed: heatmap ol[role=img]
+  → div/span). Every image has an alt (sweep-verified).
+- **Ultraship security: 96/100, 0 vulns.** Accepted-low: CSP style-src
+  unsafe-inline (React inline styles; no injection vector). REAL: Twilio
+  TWILIO_AUTH_TOKEN unset in prod → webhook fails open → runbook Task 6 (David).
+- **Ultraship SEO audit → QA pass 3 (`6b94b50`):** fixed the stranded link
+  graph (shell links /areas/ + nationwide + es + zh on all 182 pages; /areas/
+  hub HTML emits all 18 area links — was ZERO), schema truth (inLanguage per
+  locale, availableLanguage trilingual, nationwide areaServed +Country:US,
+  speakable selector now has a target, og:locale, square logo, es title trim).
+- **Squirrel surface (125 pages): 81/B** — Core SEO 95, Security 97, NINE
+  categories at 100. Remaining drag = DOCTRINE-LOCKED accepts: Structured Data
+  46 (no streetAddress — SAB law), Crawlability 54 (slash-normalization 301s —
+  correct), Performance 65 (HTML no-cache + render-blocking CSS — deliberate,
+  real-throttle paint ~270ms; 'unminified'/'LCP-hints' = verified false
+  positives). These accepts are permanent; do not chase the score into
+  breaking doctrine.
+- AGENTS.md published at /AGENTS.md (agent experience).
+
 ## Standing laws (from CLAUDE.md, restated so this file is self-sufficient)
 
 - Founded **2021**. Four items of focus. No pricing published. No install
