@@ -41,8 +41,11 @@ focus."
 - **Neon sign functions like a real sign now:** FULL BLAZE while open, ember
   after hours (previous inversion was backwards); stage 660→1080px; underline
   gets an aging-tube sputter. Reduced-motion: static lit.
-- **Legibility floor: nothing under 12px sitewide** (--lf-text-2xs 12px,
-  --lf-text-xs 13-15px). David: "a 65-year-old New Yorker has to read this."
+- **Legibility standard (SUPERSEDED 12px rule, 2026-07-18 later): 16px is the
+  ABSOLUTE floor for any text; body baseline 18-20px; main reading tier
+  20-23px (~17pt).** Optometrist-backed spec from David for the 50+ audience.
+  All form inputs ≥16px (iOS Safari auto-zoom rule). Never hardcode a px
+  font-size below the tokens.
 
 ## 2026-07-18 — Reach wave: /es/, The Lab links, Speculation Rules (LIVE, `4771866`, 179 routes)
 
