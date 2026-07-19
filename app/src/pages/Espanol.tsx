@@ -47,7 +47,7 @@ export default function Espanol() {
     const prevLang = document.documentElement.lang;
     const prevTitle = document.title;
     document.documentElement.lang = "es";
-    document.title = "Little Fight NYC en español | Páginas web y tecnología para su negocio";
+    document.title = "Páginas web y tecnología en español | Little Fight NYC";
     return () => {
       document.documentElement.lang = prevLang || "en";
       document.title = prevTitle;

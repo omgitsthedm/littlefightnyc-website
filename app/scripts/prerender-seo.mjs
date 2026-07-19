@@ -290,7 +290,7 @@ const pages = [
   {
     path: "/es/",
     locale: "es",
-    title: "Little Fight NYC en español | Páginas web y tecnología para su negocio",
+    title: "Páginas web y tecnología en español | Little Fight NYC",
     description:
       "Hacemos su página web, arreglamos la tecnología cuando falla, y acabamos con las cuotas mensuales que se comen su ganancia. Nueva York, desde 2021. La consulta es gratis.",
     h1: "Su página web trae clientes. Nosotros la mantenemos andando.",
@@ -504,7 +504,7 @@ function foundationSchemas(page) {
     "telephone": site.phone,
     "foundingDate": "2021",
     "image": site.image,
-    "logo": site.image,
+    "logo": `${siteUrl}/icon-512.png`,
     "slogan": "Better tech. Fewer bills. More customers.",
     "contactPoint": {
       "@type": "ContactPoint",
@@ -512,9 +512,9 @@ function foundationSchemas(page) {
       "email": site.email,
       "contactType": "customer support",
       "areaServed": "US-NY",
-      "availableLanguage": "English"
+      "availableLanguage": ["English", "Spanish", "Chinese"]
     },
-    "areaServed": areaServed,
+    "areaServed": page.path === "/nationwide/" ? [{ "@type": "Country", "name": "United States" }, ...areaServed] : areaServed,
     "sameAs": site.sameAs
   };
 
@@ -564,7 +564,7 @@ function foundationSchemas(page) {
       "email": site.email,
       "contactType": "customer support",
       "areaServed": "US-NY",
-      "availableLanguage": "English"
+      "availableLanguage": ["English", "Spanish", "Chinese"]
     },
     "areaServed": areaServed,
     "knowsAbout": [
@@ -659,7 +659,7 @@ function foundationSchemas(page) {
     "alternateName": ["Little Fight", "LittleFight NYC"],
     "logo": {
       "@type": "ImageObject",
-      "url": site.image
+      "url": `${siteUrl}/icon-512.png`
     }
   };
 
@@ -681,7 +681,7 @@ function foundationSchemas(page) {
     "primaryImageOfPage": { "@id": `${canonical}#primaryimage` },
     "isPartOf": { "@id": `${siteUrl}/#website` },
     "about": { "@id": `${siteUrl}/#localbusiness` },
-    "inLanguage": "en-US",
+    "inLanguage": page.locale === "zh" ? "zh" : page.locale === "es" ? "es" : "en-US",
     "publisher": publisher,
     "datePublished": publishedDate,
     "dateModified": modifiedDate,
@@ -938,6 +938,7 @@ function managedHead(page) {
     `<meta property="og:description" content="${escapeAttr(page.description)}">`,
     `<meta property="og:url" content="${escapeAttr(canonical)}">`,
     `<meta property="og:type" content="${isArticle ? "article" : "website"}">`,
+    `<meta property="og:locale" content="${page.locale === "zh" ? "zh_CN" : page.locale === "es" ? "es_US" : "en_US"}">`,
     `<meta property="og:image" content="${escapeAttr(image)}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${escapeAttr(page.title)}">`,
@@ -975,7 +976,11 @@ const primaryLinks = [
   { href: "/services/business-systems/", label: "Business Systems" },
   { href: "/services/#studio", label: "Studio" },
   { href: "/examples/", label: "Examples" },
+  { href: "/areas/", label: "All 18 Neighborhoods" },
   { href: "/areas/upper-east-side/", label: "Upper East Side" },
+  { href: "/nationwide/", label: "Websites Nationwide" },
+  { href: "/es/", label: "En español" },
+  { href: "/zh/", label: "中文" },
   { href: "/library/", label: "The Library" },
   { href: "/tech-audit/", label: "Free Tech Audit" },
   { href: "/contact/", label: "Contact" },
@@ -1187,6 +1192,13 @@ function paragraphsHtml(items) {
 // Before this, GPTBot/ClaudeBot/PerplexityBot saw only a shortAnswer + stock
 // boilerplate on every route — the site's best content was JS-gated.
 function authoredContentHtml(page) {
+  if (page.path === "/areas/") {
+    const links = siteContent.areaPages
+      .map((a) => `<li><a href="/areas/${a.slug}/">${escapeHtml(a.name)}</a> — ${escapeHtml(a.localPattern)}</li>`)
+      .join("\n");
+    return `<h2>The 18 neighborhoods we serve, across all five boroughs</h2>\n<ul>${links}</ul>`;
+  }
+
   // Generic authored paragraphs (e.g. /nationwide/) — crawler-visible body copy.
   if (Array.isArray(page.paragraphs) && page.paragraphs.length > 0) {
     return [
@@ -1654,7 +1666,7 @@ function snapshot(page) {
     <article${articleAttrs}>
     <h1 itemprop="headline">${escapeHtml(page.h1)}</h1>
     ${articleMeta(page)}
-    ${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
+    ${paragraphs.map((paragraph, i) => `<p${i === 0 ? ' class="short-answer"' : ""}>${escapeHtml(paragraph)}</p>`).join("\n")}
     ${authored}
     ${founderBlock(page)}
     ${techAuditFormHtml(page)}
