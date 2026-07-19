@@ -98,7 +98,13 @@ per instrument (canvas needs literal hex; 24 → 27 files, 61 occurrences).
 
 **Verify-by-eye method for these canvases (recurring):** element screenshots
 re-trigger the IntersectionObserver scroll-reset → capture a blank/first frame.
-Read the canvas pixels back via `toDataURL` composited over `#050507` instead.
+**Even full-VIEWPORT headless screenshots intermittently miss an actively-
+animating canvas entirely** (2026-07-18 audit: LeadsCaught blank in a viewport
+screenshot while pixel-readback at the same instant showed 9,996 painted samples,
+revealed, opacity 1 — meanwhile the same batch DID capture MoneyLeaving; timing-
+dependent). A blank canvas region in a screenshot is NOT evidence of a defect —
+read the canvas pixels back via `toDataURL` composited over `#050507`; that is
+the only ground truth.
 Bugs it caught + fixed across the three: sparse fix-phase column (raised density),
 a label covered by a token (moved above the bar), tall-layout readout/source-rail
 + milestone-label collisions, and a tall-layout readout clip. All verified legible
