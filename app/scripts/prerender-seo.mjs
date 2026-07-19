@@ -274,7 +274,7 @@ async function journalPages() {
     shortAnswer: entry.description,
     h1: entry.title.replace(" Help", ""),
     type: "WebPage",
-    image: "/assets/manhattan.webp",
+    image: entry.image || "/assets/manhattan.webp",
     industry: entry,
   }));
 
