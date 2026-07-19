@@ -206,15 +206,20 @@ working system only). Each is honest — counts/facts come from the animation
 itself or the page copy, no fabricated stats. Signal ratchet re-based deliberately
 per instrument (canvas needs literal hex; 24 → 27 files, 61 occurrences).
 
-**Verify-by-eye method for these canvases (recurring):** element screenshots
-re-trigger the IntersectionObserver scroll-reset → capture a blank/first frame.
-**Even full-VIEWPORT headless screenshots intermittently miss an actively-
-animating canvas entirely** (2026-07-18 audit: LeadsCaught blank in a viewport
-screenshot while pixel-readback at the same instant showed 9,996 painted samples,
-revealed, opacity 1 — meanwhile the same batch DID capture MoneyLeaving; timing-
-dependent). A blank canvas region in a screenshot is NOT evidence of a defect —
-read the canvas pixels back via `toDataURL` composited over `#050507`; that is
-the only ground truth.
+**⛔ CANVAS VERIFICATION — CORRECTED 2026-07-19 (the old lore below was
+dangerously wrong).** The "screenshots intermittently miss animating canvases"
+mystery was a REAL BUG: legacy-overrides.css carried `.lf-editorial
+canvas[aria-hidden="true"] {display:none!important}` (a cinematic-hero
+leftover), which hid EVERY instrument canvas on any page that had loaded
+EditorialShell's CSS. The screenshots were TELLING THE TRUTH; the toDataURL
+pixel readback LIED — a display:none canvas still paints its buffer, so
+readback "verified" instruments users could not see (the Jul-18 service-page
+instruments shipped invisible). Fixed in `2096660` (kill rule scoped to
+.hero/.cinematic-hero). **Standing method: verifying a canvas requires BOTH
+(a) toDataURL readback for painting AND (b) computed display + offsetHeight
+> 0 for visibility — and a blank canvas in a screenshot is evidence, not
+noise; find its cause.** Element screenshots can still re-trigger the IO
+scroll-reset (blank FIRST FRAME ≠ hidden canvas), so settle before shooting.
 Bugs it caught + fixed across the three: sparse fix-phase column (raised density),
 a label covered by a token (moved above the bar), tall-layout readout/source-rail
 + milestone-label collisions, and a tall-layout readout clip. All verified legible
