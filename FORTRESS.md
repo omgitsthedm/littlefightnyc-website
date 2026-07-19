@@ -103,11 +103,25 @@ Contact), then 6 BK/Queens neighborhood frames.
   heroes are generic interiors, not neighborhood shots — needs real frames).
 - Weekly GSC readout from OpenSEO; decisions follow data, not vibes.
 
-### Wave 4 — Page-by-page fortress pass
-Every unique template audited against the Wave-2 contract + conversion intent,
-in funnel order: home → services ×4 + hub → tech-audit → areas ×14 → case
-studies ×7 → examples → about → journal hub → answers hub → contact → es →
-glossary → industries → studio → legal/404.
+### Wave 4 — Page-by-page fortress pass — RUN 2026-07-19
+Rendered review at 1440px, funnel order. Results:
+- **🔥 P0 FOUND + FIXED LIVE (`2096660`): the entire canvas-instrument fleet
+  was `display:none` on shell pages** — legacy-overrides.css carried a bare
+  `.lf-editorial canvas[aria-hidden]` kill from the cinematic-hero era. The
+  Jul-18 service-page instruments had NEVER been visible to users; the
+  tech-audit "dead void" was hidden AuditBench. Verified live post-fix:
+  home ×5, contact, tech-audit, it-support all display:block with real
+  heights. **Verification law: toDataURL proves painting, NOT visibility —
+  always also assert computed display + offsetHeight** (CLAUDE.md corrected,
+  `f21758c`).
+- Fixed: minimap caption said "eight Manhattan neighborhoods" over a 14-item
+  three-borough grid (`26006c2`).
+- Verified healthy, no changes needed: tech-audit (post-fix), case-study
+  detail (narrative arc + diagram + device frame), about (essay/promises/
+  founder/census), journal hub (heatmap/featured/index), studio detail,
+  services hub, examples.
+- Remaining polish = photography punch list (Wave 2 section) + the sparse
+  publishing heatmap (fills itself as posts ship).
 
 ### Wave 5 — Watchtower (keep it won)
 
