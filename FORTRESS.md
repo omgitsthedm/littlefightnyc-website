@@ -29,9 +29,9 @@ A page that doesn't serve a station gets merged or killed.
 
 | Surface | What it is | Verdict |
 |---|---|---|
-| `/tech-audit/` | THE conversion form (16 internal refs, share-target, voice webhook) | **The one door. Keep.** |
-| `/audit/` | "Instant Website Scan" client-side tool (2 internal refs) | Fold INTO /tech-audit/ as the instant-scan top section, then 301. |
-| `audit.littlefightnyc.com` | Standalone "Website Audit Lab" Netlify site (pre-consolidation era) | Retire: 301 whole subdomain → littlefightnyc.com/tech-audit/. |
+| `/tech-audit/` | THE conversion form (16 internal refs, share-target, voice webhook) | **The one door. Keep.** ✅ |
+| `/audit/` | Marketing wrapper that linked OUT to the subdomain tool | **RETIRED 2026-07-19** — 301 → /tech-audit/, page deleted, links swept. |
+| `audit.littlefightnyc.com` (+ `audits.` alias) | "Website Audit Lab" — Netlify site `audits-littlefightnyc` (6588401d…). **Backend is DEAD: `/api/run-audit` 404s** — every scan submission errored. The homepage "Scan my website" CTA fed this broken form. | Retire: redirect-only deploy staged at scratchpad `audit-retire/`; needs David to run the netlify deploy (permission-gated). Optional future: rebuild a REAL scanner on-domain, WITH auth + rate limiting (a0cf04f lesson). |
 
 Rule going forward: **one job, one page.** Before any new page ships, check this
 ledger's logic: does an existing page already own the job?
@@ -51,10 +51,14 @@ Marketing narrative = AIDA. Dramatics top, work bottom (David's directive):
 ## The waves
 
 ### Wave 1 — One Door Per Job (redundancy kill) — IN PROGRESS
-- [x] Home restack per stacking law
-- [ ] Move the instant scanner from `/audit/` onto `/tech-audit/` (scan first,
-      form below), 301 `/audit/` → `/tech-audit/`, update footer + palette links
-- [ ] Retire `audit.littlefightnyc.com` → 301 to `/tech-audit/` (Netlify)
+- [x] Home restack per stacking law (`2ef50da`)
+- [x] `/audit/` retired → 301 → `/tech-audit/`; page + audit.css deleted; footer,
+      palette, homepage proof-band CTA repointed; dead `reportId` plumbing
+      stripped from TechAudit; 178 routes (`12290a4`). (The "fold the scanner
+      in" idea died on contact with reality — the scanner backend was already
+      dead, so there was nothing to fold.)
+- [ ] Retire `audit.littlefightnyc.com` — **David runs:**
+      `netlify deploy --prod --dir <scratchpad>/audit-retire --site 6588401d-53d4-42a3-a4f8-89fb3b937446`
 - [ ] Sweep for any other duplicate-job surfaces (old subdomains vs lab.)
 
 ### Wave 2 — Template Law (everything looks + functions the same)
