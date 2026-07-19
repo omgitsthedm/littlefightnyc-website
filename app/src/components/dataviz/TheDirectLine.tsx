@@ -18,6 +18,53 @@ import { rr, glow, DISP, MONO, ORANGE, RED, GREEN, useInstrumentCanvas } from ".
  */
 
 const MAZE = ["PRESS 1", "HOLD", "TRANSFER", "PRESS 4", "VOICEMAIL"];
+
+/** The mascot at work: a chunky drawn tug (fight-card glove precedent) that
+ *  carries the call along the direct line. Hull rides ON the line. */
+function drawTug(
+  cx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  s: number,
+  t: number,
+  moving: boolean,
+) {
+  cx.save();
+  cx.translate(x, y + Math.sin(t * 0.004) * 1.6);
+  cx.scale(s, s);
+  // wake behind the hull
+  if (moving) {
+    cx.strokeStyle = "rgba(249,115,22,.35)";
+    cx.lineWidth = 2;
+    cx.lineCap = "round";
+    cx.beginPath();
+    cx.moveTo(-18, 6); cx.lineTo(-30, 6);
+    cx.moveTo(-16, 9); cx.lineTo(-25, 9);
+    cx.stroke();
+  }
+  cx.fillStyle = ORANGE;
+  // hull — chunky, rounded bow
+  cx.beginPath();
+  cx.moveTo(-15, 0);
+  cx.quadraticCurveTo(-17, 9, -8, 10);
+  cx.lineTo(9, 10);
+  cx.quadraticCurveTo(17, 8, 15, 0);
+  cx.closePath();
+  cx.fill();
+  // cabin + funnel
+  rr(cx, -7, -9, 11, 9, 2); cx.fill();
+  rr(cx, 6, -13, 4, 8, 1.5); cx.fill();
+  // porthole
+  cx.fillStyle = "#050507";
+  cx.beginPath(); cx.arc(-1.5, -4.5, 1.8, 0, 7); cx.fill();
+  // steam puffs while moving
+  if (moving) {
+    const puff = (t * 0.006) % 1;
+    cx.fillStyle = `rgba(255,255,255,${(0.4 * (1 - puff)).toFixed(3)})`;
+    cx.beginPath(); cx.arc(8 + puff * 6, -16 - puff * 8, 2 + puff * 2.5, 0, 7); cx.fill();
+  }
+  cx.restore();
+}
 const LOOP = 9000;
 
 type Sim = { t0: number };
@@ -153,10 +200,7 @@ function draw(S: Sim, cx: CanvasRenderingContext2D, W: number, H: number, GO: HT
     cx.globalAlpha = inF;
     cx.globalCompositeOperation = "source-over";
     if (f <= 1) {
-      cx.fillStyle = ORANGE;
-      cx.beginPath();
-      cx.arc(px, lineY, 5, 0, 7);
-      cx.fill();
+      drawTug(cx, px, lineY - 4, 0.85, pt, true);
     }
     // arrival ping
     if (f > 1 && f < 1.6) {
@@ -180,6 +224,11 @@ function draw(S: Sim, cx: CanvasRenderingContext2D, W: number, H: number, GO: HT
   cx.beginPath();
   cx.arc(rightX, lineY, 7, 0, 7);
   cx.fill();
+
+  // the tug docks beside the person once the last call lands
+  if (pt > 6650) {
+    drawTug(cx, rightX - 34, lineY - 4, 0.7, pt, false);
+  }
 
   // PICKED UP tally (honest: counts this animation's pickups)
   if (lastPickup > 0) {
@@ -228,7 +277,7 @@ export default function TheDirectLine() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: two ways to reach help, racing. The usual way — a gray dot crawls through press 1, hold, transfer, press 4, and dies at voicemail with a red X. Calling us — one straight orange line from you to a real person; the call crosses in under a second and gets picked up, again and again, while the gray dot is still on hold. No phone tree. No ticket."
+      aria-label="Animation: two ways to reach help, racing. The usual way — a gray dot crawls through press 1, hold, transfer, press 4, and dies at voicemail with a red X. Calling us — one straight orange line from you to a real person; a little orange tugboat carries each call across in under a second and it gets picked up, again and again, while the gray dot is still on hold. No phone tree. No ticket."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

@@ -1,0 +1,91 @@
+/* The secret sail — type "tug". Mascot canon: steel hull, one orange beacon. */
+
+.lf-tugsail {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 12px;
+  height: 72px;
+  pointer-events: none;
+  z-index: 90; /* above content, below the command palette overlay */
+  overflow: hidden;
+}
+
+.lf-tugsail__boat {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  animation: lf-tugsail-cross 5s linear forwards;
+  will-change: transform;
+}
+
+.lf-tugsail__mark {
+  display: block;
+  width: 58px;
+  height: auto;
+  color: var(--lf-bone-soft, #cfd2d8);
+  opacity: 0.92;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+  animation: lf-tugsail-bob 1.4s ease-in-out infinite;
+}
+
+/* the ONE orange thing: the little beacon, pulsing */
+.lf-tugsail__beacon {
+  position: absolute;
+  top: -3px;
+  left: 26px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lf-fight);
+  box-shadow: 0 0 8px 2px color-mix(in srgb, var(--lf-fight) 55%, transparent);
+  animation: lf-tugsail-beacon 1s ease-in-out infinite;
+}
+
+.lf-tugsail__wake {
+  position: absolute;
+  bottom: 4px;
+  left: -34px;
+  width: 30px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to left, rgba(207, 210, 216, 0.5), transparent);
+}
+
+.lf-tugsail__toot {
+  position: absolute;
+  top: -20px;
+  left: 44px;
+  font-family: var(--lf-mono, monospace);
+  font-size: var(--lf-text-2xs, 1rem);
+  letter-spacing: 0.08em;
+  color: var(--lf-bone-soft, #cfd2d8);
+  white-space: nowrap;
+  opacity: 0;
+  animation: lf-tugsail-toot 1.6s ease-out 400ms forwards;
+}
+
+@keyframes lf-tugsail-cross {
+  from { transform: translateX(-80px); }
+  to { transform: translateX(calc(100vw + 90px)); }
+}
+
+@keyframes lf-tugsail-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-1.5deg); }
+}
+
+@keyframes lf-tugsail-beacon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes lf-tugsail-toot {
+  0% { opacity: 0; transform: translateY(4px); }
+  20% { opacity: 0.9; transform: translateY(0); }
+  80% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-tugsail { display: none; }
+}

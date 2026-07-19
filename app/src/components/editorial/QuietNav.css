@@ -58,13 +58,47 @@
   transition: transform var(--lf-time-fast) var(--lf-ease-out-quart);
 }
 
+.lf-nav__brand { position: relative; }
+
 .lf-nav__brand:hover .lf-nav__mark {
-  transform: translateY(-1px);
+  animation: lf-tug-bob 900ms var(--lf-ease-out-quart);
+}
+
+/* steam puff off the funnel on hover — one small breath, then done */
+.lf-nav__brand::after {
+  content: "";
+  position: absolute;
+  left: 1.05em;
+  top: -0.1em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--lf-bone-soft, #cfd2d8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lf-nav__brand:hover::after {
+  animation: lf-tug-puff 800ms ease-out;
+}
+
+@keyframes lf-tug-bob {
+  0% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-3deg) translateY(-1.5px); }
+  55% { transform: rotate(2.5deg) translateY(-0.5px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+@keyframes lf-tug-puff {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  25% { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(-10px) scale(1.5); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lf-nav__mark { transition: none; }
-  .lf-nav__brand:hover .lf-nav__mark { transform: none; }
+  .lf-nav__brand:hover .lf-nav__mark { animation: none; transform: none; }
+  .lf-nav__brand:hover::after { animation: none; }
 }
 
 @media (min-width: 768px) {
