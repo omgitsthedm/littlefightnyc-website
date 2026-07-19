@@ -7,6 +7,12 @@ putting out a little fire here or there; build a fortified castle."*
 
 ## North star
 
+**Revenue doctrine (David, 2026-07-19): Websites = the monthly revenue driver
+— NATIONWIDE reach, as many clients as possible. Personalized Software = the
+whale. Tech Support + Consulting = feeder channels that create website and
+software clients. The NYC-neighbor brand stays primary; /nationwide/ is the
+volume door.**
+
 One funnel, every page a station in it:
 
 **SEEN** (Google, GSC-measured) → **HOOKED** (dramatics up top) →

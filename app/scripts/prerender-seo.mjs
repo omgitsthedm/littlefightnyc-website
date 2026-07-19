@@ -1172,6 +1172,13 @@ function paragraphsHtml(items) {
 // Before this, GPTBot/ClaudeBot/PerplexityBot saw only a shortAnswer + stock
 // boilerplate on every route — the site's best content was JS-gated.
 function authoredContentHtml(page) {
+  // Generic authored paragraphs (e.g. /nationwide/) — crawler-visible body copy.
+  if (Array.isArray(page.paragraphs) && page.paragraphs.length > 0) {
+    return [
+      paragraphsHtml(page.paragraphs),
+      faqHtml(page.faq ?? [], "Long-distance questions, answered plainly"),
+    ].join("\n");
+  }
   if (page.path === "/library/") {
     const answers = (siteContent.answerGuides ?? [])
       .map((g) => `<li><a href="/answers/${g.slug}/">${escapeHtml(g.question)}</a></li>`)

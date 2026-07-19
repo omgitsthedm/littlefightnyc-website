@@ -57,6 +57,38 @@
       ]
     },
     {
+      "path": "/nationwide/",
+      "title": "Custom Small Business Websites, All 50 States | Little Fight NYC",
+      "description": "A New York web shop that builds for the whole country. Custom small business websites live in 14 days — or you don't pay. You own the code, the domain, everything.",
+      "h1": "Built in New York. Works anywhere.",
+      "shortAnswer": "Short answer: you don't have to be in New York to get the New York treatment. We build custom websites for small businesses in all 50 states, live in 14 days, and you own every line of it. The consult is free and a real person answers.",
+      "type": "WebPage",
+      "image": "/assets/hero-nationwide-wtc.webp",
+      "paragraphs": [
+        "Every main street in America has the same fight. The chains have tech teams. The corner shop has a template site from 2019 and a contact form nobody answers. We fix that for a living in New York — and a website does not care about zip codes.",
+        "How a remote build works: you call, text, or email. We talk about your business — free, like always. Then we build. You watch it come together and tell us what is right and what is wrong. In 14 days it is live. If it is not, you do not pay.",
+        "Every promise travels. The consult is free. A real person answers, 9am to 9pm Eastern. Callbacks in 2 hours. And when it is done, the code, the domain, the content — all of it is yours."
+      ],
+      "faq": [
+        {
+          "question": "Do you need to visit my business to build the site?",
+          "answer": "No. Photos, a phone call, and honest talk about how your business runs — that's everything we need. The work happens on calls and screens, wherever you are."
+        },
+        {
+          "question": "I'm on the West Coast. How do time zones work?",
+          "answer": "We answer 9am to 9pm Eastern — that's 6am to 6pm Pacific. Text or email whenever you want, and we call back inside 2 hours during those windows. The 14 days doesn't change."
+        },
+        {
+          "question": "Who takes care of the site after it launches?",
+          "answer": "You own it, so that's your call. Run it yourself — we hand over everything with plain instructions. Or keep us on call, like our New York clients do. Either way, nobody can hold your website over your head."
+        },
+        {
+          "question": "Is a remote build different from a New York build?",
+          "answer": "Same build. Same 14 days. Same deal: if we're late, you don't pay. The only difference is we can't walk to your shop — so we'll ask for a few more photos."
+        }
+      ]
+    },
+    {
       "path": "/services/it-support/",
       "title": "Small Business IT Support NYC | Little Fight NYC",
       "description": "Real local IT help for NYC small businesses. Email, domains, Wi-Fi, POS, booking, payments, devices, and locked accounts, fixed fast.",

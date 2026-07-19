@@ -31,6 +31,7 @@ const Glossary = lazyRoute(() => import("@/pages/Glossary"));
 const GlossaryTerm = lazyRoute(() => import("@/pages/GlossaryTerm"));
 const IndustryDetail = lazyRoute(() => import("@/pages/IndustryDetail"));
 const Library = lazyRoute(() => import("@/pages/Library"));
+const Nationwide = lazyRoute(() => import("@/pages/Nationwide"));
 const JournalPost = lazyRoute(() => import("@/pages/JournalPost"));
 const Legal = lazyRoute(() => import("@/pages/Legal"));
 const NotFound = lazyRoute(() => import("@/pages/NotFound"));
@@ -102,6 +103,7 @@ export default function App() {
           <Route path="examples" element={route(FieldGuide)} />
           <Route path="audit" element={<Navigate to="/tech-audit/" replace />} />
           <Route path="library" element={route(Library)} />
+          <Route path="nationwide" element={route(Nationwide)} />
           <Route path="answers" element={<Navigate to="/library/" replace />} />
           <Route path="answers/:slug" element={route(AnswerGuide)} />
           <Route path="glossary" element={route(Glossary)} />

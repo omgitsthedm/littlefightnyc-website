@@ -35,6 +35,7 @@ const footerGroups: Array<{
     title: "Work",
     links: [
       { label: "Custom Local Websites", to: "/services/custom-local-websites/" },
+      { label: "Websites Nationwide", to: "/nationwide/" },
       { label: "IT Support", to: "/services/it-support/" },
       { label: "Tech Consulting", to: "/services/tech-consulting/" },
       { label: "Software You Own", to: "/services/business-systems/" },
