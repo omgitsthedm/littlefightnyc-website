@@ -1184,6 +1184,12 @@ function authoredContentHtml(page) {
         .map((s) => `<h2>${escapeHtml(s.heading)}</h2>\n<p>${escapeHtml(s.body)}</p>`)
         .join("\n"),
       faqHtml(g.faq, "Quick answers"),
+      (() => {
+        const bridge = siteContent.answerServiceBridge?.[g.slug];
+        return bridge
+          ? `<p><strong>Want it handled?</strong> <a href="${bridge.to}">${escapeHtml(bridge.name)}</a> — ${escapeHtml(bridge.line)}</p>`
+          : "";
+      })(),
     ].join("\n");
   }
 

@@ -6,7 +6,7 @@ import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
 import AnswerStepper from "@/components/dataviz/AnswerStepper";
 import AnswerVerdict from "@/components/dataviz/AnswerVerdict";
 import ShareButton from "@/components/ShareButton";
-import { answerGuides } from "@/data/site";
+import { answerGuides, answerServiceBridge } from "@/data/site";
 import {
   ANSWER_CLUSTERS,
   ANSWER_VERDICTS,
@@ -26,6 +26,8 @@ function displayDate(date: string) {
 }
 
 /** Same-cluster guides first (same symptom family), then the rest. */
+
+
 function relatedGuides(slug: string) {
   const cluster = ANSWER_CLUSTERS.find((c) => c.slugs.includes(slug));
   const siblings = cluster ? cluster.slugs.filter((s) => s !== slug) : [];
@@ -108,6 +110,16 @@ export default function AnswerGuide() {
                 ))}
               </div>
             </section>
+          )}
+
+          {answerServiceBridge[guide.slug] && (
+            <aside className="lf-answer-page__bridge">
+              <p className="lf-answer-page__bridge-eyebrow">Reading done. Want it handled?</p>
+              <Link to={answerServiceBridge[guide.slug].to} className="lf-answer-page__bridge-link">
+                <span className="lf-answer-page__bridge-name">{answerServiceBridge[guide.slug].name}</span>
+                <span className="lf-answer-page__bridge-line">{answerServiceBridge[guide.slug].line}</span>
+              </Link>
+            </aside>
           )}
 
           {related.length > 0 && (

@@ -1156,3 +1156,41 @@ export const answerGuides: AnswerGuide[] = [
     ]
   },
 ];
+
+/** The bridge out of a research door — every answer walks the reader to the
+ *  service that actually handles it (Door Doctrine: no dead ends). */
+export const answerServiceBridge: Record<string, { to: string; name: string; line: string }> = (() => {
+  const websites = { to: "/services/custom-local-websites/", name: "Custom Local Websites", line: "Want it built right instead? A site that makes the phone ring, live in 14 days — or you don't pay." };
+  const support = { to: "/services/it-support/", name: "IT Support", line: "Want a person on this today? Real local help, 9am\u20139pm — callbacks within 2 hours." };
+  const consulting = { to: "/services/tech-consulting/", name: "Tech Consulting", line: "Want a straight answer for your exact setup? The read is free. If you don't need us, we say so." };
+  const systems = { to: "/services/business-systems/", name: "Software You Own", line: "Done renting? We build the tool once — and it's yours for good." };
+  return {
+    "website-form-not-working-small-business": support,
+    "reduce-monthly-software-costs-small-business": systems,
+    "business-not-showing-on-google-maps": consulting,
+    "hair-salon-save-money-software": systems,
+    "local-pharmacy-website-community-support": websites,
+    "when-custom-business-system-beats-saas": systems,
+    "best-web-designer-nyc-reddit": websites,
+    "best-web-design-agency-nyc-reddit": websites,
+    "small-business-it-support-nyc-reddit-recommendations": support,
+    "how-to-find-good-it-guy-reddit": support,
+    "squarespace-vs-hiring-web-designer-reddit": websites,
+    "wix-vs-custom-website-reddit": websites,
+    "is-local-seo-worth-it-reddit": consulting,
+    "google-business-profile-tips-reddit": consulting,
+    "web-developer-ghosted-me-reddit": websites,
+    "best-pos-system-small-business-reddit": consulting,
+    "square-vs-toast-reddit": consulting,
+    "glossgenius-vs-square-appointments-reddit": consulting,
+    "shopify-vs-squarespace-reddit": websites,
+    "does-my-small-business-need-a-website-reddit": websites,
+    "airtable-vs-notion-reddit-small-business": systems,
+    "nyc-small-business-tech-help-reddit": support,
+    "google-business-profile-suspended": support,
+    "website-down-emergency-nyc": support,
+    "pos-system-down-restaurant-nyc": support,
+    "business-email-going-to-spam": support,
+    "google-reviews-not-showing-up": consulting,
+  };
+})();

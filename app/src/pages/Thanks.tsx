@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import TugAvatar from "@/components/editorial/TugAvatar";
 import { trackEvent } from "@/lib/analytics";
 
 export default function Thanks() {
@@ -59,15 +60,19 @@ export default function Thanks() {
           </>
         ) : (
           <>
-            We've got the{" "}
+            We've got it{" "}
             <br />
-            <span className="lf-em">messy setup.</span>
+            <span className="lf-em">from here.</span>
           </>
         )}
         dek={websiteIntent
-          ? "Little Fight NYC is reviewing the context and will return a clear recommended next step, normally within two hours during 9am-9pm Eastern. The consultation is free, and nothing moves forward until the scope makes sense."
-          : "Little Fight NYC is reviewing the request. If it is urgent, call (646) 360-0318 and we will triage the immediate issue before planning any larger cleanup."}
+          ? "You did the hard part — you said what you want. A real person reads this today and calls you back with a clear next step, normally within two hours, 9am to 9pm Eastern. The consult is free, and nothing moves until the plan makes sense to you."
+          : "You did the hard part — you said something. A real person reads this today, not a queue. Expect a callback within two hours, 9am to 9pm Eastern. If it's urgent right now, call (646) 360-0318 and we'll triage the fire first."}
       />
+
+      {/* The tug, underway — the "help is on the way" beat. You just asked a
+          stranger for help; this is the answer to that. */}
+      <TugAvatar />
 
       <QuietContact />
     </>

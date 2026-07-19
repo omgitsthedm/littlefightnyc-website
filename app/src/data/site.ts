@@ -24,7 +24,7 @@ import type { LucideIcon } from "lucide-react";
 /* Re-export the split-out content arrays so every existing `@/data/site`
  * import keeps working; Vite tree-shakes each consumer to just its slice. */
 export type { AnswerGuide } from "./site-answers";
-export { answerGuides } from "./site-answers";
+export { answerGuides, answerServiceBridge } from "./site-answers";
 export type { CaseStudy } from "./site-cases";
 export { caseStudies } from "./site-cases";
 export type { GlossaryTerm } from "./site-glossary";
