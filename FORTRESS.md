@@ -333,6 +333,13 @@ Bushwick, Park Slope, DUMBO, Astoria, LIC) + the 4 hub-mood shots below.**
   do not trust Lighthouse run on a busy machine; CDP real-throttle is the
   standing method.** These accepts are permanent; do not chase the score into
   breaking doctrine.
+- **Lighthouse fleet (live, 8 runs):** A11y + SEO 100 on every run, TBT 0ms,
+  CLS ~0; desktop perf 96-98. 🔥 ROOT-CAUSED: register-sw.js reloaded every
+  FIRST visit (clients.claim → controllerchange → reload) — the site loaded
+  twice for every new visitor (~4.5s mobile). Fixed with hadController guard
+  (`d10a8a7`) + exact-match hero preloads for hero-* pages. Remaining minor:
+  ~46KB unused entry JS, sizes-tightening on area heroes, TikTok third-party
+  cookie (BP 78 on 2 desktop runs) — accepted/known.
 - AGENTS.md published at /AGENTS.md (agent experience).
 
 ## Standing laws (from CLAUDE.md, restated so this file is self-sufficient)
