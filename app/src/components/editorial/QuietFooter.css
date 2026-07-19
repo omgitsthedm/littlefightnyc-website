@@ -242,6 +242,23 @@
   border-bottom: 1px solid color-mix(in srgb, var(--lf-bone) 10%, transparent);
 }
 
+/* Animated fold (2026 baseline): with `interpolate-size: allow-keywords` set on
+   <html>, ::details-content can transition height to/from its natural size —
+   the accordion glides instead of snapping. Engines without it just snap open
+   exactly as before; reduced-motion keeps the snap on purpose. */
+@media (prefers-reduced-motion: no-preference) {
+  .lf-quiet-foot__group--fold::details-content {
+    height: 0;
+    overflow: clip;
+    transition:
+      height 280ms var(--lf-ease-standard, ease),
+      content-visibility 280ms allow-discrete;
+  }
+  .lf-quiet-foot__group--fold[open]::details-content {
+    height: auto;
+  }
+}
+
 .lf-quiet-foot__group--fold summary {
   display: flex;
   align-items: center;

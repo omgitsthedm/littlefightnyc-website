@@ -121,8 +121,8 @@ export default function QuietHero() {
 
         <div className="lf-hero__brief">
           <p>
-            We build local websites, fix urgent tech, and replace bloated software
-            with tools your business owns.
+            We build your website, pick up when the tech breaks, and kill the
+            monthly software bills bleeding you dry. What we build, you own.
           </p>
         </div>
 
@@ -136,7 +136,7 @@ export default function QuietHero() {
             <Globe2 size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
               <strong>Plan my website</strong>
-              <span>Free consult, then a clear scope</span>
+              <span>Free talk. Then a real plan.</span>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
@@ -153,15 +153,15 @@ export default function QuietHero() {
         <ul className="lf-hero__trust" aria-label="Why owners choose us">
           <li>
             <MapPin size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span>NYC-based, on-site when needed</span>
+            <span>NYC. We show up.</span>
           </li>
           <li>
             <Clock size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span>2-hour callback window</span>
+            <span>We call back in 2 hours</span>
           </li>
           <li>
             <ShieldCheck size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span>Own your code and data</span>
+            <span>You own what we build</span>
           </li>
         </ul>
       </div>

@@ -37,7 +37,7 @@ const TILES = [
     slug: "business-systems",
     label: "Software your business owns",
     verb: "Own",
-    line: "Replace bloated subscriptions with a focused tool built around your workflow. The code, data, and docs are yours.",
+    line: "Drop the pile of monthly subscriptions for one tool built around how you actually work. The code, data, and docs are yours.",
     image: "/assets/case-public-house-cockpit.webp",
     icon: Workflow,
     priority: "software",

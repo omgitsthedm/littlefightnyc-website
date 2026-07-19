@@ -1430,15 +1430,15 @@ function snapshot(page) {
       </picture>
       <div class="lf-seo__home-hero-copy">
         <h1>Websites bring business. <em>We keep it running.</em></h1>
-        <p class="lf-seo__home-sub">We build local websites, fix urgent tech, and replace bloated software with tools your business owns.</p>
+        <p class="lf-seo__home-sub">We build your website, pick up when the tech breaks, and kill the monthly software bills bleeding you dry. What we build, you own.</p>
         <div class="lf-seo__home-cta">
-          <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free consult, then a clear scope</span></a>
+          <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free talk. Then a real plan.</span></a>
           <a class="lf-seo__pill" href="tel:+16463600318">Get urgent tech help<span>Call ${site.phoneDisplay}</span></a>
         </div>
         <ul class="lf-seo__home-trust">
-          <li>NYC-based, on-site when needed</li>
-          <li>2-hour callback window</li>
-          <li>Own your code and data</li>
+          <li>NYC. We show up.</li>
+          <li>We call back in 2 hours</li>
+          <li>You own what we build</li>
         </ul>
       </div>
     </section>

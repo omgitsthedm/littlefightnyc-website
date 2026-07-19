@@ -202,7 +202,7 @@ a.lf-momentum__card:focus-visible {
 /* Dark ink on the orange fill for AA contrast — scoped to beat `.lf-editorial a`. */
 .lf-editorial .lf-momentum__cta-button { color: var(--lf-ink); }
 .lf-momentum__cta-button:hover {
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
   transform: translateY(-2px);
 }
 .lf-momentum__cta-button:focus-visible {

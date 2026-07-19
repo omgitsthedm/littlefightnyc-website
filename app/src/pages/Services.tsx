@@ -67,7 +67,7 @@ export default function Services() {
             <span className="lf-accent">Keep it running.</span>
           </>
         }
-        dek="Start with a website that earns attention. Add urgent support, free consulting, or owned software only when the business needs it."
+        dek="Start with a website that pulls in customers. Add the rest only when you actually need it. Nobody upsells you here."
         image={{
           src: "/assets/nyc-street-crowd.webp",
           alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",

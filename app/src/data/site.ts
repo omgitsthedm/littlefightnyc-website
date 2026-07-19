@@ -253,7 +253,7 @@ export const services: Service[] = [
     eyebrow: "Custom Local Websites",
     verb: "Build",
     title: "A website built to bring business",
-    headline: "Make the next customer action obvious.",
+    headline: "A website that makes the phone ring.",
     plain: "Custom websites for NYC businesses. Calls, booking, forms, maps, payments, and Google signals, all working together.",
     outcome: "Usually ships in 14 days. If we miss the date, you do not pay.",
     includes: [

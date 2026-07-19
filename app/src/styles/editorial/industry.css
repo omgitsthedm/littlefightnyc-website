@@ -78,7 +78,7 @@
   background: color-mix(in srgb, var(--lf-fight) 18%, transparent);
 }
 .lf-post--industry .lf-post__cta-row a:first-child:hover {
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
 }
 .lf-post--industry .lf-post__cta-row a:focus-visible {
   outline: 2px solid var(--lf-fight);

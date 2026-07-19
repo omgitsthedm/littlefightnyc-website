@@ -282,8 +282,8 @@ html[data-snap="1"] .lf-hero__char {
 .lf-editorial .lf-hero__action--website:hover,
 .lf-editorial .lf-hero__action--website:focus-visible {
   color: var(--lf-ink);
-  border-color: var(--lf-ember);
-  background: var(--lf-ember);
+  border-color: var(--lf-fight-hover);
+  background: var(--lf-fight-hover);
 }
 
 .lf-editorial .lf-hero__action--support {

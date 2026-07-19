@@ -388,7 +388,7 @@
 
 .lf-editorial .lf-audit__continue:hover {
   color: var(--lf-ink);
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
   transform: translateY(-2px);
 }
 
@@ -492,6 +492,14 @@
   font-style: italic;
 }
 
+/* 2026 baseline: the message box grows with the typing instead of scrolling
+   inside itself. min/max keep it honest; older engines keep the fixed box. */
+.lf-audit__field textarea {
+  field-sizing: content;
+  min-height: 3lh;
+  max-height: 14lh;
+}
+
 .lf-audit__field input:focus,
 .lf-audit__field select:focus,
 .lf-audit__field textarea:focus {
@@ -565,7 +573,7 @@
 }
 
 .lf-editorial .lf-audit__assurance a:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }
 
 /* Success state — a confirmed / validated field. */
@@ -627,7 +635,7 @@
 }
 
 .lf-audit__submit:hover {
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
   transform: translateY(-2px);
 }
 

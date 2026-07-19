@@ -276,7 +276,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-cases__service-link:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }
 
 .lf-cases__live {
@@ -291,7 +291,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-cases__live:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }
 
 /* ============================================================
@@ -398,7 +398,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-case-detail__service-link:hover,
 .lf-studio-detail__live:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }
 
 .lf-case-detail__live {
@@ -411,7 +411,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-case-detail__live:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }
 
 .lf-studio-detail__status--active,
@@ -831,7 +831,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-case__hero-live:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }
 
 .lf-case__hero-actions {
@@ -1305,5 +1305,5 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-case__ship-cap-link:hover {
-  color: var(--lf-ember);
+  color: var(--lf-fight-hover);
 }

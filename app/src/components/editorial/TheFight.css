@@ -171,7 +171,7 @@
 }
 /* Dark ink on the orange fill for AA contrast — scoped to beat `.lf-editorial a`. */
 .lf-editorial a.lf-fight__cta { color: var(--lf-ink); }
-.lf-fight__cta:hover { background: var(--lf-ember); transform: translateY(-2px); }
+.lf-fight__cta:hover { background: var(--lf-fight-hover); transform: translateY(-2px); }
 .lf-fight__cta:focus-visible { outline: 2px solid var(--lf-fight); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {

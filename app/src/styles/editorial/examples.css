@@ -220,7 +220,7 @@
 }
 
 .lf-ex-feature__card:hover .lf-ex-feature__cta {
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
 }
 
 /* ---------- Asymmetric rows: 1 large + 2 small, repeating ---------- */

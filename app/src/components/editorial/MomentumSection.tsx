@@ -28,13 +28,13 @@ export default function MomentumSection() {
           <div className="lf-momentum__feature-cols">
             <div className="lf-momentum__feature-main">
               <div className="lf-momentum__feature-body">
-                <span className="lf-mono lf-momentum__card-label">Ownership, not lock-in</span>
+                <span className="lf-mono lf-momentum__card-label">Own it. Don't rent it.</span>
                 <h2 id="lf-momentum-heading" className="lf-display lf-momentum__feature-title">
                   Software your business owns.
                 </h2>
                 <p className="lf-momentum__feature-line">
-                  One focused build, paid across development. No hostage pricing,
-                  and no endless rent for the same workflow.
+                  We build it once. You pay for the build — not forever. Nobody
+                  holds your own tools over your head.
                 </p>
               </div>
             </div>
@@ -50,10 +50,11 @@ export default function MomentumSection() {
             Free consulting
           </span>
           <h3 className="lf-display lf-momentum__cta-title">
-            Do the math before you build.
+            Do the math before you spend.
           </h3>
           <p className="lf-momentum__card-line">
-            We compare the software bill and the staff time around it at no cost.
+            Bring us your software bill. We'll add up what it really costs you —
+            for free.
           </p>
           <Link to="/tech-audit/" className="lf-momentum__cta-button">
             Review my software

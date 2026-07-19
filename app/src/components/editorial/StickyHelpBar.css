@@ -48,7 +48,7 @@
 
 .lf-sticky-help__cell--fit:hover,
 .lf-sticky-help__cell--fit:active {
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
 }
 
 .lf-sticky-help__label {

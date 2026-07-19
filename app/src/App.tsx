@@ -16,10 +16,6 @@ function lazyRoute<T extends ComponentType<unknown>>(
   return lazy(() => importWithRetry(importer));
 }
 
-// The install prompt only surfaces ~1200ms after load (and only on iOS/Chrome),
-// so keep it (and its lucide icons + CSS) out of the eager first-paint bundle.
-const PwaInstallPrompt = lazyRoute(() => import("@/components/PwaInstallPrompt"));
-
 const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
 const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
 const Answers = lazyRoute(() => import("@/pages/Answers"));
@@ -73,9 +69,6 @@ export default function App() {
       <RouteMetaManager />
       <RouteScrollManager />
       <GlobalViewTransitions />
-      <Suspense fallback={null}>
-        <PwaInstallPrompt />
-      </Suspense>
       <ErrorBoundary>
       <Routes>
         {/* Home: custom layout with the full Press Strike masthead - the

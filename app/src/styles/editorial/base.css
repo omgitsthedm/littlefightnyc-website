@@ -112,6 +112,19 @@ body:has(.lf-editorial) {
   text-wrap: pretty;
 }
 
+/* Reserve the scrollbar gutter so short↔long route changes don't shift the
+   whole layout by a scrollbar width — that shift reads as a jump inside the
+   native View Transition crossfade. No-op where overlay scrollbars rule. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* 2026 baseline: lets height animate to/from auto (the mobile footer folds
+   use it via ::details-content). Ignored by engines without it. */
+html {
+  interpolate-size: allow-keywords;
+}
+
 .lf-editorial :target {
   scroll-margin-top: clamp(72px, 10vh, 120px);
 }

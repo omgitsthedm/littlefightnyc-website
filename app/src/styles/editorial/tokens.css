@@ -24,7 +24,6 @@
   --lf-fight-hover: #ff8330;  /* +L — brighter on hover */
   --lf-fight-active: #e05f00; /* −L — pressed / held */
   --lf-fight-ring: rgba(249, 115, 22, 0.5); /* focus halo — the signal itself */
-  --lf-ember: var(--lf-fight-hover); /* legacy hover token → the ramp */
   --lf-blue: #3B82F6;         /* accent — Axiom blue, now a real second signal */
   --lf-blue-soft: #60A5FA;    /* lighter blue for secondary labels / hovers */
   --lf-error: #F87171;        /* semantic red — invalid / failed states */

@@ -52,7 +52,7 @@ type Props = {
 
 export default function QuietContact({
   heading = "Start with the right next step.",
-  lede = "Call, text, email, or send a brief. Little Fight NYC will review the context and come back with a clear next step.",
+  lede = "Call, text, or email. A real person reads it and tells you the next move. No phone tree, no ticket number.",
 }: Props) {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
 

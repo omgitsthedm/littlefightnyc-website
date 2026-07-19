@@ -33,11 +33,6 @@ html.is-standalone .lf-editorial {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* The install prompt should never ride over the home indicator. */
-html.is-standalone .lf-install-prompt {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
 /* ─── iPad ───────────────────────────────────────────────────────
  * iPad is a hybrid: pointer precision is higher than phone, but touch is
  * still primary. Keep tap targets generous and only enable hover-only

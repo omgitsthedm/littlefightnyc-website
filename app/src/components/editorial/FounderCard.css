@@ -133,7 +133,7 @@
     transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 .lf-editorial .lf-founder__tel:hover {
-  background: var(--lf-ember);
+  background: var(--lf-fight-hover);
   transform: translateY(var(--lf-lift));
 }
 .lf-editorial .lf-founder__tel:active {
