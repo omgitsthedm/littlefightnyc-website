@@ -1,5 +1,31 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — Instrument harness consolidation + dead-VT cleanup (LIVE, `f2cc4e2`, net −1,048 lines)
+
+Thermo-nuclear review pass. **All seven canvas instruments now share ONE
+harness: `src/components/dataviz/instrument.ts`** (rr, glow, DISP/MONO literal
+fonts, ORANGE/RED/GREEN, and `useInstrumentCanvas` — the DPR/ResizeObserver/
+reduced-motion/first-paint/IO/rAF contract). Each instrument passes a
+`create(cx)` closure returning `{reset, frame, still}` and keeps only its sim +
+draw. One shared `.lf-instrument` CSS block; per-instance sizing via
+`--lf-instrument-ratio/-minh(-m)` custom props set INLINE on the wrapper (the
+≤720px media query in instrument.css reads the `-m` variants). **New instruments
+must use this harness — do not copy-paste the old scaffolding back in.**
+AuditBench's mobile breakpoint deliberately normalized 640→720px.
+
+Dead-VT cleanup: the 21 no-op `viewTransition` props and the per-link
+`useViewTransitionNav` handlers (unreachable since GlobalViewTransitions
+preventDefaults in capture) are deleted; `viewTransition.ts` is now only
+`navigateWithViewTransition` + support checks, called ONLY by
+GlobalViewTransitions. The paired `view-transition-name` inline styles in
+CaseStudies/Journal/detail pages STAY — they drive the shared-element morphs.
+Also: WhoAnswers fault dot glows red now (orange = response only).
+
+Verified zero behavior change: 7/7 instruments render+animate on the harness
+(aspect ratios exact both viewports), reduced-motion emulated → static settled
+frame (no rAF), 1 startViewTransition per nav click, tsc+eslint clean, 178
+routes, ratchet 66→62.
+
 ## 2026-07-18 — Tugboat avatar on the 404 (LIVE, `e7ebd4b`)
 
 The doctrine's tugboat-avatar tier, realized as an ADDITIVE, low-stakes brand
