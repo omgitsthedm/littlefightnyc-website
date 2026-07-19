@@ -490,6 +490,7 @@ function foundationSchemas(page) {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     "name": site.name,
+    "alternateName": ["Little Fight", "LittleFight NYC"],
     "url": siteUrl,
     "email": site.email,
     "telephone": site.phone,
@@ -513,6 +514,7 @@ function foundationSchemas(page) {
     "@type": "ProfessionalService",
     "@id": `${siteUrl}/#localbusiness`,
     "name": site.name,
+    "alternateName": "Little Fight",
     "url": siteUrl,
     "email": site.email,
     "telephone": site.phone,
@@ -646,6 +648,7 @@ function foundationSchemas(page) {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     "name": site.name,
+    "alternateName": ["Little Fight", "LittleFight NYC"],
     "logo": {
       "@type": "ImageObject",
       "url": site.image
@@ -962,6 +965,7 @@ const primaryLinks = [
   { href: "/services/business-systems/", label: "Business Systems" },
   { href: "/services/#studio", label: "Studio" },
   { href: "/examples/", label: "Examples" },
+  { href: "/areas/upper-east-side/", label: "Upper East Side" },
   { href: "/journal/", label: "Journal" },
   { href: "/tech-audit/", label: "Free Tech Audit" },
   { href: "/contact/", label: "Contact" },

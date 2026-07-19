@@ -62,6 +62,7 @@ const footerGroups: Array<{
     title: "Local",
     links: [
       { label: "All 14 Neighborhoods", to: "/areas/" },
+      { label: "Upper East Side", to: "/areas/upper-east-side/" },
       { label: "SoHo", to: "/areas/soho/" },
       { label: "Midtown", to: "/areas/midtown/" },
       { label: "Williamsburg", to: "/areas/williamsburg/" },
