@@ -110,8 +110,25 @@ studies ×7 → examples → about → journal hub → answers hub → contact �
 glossary → industries → studio → legal/404.
 
 ### Wave 5 — Watchtower (keep it won)
-- OpenSEO weekly baseline vs. this file's numbers
-- Signal ratchet, jargon sweep, margin-audit, 16px floor as standing gates
+
+**The weekly ritual (any session, David says "run the watchtower"):**
+1. `cd ~/creative-tools/open-seo && docker compose up -d` → wait for
+   http://localhost:3001 (first boot builds ~60s)
+2. Read the littlefightnyc project's Search Performance: clicks / impressions /
+   avg position (28d) + the striking-distance table
+3. Compare to the log below; append a dated row; push
+4. Report movement to David: first clicks ever, UES entering top 5, brand
+   queries landing home instead of /about/, impressions ±30%
+5. If the UES experiment proves out, replicate the winning pattern to the next
+   area page — one at a time, never a mass stamp
+
+**GSC log:**
+| Date | Impressions (28d) | Clicks | Avg pos | Notes |
+|---|---|---|---|---|
+| 2026-07-19 | 306 (+70%) | 0 | 16.7 | Baseline. UES "seo company" cluster ~130 imp, pos 5–20. Brand queries land /about/. UES title/content experiment shipped this day. |
+
+- Standing gates every ship: signal ratchet, jargon sweep, margin audit,
+  16px floor
 - New-page rule: funnel station + ledger check + template contract, or it
   doesn't ship
 

@@ -232,9 +232,9 @@ export const areaPages: AreaPage[] = [
     slug: "upper-east-side",
     name: "Upper East Side",
     zipCodes: ["10021", "10028", "10065", "10128"],
-    headline: "Local search, websites, and support for Upper East Side businesses.",
+    headline: "Local SEO, websites, and support for Upper East Side businesses.",
     shortAnswer:
-      "Short answer: Upper East Side businesses need high-trust websites, correct Google visibility, and simple systems that make appointments and follow-up easy.",
+      "Short answer: Upper East Side businesses need high-trust websites, local SEO that keeps Google correct, and simple systems that make appointments and follow-up easy.",
     localPattern:
       "Salons, wellness practices, clinics, shops, and professional offices need clarity and trust before customers call.",
     firstMove: "Review the service pages, the profile, the reviews, the booking, and what happens after a customer reaches out.",
@@ -250,6 +250,7 @@ export const areaPages: AreaPage[] = [
       "A Google profile missing services, credentials, insurance details, or recent reviews",
       "New-patient intake that is clunky, repeats questions, or gets lost after first contact",
       "A name and address that read differently across listings and chip away at trust",
+      "An SEO bill that renews every month without showing what changed",
     ],
     faq: [
       {
@@ -266,6 +267,16 @@ export const areaPages: AreaPage[] = [
         question: "Isn't a professional practice above worrying about Google reviews?",
         answer:
           "Not on the Upper East Side. Clients here quietly check reviews before anything personal or medical. A few recent, genuine reviews and an owner who replies signal a practice that is present and cared for. That is exactly what this clientele looks for.",
+      },
+      {
+        question: "What does a local SEO company actually do for an Upper East Side business?",
+        answer:
+          "Honest version: it makes sure Google understands who you are, where you are, and what you do. Correct name and hours everywhere, real reviews coming in, service pages that answer what patients and clients actually search, and a site fast enough that nobody gives up. That is most of it. We do all of that as part of the work — and the first look is free.",
+      },
+      {
+        question: "Do I need a monthly SEO retainer?",
+        answer:
+          "Usually no. Most local SEO is setup done right, then habits — fresh reviews, correct hours, an update when something changes. A retainer that cannot tell you what changed this month is just another bill. We set it up, show you what we did, and you own it.",
       },
     ],
     nearby: ["upper-west-side", "midtown"],

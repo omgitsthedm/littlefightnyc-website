@@ -933,8 +933,8 @@
       "path": "/areas/upper-east-side/",
       "title": "Upper East Side SEO Company & Web Design | Little Fight NYC",
       "description": "Looking for an SEO company on the Upper East Side? We do local search, websites, and tech support for UES salons, practices, shops, and service teams — and we show up in person.",
-      "h1": "Local search, websites, and support for Upper East Side businesses.",
-      "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, correct Google visibility, and simple systems that make appointments and follow-up easy.",
+      "h1": "Local SEO, websites, and support for Upper East Side businesses.",
+      "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, local SEO that keeps Google correct, and simple systems that make appointments and follow-up easy.",
       "type": "PlacePage",
       "image": "/assets/manhattan.webp",
       "faq": [
@@ -949,6 +949,14 @@
         {
           "question": "Isn't a professional practice above worrying about Google reviews?",
           "answer": "Not on the Upper East Side. Clients here quietly check reviews before anything personal or medical. A few recent, genuine reviews and an owner who replies signal a practice that is present and cared for. That is exactly what this clientele looks for."
+        },
+        {
+          "question": "What does a local SEO company actually do for an Upper East Side business?",
+          "answer": "Honest version: it makes sure Google understands who you are, where you are, and what you do. Correct name and hours everywhere, real reviews coming in, service pages that answer what patients and clients actually search, and a site fast enough that nobody gives up. That is most of it. We do all of that as part of the work — and the first look is free."
+        },
+        {
+          "question": "Do I need a monthly SEO retainer?",
+          "answer": "Usually no. Most local SEO is setup done right, then habits — fresh reviews, correct hours, an update when something changes. A retainer that cannot tell you what changed this month is just another bill. We set it up, show you what we did, and you own it."
         }
       ]
     },
