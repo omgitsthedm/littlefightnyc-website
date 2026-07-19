@@ -326,7 +326,12 @@ Bushwick, Park Slope, DUMBO, Astoria, LIC) + the 4 hub-mood shots below.**
   46 (no streetAddress — SAB law), Crawlability 54 (slash-normalization 301s —
   correct), Performance 65 (HTML no-cache + render-blocking CSS — deliberate,
   real-throttle paint ~270ms; 'unminified'/'LCP-hints' = verified false
-  positives). These accepts are permanent; do not chase the score into
+  positives). **PERF GROUND TRUTH re-measured on live prod 2026-07-19 late
+  (CDP Fast-4G + 4x CPU, mobile): FCP 1.25s / LCP 1.28s / interactive 524ms /
+  full load 2.4s — throttled. Unthrottled first paint remains sub-second.
+  Local-machine Lighthouse runs under build load report 2.8s+ FCP — ARTIFACT,
+  do not trust Lighthouse run on a busy machine; CDP real-throttle is the
+  standing method.** These accepts are permanent; do not chase the score into
   breaking doctrine.
 - AGENTS.md published at /AGENTS.md (agent experience).
 
