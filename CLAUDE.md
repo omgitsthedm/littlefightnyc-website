@@ -1,5 +1,33 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — HOME = FOUR ITEMS OF FOCUS (LIVE, `daa560b`) — David's structural brief
+
+**⛔ Standing structure: the home page is FOUR ITEMS OF FOCUS — Web Design,
+Tech Support, Consulting, Personalized Software — nothing repeated, audience
+named plainly.** `TheFour.tsx`: each pillar carries its service page's canvas
+instrument (01→SiteInFourteen, 02→WhoAnswers, 03→TheFreeRead, 04→MoneyLeaving),
+alternating editorial layout, one shared physics harness. Page order: Hero →
+The Four → Recent work → The record → The fight → neon sign → contact.
+**DELETED as redundant (do not resurrect): WorkGrid, SystemVerbs,
+KeepConnectReplaceBuild, MomentumSection, MomentumCursorGlow, the home Quick
+Answers FAQ (+ its "/" FAQPage schema).** David's exact critique that drove
+this: header cramped; "Grow into the system" = terrible copy; three sections
+repeating the same ownership pitch; "no Disney magic… it should be 4 items of
+focus."
+
+- **⛔ FOUNDED 2021, NOT 2012.** David corrected the founding year. Every claim
+  swept (record stat, footer, FounderCard, /es/, prerender paragraphs,
+  foundingDate schema, llms.txt). Never write 2012 as the founding year again.
+  (industries.json "looks like your practice today, not 2012" is a style joke,
+  not a claim — it stays.)
+- **Nav:** OPEN/REPLIES chip removed from the desktop bar (cramped). Phone +
+  Start a project only. Availability lives in hero trust/neon/footer.
+- **Neon sign functions like a real sign now:** FULL BLAZE while open, ember
+  after hours (previous inversion was backwards); stage 660→1080px; underline
+  gets an aging-tube sputter. Reduced-motion: static lit.
+- **Legibility floor: nothing under 12px sitewide** (--lf-text-2xs 12px,
+  --lf-text-xs 13-15px). David: "a 65-year-old New Yorker has to read this."
+
 ## 2026-07-18 — Reach wave: /es/, The Lab links, Speculation Rules (LIVE, `4771866`, 179 routes)
 
 - **`/es/` — the complete pitch in Spanish** (standalone page, own chrome,
