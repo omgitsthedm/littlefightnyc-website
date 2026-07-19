@@ -8,7 +8,7 @@ import "./MiniMapNYC.css";
 /**
  * MiniMapNYC — a REAL basemap (Leaflet + Carto dark tiles, lazy-loaded when
  * scrolled near), following the project direction: evoke a proper map product, never a
- * hand-drawn blob. The eight served neighborhoods are tappable markers
+ * hand-drawn blob. The 14 served neighborhoods are tappable markers
  * linking to /areas/{slug}/: current = orange, its nearby[] = blue, the rest
  * muted. The ZIP chip list beside the map carries the same links + facts as
  * visible text (and is the no-map fallback). Data: areaPages.
@@ -241,7 +241,7 @@ export default function MiniMapNYC({
       <figcaption className="lf-minimap__caption">
         {currentArea
           ? `${currentArea.name} in orange · nearby in blue`
-          : "The eight Manhattan neighborhoods we serve"}
+          : "The 14 neighborhoods we serve across Manhattan, Brooklyn, and Queens"}
       </figcaption>
     </figure>
   );
