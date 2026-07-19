@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { label: "Services", to: "/services/" },
   { label: "Examples", to: "/examples/" },
   { label: "About", to: "/about/" },
-  { label: "Journal", to: "/journal/" },
+  { label: "Library", to: "/library/" },
   { label: "Contact", to: "/contact/" },
 ] as const;
 

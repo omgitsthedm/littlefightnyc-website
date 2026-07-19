@@ -343,7 +343,7 @@ export default function FieldGuide() {
             ))}
           </ul>
           <p className="lf-ex-answers__more">
-            <Link to="/answers/">
+            <Link to="/library/">
               See all the answers <span aria-hidden="true">→</span>
             </Link>
           </p>

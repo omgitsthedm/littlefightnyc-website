@@ -19,7 +19,6 @@ function lazyRoute<T extends ComponentType<unknown>>(
 const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
 const Espanol = lazyRoute(() => import("@/pages/Espanol"));
 const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
-const Answers = lazyRoute(() => import("@/pages/Answers"));
 const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
 const Areas = lazyRoute(() => import("@/pages/Areas"));
@@ -31,7 +30,7 @@ const TechAudit = lazyRoute(() => import("@/pages/TechAudit"));
 const Glossary = lazyRoute(() => import("@/pages/Glossary"));
 const GlossaryTerm = lazyRoute(() => import("@/pages/GlossaryTerm"));
 const IndustryDetail = lazyRoute(() => import("@/pages/IndustryDetail"));
-const Journal = lazyRoute(() => import("@/pages/Journal"));
+const Library = lazyRoute(() => import("@/pages/Library"));
 const JournalPost = lazyRoute(() => import("@/pages/JournalPost"));
 const Legal = lazyRoute(() => import("@/pages/Legal"));
 const NotFound = lazyRoute(() => import("@/pages/NotFound"));
@@ -101,11 +100,12 @@ export default function App() {
           <Route path="fit-check" element={<Navigate to="/tech-audit/" replace />} />
           <Route path="examples" element={route(FieldGuide)} />
           <Route path="audit" element={<Navigate to="/tech-audit/" replace />} />
-          <Route path="answers" element={route(Answers)} />
+          <Route path="library" element={route(Library)} />
+          <Route path="answers" element={<Navigate to="/library/" replace />} />
           <Route path="answers/:slug" element={route(AnswerGuide)} />
           <Route path="glossary" element={route(Glossary)} />
           <Route path="glossary/:slug" element={route(GlossaryTerm)} />
-          <Route path="journal" element={route(Journal)} />
+          <Route path="journal" element={<Navigate to="/library/" replace />} />
           <Route path="journal/:slug" element={route(JournalPost)} />
           <Route path="industries" element={<Navigate to="/examples/#industries" replace />} />
           <Route path="industries/:slug" element={route(IndustryDetail)} />

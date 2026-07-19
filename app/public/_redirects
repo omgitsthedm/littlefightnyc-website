@@ -27,6 +27,12 @@
 /lifetime-cost/          /answers/reduce-monthly-software-costs-small-business/  301
 /lifetime-cost           /answers/reduce-monthly-software-costs-small-business/  301
 
+# --- Library consolidation (2026-07-19): journal + answers hubs -> one door
+/journal/                /library/                         301
+/journal                 /library/                         301
+/answers/                /library/                         301
+/answers                 /library/                         301
+
 # --- Instant-scan retirement (2026-07-19): one audit door
 /audit/                  /tech-audit/                      301
 /audit                   /tech-audit/                      301

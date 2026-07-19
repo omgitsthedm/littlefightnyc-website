@@ -236,23 +236,18 @@ function glossaryPages() {
   return [indexPage, ...termPages];
 }
 
+let libraryJournalLinks = [];
+
 async function journalPages() {
   const journal = JSON.parse(await readFile(path.join(appRoot, "src/data/journal.json"), "utf8"));
   const industries = JSON.parse(await readFile(path.join(appRoot, "src/data/industries.json"), "utf8"));
 
-  const indexJournal = {
-    path: "/journal/",
-    // Must match RouteMeta's /journal/ entry — a mismatch makes the tab title
-    // visibly swap after hydration and splits what crawlers vs users index.
-    title: "Journal for NYC Small Business Operators | Little Fight NYC",
-    description:
-      "Plain-English field notes on websites, IT support, software bills, local search, and business systems for New York small business owners.",
-    shortAnswer:
-      "Short answer: Little Fight's Journal collects essays, software comparisons, and field notes for NYC small business owners.",
-    h1: "What we've been writing about.",
-    type: "WebPage",
-    image: "/assets/manhattan.webp",
-  };
+  // Journal hub retired 2026-07-19 — /library/ is the one front door (its
+  // entry lives in seo-pages.json). Keep the post list for the Library body.
+  libraryJournalLinks = journal.map((post) => ({
+    href: `/journal/${post.slug}/`,
+    label: post.title,
+  }));
 
   const journalPostPages = journal.map((post) => ({
     path: `/journal/${post.slug}/`,
@@ -283,7 +278,7 @@ async function journalPages() {
     industry: entry,
   }));
 
-  return [indexJournal, ...journalPostPages, ...industryDetailPages];
+  return [...journalPostPages, ...industryDetailPages];
 }
 
 const pages = [
@@ -966,7 +961,7 @@ const primaryLinks = [
   { href: "/services/#studio", label: "Studio" },
   { href: "/examples/", label: "Examples" },
   { href: "/areas/upper-east-side/", label: "Upper East Side" },
-  { href: "/journal/", label: "Journal" },
+  { href: "/library/", label: "The Library" },
   { href: "/tech-audit/", label: "Free Tech Audit" },
   { href: "/contact/", label: "Contact" },
   { href: "/privacy/", label: "Privacy" },
@@ -1069,7 +1064,7 @@ function contextualLinksFor(page) {
     );
   } else if (page.path.startsWith("/journal/") && page.path !== "/journal/") {
     links.push(
-      { href: "/journal/", label: "More from the Journal" },
+      { href: "/library/", label: "More from the Library" },
       { href: "/services/", label: "What Little Fight does" },
       { href: "/tech-audit/", label: "Book your free Tech Audit" }
     );
@@ -1177,6 +1172,19 @@ function paragraphsHtml(items) {
 // Before this, GPTBot/ClaudeBot/PerplexityBot saw only a shortAnswer + stock
 // boilerplate on every route — the site's best content was JS-gated.
 function authoredContentHtml(page) {
+  if (page.path === "/library/") {
+    const answers = (siteContent.answerGuides ?? [])
+      .map((g) => `<li><a href="/answers/${g.slug}/">${escapeHtml(g.question)}</a></li>`)
+      .join("\n");
+    const posts = libraryJournalLinks
+      .map((l) => `<li><a href="${l.href}">${escapeHtml(l.label)}</a></li>`)
+      .join("\n");
+    return [
+      `<h2>Straight answers</h2>\n<ul>${answers}</ul>`,
+      `<h2>The Journal</h2>\n<ul>${posts}</ul>`,
+    ].join("\n");
+  }
+
   if (page.answerGuide) {
     const g = page.answerGuide;
     return [

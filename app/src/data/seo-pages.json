@@ -145,13 +145,13 @@
       "image": "/assets/nyc-street.webp"
     },
     {
-      "path": "/answers/",
-      "title": "Owner Answers: NYC Small Business Tech Questions | Little Fight NYC",
-      "description": "Plain answers to the questions NYC owners actually ask. Websites, Google visibility, software costs, POS, email, and urgent fixes. Short, direct, no selling.",
-      "h1": "Plain answers, no selling.",
-      "shortAnswer": "Short answer: a library of plain answers to real NYC small-business tech questions. What to check, what it usually is, and when to get help.",
+      "path": "/library/",
+      "title": "The Library: Owner Answers & Field Notes | Little Fight NYC",
+      "description": "Everything Little Fight NYC knows, free: straight answers to real owner questions, plus how-tos, essays, and software comparisons from working with NYC small businesses.",
+      "h1": "Everything we know. Free.",
+      "shortAnswer": "Short answer: the Library is every answer and field note Little Fight NYC has published — owner questions answered plainly, plus how-tos, essays, and software comparisons. Free, no selling.",
       "type": "CollectionPage",
-      "image": "/assets/nyc-street.webp"
+      "image": "/assets/manhattan.webp"
     },
     {
       "path": "/answers/website-form-not-working-small-business/",

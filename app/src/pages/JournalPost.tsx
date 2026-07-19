@@ -135,7 +135,7 @@ export default function JournalPost() {
     };
   }, [post]);
 
-  if (!post) return <Navigate to="/journal/" replace />;
+  if (!post) return <Navigate to="/library/" replace />;
 
   // Only trust `prepared` when it belongs to the post currently on screen.
   const ready = prepared && prepared.slug === post.slug ? prepared : null;

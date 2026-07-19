@@ -37,7 +37,7 @@ function buildItems(): Item[] {
     { label: "Home", to: "/", group: "Go to", icon: Home },
     { label: "Services", to: "/services/", group: "Go to", icon: Layers },
     { label: "Examples", to: "/examples/", group: "Go to", icon: Award },
-    { label: "Journal", to: "/journal/", group: "Go to", icon: Newspaper },
+    { label: "The Library", to: "/library/", group: "Go to", icon: Newspaper },
     { label: "Glossary", to: "/glossary/", group: "Go to", icon: BookOpen },
     { label: "About", to: "/about/", group: "Go to", icon: Users },
     { label: "Contact", to: "/contact/", group: "Go to", icon: MessageSquare },

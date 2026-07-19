@@ -50,12 +50,13 @@ const footerGroups: Array<{
     ],
   },
   {
-    title: "Answers",
+    title: "The Library",
     links: [
-      { label: "All Answers", to: "/answers/" },
+      { label: "The Library", to: "/library/" },
       { label: "Cut Software Costs", to: "/answers/reduce-monthly-software-costs-small-business/" },
       { label: "Not Showing on Google", to: "/answers/business-not-showing-on-google-maps/" },
       { label: "Website Down?", to: "/answers/website-down-emergency-nyc/" },
+      { label: "Glossary", to: "/glossary/" },
     ],
   },
   {
@@ -67,13 +68,6 @@ const footerGroups: Array<{
       { label: "Midtown", to: "/areas/midtown/" },
       { label: "Williamsburg", to: "/areas/williamsburg/" },
       { label: "Astoria", to: "/areas/astoria/" },
-    ],
-  },
-  {
-    title: "Library",
-    links: [
-      { label: "Journal", to: "/journal/" },
-      { label: "Glossary", to: "/glossary/" },
     ],
   },
 ];

@@ -222,8 +222,9 @@ lost-but-safe (404 ✅), no-translation-needed (/es/ ✅), reading-companion
 
 ### Claude executes (in order)
 1. ✅ ~~Warm /thanks/~~ + ✅ ~~answer→service bridges×27~~ (`7cbfa10`)
-2. **Library consolidation** — one "Library" front door for Journal + Answers
-   (nav: one entry; hubs 301 → /library/; ALL 64 detail URLs untouched)
+2. ✅ ~~Library consolidation~~ — /library/ live: answers stream first, journal
+   below; hubs 301; 64 detail URLs untouched; crawler snapshot lists all 64
+   links (old hub snapshots listed ZERO); footer 5 groups → 4
 3. **Case-studies hub fold** — 301 /case-studies/ → /examples/ (8 detail pages
    stay; examples already IS the proof wall)
 4. **Reference door build** — UES to the full Door-Doctrine arc (recognition
