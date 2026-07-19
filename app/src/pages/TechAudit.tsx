@@ -93,29 +93,19 @@ function sharedWebsiteUrl(params: URLSearchParams): string {
   return match ? match[0].slice(0, 2048) : "";
 }
 
-function reportValue(params: URLSearchParams): string {
-  const value = queryValue(params, "report", 120).toLowerCase();
-  return /^[a-z0-9-]+$/.test(value) ? value : "";
-}
-
 function composeContextMessage(
   symptom: string | null,
   urgency: string | null,
   websiteUrl: string,
-  reportId: string,
 ): string {
   const lines = [composeMessage(symptom, urgency)];
   if (websiteUrl) lines.push(`Website: ${websiteUrl}`);
-  if (reportId) lines.push(`Free scan: https://audit.littlefightnyc.com/report/${reportId}/`);
   return lines.filter(Boolean).join("\n");
 }
 
-function appendAuditContext(message: string, websiteUrl: string, reportId: string): string {
+function appendAuditContext(message: string, websiteUrl: string): string {
   const lines = [message];
   if (websiteUrl && !message.includes("Website:")) lines.push(`Website: ${websiteUrl}`);
-  if (reportId && !message.includes("Free scan:")) {
-    lines.push(`Free scan: https://audit.littlefightnyc.com/report/${reportId}/`);
-  }
   return lines.filter(Boolean).join("\n");
 }
 
@@ -178,7 +168,6 @@ export default function TechAudit() {
   // owner wants us to look at — so it drops the form into website mode too.
   const websiteIntent =
     searchParams.get("intent") === WEBSITE_INTENT || Boolean(websiteUrl);
-  const reportId = reportValue(searchParams);
   // Attribute a lead that arrived via the PWA share target (no explicit source,
   // but the share sheet passed text/title) so shares are measurable.
   const explicitSource = queryValue(searchParams, "source", 80);
@@ -193,7 +182,6 @@ export default function TechAudit() {
   const initialMessage = appendAuditContext(
     draft?.message || composeMessage(initialSymptom, draft?.urgency ?? null),
     websiteUrl,
-    reportId,
   );
   const [step, setStep] = useState<Step>(draft?.step ?? 1);
   const [symptom, setSymptom] = useState<string | null>(initialSymptom);
@@ -218,15 +206,6 @@ export default function TechAudit() {
   const stepTitle = websiteIntent && step === 1
     ? "What needs to change on your website?"
     : STEP_TITLES[step];
-
-  useEffect(() => {
-    if (!reportId) return;
-    trackEvent("audit_scan_completed", {
-      report_id: reportId,
-      website_url: websiteUrl,
-      page_path: "/tech-audit/",
-    });
-  }, [reportId, websiteUrl]);
 
   // Move focus to the step heading on step change (not on first paint).
   useEffect(() => {
@@ -301,7 +280,7 @@ export default function TechAudit() {
     });
     setSymptom(label);
     if (!messageDirty) {
-      setMessage(composeContextMessage(label, urgency, websiteUrl, reportId));
+      setMessage(composeContextMessage(label, urgency, websiteUrl));
     }
     hapticStep();
     setStep(2);
@@ -314,7 +293,7 @@ export default function TechAudit() {
     });
     setUrgency(label);
     if (!messageDirty) {
-      setMessage(composeContextMessage(symptom, label, websiteUrl, reportId));
+      setMessage(composeContextMessage(symptom, label, websiteUrl));
     }
     if (symptom) setPayoff(true);
     hapticStep();
@@ -580,7 +559,6 @@ export default function TechAudit() {
                   <input type="hidden" name="intent" value={websiteIntent ? WEBSITE_INTENT : "general"} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />
                   {websiteUrl && <input type="hidden" name="website_url" value={websiteUrl} />}
-                  {reportId && <input type="hidden" name="report_id" value={reportId} />}
                   {symptom && <input type="hidden" name="symptom" value={symptom} />}
                   {urgency && <input type="hidden" name="urgency" value={urgency} />}
                   {Object.entries(attribution).map(([key, value]) => (

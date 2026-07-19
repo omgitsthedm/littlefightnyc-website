@@ -770,25 +770,6 @@
       ]
     },
     {
-      "path": "/audit/",
-      "title": "Instant Website Scan for NYC Small Businesses | Little Fight NYC",
-      "description": "Run a free instant scan of your website. It checks structure, copy, local signals, speed, and contact paths — then shows what to fix.",
-      "h1": "See what your site is leaking.",
-      "shortAnswer": "Short answer: the Instant Website Scan is a free, automated first read of your website. For a human review of your whole setup, book the free Tech Audit.",
-      "type": "WebPage",
-      "image": "/assets/coworking-laptops.webp",
-      "faq": [
-        {
-          "question": "What does the Little Fight website audit check?",
-          "answer": "It checks clarity, trust, mobile use, local signals, technical basics, and whether customers can act without friction."
-        },
-        {
-          "question": "Where does the audit run?",
-          "answer": "The audit is linked from littlefightnyc.com and runs at audit.littlefightnyc.com."
-        }
-      ]
-    },
-    {
       "path": "/legal/",
       "title": "Privacy and Terms | Little Fight NYC",
       "description": "Little Fight NYC privacy and terms. Forms, private information, safe account access, scope, quotes, and project promises.",

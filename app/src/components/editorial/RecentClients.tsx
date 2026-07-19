@@ -75,16 +75,16 @@ export default function RecentClients() {
           </span>
           <div className="lf-clients__scan-copy">
             <p className="lf-mono lf-clients__scan-label">Not ready to talk?</p>
-            <h3>See what your current website is costing you.</h3>
-            <p>Run a free public-page scan for speed, mobile, search, and lost-customer friction. No account or access needed.</p>
+            <h3>See what your current setup is costing you.</h3>
+            <p>Start a free Tech Audit. Tell us what’s broken — or just drop your website in — and a real person looks it over. No meeting, no charge.</p>
           </div>
           <a
             className="lf-clients__scan-cta"
-            href="https://audit.littlefightnyc.com/?source=homepage"
-            data-lf-event="audit_scan_started"
+            href="/tech-audit/?intent=website&source=home_proof_band"
+            data-lf-event="tech_audit_started"
             data-lf-label="home_proof_band"
           >
-            Scan my website
+            Start my free audit
             <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
           </a>
         </aside>

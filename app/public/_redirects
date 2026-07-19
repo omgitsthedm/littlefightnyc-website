@@ -27,6 +27,10 @@
 /lifetime-cost/          /answers/reduce-monthly-software-costs-small-business/  301
 /lifetime-cost           /answers/reduce-monthly-software-costs-small-business/  301
 
+# --- Instant-scan retirement (2026-07-19): one audit door
+/audit/                  /tech-audit/                      301
+/audit                   /tech-audit/                      301
+
 # --- Old service URLs mapped into current routes
 /website-design-small-business-nyc/*           /services/custom-local-websites/  301
 /services/website-design-small-business-nyc/*  /services/custom-local-websites/  301

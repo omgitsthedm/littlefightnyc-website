@@ -38,7 +38,6 @@ const footerGroups: Array<{
       { label: "IT Support", to: "/services/it-support/" },
       { label: "Tech Consulting", to: "/services/tech-consulting/" },
       { label: "Software You Own", to: "/services/business-systems/" },
-      { label: "Free Website Scan", to: "/audit/" },
     ],
   },
   {

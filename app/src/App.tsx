@@ -24,7 +24,6 @@ const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
 const Areas = lazyRoute(() => import("@/pages/Areas"));
 const CaseStudies = lazyRoute(() => import("@/pages/CaseStudies"));
-const Audit = lazyRoute(() => import("@/pages/Audit"));
 const CaseStudyDetail = lazyRoute(() => import("@/pages/CaseStudyDetail"));
 const Contact = lazyRoute(() => import("@/pages/Contact"));
 const FieldGuide = lazyRoute(() => import("@/pages/FieldGuide"));
@@ -101,7 +100,7 @@ export default function App() {
               for the _redirects 301 so in-app history links never dead-end. */}
           <Route path="fit-check" element={<Navigate to="/tech-audit/" replace />} />
           <Route path="examples" element={route(FieldGuide)} />
-          <Route path="audit" element={route(Audit)} />
+          <Route path="audit" element={<Navigate to="/tech-audit/" replace />} />
           <Route path="answers" element={route(Answers)} />
           <Route path="answers/:slug" element={route(AnswerGuide)} />
           <Route path="glossary" element={route(Glossary)} />

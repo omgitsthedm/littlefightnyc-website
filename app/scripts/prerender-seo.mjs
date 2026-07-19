@@ -962,7 +962,6 @@ const primaryLinks = [
   { href: "/services/business-systems/", label: "Business Systems" },
   { href: "/services/#studio", label: "Studio" },
   { href: "/examples/", label: "Examples" },
-  { href: "/audit/", label: "Audit" },
   { href: "/journal/", label: "Journal" },
   { href: "/tech-audit/", label: "Free Tech Audit" },
   { href: "/contact/", label: "Contact" },
@@ -1614,7 +1613,6 @@ function snapshot(page) {
           <a href="/terms/">Terms</a>
           <a href="/about/">About</a>
           <a href="/contact/">Contact</a>
-          <a href="/audit/">Audit</a>
         </nav>
       </footer>
     </div>
