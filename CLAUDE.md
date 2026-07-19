@@ -1,5 +1,21 @@
 # Little Fight NYC Website Config
 
+## 2026-07-18 — THE FIGHT = a fight card; animations scaled up (LIVE, `952d076`)
+
+TheFight is now a **boxing fight card** (David: the two-list version was "lame
+and boring and I don't even understand it"): poster header THE CHAINS vs YOUR
+BLOCK (orange, glowing) + the **TaleOfTheTape instrument** — the chains' corner
+all ✓s, your block all ✗s, an orange drawn glove punches each row even (impact
+starburst/shake), stamp: FAIR FIGHT, "4–4 ON THE TAPE." Rows = the four items
+of focus; no invented stats. Mobile drops the corner tags (they collided).
+**This is the template for mission storytelling here: poster type + instrument,
+never parallel bullet lists.**
+
+Animation scale bumps: shared instrument default 620/340→**620/390**, min-h
+300px (grows all four service instruments on home + service pages); AuditBench
+680/330 max-w 880; LeadsCaught emit 180ms. Copy: TheFour dek "we're the tech
+team your block never got", Tech Support "Register down? Wi-Fi dead?…".
+
 ## 2026-07-18 — HOME = FOUR ITEMS OF FOCUS (LIVE, `daa560b`) — David's structural brief
 
 **⛔ Standing structure: the home page is FOUR ITEMS OF FOCUS — Web Design,
