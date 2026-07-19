@@ -61,7 +61,7 @@
 
 .lf-cmdk__kbd {
   font-family: var(--lf-mono);
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   color: var(--lf-bone-dim);
   border: 1px solid var(--lf-hairline);
@@ -118,7 +118,7 @@
 }
 .lf-cmdk__item-group {
   font-family: var(--lf-mono);
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);

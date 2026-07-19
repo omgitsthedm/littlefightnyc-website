@@ -66,7 +66,7 @@
 
 .lf-audit__progress-label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -353,7 +353,7 @@
   background: transparent;
   border: 0;
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -462,7 +462,7 @@
 
 .lf-audit__field label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
@@ -533,7 +533,7 @@
 
 .lf-audit__error {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.04em;
   color: var(--lf-audit-warn);
   margin: 0;
@@ -543,7 +543,7 @@
 /* Quiet guidance beside the field it applies to (the no-secrets note). */
 .lf-audit__note {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.04em;
   color: var(--lf-bone-dim);
   margin: 0;
@@ -553,7 +553,7 @@
 .lf-audit__assurance {
   grid-column: 1 / -1;
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
@@ -699,7 +699,7 @@
 
 .lf-audit__aside-label {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);

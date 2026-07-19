@@ -48,7 +48,7 @@
     transform: rotate(180deg);
     font-family: var(--lf-mono);
     font-weight: 500;
-    font-size: 10px;
+    font-size: var(--lf-text-2xs); /* legibility floor: nothing under 12px */
     letter-spacing: 0.18em;
     text-transform: uppercase;
     white-space: nowrap;

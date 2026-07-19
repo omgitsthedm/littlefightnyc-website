@@ -114,7 +114,7 @@
 
 .lf-auditmap__label {
   font-family: var(--lf-mono);
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   font-weight: 500;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -184,7 +184,7 @@
   }
   .lf-auditmap__label {
     text-align: left;
-    font-size: 11px;
+    font-size: var(--lf-text-2xs);
   }
 }
 

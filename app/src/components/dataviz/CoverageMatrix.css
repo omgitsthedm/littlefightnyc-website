@@ -55,7 +55,7 @@
 }
 
 .lf-covmatrix__table thead th {
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -64,7 +64,7 @@
 }
 
 .lf-covmatrix__table tbody th {
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   font-weight: 500;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -85,7 +85,7 @@
 }
 
 .lf-covmatrix__table td {
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.05em;
   color: var(--lf-bone-dim);
 }
@@ -144,12 +144,12 @@
     padding: 10px 12px;
   }
   .lf-covmatrix__table thead th {
-    font-size: 10px;
+    font-size: var(--lf-text-2xs);
     letter-spacing: 0.08em;
     white-space: nowrap;
   }
   .lf-covmatrix__table tbody th {
-    font-size: 10px;
+    font-size: var(--lf-text-2xs);
   }
   /* Sticky industry column — needs an opaque bg so scrolled cells pass behind. */
   .lf-covmatrix__table thead th:first-child,

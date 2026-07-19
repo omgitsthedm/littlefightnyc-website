@@ -53,7 +53,7 @@
 
 .lf-sticky-help__label {
   color: var(--lf-bone-dim);
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.1em;
 }
 

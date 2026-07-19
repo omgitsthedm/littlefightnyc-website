@@ -121,7 +121,7 @@
   align-items: center;
   gap: 0.7em;
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -349,7 +349,7 @@
 .lf-pagehero__quick-label {
   display: block;
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -424,7 +424,7 @@
 
 .lf-pagehero__chip {
   font-family: var(--lf-mono);
-  font-size: 11px;
+  font-size: var(--lf-text-2xs);
   font-weight: 500;
   letter-spacing: 0.1em;
   color: var(--lf-bone-soft);
