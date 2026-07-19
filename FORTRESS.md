@@ -211,6 +211,61 @@ Rendered review at 1440px, funnel order. Results:
 - New-page rule: funnel station + ledger check + template contract, or it
   doesn't ship
 
+## THE COMPLETE TABLE (2026-07-19 — "what is still left off the table?" Answer: nothing. This is all of it.)
+
+**Mascot canon (David, 2026-07-19): the TUGBOAT is the mascot — "the tough
+little boat that can," Thomas-the-tank-engine energy. David is NOT the mascot;
+his photo is trust evidence (founder card, E-E-A-T spots), the tug is the
+character. The tug appears at emotional beats: help-is-coming (/thanks/ ✅),
+lost-but-safe (404 ✅), no-translation-needed (/es/ ✅), reading-companion
+(journal sail ✅). Future tug moments must be EARNED beats, not decoration.**
+
+### Claude executes (in order)
+1. ✅ ~~Warm /thanks/~~ + ✅ ~~answer→service bridges×27~~ (`7cbfa10`)
+2. **Library consolidation** — one "Library" front door for Journal + Answers
+   (nav: one entry; hubs 301 → /library/; ALL 64 detail URLs untouched)
+3. **Case-studies hub fold** — 301 /case-studies/ → /examples/ (8 detail pages
+   stay; examples already IS the proof wall)
+4. **Reference door build** — UES to the full Door-Doctrine arc (recognition
+   viewport, tempo, wow, path, bridge); becomes the template others inherit
+5. **Tempo classification** — tag all 27 answers emergency/dream/research;
+   emergency doors get the ER-nurse treatment (path FIRST, wow minimal)
+6. **Door→call measurement** — data-lf-event on every bridge + tel: click,
+   per-door attribution into the watchtower
+7. **Photo integration** — as David's Unsplash batch lands (shot list below)
+8. **GSC push phase** (David's sequenced finale): sitemap resubmit, request
+   indexing on changed doors, coverage/CWV/mobile reports worked to zero
+9. **AI-engine presence test** — ask the actual engines who fixes NYC small-biz
+   tech; log citations in watchtower; optimize toward being the quoted source
+
+### David's list (nothing here blocks Claude's list)
+- **Reviews — the 40× lever.** Ask every happy client (Rachel, PHC, CC Films,
+  AHA…) for a Google review. At 3-5 reviews Claude builds the on-site review
+  surface + aggregateRating schema. At 50 the math says 40×.
+- Subdomain kill: `netlify deploy --prod --dir <scratchpad>/audit-retire
+  --site 6588401d-53d4-42a3-a4f8-89fb3b937446`
+- GSC: Request Indexing on /areas/upper-east-side/ (URL Inspection)
+- GBP: hours, real photos, categories, posts (June: 54 views, 0 actions)
+- **Bing Webmaster Tools + Apple Business Connect** (free; Bing feeds
+  ChatGPT/Copilot, Apple feeds Siri/Maps — the non-Google AI surface)
+- Unsplash batch (shot list below) + any real shop/on-site photos
+- iOS device pass; decide Spanish-inquiry servicing
+
+### 📸 The shot list (Unsplash, search terms included — landscape ≥1600px)
+| Slot | Direction | Search |
+|---|---|---|
+| Answers hub | someone getting a real answer — counter conversation, NYC | "bodega counter conversation nyc" / "shopkeeper talking customer" |
+| Case Studies/Examples | work being shipped — hands, tools, storefront glow | "small shop owner night nyc storefront" |
+| Journal hub | notes/desk with NYC texture | "notebook coffee window city night" |
+| Contact | a door literally open, warm light | "shop door open warm light night nyc" |
+| Williamsburg | Bedford Ave storefront/street | "williamsburg brooklyn storefront street" |
+| Bushwick | mural wall + shop | "bushwick street art storefront" |
+| Park Slope | brownstone + stroller block | "park slope brooklyn brownstone street" |
+| DUMBO | cobblestone + bridge frame | "dumbo brooklyn manhattan bridge street" |
+| Astoria | Ditmars/broadway shop row | "astoria queens street shops" |
+| Long Island City | waterfront + industrial | "long island city street queens" |
+| UWS or West Village | replace the shared `nyc-street` | "west village nyc corner cafe street" |
+
 ## Standing laws (from CLAUDE.md, restated so this file is self-sufficient)
 
 - Founded **2021**. Four items of focus. No pricing published. No install
