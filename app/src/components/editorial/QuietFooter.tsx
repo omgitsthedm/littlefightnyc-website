@@ -4,6 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
 import StudioStatusStrip from "./StudioStatusStrip";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { openConsentPreferences } from "@/lib/consent";
 import "./QuietFooter.css";
 
 // Hydration-safe mobile check: server snapshot says desktop (plain lists),
@@ -90,6 +91,13 @@ export default function QuietFooter() {
             <Link to="/about/">About</Link>
             <Link to="/contact/">Contact</Link>
             <Link to="/privacy/">Privacy</Link>
+            <button
+              type="button"
+              className="lf-quiet-foot__privacy-button"
+              onClick={openConsentPreferences}
+            >
+              Analytics choices
+            </button>
             <Link to="/terms/">Terms</Link>
             <Link to="/es/" lang="es">
               En español</Link>{" · "}<Link to="/zh/">中文

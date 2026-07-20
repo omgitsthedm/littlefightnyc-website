@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUpRight, MessageSquare } from "lucide-react";
 import TugMark from "@/components/editorial/TugMark";
 import TugAvatar from "@/components/editorial/TugAvatar";
+import { openConsentPreferences } from "@/lib/consent";
+import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 
 /**
@@ -42,16 +44,32 @@ const PROMISES = [
   "El código, los datos, todo: suyo.",
 ];
 
+const PROOF = [
+  {
+    client: "Hair By Rachel Charles",
+    line: "De citas por mensaje directo a una página real de reservas.",
+    fact: "100 en Lighthouse · lista en 2 semanas",
+  },
+  {
+    client: "Public House Creative",
+    line: "Un sistema privado que el equipo usa en presupuestos reales.",
+    fact: "3 herramientas → 1 fuente de verdad",
+  },
+  {
+    client: "CC Films",
+    line: "Una sede oficial más clara para una película independiente.",
+    fact: "Estructura, buscadores y publicación reforzados",
+  },
+];
+
 export default function Espanol() {
   useEffect(() => {
-    const prevLang = document.documentElement.lang;
-    const prevTitle = document.title;
-    document.documentElement.lang = "es";
-    document.title = "Páginas web y tecnología en español | Little Fight NYC";
-    return () => {
-      document.documentElement.lang = prevLang || "en";
-      document.title = prevTitle;
-    };
+    return installLocalizedMeta({
+      lang: "es",
+      path: "/es/",
+      title: "Páginas web y tecnología en español | Little Fight NYC",
+      description: "Páginas web, soporte técnico y software propio para pequeños negocios de Nueva York. Vea trabajo real, llame o empiece un plan gratis.",
+    });
   }, []);
 
   return (
@@ -85,11 +103,17 @@ export default function Espanol() {
               <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
               Llámenos: (646) 360-0318
             </a>
-            <a className="lf-es__cta" href="mailto:hello@littlefightnyc.com">
-              <Mail size={20} strokeWidth={1.75} aria-hidden="true" />
-              hello@littlefightnyc.com
-            </a>
+            <Link
+              className="lf-es__cta"
+              to="/tech-audit/?intent=website&source=es"
+              data-lf-event="website_plan_intent"
+              data-lf-label="es_hero"
+            >
+              Planear mi sitio web
+              <ArrowUpRight size={18} strokeWidth={1.9} aria-hidden="true" />
+            </Link>
           </div>
+          <p className="lf-es__action-note">Consulta gratis. Primero un plan claro; después usted decide.</p>
 
           <ul className="lf-es__trust">
             <li>
@@ -105,6 +129,25 @@ export default function Espanol() {
               Usted es dueño de lo que hacemos
             </li>
           </ul>
+        </section>
+
+        <section className="lf-es__proof" aria-label="Trabajo real">
+          <div className="lf-es__section-head">
+            <p>Prueba, no promesas</p>
+            <h2>Trabajo real que ya está funcionando.</h2>
+          </div>
+          <ul>
+            {PROOF.map((item) => (
+              <li key={item.client}>
+                <strong>{item.client}</strong>
+                <span>{item.line}</span>
+                <small>{item.fact}</small>
+              </li>
+            ))}
+          </ul>
+          <Link className="lf-es__proof-link" to="/examples/">
+            Ver todos los ejemplos <ArrowUpRight size={15} aria-hidden="true" />
+          </Link>
         </section>
 
         <section className="lf-es__services" aria-label="Qué hacemos">
@@ -150,6 +193,10 @@ export default function Espanol() {
             <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
             (646) 360-0318
           </a>
+          <div className="lf-es__contact-links">
+            <a href="sms:+16463600318"><MessageSquare size={16} aria-hidden="true" /> Mandar texto</a>
+            <a href="mailto:hello@littlefightnyc.com"><Mail size={16} aria-hidden="true" /> Escribir correo</a>
+          </div>
         </section>
       </main>
 
@@ -159,6 +206,9 @@ export default function Espanol() {
           Ver el sitio completo en inglés
           <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
         </Link>
+        <button type="button" className="lf-es__foot-link" onClick={openConsentPreferences}>
+          Preferencias de analítica
+        </button>
       </footer>
     </div>
   );

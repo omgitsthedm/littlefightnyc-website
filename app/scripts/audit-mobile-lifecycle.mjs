@@ -4,10 +4,11 @@ import { readFile } from "node:fs/promises";
 const registerSource = await readFile(new URL("../public/register-sw.js", import.meta.url), "utf8");
 const workerSource = await readFile(new URL("../public/sw.js", import.meta.url), "utf8");
 const boundarySource = await readFile(new URL("../src/components/ErrorBoundary.tsx", import.meta.url), "utf8");
+const noticeSource = await readFile(new URL("../src/components/SiteNotices.tsx", import.meta.url), "utf8");
 
 for (const [label, source, forbidden] of [
   ["service-worker registration", registerSource, ["controllerchange", "visibilitychange", "location.reload", "SKIP_WAITING"]],
-  ["service worker", workerSource, ["skipWaiting", "clients.claim", "SKIP_WAITING"]],
+  ["service worker", workerSource, ["clients.claim", "SKIP_WAITING"]],
 ]) {
   for (const token of forbidden) {
     assert.equal(
@@ -17,6 +18,22 @@ for (const [label, source, forbidden] of [
     );
   }
 }
+
+assert.match(
+  workerSource,
+  /event\.data\?\.type === "ACTIVATE_UPDATE"[\s\S]*self\.skipWaiting\(\)/,
+  "service-worker activation must stay behind the explicit ACTIVATE_UPDATE message",
+);
+assert.match(
+  noticeSource,
+  /onClick=\{activateUpdate\}/,
+  "the update takeover must be initiated by a visible user action",
+);
+assert.doesNotMatch(
+  registerSource,
+  /postMessage\s*\(/,
+  "registration must never activate an update automatically",
+);
 
 assert.match(
   boundarySource,
@@ -29,4 +46,4 @@ assert.match(
   "ErrorBoundary must require a durable reload guard before refreshing",
 );
 
-console.log("mobile lifecycle ratchet OK — updates wait, reloads stay guarded.");
+console.log("mobile lifecycle ratchet OK — updates wait for a user click; error reloads stay guarded.");

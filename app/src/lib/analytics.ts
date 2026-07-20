@@ -1,13 +1,17 @@
+import { getAnalyticsConsent, onAnalyticsConsentChange } from "./consent";
+
 declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
-    clarity?: (...args: unknown[]) => void;
+    clarity?: ((...args: unknown[]) => void) & { q?: unknown[][] };
     TiktokAnalyticsObject?: string;
     ttq?: {
       load?: (pixelId: string) => void;
       page?: () => void;
       track?: (eventName: string, parameters?: Record<string, unknown>) => void;
+      grantConsent?: () => void;
+      revokeConsent?: () => void;
       methods?: string[];
       setAndDefer?: (target: Record<string, unknown>, method: string) => void;
       instance?: (pixelId: string) => Record<string, unknown>;
@@ -69,9 +73,15 @@ function ensureGtag() {
 }
 
 function bootGoogleAnalytics() {
-  if (!hasRealGaId() || gaBooted) return;
+  if (getAnalyticsConsent() !== "granted" || !hasRealGaId() || gaBooted) return;
 
   ensureGtag();
+  window.gtag?.("consent", "update", {
+    ad_storage: "granted",
+    analytics_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
+  });
   window.gtag?.("js", new Date());
   window.gtag?.("config", GA_ID, { send_page_view: false });
 
@@ -87,7 +97,21 @@ function bootGoogleAnalytics() {
 }
 
 function bootClarity() {
-  if (!hasRealClarityId() || clarityBooted) return;
+  if (getAnalyticsConsent() !== "granted" || !hasRealClarityId() || clarityBooted) return;
+
+  window.clarity =
+    window.clarity ??
+    Object.assign(
+      (...args: unknown[]) => {
+        window.clarity!.q = window.clarity!.q ?? [];
+        window.clarity!.q?.push(args);
+      },
+      { q: [] as unknown[][] },
+    );
+  window.clarity("consentv2", {
+    ad_Storage: "granted",
+    analytics_Storage: "granted",
+  });
 
   const existing = document.querySelector<HTMLScriptElement>(`script[src="${CLARITY_SRC}"]`);
   if (!existing) {
@@ -166,9 +190,10 @@ function ensureTikTokQueue() {
 }
 
 function bootTikTokPixel() {
-  if (!hasRealTikTokPixelId() || tikTokBooted) return;
+  if (getAnalyticsConsent() !== "granted" || !hasRealTikTokPixelId() || tikTokBooted) return;
 
   ensureTikTokQueue();
+  window.ttq?.grantConsent?.();
   window.ttq?.load?.(TIKTOK_PIXEL_ID);
   if (!tikTokPageTracked) {
     window.ttq?.page?.();
@@ -178,6 +203,7 @@ function bootTikTokPixel() {
 }
 
 function sendGaEvent(eventName: string, parameters: Record<string, unknown>) {
+  if (getAnalyticsConsent() !== "granted") return;
   if (hasRealGaId() && typeof window.gtag === "function") {
     window.gtag("event", eventName, parameters);
     return;
@@ -196,7 +222,7 @@ function flushPendingGaEvents() {
 }
 
 function sendTikTokEvent(eventName: string, parameters?: Record<string, unknown>) {
-  if (!hasRealTikTokPixelId()) return;
+  if (getAnalyticsConsent() !== "granted" || !hasRealTikTokPixelId()) return;
   if (!tikTokBooted) {
     pendingTikTokEvents.push({ eventName, parameters });
     scheduleVendorBoot();
@@ -215,6 +241,7 @@ function flushPendingTikTokEvents() {
 }
 
 function bootVendors() {
+  if (getAnalyticsConsent() !== "granted") return;
   bootGoogleAnalytics();
   bootClarity();
   bootTikTokPixel();
@@ -223,7 +250,11 @@ function bootVendors() {
 }
 
 function scheduleVendorBoot() {
-  if (vendorBootTimer !== undefined || (!hasRealGaId() && !hasRealClarityId() && !hasRealTikTokPixelId())) return;
+  if (
+    getAnalyticsConsent() !== "granted" ||
+    vendorBootTimer !== undefined ||
+    (!hasRealGaId() && !hasRealClarityId() && !hasRealTikTokPixelId())
+  ) return;
 
   vendorBootTimer = window.setTimeout(() => {
     vendorBootTimer = undefined;
@@ -255,23 +286,49 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
 
   if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") {
     sendTikTokEvent("Contact", { ...page, content_name: eventName, ...parameters });
-  } else if (eventName === "tech_audit_intent" || eventName === "website_plan_intent" || eventName === "audit_scan_started") {
+  } else if (
+    eventName === "tech_audit_intent" ||
+    eventName === "website_plan_intent" ||
+    eventName === "audit_scan_started" ||
+    eventName === "tech_audit_started"
+  ) {
     sendTikTokEvent("ClickButton", { ...page, content_name: eventName, ...parameters });
   } else if (eventName === "tech_audit_submit" || eventName === "form_submit" || eventName === "lead_success") {
     sendTikTokEvent("SubmitForm", { ...page, content_name: eventName, ...parameters });
   }
 }
 
+function funnelStage(eventName: string) {
+  if (eventName === "lead_success" || eventName === "generate_lead") return "lead";
+  if (eventName === "tech_audit_submit" || eventName === "form_submit") return "submit";
+  if (eventName.startsWith("intake_step_")) return "intake";
+  if (
+    eventName === "tech_audit_intent" ||
+    eventName === "website_plan_intent" ||
+    eventName === "tech_audit_started"
+  ) return "consideration";
+  if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") return "contact";
+  if (eventName === "scroll_50") return "engaged";
+  if (eventName === "page_view") return "awareness";
+  return "diagnostic";
+}
+
 function track(eventName: string, parameters: Record<string, unknown> = {}, deferVendorBoot = false) {
+  if (getAnalyticsConsent() !== "granted") return;
+  const normalized = {
+    funnel_stage: funnelStage(eventName),
+    ...parameters,
+  };
+
   if (deferVendorBoot && !gaBooted && !tikTokBooted) {
-    pendingGaEvents.push({ eventName, parameters });
+    pendingGaEvents.push({ eventName, parameters: normalized });
     scheduleVendorBoot();
     return;
   }
 
   bootVendors();
-  sendGaEvent(eventName, parameters);
-  trackTikTokConversion(eventName, parameters);
+  sendGaEvent(eventName, normalized);
+  trackTikTokConversion(eventName, normalized);
 
   if (typeof window.clarity === "function") {
     window.clarity("event", eventName);
@@ -321,7 +378,7 @@ export function installAnalyticsHooks() {
       track("sms_click", { link_url: href, link_text: target.textContent?.trim() });
     } else if (target.hostname && target.hostname !== window.location.hostname) {
       track("external_link_click", { link_url: target.href, link_text: target.textContent?.trim() });
-    } else if (href.includes("tech-audit")) {
+    } else if (href.includes("tech-audit") && !namedEvent) {
       // Event name stays tech_audit_intent for analytics continuity — the
       // user-facing offer was renamed to "Tech Audit" on 2026-07-12.
       track("tech_audit_intent", { link_url: href, link_text: target.textContent?.trim() });
@@ -367,10 +424,44 @@ export function installAnalyticsHooks() {
   window.addEventListener("click", onClick, { passive: true });
   window.addEventListener("submit", onSubmit);
   window.addEventListener("scroll", onScroll, { passive: true });
+  const removeConsentListener = onAnalyticsConsentChange((consent) => {
+    if (consent === "granted") {
+      window.clarity?.("consentv2", {
+        ad_Storage: "granted",
+        analytics_Storage: "granted",
+      });
+      window.ttq?.grantConsent?.();
+      scheduleVendorBoot();
+      trackPageView(
+        `${window.location.pathname}${window.location.search}`,
+        document.title,
+      );
+      return;
+    }
+
+    pendingGaEvents = [];
+    pendingTikTokEvents = [];
+    if (vendorBootTimer !== undefined) {
+      window.clearTimeout(vendorBootTimer);
+      vendorBootTimer = undefined;
+    }
+    window.gtag?.("consent", "update", {
+      ad_storage: "denied",
+      analytics_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+    window.clarity?.("consentv2", {
+      ad_Storage: "denied",
+      analytics_Storage: "denied",
+    });
+    window.ttq?.revokeConsent?.();
+  });
 
   return () => {
     window.removeEventListener("click", onClick);
     window.removeEventListener("submit", onSubmit);
     window.removeEventListener("scroll", onScroll);
+    removeConsentListener();
   };
 }

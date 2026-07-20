@@ -1,0 +1,156 @@
+.lf-notices {
+  position: fixed;
+  right: max(var(--lf-space-4), env(safe-area-inset-right));
+  bottom: max(var(--lf-space-4), env(safe-area-inset-bottom));
+  z-index: 1200;
+  display: grid;
+  gap: var(--lf-space-3);
+  width: min(520px, calc(100vw - (var(--lf-space-4) * 2)));
+  pointer-events: none;
+}
+
+.lf-notice {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  padding: var(--lf-space-4);
+  color: var(--lf-bone);
+  background: rgba(12, 14, 20, 0.97);
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 18%, transparent);
+  border-radius: var(--lf-radius-card);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+  pointer-events: auto;
+  animation: lf-notice-in 280ms var(--lf-ease-out-quart) both;
+}
+
+.lf-notice__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  color: var(--lf-fight);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 42%, transparent);
+  border-radius: var(--lf-radius-sm);
+}
+
+.lf-notice__copy { min-width: 0; }
+.lf-notice__copy h2,
+.lf-notice__copy p { margin: 0; }
+.lf-notice__copy h2 {
+  margin-top: var(--lf-space-1);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-lg);
+  line-height: 1.05;
+}
+.lf-notice__copy > p:not(.lf-notice__eyebrow):not(.lf-consent__current) {
+  margin-top: var(--lf-space-2);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+}
+.lf-notice__copy a { color: var(--lf-bone); }
+.lf-notice__eyebrow {
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.lf-consent__current {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-1);
+  margin-top: var(--lf-space-3) !important;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  text-transform: uppercase;
+}
+
+.lf-notice__actions {
+  grid-column: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-2);
+}
+.lf-notice button {
+  min-height: 44px;
+  padding: 0 var(--lf-space-4);
+  border-radius: var(--lf-radius-pill);
+  font: 600 var(--lf-text-sm) / 1 var(--lf-sans);
+  cursor: pointer;
+}
+.lf-notice__primary {
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  border: 1px solid var(--lf-fight);
+}
+.lf-notice__secondary {
+  color: var(--lf-bone);
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 28%, transparent);
+}
+.lf-notice button:hover { transform: translateY(-1px); }
+.lf-notice button:focus-visible {
+  outline: 2px solid var(--lf-bone);
+  outline-offset: 3px;
+}
+.lf-notice button:disabled { cursor: wait; opacity: 0.72; }
+
+.lf-update { align-items: center; }
+.lf-update .lf-notice__copy > p:last-child { margin-top: var(--lf-space-1); }
+.lf-update__actions {
+  grid-column: auto;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.lf-notice .lf-notice__dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 0;
+  color: var(--lf-bone-soft);
+  background: transparent;
+  border: 0;
+}
+
+@keyframes lf-notice-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .lf-notices {
+    left: var(--lf-space-3);
+    right: var(--lf-space-3);
+    bottom: max(var(--lf-space-3), env(safe-area-inset-bottom));
+    width: auto;
+  }
+  .lf-notice { padding: var(--lf-space-3); }
+  .lf-notice__actions { grid-column: 1 / -1; }
+  .lf-notice__actions button:not(.lf-notice__dismiss) { flex: 1 1 150px; }
+  .lf-update__actions { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-notice { animation: none; }
+  .lf-notice button:hover { transform: none; }
+}
+
+.lf-editorial .lf-privacy-choice {
+  min-height: 44px;
+  padding: 0 var(--lf-space-4);
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  border: 1px solid var(--lf-fight);
+  border-radius: var(--lf-radius-pill);
+  font: 600 var(--lf-text-sm) / 1 var(--lf-sans);
+  cursor: pointer;
+}
+
+.lf-editorial .lf-privacy-choice:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}

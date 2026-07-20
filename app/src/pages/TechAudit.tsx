@@ -712,6 +712,9 @@ export default function TechAudit() {
                       </>
                     )}
                   </button>
+                  <p className="lf-audit__submit-status" aria-live="polite" aria-atomic="true">
+                    {submitting ? "Sending securely. Keep this tab open for confirmation." : ""}
+                  </p>
                   <p className="lf-audit__assurance">
                     Free consultation / No obligation / Response window: 9am-9pm Eastern /
                     Urgent? Call <a href="tel:+16463600318">(646) 360-0318</a>

@@ -292,7 +292,7 @@ const pages = [
     locale: "es",
     title: "Páginas web y tecnología en español | Little Fight NYC",
     description:
-      "Hacemos su página web, arreglamos la tecnología cuando falla, y acabamos con las cuotas mensuales que se comen su ganancia. Nueva York, desde 2021. La consulta es gratis.",
+      "Páginas web, soporte técnico y software propio para pequeños negocios de Nueva York. Vea trabajo real, llame o empiece un plan gratis.",
     h1: "Su página web trae clientes. Nosotros la mantenemos andando.",
     shortAnswer:
       "Little Fight NYC en español: páginas web, soporte técnico, consultoría gratis y software propio para negocios pequeños de Nueva York.",
@@ -305,7 +305,7 @@ const pages = [
     locale: "zh",
     title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
     description:
-      "我们做网站、修技术、砍掉每月的软件订阅费。纽约，始于2021。咨询免费，回复您的是真人。",
+      "为纽约小生意做网站、修技术、打造自有软件。查看真实案例、打电话，或免费开始网站规划。",
     h1: "您的网站带来顾客。我们让它一直好用。",
     shortAnswer:
       "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码归您。",
@@ -1482,13 +1482,20 @@ function zhSnapshot() {
       <main>
       <h1>您的网站带来顾客。<em>我们让它一直好用。</em></h1>
       <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
-      <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a></p>
+      <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">规划我的网站</a></p>
+      <p class="es-sub">咨询免费。先给您一份清楚的方案，再由您决定。</p>
       <h2>我们做什么</h2>
       <ul class="es-cards">
         <li><h3>网站建设</h3><p>一个能让电话响起来的网站。电话、预约、收款、谷歌——全都好用，连在一起。</p></li>
         <li><h3>技术支持</h3><p>网络、收银机、邮箱、收款出了问题？接电话的是真人，帮您修好。</p></li>
         <li><h3>免费咨询</h3><p>我们告诉您哪些有用、哪些多余、先修哪个。如果您不需要我们，我们也会直说。</p></li>
         <li><h3>自有软件</h3><p>别再按月租软件了。我们为您做一次工具——永远属于您。</p></li>
+      </ul>
+      <h2>已经上线、正在发挥作用的真实项目</h2>
+      <ul class="es-cards">
+        <li><h3>Hair By Rachel Charles</h3><p>从只靠私信预约，到真正好用的在线预约网站。Lighthouse 四项满分，两周上线。</p></li>
+        <li><h3>Public House Creative</h3><p>团队每天用在真实项目上的内部工作系统。3个工具变成1个可靠数据源。</p></li>
+        <li><h3>CC Films</h3><p>为独立电影打造更清楚、更可信的官方网站，并加固搜索结构、安全标头和发布流程。</p></li>
       </ul>
       <p class="es-fight">连锁大店来的时候带着技术团队。街角小店从来没有过。所以有了我们：让小生意用上同样的工具——没有大公司的账单。</p>
       <h2>您可以放心的事</h2>
@@ -1536,14 +1543,21 @@ function esSnapshot() {
         <p class="es-sub">Hacemos su página web, contestamos cuando la tecnología falla, y acabamos con las cuotas mensuales que se comen su ganancia. Lo que construimos, es suyo.</p>
         <p>
           <a class="es-cta" href="tel:+16463600318">Llámenos: ${site.phoneDisplay}</a>
-          <a href="mailto:${site.email}">${site.email}</a>
+          <a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Planear mi sitio web</a>
         </p>
+        <p class="es-sub">Consulta gratis. Primero un plan claro; después usted decide.</p>
         <h2>Qué hacemos</h2>
         <ul class="es-cards">
           <li><h3>Páginas web</h3><p>Una página que hace sonar el teléfono. Llamadas, citas, pagos y Google — todo funcionando junto.</p></li>
           <li><h3>Soporte técnico</h3><p>El internet, la caja, el correo, los pagos. Cuando algo falla, lo arregla una persona de verdad.</p></li>
           <li><h3>Consultoría gratis</h3><p>Le decimos qué sirve, qué sobra y qué arreglar primero. Si no nos necesita, también se lo decimos.</p></li>
           <li><h3>Software propio</h3><p>Deje de rentar programas. Construimos su herramienta una vez — y es suya para siempre.</p></li>
+        </ul>
+        <h2>Trabajo real que ya está funcionando</h2>
+        <ul class="es-cards">
+          <li><h3>Hair By Rachel Charles</h3><p>De citas por mensaje directo a una página real de reservas. 100 en Lighthouse y lista en 2 semanas.</p></li>
+          <li><h3>Public House Creative</h3><p>Un sistema privado que el equipo usa en presupuestos reales. 3 herramientas convertidas en 1 fuente de verdad.</p></li>
+          <li><h3>CC Films</h3><p>Una sede oficial más clara para una película independiente, con estructura, buscadores y publicación reforzados.</p></li>
         </ul>
         <p class="es-fight">Las cadenas grandes llegaron con equipos de tecnología. La tienda de la esquina nunca tuvo uno. Por eso existimos: para darle al negocio pequeño las mismas herramientas — sin las facturas de empresa grande.</p>
         <h2>Lo que puede esperar</h2>

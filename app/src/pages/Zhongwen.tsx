@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUpRight, MessageSquare } from "lucide-react";
 import TugMark from "@/components/editorial/TugMark";
 import TugAvatar from "@/components/editorial/TugAvatar";
+import { openConsentPreferences } from "@/lib/consent";
+import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 
 /**
@@ -42,16 +44,32 @@ const PROMISES = [
   "代码、数据、一切：都归您。",
 ];
 
+const PROOF = [
+  {
+    client: "Hair By Rachel Charles",
+    line: "从只靠私信预约，到真正好用的在线预约网站。",
+    fact: "Lighthouse 四项满分 · 两周上线",
+  },
+  {
+    client: "Public House Creative",
+    line: "团队每天用在真实项目上的内部工作系统。",
+    fact: "3个工具 → 1个可靠数据源",
+  },
+  {
+    client: "CC Films",
+    line: "为独立电影打造更清楚、更可信的官方网站。",
+    fact: "搜索结构、安全标头和发布流程全面加固",
+  },
+];
+
 export default function Zhongwen() {
   useEffect(() => {
-    const prevLang = document.documentElement.lang;
-    const prevTitle = document.title;
-    document.documentElement.lang = "zh";
-    document.title = "Little Fight NYC 中文 | 纽约小生意的网站与技术支持";
-    return () => {
-      document.documentElement.lang = prevLang || "en";
-      document.title = prevTitle;
-    };
+    return installLocalizedMeta({
+      lang: "zh",
+      path: "/zh/",
+      title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
+      description: "为纽约小生意做网站、修技术、打造自有软件。查看真实案例、打电话，或免费开始网站规划。",
+    });
   }, []);
 
   return (
@@ -82,11 +100,17 @@ export default function Zhongwen() {
               <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
               打电话：(646) 360-0318
             </a>
-            <a className="lf-es__cta" href="mailto:hello@littlefightnyc.com">
-              <Mail size={20} strokeWidth={1.75} aria-hidden="true" />
-              hello@littlefightnyc.com
-            </a>
+            <Link
+              className="lf-es__cta"
+              to="/tech-audit/?intent=website&source=zh"
+              data-lf-event="website_plan_intent"
+              data-lf-label="zh_hero"
+            >
+              规划我的网站
+              <ArrowUpRight size={18} strokeWidth={1.9} aria-hidden="true" />
+            </Link>
           </div>
+          <p className="lf-es__action-note">咨询免费。先给您一份清楚的方案，再由您决定。</p>
 
           <ul className="lf-es__trust">
             <li>
@@ -102,6 +126,25 @@ export default function Zhongwen() {
               我们做的，归您所有
             </li>
           </ul>
+        </section>
+
+        <section className="lf-es__proof" aria-label="真实案例">
+          <div className="lf-es__section-head">
+            <p>看成果，不听空话</p>
+            <h2>已经上线、正在发挥作用的真实项目。</h2>
+          </div>
+          <ul>
+            {PROOF.map((item) => (
+              <li key={item.client}>
+                <strong>{item.client}</strong>
+                <span>{item.line}</span>
+                <small>{item.fact}</small>
+              </li>
+            ))}
+          </ul>
+          <Link className="lf-es__proof-link" to="/examples/">
+            查看全部案例 <ArrowUpRight size={15} aria-hidden="true" />
+          </Link>
         </section>
 
         <section className="lf-es__services" aria-label="我们做什么">
@@ -143,6 +186,10 @@ export default function Zhongwen() {
             <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
             (646) 360-0318
           </a>
+          <div className="lf-es__contact-links">
+            <a href="sms:+16463600318"><MessageSquare size={16} aria-hidden="true" /> 发短信</a>
+            <a href="mailto:hello@littlefightnyc.com"><Mail size={16} aria-hidden="true" /> 发邮件</a>
+          </div>
         </section>
       </main>
 
@@ -152,6 +199,9 @@ export default function Zhongwen() {
           查看完整英文网站
           <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
         </Link>
+        <button type="button" className="lf-es__foot-link" onClick={openConsentPreferences}>
+          分析偏好设置
+        </button>
       </footer>
     </div>
   );

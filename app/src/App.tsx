@@ -5,6 +5,7 @@ import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
 import GlobalViewTransitions from "@/components/GlobalViewTransitions";
 import TugSail from "@/components/editorial/TugSail";
+import SiteNotices from "@/components/SiteNotices";
 import { importWithRetry } from "@/lib/importWithRetry";
 import Home from "@/pages/Home";
 
@@ -71,6 +72,7 @@ export default function App() {
       <RouteScrollManager />
       <GlobalViewTransitions />
       <TugSail />
+      <SiteNotices />
       <ErrorBoundary>
       <Routes>
         {/* Home: custom layout with the full Press Strike masthead - the

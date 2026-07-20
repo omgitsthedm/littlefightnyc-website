@@ -15,6 +15,7 @@ import './styles/editorial/motion.css'
 import './styles/editorial/reveal-static.css'
 import App from './App.tsx'
 import { ForceFieldProvider } from './kernel/ForceField'
+import { getAnalyticsConsent, installConsentDefaults, onAnalyticsConsentChange } from './lib/consent'
 
 /** Run at idle, or ASAP where requestIdleCallback is unavailable. */
 function onIdle(fn: () => void, timeout = 1) {
@@ -26,6 +27,10 @@ function onIdle(fn: () => void, timeout = 1) {
 }
 
 if (typeof window !== "undefined") {
+  // Privacy defaults have to exist before any analytics config or event. The
+  // stored choice, if there is one, is applied synchronously here too.
+  installConsentDefaults();
+
   // If the SEO snapshot already painted (normal prerendered load), flag it so
   // the hero skips its character-cascade re-animation — no visible "restart".
   const root = document.getElementById("root");
@@ -34,11 +39,19 @@ if (typeof window !== "undefined") {
   }
 
   // Analytics + attribution are not on the first-paint critical path, so keep
-  // them out of the entry chunk and load them at idle. Attribution still runs
-  // early enough to capture UTM/referrer before the visitor navigates away.
+  // them out of the entry chunk and load them at idle. Campaign attribution is
+  // measurement rather than essential storage, so it follows the same opt-in.
   onIdle(() => {
-    void import("./lib/attribution").then((m) => m.captureAttribution());
     void import("./lib/analytics").then((m) => m.installAnalyticsHooks());
+    void import("./lib/rum").then((m) => m.installRum());
+
+    const captureAttribution = () => {
+      void import("./lib/attribution").then((m) => m.captureAttribution());
+    };
+    if (getAnalyticsConsent() === "granted") captureAttribution();
+    onAnalyticsConsentChange((consent) => {
+      if (consent === "granted") captureAttribution();
+    });
   });
 }
 

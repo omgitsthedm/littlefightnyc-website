@@ -1,11 +1,13 @@
 {
+  "name": "littlefightnyc-workspace",
+  "private": true,
   "scripts": {
-    "preview": "node scripts/preview-server.mjs",
-    "generate:aeo": "node scripts/generate-aeo-beast-pages.mjs",
-    "indexnow": "node scripts/submit-indexnow.mjs"
-  },
-  "devDependencies": {
-    "clean-css-cli": "^5.6.3",
-    "terser": "^5.46.1"
+    "dev": "npm --prefix app run dev",
+    "build": "npm --prefix app run build",
+    "lint": "npm --prefix app run lint",
+    "preview": "npm --prefix app run preview",
+    "audit:mobile-lifecycle": "npm --prefix app run audit:mobile-lifecycle",
+    "audit:repo-boundary": "npm --prefix app run audit:repo-boundary",
+    "audit:signal": "npm --prefix app run audit:signal"
   }
 }

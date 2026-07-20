@@ -1,0 +1,100 @@
+.lf-thanks__handoff {
+  padding: var(--lf-space-7) var(--lf-margin-mobile);
+  color: var(--lf-bone);
+  background: var(--lf-ink);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-thanks__handoff-inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+.lf-thanks__eyebrow {
+  margin: 0 0 var(--lf-space-2);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lf-thanks__handoff h2 {
+  max-width: 18ch;
+  margin: 0 0 var(--lf-space-6);
+  font: 700 var(--lf-text-xl) / 1.08 var(--lf-display);
+}
+
+.lf-thanks__handoff ol {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-thanks__handoff li {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 0 var(--lf-space-3);
+  padding: var(--lf-space-4) 0;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-thanks__handoff li > span {
+  grid-row: 1 / 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  border: 1px solid var(--lf-hairline);
+  border-radius: 50%;
+}
+
+.lf-thanks__handoff li.is-complete > span {
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  border-color: var(--lf-fight);
+  animation: lf-thanks-confirm 340ms var(--lf-ease-out-quart) both;
+}
+
+.lf-thanks__handoff strong {
+  font-size: var(--lf-text-base);
+  line-height: 1.25;
+}
+
+.lf-thanks__handoff small {
+  margin-top: var(--lf-space-1);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .lf-thanks__handoff { padding-inline: var(--lf-margin-tablet); }
+  .lf-thanks__handoff ol { grid-template-columns: repeat(3, 1fr); }
+  .lf-thanks__handoff li {
+    padding: var(--lf-space-5);
+    border-right: 1px solid var(--lf-hairline);
+  }
+  .lf-thanks__handoff li:last-child { border-right: 0; }
+}
+
+@media (min-width: 1280px) {
+  .lf-thanks__handoff { padding-inline: var(--lf-margin-desktop); }
+}
+
+@keyframes lf-thanks-confirm {
+  from { opacity: 0; transform: scale(0.72); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-thanks__handoff li.is-complete > span { animation: none; }
+}

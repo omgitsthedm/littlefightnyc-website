@@ -667,6 +667,16 @@
   animation: lf-audit-spin 0.7s linear infinite;
 }
 
+.lf-audit__submit-status {
+  grid-column: 1 / -1;
+  min-height: 1.35em;
+  margin: calc(var(--lf-space-2) * -1) 0 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.03em;
+}
+
 @keyframes lf-audit-spin {
   to { transform: rotate(360deg); }
 }

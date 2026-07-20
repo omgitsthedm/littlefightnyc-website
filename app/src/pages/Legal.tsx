@@ -2,6 +2,7 @@ import PageHero from "@/components/editorial/PageHero";
 import { Scale } from "lucide-react";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
+import { openConsentPreferences } from "@/lib/consent";
 
 export default function Legal() {
   return (
@@ -46,11 +47,16 @@ export default function Legal() {
             </p>
             <h2>Cookies, pixels, and opt-outs</h2>
             <p>
-              Analytics scripts, cookies, pixels, or similar browser storage
-              may be used by Little Fight and its providers to measure site
-              activity. You can limit this through your browser settings,
-              content blockers, private browsing tools, or opt-out controls
-              offered by Google, TikTok, and other advertising platforms.
+              Analytics is off by default for a first-time visitor. Google
+              Analytics, Microsoft Clarity, and the TikTok Pixel load only
+              after you choose “Allow analytics.” If you choose “Essential
+              only,” the site still works and those measurement scripts do not
+              load. You can change the choice at any time.
+            </p>
+            <p>
+              <button type="button" className="lf-privacy-choice" onClick={openConsentPreferences}>
+                Review analytics choices
+              </button>
             </p>
             <h2>What not to send</h2>
             <p>

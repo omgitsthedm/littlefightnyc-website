@@ -53,7 +53,7 @@ npm run preview      # vite preview
 # Netlify runs `cd app && npm ci && npm run build`, publishes `app/dist`, live in ~40s.
 # ⚠️ NEVER `netlify deploy --prod` manually on this repo.
 ```
-Note: the app-level `app/package.json` holds the real build scripts; the **root** `package.json` only has auxiliary scripts (preview server, AEO page gen, indexnow).
+Note: `app/package.json` holds the implementation scripts. The root `package.json` is a thin proxy for the same dev, build, preview, lint, and audit commands; the retired static-site generators are archived off `main`.
 
 ## 7. Non-negotiable boundaries (do not break)
 - **Auto-deploy is live:** anything pushed to `main` goes to production in ~40s. Verify before pushing; never manual `netlify deploy --prod`.

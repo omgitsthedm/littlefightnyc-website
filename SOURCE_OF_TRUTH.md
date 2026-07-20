@@ -61,6 +61,10 @@ Generated output:
 - Full mirror of the live site at consolidation time:
   `Brand/_littlefightnyc-LIVE-backup-20260630/`.
 - Netlify deploy history is intact (`netlify api restoreSiteDeploy` to roll back).
+- On 2026-07-20, the 107 inactive HTML files, root-level CSS/JS runtime, and
+  static-site generators were removed from `main`. They were never in the
+  `app/dist` publish path and remain recoverable on
+  `archive/old-static-main-20260630`.
 
 ## Incident lesson (2026-06-30)
 
