@@ -2,7 +2,7 @@
 
 > **Read this first.** If you are a person or an AI agent picking this up cold, this file tells you what LittleFight NYC is, exactly where it stands, what to do next, and where everything lives. One screen to orientation.
 >
-> **Last updated:** 2026-07-20 · **Updated by:** Codex (LiFi NYC) · **Stage:** Live flagship marketing site (acquisition pass shipped)
+> **Last updated:** 2026-07-20 · **Updated by:** Codex (LiFi NYC) · **Stage:** Live flagship; acquisition release awaiting Netlify credits
 
 ---
 
@@ -10,8 +10,8 @@
 LittleFight NYC (LFNYC) is **the agency's own flagship marketing/shopfront website** — `https://littlefightnyc.com`. It sells right-sized websites, tools, local visibility, and business systems to small/mid New York businesses. It is a **live, public production site** held to an Apple-tier craft bar (it is the agency's own storefront, so it is the reference standard for everything else).
 
 ## 2. Current state (2026-07-20)
-- **Status:** ✅ Live flagship with a proof-first acquisition path, a website-specific inquiry route, explicit service fit/ownership terms, and guarded mobile update/reload behavior.
-- **Live URL:** https://littlefightnyc.com/ — production health and exact deployed revision must be verified at the end of each shipping session.
+- **Status:** ⚠️ The acquisition release is tested and pushed to `main`, but Netlify skipped its 2026-07-20 production deploy because account credit usage was exceeded. Do not call the acquisition changes live until a retry is `ready`.
+- **Live URL:** https://littlefightnyc.com/ — still serving healthy commit `1fefc3c` at this checkpoint; verify the exact deployed revision after the Netlify credit issue is resolved.
 - **Git:** `main` is the production branch. Use `git status --short` and compare the Netlify deployed commit before calling it synced.
 - **Branch:** `main` ✅ (canonical; the intended default).
 - ⚠️ **This repo AUTO-DEPLOYS from `main`** (push → Netlify auto-build → live in ~40s). This is a deliberate **exception** to LiFi's usual manual-deploy rule. Do **NOT** run `netlify deploy --prod` manually (caused the 2026-06-30 divergence incident).
@@ -33,6 +33,7 @@ Mature React 19 + TypeScript + Vite 7 SPA (React Router 7) with build-time SEO p
 
 ## 5. What's next (immediate)
 Site is in "maintain + proactively elevate" mode; no blocking bug backlog. Open items (from CLAUDE.md / AGENTS.md):
+- Restore Netlify account credits, retry the latest `main` deploy, and verify that the resulting production deploy is `ready` before announcing the acquisition release.
 - Collect approval-backed client outcomes and quotes using `CLIENT-PROOF-COLLECTION.md`; do not invent testimonials.
 - Run the acquisition experiments one at a time and record raw counts using `CONVERSION-MEASUREMENT.md`.
 - Complete the authenticated Google actions in `SEARCH-ACQUISITION-RUNBOOK.md`; repository work alone cannot submit Search Console or edit the Business Profile.
