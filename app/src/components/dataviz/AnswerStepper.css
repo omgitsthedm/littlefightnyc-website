@@ -1,11 +1,13 @@
-/* AnswerStepper — numbered triage rail for the urgent answers. Tokens only.
- * Orange = the signal nodes; the connector stays hairline-quiet. */
+/* AnswerStepper — numbered triage tiles for urgent answers. */
 
 .lf-editorial .lf-triage {
   list-style: none;
   margin: 0 0 var(--lf-space-7);
   padding: 0;
-  max-width: 64ch;
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
 }
 
 .lf-triage__step {
@@ -13,7 +15,11 @@
   display: grid;
   grid-template-columns: 44px 1fr;
   gap: var(--lf-space-4);
-  padding-bottom: var(--lf-space-7);
+  min-width: 0;
+  padding: clamp(var(--lf-space-4), 2.4vw, var(--lf-space-6));
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
   /* Reveal: fade + rise, staggered down the rail. */
   opacity: 0;
   transform: translateY(14px);
@@ -23,36 +29,9 @@
   transition-delay: calc(var(--lf-i, 0) * 110ms);
 }
 
-.lf-triage__step:last-child {
-  padding-bottom: 0;
-}
-
 [data-revealed="true"] .lf-triage__step {
   opacity: 1;
   transform: none;
-}
-
-/* Hairline connector, drawn in after the nodes land. */
-.lf-triage__step::before {
-  content: "";
-  position: absolute;
-  left: 21.5px;
-  top: 52px;
-  bottom: 8px;
-  width: 1px;
-  background: var(--lf-hairline);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--lf-time-slow) var(--lf-ease-out);
-  transition-delay: calc(var(--lf-i, 0) * 110ms + 160ms);
-}
-
-.lf-triage__step:last-child::before {
-  display: none;
-}
-
-[data-revealed="true"] .lf-triage__step::before {
-  transform: scaleY(1);
 }
 
 .lf-triage__node {
@@ -111,7 +90,7 @@
   .lf-triage__step {
     grid-template-columns: 38px 1fr;
     gap: var(--lf-space-3);
-    padding-bottom: var(--lf-space-6);
+    padding: var(--lf-space-4);
   }
 
   .lf-triage__node {
@@ -120,16 +99,42 @@
     font-size: var(--lf-text-2xs);
   }
 
-  .lf-triage__step::before {
-    left: 18.5px;
-    top: 46px;
+}
+
+@media (min-width: 760px) {
+  .lf-editorial .lf-triage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-editorial .lf-triage[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-editorial .lf-triage[data-count="5"] .lf-triage__step:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .lf-editorial .lf-triage[data-count="5"] .lf-triage__step:last-child .lf-triage__body {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.42fr) minmax(0, 1fr);
+    gap: var(--lf-space-6);
+    align-items: start;
+  }
+
+  .lf-editorial .lf-triage[data-count="5"] .lf-triage__step:last-child .lf-triage__heading {
+    margin-bottom: 0;
+  }
+
+  .lf-editorial .lf-triage[data-count="5"] .lf-triage__step:last-child .lf-triage__text {
+    max-width: 72ch;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lf-triage__step,
-  .lf-triage__node,
-  .lf-triage__step::before {
+  .lf-triage__node {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

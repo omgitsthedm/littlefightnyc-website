@@ -181,15 +181,15 @@ export default function ServiceDetail() {
         }}
       />
 
-      <section className="lf-sd">
-        <div className="lf-sd__inner">
-          <EditorialBody dropcap>
-            <p>{service.plain}</p>
-            <PullQuote cite="What you can count on">{service.outcome}</PullQuote>
-            <ServiceDiagram slug={service.slug} />
-          </EditorialBody>
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--wide">
+            <EditorialBody dropcap>
+              <p>{service.plain}</p>
+            </EditorialBody>
+          </article>
 
-          <aside className="lf-sd__aside">
+          <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--quiet lf-sd__aside">
             <p className="lf-sd__aside-label">What's included</p>
             <ul className="lf-sd__aside-list">
               {service.includes.map((item) => (
@@ -197,6 +197,14 @@ export default function ServiceDetail() {
               ))}
             </ul>
           </aside>
+
+          <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--signal">
+            <PullQuote cite="What you can count on">{service.outcome}</PullQuote>
+          </aside>
+
+          <div className="lf-content-tile lf-content-tile--wide lf-content-tile--quiet">
+            <ServiceDiagram slug={service.slug} />
+          </div>
         </div>
       </section>
 

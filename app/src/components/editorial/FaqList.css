@@ -22,16 +22,16 @@
 .lf-faq__list {
   margin: 0;
   display: grid;
-  gap: 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
 }
 
 .lf-faq__item {
-  padding: var(--lf-space-5) 0;
-  border-top: 1px solid var(--lf-hairline);
-}
-.lf-faq__item:first-child {
-  border-top: none;
-  padding-top: 0;
+  min-width: 0;
+  padding: var(--lf-space-5);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
 }
 
 .lf-faq__q {
@@ -49,4 +49,28 @@
   line-height: 1.6;
   color: var(--lf-bone-soft);
   max-width: 64ch;
+}
+
+@media (min-width: 760px) {
+  .lf-faq__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-faq__list[data-count="5"] .lf-faq__item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .lf-faq__list[data-count="3"] .lf-faq__item:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .lf-faq__list[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-faq__list[data-count="3"] .lf-faq__item:last-child {
+    grid-column: auto;
+  }
 }

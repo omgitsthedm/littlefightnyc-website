@@ -53,79 +53,37 @@ export default function ServiceAreaDetail() {
         }}
       />
 
-      <section style={{ paddingBlock: "var(--lf-space-7) var(--lf-space-8)" }}>
-        <div className="lf-container">
-          <EditorialBody>
-            <p>{area.localPattern}</p>
-            <p>{service.outcome}</p>
-            <p><strong>First move.</strong> {area.firstMove}</p>
-          </EditorialBody>
+      <section className="lf-content-section lf-content-section--tight">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--third">
+            <p className="lf-content-tile__label">What is happening here</p>
+            <EditorialBody>
+              <p>{area.localPattern}</p>
+            </EditorialBody>
+          </article>
 
-          <section
-            style={{
-              marginTop: "var(--lf-space-8)",
-              paddingTop: "var(--lf-space-6)",
-              borderTop: "1px solid var(--lf-hairline)",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--lf-mono)",
-                fontSize: "var(--lf-text-2xs)",
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--lf-bone-dim)",
-                margin: "0 0 var(--lf-space-5)",
-              }}
-            >
-              The other services in {area.name}
-            </p>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                borderTop: "1px solid var(--lf-hairline)",
-              }}
-            >
+          <article className="lf-content-tile lf-content-tile--third lf-content-tile--quiet">
+            <p className="lf-content-tile__label">What this service changes</p>
+            <EditorialBody>
+              <p>{service.outcome}</p>
+            </EditorialBody>
+          </article>
+
+          <article className="lf-content-tile lf-content-tile--third lf-content-tile--tablet-full lf-content-tile--signal">
+            <p className="lf-content-tile__label">First move</p>
+            <EditorialBody>
+              <p>{area.firstMove}</p>
+            </EditorialBody>
+          </article>
+
+          <section className="lf-content-tile lf-content-tile--full">
+            <p className="lf-content-tile__label">The other services in {area.name}</p>
+            <ul className="lf-content-list lf-content-list--links" data-count={related.length}>
               {related.map((item) => (
-                <li
-                  key={item.slug}
-                  style={{ borderBottom: "1px solid var(--lf-hairline)" }}
-                >
-                  <Link
-                    to={`/areas/${area.slug}/${areaRouteSlug(item.slug)}/`}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "auto 1fr",
-                      gap: "var(--lf-space-4)",
-                      padding: "var(--lf-space-5) 0",
-                      textDecoration: "none",
-                      color: "var(--lf-bone)",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: "var(--lf-mono)",
-                        fontSize: "var(--lf-text-2xs)",
-                        letterSpacing: "0.16em",
-                        color: "var(--lf-fight)",
-                        paddingTop: "var(--lf-space-1)",
-                      }}
-                    >
-                      {item.eyebrow}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--lf-serif)",
-                        fontWeight: 600,
-                        fontSize: "var(--lf-text-lg)",
-                        lineHeight: 1.1,
-                        letterSpacing: 0,
-                      }}
-                    >
-                      {item.headline}
-                    </span>
+                <li key={item.slug}>
+                  <Link to={`/areas/${area.slug}/${areaRouteSlug(item.slug)}/`}>
+                    <span className="lf-content-link__label">{item.eyebrow}</span>
+                    <span className="lf-content-link__title">{item.headline}</span>
                   </Link>
                 </li>
               ))}

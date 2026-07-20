@@ -41,68 +41,48 @@ export default function GlossaryTerm() {
         }}
       />
 
-      <section style={{ paddingBlock: "var(--lf-space-7) var(--lf-space-9)" }}>
-        <div className="lf-container">
-          <EditorialBody dropcap>
-            <h2>What it means</h2>
-            <p>{term.definition}</p>
-            <h2>How it actually works</h2>
-            <p>{term.howItWorks}</p>
-          </EditorialBody>
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--half">
+            <EditorialBody dropcap>
+              <h2>What it means</h2>
+              <p>{term.definition}</p>
+            </EditorialBody>
+          </article>
 
-          <PullQuote>{term.example}</PullQuote>
+          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+            <EditorialBody>
+              <h2>How it actually works</h2>
+              <p>{term.howItWorks}</p>
+            </EditorialBody>
+          </article>
 
-          <EditorialBody>
-            <h2>When it starts costing money</h2>
-            <p>{term.whenItMatters}</p>
-            <p>{term.costOfIgnoring}</p>
-          </EditorialBody>
+          <aside className="lf-content-tile lf-content-tile--full lf-content-tile--signal">
+            <PullQuote>{term.example}</PullQuote>
+          </aside>
 
-          <FaqList title="Common questions" items={term.faq} />
+          <article
+            className={`lf-content-tile ${
+              related.length > 0 ? "lf-content-tile--wide" : "lf-content-tile--full"
+            }`}
+          >
+            <EditorialBody>
+              <h2>When it starts costing money</h2>
+              <p>{term.whenItMatters}</p>
+              <p>{term.costOfIgnoring}</p>
+            </EditorialBody>
+          </article>
 
           {related.length > 0 && (
-            <nav
-              aria-label="Related terms"
-              style={{
-                marginTop: "var(--lf-space-8)",
-                paddingTop: "var(--lf-space-6)",
-                borderTop: "1px solid var(--lf-hairline)",
-              }}
-            >
-              <p
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.55em",
-                  fontFamily: "var(--lf-mono)",
-                  fontSize: "var(--lf-text-2xs)",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "var(--lf-bone-dim)",
-                  margin: "0 0 var(--lf-space-4)",
-                }}
-              >
-                <Waypoints size={14} strokeWidth={2} aria-hidden="true" style={{ color: "var(--lf-fight)", flex: "none" }} />
+            <nav className="lf-content-tile lf-content-tile--narrow lf-content-tile--tablet-full lf-content-tile--quiet" aria-label="Related terms">
+              <p className="lf-content-tile__label">
+                <Waypoints size={14} strokeWidth={2} aria-hidden="true" />
                 Related terms
               </p>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexWrap: "wrap", gap: "var(--lf-space-3)" }}>
+              <ul className="lf-chip-list">
                 {related.map((r) => (
                   <li key={r.slug}>
-                    <Link
-                      to={`/glossary/${r.slug}/`}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.4em",
-                        padding: "10px 16px",
-                        minHeight: "44px",
-                        borderRadius: "var(--lf-radius-pill)",
-                        border: "1px solid var(--lf-hairline)",
-                        color: "var(--lf-bone)",
-                        textDecoration: "none",
-                        fontSize: "var(--lf-text-sm)",
-                      }}
-                    >
+                    <Link to={`/glossary/${r.slug}/`}>
                       {r.term} <span aria-hidden="true">→</span>
                     </Link>
                   </li>
@@ -110,6 +90,10 @@ export default function GlossaryTerm() {
               </ul>
             </nav>
           )}
+
+          <section className="lf-content-tile lf-content-tile--full">
+            <FaqList title="Common questions" items={term.faq} />
+          </section>
         </div>
       </section>
 

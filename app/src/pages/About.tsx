@@ -40,79 +40,95 @@ export default function About() {
         }}
       />
 
-      <section style={{ paddingBlock: "var(--lf-space-8)" }}>
-        <div className="lf-container">
-          <EditorialBody dropcap>
-            <p>
-              Most of the businesses that keep a neighborhood worth living in
-              are the ones with the least time and the smallest tech budget.
-              The bodega open at 11pm. The salon between the dry cleaner and
-              the bagel shop. The pharmacy that knows the patient by name.
-              They are the places people rely on. They are also the ones
-              getting outspent on tools by chains with full tech teams.
-            </p>
-            <p>
-              Little Fight closes that gap. Not by selling more software. Not
-              by pitching a giant overhaul. By doing the practical work - sites
-              that explain the business plainly, support that picks up when
-              something breaks, search visibility that tells the truth, and
-              small systems that make the day move.
-            </p>
-          </EditorialBody>
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--wide">
+            <EditorialBody dropcap>
+              <p>
+                Most of the businesses that keep a neighborhood worth living in
+                are the ones with the least time and the smallest tech budget.
+                The bodega open at 11pm. The salon between the dry cleaner and
+                the bagel shop. The pharmacy that knows the patient by name.
+                They are the places people rely on. They are also the ones
+                getting outspent on tools by chains with full tech teams.
+              </p>
+              <p>
+                Little Fight closes that gap. Not by selling more software. Not
+                by pitching a giant overhaul. By doing the practical work - sites
+                that explain the business plainly, support that picks up when
+                something breaks, search visibility that tells the truth, and
+                small systems that make the day move.
+              </p>
+            </EditorialBody>
+          </article>
 
-          <EditorialFigure
-            src="/assets/figure-bagel-counter.webp"
-            alt="A bagel shop counterman mid-shift, racks of plain, whole wheat, and cinnamon raisin behind him"
-            number="01"
-            caption="The places that make a block worth living on — usually the ones with the least time and the smallest tech budget."
-            width={1600}
-            height={1200}
-          />
+          <div className="lf-content-tile lf-content-tile--narrow lf-content-tile--media">
+            <EditorialFigure
+              src="/assets/figure-bagel-counter.webp"
+              alt="A bagel shop counterman mid-shift, racks of plain, whole wheat, and cinnamon raisin behind him"
+              number="01"
+              caption="The places that make a block worth living on - usually the ones with the least time and the smallest tech budget."
+              width={1600}
+              height={1200}
+            />
+          </div>
 
-          <EditorialBody>
-            <p>
-              The order is always the same. Keep what works. Connect what
-              matters. Replace what drags. Build only what fits.
-            </p>
-          </EditorialBody>
+          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+            <EditorialBody>
+              <p>
+                The order is always the same. Keep what works. Connect what
+                matters. Replace what drags. Build only what fits.
+              </p>
+            </EditorialBody>
+          </article>
 
-          <PullQuote cite="How the work usually starts">
-            Most owners assume the answer is a rebuild. It almost never is.
-          </PullQuote>
+          <aside className="lf-content-tile lf-content-tile--half lf-content-tile--tablet-full lf-content-tile--signal">
+            <PullQuote cite="How the work usually starts">
+              Most owners assume the answer is a rebuild. It almost never is.
+            </PullQuote>
+          </aside>
 
-          <StatBlock eyebrow="The promises" icon={BadgeCheck} items={PROMISES} />
-          <EditorialBody>
-            <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
-              After hours, leave a message and Little Fight NYC will follow up.
-            </p>
-          </EditorialBody>
+          <section className="lf-content-tile lf-content-tile--full">
+            <StatBlock eyebrow="The promises" icon={BadgeCheck} items={PROMISES} />
+            <EditorialBody>
+              <p style={{ color: "var(--lf-bone-dim)", fontSize: "var(--lf-text-sm)" }}>
+                After hours, leave a message and Little Fight NYC will follow up.
+              </p>
+            </EditorialBody>
+          </section>
 
           <FounderCard photoSrc="/assets/founder-david-marsh.webp" />
 
-          <MiniMapNYC compact />
+          <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <MiniMapNYC compact />
+          </section>
 
-          <EditorialFigure
-            src="/assets/owner.webp"
-            alt="A small-business owner at the counter"
-            number="02"
-            caption="Most calls start with “I don't know if this is a stupid question.” It almost never is — it's the business."
-            width={1600}
-            height={1200}
-          />
+          <div className="lf-content-tile lf-content-tile--half lf-content-tile--media">
+            <EditorialFigure
+              src="/assets/owner.webp"
+              alt="A small-business owner at the counter"
+              number="02"
+              caption="Most calls start with “I don't know if this is a stupid question.” It almost never is - it's the business."
+              width={1600}
+              height={1200}
+            />
+          </div>
 
-          <EditorialBody>
-            <p>
-              The Wi-Fi being weird, the email going to a stranger, the booking
-              link that hasn't worked in three months — none of that is stupid.
-              It is the business. Call when you need the path fixed.
-            </p>
-            <p>
-              The direct line is (646) 360-0318. Email is
-              hello@littlefightnyc.com. If the problem has moving parts, the
-              Tech Audit is the cleanest way to send context without sending
-              passwords, private customer data, or recovery codes.
-            </p>
-          </EditorialBody>
+          <article className="lf-content-tile lf-content-tile--half">
+            <EditorialBody>
+              <p>
+                The Wi-Fi being weird, the email going to a stranger, the booking
+                link that hasn't worked in three months - none of that is stupid.
+                It is the business. Call when you need the path fixed.
+              </p>
+              <p>
+                The direct line is (646) 360-0318. Email is
+                hello@littlefightnyc.com. If the problem has moving parts, the
+                Tech Audit is the cleanest way to send context without sending
+                passwords, private customer data, or recovery codes.
+              </p>
+            </EditorialBody>
+          </article>
         </div>
       </section>
 

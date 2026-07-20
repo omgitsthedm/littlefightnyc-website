@@ -58,7 +58,7 @@ export default function VisualIndex({
           {dek && <p className="lf-visual-index__dek">{dek}</p>}
         </header>
 
-        <div className="lf-visual-index__grid">
+        <div className="lf-visual-index__grid" data-count={items.length}>
           {items.map((item) => {
             const Icon = item.icon;
 

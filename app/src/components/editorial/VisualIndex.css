@@ -28,25 +28,10 @@
   gap: var(--lf-space-7);
 }
 
-@media (min-width: 1100px) {
-  .lf-visual-index__inner {
-    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.6fr);
-    align-items: start;
-    gap: var(--lf-space-9);
-  }
-}
-
 .lf-visual-index__head {
   display: flex;
   flex-direction: column;
   gap: var(--lf-space-4);
-}
-
-@media (min-width: 1100px) {
-  .lf-visual-index__head {
-    position: sticky;
-    top: var(--lf-space-6);
-  }
 }
 
 .lf-visual-index__eyebrow,
@@ -71,7 +56,7 @@
   line-height: 1.05;
   letter-spacing: -0.035em;
   color: var(--lf-bone);
-  max-width: 12ch;
+  max-width: 20ch;
 }
 
 .lf-visual-index__dek {
@@ -93,6 +78,24 @@
 @media (min-width: 720px) {
   .lf-visual-index__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .lf-visual-index--grid .lf-visual-index__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-visual-index--compact .lf-visual-index__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .lf-visual-index--compact .lf-visual-index__item {
+    grid-column: span 4;
+  }
+
+  .lf-visual-index--compact .lf-visual-index__grid[data-count="7"] .lf-visual-index__item:nth-child(-n + 4) {
+    grid-column: span 3;
   }
 }
 
@@ -164,16 +167,6 @@
 .lf-visual-index--compact .lf-visual-index__media {
   aspect-ratio: 16 / 10;
   min-height: 10rem;
-}
-
-@media (min-width: 860px) {
-  .lf-visual-index--compact .lf-visual-index__item:nth-child(3n + 2) .lf-visual-index__media {
-    aspect-ratio: 1 / 1;
-  }
-
-  .lf-visual-index--compact .lf-visual-index__item:nth-child(3n + 3) .lf-visual-index__media {
-    aspect-ratio: 4 / 5;
-  }
 }
 
 .lf-visual-index__media::after {

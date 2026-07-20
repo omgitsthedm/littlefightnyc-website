@@ -116,25 +116,33 @@ export default function AnswerGuide() {
 
           {EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} urgent />}
 
-          {triage ? (
-            <AnswerStepper sections={guide.sections} />
-          ) : (
-            guide.sections.map((section) => (
-              <article key={section.heading} className="lf-answer-page__section">
-                <h2>{section.heading}</h2>
-                <p>{section.body}</p>
-              </article>
-            ))
+          <div className="lf-answer-page__sections" data-count={guide.sections.length}>
+            {triage ? (
+              <AnswerStepper sections={guide.sections} />
+            ) : (
+              guide.sections.map((section) => (
+                <article key={section.heading} className="lf-answer-page__section">
+                  <h2>{section.heading}</h2>
+                  <p>{section.body}</p>
+                </article>
+              ))
+            )}
+          </div>
+
+          {verdict && (
+            <div className="lf-answer-page__feature">
+              <AnswerVerdict verdict={verdict} />
+            </div>
           )}
 
-          {verdict && <AnswerVerdict verdict={verdict} />}
-
-          <AnswerDiagram slug={guide.slug} />
+          <div className="lf-answer-page__feature lf-answer-page__feature--diagram">
+            <AnswerDiagram slug={guide.slug} />
+          </div>
 
           {guide.faq.length > 0 && (
             <section className="lf-answer-page__faq">
               <p className="lf-answer-page__faq-title">Quick answers</p>
-              <div className="lf-answer-page__faq-list">
+              <div className="lf-answer-page__faq-list" data-count={guide.faq.length}>
                 {guide.faq.map((item) => (
                   <div key={item.question}>
                     <h3 className="lf-answer-page__faq-q">{item.question}</h3>

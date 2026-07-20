@@ -49,18 +49,17 @@ export default function Areas() {
         }}
       />
 
-      <section
-        aria-label="Coverage map"
-        style={{ paddingBlock: "var(--lf-space-6) 0" }}
-      >
-        <div className="lf-container">
-          <MiniMapNYC />
+      <section className="lf-content-section lf-content-section--tight" aria-label="Coverage map">
+        <div className="lf-content-grid">
+          <div className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <MiniMapNYC />
+          </div>
         </div>
       </section>
 
       <VisualIndex
         eyebrow="Neighborhoods"
-        title="Fourteen patches of the same fight."
+        title="Eighteen patches of the same fight."
         dek="Every neighborhood breaks in its own way. Pick yours to see what we usually walk into there."
         variant="grid"
         items={areaPages.map((area) => ({

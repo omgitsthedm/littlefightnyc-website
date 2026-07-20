@@ -230,7 +230,7 @@
   background: var(--lf-fight-hover);
 }
 
-/* ---------- Asymmetric rows: 1 large + 2 small, repeating ---------- */
+/* ---------- Case-study grid: three equal stories ---------- */
 .lf-ex-rows__grid {
   list-style: none;
   margin: 0;
@@ -242,16 +242,21 @@
 
 @media (min-width: 720px) {
   .lf-ex-rows__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  /* Pairs per row, big side alternating: [2+1], [1+2], [2+1]…
-     An odd leftover takes the full row — no empty cells, ever. */
-  .lf-ex-rows__cell:nth-child(4n + 1),
-  .lf-ex-rows__cell:nth-child(4n) {
-    grid-column: span 2;
+}
+
+@media (min-width: 1100px) {
+  .lf-ex-rows__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
-  .lf-ex-rows__cell:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+
+  .lf-ex-rows__cell {
+    grid-column: span 4;
+  }
+
+  .lf-ex-rows__grid[data-count="7"] .lf-ex-rows__cell:nth-child(-n + 4) {
+    grid-column: span 3;
   }
 }
 
@@ -307,14 +312,6 @@
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--lf-paper-2);
-}
-
-@media (min-width: 720px) {
-  .lf-ex-rows__cell:nth-child(4n + 1) .lf-ex-rows__media,
-  .lf-ex-rows__cell:nth-child(4n) .lf-ex-rows__media,
-  .lf-ex-rows__cell:last-child:nth-child(odd) .lf-ex-rows__media {
-    aspect-ratio: 16 / 8;
-  }
 }
 
 .lf-ex-rows__media img {

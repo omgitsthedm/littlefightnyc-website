@@ -20,9 +20,10 @@ export default function Legal() {
         dek="Little Fight collects only what it needs to understand the issue, scopes work before quoting it, measures what is working, and handles account access through safer handoffs."
       />
 
-      <section style={{ paddingBlock: "var(--lf-space-7) var(--lf-space-9)" }}>
-        <div className="lf-container">
-          <EditorialBody>
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--reading lf-content-tile--quiet">
+            <EditorialBody wide>
             <h2 id="privacy">What forms collect</h2>
             <p>
               Tech Audit and contact paths may collect your name, business
@@ -83,7 +84,8 @@ export default function Legal() {
               For privacy questions or requests, email Little Fight at
               {" "}<a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>.
             </p>
-          </EditorialBody>
+            </EditorialBody>
+          </article>
         </div>
       </section>
 

@@ -618,19 +618,25 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--lf-hairline);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
 }
 
 .lf-case-detail-related__list li {
-  border-bottom: 1px solid var(--lf-hairline);
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
 }
 
 .lf-case-detail-related__link {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: var(--lf-space-4);
+  height: 100%;
   padding: var(--lf-space-5);
-  margin: 0 calc(var(--lf-space-5) * -1);
+  margin: 0;
   text-decoration: none;
   color: var(--lf-bone);
   border-radius: var(--lf-radius-card);
@@ -640,8 +646,13 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-case-detail-related__link:hover {
-  padding-left: var(--lf-space-6);
   background: color-mix(in srgb, var(--lf-fight) 5%, transparent);
+}
+
+@media (min-width: 900px) {
+  .lf-case-detail-related__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .lf-case-detail-related__num {

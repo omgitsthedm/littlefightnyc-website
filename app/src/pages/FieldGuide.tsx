@@ -164,10 +164,10 @@ export default function FieldGuide() {
         </div>
       </section>
 
-      {/* The rest — asymmetric rows: one large + two small, repeating. */}
+      {/* The rest — three equal case-study columns. */}
       <section className="lf-ex-rows" aria-label="More case studies">
         <div ref={rowsRef} className="lf-ex-rows__inner" data-reveal>
-          <ul className="lf-ex-rows__grid">
+          <ul className="lf-ex-rows__grid" data-count={rest.length}>
             {rest.map((study, i) => (
               <li
                 key={study.slug}

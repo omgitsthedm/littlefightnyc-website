@@ -61,43 +61,57 @@ export default function Nationwide() {
         }}
       />
 
-      <section style={{ paddingBlock: "var(--lf-space-7)" }}>
-        <div className="lf-container">
-          <EditorialBody dropcap>
-            <p>
-              Every main street in America has the same fight. The chains have
-              tech teams. The corner shop has a template site from 2019 and a
-              contact form nobody answers. We fix that for a living in New
-              York — and a website doesn't care about zip codes.
-            </p>
-            <h2>How a remote build works</h2>
-            <p>
-              You call, text, or email. We talk about your business — free,
-              like always. Then we build. You watch it come together and tell
-              us what's right and what's wrong. In 14 days it's live. If it's
-              not, you don't pay.
-            </p>
-          </EditorialBody>
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--half">
+            <EditorialBody dropcap>
+              <p>
+                Every main street in America has the same fight. The chains have
+                tech teams. The corner shop has a template site from 2019 and a
+                contact form nobody answers. We fix that for a living in New
+                York - and a website doesn't care about zip codes.
+              </p>
+            </EditorialBody>
+          </article>
 
-          {/* The proof, drawn: a real site assembling on the 14-day clock. */}
-          <SiteInFourteen />
+          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+            <EditorialBody>
+              <h2>How a remote build works</h2>
+              <p>
+                You call, text, or email. We talk about your business - free,
+                like always. Then we build. You watch it come together and tell
+                us what's right and what's wrong. In 14 days it's live. If it's
+                not, you don't pay.
+              </p>
+            </EditorialBody>
+          </article>
 
-          <EditorialBody>
-            <h2>Every promise travels</h2>
-            <p>
-              The consult is free. A real person answers, 9am to 9pm Eastern.
-              Callbacks in 2 hours. And when it's done, the code, the domain,
-              the content — all of it is yours. No hostage fees. No monthly
-              ransom.
-            </p>
-          </EditorialBody>
+          <div className="lf-content-tile lf-content-tile--wide lf-content-tile--quiet">
+            <SiteInFourteen />
+          </div>
 
-          <PullQuote cite="Why a New York shop, anywhere">
-            The chains squeeze every main street in America. The fight is the
-            same everywhere. So is the fix.
-          </PullQuote>
+          <article className="lf-content-tile lf-content-tile--narrow lf-content-tile--tablet-full">
+            <EditorialBody>
+              <h2>Every promise travels</h2>
+              <p>
+                The consult is free. A real person answers, 9am to 9pm Eastern.
+                Callbacks in 2 hours. And when it's done, the code, the domain,
+                the content - all of it is yours. No hostage fees. No monthly
+                ransom.
+              </p>
+            </EditorialBody>
+          </article>
 
-          <FaqList title="Long-distance questions, answered plainly" items={NATIONWIDE_FAQ} />
+          <aside className="lf-content-tile lf-content-tile--full lf-content-tile--signal">
+            <PullQuote cite="Why a New York shop, anywhere">
+              The chains squeeze every main street in America. The fight is the
+              same everywhere. So is the fix.
+            </PullQuote>
+          </aside>
+
+          <section className="lf-content-tile lf-content-tile--full">
+            <FaqList title="Long-distance questions, answered plainly" items={NATIONWIDE_FAQ} />
+          </section>
         </div>
       </section>
 

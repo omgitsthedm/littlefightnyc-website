@@ -152,146 +152,71 @@ export default function AreaDetail() {
         }}
       />
 
-      <section style={{ paddingBlock: "var(--lf-space-7)" }}>
-        <div className="lf-container">
-          <MiniMapNYC current={area.slug} />
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <MiniMapNYC current={area.slug} />
+          </section>
 
-          <EditorialBody dropcap>
-            <p>{area.intro}</p>
-            <h2>The businesses here</h2>
-            <p>{area.businessLandscape}</p>
-          </EditorialBody>
+          <article
+            className={`lf-content-tile ${
+              AREA_FIGURE[area.slug] ? "lf-content-tile--wide" : "lf-content-tile--full"
+            }`}
+          >
+            <EditorialBody dropcap>
+              <p>{area.intro}</p>
+              <h2>The businesses here</h2>
+              <p>{area.businessLandscape}</p>
+            </EditorialBody>
+          </article>
 
           {AREA_FIGURE[area.slug] && (
-            <EditorialFigure
-              src={AREA_FIGURE[area.slug].src}
-              alt={AREA_FIGURE[area.slug].alt}
-              caption={AREA_FIGURE[area.slug].caption}
-              width={1600}
-              height={1200}
-            />
+            <div className="lf-content-tile lf-content-tile--narrow lf-content-tile--media">
+              <EditorialFigure
+                src={AREA_FIGURE[area.slug].src}
+                alt={AREA_FIGURE[area.slug].alt}
+                caption={AREA_FIGURE[area.slug].caption}
+                width={1600}
+                height={1200}
+              />
+            </div>
           )}
 
-          <EditorialBody>
-            <h2>How customers find you</h2>
-            <p>{area.localSearchReality}</p>
-          </EditorialBody>
+          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+            <EditorialBody>
+              <h2>How customers find you</h2>
+              <p>{area.localSearchReality}</p>
+            </EditorialBody>
+          </article>
 
-          <PullQuote cite={`First move in ${area.name}`}>{area.firstMove}</PullQuote>
+          <aside className="lf-content-tile lf-content-tile--half lf-content-tile--tablet-full lf-content-tile--signal">
+            <PullQuote cite={`First move in ${area.name}`}>{area.firstMove}</PullQuote>
+          </aside>
 
-          <section
-            style={{
-              marginTop: "var(--lf-space-8)",
-              paddingTop: "var(--lf-space-6)",
-              borderTop: "1px solid var(--lf-hairline)",
-            }}
-          >
-            <p
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.55em",
-                fontFamily: "var(--lf-mono)",
-                fontSize: "var(--lf-text-2xs)",
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--lf-bone-dim)",
-                margin: "0 0 var(--lf-space-4)",
-              }}
-            >
-              <Wrench size={14} strokeWidth={2} aria-hidden="true" style={{ color: "var(--lf-fight)", flex: "none" }} />
+          <section className="lf-content-tile lf-content-tile--full">
+            <p className="lf-content-tile__label">
+              <Wrench size={14} strokeWidth={2} aria-hidden="true" />
               What we fix here
             </p>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: "var(--lf-space-3)" }}>
+            <ul className="lf-content-list" data-count={area.whatWeFixHere.length}>
               {area.whatWeFixHere.map((fix) => (
-                <li
-                  key={fix}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "auto 1fr",
-                    gap: "var(--lf-space-3)",
-                    fontSize: "var(--lf-text-md)",
-                    lineHeight: 1.55,
-                    color: "var(--lf-bone-soft)",
-                  }}
-                >
-                  <span aria-hidden="true" style={{ color: "var(--lf-fight)", fontWeight: 700 }}>—</span>
-                  <span>{fix}</span>
-                </li>
+                <li key={fix}>{fix}</li>
               ))}
             </ul>
           </section>
 
-          <FaqList title={`Owning a business in ${area.name}`} items={area.faq} />
+          <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <FaqList title={`Owning a business in ${area.name}`} items={area.faq} />
+          </section>
 
-          <section
-            style={{
-              marginTop: "var(--lf-space-8)",
-              paddingTop: "var(--lf-space-6)",
-              borderTop: "1px solid var(--lf-hairline)",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--lf-mono)",
-                fontSize: "var(--lf-text-2xs)",
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--lf-bone-dim)",
-                margin: "0 0 var(--lf-space-5)",
-              }}
-            >
-              Services in {area.name}
-            </p>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                display: "grid",
-                gridTemplateColumns: "1fr",
-                gap: 0,
-                borderTop: "1px solid var(--lf-hairline)",
-              }}
-            >
+          <section className="lf-content-tile lf-content-tile--full">
+            <p className="lf-content-tile__label">Services in {area.name}</p>
+            <ul className="lf-content-list lf-content-list--links" data-count={services.length}>
               {services.map((service) => (
-                <li
-                  key={service.slug}
-                  style={{ borderBottom: "1px solid var(--lf-hairline)" }}
-                >
-                  <Link
-                    to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "auto 1fr",
-                      gap: "var(--lf-space-4)",
-                      padding: "var(--lf-space-5) 0",
-                      textDecoration: "none",
-                      color: "var(--lf-bone)",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: "var(--lf-mono)",
-                        fontSize: "var(--lf-text-2xs)",
-                        letterSpacing: "0.16em",
-                        color: "var(--lf-fight)",
-                        paddingTop: "var(--lf-space-1)",
-                      }}
-                    >
-                      {service.eyebrow}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--lf-serif)",
-                        fontWeight: 600,
-                        fontSize: "var(--lf-text-lg)",
-                        lineHeight: 1.1,
-                        letterSpacing: 0,
-                      }}
-                    >
-                      {service.headline}
-                    </span>
+                <li key={service.slug}>
+                  <Link to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}>
+                    <span className="lf-content-link__label">{service.eyebrow}</span>
+                    <span className="lf-content-link__title">{service.headline}</span>
                   </Link>
                 </li>
               ))}
@@ -299,48 +224,15 @@ export default function AreaDetail() {
           </section>
 
           {nearby.length > 0 && (
-            <nav
-              aria-label="Nearby neighborhoods"
-              style={{
-                marginTop: "var(--lf-space-8)",
-                paddingTop: "var(--lf-space-6)",
-                borderTop: "1px solid var(--lf-hairline)",
-              }}
-            >
-              <p
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.55em",
-                  fontFamily: "var(--lf-mono)",
-                  fontSize: "var(--lf-text-2xs)",
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "var(--lf-bone-dim)",
-                  margin: "0 0 var(--lf-space-4)",
-                }}
-              >
-                <Waypoints size={14} strokeWidth={2} aria-hidden="true" style={{ color: "var(--lf-fight)", flex: "none" }} />
+            <nav className="lf-content-tile lf-content-tile--full lf-content-tile--quiet" aria-label="Nearby neighborhoods">
+              <p className="lf-content-tile__label">
+                <Waypoints size={14} strokeWidth={2} aria-hidden="true" />
                 Nearby neighborhoods
               </p>
-              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexWrap: "wrap", gap: "var(--lf-space-3)" }}>
+              <ul className="lf-chip-list">
                 {nearby.map((n) => (
                   <li key={n.slug}>
-                    <Link
-                      to={`/areas/${n.slug}/`}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.4em",
-                        padding: "10px 16px",
-                        minHeight: "44px",
-                        borderRadius: "var(--lf-radius-pill)",
-                        border: "1px solid var(--lf-hairline)",
-                        color: "var(--lf-bone)",
-                        textDecoration: "none",
-                        fontSize: "var(--lf-text-sm)",
-                      }}
-                    >
+                    <Link to={`/areas/${n.slug}/`}>
                       {n.name} <span aria-hidden="true">→</span>
                     </Link>
                   </li>

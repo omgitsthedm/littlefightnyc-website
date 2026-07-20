@@ -24,7 +24,7 @@ export default function FaqList({
         <MessageCircleQuestion size={14} strokeWidth={2} aria-hidden="true" />
         {title}
       </p>
-      <dl className="lf-faq__list">
+      <dl className="lf-faq__list" data-count={items.length}>
         {items.map((item) => (
           <div key={item.question} className="lf-faq__item">
             <dt className="lf-faq__q">{item.question}</dt>

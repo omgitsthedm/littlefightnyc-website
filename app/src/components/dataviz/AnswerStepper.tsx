@@ -4,9 +4,9 @@ import "./AnswerStepper.css";
 type Section = { heading: string; body: string };
 
 /**
- * AnswerStepper — the urgent guides' triage rail. Renders the guide's
- * authored sections, in their authored order, as a numbered vertical stepper:
- * orange nodes on a hairline connector that draws in on scroll. Content is
+ * AnswerStepper — the urgent guides' numbered triage tiles. Renders the guide's
+ * authored sections in order, using a compact grid when the viewport allows it.
+ * Orange nodes preserve the sequence without leaving half the page unused. Content is
  * passed straight through from site.ts — this component adds structure only.
  * Reduced motion renders the final state instantly (motion.css collapses the
  * transitions; the hook reveals immediately).
@@ -15,7 +15,12 @@ export default function AnswerStepper({ sections }: { sections: Section[] }) {
   const ref = useScrollReveal<HTMLOListElement>({ threshold: 0.08 });
 
   return (
-    <ol className="lf-triage" ref={ref} aria-label="Triage steps, in order">
+    <ol
+      className="lf-triage"
+      ref={ref}
+      aria-label="Triage steps, in order"
+      data-count={sections.length}
+    >
       {sections.map((section, i) => (
         <li
           key={section.heading}

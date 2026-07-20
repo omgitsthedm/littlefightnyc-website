@@ -120,6 +120,12 @@
   margin-inline: auto;
 }
 
+.lf-answer-page__sections {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
+}
+
 .lf-answer-page__short {
   font-family: var(--lf-serif);
   font-size: var(--lf-text-lg);
@@ -144,8 +150,13 @@
 }
 
 .lf-answer-page__section {
-  margin-bottom: var(--lf-space-7);
-  max-width: 60ch;
+  min-width: 0;
+  margin: 0;
+  max-width: none;
+  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
 }
 
 .lf-answer-page__section h2 {
@@ -167,6 +178,45 @@
   letter-spacing: -0.003em;
 }
 
+.lf-answer-page__feature {
+  margin-top: var(--lf-space-4);
+  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-answer-page__feature > * {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.lf-answer-page__feature:empty {
+  display: none;
+}
+
+.lf-answer-page__sections > .lf-triage {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+}
+
+@media (min-width: 760px) {
+  .lf-answer-page__sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-answer-page__sections[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-answer-page__sections[data-count="5"] .lf-answer-page__section:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 .lf-answer-page__faq {
   margin-top: var(--lf-space-8);
   padding-top: var(--lf-space-7);
@@ -183,10 +233,17 @@
 }
 
 .lf-answer-page__faq-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--lf-space-5);
-  max-width: 60ch;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
+  max-width: none;
+}
+
+.lf-answer-page__faq-list > div {
+  padding: var(--lf-space-5);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
 }
 
 .lf-answer-page__faq-q {
@@ -207,6 +264,26 @@
   margin: 0;
 }
 
+@media (min-width: 760px) {
+  .lf-answer-page__faq-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-answer-page__faq-list[data-count="3"] > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .lf-answer-page__faq-list[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-answer-page__faq-list[data-count="3"] > div:last-child {
+    grid-column: auto;
+  }
+}
+
 /* Related reading (was inline styles) */
 .lf-answer-page__related {
   margin-top: var(--lf-space-9);
@@ -224,7 +301,37 @@
 }
 
 .lf-answer-page__related-list {
-  border-top: 1px solid var(--lf-hairline);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
+  border-top: 0;
+}
+
+.lf-answer-page__related-list .lf-answers-index__item {
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+}
+
+.lf-answer-page__related-list .lf-answers-index__link {
+  height: 100%;
+  padding: var(--lf-space-5);
+}
+
+.lf-answer-page__related-list .lf-answers-index__link:hover {
+  padding-left: var(--lf-space-5);
+  background: color-mix(in srgb, var(--lf-fight) 5%, var(--lf-paper));
+}
+
+.lf-answer-page__related-list .lf-answers-index__q {
+  font-size: var(--lf-text-lg);
+}
+
+@media (min-width: 900px) {
+  .lf-answer-page__related-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* ---- Answers hub — symptom clusters -------------------------------------

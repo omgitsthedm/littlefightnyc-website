@@ -27,63 +27,24 @@ export default function Glossary() {
         }}
       />
 
-      <section
-        style={{
-          paddingBlock: "var(--lf-space-7) var(--lf-space-9)",
-        }}
-      >
-        <div className="lf-container">
-          <TermMap />
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              borderTop: "1px solid var(--lf-hairline)",
-            }}
-          >
-            {glossaryTerms.map((term) => (
-              <li
-                key={term.slug}
-                style={{ borderBottom: "1px solid var(--lf-hairline)" }}
-              >
-                <Link
-                  to={`/glossary/${term.slug}/`}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr",
-                    gap: "var(--lf-space-2)",
-                    padding: "var(--lf-space-5) 0",
-                    textDecoration: "none",
-                    color: "var(--lf-bone)",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: "var(--lf-serif)",
-                      fontWeight: 600,
-                      fontSize: "var(--lf-text-lg)",
-                      lineHeight: 1.1,
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {term.term}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--lf-serif)",
-                      fontStyle: "italic",
-                      fontSize: "var(--lf-text-base)",
-                      color: "var(--lf-bone-soft)",
-                      letterSpacing: "-0.005em",
-                    }}
-                  >
-                    {term.plain}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <section className="lf-content-section">
+        <div className="lf-content-grid">
+          <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <TermMap />
+          </section>
+
+          <section className="lf-content-tile lf-content-tile--full">
+            <ul className="lf-content-list lf-content-list--links lf-content-list--three" data-count={glossaryTerms.length}>
+              {glossaryTerms.map((term) => (
+                <li key={term.slug}>
+                  <Link to={`/glossary/${term.slug}/`}>
+                    <span className="lf-content-link__title">{term.term}</span>
+                    <span className="lf-content-link__copy">{term.plain}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
       </section>
 

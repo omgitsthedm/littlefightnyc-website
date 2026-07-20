@@ -50,25 +50,6 @@ export default function ServiceEditorialSpread() {
         </header>
 
         <div className="lf-service-spread__layout">
-          <figure className="lf-service-spread__lead">
-            <img {...skelImg}
-              src="/assets/nyc-street.webp"
-              alt="A New York street corner at dusk, a lit pharmacy and a small restaurant on the block"
-              width={1600}
-              height={1200}
-              loading="lazy"
-              decoding="async"
-              {...responsiveImageProps(
-                "/assets/nyc-street.webp",
-                "(max-width: 720px) 100vw, 50vw",
-              )}
-            />
-            <figcaption>
-              Built for small teams where the website, the register, the inbox,
-              and the follow-up path all affect the same day.
-            </figcaption>
-          </figure>
-
           <ol className="lf-service-spread__list">
             {SERVICE_ORDER.map((slug) => {
               const service = services.find((item) => item.slug === slug);
@@ -107,39 +88,6 @@ export default function ServiceEditorialSpread() {
               );
             })}
           </ol>
-
-          <aside className="lf-service-spread__marginal" aria-label="What the work touches">
-            <figure>
-              <img {...skelImg}
-                src="/assets/nyc-stickys-steam.webp"
-                alt="Steam rising from a New York street food counter"
-                width={1200}
-                height={1600}
-                loading="lazy"
-                decoding="async"
-                {...responsiveImageProps(
-                  "/assets/nyc-stickys-steam.webp",
-                  "(max-width: 720px) 100vw, 50vw",
-                )}
-              />
-              <figcaption>Customer path</figcaption>
-            </figure>
-            <figure>
-              <img {...skelImg}
-                src="/assets/shop-interior.webp"
-                alt="Inside a small independent shop — a rail of jeans by the counter"
-                width={1600}
-                height={1200}
-                loading="lazy"
-                decoding="async"
-                {...responsiveImageProps(
-                  "/assets/shop-interior.webp",
-                  "(max-width: 720px) 100vw, 50vw",
-                )}
-              />
-              <figcaption>Owner view</figcaption>
-            </figure>
-          </aside>
         </div>
       </div>
     </section>

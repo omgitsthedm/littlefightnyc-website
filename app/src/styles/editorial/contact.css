@@ -82,6 +82,56 @@
   flex: none;
 }
 
+/* The response path and the four promises belong to one decision surface.
+   Pair them on wide screens instead of stretching two sparse bands across
+   separate viewports. */
+.lf-contact-operations {
+  padding: var(--lf-space-7) var(--lf-margin-mobile);
+  background: var(--lf-ink);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-contact-operations__inner {
+  width: 100%;
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
+}
+
+.lf-contact-operations__inner > .lf-contact-window,
+.lf-contact-operations__inner > .lf-tpi {
+  min-width: 0;
+  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+}
+
+.lf-contact-operations .lf-contact-window__inner,
+.lf-contact-operations .lf-tpi__inner {
+  max-width: none;
+}
+
+@media (min-width: 768px) {
+  .lf-contact-operations {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 900px) {
+  .lf-contact-operations__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-contact-operations {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
 /* ─── The Direct Line band ─────────────────────────────────────── */
 
 .lf-contact-line {

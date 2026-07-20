@@ -4,6 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 // fonts/tokens/base are imported once at the entry (src/main.tsx). Only the
 // shell-specific overrides stay here.
 import "@/styles/editorial/legacy-overrides.css";
+import "@/styles/editorial/tiled-layout.css";
 
 // RouteMeta keeps <head> in sync on client-side navigation. The prerendered
 // HTML already carries correct per-page meta on first paint, so it's not on the

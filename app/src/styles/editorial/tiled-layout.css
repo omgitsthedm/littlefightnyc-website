@@ -1,0 +1,317 @@
+/* Density-aware page composition.
+ *
+ * This is the shared structural layer for inner-page stories. It replaces the
+ * old pattern of stacking a 60ch prose column inside a 1312px container and
+ * leaving the rest of the viewport empty. Content keeps a readable measure,
+ * but related blocks now occupy a deliberate 12-column composition.
+ */
+
+.lf-content-section {
+  padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-9);
+}
+
+.lf-content-section--tight {
+  padding-block: var(--lf-space-6) var(--lf-space-8);
+}
+
+.lf-content-grid {
+  width: 100%;
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
+}
+
+.lf-content-tile {
+  min-width: 0;
+  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+}
+
+.lf-content-tile--quiet {
+  background: var(--lf-paper-2);
+}
+
+.lf-content-tile--signal {
+  border-color: color-mix(in srgb, var(--lf-fight) 52%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-fight) 6%, var(--lf-paper));
+}
+
+.lf-content-tile--media {
+  padding: 0;
+  background: var(--lf-paper-2);
+}
+
+.lf-content-tile--media > .lf-fig,
+.lf-content-tile--media > .lf-fig > .lf-fig__frame {
+  height: 100%;
+}
+
+.lf-content-tile--media .lf-fig__frame img {
+  width: 100%;
+  height: 100%;
+  min-height: clamp(22rem, 38vw, 36rem);
+  object-fit: cover;
+}
+
+.lf-content-tile--media .lf-fig__caption {
+  padding: var(--lf-space-4) var(--lf-space-5) var(--lf-space-5);
+}
+
+.lf-content-tile > :where(.lf-body, .lf-pullquote, .lf-stats, .lf-faq, .lf-minimap, .lf-instrument) {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.lf-content-tile > .lf-body + .lf-body,
+.lf-content-tile > .lf-body + .lf-pullquote,
+.lf-content-tile > .lf-pullquote + .lf-body {
+  margin-top: var(--lf-space-6);
+}
+
+.lf-content-grid > .lf-founder {
+  margin: 0;
+}
+
+.lf-content-tile .lf-body p,
+.lf-content-tile .lf-faq__a {
+  max-width: 68ch;
+}
+
+.lf-content-tile__label {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  margin: 0 0 var(--lf-space-5);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.lf-content-tile__label svg {
+  flex: none;
+  color: var(--lf-fight);
+}
+
+.lf-content-tile__title {
+  margin: 0 0 var(--lf-space-4);
+  max-width: 22ch;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-xl);
+  line-height: 1.06;
+}
+
+.lf-content-tile__copy {
+  max-width: 68ch;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-md);
+  line-height: 1.6;
+}
+
+.lf-content-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-content-list > li {
+  min-width: 0;
+  padding: var(--lf-space-4);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+}
+
+.lf-content-list--links > li {
+  padding: 0;
+  overflow: hidden;
+}
+
+.lf-content-list--links a {
+  display: grid;
+  min-height: 100%;
+  gap: var(--lf-space-3);
+  padding: var(--lf-space-5);
+  color: var(--lf-bone);
+  text-decoration: none;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-content-list--links a:hover,
+.lf-content-list--links a:focus-visible {
+  background: color-mix(in srgb, var(--lf-fight) 7%, var(--lf-paper-2));
+  transform: translateY(var(--lf-lift));
+}
+
+.lf-content-link__label {
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lf-content-link__title {
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-lg);
+  line-height: 1.12;
+}
+
+.lf-content-link__copy {
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+}
+
+.lf-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-chip-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: 44px;
+  padding: var(--lf-space-2) var(--lf-space-4);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  color: var(--lf-bone);
+  font-size: var(--lf-text-sm);
+  text-decoration: none;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-chip-list a:hover,
+.lf-chip-list a:focus-visible {
+  border-color: var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
+}
+
+@media (min-width: 720px) {
+  .lf-content-section {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-content-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--lf-space-4);
+  }
+
+  .lf-content-tile {
+    grid-column: span 3;
+  }
+
+  .lf-content-tile--full,
+  .lf-content-tile--wide,
+  .lf-content-tile--reading,
+  .lf-content-tile--tablet-full,
+  .lf-content-grid > .lf-founder {
+    grid-column: 1 / -1;
+  }
+
+  .lf-content-list[data-count="2"],
+  .lf-content-list[data-count="4"],
+  .lf-content-list[data-count="6"],
+  .lf-content-list[data-count="8"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-content-list[data-count="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .lf-content-tile--third,
+  .lf-content-tile--third.lf-content-tile--tablet-full {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1080px) {
+  .lf-content-section {
+    padding-inline: var(--lf-margin-desktop);
+  }
+
+  .lf-content-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--lf-space-5);
+  }
+
+  .lf-content-tile--full {
+    grid-column: 1 / -1;
+  }
+
+  .lf-content-tile--wide {
+    grid-column: span 7;
+  }
+
+  .lf-content-tile--narrow {
+    grid-column: span 5;
+  }
+
+  .lf-content-tile--half,
+  .lf-content-tile:not([class*="lf-content-tile--"]) {
+    grid-column: span 6;
+  }
+
+  .lf-content-tile--third {
+    grid-column: span 4;
+  }
+
+  .lf-content-tile--quarter {
+    grid-column: span 3;
+  }
+
+  .lf-content-tile--reading {
+    grid-column: 3 / span 8;
+  }
+
+  .lf-content-tile--offset {
+    grid-column-start: 8;
+  }
+
+  .lf-content-list[data-count="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-content-list--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-content-list--links a,
+  .lf-content-list--links a:hover,
+  .lf-content-list--links a:focus-visible {
+    transition: none;
+    transform: none;
+  }
+}

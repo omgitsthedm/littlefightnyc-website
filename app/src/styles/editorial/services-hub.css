@@ -1,6 +1,5 @@
-/* Services hub — the symptom router band. Replaces the old 2×2 card grid
-   that repeated the same four services the hero and the editorial spread
-   already state (the page said its one message three times). */
+/* Services hub — four equal entry doors. The hierarchy lives inside each
+   card, while the outer 2×2 grid stays predictable and easy to scan. */
 
 .lf-svc-router {
   padding: var(--lf-space-7) var(--lf-margin-mobile);
@@ -58,15 +57,6 @@
   .lf-svc-router__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .lf-svc-router__item:first-child {
-    grid-column: 1 / -1;
-  }
-}
-
-@container svc-router (min-width: 1040px) {
-  .lf-svc-router__list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
 .lf-svc-router__item {
@@ -97,8 +87,6 @@
 }
 
 .lf-editorial .lf-svc-router__link--primary {
-  min-height: 176px;
-  justify-content: flex-end;
   border-color: color-mix(in srgb, var(--lf-fight) 44%, var(--lf-hairline));
   background: var(--lf-paper-2); /* solid fallback: keeps the card filled if color-mix drops on Safari <16.2 */
   background:
