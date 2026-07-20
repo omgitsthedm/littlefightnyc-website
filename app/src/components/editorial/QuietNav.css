@@ -282,7 +282,7 @@
 @media (min-width: 1024px) {
   .lf-nav__start {
     display: inline-flex;
-    margin-inline-start: var(--lf-space-3);
+    margin-inline-start: var(--lf-space-5);
   }
 }
 
