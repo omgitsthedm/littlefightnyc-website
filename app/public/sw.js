@@ -13,13 +13,8 @@ self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_URLS)));
 });
 
-// Updates wait by default. The page sends this only after the visitor presses
-// “Refresh now” in the update notice; installs never take over a tab on their own.
-self.addEventListener("message", (event) => {
-  if (event.data?.type === "ACTIVATE_UPDATE") {
-    self.skipWaiting();
-  }
-});
+// Updates wait until controlled tabs close, then activate on the next visit.
+// Nothing takes over or reloads a page while somebody is using it.
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(

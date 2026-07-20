@@ -7,8 +7,9 @@ const boundarySource = await readFile(new URL("../src/components/ErrorBoundary.t
 const noticeSource = await readFile(new URL("../src/components/SiteNotices.tsx", import.meta.url), "utf8");
 
 for (const [label, source, forbidden] of [
-  ["service-worker registration", registerSource, ["controllerchange", "visibilitychange", "location.reload", "SKIP_WAITING"]],
-  ["service worker", workerSource, ["clients.claim", "SKIP_WAITING"]],
+  ["service-worker registration", registerSource, ["controllerchange", "visibilitychange", "location.reload", "postMessage", "lf:sw-update-ready"]],
+  ["service worker", workerSource, ["clients.claim", "skipWaiting", "ACTIVATE_UPDATE"]],
+  ["site notices", noticeSource, ["Site update ready", "Refresh now", "lf:sw-update-ready"]],
 ]) {
   for (const token of forbidden) {
     assert.equal(
@@ -19,20 +20,16 @@ for (const [label, source, forbidden] of [
   }
 }
 
-assert.match(
-  workerSource,
-  /event\.data\?\.type === "ACTIVATE_UPDATE"[\s\S]*self\.skipWaiting\(\)/,
-  "service-worker activation must stay behind the explicit ACTIVATE_UPDATE message",
-);
+assert.match(registerSource, /\.register\("\/sw\.js"\)/, "service worker must remain registered");
 assert.match(
   noticeSource,
-  /onClick=\{activateUpdate\}/,
-  "the update takeover must be initiated by a visible user action",
+  /const \[visible, setVisible\] = useState\(false\)/,
+  "analytics preferences must stay closed until the visitor opens them from the footer",
 );
 assert.doesNotMatch(
-  registerSource,
-  /postMessage\s*\(/,
-  "registration must never activate an update automatically",
+  noticeSource,
+  /getAnalyticsConsent\(\) === null/,
+  "a first visit must not trigger an analytics overlay",
 );
 
 assert.match(
@@ -46,4 +43,4 @@ assert.match(
   "ErrorBoundary must require a durable reload guard before refreshing",
 );
 
-console.log("mobile lifecycle ratchet OK — updates wait for a user click; error reloads stay guarded.");
+console.log("mobile lifecycle ratchet OK — updates wait for tab close; no public prompt or forced reload remains.");
