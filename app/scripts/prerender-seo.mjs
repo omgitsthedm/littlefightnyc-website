@@ -875,13 +875,29 @@ function fontPreloads() {
     .join("\n    ");
 }
 
-// The `site` data chunk is imported by content routes across the site but is a
-// Vite lazy dep, so the browser otherwise discovers it after index.js parses.
-// Home does not consume it until deferred, below-the-fold sections mount; a
-// preload there wastes early bandwidth and produces a browser warning.
+// Only these immediately-rendered route chunks consume the core `site.ts`
+// split. Preloading it on every inner page wastes bandwidth (Contact, Library,
+// and others use smaller named splits instead), while Home consumes it only
+// after deferred below-the-fold sections mount.
+function usesCoreSiteData(routePath) {
+  return (
+    routePath === "/about/" ||
+    routePath === "/services/" ||
+    routePath === "/tech-audit/" ||
+    /^\/services\/[^/]+\/$/.test(routePath) ||
+    /^\/areas\/[^/]+\/$/.test(routePath) ||
+    /^\/areas\/[^/]+\/[^/]+\/$/.test(routePath) ||
+    /^\/case-studies\/[^/]+\/$/.test(routePath) ||
+    /^\/studio\/[^/]+\/$/.test(routePath)
+  );
+}
+
 function siteModulePreload(page) {
-  if (page.path === "/") return "";
-  const chunk = assetFiles.find((f) => f.startsWith("site-") && f.endsWith(".js"));
+  if (!usesCoreSiteData(page.path)) return "";
+
+  // Match the core `site-<8-char Vite hash>.js` chunk exactly. A loose
+  // startsWith("site-") accidentally selected site-answers first.
+  const chunk = assetFiles.find((f) => /^site-[A-Za-z0-9_-]{8}\.js$/.test(f));
   return chunk
     ? `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`
     : "";
