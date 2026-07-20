@@ -37,7 +37,7 @@
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-6);
+  gap: var(--lf-space-7);
   opacity: 0;
   transform: translateY(20px);
   transition: opacity var(--lf-time-cinematic) var(--lf-ease-out-quart),
@@ -51,7 +51,7 @@
 
 .lf-contact-block__head {
   display: grid;
-  gap: var(--lf-space-3);
+  gap: var(--lf-space-4);
   max-width: 56rem;
 }
 
@@ -103,7 +103,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--lf-space-3);
+  gap: var(--lf-space-4);
 }
 
 @media (min-width: 560px) {
@@ -130,8 +130,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-3);
-  min-height: 148px;
+  gap: var(--lf-space-4);
+  min-height: 160px;
   height: 100%;
   width: 100%;
   padding: var(--lf-space-5);
@@ -248,10 +248,9 @@
   list-style: none;
   margin: var(--lf-space-2) 0 0;
   padding: var(--lf-space-5) 0 0;
-  border-top: 1px solid var(--lf-hairline);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--lf-space-3) var(--lf-space-4);
+  gap: var(--lf-space-5) var(--lf-space-4);
   text-align: left;
 }
 
@@ -267,7 +266,7 @@
 .lf-contact-block__promises li {
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-1);
+  gap: var(--lf-space-2);
 }
 
 .lf-contact-block__promises span {
