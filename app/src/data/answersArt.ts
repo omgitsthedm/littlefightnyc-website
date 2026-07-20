@@ -11,7 +11,7 @@
  *     priced.
  */
 
-export type AnswerArchetype =
+type AnswerArchetype =
   | "urgent"
   | "versus"
   | "pin"
@@ -161,7 +161,7 @@ export function isTriageGuide(sections: Array<{ heading: string }>): boolean {
 
 /* ---- Verdict tables ------------------------------------------------------ */
 
-export type AnswerVerdictColumn = {
+type AnswerVerdictColumn = {
   name: string;
   goodIf: string[];
   skipIf: string[];

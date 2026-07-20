@@ -27,6 +27,7 @@ function isChunkLoadError(error: unknown): boolean {
     /Loading( CSS)? chunk .* failed/i.test(message) ||
     /Failed to fetch dynamically imported module/i.test(message) ||
     /error loading dynamically imported module/i.test(message) ||
+    /Importing a module script failed/i.test(message) ||
     /'?text\/html'? is not a valid JavaScript MIME type/i.test(message)
   );
 }
@@ -41,20 +42,26 @@ export default class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, info: ErrorInfo) {
     if (isChunkLoadError(error) && typeof window !== "undefined") {
       let last = 0;
+      let storageAvailable = true;
       try {
         last = Number(window.sessionStorage.getItem(RELOAD_FLAG)) || 0;
       } catch {
-        /* storage blocked (private mode) — fall through to a single reload */
+        // Without a durable guard, an automatic refresh could loop forever.
+        storageAvailable = false;
       }
       const now = Date.now();
-      if (now - last > RELOAD_COOLDOWN_MS) {
+      if (storageAvailable && now - last > RELOAD_COOLDOWN_MS) {
         try {
           window.sessionStorage.setItem(RELOAD_FLAG, String(now));
         } catch {
-          /* ignore */
+          // If the guard cannot be written, show the fallback instead of
+          // starting a reload that cannot prove it already ran.
+          storageAvailable = false;
         }
-        window.location.reload();
-        return;
+        if (storageAvailable) {
+          window.location.reload();
+          return;
+        }
       }
     }
     // Non-chunk error, or we already reloaded once and it did not help.

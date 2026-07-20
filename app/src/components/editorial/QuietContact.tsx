@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analyticsClient";
 import "./QuietContact.css";
 
 const CONTACT_CHANNELS = [

@@ -36,7 +36,7 @@ function revealNow(el: Element) {
  * only ever sets the "in" (shown) state — it never sets "pending", so the
  * base.css `[data-lf-reveal="pending"]` opacity:0 entrance never applies and
  * nothing waits to fade in. Safe to call repeatedly (idempotent per element). */
-export function refreshListReveals(): void {
+function refreshListReveals(): void {
   if (typeof window === "undefined" || typeof document === "undefined") return;
   const els = document.querySelectorAll<HTMLElement>(SELECTOR);
   els.forEach(revealNow);

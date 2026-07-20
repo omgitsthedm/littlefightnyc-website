@@ -30,7 +30,7 @@ type DocumentWithVT = Document & {
   ) => ViewTransitionLike;
 };
 
-export function prefersReducedMotion(): boolean {
+function prefersReducedMotion(): boolean {
   return (
     typeof window !== "undefined" &&
     typeof window.matchMedia === "function" &&
@@ -38,7 +38,7 @@ export function prefersReducedMotion(): boolean {
   );
 }
 
-export function supportsViewTransitions(): boolean {
+function supportsViewTransitions(): boolean {
   if (typeof document === "undefined") return false;
   const doc = document as DocumentWithVT;
   if (typeof doc.startViewTransition !== "function") return false;

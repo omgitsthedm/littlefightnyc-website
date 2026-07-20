@@ -3,6 +3,8 @@
 node_modules/
 .superpowers/
 .playwright-mcp/
+.playwright-cli/
+output/
 *.png
 # ...but EVERY PWA / apple-touch / startup / screenshot PNG in public/ MUST
 # deploy (Netlify builds from git, so blanket-ignoring these 404s the live

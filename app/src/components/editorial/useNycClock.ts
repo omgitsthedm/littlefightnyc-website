@@ -32,7 +32,7 @@ function getFormatter(): Intl.DateTimeFormat {
   return formatter;
 }
 
-export function readNycClock(now: Date = new Date()): NycClock {
+function readNycClock(now: Date = new Date()): NycClock {
   const parts = getFormatter().formatToParts(now);
   const get = (type: Intl.DateTimeFormatPartTypes) =>
     parts.find((part) => part.type === type)?.value ?? "";

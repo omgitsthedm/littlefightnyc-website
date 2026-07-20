@@ -3,20 +3,13 @@ import {
   CreditCard,
   FileSearch,
   Globe2,
-  HeartHandshake,
   Laptop,
   MessagesSquare,
   MousePointerClick,
   Phone,
-  PlugZap,
   ReceiptText,
-  Scale,
-  Scissors,
   Search,
-  ShieldCheck,
-  Shirt,
   Sparkles,
-  Store,
   Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -50,13 +43,6 @@ export type Service = {
   fallacies: Array<{ myth: string; reality: string }>;
   faq: Array<{ question: string; answer: string }>;
 };
-
-export type Answer = {
-  question: string;
-  short: string;
-  path: string;
-};
-
 
 export type StudioProject = {
   slug: string;
@@ -490,51 +476,6 @@ export const auditRoutes = [
     icon: CreditCard,
   },
 ];
-
-export const ownerAnswers: Answer[] = [
-  {
-    question: "Do I need a new website or just a better path?",
-    short: "If people trust the site but the form or booking is broken, fix the path first. A full rebuild can wait.",
-    path: "/examples/#answers",
-  },
-  {
-    question: "Why are we paying for software and still using spreadsheets?",
-    short: "The tool does not fit the work. Keep the useful parts, connect the gaps, replace the drag.",
-    path: "/examples/#answers",
-  },
-  {
-    question: "Why does a competitor show up on Google before us?",
-    short: "Google needs a clear profile, real service pages, steady reviews, and local proof it can read.",
-    path: "/examples/#answers",
-  },
-  {
-    question: "Can custom be cheaper than another subscription?",
-    short: "Sometimes. Not always. Start the math with the monthly bill plus the staff hours lost around it.",
-    path: "/examples/#answers",
-  },
-];
-
-
-
-export const proofSignals = [
-  { label: "Keep", text: "The tools that still earn their place.", icon: ShieldCheck },
-  { label: "Connect", text: "The pieces that work but do not talk.", icon: PlugZap },
-  { label: "Replace", text: "The costly tools and shaky workarounds.", icon: FileSearch },
-  { label: "Build", text: "The missing page, dashboard, or workflow.", icon: Sparkles },
-];
-
-export const businessTypes = [
-  { label: "Law firms", icon: Scale },
-  { label: "Bars & restaurants", icon: Store },
-  { label: "Clothing brands", icon: Shirt },
-  { label: "Salons & barbershops", icon: Scissors },
-  { label: "Clinics & pharmacies", icon: HeartHandshake },
-  { label: "Shops & bodegas", icon: Globe2 },
-  { label: "Gyms & studios", icon: ClipboardCheck },
-  { label: "Local services", icon: Wrench },
-];
-
-
 
 export const studioProjects: StudioProject[] = [
   {

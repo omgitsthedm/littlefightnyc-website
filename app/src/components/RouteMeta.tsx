@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import routeMeta from "@/data/route-meta.json";
-import { trackPageView } from "@/lib/analytics";
+import { trackPageView } from "@/lib/analyticsClient";
 
 /**
  * Updates the tab title + meta on client-side navigation. The correct tags are

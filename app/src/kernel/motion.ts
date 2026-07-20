@@ -18,22 +18,20 @@ export const clamp = (v: number, a: number, b: number) => (v < a ? a : v > b ? b
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 // --- easing functions (canvas / JS side) ---
-export const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-export const easeInCubic = (t: number) => t * t * t;
-export const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-export const easeOutBack = (t: number) => {
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeOutBack = (t: number) => {
   const c = 1.5;
   return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
 };
 
 // Doctrine aliases (short names used inside instruments).
 export const eoc = easeOutCubic;
-export const eic = easeInCubic;
 export const eio = easeInOutCubic;
 export const eoBack = easeOutBack;
 
 /** A named motion intent — the atom of the grammar. */
-export type Intent = {
+type Intent = {
   /** duration in ms */
   ms: number;
   /** CSS timing function for DOM transitions/animations */
@@ -50,7 +48,7 @@ export type Intent = {
  * - reveal:      arrivals with a touch of weight/overshoot (an object landing)
  * - weenie:      a slow, quiet lead — a visual magnet inviting the eye onward
  */
-export const motion: Record<"settle" | "consolidate" | "signal" | "reveal" | "weenie", Intent> = {
+const motion: Record<"settle" | "consolidate" | "signal" | "reveal" | "weenie", Intent> = {
   settle: { ms: 640, css: "cubic-bezier(0.22, 1, 0.36, 1)", fn: easeOutCubic },
   consolidate: { ms: 900, css: "cubic-bezier(0.22, 1, 0.36, 1)", fn: easeOutCubic },
   signal: { ms: 180, css: "cubic-bezier(0.4, 0, 0.2, 1)", fn: easeInOutCubic },

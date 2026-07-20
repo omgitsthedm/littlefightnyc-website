@@ -4,7 +4,7 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import "./VisualIndex.css";
 
-export type VisualIndexItem = {
+type VisualIndexItem = {
   body: string;
   eyebrow: string;
   icon: LucideIcon;

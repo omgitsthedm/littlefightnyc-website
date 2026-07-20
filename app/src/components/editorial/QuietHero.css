@@ -189,6 +189,7 @@
    type simply be there. main.tsx stamps data-snap before mounting. */
 html[data-snap="1"] .lf-hero__char {
   animation: none;
+  will-change: auto;
 }
 
 @keyframes lf-hero-char-rise {

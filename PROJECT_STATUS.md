@@ -36,7 +36,7 @@ Site is in "maintain + proactively elevate" mode; no blocking bug backlog. Open 
 - ⚠️ **Google Business Profile is the traffic bottleneck — NOT the site.** June GBP: 54 views, 0 calls/clicks/interactions. Needs work in Business Profile Manager (David's login): confirm URL + call button, add photos/categories/services, post, get reviews.
 - Once David provides GBP URL + social handles: populate `site.sameAs` and add real `streetAddress`/registered address to LocalBusiness schema for NAP/entity strength (`streetAddress` intentionally omitted today — service-area business).
 - **⏳ Awaiting David's DataForSEO key** to stand up OpenSEO keyword-volume/competitor audit (paid key; not started until provided).
-- Housekeeping (David's call): the three `netlify/functions/*.mts` (ask, tech-audit-submit, tech-audit-voice) are **not deployed** (live endpoints 404) — wire or delete.
+- Voice intake is deployed from `netlify/functions/tech-audit-voice.mts` at `/api/tech-audit/voice`; do not use the default `/.netlify/functions/...` URL as its health check.
 - Deferred perf/UX polish items are catalogued in the 2026-07-14 CLAUDE.md "Deferred" note.
 
 ## 6. How to run / build / deploy

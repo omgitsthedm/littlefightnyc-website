@@ -3,7 +3,7 @@ import { CheckCircle2 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import TugAvatar from "@/components/editorial/TugAvatar";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analyticsClient";
 
 export default function Thanks() {
   const [leadIntent] = useState(() => {
@@ -55,7 +55,7 @@ export default function Thanks() {
         icon={CheckCircle2}
         title={websiteIntent ? (
           <>
-            Your website plan<br />
+            Your website plan<br />{" "}
             <span className="lf-em">is in motion.</span>
           </>
         ) : (

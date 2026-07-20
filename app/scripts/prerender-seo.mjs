@@ -875,11 +875,12 @@ function fontPreloads() {
     .join("\n    ");
 }
 
-// The `site` data chunk (~64KB gz) is imported by content routes across the
-// whole site but is a Vite lazy dep, so the browser only discovers it AFTER
-// index.js parses — one extra serial round-trip before the page can render. It's
-// universal, so modulepreload it up front to collapse that waterfall.
-function siteModulePreload() {
+// The `site` data chunk is imported by content routes across the site but is a
+// Vite lazy dep, so the browser otherwise discovers it after index.js parses.
+// Home does not consume it until deferred, below-the-fold sections mount; a
+// preload there wastes early bandwidth and produces a browser warning.
+function siteModulePreload(page) {
+  if (page.path === "/") return "";
   const chunk = assetFiles.find((f) => f.startsWith("site-") && f.endsWith(".js"));
   return chunk
     ? `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`
@@ -919,7 +920,7 @@ function managedHead(page) {
     `<meta name="robots" content="${page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large"}">`,
     `<link rel="canonical" href="${escapeAttr(canonical)}">`,
     fontPreloads(),
-    siteModulePreload(),
+    siteModulePreload(page),
     routeImagePreload(page),
     routeExtraImagePreloads(page),
     routeModulePreload(page),

@@ -169,17 +169,17 @@ export default function QuietHero() {
       <div className="lf-hero__marquee" aria-label="A sample of what we fix">
         <div className="lf-hero__marquee-track">
           {[0, 1].map((dup) => (
-            <ul key={dup} className="lf-hero__marquee-list" aria-hidden={dup === 1}>
+            <ul key={dup} className="lf-hero__marquee-list" aria-hidden={dup === 1 ? "true" : undefined}>
               <li className="lf-hero__marquee-label">The kind of thing we fix</li>
               {MARQUEE_ITEMS.map((item) => (
                 <li key={`${dup}-${item.label}`} className="lf-hero__marquee-item">
-                  <Link
-                    to={item.to}
-                    className="lf-hero__marquee-link"
-                    tabIndex={dup === 1 ? -1 : undefined}
-                  >
-                    {item.label}
-                  </Link>
+                  {dup === 0 ? (
+                    <Link to={item.to} className="lf-hero__marquee-link">
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <span className="lf-hero__marquee-link">{item.label}</span>
+                  )}
                 </li>
               ))}
             </ul>

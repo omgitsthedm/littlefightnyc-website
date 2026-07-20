@@ -63,7 +63,7 @@ export default function Services() {
         icon={Layers}
         title={
           <>
-            Pick what's broken.<br />
+            Pick what's broken.<br />{" "}
             <span className="lf-accent">We take it from there.</span>
           </>
         }

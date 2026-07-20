@@ -92,6 +92,7 @@ export default function Library() {
           <>
             Everything we know.
             <br />
+            {" "}
             <span className="lf-em">Free.</span>
           </>
         }

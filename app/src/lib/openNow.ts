@@ -27,7 +27,7 @@ function easternHour(now: Date): number {
   return hour ? Number(hour.value) : Number.NaN;
 }
 
-export function computeOpenNow(now: Date = new Date()): OpenNow {
+function computeOpenNow(now: Date = new Date()): OpenNow {
   const hour = easternHour(now);
   const open =
     Number.isFinite(hour) && hour >= OPEN_HOUR && hour < CLOSE_HOUR;

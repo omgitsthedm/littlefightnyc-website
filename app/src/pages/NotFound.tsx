@@ -9,7 +9,7 @@ export default function NotFound() {
         eyebrow="404 · Not Found"
         title={
           <>
-            This page got<br />
+            This page got<br />{" "}
             <span className="lf-em">knocked out.</span>
           </>
         }

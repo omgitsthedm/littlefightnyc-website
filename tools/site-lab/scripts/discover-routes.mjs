@@ -112,6 +112,7 @@ async function main() {
   const routes = await discoverRoutes({
     base,
     max,
+    sitemapPath: args.get("sitemap") ?? "/sitemap.xml",
     includePattern: args.get("include") ?? "",
     excludePattern: args.get("exclude") ?? "",
   });

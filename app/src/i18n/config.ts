@@ -51,5 +51,3 @@ function syncDocument(lng: string) {
 
 i18n.on("languageChanged", syncDocument);
 syncDocument(i18n.language || DEFAULT_LOCALE);
-
-export default i18n;

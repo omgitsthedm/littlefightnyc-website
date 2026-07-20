@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analyticsClient";
 import "./PhoneAction.css";
 
 const TEL = "+16463600318";
@@ -90,5 +90,3 @@ export default function PhoneAction({
     </span>
   );
 }
-
-export { TEL as LF_PHONE_TEL, PRETTY as LF_PHONE_PRETTY };

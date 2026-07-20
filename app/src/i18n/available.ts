@@ -6,7 +6,7 @@
  */
 const bundlePaths = import.meta.glob("./locales/*/common.json");
 
-export const AVAILABLE_LOCALE_CODES: string[] = Object.keys(bundlePaths)
+const AVAILABLE_LOCALE_CODES: string[] = Object.keys(bundlePaths)
   .map((p) => p.split("/")[2]) // "./locales/<code>/common.json" -> "<code>"
   .sort();
 

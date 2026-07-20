@@ -8,7 +8,7 @@ import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import AuditBench from "@/components/dataviz/AuditBench";
 import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analyticsClient";
 import { readAttribution } from "@/lib/attribution";
 import "@/styles/editorial/tech-audit.css";
 
@@ -359,7 +359,7 @@ export default function TechAudit() {
         icon={ClipboardCheck}
         title={websiteIntent ? (
           <>
-            Build the website<br />
+            Build the website<br />{" "}
             <span className="lf-em">your business needs.</span>
           </>
         ) : (

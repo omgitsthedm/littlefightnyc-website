@@ -30,7 +30,7 @@ const MONTHS: Record<string, number> = {
 };
 
 /** Deterministic month labels — never toLocaleString (SSR/WebKit divergence). */
-export const MONTH_ABBR = [
+const MONTH_ABBR = [
   "Jan",
   "Feb",
   "Mar",
@@ -51,7 +51,7 @@ export const MONTH_ABBR = [
  * unknown month names, overflow days ("February 31"), or garbage. The
  * Date.parse fallback is NaN-guarded and year-sanity-checked.
  */
-export function parseProseDate(value: unknown): Date | null {
+function parseProseDate(value: unknown): Date | null {
   if (typeof value !== "string") return null;
   const text = value.trim();
   if (!text) return null;
@@ -99,43 +99,6 @@ for (const post of posts) {
 
 type PulseEntry = { published?: string; updated?: string };
 
-type DayActivity = { published: number; updated: number };
-
-export type PulseCellLevel = 0 | 1 | 2 | 3 | 4;
-
-export type PulseCell = {
-  key: string;
-  title?: string;
-  level: PulseCellLevel;
-  inYear: boolean;
-};
-
-export type PulseModel = {
-  year: number;
-  totalEntries: number;
-  undated: number;
-  activeDays: number;
-  weeks: PulseCell[][];
-  monthLabels: { label: string; week: number }[];
-  lastActiveWeek: number;
-};
-
-const dayNum = (d: Date) =>
-  d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-
-const dateLabel = (d: Date) =>
-  `${MONTH_ABBR[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-
-// Intensity buckets — the Jul-12 relaunch day (25 entries) must not wash out
-// every other day, so buckets, not linear scaling.
-function level(count: number): PulseCellLevel {
-  if (count <= 0) return 0;
-  if (count === 1) return 1;
-  if (count <= 4) return 2;
-  if (count <= 9) return 3;
-  return 4;
-}
-
 /* ============================================================
    Monthly publishing cadence — a per-day contribution grid reads
    as "dead" when posts are batch-published (this journal has real
@@ -144,9 +107,9 @@ function level(count: number): PulseCellLevel {
    relaunch actually reads as an active publication.
    ============================================================ */
 
-export type MonthBar = { key: string; label: string; count: number; peak: boolean };
+type MonthBar = { key: string; label: string; count: number; peak: boolean };
 
-export type MonthlyModel = {
+type MonthlyModel = {
   year: number;
   totalDated: number;
   undated: number;
@@ -197,92 +160,4 @@ export function buildMonthlyModel(entries: PulseEntry[]): MonthlyModel {
   for (const bar of months) bar.peak = bar.label === peakLabel && bar.count === peak;
 
   return { year, totalDated, undated, months, peakLabel };
-}
-
-export function buildPulseModel(entries: PulseEntry[]): PulseModel {
-  const byDay = new Map<number, DayActivity>();
-  let undated = 0;
-  let latest: Date | null = null;
-
-  for (const entry of entries) {
-    const pub = parseProseDate(entry.published);
-    const upd = parseProseDate(entry.updated);
-    if (!pub && !upd) {
-      undated += 1;
-      continue;
-    }
-    const events: { date: Date; kind: keyof DayActivity }[] = [];
-    if (pub) events.push({ date: pub, kind: "published" });
-    // An update on the publish day is one event, not two.
-    if (upd && (!pub || dayNum(upd) !== dayNum(pub))) {
-      events.push({ date: upd, kind: "updated" });
-    }
-    for (const event of events) {
-      const key = dayNum(event.date);
-      const day = byDay.get(key) ?? { published: 0, updated: 0 };
-      day[event.kind] += 1;
-      byDay.set(key, day);
-      if (!latest || event.date > latest) latest = event.date;
-    }
-  }
-
-  const year = (latest ?? new Date()).getFullYear();
-
-  // Sundays-start grid covering the whole year.
-  const start = new Date(year, 0, 1);
-  start.setDate(start.getDate() - start.getDay());
-  const end = new Date(year, 11, 31);
-  end.setDate(end.getDate() + (6 - end.getDay()));
-
-  const weeks: PulseCell[][] = [];
-  const monthLabels: { label: string; week: number }[] = [];
-  let activeDays = 0;
-  let lastActiveWeek = 0;
-  let seenMonth = -1;
-
-  for (let cursor = new Date(start); cursor <= end; ) {
-    const week: PulseCell[] = [];
-    for (let i = 0; i < 7; i += 1) {
-      const inYear = cursor.getFullYear() === year;
-      const day = inYear ? byDay.get(dayNum(cursor)) : undefined;
-      const count = day ? day.published + day.updated : 0;
-      if (day) {
-        activeDays += 1;
-        lastActiveWeek = weeks.length;
-      }
-      if (inYear && cursor.getDate() === 1 && cursor.getMonth() !== seenMonth) {
-        seenMonth = cursor.getMonth();
-        monthLabels.push({ label: MONTH_ABBR[seenMonth], week: weeks.length });
-      }
-      let title: string | undefined;
-      if (inYear) {
-        if (day) {
-          const parts: string[] = [];
-          if (day.published) parts.push(`${day.published} published`);
-          if (day.updated) parts.push(`${day.updated} updated`);
-          title = `${dateLabel(cursor)} — ${parts.join(" · ")}`;
-        } else {
-          title = `${dateLabel(cursor)} — no entries`;
-        }
-      }
-      week.push({
-        key: `${cursor.getFullYear()}-${cursor.getMonth()}-${cursor.getDate()}`,
-        title,
-        level: level(count),
-        inYear,
-      });
-      cursor.setDate(cursor.getDate() + 1);
-    }
-    weeks.push(week);
-  }
-
-  return {
-    year,
-    totalEntries: entries.length,
-    undated,
-    activeDays,
-    weeks,
-    monthLabels,
-    lastActiveWeek,
-  };
 }

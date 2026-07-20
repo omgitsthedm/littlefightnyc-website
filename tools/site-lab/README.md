@@ -25,6 +25,9 @@ npm run unlighthouse
 npm run lhci
 ```
 
+Use `--sitemap=/path.xml` with `creative-scan.mjs` or `discover-routes.mjs`
+when auditing generated, noindex, or otherwise intentionally unlisted routes.
+
 ## Outputs
 
 - `reports/live/report.md` - sortable human/agent audit summary.

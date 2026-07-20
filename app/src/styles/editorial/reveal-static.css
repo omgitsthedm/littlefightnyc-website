@@ -42,6 +42,7 @@
   opacity: 1 !important;
   clip-path: none !important;
   transition: none !important;
+  will-change: auto !important;
 }
 
 /* Staggered table rows (CoverageMatrix) reveal off the band's data-revealed. */

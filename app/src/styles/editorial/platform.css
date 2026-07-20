@@ -1,7 +1,7 @@
 /* Little Fight NYC — Platform-specific polish
  * Tiny per-engine / per-form-factor adjustments that make the site feel
  * native to the device it is running on. Classes are stamped on <html>
- * by the inline detector in app/index.html before first paint.
+ * by app/public/boot.js before first paint.
  */
 
 /* ─── iOS / iPadOS ───────────────────────────────────────────────

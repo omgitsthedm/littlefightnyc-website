@@ -30,6 +30,7 @@ export default function BrandLine() {
         <p className="lf-line__text">
           Small shops compete every day.
           <br />
+          {" "}
           <span className="lf-line__em">We hand them the tools the chains use.</span>
         </p>
       </div>
