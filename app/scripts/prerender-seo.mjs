@@ -821,6 +821,15 @@ function routeImagePreload(page) {
       .join("\n    ");
   }
 
+  // The website service now leads with real shipped work instead of the
+  // generic laptop image used by its social card. Keep the preload aligned
+  // with the hydrated PageHero or the browser downloads both candidates.
+  if (page.path === "/services/custom-local-websites/") {
+    const base = "/assets/case-hair-by-rachel-charles";
+    const srcset = [480, 640, 900].map((w) => `${base}-${w}.webp ${w}w`).join(", ");
+    return `<link rel="preload" href="${base}-900.webp" imagesrcset="${srcset}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  }
+
   // Inner pages whose og image IS the rendered PageHero hero (the hero-*
   // naming convention — og and PageHero were synced in the 2026-07-19 photo
   // waves): preload with EXACTLY PageHero's srcset/sizes so the preload and

@@ -190,7 +190,12 @@ export default function CaseStudyDetail() {
             </EditorialBody>
 
             {study.metrics && study.metrics.length > 0 && (
-              <StatBlock eyebrow="Project at a glance" icon={Gauge} items={study.metrics} />
+              <StatBlock
+                eyebrow="Production proof"
+                icon={Gauge}
+                items={study.metrics}
+                note="Facts shown here come from the shipped build, launch checks, or the named production workflow."
+              />
             )}
 
             <CaseDiagram slug={study.slug} />

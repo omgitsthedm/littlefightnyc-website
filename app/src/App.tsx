@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ComponentType } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
@@ -66,6 +66,8 @@ function route(Component: ComponentType) {
 }
 
 export default function App() {
+  const { search } = useLocation();
+
   return (
     <>
       <RouteMetaManager />
@@ -100,7 +102,17 @@ export default function App() {
           <Route path="consulting" element={<Navigate to="/services/tech-consulting/" replace />} />
           <Route path="it-support" element={<Navigate to="/services/it-support/" replace />} />
           <Route path="lifetime-cost" element={<Navigate to="/answers/reduce-monthly-software-costs-small-business/" replace />} />
-          <Route path="tech-audit" element={route(TechAudit)} />
+          {/* Query state selects the general or website-specific intake. A key
+              prevents an in-place query change from leaving the other mode's
+              current step mounted. Draft data remains available per mode. */}
+          <Route
+            path="tech-audit"
+            element={(
+              <Suspense fallback={<RouteLoading />}>
+                <TechAudit key={search} />
+              </Suspense>
+            )}
+          />
           {/* Fit Check renamed to Tech Audit (2026-07-12) — SPA-side backup
               for the _redirects 301 so in-app history links never dead-end. */}
           <Route path="fit-check" element={<Navigate to="/tech-audit/" replace />} />

@@ -1,5 +1,5 @@
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
-import { areaPages, services } from "@/data/site";
+import { areaPages, caseStudies, services } from "@/data/site";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
@@ -7,6 +7,8 @@ import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
 import ShareButton from "@/components/ShareButton";
+import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/service-detail.css";
 
 const FIGURE_CAPTION: Record<string, string> = {
@@ -19,7 +21,7 @@ const FIGURE_CAPTION: Record<string, string> = {
 const FEATURE_IMAGE: Record<string, string> = {
   "tech-consulting": "/assets/local-business.webp",
   "it-support": "/assets/typing.webp",
-  "custom-local-websites": "/assets/hero-laptop.webp",
+  "custom-local-websites": "/assets/case-hair-by-rachel-charles.webp",
   "business-systems": "/assets/pos.webp",
 };
 
@@ -57,6 +59,99 @@ function areaRouteSlug(serviceSlug: string) {
   return AREA_ROUTE_SLUG[serviceSlug] ?? serviceSlug;
 }
 
+function WebsiteAcquisitionBlock() {
+  const proof = caseStudies.find((study) => study.slug === "hair-by-rachel-charles");
+  if (!proof) return null;
+
+  return (
+    <section className="lf-sd-web" aria-labelledby="lf-sd-web-title">
+      <div className="lf-sd-web__inner">
+        <div className="lf-sd-web__proof">
+          <Link className="lf-sd-web__shot" to={`/case-studies/${proof.slug}/`}>
+            <img
+              {...skelImg}
+              src={proof.image}
+              {...responsiveImageProps(proof.image, "(min-width: 960px) 48vw, 100vw", [480, 640, 900])}
+              alt={`The ${proof.client} website as it shipped`}
+              width={1600}
+              height={1200}
+              loading="lazy"
+              decoding="async"
+            />
+          </Link>
+          <div className="lf-sd-web__proof-copy">
+            <p className="lf-sd-web__label">A website result you can open</p>
+            <h2 id="lf-sd-web-title">Instagram-only to a real booking site in two weeks.</h2>
+            <p>{proof.result}</p>
+            {proof.metrics && (
+              <dl className="lf-sd-web__metrics">
+                {proof.metrics.map((metric) => (
+                  <div key={metric.label}>
+                    <dt>{metric.value}</dt>
+                    <dd>{metric.label}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            <div className="lf-sd-web__actions">
+              <Link
+                className="lf-sd-web__primary"
+                to="/tech-audit/?intent=website&source=website_service_proof"
+                data-lf-event="website_plan_intent"
+                data-lf-label="website_service_proof"
+              >
+                Plan my website
+              </Link>
+              <Link className="lf-sd-web__secondary" to={`/case-studies/${proof.slug}/`}>
+                Read the case study
+              </Link>
+            </div>
+            <div className="lf-sd-web__owner">
+              <img
+                src="/assets/founder-david-marsh.webp"
+                alt=""
+                width={96}
+                height={96}
+                loading="lazy"
+                decoding="async"
+              />
+              <p>
+                <strong>David Marsh, founder.</strong> One accountable owner on every project.{" "}
+                <Link to="/about/">How we work</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="lf-sd-web__terms">
+          <header className="lf-sd-web__terms-head">
+            <h2>Know the fit before the quote.</h2>
+            <p>The first read is free. The scope, responsibilities, and exact quote are written down before work starts.</p>
+          </header>
+          <dl className="lf-sd-web__terms-grid">
+            <div>
+              <dt>Works best for</dt>
+              <dd>Owner-led businesses where calls, bookings, visits, or qualified inquiries matter, and one team should own the path.</dd>
+            </div>
+            <div>
+              <dt>Not the right fit</dt>
+              <dd>A large catalog that changes every day may belong on a maintained commerce platform. A working site may need a cleanup, not a rebuild.</dd>
+            </div>
+            <div>
+              <dt>What we need from you</dt>
+              <dd>One decision-maker, accurate services and hours, usable brand assets, and access to the domain and business tools. Never send passwords through the form.</dd>
+            </div>
+            <div>
+              <dt>Scope, ownership, and care</dt>
+              <dd>The written scope names review rounds, launch responsibilities, timing, and care. You own the code, domain, and content.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ServiceDetail() {
   const { slug } = useParams();
   const { pathname } = useLocation();
@@ -78,7 +173,9 @@ export default function ServiceDetail() {
         dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
         image={{
           src: FEATURE_IMAGE[service.slug] ?? service.image,
-          alt: `${service.eyebrow} for New York small businesses`,
+          alt: service.slug === "custom-local-websites"
+            ? "The Hair By Rachel Charles booking website as it shipped"
+            : `${service.eyebrow} for New York small businesses`,
           width: 1200,
           height: 900,
         }}
@@ -102,6 +199,8 @@ export default function ServiceDetail() {
           </aside>
         </div>
       </section>
+
+      {service.slug === "custom-local-websites" && <WebsiteAcquisitionBlock />}
 
       <section className="lf-sd-deep">
         <div className="lf-sd-deep__inner">

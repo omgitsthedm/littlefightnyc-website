@@ -45,7 +45,7 @@ export default function TheFight() {
         <Link
           to="/tech-audit/"
           className="lf-fight__cta"
-          data-lf-event="website_plan_intent"
+          data-lf-event="tech_audit_intent"
           data-lf-label="home_fight"
         >
           Put us in your corner

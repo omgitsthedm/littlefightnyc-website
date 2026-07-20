@@ -72,6 +72,269 @@
   letter-spacing: -0.005em;
 }
 
+/* Website acquisition block: shipped proof first, terms second. */
+.lf-sd-web {
+  padding: var(--lf-space-8) var(--lf-margin-mobile);
+  border-top: 1px solid var(--lf-hairline);
+  background: var(--lf-paper-2);
+}
+
+.lf-sd-web__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+  display: grid;
+  gap: var(--lf-space-9);
+}
+
+.lf-sd-web__proof {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-6);
+  align-items: center;
+}
+
+.lf-sd-web__shot {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+}
+
+.lf-sd-web__shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 520ms var(--lf-ease-out-quart);
+}
+
+.lf-sd-web__shot:hover img,
+.lf-sd-web__shot:focus-visible img {
+  transform: scale(1.035);
+}
+
+.lf-sd-web__shot:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
+}
+
+.lf-sd-web__proof-copy {
+  min-width: 0;
+}
+
+.lf-sd-web__label {
+  margin: 0 0 var(--lf-space-3);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lf-sd-web__proof-copy h2,
+.lf-sd-web__terms-head h2 {
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-xl);
+  line-height: 1.06;
+}
+
+.lf-sd-web__proof-copy > p:not(.lf-sd-web__label),
+.lf-sd-web__terms-head p {
+  max-width: 58ch;
+  margin: var(--lf-space-4) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
+}
+
+.lf-sd-web__metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-4);
+  margin: var(--lf-space-6) 0 0;
+}
+
+.lf-sd-web__metrics div {
+  min-width: 0;
+  padding-top: var(--lf-space-3);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-sd-web__metrics dt {
+  color: var(--lf-fight);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-lg);
+  line-height: 1.05;
+}
+
+.lf-sd-web__metrics dd {
+  margin: var(--lf-space-1) 0 0;
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-sm);
+  line-height: 1.35;
+}
+
+.lf-sd-web__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-6);
+}
+
+.lf-sd-web__owner {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  align-items: center;
+  max-width: 34rem;
+  margin-top: var(--lf-space-5);
+  padding-top: var(--lf-space-4);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-sd-web__owner img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: grayscale(1);
+}
+
+.lf-sd-web__owner p {
+  margin: 0;
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-sm);
+  line-height: 1.45;
+}
+
+.lf-sd-web__owner strong {
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-sd-web__owner a {
+  color: var(--lf-fight);
+  text-underline-offset: 0.18em;
+}
+
+.lf-editorial .lf-sd-web__owner a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.lf-editorial .lf-sd-web__primary,
+.lf-editorial .lf-sd-web__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding-inline: var(--lf-space-5);
+  border-radius: var(--lf-radius-control);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color var(--lf-time-snappy) var(--lf-ease-standard),
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-sd-web__primary {
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+}
+
+.lf-editorial .lf-sd-web__secondary {
+  color: var(--lf-bone);
+  border: 1px solid var(--lf-hairline);
+  background: transparent;
+}
+
+.lf-editorial .lf-sd-web__primary:hover {
+  background: var(--lf-fight-hover);
+  transform: translateY(-2px);
+}
+
+.lf-editorial .lf-sd-web__secondary:hover {
+  color: var(--lf-fight);
+  border-color: var(--lf-fight);
+}
+
+.lf-editorial .lf-sd-web__primary:focus-visible,
+.lf-editorial .lf-sd-web__secondary:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-sd-web__terms {
+  display: grid;
+  gap: var(--lf-space-6);
+  padding-top: var(--lf-space-7);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-sd-web__terms-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-sd-web__terms-grid div {
+  padding: var(--lf-space-5) 0;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-sd-web__terms-grid dt {
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lf-sd-web__terms-grid dd {
+  max-width: 52ch;
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
+}
+
+@media (min-width: 768px) {
+  .lf-sd-web { padding: var(--lf-space-9) var(--lf-margin-tablet); }
+  .lf-sd-web__metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lf-sd-web__terms-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--lf-space-7);
+  }
+}
+
+@media (min-width: 960px) {
+  .lf-sd-web__proof {
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+    gap: var(--lf-space-8);
+  }
+  .lf-sd-web__terms {
+    grid-template-columns: minmax(280px, 0.68fr) minmax(0, 1.32fr);
+    gap: var(--lf-space-9);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-sd-web { padding: var(--lf-space-10) var(--lf-margin-desktop); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-sd-web__shot img,
+  .lf-editorial .lf-sd-web__primary,
+  .lf-editorial .lf-sd-web__secondary {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* FAQ */
 .lf-sd-faq {
   padding: var(--lf-space-8) var(--lf-margin-mobile);

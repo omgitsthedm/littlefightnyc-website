@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame } from "lucide-react";
 import type { FormEvent } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
@@ -10,6 +10,8 @@ import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
 import { readAttribution } from "@/lib/attribution";
+import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/tech-audit.css";
 
 type FieldName = "name" | "business" | "contact" | "message";
@@ -124,6 +126,7 @@ const EMPTY_FIELDS: ContactFields = {
 };
 
 type Draft = {
+  intent: "general" | "website";
   step: Step;
   symptom: string | null;
   urgency: string | null;
@@ -140,10 +143,22 @@ function readDraft(): Draft | null {
     const d = JSON.parse(raw) as Partial<Draft>;
     if (!d || typeof d !== "object") return null;
     const step: Step = d.step === 2 ? 2 : d.step === 3 ? 3 : 1;
+    const symptom = typeof d.symptom === "string" ? d.symptom : null;
+    const urgency = typeof d.urgency === "string" ? d.urgency : null;
+    // Drafts written before intent was stored can be identified safely: the
+    // general flow cannot reach step 3 without an urgency choice.
+    const intent = d.intent === "website"
+      ? "website"
+      : d.intent === "general"
+        ? "general"
+        : step === 3 && symptom === WEBSITE_ROUTE.label && urgency === null
+          ? "website"
+          : "general";
     return {
+      intent,
       step,
-      symptom: typeof d.symptom === "string" ? d.symptom : null,
-      urgency: typeof d.urgency === "string" ? d.urgency : null,
+      symptom,
+      urgency,
       message: typeof d.message === "string" ? d.message : "",
       messageDirty: d.messageDirty === true,
       fields: { ...EMPTY_FIELDS, ...(d.fields ?? {}) },
@@ -176,18 +191,20 @@ export default function TechAudit() {
     (websiteUrl && (searchParams.has("text") || searchParams.has("title"))
       ? "pwa_share"
       : "littlefightnyc.com");
+  const intentMode = websiteIntent ? "website" : "general";
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
-  const initialSymptom = draft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
+  const activeDraft = draft?.intent === intentMode ? draft : null;
+  const initialSymptom = activeDraft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
   const initialMessage = appendAuditContext(
-    draft?.message || composeMessage(initialSymptom, draft?.urgency ?? null),
+    activeDraft?.message || composeMessage(initialSymptom, activeDraft?.urgency ?? null),
     websiteUrl,
   );
-  const [step, setStep] = useState<Step>(draft?.step ?? 1);
+  const [step, setStep] = useState<Step>(websiteIntent ? 3 : (activeDraft?.step ?? 1));
   const [symptom, setSymptom] = useState<string | null>(initialSymptom);
-  const [urgency, setUrgency] = useState<string | null>(draft?.urgency ?? null);
+  const [urgency, setUrgency] = useState<string | null>(activeDraft?.urgency ?? null);
   const [message, setMessage] = useState(initialMessage);
-  const [messageDirty, setMessageDirty] = useState(draft?.messageDirty ?? false);
+  const [messageDirty, setMessageDirty] = useState(activeDraft?.messageDirty ?? false);
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -203,9 +220,11 @@ export default function TechAudit() {
   const hapticStep = useHaptic(8);
   const hapticSubmit = useHaptic([12, 40, 12]);
   const hapticError = useHaptic([26, 40, 26]);
-  const stepTitle = websiteIntent && step === 1
-    ? "What needs to change on your website?"
-    : STEP_TITLES[step];
+  const stepTitle = websiteIntent && step === 3
+    ? "Where should we send your plan?"
+    : websiteIntent && step === 1
+      ? "What needs to change on your website?"
+      : STEP_TITLES[step];
 
   // Move focus to the step heading on step change (not on first paint).
   useEffect(() => {
@@ -218,8 +237,8 @@ export default function TechAudit() {
 
   // Keep the draft current — progress survives navigate-away-and-back.
   useEffect(() => {
-    writeDraft({ step, symptom, urgency, message, messageDirty, fields });
-  }, [step, symptom, urgency, message, messageDirty, fields]);
+    writeDraft({ intent: intentMode, step, symptom, urgency, message, messageDirty, fields });
+  }, [intentMode, step, symptom, urgency, message, messageDirty, fields]);
 
   // The beat is one-shot: disarm after it has played so re-renders and
   // later step changes can never replay it.
@@ -354,54 +373,88 @@ export default function TechAudit() {
 
   return (
     <>
-      <PageHero
-        eyebrow="Tech Audit"
-        icon={ClipboardCheck}
-        title={websiteIntent ? (
-          <>
-            Build the website<br />{" "}
-            <span className="lf-em">your business needs.</span>
-          </>
-        ) : (
+      {websiteIntent ? (
+        <section className="lf-audit-intro" aria-labelledby="lf-audit-intro-title">
+          <div className="lf-audit-intro__inner">
+            <div className="lf-audit-intro__copy">
+              <p className="lf-audit-intro__eyebrow">
+                <ClipboardCheck size={18} strokeWidth={1.8} aria-hidden="true" />
+                Free website plan
+              </p>
+              <h1 id="lf-audit-intro-title">Get a clear website plan.</h1>
+              <p>Tell us what the site needs to do. A real person reviews it and replies with a practical next move.</p>
+              <p className="lf-audit-intro__meta">About two minutes. Reviewed by a person. Replies 9am-9pm Eastern.</p>
+            </div>
+            <Link
+              className="lf-audit-intro__proof"
+              to="/case-studies/hair-by-rachel-charles/"
+              aria-label="Read the Hair By Rachel Charles case study"
+            >
+              <img
+                {...skelImg}
+                src="/assets/case-hair-by-rachel-charles.webp"
+                {...responsiveImageProps(
+                  "/assets/case-hair-by-rachel-charles.webp",
+                  "(min-width: 1200px) 34vw, 42vw",
+                  [480, 640, 900],
+                )}
+                alt="The Hair By Rachel Charles booking website as it shipped"
+                width={1600}
+                height={1200}
+                fetchPriority="high"
+                decoding="async"
+              />
+              <span>Hair By Rachel Charles: live in two weeks, with 100 Lighthouse scores.</span>
+            </Link>
+          </div>
+        </section>
+      ) : (
+        <PageHero
+          eyebrow="Tech Audit"
+          icon={ClipboardCheck}
+          title={(
           <>
             Show us the<br />
             {" "}
             <span className="lf-em">moving parts.</span>
           </>
-        )}
-        dek={websiteIntent
-          ? "Tell us where the current site is losing calls, bookings, or trust. Little Fight NYC will review the context and return a clear recommended next step. Consulting is always free."
-          : "Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. Consulting is always free."}
-        image={{
-          src: "/assets/case-after-hours-agenda.webp",
-          alt: "Homepage built for After Hours Agenda",
-          width: 1600,
-          height: 1200,
-        }}
-      />
+          )}
+          dek="Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. Consulting is always free."
+          image={{
+            src: "/assets/case-after-hours-agenda.webp",
+            alt: "Homepage built for After Hours Agenda",
+            width: 1600,
+            height: 1200,
+          }}
+        />
+      )}
 
-      <section className="lf-audit">
-        <div className="lf-audit__bench">
-          <AuditBench />
-        </div>
+      <section className={`lf-audit${websiteIntent ? " lf-audit--website" : ""}`}>
+        {!websiteIntent && (
+          <div className="lf-audit__bench">
+            <AuditBench />
+          </div>
+        )}
         <div className="lf-audit__inner">
           <div className="lf-audit__flow">
-            <div className="lf-audit__progress">
-              <p className="lf-audit__progress-label" aria-live="polite">
-                Step {step} of 3 <span className="lf-audit__sr"> - {stepTitle}</span>
-              </p>
-              <div
-                className={`lf-audit__progress-bar${payoff ? " is-payoff" : ""}`}
-                aria-hidden="true"
-              >
-                {([1, 2, 3] as const).map((s) => (
-                  <span
-                    key={s}
-                    className={`lf-audit__progress-seg${s <= step ? " is-done" : ""}`}
-                  />
-                ))}
+            {!websiteIntent && (
+              <div className="lf-audit__progress">
+                <p className="lf-audit__progress-label" aria-live="polite">
+                  Step {step} of 3 <span className="lf-audit__sr"> - {stepTitle}</span>
+                </p>
+                <div
+                  className={`lf-audit__progress-bar${payoff ? " is-payoff" : ""}`}
+                  aria-hidden="true"
+                >
+                  {([1, 2, 3] as const).map((s) => (
+                    <span
+                      key={s}
+                      className={`lf-audit__progress-seg${s <= step ? " is-done" : ""}`}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {step === 1 && (
               <div className="lf-audit__step">
@@ -537,10 +590,12 @@ export default function TechAudit() {
                   tabIndex={-1}
                   ref={headingRef}
                 >
-                  {STEP_TITLES[3]}
+                  {websiteIntent ? "Where should we send your plan?" : STEP_TITLES[3]}
                 </h2>
                 <p className="lf-audit__step-sub">
-                  We only need enough to reply. The rest happens on the call.
+                  {websiteIntent
+                    ? "About two minutes. A real person reads every brief."
+                    : "We only need enough to reply. The rest happens on the call."}
                 </p>
 
                 <form
@@ -725,15 +780,17 @@ export default function TechAudit() {
                   </p>
                 </form>
 
-                <div className="lf-audit__step-nav lf-audit__step-nav--below">
-                  <button
-                    type="button"
-                    className="lf-audit__back"
-                    onClick={() => setStep(2)}
-                  >
-                    <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
-                  </button>
-                </div>
+                {!websiteIntent && (
+                  <div className="lf-audit__step-nav lf-audit__step-nav--below">
+                    <button
+                      type="button"
+                      className="lf-audit__back"
+                      onClick={() => setStep(2)}
+                    >
+                      <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 

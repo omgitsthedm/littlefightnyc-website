@@ -75,7 +75,7 @@
   .lf-clients__all { min-height: 44px; }
 }
 
-/* ---- Grid: featured card wide, the rest 2-up ---- */
+/* ---- Grid: one lead proof with two compact supporting builds ---- */
 .lf-clients__grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -86,13 +86,31 @@
 }
 .lf-clients__card--feature { grid-column: 1 / -1; }
 
-/* Desktop: all three proofs sit in ONE equal row so the proof lands fast
-   instead of a full-width feature stacked over a second row (~1 screen tighter).
-   The feature card drops its full-bleed span and matches the others' ratio. */
 @media (min-width: 960px) {
-  .lf-clients__grid { grid-template-columns: repeat(3, 1fr); }
-  .lf-clients__card--feature { grid-column: auto; }
-  .lf-clients__card--feature .lf-clients__shot { aspect-ratio: 16 / 10; }
+  .lf-clients__grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  }
+  .lf-clients__card--feature {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .lf-clients__card:not(.lf-clients__card--feature) {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
+  }
+  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__shot {
+    height: 100%;
+    min-height: 260px;
+    aspect-ratio: auto;
+  }
+  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__meta {
+    padding: var(--lf-space-4);
+  }
+  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__fact:nth-child(n + 3) {
+    display: none;
+  }
+  .lf-clients__card--feature .lf-clients__shot { aspect-ratio: 16 / 9; }
 }
 
 /* ---- Card ---- */
@@ -175,6 +193,36 @@
   font-size: var(--lf-text-sm);
   line-height: 1.45;
   color: var(--lf-bone-soft);
+}
+.lf-clients__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-3);
+  padding-top: var(--lf-space-4);
+  border-top: 1px solid var(--lf-hairline);
+}
+.lf-clients__fact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-space-1);
+  min-width: 0;
+}
+.lf-clients__fact strong {
+  color: var(--lf-fight);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-lg);
+  line-height: 1;
+}
+.lf-clients__fact > span {
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.35;
+}
+@media (min-width: 640px) {
+  .lf-clients__card--feature .lf-clients__facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 .lf-clients__go {
   position: absolute;

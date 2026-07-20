@@ -4,6 +4,7 @@
  * reconciled with the Little Fight brand. See app/DESIGN.md.
  */
 
+:root,
 .lf-editorial {
   /* Palette — Axiom product-OS. Roles kept distinct for contrast parity. */
   --lf-ink: #050507;          /* primary ground / background (Axiom bg) */
@@ -131,6 +132,7 @@
    @supports is the correct way to keep the hex fallback above intact. Resting
    --lf-fight is never redefined here — it stays exactly #F97316. */
 @supports (color: oklch(0.7 0.18 48)) {
+  :root,
   .lf-editorial {
     --lf-fight-hover: oklch(0.752 0.185 48);
     --lf-fight-active: oklch(0.638 0.182 47);

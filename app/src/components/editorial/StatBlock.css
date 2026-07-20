@@ -67,6 +67,17 @@
   color: var(--lf-bone-soft);
 }
 
+.lf-stats__note {
+  max-width: 66ch;
+  margin: var(--lf-space-5) 0 0;
+  padding-top: var(--lf-space-4);
+  border-top: 1px solid var(--lf-hairline);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.5;
+}
+
 /* Phone: two columns means ~165px cells — the display scale broke words
    mid-glyph ("2 week / s", "Squar / e"). Step the whole tier down so every
    value sits on one or two clean lines with air. */

@@ -56,6 +56,14 @@
   padding-top: var(--lf-space-7);
 }
 
+.lf-editorial .lf-four__pillar--primary {
+  padding: var(--lf-space-6);
+  border-top-color: var(--lf-fight);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+  box-shadow: inset 4px 0 0 var(--lf-fight);
+}
+
 .lf-editorial .lf-four__num {
   display: block;
   font-family: var(--lf-mono);
@@ -114,6 +122,10 @@
   .lf-editorial .lf-four__pillar {
     grid-template-columns: minmax(320px, 5fr) 7fr;
     gap: var(--lf-space-8);
+  }
+  .lf-editorial .lf-four__pillar--primary {
+    grid-template-columns: minmax(320px, 4fr) minmax(0, 8fr);
+    padding: var(--lf-space-7);
   }
   .lf-editorial .lf-four__pillar--flip .lf-four__copy {
     order: 2;

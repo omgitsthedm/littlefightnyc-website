@@ -12,9 +12,9 @@ import "./RecentClients.css";
  * proof; the rest form a grid. Staggered reveal, hover lift + image zoom.
  */
 const FEATURED_SLUGS = [
-  "grand-funding-llc",
   "hair-by-rachel-charles",
-  "cc-films",
+  "public-house-creative",
+  "venuecircuit",
 ] as const;
 
 export default function RecentClients() {
@@ -29,10 +29,10 @@ export default function RecentClients() {
       <div className="lf-clients__inner">
         <div className="lf-clients__head">
           <div>
-            <p className="lf-mono lf-clients__label">Recent work</p>
-            <h2 className="lf-clients__heading">Websites already doing the work.</h2>
+            <p className="lf-mono lf-clients__label">Shipped proof</p>
+            <h2 className="lf-clients__heading">See the work before the pitch.</h2>
             <p className="lf-clients__lede">
-              Real businesses, real launches, and a clear path from first look to next action.
+              A booking site, a production cockpit, and an owned software product. Open every one.
             </p>
           </div>
           <Link to="/examples/" className="lf-clients__all">
@@ -63,6 +63,16 @@ export default function RecentClients() {
                 <span className="lf-mono lf-clients__type">{study.type}</span>
                 <span className="lf-clients__client">{study.client}</span>
                 <span className="lf-clients__title">{study.title}</span>
+                {study.metrics && (
+                  <span className="lf-clients__facts" aria-label={`${study.client} project results`}>
+                    {study.metrics.slice(0, 3).map((metric) => (
+                      <span className="lf-clients__fact" key={metric.label}>
+                        <strong>{metric.value}</strong>
+                        <span>{metric.label}</span>
+                      </span>
+                    ))}
+                  </span>
+                )}
               </span>
               <ArrowUpRight className="lf-clients__go" size={18} strokeWidth={2} aria-hidden="true" />
             </Link>
@@ -74,9 +84,9 @@ export default function RecentClients() {
             <ScanSearch size={24} strokeWidth={1.75} />
           </span>
           <div className="lf-clients__scan-copy">
-            <p className="lf-mono lf-clients__scan-label">Not ready to talk?</p>
-            <h3>See what your current setup is costing you.</h3>
-            <p>Start a free Tech Audit. Tell us what’s broken — or just drop your website in — and a real person looks it over. No meeting, no charge.</p>
+            <p className="lf-mono lf-clients__scan-label">Start with the free read</p>
+            <h3>Get a practical website plan before you spend.</h3>
+            <p>Send the current site and the goal. A real person reviews it and replies with the clearest next move. No meeting required.</p>
           </div>
           <a
             className="lf-clients__scan-cta"
@@ -84,7 +94,7 @@ export default function RecentClients() {
             data-lf-event="tech_audit_started"
             data-lf-label="home_proof_band"
           >
-            Start my free audit
+            Plan my website
             <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
           </a>
         </aside>

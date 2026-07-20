@@ -6,6 +6,10 @@
   display: grid;
   gap: var(--lf-space-3);
   width: min(520px, calc(100vw - (var(--lf-space-4) * 2)));
+  color: var(--lf-bone);
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
   pointer-events: none;
 }
 

@@ -75,7 +75,7 @@ function Pillar({
   return (
     <div
       ref={ref}
-      className={`lf-four__pillar${flip ? " lf-four__pillar--flip" : ""}`}
+      className={`lf-four__pillar${flip ? " lf-four__pillar--flip" : ""}${index === 0 ? " lf-four__pillar--primary" : ""}`}
       data-reveal
       style={{ ["--lf-i" as string]: index }}
     >
@@ -102,11 +102,11 @@ export default function TheFour() {
       <header ref={headRef} className="lf-four__head" data-reveal>
         <p className="lf-four__eyebrow">What we do</p>
         <h2 id="lf-four-title" className="lf-four__title">
-          Four things. <span className="lf-four__em">Done right.</span>
+          Start with the leak. <span className="lf-four__em">Build what earns its place.</span>
         </h2>
         <p className="lf-four__dek">
-          The bar, the clinic, the shop, the firm — we're the tech team your
-          block never got. And we pick up the phone.
+          Websites are the main build. Urgent support moves first. Consulting
+          is the free read. Custom software comes when ordinary tools stop fitting.
         </p>
       </header>
       <div className="lf-four__list">

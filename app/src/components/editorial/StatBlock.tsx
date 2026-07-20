@@ -34,10 +34,12 @@ export default function StatBlock({
   eyebrow,
   icon: Icon,
   items,
+  note,
 }: {
   eyebrow?: string;
   icon?: LucideIcon;
   items: Array<{ value: string; label: string }>;
+  note?: string;
 }) {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.2 });
 
@@ -73,6 +75,7 @@ export default function StatBlock({
           </div>
         ))}
       </dl>
+      {note && <p className="lf-stats__note">{note}</p>}
     </section>
   );
 }
