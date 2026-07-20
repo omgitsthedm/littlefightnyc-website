@@ -4,6 +4,7 @@ node_modules/
 .superpowers/
 .playwright-mcp/
 .playwright-cli/
+.unlighthouse/
 output/
 *.png
 # ...but EVERY PWA / apple-touch / startup / screenshot PNG in public/ MUST
