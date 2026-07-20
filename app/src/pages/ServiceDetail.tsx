@@ -108,7 +108,7 @@ function WebsiteAcquisitionBlock() {
             </div>
             <div className="lf-sd-web__owner">
               <img
-                src="/assets/founder-david-marsh.webp"
+                src="/assets/founder-david-marsh-128.webp"
                 alt=""
                 width={96}
                 height={96}

@@ -169,6 +169,11 @@
   display: block;
   transition: transform 600ms cubic-bezier(0, 0, 0.2, 1);
 }
+.lf-clients__shot picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .lf-clients__card:hover .lf-clients__shot img,
 .lf-clients__card:focus-visible .lf-clients__shot img {
   transform: scale(1.045);

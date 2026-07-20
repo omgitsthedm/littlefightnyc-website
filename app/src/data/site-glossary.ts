@@ -47,7 +47,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "crm",
     term: "CRM",
     definition:
-      "One place where leads, customers, notes, follow-up, and sales history live.",
+      "A CRM keeps leads, customers, notes, follow-up, and sales history in one shared place so nothing falls through the cracks.",
     plain: "The list of people who asked for help, bought something, or need a reply.",
     whenItMatters:
       "It matters when customer notes are split between email, texts, spreadsheets, booking tools, and memory.",

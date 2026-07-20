@@ -1,39 +1,28 @@
-# Placeholders — Little Fight NYC Overhaul
+# Resolved inputs — Little Fight NYC
 
-> Last updated: May 6, 2026 — David's confirmed answers locked in.
+> Last verified: July 20, 2026. This file is no longer an open-placeholder
+> queue; current product and brand truth lives in `PROJECT_STATUS.md`,
+> `AGENTS.md`, `CLAUDE.md`, and `app/src/data/site.ts`.
 
-## RESOLVED (David confirmed)
+## Current confirmed facts
 
-| # | Answer |
-|---|---|
-| 1. Quadrant names | ✅ Websites · Custom Systems · Consulting · IT Support |
-| 2. Websites: 14 days or you don't pay | ✅ Real |
-| 3. Custom Systems: 30 days first version | ✅ Real, depending on scope |
-| 4. IT Support promise | **2-hour response during business hours + 24-hour service with our live AI phone agent** |
-| 5. Websites pricing | ❌ NO PRICE POSTED. Use: "Clients save on average 50% on custom website development." |
-| 6. Custom Systems pricing | ❌ NO PRICE POSTED. Use: "Outperform most off-the-shelf apps at a quarter of the annual price." |
-| 7. Consulting pricing | "First hour is free. Longer consultations depend on depth." |
-| 8. IT Support pricing | "$200/hour on-location after proper intake. Fair for small business — even if not a fit, reach out and we'll refer you to someone who can." |
-| 9. Real number | **20+ NYC businesses since 2017. 100+ nationwide since 2012.** |
-| 12. LinkedIn | ❌ NO LinkedIn anywhere. Remove all references. |
-| 15. Anthropic API key | Not yet — use voice call (Twilio) first. |
-| 16. Phone | ✅ (646) 360-0318 |
-| 17. Email | ✅ hello@littlefightnyc.com |
+- Four services: Custom Local Websites, IT Support, Tech Consulting, and
+  Software You Own.
+- Websites ship in 14 days or the client does not pay.
+- Consulting is free. Do not publish base pricing for websites, support, or
+  custom software unless David explicitly changes that policy.
+- Little Fight NYC was founded in **2021**.
+- Phone: **(646) 360-0318**. Email: **hello@littlefightnyc.com**.
+- Tech Audit intake uses Netlify Forms. The retired Twilio/AI voice intake is
+  removed and must not be presented as a feature.
+- Current proof uses real, named case studies and approved facts from
+  `app/src/data/site-cases.ts`; do not restore placeholder clients or invent
+  testimonials, savings percentages, dates, prices, or business counts.
 
-## STILL PENDING
+## Still requires owner-supplied truth
 
-| # | What's needed |
-|---|---|
-| 10. Above-fold proof | Use placeholder client names in a "Recent clients" band (NOT testimonials): **Hair By Rachel Charles, Public House Creative, Grand Funding LLC**. Real case studies coming later. |
-| 11. Founder photo | Placeholder until David sends real headshot |
-| 13. Founder bio | Wait for voice text from David |
-| 14. Fires of the Week | Replace seed with generic mid-tier examples. David's 3 confirmed examples: law firm WiFi went down, boutique store can't run credit cards, Interior Design firm large format printer went down. Generate similar generic ones for the rest. |
-
-## EXECUTION RULES (this overhaul cycle)
-
-- **No prices on Websites or Custom Systems pages.** Use value-prop language.
-- **No "$1,500 flat" anywhere.** Consulting = first hour free + variable.
-- **IT Support price ($200/hr on-location) only mentioned with the "after proper intake" + "fair for small business" framing.**
-- **Real numbers replace generic claims:** "20+ NYC businesses since 2017" or "100+ nationwide since 2012."
-- **24-hour AI phone agent** is the differentiator — surface it on homepage, IT Support page, contact, anywhere "response time" is discussed.
-- **Three placeholder client names** can appear in a "Recent clients" band on homepage + about, but not in testimonial format.
+- Google Business Profile URL and approved social profiles for `sameAs`.
+- A real registered address only if David chooses to publish it; the business
+  currently operates correctly as a service-area business.
+- Approval-backed client outcomes or quotes collected through
+  `CLIENT-PROOF-COLLECTION.md`.

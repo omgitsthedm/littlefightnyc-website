@@ -2,7 +2,7 @@
 
 ## Source Of Truth
 
-Last verified: 2026-07-07.
+Last verified: 2026-07-20.
 
 Repo (off iCloud): `~/Code/LiFi NYC/Clients/LittleFightNYC/Brand/Website/littlefightnyc-website`
 (Desktop path `~/Desktop/LiFi NYC/Clients/LittleFightNYC/...` is a same-name symlink into `~/Code`.)
@@ -21,12 +21,12 @@ See `SOURCE_OF_TRUTH.md` before major edits.
 
 - **App:** React 19 + TypeScript + Vite 7 in `app/`. Routing = React Router 7 (`react-router-dom`, `BrowserRouter` + `<Routes>`). Icons = `lucide-react`.
 - **Routing / layout:** `src/App.tsx` defines all routes. Most pages inherit `EditorialShell` (QuietNav + QuietFooter + StickyHelpBar + RouteMeta + **CommandPalette**). ⚠️ The home page `/` is a **standalone layout** (its own `.lf-editorial` wrapper, own nav/footer) — it does NOT use EditorialShell, so any shell-only global (e.g. CommandPalette) must **also** be rendered in `Home.tsx`.
-- **Rendering:** client-rendered SPA. `src/main.tsx` uses `createRoot` (not hydrate). At build, `scripts/prerender-seo.mjs` writes one static `index.html` per route (102) with full `<head>` SEO + JSON-LD (FAQPage, BreadcrumbList, LocalBusiness/ProfessionalService, DefinedTerm, Article, HowTo) and a lightweight SEO `snapshot()` in `#root` that `createRoot` replaces on load. ⚠️ So the visible body is **JS-gated** (not true SSR). Home below-the-fold mounts via `useDeferredSections()` on the next idle frame. **Open perf next-step:** true "instant-like-Apple" FCP needs a real SSG + `hydrateRoot` migration (route + section components are `lazy()`, which complicates `renderToString`).
+- **Rendering:** client-rendered SPA. `src/main.tsx` uses `createRoot` (not hydrate). At build, `scripts/prerender-seo.mjs` writes one static `index.html` per route (currently 182) with full `<head>` SEO + JSON-LD (FAQPage, BreadcrumbList, LocalBusiness/ProfessionalService, DefinedTerm, Article, HowTo) and a lightweight SEO `snapshot()` in `#root` that `createRoot` replaces on load. ⚠️ So the visible body is **JS-gated** (not true SSR). Home below-the-fold mounts via `useDeferredSections()` on the next idle frame.
 - **Data (source of truth):** `src/data/site.ts` — `services`, `caseStudies` (+`metrics`), `answerGuides`, `areaPages`, `glossaryTerms`, `studioProjects`, `navItems`. Plus `journal.json`, `industries.json`. ⚠️ `src/data/seo-pages.json` is the **prerender's** SEO/schema source and is a **separate copy** — keep FAQ/meta in sync with `site.ts` (a node splice syncs area/glossary faq; scratch payloads at the session scratchpad).
-- **Design system:** Axiom Momentum tokens in `src/styles/editorial/tokens.css` (bg `#050507`, orange `#F97316`, blue `#3B82F6` accent, Inter). Reveals via `src/styles/editorial/motion.css` `[data-reveal]` + `useScrollReveal`. Reusable editorial components in `src/components/editorial/` (PageHero w/ content-type icon, EditorialFigure, PullQuote, FaqList, StatBlock, SignatureBand, VisualIndex, MomentumSection, TheFight, ProcessFlow, BrandLine, AmbientField, CommandPalette).
+- **Design system:** Axiom Momentum tokens in `src/styles/editorial/tokens.css` (bg `#050507`, orange `#F97316`, blue `#3B82F6` accent, Oswald display + Barlow body). Reveals via `src/styles/editorial/motion.css` `[data-reveal]` + `useScrollReveal`. Reusable editorial components live in `src/components/editorial/`.
 - **CSS gotchas:** (1) `.lf-editorial button` reset strips custom `<button>` fill/border/padding — scope custom button rules under `.lf-editorial`. (2) global `.lf-editorial a` color (0,1,1) can override a single-class CTA's `color` (0,1,0) — scope CTA color rules under `.lf-editorial` too (this caused white-on-orange AA fails). (3) use `rgba()` not `color-mix()` inside gradients.
 - **Build/deploy:** `cd app && npm run build` = `tsc -b && vite build && node scripts/prerender-seo.mjs`. ⚠️ **Prod build strips `console.log`** — debug built/live code with `window.__flags`, not console.
-- **Conversion + infra:** `/tech-audit/` submits via Netlify Forms (registration in `app/public/__forms.html` — new form fields must be added there too). The Twilio intake in `netlify/functions/tech-audit-voice.mts` is deployed on its custom path, `/api/tech-audit/voice` (the default `/.netlify/functions/...` URL is not its public route). Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) in root `netlify.toml`. **Redirects live ONLY in `app/public/_redirects`** (processed before the toml — toml-only rules are dead). Analytics: **delayed-boot, NOT consent-gated** — GA4 (needs `VITE_GA_ID` in Netlify build env) + Clarity + TikTok pixel boot ~6.5s after load in `src/lib/analytics.ts`; no consent gate exists.
+- **Conversion + infra:** `/tech-audit/` submits via Netlify Forms (registration in `app/public/__forms.html` — new form fields must be added there too). The retired Twilio voice webhook has been removed; the public phone number remains a normal `tel:` contact path. Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) live in root `netlify.toml`. **Redirects live ONLY in `app/public/_redirects`**. Analytics is denied by default and consent-gated: GA4, Clarity, and TikTok load only after a visitor allows analytics, then boot after the existing delay.
 - **Quality bar (live-verified 2026-07-07):** Lighthouse Home 92 / Services 90 perf, BP + SEO 100, CLS 0, TBT 0; Accessibility 100 (post contrast-fix); squirrelscan full = 83/B (ceiling = by-design HTML caching + service-area streetAddress omission + trailing-slash canonicalization).
 
 ## Design Context
@@ -53,7 +53,7 @@ The blog should feel like a hybrid of a field guide and an editorial publication
 Brand anchors that should stay intact:
 - Bright orange as the lead brand signal (`#F97316`; hover/ember for states)
 - Blue (`#3B82F6`) as a real accent — background bursts/ambient are blue, orange stays the signal
-- **Inter** for display + body (700/800 display, 400/500/600 body), **JetBrains Mono** for labels/metadata. *(2026-07 Axiom "Momentum" pivot — Lexend/Caveat/Fraunces are retired; authoritative tokens in `app/src/styles/editorial/tokens.css`, documented in `app/DESIGN.md`.)*
+- **Oswald** for display (700), **Barlow** for body (400/500/600), and **JetBrains Mono** for labels/metadata. Authoritative tokens live in `app/src/styles/editorial/tokens.css`; the full system is documented in `app/DESIGN.md`.
 - Note: the hub of proof/answers is now named **"Examples"** at `/examples/` (was "Field Guide" — 301 preserved)
 - React 19 + Vite + TypeScript SPA, prerendered for SEO, Netlify delivery (see Tech Stack above)
 - WCAG-aware contrast, responsive intent, and reduced-motion respect

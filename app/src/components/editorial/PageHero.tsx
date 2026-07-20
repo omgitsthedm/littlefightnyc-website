@@ -14,6 +14,8 @@ type Props = {
     alt: string;
     width?: number;
     height?: number;
+    /** Cap mobile density for unusually heavy images while preserving desktop detail. */
+    mobileWidths?: number[];
   };
   /**
    * Case-study archetype: the project screenshot runs full-bleed BEHIND the
@@ -144,20 +146,28 @@ export default function PageHero({
 
         {image && (
           <div className="lf-pagehero__image">
-            <img
-              {...skelImg}
-              src={image.src}
-              alt={image.alt}
-              width={image.width}
-              height={image.height}
-              {...responsiveImageProps(
-                image.src,
-                "(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw",
-                [480, 640, 900],
+            <picture>
+              {image.mobileWidths && (
+                <source
+                  media="(max-width: 767px)"
+                  {...responsiveImageProps(image.src, "100vw", image.mobileWidths)}
+                />
               )}
-              fetchPriority="high"
-              decoding="async"
-            />
+              <img
+                {...skelImg}
+                src={image.src}
+                alt={image.alt}
+                width={image.width}
+                height={image.height}
+                {...responsiveImageProps(
+                  image.src,
+                  "(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw",
+                  [480, 640, 900],
+                )}
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
           </div>
         )}
       </div>

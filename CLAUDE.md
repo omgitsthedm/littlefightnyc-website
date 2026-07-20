@@ -1,5 +1,14 @@
 # Little Fight NYC Website Config
 
+## 2026-07-20 — Twilio retired; final release polish
+
+The old Tech Audit voice webhook is fully removed from deployable source.
+`/tech-audit/` uses Netlify Forms; the public `(646) 360-0318` `tel:` contact
+path remains. Current analytics is privacy-first and consent-gated. Final
+release polish also right-sizes mobile proof imagery, preloads the real Tech
+Audit LCP image, tightens long SEO titles, removes shadowed redirects, and
+points Lighthouse CI at `/examples/` instead of retired `/field-guide/`.
+
 ## 2026-07-18 — Margin-reset gotcha: SITEWIDE audit done (LIVE, `8623e90` + `52567f7`)
 
 The `.lf-editorial h1,h2,h3,h4,p,ul,ol,figure { margin:0 }` reset (0,1,1) beats

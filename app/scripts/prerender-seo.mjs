@@ -802,6 +802,15 @@ function routeImagePreload(page) {
   const homeHero = "/assets/hero-soho-crosswalk.webp";
   const asset = page.path === "/" ? homeHero : page.image;
 
+  // Tech Audit renders the After Hours Agenda case image, not its social-card
+  // asset. This route branch must precede the generic WebP guard because its
+  // SEO image is the JPG brand card, while its actual LCP is a WebP.
+  if (page.path === "/tech-audit/") {
+    const base = "/assets/case-after-hours-agenda";
+    const srcset = [480, 640, 900].map((w) => `${base}-${w}.webp ${w}w`).join(", ");
+    return `<link rel="preload" href="${base}-900.webp" imagesrcset="${srcset}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  }
+
   if (!asset?.endsWith(".webp")) return "";
 
   if (page.path === "/") {
@@ -830,6 +839,16 @@ function routeImagePreload(page) {
     return `<link rel="preload" href="${base}-900.webp" imagesrcset="${srcset}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
 
+  // The Examples hero is visually detailed but unusually heavy. Mobile caps
+  // at the 640px candidate; desktop keeps the full 900px option.
+  if (page.path === "/examples/") {
+    const base = "/assets/hero-examples-market";
+    return [
+      `<link rel="preload" media="(max-width: 767px)" href="${base}-640.webp" imagesrcset="${base}-480.webp 480w, ${base}-640.webp 640w" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+      `<link rel="preload" media="(min-width: 768px)" href="${base}-900.webp" imagesrcset="${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+    ].join("\n    ");
+  }
+
   // Inner pages whose og image IS the rendered PageHero hero (the hero-*
   // naming convention — og and PageHero were synced in the 2026-07-19 photo
   // waves): preload with EXACTLY PageHero's srcset/sizes so the preload and
@@ -844,12 +863,6 @@ function routeImagePreload(page) {
   // Other inner pages: page.image is the OG/social image, which is NOT
   // reliably the rendered LCP — a wrong preload is worse than none.
   return "";
-}
-
-function routeExtraImagePreloads(page) {
-  if (page.path !== "/examples/") return "";
-
-  return `<link rel="preload" href="/assets/case-hair-by-rachel-charles-480.webp" imagesrcset="/assets/case-hair-by-rachel-charles-480.webp 480w, /assets/case-hair-by-rachel-charles-900.webp 900w" imagesizes="(min-width: 1180px) 34vw, (min-width: 720px) 48vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
 }
 
 function routeChunkPrefix(page) {
@@ -947,7 +960,6 @@ function managedHead(page) {
     fontPreloads(),
     siteModulePreload(page),
     routeImagePreload(page),
-    routeExtraImagePreloads(page),
     routeModulePreload(page),
     journalBodyModulePreload(page),
     // hreflang: home ↔ /es/ are language alternates of the same pitch; every

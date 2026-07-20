@@ -49,15 +49,21 @@ export default function RecentClients() {
               style={{ ["--lf-i" as string]: i }}
             >
               <span className="lf-clients__shot" aria-hidden="true">
-                <img {...skelImg}
-                  src={study.image}
-                  {...responsiveImageProps(study.image, "(min-width: 1024px) 42vw, 100vw", [480, 640, 900])}
-                  alt=""
-                  width={1600}
-                  height={1200}
-                  loading="lazy"
-                  decoding="async"
-                />
+                <picture>
+                  <source
+                    media="(max-width: 767px)"
+                    {...responsiveImageProps(study.image, "100vw", [480, 640])}
+                  />
+                  <img {...skelImg}
+                    src={study.image}
+                    {...responsiveImageProps(study.image, "(min-width: 1024px) 42vw, 100vw", [480, 640, 900])}
+                    alt=""
+                    width={1600}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </span>
               <span className="lf-clients__meta">
                 <span className="lf-mono lf-clients__type">{study.type}</span>

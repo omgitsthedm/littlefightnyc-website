@@ -1,4 +1,5 @@
 import { Phone } from "lucide-react";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import { useScrollReveal } from "./useScrollReveal";
 import "./FounderCard.css";
 
@@ -20,6 +21,7 @@ export default function FounderCard({ photoSrc }: { photoSrc?: string }) {
           <img
             className="lf-founder__photo"
             src={photoSrc}
+            {...responsiveImageProps(photoSrc, "(max-width: 640px) 100vw, 260px", [480, 640])}
             alt="David Marsh, founder of Little Fight NYC"
             loading="lazy"
             decoding="async"

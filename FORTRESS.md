@@ -37,7 +37,7 @@ A page that doesn't serve a station gets merged or killed.
 
 | Surface | What it is | Verdict |
 |---|---|---|
-| `/tech-audit/` | THE conversion form (16 internal refs, share-target, voice webhook) | **The one door. Keep.** ✅ |
+| `/tech-audit/` | THE conversion form (Netlify Forms, share-target) | **The one door. Keep.** ✅ |
 | `/audit/` | Marketing wrapper that linked OUT to the subdomain tool | **RETIRED 2026-07-19** — 301 → /tech-audit/, page deleted, links swept. |
 | `audit.littlefightnyc.com` (+ `audits.` alias) | "Website Audit Lab" — Netlify site `audits-littlefightnyc` (6588401d…). **Backend is DEAD: `/api/run-audit` 404s** — every scan submission errored. The homepage "Scan my website" CTA fed this broken form. | Retire: redirect-only deploy staged at scratchpad `audit-retire/`; needs David to run the netlify deploy (permission-gated). Optional future: rebuild a REAL scanner on-domain, WITH auth + rate limiting (a0cf04f lesson). |
 
@@ -314,8 +314,9 @@ Bushwick, Park Slope, DUMBO, Astoria, LIC) + the 4 hub-mood shots below.**
 - **Axe:** ZERO critical/serious across 12 routes (fixed: heatmap ol[role=img]
   → div/span). Every image has an alt (sweep-verified).
 - **Ultraship security: 96/100, 0 vulns.** Accepted-low: CSP style-src
-  unsafe-inline (React inline styles; no injection vector). REAL: Twilio
-  TWILIO_AUTH_TOKEN unset in prod → webhook fails open → runbook Task 6 (David).
+  unsafe-inline (React inline styles; no injection vector). **Resolved
+  2026-07-20:** the retired Twilio webhook and its deployable function were
+  removed; Tech Audit continues through Netlify Forms.
 - **Ultraship SEO audit → QA pass 3 (`6b94b50`):** fixed the stranded link
   graph (shell links /areas/ + nationwide + es + zh on all 182 pages; /areas/
   hub HTML emits all 18 area links — was ZERO), schema truth (inLanguage per

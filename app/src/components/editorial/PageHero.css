@@ -230,6 +230,12 @@
   will-change: transform;
 }
 
+.lf-pagehero__image picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* Scroll-driven zoom — TRANSFORM ONLY for smooth 60fps */
 @supports (animation-timeline: view()) {
   .lf-pagehero__image img {

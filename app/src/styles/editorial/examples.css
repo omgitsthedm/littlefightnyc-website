@@ -130,6 +130,13 @@
   transition: transform var(--lf-time-slow) var(--lf-ease-out);
 }
 
+.lf-ex-feature__media picture,
+.lf-ex-rows__media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .lf-ex-feature__card:hover .lf-ex-feature__media img {
   transform: scale(1.03);
 }

@@ -4,7 +4,7 @@ module.exports = {
       url: [
         "https://littlefightnyc.com/",
         "https://littlefightnyc.com/services/",
-        "https://littlefightnyc.com/field-guide/",
+        "https://littlefightnyc.com/examples/",
         "https://littlefightnyc.com/tech-audit/",
         "https://littlefightnyc.com/journal/read-your-monthly-software-bill/",
       ],

@@ -40,7 +40,7 @@ Edit the React/Vite app in `app/`:
 Root files that still matter:
 
 - `netlify.toml`
-- `netlify/functions/**`
+- `netlify/functions/**` if a future serverless feature is intentionally added
 - `.netlify/state.json`
 - `AGENTS.md` / `CLAUDE.md` / `HANDOFF.md`
 
@@ -50,8 +50,8 @@ Generated output:
 
 ## Secrets
 
-- `app/.env` holds API keys and is gitignored. Never commit it. The same values must be
-  set as Netlify environment variables (site settings) for the serverless functions.
+- `app/.env` is gitignored. Never commit secrets. Public build configuration such as
+  analytics IDs belongs in Netlify environment variables.
 
 ## History / archives (2026-06-30 consolidation)
 

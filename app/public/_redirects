@@ -54,13 +54,10 @@
 /software-cost-calculator/*                    /answers/reduce-monthly-software-costs-small-business/  301
 
 # --- Information architecture consolidation (May 2026)
-# (/answers/ and /case-studies/ are REAL hub pages again as of 2026-07-12.)
 /work/           /services/                 301
 /work            /services/                 301
-/answers         /answers/                  301
 /industries/     /examples/#industries      301
 /industries      /examples/#industries      301
-/case-studies    /case-studies/             301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301
 
@@ -100,12 +97,10 @@
 /services        /services/         301
 /tech-audit      /tech-audit/       301
 /about           /about/            301
-/audit           /audit/            301
 /glossary        /glossary/         301
 /thanks          /thanks/           301
 /legal           /legal/            301
 /areas           /areas/            301
-/journal         /journal/          301
 /examples        /examples/         301
 /contact         /contact/          301
 # NOTE (2026-07-13): the old per-section `/x/:slug -> /x/:slug/` rules are

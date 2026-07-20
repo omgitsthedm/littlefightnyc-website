@@ -96,6 +96,7 @@ export default function FieldGuide() {
           alt: "A Manhattan Chinatown restaurant storefront lit up at night near the Manhattan Bridge",
           width: 1600,
           height: 1200,
+          mobileWidths: [480, 640],
         }}
       />
 
@@ -119,20 +120,26 @@ export default function FieldGuide() {
               className="lf-ex-feature__card"
             >
               <span className="lf-ex-feature__media" aria-hidden="true">
-                <img {...skelImg}
-                  src={featured.image}
-                  alt=""
-                  {...responsiveImageProps(
-                    featured.image,
-                    "(min-width: 1024px) 58vw, 100vw",
-                    [640, 900],
-                  )}
-                  width={1800}
-                  height={1200}
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                />
+                <picture>
+                  <source
+                    media="(max-width: 767px)"
+                    {...responsiveImageProps(featured.image, "100vw", [480, 640])}
+                  />
+                  <img {...skelImg}
+                    src={featured.image}
+                    alt=""
+                    {...responsiveImageProps(
+                      featured.image,
+                      "(min-width: 1024px) 58vw, 100vw",
+                      [640, 900],
+                    )}
+                    width={1800}
+                    height={1200}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                  />
+                </picture>
               </span>
               <span className="lf-ex-feature__copy">
                 <span className="lf-ex-feature__flag">Featured build</span>
@@ -172,19 +179,25 @@ export default function FieldGuide() {
                   className="lf-ex-rows__card"
                 >
                   <span className="lf-ex-rows__media" aria-hidden="true">
-                    <img {...skelImg}
-                      src={study.image}
-                      alt=""
-                      {...responsiveImageProps(
-                        study.image,
-                        "(min-width: 1024px) 33vw, 100vw",
-                        [480, 900],
-                      )}
-                      width={1800}
-                      height={1200}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <picture>
+                      <source
+                        media="(max-width: 767px)"
+                        {...responsiveImageProps(study.image, "100vw", [480, 640])}
+                      />
+                      <img {...skelImg}
+                        src={study.image}
+                        alt=""
+                        {...responsiveImageProps(
+                          study.image,
+                          "(min-width: 1024px) 33vw, 100vw",
+                          [480, 640, 900],
+                        )}
+                        width={1800}
+                        height={1200}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                   </span>
                   <span className="lf-ex-rows__copy">
                     <span className="lf-ex-rows__type">{study.type}</span>
