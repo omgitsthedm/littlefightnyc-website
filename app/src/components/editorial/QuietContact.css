@@ -262,7 +262,7 @@
 
 @media (min-width: 768px) {
   .lf-contact-block__promises {
-    gap: var(--lf-space-5);
+    gap: var(--lf-space-5) var(--lf-space-4);
     margin-top: var(--lf-space-8);
     padding-top: var(--lf-space-6);
   }

@@ -68,7 +68,8 @@ export default function Zhongwen() {
       lang: "zh",
       path: "/zh/",
       title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
-      description: "为纽约小生意做网站、修技术、打造自有软件。查看真实案例、打电话，或免费开始网站规划。",
+      description:
+        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码和数据归您；电话、短信或邮件都由真人回复。服务纽约五大区。",
     });
   }, []);
 

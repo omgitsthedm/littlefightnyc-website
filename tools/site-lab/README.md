@@ -62,36 +62,14 @@ The score is not a replacement for taste. It is a triage system that tells us wh
 
 The goal is a site that can keep becoming more cinematic, useful, fast, accessible, and locally specific without losing control of the details.
 
-## Initial Baseline: 2026-05-12
+## Verified Baseline: 2026-07-20
 
-Latest full live custom scan:
+Latest full local production scan:
 
-- 98 sitemap routes scanned.
-- 294 screenshots captured.
-- Average custom site-lab score: 87/100.
-- No horizontal overflow found.
-- 24 routes flagged for dark dead-zone risk.
-- 16 routes flagged for low visual power.
-- 122 axe violations detected across the sitemap, mostly contrast.
-- Linkinator scanned 195 links successfully.
-- squirrelscan scored the live site 89/B with 0 failed rules and 340 warnings.
+- 125 sitemap routes and 375 desktop/tablet/mobile captures.
+- Average custom site-lab score: 100/100 rounded.
+- Zero axe violations, horizontal-overflow routes, dark dead-zone risks, or low-visual-power routes.
+- The shared contact block passed a separate 12-case regression matrix on `/`, `/contact/`, and `/services/custom-local-websites/` at 390, 768, 1024, and 1440 CSS pixels.
+- Priority performance tooling targets `/examples/`; `/field-guide/` remains only as a deliberate 301 redirect.
 
-Highest-leverage families from the first run:
-
-- `industries`: duplicate H1s, contrast, and one weak visual route.
-- `journal`: duplicate H1s on older articles, several dark/dead-zone routes.
-- `glossary`: visually thin term pages.
-- `tech-audit`: low visual power and dark-space risk.
-- `services`, `field-guide`, and `journal`: image alt text and performance pressure.
-
-Priority performance findings:
-
-- Lighthouse CI warnings: `/services/` 0.80, `/field-guide/` 0.80, `/tech-audit/` 0.84, `/journal/read-your-monthly-software-bill/` 0.81.
-- Unlighthouse priority run passed overall budget scores above 0.84 but failed the strict 80 performance category budget on the same priority routes.
-
-Backstop baseline:
-
-- First 40 sitemap routes are configured across desktop, tablet, and mobile.
-- Backstop uses a static capture hook that disables animation and hides canvas/video so layout regression testing is stable.
-- Current comparison result: 114 passed, 6 failed.
-- The remaining failed captures are `home` tablet/mobile, `services` tablet/mobile, and `field-guide` desktop/mobile. Treat those as intentional instability until the moving surfaces are either made deterministic or given custom thresholds.
+Generated evidence lives under `reports/local/` and `reports/contact-closeout/` and is intentionally ignored by Git.

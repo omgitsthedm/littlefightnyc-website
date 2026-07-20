@@ -6,11 +6,11 @@ import path from "node:path";
 const fallbackRoutes = [
   "/",
   "/services/",
-  "/field-guide/",
-  "/audit/",
+  "/examples/",
   "/tech-audit/",
   "/about/",
-  "/journal/",
+  "/contact/",
+  "/library/",
 ];
 
 export function parseArgs(argv = process.argv.slice(2)) {
