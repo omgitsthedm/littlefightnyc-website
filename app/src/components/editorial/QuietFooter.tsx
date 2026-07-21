@@ -47,7 +47,8 @@ const footerGroups: Array<{
     links: [
       { label: "Examples", to: "/examples/" },
       { label: "The Studio", to: "/services/#studio" },
-      { label: "The Lab", to: "/examples/lab/" },
+      { label: "The Lab", to: "/examples/lab/", external: true },
+      { label: "The Audit", to: "/examples/audit/", external: true },
     ],
   },
   {

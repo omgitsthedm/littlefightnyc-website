@@ -66,6 +66,41 @@ for = "/examples/lab/concepts/aha-laser/*"
   [headers.values]
   X-Robots-Tag = "noindex, nofollow"
 
+# The retired standalone Audit Lab is hosted under /examples/audit/. Its
+# preserved pages and generated reports use inline scripts plus Google Fonts,
+# so they need the standalone site's narrower policy instead of the main app's.
+[[headers]]
+for = "/examples/audit/*"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-XSS-Protection = "1; mode=block"
+
+[[headers]]
+for = "/examples/audit/report/*"
+
+  [headers.values]
+  Cache-Control = "no-cache"
+
+[[headers]]
+for = "/examples/audit/api/og"
+
+  [headers.values]
+  Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/examples/audit/api/*"
+
+  [headers.values]
+  Access-Control-Allow-Headers = "Content-Type"
+  Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+  Access-Control-Allow-Origin = "https://littlefightnyc.com"
+  Access-Control-Max-Age = "86400"
+  Cache-Control = "no-store"
+
 [[headers]]
 for = "/*.xml"
 

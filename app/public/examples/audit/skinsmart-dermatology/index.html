@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Audit — SkinSmart Dermatology | Little Fight NYC</title>
+  <link rel="icon" href="/examples/audit/favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Comprehensive website performance, SEO, and conversion audit for SkinSmart Dermatology in Hinsdale, IL. Prepared by Little Fight NYC, March 2026.">
+  <meta property="og:title" content="Website Audit — SkinSmart Dermatology">
+  <meta property="og:description" content="Performance, SEO, mobile, and trust audit for skinbysmart.com. Score: 70/100. Prepared by Little Fight NYC.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       DESERT GLOW — SkinSmart Dermatology Audit
+       Palette: Warm Charcoal + Coral + Cream
+       ======================================== */
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #1a1511;
+      --bg-warm: #211c16;
+      --surface: #2a231b;
+      --surface-light: #352d23;
+      --text: #fbf3ee;
+      --text-muted: #cebfb0;
+      --primary: #eb5e55;
+      --primary-soft: #d4534b;
+      --accent: #f4dbce;
+      --accent-warm: #e8c4b3;
+      --peach: #f4dbce;
+      --coral: #eb5e55;
+      --cream: #fbf3ee;
+      --charcoal: #333333;
+      --beige: #cebfb0;
+
+      --font-heading: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+      --font-body: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      --max-width: 1120px;
+      --section-pad: clamp(4rem, 8vw, 7rem);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--bg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Warm radial glow background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(235, 94, 85, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 60% 70%, rgba(244, 219, 206, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Subtle grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ---- TYPOGRAPHY ---- */
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--cream);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 2rem + 2vw, 3.6rem);
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 1.4rem + 1.2vw, 2.4rem);
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      font-size: clamp(1.2rem, 1.1rem + 0.6vw, 1.6rem);
+    }
+
+    h4 {
+      font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+      font-family: var(--font-body);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    p {
+      margin-bottom: 1.2em;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: var(--accent);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ---- LAYOUT UTILITIES ---- */
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      padding: var(--section-pad) 0;
+    }
+
+    /* ---- ANIMATIONS ---- */
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 8px rgba(235, 94, 85, 0.3)); }
+      50% { filter: drop-shadow(0 0 20px rgba(235, 94, 85, 0.5)); }
+    }
+
+    @keyframes expandRing {
+      from {
+        stroke-dashoffset: var(--circumference);
+      }
+      to {
+        stroke-dashoffset: var(--dash-offset);
+      }
+    }
+
+    @keyframes dotAppear {
+      from {
+        opacity: 0;
+        transform: scale(0);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .animate-rise {
+      opacity: 0;
+      animation: riseIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .animate-rise.delay-1 { animation-delay: 0.15s; }
+    .animate-rise.delay-2 { animation-delay: 0.3s; }
+    .animate-rise.delay-3 { animation-delay: 0.45s; }
+    .animate-rise.delay-4 { animation-delay: 0.6s; }
+    .animate-rise.delay-5 { animation-delay: 0.75s; }
+    .animate-rise.delay-6 { animation-delay: 0.9s; }
+    .animate-rise.delay-7 { animation-delay: 1.05s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+      }
+      .animate-rise {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ========================================
+       HERO SECTION
+       ======================================== */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(6rem, 15vh, 10rem) 0 clamp(4rem, 8vh, 6rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(
+        ellipse 50% 40% at 50% 40%,
+        rgba(235, 94, 85, 0.1) 0%,
+        rgba(244, 219, 206, 0.04) 35%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      padding: 0.5em 1.5em;
+      border: 1px solid rgba(235, 94, 85, 0.35);
+      border-radius: 100px;
+    }
+
+    .hero h1 {
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-meta {
+      font-size: 0.9rem;
+      color: var(--beige);
+      opacity: 0.7;
+      margin-top: 2.5rem;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--primary);
+      margin: 2.5rem auto;
+      border: none;
+      opacity: 0.6;
+    }
+
+    /* ========================================
+       SCORE SECTION — RADIAL RINGS
+       ======================================== */
+
+    .score-section {
+      padding: var(--section-pad) 0;
+      text-align: center;
+    }
+
+    .score-section h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .score-intro {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      font-size: 1.05rem;
+    }
+
+    .score-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .score-display {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+      }
+    }
+
+    /* Radial Ring Chart */
+    .rings-chart {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+      .rings-chart {
+        width: 320px;
+        height: 320px;
+      }
+    }
+
+    .rings-chart svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .ring-track {
+      fill: none;
+      stroke: var(--surface);
+      stroke-width: 10;
+      opacity: 0.5;
+    }
+
+    .ring-fill {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: var(--circumference);
+      stroke-dashoffset: var(--circumference);
+      animation: expandRing 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: var(--ring-delay, 0.3s);
+    }
+
+    .ring-fill.performance {
+      stroke: #eb5e55;
+      --ring-delay: 0.4s;
+    }
+
+    .ring-fill.mobile {
+      stroke: #f4dbce;
+      --ring-delay: 0.6s;
+    }
+
+    .ring-fill.seo {
+      stroke: #cebfb0;
+      --ring-delay: 0.8s;
+    }
+
+    .ring-fill.security {
+      stroke: #d4917a;
+      --ring-delay: 1.0s;
+    }
+
+    .rings-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    .rings-center .score-number {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .rings-center .score-total {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .rings-center .score-grade {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-top: 0.5rem;
+      padding: 0.2em 0.8em;
+      border: 1px solid rgba(235, 94, 85, 0.4);
+      border-radius: 4px;
+    }
+
+    /* Category Scores List */
+    .score-categories {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .score-cat {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .score-cat-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .score-cat-dot.performance { background: #eb5e55; }
+    .score-cat-dot.mobile { background: #f4dbce; }
+    .score-cat-dot.seo { background: #cebfb0; }
+    .score-cat-dot.security { background: #d4917a; }
+
+    .score-cat-info {
+      flex: 1;
+    }
+
+    .score-cat-label {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--cream);
+      margin-bottom: 0.35rem;
+    }
+
+    .score-cat-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--surface);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .score-cat-fill {
+      height: 100%;
+      border-radius: 3px;
+      animation: barFill 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: var(--bar-delay, 0.5s);
+      width: 0;
+    }
+
+    @keyframes barFill {
+      to { width: var(--bar-width); }
+    }
+
+    .score-cat-fill.performance {
+      background: #eb5e55;
+      --bar-width: 62%;
+      --bar-delay: 0.6s;
+    }
+    .score-cat-fill.mobile {
+      background: #f4dbce;
+      --bar-width: 74%;
+      --bar-delay: 0.8s;
+    }
+    .score-cat-fill.seo {
+      background: #cebfb0;
+      --bar-width: 72%;
+      --bar-delay: 1.0s;
+    }
+    .score-cat-fill.security {
+      background: #d4917a;
+      --bar-width: 72%;
+      --bar-delay: 1.2s;
+    }
+
+    .score-cat-value {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      width: 55px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ring-fill {
+        stroke-dashoffset: var(--dash-offset);
+      }
+      .score-cat-fill {
+        width: var(--bar-width);
+      }
+      .rings-center {
+        filter: none;
+        animation: none;
+      }
+    }
+
+    /* ========================================
+       FINDINGS — TIMELINE LAYOUT
+       ======================================== */
+
+    .findings-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .findings-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .findings-header h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .findings-header p {
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    /* Vertical timeline line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 10px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--surface-light) 5%,
+        var(--surface-light) 95%,
+        transparent 100%
+      );
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      opacity: 0;
+      animation: riseIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .timeline-item:nth-child(1) { animation-delay: 0.3s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.55s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.8s; }
+    .timeline-item:nth-child(4) { animation-delay: 1.05s; }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Timeline dot */
+    .timeline-dot {
+      position: absolute;
+      left: -2.55rem;
+      top: 0.35rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--primary);
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0);
+      animation: dotAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .timeline-item:nth-child(1) .timeline-dot { animation-delay: 0.5s; }
+    .timeline-item:nth-child(2) .timeline-dot { animation-delay: 0.75s; }
+    .timeline-item:nth-child(3) .timeline-dot { animation-delay: 1.0s; }
+    .timeline-item:nth-child(4) .timeline-dot { animation-delay: 1.25s; }
+
+    .timeline-dot.critical {
+      border-color: #eb5e55;
+      box-shadow: 0 0 12px rgba(235, 94, 85, 0.4);
+    }
+
+    .timeline-dot.warning {
+      border-color: #cebfb0;
+      box-shadow: 0 0 10px rgba(206, 191, 176, 0.25);
+    }
+
+    .timeline-dot.info {
+      border-color: var(--surface-light);
+      box-shadow: none;
+    }
+
+    .finding-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+      border: 1px solid rgba(206, 191, 176, 0.08);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .finding-card:hover {
+      border-color: rgba(235, 94, 85, 0.2);
+      transform: translateY(-2px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .finding-card:hover {
+        transform: none;
+      }
+      .timeline-item {
+        opacity: 1;
+      }
+      .timeline-dot {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .finding-severity {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3em 0.9em;
+      border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    .finding-severity.critical {
+      background: rgba(235, 94, 85, 0.15);
+      color: #eb5e55;
+      border: 1px solid rgba(235, 94, 85, 0.3);
+    }
+
+    .finding-severity.warning {
+      background: rgba(206, 191, 176, 0.1);
+      color: var(--beige);
+      border: 1px solid rgba(206, 191, 176, 0.25);
+    }
+
+    .finding-severity.info {
+      background: rgba(244, 219, 206, 0.08);
+      color: var(--accent-warm);
+      border: 1px solid rgba(244, 219, 206, 0.15);
+    }
+
+    .finding-card h3 {
+      margin-bottom: 1rem;
+      color: var(--cream);
+      line-height: 1.35;
+    }
+
+    .finding-card p {
+      color: var(--text-muted);
+      margin-bottom: 0;
+      line-height: 1.75;
+    }
+
+    .finding-card p strong {
+      color: var(--cream);
+      font-weight: 700;
+    }
+
+    /* ========================================
+       REVENUE IMPACT SECTION
+       ======================================== */
+
+    .impact-section {
+      padding: var(--section-pad) 0;
+    }
+
+    .impact-card {
+      max-width: 800px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--bg-warm) 100%);
+      border: 1px solid rgba(235, 94, 85, 0.15);
+      border-radius: 16px;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .impact-card::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 60%;
+      height: 180%;
+      background: radial-gradient(ellipse at center, rgba(235, 94, 85, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .impact-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .impact-card h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .impact-figure {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 1.8rem + 1.5vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin: 1.5rem 0;
+      line-height: 1.2;
+    }
+
+    .impact-card p {
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========================================
+       CTA SECTION
+       ======================================== */
+
+    .cta-section {
+      padding: var(--section-pad) 0;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      max-width: 700px;
+      margin: 0 auto 1rem;
+    }
+
+    .cta-section h2 em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .cta-tagline {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--bg);
+      background: var(--primary);
+      padding: 1.05em 2.5em;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 4px 24px rgba(235, 94, 85, 0.25);
+    }
+
+    .cta-button:hover,
+    .cta-button:focus-visible {
+      background: #d4534b;
+      color: var(--cream);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(235, 94, 85, 0.35);
+    }
+
+    .cta-button:focus-visible {
+      outline: 2px solid var(--cream);
+      outline-offset: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-button:hover {
+        transform: none;
+      }
+    }
+
+    /* ========================================
+       SECTION DIVIDER
+       ======================================== */
+
+    .section-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(206, 191, 176, 0.15) 30%,
+        rgba(235, 94, 85, 0.2) 50%,
+        rgba(206, 191, 176, 0.15) 70%,
+        transparent 100%
+      );
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+
+    footer {
+      padding: 3rem 0 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(206, 191, 176, 0.08);
+    }
+
+    .footer-prepared {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-credit {
+      font-size: 0.85rem;
+      color: #e8762f;
+      font-weight: 700;
+    }
+
+    .footer-credit a {
+      color: #e8762f;
+      text-decoration: none;
+    }
+
+    .footer-credit a:hover,
+    .footer-credit a:focus-visible {
+      text-decoration: underline;
+      color: #f49248;
+    }
+
+    /* ========================================
+       RESPONSIVE REFINEMENTS
+       ======================================== */
+
+    @media (max-width: 480px) {
+      .timeline {
+        padding-left: 2.25rem;
+      }
+
+      .timeline::before {
+        left: 6px;
+      }
+
+      .timeline-dot {
+        width: 16px;
+        height: 16px;
+        left: -2.05rem;
+      }
+
+      .rings-chart {
+        width: 240px;
+        height: 240px;
+      }
+
+      .rings-center .score-number {
+        font-size: 2.8rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .timeline {
+        padding-left: 4rem;
+      }
+
+      .timeline::before {
+        left: 14px;
+      }
+
+      .timeline-dot {
+        left: -3.35rem;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .findings-grid {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+    }
+
+    /* ========================================
+       PRINT STYLES
+       ======================================== */
+
+    @media print {
+      body {
+        background: white;
+        color: #333;
+      }
+
+      body::before,
+      body::after {
+        display: none;
+      }
+
+      .hero::before {
+        display: none;
+      }
+
+      .finding-card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+      }
+
+      .cta-button {
+        border: 2px solid #333;
+        background: transparent;
+        color: #333;
+      }
+    }
+  </style>
+  <noscript><style>.reveal,[class*="fade"],section,article{opacity:1!important;transform:none!important}</style></noscript>
+  <link rel="stylesheet" href="/examples/audit/brand.css">
+</head>
+<body class="lf-audit-report">
+  <nav class="lf-report-nav" aria-label="Audit report navigation">
+    <a class="lf-report-brand" href="https://littlefightnyc.com/">Little Fight NYC <span>Website Audit</span></a>
+    <div class="lf-report-actions"><a class="lf-report-link" href="/examples/audit/">Audit Lab</a><button type="button" class="pdf-btn" onclick="window.print()">Save PDF</button><a class="lf-report-link lf-report-link--primary" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a></div>
+  </nav>
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <header class="hero">
+    <div class="container">
+      <span class="hero-label animate-rise">Website Audit</span>
+      <h1 class="animate-rise delay-1">SkinSmart<br>Dermatology</h1>
+      <hr class="hero-divider animate-rise delay-2" aria-hidden="true">
+      <p class="hero-subtitle animate-rise delay-3">A comprehensive review of skinbysmart.com</p>
+      <p class="hero-meta animate-rise delay-4">
+        Hinsdale, Illinois &nbsp;&bull;&nbsp; March 2026
+      </p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================================
+         OVERALL SCORE + RADIAL RINGS
+         ============================================ -->
+    <section class="score-section section" aria-labelledby="score-heading">
+      <div class="container">
+        <h2 id="score-heading" class="animate-rise">Your Website Score</h2>
+        <p class="score-intro animate-rise delay-1">
+          Four pillars that determine whether patients find you, trust you, and book with you.
+        </p>
+
+        <div class="score-display">
+
+          <!-- SVG Radial Rings -->
+          <div class="rings-chart animate-rise delay-2" role="img" aria-label="Overall website score: 70 out of 100, Grade C. Performance 62, Mobile 74, SEO 72, Security 72.">
+            <svg viewBox="0 0 320 320">
+              <!--
+                4 concentric rings.
+                Ring 1 (outermost): r=148, circumference=929.9
+                Ring 2: r=128, circumference=804.2
+                Ring 3: r=108, circumference=678.6
+                Ring 4 (innermost): r=88, circumference=553.0
+              -->
+
+              <!-- Track backgrounds -->
+              <circle class="ring-track" cx="160" cy="160" r="148"/>
+              <circle class="ring-track" cx="160" cy="160" r="128"/>
+              <circle class="ring-track" cx="160" cy="160" r="108"/>
+              <circle class="ring-track" cx="160" cy="160" r="88"/>
+
+              <!-- Performance: 62/100 — outermost ring -->
+              <circle class="ring-fill performance" cx="160" cy="160" r="148"
+                style="--circumference: 929.9; --dash-offset: 353.4;"
+              />
+
+              <!-- Mobile: 74/100 -->
+              <circle class="ring-fill mobile" cx="160" cy="160" r="128"
+                style="--circumference: 804.2; --dash-offset: 209.1;"
+              />
+
+              <!-- SEO: 72/100 -->
+              <circle class="ring-fill seo" cx="160" cy="160" r="108"
+                style="--circumference: 678.6; --dash-offset: 190.0;"
+              />
+
+              <!-- Security: 72/100 — innermost ring -->
+              <circle class="ring-fill security" cx="160" cy="160" r="88"
+                style="--circumference: 553.0; --dash-offset: 154.8;"
+              />
+            </svg>
+
+            <!-- Center score display -->
+            <div class="rings-center">
+              <div class="score-number">70</div>
+              <div class="score-total">out of 100</div>
+              <div class="score-grade">Grade C</div>
+            </div>
+          </div>
+
+          <!-- Category Breakdown -->
+          <div class="score-categories animate-rise delay-3">
+            <div class="score-cat">
+              <span class="score-cat-dot performance" aria-hidden="true"></span>
+              <div class="score-cat-info">
+                <div class="score-cat-label">Performance</div>
+                <div class="score-cat-bar">
+                  <div class="score-cat-fill performance" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" aria-label="Performance score: 62 out of 100"></div>
+                </div>
+              </div>
+              <span class="score-cat-value">62</span>
+            </div>
+
+            <div class="score-cat">
+              <span class="score-cat-dot mobile" aria-hidden="true"></span>
+              <div class="score-cat-info">
+                <div class="score-cat-label">Mobile Experience</div>
+                <div class="score-cat-bar">
+                  <div class="score-cat-fill mobile" role="progressbar" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100" aria-label="Mobile experience score: 74 out of 100"></div>
+                </div>
+              </div>
+              <span class="score-cat-value">74</span>
+            </div>
+
+            <div class="score-cat">
+              <span class="score-cat-dot seo" aria-hidden="true"></span>
+              <div class="score-cat-info">
+                <div class="score-cat-label">SEO &amp; Visibility</div>
+                <div class="score-cat-bar">
+                  <div class="score-cat-fill seo" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="SEO and visibility score: 72 out of 100"></div>
+                </div>
+              </div>
+              <span class="score-cat-value">72</span>
+            </div>
+
+            <div class="score-cat">
+              <span class="score-cat-dot security" aria-hidden="true"></span>
+              <div class="score-cat-info">
+                <div class="score-cat-label">Security &amp; Trust</div>
+                <div class="score-cat-bar">
+                  <div class="score-cat-fill security" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="Security and trust score: 72 out of 100"></div>
+                </div>
+              </div>
+              <span class="score-cat-value">72</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" aria-hidden="true">
+
+    <!-- ============================================
+         KEY FINDINGS — TIMELINE
+         ============================================ -->
+    <section class="findings-section section" aria-labelledby="findings-heading">
+      <div class="container">
+        <div class="findings-header">
+          <h2 id="findings-heading" class="animate-rise">Key Findings</h2>
+          <p class="animate-rise delay-1">What's holding your site back from converting the patients searching for you right now.</p>
+        </div>
+
+        <div class="findings-grid">
+          <div class="timeline">
+
+            <!-- Finding 1: CRITICAL -->
+            <article class="timeline-item">
+              <div class="timeline-dot critical" aria-hidden="true"></div>
+              <div class="finding-card">
+                <span class="finding-severity critical">Critical</span>
+                <h3>Image-Heavy Pages Without Optimization</h3>
+                <p>
+                  Your before/after galleries and treatment pages load full-resolution images without WebP conversion, lazy loading, or responsive sizing. On mobile, this means <strong>8&ndash;12 MB of image data per page</strong>. Your Largest Contentful Paint exceeds 5 seconds. Google&rsquo;s Core Web Vitals threshold is 2.5 seconds &mdash; you&rsquo;re double that.
+                </p>
+              </div>
+            </article>
+
+            <!-- Finding 2: WARNING -->
+            <article class="timeline-item">
+              <div class="timeline-dot warning" aria-hidden="true"></div>
+              <div class="finding-card">
+                <span class="finding-severity warning">Warning</span>
+                <h3>Missing FAQPage Schema for AI Visibility</h3>
+                <p>
+                  When patients ask Perplexity or ChatGPT <strong>&ldquo;best dermatologist Hinsdale IL for acne treatment,&rdquo;</strong> your site can&rsquo;t be referenced because there&rsquo;s no structured FAQ content. Adding schema-marked FAQ sections for your top 10 treatments would make you visible to AI search platforms &mdash; the fastest-growing source of medical referrals.
+                </p>
+              </div>
+            </article>
+
+            <!-- Finding 3: WARNING -->
+            <article class="timeline-item">
+              <div class="timeline-dot warning" aria-hidden="true"></div>
+              <div class="finding-card">
+                <span class="finding-severity warning">Warning</span>
+                <h3>CTA Buried Below the Fold</h3>
+                <p>
+                  Your primary call-to-action (booking/contact) requires scrolling past the hero section. On mobile, the booking button doesn&rsquo;t appear until <strong>3+ scroll depths</strong>. Moving a sticky &ldquo;Book Now&rdquo; button or floating CTA to the viewport would capture visitors who are ready to act immediately.
+                </p>
+              </div>
+            </article>
+
+            <!-- Finding 4: INFO -->
+            <article class="timeline-item">
+              <div class="timeline-dot info" aria-hidden="true"></div>
+              <div class="finding-card">
+                <span class="finding-severity info">Info</span>
+                <h3>No Google Business Profile Integration</h3>
+                <p>
+                  Your website doesn&rsquo;t link to or embed your Google reviews. Displaying your Google rating and recent reviews on-site <strong>builds trust and keeps visitors from leaving</strong> to check reviews elsewhere &mdash; where they might discover competitors.
+                </p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" aria-hidden="true">
+
+    <!-- ============================================
+         REVENUE IMPACT
+         ============================================ -->
+    <section class="impact-section section" aria-labelledby="impact-heading">
+      <div class="container">
+        <div class="impact-card animate-rise">
+          <div class="impact-label">Revenue Impact</div>
+          <h2 id="impact-heading">What This Costs You Each Month</h2>
+          <p>
+            Hinsdale is an affluent Chicago suburb. Dermatology visits average $200&ndash;400, with cosmetic procedures ranging $500&ndash;3,000. Your &ldquo;Natural Skin&rdquo; positioning attracts a premium clientele.
+          </p>
+          <div class="impact-figure">
+            $2,500 &ndash; $4,500 / month
+          </div>
+          <p>
+            Mostly from mobile users who can&rsquo;t wait for images to load and visitors who scroll away before finding how to book. These are patients who wanted to choose you and couldn&rsquo;t.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="section-divider" aria-hidden="true">
+
+    <!-- ============================================
+         CALL TO ACTION
+         ============================================ -->
+    <section class="cta-section section" aria-labelledby="cta-heading">
+      <div class="container">
+        <h2 id="cta-heading" class="animate-rise">Your <em>natural skin</em> philosophy<br>is perfect.</h2>
+        <p class="cta-tagline animate-rise delay-1">
+          Let&rsquo;s make sure patients can find you.
+        </p>
+        <a href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab" class="cta-button animate-rise delay-2">
+          Start the Conversation
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer>
+    <div class="container">
+      <p class="footer-prepared">
+        Prepared by Little Fight NYC &mdash; March 2026
+      </p>
+      <p class="footer-credit">
+        <a href="https://littlefightnyc.com" target="_blank" rel="noopener noreferrer">
+          Designed, Hosted and Cared For by LittleFightNYC.com
+        </a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

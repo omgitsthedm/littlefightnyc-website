@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Audit — Marcus Medical Spa | Little Fight NYC</title>
+    <link rel="icon" href="/examples/audit/favicon.svg" type="image/svg+xml">
+    <meta name="description" content="Comprehensive website audit for Marcus Medical Spa. Performance, SEO, mobile experience, and revenue impact analysis prepared by Little Fight NYC.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="Website Audit — Marcus Medical Spa">
+    <meta property="og:description" content="Performance, SEO, and conversion audit for Marcus Medical Spa by Little Fight NYC. Score: 76/100.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset ─────────────────────────────────────── */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ── Custom Properties ─────────────────────────── */
+        :root {
+            --black: #0a0a0a;
+            --teal: #9db5b6;
+            --teal-dim: rgba(98, 121, 122, 0.35);
+            --silver: #c0c0c0;
+            --silver-dim: rgba(192, 192, 192, 0.75);
+            --white: #f0f0f0;
+            --white-dim: rgba(240, 240, 240, 0.75);
+            --orange: #e8732a;
+            --font-serif: 'Fraunces', Georgia, serif;
+            --font-sans: 'Manrope', -apple-system, Helvetica Neue, sans-serif;
+            --space-xs: clamp(1rem, 2vw, 1.5rem);
+            --space-sm: clamp(2rem, 4vw, 3rem);
+            --space-md: clamp(4rem, 8vw, 7rem);
+            --space-lg: clamp(6rem, 12vw, 10rem);
+            --space-xl: clamp(8rem, 16vw, 14rem);
+            --content-width: min(640px, 88vw);
+        }
+
+        /* ── Base ───────────────────────────────────────── */
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--silver);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+            overflow-x: hidden;
+        }
+
+        /* ── Animations ────────────────────────────────── */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        .delay-6 { animation-delay: 1.2s; }
+        .delay-7 { animation-delay: 1.4s; }
+        .delay-8 { animation-delay: 1.6s; }
+        .delay-9 { animation-delay: 1.8s; }
+        .delay-10 { animation-delay: 2.0s; }
+        .delay-11 { animation-delay: 2.2s; }
+        .delay-12 { animation-delay: 2.4s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in {
+                opacity: 1;
+                animation: none;
+            }
+        }
+
+        /* ── Top Rule ──────────────────────────────────── */
+        .top-rule {
+            width: 100%;
+            height: 1px;
+            background-color: var(--teal);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        /* ── Layout ────────────────────────────────────── */
+        .container {
+            width: var(--content-width);
+            margin: 0 auto;
+        }
+
+        /* ── Header ────────────────────────────────────── */
+        header {
+            padding-top: var(--space-md);
+            padding-bottom: var(--space-lg);
+        }
+
+        .prepared-for {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: var(--space-xs);
+        }
+
+        .client-name {
+            font-family: var(--font-serif);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .client-detail {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--white-dim);
+            margin-top: 0.75rem;
+        }
+
+        /* ── Score ──────────────────────────────────────── */
+        .score-section {
+            padding: var(--space-lg) 0;
+            text-align: center;
+        }
+
+        .score-number {
+            font-family: var(--font-serif);
+            font-size: clamp(140px, 28vw, 260px);
+            font-weight: 100;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            background: linear-gradient(180deg, var(--white) 0%, var(--teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            user-select: none;
+        }
+
+        .score-divider {
+            width: 80px;
+            height: 1px;
+            background-color: var(--teal);
+            margin: 1.5rem auto 1rem;
+        }
+
+        .score-label {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--teal);
+        }
+
+        .score-grade {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--white-dim);
+            margin-top: var(--space-sm);
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Category Scores ───────────────────────────── */
+        .categories-section {
+            padding: var(--space-md) 0;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(98, 121, 122, 0.1);
+        }
+
+        .category-item:first-child {
+            border-top: 1px solid rgba(98, 121, 122, 0.1);
+        }
+
+        .category-name {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--silver-dim);
+            letter-spacing: 0.02em;
+        }
+
+        .category-score {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            font-weight: 200;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .category-max {
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: var(--silver-dim);
+        }
+
+        /* ── Findings ──────────────────────────────────── */
+        .findings-section {
+            padding: var(--space-lg) 0;
+        }
+
+        .section-label {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: var(--space-sm);
+        }
+
+        .finding {
+            border-top: 1px solid var(--teal);
+            padding: var(--space-sm) 0 var(--space-md);
+        }
+
+        .finding-tag {
+            font-family: var(--font-sans);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.85rem;
+        }
+
+        .finding-tag--warning {
+            color: var(--silver);
+        }
+
+        .finding-tag--info {
+            color: var(--teal);
+        }
+
+        .finding-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.25rem;
+        }
+
+        .finding-body {
+            font-size: 0.88rem;
+            line-height: 1.8;
+            color: var(--silver-dim);
+            max-width: 560px;
+        }
+
+        /* ── Revenue Impact ────────────────────────────── */
+        .revenue-section {
+            padding: var(--space-lg) 0;
+        }
+
+        .revenue-headline {
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .revenue-amount {
+            color: var(--teal);
+        }
+
+        .revenue-body {
+            font-size: 0.88rem;
+            line-height: 1.8;
+            color: var(--silver-dim);
+            max-width: 560px;
+        }
+
+        /* ── CTA ───────────────────────────────────────── */
+        .cta-section {
+            padding: var(--space-xl) 0;
+            text-align: center;
+        }
+
+        .cta-phrase {
+            font-family: var(--font-serif);
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 200;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .cta-button {
+            display: inline-block;
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--black);
+            background-color: var(--teal);
+            text-decoration: none;
+            padding: 1rem 3rem;
+            transition: opacity 0.4s ease;
+        }
+
+        .cta-button:hover {
+            opacity: 0.8;
+        }
+
+        .cta-button:focus-visible {
+            outline: 2px solid var(--teal);
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cta-button {
+                transition: none;
+            }
+        }
+
+        /* ── Footer ────────────────────────────────────── */
+        footer {
+            padding: var(--space-lg) 0 var(--space-sm);
+            text-align: center;
+        }
+
+        .footer-prepared {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--silver-dim);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-credit {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            font-weight: 400;
+            color: var(--orange);
+            margin-top: 1.5rem;
+            padding-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .footer-credit a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+
+        .footer-credit a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-credit a:focus-visible {
+            outline: 2px solid var(--orange);
+            outline-offset: 2px;
+        }
+
+        /* ── Responsive ────────────────────────────────── */
+        @media (max-width: 480px) {
+            .category-score {
+                font-size: 1.15rem;
+            }
+
+            .finding-body,
+            .revenue-body {
+                font-size: 0.84rem;
+            }
+
+            .cta-button {
+                padding: 0.9rem 2.25rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .finding-body,
+            .revenue-body {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ── Print ─────────────────────────────────────── */
+        @media print {
+            body {
+                background: #fff;
+                color: #1a1a1a;
+            }
+
+            .top-rule { display: none; }
+
+            .score-number {
+                -webkit-text-fill-color: #1a1a1a;
+                background: none;
+            }
+
+            .fade-in {
+                opacity: 1;
+                animation: none;
+            }
+        }
+    </style>
+    <noscript><style>[class*="fade"],section,article{opacity:1!important;transform:none!important}</style></noscript>
+    <link rel="stylesheet" href="/examples/audit/brand.css">
+</head>
+<body class="lf-audit-report">
+    <nav class="lf-report-nav" aria-label="Audit report navigation">
+        <a class="lf-report-brand" href="https://littlefightnyc.com/">Little Fight NYC <span>Website Audit</span></a>
+        <div class="lf-report-actions"><a class="lf-report-link" href="/examples/audit/">Audit Lab</a><button type="button" class="pdf-btn" onclick="window.print()">Save PDF</button><a class="lf-report-link lf-report-link--primary" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a></div>
+    </nav>
+
+    <!-- Top Rule -->
+    <div class="top-rule" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <p class="prepared-for fade-in delay-1">Website Audit</p>
+            <h1 class="client-name fade-in delay-2">Marcus Medical Spa</h1>
+            <p class="client-detail fade-in delay-3">Dr. Keith Marcus &middot; Manhattan Beach &amp; Redondo Beach, CA</p>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Score -->
+        <section class="score-section" aria-label="Overall Score">
+            <div class="container">
+                <div class="score-number fade-in">76</div>
+                <div class="score-divider fade-in delay-1" aria-hidden="true"></div>
+                <p class="score-label fade-in delay-2">out of 100</p>
+                <p class="score-grade fade-in delay-3">Grade: B&minus;</p>
+            </div>
+        </section>
+
+        <!-- Category Scores -->
+        <section class="categories-section" aria-label="Category Breakdown">
+            <div class="container">
+                <ul class="category-list">
+                    <li class="category-item fade-in delay-4">
+                        <span class="category-name">Performance</span>
+                        <span class="category-score">72 <span class="category-max">/ 100</span></span>
+                    </li>
+                    <li class="category-item fade-in delay-5">
+                        <span class="category-name">Mobile Experience</span>
+                        <span class="category-score">80 <span class="category-max">/ 100</span></span>
+                    </li>
+                    <li class="category-item fade-in delay-6">
+                        <span class="category-name">SEO &amp; Visibility</span>
+                        <span class="category-score">78 <span class="category-max">/ 100</span></span>
+                    </li>
+                    <li class="category-item fade-in delay-7">
+                        <span class="category-name">Security &amp; Trust</span>
+                        <span class="category-score">74 <span class="category-max">/ 100</span></span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Key Findings -->
+        <section class="findings-section" aria-label="Key Findings">
+            <div class="container">
+                <p class="section-label fade-in delay-8">Key Findings</p>
+
+                <article class="finding fade-in delay-8">
+                    <p class="finding-tag finding-tag--warning">Warning</p>
+                    <h2 class="finding-title">Largest Contentful Paint Exceeds Target</h2>
+                    <p class="finding-body">Your hero section loads a high-resolution image that pushes LCP to 3.8 seconds. Google considers 2.5 seconds the threshold for a good experience. For a luxury practice where first impressions define perception, a slow-loading hero undercuts the premium positioning you've built. Switching to next-gen image formats and implementing a preload strategy would cut this in half.</p>
+                </article>
+
+                <article class="finding fade-in delay-9">
+                    <p class="finding-tag finding-tag--warning">Warning</p>
+                    <h2 class="finding-title">Missing Service-Specific SEO Pages</h2>
+                    <p class="finding-body">High-value search terms like "rhinoplasty Manhattan Beach" and "facelift South Bay CA" represent patients actively looking for a surgeon. Currently, procedures live on aggregate pages rather than dedicated landing pages with unique content, schema markup, and optimized meta descriptions. Each dedicated page is a new ranking opportunity in a market where search intent directly correlates with bookings.</p>
+                </article>
+
+                <article class="finding fade-in delay-10">
+                    <p class="finding-tag finding-tag--info">Info</p>
+                    <h2 class="finding-title">No AI-Ready Content Structure</h2>
+                    <p class="finding-body">AI assistants are becoming primary research tools for cosmetic procedures. Your site lacks the structured Q&amp;A content these platforms need to surface your practice. A concise "Questions About [Procedure]" section per service page, written with the authority of a double board-certified surgeon, would position Dr. Marcus as the AI-recommended provider in South Bay.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Revenue Impact -->
+        <section class="revenue-section" aria-label="Revenue Impact">
+            <div class="container">
+                <p class="section-label fade-in delay-10">Estimated Revenue Impact</p>
+                <h2 class="revenue-headline fade-in delay-11">These issues likely cost <span class="revenue-amount">$8,000&ndash;15,000 per month</span></h2>
+                <p class="revenue-body fade-in delay-11">South Bay cosmetic surgery is a premium market. Consultations average $300&ndash;500, with procedures ranging from $8,000 to $30,000 and above. Dr. Marcus's double board certification commands premium positioning. The lost revenue comes primarily from reduced organic visibility for procedure-specific searches where patients carry high purchase intent.</p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section" aria-label="Next Steps">
+            <div class="container">
+                <p class="cta-phrase fade-in delay-11">Minimal changes.<br>Maximum impact.</p>
+                <a class="cta-button fade-in delay-12" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Review This With Little Fight NYC, Free</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-prepared fade-in delay-12">Prepared by Little Fight NYC &mdash; March 2026</p>
+            <p class="footer-credit fade-in delay-12">Designed, Hosted and Cared For by <a href="https://littlefightnyc.com">LittleFightNYC.com</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>

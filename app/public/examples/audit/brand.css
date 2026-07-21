@@ -1,0 +1,1115 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  color-scheme: dark;
+  --lf-ink: #06080f;
+  --lf-paper: #0e1220;
+  --lf-paper-2: #0a0d18;
+  --lf-hairline: #1b2233;
+  --lf-bone: #f0f2f8;
+  --lf-bone-soft: #a1a1aa;
+  --lf-bone-dim: #8a8a94;
+  --lf-fight: #f97316;
+  --lf-ember: #fb923c;
+  --lf-blue: #3b82f6;
+  --lf-blue-soft: #60a5fa;
+  --lf-success: #22c55e;
+  --lf-error: #ef4444;
+  --lf-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --lf-body: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --lf-radius-sm: 12px;
+  --lf-radius-control: 32px;
+  --lf-radius-card: 32px;
+  --lf-radius-pill: 9999px;
+  --lf-time-snappy: 180ms;
+  --lf-time-base: 320ms;
+  --lf-ease-standard: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --lf-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Compatibility aliases for the original Lab and report themes. */
+  --bg: var(--lf-ink);
+  --surface: var(--lf-paper);
+  --surface-border: var(--lf-hairline);
+  --line: var(--lf-hairline);
+  --text: var(--lf-bone);
+  --muted: var(--lf-bone-soft);
+  --primary: var(--lf-fight);
+  --primary-hover: var(--lf-ember);
+  --primary-glow: rgb(249 115 22 / 16%);
+  --error: var(--lf-error);
+  --success: var(--lf-success);
+  --font-heading: var(--lf-display);
+  --font-body: var(--lf-body);
+  --orange: var(--lf-fight);
+}
+
+html {
+  background: var(--lf-ink);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.lf-audit-shell-page,
+body.lf-audit-report {
+  margin: 0;
+}
+
+body.lf-audit-shell-page *,
+body.lf-audit-shell-page *::before,
+body.lf-audit-shell-page *::after,
+body.lf-audit-report *,
+body.lf-audit-report *::before,
+body.lf-audit-report *::after {
+  box-sizing: border-box;
+}
+
+body.lf-audit-shell-page {
+  min-width: 0;
+  overflow-x: clip;
+  background:
+    radial-gradient(100% 76% at 0% 0%, rgb(59 130 246 / 10%), transparent 56%),
+    radial-gradient(80% 62% at 100% 8%, rgb(59 130 246 / 6%), transparent 62%),
+    var(--lf-ink);
+  color: var(--lf-bone);
+  font-family: var(--lf-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.lf-audit-shell-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 2.2%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 2.2%) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, #000, transparent 76%);
+  opacity: 0.48;
+}
+
+body.lf-audit-shell-page::after { content: none; }
+
+body.lf-audit-shell-page main,
+body.lf-audit-shell-page header,
+body.lf-audit-shell-page footer,
+body.lf-audit-shell-page section { position: relative; z-index: 1; }
+
+body.lf-audit-shell-page a,
+body.lf-audit-report a,
+body.lf-audit-shell-page button,
+body.lf-audit-report button,
+body.lf-audit-shell-page input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.lf-audit-shell-page a:focus-visible,
+body.lf-audit-report a:focus-visible,
+body.lf-audit-shell-page button:focus-visible,
+body.lf-audit-report button:focus-visible,
+body.lf-audit-shell-page input:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* Shared Little Fight navigation. */
+.lf-audit-shell-page .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  background: rgb(5 5 7 / 86%);
+  backdrop-filter: blur(20px) saturate(140%);
+}
+
+.audit-nav-shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(100%, 1440px);
+  min-height: 64px;
+  margin-inline: auto;
+  padding: 10px clamp(20px, 4vw, 64px);
+}
+
+.lf-audit-shell-page .brand { margin: 0; }
+
+.lf-audit-shell-page .brand a {
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(0.95rem, 1.6vw, 1.18rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-audit-shell-page .brand a:hover { color: var(--lf-fight); }
+
+.lf-audit-shell-page .audit-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin: 0;
+}
+
+.lf-audit-shell-page .audit-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-bone-soft);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-audit-shell-page .audit-nav a:hover,
+.lf-audit-shell-page .audit-nav a[aria-current="page"] { color: var(--lf-bone); }
+
+.lf-audit-shell-page .audit-nav a:not(.audit-nav__cta)::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  bottom: 5px;
+  left: 12px;
+  height: 2px;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-audit-shell-page .audit-nav a:hover::after,
+.lf-audit-shell-page .audit-nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+.lf-audit-shell-page .audit-nav .audit-nav__cta {
+  min-height: 44px;
+  margin-left: 8px;
+  padding-inline: 18px;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-weight: 700;
+  transition:
+    background var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-audit-shell-page .audit-nav .audit-nav__cta:hover {
+  background: var(--lf-ember);
+  color: var(--lf-ink);
+  transform: translateY(-2px);
+}
+
+/* Audit Lab acquisition page. */
+.lf-audit-shell-page .site-main {
+  display: block;
+  min-height: auto;
+  padding: clamp(64px, 10vw, 128px) clamp(20px, 4vw, 64px) clamp(72px, 10vw, 128px);
+  background: transparent;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-audit-shell-page .site-main .glow { display: none; }
+
+.lf-audit-shell-page .site-main > .container {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+  gap: clamp(48px, 7vw, 104px);
+  align-items: start;
+  width: min(100%, 1180px);
+  max-width: none;
+  margin-inline: auto;
+}
+
+.audit-form-section,
+.audit-progress-section { min-width: 0; }
+
+.audit-form-section.hidden,
+.audit-progress-section.hidden { display: none; }
+
+.audit-eyebrow,
+.section-kicker,
+.audit-scan__eyebrow,
+.lf-audit-shell-page .kicker {
+  margin: 0 0 16px;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.lf-audit-shell-page .headline {
+  max-width: 14ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(3rem, 5.6vw, 5.2rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+  text-align: left;
+  text-wrap: balance;
+}
+
+.lf-audit-shell-page .headline span { color: var(--lf-fight); }
+
+.lf-audit-shell-page .subheadline {
+  max-width: 55ch;
+  margin: 28px 0 32px;
+  color: var(--lf-bone-soft);
+  font-size: clamp(1.02rem, 1.4vw, 1.2rem);
+  line-height: 1.58;
+  text-align: left;
+}
+
+.audit-panel,
+.audit-progress-section {
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+  box-shadow: 0 28px 70px rgb(0 0 0 / 28%);
+}
+
+.lf-audit-shell-page .audit-form { gap: 18px; }
+
+.lf-audit-shell-page .form-group { gap: 8px; }
+
+.lf-audit-shell-page .form-label {
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+.lf-audit-shell-page .form-input {
+  min-height: 54px;
+  padding: 14px 18px;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
+  color: var(--lf-bone);
+  font-family: var(--lf-body);
+  font-size: 1rem;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    box-shadow var(--lf-time-snappy) var(--lf-ease-standard),
+    background var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-audit-shell-page .form-input::placeholder { color: var(--lf-bone-dim); }
+
+.lf-audit-shell-page .form-input:hover { border-color: #3f3f46; }
+
+.lf-audit-shell-page .form-input:focus {
+  border-color: var(--lf-fight);
+  background: #15171e;
+  box-shadow: 0 0 0 3px rgb(249 115 22 / 13%);
+}
+
+.lf-audit-shell-page .form-input.input-error {
+  border-color: var(--lf-error);
+  box-shadow: 0 0 0 3px rgb(239 68 68 / 12%);
+}
+
+.lf-audit-shell-page .field-error {
+  min-height: 18px;
+  color: #fca5a5;
+  font-size: 0.78rem;
+}
+
+.lf-audit-shell-page .btn-primary,
+.lf-audit-shell-page .btn-retry,
+.lf-audit-shell-page .btn,
+.lf-audit-shell-page .fit-check-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-body);
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition:
+    background var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-audit-shell-page .btn-primary {
+  width: 100%;
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.lf-audit-shell-page .btn-primary:hover,
+.lf-audit-shell-page .btn:hover {
+  background: var(--lf-ember);
+  transform: translateY(-2px);
+}
+
+.lf-audit-shell-page .btn-primary:active,
+.lf-audit-shell-page .btn:active { transform: translateY(0); }
+
+.lf-audit-shell-page .btn-primary:disabled {
+  cursor: wait;
+  opacity: 0.64;
+  transform: none;
+}
+
+.lf-audit-shell-page .trust-line {
+  margin: 16px 0 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.lf-audit-shell-page .fit-check-link {
+  width: 100%;
+  margin-top: 12px;
+  border-color: var(--lf-hairline);
+  background: transparent;
+  color: var(--lf-bone);
+}
+
+.lf-audit-shell-page .fit-check-link:hover,
+.lf-audit-shell-page .btn.ghost:hover {
+  border-color: rgb(249 115 22 / 55%);
+  background: rgb(249 115 22 / 8%);
+  color: var(--lf-bone);
+  transform: translateY(-2px);
+}
+
+.audit-scan {
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 34%);
+  margin-top: 64px;
+}
+
+.audit-scan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 3%) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, #000, transparent);
+}
+
+.audit-scan__head,
+.audit-scan__body,
+.audit-scan__foot { position: relative; z-index: 1; }
+
+.audit-scan__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 60px;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.audit-scan__eyebrow { margin: 0; color: var(--lf-blue-soft); }
+
+.audit-scan__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.audit-scan__status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lf-success);
+  box-shadow: 0 0 0 5px rgb(34 197 94 / 10%);
+}
+
+.audit-scan__body { padding: 28px 22px 24px; }
+
+.audit-scan__viewport {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  overflow: hidden;
+  border: 1px solid #30323a;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at center, rgb(59 130 246 / 13%), transparent 54%),
+    #0d0f14;
+}
+
+.audit-scan__viewport svg {
+  width: min(62%, 210px);
+  color: var(--lf-blue-soft);
+  opacity: 0.88;
+}
+
+.audit-scan__beam {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 26%;
+  height: 1px;
+  background: var(--lf-fight);
+  box-shadow: 0 0 20px 4px rgb(249 115 22 / 22%);
+  animation: lf-audit-scan 3.2s var(--lf-ease-out) infinite alternate;
+}
+
+@keyframes lf-audit-scan {
+  from { transform: translateY(0); opacity: 0.55; }
+  to { transform: translateY(112px); opacity: 1; }
+}
+
+.audit-scan__list {
+  display: grid;
+  gap: 0;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audit-scan__list li {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 50px;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.audit-scan__list svg {
+  width: 18px;
+  color: var(--lf-fight);
+}
+
+.audit-scan__list strong {
+  color: var(--lf-bone);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.audit-scan__list span {
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.audit-scan__foot {
+  padding: 18px 22px;
+  border-top: 1px solid var(--lf-hairline);
+  color: var(--lf-bone-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.lf-audit-shell-page .audit-progress-section {
+  align-self: center;
+  min-height: 440px;
+}
+
+.lf-audit-shell-page .progress-heading {
+  margin: 0 0 28px;
+  color: var(--lf-bone);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  text-align: left;
+}
+
+.lf-audit-shell-page .progress-url { color: var(--lf-fight); }
+
+.lf-audit-shell-page progress.progress-bar-track {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  border: 0;
+  background: #0d0f14;
+  color: var(--lf-fight);
+}
+
+.lf-audit-shell-page progress.progress-bar-track::-webkit-progress-bar {
+  background: #0d0f14;
+  border-radius: 999px;
+}
+
+.lf-audit-shell-page progress.progress-bar-track::-webkit-progress-value {
+  background: var(--lf-fight);
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lf-audit-shell-page progress.progress-bar-track::-moz-progress-bar {
+  background: var(--lf-fight);
+  border-radius: 999px;
+}
+
+.lf-audit-shell-page .progress-step {
+  min-height: 44px;
+  color: var(--lf-bone-dim);
+}
+
+.lf-audit-shell-page .progress-step.active { color: var(--lf-bone); }
+.lf-audit-shell-page .progress-step.done { color: #86efac; }
+
+/* Content below the tool: editorial rows rather than generic feature cards. */
+.lf-audit-shell-page .info-section {
+  padding: clamp(72px, 10vw, 128px) clamp(20px, 4vw, 64px);
+  border-top: 0;
+  background: var(--lf-ink);
+}
+
+.lf-audit-shell-page .info-container {
+  width: min(100%, 1120px);
+  max-width: none;
+  margin-inline: auto;
+}
+
+.lf-audit-shell-page .info-heading {
+  max-width: 18ch;
+  margin: 0 0 36px;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  text-align: left;
+}
+
+.lf-audit-shell-page .info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 48px;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-audit-shell-page .info-item {
+  position: relative;
+  min-height: 148px;
+  padding: 26px 0 28px 44px;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-audit-shell-page .info-item::before {
+  content: counter(lf-info, decimal-leading-zero);
+  position: absolute;
+  top: 29px;
+  left: 0;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+}
+
+.lf-audit-shell-page .info-grid { counter-reset: lf-info; }
+.lf-audit-shell-page .info-item { counter-increment: lf-info; }
+
+.lf-audit-shell-page .info-item strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--lf-bone);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.lf-audit-shell-page .info-item p {
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.info-block + .info-block { margin-top: clamp(72px, 9vw, 112px); }
+
+.lf-audit-shell-page .info-intro {
+  max-width: 72ch;
+  margin: -12px 0 32px;
+  color: var(--lf-bone-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.lf-audit-shell-page .info-cta {
+  margin-top: 32px;
+  color: var(--lf-bone-soft);
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.lf-audit-shell-page .info-cta a {
+  color: var(--lf-fight);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lf-audit-shell-page .info-cta a:hover { color: var(--lf-ember); }
+
+/* Secondary Audit Lab pages. */
+.lf-audit-shell-page .shell {
+  width: min(100%, 880px);
+  max-width: none;
+  margin-inline: auto;
+  padding: clamp(72px, 10vw, 128px) 24px;
+}
+
+.lf-audit-shell-page .shell h1 {
+  max-width: 13ch;
+  margin: 12px 0 32px;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.lf-audit-shell-page .shell h2 {
+  margin: 56px 0 14px;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(1.55rem, 3vw, 2.3rem);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.lf-audit-shell-page .shell p,
+.lf-audit-shell-page .shell li {
+  color: var(--lf-bone-soft);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  line-height: 1.75;
+}
+
+.lf-audit-shell-page .shell a:not(.btn) { color: var(--lf-fight); }
+
+.lf-audit-shell-page .panel {
+  margin-top: 36px;
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+}
+
+.lf-audit-shell-page .panel strong { color: var(--lf-bone); }
+
+.lf-audit-shell-page .panel h2:first-child { margin-top: 0; }
+
+.lf-audit-shell-page .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.lf-audit-shell-page .btn.ghost {
+  border-color: var(--lf-hairline);
+  background: transparent;
+  color: var(--lf-bone);
+}
+
+.lf-audit-shell-page .contact-list { gap: 16px; }
+
+/* Footer shared by the Lab shell. */
+.lf-audit-shell-page .site-footer,
+body.lf-audit-shell-page > footer {
+  padding: 48px clamp(20px, 4vw, 64px);
+  border-top: 1px solid var(--lf-hairline);
+  background: var(--lf-ink);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.lf-audit-shell-page .footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin: 0 0 22px;
+}
+
+.lf-audit-shell-page .site-footer a,
+body.lf-audit-shell-page > footer a {
+  color: var(--lf-bone-soft);
+  text-decoration: none;
+}
+
+.lf-audit-shell-page .site-footer > a,
+body.lf-audit-shell-page > footer.site-footer > a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+.lf-audit-shell-page .site-footer a:hover,
+body.lf-audit-shell-page > footer a:hover { color: var(--lf-fight); }
+
+.lf-audit-shell-page .footer-legal { margin-top: 8px; color: var(--lf-bone-dim); }
+
+/* Branded report shell: client findings stay specific, Little Fight owns the frame. */
+body.lf-audit-report {
+  --base: var(--lf-ink);
+  --black: var(--lf-ink);
+  --bg: var(--lf-ink);
+  --bg-deep: var(--lf-ink);
+  --deep-base: var(--lf-ink);
+  --surface: var(--lf-paper);
+  --bg-card: var(--lf-paper);
+  --deep-card: var(--lf-paper);
+  --surface-alt: var(--lf-paper-2);
+  --bg-elevated: var(--lf-paper-2);
+  --base-light: var(--lf-paper-2);
+  --line: var(--lf-hairline);
+  --border: var(--lf-hairline);
+  --text: var(--lf-bone);
+  --white: var(--lf-bone);
+  --silver: var(--lf-bone-soft);
+  --text-primary: var(--lf-bone);
+  --text-secondary: var(--lf-bone-soft);
+  --text-muted: var(--lf-bone-dim);
+  --orange: var(--lf-fight);
+  --lifi-orange: var(--lf-fight);
+  --brand-primary: var(--lf-fight);
+  --brand-accent: var(--lf-blue);
+  --heading: var(--lf-display);
+  --body: var(--lf-body);
+  --serif: var(--lf-display);
+  --sans: var(--lf-body);
+  --font-heading: var(--lf-display);
+  --font-body: var(--lf-body);
+  --font-serif: var(--lf-display);
+  --font-sans: var(--lf-body);
+  min-width: 0;
+  overflow-x: clip;
+  background-color: var(--lf-ink);
+  color: var(--lf-bone);
+  font-family: var(--lf-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.lf-audit-report h1,
+body.lf-audit-report h2,
+body.lf-audit-report h3,
+body.lf-audit-report h4 { font-family: var(--lf-display); }
+
+.lf-report-nav,
+body.lf-audit-report .logo-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: none;
+  min-height: 64px;
+  margin: 0;
+  padding: 9px clamp(20px, 4vw, 64px);
+  border-bottom: 1px solid var(--lf-hairline);
+  background: rgb(5 5 7 / 90%);
+  backdrop-filter: blur(20px) saturate(140%);
+}
+
+.lf-report-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--lf-bone) !important;
+  font-family: var(--lf-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  text-decoration: none !important;
+  white-space: nowrap;
+}
+
+.lf-report-brand span {
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lf-report-actions { display: flex; align-items: center; gap: 8px; }
+
+.lf-report-link,
+body.lf-audit-report .pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  background: transparent;
+  color: var(--lf-bone-soft) !important;
+  font-family: var(--lf-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition:
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    color var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-report-link:hover,
+body.lf-audit-report .pdf-btn:hover {
+  border-color: rgb(249 115 22 / 55%);
+  color: var(--lf-bone) !important;
+  transform: translateY(-2px);
+}
+
+.lf-report-link--primary {
+  border-color: transparent;
+  background: var(--lf-fight);
+  color: var(--lf-ink) !important;
+}
+
+.lf-report-link--primary:hover {
+  border-color: transparent;
+  background: var(--lf-ember);
+  color: var(--lf-ink) !important;
+}
+
+body.lf-audit-report :is(
+  .finding-card,
+  .finding,
+  .lux-card,
+  .category-card,
+  .score-card,
+  .revenue-card,
+  .revenue__box,
+  .impact-card,
+  .grade-card,
+  .roadmap-phase
+) {
+  border-color: var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+}
+
+body.lf-audit-report :is(
+  .cta-btn,
+  .cta-button,
+  .lux-cta__btn
+) {
+  min-height: 48px;
+  padding: 13px 24px;
+  border: 0;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-body);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition:
+    background var(--lf-time-snappy) var(--lf-ease-standard),
+    transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+body.lf-audit-report :is(.cta-btn, .cta-button, .lux-cta__btn):hover {
+  background: var(--lf-ember);
+  color: var(--lf-ink);
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+body.lf-audit-report :is(
+  .section-label,
+  .revenue__label,
+  .impact-label,
+  .hero-label,
+  .audit-header__prepared,
+  .clin-header__meta,
+  .noir-hero__kicker,
+  .lux-hero__date,
+  .exec-summary__heading,
+  .roadmap-phase__label
+) {
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body.lf-audit-report footer {
+  padding: 48px 24px;
+  border-top: 1px solid var(--lf-hairline);
+  background: var(--lf-ink);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+body.lf-audit-report footer a,
+body.lf-audit-report .footer-brand,
+body.lf-audit-report .footer-brand a,
+body.lf-audit-report .footer-credit a,
+body.lf-audit-report .footer-secondary a {
+  color: var(--lf-fight);
+}
+
+body.lf-audit-report .audit-header__url,
+body.lf-audit-report .footer-primary {
+  color: var(--lf-bone-soft);
+  opacity: 1;
+}
+
+body.lf-audit-report .audit-footer__credit,
+body.lf-audit-report .footer-secondary {
+  opacity: 1;
+}
+
+body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
+
+/* Branded 404. */
+.lf-audit-404 {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 64px);
+  padding: 64px 24px;
+}
+
+.lf-audit-404__inner { width: min(100%, 780px); text-align: left; }
+
+.lf-audit-404__code {
+  margin: 0;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lf-audit-404 h1 {
+  margin: 16px 0 24px;
+  color: var(--lf-bone);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.lf-audit-404 p:not(.lf-audit-404__code) {
+  max-width: 48ch;
+  margin: 0 0 32px;
+  color: var(--lf-bone-soft);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 900px) {
+  .lf-audit-shell-page .site-main > .container {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-scan { min-height: auto; margin-top: 0; }
+  .audit-scan__viewport { min-height: 190px; }
+}
+
+@media (max-width: 720px) {
+  .audit-nav-shell { min-height: 58px; padding-block: 7px; }
+  .lf-audit-shell-page .audit-nav a:not(.audit-nav__cta) { display: none; }
+  .lf-audit-shell-page .audit-nav .audit-nav__cta { margin-left: 0; padding-inline: 14px; }
+  .lf-audit-shell-page .site-main { padding-top: 56px; }
+  .lf-audit-shell-page .info-grid { grid-template-columns: 1fr; }
+  .lf-audit-shell-page .info-item { min-height: 0; }
+  .lf-report-link:not(.lf-report-link--primary),
+  body.lf-audit-report .pdf-btn { display: none; }
+  .lf-report-brand span { display: none; }
+}
+
+@media (max-width: 420px) {
+  .audit-nav-shell { gap: 10px; padding-inline: 14px; }
+  .lf-audit-shell-page .brand a { font-size: 0.88rem; }
+  .lf-audit-shell-page .audit-nav .audit-nav__cta { min-height: 40px; font-size: 0.78rem; }
+  .lf-audit-shell-page .headline { font-size: clamp(2.7rem, 14vw, 4rem); }
+  .audit-panel,
+  .audit-progress-section { padding: 20px; border-radius: 24px; }
+  .audit-scan { border-radius: 24px; }
+  .lf-report-nav,
+  body.lf-audit-report .logo-bar { padding-inline: 14px; }
+  .lf-report-link--primary { min-height: 40px; padding-inline: 12px; font-size: 0.72rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .audit-scan__beam { transform: translateY(56px); opacity: 0.8; }
+}
+
+@media print {
+  .lf-report-nav,
+  body.lf-audit-report .logo-bar { position: static; }
+  .lf-report-actions { display: none; }
+}

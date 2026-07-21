@@ -268,8 +268,26 @@ export default function FieldGuide() {
               pages, not screenshots. Poke around. Break nothing.
             </p>
           </div>
-          <a className="lf-ex-lab__link" href="/examples/lab/">
+          <a className="lf-ex-lab__link" href="/examples/lab/" data-no-vt>
             Open The Lab
+            <span aria-hidden="true"> ↗</span>
+          </a>
+        </div>
+      </section>
+
+      {/* The Audit — preserved in-repo under /examples/audit/. */}
+      <section className="lf-ex-lab" aria-label="The Website Audit Lab">
+        <div className="lf-ex-lab__inner">
+          <div>
+            <p className="lf-ex-head__eyebrow">The Audit</p>
+            <h2 className="lf-ex-lab__title">Five sample reports. One working audit engine.</h2>
+            <p className="lf-ex-head__dek">
+              Run a live website check or browse the preserved sample reports.
+              Performance, mobile, SEO, and security — all in one place.
+            </p>
+          </div>
+          <a className="lf-ex-lab__link" href="/examples/audit/" data-no-vt>
+            Open The Audit
             <span aria-hidden="true"> ↗</span>
           </a>
         </div>

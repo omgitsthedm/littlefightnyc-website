@@ -1836,7 +1836,7 @@ function imageSitemap() {
 }
 
 function sitemapIndex() {
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${siteUrl}/sitemap.xml</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${siteUrl}/image-sitemap.xml</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>\n</sitemapindex>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <sitemap>\n    <loc>${siteUrl}/sitemap.xml</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${siteUrl}/image-sitemap.xml</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>\n  <sitemap>\n    <loc>${siteUrl}/examples/audit/sitemap.xml</loc>\n    <lastmod>${lastmod}</lastmod>\n  </sitemap>\n</sitemapindex>\n`;
 }
 
 function robots() {
@@ -1846,7 +1846,7 @@ function robots() {
   // rules file with no matching group inconsistently.
   const catchAll = "User-agent: *\nAllow: /\n";
 
-  return `${botBlocks}\n${catchAll}\nSitemap: ${siteUrl}/sitemap-index.xml\nSitemap: ${siteUrl}/sitemap.xml\nSitemap: ${siteUrl}/image-sitemap.xml\n`;
+  return `${botBlocks}\n${catchAll}\nSitemap: ${siteUrl}/sitemap-index.xml\nSitemap: ${siteUrl}/sitemap.xml\nSitemap: ${siteUrl}/image-sitemap.xml\nSitemap: ${siteUrl}/examples/audit/sitemap.xml\n`;
 }
 
 function llmsTxt() {

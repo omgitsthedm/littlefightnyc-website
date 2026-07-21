@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://littlefightnyc.com/examples/audit/sitemap.xml

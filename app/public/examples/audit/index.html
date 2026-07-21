@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Audit Lab — Little Fight NYC</title>
+  <meta name="description" content="A fast website audit for New York businesses: performance, SEO, mobile experience, conversion friction, and clear next moves.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Website Audit Lab — Little Fight NYC">
+  <meta property="og:description" content="Run a fast audit and see whether your website, search visibility, and conversion path fit the way the business actually works.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://littlefightnyc.com/examples/audit/">
+  <meta property="og:image" content="https://littlefightnyc.com/examples/audit/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Website Audit Lab — Little Fight NYC">
+  <meta name="twitter:description" content="Run a fast audit for performance, local visibility, mobile experience, and conversion friction.">
+  <meta name="twitter:image" content="https://littlefightnyc.com/examples/audit/og-image.png">
+  <link rel="canonical" href="https://littlefightnyc.com/examples/audit/">
+  <link rel="icon" type="image/svg+xml" href="/examples/audit/favicon.svg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://littlefightnyc.com/examples/audit/#org","name":"Little Fight NYC","url":"https://littlefightnyc.com/","email":"hello@littlefightnyc.com","telephone":"+16463600318","logo":"https://littlefightnyc.com/apple-touch-icon.png","sameAs":["https://littlefightnyc.com/"]},{"@type":"WebPage","@id":"https://littlefightnyc.com/examples/audit/#webpage","url":"https://littlefightnyc.com/examples/audit/","name":"Website Audit Lab - Little Fight NYC","description":"A fast website audit for New York businesses: performance, SEO, mobile experience, conversion friction, and clear next moves.","datePublished":"2026-03-05","dateModified":"2026-07-21","author":{"@id":"https://littlefightnyc.com/examples/audit/#org"},"publisher":{"@id":"https://littlefightnyc.com/examples/audit/#org"}}]}</script>
+  <style>*,::after,::before{margin:0;padding:0;box-sizing:border-box}:root{--bg:#06080f;--surface:#0e1220;--surface-border:rgba(255, 255, 255, 0.1);--text:#f0f2f8;--muted:#a1a1aa;--primary:#f97316;--primary-hover:#fb923c;--primary-glow:rgba(249, 115, 22, 0.16);--error:#ff4444;--success:#22c55e;--font-heading:"Oswald", ui-sans-serif, system-ui, sans-serif;--font-body:"Barlow", ui-sans-serif, system-ui, sans-serif;--transition-base:200ms ease;--transition-smooth:400ms cubic-bezier(0.16, 1, 0.3, 1)}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}body{font-family:var(--font-body);font-size:17px;line-height:1.6;color:var(--text);background-color:var(--bg);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 16%,rgba(249,115,22,.16),transparent 24%),radial-gradient(circle at 86% 18%,rgba(8,145,178,.1),transparent 25%),radial-gradient(circle at 52% 84%,rgba(249,115,22,.09),transparent 25%)}body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(249,115,22,.36) 0 1px,transparent 1.7px),radial-gradient(circle,rgba(249,115,22,.18) 0 1px,transparent 1.8px);background-size:92px 92px,146px 146px;background-position:0 0,44px 62px;mask-image:linear-gradient(180deg,rgba(0,0,0,0.82),rgba(0,0,0,0.2));opacity:.42;animation:34s linear infinite dot-field-drift}@keyframes dot-field-drift{from{background-position:0 0,44px 62px}to{background-position:92px 184px,190px 208px}}.site-header{padding:1.5rem 1.5rem 0;text-align:center;position:relative;z-index:1}.brand{font-family:var(--font-heading);font-weight:600;font-size:.875rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}.brand a{color:inherit;text-decoration:none;transition:color var(--transition-base)}.brand a:hover{color:var(--primary)}.audit-nav{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:.75rem;font-size:.8125rem}.audit-nav a{color:var(--muted);text-decoration:none;transition:color var(--transition-base)}.audit-nav a:focus-visible,.audit-nav a:hover{color:var(--text);outline:0}.site-main{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem 3rem;position:relative;z-index:1}.glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(600px,100vw);height:min(600px,100vw);background:radial-gradient(circle,var(--primary-glow) 0,transparent 70%);pointer-events:none;z-index:0}.container{width:100%;max-width:480px;position:relative;z-index:1}.audit-form-section{transition:opacity var(--transition-smooth),transform var(--transition-smooth)}.audit-form-section.hidden{opacity:0;transform:translateY(12px);pointer-events:none;position:absolute;visibility:hidden}.audit-progress-section{transition:opacity var(--transition-smooth),transform var(--transition-smooth)}.audit-progress-section.hidden{opacity:0;transform:translateY(12px);pointer-events:none;position:absolute;visibility:hidden}.headline{font-family:var(--font-heading);font-weight:700;font-size:clamp(1.75rem, 5vw, 2.5rem);line-height:1.15;margin-bottom:.75rem;text-align:center}.subheadline{color:var(--muted);font-size:1.0625rem;text-align:center;margin-bottom:2.5rem;max-width:380px;margin-left:auto;margin-right:auto}.audit-form{display:flex;flex-direction:column;gap:1rem}.form-group{display:flex;flex-direction:column;gap:.375rem}.form-label{font-family:var(--font-heading);font-weight:500;font-size:.8125rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.form-input{background:var(--surface);border:1px solid var(--surface-border);border-radius:10px;padding:.9375rem 1.125rem;font-family:var(--font-body);font-size:1rem;color:var(--text);transition:border-color var(--transition-base),box-shadow var(--transition-base);outline:0;width:100%}.form-input::placeholder{color:#555}.form-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-glow)}.form-input.input-error{border-color:var(--error);box-shadow:0 0 0 3px rgba(255,68,68,.12)}.field-error{font-size:.8125rem;color:var(--error);min-height:1.25rem;padding-top:.125rem}.hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;pointer-events:none;tab-index:-1}.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--primary);color:#fff;border:none;border-radius:10px;padding:1rem 2rem;font-family:var(--font-heading);font-weight:600;font-size:1.0625rem;cursor:pointer;transition:transform var(--transition-base),box-shadow var(--transition-base),background-color var(--transition-base);margin-top:.5rem;width:100%;letter-spacing:.01em}.btn-primary:hover{background:var(--primary-hover);transform:translateY(-2px);box-shadow:0 8px 30px rgba(251,146,60,.3)}.btn-primary:active{transform:translateY(0);box-shadow:0 2px 10px rgba(251,146,60,.2)}.btn-primary:focus-visible{outline:2px solid var(--primary);outline-offset:3px}.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}.trust-line{text-align:center;margin-top:1.75rem;font-size:.875rem;color:var(--muted)}.form-error-banner{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.25);border-radius:10px;padding:.875rem 1rem;color:var(--error);font-size:.9375rem;text-align:center;display:none}.form-error-banner.visible{display:block}.progress-heading{font-family:var(--font-heading);font-weight:600;font-size:1.375rem;text-align:center;margin-bottom:2rem}.progress-url{color:var(--primary);word-break:break-all}.progress-bar-track{width:100%;height:6px;background:var(--surface);border-radius:3px;overflow:hidden;margin-bottom:2.5rem}.progress-bar-fill{height:100%;width:0%;background:var(--primary);border-radius:3px;transition:width .6s cubic-bezier(.16, 1, .3, 1)}.progress-steps{list-style:none;display:flex;flex-direction:column;gap:1.25rem}.progress-step{display:flex;align-items:center;gap:1rem;font-size:.9375rem;color:var(--muted);transition:color var(--transition-smooth)}.progress-step.active{color:var(--text)}.progress-step.done{color:var(--success)}.step-icon{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center}.step-icon .icon-dot{width:8px;height:8px;border-radius:50%;background:var(--surface-border);transition:background var(--transition-smooth)}.progress-step.active .icon-dot{background:var(--primary);display:none}.progress-step.done .icon-dot{background:var(--success)}.step-icon .icon-spinner{width:20px;height:20px;border:2px solid var(--surface-border);border-top-color:var(--primary);border-radius:50%;animation:.8s linear infinite spin;display:none}.step-icon .icon-check{width:20px;height:20px;color:var(--success);display:none}.progress-step.active .icon-spinner{display:block}.progress-step.active .icon-check,.progress-step.done .icon-dot,.progress-step.done .icon-spinner{display:none}.progress-step.done .icon-check{display:block}@keyframes spin{to{transform:rotate(360deg)}}.progress-error{text-align:center;padding:2rem 0;display:none}.progress-error.visible{display:block}.progress-error-message{color:var(--error);margin-bottom:1.5rem;font-size:.9375rem}.btn-retry{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:0 0;color:var(--primary);border:1px solid var(--primary);border-radius:10px;padding:.75rem 1.75rem;font-family:var(--font-heading);font-weight:600;font-size:.9375rem;cursor:pointer;transition:background var(--transition-base),color var(--transition-base)}.btn-retry:hover{background:var(--primary);color:#fff}.btn-retry:focus-visible{outline:2px solid var(--primary);outline-offset:3px}.site-footer{text-align:center;padding:1.5rem;font-size:.8125rem;position:relative;z-index:1}.site-footer a{color:var(--primary);text-decoration:none;transition:opacity var(--transition-base)}.site-footer a:hover{opacity:.8}.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:.85rem;margin-bottom:.75rem}.footer-links a{color:var(--muted)}@media (prefers-reduced-motion:reduce){*,::after,::before{animation-duration:0s!important;animation-iteration-count:1!important;transition-duration:0s!important}.audit-form-section,.audit-progress-section,.progress-bar-fill{transition:none}}@media (min-width:768px){.site-header{padding:2rem 2rem 0}.site-main{padding:3rem 2rem 4rem}.container{max-width:520px}.glow{width:min(800px,100vw);height:min(800px,100vw)}}.info-section{padding:3rem 1.5rem 2rem;border-top:1px solid var(--surface-border);position:relative;z-index:1}.info-container{max-width:720px;margin:0 auto}.info-heading{font-family:var(--font-heading);font-weight:600;font-size:1.375rem;text-align:center;margin-bottom:2rem;color:var(--text)}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}.info-item strong{display:block;font-family:var(--font-heading);font-size:.9375rem;color:var(--text);margin-bottom:.25rem}.info-item p{font-size:.875rem;color:var(--muted);line-height:1.5}.info-cta{text-align:center;margin-top:2rem;font-size:.9375rem;color:var(--muted)}.info-cta a{color:var(--primary);text-decoration:none;font-weight:500}.info-cta a:hover{opacity:.8}.fit-check-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;margin-top:.85rem;padding:.7rem 1.15rem;border-radius:999px;border:1px solid rgba(249,115,22,.3);color:var(--text);text-decoration:none;font-family:var(--font-heading);font-size:.9rem;font-weight:700;background:rgba(249,115,22,.08);transition:background var(--transition-base),transform var(--transition-base)}.fit-check-link:focus-visible,.fit-check-link:hover{background:rgba(249,115,22,.14);transform:translateY(-1px);outline:0}.footer-legal{margin-top:.5rem;font-size:.75rem;color:#6b7280}@media (max-width:480px){.info-grid{grid-template-columns:1fr}}@media (min-width:1200px){.site-header{padding:2.5rem 3rem 0}.site-main{padding:4rem 3rem 5rem}}</style>
+  <link rel="stylesheet" href="/examples/audit/brand.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/examples/audit/experience.css">
+<script defer src="/examples/audit/experience.js"></script>
+</head>
+<body class="lf-audit-shell-page">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tug" viewBox="0 0 838.016418 562.406218"><g transform="translate(-297.159815,611.589160) scale(0.100000,-0.100000)"
+fill="currentColor" stroke="none">
+<path d="M6050 6114 c-317 -39 -527 -140 -620 -299 -42 -70 -38 -357 6 -506
+17 -57 20 -58 111 -24 189 70 312 107 448 136 128 27 475 30 623 5 51 -8 99
+-13 107 -9 18 6 20 85 5 195 -5 40 -14 105 -19 145 -30 230 -198 349 -506 358
+-66 2 -136 1 -155 -1z"/>
+<path d="M8860 5354 c-152 -16 -582 -54 -908 -79 -326 -25 -534 -168 -639
+-439 -32 -82 -44 -234 -41 -541 4 -311 -2 -337 -84 -409 -50 -43 -86 -59 -165
+-72 -39 -6 -43 -4 -61 26 -11 17 -22 48 -26 68 -20 126 -56 422 -61 507 -4 55
+-13 143 -20 195 -7 52 -16 129 -20 170 -9 103 -32 235 -45 259 -42 80 -614
+120 -811 57 -24 -8 -91 -29 -149 -47 -134 -41 -282 -112 -315 -150 -29 -35
+-33 -95 -14 -208 5 -35 16 -132 24 -215 17 -180 51 -493 65 -591 16 -115 13
+-189 -8 -208 -27 -24 -99 -35 -281 -42 -343 -12 -525 -91 -693 -297 -135 -166
+-174 -337 -158 -685 9 -192 11 -198 52 -212 67 -24 1232 -9 1543 19 61 5 184
+14 275 20 150 10 459 46 585 69 28 5 79 12 115 16 65 6 161 23 295 52 39 8 90
+19 115 24 97 20 147 56 337 243 222 219 296 271 461 331 72 26 224 60 312 69
+30 4 87 13 125 21 146 30 243 47 330 61 50 7 144 25 210 39 66 14 149 30 185
+36 36 5 117 21 180 36 63 14 150 34 192 43 42 9 84 22 92 30 20 16 21 104 2
+260 -8 63 -17 178 -21 255 -3 77 -10 176 -15 220 -5 44 -14 145 -20 225 -16
+204 -41 324 -90 422 -97 193 -244 318 -461 394 -73 25 -281 40 -389 28z m420
+-582 c59 -26 108 -75 136 -137 26 -58 59 -299 70 -510 10 -189 2 -200 -141
+-215 -44 -4 -125 -13 -180 -19 -55 -6 -149 -15 -210 -21 -60 -5 -155 -15 -210
+-21 -154 -16 -212 -3 -275 63 -41 45 -59 109 -71 267 -17 213 -9 347 23 396
+83 127 183 168 478 195 69 6 152 15 185 20 80 11 140 6 195 -18z"/>
+<path d="M10910 3414 c-30 -7 -118 -25 -195 -39 -77 -14 -174 -32 -215 -40
+-173 -34 -250 -48 -340 -60 -52 -8 -149 -25 -215 -40 -66 -14 -149 -30 -185
+-36 -36 -5 -94 -16 -130 -24 -177 -40 -249 -55 -290 -60 -25 -3 -74 -12 -110
+-20 -116 -25 -223 -46 -310 -60 -47 -7 -107 -18 -135 -24 -105 -22 -213 -42
+-300 -56 -219 -34 -315 -90 -490 -286 -107 -119 -155 -162 -249 -223 -74 -49
+-231 -113 -316 -131 -206 -42 -369 -72 -450 -80 -30 -3 -100 -12 -155 -20
+-153 -22 -452 -53 -625 -65 -85 -6 -202 -15 -259 -20 -506 -45 -1428 -36
+-2266 22 -479 33 -451 32 -522 13 -190 -52 -231 -306 -122 -761 16 -66 36
+-138 44 -160 9 -21 22 -52 28 -69 53 -134 166 -309 251 -389 158 -147 285
+-213 506 -262 122 -27 888 -35 3235 -31 2488 3 2311 -1 2575 61 176 41 267 74
+427 155 376 187 669 473 900 876 78 137 179 375 198 465 4 19 22 87 40 150
+103 364 149 896 92 1058 -27 76 -65 126 -117 152 -47 24 -210 27 -300 4z
+m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
+-136 -333 -47 -29 -55 -31 -155 -31 -100 0 -108 2 -155 31 -209 128 -187 444
+38 549 71 33 163 34 232 1z"/>
+</g></symbol></svg>
+
+  <header class="site-header">
+    <svg data-tug width="58" height="39" viewBox="0 0 838.016418 562.406218" style="color:var(--primary);display:inline-block;margin:0 auto .5rem" role="img" aria-label="Little Fight NYC tugboat"><use href="#tug"/></svg>
+      <div class="audit-nav-shell">
+      <p class="brand"><a href="https://littlefightnyc.com">Little Fight NYC</a></p>
+      <nav class="audit-nav" aria-label="Audit site navigation">
+        <a href="/examples/audit/" aria-current="page">Audit Lab</a>
+        <a href="/examples/audit/about/">About</a>
+        <a href="/examples/audit/contact/">Contact</a>
+        <a href="/examples/audit/privacy/">Privacy</a>
+        <a class="audit-nav__cta" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main">
+    <div class="glow" aria-hidden="true"></div>
+
+    <div class="container">
+
+      <!-- STATE 1: FORM -->
+      <section class="audit-form-section" id="formSection" aria-label="Website audit request form">
+        <p class="audit-eyebrow">Website Audit Lab · Free public-page scan</p>
+        <h1 class="headline">Does your website fit the way your business <span>works?</span></h1>
+        <p class="subheadline">Check speed, mobile use, search visibility, trust, and whether the next action is clear. Get the findings in plain English.</p>
+
+        <div class="audit-panel">
+        <form class="audit-form" id="auditForm" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="siteUrl">Website URL</label>
+            <input
+              class="form-input"
+              type="url"
+              id="siteUrl"
+              name="url"
+              placeholder="yoursite.com"
+              autocomplete="url"
+              required
+              aria-describedby="urlError"
+            >
+            <p class="field-error" id="urlError" role="alert" aria-live="polite"></p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email for your report</label>
+            <input
+              class="form-input"
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@company.com"
+              autocomplete="email"
+              required
+              aria-describedby="emailError"
+            >
+            <p class="field-error" id="emailError" role="alert" aria-live="polite"></p>
+          </div>
+
+          <!-- Honeypot -->
+          <div class="hp-field" inert>
+            <label for="website">Leave this empty</label>
+            <input type="text" id="website" name="website" autocomplete="off">
+          </div>
+
+          <div class="form-error-banner" id="formErrorBanner" role="alert" aria-live="polite"></div>
+
+          <button type="submit" class="btn-primary" id="submitBtn">
+            Check my website
+          </button>
+        </form>
+
+        <p class="trust-line">No account · No passwords · Public pages only</p>
+        <a class="fit-check-link" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Website not the only problem? Start the free Tech Audit</a>
+        </div>
+      </section>
+
+      <!-- STATE 2: PROGRESS -->
+      <section class="audit-progress-section hidden" id="progressSection" aria-label="Audit progress" aria-live="polite">
+        <p class="progress-heading">Auditing <span class="progress-url" id="progressUrl"></span></p>
+
+        <progress class="progress-bar-track" value="0" max="100" aria-label="Audit progress" id="progressBar">0%</progress>
+
+        <ol class="progress-steps" id="progressSteps">
+          <li class="progress-step" data-step="0">
+            <span class="step-icon">
+              <span class="icon-dot"></span>
+              <span class="icon-spinner"></span>
+              <svg class="icon-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+            </span>
+            <span>Connecting to your website&hellip;</span>
+          </li>
+          <li class="progress-step" data-step="1">
+            <span class="step-icon">
+              <span class="icon-dot"></span>
+              <span class="icon-spinner"></span>
+              <svg class="icon-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+            </span>
+            <span>Running performance tests&hellip;</span>
+          </li>
+          <li class="progress-step" data-step="2">
+            <span class="step-icon">
+              <span class="icon-dot"></span>
+              <span class="icon-spinner"></span>
+              <svg class="icon-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+            </span>
+            <span>Analyzing mobile experience&hellip;</span>
+          </li>
+          <li class="progress-step" data-step="3">
+            <span class="step-icon">
+              <span class="icon-dot"></span>
+              <span class="icon-spinner"></span>
+              <svg class="icon-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+            </span>
+            <span>Checking Google visibility&hellip;</span>
+          </li>
+          <li class="progress-step" data-step="4">
+            <span class="step-icon">
+              <span class="icon-dot"></span>
+              <span class="icon-spinner"></span>
+              <svg class="icon-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+            </span>
+            <span>Generating your report&hellip;</span>
+          </li>
+        </ol>
+
+        <div class="progress-error" id="progressError">
+          <p class="progress-error-message" id="progressErrorMsg">Something went wrong while running your audit. Please try again.</p>
+          <button type="button" class="btn-retry" id="retryBtn">Try Again</button>
+        </div>
+      </section>
+
+      <aside class="audit-scan" aria-label="What the Website Audit Lab checks">
+        <div class="audit-scan__head">
+          <p class="audit-scan__eyebrow">Public-page diagnostic</p>
+          <span class="audit-scan__status">Ready</span>
+        </div>
+        <div class="audit-scan__body">
+          <div class="audit-scan__viewport" aria-hidden="true">
+            <svg viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="18" width="200" height="124" rx="12" stroke="currentColor" stroke-width="2"/>
+              <path d="M20 48H220" stroke="currentColor" stroke-width="2"/>
+              <circle cx="38" cy="33" r="3" fill="currentColor"/>
+              <circle cx="50" cy="33" r="3" fill="currentColor" opacity=".55"/>
+              <circle cx="62" cy="33" r="3" fill="currentColor" opacity=".28"/>
+              <rect x="42" y="70" width="74" height="48" rx="6" stroke="currentColor" stroke-width="2"/>
+              <path d="M135 74H194M135 88H186M135 102H174M135 116H194" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".72"/>
+            </svg>
+            <span class="audit-scan__beam"></span>
+          </div>
+          <ul class="audit-scan__list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="3"/></svg>
+              <strong>Performance</strong><span>Speed + stability</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg>
+              <strong>Mobile experience</strong><span>Tap + read</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M11 8v6M8 11h6"/></svg>
+              <strong>Search visibility</strong><span>Find + understand</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-8M22 19H2"/></svg>
+              <strong>Customer path</strong><span>Call + book + buy</span>
+            </li>
+          </ul>
+        </div>
+        <p class="audit-scan__foot">A first read, not a scare tactic. Fix it yourself, bring the report to Little Fight NYC, or use the free Tech Audit when the problem reaches beyond the page.</p>
+      </aside>
+
+    </div>
+  </main>
+
+  <section class="info-section" aria-label="About this audit">
+    <div class="info-container">
+      <div class="info-block">
+        <p class="section-kicker">What the scan returns</p>
+        <h2 class="info-heading">A practical first read of the front door.</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Speed and trust scores</strong>
+            <p>Clear grades for speed, accessibility, Google visibility, and the basics that help customers trust the site.</p>
+          </div>
+          <div class="info-item">
+            <strong>Fit findings</strong>
+            <p>Specific recommendations tied to speed, clarity, search visibility, and customer action.</p>
+          </div>
+          <div class="info-item">
+            <strong>Mobile experience</strong>
+            <p>See how the page behaves on the phones where most customers are browsing.</p>
+          </div>
+          <div class="info-item">
+            <strong>Lost-customer points</strong>
+            <p>Find weak spots that keep visits from becoming calls, bookings, orders, or leads.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <p class="section-kicker">How it works</p>
+        <h2 class="info-heading">Public page in. Plain-English report out.</h2>
+        <p class="info-intro">The scan starts with what customers can already see. It never asks for passwords, private files, or account access. If the page problem is really a lead, booking, payment, or follow-up problem, the free Tech Audit looks behind the page and sorts out what to keep, connect, replace, or build.</p>
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Enter the public URL</strong>
+            <p>Drop in the website address and an email for the report. No account, card, or access request.</p>
+          </div>
+          <div class="info-item">
+            <strong>We run the checks</strong>
+            <p>Lighthouse measures the page while the Lab reviews patterns, friction, and obvious opportunities.</p>
+          </div>
+          <div class="info-item">
+            <strong>Get the report</strong>
+            <p>The breakdown arrives with grades, specific findings, and next steps written for a business owner.</p>
+          </div>
+          <div class="info-item">
+            <strong>Choose the next move</strong>
+            <p>Fix it yourself, bring it to Little Fight NYC, or let us handle the highest-leverage repair first.</p>
+          </div>
+        </div>
+        <p class="info-cta">Need help fixing what we find? <a href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Plan the next move with Little Fight NYC</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <nav class="footer-links" aria-label="Audit footer navigation">
+      <a href="/examples/audit/">Audit Lab</a>
+      <a href="/examples/audit/about/">About</a>
+      <a href="/examples/audit/contact/">Contact</a>
+      <a href="/examples/audit/privacy/">Privacy</a>
+      <a href="https://littlefightnyc.com/">Main site</a>
+      <a href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a>
+    </nav>
+    <p><a href="https://littlefightnyc.com">Designed, Hosted and Cared For by LittleFightNYC.com</a></p>
+    <p class="footer-legal">We never share your data. Your email is only used to send your audit report.</p>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── DOM refs ── */
+      var form         = document.getElementById('auditForm');
+      var formSection  = document.getElementById('formSection');
+      var progressSec  = document.getElementById('progressSection');
+      var submitBtn    = document.getElementById('submitBtn');
+      var urlInput     = document.getElementById('siteUrl');
+      var emailInput   = document.getElementById('email');
+      var urlError     = document.getElementById('urlError');
+      var emailError   = document.getElementById('emailError');
+      var errorBanner  = document.getElementById('formErrorBanner');
+      var progressUrl  = document.getElementById('progressUrl');
+      var progressBar  = document.getElementById('progressBar');
+      var stepEls      = document.querySelectorAll('.progress-step');
+      var progressErr  = document.getElementById('progressError');
+      var progressMsg  = document.getElementById('progressErrorMsg');
+      var retryBtn     = document.getElementById('retryBtn');
+      var honeypot     = document.getElementById('website');
+
+      /* ── Step timing (cumulative seconds) ── */
+      var stepThresholds = [5, 15, 25, 35, 45];
+      var totalDuration  = 45;
+      var pollInterval   = 3000;
+      var auditId        = null;
+      var pollTimer      = null;
+      var progressTimer  = null;
+      var startTime      = null;
+
+      /* ── Validation helpers ── */
+      var domainPattern = /^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+      var emailPattern  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      function normalizeUrl(raw) {
+        var val = raw.trim().toLowerCase();
+        val = val.replace(/^https?:\/\//, '');
+        val = val.replace(/\/+$/, '');
+        return val;
+      }
+
+      function validateUrl() {
+        var val = normalizeUrl(urlInput.value);
+        if (!val) {
+          urlError.textContent = 'Please enter your website URL.';
+          urlInput.classList.add('input-error');
+          return false;
+        }
+        var domainCheck = val.replace(/^www\./, '').split('/')[0];
+        if (!domainPattern.test(domainCheck)) {
+          urlError.textContent = 'Please enter a valid domain (e.g. yoursite.com).';
+          urlInput.classList.add('input-error');
+          return false;
+        }
+        urlError.textContent = '';
+        urlInput.classList.remove('input-error');
+        return true;
+      }
+
+      function validateEmail() {
+        var val = emailInput.value.trim();
+        if (!val) {
+          emailError.textContent = 'Please enter your email address.';
+          emailInput.classList.add('input-error');
+          return false;
+        }
+        if (!emailPattern.test(val)) {
+          emailError.textContent = 'Please enter a valid email address.';
+          emailInput.classList.add('input-error');
+          return false;
+        }
+        emailError.textContent = '';
+        emailInput.classList.remove('input-error');
+        return true;
+      }
+
+      /* ── Clear errors on input ── */
+      urlInput.addEventListener('input', function () {
+        if (urlInput.classList.contains('input-error')) validateUrl();
+      });
+
+      emailInput.addEventListener('input', function () {
+        if (emailInput.classList.contains('input-error')) validateEmail();
+      });
+
+      /* ── Show / hide states ── */
+      function showProgress() {
+        formSection.classList.add('hidden');
+        progressSec.classList.remove('hidden');
+      }
+
+      function showForm() {
+        progressSec.classList.add('hidden');
+        formSection.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Check my website';
+      }
+
+      function resetProgress() {
+        progressBar.value = 0;
+        progressBar.textContent = '0%';
+        progressErr.classList.remove('visible');
+        stepEls.forEach(function (el) {
+          el.classList.remove('active', 'done');
+        });
+      }
+
+      /* ── Progress animation ── */
+      function startProgressAnimation() {
+        startTime = Date.now();
+        progressTimer = setInterval(updateProgress, 300);
+        updateProgress();
+      }
+
+      function updateProgress() {
+        var elapsed = (Date.now() - startTime) / 1000;
+        var pct = Math.min((elapsed / totalDuration) * 100, 95);
+
+        progressBar.value = pct;
+        progressBar.textContent = Math.round(pct) + '%';
+
+        for (var i = 0; i < stepThresholds.length; i++) {
+          var step = stepEls[i];
+
+          if (elapsed >= stepThresholds[i]) {
+            if (!step.classList.contains('done')) {
+              step.classList.remove('active');
+              step.classList.add('done');
+            }
+          } else if (i === 0 || elapsed >= stepThresholds[i - 1]) {
+            if (!step.classList.contains('active') && !step.classList.contains('done')) {
+              step.classList.add('active');
+            }
+          }
+        }
+      }
+
+      function stopProgressAnimation() {
+        if (progressTimer) {
+          clearInterval(progressTimer);
+          progressTimer = null;
+        }
+      }
+
+      function completeProgress() {
+        stopProgressAnimation();
+        progressBar.value = 100;
+        progressBar.textContent = '100%';
+
+        stepEls.forEach(function (el) {
+          el.classList.remove('active');
+          el.classList.add('done');
+        });
+      }
+
+      /* ── Polling ── */
+      function startPolling(id) {
+        auditId = id;
+        pollTimer = setInterval(function () {
+          fetch('/examples/audit/api/status?id=' + encodeURIComponent(auditId))
+            .then(function (res) {
+              if (!res.ok) throw new Error('Status check failed');
+              return res.json();
+            })
+            .then(function (data) {
+              if (data.status === 'done' && data.url) {
+                stopPolling();
+                completeProgress();
+                setTimeout(function () {
+                  window.location.href = data.url;
+                }, 800);
+              } else if (data.status === 'error') {
+                stopPolling();
+                stopProgressAnimation();
+                showError(data.message || 'The audit encountered an error. Please try again.');
+              }
+            })
+            .catch(function () {
+              /* Silently retry on next interval */
+            });
+        }, pollInterval);
+      }
+
+      function stopPolling() {
+        if (pollTimer) {
+          clearInterval(pollTimer);
+          pollTimer = null;
+        }
+      }
+
+      /* ── Error display ── */
+      function showError(msg) {
+        progressMsg.textContent = msg;
+        progressErr.classList.add('visible');
+      }
+
+      /* ── Retry ── */
+      retryBtn.addEventListener('click', function () {
+        stopPolling();
+        stopProgressAnimation();
+        resetProgress();
+        showForm();
+      });
+
+      /* ── Form submit ── */
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        errorBanner.classList.remove('visible');
+        errorBanner.textContent = '';
+
+        var urlValid   = validateUrl();
+        var emailValid = validateEmail();
+
+        if (!urlValid || !emailValid) {
+          (urlValid ? emailInput : urlInput).focus();
+          return;
+        }
+
+        var cleanUrl  = normalizeUrl(urlInput.value);
+        var userEmail = emailInput.value.trim();
+        var hp        = honeypot.value;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting\u2026';
+
+        fetch('/examples/audit/api/run-audit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url: cleanUrl,
+            email: userEmail,
+            honeypot: hp
+          })
+        })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Submission failed');
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data.id) throw new Error('No audit ID returned');
+
+          progressUrl.textContent = cleanUrl;
+          resetProgress();
+          showProgress();
+          startProgressAnimation();
+          startPolling(data.id);
+        })
+        .catch(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Check my website';
+          errorBanner.textContent = 'Could not start your audit. Please check your connection and try again.';
+          errorBanner.classList.add('visible');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

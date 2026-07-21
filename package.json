@@ -6,8 +6,17 @@
     "build": "npm --prefix app run build",
     "lint": "npm --prefix app run lint",
     "preview": "npm --prefix app run preview",
+    "audit:audit": "npm --prefix app run audit:audit",
     "audit:mobile-lifecycle": "npm --prefix app run audit:mobile-lifecycle",
     "audit:repo-boundary": "npm --prefix app run audit:repo-boundary",
     "audit:signal": "npm --prefix app run audit:signal"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0",
+    "@netlify/functions": "^5.3.0",
+    "nodemailer": "^9.0.3"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^8.0.1"
   }
 }

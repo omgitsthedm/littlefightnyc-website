@@ -1,0 +1,28 @@
+{
+  "sourcePath": "~/Desktop/LiFi NYC/Clients/LittleFightNYC/Brand/Internal/Audits/site",
+  "sourceNetlifySite": "audits-littlefightnyc",
+  "sourceNetlifySiteId": "6588401d-53d4-42a3-a4f8-89fb3b937446",
+  "sourceDeployId": "6a5f2dba149b7e92a3c53c25",
+  "sourceAuthoredFiles": 33,
+  "liveMatchedFiles": 30,
+  "unpublishedSourceFiles": [
+    "netlify.toml"
+  ],
+  "excludedGeneratedState": [
+    ".netlify/**",
+    "node_modules/**"
+  ],
+  "staticFiles": 17,
+  "htmlPages": 10,
+  "functionFiles": 9,
+  "migratedPath": "/examples/audit/",
+  "migratedFunctionPaths": [
+    "/examples/audit/api/status",
+    "/examples/audit/api/run-audit",
+    "/examples/audit/api/og",
+    "/examples/audit/api/record-engagement",
+    "/examples/audit/api/report-views",
+    "/examples/audit/report/*"
+  ],
+  "migratedOn": "2026-07-21"
+}

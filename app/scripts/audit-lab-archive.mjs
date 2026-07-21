@@ -102,7 +102,10 @@ if (!terminalBundle.includes("/examples/lab/concepts/terminal-3d/data/building.j
 }
 
 const fieldGuide = fs.readFileSync(path.join(appRoot, "src", "pages", "FieldGuide.tsx"), "utf8");
-if (!fieldGuide.includes('href="/examples/lab/"') || fieldGuide.includes("lab.littlefightnyc.com")) {
+if (
+  !fieldGuide.includes('href="/examples/lab/" data-no-vt') ||
+  fieldGuide.includes("lab.littlefightnyc.com")
+) {
   failures.push("main Examples page is not linked to the in-site Lab hub");
 }
 

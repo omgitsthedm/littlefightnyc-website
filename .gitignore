@@ -12,12 +12,14 @@ output/
 # manifest icons, iOS startup images, and install-dialog screenshots).
 # Directory-level negation so new public deploy PNGs are never missed again.
 !app/public/*.png
+!app/public/examples/audit/og-image.png
 *.bak
 docs/
 firebase-debug.log
 .claude/
 node_modules/
 package-lock.json
+!/package-lock.json
 !app/package-lock.json
 dist/
 dist-*/
