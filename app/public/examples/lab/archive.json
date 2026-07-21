@@ -1,0 +1,14 @@
+{
+  "sourceRepository": "omgitsthedm/littlefight-lab",
+  "sourceCommit": "ea0717ed6016314ce194fb9981228a10fd90f51e",
+  "sourceRemoteCommit": "cab64b7eea04ad1a74eacb9f87d0f1508d655808",
+  "includedUnpushedCommits": 4,
+  "sourceFiles": 160,
+  "htmlPages": 47,
+  "concepts": 11,
+  "recoveredFiles": [
+    "concepts/terminal-3d/data/building.json"
+  ],
+  "migratedPath": "/examples/lab/",
+  "migratedOn": "2026-07-21"
+}

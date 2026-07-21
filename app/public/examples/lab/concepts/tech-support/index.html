@@ -1,0 +1,2255 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary Meta Tags -->
+  <title>Little Fight NYC | Tech Support for Small Businesses in NYC</title>
+  <meta name="title" content="Little Fight NYC | Tech Support for Small Businesses in NYC" />
+  <meta name="description"
+    content="Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide. We fix websites, POS systems, Wi-Fi, and more." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://littlefightnyc.com/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://littlefightnyc.com/" />
+  <meta property="og:title" content="Little Fight NYC | Tech Support for Small Businesses in NYC" />
+  <meta property="og:description"
+    content="Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide. We fix websites, POS systems, Wi-Fi, and more." />
+  <meta property="og:image" content="https://littlefightnyc.com/images/og-image.jpg" />
+  <meta property="og:site_name" content="Little Fight NYC" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://littlefightnyc.com/" />
+  <meta name="twitter:title" content="Little Fight NYC | Tech Support for Small Businesses in NYC" />
+  <meta name="twitter:description"
+    content="Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide. We fix websites, POS systems, Wi-Fi, and more." />
+  <meta name="twitter:image" content="https://littlefightnyc.com/images/og-image.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <meta name="theme-color" content="#FF5A00" />
+
+  <!-- Preload critical font -->
+  <link rel="preload" href="fonts/mdi-subset.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Critical CSS - Inlined to eliminate render blocking -->
+  <style>
+    /* Fallback font to prevent CLS */
+    @font-face {
+      font-family: "Lexend Fallback";
+      src: local("Arial");
+      size-adjust: 100%;
+      ascent-override: 90%;
+      descent-override: 22%;
+      line-gap-override: 0%;
+    }
+
+    :root {
+      --text-primary: #1f2326;
+      --text-secondary: #3e454d;
+      --text-muted: #5e6770;
+      --accent-ui: #ff5a00;
+      --accent-ui-strong: #ff5a00;
+      --accent-ui-strong-hover: #ff7a33;
+      --accent-ui-contrast: #11294f;
+      --accent-text: #1f5bbe;
+      --bg-dark: #1f2326;
+      --footer-text: #b8bfc8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        sans-serif;
+      color: var(--text-primary);
+      background-color: #fff;
+      background-image:
+        radial-gradient(circle at 8% 14%,
+          rgba(241, 142, 96, 0.13) 0 132px,
+          transparent 133px),
+        radial-gradient(circle at 88% 18%,
+          rgba(35, 101, 207, 0.1) 0 152px,
+          transparent 153px),
+        radial-gradient(circle at 14% 72%,
+          rgba(255, 208, 184, 0.2) 0 126px,
+          transparent 127px),
+        radial-gradient(circle at 82% 78%,
+          rgba(35, 101, 207, 0.07) 0 140px,
+          transparent 141px);
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+      padding: 0 24px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-box {
+      width: 45px;
+      height: 45px;
+      background: var(--accent-ui-strong);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-ui-contrast);
+      font-weight: 900;
+      font-size: 0.55rem;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .nav-logo-text {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .nav-cta {
+      background: var(--accent-ui-strong);
+      color: var(--accent-ui-contrast) !important;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #fcede6 0%, #fff 50%, #eaebec 100%);
+      padding: 80px 24px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 40px;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(64, 124, 138, 0.12);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent-text);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--bg-dark);
+    }
+
+    .hero-title .highlight {
+      color: var(--accent-ui);
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      min-height: 58px;
+    }
+
+    .btn {
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      border: 2px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 58px;
+      line-height: 1.2;
+    }
+
+    .btn-primary {
+      background: var(--accent-ui-strong);
+      color: var(--accent-ui-contrast);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--accent-text);
+      border-color: var(--accent-text);
+    }
+
+    .hero-note {
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    /* Hero visual - must be in critical CSS to prevent CLS */
+    .hero-visual {
+      position: relative;
+    }
+
+    .illustration {
+      position: relative;
+      width: 100%;
+      height: clamp(340px, 42vh, 520px);
+      border-radius: 16px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #E4EEF8 0%, #EDF3F9 40%, #F2F5F9 100%);
+    }
+
+    .city-buildings-row {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      /* Center these narrower buildings */
+      gap: 1.5%;
+      /* Walk-up spacing */
+      z-index: 5;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .city-building {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+
+    /* Thinner, taller proportions */
+    .city-bakery {
+      width: 14%;
+    }
+
+    .city-cafe {
+      width: 15%;
+    }
+
+    .city-hotel {
+      width: 18%;
+    }
+
+    /* Still widest but narrower than before */
+    .city-realty {
+      width: 14%;
+    }
+
+    .city-restaurant {
+      width: 15%;
+    }
+
+    .city-sidewalk {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 20px;
+      background: linear-gradient(180deg, #B8AF9E, #C8BFAD);
+      border-top: 2px solid #A09882;
+      z-index: 10;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Tablet */
+    @media (max-width: 968px) {
+      .hero {
+        padding: 80px 20px 32px;
+        min-height: auto;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .hero-visual {
+        order: 2;
+        max-width: 520px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .illustration {
+        height: 300px;
+      }
+    }
+
+    /* Tablet + Mobile nav */
+    @media (max-width: 968px) {
+      .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        padding: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      .nav-toggle span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--text-primary);
+        border-radius: 2px;
+      }
+
+      .nav-links {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .nav-links.active {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .hero {
+        padding: 76px 16px 24px;
+      }
+
+      .hero-container {
+        gap: 20px;
+      }
+
+      .hero-visual {
+        max-width: 100%;
+      }
+
+      .illustration {
+        height: 260px;
+        border-radius: 12px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        text-align: center;
+      }
+    }
+
+    /* Critical City Animation CSS - Inlined for Performance */
+    .city-floors-stack {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column-reverse;
+      z-index: 1;
+    }
+
+    .city-service-floor {
+      position: relative;
+      width: 100%;
+      height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      overflow: hidden;
+      transition: height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      /* Bouncy pop effect */
+      box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .city-service-floor.is-visible {
+      opacity: 1;
+      height: 44px;
+      /* Taller floors for verticality */
+    }
+
+    .city-floor-label {
+      position: relative;
+      z-index: 2;
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 3px 8px;
+      border-radius: 4px;
+      /* More modern than pill */
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: all 0.3s ease 0.1s;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .city-service-floor.is-visible .city-floor-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Windows on floors */
+    .city-service-floor.is-visible::before {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: 6px;
+      height: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Building Specifics - Premium Gradients & Details */
+    .city-bakery .city-service-floor {
+      background: linear-gradient(90deg, #FF9650, #FF7030);
+      border-right: 1px solid #C45218;
+      border-left: 1px solid #FFAD70;
+    }
+
+    .city-bakery .city-service-floor:last-child {
+      border-top: 3px solid #E07530;
+    }
+
+    .city-cafe .city-service-floor {
+      background: linear-gradient(90deg, #FF8838, #E66614);
+      border-right: 1px solid #C2510A;
+      border-left: 1px solid #FFA060;
+    }
+
+    .city-cafe .city-service-floor:last-child {
+      border-top: 3px solid #D96E20;
+    }
+
+    .city-hotel .city-service-floor {
+      background: linear-gradient(90deg, #5078C0, #365C9E);
+      border-right: 1px solid #24467D;
+      border-left: 1px solid #6E90D1;
+    }
+
+    .city-hotel .city-service-floor:last-child {
+      border-top: 3px solid #3A5BA0;
+      box-shadow: 0 -2px 10px rgba(58, 91, 160, 0.3);
+      /* Crown glow */
+    }
+
+    .city-hotel .city-service-floor.is-visible::before {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .city-realty .city-service-floor {
+      background: linear-gradient(90deg, #FFBA58, #F0A030);
+      border-right: 1px solid #CC8220;
+      border-left: 1px solid #FFD080;
+    }
+
+    .city-realty .city-service-floor:last-child {
+      border-top: 3px solid #E09830;
+    }
+
+    .city-realty .city-service-floor .city-floor-label {
+      color: #3A2A10;
+      background: rgba(255, 255, 255, 0.6);
+      text-shadow: none;
+    }
+
+    .city-restaurant .city-service-floor {
+      background: linear-gradient(90deg, #FFA060, #E67836);
+      border-right: 1px solid #C25E20;
+      border-left: 1px solid #FFB885;
+    }
+
+    .city-restaurant .city-service-floor:last-child {
+      border-top: 3px solid #E08040;
+    }
+
+    /* Storefront Base Styles (Critical for initial load) */
+    .city-storefront {
+      position: relative;
+      z-index: 5;
+      background: #fff;
+      /* Fallback */
+    }
+
+    /* SHARED ARCHITECTURE (Inlined) */
+    .city-cornice {
+      height: 6px;
+      background: rgba(0, 0, 0, 0.15);
+      border-top: 2px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .city-upper-floor {
+      display: flex;
+      gap: 5px;
+      padding: 6px 8% 0;
+      min-height: 38px;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), transparent);
+    }
+
+    .city-win {
+      flex: 1;
+      height: 28px;
+      background: linear-gradient(135deg, #D6E4F0 0%, #C8D8E8 100%);
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      border-radius: 2px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .city-win::after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.6) 50%, transparent 55%);
+      opacity: 0.6;
+    }
+
+    .city-win-arched {
+      border-radius: 12px 12px 2px 2px;
+    }
+
+    .city-win-round {
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 3px solid #E0E0E0;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .city-win-round .mdi {
+      font-size: 0.8rem;
+      color: #7A5030;
+    }
+
+    .city-awning {
+      height: 12px;
+      margin: 0 6%;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .city-shop-sign {
+      margin: 3px 8%;
+      padding: 3px 0;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.6rem;
+      color: #fff;
+      background: rgba(50, 50, 50, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      letter-spacing: 0.05em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .city-street-level {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      padding: 0 5%;
+      min-height: 44px;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0));
+    }
+
+    .city-door {
+      width: 28%;
+      height: 38px;
+      background: #3D2215;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-bottom: 0;
+      border-radius: 2px 2px 0 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .city-door .mdi {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .city-display-window {
+      flex: 1;
+      height: 32px;
+      background: linear-gradient(180deg, rgba(180, 215, 240, 0.6), rgba(200, 230, 255, 0.4));
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-bottom: 0;
+      border-radius: 2px 2px 0 0;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* DETAILED BUILDING STYLES */
+    /* Bakery */
+    .city-bakery .city-cornice {
+      background: #E07530;
+      border-top: 3px solid #CC6520;
+    }
+
+    .city-bakery .city-awning-scalloped {
+      background: #FFB07A;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 60%, 90% 100%, 80% 60%, 70% 100%, 60% 60%, 50% 100%, 40% 60%, 30% 100%, 20% 60%, 10% 100%, 0% 60%);
+      height: 14px;
+    }
+
+    .city-bakery .city-shop-sign {
+      background: #E07530;
+      border-color: #FFB880;
+    }
+
+    /* Cafe */
+    .city-cafe .city-cornice {
+      background: #D96E20;
+      border-top: 3px solid #C05A10;
+    }
+
+    .city-cafe .city-awning-flat {
+      background: #222;
+      border-bottom: 2px solid #111;
+      height: 8px;
+    }
+
+    .city-cafe .city-shop-sign {
+      background: #D96E20;
+      border-color: #FFB480;
+    }
+
+    .city-cafe .city-chalkboard {
+      margin: 2px 15% 3px;
+      padding: 2px;
+      background: #1A1A1A;
+      border: 1px solid #444;
+      border-radius: 2px;
+      color: #ddd;
+      font-size: 0.4rem;
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
+
+    /* Hotel */
+    .city-hotel .city-cornice-ornate {
+      height: 10px;
+      background: #2E4A85;
+      border-top: 3px solid #1E3668;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .city-hotel .city-awning-canopy {
+      background: #2E4A85;
+      border-bottom: 2px solid #1E3668;
+      height: 10px;
+    }
+
+    .city-hotel .city-shop-sign-formal {
+      background: #2E4A85;
+      border: 2px solid #D4A843;
+      text-transform: uppercase;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+    }
+
+    .city-hotel .city-door-gold {
+      background: linear-gradient(135deg, #D4A843, #B8923A);
+      border-color: #907020;
+    }
+
+    .city-hotel .city-cornice-band {
+      height: 4px;
+      margin: 2px 0;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Realty */
+    .city-realty .city-cornice {
+      background: #E09830;
+      border-top: 3px solid #C88020;
+    }
+
+    .city-realty .city-railing {
+      height: 5px;
+      margin: 0 8%;
+      background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0, rgba(0, 0, 0, 0.12) 2px, transparent 2px, transparent 7px);
+    }
+
+    .city-realty .city-awning-striped {
+      background: repeating-linear-gradient(90deg, #FF9030 0, #FF9030 5px, #FFF8ED 5px, #FFF8ED 10px);
+      border-bottom: 2px solid #D88020;
+    }
+
+    /* =============================================
+         BRAND PALETTE & NYC DETAILS
+         ============================================= */
+
+    /* Shared Elements */
+    .city-cornice {
+      height: 12px;
+      /* Prominent NYC cornice */
+      background: linear-gradient(180deg, rgba(30, 30, 30, 0.1) 0%, rgba(30, 30, 30, 0.2) 100%);
+      border-top: 3px solid rgba(0, 0, 0, 0.25);
+      border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.12);
+      position: relative;
+      z-index: 4;
+    }
+
+    .city-floors-stack {
+      border-left: 4px solid rgba(0, 0, 0, 0.1);
+      /* Side wall depth */
+      border-right: 2px solid rgba(0, 0, 0, 0.05);
+    }
+
+    /* Fire Escape (Applied to Hotel & Realty) */
+    .city-fire-escape {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 30%;
+      left: 35%;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .city-fire-escape::before {
+      /* Rungs */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(180deg, transparent 0, transparent 14px, #333 14px, #333 16px);
+    }
+
+    /* Stoop Steps */
+    .city-stoop {
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 12px;
+      background: repeating-linear-gradient(180deg, #999 0, #999 4px, #777 4px, #777 5px);
+      clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+      z-index: 6;
+    }
+
+    /* Strict Brand Colors */
+    /* Brand Orange: #FF5A00 */
+    /* Soft Orange: #FFD9C7 */
+    /* Brand Blue: #1F5BBE */
+    /* Soft Blue: #EAEBEC (Using #D6E4F0 for windows/sky feel) */
+
+    /* 1. BAKERY - Brand Orange */
+    .city-bakery .city-facade {
+      background: #FF5A00;
+      /* Primary Brand */
+      border: 1px solid #CC4800;
+    }
+
+    .city-bakery .city-service-floor {
+      background: #FF5A00;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .city-bakery .city-cornice {
+      background: #CC4800;
+    }
+
+    .city-bakery .city-awning-scalloped {
+      background: #FFD9C7;
+    }
+
+    /* Soft orange accent */
+
+    /* 2. CAFE - Soft Orange (Brick feel) */
+    .city-cafe .city-facade {
+      background: #E87E50;
+      /* Terracotta brick */
+      background-image: repeating-linear-gradient(0deg, transparent 0, transparent 9px, rgba(0, 0, 0, 0.1) 10px);
+    }
+
+    .city-cafe .city-service-floor {
+      background: #E87E50;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .city-cafe .city-cornice {
+      background: #333;
+    }
+
+    /* Black cornice contrast */
+    .city-cafe .city-awning-flat {
+      background: #1F2326;
+      height: 10px;
+    }
+
+    /* Dark */
+
+    /* 3. HOTEL - Brand Blue (Tallest) */
+    .city-hotel .city-facade {
+      background: #1F5BBE;
+      /* Primary Blue */
+    }
+
+    .city-hotel .city-service-floor {
+      background: #1F5BBE;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .city-hotel .city-cornice-ornate {
+      height: 18px;
+      background: #11294F;
+      /* Dark blue contrast */
+      border-top: 4px solid #0D1F3D;
+    }
+
+    .city-hotel .city-awning-canopy {
+      background: #11294F;
+    }
+
+    .city-hotel .city-door-gold {
+      background: #FFD9C7;
+      border: 2px solid #FF5A00;
+    }
+
+    /* Use brand oranges for gold */
+
+    /* 4. REALTY - Soft Blue / Limestone */
+    .city-realty .city-facade {
+      background: #EAEBEC;
+      /* Soft Blue/Grey */
+    }
+
+    .city-realty .city-service-floor {
+      background: #EAEBEC;
+      border-bottom: 1px solid #D0D4D9;
+    }
+
+    .city-realty .city-cornice {
+      background: #9EA8B3;
+    }
+
+    .city-realty .city-fire-escape {
+      border-color: #555;
+    }
+
+    .city-realty .city-fire-escape::before {
+      background-image: repeating-linear-gradient(180deg, transparent 0, transparent 14px, #555 14px, #555 16px);
+    }
+
+    .city-realty .city-floor-label {
+      color: #1F2326;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 5. RESTAURANT - Soft Orange/Brick */
+    .city-restaurant .city-facade {
+      background: #D46A43;
+      /* Darker brick */
+    }
+
+    .city-restaurant .city-service-floor {
+      background: #D46A43;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .city-restaurant .city-cornice {
+      background: #964020;
+    }
+
+    .city-restaurant .city-awning-burgundy {
+      background: #8B2E2E;
+    }
+
+    /* Replay Button Update */
+    .city-replay-btn {
+      background: #FF5A00;
+      color: #fff;
+      /* Brand button */
+      box-shadow: 0 4px 12px rgba(255, 90, 0, 0.3);
+    }
+
+    .city-replay-btn:hover {
+      background: #FF7A33;
+      transform: scale(1.05);
+    }
+
+    .city-realty .city-shop-sign {
+      background: #D88020;
+      border-color: #FFD090;
+    }
+
+    .city-realty .city-door-arched {
+      border-radius: 14px 14px 0 0;
+    }
+
+    .city-realty .city-planter {
+      width: 22%;
+      height: 8px;
+      background: #6B4020;
+      border-radius: 2px;
+      border: 1px solid #4A2810;
+    }
+
+    .city-realty .city-plant {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: -9px;
+      height: 10px;
+      background: radial-gradient(circle at 50% 70%, #5AA06A 0 4px, transparent 4px);
+    }
+
+    /* Restaurant */
+    .city-restaurant .city-cornice {
+      background: #E08040;
+      border-top: 3px solid #C86830;
+    }
+
+    .city-restaurant .city-string-lights {
+      height: 8px;
+      margin: 0 8%;
+      background: radial-gradient(circle at 50% 60%, #FFF8C0 0 2px, transparent 2px);
+      background-size: 20% 100%;
+    }
+
+    .city-restaurant .city-awning-burgundy {
+      background: #7B2D3B;
+      border-bottom: 2px solid #5A1A25;
+      height: 10px;
+    }
+
+    .city-restaurant .city-shop-sign {
+      background: #C06838;
+      border-color: #FFB888;
+    }
+
+    /* Replay Button */
+    .city-replay-btn {
+      position: absolute;
+      bottom: 28px;
+      right: 10px;
+      z-index: 20;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #FF5A00;
+      font-weight: 700;
+      font-size: 0.7rem;
+      padding: 6px 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .city-replay-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(255, 90, 0, 0.25);
+      }
+
+      /* =============================================
+         MOBILE & CONTRAST
+         ============================================= */
+
+      .illustration {
+        /* Add soft gradient sky for contrast against white buildings/brand colors */
+        background: linear-gradient(180deg, #C8D8E8 0%, #F4F7FA 80%);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      /* Ensure buildings stay tall on mobile */
+      @media (max-width: 768px) {
+        .city-buildings-row {
+          bottom: 15px;
+          gap: 1%;
+          width: 95%;
+        }
+
+        .city-building {
+          width: 17% !important;
+          /* Slightly wider on mobile to fit content */
+        }
+
+        .city-hotel {
+          width: 22% !important;
+        }
+
+        /* Scale down details but keep height */
+        .city-service-floor.is-visible {
+          height: 32px;
+        }
+
+        .city-win {
+          height: 22px;
+        }
+
+        .city-cornice {
+          height: 8px;
+        }
+
+        .city-floor-label {
+          font-size: 0.4rem;
+          padding: 1px 4px;
+        }
+      }
+
+      /* Fix "white on white" by ensuring storefronts have contrast */
+      .city-storefront {
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* PREMIUM TYPOGRAPHY UPDATE */
+      .city-floor-label {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.55rem;
+        padding: 3px 8px;
+        border-radius: 4px;
+        /* More "tech" / confident box shape */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Realty Color Update - Limestone/Warm Grey */
+      .city-realty .city-facade {
+        background: #E0E4E8;
+        /* Limestone */
+        border: 1px solid #C0C4C8;
+      }
+
+      .city-realty .city-service-floor {
+        font-size: 0.4rem;
+        padding: 1px 4px;
+      }
+    }
+
+    /* Fix "white on white" by ensuring storefronts have contrast */
+    .city-storefront {
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* PREMIUM TYPOGRAPHY UPDATE */
+    .city-floor-label {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.55rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      /* More "tech" / confident box shape */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Realty Color Update - Limestone/Warm Grey */
+    .city-realty .city-facade {
+      background: #E0E4E8;
+      /* Limestone */
+      border: 1px solid #C0C4C8;
+    }
+
+    .city-realty .city-service-floor {
+      background: #E0E4E8;
+      border-bottom: 1px solid #C0C4C8;
+    }
+
+    /* =============================================
+         BRAND PALETTE & NYC DETAILS - VIBRANT EDITION
+         ============================================= */
+
+    /* Shared Elements */
+    .city-cornice {
+      height: 14px;
+      /* Bolder */
+      background: linear-gradient(180deg, rgba(30, 30, 30, 0.15) 0%, rgba(30, 30, 30, 0.3) 100%);
+      border-top: 3px solid rgba(0, 0, 0, 0.25);
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      /* Deeper shadow */
+      position: relative;
+      z-index: 4;
+    }
+
+    .city-floors-stack {
+      border-left: 5px solid rgba(0, 0, 0, 0.12);
+      /* Deeper side wall */
+      border-right: 2px solid rgba(0, 0, 0, 0.08);
+    }
+
+    /* AC Unit Details */
+    .city-ac-unit {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 14px;
+      height: 10px;
+      background: #d0d0d0;
+      border: 1px solid #999;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+    }
+
+    .city-ac-unit::before {
+      /* Fan grid */
+      content: "";
+      position: absolute;
+      inset: 2px;
+      background: radial-gradient(circle, #555 1px, transparent 1px);
+      background-size: 3px 3px;
+    }
+
+    /* Fire Escape - Detailed */
+    .city-fire-escape {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 34%;
+      left: 33%;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.85;
+      /* More visible */
+    }
+
+    .city-fire-escape::before {
+      /* Rungs */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(180deg, transparent 0, transparent 12px, #2a2a2a 12px, #2a2a2a 14px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .city-fire-escape::after {
+      /* Diagonal railing hint */
+      content: "";
+      position: absolute;
+      top: 10%;
+      bottom: 10%;
+      left: 0;
+      right: 0;
+      background: repeating-linear-gradient(45deg, transparent 0, transparent 48%, rgba(0, 0, 0, 0.3) 49%, transparent 50%);
+      background-size: 100% 60px;
+    }
+
+    /* Stoop Steps */
+    .city-stoop {
+      position: absolute;
+      bottom: 0;
+      left: 8%;
+      right: 8%;
+      height: 14px;
+      background: repeating-linear-gradient(180deg, #888 0, #888 4px, #666 4px, #666 5px);
+      clip-path: polygon(15% 0, 85% 0, 100% 100%, 0% 100%);
+      z-index: 6;
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Water Tower (Hotel Roof) */
+    .city-water-tower {
+      position: absolute;
+      top: -35px;
+      left: 20%;
+      width: 20px;
+      height: 35px;
+      z-index: 0;
+      opacity: 0;
+      /* Hidden until built? or always there on storefront? Let's hide and reveal */
+      transition: opacity 0.5s ease 1s;
+    }
+
+    .city-hotel.is-visible .city-water-tower {
+      opacity: 1;
+    }
+
+    .city-water-tank {
+      width: 100%;
+      height: 22px;
+      background: repeating-linear-gradient(90deg, #8B5A2B 0, #8B5A2B 4px, #5D3A1A 4px, #5D3A1A 5px);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .city-water-tank::before {
+      /* Roof */
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -2px;
+      right: -2px;
+      height: 6px;
+      background: #4A3015;
+      clip-path: polygon(50% 0, 100% 100%, 0% 100%);
+    }
+
+    .city-water-legs {
+      width: 80%;
+      height: 13px;
+      margin: 0 auto;
+      border-left: 2px solid #333;
+      border-right: 2px solid #333;
+      position: relative;
+    }
+
+    .city-water-legs::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: #333;
+      transform: rotate(-15deg);
+    }
+
+
+    /* 1. BAKERY - Brand Orange (Vibrant Glow) */
+    .city-bakery .city-facade {
+      background: linear-gradient(135deg, #FF6A1A 0%, #FF5A00 100%);
+      /* Richer */
+      border: 1px solid #CC4800;
+    }
+
+    .city-bakery .city-service-floor {
+      background: linear-gradient(90deg, #FF9650, #FF5A00);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+    }
+
+    .city-bakery .city-cornice {
+      background: #B33E00;
+    }
+
+    .city-bakery .city-awning-scalloped {
+      background: repeating-linear-gradient(90deg, #FFD9C7 0, #FFD9C7 10px, #FF9050 10px, #FF9050 20px);
+    }
+
+    .city-bakery .city-street-level {
+      background: #683010;
+    }
+
+    /* Dark base for contrast */
+
+
+    /* 2. CAFE - Brick Texture (Terracotta) */
+    .city-cafe .city-facade {
+      background-color: #D66030;
+      background-image:
+        linear-gradient(335deg, rgba(0, 0, 0, 0.1) 23px, transparent 23px),
+        linear-gradient(155deg, rgba(0, 0, 0, 0.1) 23px, transparent 23px),
+        linear-gradient(335deg, rgba(0, 0, 0, 0.1) 23px, transparent 23px),
+        linear-gradient(155deg, rgba(0, 0, 0, 0.1) 23px, transparent 23px);
+      background-size: 58px 58px;
+      background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+    }
+
+    .city-cafe .city-service-floor {
+      background-color: #D66030;
+      background-image:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+        linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+      background-size: 10px 6px;
+      /* Brick pattern */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .city-cafe .city-cornice {
+      background: #222;
+      border-top: 3px solid #000;
+    }
+
+    .city-cafe .city-awning-flat {
+      background: #111;
+      height: 12px;
+    }
+
+
+    /* 3. HOTEL - Art Deco (Brand Blue) */
+    .city-hotel .city-facade {
+      background: #1F5BBE;
+    }
+
+    .city-hotel .city-service-floor {
+      background: linear-gradient(90deg, #3A70CB, #1F5BBE, #134699);
+      /* Metallic sheen */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .city-hotel .city-service-floor.is-visible::after {
+      /* Vertical pinstripes */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent 0, transparent 19%, rgba(255, 255, 255, 0.07) 20%, transparent 21%);
+      pointer-events: none;
+    }
+
+    .city-hotel .city-cornice-ornate {
+      height: 20px;
+      background: #0D264D;
+      border-top: 4px solid #081830;
+    }
+
+    .city-hotel .city-awning-canopy {
+      background: #0D264D;
+      border-bottom: 2px solid #D4A843;
+    }
+
+    /* Gold trim */
+    .city-hotel .city-door-gold {
+      background: linear-gradient(135deg, #FFD9C7, #F0B080);
+      border: 2px solid #E08030;
+      box-shadow: 0 0 10px rgba(255, 150, 50, 0.4);
+      /* Glow */
+    }
+
+
+    /* 4. REALTY - Limestone Blocks */
+    .city-realty .city-facade {
+      background: #E0E4E8;
+    }
+
+    .city-realty .city-service-floor {
+      background: #E0E4E8;
+      border-bottom: 2px solid #C0C4C8;
+      background-image: linear-gradient(90deg, transparent 49%, rgba(0, 0, 0, 0.05) 50%, transparent 51%);
+      background-size: 50% 100%;
+      /* Giant blocks */
+    }
+
+    .city-realty .city-cornice {
+      background: #88929C;
+    }
+
+    .city-realty .city-fire-escape {
+      border-color: #444;
+      width: 32%;
+      left: 34%;
+    }
+
+    .city-realty .city-floor-label {
+      color: #1F2326;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 5. RESTAURANT - Deep Brick & Night Vibe */
+    .city-restaurant .city-facade {
+      background: #B64D28;
+      /* Darker brick */
+    }
+
+    .city-restaurant .city-service-floor {
+      background: #B64D28;
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0, transparent 5px, rgba(0, 0, 0, 0.15) 6px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 10px, rgba(0, 0, 0, 0.05) 11px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .city-restaurant .city-cornice {
+      background: #7A3015;
+    }
+
+    .city-restaurant .city-awning-burgundy {
+      background: repeating-linear-gradient(90deg, #7B2D3B 0, #7B2D3B 10px, #5A1A25 10px, #5A1A25 20px);
+    }
+
+    .city-restaurant .city-string-lights {
+      background: radial-gradient(circle at 50% 50%, #FFD700 0%, rgba(255, 215, 0, 0.2) 60%, transparent 100%);
+      background-size: 12px 12px;
+      background-repeat: space;
+      height: 12px;
+      margin: -6px 5% 0;
+      /* Hang below cornice */
+      z-index: 10;
+      filter: drop-shadow(0 0 4px #FFD700);
+    }
+
+    /* Replay Button Update */
+    .city-replay-btn {
+      background: #FF5A00;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(255, 90, 0, 0.3);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .city-replay-btn:hover {
+      background: #FF7A33;
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(255, 90, 0, 0.4);
+    }
+  </style>
+
+  <!-- Fonts: Lexend (Headings/UI) & Caveat (Accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Lexend:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.min.css" />
+  <link rel="stylesheet" href="css/a11y-fixes.min.css" />
+
+
+  <!-- Google Analytics 4 - Placeholder -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script> -->
+
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json"> {
+
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Little Fight NYC",
+      "description": "Friendly IT support for NYC small businesses. On-site tech help in Manhattan, remote support nationwide.",
+      "url": "https://littlefightnyc.com",
+      "telephone": "+1-646-360-0318",
+      "email": "hello@littlefightnyc.com",
+      "address": {
+        "@type": "PostalAddress",
+          "addressLocality": "New York",
+          "addressRegion": "NY",
+          "addressCountry": "US"
+      }
+
+      ,
+      "areaServed": [ {
+        "@type": "City",
+          "name": "New York",
+          "sameAs": "https://en.wikipedia.org/wiki/New_York_City"
+      }
+
+      ,
+      {
+      "@type": "Country",
+        "name": "United States"
+    }
+
+    ],
+    "serviceType": [ "IT Support",
+    "Website Design",
+    "SEO",
+    "POS Setup",
+    "Tech Consulting"
+
+    ],
+    "priceRange": "$$",
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+    }
+    }
+
+    </script>
+  <!-- Schema.org FAQPage -->
+  <script type="application/ld+json"> {
+
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [ {
+
+        "@type": "Question",
+        "name": "I'm not good with technology. Can you still help me?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+            "text": "Absolutely—that's exactly who we're here for! We specialize in helping business owners who aren't tech-savvy. We explain everything in plain English, never make you feel dumb for asking questions, and set up systems that are easy for you to use."
+        }
+      }
+
+      ,
+      {
+
+      "@type": "Question",
+      "name": "Do you come to my business location?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+          "text": "Yes! We provide on-site IT support throughout Manhattan and the greater NYC area. We'll come directly to your shop, restaurant, office, or wherever you need us. No need to unplug everything and drag it somewhere—we come to you."
+      }
+    }
+
+    ,
+    {
+
+    "@type": "Question",
+    "name": "How much does this cost?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+        "text": "Our pricing varies based on what you need, but we're specifically designed to be affordable for small businesses. We offer a free first hour of consulting so you can understand exactly what you need before spending anything."
+    }
+    }
+
+    ,
+    {
+
+    "@type": "Question",
+    "name": "Can you help fix my POS system or cash register?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+        "text": "Yes! POS system issues are one of our specialties. We work with Square, Clover, Toast, Lightspeed, and other common systems. Whether your register is freezing or your card reader won't connect, we've got you covered."
+    }
+    }
+
+    ,
+    {
+
+    "@type": "Question",
+    "name": "Why is it called Little Fight NYC?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+        "text": "Small businesses in NYC are in a constant fight—against rising rents, big corporations, and tech that makes life harder. We help small businesses punch above their weight. When local businesses succeed, neighborhoods stay interesting."
+    }
+    }
+    }
+
+    ]
+    }
+
+    </script>
+</head>
+
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <!-- Navigation -->
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-container"><a href="index.html" class="nav-logo" aria-label="Little Fight NYC - Home">
+        <div class="nav-logo-box" aria-hidden="true">LITTLE<br />FIGHT<br />NYC </div><span class="nav-logo-text">Little
+          Fight NYC</span>
+      </a>
+      <!-- Mobile menu toggle --><button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false"
+        aria-controls="nav-links"><span></span><span></span><span></span></button>
+      <div class="nav-links" id="nav-links"><a href="index.html">Home</a><a href="services/index.html">Services</a><a
+          href="solutions/index.html">Solutions</a><a href="work/index.html">Work</a><a href='industries.html'>Industries</a><a
+          href="about/index.html">About</a><a href="blog/index.html">Blog</a><a href="contact/index.html">Contact</a><a href="contact/index.html"
+          class="nav-cta">Let's Talk</a>
+      </div>
+    </div>
+  </nav>
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-shape hero-shape-1"></div>
+      <div class="hero-shape hero-shape-2"></div>
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="hero-badge"><span class="hero-badge-dot"></span>NYC's Friendliest Tech Support
+          </div>
+          <h1 class="hero-title">We fix the tech <span class="highlight">slowing down</span> your business.</h1>
+          <p class="hero-subtitle">No tech-speak. No judgment. Just friendly, practical help for NYC small businesses
+            who have better things to do than argue with their Wi-Fi. </p>
+          <div class="hero-buttons"><a href="index.html#contact" class="btn btn-primary">Get Help Today</a><a href="services/index.html"
+              class="btn btn-secondary">See What We Do</a></div>
+          <p class="hero-note">👋 First hour of consulting is free !</p>
+        </div>
+        <div class="hero-visual">
+          <div class="illustration" id="streetStage">
+            <!-- NYC Skyline silhouette -->
+            <div class="city-skyline-bg"></div>
+            <div class="city-sky"></div>
+            <div class="city-buildings-row" id="buildingsRow">
+              <!-- 1. BAKERY — warm bright orange -->
+              <div class="city-building city-bakery" data-slug="bakery">
+                <div class="city-floors-stack"></div>
+                <div class="city-storefront">
+                  <div class="city-facade">
+                    <div class="city-cornice"></div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win city-win-round"><i class="mdi mdi-bread-slice" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win"></div>
+                    </div>
+                    <div class="city-awning city-awning-scalloped"></div>
+                    <div class="city-shop-sign">Bakery</div>
+                    <div class="city-street-level">
+                      <div class="city-door"><i class="mdi mdi-door-open" aria-hidden="true"></i></div>
+                      <div class="city-display-window"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 2. CAFE — deeper orange, chalkboard -->
+              <div class="city-building city-cafe" data-slug="cafe">
+                <div class="city-floors-stack"></div>
+                <div class="city-storefront">
+                  <div class="city-facade">
+                    <div class="city-cornice"></div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win">
+                        <div class="city-ac-unit"></div>
+                      </div>
+                    </div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win">
+                        <div class="city-ac-unit"></div>
+                      </div>
+                    </div>
+                    <div class="city-awning city-awning-flat"></div>
+                    <div class="city-shop-sign">Caf&eacute;
+                    </div>
+                    <div class="city-chalkboard"><i class="mdi mdi-coffee" aria-hidden="true"></i>MENU</div>
+                    <div class="city-street-level">
+                      <div class="city-door city-door-narrow"><i class="mdi mdi-door-closed" aria-hidden="true"></i>
+                      </div>
+                      <div class="city-display-window city-display-window-wide"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 3. HOTEL — CENTER HERO, rich blue, tallest facade -->
+              <div class="city-building city-hotel" data-slug="hotel">
+                <div class="city-water-tower">
+                  <div class="city-water-tank"></div>
+                  <div class="city-water-legs"></div>
+                </div>
+                <div class="city-floors-stack"></div>
+                <div class="city-storefront">
+                  <div class="city-facade">
+                    <div class="city-cornice city-cornice-ornate"></div>
+                    <div class="city-upper-floor">
+                      <div class="city-win city-win-arched"></div>
+                      <div class="city-win city-win-arched"></div>
+                      <div class="city-win city-win-arched"></div>
+                    </div>
+                    <div class="city-cornice-band"></div>
+                    <div class="city-upper-floor">
+                      <div class="city-win city-win-arched"></div>
+                      <div class="city-win city-win-arched"></div>
+                      <div class="city-win city-win-arched"></div>
+                    </div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win"></div>
+                      <div class="city-win"></div>
+                    </div>
+                    <div class="city-awning city-awning-canopy"></div>
+                    <div class="city-shop-sign city-shop-sign-formal">Hotel &amp;
+                      Suites</div>
+                    <div class="city-street-level">
+                      <div class="city-display-window city-display-window-formal"></div>
+                      <div class="city-door city-door-gold"><i class="mdi mdi-door-open" aria-hidden="true"></i></div>
+                      <div class="city-display-window city-display-window-formal"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 4. REALTY — bright yellow-orange, formal -->
+              <div class="city-building city-realty" data-slug="realty">
+                <div class="city-floors-stack"></div>
+                <div class="city-storefront">
+                  <div class="city-facade">
+                    <div class="city-cornice"></div>
+                    <div class="city-railing"></div>
+                    <div class="city-upper-floor">
+
+                      <!-- Added structure for refinement -->
+                      <div class="city-win">
+                        <div class="city-ac-unit"></div>
+                      </div>
+                      <!-- AC Unit Added -->
+                      <div class="city-win"></div>
+                    </div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win">
+                        <div class="city-ac-unit"></div>
+                      </div>
+                      <!-- AC Unit Added -->
+                    </div>
+                    <div class="city-awning city-awning-striped"></div>
+                    <div class="city-shop-sign">Realty</div>
+                    <div class="city-street-level">
+                      <div class="city-stoop"></div>
+                      <!-- Added structure for refinement -->
+                      <div class="city-door city-door-arched"><i class="mdi mdi-home-city" aria-hidden="true"></i></div>
+                      <div class="city-display-window"></div>
+                      <div class="city-planter">
+                        <div class="city-plant"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 5. RESTAURANT — soft warm orange, string lights -->
+              <div class="city-building city-restaurant" data-slug="restaurant">
+                <div class="city-floors-stack"></div>
+                <div class="city-storefront">
+                  <div class="city-facade">
+                    <div class="city-cornice"></div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win"></div>
+                    </div>
+                    <div class="city-upper-floor">
+                      <div class="city-win"></div>
+                      <div class="city-win"></div>
+                    </div>
+                    <div class="city-string-lights"></div>
+                    <div class="city-awning city-awning-burgundy"></div>
+                    <div class="city-shop-sign">Restaurant</div>
+                    <div class="city-street-level">
+                      <div class="city-door city-door-double"><i class="mdi mdi-silverware-fork-knife"
+                          aria-hidden="true"></i></div>
+                      <div class="city-display-window"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="city-sidewalk"></div>
+            <!-- Replay button --><button id="replayBtn" class="city-replay-btn" type="button"
+              aria-label="Replay growth animation"><i class="mdi mdi-replay" aria-hidden="true"></i>Replay
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="proof-strip section-shell">
+      <div class="container">
+        <p class="proof-strip-label">Built for the businesses that keep NYC alive </p>
+        <h2 class="sr-only">Why small businesses choose Little Fight NYC</h2>
+        <div class="proof-pill-grid">
+          <article class="proof-pill">
+            <h3>Clear Descriptions</h3>
+            <p>We describe what you do in simple words that your customers (and Google) can understand right away. </p>
+          </article>
+          <article class="proof-pill">
+            <h3>Easy to Use</h3>
+            <p>Your site will look great and work perfectly on every phone, making it simple for people to trust you.
+            </p>
+          </article>
+          <article class="proof-pill">
+            <h3>Trustworthy Details</h3>
+            <p>We make sure your phone number, location, and services are easy to find so customers can reach out with
+              confidence. </p>
+          </article>
+        </div>
+        <p class="proof-strip-links">See it in action: <a href="work/index.html">Case studies</a>· <a
+            href="services/index.html">Services</a>· <a href="contact/index.html">Start a project</a></p>
+      </div>
+    </section>
+    <!-- Services Section -->
+    <div class="section-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path fill="rgba(234,235,236,0.5)" d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,20 1440,40 L1440,80 L0,80 Z" />
+      </svg>
+    </div>
+    <section id="services" class="section-shell section-shell-soft">
+      <div class="container">
+        <div class="section-header sr-reveal">
+          <p class="section-eyebrow">WHAT WE DO</p>
+          <h2 class="section-title">Tech Support That Actually Makes Sense</h2>
+          <p class="section-description">From fixing your website to stable Wi-Fi, we handle the technical headaches so
+            you can focus on what you're best at. </p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-lan-connect" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/on-site-it-support-nyc/index.html">On-Site IT Support</a></h3>
+            <p class="service-description">We show up and fix it. Mac,
+              PC,
+              printers,
+              Wi-Fi,
+              POS systems—whatever's driving you crazy.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-monitor-dashboard" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/website-design-small-business-nyc/index.html">Website Design</a>
+            </h3>
+            <p class="service-description">Beautiful,
+              fast websites that actually bring in customers. Built on platforms you can update yourself. </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-map-marker-radius" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/local-seo-and-google-ads-nyc/index.html">Getting Found on Google</a></h3>
+            <p class="service-description">We help neighbors find you on Google Search and Maps. We handle all the
+              technical settings for you. </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-cellphone" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/apple-device-setup-and-management/index.html">Apple Device
+                Setup</a></h3>
+            <p class="service-description">iPhones,
+              iPads,
+              Macs for your team—set up,
+              secured,
+              and managed simply. </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-palette-outline" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/branding-and-identity-design/index.html">Branding & Identity</a>
+            </h3>
+            <p class="service-description">Need a logo,
+              name,
+              or complete visual identity? We'll help you
+              look legit. </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-cart-outline" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/ecommerce-setup-shopify-square-woocommerce/index.html">E-Commerce
+                Setup</a></h3>
+            <p class="service-description">Start selling online with Shopify,
+              Square,
+              or WooCommerce. We set it all up. </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-cash-register" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/pos-and-register-setup-nyc/index.html">POS & Registers</a></h3>
+            <p class="service-description">Square,
+              Clover,
+              Toast—we work with them all. Setup,
+              troubleshooting,
+              training. </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-compass-outline" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/tech-consulting-small-business/index.html">Just Want to Chat?</a>
+            </h3>
+            <p class="service-description">Not sure what you need or where to start? Let's talk it through. Your first
+              hour with us is always free.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon"><i class="mdi mdi-home-automation" aria-hidden="true"></i></div>
+            <h3 class="service-title"><a href="services/smart-home-services-nyc/index.html">Smart Home & Business
+                Systems</a></h3>
+            <p class="service-description">Planning,
+              deployment,
+              and maintenance for smart homes,
+              apartments,
+              offices,
+              and retail spaces. </p>
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 28px"><a href="services/index.html" class="btn btn-secondary">Explore
+            All Service Pages</a></p>
+      </div>
+    </section>
+    <section class="premium-difference section-shell section-shell-soft">
+      <div class="container premium-difference-grid">
+        <div class="premium-difference-copy">
+          <p class="section-eyebrow">WHAT FEELS DIFFERENT</p>
+          <h2 class="section-title">Premium Means Less Stress, Not More Complicated</h2>
+          <p class="section-description">When your website is fast and your message is clear, customers know they can
+            trust you. We make sure everything works perfectly so you don't have to worry about it. </p>
+          <div class="premium-difference-links"><a href="blog/index.html">Read strategy insights</a><a
+              href="services/website-design-small-business-nyc/index.html">Explore website design</a></div>
+        </div>
+        <div class="premium-difference-list">
+          <article class="premium-point">
+            <h3>Before</h3>
+            <p>A slow website, confusing links, and customers who aren't sure how to reach you. </p>
+          </article>
+          <article class="premium-point">
+            <h3>After</h3>
+            <p>A fast, professional site where everyone knows exactly what you offer and how to get help. </p>
+          </article>
+          <article class="premium-point">
+            <h3>Outcome</h3>
+            <p>Fewer confusing questions on the phone. More calls from people who are ready to work with you. </p>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- About / CTA Section -->
+    <section id="about" class="cta-section section-shell">
+      <div class="container">
+        <div class="section-header sr-reveal">
+          <p class="section-eyebrow">WHY US</p>
+          <h2 class="section-title">We're Small Business People, Just Like You</h2>
+          <p class="section-description">Big companies have huge IT departments and confusing help desks. You have us—a
+            friendly team that actually cares about keeping New York's local businesses running smoothly. </p>
+        </div>
+      </div>
+    </section>
+    <!-- Service Areas -->
+    <section id="areas" class="section-shell section-shell-soft">
+      <div class="container">
+        <div class="section-header sr-reveal">
+          <p class="section-eyebrow">WHERE WE HELP</p>
+          <h2 class="section-title">Manhattan On-Site+Nationwide Remote</h2>
+          <p class="section-description">On-site IT support throughout Manhattan. Remote support for small
+            businesses anywhere in the United States. </p>
+        </div>
+        <div style="
+ display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+    ">
+          <div style="
+ background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    ">
+            <h3 style="font-weight: 700; margin-bottom: 12px">🗽 Manhattan On-Site Service </h3>
+            <p style="color: #595959; margin-bottom: 12px"><a href='areas/east-village.html' style='color: #407c8a; text-decoration: none'>East Village</a>• <a href='areas/lower-east-side.html' style='color: #407c8a; text-decoration: none'>Lower East
+                Side</a>• <a href='areas/west-village.html' style='color: #407c8a; text-decoration: none'>West
+                Village</a></p>
+            <p style="color: #595959; margin-bottom: 12px"><a href='areas/meatpacking-district.html' style='color: #407c8a; text-decoration: none'>Meatpacking District</a>• <a href='areas/soho.html' style='color: #407c8a; text-decoration: none'>SoHo</a>• <a href='areas/midtown.html' style='color: #407c8a; text-decoration: none'>Midtown</a></p>
+            <p style="color: #595959"><a href='areas/upper-east-side.html' style='color: #407c8a; text-decoration: none'>Upper East Side</a></p>
+          </div>
+          <div style="
+ background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    ">
+            <h3 style="font-weight: 700; margin-bottom: 12px">🌎 Helping You Wherever You Are </h3>
+            <p style="color: #595959">Not in Manhattan? We've got you covered. We help small businesses across all 50
+              states with remote support. Whether it's a quick phone call or sharing your screen, we're your personal IT
+              team no matter where you're located.
+            </p>
+            <p style="color: #595959; margin-top: 12px">🖥️ Screen sharing troubleshooting<br /><i class="mdi mdi-phone"
+                aria-hidden="true"></i>Phone & video support<br />🌐 Website design &
+              SEO<br />☁️ Cloud setup & management </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ Section -->
+    <section id="faq" class="section-shell">
+      <div class="container">
+        <div class="section-header sr-reveal">
+          <p class="section-eyebrow">FAQ</p>
+          <h2 class="section-title">Questions We Get A Lot</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-question">I'm not good with technology. Can you still
+              help me?
+              <span class="faq-icon" aria-hidden="true"><i class="mdi mdi-chevron-down"></i></span></button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">Absolutely—that's exactly who we're here for! We specialize in helping
+                business owners who don't want to deal with tech. We explain everything in plain English, we'll never
+                make you feel bad for asking a queston, and we'll make sure your systems are simple and easy to use.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-question">Do you come to my business location? <span class="faq-icon"
+                aria-hidden="true"><i class="mdi mdi-chevron-down"></i></span></button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">Yes ! We provide on-site IT support throughout Manhattan and
+                the greater NYC area. We'll come directly to your shop,
+                restaurant,
+                office,
+                or wherever you need us. No need to unplug everything and drag it somewhere—we come to
+                you. </div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-question">How much does this cost? <span class="faq-icon"
+                aria-hidden="true"><i class="mdi mdi-chevron-down"></i></span></button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">Our pricing varies based on what you need,
+                but we're
+                specifically designed to be affordable for small businesses. We offer a free first hour of
+                consulting so you can understand exactly what you need before spending anything. </div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-question">Can you help fix my POS system or cash
+              register? <span class="faq-icon" aria-hidden="true"><i class="mdi mdi-chevron-down"></i></span></button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">Yes ! POS system issues are one of our specialties. We work
+                with Square,
+                Clover,
+                Toast,
+                Lightspeed,
+                and other common systems. Whether your register is freezing or your card reader won't
+                connect, we' ve got you covered. </div>
+            </div>
+          </div>
+          <div class="faq-item"><button class="faq-question">Why is it called Little Fight NYC? <span class="faq-icon"
+                aria-hidden="true"><i class="mdi mdi-chevron-down"></i></span></button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">Small businesses in New York are constantly working hard against rising
+                costs and big corporations. We're here to help the "little guy" stand tall. When local businesses
+                succeed, our neighborhoods stay unique and interesting. </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="section-shell section-shell-soft">
+      <div class="container">
+        <div class="section-header sr-reveal">
+          <p class="section-eyebrow">GET IN TOUCH</p>
+          <h2 class="section-title">We’re Here to Make Tech Easy for You</h2>
+          <p class="section-description">Have a quick question? Need someone to take a look at a problem? Or just want
+            to talk about how to make your tech work better? We’re always happy to help. </p>
+        </div>
+        <div class="contact-grid">
+          <div><a href="mailto:hello@littlefightnyc.com" class="contact-info-item"
+              style="text-decoration: none; color: inherit">
+              <div class="contact-icon"><i class="mdi mdi-email-outline" aria-hidden="true"></i></div>
+              <div>
+                <div style="font-size: 0.875rem; color: #767676">Email us </div>
+                <div style="font-size: 1.1rem; font-weight: 600">hello@littlefightnyc.com </div>
+              </div>
+            </a><a href="tel:+16463600318" class="contact-info-item" style="text-decoration: none; color: inherit">
+              <div class="contact-icon"><i class="mdi mdi-phone-outline" aria-hidden="true"></i></div>
+              <div>
+                <div style="font-size: 0.875rem; color: #767676">Call us</div>
+                <div style="font-size: 1.1rem; font-weight: 600">646-360-0318 </div>
+              </div>
+            </a>
+            <div class="contact-info-item">
+              <div class="contact-icon"><i class="mdi mdi-map-marker" aria-hidden="true"></i></div>
+              <div>
+                <div style="font-size: 0.875rem; color: #767676">Based in </div>
+                <div style="font-size: 1.1rem; font-weight: 600">Manhattan, NYC </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-container">
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden"
+                name="form-name" value="contact" />
+              <!-- Honeypot for spam protection -->
+              <p class="hidden" style="display: none" aria-hidden="true"><label>Don't fill this out:
+                  <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+              <div class="form-row">
+                <div><label class="form-label" for="contact-name">Your Name</label><input type="text" name="name"
+                    id="contact-name" class="form-input" placeholder="Jane Smith" required /></div>
+                <div><label class="form-label" for="contact-email">Email</label><input type="email" name="email"
+                    id="contact-email" class="form-input" placeholder="jane@business.com" required /></div>
+              </div>
+              <div class="form-row">
+                <div><label class="form-label" for="contact-business">Business Name</label><input type="text"
+                    name="business" id="contact-business" class="form-input" placeholder="Jane's Coffee Shop" /></div>
+                <div><label class="form-label" for="contact-location">How can we help? (Optional)</label><textarea
+                    name="location" id="contact-location" class="form-input"
+                    placeholder="Tell us a little bit about what's on your mind (e.g., 'My Wi-Fi is slow' or 'I need a new website')..."
+                    style="min-height: 100px; padding-top: 12px"></textarea></div><button type="submit"
+                  class="btn btn-primary" style="width: 100%">Get in Touch </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">
+            <div class="footer-logo-box">LITTLE<br />FIGHT<br />NYC</div><span
+              style="font-weight: 800; font-size: 1.1rem">Little Fight NYC</span>
+          </div>
+          <p class="footer-text">Helping small businesses punch above their weight. Tech support that actually
+            makes sense. </p>
+        </div>
+        <div>
+          <h2 class="footer-heading">Services</h2>
+          <div class="footer-links"><a href="services/on-site-it-support-nyc/index.html">On-Site IT</a><a
+              href="services/website-design-small-business-nyc/index.html">Websites</a><a
+              href="services/local-seo-and-google-ads-nyc/index.html">Local SEO</a><a
+              href="services/pos-and-register-setup-nyc/index.html">POS Setup</a><a
+              href="services/apple-device-setup-and-management/index.html">Apple MDM</a></div>
+        </div>
+        <div>
+          <h2 class="footer-heading">Company</h2>
+          <div class="footer-links"><a href="index.html">Home</a><a href="solutions/index.html">Solutions</a><a href="about/index.html">About
+              Us</a><a href="work/index.html">Work</a><a href='industries.html'>Industries</a><a href="blog/index.html">Blog</a><a
+              href="contact/index.html">Contact</a></div>
+        </div>
+        <div>
+          <h2 class="footer-heading">Get In Touch</h2>
+          <div class="footer-links"><a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a><a
+              href="tel:+16463600318">646-360-0318</a><a href="contact/index.html">Manhattan, NYC</a></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copyright">© 2026 Little Fight NYC. Built in New York with guts & grit. </p>
+        <div class="footer-legal"><a href='privacy.html'>Privacy Policy</a><a href='terms.html'>Terms of
+            Service</a></div>
+      </div>
+      <!-- Required footer credit -->
+      <!-- Required footer credit -->
+      <div class="footer-credit"><a href="https://littlefightnyc.com" target="_blank" rel="noopener">Designed,
+          Hosted and Cared For by LittleFightNYC.com</a></div>
+    </div>
+  </footer>
+  <script src="js/main.min.js" defer></script>
+  <script src="js/city-growth.min.js" defer></script>
+
+  <script>
+    /* Scroll-Reveal Observer */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.sr-reveal').forEach(function (el) { el.classList.add('sr-visible'); });
+        return;
+      }
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.sr-reveal').forEach(function (el) { el.classList.add('sr-visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('sr-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.sr-reveal').forEach(function (el) { obs.observe(el); });
+    })();
+  </script>
+<script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+
+</html>

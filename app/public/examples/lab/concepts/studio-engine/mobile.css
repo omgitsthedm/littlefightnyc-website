@@ -1,0 +1,372 @@
+.mobile-workspace {
+  display: none;
+}
+
+@media (max-width: 1080px) {
+  .mobile-workspace {
+    position: sticky;
+    top: 10px;
+    z-index: 9;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+    padding: 8px;
+  }
+
+  .mobile-pane-chip {
+    min-height: 44px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    font: inherit;
+    transition:
+      transform var(--transition),
+      background-color var(--transition),
+      border-color var(--transition),
+      color var(--transition),
+      box-shadow var(--transition);
+  }
+
+  .mobile-pane-chip.active {
+    border-color: rgba(255, 102, 0, 0.55);
+    background: rgba(255, 102, 0, 0.12);
+    box-shadow: 0 0 30px rgba(255, 102, 0, 0.08);
+  }
+
+  .mobile-pane-chip:hover {
+    transform: translateY(-2px) scale(1.003);
+  }
+
+  .app-shell[data-mobile-pane='scene'] [data-mobile-pane='signal'],
+  .app-shell[data-mobile-pane='scene'] [data-mobile-pane='brain'],
+  .app-shell[data-mobile-pane='signal'] [data-mobile-pane='scene'],
+  .app-shell[data-mobile-pane='signal'] [data-mobile-pane='brain'],
+  .app-shell[data-mobile-pane='brain'] [data-mobile-pane='signal'],
+  .app-shell[data-mobile-pane='brain'] [data-mobile-pane='scene'] {
+    display: none;
+  }
+
+  .cockpit-layout {
+    grid-template-columns: 1fr;
+    margin-top: 14px;
+  }
+
+  .signal-panel,
+  .scene-panel,
+  .brain-panel {
+    padding: 16px;
+  }
+
+  .scene-panel {
+    min-height: calc(100svh - 250px);
+  }
+
+  .scene-stage {
+    min-height: max(500px, calc(100svh - 360px));
+    padding: 16px;
+  }
+
+  .device-stack[data-layout='duo'] {
+    grid-template-columns: 1fr;
+  }
+
+  .device-frame,
+  .device-mobile {
+    justify-self: center;
+    max-width: 100%;
+  }
+
+  .device-viewport {
+    height: min(68svh, 720px);
+  }
+
+  .device-mobile .device-viewport {
+    height: min(64svh, 620px);
+  }
+
+  .segmented-chip[data-viewport-button='duo'] {
+    display: none;
+  }
+
+  .segmented-control {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .bottom-dock {
+    position: sticky;
+    bottom: 10px;
+    z-index: 8;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    align-items: stretch;
+    padding: 10px;
+    margin-top: 16px;
+  }
+
+  .dock-lights,
+  .version-cluster {
+    display: none;
+  }
+
+  .dock-actions {
+    display: contents;
+  }
+
+  .bottom-dock .dock-button {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 780px) {
+  .app-shell {
+    width: min(100vw - 12px, 100%);
+    padding: 12px 0 94px;
+  }
+
+  .topbar {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .topbar::before,
+  .signal-panel::before,
+  .scene-panel::before,
+  .brain-panel::before,
+  .bottom-dock::before {
+    width: 34px;
+    height: 34px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .brand-group {
+    gap: 12px;
+    align-items: center;
+  }
+
+  .brand-plate {
+    min-width: 76px;
+    padding: 9px;
+    border-radius: 14px;
+    font-size: 0.62rem;
+  }
+
+  .console-strip,
+  .subhead,
+  .workflow-strip {
+    display: none;
+  }
+
+  h1 {
+    font-size: clamp(1.55rem, 6vw, 2rem);
+  }
+
+  .topbar-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .metric-card,
+  .metric-card-signal {
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .metric-card strong {
+    font-size: 0.84rem;
+    line-height: 1.2;
+  }
+
+  .metric-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .signal-meter {
+    height: 8px;
+  }
+
+  .topbar-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .topbar-actions .ghost-button,
+  .topbar-actions .primary-button {
+    width: auto;
+    min-height: 42px;
+    padding: 0 10px;
+    font-size: 0.74rem;
+  }
+
+  .panel-kicker,
+  .scene-kicker {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .mode-switch {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .mode-chip,
+  .segmented-chip {
+    width: auto;
+    min-height: 42px;
+    padding: 0 10px;
+  }
+
+  .scene-controls {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .menu-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .menu-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .live-ribbon {
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    font-size: 0.72rem;
+  }
+
+  .scene-stage {
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  .scene-hud {
+    inset: 16px;
+  }
+
+  .device-header,
+  .device-mobile-meta {
+    font-size: 0.68rem;
+  }
+
+  .device-frame {
+    border-radius: 22px;
+  }
+
+  .device-viewport {
+    height: min(62svh, 680px);
+  }
+
+  .device-mobile {
+    width: min(100%, 330px);
+    max-width: 330px;
+  }
+
+  .device-mobile .device-viewport {
+    height: min(58svh, 560px);
+  }
+
+  .phone-shell {
+    padding: 10px;
+    border-radius: 36px;
+  }
+
+  .phone-screen {
+    border-radius: 28px;
+  }
+
+  .phone-topbar {
+    padding: 10px 14px 6px;
+    font-size: 0.68rem;
+  }
+
+  .phone-island {
+    width: 92px;
+    height: 24px;
+  }
+
+  .phone-home-indicator {
+    width: 96px;
+  }
+
+  .signal-panel,
+  .scene-panel,
+  .brain-panel {
+    padding: 16px;
+  }
+
+  .field-grid,
+  .color-grid,
+  .output-grid,
+  .site-grid-3,
+  .site-grid-2,
+  .site-grid-contact,
+  .site-hero,
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .signal-accordion summary {
+    align-items: flex-start;
+  }
+
+  .accordion-meta {
+    text-align: left;
+  }
+
+  .brain-scroll {
+    gap: 10px;
+  }
+
+  .brain-card {
+    padding: 16px;
+  }
+
+  .ai-orb {
+    top: 10px;
+    right: 10px;
+    width: 64px;
+    height: 64px;
+  }
+
+  .orb-core {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 520px) {
+  .topbar-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric-card-signal {
+    grid-column: 1 / -1;
+  }
+
+  .topbar-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topbar-actions .primary-button {
+    grid-column: 1 / -1;
+  }
+}

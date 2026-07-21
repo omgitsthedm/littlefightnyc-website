@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Little Fight NYC | We Fix The Tech Slowing Down Your Business</title>
+  <meta
+    name="description"
+    content="Little Fight NYC builds websites, automations, and digital tools for New York City small businesses ready to punch above their weight."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bg: #070a11;
+      --panel: rgba(11, 15, 24, 0.96);
+      --panel-soft: rgba(14, 19, 30, 0.94);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f2f4f8;
+      --muted: #9ea7b7;
+      --orange: #fe5800;
+      --orange-deep: #e44f00;
+      --orange-soft: rgba(254, 88, 0, 0.18);
+      --blue-soft: rgba(8, 145, 178, 0.16);
+      --shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 12px 12px 28px;
+      color: var(--text);
+      font-family: "Manrope", sans-serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 14% 10%, rgba(254, 88, 0, 0.12), transparent 24%),
+        radial-gradient(circle at 86% 14%, rgba(8, 145, 178, 0.08), transparent 22%),
+        linear-gradient(180deg, #04070d 0%, #070b13 54%, #04070d 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.28;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .panel {
+      width: min(calc(100vw - 24px), 1180px);
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+        var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(circle at center, black 42%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(254, 88, 0, 0.08);
+      border: 1px solid rgba(254, 88, 0, 0.12);
+      color: #ff9d6e;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 12px rgba(254, 88, 0, 0.5);
+    }
+
+    .site-hero {
+      min-height: calc(100vh - 24px);
+      display: flex;
+      flex-direction: column;
+      padding: 22px 24px 28px;
+    }
+
+    .masthead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--orange), #ff7a38);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(254, 88, 0, 0.24);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: #a3acbc;
+      font-size: 0.84rem;
+    }
+
+    .nav a {
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .nav-cta {
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), #ff7a38);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 8px 22px rgba(254, 88, 0, 0.22);
+    }
+
+    .hero-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 0.84fr) minmax(320px, 0.9fr);
+      gap: 24px;
+      align-items: center;
+      padding: 52px 0 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0 0;
+      max-width: 9ch;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(3rem, 7.2vw, 5.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-copy h1 .accent {
+      color: var(--orange);
+    }
+
+    .hero-copy p {
+      margin: 18px 0 0;
+      max-width: 34ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.94rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--orange), #ff7a38);
+      color: #fff;
+      box-shadow: 0 10px 26px rgba(254, 88, 0, 0.22);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #e5e9f2;
+    }
+
+    .hero-art {
+      position: relative;
+      min-height: 420px;
+      overflow: hidden;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 24% 30%, rgba(254, 88, 0, 0.16), transparent 28%),
+        radial-gradient(circle at 74% 28%, rgba(255, 255, 255, 0.05), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 38%);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.4;
+    }
+
+    .hero-orb.o1 {
+      left: -4%;
+      top: 24%;
+      width: 220px;
+      height: 220px;
+      background: rgba(254, 88, 0, 0.52);
+    }
+
+    .hero-orb.o2 {
+      right: -6%;
+      bottom: 20%;
+      width: 180px;
+      height: 180px;
+      background: rgba(8, 145, 178, 0.26);
+    }
+
+    .hero-city {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 65%;
+      opacity: 0.38;
+    }
+
+    .hero-city .tower {
+      position: absolute;
+      bottom: 0;
+      border-radius: 8px 8px 0 0;
+      background:
+        linear-gradient(180deg, rgba(56, 62, 76, 0.92), rgba(22, 26, 36, 0.98)),
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 5px, transparent 5px 10px);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-city .tower::after {
+      content: "";
+      position: absolute;
+      inset: 14% 22%;
+      background:
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0 4px, transparent 4px 10px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 8px, transparent 8px 16px);
+      opacity: 0.16;
+    }
+
+    .hero-city .t1 { left: 8%; width: 10%; height: 28%; }
+    .hero-city .t2 { left: 20%; width: 8%; height: 44%; }
+    .hero-city .t3 { left: 31%; width: 12%; height: 38%; }
+    .hero-city .t4 { left: 47%; width: 9%; height: 64%; }
+    .hero-city .t5 { left: 60%; width: 14%; height: 48%; }
+    .hero-city .t6 { left: 78%; width: 12%; height: 36%; }
+
+    .hero-floor {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 30%;
+      background:
+        linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.02) 26%, rgba(255, 255, 255, 0.04)),
+        linear-gradient(90deg, transparent 0 12%, rgba(255, 255, 255, 0.08) 12% 18%, transparent 18% 36%, rgba(255, 255, 255, 0.08) 36% 42%, transparent 42% 60%, rgba(255, 255, 255, 0.08) 60% 66%, transparent 66% 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .scroll-cue {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #7e8797;
+      font-size: 0.76rem;
+      text-align: center;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .scroll-cue::before {
+      content: "↓";
+      color: #c8cfdb;
+      font-size: 1rem;
+    }
+
+    .section {
+      padding: 56px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-header h2 {
+      margin: 14px 0 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.2rem, 4.8vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .section-header p {
+      max-width: 58ch;
+      margin: 16px auto 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: #ff9d6e;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: var(--panel-soft);
+      overflow: hidden;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    .card-preview {
+      position: relative;
+      height: 170px;
+      background: linear-gradient(180deg, rgba(20, 26, 42, 0.96), rgba(14, 18, 28, 0.98));
+      overflow: hidden;
+    }
+
+    .card-preview::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.45;
+    }
+
+    .card-status {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(254, 88, 0, 0.1);
+      border: 1px solid rgba(254, 88, 0, 0.16);
+      color: #ff9d6e;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .preview-storefront .local-mini {
+      position: absolute;
+      left: 18%;
+      bottom: 22%;
+      width: 26%;
+      height: 40%;
+      border-radius: 16px 16px 12px 12px;
+      background: linear-gradient(180deg, #ffbc96 0%, #ff9a63 14%, var(--orange) 14%, var(--orange-deep) 100%);
+      box-shadow: 0 10px 24px rgba(254, 88, 0, 0.18);
+    }
+
+    .preview-storefront .local-mini::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 12%;
+      height: 16%;
+      border-radius: 8px;
+      background: repeating-linear-gradient(90deg, #fff2ea 0 10px, #ff7d3a 10px 20px);
+    }
+
+    .preview-storefront .local-mini::after {
+      content: "";
+      position: absolute;
+      left: 40%;
+      bottom: 0;
+      width: 20%;
+      height: 34%;
+      border-radius: 8px 8px 0 0;
+      background: rgba(10, 14, 22, 0.62);
+    }
+
+    .preview-storefront .chain-mini {
+      position: absolute;
+      right: 12%;
+      bottom: 22%;
+      width: 32%;
+      height: 46%;
+      border-radius: 20px 20px 14px 14px;
+      background: linear-gradient(180deg, #9199ab 0%, #656d7d 54%, #313846 100%);
+      opacity: 0.9;
+    }
+
+    .preview-storefront .chain-mini::before {
+      content: "";
+      position: absolute;
+      inset: 14% auto -10% -42%;
+      width: 72%;
+      background: linear-gradient(90deg, rgba(8, 12, 20, 0.56), rgba(8, 12, 20, 0));
+      filter: blur(12px);
+    }
+
+    .preview-storefront .beam-mini {
+      position: absolute;
+      left: 44%;
+      bottom: 40%;
+      width: 18%;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--orange), #0891b2);
+      box-shadow: 0 0 14px rgba(254, 88, 0, 0.24);
+    }
+
+    .preview-impact {
+      background:
+        radial-gradient(circle at 12% 50%, rgba(255, 51, 51, 0.46), transparent 28%),
+        radial-gradient(circle at 82% 52%, rgba(255, 107, 107, 0.36), transparent 26%),
+        radial-gradient(circle at 52% 78%, rgba(255, 71, 87, 0.28), transparent 22%),
+        linear-gradient(180deg, #0a0a0a, #07070b);
+    }
+
+    .preview-impact .impact-text {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #f4f5f8;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+    }
+
+    .preview-tech .corp-block {
+      position: absolute;
+      left: 16%;
+      bottom: 26%;
+      width: 18%;
+      height: 40%;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(180deg, #1a1e2d, #151824);
+      border: 1px solid #2a2f45;
+      opacity: 0.78;
+    }
+
+    .preview-tech .corp-block::before {
+      content: "";
+      position: absolute;
+      inset: 12% 18%;
+      background:
+        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 4px, transparent 4px 10px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 8px, transparent 8px 16px);
+      opacity: 0.22;
+    }
+
+    .preview-tech .biz-core {
+      position: absolute;
+      right: 20%;
+      bottom: 34%;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--orange), #ff6b35);
+      box-shadow: 0 0 28px rgba(254, 88, 0, 0.28);
+    }
+
+    .preview-tech .biz-core::before,
+    .preview-tech .biz-core::after {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      border-radius: 50%;
+      border: 2px dashed rgba(8, 145, 178, 0.35);
+    }
+
+    .preview-tech .biz-core::after {
+      inset: -40px;
+      border-color: rgba(254, 88, 0, 0.26);
+    }
+
+    .preview-tech .node {
+      position: absolute;
+      right: 13%;
+      bottom: 26%;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0d1120;
+      border: 1px solid #0891b2;
+      box-shadow: 0 0 12px rgba(8, 145, 178, 0.22);
+    }
+
+    .preview-tech .node.n2 {
+      right: 30%;
+      bottom: 22%;
+      border-color: var(--orange);
+    }
+
+    .preview-tech .stream {
+      position: absolute;
+      left: 44%;
+      bottom: 46%;
+      width: 32%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #0891b2, var(--orange), transparent);
+      opacity: 0.84;
+    }
+
+    .card-body {
+      padding: 18px 18px 16px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.04rem;
+      line-height: 1.3;
+    }
+
+    .card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(8, 145, 178, 0.1);
+      border: 1px solid rgba(8, 145, 178, 0.16);
+      color: #5bd3ef;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 26px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-card {
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: var(--panel-soft);
+    }
+
+    .service-card h3 {
+      margin: 14px 0 0;
+      font-size: 1.08rem;
+    }
+
+    .service-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .service-card .pill {
+      padding: 5px 9px;
+      font-size: 0.62rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 24px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-grid p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .about-note {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: var(--panel-soft);
+      color: #dbe1ec;
+      line-height: 1.7;
+    }
+
+    .site-footer {
+      width: min(calc(100vw - 24px), 1180px);
+      padding: 6px 12px 0;
+      text-align: center;
+      color: #7e8797;
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+
+    .site-footer strong {
+      color: var(--orange);
+    }
+
+    @media (max-width: 940px) {
+      .hero-main,
+      .about-grid,
+      .services-grid,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .site-hero {
+        min-height: auto;
+      }
+
+      .hero-main {
+        padding-top: 34px;
+      }
+
+      .hero-art {
+        min-height: 320px;
+      }
+
+      .nav {
+        gap: 14px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding-bottom: 20px;
+      }
+
+      .panel {
+        width: calc(100vw - 24px);
+      }
+
+      .site-hero,
+      .section {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .masthead {
+        flex-wrap: wrap;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .hero-copy h1 {
+        max-width: 10ch;
+      }
+
+      .hero-actions {
+        gap: 10px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero-art {
+        min-height: 260px;
+      }
+
+      .preview-impact .impact-text {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <section class="panel site-hero" id="top" aria-label="Little Fight NYC hero section">
+      <header class="masthead">
+        <div class="brand-lockup">
+          <div class="brand-mark">LF</div>
+          <span>Little Fight NYC</span>
+        </div>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="index.html#ring">The Ring</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#services" class="nav-cta">Get Started</a>
+        </nav>
+      </header>
+
+      <div class="hero-main">
+        <div class="hero-copy">
+          <div class="pill">NYC Small Business Tech</div>
+          <h1>
+            We fix the tech
+            <span class="accent">slowing down</span>
+            your business.
+          </h1>
+          <p>Websites, automations, and digital tools — built scrappy and smart for New York City businesses that punch above their weight.</p>
+
+          <div class="hero-actions">
+            <a href="index.html#services" class="button button-primary">Book a Free Consult</a>
+            <a href="index.html#ring" class="button button-secondary">See Our Work ↓</a>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-orb o1"></div>
+          <div class="hero-orb o2"></div>
+          <div class="hero-city">
+            <div class="tower t1"></div>
+            <div class="tower t2"></div>
+            <div class="tower t3"></div>
+            <div class="tower t4"></div>
+            <div class="tower t5"></div>
+            <div class="tower t6"></div>
+          </div>
+          <div class="hero-floor"></div>
+        </div>
+      </div>
+
+      <div class="scroll-cue">Scroll to explore</div>
+    </section>
+
+    <section class="panel section" id="ring" aria-labelledby="ring-heading">
+      <div class="section-header">
+        <div class="eyebrow">Step into the ring</div>
+        <h2 id="ring-heading">The Ring</h2>
+        <p>Live prototypes, experiments, and proof-of-concepts. This is where we test ideas before they hit production.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-preview preview-storefront" aria-hidden="true">
+            <div class="card-status">Live</div>
+            <div class="local-mini"></div>
+            <div class="beam-mini"></div>
+            <div class="chain-mini"></div>
+          </div>
+          <div class="card-body">
+            <h3>Neighborhood Takeover Hero</h3>
+            <p>Street-level storefront story showing big chains pressing in and local businesses getting equipped to fight back.</p>
+            <div class="tag-row">
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">NYC</span>
+              <span class="tag">Storytelling</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-preview preview-impact" aria-hidden="true">
+            <div class="card-status">Live</div>
+            <div class="impact-text">Small Business<br>Big Impact<br>Little Fight.</div>
+          </div>
+          <div class="card-body">
+            <h3>Small Business Big Impact</h3>
+            <p>Abstract, punchy hero direction built for fast emotional impact and strong calls-to-action above the fold.</p>
+            <div class="tag-row">
+              <span class="tag">Brand</span>
+              <span class="tag">Hero Copy</span>
+              <span class="tag">CTA</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-preview preview-tech" aria-hidden="true">
+            <div class="card-status">Live</div>
+            <div class="corp-block"></div>
+            <div class="stream"></div>
+            <div class="biz-core"></div>
+            <div class="node n1"></div>
+            <div class="node n2"></div>
+          </div>
+          <div class="card-body">
+            <h3>Tech Stack Hero</h3>
+            <p>David-versus-Goliath concept where custom tech becomes the equalizer for small businesses competing with big corporations.</p>
+            <div class="tag-row">
+              <span class="tag">Tech Stack</span>
+              <span class="tag">Animation</span>
+              <span class="tag">Conversion</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel section" id="services" aria-labelledby="services-heading">
+      <div class="section-header">
+        <div class="eyebrow">What we build</div>
+        <h2 id="services-heading">Services</h2>
+        <p>We help New York City small businesses move faster, look sharper, and stop losing momentum to bad tech.</p>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="pill">Websites</div>
+          <h3>Custom sites that feel credible fast</h3>
+          <p>Conversion-first websites built to answer what you do, who you help, and why a visitor should trust you in the first few seconds.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="pill">Automations</div>
+          <h3>Systems that remove busywork</h3>
+          <p>Lead routing, follow-up, notifications, scheduling, and internal workflows that help small teams act bigger without adding friction.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="pill">Digital Tools</div>
+          <h3>Practical tools built around real work</h3>
+          <p>Dashboards, quoting tools, intake flows, and operational improvements designed around how your business actually runs day to day.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel section" id="about" aria-labelledby="about-heading">
+      <div class="section-header">
+        <div class="eyebrow">Built in New York</div>
+        <h2 id="about-heading">About Little Fight NYC</h2>
+      </div>
+
+      <div class="about-grid">
+        <p>Little Fight NYC exists for the businesses that keep neighborhoods alive but get squeezed by bad software, slow websites, and bigger competitors with more resources. We build the practical tech that helps smaller teams look credible, move faster, and punch above their weight.</p>
+        <div class="about-note">We work best with owners who need clean thinking, fast execution, and a partner who understands that “simple” usually means harder thinking, not less. Our default is premium, trustworthy, and built to perform on desktop and mobile.</div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div>© 2026 Little Fight NYC. All rights reserved. Built in New York.</div>
+      <div><strong>Designed, Hosted and Cared For by LittleFightNYC.com</strong></div>
+    </footer>
+  </div>
+<script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

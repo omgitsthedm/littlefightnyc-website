@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /$
+Allow: /assets/
+Allow: /concepts/pill-scroll/
+Allow: /concepts/micro-animations/
+Allow: /concepts/terminal-3d/
+Allow: /concepts/walkup-3d/
+Allow: /concepts/studio-engine/
+Allow: /concepts/hero/
+Allow: /concepts/tech-support/
+Allow: /concepts/goliath/
+Allow: /concepts/growth-street/
+Disallow: /concepts/chef-drew/
+Disallow: /concepts/aha-laser/

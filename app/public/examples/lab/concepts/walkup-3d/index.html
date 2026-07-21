@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC Brownstone Walk-Up</title>
+<meta name="description" content="NYC brownstone walk-up in 3D — an interactive scene study from The Lab, Little Fight NYC.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { overflow: hidden; background: #000; }
+  canvas { display: block; }
+  #info {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    color: #fff; font-family: 'Helvetica Neue', sans-serif; font-size: 13px;
+    background: rgba(0,0,0,0.5); padding: 8px 16px; border-radius: 20px;
+    pointer-events: none; letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div id="info">Drag to orbit &middot; Scroll to zoom &middot; Right-click to pan</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.164.1/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.164.1/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// ── Scene ────────────────────────────────────────────────
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x87CEEB); // sky blue
+scene.fog = new THREE.Fog(0x87CEEB, 80, 150);
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 200);
+camera.position.set(18, 16, 22);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.appendChild(renderer.domElement);
+
+// ── Lights ───────────────────────────────────────────────
+const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambient);
+
+const sun = new THREE.DirectionalLight(0xfff5e6, 1.8);
+sun.position.set(15, 30, 20);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -25;
+sun.shadow.camera.right = 25;
+sun.shadow.camera.top = 25;
+sun.shadow.camera.bottom = -25;
+sun.shadow.camera.near = 0.5;
+sun.shadow.camera.far = 80;
+sun.shadow.bias = -0.001;
+scene.add(sun);
+
+const fill = new THREE.DirectionalLight(0xaaccff, 0.3);
+fill.position.set(-10, 10, -10);
+scene.add(fill);
+
+// ── Controls ─────────────────────────────────────────────
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 12, 0);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 0.5;
+controls.maxPolarAngle = Math.PI / 2.05;
+controls.minDistance = 10;
+controls.maxDistance = 60;
+controls.update();
+
+// ── Procedural Brick Texture ─────────────────────────────
+function createBrickTexture(w = 512, h = 512) {
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext('2d');
+
+  // Base mortar
+  ctx.fillStyle = '#8a7d6b';
+  ctx.fillRect(0, 0, w, h);
+
+  const brickW = w / 8;
+  const brickH = h / 16;
+  const mortarSize = 2;
+
+  for (let row = 0; row < 16; row++) {
+    const offset = (row % 2) * (brickW / 2);
+    for (let col = -1; col < 9; col++) {
+      const x = col * brickW + offset;
+      const y = row * brickH;
+
+      // Vary brick colors for realism
+      const r = 140 + Math.random() * 50;
+      const g = 45 + Math.random() * 30;
+      const b = 30 + Math.random() * 25;
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      ctx.fillRect(
+        x + mortarSize, y + mortarSize,
+        brickW - mortarSize * 2, brickH - mortarSize * 2
+      );
+
+      // Subtle noise on each brick
+      for (let i = 0; i < 20; i++) {
+        const nx = x + mortarSize + Math.random() * (brickW - mortarSize * 2);
+        const ny = y + mortarSize + Math.random() * (brickH - mortarSize * 2);
+        const alpha = Math.random() * 0.15;
+        ctx.fillStyle = Math.random() > 0.5
+          ? `rgba(255,255,255,${alpha})`
+          : `rgba(0,0,0,${alpha})`;
+        ctx.fillRect(nx, ny, 2, 2);
+      }
+    }
+  }
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+function createBrickNormal(w = 512, h = 512) {
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#8080ff'; // flat normal
+  ctx.fillRect(0, 0, w, h);
+
+  const brickW = w / 8;
+  const brickH = h / 16;
+  const mortarSize = 2;
+
+  for (let row = 0; row < 16; row++) {
+    const offset = (row % 2) * (brickW / 2);
+    for (let col = -1; col < 9; col++) {
+      const x = col * brickW + offset;
+      const y = row * brickH;
+
+      // Mortar grooves (darker normal = recessed)
+      ctx.fillStyle = '#7070e0';
+      ctx.fillRect(x, y, brickW, mortarSize);
+      ctx.fillRect(x, y, mortarSize, brickH);
+
+      // Brick face slightly raised
+      ctx.fillStyle = '#8888ff';
+      ctx.fillRect(
+        x + mortarSize + 1, y + mortarSize + 1,
+        brickW - mortarSize * 2 - 2, brickH - mortarSize * 2 - 2
+      );
+    }
+  }
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  return tex;
+}
+
+// ── Materials ────────────────────────────────────────────
+const brickTex = createBrickTexture();
+brickTex.repeat.set(3, 6);
+const brickNorm = createBrickNormal();
+brickNorm.repeat.set(3, 6);
+
+const brickMat = new THREE.MeshStandardMaterial({
+  map: brickTex,
+  normalMap: brickNorm,
+  normalScale: new THREE.Vector2(0.5, 0.5),
+  roughness: 0.85,
+  metalness: 0.0,
+});
+
+const stoneMat = new THREE.MeshStandardMaterial({
+  color: 0xc4b08a,
+  roughness: 0.7,
+  metalness: 0.0,
+});
+
+const darkStoneMat = new THREE.MeshStandardMaterial({
+  color: 0x8a7d6b,
+  roughness: 0.8,
+});
+
+const windowMat = new THREE.MeshStandardMaterial({
+  color: 0x1a2530,
+  roughness: 0.1,
+  metalness: 0.8,
+});
+
+const windowFrameMat = new THREE.MeshStandardMaterial({
+  color: 0xd4cfc2,
+  roughness: 0.5,
+});
+
+const doorMat = new THREE.MeshStandardMaterial({
+  color: 0x2a1506,
+  roughness: 0.6,
+  metalness: 0.1,
+});
+
+const metalMat = new THREE.MeshStandardMaterial({
+  color: 0x1a1a1a,
+  roughness: 0.4,
+  metalness: 0.9,
+});
+
+const groundMat = new THREE.MeshStandardMaterial({
+  color: 0x555555,
+  roughness: 0.9,
+});
+
+const sidewalkMat = new THREE.MeshStandardMaterial({
+  color: 0x999999,
+  roughness: 0.8,
+});
+
+// ── Building group ───────────────────────────────────────
+const building = new THREE.Group();
+scene.add(building);
+
+const FLOORS = 6;
+const FLOOR_H = 4;
+const BUILD_W = 12;
+const BUILD_D = 9;
+const BUILD_H = FLOORS * FLOOR_H;
+
+// Main body
+const bodyGeo = new THREE.BoxGeometry(BUILD_W, BUILD_H, BUILD_D);
+const body = new THREE.Mesh(bodyGeo, brickMat);
+body.position.y = BUILD_H / 2;
+body.castShadow = true;
+body.receiveShadow = true;
+building.add(body);
+
+// ── Foundation / Base ────────────────────────────────────
+const baseGeo = new THREE.BoxGeometry(BUILD_W + 0.3, 1.2, BUILD_D + 0.3);
+const base = new THREE.Mesh(baseGeo, darkStoneMat);
+base.position.y = 0.6;
+base.castShadow = true;
+base.receiveShadow = true;
+building.add(base);
+
+// ── Cornice (top) ────────────────────────────────────────
+const corniceGroup = new THREE.Group();
+corniceGroup.position.y = BUILD_H;
+
+// Main cornice ledge
+const cornice1 = new THREE.Mesh(
+  new THREE.BoxGeometry(BUILD_W + 1.2, 0.4, BUILD_D + 0.6),
+  stoneMat
+);
+cornice1.position.y = 0.2;
+cornice1.castShadow = true;
+corniceGroup.add(cornice1);
+
+// Upper cornice
+const cornice2 = new THREE.Mesh(
+  new THREE.BoxGeometry(BUILD_W + 0.8, 0.3, BUILD_D + 0.4),
+  stoneMat
+);
+cornice2.position.y = 0.55;
+cornice2.castShadow = true;
+corniceGroup.add(cornice2);
+
+// Dentil molding (small repeating blocks)
+const dentilGeo = new THREE.BoxGeometry(0.3, 0.25, 0.15);
+for (let i = 0; i < 30; i++) {
+  const d = new THREE.Mesh(dentilGeo, stoneMat);
+  d.position.set(-BUILD_W / 2 + 0.6 + i * 0.4, -0.12, BUILD_D / 2 + 0.15);
+  corniceGroup.add(d);
+}
+building.add(corniceGroup);
+
+// ── Parapet ──────────────────────────────────────────────
+const parapetGeo = new THREE.BoxGeometry(BUILD_W + 0.4, 1.0, 0.3);
+const parapetFront = new THREE.Mesh(parapetGeo, brickMat);
+parapetFront.position.set(0, BUILD_H + 1.3, BUILD_D / 2 + 0.05);
+parapetFront.castShadow = true;
+building.add(parapetFront);
+
+const parapetBack = new THREE.Mesh(parapetGeo, brickMat);
+parapetBack.position.set(0, BUILD_H + 1.3, -BUILD_D / 2 - 0.05);
+building.add(parapetBack);
+
+const parapetSideGeo = new THREE.BoxGeometry(0.3, 1.0, BUILD_D + 0.4);
+const parapetLeft = new THREE.Mesh(parapetSideGeo, brickMat);
+parapetLeft.position.set(-BUILD_W / 2 - 0.05, BUILD_H + 1.3, 0);
+building.add(parapetLeft);
+
+const parapetRight = new THREE.Mesh(parapetSideGeo, brickMat);
+parapetRight.position.set(BUILD_W / 2 + 0.05, BUILD_H + 1.3, 0);
+building.add(parapetRight);
+
+// ── Parapet cap ──────────────────────────────────────────
+const capGeo = new THREE.BoxGeometry(BUILD_W + 0.8, 0.15, BUILD_D + 0.8);
+const cap = new THREE.Mesh(capGeo, stoneMat);
+cap.position.y = BUILD_H + 1.9;
+building.add(cap);
+
+// ── Windows ──────────────────────────────────────────────
+const WIN_W = 1.4;
+const WIN_H = 2.4;
+const WIN_DEPTH = 0.15;
+const FRAME_THICK = 0.08;
+
+function createWindow(x, y, z) {
+  const grp = new THREE.Group();
+
+  // Recessed opening
+  const recess = new THREE.Mesh(
+    new THREE.BoxGeometry(WIN_W + 0.2, WIN_H + 0.2, 0.3),
+    darkStoneMat
+  );
+  recess.position.set(x, y, z + 0.05);
+  grp.add(recess);
+
+  // Glass
+  const glass = new THREE.Mesh(
+    new THREE.BoxGeometry(WIN_W, WIN_H, WIN_DEPTH),
+    windowMat
+  );
+  glass.position.set(x, y, z + 0.15);
+  grp.add(glass);
+
+  // Frame - top
+  grp.add(makeFrame(x, y + WIN_H / 2, z + 0.2, WIN_W + 0.15, FRAME_THICK, FRAME_THICK));
+  // Frame - bottom
+  grp.add(makeFrame(x, y - WIN_H / 2, z + 0.2, WIN_W + 0.15, FRAME_THICK, FRAME_THICK));
+  // Frame - left
+  grp.add(makeFrame(x - WIN_W / 2, y, z + 0.2, FRAME_THICK, WIN_H, FRAME_THICK));
+  // Frame - right
+  grp.add(makeFrame(x + WIN_W / 2, y, z + 0.2, FRAME_THICK, WIN_H, FRAME_THICK));
+  // Horizontal divider
+  grp.add(makeFrame(x, y + 0.3, z + 0.2, WIN_W, FRAME_THICK, FRAME_THICK));
+
+  // Stone sill
+  const sill = new THREE.Mesh(
+    new THREE.BoxGeometry(WIN_W + 0.4, 0.15, 0.3),
+    stoneMat
+  );
+  sill.position.set(x, y - WIN_H / 2 - 0.08, z + 0.2);
+  sill.castShadow = true;
+  grp.add(sill);
+
+  // Stone lintel (header)
+  const lintel = new THREE.Mesh(
+    new THREE.BoxGeometry(WIN_W + 0.3, 0.2, 0.15),
+    stoneMat
+  );
+  lintel.position.set(x, y + WIN_H / 2 + 0.15, z + 0.15);
+  lintel.castShadow = true;
+  grp.add(lintel);
+
+  return grp;
+}
+
+function makeFrame(x, y, z, w, h, d) {
+  const m = new THREE.Mesh(
+    new THREE.BoxGeometry(w, h, d),
+    windowFrameMat
+  );
+  m.position.set(x, y, z);
+  return m;
+}
+
+// Place windows on front face
+const windowXPositions = [-4.2, -1.4, 1.4, 4.2];
+const frontZ = BUILD_D / 2;
+
+for (let floor = 0; floor < FLOORS; floor++) {
+  const y = floor * FLOOR_H + FLOOR_H / 2 + 1.5;
+  // Skip ground floor center windows (door goes there)
+  for (let i = 0; i < windowXPositions.length; i++) {
+    if (floor === 0 && (i === 1 || i === 2)) continue; // door area
+    building.add(createWindow(windowXPositions[i], y, frontZ));
+  }
+}
+
+// Side windows (fewer, offset from edges)
+const sideWindowX = [-2.5, 2.5];
+const sideZ = BUILD_W / 2;
+
+for (let floor = 0; floor < FLOORS; floor++) {
+  const y = floor * FLOOR_H + FLOOR_H / 2 + 1.5;
+  for (const wx of sideWindowX) {
+    // Right side
+    const rWin = createWindow(0, y, 0);
+    rWin.rotation.y = Math.PI / 2;
+    rWin.position.set(sideZ, 0, wx);
+    building.add(rWin);
+
+    // Left side
+    const lWin = createWindow(0, y, 0);
+    lWin.rotation.y = -Math.PI / 2;
+    lWin.position.set(-sideZ, 0, wx);
+    building.add(lWin);
+  }
+}
+
+// ── Door ─────────────────────────────────────────────────
+const DOOR_W = 2.0;
+const DOOR_H = 3.2;
+const doorGroup = new THREE.Group();
+
+// Door recess
+const doorRecess = new THREE.Mesh(
+  new THREE.BoxGeometry(DOOR_W + 0.4, DOOR_H + 0.3, 0.4),
+  darkStoneMat
+);
+doorRecess.position.set(0, DOOR_H / 2 + 1.0, frontZ + 0.05);
+doorGroup.add(doorRecess);
+
+// Door panel
+const doorPanel = new THREE.Mesh(
+  new THREE.BoxGeometry(DOOR_W, DOOR_H, 0.12),
+  doorMat
+);
+doorPanel.position.set(0, DOOR_H / 2 + 1.0, frontZ + 0.2);
+doorGroup.add(doorPanel);
+
+// Door frame
+const doorFrameTop = new THREE.Mesh(
+  new THREE.BoxGeometry(DOOR_W + 0.3, 0.15, 0.15),
+  stoneMat
+);
+doorFrameTop.position.set(0, DOOR_H + 1.15, frontZ + 0.25);
+doorGroup.add(doorFrameTop);
+
+// Transom window above door
+const transom = new THREE.Mesh(
+  new THREE.BoxGeometry(DOOR_W, 0.6, 0.08),
+  windowMat
+);
+transom.position.set(0, DOOR_H + 0.6 + 1.0, frontZ + 0.2);
+doorGroup.add(transom);
+
+// Door knob
+const knobGeo = new THREE.SphereGeometry(0.06, 8, 8);
+const knob = new THREE.Mesh(knobGeo, metalMat);
+knob.position.set(0.65, DOOR_H / 2 + 0.8, frontZ + 0.3);
+doorGroup.add(knob);
+
+building.add(doorGroup);
+
+// ── Stoop (front steps) ─────────────────────────────────
+const stoopGroup = new THREE.Group();
+const STOOP_W = 3.5;
+const STEP_COUNT = 5;
+const STEP_H = 0.22;
+const STEP_D = 0.4;
+
+for (let i = 0; i < STEP_COUNT; i++) {
+  const step = new THREE.Mesh(
+    new THREE.BoxGeometry(STOOP_W, STEP_H, STEP_D),
+    stoneMat
+  );
+  step.position.set(0, STEP_H / 2 + i * STEP_H, frontZ + 0.5 + (STEP_COUNT - i) * STEP_D);
+  step.castShadow = true;
+  step.receiveShadow = true;
+  stoopGroup.add(step);
+}
+
+// Landing at top of steps
+const landing = new THREE.Mesh(
+  new THREE.BoxGeometry(STOOP_W, STEP_COUNT * STEP_H, STEP_D * 1.5),
+  stoneMat
+);
+landing.position.set(0, STEP_COUNT * STEP_H / 2, frontZ + 0.5 + STEP_D * 0.25);
+landing.castShadow = true;
+stoopGroup.add(landing);
+
+// Stoop railings
+const railMat = metalMat;
+const railH = 1.2;
+for (const side of [-1, 1]) {
+  const x = side * STOOP_W / 2;
+  // Vertical posts
+  for (let i = 0; i <= STEP_COUNT; i++) {
+    const post = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.04, 0.04, railH, 6),
+      railMat
+    );
+    post.position.set(
+      x,
+      STEP_H * i + railH / 2,
+      frontZ + 0.5 + (STEP_COUNT - i) * STEP_D + STEP_D / 2
+    );
+    stoopGroup.add(post);
+  }
+  // Top rail (simplified as a thin box)
+  const railLen = Math.sqrt((STEP_COUNT * STEP_H) ** 2 + (STEP_COUNT * STEP_D) ** 2);
+  const railAngle = Math.atan2(STEP_COUNT * STEP_H, STEP_COUNT * STEP_D);
+  const rail = new THREE.Mesh(
+    new THREE.BoxGeometry(0.06, 0.06, railLen + 0.3),
+    railMat
+  );
+  rail.position.set(
+    x,
+    STEP_COUNT * STEP_H / 2 + railH,
+    frontZ + 0.5 + STEP_COUNT * STEP_D / 2 + STEP_D / 2
+  );
+  rail.rotation.x = railAngle;
+  stoopGroup.add(rail);
+}
+
+building.add(stoopGroup);
+
+// ── Fire Escape ──────────────────────────────────────────
+const fireEscapeGroup = new THREE.Group();
+const FE_W = 3.5;
+const FE_D = 2.5;
+const FE_X = 3.5; // offset from center
+
+for (let floor = 1; floor < FLOORS; floor++) {
+  const y = floor * FLOOR_H + 0.8;
+
+  // Platform
+  const platform = new THREE.Mesh(
+    new THREE.BoxGeometry(FE_W, 0.08, FE_D),
+    metalMat
+  );
+  platform.position.set(FE_X, y, frontZ + FE_D / 2);
+  platform.castShadow = true;
+  fireEscapeGroup.add(platform);
+
+  // Platform grate lines
+  for (let g = -FE_W / 2 + 0.15; g < FE_W / 2; g += 0.2) {
+    const grate = new THREE.Mesh(
+      new THREE.BoxGeometry(0.03, 0.02, FE_D - 0.1),
+      metalMat
+    );
+    grate.position.set(FE_X + g, y + 0.04, frontZ + FE_D / 2);
+    fireEscapeGroup.add(grate);
+  }
+
+  // Railing posts
+  for (const sx of [-FE_W / 2, FE_W / 2]) {
+    for (const sz of [0, FE_D]) {
+      const post = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.03, 0.03, 1.2, 6),
+        metalMat
+      );
+      post.position.set(FE_X + sx, y + 0.6, frontZ + sz);
+      fireEscapeGroup.add(post);
+    }
+  }
+
+  // Top rails
+  const topRailFront = new THREE.Mesh(
+    new THREE.BoxGeometry(FE_W, 0.04, 0.04),
+    metalMat
+  );
+  topRailFront.position.set(FE_X, y + 1.2, frontZ + FE_D);
+  fireEscapeGroup.add(topRailFront);
+
+  const topRailSide1 = new THREE.Mesh(
+    new THREE.BoxGeometry(0.04, 0.04, FE_D),
+    metalMat
+  );
+  topRailSide1.position.set(FE_X - FE_W / 2, y + 1.2, frontZ + FE_D / 2);
+  fireEscapeGroup.add(topRailSide1);
+
+  const topRailSide2 = topRailSide1.clone();
+  topRailSide2.position.x = FE_X + FE_W / 2;
+  fireEscapeGroup.add(topRailSide2);
+
+  // Ladder between floors (zigzag)
+  if (floor < FLOORS - 1) {
+    const ladderSide = (floor % 2 === 0) ? -1 : 1;
+    const ladderX = FE_X + ladderSide * (FE_W / 2 - 0.5);
+    const ladderGeo = new THREE.BoxGeometry(0.04, FLOOR_H, 0.04);
+    const ladderL = new THREE.Mesh(ladderGeo, metalMat);
+    ladderL.position.set(ladderX - 0.25, y + FLOOR_H / 2, frontZ + FE_D - 0.3);
+    fireEscapeGroup.add(ladderL);
+    const ladderR = new THREE.Mesh(ladderGeo, metalMat);
+    ladderR.position.set(ladderX + 0.25, y + FLOOR_H / 2, frontZ + FE_D - 0.3);
+    fireEscapeGroup.add(ladderR);
+
+    // Rungs
+    for (let r = 0; r < 8; r++) {
+      const rung = new THREE.Mesh(
+        new THREE.BoxGeometry(0.5, 0.03, 0.03),
+        metalMat
+      );
+      rung.position.set(ladderX, y + 0.3 + r * 0.45, frontZ + FE_D - 0.3);
+      fireEscapeGroup.add(rung);
+    }
+  }
+}
+
+// Drop ladder from first fire escape
+const dropLadderY = FLOOR_H + 0.8;
+const dlX = FE_X;
+for (const dx of [-0.25, 0.25]) {
+  const dl = new THREE.Mesh(
+    new THREE.BoxGeometry(0.04, dropLadderY, 0.04),
+    metalMat
+  );
+  dl.position.set(dlX + dx, dropLadderY / 2, frontZ + FE_D - 0.3);
+  fireEscapeGroup.add(dl);
+}
+for (let r = 0; r < 10; r++) {
+  const rung = new THREE.Mesh(
+    new THREE.BoxGeometry(0.5, 0.03, 0.03),
+    metalMat
+  );
+  rung.position.set(dlX, 0.3 + r * (dropLadderY / 10), frontZ + FE_D - 0.3);
+  fireEscapeGroup.add(rung);
+}
+
+building.add(fireEscapeGroup);
+
+// ── Water Tower (rooftop) ────────────────────────────────
+const waterTower = new THREE.Group();
+
+// Tank
+const tankGeo = new THREE.CylinderGeometry(1.2, 1.2, 2.5, 12);
+const tankMat = new THREE.MeshStandardMaterial({
+  color: 0x6b4226,
+  roughness: 0.9,
+});
+const tank = new THREE.Mesh(tankGeo, tankMat);
+tank.position.y = BUILD_H + 4.5;
+tank.castShadow = true;
+waterTower.add(tank);
+
+// Conical roof
+const roofGeo = new THREE.ConeGeometry(1.4, 1.0, 12);
+const roof = new THREE.Mesh(roofGeo, tankMat);
+roof.position.y = BUILD_H + 6.0;
+roof.castShadow = true;
+waterTower.add(roof);
+
+// Legs
+for (let i = 0; i < 4; i++) {
+  const angle = (i / 4) * Math.PI * 2 + Math.PI / 4;
+  const leg = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.06, 0.06, 3.0, 6),
+    metalMat
+  );
+  leg.position.set(
+    Math.cos(angle) * 0.9,
+    BUILD_H + 2.7,
+    Math.sin(angle) * 0.9
+  );
+  waterTower.add(leg);
+}
+
+waterTower.position.set(-3, 0, -1.5);
+building.add(waterTower);
+
+// ── Floor band lines (brownstone trim between floors) ────
+for (let floor = 1; floor <= FLOORS; floor++) {
+  const y = floor * FLOOR_H;
+  const band = new THREE.Mesh(
+    new THREE.BoxGeometry(BUILD_W + 0.15, 0.15, BUILD_D + 0.15),
+    stoneMat
+  );
+  band.position.y = y;
+  building.add(band);
+}
+
+// ── Ground Plane ─────────────────────────────────────────
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(100, 100),
+  groundMat
+);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+scene.add(ground);
+
+// Sidewalk
+const sidewalk = new THREE.Mesh(
+  new THREE.BoxGeometry(BUILD_W + 8, 0.1, 5),
+  sidewalkMat
+);
+sidewalk.position.set(0, 0.05, frontZ + 3.5);
+sidewalk.receiveShadow = true;
+scene.add(sidewalk);
+
+// Curb
+const curb = new THREE.Mesh(
+  new THREE.BoxGeometry(BUILD_W + 8, 0.25, 0.3),
+  stoneMat
+);
+curb.position.set(0, 0.125, frontZ + 6.1);
+scene.add(curb);
+
+// ── Animate ──────────────────────────────────────────────
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+<script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

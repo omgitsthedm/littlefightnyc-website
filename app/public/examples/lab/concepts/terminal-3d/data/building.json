@@ -1,0 +1,31 @@
+{
+  "name": "Terminal Tower",
+  "ground": {
+    "width": 18,
+    "depth": 14,
+    "height": 0.5
+  },
+  "building": {
+    "floors": 12,
+    "floorHeight": 2.8,
+    "width": 10,
+    "depth": 8,
+    "setbackEvery": 4,
+    "setbackAmount": 0.8,
+    "wallColor": "#cbd5e1",
+    "glassColor": "#67e8f9",
+    "roofColor": "#0f172a"
+  },
+  "windows": {
+    "rowsPerFloor": 2,
+    "columnsFront": 5,
+    "columnsSide": 3,
+    "windowWidth": 1.0,
+    "windowHeight": 0.8,
+    "inset": 0.08
+  },
+  "lights": {
+    "ambient": 0.8,
+    "directional": 1.1
+  }
+}

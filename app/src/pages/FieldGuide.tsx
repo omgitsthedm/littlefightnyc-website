@@ -257,19 +257,19 @@ export default function FieldGuide() {
         </section>
       )}
 
-      {/* The Lab — the demo-build showcase on its own subdomain. */}
+      {/* The Lab — preserved in-repo under /examples/lab/. */}
       <section className="lf-ex-lab" aria-label="The Lab demo builds">
         <div className="lf-ex-lab__inner">
           <div>
             <p className="lf-ex-head__eyebrow">The Lab</p>
-            <h2 className="lf-ex-lab__title">Fifteen sites we built to prove it.</h2>
+            <h2 className="lf-ex-lab__title">Eleven concepts. Forty-seven working pages.</h2>
             <p className="lf-ex-head__dek">
-              Demo builds for barbershops, diners, gyms, florists — real working
-              sites, not mockups. Poke around. Break nothing.
+              Motion studies, brand systems, and client concepts — real working
+              pages, not screenshots. Poke around. Break nothing.
             </p>
           </div>
-          <a className="lf-ex-lab__link" href="https://lab.littlefightnyc.com" rel="external">
-            Visit The Lab
+          <a className="lf-ex-lab__link" href="/examples/lab/">
+            Open The Lab
             <span aria-hidden="true"> ↗</span>
           </a>
         </div>

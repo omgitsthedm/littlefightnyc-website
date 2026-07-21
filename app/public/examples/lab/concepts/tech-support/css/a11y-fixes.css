@@ -1,0 +1,121 @@
+/* Accessibility overrides with orange-first brand controls and blue contrast support */
+:root {
+  --brand-orange-accessible: #ff5a00;
+  --brand-orange-hover: #ff7a33;
+  --brand-orange-ink: #11294f;
+  /* High contrast navy on orange */
+  --accent-accessible: #1f5bbe;
+  --accent-hover: #184a99;
+  --accent-bright: #2b71db;
+  --accent-on-dark: #a8c6ff;
+  --accent-tint: rgba(31, 91, 190, 0.14);
+  --gray-accessible: #3e454d;
+  --gray-muted: #5e6770;
+}
+
+.section-eyebrow,
+[class*="eyebrow"] {
+  color: var(--brand-orange-accessible) !important;
+}
+
+a[href^="/areas/"],
+a[href^="areas/"] {
+  color: var(--accent-accessible) !important;
+}
+
+a[href^="/areas/"]:hover,
+a[href^="/areas/"]:focus,
+a[href^="areas/"]:hover,
+a[href^="areas/"]:focus {
+  color: var(--accent-hover) !important;
+  text-decoration: underline;
+}
+
+[style*="color: #888"],
+[style*="color:#888"],
+.contact-label,
+.muted-text {
+  color: var(--gray-accessible) !important;
+}
+
+.nav-logo-box,
+.footer-logo-box,
+.btn-primary,
+.nav-cta,
+a.nav-cta,
+button[type="submit"].btn-primary {
+  color: var(--brand-orange-ink) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.nav-cta:hover,
+.nav-cta:focus {
+  color: var(--brand-orange-ink) !important;
+}
+
+.btn-secondary {
+  color: var(--accent-accessible) !important;
+  border-color: var(--accent-accessible) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
+  background: var(--accent-tint) !important;
+}
+
+.hero-badge {
+  color: var(--accent-accessible) !important;
+  background: var(--accent-tint) !important;
+}
+
+footer .footer-text,
+footer .footer-copyright,
+footer .footer-links a,
+footer .footer-legal a {
+  color: #b8bfc8 !important;
+}
+
+footer .footer-links a:hover,
+footer .footer-links a:focus,
+footer .footer-legal a:hover,
+footer .footer-legal a:focus {
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+footer .footer-credit a {
+  color: var(--accent-on-dark) !important;
+}
+
+footer .footer-credit a:hover {
+  color: #fff !important;
+}
+
+.service-card:hover {
+  border-color: var(--accent-bright);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--accent-accessible);
+  box-shadow: 0 0 0 3px rgba(31, 91, 190, 0.2);
+}
+
+.contact-icon {
+  background: var(--accent-tint) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

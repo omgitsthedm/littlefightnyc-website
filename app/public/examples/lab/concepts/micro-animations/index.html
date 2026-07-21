@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Little Fight NYC | Micro-Animation Service Demos</title>
+<meta name="description" content="Service micro-animations in pure HTML and CSS — a motion study from The Lab, Little Fight NYC.">
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="page-header">
+        <p class="eyebrow">Little Fight NYC Demo Lab</p>
+        <h1>Service Micro-Animations in HTML + CSS</h1>
+        <p>
+          A single-page concept board showing subtle, icon-sized interaction ideas for core services.
+          Use filters to focus by service type, then open each card to inspect the snippet.
+        </p>
+      </header>
+
+      <section class="filter-bar" aria-label="Filter services">
+        <button class="filter-pill is-active" data-filter="all" type="button">All</button>
+        <button class="filter-pill" data-filter="web" type="button">Web</button>
+        <button class="filter-pill" data-filter="branding" type="button">Branding</button>
+        <button class="filter-pill" data-filter="seo" type="button">SEO</button>
+        <button class="filter-pill" data-filter="smart" type="button">Smart</button>
+        <button class="filter-pill" data-filter="photo" type="button">Photo</button>
+        <button class="filter-pill" data-filter="video" type="button">Video</button>
+        <button class="filter-pill" data-filter="support" type="button">Support</button>
+      </section>
+
+      <section class="cards-grid" id="cards-grid">
+        <article class="service-card" data-cats="web branding">
+          <div class="card-head">
+            <h2>Website Design + Build</h2>
+            <p>Responsive sites with clean UX and conversion-focused structure.</p>
+          </div>
+          <div class="micro micro-wireframe" aria-hidden="true">
+            <span class="wf-box"></span>
+            <span class="wf-line line-a"></span>
+            <span class="wf-line line-b"></span>
+            <span class="wf-line line-c"></span>
+            <span class="wf-cursor"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-wireframe"&gt;
+  &lt;span class="wf-box"&gt;&lt;/span&gt;
+  &lt;span class="wf-cursor"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-wireframe .wf-cursor {
+  animation: cursor-drift 1.8s ease-in-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="web support">
+          <div class="card-head">
+            <h2>Hosting + Maintenance</h2>
+            <p>Reliable uptime, updates, and proactive site care.</p>
+          </div>
+          <div class="micro micro-cloud" aria-hidden="true">
+            <span class="cloud-shape"></span>
+            <span class="sync-ring"></span>
+            <span class="sync-dot"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-cloud"&gt;
+  &lt;span class="cloud-shape"&gt;&lt;/span&gt;
+  &lt;span class="sync-ring"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-cloud .sync-ring {
+  animation: rotate-soft 2s linear infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="seo web">
+          <div class="card-head">
+            <h2>SEO + AEO</h2>
+            <p>Search and answer-engine optimization with measurable growth.</p>
+          </div>
+          <div class="micro micro-search" aria-hidden="true">
+            <span class="lens"></span>
+            <span class="handle"></span>
+            <span class="scan"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-search"&gt;
+  &lt;span class="lens"&gt;&lt;/span&gt;
+  &lt;span class="scan"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-search .scan {
+  animation: scan-pass 1.6s ease-in-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="branding">
+          <div class="card-head">
+            <h2>Branding + Identity</h2>
+            <p>Distinct visual systems that make your brand instantly recognizable.</p>
+          </div>
+          <div class="micro micro-brand" aria-hidden="true">
+            <span class="brand-orb"></span>
+            <span class="brand-spark spark-a"></span>
+            <span class="brand-spark spark-b"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-brand"&gt;
+  &lt;span class="brand-orb"&gt;&lt;/span&gt;
+  &lt;span class="brand-spark"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-brand .brand-spark {
+  animation: twinkle 1.5s ease-in-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="branding">
+          <div class="card-head">
+            <h2>Graphic Design</h2>
+            <p>Campaign-ready graphics, print assets, and social visuals.</p>
+          </div>
+          <div class="micro micro-graphic" aria-hidden="true">
+            <span class="swatch swatch-a"></span>
+            <span class="swatch swatch-b"></span>
+            <span class="swatch swatch-c"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-graphic"&gt;
+  &lt;span class="swatch swatch-a"&gt;&lt;/span&gt;
+  &lt;span class="swatch swatch-b"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-graphic .swatch-a {
+  animation: slide-stack 1.9s ease-in-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="branding seo">
+          <div class="card-head">
+            <h2>Copywriting + Content</h2>
+            <p>Clear messaging tuned for audience, rankings, and conversion.</p>
+          </div>
+          <div class="micro micro-copy" aria-hidden="true">
+            <span class="type-line t1"></span>
+            <span class="type-line t2"></span>
+            <span class="caret"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-copy"&gt;
+  &lt;span class="type-line t1"&gt;&lt;/span&gt;
+  &lt;span class="caret"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-copy .t1 {
+  animation: typing 2s steps(10, end) infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="photo">
+          <div class="card-head">
+            <h2>Photography</h2>
+            <p>Brand and product photography with polished visual storytelling.</p>
+          </div>
+          <div class="micro micro-photo" aria-hidden="true">
+            <span class="cam-body"></span>
+            <span class="cam-lens"></span>
+            <span class="cam-flash"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-photo"&gt;
+  &lt;span class="cam-body"&gt;&lt;/span&gt;
+  &lt;span class="cam-flash"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-photo .cam-flash {
+  animation: flash-pop 2s ease-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="video">
+          <div class="card-head">
+            <h2>Video Editing / Reels</h2>
+            <p>Fast, platform-ready edits designed for retention and engagement.</p>
+          </div>
+          <div class="micro micro-video" aria-hidden="true">
+            <span class="clap-top"></span>
+            <span class="clap-base"></span>
+            <span class="play-dot"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-video"&gt;
+  &lt;span class="clap-top"&gt;&lt;/span&gt;
+  &lt;span class="clap-base"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-video .clap-top {
+  animation: clap 1.4s ease-in-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="web support">
+          <div class="card-head">
+            <h2>E-commerce Setup</h2>
+            <p>Launch storefronts with smooth checkout and product management.</p>
+          </div>
+          <div class="micro micro-shop" aria-hidden="true">
+            <span class="bag"></span>
+            <span class="bag-handle"></span>
+            <span class="coin"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-shop"&gt;
+  &lt;span class="bag"&gt;&lt;/span&gt;
+  &lt;span class="coin"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-shop .coin {
+  animation: coin-drop 1.7s ease-in-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="support web">
+          <div class="card-head">
+            <h2>Performance + Security</h2>
+            <p>Speed tuning, hardening, and monitoring for resilient delivery.</p>
+          </div>
+          <div class="micro micro-shield" aria-hidden="true">
+            <span class="shield"></span>
+            <span class="shield-check"></span>
+            <span class="shield-wave"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-shield"&gt;
+  &lt;span class="shield"&gt;&lt;/span&gt;
+  &lt;span class="shield-wave"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-shield .shield-wave {
+  animation: secure-pulse 2s ease-out infinite;
+}</code></pre>
+          </div>
+        </article>
+
+        <article class="service-card" data-cats="smart support">
+          <div class="card-head">
+            <h2>Home Automation</h2>
+            <p>Connected lighting, controls, and routines tuned for daily flow.</p>
+          </div>
+          <div class="micro micro-home" aria-hidden="true">
+            <span class="home-shell"></span>
+            <span class="home-door"></span>
+            <span class="home-ring ring-a"></span>
+            <span class="home-ring ring-b"></span>
+            <span class="home-dot"></span>
+          </div>
+          <button class="code-toggle" type="button" aria-expanded="false">View Code</button>
+          <div class="code-panel" hidden>
+<pre><code>&lt;div class="micro micro-home"&gt;
+  &lt;span class="home-shell"&gt;&lt;/span&gt;
+  &lt;span class="home-ring ring-a"&gt;&lt;/span&gt;
+&lt;/div&gt;
+
+.micro-home .home-ring {
+  animation: beacon-home 2.8s ease-out infinite;
+}</code></pre>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="assets/app.js" defer></script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

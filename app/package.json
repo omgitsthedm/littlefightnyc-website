@@ -13,6 +13,7 @@
     "dev": "vite",
     "build": "node scripts/split-journal.mjs && node scripts/build-route-meta.mjs && node scripts/build-nav-index.mjs && tsc -b && vite build && node scripts/prerender-seo.mjs",
     "lint": "eslint .",
+    "audit:lab": "node scripts/audit-lab-archive.mjs",
     "audit:mobile-lifecycle": "node scripts/audit-mobile-lifecycle.mjs",
     "audit:repo-boundary": "node scripts/audit-repo-boundary.mjs",
     "audit:signal": "node scripts/audit-signal.mjs",

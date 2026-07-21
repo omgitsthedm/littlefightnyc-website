@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Little Fight NYC animated storefront growth illustration.">
+  <title>Little Fight NYC | Growth Street</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Little Fight NYC Concept</p>
+      <h1>Single-Row Growth Street</h1>
+      <p class="lede">Five storefront industries, touching wall-to-wall. Each service adds a floor and pushes business growth upward.</p>
+      <button id="replayBtn" class="btn" type="button">Replay Animation</button>
+    </header>
+
+    <section class="street-stage" id="streetStage" aria-label="Animated row of five storefront industries growing with added services.">
+      <div class="service-layer" id="serviceLayer" aria-hidden="true"></div>
+
+      <ul class="street-row" aria-hidden="true">
+        <li class="building perry" data-slug="perry" style="--storefront-h: 166px;">
+          <div class="tower">
+            <div class="floors"></div>
+            <div class="storefront">
+              <span class="name">Bakery</span>
+              <span class="awning scallop"></span>
+              <span class="round-window">🥖</span>
+              <span class="door"></span>
+              <span class="display"></span>
+            </div>
+          </div>
+        </li>
+
+        <li class="building bleecker" data-slug="bleecker" style="--storefront-h: 210px;">
+          <div class="tower">
+            <div class="floors"></div>
+            <div class="storefront">
+              <span class="name">Cafe</span>
+              <span class="awning flat"></span>
+              <span class="drip-edge"></span>
+              <span class="chalkboard"></span>
+              <span class="icon-window">☕</span>
+              <span class="door"></span>
+            </div>
+          </div>
+        </li>
+
+        <li class="building village" data-slug="village" style="--storefront-h: 232px;">
+          <div class="tower">
+            <div class="floors"></div>
+            <div class="storefront formal">
+              <span class="name">Realty</span>
+              <span class="arched-row">
+                <span></span><span></span><span></span>
+              </span>
+              <span class="door gold"></span>
+              <span class="display"></span>
+            </div>
+          </div>
+        </li>
+
+        <li class="building orchard" data-slug="orchard" style="--storefront-h: 192px;">
+          <div class="tower">
+            <div class="floors"></div>
+            <div class="storefront">
+              <span class="name">Hotel</span>
+              <span class="awning striped"></span>
+              <span class="display"></span>
+              <span class="flower-box"></span>
+              <span class="door arch"></span>
+            </div>
+          </div>
+        </li>
+
+        <li class="building vestry" data-slug="vestry" style="--storefront-h: 178px;">
+          <div class="tower">
+            <div class="floors"></div>
+            <div class="storefront">
+              <span class="name">Dining</span>
+              <span class="lights" aria-hidden="true"></span>
+              <span class="canopy"></span>
+              <span class="icon-window">🍷</span>
+              <span class="door"></span>
+              <span class="display"></span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+<script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

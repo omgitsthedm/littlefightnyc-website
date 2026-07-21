@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="LFNYC Studio Engine is an internal AI-native website forge for rapidly generating service-business concepts."
+    />
+    <title>Little Fight NYC Design Engine v1.2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="mobile.css" />
+  </head>
+  <body>
+    <div class="stage-glow stage-glow-a" aria-hidden="true"></div>
+    <div class="stage-glow stage-glow-b" aria-hidden="true"></div>
+    <div class="grid-plane" aria-hidden="true"></div>
+    <div class="noise-layer" aria-hidden="true"></div>
+    <div class="scanline-layer" aria-hidden="true"></div>
+    <div class="particle-field" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="app-shell" id="appShell">
+      <header class="topbar glass-panel">
+        <div class="brand-group">
+          <div class="brand-plate" aria-hidden="true">
+            <span>LITTLE</span>
+            <span>FIGHT</span>
+            <span>NYC</span>
+          </div>
+          <div>
+            <p class="eyebrow">Little Fight NYC / Internal Only</p>
+            <h1>Studio Engine</h1>
+            <p class="subhead">Minimal signal in. Website concept out.</p>
+          </div>
+        </div>
+
+        <div class="console-strip" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <i></i>
+        </div>
+
+        <div class="topbar-metrics">
+          <article class="metric-card">
+            <span class="metric-label">Project</span>
+            <strong id="projectNameDisplay">Untitled Concept</strong>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Mode</span>
+            <strong id="modeDisplay">Quick Mode</strong>
+          </article>
+          <article class="metric-card metric-card-signal">
+            <div class="metric-row">
+              <span class="metric-label">Signal Strength</span>
+              <strong id="signalPercent">18%</strong>
+            </div>
+            <div class="signal-meter" aria-hidden="true">
+              <span id="signalMeterFill"></span>
+            </div>
+          </article>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="ghost-button" id="contrastButton" type="button">High Contrast</button>
+          <button class="ghost-button" id="exportMarkdownButton" type="button">Export Markdown</button>
+          <button class="primary-button" id="publishButton" type="button">Publish Concept</button>
+        </div>
+      </header>
+
+      <nav class="mobile-workspace glass-panel" aria-label="Mobile workspace">
+        <button class="mobile-pane-chip active" data-mobile-pane-button="scene" type="button" aria-selected="true">
+          Preview
+        </button>
+        <button class="mobile-pane-chip" data-mobile-pane-button="signal" type="button" aria-selected="false">
+          Input
+        </button>
+        <button class="mobile-pane-chip" data-mobile-pane-button="brain" type="button" aria-selected="false">
+          AI Brain
+        </button>
+      </nav>
+
+      <main class="cockpit-layout">
+        <section class="glass-panel signal-panel" id="signalPanel" data-mobile-pane="signal">
+          <div class="panel-kicker">
+            <div>
+              <p class="eyebrow">Signal Input</p>
+              <h2>Ready when you are.</h2>
+              <p class="panel-copy">Answer the essentials. The engine fills the rest.</p>
+            </div>
+            <button class="ghost-button" id="loadDemoButton" type="button">Load Demo</button>
+          </div>
+
+          <div class="mode-switch" role="tablist" aria-label="Input modes">
+            <button class="mode-chip active" data-mode-button="quick" role="tab" aria-selected="true" type="button">
+              Quick
+            </button>
+            <button class="mode-chip" data-mode-button="prompt" role="tab" aria-selected="false" type="button">
+              Prompt
+            </button>
+            <button class="mode-chip" data-mode-button="dream" role="tab" aria-selected="false" type="button">
+              Dream
+            </button>
+          </div>
+
+          <div class="workflow-strip" aria-label="Workflow">
+            <article class="workflow-step active">
+              <span>01</span>
+              <strong>Describe</strong>
+              <p>Core signal first</p>
+            </article>
+            <article class="workflow-step">
+              <span>02</span>
+              <strong>Refine</strong>
+              <p>Only if needed</p>
+            </article>
+            <article class="workflow-step">
+              <span>03</span>
+              <strong>Publish</strong>
+              <p>Share the concept</p>
+            </article>
+          </div>
+
+          <form id="studioForm" class="signal-form" novalidate>
+            <section class="mode-panel" data-mode-panel="quick">
+              <div class="section-head">
+                <span class="section-tag">30 Second Intake</span>
+                <p>Enter the core signal. The engine handles structure, copy, palette, and layout logic.</p>
+              </div>
+              <div class="field-grid">
+                <label class="field">
+                  <span>Business Name</span>
+                  <input id="businessName" name="businessName" autocomplete="organization" />
+                </label>
+                <label class="field">
+                  <span>City</span>
+                  <input id="city" name="city" autocomplete="address-level2" />
+                </label>
+                <label class="field field-wide">
+                  <span>Industry</span>
+                  <input id="industry" name="industry" />
+                </label>
+                <label class="field field-wide">
+                  <span>Primary Offer</span>
+                  <input id="primaryOffer" name="primaryOffer" />
+                </label>
+                <label class="field field-wide">
+                  <span>Primary CTA</span>
+                  <input id="primaryCta" name="primaryCta" />
+                </label>
+              </div>
+            </section>
+
+            <section class="mode-panel" data-mode-panel="prompt" hidden>
+              <div class="section-head">
+                <span class="section-tag">Natural Language</span>
+                <p>Describe the business in one sentence.</p>
+              </div>
+              <label class="field">
+                <span>Prompt</span>
+                <small>One sentence is enough.</small>
+                <textarea id="promptInput" name="promptInput" rows="7"></textarea>
+              </label>
+            </section>
+
+            <section class="mode-panel" data-mode-panel="dream" hidden>
+              <div class="section-head">
+                <span class="section-tag">Concept Generator</span>
+                <p>Use a mood plus business type for an instant direction.</p>
+              </div>
+              <label class="field">
+                <span>Dream Prompt</span>
+                <small>Think mood plus business type.</small>
+                <textarea id="dreamPrompt" name="dreamPrompt" rows="7"></textarea>
+              </label>
+            </section>
+
+            <details class="signal-accordion" id="optionalSignalAccordion">
+              <summary>
+                <div>
+                  <span class="section-tag">Optional Signal</span>
+                  <strong>Tighten the brief</strong>
+                </div>
+                <span class="accordion-meta">Phone, services, URL</span>
+              </summary>
+              <div class="signal-accordion-body">
+                <div class="field-grid">
+                  <label class="field">
+                    <span>Phone</span>
+                    <input id="phone" name="phone" autocomplete="tel" />
+                  </label>
+                  <label class="field">
+                    <span>Email</span>
+                    <input id="email" name="email" type="email" autocomplete="email" />
+                  </label>
+                  <label class="field field-wide">
+                    <span>Website URL</span>
+                    <input id="websiteUrl" name="websiteUrl" autocomplete="url" />
+                  </label>
+                  <label class="field field-wide">
+                    <span>Services List</span>
+                    <textarea id="servicesText" name="servicesText" rows="4"></textarea>
+                  </label>
+                </div>
+              </div>
+            </details>
+
+            <details class="signal-accordion" id="styleControlAccordion">
+              <summary>
+                <div>
+                  <span class="section-tag">Style Control</span>
+                  <strong>Force the look</strong>
+                </div>
+                <span class="accordion-meta">Template and colors</span>
+              </summary>
+              <div class="signal-accordion-body">
+                <div class="field-grid">
+                  <label class="field field-wide">
+                    <span>Template Style</span>
+                    <select id="templateStyle" name="templateStyle">
+                      <option value="">Auto Select</option>
+                      <option value="1">1 / Modern Grid</option>
+                      <option value="2">2 / Elegant Editorial</option>
+                      <option value="3">3 / SaaS Sharp</option>
+                      <option value="4">4 / Luxury Minimal</option>
+                      <option value="5">5 / Studio Bold</option>
+                      <option value="6">6 / Local Trust</option>
+                      <option value="7">7 / Clinic Clean</option>
+                      <option value="8">8 / Neo Terminal</option>
+                      <option value="9">9 / Warm Hospitality</option>
+                      <option value="10">10 / High Contrast</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="color-grid">
+                  <label class="color-field">
+                    <span>Primary</span>
+                    <div class="color-input-wrap">
+                      <input id="brandPrimary" name="brandPrimary" type="color" value="#ff6600" />
+                      <strong data-color-value="brandPrimary">#FF6600</strong>
+                    </div>
+                  </label>
+                  <label class="color-field">
+                    <span>Secondary</span>
+                    <div class="color-input-wrap">
+                      <input id="brandSecondary" name="brandSecondary" type="color" value="#121217" />
+                      <strong data-color-value="brandSecondary">#121217</strong>
+                    </div>
+                  </label>
+                  <label class="color-field">
+                    <span>Accent</span>
+                    <div class="color-input-wrap">
+                      <input id="brandAccent" name="brandAccent" type="color" value="#f2ede9" />
+                      <strong data-color-value="brandAccent">#F2EDE9</strong>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </details>
+          </form>
+        </section>
+
+        <section class="glass-panel scene-panel" data-mobile-pane="scene">
+          <div class="panel-kicker scene-kicker">
+            <div>
+              <p class="eyebrow">Live Website Scene</p>
+              <h2 id="sceneTitle">Signal-to-site cockpit</h2>
+              <p class="panel-copy">Live render as the signal gets stronger.</p>
+            </div>
+
+            <div class="scene-controls">
+              <div class="segmented-control" aria-label="Viewport controls">
+                <button class="segmented-chip active" data-viewport-button="desktop" type="button">Desktop</button>
+                <button class="segmented-chip" data-viewport-button="mobile" type="button">Mobile</button>
+                <button class="segmented-chip" data-viewport-button="duo" type="button">Dual</button>
+              </div>
+
+              <div class="menu-wrap">
+                <button
+                  class="menu-button"
+                  id="previewMenuButton"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="previewMenu"
+                  aria-label="Open preview menu"
+                >
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </button>
+                <div class="menu-panel" id="previewMenu" hidden>
+                  <button class="menu-item" id="previewLoadDemoButton" type="button">Load Demo</button>
+                  <a class="menu-item" href="docs/service-business-netlify-tool-spec.md" target="_blank" rel="noreferrer">
+                    Open Spec
+                  </a>
+                  <a class="menu-item" href="schemas/service-business-brief.schema.json" target="_blank" rel="noreferrer">
+                    Open Schema
+                  </a>
+                  <button class="menu-item" id="downloadMarkdownButton" type="button">Download Markdown File</button>
+                  <button class="menu-item" id="focusSignalButton" type="button">Edit Info</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="live-ribbon">
+            <span id="liveStatus">LIVE RENDER / ACTIVE</span>
+            <span id="sceneMeta">5 sections / 3 variants / local inference</span>
+          </div>
+
+          <div class="scene-stage" id="sceneStage">
+            <div class="scene-hud" aria-hidden="true">
+              <span class="hud-orbit"></span>
+              <span class="hud-orbit hud-orbit-secondary"></span>
+              <span class="hud-beam"></span>
+              <span class="hud-ticks"></span>
+            </div>
+            <button class="ai-orb" id="aiOrbButton" type="button" aria-label="Open command palette">
+              <span class="orb-core"></span>
+            </button>
+            <div class="device-stack" id="deviceStack"></div>
+          </div>
+        </section>
+
+        <aside class="glass-panel brain-panel" data-mobile-pane="brain">
+          <div class="panel-kicker">
+            <div>
+              <p class="eyebrow">AI Brain</p>
+              <h2>System decisions</h2>
+              <p class="panel-copy" id="brainSummary">Local inference. Confidence rises with better signal.</p>
+            </div>
+            <div class="brain-badge" id="brainStatus">Local Intelligence</div>
+          </div>
+
+          <div class="brain-scroll">
+            <section class="brain-card">
+              <div class="brain-card-head">
+                <span class="brain-card-tag">Decisions</span>
+                <strong id="decisionTone">Calibrating</strong>
+              </div>
+              <dl class="decision-list" id="decisionList"></dl>
+            </section>
+
+            <section class="brain-card">
+              <div class="brain-card-head">
+                <span class="brain-card-tag">Confidence</span>
+                <strong id="confidenceHeadline">Sections adapting in real time</strong>
+              </div>
+              <div class="confidence-list" id="confidenceList"></div>
+            </section>
+
+            <section class="brain-card">
+              <div class="brain-card-head">
+                <span class="brain-card-tag">Directions</span>
+                <strong>Safe / Bold / Experimental</strong>
+              </div>
+              <div class="variant-grid" id="variantGrid"></div>
+            </section>
+
+            <section class="brain-card">
+              <div class="brain-card-head">
+                <span class="brain-card-tag">Suggestions</span>
+                <strong>Mutation prompts</strong>
+              </div>
+              <div class="suggestion-list" id="suggestionList"></div>
+            </section>
+
+            <section class="brain-card">
+              <div class="brain-card-head">
+                <span class="brain-card-tag">Outputs</span>
+                <strong>Deployable package</strong>
+              </div>
+              <div class="output-grid" id="outputGrid"></div>
+              <div class="heatmap-card" id="heatmapCard"></div>
+            </section>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="bottom-dock glass-panel">
+        <button class="dock-button" id="commandPaletteButton" type="button">⌘K Command Palette</button>
+        <div class="dock-lights" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="version-cluster">
+          <span class="dock-label">Version History</span>
+          <div class="version-history" id="versionHistory"></div>
+        </div>
+
+        <div class="dock-actions">
+          <button class="dock-button" id="shareButton" type="button">Share Link</button>
+          <button class="dock-button" id="dockFocusSignalButton" type="button">Edit Signal</button>
+        </div>
+      </footer>
+    </div>
+
+    <div class="command-overlay" id="commandOverlay" hidden>
+      <div class="command-palette glass-panel" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+        <div class="command-head">
+          <div>
+            <p class="eyebrow">Command Palette</p>
+            <h2 id="commandTitle">Mutate the concept</h2>
+          </div>
+          <button class="ghost-button" id="closeCommandButton" type="button">Close</button>
+        </div>
+
+        <form id="commandForm" class="command-form">
+          <label class="field">
+            <span>Command</span>
+            <small>Use natural language. Example: make this more premium.</small>
+            <input id="commandInput" name="commandInput" autocomplete="off" />
+          </label>
+        </form>
+
+        <div class="command-suggestions" id="commandSuggestions"></div>
+        <div class="command-log" id="commandLog"></div>
+      </div>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay" hidden>
+      <div class="loading-card glass-panel">
+        <p class="eyebrow">LFNYC Studio Engine</p>
+        <h2 id="loadingTitle">Forging concept</h2>
+        <div class="loading-bar" aria-hidden="true">
+          <span id="loadingBarFill"></span>
+        </div>
+        <div class="loading-log" id="loadingLog"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" hidden></div>
+
+    <script src="app.js" defer></script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

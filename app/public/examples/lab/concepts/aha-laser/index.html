@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AHA Laser Poster</title>
+  <meta name="description" content="AHA neon laser poster with animated carve-on reveal." />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="AHA Laser Poster" />
+  <meta property="og:description" content="Neon laser-draw poster animation for After Hours Agenda." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/examples/lab/concepts/aha-laser/apple-touch-icon.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AHA Laser Poster" />
+  <meta name="twitter:description" content="Neon laser-draw poster animation for After Hours Agenda." />
+  <meta name="twitter:image" content="/examples/lab/concepts/aha-laser/apple-touch-icon.png" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <style>
+    :root{
+      /* ===== TUNING ===== */
+      --bg: #000;
+      --pink: #ff2bd6;
+      --pinkSoft: #ff9af2;
+      --whiteHot: #ffd0f7;
+
+      --drawDuration: 3.6s;     /* how long the carve-on takes */
+      --stagger: 0.12s;         /* delay between layers */
+      --flickerChance: 0.12;    /* handled in JS */
+
+      --laserSweepDuration: 1.8s;
+      --laserSweepDelay: 0.2s;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      overflow: hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .wrap{
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      transition: opacity 320ms ease;
+    }
+
+    svg{
+      width: min(1200px, 95vw);
+      max-height: 92vh;
+      height: auto;
+      display: block;
+    }
+
+    /* Laser-draw paths */
+    .laser-path{
+      fill: none;
+      stroke: var(--pink);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+      filter: url(index.html);
+      opacity: 0.95;
+
+      /* dash animation set in JS per-path for correct length */
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: none;
+    }
+
+    .laser-path.hot{
+      stroke: var(--whiteHot);
+      opacity: 0.75;
+      stroke-width: 2.6;
+      filter: url(index.html);
+      mix-blend-mode: screen;
+    }
+
+    .laser-path.soft{
+      stroke: var(--pinkSoft);
+      opacity: 0.55;
+      stroke-width: 2.2;
+      filter: url(index.html);
+      mix-blend-mode: screen;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    body.scene-ready .laser-path{
+      animation: draw var(--drawDuration) ease forwards;
+    }
+
+    /* Subtle CRT scanlines */
+    .scanlines{
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 1px,
+        rgba(0,0,0,0) 3px,
+        rgba(0,0,0,0) 6px
+      );
+      mix-blend-mode: overlay;
+      opacity: 0.25;
+    }
+
+    /* A moving “laser bar” sweep */
+    .laserbar{
+      position: fixed;
+      left: -20vw;
+      top: 0;
+      width: 40vw;
+      height: 100vh;
+      background: linear-gradient(
+        90deg,
+        rgba(0,0,0,0) 0%,
+        rgba(255,43,214,0.12) 35%,
+        rgba(255,208,247,0.22) 50%,
+        rgba(255,43,214,0.12) 65%,
+        rgba(0,0,0,0) 100%
+      );
+      filter: blur(2px);
+      mix-blend-mode: screen;
+      opacity: 0.0;
+      transform: skewX(-10deg);
+      animation: none;
+    }
+
+    @keyframes sweep{
+      0% { transform: translateX(-60vw) skewX(-10deg); opacity: 0; }
+      15% { opacity: 0.35; }
+      50% { opacity: 0.2; }
+      85% { opacity: 0.35; }
+      100% { transform: translateX(160vw) skewX(-10deg); opacity: 0; }
+    }
+
+    /* Tiny “power hum” flicker */
+    .flicker{
+      animation: none;
+      transform-origin: center;
+    }
+    @keyframes flicker{
+      0%, 100% { opacity: 1; }
+      48% { opacity: 0.96; }
+      49% { opacity: 0.78; }
+      50% { opacity: 0.98; }
+      52% { opacity: 0.9; }
+    }
+
+    body.scene-ready .laserbar{
+      animation: sweep var(--laserSweepDuration) ease-in-out var(--laserSweepDelay) infinite;
+    }
+
+    body.scene-ready .flicker{
+      animation: flicker 2.3s infinite;
+    }
+
+    body:not(.scene-ready) .laserbar,
+    body:not(.scene-ready) .scanlines{
+      opacity: 0;
+    }
+
+    .mobile-loader{
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      place-items: center;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255, 43, 214, 0.2), rgba(0, 0, 0, 0.98) 62%),
+        #000;
+      color: #ffd0f7;
+      font-family: "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.26em;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 280ms ease;
+      pointer-events: none;
+    }
+
+    .loader-text{
+      font-size: clamp(18px, 5.4vw, 28px);
+      text-shadow: 0 0 10px rgba(255, 43, 214, 0.8);
+      animation: loaderPulse 1.2s ease-in-out infinite;
+    }
+
+    .loader-dots{
+      display: inline-block;
+      min-width: 3ch;
+      text-align: left;
+      animation: loaderDots 1s steps(4, end) infinite;
+    }
+
+    @keyframes loaderPulse{
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes loaderDots{
+      0% { width: 0; }
+      100% { width: 3ch; }
+    }
+
+    @keyframes sweepMobile{
+      0% { transform: translateX(-75vw) skewX(-10deg); opacity: 0; }
+      12% { opacity: 0.22; }
+      50% { opacity: 0.16; }
+      88% { opacity: 0.22; }
+      100% { transform: translateX(175vw) skewX(-10deg); opacity: 0; }
+    }
+
+    .replay-btn{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      border: 1px solid rgba(255, 43, 214, 0.7);
+      background: rgba(0, 0, 0, 0.65);
+      color: #ffd0f7;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font: 600 12px/1 "IBM Plex Mono", "Courier New", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 160ms ease, transform 160ms ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .replay-btn:hover{
+      background: rgba(255, 43, 214, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .replay-btn:active{
+      transform: translateY(0);
+    }
+
+    body.reduced-motion .laser-path{
+      animation: none !important;
+      stroke-dasharray: none !important;
+      stroke-dashoffset: 0 !important;
+    }
+
+    body.reduced-motion .laserbar,
+    body.reduced-motion .scanlines{
+      display: none !important;
+    }
+
+    body.reduced-motion .flicker{
+      animation: none !important;
+    }
+
+    @media (max-width: 780px) {
+      :root{
+        --drawDuration: 5.4s;
+        --stagger: 0.16s;
+        --laserSweepDuration: 2.8s;
+        --laserSweepDelay: 5.2s;
+      }
+
+      .wrap{
+        padding: 8px;
+      }
+
+      svg{
+        width: 100vw;
+        max-height: 96vh;
+      }
+
+      .laserbar{
+        width: 46vw;
+        filter: blur(0.8px);
+      }
+
+      .replay-btn{
+        right: 10px;
+        bottom: 10px;
+        padding: 9px 11px;
+        font-size: 11px;
+      }
+
+      .laser-path{
+        filter: url(index.html);
+      }
+
+      .laser-path.hot{
+        filter: url(index.html);
+      }
+
+      .laser-path.soft{
+        filter: url(index.html);
+      }
+
+      .scanlines{
+        display: none;
+      }
+
+      body.mobile-simple .flicker{
+        animation: none !important;
+      }
+
+      body.mobile-simple .laser-path:not(.mobile-draw){
+        animation: none !important;
+        stroke-dasharray: none !important;
+        stroke-dashoffset: 0 !important;
+      }
+
+      body.mobile-simple .laser-path.mobile-draw{
+        animation: none;
+      }
+
+      body.mobile-simple.scene-ready .laser-path.mobile-draw{
+        animation: draw var(--drawDuration) linear forwards !important;
+      }
+
+      body.mobile-simple.scene-ready .laserbar{
+        animation: sweepMobile 4.2s linear 1.1s infinite !important;
+      }
+
+      /* While mobile draw is running, keep effects light; restore glow after carve completes. */
+      body.mobile-simple .mobile-draw{
+        filter: none !important;
+        mix-blend-mode: normal !important;
+      }
+
+      body.mobile-simple.mobile-glow-on .mobile-draw{
+        filter: url(index.html) !important;
+        mix-blend-mode: screen !important;
+      }
+
+      body.mobile-simple.mobile-glow-on .mobile-draw.hot{
+        filter: url(index.html) !important;
+      }
+
+      body.mobile-simple.mobile-glow-on .mobile-draw.soft{
+        filter: url(index.html) !important;
+      }
+
+      body.mobile-booting .wrap{
+        opacity: 0;
+      }
+
+      body.mobile-booting .mobile-loader{
+        display: grid;
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <svg id="posterSvg" viewBox="0 0 1600 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AHA neon laser poster">
+      <defs>
+        <!-- Neon glows -->
+        <filter id="neonGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="3.5" result="b1"/>
+          <feGaussianBlur stdDeviation="10" result="b2"/>
+          <feMerge>
+            <feMergeNode in="b2"/>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="6" result="b1"/>
+          <feGaussianBlur stdDeviation="16" result="b2"/>
+          <feMerge>
+            <feMergeNode in="b2"/>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="hotGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="2" result="b1"/>
+          <feGaussianBlur stdDeviation="8" result="b2"/>
+          <feMerge>
+            <feMergeNode in="b2"/>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="neonGlowMobile" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.6" result="b1"/>
+          <feGaussianBlur stdDeviation="4.5" result="b2"/>
+          <feMerge>
+            <feMergeNode in="b2"/>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="softGlowMobile" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="2.5" result="b1"/>
+          <feGaussianBlur stdDeviation="6.5" result="b2"/>
+          <feMerge>
+            <feMergeNode in="b2"/>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <filter id="hotGlowMobile" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.1" result="b1"/>
+          <feGaussianBlur stdDeviation="3.2" result="b2"/>
+          <feMerge>
+            <feMergeNode in="b2"/>
+            <feMergeNode in="b1"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+
+        <!-- For “3D-ish” AHA face -->
+        <linearGradient id="faceGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff67ea"/>
+          <stop offset="0.55" stop-color="#ff2bd6"/>
+          <stop offset="1" stop-color="#d100a8"/>
+        </linearGradient>
+
+        <!-- AHA extrusion gradient -->
+        <linearGradient id="depthGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#7a0066"/>
+          <stop offset="1" stop-color="#220018"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Background -->
+      <rect width="1600" height="1100" fill="#000"/>
+
+      <!-- Frame (laser-drawn) -->
+      <g class="flicker">
+        <rect id="frameOuter" class="laser-path soft mobile-draw" data-stroke="4.5" x="120" y="90" width="1360" height="920" rx="2"/>
+        <rect id="frameInner" class="laser-path mobile-draw" data-stroke="3.2" x="150" y="120" width="1300" height="860" rx="2"/>
+      </g>
+
+      <!-- AHA 3D (path-based for consistent cross-device rendering) -->
+      <g id="ahaGroup" aria-label="AHA">
+        <g opacity="0.9">
+          <path id="ahaDepth18" fill="url(#depthGrad)"/>
+          <path id="ahaDepth14" fill="url(#depthGrad)"/>
+          <path id="ahaDepth10" fill="url(#depthGrad)"/>
+          <path id="ahaDepth06" fill="url(#depthGrad)"/>
+        </g>
+
+        <path id="ahaFace"
+              fill="url(#faceGrad)" stroke="#ffb3f3" stroke-width="2" filter="url(#neonGlow)"/>
+
+        <path id="ahaOutline"
+              fill="none" stroke="#ff2bd6" stroke-width="8" filter="url(#neonGlow)"
+              class="laser-path mobile-draw" data-stroke="8"/>
+
+        <path id="ahaHot"
+              fill="none" stroke="#ffd0f7" stroke-width="3.2" filter="url(#hotGlow)"
+              class="laser-path hot" data-stroke="3.2"/>
+      </g>
+
+      <!-- Divider sparkle line -->
+      <g class="flicker">
+        <path id="dividerLine" class="laser-path mobile-draw" data-stroke="2.6" d="M400 785 L1200 785"/>
+        <circle id="dividerLeft" class="laser-path hot" data-stroke="2.6" cx="400" cy="785" r="4"/>
+        <circle id="dividerRight" class="laser-path hot" data-stroke="2.6" cx="1200" cy="785" r="4"/>
+      </g>
+
+      <!-- Script + sublines (path-based) -->
+      <g class="flicker">
+        <path id="scriptLine"
+              fill="none"
+              stroke="#ff2bd6"
+              stroke-width="4.2"
+              filter="url(#neonGlow)"
+              class="laser-path mobile-draw"
+              data-stroke="4.2"/>
+
+        <path id="estLine"
+              fill="none"
+              stroke="#ff2bd6"
+              stroke-width="2.6"
+              filter="url(#neonGlow)"
+              class="laser-path mobile-draw"
+              data-stroke="2.6"/>
+
+        <path id="nycLine"
+              fill="none"
+              stroke="#ff2bd6"
+              stroke-width="2.6"
+              filter="url(#neonGlow)"
+              class="laser-path mobile-draw"
+              data-stroke="2.6"/>
+      </g>
+    </svg>
+  </div>
+
+  <div id="mobileLoader" class="mobile-loader" aria-live="polite" aria-label="Loading poster">
+    <div class="loader-text">LOADING<span class="loader-dots">...</span></div>
+  </div>
+
+  <button id="replayBtn" class="replay-btn" type="button" aria-label="Replay animation">Replay</button>
+
+  <div class="laserbar" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <script src="assets/text-paths.js"></script>
+  <script>
+    const PATHS = window.POSTER_PATHS || {};
+    const requiredPathKeys = ['aha', 'script', 'est', 'nyc'];
+    for (const key of requiredPathKeys) {
+      if (!PATHS[key] || !PATHS[key].d || !PATHS[key].width) {
+        throw new Error(`Missing path data for ${key}.`);
+      }
+    }
+
+    const svg = document.getElementById('posterSvg');
+    const replayBtn = document.getElementById('replayBtn');
+    const frameOuter = document.getElementById('frameOuter');
+    const frameInner = document.getElementById('frameInner');
+    const dividerLine = document.getElementById('dividerLine');
+    const dividerLeft = document.getElementById('dividerLeft');
+    const dividerRight = document.getElementById('dividerRight');
+    const ahaDepth18 = document.getElementById('ahaDepth18');
+    const ahaDepth14 = document.getElementById('ahaDepth14');
+    const ahaDepth10 = document.getElementById('ahaDepth10');
+    const ahaDepth06 = document.getElementById('ahaDepth06');
+    const ahaFace = document.getElementById('ahaFace');
+    const ahaOutline = document.getElementById('ahaOutline');
+    const ahaHot = document.getElementById('ahaHot');
+    const scriptLine = document.getElementById('scriptLine');
+    const estLine = document.getElementById('estLine');
+    const nycLine = document.getElementById('nycLine');
+    const body = document.body;
+    const mobileQuery = window.matchMedia('(max-width: 780px)');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const DESKTOP = {
+      viewBox: '0 0 1600 1100',
+      frameOuter: { x: 120, y: 90, w: 1360, h: 920, stroke: 4.5 },
+      frameInner: { x: 150, y: 120, w: 1300, h: 860, stroke: 3.2 },
+      aha: { width: 700, x: 800, y: 500, outlineStroke: 8, hotStroke: 3.2 },
+      script: { width: 810, x: 800, y: 730, stroke: 4.2 },
+      est: { width: 500, x: 800, y: 850, stroke: 2.6 },
+      nyc: { width: 620, x: 800, y: 915, stroke: 2.6 },
+      divider: { d: 'M400 785 L1200 785', cx1: 400, cy: 785, cx2: 1200, r: 4, stroke: 2.6 },
+      depthOffsets: [18, 14, 10, 6]
+    };
+
+    const MOBILE = {
+      viewBox: '500 70 600 940',
+      frameOuter: { x: 520, y: 110, w: 560, h: 860, stroke: 3.8 },
+      frameInner: { x: 545, y: 135, w: 510, h: 810, stroke: 2.8 },
+      aha: { width: 520, x: 800, y: 470, outlineStroke: 6.8, hotStroke: 2.8 },
+      script: { width: 380, x: 800, y: 670, stroke: 2.8 },
+      est: { width: 335, x: 800, y: 800, stroke: 2.2 },
+      nyc: { width: 415, x: 800, y: 860, stroke: 2.2 },
+      divider: { d: 'M560 730 L1040 730', cx1: 560, cy: 730, cx2: 1040, r: 3.2, stroke: 2.2 },
+      depthOffsets: [14, 11, 8, 5]
+    };
+
+    let didPrepAllStrokes = false;
+    let didPrepMobileDrawStrokes = false;
+    let sceneReady = false;
+    let flickerTimer = null;
+    let flickerStartTimeout = null;
+    let mobileGlowTimer = null;
+    let lastMobileMode = null;
+
+    const lowPowerDevice = (
+      (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4) ||
+      (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4)
+    );
+    let reducedMotion = reducedMotionQuery.matches || lowPowerDevice;
+    if (reducedMotion) body.classList.add('reduced-motion');
+
+    function assignPathData() {
+      const ahaD = PATHS.aha.d;
+      for (const el of [ahaDepth18, ahaDepth14, ahaDepth10, ahaDepth06, ahaFace, ahaOutline, ahaHot]) {
+        el.setAttribute('d', ahaD);
+      }
+      scriptLine.setAttribute('d', PATHS.script.d);
+      estLine.setAttribute('d', PATHS.est.d);
+      nycLine.setAttribute('d', PATHS.nyc.d);
+    }
+
+    function setPathTransform(el, pathMeta, targetWidth, centerX, baselineY, dx = 0, dy = 0) {
+      const scale = targetWidth / pathMeta.width;
+      const x = centerX - (pathMeta.width * scale) / 2 + dx;
+      const y = baselineY + dy;
+      el.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(6)} ${(-scale).toFixed(6)})`);
+    }
+
+    function setAhaLayout(profile) {
+      const [o1, o2, o3, o4] = profile.depthOffsets;
+      setPathTransform(ahaDepth18, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y, o1, o1);
+      setPathTransform(ahaDepth14, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y, o2, o2);
+      setPathTransform(ahaDepth10, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y, o3, o3);
+      setPathTransform(ahaDepth06, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y, o4, o4);
+      setPathTransform(ahaFace, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y);
+      setPathTransform(ahaOutline, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y);
+      setPathTransform(ahaHot, PATHS.aha, profile.aha.width, profile.aha.x, profile.aha.y);
+      ahaOutline.setAttribute('data-stroke', String(profile.aha.outlineStroke));
+      ahaHot.setAttribute('data-stroke', String(profile.aha.hotStroke));
+    }
+
+    function setTextLayout(profile) {
+      setPathTransform(scriptLine, PATHS.script, profile.script.width, profile.script.x, profile.script.y);
+      setPathTransform(estLine, PATHS.est, profile.est.width, profile.est.x, profile.est.y);
+      setPathTransform(nycLine, PATHS.nyc, profile.nyc.width, profile.nyc.x, profile.nyc.y);
+      scriptLine.setAttribute('data-stroke', String(profile.script.stroke));
+      estLine.setAttribute('data-stroke', String(profile.est.stroke));
+      nycLine.setAttribute('data-stroke', String(profile.nyc.stroke));
+    }
+
+    assignPathData();
+
+    const paths = Array.from(document.querySelectorAll('.laser-path'));
+    const mobileDrawPaths = paths.filter((el) => el.classList.contains('mobile-draw'));
+
+    if (mobileQuery.matches && !reducedMotion) {
+      body.classList.add('mobile-booting');
+    }
+
+    function prepStroke(el, i) {
+      const w = el.getAttribute('data-stroke');
+      if (w) el.style.strokeWidth = w;
+
+      let len = 1000;
+      try {
+        if (typeof el.getTotalLength === 'function') {
+          len = el.getTotalLength();
+        } else {
+          const bb = el.getBBox();
+          len = 2 * (bb.width + bb.height);
+        }
+      } catch (e) {
+        len = 1200;
+      }
+
+      el.style.strokeDasharray = len;
+      el.style.strokeDashoffset = len;
+      const delay = (i * parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--stagger'))) || (i * 0.12);
+      el.style.animationDelay = `${delay}s`;
+    }
+
+    function refreshStrokeWidthsFor(set) {
+      for (const el of set) {
+        const w = el.getAttribute('data-stroke');
+        if (w) el.style.strokeWidth = w;
+      }
+    }
+
+    function stopTimers() {
+      if (flickerTimer) {
+        clearInterval(flickerTimer);
+        flickerTimer = null;
+      }
+      if (flickerStartTimeout) {
+        clearTimeout(flickerStartTimeout);
+        flickerStartTimeout = null;
+      }
+      if (mobileGlowTimer) {
+        clearTimeout(mobileGlowTimer);
+        mobileGlowTimer = null;
+      }
+    }
+
+    function restartFlicker(mobile) {
+      if (!sceneReady || mobile || reducedMotion) return;
+
+      if (flickerTimer) clearInterval(flickerTimer);
+      if (flickerStartTimeout) clearTimeout(flickerStartTimeout);
+
+      const baseChance = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--flickerChance')) || 0.12;
+      flickerStartTimeout = setTimeout(() => {
+        flickerTimer = setInterval(() => {
+          for (const el of paths) {
+            if (Math.random() < baseChance) {
+              el.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+              setTimeout(() => { el.style.opacity = ''; }, 70 + Math.random() * 120);
+            }
+          }
+        }, 260);
+      }, 900);
+    }
+
+    function syncMobileGlow(mobile) {
+      if (mobileGlowTimer) {
+        clearTimeout(mobileGlowTimer);
+        mobileGlowTimer = null;
+      }
+      if (reducedMotion) return;
+
+      if (!mobile) {
+        body.classList.add('mobile-glow-on');
+        return;
+      }
+
+      body.classList.remove('mobile-glow-on');
+      const drawDurationMs = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--drawDuration')) * 1000 || 5400;
+      mobileGlowTimer = setTimeout(() => {
+        body.classList.add('mobile-glow-on');
+      }, drawDurationMs + 550);
+    }
+
+    function applyLayout() {
+      const mobile = mobileQuery.matches;
+      const profile = mobile ? MOBILE : DESKTOP;
+      body.classList.toggle('mobile-simple', mobile);
+      if (!mobile) body.classList.remove('mobile-glow-on');
+
+      svg.setAttribute('viewBox', profile.viewBox);
+      frameOuter.setAttribute('x', String(profile.frameOuter.x));
+      frameOuter.setAttribute('y', String(profile.frameOuter.y));
+      frameOuter.setAttribute('width', String(profile.frameOuter.w));
+      frameOuter.setAttribute('height', String(profile.frameOuter.h));
+      frameOuter.setAttribute('data-stroke', String(profile.frameOuter.stroke));
+      frameInner.setAttribute('x', String(profile.frameInner.x));
+      frameInner.setAttribute('y', String(profile.frameInner.y));
+      frameInner.setAttribute('width', String(profile.frameInner.w));
+      frameInner.setAttribute('height', String(profile.frameInner.h));
+      frameInner.setAttribute('data-stroke', String(profile.frameInner.stroke));
+
+      dividerLine.setAttribute('d', profile.divider.d);
+      dividerLine.setAttribute('data-stroke', String(profile.divider.stroke));
+      dividerLeft.setAttribute('cx', String(profile.divider.cx1));
+      dividerLeft.setAttribute('cy', String(profile.divider.cy));
+      dividerLeft.setAttribute('r', String(profile.divider.r));
+      dividerLeft.setAttribute('data-stroke', String(profile.divider.stroke));
+      dividerRight.setAttribute('cx', String(profile.divider.cx2));
+      dividerRight.setAttribute('cy', String(profile.divider.cy));
+      dividerRight.setAttribute('r', String(profile.divider.r));
+      dividerRight.setAttribute('data-stroke', String(profile.divider.stroke));
+
+      setAhaLayout(profile);
+      setTextLayout(profile);
+
+      if (mobile) {
+        if (!didPrepMobileDrawStrokes) {
+          mobileDrawPaths.forEach(prepStroke);
+          didPrepMobileDrawStrokes = true;
+        } else {
+          refreshStrokeWidthsFor(mobileDrawPaths);
+        }
+      } else {
+        if (!didPrepAllStrokes) {
+          paths.forEach(prepStroke);
+          didPrepAllStrokes = true;
+        } else {
+          refreshStrokeWidthsFor(paths);
+        }
+      }
+
+      if (sceneReady && mobile !== lastMobileMode) {
+        syncMobileGlow(mobile);
+        restartFlicker(mobile);
+        lastMobileMode = mobile;
+      }
+    }
+
+    function revealScene() {
+      if (sceneReady) return;
+      sceneReady = true;
+      body.classList.add('scene-ready');
+      body.classList.remove('mobile-booting');
+      const mobile = mobileQuery.matches;
+      syncMobileGlow(mobile);
+      lastMobileMode = mobile;
+      restartFlicker(mobile);
+    }
+
+    function bootstrapScene() {
+      applyLayout();
+
+      if (reducedMotion) {
+        revealScene();
+        return;
+      }
+
+      const minDelayMs = mobileQuery.matches ? 760 : 120;
+      const minDelay = new Promise((resolve) => setTimeout(resolve, minDelayMs));
+      const fontReady = (document.fonts && document.fonts.ready)
+        ? document.fonts.ready.catch(() => {})
+        : Promise.resolve();
+
+      Promise.all([fontReady, minDelay]).then(() => {
+        applyLayout();
+        requestAnimationFrame(() => requestAnimationFrame(revealScene));
+      });
+    }
+
+    function resetDrawState(set) {
+      for (const [i, el] of set.entries()) {
+        prepStroke(el, i);
+        el.style.animation = 'none';
+      }
+      void svg.getBoundingClientRect();
+      for (const el of set) {
+        el.style.animation = '';
+      }
+    }
+
+    function replayScene() {
+      stopTimers();
+      sceneReady = false;
+      lastMobileMode = null;
+      body.classList.remove('scene-ready');
+      body.classList.remove('mobile-glow-on');
+      const mobile = mobileQuery.matches;
+      if (mobile && !reducedMotion) body.classList.add('mobile-booting');
+      resetDrawState(mobile ? mobileDrawPaths : paths);
+      bootstrapScene();
+    }
+
+    replayBtn.addEventListener('click', replayScene);
+
+    if (reducedMotionQuery.addEventListener) {
+      reducedMotionQuery.addEventListener('change', () => {
+        reducedMotion = reducedMotionQuery.matches || lowPowerDevice;
+        body.classList.toggle('reduced-motion', reducedMotion);
+        replayScene();
+      });
+    }
+
+    bootstrapScene();
+    window.addEventListener('resize', applyLayout);
+    window.addEventListener('orientationchange', applyLayout);
+  </script>
+<script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>
