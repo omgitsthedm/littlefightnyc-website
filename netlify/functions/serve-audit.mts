@@ -25,6 +25,25 @@ interface ViewData {
   last_view: string | null;
 }
 
+/** Bring reports generated before the local-font migration onto the current shell. */
+function normalizeStoredReport(html: string): string {
+  let normalized = html
+    .replace(/<link\b[^>]*href=["']https:\/\/fonts\.googleapis\.com[^"']*["'][^>]*>\s*/gi, "")
+    .replace(/<link\b[^>]*href=["']https:\/\/fonts\.gstatic\.com[^"']*["'][^>]*>\s*/gi, "")
+    .replace(/<link\b[^>]*href=["']https:\/\/fonts\.googleapis\.com["'][^>]*>\s*/gi, "")
+    .replace(/<link\b[^>]*href=["']https:\/\/fonts\.gstatic\.com["'][^>]*>\s*/gi, "")
+    .replace(/<noscript>\s*<\/noscript>\s*/gi, "");
+
+  if (!normalized.includes('/assets/lf-fonts.css')) {
+    normalized = normalized.replace(
+      "</head>",
+      '  <link rel="stylesheet" href="/assets/lf-fonts.css">\n</head>'
+    );
+  }
+
+  return normalized;
+}
+
 /** Branded expired-report page */
 function expiredPage(name: string): string {
   const safe = name.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -149,7 +168,7 @@ export default async (req: Request, context: Context) => {
     console.error("[views] tracking error:", err);
   }
 
-  return new Response(html, {
+  return new Response(normalizeStoredReport(html), {
     status: 200,
     headers: {
       ...SECURITY_HEADERS,
