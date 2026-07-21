@@ -6,6 +6,9 @@
   "sourceFiles": 160,
   "htmlPages": 47,
   "concepts": 11,
+  "liveFiles": 165,
+  "flagshipUpgrade": "Living Instrument",
+  "flagshipUpgradeDate": "2026-07-21",
   "recoveredFiles": [
     "concepts/terminal-3d/data/building.json"
   ],

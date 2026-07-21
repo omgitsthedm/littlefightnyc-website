@@ -369,7 +369,7 @@ function premiumSharedCSS(p: string): string {
 
 /** Shared meta tags block */
 function metaBlock(data: AuditData): string {
-  const title = `${esc(data.companyName)} Website Audit — ${esc(data.auditDate)}`;
+  const title = `${esc(data.companyName)} Website Audit | ${esc(data.auditDate)}`;
   const desc = `Comprehensive website audit for ${esc(data.companyName)} (${esc(data.domain)}) covering performance, mobile, SEO, and security.`;
   return `<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -387,6 +387,144 @@ function metaBlock(data: AuditData): string {
     <meta name="twitter:image" content="https://littlefightnyc.com/examples/audit/api/og?slug=${encodeURIComponent(data.slug)}">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="/examples/audit/favicon.svg" type="image/svg+xml">`;
+}
+
+// ---------------------------------------------------------------------------
+// Living Instrument: the flagship report system
+// ---------------------------------------------------------------------------
+
+function generateLivingInstrument(data: AuditData): string {
+  const circumference = 2 * Math.PI * 76;
+  const scoreOffset = circumference - (data.overallScore / 100) * circumference;
+  const categories = [
+    { label: "Performance", score: data.performanceScore },
+    { label: "Mobile", score: data.mobileScore },
+    { label: "Search", score: data.seoScore },
+    { label: "Trust", score: data.securityScore },
+  ];
+
+  const categoryHTML = categories.map((category) => `
+          <div class="fade-up">
+            <dt>${category.label}</dt>
+            <dd>${category.score}</dd>
+            <span class="instrument-scores__track" aria-hidden="true"><i class="instrument-scores__fill" style="--score:${category.score}%"></i></span>
+          </div>`).join("");
+
+  const findingsHTML = data.findings.map((finding, index) => `
+        <li class="instrument-finding fade-up" data-severity="${finding.severity}">
+          <span class="instrument-finding__index">${String(index + 1).padStart(2, "0")}</span>
+          <h3>${esc(finding.title)}</h3>
+          <p>${esc(finding.description)}</p>
+          <span class="instrument-finding__severity">${severityLabel(finding.severity)}</span>
+        </li>`).join("");
+
+  const roadmapHTML = data.roadmap && data.roadmap.length > 0 ? `
+      <section class="instrument-section" aria-labelledby="instrument-roadmap-title">
+        <header class="instrument-section__head fade-up">
+          <p class="instrument-section__kicker">Repair order</p>
+          <h2 id="instrument-roadmap-title">What to do next.</h2>
+          <p>The sequence matters. Fix the highest-leverage problems first, then build on a cleaner foundation.</p>
+        </header>
+        <div class="instrument-roadmap">
+          ${data.roadmap.map((item) => `
+          <article class="instrument-roadmap__item fade-up">
+            <p class="instrument-roadmap__phase">${esc(item.phase)}</p>
+            <h3>${esc(item.title)}</h3>
+            <ul>${item.items.map((entry) => `<li>${esc(entry)}</li>`).join("")}</ul>
+          </article>`).join("")}
+        </div>
+      </section>` : "";
+
+  const benchmark = data.benchmarkPercentile
+    ? `<p class="instrument-benchmark">Ahead of ${data.benchmarkPercentile}% of comparable ${esc(data.niche.toLowerCase())} sites</p>`
+    : "";
+
+  const summary = data.executiveSummary
+    ? `<p class="instrument-summary fade-up">${esc(data.executiveSummary)}</p>`
+    : "";
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  ${metaBlock(data)}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="stylesheet" href="/examples/audit/brand.css">
+  <link rel="stylesheet" href="/examples/audit/report.css">
+</head>
+<body class="lf-audit-report lf-report-instrument">
+  ${noscriptBlock()}
+  ${logoBarHTML(data)}
+
+  <header class="instrument-hero">
+    <div>
+      <p class="instrument-kicker fade-up">Website Audit / ${esc(data.auditDate)}</p>
+      <h1 class="instrument-title fade-up">${esc(data.companyName)}</h1>
+      <p class="instrument-domain fade-up">${esc(data.domain)}</p>
+      <p class="instrument-location fade-up">${esc(data.city)}, ${esc(data.state)} / ${esc(data.niche)}</p>
+    </div>
+    <div class="instrument-score fade-up" role="img" aria-label="Overall website score ${data.overallScore} out of 100, grade ${esc(data.grade)}" style="--score-offset:${scoreOffset.toFixed(2)}">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="76"></circle>
+        <circle class="instrument-score__ring" cx="100" cy="100" r="76"></circle>
+      </svg>
+      <div class="instrument-score__center">
+        <span class="instrument-score__label">Overall signal</span>
+        <strong class="instrument-score__number" data-score-counter>${data.overallScore}</strong>
+        <span class="instrument-score__grade">Grade ${esc(data.grade)}</span>
+      </div>
+      ${benchmark}
+    </div>
+  </header>
+
+  <main class="instrument-main">
+    <section class="instrument-section" aria-labelledby="instrument-signal-title">
+      <header class="instrument-section__head fade-up">
+        <p class="instrument-section__kicker">Signal readout</p>
+        <h2 id="instrument-signal-title">The front door, measured.</h2>
+        <p>Four category scores show where the public experience is strong and where customers encounter resistance.</p>
+      </header>
+      ${summary}
+      <dl class="instrument-scores" aria-label="Audit category scores">${categoryHTML}</dl>
+    </section>
+
+    <section class="instrument-section" aria-labelledby="instrument-findings-title">
+      <header class="instrument-section__head fade-up">
+        <p class="instrument-section__kicker">Evidence</p>
+        <h2 id="instrument-findings-title">What deserves attention.</h2>
+        <p>These are the specific signals behind the score, ordered to make the next decision easier.</p>
+      </header>
+      <ol class="instrument-findings">${findingsHTML}</ol>
+    </section>
+
+    <section class="instrument-impact" aria-labelledby="instrument-impact-title">
+      <div class="fade-up">
+        <p class="instrument-impact__label">Estimated annual opportunity</p>
+        <h2 id="instrument-impact-title">Cost of the friction.</h2>
+        <p class="instrument-impact__range">${formatCurrency(data.revenueImpact.low)} to ${formatCurrency(data.revenueImpact.high)}<small>Directional estimate, not a guarantee</small></p>
+      </div>
+      <p class="instrument-impact__explanation fade-up">${esc(data.revenueImpact.explanation)}</p>
+    </section>
+
+    ${roadmapHTML}
+
+    <section class="instrument-cta fade-up" aria-labelledby="instrument-cta-title">
+      <p class="instrument-section__kicker">Next move</p>
+      <h2 id="instrument-cta-title">Turn the report into a repair.</h2>
+      <p>Bring the evidence to a free Tech Audit. We will sort out what to keep, connect, replace, or build first.</p>
+      <a class="instrument-cta__button" href="${esc(techAuditHref(data))}">${esc(data.ctaText || "Review this report with Little Fight NYC")}</a>
+    </section>
+  </main>
+
+  <footer>
+    ${expiryNoticeHTML(data)}
+    <p class="footer-prepared">Prepared by Little Fight NYC / ${esc(data.auditDate)}</p>
+    <p class="footer-brand">Designed, Hosted and Cared For by <a href="https://littlefightnyc.com" target="_blank" rel="noopener">LittleFightNYC.com</a></p>
+  </footer>
+  ${fullAnimationScript(data.overallScore)}
+</body>
+</html>`;
 }
 
 /** Shared IntersectionObserver script for fade-up */
@@ -1607,22 +1745,7 @@ function generateMinimalLuxe(data: AuditData): string {
 // ---------------------------------------------------------------------------
 
 export function generateAuditHTML(data: AuditData): string {
-  const variant = data.slug.length % 3;
-
-  let html: string;
-  switch (variant) {
-    case 0:
-      html = generateNoirEditorial(data);
-      break;
-    case 1:
-      html = generateClinicalPrecision(data);
-      break;
-    case 2:
-      html = generateMinimalLuxe(data);
-      break;
-    default:
-      html = generateNoirEditorial(data);
-  }
+  let html = generateLivingInstrument(data);
 
   // Inject scroll-depth + time-on-page tracker before </body>
   const engagementScript = `

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website Audit Lab — Little Fight NYC</title>
+  <title>Website Audit Lab | Little Fight NYC</title>
   <meta name="description" content="A fast website audit for New York businesses: performance, SEO, mobile experience, conversion friction, and clear next moves.">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Website Audit Lab — Little Fight NYC">
+  <meta property="og:title" content="Website Audit Lab | Little Fight NYC">
   <meta property="og:description" content="Run a fast audit and see whether your website, search visibility, and conversion path fit the way the business actually works.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://littlefightnyc.com/examples/audit/">
@@ -14,7 +14,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Website Audit Lab — Little Fight NYC">
+  <meta name="twitter:title" content="Website Audit Lab | Little Fight NYC">
   <meta name="twitter:description" content="Run a fast audit for performance, local visibility, mobile experience, and conversion friction.">
   <meta name="twitter:image" content="https://littlefightnyc.com/examples/audit/og-image.png">
   <link rel="canonical" href="https://littlefightnyc.com/examples/audit/">
@@ -24,7 +24,9 @@
   <link rel="stylesheet" href="/examples/audit/brand.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="/examples/audit/experience.css">
+<link rel="stylesheet" href="/examples/audit/flagship.css">
 <script defer src="/examples/audit/experience.js"></script>
+<script defer src="/examples/audit/flagship.js"></script>
 </head>
 <body class="lf-audit-shell-page">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="tug" viewBox="0 0 838.016418 562.406218"><g transform="translate(-297.159815,611.589160) scale(0.100000,-0.100000)"
@@ -69,9 +71,11 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
 </g></symbol></svg>
 
   <header class="site-header">
-    <svg data-tug width="58" height="39" viewBox="0 0 838.016418 562.406218" style="color:var(--primary);display:inline-block;margin:0 auto .5rem" role="img" aria-label="Little Fight NYC tugboat"><use href="#tug"/></svg>
-      <div class="audit-nav-shell">
-      <p class="brand"><a href="https://littlefightnyc.com">Little Fight NYC</a></p>
+    <div class="audit-nav-shell">
+      <div class="audit-identity">
+        <svg data-tug width="42" height="29" viewBox="0 0 838.016418 562.406218" style="color:var(--primary);display:block" role="img" aria-label="Little Fight NYC tugboat"><use href="#tug"/></svg>
+        <p class="brand"><a href="https://littlefightnyc.com">Little Fight NYC</a></p>
+      </div>
       <nav class="audit-nav" aria-label="Audit site navigation">
         <a href="/examples/audit/" aria-current="page">Audit Lab</a>
         <a href="/examples/audit/about/">About</a>
@@ -215,16 +219,13 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
         </div>
         <div class="audit-scan__body">
           <div class="audit-scan__viewport" aria-hidden="true">
-            <svg viewBox="0 0 240 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="18" width="200" height="124" rx="12" stroke="currentColor" stroke-width="2"/>
-              <path d="M20 48H220" stroke="currentColor" stroke-width="2"/>
-              <circle cx="38" cy="33" r="3" fill="currentColor"/>
-              <circle cx="50" cy="33" r="3" fill="currentColor" opacity=".55"/>
-              <circle cx="62" cy="33" r="3" fill="currentColor" opacity=".28"/>
-              <rect x="42" y="70" width="74" height="48" rx="6" stroke="currentColor" stroke-width="2"/>
-              <path d="M135 74H194M135 88H186M135 102H174M135 116H194" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".72"/>
-            </svg>
-            <span class="audit-scan__beam"></span>
+            <canvas id="auditInstrument"></canvas>
+            <div class="audit-instrument__center">
+              <span data-instrument-stage>Signal map</span>
+              <strong data-instrument-domain>Awaiting URL</strong>
+            </div>
+            <span class="audit-instrument__corner audit-instrument__corner--tl"></span>
+            <span class="audit-instrument__corner audit-instrument__corner--br"></span>
           </div>
           <ul class="audit-scan__list">
             <li>
@@ -250,6 +251,54 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
 
     </div>
   </main>
+
+  <section class="audit-proof" aria-labelledby="audit-proof-title">
+    <div class="audit-proof__inner">
+      <header class="audit-proof__header">
+        <p class="section-kicker">One continuous system</p>
+        <h2 id="audit-proof-title">From public page to useful next move.</h2>
+        <p>The scan measures what customers experience, translates the signals into plain English, and builds a report you can act on.</p>
+      </header>
+
+      <div class="audit-proof__grid">
+        <ol class="audit-pipeline" aria-label="Audit pipeline">
+          <li>
+            <span>01</span>
+            <div><strong>Read the front door</strong><p>Load the public page like a customer and capture performance, mobile, trust, and search signals.</p></div>
+          </li>
+          <li>
+            <span>02</span>
+            <div><strong>Find the friction</strong><p>Separate cosmetic noise from the issues that block calls, bookings, orders, and qualified leads.</p></div>
+          </li>
+          <li>
+            <span>03</span>
+            <div><strong>Build the repair order</strong><p>Turn the evidence into prioritized findings, score context, and a practical roadmap.</p></div>
+          </li>
+        </ol>
+
+        <a class="audit-result-preview" href="/examples/audit/skinsmart-dermatology/" aria-label="Open a sample Website Audit Lab report">
+          <div class="audit-result-preview__bar">
+            <span>Sample result</span>
+            <strong>Open report</strong>
+          </div>
+          <div class="audit-result-preview__score">
+            <div><span>Overall</span><strong>70</strong><small>Grade C</small></div>
+            <svg viewBox="0 0 180 180" aria-hidden="true">
+              <circle cx="90" cy="90" r="68"></circle>
+              <circle class="audit-result-preview__ring" cx="90" cy="90" r="68"></circle>
+            </svg>
+          </div>
+          <dl class="audit-result-preview__signals">
+            <div><dt>Performance</dt><dd>62</dd></div>
+            <div><dt>Mobile</dt><dd>74</dd></div>
+            <div><dt>Search</dt><dd>72</dd></div>
+            <div><dt>Trust</dt><dd>72</dd></div>
+          </dl>
+          <p>Real findings from a preserved sample report. No account needed.</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <section class="info-section" aria-label="About this audit">
     <div class="info-container">

@@ -12,7 +12,7 @@
     ".netlify/**",
     "node_modules/**"
   ],
-  "staticFiles": 17,
+  "staticFiles": 20,
   "htmlPages": 10,
   "functionFiles": 9,
   "migratedPath": "/examples/audit/",
@@ -24,5 +24,7 @@
     "/examples/audit/api/report-views",
     "/examples/audit/report/*"
   ],
-  "migratedOn": "2026-07-21"
+  "migratedOn": "2026-07-21",
+  "flagshipUpgrade": "Living Instrument",
+  "flagshipUpgradeDate": "2026-07-21"
 }

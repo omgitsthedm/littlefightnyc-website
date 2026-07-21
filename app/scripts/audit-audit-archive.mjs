@@ -35,7 +35,7 @@ const htmlFiles = files.filter((file) => file.endsWith(".html"));
 const textFiles = files.filter((file) => /\.(?:css|html|js|json|txt|xml)$/i.test(file));
 const functionFiles = walk(functionsRoot).filter((file) => file.endsWith(".mts"));
 
-if (files.length !== 18) failures.push(`expected 18 archived files, found ${files.length}`);
+if (files.length !== 21) failures.push(`expected 21 archived files, found ${files.length}`);
 if (htmlFiles.length !== 10) failures.push(`expected 10 HTML pages, found ${htmlFiles.length}`);
 if (functionFiles.length !== 9) failures.push(`expected 9 function files, found ${functionFiles.length}`);
 

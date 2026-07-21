@@ -32,12 +32,12 @@ const files = walk(labRoot);
 const htmlFiles = files.filter((file) => file.endsWith(".html"));
 const textFiles = files.filter((file) => /\.(?:css|html|js|json|txt|xml)$/i.test(file));
 
-if (files.length !== 162) failures.push(`expected 162 archived files, found ${files.length}`);
+if (files.length !== 165) failures.push(`expected 165 hosted files, found ${files.length}`);
 if (htmlFiles.length !== 47) failures.push(`expected 47 HTML pages, found ${htmlFiles.length}`);
 
 const hubPath = path.join(labRoot, "index.html");
 const hub = fs.readFileSync(hubPath, "utf8");
-const conceptLinks = [...hub.matchAll(/class="card[^"]*"[^>]*href="([^"]+)"/g)].map(
+const conceptLinks = [...hub.matchAll(/class="concept-row[^"]*"[^>]*href="([^"]+)"/g)].map(
   (match) => match[1],
 );
 
@@ -89,7 +89,7 @@ if (mainSiteText.includes("lab.littlefightnyc.com")) {
 }
 
 const returnScript = fs.readFileSync(path.join(labRoot, "assets", "lab-return.js"), "utf8");
-if (!returnScript.includes("a.href = '/examples/lab/';")) {
+if (!returnScript.includes("'/examples/lab/'") || !returnScript.includes("lab-concept-shell__back")) {
   failures.push("concept return chip does not point to the in-site Lab hub");
 }
 
