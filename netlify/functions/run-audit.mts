@@ -9,6 +9,23 @@ import { getStore } from "@netlify/blobs";
 const RATE_LIMIT_WINDOW_HOURS = 24;
 const RATE_LIMIT_MAX_PUBLIC = 3; // public form: 3 audits per IP per 24h
 const RATE_LIMIT_MAX_API = 500; // API key: 500 audits per 24h (Dakota)
+const JOB_TOKEN_TTL_MS = 30 * 60 * 1000;
+
+function createJobToken(): string {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function sha256Hex(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+}
 
 // ── CORS helper ───────────────────────────────────────────────
 function corsHeaders(): Record<string, string> {
@@ -82,15 +99,6 @@ export default async (req: Request, context: Context) => {
   // ── API key authentication (Dakota / programmatic access) ──
   const SERVER_API_KEY = process.env.AUDIT_API_KEY || "";
   const isAuthenticated = !!(api_key && SERVER_API_KEY && api_key === SERVER_API_KEY);
-  const internalSecret = process.env.AUDIT_INTERNAL_SECRET || "";
-
-  if (!internalSecret) {
-    console.error("AUDIT_INTERNAL_SECRET is not configured");
-    return new Response(JSON.stringify({ error: "Audit service is temporarily unavailable" }), {
-      status: 503,
-      headers: corsHeaders(),
-    });
-  }
 
   // ── Honeypot — bots fill hidden fields ──────────────────────
   if (honeypot) {
@@ -220,6 +228,16 @@ export default async (req: Request, context: Context) => {
     message: null,
   });
 
+  // One-time authorization for the public background-function endpoint. The
+  // raw token only travels in this request; its SHA-256 hash is stored in a
+  // private Blob store and removed as soon as the background job accepts it.
+  const jobToken = createJobToken();
+  const jobStore = getStore({ name: "audit-jobs", consistency: "strong" });
+  await jobStore.setJSON(slug, {
+    tokenHash: await sha256Hex(jobToken),
+    expiresAt: new Date(Date.now() + JOB_TOKEN_TTL_MS).toISOString(),
+  });
+
   // ── Trigger background function ─────────────────────────────
   const origin = new URL(req.url).origin;
   const bgUrl = `${origin}/.netlify/functions/run-audit-background`;
@@ -229,13 +247,14 @@ export default async (req: Request, context: Context) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "X-Audit-Internal": internalSecret,
+        "X-Audit-Job-Token": jobToken,
       },
       body: JSON.stringify({ url: fullUrl, email, slug, domain }),
     });
 
     if (!bgRes.ok && bgRes.status !== 202) {
       console.error(`Background trigger failed: ${bgRes.status}`);
+      await jobStore.delete(slug);
       await statusStore.setJSON(slug, {
         status: "error",
         step: "queued",
@@ -245,6 +264,7 @@ export default async (req: Request, context: Context) => {
     }
   } catch (err) {
     console.error("Background trigger error:", err);
+    await jobStore.delete(slug);
     await statusStore.setJSON(slug, {
       status: "error",
       step: "queued",

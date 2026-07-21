@@ -36,6 +36,16 @@ function secretsMatch(expected: string, received: string): boolean {
   return mismatch === 0;
 }
 
+async function sha256Hex(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value),
+  );
+  return Array.from(new Uint8Array(digest), (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+}
+
 // ═══════════════════════════════════════════════════════════════
 // Status helper — updates the polling blob
 // ═══════════════════════════════════════════════════════════════
@@ -637,11 +647,9 @@ async function sendTelegramAlert(data: {
 // ═══════════════════════════════════════════════════════════════
 
 export default async (req: Request, context: Context) => {
-  const internalSecret = getEnv("AUDIT_INTERNAL_SECRET") || "";
-  const receivedSecret = req.headers.get("x-audit-internal") || "";
-  if (!secretsMatch(internalSecret, receivedSecret)) {
-    console.warn("[audit] Rejected unauthorized background invocation");
-    return new Response(null, { status: 404 });
+  if (req.method !== "POST") {
+    console.warn("[audit] Rejected non-POST background invocation");
+    return;
   }
 
   let body: { url: string; email: string; slug: string; domain: string };
@@ -654,6 +662,37 @@ export default async (req: Request, context: Context) => {
   }
 
   const { url, email, slug, domain } = body;
+  if (
+    typeof url !== "string" ||
+    typeof email !== "string" ||
+    typeof domain !== "string" ||
+    typeof slug !== "string" ||
+    !/^[a-z0-9-]+$/.test(slug)
+  ) {
+    console.warn("[audit] Rejected malformed background invocation");
+    return;
+  }
+
+  const receivedToken = req.headers.get("x-audit-job-token") || "";
+  const jobStore = getStore({ name: "audit-jobs", consistency: "strong" });
+  const job = (await jobStore.get(slug, { type: "json" })) as {
+    tokenHash?: string;
+    expiresAt?: string;
+  } | null;
+  const receivedHash = receivedToken ? await sha256Hex(receivedToken) : "";
+  const expired = !job?.expiresAt || new Date(job.expiresAt) <= new Date();
+
+  if (
+    expired ||
+    !job?.tokenHash ||
+    !secretsMatch(job.tokenHash, receivedHash)
+  ) {
+    console.warn("[audit] Rejected unauthorized background invocation");
+    return;
+  }
+
+  // Consume before starting expensive work so the token cannot be replayed.
+  await jobStore.delete(slug);
   console.log(`[audit] ▶ Pipeline start: ${domain} → ${slug}`);
 
   try {

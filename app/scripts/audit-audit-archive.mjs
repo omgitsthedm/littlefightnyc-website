@@ -71,6 +71,12 @@ const combinedAuditText = [...textFiles, ...functionFiles]
 if (combinedAuditText.includes("audits.littlefightnyc.com")) {
   failures.push("old Audit hostname remains");
 }
+if (combinedAuditText.includes("AUDIT_INTERNAL_SECRET")) {
+  failures.push("Audit still depends on the retired site's internal secret");
+}
+if (!combinedAuditText.includes('name: "audit-jobs"')) {
+  failures.push("one-time background job authorization is missing");
+}
 
 const expectedFunctionPaths = [
   "/examples/audit/api/status",

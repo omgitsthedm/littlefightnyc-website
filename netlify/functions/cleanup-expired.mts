@@ -1,6 +1,7 @@
 // cleanup-expired.mts — Scheduled function to delete expired audit reports
 // Runs daily at 3:00 AM UTC. Lists all audit-meta entries, finds reports
 // past their 30-day expiration, and purges HTML + views + status + meta blobs.
+// It also removes orphaned one-time background-job tokens.
 
 import type { Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
@@ -10,6 +11,7 @@ export default async () => {
   const pageStore = getStore("audit-pages");
   const viewStore = getStore("audit-views");
   const statusStore = getStore("audit-status");
+  const jobStore = getStore("audit-jobs");
 
   const now = new Date();
   let deleted = 0;
@@ -51,6 +53,25 @@ export default async () => {
 
   console.log(
     `[cleanup] Done: checked ${listing.blobs.length}, deleted ${deleted}`,
+  );
+
+  const jobs = await jobStore.list();
+  let deletedJobs = 0;
+  for (const entry of jobs.blobs) {
+    try {
+      const job = (await jobStore.get(entry.key, { type: "json" })) as {
+        expiresAt?: string;
+      } | null;
+      if (!job?.expiresAt || new Date(job.expiresAt) <= now) {
+        await jobStore.delete(entry.key);
+        deletedJobs++;
+      }
+    } catch (err) {
+      console.error(`[cleanup] Error processing job ${entry.key}:`, err);
+    }
+  }
+  console.log(
+    `[cleanup] Job tokens: checked ${jobs.blobs.length}, deleted ${deletedJobs}`,
   );
 };
 
