@@ -144,7 +144,7 @@ body.is-inspecting .brownstone-help {
 
 .brownstone-actions {
   position: fixed;
-  top: max(22px, env(safe-area-inset-top));
+  top: max(92px, calc(env(safe-area-inset-top) + 70px));
   right: 24px;
   z-index: 45;
   display: flex;
@@ -196,7 +196,7 @@ body.is-inspecting .brownstone-help {
 
 body.is-inspecting [data-inspect] {
   position: fixed;
-  top: max(22px, env(safe-area-inset-top));
+  top: max(92px, calc(env(safe-area-inset-top) + 70px));
   right: 24px;
   z-index: 70;
   border-color: var(--bs-signal);
