@@ -398,7 +398,7 @@ function generateLivingInstrument(data: AuditData): string {
   const scoreOffset = circumference - (data.overallScore / 100) * circumference;
   const categories = [
     { label: "Performance", score: data.performanceScore },
-    { label: "Mobile", score: data.mobileScore },
+    { label: "Accessibility", score: data.mobileScore },
     { label: "Search", score: data.seoScore },
     { label: "Trust", score: data.securityScore },
   ];
@@ -447,9 +447,8 @@ function generateLivingInstrument(data: AuditData): string {
 <html lang="en">
 <head>
   ${metaBlock(data)}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+  <link rel="preload" href="/assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
   <link rel="stylesheet" href="/examples/audit/brand.css">
   <link rel="stylesheet" href="/examples/audit/report.css">
 </head>

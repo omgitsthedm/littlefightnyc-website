@@ -9,7 +9,10 @@
   var title = document.querySelector('[data-preview-title]');
   var type = document.querySelector('[data-preview-type]');
   var link = document.querySelector('[data-preview-link]');
-  var featureFrame = document.querySelector('[data-feature-frame]');
+  var featureStage = document.querySelector('[data-feature-stage]');
+  var featureActivate = document.querySelector('[data-feature-activate]');
+  var featureFrame = null;
+  var frameObserver = null;
   var previewTimer = 0;
   var activePath = '';
 
@@ -50,6 +53,26 @@
     });
   }
 
+  function activateFeature() {
+    if (!featureStage || featureFrame) return;
+    featureActivate.disabled = true;
+    featureFrame = document.createElement('iframe');
+    featureFrame.src = '/examples/lab/concepts/walkup-3d/index.html?embed=1';
+    featureFrame.title = 'Live preview of the Brownstone Walk-Up';
+    featureFrame.tabIndex = -1;
+    featureFrame.setAttribute('data-feature-frame', '');
+    featureFrame.addEventListener('load', function () {
+      featureStage.classList.add('is-live');
+      if (featureFrame.contentWindow) {
+        featureFrame.contentWindow.postMessage({ type: 'lab:visibility', active: true }, location.origin);
+      }
+    }, { once: true });
+    featureStage.appendChild(featureFrame);
+    if (frameObserver) frameObserver.observe(featureFrame);
+  }
+
+  if (featureActivate) featureActivate.addEventListener('click', activateFeature);
+
   rows.forEach(function (row) {
     function schedule() {
       clearTimeout(previewTimer);
@@ -60,7 +83,7 @@
   });
 
   if ('IntersectionObserver' in window) {
-    var frameObserver = new IntersectionObserver(function (entries) {
+    frameObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.target.contentWindow) return;
         entry.target.contentWindow.postMessage({ type: 'lab:visibility', active: entry.isIntersecting }, location.origin);

@@ -30,7 +30,7 @@ const PILLARS = [
   {
     num: "01",
     name: "Web Design",
-    line: "A website that makes the phone ring — live in 14 days, or you don't pay.",
+    line: "A fast, clear website built to bring in calls, bookings, and sales.",
     to: "/services/custom-local-websites/",
     cta: "See website work",
     Viz: SiteInFourteen,
@@ -38,7 +38,7 @@ const PILLARS = [
   {
     num: "02",
     name: "Tech Support",
-    line: "Register down? Wi-Fi dead? A real person picks up — and gets it fixed.",
+    line: "When the register, Wi-Fi, or computer breaks, a real person fixes it.",
     to: "/services/it-support/",
     cta: "See how support works",
     Viz: WhoAnswers,
@@ -46,7 +46,7 @@ const PILLARS = [
   {
     num: "03",
     name: "Consulting",
-    line: "Free, always. We tell you what to fix first — and what to skip.",
+    line: "We find what is wasting time or money, then tell you what to fix first.",
     to: "/services/tech-consulting/",
     cta: "Get the free read",
     Viz: TheFreeRead,
@@ -54,7 +54,7 @@ const PILLARS = [
   {
     num: "04",
     name: "Personalized Software",
-    line: "Stop renting tools. We build yours once — and hand you the keys.",
+    line: "We replace awkward monthly software with a tool built for your business.",
     to: "/services/business-systems/",
     cta: "See software you own",
     Viz: MoneyLeaving,
@@ -102,11 +102,11 @@ export default function TheFour() {
       <header ref={headRef} className="lf-four__head" data-reveal>
         <p className="lf-four__eyebrow">What we do</p>
         <h2 id="lf-four-title" className="lf-four__title">
-          Start with the leak. <span className="lf-four__em">Build what earns its place.</span>
+          Your website and tech. <span className="lf-four__em">Handled.</span>
         </h2>
         <p className="lf-four__dek">
-          Websites are the main build. Urgent support moves first. Consulting
-          is the free read. Custom software comes when ordinary tools stop fitting.
+          Tell us what is not working. We will explain the fix in plain English,
+          build it, and keep it working.
         </p>
       </header>
       <div className="lf-four__list">

@@ -3,6 +3,7 @@
 .lf-quiet-foot {
   background: var(--lf-ink);
   border-top: 1px solid var(--lf-hairline);
+  margin-top: var(--lf-space-3);
   padding: var(--lf-space-7) var(--lf-margin-mobile) var(--lf-space-8);
   /* Below the fold on every one of the 178 pages: skip its layout + paint
      while off-screen (content stays in the DOM — crawlable + accessible, this
@@ -91,7 +92,7 @@
 
 @media (min-width: 1120px) {
   .lf-quiet-foot__nav {
-    grid-template-columns: 1.05fr 1.2fr 1.2fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

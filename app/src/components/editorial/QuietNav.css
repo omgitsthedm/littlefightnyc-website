@@ -620,3 +620,11 @@
 
 /* Nav placement: the full chip needs room — below 900px the dot alone sits
    by the phone number (the aria sentence stays complete). */
+.lf-nav__scroll-sentinel {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}

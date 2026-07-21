@@ -32,7 +32,7 @@ const files = walk(labRoot);
 const htmlFiles = files.filter((file) => file.endsWith(".html"));
 const textFiles = files.filter((file) => /\.(?:css|html|js|json|txt|xml)$/i.test(file));
 
-if (files.length !== 165) failures.push(`expected 165 hosted files, found ${files.length}`);
+if (files.length !== 166) failures.push(`expected 166 hosted files, found ${files.length}`);
 if (htmlFiles.length !== 47) failures.push(`expected 47 HTML pages, found ${htmlFiles.length}`);
 
 const hubPath = path.join(labRoot, "index.html");

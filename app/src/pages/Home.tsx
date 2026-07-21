@@ -12,9 +12,6 @@ const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMet
 const RecentClients = lazy(() => importWithRetry(() => import("@/components/editorial/RecentClients")));
 const TheFight = lazy(() => importWithRetry(() => import("@/components/editorial/TheFight")));
 const TheFour = lazy(() => importWithRetry(() => import("@/components/editorial/TheFour")));
-const NeonSign = lazy(() => importWithRetry(() => import("@/components/editorial/NeonSign")));
-const BrandLine = lazy(() => importWithRetry(() => import("@/components/editorial/BrandLine")));
-const SignatureBand = lazy(() => importWithRetry(() => import("@/components/editorial/SignatureBand")));
 const QuietContact = lazy(() => importWithRetry(() => import("@/components/editorial/QuietContact")));
 const QuietFooter = lazy(() => importWithRetry(() => import("@/components/editorial/QuietFooter")));
 const StickyHelpBar = lazy(() => importWithRetry(() => import("@/components/editorial/StickyHelpBar")));
@@ -38,15 +35,8 @@ export default function Home() {
       <main id="main-content">
         <QuietHero />
         <Suspense fallback={null}>
-            {/* BlueprintFrame = opt-in drafting marginalia on the major
-                section boundaries (corner ticks + SEC. NN margin notes,
-                ≥1280px only — see BlueprintFrame.css).
-
-                Stacking law (updated 2026-07-20): proof follows the hook so a
-                first-time visitor sees shipped work before the pitch. Then:
-                why we exist (the fight card) → FOUR ITEMS OF FOCUS: Web Design, Tech
-                Support, Consulting, Personalized Software, each proven by its
-                living instrument → the record → the sign → the door. */}
+            {/* Proof follows the hook. One New York point of view follows the
+                proof, then four plain ways to help, then the contact door. */}
             <BlueprintFrame index={1} label="Shipped proof">
               <RecentClients />
             </BlueprintFrame>
@@ -56,13 +46,6 @@ export default function Home() {
             <BlueprintFrame index={3} label="What we do">
               <TheFour />
             </BlueprintFrame>
-            <BlueprintFrame index={4} label="The record">
-              <SignatureBand />
-            </BlueprintFrame>
-            <BlueprintFrame index={5} label="Open for business">
-              <NeonSign />
-            </BlueprintFrame>
-            <BrandLine />
             <QuietContact />
         </Suspense>
       </main>

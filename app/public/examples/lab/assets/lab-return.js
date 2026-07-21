@@ -35,7 +35,7 @@
     if (document.querySelector('link[data-lab-fonts]')) return;
     var link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap';
+    link.href = '/assets/lf-fonts.css';
     link.setAttribute('data-lab-fonts', '');
     document.head.appendChild(link);
   }
@@ -110,7 +110,7 @@
 
     var identity = document.createElement('div');
     identity.className = 'lab-concept-shell__identity';
-    var back = makeLink('lab-concept-shell__back', 'THE LAB', '/examples/lab/', 'Back to all Lab concepts');
+    var back = makeLink('lab-concept-shell__back', 'THE LAB', '/examples/lab/');
     var rule = document.createElement('span');
     rule.className = 'lab-concept-shell__rule';
     rule.setAttribute('aria-hidden', 'true');

@@ -65,7 +65,7 @@
       stroke-linecap: round;
       stroke-linejoin: round;
       vector-effect: non-scaling-stroke;
-      filter: url(index.html);
+      filter: url(#neonGlow);
       opacity: 0.95;
 
       /* dash animation set in JS per-path for correct length */
@@ -78,7 +78,7 @@
       stroke: var(--whiteHot);
       opacity: 0.75;
       stroke-width: 2.6;
-      filter: url(index.html);
+      filter: url(#hotGlow);
       mix-blend-mode: screen;
     }
 
@@ -86,7 +86,7 @@
       stroke: var(--pinkSoft);
       opacity: 0.55;
       stroke-width: 2.2;
-      filter: url(index.html);
+      filter: url(#softGlow);
       mix-blend-mode: screen;
     }
 
@@ -291,15 +291,15 @@
       }
 
       .laser-path{
-        filter: url(index.html);
+        filter: url(#neonGlowMobile);
       }
 
       .laser-path.hot{
-        filter: url(index.html);
+        filter: url(#hotGlowMobile);
       }
 
       .laser-path.soft{
-        filter: url(index.html);
+        filter: url(#softGlowMobile);
       }
 
       .scanlines{
@@ -335,16 +335,16 @@
       }
 
       body.mobile-simple.mobile-glow-on .mobile-draw{
-        filter: url(index.html) !important;
+        filter: url(#neonGlowMobile) !important;
         mix-blend-mode: screen !important;
       }
 
       body.mobile-simple.mobile-glow-on .mobile-draw.hot{
-        filter: url(index.html) !important;
+        filter: url(#hotGlowMobile) !important;
       }
 
       body.mobile-simple.mobile-glow-on .mobile-draw.soft{
-        filter: url(index.html) !important;
+        filter: url(#softGlowMobile) !important;
       }
 
       body.mobile-booting .wrap{
@@ -360,7 +360,7 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <main class="wrap">
     <svg id="posterSvg" viewBox="0 0 1600 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AHA neon laser poster">
       <defs>
         <!-- Neon glows -->
@@ -448,7 +448,7 @@
       </g>
 
       <!-- AHA 3D (path-based for consistent cross-device rendering) -->
-      <g id="ahaGroup" aria-label="AHA">
+      <g id="ahaGroup">
         <g opacity="0.9">
           <path id="ahaDepth18" fill="url(#depthGrad)"/>
           <path id="ahaDepth14" fill="url(#depthGrad)"/>
@@ -502,7 +502,7 @@
               data-stroke="2.6"/>
       </g>
     </svg>
-  </div>
+  </main>
 
   <div id="mobileLoader" class="mobile-loader" aria-live="polite" aria-label="Loading poster">
     <div class="loader-text">LOADING<span class="loader-dots">...</span></div>

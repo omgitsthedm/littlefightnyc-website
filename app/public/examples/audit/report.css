@@ -10,6 +10,7 @@ body.lf-report-instrument {
   --report-orange: #f97316;
   --report-blue: #70a5ff;
   min-width: 320px;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 80% 10%, rgba(112, 165, 255, 0.08), transparent 28rem),
     var(--report-bg);
@@ -47,6 +48,7 @@ body.lf-report-instrument {
   width: min(100% - 48px, 1320px);
   margin-inline: auto;
   padding: clamp(72px, 10vw, 144px) 0;
+  overflow: clip;
 }
 
 .instrument-hero::after {
@@ -89,6 +91,7 @@ body.lf-report-instrument {
   letter-spacing: -0.048em;
   line-height: 0.82;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .instrument-domain {
@@ -465,8 +468,20 @@ body.lf-report-instrument {
   .instrument-section,
   .instrument-impact,
   .instrument-cta { width: min(100% - 28px, 1180px); }
-  .instrument-title { font-size: clamp(4rem, 21vw, 6.4rem); }
-  .instrument-score { width: 100%; }
+  .instrument-title {
+    max-width: 100%;
+    font-size: clamp(2.75rem, 14vw, 5rem);
+  }
+  .instrument-score {
+    width: min(86vw, 335px);
+    justify-self: center;
+  }
+  .instrument-score::before { inset: 14%; }
+  .instrument-benchmark {
+    right: 2%;
+    bottom: 4%;
+    max-width: 18ch;
+  }
   .instrument-section__head { gap: 24px; }
   .instrument-scores { grid-template-columns: 1fr 1fr; }
   .instrument-scores > div { padding-inline: 16px; }
@@ -478,6 +493,11 @@ body.lf-report-instrument {
   .instrument-roadmap__item { grid-template-columns: 1fr; gap: 12px; }
   .instrument-roadmap__item ul { margin-top: 6px; }
   .instrument-cta { padding: 34px 26px; }
+  .instrument-cta__button {
+    max-width: 100%;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

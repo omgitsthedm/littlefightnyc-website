@@ -1,24 +1,16 @@
-import { useLayoutEffect } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
-import { ArrowUpRight, Award, Gauge } from "lucide-react";
+import { ArrowUpRight, Award } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
-import EditorialBody from "@/components/editorial/EditorialBody";
-import StatBlock from "@/components/editorial/StatBlock";
 import QuietContact from "@/components/editorial/QuietContact";
-import DeviceFrame from "@/components/editorial/DeviceFrame";
-import CaseDiagram from "@/components/dataviz/CaseDiagram";
+import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
 import ShareButton from "@/components/ShareButton";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
-import { responsiveImageProps } from "@/lib/responsiveImages";
-import { skelImg } from "@/lib/imgSkeleton";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
 
 function serviceLabel(slug: string): string | undefined {
-  return services.find((s) => s.slug === slug)?.eyebrow;
+  return services.find((service) => service.slug === slug)?.eyebrow;
 }
 
-/** "https://www.ccfilms.net" → "ccfilms.net" for the drawn URL bar + caption. */
 function displayDomain(url: string): string {
   try {
     return new URL(url).hostname.replace(/^www\./, "");
@@ -27,88 +19,38 @@ function displayDomain(url: string): string {
   }
 }
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  month: "long",
-  day: "numeric",
-  year: "numeric",
-});
-
-function displayDate(date: string) {
-  return dateFormatter.format(new Date(`${date}T00:00:00`));
-}
-
 export default function CaseStudyDetail() {
   const { slug } = useParams();
   const { pathname } = useLocation();
-  const study = caseStudies.find((s) => s.slug === slug);
+  const study = caseStudies.find((entry) => entry.slug === slug);
 
-  const arcRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
-  const shipRef = useScrollReveal<HTMLElement>({ threshold: 0.2 });
-  const resultRef = useScrollReveal<HTMLOListElement>({ threshold: 0.15 });
+  if (!study) return <Navigate to="/examples/" replace />;
 
-  // Shared-element morph: pair this hero's backdrop image with the hub card
-  // image (`case-${slug}` — see CaseStudies.tsx + lib/viewTransition.ts).
-  // PageHero owns the img, so the name is stamped here, synchronously in the
-  // commit, which is early enough for the view transition's new snapshot.
-  // No-op styling for browsers without the View Transitions API.
-  useLayoutEffect(() => {
-    if (!study) return undefined;
-    const img = document.querySelector<HTMLElement>(
-      ".lf-pagehero--case .lf-pagehero__backdrop img",
-    );
-    if (!img) return undefined;
-    img.style.viewTransitionName = `case-${study.slug}`;
-    return () => {
-      img.style.viewTransitionName = "";
-    };
-  }, [study]);
-
-  if (!study) return <Navigate to="/examples/#studies" replace />;
-
-  const studyIndex = caseStudies.findIndex((s) => s.slug === study.slug);
-  const related = caseStudies.filter((s) => s.slug !== study.slug).slice(0, 3);
-  const published = study.published;
-  const updated = study.updated;
-
-  // The four-beat arc — setup → tension → resolution, argued not listed.
-  const arc = [
-    { label: "The problem", body: study.problem },
-    { label: "What we kept", body: study.kept },
-    { label: "What we changed", body: study.changed },
-    { label: "What they got back", body: study.result },
-  ].filter((beat) => beat.body);
-
-  // The payoff beat: after problem → kept → changed, show the shipped thing
-  // itself — full width, in drawn browser chrome — then land the result.
-  const resultBeat =
-    arc.length > 0 && arc[arc.length - 1].label === "What they got back"
-      ? arc[arc.length - 1]
-      : null;
-  const leadBeats = resultBeat ? arc.slice(0, -1) : arc;
-
+  const related = caseStudies.filter((entry) => entry.slug !== study.slug).slice(0, 3);
   const serviceLinks = study.services
-    .map((s) => ({ slug: s, label: serviceLabel(s) }))
-    .filter((s): s is { slug: string; label: string } => Boolean(s.label));
+    .map((service) => ({ slug: service, label: serviceLabel(service) }))
+    .filter((service): service is { slug: string; label: string } => Boolean(service.label));
+
+  const beats = [
+    { label: "Before", body: study.problem },
+    { label: "Kept", body: study.kept },
+    { label: "Changed", body: study.changed },
+    { label: "After", body: study.result },
+  ];
 
   return (
     <>
       <PageHero
-        eyebrow={`Case Study · ${study.type}`}
+        eyebrow={`Case study: ${study.type}`}
         icon={Award}
-        title={<span className="lf-em">{study.client}</span>}
+        title={<span className="lf-accent">{study.client}</span>}
         dek={study.title}
         backdrop={{ src: study.image, alt: "" }}
       />
 
       <div className="lf-case__hero-band">
         <div className="lf-case__hero-band-inner">
-          <span className="lf-case__hero-index" aria-hidden="true">
-            {String(studyIndex + 1).padStart(2, "0")}
-          </span>
-          <span className="lf-case__hero-badge">
-            <span className="lf-case__hero-dot" aria-hidden="true" />
-            Shipped
-          </span>
+          <span className="lf-case__hero-badge">Shipped and live</span>
           <span className="lf-case__hero-actions">
             <a
               className="lf-case__hero-live"
@@ -129,178 +71,116 @@ export default function CaseStudyDetail() {
         </div>
       </div>
 
-      <article className="lf-case">
-        <div className="lf-case__inner">
-          {/* Meta rail — the credits block of the feature. */}
-          <aside className="lf-case__meta" aria-label="Project details">
-            <div className="lf-case__meta-item">
-              <p className="lf-case__meta-label">Client</p>
-              <p className="lf-case__meta-value">{study.client}</p>
-            </div>
-            <div className="lf-case__meta-item">
-              <p className="lf-case__meta-label">Type</p>
-              <p className="lf-case__meta-value">{study.type}</p>
-            </div>
-            {study.url && (
-              <div className="lf-case__meta-item">
-                <p className="lf-case__meta-label">Live</p>
-                <p className="lf-case__meta-value">
-                  <a
-                    className="lf-case__service-link"
-                    href={study.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Visit site <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
-                  </a>
-                </p>
-              </div>
-            )}
-            {serviceLinks.length > 0 && (
-              <div className="lf-case__meta-item">
-                <p className="lf-case__meta-label">Services</p>
-                <p className="lf-case__meta-value lf-case__meta-services">
-                  {serviceLinks.map((s) => (
-                    <Link key={s.slug} to={`/services/${s.slug}/`} className="lf-case__service-link">
-                      {s.label}
-                    </Link>
-                  ))}
-                </p>
-              </div>
-            )}
-            {published && (
-              <div className="lf-case__meta-item">
-                <p className="lf-case__meta-label">Published</p>
-                <p className="lf-case__meta-value">
-                  <time dateTime={published}>{displayDate(published)}</time>
-                  {updated && (
-                    <span className="lf-case__meta-updated">
-                      Updated <time dateTime={updated}>{displayDate(updated)}</time>
-                    </span>
-                  )}
-                </p>
-              </div>
-            )}
-          </aside>
-
-          {/* The story. */}
-          <div className="lf-case__story">
-            <EditorialBody dropcap>
-              {study.body?.map((p, i) => <p key={i}>{p}</p>)}
-            </EditorialBody>
+      <article className="lf-case-detail">
+        <section className="lf-case-next__overview" aria-labelledby="lf-case-overview-title">
+          <div className="lf-case-next__overview-inner">
+            <header>
+              <h2 id="lf-case-overview-title">The result, first.</h2>
+              <p>{study.result}</p>
+            </header>
 
             {study.metrics && study.metrics.length > 0 && (
-              <StatBlock
-                eyebrow="Production proof"
-                icon={Gauge}
-                items={study.metrics}
-                note="Facts shown here come from the shipped build, launch checks, or the named production workflow."
-              />
-            )}
-
-            <CaseDiagram slug={study.slug} />
-          </div>
-        </div>
-
-        {/* The arc — the argument, sequenced. */}
-        {arc.length > 0 && (
-          <section className="lf-case__arc" aria-label="The shape of the work">
-            <div className="lf-case__arc-inner">
-              <p className="lf-mono lf-case__arc-kicker">The shape of the work</p>
-              <ol ref={arcRef} className="lf-case__arc-list">
-                {leadBeats.map((beat, i) => (
-                  <li
-                    key={beat.label}
-                    className="lf-case__beat"
-                    style={{ ["--lf-i" as string]: i }}
-                  >
-                    <span className="lf-mono lf-case__beat-num">{String(i + 1).padStart(2, "0")}</span>
-                    <div className="lf-case__beat-body">
-                      <h2 className="lf-case__beat-label">{beat.label}</h2>
-                      <p className="lf-case__beat-text">{beat.body}</p>
-                    </div>
-                  </li>
+              <dl className="lf-case-next__metrics" aria-label={`${study.client} project results`}>
+                {study.metrics.map((metric) => (
+                  <div key={metric.label}>
+                    <dt>{metric.value}</dt>
+                    <dd>{metric.label}</dd>
+                  </div>
                 ))}
-              </ol>
-            </div>
-
-            {/* The shipped thing, full width — the evidence before the verdict. */}
-            <figure ref={shipRef} className="lf-case__ship">
-              <div className="lf-case__ship-frame">
-                <DeviceFrame domain={displayDomain(study.url)}>
-                  <img {...skelImg}
-                    src={study.image}
-                    {...responsiveImageProps(
-                      study.image,
-                      "(max-width: 767px) 100vw, min(100vw - 128px, 1312px)",
-                      [480, 900],
-                    )}
-                    alt={`The ${study.client} site as it shipped`}
-                    width={1600}
-                    height={1200}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </DeviceFrame>
-              </div>
-              <figcaption className="lf-mono lf-case__ship-cap">
-                <span className="lf-case__ship-cap-flag">Shipped</span>
-                <a
-                  href={study.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="lf-case__ship-cap-link"
-                >
-                  {displayDomain(study.url)}
-                  <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
-                </a>
-              </figcaption>
-            </figure>
-
-            {resultBeat && (
-              <div className="lf-case__arc-inner">
-                <ol ref={resultRef} className="lf-case__arc-list" aria-label="The result">
-                  <li className="lf-case__beat" style={{ ["--lf-i" as string]: 0 }}>
-                    <span className="lf-mono lf-case__beat-num">
-                      {String(leadBeats.length + 1).padStart(2, "0")}
-                    </span>
-                    <div className="lf-case__beat-body">
-                      <h2 className="lf-case__beat-label">{resultBeat.label}</h2>
-                      <p className="lf-case__beat-text">{resultBeat.body}</p>
-                    </div>
-                  </li>
-                </ol>
-              </div>
+              </dl>
             )}
-          </section>
-        )}
+
+            <aside className="lf-case-next__details" aria-label="Project details">
+              <div>
+                <span>Client</span>
+                <strong>{study.client}</strong>
+              </div>
+              <div>
+                <span>Work</span>
+                <strong>{study.type}</strong>
+              </div>
+              <div>
+                <span>Services</span>
+                <strong>
+                  {serviceLinks.map((service, index) => (
+                    <span key={service.slug}>
+                      {index > 0 && ", "}
+                      <Link to={`/services/${service.slug}/`}>{service.label}</Link>
+                    </span>
+                  ))}
+                </strong>
+              </div>
+              <div>
+                <span>Current capture</span>
+                <strong>July 21, 2026</strong>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section className="lf-case-next__live" aria-labelledby="lf-case-live-title">
+          <div className="lf-case-next__live-inner">
+            <header>
+              <h2 id="lf-case-live-title">See the live work.</h2>
+              <p>Switch views and scroll inside the frame. The button opens the production site.</p>
+            </header>
+            <div className="lf-case-next__explorer">
+              <LiveSiteExplorer key={study.slug} client={study.client} slug={study.slug} url={study.url} />
+            </div>
+          </div>
+        </section>
+
+        <section className="lf-case-next__story" aria-labelledby="lf-case-story-title">
+          <div className="lf-case-next__story-inner">
+            <header>
+              <h2 id="lf-case-story-title">The whole story, quickly.</h2>
+            </header>
+            <ol>
+              {beats.map((beat) => (
+                <li key={beat.label}>
+                  <h3>{beat.label}</h3>
+                  <p>{beat.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
       </article>
 
       {related.length > 0 && (
-        <section className="lf-case-detail-related">
-          <div className="lf-case-detail-related__inner">
-            <p className="lf-case-detail-related__label">More case studies</p>
-            <ol className="lf-case-detail-related__list">
-              {related.map((r, i) => (
-                <li key={r.slug}>
-                  <Link to={`/case-studies/${r.slug}/`} className="lf-case-detail-related__link">
-                    <span className="lf-case-detail-related__num">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="lf-case-detail-related__body">
-                      <span className="lf-case-detail-related__type">{r.type}</span>
-                      <span className="lf-case-detail-related__client">{r.client}</span>
-                      <span className="lf-case-detail-related__title">{r.title}</span>
+        <section className="lf-case-next__related" aria-labelledby="lf-case-related-title">
+          <div className="lf-case-next__related-inner">
+            <h2 id="lf-case-related-title">More live work.</h2>
+            <ul>
+              {related.map((entry) => (
+                <li key={entry.slug}>
+                  <Link to={`/case-studies/${entry.slug}/`}>
+                    <span className="lf-case-next__related-image">
+                      <img
+                        src={entry.image}
+                        alt=""
+                        width="900"
+                        height="675"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
+                    <span className="lf-case-next__related-copy">
+                      <small>{entry.type}</small>
+                      <strong>{entry.client}</strong>
+                      <span>{entry.title}</span>
                     </span>
                   </Link>
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
         </section>
       )}
 
       <QuietContact
         heading="Want a build like this?"
-        lede="Tell us about your shop. We will tell you what a build like this looks like for you. Consulting is always free."
+        lede="Tell us what your business needs. We will explain the best next step in plain English. Consulting is free."
       />
     </>
   );

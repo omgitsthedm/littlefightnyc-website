@@ -849,6 +849,16 @@ function routeImagePreload(page) {
     ].join("\n    ");
   }
 
+  // Case studies render the current project capture full-bleed behind the
+  // title. The route HTML already knows the exact study, so surface the same
+  // 640/900/original set before React loads instead of discovering the LCP
+  // image from the hydrated component.
+  if (page.caseStudy?.image?.endsWith(".webp")) {
+    const base = page.caseStudy.image.slice(0, -".webp".length);
+    const srcset = `${base}-640.webp 640w, ${base}-900.webp 900w, ${page.caseStudy.image} 1800w`;
+    return `<link rel="preload" href="${escapeAttr(`${base}-900.webp`)}" imagesrcset="${escapeAttr(srcset)}" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  }
+
   // Inner pages whose og image IS the rendered PageHero hero (the hero-*
   // naming convention — og and PageHero were synced in the 2026-07-19 photo
   // waves): preload with EXACTLY PageHero's srcset/sizes so the preload and
@@ -867,8 +877,9 @@ function routeImagePreload(page) {
 
 function routeChunkPrefix(page) {
   if (page.path === "/services/") return "Services-";
-  if (page.path === "/examples/") return "Examples-";
+  if (page.path === "/examples/") return "FieldGuide-";
   if (page.path === "/tech-audit/") return "TechAudit-";
+  if (page.path.startsWith("/case-studies/")) return "CaseStudyDetail-";
   if (page.path.startsWith("/journal/") && page.path !== "/journal/") return "JournalPost-";
   return "";
 }

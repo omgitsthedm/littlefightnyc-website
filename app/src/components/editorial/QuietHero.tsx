@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Globe2, MapPin, Phone, ShieldCheck, Clock } from "lucide-react";
+import { ArrowUpRight, Globe2, Phone } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietHero.css";
 
@@ -46,27 +46,6 @@ function cascade(text: string, startIdx: number, prefix: string) {
   });
   return out;
 }
-
-// Each marquee item links to the page that addresses the problem.
-// Common NYC small-business issues → relevant answer / journal / service.
-const MARQUEE_ITEMS: { label: string; to: string }[] = [
-  { label: "Broken POS", to: "/services/it-support/" },
-  { label: "Domain dispute", to: "/services/it-support/" },
-  { label: "Email going to spam", to: "/services/it-support/" },
-  { label: "Google Maps wrong", to: "/answers/business-not-showing-on-google-maps/" },
-  { label: "Contact form silent", to: "/answers/website-form-not-working-small-business/" },
-  { label: "Squarespace migration", to: "/journal/migrate-off-squarespace-without-breaking-booking/" },
-  { label: "Failed payment processor", to: "/services/it-support/" },
-  { label: "Unverified listing", to: "/answers/business-not-showing-on-google-maps/" },
-  { label: "Duplicate software tools", to: "/journal/keep-connect-replace-build-framework/" },
-  { label: "Missed callbacks", to: "/tech-audit/" },
-  { label: "Booking link dead", to: "/answers/website-form-not-working-small-business/" },
-  { label: "Website timing out", to: "/tech-audit/" },
-  { label: "Wi-Fi down at the counter", to: "/services/it-support/" },
-  { label: "Printer offline", to: "/services/it-support/" },
-  { label: "Lead form sending to nobody", to: "/answers/website-form-not-working-small-business/" },
-  { label: "Monthly bill creep", to: "/journal/read-your-monthly-software-bill/" },
-];
 
 export default function QuietHero() {
   const claimRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
@@ -121,8 +100,8 @@ export default function QuietHero() {
 
         <div className="lf-hero__brief">
           <p>
-            We build your website, pick up when the tech breaks, and kill the
-            monthly software bills bleeding you dry. What we build, you own.
+            We build websites that bring in customers, fix broken tech, and
+            replace expensive software. You own everything.
           </p>
         </div>
 
@@ -150,41 +129,6 @@ export default function QuietHero() {
           </a>
         </div>
 
-        <ul className="lf-hero__trust" aria-label="Why owners choose us">
-          <li>
-            <MapPin size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span>NYC. We show up.</span>
-          </li>
-          <li>
-            <Clock size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span>We call back in 2 hours</span>
-          </li>
-          <li>
-            <ShieldCheck size={16} strokeWidth={1.75} aria-hidden="true" />
-            <span>You own what we build</span>
-          </li>
-        </ul>
-      </div>
-
-      <div className="lf-hero__marquee" aria-label="A sample of what we fix">
-        <div className="lf-hero__marquee-track">
-          {[0, 1].map((dup) => (
-            <ul key={dup} className="lf-hero__marquee-list" aria-hidden={dup === 1 ? "true" : undefined}>
-              <li className="lf-hero__marquee-label">The kind of thing we fix</li>
-              {MARQUEE_ITEMS.map((item) => (
-                <li key={`${dup}-${item.label}`} className="lf-hero__marquee-item">
-                  {dup === 0 ? (
-                    <Link to={item.to} className="lf-hero__marquee-link">
-                      {item.label}
-                    </Link>
-                  ) : (
-                    <span className="lf-hero__marquee-link">{item.label}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
       </div>
     </section>
   );

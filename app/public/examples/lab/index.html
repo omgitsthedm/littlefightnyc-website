@@ -8,9 +8,8 @@
   <meta name="theme-color" content="#07080c">
   <link rel="canonical" href="https://littlefightnyc.com/examples/lab/">
   <link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="/assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
   <link rel="stylesheet" href="/examples/lab/assets/lab.css">
   <script defer src="/examples/lab/assets/lab.js"></script>
 </head>
@@ -18,7 +17,7 @@
   <a class="skip-link" href="#concepts">Skip to concepts</a>
 
   <header class="lab-bar">
-    <a class="lab-brand" href="https://littlefightnyc.com" aria-label="Little Fight NYC home">
+    <a class="lab-brand" href="https://littlefightnyc.com" aria-label="LITTLEFIGHTNYC home">
       <img src="/examples/lab/assets/favicon.svg" width="34" height="24" alt="">
       <span>LITTLEFIGHT<span>NYC</span></span>
     </a>
@@ -42,14 +41,18 @@
       </div>
 
       <div class="lab-feature" aria-label="Featured concept: Brownstone Walk-Up">
-        <div class="lab-feature__frame">
-          <iframe
-            src="/examples/lab/concepts/walkup-3d/index.html?embed=1"
-            title="Live preview of the Brownstone Walk-Up"
-            loading="eager"
-            tabindex="-1"
-            data-feature-frame
-          ></iframe>
+        <div class="lab-feature__frame" data-feature-stage>
+          <img
+            class="lab-feature__poster"
+            src="/examples/lab/assets/brownstone-poster.webp"
+            width="1280"
+            height="800"
+            alt="Night view of the interactive 3D Brownstone Walk-Up"
+            fetchpriority="high"
+          >
+          <button class="lab-feature__play" type="button" data-feature-activate>
+            Play 3D preview
+          </button>
           <span class="lab-feature__shade" aria-hidden="true"></span>
         </div>
         <div class="lab-feature__caption">
@@ -138,7 +141,7 @@
             <span class="concept-row__open">Open</span>
           </a>
 
-          <div class="concept-index__client-note" role="note">Unpublished client concepts are preserved here for reference and remain noindex.</div>
+          <div class="concept-index__client-note" role="listitem"><span role="note">Unpublished client concepts are preserved here for reference and remain noindex.</span></div>
 
           <a class="concept-row concept-row--client" role="listitem" href="/examples/lab/concepts/chef-drew/" data-preview="/examples/lab/concepts/chef-drew/index.html?embed=1" data-title="I Am Cooking" data-type="Client concept">
             <span class="concept-row__type">Client concept</span>

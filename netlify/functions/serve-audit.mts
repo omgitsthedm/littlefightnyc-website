@@ -65,7 +65,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   "X-XSS-Protection": "1; mode=block",
   "Referrer-Policy": "strict-origin-when-cross-origin",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data: https://littlefightnyc.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:",
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; img-src 'self' data: https://littlefightnyc.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:",
 };
 
 export default async (req: Request, context: Context) => {

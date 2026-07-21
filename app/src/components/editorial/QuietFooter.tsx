@@ -2,7 +2,6 @@ import { useSyncExternalStore } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
-import StudioStatusStrip from "./StudioStatusStrip";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { openConsentPreferences } from "@/lib/consent";
 import "./QuietFooter.css";
@@ -33,10 +32,9 @@ const footerGroups: Array<{
   links: Array<{ label: string; to: string; external?: boolean }>;
 }> = [
   {
-    title: "Work",
+    title: "Services",
     links: [
       { label: "Custom Local Websites", to: "/services/custom-local-websites/" },
-      { label: "Websites Nationwide", to: "/nationwide/" },
       { label: "IT Support", to: "/services/it-support/" },
       { label: "Tech Consulting", to: "/services/tech-consulting/" },
       { label: "Software You Own", to: "/services/business-systems/" },
@@ -45,31 +43,17 @@ const footerGroups: Array<{
   {
     title: "Proof",
     links: [
-      { label: "Examples", to: "/examples/" },
-      { label: "The Studio", to: "/services/#studio" },
+      { label: "Live Work", to: "/examples/" },
       { label: "The Lab", to: "/examples/lab/", external: true },
       { label: "The Audit", to: "/examples/audit/", external: true },
     ],
   },
   {
-    title: "The Library",
+    title: "Explore",
     links: [
       { label: "The Library", to: "/library/" },
-      { label: "Cut Software Costs", to: "/answers/reduce-monthly-software-costs-small-business/" },
-      { label: "Not Showing on Google", to: "/answers/business-not-showing-on-google-maps/" },
-      { label: "Website Down?", to: "/answers/website-down-emergency-nyc/" },
-      { label: "Glossary", to: "/glossary/" },
-    ],
-  },
-  {
-    title: "Local",
-    links: [
-      { label: "All 18 Neighborhoods", to: "/areas/" },
-      { label: "Upper East Side", to: "/areas/upper-east-side/" },
-      { label: "SoHo", to: "/areas/soho/" },
-      { label: "Midtown", to: "/areas/midtown/" },
-      { label: "Williamsburg", to: "/areas/williamsburg/" },
-      { label: "Astoria", to: "/areas/astoria/" },
+      { label: "NYC Neighborhoods", to: "/areas/" },
+      { label: "Websites Nationwide", to: "/nationwide/" },
     ],
   },
 ];
@@ -81,7 +65,6 @@ export default function QuietFooter() {
   return (
     <footer className="lf-quiet-foot" role="contentinfo">
       <div className="lf-quiet-foot__inner">
-        <StudioStatusStrip />
         <div className="lf-quiet-foot__top">
           <div className="lf-quiet-foot__brand">
             <Link to="/" className="lf-quiet-foot__brand-link">Little Fight NYC</Link>

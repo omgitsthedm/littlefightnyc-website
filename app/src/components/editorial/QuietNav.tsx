@@ -40,6 +40,7 @@ export function OpenNowBadge({ className }: { className?: string }) {
 export default function QuietNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const scrollSentinelRef = useRef<HTMLSpanElement>(null);
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -47,12 +48,17 @@ export default function QuietNav() {
   // The panel closes on link tap (see the panel NavLinks) — no route-change
   // effect, so there's no synchronous setState-in-effect.
 
-  // Chrome condenses + gains a glass floor once the page scrolls off the hero.
-  // setState only fires inside the scroll handler (an event), never sync-in-effect.
+  // Chrome condenses + gains a glass floor once the top sentinel leaves view.
+  // IntersectionObserver avoids continuous main-thread work while scrolling.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const sentinel = scrollSentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
   }, []);
 
   // While open: Escape closes (returns focus to the toggle), and Tab is
@@ -116,6 +122,8 @@ export default function QuietNav() {
   }, [open]);
 
   return (
+    <>
+    <span ref={scrollSentinelRef} className="lf-nav__scroll-sentinel" aria-hidden="true" />
     <header className="lf-nav" data-scrolled={scrolled}>
       <div className="lf-nav__inner">
         <Link to="/" className="lf-nav__brand" aria-label="Little Fight NYC — home">
@@ -155,7 +163,7 @@ export default function QuietNav() {
             data-lf-event="website_plan_intent"
             data-lf-label="nav_desktop"
           >
-            Start a project
+            Plan my website
             <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
           </Link>
 
@@ -243,5 +251,6 @@ export default function QuietNav() {
         </>
       )}
     </header>
+    </>
   );
 }

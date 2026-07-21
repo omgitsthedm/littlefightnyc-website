@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import PhoneAction from "./PhoneAction";
@@ -53,9 +54,24 @@ function fitCta(pathname: string): FitCta {
 export default function StickyHelpBar() {
   const { pathname } = useLocation();
   const trimmed = pathname.replace(/\/$/, "");
+  const onHome = trimmed === "";
+  const [heroVisible, setHeroVisible] = useState(onHome);
+
+  useEffect(() => {
+    if (!onHome) return;
+    const hero = document.querySelector(".lf-hero");
+    if (!hero) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [onHome]);
+
   const hide = trimmed === "/tech-audit" || trimmed === "/thanks";
 
-  if (hide) return null;
+  if (hide || (onHome && heroVisible)) return null;
 
   const cta = fitCta(pathname);
 

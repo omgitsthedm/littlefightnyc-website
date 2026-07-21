@@ -375,6 +375,17 @@ html[data-lab-concept="growth-street"] body {
   color: #f4f3ef;
 }
 
+/* The archived full-site concept carries decorative hero shapes beyond the
+   viewport by design. Clip those layers so the page never creates a second,
+   invisible horizontal canvas on phones or desktops. */
+html[data-lab-concept="tech-support"],
+html[data-lab-concept="tech-support"] body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+html[data-lab-concept="tech-support"] .hero { overflow: hidden; }
+
 html[data-lab-concept="growth-street"] .page {
   width: min(1280px, calc(100vw - 48px));
   padding-top: 38px;
@@ -486,6 +497,10 @@ html[data-lab-concept="growth-street"] .street-stage {
 
   .lab-concept-shell__shortcut {
     display: none;
+  }
+
+  html[data-lab-concept="aha-laser"] .replay-btn {
+    bottom: calc(94px + env(safe-area-inset-bottom));
   }
 
   @keyframes lab-shell-enter {
