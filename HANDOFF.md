@@ -1,22 +1,27 @@
 # HANDOFF — littlefightnyc.com
-updated: 2026-07-19 (end of the Fortress Campaign session)
+updated: 2026-07-20 (audit, conversion, and layout closeout)
 
-state: SITE-COMPLETE. 182 routes / 125 sitemap / 18 areas (5 boroughs) / en+es+zh
-  / nationwide door / all QA audits passed or doctrine-accepted. Everything live
-  on auto-deploy (main → Netlify). Session record: SESSION-2026-07-19-FORTRESS.md.
-  Plan of record: FORTRESS.md (read it first, always).
+state: SITE-COMPLETE. Mobile reload loop resolved; retired static runtime and
+  Twilio voice webhook removed; analytics privacy-gated; acquisition path and
+  shared contact block polished; density-aware tiled layouts live across the
+  structured page estate. Application release `fb61c52` is on canonical
+  `main`; GitHub, Netlify's Git deploy, and production were verified in sync.
 
-next action (ONE): David runs ~/Desktop/LFNYC-PAPERWORK-RUNBOOK.md
-  (Task 1 Bing Webmaster is the gate — site is absent from Bing/ChatGPT/Copilot
-  until then).
+session records:
+  - `SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md` — latest pass.
+  - `SESSION-2026-07-19-FORTRESS.md` — preceding Fortress Campaign.
+  - `FORTRESS.md` — plan of record and growth doctrine.
 
-claude follow-ups, gated: IndexNow wiring (after Bing) · reviews surface +
-  aggregateRating (after 3-5 GBP reviews) · watchtower Mondays ("run the
-  watchtower") → replicate winning doors from GSC data.
+next action (ONE): David runs `~/Desktop/LFNYC-PAPERWORK-RUNBOOK.md`.
+  Bing/Business Profile/search-account work is now the leverage; there is no
+  blocking site-code backlog.
 
-gotchas for the next session: canvas verification = computed display +
-  offsetHeight AND readback, never readback alone · Lighthouse on a busy
-  machine lies — CDP real-throttle is the method · never script-remove CSS
-  rules by brace-hunting · seo-pages.json + site-areas.ts stay in lockstep ·
-  hero-* og images ARE the rendered heroes (preloads depend on it) · the
-  micro-interaction zooms use the composing `scale` property on purpose.
+gated follow-ups: IndexNow after Bing · reviews surface + aggregateRating after
+  3–5 approved GBP reviews · watchtower Mondays ("run the watchtower") · run
+  acquisition experiments one at a time using `CONVERSION-MEASUREMENT.md`.
+
+standing gotchas: deploy by pushing `main` only—never manual Netlify production
+  deploy · canvas verification = computed display + offsetHeight AND readback ·
+  seo-pages.json + site data stay in lockstep · hero images are preload-linked ·
+  analytics stays denied until consent · density-aware layout beats unexplained
+  dead space, but long-form prose keeps a readable measure.

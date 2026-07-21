@@ -66,3 +66,7 @@ Brand anchors that should stay intact:
 4. Prefer concrete proof, examples, and operational clarity over strategy jargon, explanation blocks, or generic feature scaffolding.
 5. Motion should feel purposeful and premium: smooth, helpful, and optional, never noisy or gimmicky.
 6. Design responsively with intent: desktop expansive, tablet composed, mobile tactile, readable, and fast.
+7. Compose by information density: four related items usually form a 2x2 grid,
+   three form columns, and two form a row. Preserve readable measure for long
+   prose, but do not leave half a viewport empty without a deliberate visual or
+   narrative reason. Asymmetry is a tool, not an automatic default.

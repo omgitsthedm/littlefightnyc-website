@@ -2,7 +2,7 @@
 
 > **Read this first.** If you are a person or an AI agent picking this up cold, this file tells you what LittleFight NYC is, exactly where it stands, what to do next, and where everything lives. One screen to orientation.
 >
-> **Last updated:** 2026-07-20 · **Updated by:** Codex (LiFi NYC) · **Stage:** Live flagship; final polish release
+> **Last updated:** 2026-07-20 · **Updated by:** Codex (LiFi NYC) · **Stage:** Live flagship; audit and layout pass closed
 
 ---
 
@@ -10,12 +10,13 @@
 LittleFight NYC (LFNYC) is **the agency's own flagship marketing/shopfront website** — `https://littlefightnyc.com`. It sells right-sized websites, tools, local visibility, and business systems to small/mid New York businesses. It is a **live, public production site** held to an Apple-tier craft bar (it is the agency's own storefront, so it is the reference standard for everything else).
 
 ## 2. Current state (2026-07-20)
-- **Status:** Final performance, SEO, redirect, documentation, and conversion cleanup is shipping through the canonical `main` auto-deploy path. Verify Netlify's published commit before calling a release live.
+- **Status:** Site complete and in maintain/elevate mode. The mobile lifecycle, repository boundary, privacy/measurement path, conversion surfaces, shared contact block, production polish, and density-aware sitewide layout pass are live and verified. Latest application release: `fb61c52`.
 - **Live URL:** https://littlefightnyc.com/ — verify the exact deployed revision in Netlify during every release.
 - **Git:** `main` is the production branch. Use `git status --short` and compare the Netlify deployed commit before calling it synced.
 - **Branch:** `main` ✅ (canonical; the intended default).
 - ⚠️ **This repo AUTO-DEPLOYS from `main`** (push → Netlify auto-build → live in ~40s). This is a deliberate **exception** to LiFi's usual manual-deploy rule. Do **NOT** run `netlify deploy --prod` manually (caused the 2026-06-30 divergence incident).
 - **Biggest open lever is off-site:** Google Business Profile, not the code — see §5.
+- **Latest closeout:** `SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md`.
 
 ## 3. Where everything lives
 | Thing | Location |
@@ -69,4 +70,4 @@ Note: `app/package.json` holds the implementation scripts. The root `package.jso
 - No fabricated metrics on case studies (honest, verifiable facts only).
 
 ## 8. Deeper docs (read in this order)
-`SOURCE_OF_TRUTH.md` → `AGENTS.md` (tech stack + gotchas) → `CLAUDE.md` (dated session log, newest first) → `DESIGN_LANGUAGE.md` / `docs/UIUX-DOCTRINE.md` → `VOICE.md` → `HANDOFF.md` → `_qa/` audit reports (gitignored, session-local).
+`SOURCE_OF_TRUTH.md` → `AGENTS.md` (tech stack + gotchas) → `HANDOFF.md` → `SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md` → `CLAUDE.md` (dated session log, newest first) → `DESIGN_LANGUAGE.md` / `docs/UIUX-DOCTRINE.md` → `VOICE.md` → `_qa/` audit reports (gitignored, session-local).

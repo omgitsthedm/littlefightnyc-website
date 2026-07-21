@@ -1,5 +1,22 @@
 # Little Fight NYC Website Config
 
+## 2026-07-20 — Density-aware sitewide layout (LIVE, `fb61c52`)
+
+The structured page estate now uses one shared tiled composition system
+(`src/styles/editorial/tiled-layout.css`). Four related items default to 2x2,
+three to columns, and two to a row; dense content gets more room, sparse content
+does not strand an unexplained blank half-screen, and genuine long-form copy
+keeps a readable single-column measure. Service spreads, areas, About,
+Nationwide, glossary/detail, legal, answer, service-area, FAQ, related-content,
+proof, and contact patterns were rebuilt around that rule.
+
+**This supersedes the unconditional 2026-07-17 “left-hugging is the brand”
+language.** The rollback lesson still matters—do not flatten the site into a
+generic centered template—but asymmetry now has to earn its space. A blank right
+half, an unrelated full-frame photo, or four items forced into a list is not
+editorial intent. Verify the composition by eye at 390/768/1024/1440, not only
+with computed measurements.
+
 ## 2026-07-20 — Twilio retired; final release polish
 
 The old Tech Audit voice webhook is fully removed from deployable source.
@@ -354,7 +371,7 @@ our pricing — consistent with the no-published-prices doctrine.)
 Whole-site sweep. **One real finding, now fixed; everything else verified clean.**
 
 - **FIXED — SignatureBand title collided with the stat row (`56b9273`).** "THE RECORD" section: the orange "small businesses." headline sat on top of 2012/14-day/Free/Custom. Root cause = the `.lf-editorial h1,h2,…,p { margin: 0 }` reset (0,1,1) beating the component's bare `.lf-signature__title` (0,1,0), zeroing its 96px bottom margin. Scoped both title + eyebrow under `.lf-editorial` (0,2,0). **This is the heading form of the button-reset gotcha — any bare single-class heading rule that sets margin will lose to that reset; use a descendant selector or scope under `.lf-editorial`.**
-- **FIXED — removed two orphaned unauthenticated endpoints (`a0cf04f`).** `/api/ask` + `/api/tech-audit/submit` were deployed, public, unauthenticated, no rate limiting, and **unused** (the live form is Netlify Forms, `data-netlify`). Latent paid-LLM/SMS/email cost-abuse vector. Both now 404. **KEPT `tech-audit-voice.mts`** — real Twilio webhook, HMAC-SHA1 signature-validated (`timingSafeEqual`, secure default). The React frontend does NOT call the serverless functions; don't wire a form to them without adding auth + rate limiting first.
+- **FIXED — removed two orphaned unauthenticated endpoints (`a0cf04f`).** `/api/ask` + `/api/tech-audit/submit` were deployed, public, unauthenticated, no rate limiting, and **unused** (the live form is Netlify Forms, `data-netlify`). Latent paid-LLM/SMS/email cost-abuse vector. Both now 404. **Historical state:** this pass kept `tech-audit-voice.mts` with Twilio signature validation; it was later fully retired and removed in `0a1dde9` (see the newest 2026-07-20 entry). The React frontend does NOT call serverless intake functions; don't add one without auth + rate limiting first.
 - **Verified clean:** `npm audit` 0 vulns; no hardcoded secrets, `.env` untracked, no server-env in client bundle; CSP (`script-src 'self'`, `frame-ancestors 'none'`, `base-uri`/`form-action 'self'`) + HSTS preload + X-Frame DENY + nosniff + Permissions-Policy all live; tsc + eslint clean; **0 broken internal links** (172 hrefs / 178 pages); 32 routes × 2 viewports = 0 real console errors / overflow / broken images / lost assets; 404s return HTTP 404 + noindex + real page; all 7 `dangerouslySetInnerHTML` sources are first-party static data (journal/industries JSON, hardcoded SVG) behind the strict CSP.
 - **QA-tooling caveat (recurring):** a Range-rect glyph-overlap detector flags clients/fight/momentum/contact-block home headings as "colliding" (ov 7–18px). All **false positives** — line-box leading overlaps between adjacent text blocks. Verified by eye. Real collisions (SignatureBand) show the next block visually ON the heading; these don't. Discriminator: is the next block display-size (stats) or small body text (lede/dek)? Only display-size next-blocks collide when the heading margin is zeroed.
 
@@ -391,6 +408,10 @@ After the rollback below, the reverted work was re-landed **one wave at a time, 
 `1abf6a7` ("kill dead-space / **left-hugging** section layouts") and `1f8e71a` read the site's **asymmetric, left-aligned editorial layout as a defect** and centered it — 11 × `text-align: center` + `margin: 0 auto`, WorkGrid's lede squeezed 58ch → 50ch. `479802b`/`cc04604` then locked every content column into a uniform centered 1200px. Net effect: the sharp editorial magazine grid became a generic centered template with dead margins either side.
 
 **"Left-hugging" is not a bug on this site — it is the brand.** `CLAUDE.md`'s own doctrine says *sharp editorial grids*, *asymmetric grids*, *white-space-as-punctuation*. Never "fix" asymmetry into centering here. If a section looks left-heavy, that is the design language, not dead space.
+
+**Superseded 2026-07-20:** keep the warning against generic centering, but do
+not use it to defend unexplained empty space. The current density-aware rule is
+recorded at the top of this file and in `AGENTS.md`.
 
 **The verification lesson (this is the important one).** The presentation system was "verified" by measuring that every section resolved to 1200 / 128px / 52px — i.e. it was checked **against its own new spec**, which it passed perfectly while the site got worse. Uniform measurements are not quality. **Consistency is not the same as good.** Any design claim on this repo must be settled by *looking* at a render (and comparing against the previous deploy), not by asserting computed styles. Netlify keeps every deploy — `https://<deploy_id>--littlefightnyc.netlify.app` gives you the old site instantly for an A/B, no rebuild needed.
 
@@ -510,7 +531,7 @@ David: the site had no "wow / connect-the-dots" moment and the Services page was
 
 The current live `https://littlefightnyc.com` source is this folder:
 
-`/Users/davidmarsh/Desktop/LiFi NYC/Brand/Website/littlefightnyc-website`
+`/Users/davidmarsh/Code/LiFi NYC/Clients/LittleFightNYC/Brand/Website/littlefightnyc-website`
 
 Current app source is under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
 
@@ -524,7 +545,9 @@ Netlify project:
 Read `SOURCE_OF_TRUTH.md` before major edits.
 
 ## Latest Handoff
-Read `HANDOFF.md` before making major edits. It contains the May 6, 2026 Claude Code handoff with the current live deploy, completed overhaul work, Tech Audit/phone intake state, SEO/AEO answer engine, case studies, verification results, concerns, and next work queue.
+Read `HANDOFF.md` before making major edits. It is the compact current state and
+routes to the latest session record, production release, verified checks, and
+next external acquisition action.
 
 ## Client
 Little Fight NYC

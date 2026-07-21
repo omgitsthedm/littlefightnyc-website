@@ -1,6 +1,6 @@
 # Little Fight NYC — Source of Truth
 
-Last verified: 2026-06-30 (consolidation).
+Last verified: 2026-07-20 (canonical Git, Netlify, and live reconciliation).
 
 This repository (`Brand/Website/littlefightnyc-website/`) is THE source of truth for
 `https://littlefightnyc.com`. Branch **`main` is canonical** and the site **auto-deploys
@@ -15,6 +15,10 @@ from `main`**.
 - Publish directory: `app/dist`
 - **Deploy mechanism: GitHub `main` → Netlify auto-build → auto-publish.**
   (As of 2026-06-30 `main` equals the live source; pushing `main` deploys production.)
+- Application release `fb61c52` was verified on GitHub, in a `ready` Netlify
+  Git deploy with the same commit reference, and on the live apex/`www` domains
+  on 2026-07-20. See
+  `SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md`.
 
 ## Deploy workflow (the only one you need)
 
