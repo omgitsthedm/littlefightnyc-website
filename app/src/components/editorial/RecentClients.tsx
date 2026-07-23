@@ -9,8 +9,8 @@ import "./RecentClients.css";
  * instead of asking a visitor to decode a homepage screenshot.
  */
 const FEATURED_SLUGS = [
+  "army-navy-bags",
   "hair-by-rachel-charles",
-  "public-house-creative",
   "venuecircuit",
 ] as const;
 
@@ -29,7 +29,7 @@ export default function RecentClients() {
             <p className="lf-mono lf-clients__label">Shipped proof</p>
             <h2 className="lf-clients__heading">See the work before the pitch.</h2>
             <p className="lf-clients__lede">
-              A booking flow, private estimating software, and a venue financial product.
+              A neighborhood storefront, a booking flow, and a venue financial product.
               Follow the working path for each one.
             </p>
           </div>

@@ -18,7 +18,7 @@ type Props = {
     mobileWidths?: number[];
   };
   /**
-   * Case-study archetype: the project screenshot runs full-bleed BEHIND the
+   * Case-study archetype: the project proof image runs full-bleed BEHIND the
    * title under a dark scrim. The work IS the hero.
    */
   backdrop?: {
@@ -45,7 +45,7 @@ type Props = {
  * Reusable hero for every inner page — now with archetypes so no two page
  * types feel stamped from one template:
  * - default: eyebrow + big title + dek (+ optional side image)
- * - case (`backdrop`): full-bleed project screenshot behind the title
+ * - case (`backdrop`): full-bleed project proof image behind the title
  * - answer (`quickAnswer`): pure type + an orange quick-answer card
  * - area (`displayName` + `chips`): giant neighborhood name + ZIP chips
  */

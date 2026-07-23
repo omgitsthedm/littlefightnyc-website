@@ -1,5 +1,17 @@
 # Little Fight NYC Website Config
 
+## 2026-07-23 — Army & Navy Bags neighborhood case
+
+The Examples entry at `/case-studies/army-navy-bags/` presents the Lower East
+Side retail concept as a simple foot-traffic story: find the shop, feel the
+place, see it inside a real neighborhood walk, then get directions.
+
+**Privacy boundary:** this is a private client concept. Keep `site-cases.ts`
+`url: ""`, `availability: "private"`, and `privacyLabel: "Private client
+concept"`. Do not link the case, Examples entry, or homepage proof card to the
+Netlify proof deploy or the client's current domain without David's explicit
+approval.
+
 ## 2026-07-23 — Brothers Pizzeria heritage case
 
 The Examples entry at `/case-studies/brothers-pizzeria/` now documents the full
