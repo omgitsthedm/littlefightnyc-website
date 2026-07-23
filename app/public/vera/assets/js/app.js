@@ -893,7 +893,7 @@
 
       (photos.length
         ? '<section class="panel reveal span2"><h2>Photos</h2><div class="photo-grid">' +
-          photos.slice(0, 8).map((u) => '<img src="' + esc(u) + '" alt="Listing photo" loading="lazy">').join('') +
+          photos.slice(0, 8).map((u) => '<img src="' + esc(u) + '" alt="Listing photo" loading="lazy" referrerpolicy="no-referrer">').join('') +
           '</div></section>'
         : '') +
 
