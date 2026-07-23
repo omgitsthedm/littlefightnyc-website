@@ -1165,10 +1165,10 @@ function usefulLinksFor(page) {
 }
 
 const proofLinks = [
+  { href: "/case-studies/army-navy-bags/", label: "Army & Navy Bags" },
   { href: "/case-studies/cc-films/", label: "CC Films" },
   { href: "/case-studies/hair-by-rachel-charles/", label: "Hair By Rachel Charles" },
   { href: "/case-studies/grand-funding-llc/", label: "Grand Funding LLC" },
-  { href: "/case-studies/public-house-creative/", label: "Private estimating software" },
 ];
 
 const officialReferenceLinks = [

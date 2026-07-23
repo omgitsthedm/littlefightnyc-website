@@ -212,10 +212,8 @@
   }
 
   .lf-project-walkthrough__stages {
-    overflow-x: auto;
-    grid-template-columns: repeat(var(--lf-stage-count), minmax(112px, 1fr));
-    scrollbar-width: thin;
-    scroll-snap-type: x proximity;
+    grid-template-columns: repeat(var(--lf-stage-count), minmax(0, 1fr));
+    padding-inline: 0.6rem;
   }
 
   .lf-project-walkthrough__stages::before {
@@ -224,7 +222,7 @@
 
   .lf-editorial .lf-project-walkthrough__stages button {
     min-height: 76px;
-    scroll-snap-align: center;
+    padding-inline: 2px;
   }
 
   .lf-project-walkthrough__detail {

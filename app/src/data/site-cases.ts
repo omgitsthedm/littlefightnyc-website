@@ -31,6 +31,66 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    type: "Lower East Side retail shop",
+    client: "Army & Navy Bags",
+    url: "",
+    slug: "army-navy-bags",
+    metrics: [
+      { value: "5 landmarks", label: "The shop joins a real neighborhood walk" },
+      { value: "1 tap", label: "Call or get directions from a phone" },
+      { value: "98/100", label: "Fast mobile performance" },
+    ],
+    showcase: {
+      label: "A neighborhood shop people can find",
+      kind: "Private website concept",
+      context: "Lower East Side retail",
+      availability: "private",
+      privacyLabel: "Private client concept",
+      heroPosition: "center 52%",
+      heroPositionMobile: "56% center",
+      stages: [
+        {
+          label: "Find",
+          detail:
+            "Clear search facts tell Google what the shop sells, where it is, and when it is open, so a new neighbor can find the right answer.",
+        },
+        {
+          label: "Feel",
+          detail:
+            "Real store photos, gear, and the old awning make the page feel like the actual shop instead of a shiny template.",
+        },
+        {
+          label: "Walk",
+          detail:
+            "A real map puts the store beside Katz's, Russ & Daughters, Yonah Schimmel's, and Essex Market, so it can become part of a Lower East Side day.",
+        },
+        {
+          label: "Visit",
+          detail:
+            "The phone number, hours, address, and directions stay easy to reach on a phone, so looking can turn into walking through the door.",
+        },
+      ],
+    },
+    image: "/assets/case-army-navy-bags.webp",
+    services: ["custom-local-websites", "tech-consulting"],
+    published: "2026-07-23",
+    updated: "2026-07-23",
+    title: "A dated WordPress page became a reason to visit the block.",
+    problem:
+      "A long-running Lower East Side shop had history, character, and shelves people could get lost in. Its dated WordPress site mostly acted like an old listing. It did not show new residents or travelers why the store belonged in their day.",
+    kept:
+      "The weathered awning, the packed-in shop, the real products, the old-school personality, the address, the phone number, and the feeling that this place could only exist on the Lower East Side.",
+    changed:
+      "Built a fast, phone-first website around a simple visit. Real shop photos show the place. Clear product groups explain what is inside. Local search facts help people find it. A real neighborhood map places the store beside five familiar stops, and one-tap directions make the last few blocks easy.",
+    result:
+      "A private client concept designed to turn online curiosity into foot traffic. It does not pretend the shop is a big chain. It shows new neighbors and travelers why Army & Navy Bags belongs on their Lower East Side walk.",
+    body: [
+      "This is a private client concept, not a public client launch. Think of the old WordPress site like a faded paper sign: it said the shop existed, but it did not help a new person understand why to go. Army & Navy Bags is the opposite of a plain listing. The store is narrow, packed, useful, strange, and full of Lower East Side character. The website needed to make that feeling easy to understand on a phone.",
+      "We kept the scuffed awning, the real shelves, the military bags, jackets, patches, hats, and the people inside. Then we made the path simple. First, see what kind of place this is. Next, see what it carries. Then check the hours, call, or get directions. There is no giant menu to learn and no shiny store template pretending the shop is something it is not.",
+      "The neighborhood map does one extra job. It shows Army & Navy Bags beside Katz's, Russ & Daughters, Yonah Schimmel's, and Essex Market. In little-kid terms: if someone is already going there, the map says, 'The bag shop is right around the corner.' That turns the website from a digital business card into a reason to add one more stop to the day. Fast pages, clear local facts, and one-tap directions make it easier for that person to reach the real front door.",
+    ],
+  },
+  {
     type: "Film production company",
     client: "CC Films",
     url: "https://ccfilms.net",
