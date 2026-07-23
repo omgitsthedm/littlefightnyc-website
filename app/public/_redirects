@@ -111,5 +111,12 @@
 # Netlify normalizes no-slash -> slash for existing directories natively,
 # so the dynamic rules were pure downside. Do not reintroduce them.
 
+# --- VERA (2026-07-23): live personalized-software example. App is static
+# at /vera/; data proxies to the pipeline feed site (David's Mac publishes
+# nightly). Engine docs: ~/Code/Personal/vera-apartment-search/CLAUDE.md
+/VERA             /vera/                                                          301
+/vera/data/*      https://nyc-apartment-search-vera.netlify.app/data/:splat       200
+/vera/artifacts/* https://nyc-apartment-search-vera.netlify.app/artifacts/:splat  200
+
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404
