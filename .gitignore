@@ -13,6 +13,8 @@ output/
 # Directory-level negation so new public deploy PNGs are never missed again.
 !app/public/*.png
 !app/public/examples/audit/og-image.png
+!app/public/brand-kit/
+!app/public/brand-kit/**
 *.bak
 docs/
 firebase-debug.log
@@ -33,4 +35,5 @@ tmp/
 backup/
 deploy-*.zip
 *.zip
+!app/public/brand-kit/assets/downloads/little-fight-nyc-brand-kit.zip
 _qa/

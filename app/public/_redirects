@@ -103,6 +103,7 @@
 /areas           /areas/            301
 /examples        /examples/         301
 /contact         /contact/          301
+/brand-kit       /brand-kit/        301
 # NOTE (2026-07-13): the old per-section `/x/:slug -> /x/:slug/` rules are
 # GONE deliberately. They also matched URLs that already had the trailing
 # slash — real pages were shadowed by their files, but every UNKNOWN slug

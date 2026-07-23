@@ -52,6 +52,7 @@ const footerGroups: Array<{
     title: "Explore",
     links: [
       { label: "The Library", to: "/library/" },
+      { label: "Brand Kit", to: "/brand-kit/" },
       { label: "NYC Neighborhoods", to: "/areas/" },
       { label: "Websites Nationwide", to: "/nationwide/" },
     ],

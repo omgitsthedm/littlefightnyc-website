@@ -43,6 +43,24 @@ for = "/assets/*"
   [headers.values]
   Cache-Control = "public, max-age=31536000, immutable"
 
+# The Brand Kit moved from brandkit.littlefightnyc.com to /brand-kit/.
+# It is a preserved, self-contained static experience with inline motion and
+# Google Fonts, so it needs its own narrow policy instead of the SPA policy.
+[[headers]]
+for = "/brand-kit/*"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+
+[[headers]]
+for = "/brand-kit/assets/*"
+
+  [headers.values]
+  Cache-Control = "public, max-age=604800"
+
 # The retired Lab subdomain is preserved as a static gallery under
 # /examples/lab/. Its standalone concept pages use inline scripts, Google
 # Fonts, and narrowly scoped module-CDN imports that the main app does not.
