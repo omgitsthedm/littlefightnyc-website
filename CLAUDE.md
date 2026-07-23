@@ -1,5 +1,19 @@
 # Little Fight NYC Website Config
 
+## 2026-07-23 — Brothers Pizzeria heritage case
+
+The Examples entry at `/case-studies/brothers-pizzeria/` now documents the full
+heritage redesign, not the rejected black menu-template pass. Its proof image,
+SEO copy, walkthrough, metrics, and case narrative use the approved butcher
+paper / tomato / basil experience and the correct history: Johnny came to
+Arizona in 1979; the Cactus Road shop opened in 1998.
+
+**Privacy boundary:** this remains a private client concept. Keep
+`site-cases.ts` `url: ""`, `availability: "private"`, and
+`privacyLabel: "Private client concept"`. Do not link the case or Examples
+entry to the proof deploy or the client's current domain without David's
+explicit approval.
+
 ## 2026-07-20 — Density-aware sitewide layout (LIVE, `fb61c52`)
 
 The structured page estate now uses one shared tiled composition system

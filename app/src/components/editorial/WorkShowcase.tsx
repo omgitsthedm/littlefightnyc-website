@@ -86,7 +86,7 @@ export default function WorkShowcase() {
                 ) : (
                   <span className="lf-work-showcase__private">
                     <LockKeyhole size={15} strokeWidth={1.8} aria-hidden="true" />
-                    Private system
+                    {active.showcase.privacyLabel ?? "Private system"}
                   </span>
                 )}
               </span>

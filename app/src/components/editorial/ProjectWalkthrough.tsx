@@ -39,7 +39,9 @@ export default function ProjectWalkthrough({ study }: { study: CaseStudy }) {
         <span
           className={`lf-project-walkthrough__availability lf-project-walkthrough__availability--${study.showcase.availability}`}
         >
-          {study.showcase.availability === "private" ? "Private production system" : "Live in production"}
+          {study.showcase.availability === "private"
+            ? (study.showcase.privacyLabel ?? "Private production system")
+            : "Live in production"}
         </span>
       </header>
 

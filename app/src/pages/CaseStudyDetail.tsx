@@ -56,7 +56,9 @@ export default function CaseStudyDetail() {
       <div className="lf-case__hero-band">
         <div className="lf-case__hero-band-inner">
           <span className="lf-case__hero-badge">
-            {study.showcase.availability === "private" ? "Private production system" : "Shipped and live"}
+            {study.showcase.availability === "private"
+              ? (study.showcase.privacyLabel ?? "Private production system")
+              : "Shipped and live"}
           </span>
           <span className="lf-case__hero-actions">
             {study.showcase.availability === "public" ? (
@@ -127,7 +129,9 @@ export default function CaseStudyDetail() {
               <div>
                 <span>Availability</span>
                 <strong>
-                  {study.showcase.availability === "private" ? "Private, in production" : "Public, live"}
+                  {study.showcase.availability === "private"
+                    ? (study.showcase.privacyLabel ?? "Private, in production")
+                    : "Public, live"}
                 </strong>
               </div>
             </aside>

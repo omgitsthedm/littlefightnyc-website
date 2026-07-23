@@ -22,6 +22,7 @@ export type CaseStudy = {
     kind: string;
     context: string;
     availability: "public" | "private";
+    privacyLabel?: string;
     stages: Array<{ label: string; detail: string }>;
     heroPosition?: string;
     heroPositionMobile?: string;
@@ -329,35 +330,36 @@ export const caseStudies: CaseStudy[] = [
     url: "",
     slug: "brothers-pizzeria",
     metrics: [
-      { value: "18px menu", label: "Prices readable without glasses" },
-      { value: "One tap", label: "Phone number always on screen" },
-      { value: "0 of 57", label: "Prices lost in the rebuild" },
+      { value: "1998", label: "Shop history corrected and centered" },
+      { value: "16px+", label: "Reading floor on phones and tablets" },
+      { value: "Every price", label: "Carried into the new experience" },
     ],
     showcase: {
-      label: "Menu built for phone orders",
-      kind: "Website concept",
-      context: "Family pizzeria, 45 years",
+      label: "Heritage built into the order",
+      kind: "Private website concept",
+      context: "Family pizzeria · Peoria",
       availability: "private",
+      privacyLabel: "Private client concept",
       stages: [
-        { label: "Read", detail: "The price list stops being a squeezed spreadsheet and becomes cards a customer can actually read on a phone." },
-        { label: "Decide", detail: "Every size and price sits on its own line, big and high contrast, so nobody has to pinch and zoom to compare." },
-        { label: "Call", detail: "The phone number stays on screen the whole time, one thumb-tap from anywhere on the page." },
-        { label: "Hold the line", detail: "A brand kit keeps the logo, colors, type, and the facts that must stay correct in one place the owner can hand to anyone." },
+        { label: "Recognize", detail: "Butcher paper, tomato red, basil green, and a real slice make the first screen feel like a neighborhood pizzeria instead of a restaurant template." },
+        { label: "Trust", detail: "Johnny's 1979 move west, the shop's 1998 opening, and real customer words arrive before the menu." },
+        { label: "Order", detail: "Every price stays readable on a phone or tablet, and the call action remains one thumb-tap away." },
+        { label: "Carry", detail: "A matching brand kit gives the client the logo, colors, type, voice, and facts for future menus, signs, and ads." },
       ],
     },
     image: "/assets/case-brothers-pizza.webp",
     services: ["custom-local-websites"],
     published: "2026-07-23",
     updated: "2026-07-23",
-    title: "A pizzeria menu an older customer can order from.",
-    problem: "The menu was a four-column price grid squeezed onto a phone screen at fourteen-point type. The people who order most from a neighborhood pizzeria are the ones least able to read it, and the phone number disappeared as soon as you scrolled.",
-    kept: "Every price, every item, the hours, the address, and the pizzeria's own dark-and-orange look. Nothing on the menu changed.",
-    changed: "The price grid became labeled cards at eighteen-point type, on phones and iPads both. Prices never shrink. The call button carries the phone number in every scroll state at a real thumb-sized target. A brand kit page holds the logo files, colors, type, voice, and the facts that must stay right.",
-    result: "A menu somebody in their seventies can read at arm's length and order from with one tap. Text below sixteen points went from thirty-nine instances to zero. All fifty-seven prices carried over untouched.",
+    title: "A pizzeria website that finally feels like the place.",
+    problem: "The first proof worked as a digital menu, but it looked like a generic black restaurant template. It buried the family story, reduced the shop's history to badges, and squeezed the price grid on phones and tablets.",
+    kept: "The logo, full menu, every price, hours, contact facts, phone-first ordering, real food photography, and the true family story: Johnny came west in 1979 and opened this shop in 1998.",
+    changed: "Rebuilt the whole experience as a printed neighborhood handbill. The family story and customer voices now lead. Butcher paper, tomato red, basil green, heavy sign-painter type, and a real slice carry the character. The menu stacks cleanly on small screens, reading text stays at sixteen points or larger, and the call action remains thumb-sized.",
+    result: "A private client concept with a recognizable point of view: family story first, menu second, phone ordering always close. It stays composed from a 390px phone through a 1440px desktop, carries every price, and includes a matching brand kit for future materials.",
     body: [
-      "This one is a proof of concept, not a live storefront. The pizzeria has been family-run since 1979 and most of its orders come by phone. That single fact should decide everything about how the site behaves, and it did not. The menu rendered as a four-column table crushed into a phone screen at fourteen-point type, and the same cramped grid showed up on an iPad. The customers most likely to call are the ones least likely to squint through that.",
-      "So the work was not a redesign for its own sake. Every price, item, hour, and the pizzeria's own look stayed exactly as it was. What changed was legibility and reach. The price matrix became stacked cards with the size labeled next to each number, set at eighteen points and carried through tablet widths. Prices were pinned so they never shrink anywhere, including the catering section that sat outside the main menu code. The call bar was rebuilt to keep the phone number visible no matter where you scroll, at a target big enough for an unsteady thumb.",
-      "The site also got a brand kit at its own address: logo files with usage rules, the real colors pulled from the stylesheet, the type pairing, a plain do-and-don't for how the pizzeria talks, and the facts that have to stay correct everywhere. Hours that go stale cost more orders than a bad photo ever will, so they live in one place the owner can hand to anyone printing a menu or running an ad.",
+      "This is a private client concept, not a public storefront. Johnny brought his pizza passion to Arizona in 1979 and opened the Cactus Road shop in 1998. The first proof got the menu online, but not the feeling of the place. It was a dark digital menu with a few history badges attached. The family story, the regulars, and the New York-to-Peoria journey were doing none of the work.",
+      "The second pass treated the whole page like something that could have been taped in the shop window. Aged butcher paper replaced the black canvas. Tomato red and basil green came from the language of old pizzeria signs. Heavy block type, a real slice on a paper plate, and customer quotes made the first screen recognizable before anyone reached the menu. The story moved ahead of specials and ordering because heritage only matters when people can feel it.",
+      "The operational work stayed underneath the character. Every menu item and price carried over. Long price lines stack instead of pushing the phone page sideways. Reading text stays at sixteen points or larger, visible controls clear a forty-four-pixel target, and the call action remains close throughout the page. The client also gets a matching brand kit for future signs, menus, ads, and social work without having to reverse-engineer the website.",
     ],
   },
 ];
