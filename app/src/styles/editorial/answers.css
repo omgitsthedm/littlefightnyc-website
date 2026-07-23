@@ -412,6 +412,11 @@
   .lf-answers-hub__grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .lf-answers-hub__grid[data-count="2"],
+  .lf-answers-hub__grid[data-count="4"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .lf-answers-hub__card {
@@ -487,6 +492,10 @@
 }
 
 .lf-answers-hub__short {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   font-family: var(--lf-serif);
   font-size: var(--lf-text-sm);
   line-height: 1.55;

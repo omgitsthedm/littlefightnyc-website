@@ -6,8 +6,6 @@ import PullQuote from "@/components/editorial/PullQuote";
 import StatBlock from "@/components/editorial/StatBlock";
 import FounderCard from "@/components/editorial/FounderCard";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
-import BlueprintFrame from "@/components/editorial/BlueprintFrame";
-import SiteCensus from "@/components/editorial/SiteCensus";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 
@@ -73,16 +71,7 @@ export default function About() {
             />
           </div>
 
-          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
-            <EditorialBody>
-              <p>
-                The order is always the same. Keep what works. Connect what
-                matters. Replace what drags. Build only what fits.
-              </p>
-            </EditorialBody>
-          </article>
-
-          <aside className="lf-content-tile lf-content-tile--half lf-content-tile--tablet-full lf-content-tile--signal">
+          <aside className="lf-content-tile lf-content-tile--reading lf-content-tile--signal">
             <PullQuote cite="How the work usually starts">
               Most owners assume the answer is a rebuild. It almost never is.
             </PullQuote>
@@ -131,11 +120,6 @@ export default function About() {
           </article>
         </div>
       </section>
-
-      {/* Site census — honest build-derived counts (see SiteCensus.tsx). */}
-      <BlueprintFrame index={3} label="Site census">
-        <SiteCensus />
-      </BlueprintFrame>
 
       <ProcessFlow />
 

@@ -4,7 +4,6 @@ import { ArrowUpRight, Library as LibraryIcon } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
-import PublishingHeatmap from "@/components/dataviz/PublishingHeatmap";
 import { READ_MINUTES } from "@/components/dataviz/journalStats";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
@@ -127,7 +126,7 @@ export default function Library() {
                   <h2 className="lf-answers-hub__title">{cluster.title}</h2>
                 </header>
 
-                <div className="lf-answers-hub__grid">
+                <div className="lf-answers-hub__grid" data-count={guides.length}>
                   {guides.map((guide) => (
                     <Link
                       key={guide.slug}
@@ -164,8 +163,6 @@ export default function Library() {
 
       {/* ── The Journal — the browse layer ── */}
       <section id="journal" aria-label="The Journal">
-        <PublishingHeatmap />
-
         <div className="lf-journal-filter">
           <div className="lf-journal-filter__inner" role="group" aria-label="Filter journal by type">
             <button
