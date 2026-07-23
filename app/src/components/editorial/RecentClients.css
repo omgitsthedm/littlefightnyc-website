@@ -1,4 +1,4 @@
-/* Recent work — real project screenshots as a visual grid. */
+/* Recent work — outcome-led project maps as a visual grid. */
 
 .lf-clients {
   padding: var(--lf-space-9) var(--lf-margin-mobile);
@@ -99,10 +99,10 @@
     display: grid;
     grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
   }
-  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__shot {
+  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__flow {
     height: 100%;
     min-height: 260px;
-    aspect-ratio: auto;
+    align-content: center;
   }
   .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__meta {
     padding: var(--lf-space-4);
@@ -110,7 +110,7 @@
   .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__fact:nth-child(n + 3) {
     display: none;
   }
-  .lf-clients__card--feature .lf-clients__shot { aspect-ratio: 16 / 9; }
+  .lf-clients__card--feature .lf-clients__flow { min-height: 310px; }
 }
 
 /* ---- Card ---- */
@@ -147,36 +147,79 @@
   outline-offset: 3px;
 }
 
-.lf-clients__shot {
-  display: block;
+.lf-clients__flow {
+  position: relative;
+  min-height: 230px;
+  display: grid;
+  grid-template-columns: repeat(var(--lf-client-stage-count), minmax(0, 1fr));
+  align-items: center;
+  gap: 0;
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 3.5rem);
   overflow: hidden;
-  aspect-ratio: 16 / 10;
-  /* Deliberate placeholder while the lazy screenshot streams in — a soft
-     diagonal sheen so an unloaded card never reads as an empty black box. */
-  background-image: linear-gradient(
-    135deg,
-    var(--lf-paper) 0%,
-    var(--lf-paper-2) 55%,
-    var(--lf-paper) 100%
-  );
+  background:
+    radial-gradient(90% 130% at 100% 0%, rgba(59, 130, 246, 0.14), transparent 55%),
+    linear-gradient(160deg, #11141c 0%, #090b10 72%);
   box-shadow: inset 0 0 0 1px var(--lf-hairline);
 }
-.lf-clients__card--feature .lf-clients__shot { aspect-ratio: 16 / 7; }
-.lf-clients__shot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 600ms cubic-bezier(0, 0, 0.2, 1);
+
+.lf-clients__flow-stage {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.3;
+  text-align: center;
 }
-.lf-clients__shot picture {
-  display: block;
-  width: 100%;
-  height: 100%;
+
+.lf-clients__flow-stage::after {
+  position: absolute;
+  top: 10px;
+  left: calc(50% + 11px);
+  width: calc(100% - 22px);
+  height: 1px;
+  background: var(--lf-hairline);
+  content: "";
 }
-.lf-clients__card:hover .lf-clients__shot img,
-.lf-clients__card:focus-visible .lf-clients__shot img {
-  transform: scale(1.045);
+
+.lf-clients__flow-stage:last-child::after {
+  display: none;
+}
+
+.lf-clients__flow-dot {
+  position: relative;
+  z-index: 1;
+  width: 21px;
+  height: 21px;
+  border: 5px solid #0d1016;
+  border-radius: 50%;
+  background: var(--lf-fight);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--lf-fight) 55%, transparent),
+    0 0 24px color-mix(in srgb, var(--lf-fight) 35%, transparent);
+}
+
+.lf-clients__card:not(.lf-clients__card--feature) .lf-clients__flow {
+  grid-template-columns: 1fr;
+  gap: var(--lf-space-4);
+}
+
+.lf-clients__card:not(.lf-clients__card--feature) .lf-clients__flow-stage {
+  grid-template-columns: auto minmax(0, 1fr);
+  justify-items: start;
+  align-items: center;
+  text-align: left;
+}
+
+.lf-clients__card:not(.lf-clients__card--feature) .lf-clients__flow-stage::after {
+  top: calc(50% + 11px);
+  bottom: auto;
+  left: 10px;
+  width: 1px;
+  height: calc(100% + var(--lf-space-4) - 22px);
 }
 
 .lf-clients__meta {
@@ -227,6 +270,27 @@
 @media (min-width: 640px) {
   .lf-clients__card--feature .lf-clients__facts {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .lf-clients__flow {
+    grid-template-columns: 1fr;
+    gap: var(--lf-space-4);
+  }
+
+  .lf-clients__flow-stage {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-items: start;
+    align-items: center;
+    text-align: left;
+  }
+
+  .lf-clients__flow-stage::after {
+    top: calc(50% + 11px);
+    left: 10px;
+    width: 1px;
+    height: calc(100% + var(--lf-space-4) - 22px);
   }
 }
 .lf-clients__go {
@@ -329,6 +393,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lf-clients__card { opacity: 1; transform: none; transition: none; }
-  .lf-clients__shot img { transition: none; }
   .lf-editorial .lf-clients__scan-cta { transition: none; }
 }

@@ -24,6 +24,8 @@ type Props = {
   backdrop?: {
     src: string;
     alt: string;
+    position?: string;
+    mobilePosition?: string;
   };
   /**
    * Answer archetype: an orange "quick answer" card sits right in the hero.
@@ -83,7 +85,16 @@ export default function PageHero({
   return (
     <section className={`lf-pagehero ${variantClass}`}>
       {backdrop && (
-        <div className="lf-pagehero__backdrop" aria-hidden="true">
+        <div
+          className="lf-pagehero__backdrop"
+          aria-hidden="true"
+          style={
+            {
+              "--lf-backdrop-position": backdrop.position,
+              "--lf-backdrop-position-mobile": backdrop.mobilePosition,
+            } as React.CSSProperties
+          }
+        >
           <img
             src={backdrop.src}
             alt=""

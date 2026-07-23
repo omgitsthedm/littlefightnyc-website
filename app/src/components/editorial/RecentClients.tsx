@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ScanSearch } from "lucide-react";
-import { responsiveImageProps } from "@/lib/responsiveImages";
-import { skelImg } from "@/lib/imgSkeleton";
 import { useScrollReveal } from "./useScrollReveal";
 import { caseStudies } from "@/data/site";
 import "./RecentClients.css";
 
 /**
- * Recent work — real project screenshots, not a text list. Each card shows the
- * shipped work and links to its case study. First card runs wide as the featured
- * proof; the rest form a grid. Staggered reveal, hover lift + image zoom.
+ * Recent work — outcome-led project maps. Each card shows how the work moves
+ * instead of asking a visitor to decode a homepage screenshot.
  */
 const FEATURED_SLUGS = [
   "hair-by-rachel-charles",
@@ -32,7 +29,8 @@ export default function RecentClients() {
             <p className="lf-mono lf-clients__label">Shipped proof</p>
             <h2 className="lf-clients__heading">See the work before the pitch.</h2>
             <p className="lf-clients__lede">
-              A booking site, a production cockpit, and an owned software product. Open every one.
+              A booking flow, private estimating software, and a venue financial product.
+              Follow the working path for each one.
             </p>
           </div>
           <Link to="/examples/" className="lf-clients__all">
@@ -48,29 +46,26 @@ export default function RecentClients() {
               className={`lf-clients__card${i === 0 ? " lf-clients__card--feature" : ""}`}
               style={{ ["--lf-i" as string]: i }}
             >
-              <span className="lf-clients__shot" aria-hidden="true">
-                <picture>
-                  <source
-                    media="(max-width: 767px)"
-                    {...responsiveImageProps(study.image, "100vw", [480, 640])}
-                  />
-                  <img {...skelImg}
-                    src={study.image}
-                    {...responsiveImageProps(study.image, "(min-width: 1024px) 42vw, 100vw", [480, 640, 900])}
-                    alt=""
-                    width={1600}
-                    height={1200}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
+              <span
+                className="lf-clients__flow"
+                aria-label={`${study.showcase.label} project flow`}
+                style={
+                  { "--lf-client-stage-count": study.showcase.stages.length } as React.CSSProperties
+                }
+              >
+                {study.showcase.stages.map((stage) => (
+                  <span className="lf-clients__flow-stage" key={stage.label}>
+                    <span className="lf-clients__flow-dot" aria-hidden="true" />
+                    <span>{stage.label}</span>
+                  </span>
+                ))}
               </span>
               <span className="lf-clients__meta">
-                <span className="lf-mono lf-clients__type">{study.type}</span>
-                <span className="lf-clients__client">{study.client}</span>
+                <span className="lf-mono lf-clients__type">{study.showcase.context}</span>
+                <span className="lf-clients__client">{study.showcase.label}</span>
                 <span className="lf-clients__title">{study.title}</span>
                 {study.metrics && (
-                  <span className="lf-clients__facts" aria-label={`${study.client} project results`}>
+                  <span className="lf-clients__facts" aria-label={`${study.showcase.label} project results`}>
                     {study.metrics.slice(0, 3).map((metric) => (
                       <span className="lf-clients__fact" key={metric.label}>
                         <strong>{metric.value}</strong>

@@ -332,9 +332,10 @@ const pages = [
       page.published ??= study.published;
       page.updated ??= study.updated;
       page.caseStudy = study;
-      if (page.h1 && page.h1 !== study.client) {
-        console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${study.client}" — using rendered`);
-        page.h1 = study.client;
+      const renderedHeading = study.showcase?.label ?? study.client;
+      if (page.h1 && page.h1 !== renderedHeading) {
+        console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${renderedHeading}" — using rendered`);
+        page.h1 = renderedHeading;
       }
     }
 
@@ -1167,7 +1168,7 @@ const proofLinks = [
   { href: "/case-studies/cc-films/", label: "CC Films" },
   { href: "/case-studies/hair-by-rachel-charles/", label: "Hair By Rachel Charles" },
   { href: "/case-studies/grand-funding-llc/", label: "Grand Funding LLC" },
-  { href: "/case-studies/public-house-creative/", label: "Public House Creative" },
+  { href: "/case-studies/public-house-creative/", label: "Private estimating software" },
 ];
 
 const officialReferenceLinks = [
@@ -1526,7 +1527,7 @@ function zhSnapshot() {
       <h2>已经上线、正在发挥作用的真实项目</h2>
       <ul class="es-cards">
         <li><h3>Hair By Rachel Charles</h3><p>从只靠私信预约，到真正好用的在线预约网站。Lighthouse 四项满分，两周上线。</p></li>
-        <li><h3>Public House Creative</h3><p>团队每天用在真实项目上的内部工作系统。3个工具变成1个可靠数据源。</p></li>
+        <li><h3>定制橱柜估价软件</h3><p>团队每天用在真实项目上的内部工作系统。3个工具变成1个可靠数据源。</p></li>
         <li><h3>CC Films</h3><p>为独立电影打造更清楚、更可信的官方网站，并加固搜索结构、安全标头和发布流程。</p></li>
       </ul>
       <p class="es-fight">连锁大店来的时候带着技术团队。街角小店从来没有过。所以有了我们：让小生意用上同样的工具——没有大公司的账单。</p>
@@ -1588,7 +1589,7 @@ function esSnapshot() {
         <h2>Trabajo real que ya está funcionando</h2>
         <ul class="es-cards">
           <li><h3>Hair By Rachel Charles</h3><p>De citas por mensaje directo a una página real de reservas. 100 en Lighthouse y lista en 2 semanas.</p></li>
-          <li><h3>Public House Creative</h3><p>Un sistema privado que el equipo usa en presupuestos reales. 3 herramientas convertidas en 1 fuente de verdad.</p></li>
+          <li><h3>Software privado de presupuestos</h3><p>Un sistema privado que el equipo usa en presupuestos reales. 3 herramientas convertidas en 1 fuente de verdad.</p></li>
           <li><h3>CC Films</h3><p>Una sede oficial más clara para una película independiente, con estructura, buscadores y publicación reforzados.</p></li>
         </ul>
         <p class="es-fight">Las cadenas grandes llegaron con equipos de tecnología. La tienda de la esquina nunca tuvo uno. Por eso existimos: para darle al negocio pequeño las mismas herramientas — sin las facturas de empresa grande.</p>

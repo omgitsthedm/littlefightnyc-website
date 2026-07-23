@@ -845,6 +845,16 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   color: var(--lf-fight-hover);
 }
 
+.lf-case__hero-private {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.08em;
+}
+
 .lf-case__hero-actions {
   display: inline-flex;
   align-items: center;
@@ -1453,11 +1463,6 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 
 .lf-case-next__explorer {
   margin-top: clamp(2.5rem, 5vw, 4.5rem);
-  overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--lf-bone) 16%, transparent);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.34);
 }
 
 .lf-case-next__story {
@@ -1544,7 +1549,6 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
   transition: transform 650ms var(--lf-ease-out-quart);
 }
 

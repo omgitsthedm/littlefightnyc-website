@@ -1,8 +1,8 @@
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
-import { ArrowUpRight, Award } from "lucide-react";
+import { ArrowUpRight, Award, LockKeyhole } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
-import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
+import ProjectWalkthrough from "@/components/editorial/ProjectWalkthrough";
 import ShareButton from "@/components/ShareButton";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
@@ -41,28 +41,42 @@ export default function CaseStudyDetail() {
   return (
     <>
       <PageHero
-        eyebrow={`Case study: ${study.type}`}
+        eyebrow={`Case study: ${study.showcase.kind}`}
         icon={Award}
-        title={<span className="lf-accent">{study.client}</span>}
+        title={<span className="lf-accent">{study.showcase.label}</span>}
         dek={study.title}
-        backdrop={{ src: study.image, alt: "" }}
+        backdrop={{
+          src: study.image,
+          alt: "",
+          position: study.showcase.heroPosition,
+          mobilePosition: study.showcase.heroPositionMobile,
+        }}
       />
 
       <div className="lf-case__hero-band">
         <div className="lf-case__hero-band-inner">
-          <span className="lf-case__hero-badge">Shipped and live</span>
+          <span className="lf-case__hero-badge">
+            {study.showcase.availability === "private" ? "Private production system" : "Shipped and live"}
+          </span>
           <span className="lf-case__hero-actions">
-            <a
-              className="lf-case__hero-live"
-              href={study.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {displayDomain(study.url)}
-              <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
-            </a>
+            {study.showcase.availability === "public" ? (
+              <a
+                className="lf-case__hero-live"
+                href={study.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {displayDomain(study.url)}
+                <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
+              </a>
+            ) : (
+              <span className="lf-case__hero-private">
+                <LockKeyhole size={14} strokeWidth={1.8} aria-hidden="true" />
+                Client access only
+              </span>
+            )}
             <ShareButton
-              title={`${study.client}: ${study.title}`}
+              title={`${study.showcase.label}: ${study.title}`}
               text={study.title}
               url={`https://littlefightnyc.com${pathname}`}
               label="Share"
@@ -97,7 +111,7 @@ export default function CaseStudyDetail() {
               </div>
               <div>
                 <span>Work</span>
-                <strong>{study.type}</strong>
+                <strong>{study.showcase.kind}</strong>
               </div>
               <div>
                 <span>Services</span>
@@ -111,8 +125,10 @@ export default function CaseStudyDetail() {
                 </strong>
               </div>
               <div>
-                <span>Current capture</span>
-                <strong>July 21, 2026</strong>
+                <span>Availability</span>
+                <strong>
+                  {study.showcase.availability === "private" ? "Private, in production" : "Public, live"}
+                </strong>
               </div>
             </aside>
           </div>
@@ -121,11 +137,11 @@ export default function CaseStudyDetail() {
         <section className="lf-case-next__live" aria-labelledby="lf-case-live-title">
           <div className="lf-case-next__live-inner">
             <header>
-              <h2 id="lf-case-live-title">See the live work.</h2>
-              <p>Switch views and scroll inside the frame. The button opens the production site.</p>
+              <h2 id="lf-case-live-title">Walk through the build.</h2>
+              <p>Choose a stage to see how the work moves from input to a result the business uses.</p>
             </header>
             <div className="lf-case-next__explorer">
-              <LiveSiteExplorer key={study.slug} client={study.client} slug={study.slug} url={study.url} />
+              <ProjectWalkthrough key={study.slug} study={study} />
             </div>
           </div>
         </section>
@@ -163,11 +179,14 @@ export default function CaseStudyDetail() {
                         height="675"
                         loading="lazy"
                         decoding="async"
+                        style={{
+                          objectPosition: entry.showcase.heroPosition ?? "center center",
+                        }}
                       />
                     </span>
                     <span className="lf-case-next__related-copy">
-                      <small>{entry.type}</small>
-                      <strong>{entry.client}</strong>
+                      <small>{entry.showcase.context}</small>
+                      <strong>{entry.showcase.label}</strong>
                       <span>{entry.title}</span>
                     </span>
                   </Link>

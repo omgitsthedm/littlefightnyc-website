@@ -502,13 +502,13 @@ export const studioProjects: StudioProject[] = [
     name: "Estimator's Cockpit",
     kind: "Field-precision web app",
     status: "Active",
-    oneline: "An internal cockpit for Public House Creative. Discovery, sorting, and reporting in one premium UI.",
+    oneline: "Private estimating software for a custom cabinetry team. Discovery, sorting, and reporting in one working system.",
     description:
-      "Built for Public House Creative. The Cockpit turns the messy first pass of an estimate into a structured record. Documents in. Rooms sorted. Price drivers checked. Report out. Private to the team. The biggest non-public build Little Fight has shipped.",
+      "The Cockpit turns the messy first pass of a cabinetry estimate into a structured record. Documents in. Rooms sorted. Price drivers checked. Report out. Private to the team. The biggest non-public build Little Fight has shipped.",
     stack: ["Next.js", "Supabase", "Anthropic", "Netlify Functions"],
     image: "/assets/hero-laptop.webp",
     body: [
-      "The Cockpit is the largest non-public build Little Fight has shipped. It was built for Public House Creative. It turns the messy first pass of an estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out.",
+      "The Cockpit is the largest non-public build Little Fight has shipped. It turns the messy first pass of a custom cabinetry estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out.",
       "The build is Next.js, Supabase, Anthropic for classification, and Netlify Functions for the heavy processing. The screens show dense information without hiding anything. The data tells the truth. The estimator's judgment makes the call.",
       "Real estimates run through it. The math is honest. The team uses it on every project.",
     ],

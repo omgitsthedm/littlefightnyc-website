@@ -51,7 +51,7 @@ const PROOF = [
     fact: "100 en Lighthouse · lista en 2 semanas",
   },
   {
-    client: "Public House Creative",
+    client: "Software privado de presupuestos",
     line: "Un sistema privado que el equipo usa en presupuestos reales.",
     fact: "3 herramientas → 1 fuente de verdad",
   },

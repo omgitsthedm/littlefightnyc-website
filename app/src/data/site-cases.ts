@@ -17,6 +17,15 @@ export type CaseStudy = {
   updated?: string;
   body?: string[];
   metrics?: Array<{ value: string; label: string }>;
+  showcase: {
+    label: string;
+    kind: string;
+    context: string;
+    availability: "public" | "private";
+    stages: Array<{ label: string; detail: string }>;
+    heroPosition?: string;
+    heroPositionMobile?: string;
+  };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -30,6 +39,17 @@ export const caseStudies: CaseStudy[] = [
       { value: "Schema + headers", label: "Hardened for search + crawlers" },
       { value: "Netlify + GitHub", label: "Existing deploy path kept" },
     ],
+    showcase: {
+      label: "Official film source",
+      kind: "Website",
+      context: "Independent film company",
+      availability: "public",
+      stages: [
+        { label: "Gather", detail: "Trailer, credits, reviews, premiere photos, and release facts come together in one official source." },
+        { label: "Prove", detail: "Press and festival audiences get fast paths to the film, company, cast, and coverage." },
+        { label: "Publish", detail: "Structured data, headers, sitemap signals, and the existing deploy path keep every update credible." },
+      ],
+    },
     image: "/assets/case-cc-films.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
@@ -55,6 +75,17 @@ export const caseStudies: CaseStudy[] = [
       { value: "3 jobs", label: "Onboard guide · social · memory layer" },
       { value: "Kept", label: "The nostalgic heart of cruising" },
     ],
+    showcase: {
+      label: "Cruise guest network",
+      kind: "Public product",
+      context: "Life at sea",
+      availability: "public",
+      stages: [
+        { label: "Orient", detail: "Guests find voyage details, venue hours, shops, bars, restaurants, and what is happening next." },
+        { label: "Connect", detail: "Profiles and shared events turn a ship full of strangers into a temporary neighborhood." },
+        { label: "Remember", detail: "Photos and voyage history give the trip a useful memory layer after everyone gets home." },
+      ],
+    },
     image: "/assets/case-deckspace.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
@@ -80,6 +111,19 @@ export const caseStudies: CaseStudy[] = [
       { value: "2 weeks", label: "Instagram-only → real booking site" },
       { value: "Square", label: "Booking kept — clients already knew it" },
     ],
+    showcase: {
+      label: "Salon booking flow",
+      kind: "Website",
+      context: "Solo stylist",
+      availability: "public",
+      heroPosition: "center 10%",
+      heroPositionMobile: "82% 10%",
+      stages: [
+        { label: "Find", detail: "A new Google Business Profile and neighborhood search signals make the studio visible beyond Instagram." },
+        { label: "Trust", detail: "Rachel's face, work, location, and services answer the questions a first-time client has before booking." },
+        { label: "Book", detail: "The Square setup clients already knew stays in place, now inside a clear mobile booking path." },
+      ],
+    },
     image: "/assets/case-hair-by-rachel-charles.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
@@ -105,6 +149,17 @@ export const caseStudies: CaseStudy[] = [
       { value: "1 day", label: "To ship a new product drop" },
       { value: "Square + Printful", label: "Payments + fulfillment wired" },
     ],
+    showcase: {
+      label: "Custom storefront",
+      kind: "Website + commerce",
+      context: "Independent streetwear",
+      availability: "public",
+      stages: [
+        { label: "Catalog", detail: "One JSON master holds the products, prices, and drop details without hardcoded storefront content." },
+        { label: "Sell", detail: "A custom Next.js experience keeps the brand intact while Square handles payment." },
+        { label: "Fulfill", detail: "Paid orders move to Printful for shipping, so a new drop can ship without a platform rebuild." },
+      ],
+    },
     image: "/assets/case-after-hours-agenda.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
@@ -130,6 +185,17 @@ export const caseStudies: CaseStudy[] = [
       { value: "Per-site CI", label: "Independent deploys on push" },
       { value: "Real-time", label: "Intake routing, no copying" },
     ],
+    showcase: {
+      label: "Connected intake system",
+      kind: "Connected system",
+      context: "Help service",
+      availability: "public",
+      stages: [
+        { label: "Receive", detail: "The public site gives people a clear place to ask for help without exposing the working system behind it." },
+        { label: "Route", detail: "Intake moves through one shared Supabase backend in real time, with no copying between tools." },
+        { label: "Manage", detail: "A separate protected admin site lets the team work the queue while each site deploys independently." },
+      ],
+    },
     image: "/assets/case-clearhelp.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
@@ -155,6 +221,18 @@ export const caseStudies: CaseStudy[] = [
       { value: "Every number", label: "Audits back to its source" },
       { value: "In production", label: "Runs on the team's real bids" },
     ],
+    showcase: {
+      label: "Private estimating software",
+      kind: "Private software",
+      context: "Custom cabinetry team",
+      availability: "private",
+      stages: [
+        { label: "Collect", detail: "Site photos, blueprints, notes, and scope emails enter one structured project record." },
+        { label: "Resolve", detail: "Rooms and price drivers get classified while the estimator keeps control of the final judgment." },
+        { label: "Audit", detail: "The math checks itself and every number can be traced back to its source." },
+        { label: "Export", detail: "A clean report leaves the system ready for the real bid, with no spreadsheet reconstruction." },
+      ],
+    },
     image: "/assets/case-public-house-cockpit.webp",
     services: ["business-systems"],
     published: "2026-05-13",
@@ -180,6 +258,17 @@ export const caseStudies: CaseStudy[] = [
       { value: "Schema", label: "Org · FinancialService · Person" },
       { value: "Live", label: "grandfundingllc.com" },
     ],
+    showcase: {
+      label: "Credible finance landing",
+      kind: "Website",
+      context: "Funding business",
+      availability: "public",
+      stages: [
+        { label: "Explain", detail: "A quiet, type-led page says what the business offers without leaning on generic finance imagery." },
+        { label: "Reassure", detail: "Structured company, service, and founder information creates a credible public record." },
+        { label: "Capture", detail: "One clear contact path gives partners and prospects an obvious next step." },
+      ],
+    },
     image: "/assets/case-grand-funding-llc.webp",
     services: ["custom-local-websites"],
     published: "2026-05-13",
@@ -205,6 +294,17 @@ export const caseStudies: CaseStudy[] = [
       { value: "~90 seconds", label: "To close a night" },
       { value: "Every number", label: "Drills to the receipt behind it" },
     ],
+    showcase: {
+      label: "Venue financial software",
+      kind: "Public product",
+      context: "Independent venues",
+      availability: "public",
+      stages: [
+        { label: "Close", detail: "Bar, door, staff, splits, and payouts enter one nightly close that takes about 90 seconds." },
+        { label: "Separate", detail: "Venue money and promoter money stay distinct instead of blurring together in a spreadsheet." },
+        { label: "Verify", detail: "Every report number drills down to the receipt behind it, from midnight questions to quarter review." },
+      ],
+    },
     image: "/assets/case-venuecircuit.webp",
     services: ["business-systems", "custom-local-websites"],
     published: "2026-07-12",

@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, LockKeyhole } from "lucide-react";
 import { caseStudies } from "@/data/site";
-import LiveSiteExplorer from "./LiveSiteExplorer";
+import ProjectWalkthrough from "./ProjectWalkthrough";
 import "./WorkShowcase.css";
 
 export default function WorkShowcase() {
@@ -24,17 +24,17 @@ export default function WorkShowcase() {
     <section className="lf-work-showcase" aria-labelledby="lf-work-showcase-title">
       <div className="lf-work-showcase__inner">
         <header className="lf-work-showcase__head">
-          <h2 id="lf-work-showcase-title">Work you can open.</h2>
+          <h2 id="lf-work-showcase-title">What changed. How it works.</h2>
           <p>
-            Eight live businesses and products. Pick one, move through the current site,
-            then open the real thing.
+            Pick the job, not the client. Follow the working path from the first input
+            to the result the business uses.
           </p>
         </header>
 
         <div className="lf-work-showcase__layout">
-          <nav className="lf-work-showcase__index" aria-label="Choose a client project">
-            <ol>
-              {caseStudies.map((study, index) => (
+          <nav className="lf-work-showcase__index" aria-label="Choose a project outcome">
+            <ul>
+              {caseStudies.map((study) => (
                 <li key={study.slug}>
                   <button
                     type="button"
@@ -42,44 +42,57 @@ export default function WorkShowcase() {
                     aria-pressed={study.slug === active.slug}
                     onClick={() => chooseStudy(study.slug)}
                   >
-                    <span className="lf-work-showcase__number" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
                     <span>
-                      <strong>{study.client}</strong>
-                      <small>{study.type}</small>
+                      <strong>{study.showcase.label}</strong>
+                      <small>{study.showcase.context}</small>
                     </span>
+                    <ArrowRight size={17} strokeWidth={1.8} aria-hidden="true" />
                   </button>
                 </li>
               ))}
-            </ol>
+            </ul>
           </nav>
 
-          <article className="lf-work-showcase__browser" aria-labelledby="lf-work-active-title">
-            <LiveSiteExplorer
-              key={active.slug}
-              client={active.client}
-              slug={active.slug}
-              url={active.url}
-            />
+          <article className="lf-work-showcase__specimen" aria-labelledby="lf-work-active-title">
+            <ProjectWalkthrough key={active.slug} study={active} />
+
+            {active.metrics && active.metrics.length > 0 && (
+              <dl className="lf-work-showcase__metrics" aria-label={`${active.showcase.label} results`}>
+                {active.metrics.map((metric) => (
+                  <div key={metric.label}>
+                    <dt>{metric.value}</dt>
+                    <dd>{metric.label}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
 
             <footer className="lf-work-showcase__result">
               <div>
-                <p>{active.type}</p>
-                <h3 id="lf-work-active-title">{active.client}</h3>
+                <p>{active.showcase.context}</p>
+                <h3 id="lf-work-active-title">The working result</h3>
                 <span>{active.result}</span>
               </div>
-              <Link to={`/case-studies/${active.slug}/`}>
-                Read the story
-                <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
-              </Link>
+              <span className="lf-work-showcase__actions">
+                <Link to={`/case-studies/${active.slug}/`}>
+                  Read the case
+                  <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+                </Link>
+                {active.showcase.availability === "public" ? (
+                  <a href={active.url} target="_blank" rel="noopener noreferrer">
+                    Open live
+                    <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
+                  </a>
+                ) : (
+                  <span className="lf-work-showcase__private">
+                    <LockKeyhole size={15} strokeWidth={1.8} aria-hidden="true" />
+                    Private system
+                  </span>
+                )}
+              </span>
             </footer>
           </article>
         </div>
-
-        <p className="lf-work-showcase__capture-note">
-          Captured from each live production site on July 21, 2026. Scroll inside the frame.
-        </p>
       </div>
     </section>
   );

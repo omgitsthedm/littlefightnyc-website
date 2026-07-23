@@ -51,7 +51,7 @@ const PROOF = [
     fact: "Lighthouse 四项满分 · 两周上线",
   },
   {
-    client: "Public House Creative",
+    client: "定制橱柜估价软件",
     line: "团队每天用在真实项目上的内部工作系统。",
     fact: "3个工具 → 1个可靠数据源",
   },

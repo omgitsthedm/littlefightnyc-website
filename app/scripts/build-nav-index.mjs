@@ -35,7 +35,7 @@ const site = await import(pathToFileURL(bundlePath).href + "?t=" + Date.now());
 
 const nav = [
   ...site.services.map((s) => ({ label: s.eyebrow, to: `/services/${s.slug}/`, group: "Services" })),
-  ...site.caseStudies.map((c) => ({ label: c.client, to: `/case-studies/${c.slug}/`, group: "Case studies" })),
+  ...site.caseStudies.map((c) => ({ label: c.showcase?.label ?? c.client, to: `/case-studies/${c.slug}/`, group: "Case studies" })),
   ...site.answerGuides.map((a) => ({ label: a.question, to: `/answers/${a.slug}/`, group: "Answers" })),
   ...site.glossaryTerms.map((t) => ({ label: t.term, to: `/glossary/${t.slug}/`, group: "Glossary" })),
   ...site.areaPages.map((a) => ({ label: a.name, to: `/areas/${a.slug}/`, group: "Neighborhoods" })),
