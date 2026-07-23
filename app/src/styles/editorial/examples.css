@@ -771,6 +771,11 @@ a:hover .lf-ex-rows__media img {
   aspect-ratio: 4 / 3;
 }
 
+.lf-ex-tool--vera .lf-ex-tool__media,
+.lf-ex-tool--myspace .lf-ex-tool__media {
+  aspect-ratio: 16 / 9;
+}
+
 .lf-ex-tool__media::after {
   content: "";
   position: absolute;

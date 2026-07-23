@@ -1,0 +1,2034 @@
+:root{
+  --bg:#e9edf3;
+  --panel:#f7f7f7;
+  --border:#7fa2c9;
+  --border2:#c3d1e5;
+  --topbar1:#4b79b5;
+  --topbar2:#35689f;
+  --link:#1b5ea7;
+  --accent-orange:#f2b35c;
+  --text:#1f2a37;
+  --muted:#58677a;
+  --riot-green:#4AF40C;
+  --riot-pink:#ff2f86;
+  --shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  color:var(--text);
+  background: linear-gradient(#f4f6f9, var(--bg)) fixed;
+  padding-bottom:64px; /* room for mobile sticky bar */
+}
+
+/* 2007 grit overlay (subtle) */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px, rgba(0,0,0,0) 1px);
+  background-size: 100% 3px;
+  mix-blend-mode: overlay;
+  opacity:.18;
+}
+
+a{color:var(--link); text-decoration:none}
+a:hover{ text-decoration:underline }
+
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background: linear-gradient(var(--topbar1), var(--topbar2));
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.25);
+}
+.topbar .inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  min-width:210px;
+}
+.brand img{height:22px; width:auto; display:block}
+.badge{
+  font-size:20px;
+  padding:3px 6px;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:3px;
+  opacity:.95;
+}
+
+.search{
+  flex:1;
+  display:flex; gap:8px; align-items:center;
+}
+.search input{
+  flex:1;
+  padding:7px 10px;
+  border-radius:3px;
+  border:1px solid rgba(255,255,255,.25);
+  outline:none;
+}
+.search button{
+  padding:9px 12px;
+  border-radius:12px;
+  border:1px solid #6f8fb8;
+  background: linear-gradient(#ffffff, #dfe8f6);
+  color:#153a67;
+  cursor:pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.08), 0 2px 0 rgba(44,79,122,.25);
+}
+.search button:active{transform: translateY(1px);}
+
+.nav{
+  display:flex; gap:10px; flex-wrap:wrap;
+  font-size:13px;
+}
+.nav a{color:#e9f2ff}
+.nav a:hover{color:#fff; text-decoration:none}
+.container{
+  max-width:1100px;
+  margin:18px auto;
+  padding:0 14px;
+}
+
+.shell{
+  background: rgba(243,246,251,.98);
+  border:1px solid rgba(155,183,216,.55);
+  box-shadow: var(--shadow);
+  border-radius:6px;
+  overflow:hidden;
+}
+
+.subnav{
+  background: linear-gradient(#edf3fb, #dfeaf7);
+  border-bottom:1px solid var(--border2);
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.subnav .crumbs{
+  display:flex; gap:10px; flex-wrap:wrap;
+  font-size:13px;
+}
+.subnav .crumbs a{color:#0f4f95}
+.subnav .cta{
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+
+/* Myspace-ish buttons */
+.btn{
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.02em;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid #6f8fb8;
+  background: linear-gradient(#ffffff, #dfe8f6);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    inset 0 -1px 0 rgba(0,0,0,.08),
+    0 3px 0 rgba(44,79,122,.35),
+    0 10px 18px rgba(0,0,0,.12);
+  color:#153a67;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  text-decoration:none;
+}
+.btn:active{transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.12), 0 2px 0 rgba(44,79,122,.35), 0 8px 14px rgba(0,0,0,.12);}
+.btn:hover{filter:brightness(1.03)}
+.btn-primary{
+  border-color: rgba(74,244,12,.55);
+  background: linear-gradient(#1b1f27, #0c1119);
+  color:#fff;
+  box-shadow: 0 0 0 2px rgba(74,244,12,.18), inset 0 1px 0 rgba(255,255,255,.1);
+}
+.btn-primary .dot{
+  width:10px; height:10px; border-radius:50%;
+  background: var(--riot-green);
+  box-shadow: 0 0 10px rgba(74,244,12,.65);
+}
+.btn-pink{
+  border-color: rgba(255,47,134,.55);
+  background: linear-gradient(#1b1f27, #0c1119);
+  color:#fff;
+  box-shadow: 0 0 0 2px rgba(255,47,134,.18), inset 0 1px 0 rgba(255,255,255,.1);
+}
+.btn-pink .dot{
+  width:10px; height:10px; border-radius:50%;
+  background: var(--riot-pink);
+  box-shadow: 0 0 10px rgba(255,47,134,.65);
+}
+
+/* Layout columns like Myspace Music */
+.grid{
+  display:grid;
+  grid-template-columns: 320px 1fr;
+  gap:14px;
+  padding:14px;
+}
+@media (max-width: 720px){
+  .grid{grid-template-columns:1fr}
+  .brand{min-width:auto}
+}
+
+.panel{
+  background: var(--panel);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  overflow:hidden;
+}
+.panel .hd{
+  background: linear-gradient(#f7fbff, #e3eefc);
+  border-bottom:1px solid var(--border2);
+  padding:8px 10px;
+  font-weight:800;
+  font-size:13px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.panel .bd{padding:10px}
+.small{font-size:12px; color:var(--muted)}
+.kv{display:grid; grid-template-columns: 1fr 1fr; gap:8px}
+.kv div{
+  padding:8px;
+  border:1px solid #e8eef7;
+  border-radius:4px;
+  background:#fbfdff;
+}
+
+.avatar{
+  display:flex;
+  gap:10px;
+}
+
+
+/* Avatar split: keep the Myspace illusion on small screens (stack, but same chrome) */
+.avatar.avatar-split{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:10px;
+}
+.avatar.avatar-split .avatar-left{ display:block; }
+.avatar.avatar-split .avatar-right{ display:block; }
+.avatar.avatar-split .under-meta{
+  background: linear-gradient(#f7fbff, #e3eefc);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  padding:8px 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+}
+
+@media (min-width: 560px){
+  .avatar.avatar-split{ grid-template-columns: 280px 1fr; }
+}
+@media (max-width: 420px){
+  .profilepic-large{ width:100%; height:auto; aspect-ratio: 1 / 1; }
+  .avatar.avatar-split .under-meta{ margin-top:10px; }
+}
+.avatar img{
+  width:96px; height:96px;
+  object-fit:cover;
+  border-radius:4px;
+  border:1px solid #c7d7ef;
+}
+.online{
+  display:inline-flex; align-items:center; gap:6px;
+  font-weight:700; color:#0b6b1c;
+}
+
+@keyframes ledPulse{0%{transform:scale(1);opacity:.85}50%{transform:scale(1.45);opacity:1}100%{transform:scale(1);opacity:.85}}
+.online .led{
+  width:10px; height:10px; border-radius:50%;
+  background: var(--riot-green);
+  box-shadow: 0 0 10px rgba(74,244,12,.55);
+
+  animation: ledPulse 1.2s ease-in-out infinite;
+}
+hr{border:none; border-top:1px solid #e6eef9; margin:10px 0}
+
+.player{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.player .art{
+  width:72px; height:72px;
+  border:1px solid #c7d7ef;
+  border-radius:4px;
+  overflow:hidden;
+  background:#000;
+}
+.player .art img{width:100%; height:100%; object-fit:cover; display:block; opacity:.9}
+.player .meta{flex:1}
+.player .meta strong{display:block}
+.player .controls{
+  display:flex; gap:6px; flex-wrap:wrap;
+}
+.pill{
+  font-size:11px;
+  padding:3px 6px;
+  border-radius:999px;
+  border:1px solid #c7d7ef;
+  background:#f7fbff;
+  color:#153a67;
+}
+.tracklist{
+  margin:0; padding:0; list-style:none;
+}
+.tracklist li{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:8px 6px;
+  border-bottom:1px solid #eef4fd;
+  font-size:13px;
+}
+.tracklist li:last-child{border-bottom:none}
+.tracklist .t{
+  display:flex; align-items:center; gap:8px;
+}
+.tracklist .num{
+  width:18px; text-align:right; color:#6b7b90; font-variant-numeric: tabular-nums;
+}
+.tracklist .play{
+  font-size:12px;
+  font-weight:700;
+  border:1px solid #7fa2c9;
+  background: linear-gradient(#ffffff, #dfe8f6);
+  padding:7px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.08), 0 2px 0 rgba(44,79,122,.25);
+}
+.play:active{transform: translateY(1px);}
+
+
+.eventcard{
+  padding:10px;
+  border:1px solid #e8eef7;
+  border-radius:4px;
+  background:#fbfdff;
+  display:grid;
+  gap:6px;
+}
+.eventcard .when{font-weight:900}
+.eventcard .where{color:#2f4c74}
+.eventcard .tagrow{display:flex; gap:6px; flex-wrap:wrap}
+
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:8px;
+}
+@media (max-width: 900px){ .gallery{grid-template-columns: repeat(2, 1fr);} }
+@media (max-width: 520px){ .gallery{grid-template-columns: 1fr;} }
+.gallery img{
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:4px;
+  border:1px solid #d9e5f7;
+}
+
+/* Video loops */
+.videos{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+}
+@media (max-width: 900px){ .videos{grid-template-columns: 1fr;} }
+.videos video{
+  width:100%;
+  border-radius:4px;
+  border:1px solid #d9e5f7;
+  background:#000;
+}
+
+/* Comment wall */
+.comment{
+  border:1px solid #e8eef7;
+  border-radius:4px;
+  background:#fbfdff;
+  padding:10px;
+  margin-bottom:10px;
+}
+.comment .who{font-weight:900}
+.comment .when{font-size:11px; color:#6b7b90}
+
+/* Mobile sticky bar */
+.stickybar{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  background: linear-gradient(#0c1119,#070a0f);
+  border-top:1px solid rgba(255,255,255,.08);
+  display:none;
+  padding:10px 12px;
+  z-index:60;
+}
+.stickybar .inner{
+  max-width:1100px;
+  margin:0 auto;
+  display:flex;
+  gap:10px;
+}
+.stickybar a{
+  flex:1;
+  text-align:center;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,.14);
+  color:#fff;
+  font-weight:900;
+  text-decoration:none;
+}
+.stickybar a.primary{
+  border-color: rgba(74,244,12,.55);
+  box-shadow: 0 0 0 2px rgba(74,244,12,.16);
+}
+@media (max-width: 900px){
+  .stickybar{display:block;}
+}
+
+.footer{
+  padding:14px;
+  border-top:1px solid #d9e5f7;
+  background: linear-gradient(#f7fbff, #e3eefc);
+  font-size:12px;
+  color:#44566d;
+}
+.footer strong{color:#153a67}
+
+
+/* --- Riot Night tweaks: bigger profile logo --- */
+.avatar.avatar-big{ align-items:flex-start; }
+.avatar.avatar-big .profilepic{
+  width:150px;
+  height:150px;
+  background:#000;
+  border:1px solid #111;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.08), 0 10px 20px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.profilepic img{width:90%; height:auto; display:block; filter: drop-shadow(0 8px 10px rgba(0,0,0,.45));}
+.profilepic-large{width:280px;height:280px;border-radius:10px;}
+
+.profile-logo{
+  width:100%;
+  height:auto;
+  display:block;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.25));
+}
+
+/* --- Player: smaller + metallic 3D --- */
+.player.player-small{ gap:8px; }
+.player.player-small .meta strong{ font-size:13px; }
+.player.player-small .meta .small{ font-size:11px; }
+
+.player.player-metal{
+  padding:8px;
+  border-radius:8px;
+  border:1px solid rgba(60,60,60,.35);
+  background:
+    linear-gradient(180deg, rgba(245,245,245,.95), rgba(200,200,200,.92)),
+    linear-gradient(90deg, rgba(255,255,255,.25), rgba(0,0,0,.06));
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.75),
+    inset 0 -2px 0 rgba(0,0,0,.12),
+    0 10px 22px rgba(0,0,0,.12);
+}
+
+.player.player-metal .art{
+  width:56px; height:56px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,.25);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+.player.player-metal .controls .pill{
+  border:1px solid rgba(0,0,0,.28);
+  background: linear-gradient(#f7f7f7, #cfcfcf);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(0,0,0,.12);
+  color:#111;
+}
+
+/* Tracklist: keep it tight */
+.tracklist li{ padding:7px 6px; }
+.tracklist .t{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width: calc(100% - 56px); }
+
+/* --- Comments board (Myspace-ish) --- */
+.commentform input{
+  width:100%;
+  padding:10px;
+  border:1px solid #c7d7ef;
+  border-radius:4px;
+  margin:6px 0 0;
+  background: #fff;
+}
+.commentform .row{ display:flex; gap:10px; flex-wrap:wrap; }
+.board{ margin-top:12px; display:grid; gap:10px; }
+.board .entry{
+  border:1px solid #c7d7ef;
+  border-radius:6px;
+  overflow:hidden;
+  background: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+}
+.board .entry .top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 10px;
+  background: linear-gradient(#e9f1ff, #d7e6ff);
+  border-bottom:1px solid #c7d7ef;
+}
+.board .entry .top .from{ font-weight:700; color:#123b6b; }
+.board .entry .body{
+  padding:10px;
+  font-size:13px;
+  line-height:1.35;
+}
+.board .entry:nth-child(even) .body{
+  background:#f7fbff;
+}
+
+/* --- Footer map layout --- */
+.footer{ padding:14px; }
+.footer-grid{
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap:12px;
+  align-items:start;
+}
+.footer-map iframe{ height:220px; }
+
+@media (max-width: 860px){
+  .avatar.avatar-big .profilepic{
+  width:150px;
+  height:150px;
+  background:#000;
+  border:1px solid #111;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.08), 0 10px 20px rgba(0,0,0,.18);
+  overflow:hidden;
+}
+.profilepic img{width:90%; height:auto; display:block; filter: drop-shadow(0 8px 10px rgba(0,0,0,.45));}
+.profilepic-large{width:280px;height:280px;border-radius:10px;}
+
+  .footer-grid{ grid-template-columns: 1fr; }
+  .footer-map iframe{ height:240px; }
+}
+
+
+.hd.hd-orange{background: linear-gradient(#ffd9a8, var(--accent-orange)); border-bottom:1px solid rgba(0,0,0,.08); color:#2b1b05;}
+.hd.hd-orange a{color:#2b1b05;}
+
+
+/* 3D square-ish player controls */
+.control-btn{
+  width:56px;
+  height:56px;
+  border-radius:16px;
+  border:1px solid #93a7c4;
+  background: linear-gradient(#ffffff, #d0d9e7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(0,0,0,.14), 0 4px 0 rgba(55,80,115,.35), 0 14px 18px rgba(0,0,0,.18);
+  color:#1c2b3f;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:20px;
+}
+.control-btn:active{transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.85), inset 0 -1px 0 rgba(0,0,0,.18), 0 2px 0 rgba(90,110,140,.35), 0 8px 14px rgba(0,0,0,.16);} 
+.control-btn:hover{filter:brightness(1.02);} 
+
+
+/* FAQ: Myspace-themed accordion that can handle modern long answers */
+.faq-list{ display:grid; gap:8px; }
+.faq-item{
+  border:1px solid var(--border2);
+  background: linear-gradient(#ffffff, #f3f7ff);
+  border-radius:4px;
+  overflow:hidden;
+}
+.faq-item summary{
+  list-style:none;
+  cursor:pointer;
+  padding:10px 12px;
+  font-weight:800;
+  font-size:13px;
+  color:#153a67;
+  background: linear-gradient(#f7fbff, #e3eefc);
+  border-bottom:1px solid var(--border2);
+  position:relative;
+}
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary:after{
+  content:"+";
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform: translateY(-50%);
+  width:22px;height:22px;
+  border-radius:6px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #6f8fb8;
+  background: linear-gradient(#ffffff, #dfe8f6);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(0,0,0,.08);
+}
+.faq-item[open] summary:after{ content:"–"; }
+.faq-answer{ padding:10px 12px; line-height:1.45; }
+.faq-sub{ margin-top:8px; color:#44566d; }
+.faq-bullets{ margin:8px 0 0 18px; }
+
+
+
+/* Make all status dots pulse like "Online Now" */
+.dot{
+  display:inline-block;
+  animation: ledPulse 1.2s ease-in-out infinite;
+}
+
+/* Profile picture + meta */
+.avatar-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:10px;
+}
+.profilepic-huge{
+  width:100%;
+  height:220px;
+  background:#000;
+  border-radius:6px;
+  border:1px solid #c7d7ef;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.profilepic-huge img{
+  width:86%;
+  height:auto;
+  object-fit:contain;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+}
+.profile-meta{
+  border:1px solid #c7d7ef;
+  border-radius:6px;
+  background: linear-gradient(#f6f9ff, #eef5ff);
+  padding:10px;
+}
+.profile-meta .small{ margin:4px 0; }
+
+/* Top 8 */
+.top8-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:10px;
+}
+.top8-card{
+  position:relative;
+  border:1px solid #c7d7ef;
+  border-radius:6px;
+  background: linear-gradient(#fdfefe, #eaf2ff);
+  padding:10px;
+  text-decoration:none;
+  color:#0a2a4a;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 1px 0 rgba(0,0,0,.05);
+  min-height:86px;
+}
+.top8-card:hover{ filter: brightness(1.03); }
+.top8-num{
+  position:absolute;
+  top:8px; left:8px;
+  width:22px; height:22px;
+  border-radius:6px;
+  background: #d7e6ff;
+  border:1px solid #aac6f3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:12px;
+}
+.top8-initials{
+  display:block;
+  font-weight:900;
+  letter-spacing:.5px;
+  margin-top:14px;
+}
+.top8-name{
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  line-height:1.15;
+}
+.top8-card.limp{
+  border-color: rgba(255,47,134,.55);
+  box-shadow: 0 0 0 2px rgba(255,47,134,.12), inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+/* Footer: old-school Myspace vibe */
+.myspace-footer{
+  margin-top:14px;
+  border:1px solid #b7cdee;
+  background: linear-gradient(#f7fbff, #e7f0ff);
+}
+.myspace-footer .footer-inner{ padding:12px; }
+.myspace-footer .footer-top{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  padding-bottom:10px;
+  border-bottom:1px solid #cfe0fb;
+}
+.footer-logo{ height:28px; width:auto; }
+.footer-nav{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  font-weight:700;
+  text-transform:lowercase;
+}
+.footer-nav a{
+  color:#2f6db3;
+  text-decoration:none;
+}
+.footer-nav a:hover{ text-decoration:underline; }
+.footer-legal{
+  margin-top:10px;
+}
+.footer-legal a{ color:#2f6db3; text-decoration:none; }
+.footer-legal a:hover{ text-decoration:underline; }
+.myspace-footer .footer-grid{
+  display:grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap:12px;
+  margin-top:12px;
+  align-items:start;
+}
+.myspace-footer iframe{
+  border:1px solid #c7d7ef;
+  border-radius:6px;
+}
+.footer-credit{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid #cfe0fb;
+  color: var(--accent-orange);
+  font-weight:800;
+  text-align:center;
+}
+
+/* Single-column pages */
+.grid-single{
+  grid-template-columns: 1fr;
+}
+
+/* Readable content blocks */
+.prose h3{
+  margin:14px 0 6px;
+  font-size:14px;
+}
+.prose ul{ margin:8px 0 10px 18px; }
+.bloglist{ display:flex; flex-direction:column; gap:10px; }
+.blogitem{
+  border:1px solid #c7d7ef;
+  border-radius:6px;
+  padding:10px;
+  background: #fff;
+}
+.blogtitle{ font-weight:900; color:#0a2a4a; margin-bottom:4px; }
+
+/* Mobile: keep the Myspace illusion as long as possible */
+@media (max-width: 760px){
+  .profilepic-huge{ height:200px; }
+  .top8-grid{ grid-template-columns: repeat(2, 1fr); }
+  .myspace-footer .footer-grid{ grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   MIKE ZIEMER CUSTOMIZATIONS
+   ============================================ */
+
+/* ============================================
+   CLASSIC MYSPACE PROFILE HEADER
+   ============================================ */
+.profile-header{
+  background: linear-gradient(#edf3fb, #dfeaf7);
+  border-bottom:1px solid var(--border2);
+  padding:16px;
+}
+.profile-header-inner{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+.profile-pic-large{
+  width:200px;
+  min-width:200px;
+  height:200px;
+  border-radius:4px;
+  overflow:hidden;
+  border:3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.profile-pic-large img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.profile-info{
+  flex:1;
+}
+.profile-name{
+  margin:0 0 4px;
+  font-size:24px;
+  color:#1b5ea7;
+}
+.profile-tagline{
+  font-style:italic;
+  color:var(--muted);
+  margin-bottom:12px;
+  font-size:13px;
+}
+.profile-details{
+  border-collapse:collapse;
+  font-size:13px;
+  margin-bottom:12px;
+}
+.profile-details td{
+  padding:3px 0;
+}
+.profile-details td:first-child{
+  font-weight:700;
+  color:#153a67;
+  padding-right:12px;
+  white-space:nowrap;
+}
+.online-status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:#0b6b1c;
+  font-weight:700;
+}
+.profile-stats{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.profile-stats .stat{
+  text-align:center;
+  padding:8px 12px;
+  background:#fff;
+  border:1px solid var(--border2);
+  border-radius:4px;
+}
+.profile-stats .stat strong{
+  display:block;
+  font-size:18px;
+  color:#1b5ea7;
+}
+.profile-stats .stat span{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* Classic MySpace 2-column grid */
+.grid-classic{
+  grid-template-columns: 260px 1fr;
+}
+.sidebar-left{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+
+/* Blue header style */
+.hd.hd-blue{
+  background: linear-gradient(#4b79b5, #35689f);
+  border-bottom:1px solid rgba(0,0,0,.15);
+  color:#fff;
+}
+.hd.hd-blue span{
+  color:#fff;
+}
+
+/* Contacting section */
+.contact-actions{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.contact-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border:1px solid #c7d7ef;
+  border-radius:4px;
+  background: linear-gradient(#fff, #f0f5ff);
+  color:#1b5ea7;
+  font-size:13px;
+  font-weight:600;
+  text-decoration:none;
+  transition: all 0.15s ease;
+}
+.contact-btn:hover{
+  background: linear-gradient(#f0f5ff, #e0ebff);
+  text-decoration:none;
+  border-color:#a0b8e0;
+}
+.contact-icon{
+  width:20px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* URL Box */
+.url-box{
+  padding:10px;
+  background:#fff;
+  border:1px solid #c7d7ef;
+  border-radius:4px;
+  text-align:center;
+}
+.url-box a{
+  font-weight:700;
+  font-size:14px;
+  color:#1b5ea7;
+}
+
+/* ============================================
+   CLASSIC MYSPACE MUSIC PLAYER
+   ============================================ */
+.myspace-player{
+  background: linear-gradient(#2a2a2a, #1a1a1a);
+  border-radius:0 0 4px 4px;
+  overflow:hidden;
+}
+.player-display{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  background: linear-gradient(#333, #222);
+  border-bottom:1px solid #444;
+}
+.player-art{
+  width:70px;
+  height:70px;
+  min-width:70px;
+  border-radius:4px;
+  overflow:hidden;
+  border:2px solid #555;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.player-art img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.player-info{
+  flex:1;
+  min-width:0;
+  color:#fff;
+}
+.player-now-playing{
+  font-size:9px;
+  color:#ff6b35;
+  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:4px;
+}
+.player-title{
+  font-size:14px;
+  font-weight:700;
+  color:#fff;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.player-artist{
+  font-size:12px;
+  color:#aaa;
+  margin-top:2px;
+}
+.player-album{
+  font-size:10px;
+  color:#666;
+  margin-top:4px;
+  font-style:italic;
+}
+.player-progress{
+  padding:8px 12px;
+  background:#1a1a1a;
+}
+.progress-bar{
+  height:6px;
+  background:#333;
+  border-radius:3px;
+  overflow:hidden;
+  cursor:pointer;
+}
+.progress-fill{
+  height:100%;
+  width:35%;
+  background: linear-gradient(90deg, #ff6b35, #ff8f5a);
+  border-radius:3px;
+  transition: width 0.1s ease;
+}
+.progress-time{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  color:#666;
+  margin-top:4px;
+}
+.player-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 12px;
+  background: linear-gradient(#2a2a2a, #222);
+  border-top:1px solid #333;
+  border-bottom:1px solid #333;
+}
+.player-btn{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:2px solid #555;
+  background: linear-gradient(#444, #333);
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: all 0.15s ease;
+}
+.player-btn:hover{
+  background: linear-gradient(#555, #444);
+  border-color:#666;
+}
+.player-btn-play{
+  width:44px;
+  height:44px;
+  font-size:18px;
+  background: linear-gradient(#ff6b35, #e55a2b);
+  border-color:#ff8f5a;
+}
+.player-btn-play:hover{
+  background: linear-gradient(#ff8f5a, #ff6b35);
+}
+.player-btn-play.playing{
+  background: linear-gradient(#4CAF50, #388E3C);
+  border-color:#66BB6A;
+}
+.player-volume{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-left:auto;
+  color:#888;
+  font-size:14px;
+}
+.player-volume input[type="range"]{
+  width:60px;
+  height:4px;
+  -webkit-appearance:none;
+  appearance:none;
+  background:#333;
+  border-radius:2px;
+  cursor:pointer;
+}
+.player-volume input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ff6b35;
+  cursor:pointer;
+}
+.player-playlist{
+  max-height:120px;
+  overflow-y:auto;
+}
+.playlist-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  font-size:12px;
+  color:#888;
+  cursor:pointer;
+  transition: background 0.15s ease;
+  border-bottom:1px solid #2a2a2a;
+}
+.playlist-item:hover{
+  background:#2a2a2a;
+}
+.playlist-item.active{
+  background:#333;
+  color:#fff;
+}
+.playlist-item.active .track-name{
+  color:#ff6b35;
+}
+.track-num{
+  width:18px;
+  text-align:center;
+  color:#555;
+}
+.playlist-item.active .track-num{
+  color:#ff6b35;
+}
+.track-name{
+  flex:1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.track-duration{
+  color:#555;
+  font-size:11px;
+}
+.player-branding{
+  padding:6px 12px;
+  background:#111;
+  text-align:center;
+  font-size:9px;
+  color:#444;
+  letter-spacing:0.5px;
+}
+
+/* Top 8 large version for main content area */
+.top8-large{
+  grid-template-columns: repeat(4, 1fr);
+}
+.top8-large .top8-card.top8-image{
+  min-height:120px;
+}
+
+/* Events list */
+.events-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.event-item{
+  display:flex;
+  gap:12px;
+  padding:10px;
+  border:1px solid #e8eef7;
+  border-radius:4px;
+  background:#fbfdff;
+}
+.event-date{
+  width:50px;
+  min-width:50px;
+  text-align:center;
+  padding:6px;
+  background: linear-gradient(#ff6b35, #e55a2b);
+  border-radius:4px;
+  color:#fff;
+}
+.event-date .month{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+.event-date .day{
+  display:block;
+  font-size:22px;
+  font-weight:900;
+  line-height:1;
+}
+.event-info{
+  flex:1;
+}
+.event-info h4{
+  margin:0 0 4px;
+  font-size:14px;
+  color:#0a2a4a;
+}
+.event-info p{
+  margin:0 0 6px;
+}
+.event-tags{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+}
+
+/* Profile photo (not logo) styling */
+.profilepic-photo{
+  background: #1a1a1a;
+}
+.profilepic-photo .profile-photo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter: none;
+}
+
+/* Top 8 with images */
+.top8-ventures{
+  gap:8px;
+}
+.top8-card.top8-image{
+  position:relative;
+  padding:0;
+  min-height:100px;
+  overflow:hidden;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.top8-card.top8-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  inset:0;
+  opacity:0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.top8-card.top8-image:hover img{
+  opacity:1;
+  transform: scale(1.05);
+}
+.top8-card.top8-image .top8-num{
+  z-index:2;
+  background: rgba(0,0,0,0.7);
+  border-color: rgba(255,255,255,0.3);
+  color:#fff;
+}
+.top8-card.top8-image .top8-overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:6px 8px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  z-index:2;
+  text-align:center;
+}
+
+/* Business Ventures List */
+.ventures-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.venture-item{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  border:1px solid #e8eef7;
+  border-radius:6px;
+  background:#fbfdff;
+  transition: box-shadow 0.2s ease;
+  text-decoration:none;
+  color:inherit;
+}
+.venture-item:hover{
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  text-decoration:none;
+}
+a.venture-item{
+  cursor:pointer;
+}
+a.venture-item:hover .venture-info h4{
+  color:var(--link);
+}
+.venture-logo{
+  width:80px;
+  height:80px;
+  min-width:80px;
+  border-radius:6px;
+  overflow:hidden;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.venture-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.venture-info{
+  flex:1;
+  min-width:0;
+}
+.venture-info h4{
+  margin:0 0 6px;
+  font-size:14px;
+  color:#0a2a4a;
+}
+.venture-info p{
+  margin:0;
+  line-height:1.4;
+}
+
+/* Instagram gallery with captions */
+.gallery-featured{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+}
+.gallery-item{
+  position:relative;
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid #d9e5f7;
+}
+.gallery-item img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+  transition: transform 0.2s ease;
+}
+.gallery-item:hover img{
+  transform: scale(1.03);
+}
+.gallery-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:8px 10px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color:#fff;
+  font-size:11px;
+  font-weight:600;
+}
+
+/* Contact form styling */
+.contactform input,
+.contactform textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #c7d7ef;
+  border-radius:4px;
+  margin:6px 0 0;
+  background:#fff;
+  font-family:inherit;
+}
+.contactform .row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* Footer social links */
+.footer-social{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin:12px 0;
+  flex-wrap:wrap;
+}
+.social-link{
+  padding:8px 16px;
+  border-radius:6px;
+  border:1px solid #c7d7ef;
+  background: linear-gradient(#ffffff, #eef4ff);
+  color:#2f6db3;
+  font-weight:700;
+  font-size:13px;
+  text-decoration:none;
+  transition: all 0.2s ease;
+}
+.social-link:hover{
+  background: linear-gradient(#eef4ff, #d7e6ff);
+  text-decoration:none;
+}
+
+/* Prose styling */
+.prose p{
+  margin:0 0 12px;
+  line-height:1.55;
+  font-size:13px;
+}
+.prose p:last-child{
+  margin-bottom:0;
+}
+
+/* ============================================
+   HYBRID MOBILE: Desktop-ish but readable
+   Keep 2-column layout, scale down gracefully
+   ============================================ */
+
+/* Tablet: Keep 2-column but tighten up */
+@media (max-width: 900px){
+  .gallery-featured{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery-item img{
+    height:160px;
+  }
+
+  /* Profile header: smaller but keep side-by-side */
+  .profile-pic-large{
+    width:160px;
+    min-width:160px;
+    height:160px;
+  }
+  .profile-name{
+    font-size:22px;
+  }
+
+  /* Slightly larger touch targets */
+  .contact-btn{
+    padding:10px 12px;
+    font-size:14px;
+  }
+
+  /* Top 8 stays 4-wide */
+  .top8-large{
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* 2-column grid: tighter sidebar */
+  .grid-classic{
+    grid-template-columns: 220px 1fr;
+    gap:10px;
+  }
+}
+
+/* Mobile: Keep 2-column layout with smaller sidebar */
+@media (max-width: 720px){
+  /* KEEP 2-column layout - MySpace style */
+  .grid{
+    grid-template-columns: 160px 1fr;
+    gap:4px;
+  }
+  .grid-classic{
+    grid-template-columns: 160px 1fr;
+    gap:4px;
+  }
+
+  /* Increase base font size for readability */
+  body{
+    font-size:15px;
+  }
+
+  /* Hide search to save space */
+  .search{
+    display:none;
+  }
+
+  /* Top nav: compact */
+  .nav{
+    gap:6px;
+    font-size:12px;
+  }
+
+  /* Profile header: smaller but keep side-by-side */
+  .profile-header{
+    padding:8px;
+  }
+  .profile-header-inner{
+    gap:8px;
+  }
+  .profile-pic-large{
+    width:100px;
+    min-width:100px;
+    height:100px;
+  }
+  .profile-name{
+    font-size:18px;
+  }
+  .profile-tagline{
+    font-size:11px;
+    margin-bottom:6px;
+  }
+  .profile-details{
+    font-size:11px;
+  }
+  .profile-stats{
+    gap:6px;
+  }
+  .profile-stats .stat{
+    padding:4px 6px;
+  }
+  .profile-stats .stat strong{
+    font-size:13px;
+  }
+  .profile-stats .stat span{
+    font-size:9px;
+  }
+
+  /* Subnav: keep horizontal */
+  .subnav{
+    padding:6px;
+    gap:6px;
+  }
+  .subnav .crumbs{
+    font-size:11px;
+    gap:6px;
+  }
+  .subnav .cta .btn{
+    padding:6px 8px;
+    font-size:11px;
+  }
+
+  /* Container - tighter edges */
+  .container{
+    padding:0 2px;
+    margin:8px auto;
+  }
+
+  /* Shell - tighter */
+  .shell{
+    border-radius:4px;
+  }
+
+  /* Panels - tighter */
+  .panel .hd{
+    padding:5px 6px;
+    font-size:11px;
+  }
+  .panel .bd{
+    padding:6px;
+  }
+
+  /* Reduce panel margins */
+  .panel[style*="margin-top"]{
+    margin-top:8px !important;
+  }
+
+  /* Sidebar contact buttons: readable */
+  .contact-btn{
+    padding:10px 8px;
+    font-size:13px;
+  }
+  .contact-icon{
+    width:18px;
+    font-size:12px;
+  }
+
+  /* URL box */
+  .url-box{
+    padding:8px;
+  }
+  .url-box a{
+    font-size:12px;
+  }
+
+  /* Music player: compact but functional */
+  .player-display{
+    padding:8px;
+    gap:8px;
+  }
+  .player-art{
+    width:50px;
+    height:50px;
+    min-width:50px;
+  }
+  .player-title{
+    font-size:12px;
+  }
+  .player-artist{
+    font-size:10px;
+  }
+  .player-now-playing{
+    font-size:8px;
+  }
+  .player-controls{
+    padding:6px 8px;
+    gap:4px;
+  }
+  .player-btn{
+    width:28px;
+    height:28px;
+    font-size:10px;
+  }
+  .player-btn-play{
+    width:34px;
+    height:34px;
+    font-size:14px;
+  }
+  .player-volume{
+    display:none;
+  }
+  .playlist-item{
+    padding:6px 8px;
+    font-size:10px;
+  }
+  .player-progress{
+    padding:6px 8px;
+  }
+  .progress-time{
+    font-size:9px;
+  }
+
+  /* Top 8: 2x4 grid */
+  .top8-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap:6px;
+  }
+  .top8-large{
+    grid-template-columns: repeat(2, 1fr);
+    gap:8px;
+  }
+  .top8-card{
+    min-height:60px;
+    padding:6px;
+  }
+  .top8-card.top8-image{
+    min-height:70px;
+  }
+  .top8-card.top8-image .top8-overlay{
+    font-size:9px;
+    padding:4px 6px;
+  }
+  .top8-num{
+    width:18px;
+    height:18px;
+    font-size:10px;
+    top:4px;
+    left:4px;
+  }
+
+  /* Events list */
+  .event-item{
+    padding:8px;
+    gap:8px;
+  }
+  .event-date{
+    width:40px;
+    min-width:40px;
+    padding:4px;
+  }
+  .event-date .month{
+    font-size:9px;
+  }
+  .event-date .day{
+    font-size:18px;
+  }
+  .event-info h4{
+    font-size:12px;
+  }
+  .event-info p{
+    font-size:11px;
+  }
+  .pill{
+    font-size:9px;
+    padding:2px 5px;
+  }
+
+  /* Venture items: keep horizontal */
+  .venture-item{
+    padding:8px;
+    gap:8px;
+  }
+  .venture-logo{
+    width:60px;
+    height:60px;
+    min-width:60px;
+  }
+  .venture-info h4{
+    font-size:12px;
+  }
+  .venture-info p{
+    font-size:11px;
+  }
+
+  /* Comments */
+  .commentform input{
+    padding:10px;
+    font-size:14px;
+  }
+  .board .entry .top{
+    padding:4px 8px;
+  }
+  .board .entry .top .from{
+    font-size:12px;
+  }
+  .board .entry .body{
+    padding:8px;
+    font-size:12px;
+  }
+
+  /* KV grid */
+  .kv{
+    grid-template-columns: 1fr;
+    gap:6px;
+  }
+  .kv div{
+    padding:6px;
+    font-size:12px;
+  }
+
+  /* Prose */
+  .prose p{
+    font-size:12px;
+    line-height:1.5;
+  }
+
+  /* Footer */
+  .footer-nav{
+    gap:8px;
+    font-size:12px;
+  }
+  .footer-social{
+    gap:8px;
+  }
+  .social-link{
+    padding:8px 12px;
+    font-size:12px;
+  }
+
+  /* Sticky bar */
+  .stickybar a{
+    padding:10px 8px;
+    font-size:12px;
+  }
+}
+
+/* Small mobile: still 2-column, just tighter */
+@media (max-width: 520px){
+  /* Topbar */
+  .topbar .inner{
+    padding:4px 6px;
+    gap:6px;
+  }
+  .brand img{
+    height:14px;
+  }
+  .badge{
+    font-size:9px;
+    padding:2px 4px;
+  }
+
+  /* Even tighter 2-column */
+  .grid,
+  .grid-classic{
+    grid-template-columns: 140px 1fr;
+    gap:3px;
+  }
+
+  /* Container - minimal edges */
+  .container{
+    padding:0 1px;
+    margin:4px auto;
+  }
+
+  /* Profile header: compact but horizontal */
+  .profile-header{
+    padding:6px;
+  }
+  .profile-header-inner{
+    gap:6px;
+  }
+  .profile-pic-large{
+    width:80px;
+    min-width:80px;
+    height:80px;
+  }
+  .profile-name{
+    font-size:15px;
+  }
+  .profile-tagline{
+    font-size:10px;
+    margin-bottom:4px;
+  }
+  .profile-details td{
+    padding:1px 0;
+    font-size:10px;
+  }
+  .profile-details td:first-child{
+    padding-right:4px;
+  }
+  .profile-stats{
+    gap:3px;
+    flex-wrap:wrap;
+  }
+  .profile-stats .stat{
+    padding:3px 5px;
+  }
+  .profile-stats .stat strong{
+    font-size:11px;
+  }
+  .profile-stats .stat span{
+    font-size:8px;
+  }
+
+  /* Panels even tighter */
+  .panel .hd{
+    padding:4px 5px;
+    font-size:10px;
+  }
+  .panel .bd{
+    padding:5px;
+  }
+
+  /* Contact buttons: stacked but still usable */
+  .contact-btn{
+    padding:7px 5px;
+    font-size:10px;
+    gap:3px;
+  }
+  .contact-icon{
+    width:12px;
+    font-size:9px;
+  }
+
+  /* URL box tighter */
+  .url-box{
+    padding:5px;
+  }
+  .url-box a{
+    font-size:10px;
+  }
+
+  /* Player: minimal but functional */
+  .player-display{
+    padding:5px;
+    gap:5px;
+  }
+  .player-art{
+    width:36px;
+    height:36px;
+    min-width:36px;
+  }
+  .player-title{
+    font-size:10px;
+  }
+  .player-artist{
+    font-size:8px;
+  }
+  .player-now-playing{
+    font-size:7px;
+  }
+  .player-btn{
+    width:22px;
+    height:22px;
+    font-size:8px;
+  }
+  .player-btn-play{
+    width:28px;
+    height:28px;
+    font-size:11px;
+  }
+  .player-controls{
+    padding:4px 5px;
+    gap:3px;
+  }
+  .player-progress{
+    padding:4px 5px;
+  }
+  .playlist-item{
+    padding:3px 5px;
+    font-size:8px;
+  }
+  .player-branding{
+    padding:4px;
+    font-size:8px;
+  }
+
+  /* Top 8 */
+  .top8-grid,
+  .top8-large{
+    gap:4px;
+  }
+  .top8-card.top8-image{
+    min-height:50px;
+  }
+  .top8-card.top8-image .top8-overlay{
+    font-size:7px;
+    padding:2px 3px;
+  }
+  .top8-num{
+    width:14px;
+    height:14px;
+    font-size:8px;
+    top:2px;
+    left:2px;
+  }
+
+  /* Events: compact */
+  .events-list{
+    gap:6px;
+  }
+  .event-item{
+    padding:5px;
+    gap:5px;
+  }
+  .event-date{
+    width:32px;
+    min-width:32px;
+    padding:2px;
+  }
+  .event-date .month{
+    font-size:7px;
+  }
+  .event-date .day{
+    font-size:13px;
+  }
+  .event-info h4{
+    font-size:11px;
+  }
+  .event-info p{
+    font-size:9px;
+  }
+  .pill{
+    font-size:8px;
+    padding:1px 4px;
+  }
+
+  /* Ventures: smaller logos */
+  .ventures-list{
+    gap:6px;
+  }
+  .venture-item{
+    padding:5px;
+    gap:5px;
+  }
+  .venture-logo{
+    width:45px;
+    height:45px;
+    min-width:45px;
+  }
+  .venture-info h4{
+    font-size:11px;
+  }
+  .venture-info p{
+    font-size:9px;
+  }
+
+  /* Gallery: 2-up */
+  .gallery-featured{
+    grid-template-columns: repeat(2, 1fr);
+    gap:4px;
+  }
+  .gallery-item img{
+    height:80px;
+  }
+  .gallery-caption{
+    font-size:8px;
+    padding:3px 4px;
+  }
+
+  /* Prose */
+  .prose h3{
+    font-size:12px;
+    margin:10px 0 4px;
+  }
+  .prose p{
+    font-size:10px;
+    line-height:1.4;
+    margin-bottom:8px;
+  }
+
+  /* Comments */
+  .commentform input{
+    padding:8px;
+    font-size:12px;
+  }
+  .board .entry .body{
+    padding:5px;
+    font-size:10px;
+  }
+
+  /* Footer */
+  .myspace-footer .footer-inner{
+    padding:8px;
+  }
+  .footer-nav{
+    gap:6px;
+    font-size:10px;
+  }
+  .footer-logo{
+    height:20px;
+  }
+}
+
+/* Extra small: maintain layout, allow horizontal scroll if needed */
+@media (max-width: 380px){
+  /* Set minimum width to prevent squishing */
+  .shell{
+    min-width:320px;
+  }
+
+  /* Even tighter container */
+  .container{
+    padding:0;
+    margin:2px auto;
+  }
+
+  /* Profile can stack on very small screens */
+  .profile-header-inner{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .profile-header{
+    padding:5px;
+  }
+  .profile-details{
+    margin:0 auto;
+  }
+  .profile-stats{
+    justify-content:center;
+  }
+
+  /* 2-column stays but tighter */
+  .grid,
+  .grid-classic{
+    grid-template-columns: 120px 1fr;
+    gap:2px;
+    padding:4px;
+  }
+
+  /* Panels minimal */
+  .panel .hd{
+    padding:3px 4px;
+    font-size:9px;
+  }
+  .panel .bd{
+    padding:4px;
+  }
+
+  /* Top 8: 2 columns still */
+  .top8-card.top8-image{
+    min-height:45px;
+  }
+}

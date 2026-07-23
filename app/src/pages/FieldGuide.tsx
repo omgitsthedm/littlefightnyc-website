@@ -114,6 +114,50 @@ export default function FieldGuide() {
                 </span>
               </span>
             </a>
+
+            <a className="lf-ex-tool lf-ex-tool--vera" href="/vera/" data-no-vt>
+              <span className="lf-ex-tool__media">
+                <img
+                  src="/assets/examples-vera-preview.webp"
+                  alt="The VERA mission-control dashboard showing today's apartment shortlist"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span className="lf-ex-tool__copy">
+                <span className="lf-ex-tool__type">Live personal software</span>
+                <strong>VERA</strong>
+                <span>A robot that hunts NYC apartments every night — checks city records, finds the real landlord, skips the scams.</span>
+                <span className="lf-ex-tool__open">
+                  Ride along with VERA
+                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+                </span>
+              </span>
+            </a>
+
+            <a className="lf-ex-tool lf-ex-tool--myspace" href="/myspace-demo/" data-no-vt>
+              <span className="lf-ex-tool__media">
+                <img
+                  src="/assets/examples-myspace-preview.webp"
+                  alt="A client profile page styled like a 2006 MySpace profile, Top 8 included"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span className="lf-ex-tool__copy">
+                <span className="lf-ex-tool__type">Just for fun</span>
+                <strong>The MySpace Demo</strong>
+                <span>A client's profile rebuilt like it's 2006 — Top 8 and all. Custom means anything you can picture.</span>
+                <span className="lf-ex-tool__open">
+                  Open the throwback
+                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+                </span>
+              </span>
+            </a>
           </div>
         </div>
       </section>
