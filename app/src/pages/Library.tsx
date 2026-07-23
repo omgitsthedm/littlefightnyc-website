@@ -1,6 +1,38 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Library as LibraryIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  Blocks,
+  BriefcaseBusiness,
+  Building2,
+  CalendarCheck,
+  CircleHelp,
+  CreditCard,
+  Headset,
+  HeartPulse,
+  Library as LibraryIcon,
+  MailWarning,
+  MapPin,
+  MapPinOff,
+  MessageSquareWarning,
+  MonitorSmartphone,
+  Palette,
+  PenTool,
+  ReceiptText,
+  Scissors,
+  SearchCheck,
+  ServerCrash,
+  ShoppingBag,
+  StarOff,
+  Store,
+  TableProperties,
+  TabletSmartphone,
+  UserRoundCheck,
+  UserRoundX,
+  UtensilsCrossed,
+  Workflow,
+  type LucideIcon,
+} from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
@@ -10,7 +42,7 @@ import { skelImg } from "@/lib/imgSkeleton";
 import journal from "@/data/journal-index.json";
 import { POST_IMAGE, CATEGORY_LABEL, CATEGORY_IMAGE } from "@/data/journalArt";
 import { answerGuides } from "@/data/site";
-import { ANSWER_CLUSTERS, answerArt } from "@/data/answersArt";
+import { ANSWER_CLUSTERS } from "@/data/answersArt";
 import "@/styles/editorial/journal.css";
 import "@/styles/editorial/answers.css";
 
@@ -36,6 +68,36 @@ const CATEGORY_ORDER: Post["category"][] = ["howto", "essay", "blog", "guide"];
 type Filter = Post["category"] | "all";
 
 const guideBySlug = new Map(answerGuides.map((guide) => [guide.slug, guide]));
+
+const ANSWER_ICON_BY_SLUG: Record<string, LucideIcon> = {
+  "website-down-emergency-nyc": ServerCrash,
+  "pos-system-down-restaurant-nyc": CreditCard,
+  "google-business-profile-suspended": MapPinOff,
+  "website-form-not-working-small-business": MessageSquareWarning,
+  "business-email-going-to-spam": MailWarning,
+  "business-not-showing-on-google-maps": MapPin,
+  "google-reviews-not-showing-up": StarOff,
+  "is-local-seo-worth-it-reddit": SearchCheck,
+  "google-business-profile-tips-reddit": Store,
+  "reduce-monthly-software-costs-small-business": ReceiptText,
+  "hair-salon-save-money-software": Scissors,
+  "local-pharmacy-website-community-support": HeartPulse,
+  "wix-vs-custom-website-reddit": Blocks,
+  "squarespace-vs-hiring-web-designer-reddit": Palette,
+  "shopify-vs-squarespace-reddit": ShoppingBag,
+  "square-vs-toast-reddit": UtensilsCrossed,
+  "glossgenius-vs-square-appointments-reddit": CalendarCheck,
+  "airtable-vs-notion-reddit-small-business": TableProperties,
+  "best-pos-system-small-business-reddit": TabletSmartphone,
+  "when-custom-business-system-beats-saas": Workflow,
+  "does-my-small-business-need-a-website-reddit": MonitorSmartphone,
+  "best-web-designer-nyc-reddit": PenTool,
+  "best-web-design-agency-nyc-reddit": BriefcaseBusiness,
+  "small-business-it-support-nyc-reddit-recommendations": Headset,
+  "how-to-find-good-it-guy-reddit": UserRoundCheck,
+  "web-developer-ghosted-me-reddit": UserRoundX,
+  "nyc-small-business-tech-help-reddit": Building2,
+};
 
 function postTime(published: string): number {
   const t = new Date(published).getTime();
@@ -97,9 +159,9 @@ export default function Library() {
         }
         dek="Straight answers to the questions NYC owners actually ask, plus how-tos, essays, and software comparisons from the field. Short, plain, and not trying to sell you a thing."
         image={{
-          src: "/assets/hero-library-avenue.webp",
-          alt: "A New York avenue at golden hour, streetlights just coming on down the corridor",
-          width: 1800,
+          src: "/assets/hero-ind-bookshop.webp",
+          alt: "A reader browsing the shelves of an independent New York bookshop",
+          width: 1600,
           height: 1200,
         }}
       />
@@ -127,33 +189,29 @@ export default function Library() {
                 </header>
 
                 <div className="lf-answers-hub__grid" data-count={guides.length}>
-                  {guides.map((guide) => (
-                    <Link
-                      key={guide.slug}
-                      to={`/answers/${guide.slug}/`}
-                      className="lf-answers-hub__card"
-                    >
-                      <span className="lf-answers-hub__thumb" aria-hidden="true">
-                        <img
-                          src={answerArt(guide.slug).replace(".webp", "-480.webp")}
-                          alt=""
-                          width={480}
-                          height={360}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </span>
-                      <span className="lf-answers-hub__copy">
-                        <span className="lf-answers-hub__q">{guide.question}</span>
-                        <span className="lf-answers-hub__short">
-                          {guide.short.replace(/^Short answer:\s*/i, "")}
+                  {guides.map((guide, guideIndex) => {
+                    const GuideIcon = ANSWER_ICON_BY_SLUG[guide.slug] ?? CircleHelp;
+                    return (
+                      <Link
+                        key={guide.slug}
+                        to={`/answers/${guide.slug}/`}
+                        className={`lf-answers-hub__card${guideIndex === 0 ? " lf-answers-hub__card--lead" : ""}`}
+                      >
+                        <span className="lf-answers-hub__thumb" aria-hidden="true">
+                          <GuideIcon size={34} strokeWidth={1.75} />
                         </span>
-                        <span className="lf-answers-hub__open">
-                          Read the answer <span aria-hidden="true">→</span>
+                        <span className="lf-answers-hub__copy">
+                          <span className="lf-answers-hub__q">{guide.question}</span>
+                          <span className="lf-answers-hub__short">
+                            {guide.short.replace(/^Short answer:\s*/i, "")}
+                          </span>
+                          <span className="lf-answers-hub__open">
+                            Read the answer <span aria-hidden="true">→</span>
+                          </span>
                         </span>
-                      </span>
-                    </Link>
-                  ))}
+                      </Link>
+                    );
+                  })}
                 </div>
               </section>
             );

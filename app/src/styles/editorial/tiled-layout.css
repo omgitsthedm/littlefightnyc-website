@@ -46,9 +46,14 @@
   background: var(--lf-paper-2);
 }
 
-.lf-content-tile--media > .lf-fig,
-.lf-content-tile--media > .lf-fig > .lf-fig__frame {
+.lf-content-tile--media > .lf-fig {
   height: 100%;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.lf-content-tile--media > .lf-fig > .lf-fig__frame {
+  height: auto;
 }
 
 .lf-content-tile--media .lf-fig__frame img {
@@ -304,6 +309,24 @@
 
   .lf-content-list--three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-content-tile--about-owner {
+    align-self: start;
+  }
+
+  .lf-content-tile--about-owner.lf-content-tile--media > .lf-fig {
+    height: auto;
+    grid-template-rows: auto auto;
+  }
+
+  .lf-content-tile--about-owner.lf-content-tile--media > .lf-fig > .lf-fig__frame {
+    aspect-ratio: 4 / 3;
+  }
+
+  .lf-content-tile--about-owner.lf-content-tile--media .lf-fig__frame img {
+    min-height: 0;
+    object-position: center top;
   }
 }
 

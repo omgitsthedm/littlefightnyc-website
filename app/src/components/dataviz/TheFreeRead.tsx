@@ -189,12 +189,22 @@ function draw(S: Sim, cx: CanvasRenderingContext2D, W: number, H: number, GO: HT
     cx.fillText(S.sort > 0.15 ? String(rank + 1) : "·", rh * 0.2 + badge / 2, rh / 2 + 0.5);
     // label
     cx.fillStyle = "rgba(230,233,240,.95)";
-    cx.font = "600 " + Math.max(10, (rh * 0.34) | 0) + "px " + DISP;
+    let labelSize = Math.max(10, (rh * 0.34) | 0);
+    const tagSize = Math.max(8, (rh * 0.26) | 0);
+    cx.font = "500 " + tagSize + "px " + MONO;
+    const tagWidth = cx.measureText(f.tag).width;
+    const labelX = bx + badge;
+    const labelWidth = Math.max(48, listW - labelX - tagWidth - 28);
+    cx.font = "600 " + labelSize + "px " + DISP;
+    while (labelSize > 9 && cx.measureText(f.label).width > labelWidth) {
+      labelSize -= 1;
+      cx.font = "600 " + labelSize + "px " + DISP;
+    }
     cx.textAlign = "left";
-    cx.fillText(f.label, bx + badge, rh / 2);
+    cx.fillText(f.label, labelX, rh / 2, labelWidth);
     // priority tag (right)
     cx.fillStyle = tagColor(f.tag);
-    cx.font = "500 " + Math.max(8, (rh * 0.26) | 0) + "px " + MONO;
+    cx.font = "500 " + tagSize + "px " + MONO;
     cx.textAlign = "right";
     cx.fillText(f.tag, listW - 10, rh / 2);
     cx.restore();

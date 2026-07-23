@@ -92,7 +92,7 @@ export default function About() {
             <MiniMapNYC compact />
           </section>
 
-          <div className="lf-content-tile lf-content-tile--half lf-content-tile--media">
+          <div className="lf-content-tile lf-content-tile--half lf-content-tile--media lf-content-tile--about-owner">
             <EditorialFigure
               src="/assets/owner.webp"
               alt="A small-business owner at the counter"
@@ -103,7 +103,7 @@ export default function About() {
             />
           </div>
 
-          <article className="lf-content-tile lf-content-tile--half">
+          <article className="lf-content-tile lf-content-tile--half lf-content-tile--about-owner">
             <EditorialBody>
               <p>
                 The Wi-Fi being weird, the email going to a stranger, the booking

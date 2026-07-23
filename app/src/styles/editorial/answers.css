@@ -441,6 +441,11 @@
   transform: translateY(var(--lf-lift));
 }
 
+.lf-answers-hub__card--lead {
+  border-color: color-mix(in srgb, var(--lf-blue) 34%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-blue) 5%, var(--lf-paper));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lf-answers-hub__card,
   .lf-answers-hub__card:hover {
@@ -450,24 +455,26 @@
 }
 
 .lf-answers-hub__thumb {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 96px;
   aspect-ratio: 4 / 3;
   border-radius: var(--lf-radius-sm);
   overflow: hidden;
-  border: 1px solid var(--lf-hairline);
-  background: var(--lf-ink);
+  color: var(--lf-fight);
+  border: 1px solid color-mix(in srgb, var(--lf-blue) 32%, var(--lf-hairline));
+  background:
+    radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.14), transparent 72%),
+    var(--lf-ink);
 }
 
-.lf-answers-hub__thumb img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Zoom the crop into the art's motif (drawn at ~67% / 47% of the canvas)
-   * so the archetype mark reads clearly at thumbnail size. */
-  transform: scale(2.1);
-  transform-origin: 67% 47%;
+.lf-answers-hub__thumb svg {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  transform: translate(0, 0);
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-answers-hub__copy {
@@ -521,6 +528,11 @@
   .lf-answers-hub__thumb {
     width: 72px;
   }
+
+  .lf-answers-hub__thumb svg {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 /* The bridge out of a research door (Door Doctrine: no dead ends). */
@@ -569,14 +581,11 @@
   background: color-mix(in srgb, var(--lf-fight) 8%, transparent);
 }
 
-/* Micro-interaction: answer-card art leans in on hover. */
-.lf-answers-hub__thumb img {
-  transition: scale 600ms var(--lf-ease-out-quart, ease);
-}
-.lf-answers-hub__card:hover .lf-answers-hub__thumb img {
-  scale: 1.045;
+/* Micro-interaction: the article-specific symbol answers the card lift. */
+.lf-answers-hub__card:hover .lf-answers-hub__thumb svg {
+  transform: scale(1.08);
 }
 @media (prefers-reduced-motion: reduce) {
-  .lf-answers-hub__thumb img { transition: none; }
-  .lf-answers-hub__card:hover .lf-answers-hub__thumb img { scale: none; }
+  .lf-answers-hub__thumb svg { transition: none; }
+  .lf-answers-hub__card:hover .lf-answers-hub__thumb svg { transform: none; }
 }
