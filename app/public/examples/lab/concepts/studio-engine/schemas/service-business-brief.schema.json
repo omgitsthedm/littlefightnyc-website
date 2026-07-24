@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://internal.example.com/schemas/service-business-brief.schema.json",
+  "$id": "/examples/lab/concepts/studio-engine/schemas/service-business-brief.schema.json",
   "title": "Service Business Website Brief",
   "type": "object",
   "additionalProperties": false,

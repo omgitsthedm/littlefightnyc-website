@@ -394,6 +394,14 @@ h2 {
   max-width: 46ch;
 }
 
+.local-disclosure {
+  max-width: 54ch;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
 .eyebrow,
 .metric-label,
 .site-kicker,
@@ -1577,7 +1585,7 @@ h2 {
 }
 
 .suggestion-pill {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 14px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);

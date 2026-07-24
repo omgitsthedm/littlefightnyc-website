@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Brownstone Walk-Up | The Lab</title>
   <meta name="description" content="Climb a procedural New York brownstone from street level to the water tower in this interactive spatial story from Little Fight NYC.">
   <meta name="theme-color" content="#07080c">
   <link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
   <link rel="stylesheet" href="brownstone.css">
 </head>
 <body>
@@ -25,8 +23,14 @@
   </div>
 
   <div class="brownstone-actions" aria-label="Brownstone controls">
-    <button type="button" data-time aria-pressed="false">Dawn light</button>
-    <button type="button" data-inspect aria-pressed="false">Inspect the model</button>
+    <button type="button" data-time aria-label="Change time of day, currently night">
+      <span class="brownstone-action__meta">Light</span>
+      <span data-time-label>Night</span>
+    </button>
+    <button type="button" data-inspect aria-pressed="false" aria-label="Open facade inspector">
+      <span class="brownstone-action__meta">Explore</span>
+      <span data-inspect-label>Inspect</span>
+    </button>
   </div>
 
   <nav class="brownstone-rail" aria-label="Brownstone floors">
@@ -42,8 +46,11 @@
       <div class="brownstone-copy">
         <p class="brownstone-kicker">A spatial story from The Lab</p>
         <h1 id="street-title">Climb the brownstone.</h1>
-        <p>Move from curb to water tower as the building and the city wake around you.</p>
-        <a href="#stoop">Start at the stoop</a>
+        <p>Move from curb to water tower, then touch the facade and wake each room yourself.</p>
+        <div class="brownstone-copy__actions">
+          <a href="#stoop">Start at the stoop</a>
+          <button type="button" class="brownstone-copy__secondary" data-quick-inspect>Touch the facade</button>
+        </div>
       </div>
     </section>
 
@@ -81,7 +88,24 @@
     </section>
   </main>
 
-  <p class="brownstone-help" data-help>Use the floor rail or keep moving through the story.</p>
+  <aside class="brownstone-inspector" data-inspector hidden aria-label="Facade inspector">
+    <p class="brownstone-inspector__eyebrow">Facade inspector</p>
+    <div class="brownstone-inspector__heading">
+      <h2 data-window-title>Select a window</h2>
+      <span data-window-state>Ready</span>
+    </div>
+    <p data-window-note>Tap a window to inspect its locally anchored frame, sash, sill, and light.</p>
+    <div class="brownstone-inspector__actions">
+      <button type="button" data-previous-window>Previous window</button>
+      <button type="button" data-next-window>Next window</button>
+      <button type="button" data-window-light disabled>Switch this light</button>
+      <button type="button" data-reset-view>Reset view</button>
+    </div>
+    <p class="brownstone-inspector__gesture">Tap a window · drag to orbit · pinch or scroll to zoom</p>
+  </aside>
+
+  <p class="brownstone-status" data-status role="status" aria-live="polite" aria-atomic="true"></p>
+  <p class="brownstone-help" data-help>Choose a floor, or open Inspect and touch the facade.</p>
 
   <script type="module" src="brownstone.js"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>

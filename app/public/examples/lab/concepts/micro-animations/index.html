@@ -2,35 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Little Fight NYC | Micro-Animation Service Demos</title>
-<meta name="description" content="Service micro-animations in pure HTML and CSS — a motion study from The Lab, Little Fight NYC.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#08080a" />
+    <title>Interaction Arcade | Little Fight NYC</title>
+    <meta name="description" content="Eleven touch-friendly service interaction studies built with pure HTML and CSS in the Little Fight NYC Lab.">
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
     <main class="page-shell">
       <header class="page-header">
-        <p class="eyebrow">Little Fight NYC Demo Lab</p>
-        <h1>Service Micro-Animations in HTML + CSS</h1>
-        <p>
-          A single-page concept board showing subtle, icon-sized interaction ideas for core services.
-          Use filters to focus by service type, then open each card to inspect the snippet.
-        </p>
+        <p class="eyebrow">Little Fight Interaction Arcade</p>
+        <h1>Tiny moments with real feedback.</h1>
+        <p>Tap any study to replay it. Filter by capability, inspect the honest snippet, then copy or download it.</p>
       </header>
 
       <section class="filter-bar" aria-label="Filter services">
         <button class="filter-pill is-active" data-filter="all" type="button">All</button>
-        <button class="filter-pill" data-filter="web" type="button">Web</button>
-        <button class="filter-pill" data-filter="branding" type="button">Branding</button>
-        <button class="filter-pill" data-filter="seo" type="button">SEO</button>
-        <button class="filter-pill" data-filter="smart" type="button">Smart</button>
-        <button class="filter-pill" data-filter="photo" type="button">Photo</button>
-        <button class="filter-pill" data-filter="video" type="button">Video</button>
-        <button class="filter-pill" data-filter="support" type="button">Support</button>
+        <button class="filter-pill" data-filter="web" type="button">Websites</button>
+        <button class="filter-pill" data-filter="systems" type="button">Business systems</button>
+        <button class="filter-pill" data-filter="brand" type="button">Brand + content</button>
+        <button class="filter-pill" data-filter="media" type="button">Photo + video</button>
       </section>
+      <p class="filter-status" id="filter-status" aria-live="polite">Showing all 11 studies</p>
 
       <section class="cards-grid" id="cards-grid">
-        <article class="service-card" data-cats="web branding">
+        <article class="service-card" data-cats="web brand">
           <div class="card-head">
             <h2>Website Design + Build</h2>
             <p>Responsive sites with clean UX and conversion-focused structure.</p>
@@ -55,7 +51,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="web support">
+        <article class="service-card" data-cats="systems">
           <div class="card-head">
             <h2>Hosting + Maintenance</h2>
             <p>Reliable uptime, updates, and proactive site care.</p>
@@ -78,7 +74,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="seo web">
+        <article class="service-card" data-cats="web">
           <div class="card-head">
             <h2>SEO + AEO</h2>
             <p>Search and answer-engine optimization with measurable growth.</p>
@@ -101,7 +97,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="branding">
+        <article class="service-card" data-cats="brand">
           <div class="card-head">
             <h2>Branding + Identity</h2>
             <p>Distinct visual systems that make your brand instantly recognizable.</p>
@@ -124,7 +120,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="branding">
+        <article class="service-card" data-cats="brand">
           <div class="card-head">
             <h2>Graphic Design</h2>
             <p>Campaign-ready graphics, print assets, and social visuals.</p>
@@ -147,7 +143,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="branding seo">
+        <article class="service-card" data-cats="brand web">
           <div class="card-head">
             <h2>Copywriting + Content</h2>
             <p>Clear messaging tuned for audience, rankings, and conversion.</p>
@@ -170,7 +166,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="photo">
+        <article class="service-card" data-cats="media">
           <div class="card-head">
             <h2>Photography</h2>
             <p>Brand and product photography with polished visual storytelling.</p>
@@ -193,7 +189,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="video">
+        <article class="service-card" data-cats="media">
           <div class="card-head">
             <h2>Video Editing / Reels</h2>
             <p>Fast, platform-ready edits designed for retention and engagement.</p>
@@ -216,7 +212,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="web support">
+        <article class="service-card" data-cats="systems web">
           <div class="card-head">
             <h2>E-commerce Setup</h2>
             <p>Launch storefronts with smooth checkout and product management.</p>
@@ -239,7 +235,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="support web">
+        <article class="service-card" data-cats="systems web">
           <div class="card-head">
             <h2>Performance + Security</h2>
             <p>Speed tuning, hardening, and monitoring for resilient delivery.</p>
@@ -262,7 +258,7 @@
           </div>
         </article>
 
-        <article class="service-card" data-cats="smart support">
+        <article class="service-card" data-cats="systems">
           <div class="card-head">
             <h2>Home Automation</h2>
             <p>Connected lighting, controls, and routines tuned for daily flow.</p>

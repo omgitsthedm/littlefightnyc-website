@@ -73,12 +73,11 @@
         <div class="contact-info-item"><div class="contact-icon"><i class="mdi mdi-map-marker" aria-hidden="true"></i></div><div><div style="font-size:.875rem;color:#767676;">Based in</div><div style="font-size:1.1rem;font-weight:600;">Manhattan, NYC</div></div></div>
       </div>
       <div class="form-container">
-        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact">
-          <p class="hidden" style="display:none;" aria-hidden="true"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <form name="contact-demo" data-lab-demo-form>
           <div class="form-row"><div><label class="form-label" for="contact-name">Your Name</label><input type="text" name="name" id="contact-name" class="form-input" required></div><div><label class="form-label" for="contact-email">Email</label><input type="email" name="email" id="contact-email" class="form-input" required></div></div>
           <div class="form-group"><label class="form-label" for="contact-message">What do you need help with?</label><textarea name="message" id="contact-message" class="form-textarea" required></textarea></div>
-          <button type="submit" class="btn btn-primary" style="width:100%;">Send Message (No Jargon, Promise)</button>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Run Contact Demo</button>
+          <p data-demo-form-status role="status" hidden style="margin:1rem 0 0;font-weight:700;color:#236642;"></p>
         </form>
       </div>
     </div>
@@ -175,6 +174,20 @@
 }
     </script>
     <script src="../js/main.js" defer></script>
+    <script>
+      (function () {
+        var form = document.querySelector('[data-lab-demo-form]');
+        var status = document.querySelector('[data-demo-form-status]');
+        if (!form || !status) return;
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          if (!form.reportValidity()) return;
+          form.reset();
+          status.hidden = false;
+          status.textContent = 'Demo complete — no information was sent.';
+        });
+      })();
+    </script>
 <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

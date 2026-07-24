@@ -1,0 +1,166 @@
+{
+  "version": 2,
+  "suites": [
+    {
+      "slug": "spatial-nyc",
+      "shortTitle": "Spatial",
+      "title": "Spatial NYC",
+      "label": "Architecture you can enter",
+      "headline": "A New York building becomes the interface.",
+      "description": "Walk a procedural brownstone, inspect its facade, then shift into a cinematic city-scale build.",
+      "featuredConcept": "walkup-3d",
+      "concepts": [
+        "walkup-3d",
+        "terminal-3d"
+      ],
+      "capabilities": [
+        "Procedural 3D architecture",
+        "Touch and pointer inspection",
+        "Scroll-linked spatial story",
+        "Low-power and static fallbacks"
+      ]
+    },
+    {
+      "slug": "motion-playground",
+      "shortTitle": "Motion",
+      "title": "Motion Playground",
+      "label": "Movement with a communication job",
+      "headline": "Control the rhythm, then inspect the craft.",
+      "description": "Scrub a scroll story, replay service interactions, and tune a laser-drawn campaign poster.",
+      "featuredConcept": "pill-scroll",
+      "concepts": [
+        "pill-scroll",
+        "micro-animations",
+        "aha-laser"
+      ],
+      "capabilities": [
+        "Scroll-driven choreography",
+        "Direct-manipulation micro-interactions",
+        "SVG path animation",
+        "Reduced-motion equivalents"
+      ]
+    },
+    {
+      "slug": "business-systems",
+      "shortTitle": "Systems",
+      "title": "Systems Lab",
+      "label": "From a messy signal to an owned tool",
+      "headline": "See the business change as its systems connect.",
+      "description": "Shape a service concept, compare operating states, and inspect the complete earlier site.",
+      "featuredConcept": "studio-engine",
+      "concepts": [
+        "studio-engine",
+        "growth-street",
+        "tech-support"
+      ],
+      "capabilities": [
+        "Interactive concept modeling",
+        "Clear before-and-after states",
+        "Responsive product previews",
+        "Exportable project briefs"
+      ]
+    },
+    {
+      "slug": "brand-campaign",
+      "shortTitle": "Campaign",
+      "title": "Campaign Studio",
+      "label": "One idea, multiple visual systems",
+      "headline": "Switch the voice without losing the point.",
+      "description": "Compare a kinetic hero, a high-contrast campaign, and a complete hospitality client world.",
+      "featuredConcept": "goliath",
+      "concepts": [
+        "goliath",
+        "hero",
+        "chef-drew"
+      ],
+      "capabilities": [
+        "Campaign art direction",
+        "Interactive brand storytelling",
+        "Responsive client worlds",
+        "Conversion-aware layouts"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "slug": "walkup-3d",
+      "title": "Brownstone Walk-Up",
+      "type": "Spatial story",
+      "description": "Climb a New York walk-up from street level to the water tower.",
+      "suite": "spatial-nyc",
+      "featured": true
+    },
+    {
+      "slug": "terminal-3d",
+      "title": "Cinematic 3D",
+      "type": "Spatial website",
+      "description": "Architecture, atmosphere, and scroll-driven story inside a working site.",
+      "suite": "spatial-nyc"
+    },
+    {
+      "slug": "pill-scroll",
+      "title": "Scroll Into Motion",
+      "type": "Motion study",
+      "description": "A single object changes meaning as the page moves through it.",
+      "suite": "motion-playground"
+    },
+    {
+      "slug": "micro-animations",
+      "title": "Micro-Animations",
+      "type": "Interaction study",
+      "description": "Service ideas translated into small, readable moments of motion.",
+      "suite": "motion-playground"
+    },
+    {
+      "slug": "aha-laser",
+      "title": "AHA Laser Poster",
+      "type": "Client motion concept",
+      "description": "A laser-cut poster becomes a responsive typographic performance.",
+      "suite": "motion-playground",
+      "client": true
+    },
+    {
+      "slug": "studio-engine",
+      "title": "Studio Engine",
+      "type": "Interactive design system",
+      "description": "A local concept generator with real controls, layouts, and export paths.",
+      "suite": "business-systems"
+    },
+    {
+      "slug": "growth-street",
+      "title": "Growth Street",
+      "type": "Systems study",
+      "description": "A row of storefronts changes as the systems behind them improve.",
+      "suite": "business-systems"
+    },
+    {
+      "slug": "tech-support",
+      "title": "Tech Support Site",
+      "type": "Full website",
+      "description": "The earlier full service site, preserved as a complete working branch.",
+      "suite": "business-systems"
+    },
+    {
+      "slug": "goliath",
+      "title": "Goliath",
+      "type": "Brand campaign",
+      "description": "Little Fight at its loudest with sharp type, hard contrast, and direct action.",
+      "suite": "brand-campaign"
+    },
+    {
+      "slug": "hero",
+      "title": "Hero Prototype",
+      "type": "Brand study",
+      "description": "A complete homepage direction built around one clear promise.",
+      "suite": "brand-campaign"
+    },
+    {
+      "slug": "chef-drew",
+      "title": "I Am Cooking",
+      "type": "Client concept",
+      "description": "Chef Drew's catering world with appetite, motion, and booking paths.",
+      "suite": "brand-campaign",
+      "client": true
+    }
+  ]
+}

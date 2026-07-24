@@ -1,636 +1,1299 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Little Fight NYC — We Fix The Tech Slowing Down Your Business</title>
-<meta name="description" content="Hero concept — a Little Fight NYC brand-direction study from The Lab.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Lexend:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#080B14;--orange:#FE5800;--orange-end:#FF6B35;--blue:#0891B2;--text:#F0F0EC;--muted:#8A8EA0;--font:'Lexend',sans-serif;--accent:'Caveat',cursive}body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:hidden}#navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2.5rem;background:transparent;transition:background .3s ease;backdrop-filter:blur(0)}#navbar.scrolled{background:rgba(8,11,20,.8);backdrop-filter:blur(10px)}.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--text);font-weight:700;font-size:1.1rem}.nav-logo-box{width:2rem;height:2rem;background:linear-gradient(135deg,var(--orange),var(--orange-end));border-radius:.4rem;display:flex;align-items:center;justify-content:center;color:var(--bg);font-weight:800;font-size:.9rem}.nav-links{display:flex;gap:2rem;align-items:center}.nav-links a{color:var(--text);text-decoration:none;font-size:.95rem;transition:color .2s}.nav-links a:hover{color:var(--orange)}.nav-cta{background:linear-gradient(135deg,var(--orange),var(--orange-end));color:var(--bg);padding:.5rem 1rem;border-radius:.5rem;font-weight:600;transition:transform .2s}.nav-cta:hover{transform:scale(1.05)}.hero{display:grid;grid-template-columns:1fr 1fr;align-items:center;min-height:100vh;padding:6rem 2.5rem 3rem;gap:2rem}.hero-text{max-width:32rem}.badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(8,139,178,.15);border:1px solid rgba(8,139,178,.3);padding:.5rem 1rem;border-radius:2rem;margin-bottom:1.5rem;font-size:.85rem;color:var(--blue)}.badge-dot{width:.5rem;height:.5rem;background:var(--blue);border-radius:50%;animation:pulse 2s infinite}.hero h1{font-family:var(--font);font-size:clamp(2.2rem,4.5vw,3.8rem);line-height:1.15;font-weight:800;margin-bottom:1.5rem;letter-spacing:-1.2px}.hero h1 .highlight{background:linear-gradient(135deg,var(--orange),var(--orange-end));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.hero p{color:var(--muted);font-size:1.05rem;line-height:1.6;margin-bottom:2rem}.hero-actions{display:flex;gap:1rem}.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-end));color:var(--bg);border:none;padding:.875rem 1.75rem;border-radius:.6rem;font-weight:600;font-size:1rem;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 15px rgba(254,88,0,.3)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(254,88,0,.4)}.btn-secondary{background:rgba(8,139,178,.1);border:1.5px solid var(--blue);color:var(--text);padding:.875rem 1.75rem;border-radius:.6rem;font-weight:600;font-size:1rem;cursor:pointer;transition:background .2s,border-color .2s}.btn-secondary:hover{background:rgba(8,139,178,.2);border-color:var(--orange)}.hero-canvas-wrap{position:relative;width:100%;aspect-ratio:3/4;max-height:75vh;border-radius:16px;overflow:hidden}.canvas-overlay{position:absolute;inset:0;background:var(--bg);z-index:1;transition:opacity .4s ease-out;pointer-events:none;opacity:1}.canvas-overlay.revealed{opacity:0}.scroll-cue{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);text-align:center;color:var(--muted);font-size:.85rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:bounce 2s infinite}.scroll-cue svg{width:1.5rem;height:1.5rem;stroke:var(--muted)}.audio-toggle{position:fixed;bottom:2rem;right:2rem;width:3rem;height:3rem;border-radius:50%;background:rgba(8,139,178,.15);border:1.5px solid var(--blue);color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:background .2s,border-color .2s}.audio-toggle:hover{background:rgba(8,139,178,.25);border-color:var(--orange)}.workshop{padding:5rem 2.5rem;max-width:80rem;margin:0 auto}.workshop-header{text-align:center;margin-bottom:4rem}.section-tag{font-family:var(--accent);color:var(--orange);font-size:1.5rem;font-weight:700;display:block;margin-bottom:.5rem}.workshop h2{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;margin-bottom:1rem}.workshop-header p{color:var(--muted);font-size:1.05rem;line-height:1.6;max-width:50rem;margin:0 auto}.exhibit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.exhibit-card{background:rgba(8,139,178,.05);border:1px solid rgba(8,139,178,.2);border-radius:1rem;overflow:hidden;transition:transform .3s,border-color .3s}.exhibit-card:hover{transform:translateY(-4px);border-color:var(--orange)}.exhibit-card.coming-soon{opacity:.6}.exhibit-thumb{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,rgba(8,139,178,.1),rgba(254,88,0,.05));display:flex;align-items:center;justify-content:center;font-size:4rem;overflow:hidden}.live-badge{position:absolute;top:1rem;right:1rem;background:rgba(8,139,178,.2);border:1px solid var(--blue);padding:.375rem .75rem;border-radius:.5rem;font-size:.75rem;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:.4rem;z-index:2}.exhibit-body{padding:1.5rem}.exhibit-body h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}.exhibit-body p{color:var(--muted);font-size:.95rem;line-height:1.5;margin-bottom:1rem}.exhibit-tags{display:flex;flex-wrap:wrap;gap:.5rem}.exhibit-tags span{background:rgba(8,139,178,.15);color:var(--blue);font-size:.8rem;padding:.25rem .75rem;border-radius:2rem}footer{text-align:center;padding:2rem;color:var(--muted);font-size:.9rem;border-top:1px solid rgba(8,139,178,.1);margin-top:3rem}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}@media(max-width:900px){.hero{grid-template-columns:1fr;padding:5rem 2rem 2rem}.hero-text{order:1}.hero-canvas-wrap{order:2;aspect-ratio:4/3;max-height:45vh}.hero h1{font-size:clamp(1.8rem,3.5vw,2.8rem)}.nav-links{gap:1rem;font-size:.9rem}.workshop{padding:3rem 1.5rem}.exhibit-grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){#hero-canvas,.canvas-overlay,.audio-toggle{display:none}*{animation:none!important;transition:none!important}}
-/* 2026 Lab restoration: preserve the cyan atmosphere while meeting AA contrast. */
-:root{--blue:#22B8D6;--muted:#A7ADBA}
-.exhibit-card.coming-soon{opacity:1;border-style:dashed}
-</style>
-</head>
-<body>
-
-<nav id="navbar"><a href="index.html#" class="nav-logo"><div class="nav-logo-box">LF</div><span>Little Fight NYC</span></a><div class="nav-links"><a href="index.html#workshop">The Ring</a><a href="index.html#">Services</a><a href="index.html#">About</a><a href="index.html#" class="nav-cta">Get Started</a></div></nav>
-
-<main>
-<section class="hero" id="heroSection">
-  <div class="hero-text">
-    <div class="badge"><span class="badge-dot"></span> NYC Small Business Tech</div>
-    <h1>We fix the tech<br><span class="highlight">slowing down</span><br>your business.</h1>
-    <p>Websites, automations, and digital tools — built scrappy and smart for New York City businesses that punch above their weight.</p>
-    <div class="hero-actions"><button class="btn-primary">Book a Free Consult</button><button class="btn-secondary">See Our Work ↓</button></div>
-  </div>
-  <div class="hero-canvas-wrap">
-    <canvas id="hero-canvas"></canvas>
-    <div class="canvas-overlay" id="canvasOverlay"></div>
-  </div>
-  <div class="scroll-cue"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>Scroll to explore</div>
-</section>
-
-<button class="audio-toggle" id="audioToggle" aria-label="Toggle ambient sound"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg></button>
-
-<section class="workshop" id="workshop">
-  <div class="workshop-header"><div class="section-tag">Step into the ring</div><h2>The Ring</h2><p>Live prototypes, experiments, and proof-of-concepts. This is where we test ideas before they hit production.</p></div>
-  <div class="exhibit-grid">
-    <div class="exhibit-card"><div class="exhibit-thumb"><div class="live-badge"><span class="badge-dot"></span> LIVE</div><div class="placeholder-icon">🏠</div></div><div class="exhibit-body"><h3>The Brownstone</h3><p>Interactive 3D brownstone model — an explorable NYC building.</p><div class="exhibit-tags"><span>Three.js</span><span>WebGL</span><span>Procedural</span></div></div></div>
-    <div class="exhibit-card"><div class="exhibit-thumb"><div class="live-badge"><span class="badge-dot"></span> LIVE</div><div class="placeholder-icon">🌃</div></div><div class="exhibit-body"><h3>NYC Block Hero</h3><p>Cinematic 3D cityscape — neon-lit cubes on a Tron grid.</p><div class="exhibit-tags"><span>Three.js</span><span>Bloom</span><span>Post-FX</span></div></div></div>
-    <div class="exhibit-card coming-soon"><div class="exhibit-thumb"><div class="placeholder-icon">⚡</div></div><div class="exhibit-body"><h3>Speed Audit Dashboard</h3><p>Real-time website performance scoring for NYC small businesses.</p><div class="exhibit-tags"><span>Lighthouse</span><span>React</span><span>API</span></div></div></div>
-  </div>
-</section>
-</main>
-<footer>&copy; 2026 Little Fight NYC. All rights reserved. Built in New York.</footer>
-
-<script type="importmap">
-{"imports":{"three":"https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.module.min.js","three/addons/":"https://unpkg.com/three@0.164.1/examples/jsm/"}}
-</script>
-
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-
-if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) throw 0;
-
-const canvas = document.getElementById('hero-canvas');
-const overlay = document.getElementById('canvasOverlay');
-const audioToggle = document.getElementById('audioToggle');
-
-const W = canvas.clientWidth;
-const H = canvas.clientHeight;
-
-canvas.width = W;
-canvas.height = H;
-
-let audioContext = null;
-let audioPlaying = false;
-
-audioToggle.addEventListener('click', () => {
-  if(!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  audioPlaying = !audioPlaying;
-  audioToggle.style.opacity = audioPlaying ? '1' : '0.5';
-  if(audioPlaying) startAudio();
-  else stopAudio();
-});
-
-let audioOscillators = [];
-let audioGain = null;
-
-function startAudio() {
-  if(audioOscillators.length > 0) return;
-  const ctx = audioContext;
-  audioGain = ctx.createGain();
-  audioGain.gain.value = 0.05;
-  audioGain.connect(ctx.destination);
-
-  const osc1 = ctx.createOscillator();
-  osc1.frequency.value = 120;
-  osc1.type = 'sawtooth';
-  osc1.connect(audioGain);
-  osc1.start();
-  audioOscillators.push(osc1);
-
-  const osc2 = ctx.createOscillator();
-  osc2.frequency.value = 55;
-  osc2.type = 'sine';
-  osc2.connect(audioGain);
-  osc2.start();
-  audioOscillators.push(osc2);
-
-  const osc3 = ctx.createOscillator();
-  osc3.frequency.value = 82;
-  osc3.type = 'sine';
-  osc3.connect(audioGain);
-  osc3.start();
-  audioOscillators.push(osc3);
-}
-
-function stopAudio() {
-  audioOscillators.forEach(osc => osc.stop());
-  audioOscillators = [];
-}
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, W/H, 0.1, 60);
-camera.position.set(0.5, 3, 12);
-camera.lookAt(0.5, 2, 0);
-
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
-renderer.setSize(W, H);
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.2;
-
-const composer = new EffectComposer(renderer);
-const renderPass = new RenderPass(scene, camera);
-composer.addPass(renderPass);
-
-const bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 1.0, 0.4, 0.3);
-composer.addPass(bloom);
-
-scene.fog = new THREE.FogExp2(0x080B14, 0.02);
-
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true;
-controls.dampingFactor = 0.02;
-controls.enablePan = false;
-controls.autoRotate = false;
-controls.autoRotateSpeed = 0.2;
-controls.target.set(0.5, 2, 0);
-controls.update();
-
-const ambientLight = new THREE.AmbientLight(0x1a2040, 0.8);
-scene.add(ambientLight);
-
-const dirLight = new THREE.DirectionalLight(0x4466cc, 0.5);
-dirLight.position.set(5, 10, 6);
-scene.add(dirLight);
-
-const groundGeo = new THREE.PlaneGeometry(50, 50);
-const groundMat = new THREE.MeshStandardMaterial({
-  color: 0x0a0d18,
-  roughness: 0.06,
-  metalness: 0.95,
-  emissive: 0x000000
-});
-const ground = new THREE.Mesh(groundGeo, groundMat);
-ground.rotation.x = -Math.PI / 2;
-scene.add(ground);
-
-const gridHelper = new THREE.GridHelper(50, 50, new THREE.Color(0x0891B2), new THREE.Color(0x0891B2));
-gridHelper.position.y = 0.01;
-gridHelper.material.transparent = true;
-gridHelper.material.opacity = 0;
-scene.add(gridHelper);
-
-const buildingPositions = [
-  { x: -4.2, w: 1.2, d: 1.2, height: 3.5, color: new THREE.Color(0xFE5800) },
-  { x: -3.0, w: 1.0, d: 1.0, height: 2.4, color: new THREE.Color(0xFF6B35) },
-  { x: -2.0, w: 1.4, d: 1.4, height: 4.2, color: new THREE.Color(0x0891B2) },
-  { x: -0.7, w: 0.9, d: 0.9, height: 2.8, color: new THREE.Color(0x06D6A0) },
-  { x:  0.3, w: 1.5, d: 1.5, height: 5.2, color: new THREE.Color(0x8B5CF6) },
-  { x:  1.8, w: 1.1, d: 1.1, height: 3.8, color: new THREE.Color(0xE040A0) },
-  { x:  2.8, w: 0.8, d: 0.8, height: 2.2, color: new THREE.Color(0xFFBE0B) },
-  { x:  3.5, w: 1.3, d: 1.3, height: 4.5, color: new THREE.Color(0x0891B2) },
-  { x:  4.6, w: 1.0, d: 1.0, height: 3.0, color: new THREE.Color(0xFF6B6B) },
-  { x:  5.5, w: 0.9, d: 0.9, height: 2.0, color: new THREE.Color(0x10B981) },
-];
-
-const buildings = [];
-
-buildingPositions.forEach((cfg, idx) => {
-  const h = cfg.height;
-  const baseColor = cfg.color.clone().multiplyScalar(0.25);
-  const emissiveColor = cfg.color.clone();
-
-  const bodyGeo = new THREE.BoxGeometry(cfg.w, h, cfg.d);
-  const bodyMat = new THREE.MeshStandardMaterial({
-    color: baseColor,
-    emissive: emissiveColor,
-    emissiveIntensity: 0.1,
-    roughness: 0.3,
-    metalness: 0.4
-  });
-  const body = new THREE.Mesh(bodyGeo, bodyMat);
-  body.position.set(cfg.x, -(h + 2), 0);
-  body.userData.targetY = h / 2;
-  body.userData.startY = -(h + 2);
-  body.userData.emissiveColor = emissiveColor;
-  scene.add(body);
-  buildings.push(body);
-
-  const edges = new THREE.EdgesGeometry(bodyGeo);
-  const wireframe = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: cfg.color, linewidth: 2 }));
-  body.add(wireframe);
-
-  const light = new THREE.PointLight(cfg.color, 0.8, 8);
-  light.position.set(cfg.x, h / 2, cfg.d/2 + 1);
-  scene.add(light);
-
-  for(let x = -cfg.w/2 + 0.15; x <= cfg.w/2 - 0.15; x += 0.2) {
-    for(let y = 0.5; y < h - 0.5; y += 0.4) {
-      const windowGeo = new THREE.BoxGeometry(0.08, 0.08, 0.02);
-      const windowMat = new THREE.MeshStandardMaterial({
-        color: 0xFFDD00,
-        emissive: 0xFFDD00,
-        emissiveIntensity: 0
-      });
-      const window = new THREE.Mesh(windowGeo, windowMat);
-      window.position.set(x, y - h/2 + 0.4, cfg.d/2 + 0.01);
-      window.userData.emissiveColor = new THREE.Color(0xFFDD00);
-      body.add(window);
-    }
-  }
-
-  const barGeo = new THREE.BoxGeometry(cfg.w, 0.15, 0.02);
-  const barMat = new THREE.MeshStandardMaterial({
-    color: cfg.color,
-    emissive: cfg.color,
-    emissiveIntensity: 0
-  });
-  const storefront = new THREE.Mesh(barGeo, barMat);
-  storefront.position.set(0, -h/2 + 0.1, cfg.d/2 + 0.01);
-  storefront.userData.emissiveColor = cfg.color;
-  body.add(storefront);
-});
-
-// Neon sign on the tall purple building (x: 0.3)
-const neonGroup = new THREE.Group();
-neonGroup.position.set(0.3, 3.0, 0.78);
-
-// Sign backing
-neonGroup.add(new THREE.Mesh(
-  new THREE.BoxGeometry(1.9, 0.7, 0.06),
-  new THREE.MeshStandardMaterial({ color: 0x080808, roughness: 0.5 })
-));
-
-// Hitbox for hover
-const neonHitbox = new THREE.Mesh(
-  new THREE.BoxGeometry(2.1, 0.8, 0.3),
-  new THREE.MeshBasicMaterial({ visible: false })
-);
-neonHitbox.position.z = 0.05;
-neonGroup.add(neonHitbox);
-
-function NB(x, y, w, h, c) {
-  const m = new THREE.Mesh(
-    new THREE.BoxGeometry(w, h, 0.035),
-    new THREE.MeshStandardMaterial({ color: c, emissive: new THREE.Color(c), emissiveIntensity: 0, roughness: 0.25 })
-  );
-  m.position.set(x, y, 0.05);
-  neonGroup.add(m);
-  return m;
-}
-
-const neonBars = [];
-const T = 0.05, Y1 = 0.12, H1 = 0.22, Y2 = -0.16, H2 = 0.17;
-const OC = 0xFE5800, OE = 0xFF6B35, BL = 0x0891B2;
-
-// "Little"
-neonBars.push(NB(-.82,Y1,T,H1,OC), NB(-.76,Y1-H1/2+T/2,.1,T,OC));
-neonBars.push(NB(-.66,Y1-.03,T,H1*.6,OC), NB(-.66,Y1+H1/2-.01,T*.8,T*.8,OC));
-neonBars.push(NB(-.57,Y1,T,H1,OC), NB(-.57,Y1+H1/2-T/2,.1,T,OC));
-neonBars.push(NB(-.46,Y1,T,H1,OC), NB(-.46,Y1+H1/2-T/2,.1,T,OC));
-neonBars.push(NB(-.36,Y1,T,H1,OC));
-neonBars.push(NB(-.27,Y1,T,H1,OC), NB(-.21,Y1+H1/2-T/2,.1,T,OC), NB(-.21,Y1,.1,T,OC), NB(-.21,Y1-H1/2+T/2,.1,T,OC));
-// "Fight"
-neonBars.push(NB(-.04,Y1,T,H1,OE), NB(.03,Y1+H1/2-T/2,.12,T,OE), NB(.01,Y1+.01,.08,T,OE));
-neonBars.push(NB(.14,Y1-.03,T,H1*.6,OE), NB(.14,Y1+H1/2-.01,T*.8,T*.8,OE));
-neonBars.push(NB(.24,Y1+.02,T,H1*.8,OE), NB(.31,Y1+H1/2-T/2,.12,T,OE), NB(.31,Y1-.01,.12,T,OE), NB(.37,Y1+.06,T,H1*.55,OE), NB(.31,Y1-H1/2+T/2,.12,T,OE));
-neonBars.push(NB(.48,Y1,T,H1,OE), NB(.48,Y1+.01,.08,T,OE), NB(.55,Y1-.05,T,H1*.5,OE));
-neonBars.push(NB(.65,Y1,T,H1,OE), NB(.65,Y1+H1/2-T/2,.1,T,OE));
-// "NYC, NY"
-neonBars.push(NB(-.28,Y2,T,H2,BL), NB(-.18,Y2,T,H2,BL), NB(-.23,Y2,.12,T*.7,BL));
-neonBars.push(NB(-.07,Y2+H2*.2,T,H2*.5,BL), NB(.01,Y2+H2*.2,T,H2*.5,BL), NB(-.03,Y2-H2*.15,T,H2*.45,BL));
-neonBars.push(NB(.12,Y2,T,H2,BL), NB(.18,Y2+H2/2-T/2,.08,T,BL), NB(.18,Y2-H2/2+T/2,.08,T,BL));
-neonBars.push(NB(.27,Y2-H2/2,T*.6,T*.6,BL));
-neonBars.push(NB(.38,Y2,T,H2,BL), NB(.48,Y2,T,H2,BL), NB(.43,Y2,.12,T*.7,BL));
-neonBars.push(NB(.58,Y2+H2*.2,T,H2*.5,BL), NB(.66,Y2+H2*.2,T,H2*.5,BL), NB(.62,Y2-H2*.15,T,H2*.45,BL));
-
-const neonLetters = neonBars.flat();
-
-const neonPL = new THREE.PointLight(0xFE5800, 0, 5, 1.5);
-neonPL.position.set(0.3, 3.2, 1.5);
-scene.add(neonPL);
-scene.add(neonGroup);
-
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-let neonHoverIntensity = 0;
-
-document.addEventListener('pointermove', (e) => {
-  mouse.x = (e.clientX / W) * 2 - 1;
-  mouse.y = -(e.clientY / H) * 2 + 1;
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObject(neonHitbox);
-  neonHoverIntensity = intersects.length > 0 ? 1 : 0;
-});
-
-let firstPointerDown = true;
-document.addEventListener('pointerdown', () => {
-  if(firstPointerDown) {
-    spawnSpark(0.3, 3.0, 0.78, 30, true);
-    firstPointerDown = false;
-  }
-});
-
-function spawnSpark(x, y, z, count, isBurst) {
-  for(let i = 0; i < count; i++) {
-    const angle = (Math.random() * Math.PI * 2);
-    const speed = isBurst ? 3 + Math.random() * 4 : 0.5 + Math.random();
-    const particle = {
-      pos: new THREE.Vector3(x, y, z),
-      vel: new THREE.Vector3(Math.cos(angle) * speed, (isBurst ? 2 + Math.random() * 2 : 1 + Math.random()) * speed, Math.sin(angle) * speed),
-      life: 1,
-      color: new THREE.Color().setHSL(Math.random() * 0.2 + 0.05, 1, 0.6),
-      size: isBurst ? 3 + Math.random() * 3 : 1 + Math.random() * 2
-    };
-    sparkles.push(particle);
-  }
-}
-
-const sparkles = [];
-const embersGeo = new THREE.BufferGeometry();
-const emberPositions = new Float32Array(35 * 3);
-const emberVelocities = [];
-for(let i = 0; i < 35; i++) {
-  emberPositions[i*3] = 0.3 + (Math.random() - 0.5) * 0.5;
-  emberPositions[i*3+1] = 3.0 + (Math.random() - 0.5) * 0.3;
-  emberPositions[i*3+2] = 0.78;
-  emberVelocities.push({
-    x: (Math.random() - 0.5) * 0.3,
-    y: 0.2 + Math.random() * 0.15,
-    z: (Math.random() - 0.5) * 0.3,
-    life: 1,
-    hue: 0.05 + Math.random() * 0.1
-  });
-}
-embersGeo.setAttribute('position', new THREE.BufferAttribute(emberPositions, 3));
-
-const canvas_shader_frag = `
-varying vec3 vColor;
-varying float vAlpha;
-void main(){
-  float dist = length(gl_PointCoord - vec2(0.5));
-  if(dist > 0.5) discard;
-  gl_FragColor = vec4(vColor, vAlpha * (1.0 - dist * 2.0));
-}`;
-
-const canvas_shader_vert = `
-varying vec3 vColor;
-varying float vAlpha;
-attribute vec3 color;
-attribute float alpha;
-void main(){
-  vColor = color;
-  vAlpha = alpha;
-  gl_PointSize = 4.0;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}`;
-
-const emberColors = new Float32Array(35 * 3);
-const emberAlphas = new Float32Array(35);
-for(let i = 0; i < 35; i++) {
-  emberColors[i*3] = 1; emberColors[i*3+1] = 0.4; emberColors[i*3+2] = 0;
-  emberAlphas[i] = 0.8;
-}
-embersGeo.setAttribute('color', new THREE.BufferAttribute(emberColors, 3));
-embersGeo.setAttribute('alpha', new THREE.BufferAttribute(emberAlphas, 1));
-
-const emberMat = new THREE.ShaderMaterial({
-  vertexShader: canvas_shader_vert,
-  fragmentShader: canvas_shader_frag,
-  transparent: true,
-  blending: THREE.AdditiveBlending
-});
-const embers = new THREE.Points(embersGeo, emberMat);
-scene.add(embers);
-
-const dataStreamPaths = [];
-for(let i = 0; i < 6; i++) {
-  dataStreamPaths.push({
-    points: [
-      new THREE.Vector3(0, 5, 0),
-      new THREE.Vector3((Math.random() - 0.5) * 3, 2, (Math.random() - 0.5) * 3),
-      new THREE.Vector3((Math.random() - 0.5) * 5, 0, (Math.random() - 0.5) * 5)
-    ],
-    t: Math.random(),
-    speed: 0.3 + Math.random() * 0.3
-  });
-}
-
-const dataStreams = [];
-const streamLineGeo = new THREE.BufferGeometry();
-const streamLineMat = new THREE.LineBasicMaterial({
-  color: new THREE.Color(0x0891B2),
-  transparent: true,
-  blending: THREE.AdditiveBlending
-});
-
-const ambientParticlesGeo = new THREE.BufferGeometry();
-const ambientPositions = new Float32Array(70 * 3);
-const ambientColors = new Float32Array(70 * 3);
-for(let i = 0; i < 70; i++) {
-  ambientPositions[i*3] = (Math.random() - 0.5) * 10;
-  ambientPositions[i*3+1] = Math.random() * 5;
-  ambientPositions[i*3+2] = (Math.random() - 0.5) * 10;
-  const col = new THREE.Color().setHSL(Math.random(), 0.5 + Math.random() * 0.5, 0.4 + Math.random() * 0.3);
-  ambientColors[i*3] = col.r; ambientColors[i*3+1] = col.g; ambientColors[i*3+2] = col.b;
-}
-ambientParticlesGeo.setAttribute('position', new THREE.BufferAttribute(ambientPositions, 3));
-ambientParticlesGeo.setAttribute('color', new THREE.BufferAttribute(ambientColors, 3));
-
-const ambientMat = new THREE.PointsMaterial({
-  size: 0.1,
-  color: 0xffffff,
-  transparent: true,
-  vertexColors: true,
-  sizeAttenuation: true
-});
-const ambientParticles = new THREE.Points(ambientParticlesGeo, ambientMat);
-ambientParticles.userData.opacity = 0;
-scene.add(ambientParticles);
-
-const shootingStarGeo = new THREE.BufferGeometry();
-const shootingStarMat = new THREE.LineBasicMaterial({
-  color: new THREE.Color(0xFFFFFF),
-  transparent: true,
-  linewidth: 2
-});
-let shootingStarLine = null;
-let lastShootingStarTime = 0;
-let shootingStarAge = 99;
-let nextShootingStarDelay = 5 + Math.random() * 4;
-
-const clock = new THREE.Clock();
-let startTime = null;
-let started = false;
-let hasScrolled = false;
-
-function easeOutBack(t) {
-  const c1 = 1.70158;
-  const c3 = c1 + 1;
-  return c3 * t * t * t - c1 * t * t;
-}
-
-function bezier(p0, p1, p2, t) {
-  const mt = 1 - t;
-  return mt * mt * p0 + 2 * mt * t * p1 + t * t * p2;
-}
-
-function animate() {
-  if(!started) {
-    startTime = clock.getElapsedTime();
-    started = true;
-    overlay.classList.add('revealed');
-    clock.getDelta();
-  }
-
-  const elapsed = clock.getElapsedTime() - startTime;
-
-  const navBar = document.getElementById('navbar');
-  if(window.scrollY > 50) {
-    navBar.classList.add('scrolled');
-  } else {
-    navBar.classList.remove('scrolled');
-  }
-
-  const scrollP = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-
-  if(scrollP > 0) hasScrolled = true;
-
-  if(scrollP > 0.7) {
-    canvas.style.opacity = Math.max(0, 1 - (scrollP - 0.7) / 0.3);
-  } else {
-    canvas.style.opacity = '1';
-  }
-
-  if(elapsed < 0.8) {
-    const p = elapsed / 0.8;
-    gridHelper.material.opacity = p * 0.3;
-
-    buildings.forEach(b => {
-      const lerpY = easeOutBack(p);
-      b.position.y = b.userData.startY + (b.userData.targetY - b.userData.startY) * lerpY;
-    });
-
-    if(elapsed >= 0.3 && elapsed < 0.35) {
-      spawnSpark(0.3, 3.0, 0.78, 50, true);
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Signal Field | Little Fight NYC Lab</title>
+  <meta name="description" content="Send a signal across a touch-reactive procedural New York cityscape in this interactive Little Fight NYC brand study.">
+  <meta name="theme-color" content="#07080c">
+  <link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --field-bg: #07080c;
+      --field-ink: #f4f3ef;
+      --field-muted: #aaa9ae;
+      --field-orange: #f97316;
+      --field-orange-hot: #ff9a55;
+      --field-blue: #4f8df7;
+      --field-cyan: #22b8d6;
+      --field-line: rgba(244, 243, 239, 0.16);
+      --field-panel: rgba(7, 8, 12, 0.76);
+      --field-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
+      --field-body: "Barlow", ui-sans-serif, system-ui, sans-serif;
+      --field-mono: "JetBrains Mono", ui-monospace, monospace;
+      --field-ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    if(elapsed >= 0.4) {
-      const crackP = Math.min((elapsed - 0.4) / 0.2, 1);
-      neonLetters.forEach(bar => {
-        bar.material.emissiveIntensity = crackP * 3.5;
-      });
-      if(!neonPL.userData.intensitySet) {
-        neonPL.intensity = 5;
-        neonPL.userData.intensitySet = true;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--field-bg);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: clip;
+      background:
+        radial-gradient(circle at 78% 24%, rgba(79, 141, 247, 0.14), transparent 30rem),
+        radial-gradient(circle at 16% 72%, rgba(249, 115, 22, 0.09), transparent 28rem),
+        var(--field-bg);
+      color: var(--field-ink);
+      font-family: var(--field-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    canvas:focus-visible {
+      outline: 2px solid var(--field-orange);
+      outline-offset: 4px;
+    }
+
+    .signal-stage {
+      width: min(1500px, 100%);
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: minmax(290px, 0.72fr) minmax(400px, 1.28fr);
+      align-items: center;
+      gap: clamp(28px, 4vw, 72px);
+      margin: 0 auto;
+      padding:
+        max(108px, calc(env(safe-area-inset-top) + 96px))
+        max(24px, calc(env(safe-area-inset-right) + 24px))
+        max(36px, calc(env(safe-area-inset-bottom) + 28px))
+        max(24px, calc(env(safe-area-inset-left) + 24px));
+    }
+
+    .signal-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 570px;
+    }
+
+    .signal-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      color: var(--field-orange);
+      font: 700 12px/1.2 var(--field-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .signal-kicker::before {
+      content: "";
+      width: 42px;
+      height: 2px;
+      background: currentColor;
+      box-shadow: 0 0 16px rgba(249, 115, 22, 0.7);
+    }
+
+    .signal-copy h1 {
+      max-width: 10ch;
+      margin: 0;
+      font: 700 clamp(62px, 7vw, 116px) / 0.88 var(--field-display);
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+    }
+
+    .signal-copy h1 span {
+      display: block;
+      color: var(--field-orange);
+    }
+
+    .signal-lede {
+      max-width: 41ch;
+      margin: 26px 0 0;
+      color: var(--field-muted);
+      font-size: clamp(18px, 1.65vw, 22px);
+      line-height: 1.45;
+      text-wrap: pretty;
+    }
+
+    .signal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .signal-button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 19px;
+      border: 1px solid var(--field-line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--field-ink);
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        transform 180ms var(--field-ease),
+        border-color 180ms ease,
+        background 180ms ease;
+    }
+
+    .signal-button--primary {
+      border-color: var(--field-orange);
+      background: var(--field-orange);
+      color: #111217;
+      box-shadow: 0 14px 42px rgba(249, 115, 22, 0.22);
+    }
+
+    .signal-button__spark {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 5px rgba(17, 18, 23, 0.12);
+    }
+
+    @media (hover: hover) {
+      .signal-button:hover {
+        border-color: var(--field-orange);
+        transform: translateY(-2px);
+      }
+
+      .signal-button--primary:hover {
+        background: var(--field-orange-hot);
       }
     }
 
-    if(elapsed >= 0.6) {
-      buildings.forEach(b => {
-        b.children.forEach(child => {
-          if(child instanceof THREE.Mesh && child.material.emissive) {
-            child.material.emissiveIntensity = Math.min((elapsed - 0.6) / 0.4, 1);
-          }
-        });
-      });
+    .signal-button:active {
+      transform: scale(0.97);
     }
-  } else {
-    gridHelper.material.opacity = 0.3;
 
-    buildings.forEach((b, idx) => {
-      b.position.y = b.userData.targetY;
-      const h = b.userData.targetY * 2;
-      b.scale.y = 1 + Math.sin(elapsed * 0.6 + idx * 0.3) * 0.015;
+    .signal-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin: 28px 0 0;
+      padding: 0;
+      color: var(--field-muted);
+      font: 500 12px/1.4 var(--field-mono);
+      list-style: none;
+    }
 
-      b.children.forEach(child => {
-        if(child instanceof THREE.Mesh && child.material.emissive) {
-          child.material.emissiveIntensity = 2.0;
+    .signal-proof li {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .signal-proof li::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--field-blue);
+      box-shadow: 0 0 10px rgba(79, 141, 247, 0.7);
+    }
+
+    .signal-viewport {
+      position: relative;
+      min-width: 0;
+      width: 100%;
+      height: clamp(520px, 72svh, 820px);
+      overflow: hidden;
+      isolation: isolate;
+      border: 1px solid var(--field-line);
+      border-radius: clamp(22px, 3vw, 38px);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(79, 141, 247, 0.17), transparent 44%),
+        #080a10;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        0 42px 120px rgba(0, 0, 0, 0.42);
+    }
+
+    .signal-viewport::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(7, 8, 12, 0.08), transparent 32%, rgba(7, 8, 12, 0.2)),
+        radial-gradient(circle at var(--signal-x, 50%) var(--signal-y, 52%), rgba(249, 115, 22, 0.12), transparent 23%);
+      transition: background-position 180ms ease;
+    }
+
+    .signal-viewport::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.17;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    #hero-canvas:active {
+      cursor: grabbing;
+    }
+
+    #hero-canvas[hidden] {
+      display: none;
+    }
+
+    .signal-loader {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: grid;
+      place-content: center;
+      gap: 15px;
+      background: #080a10;
+      text-align: center;
+      transition: opacity 420ms ease, visibility 420ms ease;
+    }
+
+    .signal-loader span {
+      color: var(--field-muted);
+      font: 600 12px/1 var(--field-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .signal-loader i {
+      width: min(280px, 54vw);
+      height: 2px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .signal-loader i::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--field-blue), var(--field-orange));
+      transform-origin: 0 50%;
+      animation: signal-load 1.1s var(--field-ease) infinite alternate;
+    }
+
+    .signal-loader.is-ready {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .signal-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      padding: 30px;
+      background:
+        linear-gradient(180deg, transparent 0 42%, rgba(79, 141, 247, 0.08)),
+        #080a10;
+      text-align: center;
+    }
+
+    .signal-fallback[hidden] {
+      display: none;
+    }
+
+    .signal-fallback__city {
+      width: min(430px, 80%);
+      height: 170px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 7px;
+      margin-bottom: 28px;
+      border-bottom: 2px solid rgba(79, 141, 247, 0.7);
+    }
+
+    .signal-fallback__city i {
+      width: 10%;
+      min-width: 20px;
+      height: var(--tower);
+      border: 1px solid rgba(249, 115, 22, 0.65);
+      background:
+        repeating-linear-gradient(180deg, transparent 0 12px, rgba(249, 115, 22, 0.32) 13px 14px),
+        rgba(249, 115, 22, 0.07);
+      box-shadow: 0 0 28px rgba(249, 115, 22, 0.08);
+    }
+
+    .signal-fallback h2 {
+      margin: 0;
+      font: 700 clamp(38px, 6vw, 64px) / 0.92 var(--field-display);
+    }
+
+    .signal-fallback p {
+      max-width: 34ch;
+      margin: 14px 0 0;
+      color: var(--field-muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .signal-fallback .signal-button {
+      margin-top: 22px;
+    }
+
+    .signal-hud {
+      position: absolute;
+      top: max(18px, env(safe-area-inset-top));
+      right: 18px;
+      left: 18px;
+      z-index: 4;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .signal-readout,
+    .signal-status {
+      margin: 0;
+      border: 1px solid var(--field-line);
+      background: var(--field-panel);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+
+    .signal-readout {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 13px;
+      border-radius: 999px;
+      color: var(--field-muted);
+      font: 600 11px/1 var(--field-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .signal-readout i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--field-cyan);
+      box-shadow: 0 0 16px rgba(34, 184, 214, 0.82);
+    }
+
+    .signal-status {
+      max-width: min(330px, 55%);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 13px;
+      border-radius: 14px;
+      color: var(--field-ink);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: right;
+    }
+
+    .signal-hint {
+      position: absolute;
+      right: 18px;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      left: 18px;
+      z-index: 4;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      color: var(--field-muted);
+      font: 500 12px/1.35 var(--field-mono);
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .signal-hint span {
+      padding: 10px 14px;
+      border: 1px solid var(--field-line);
+      border-radius: 12px;
+      background: var(--field-panel);
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+    }
+
+    @keyframes signal-load {
+      from { transform: scaleX(0.14); }
+      to { transform: scaleX(1); }
+    }
+
+    @media (max-width: 980px) {
+      .signal-stage {
+        grid-template-columns: minmax(260px, 0.78fr) minmax(360px, 1.22fr);
+        gap: 28px;
+      }
+
+      .signal-copy h1 {
+        font-size: clamp(56px, 7.7vw, 82px);
+      }
+
+      .signal-viewport {
+        height: min(70svh, 700px);
+      }
+    }
+
+    @media (max-width: 780px) {
+      .signal-stage {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        align-content: start;
+        gap: 28px;
+        padding:
+          max(24px, env(safe-area-inset-top))
+          max(12px, env(safe-area-inset-right))
+          max(24px, env(safe-area-inset-bottom))
+          max(12px, env(safe-area-inset-left));
+      }
+
+      .signal-copy {
+        max-width: none;
+        padding: 10px 8px 0;
+      }
+
+      .signal-copy h1 {
+        max-width: 8.5ch;
+        font-size: clamp(54px, 15.5vw, 78px);
+      }
+
+      .signal-lede {
+        max-width: 36ch;
+        margin-top: 20px;
+        font-size: 18px;
+      }
+
+      .signal-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 24px;
+      }
+
+      .signal-button {
+        min-width: 0;
+        padding-inline: 14px;
+      }
+
+      .signal-proof {
+        margin-top: 20px;
+      }
+
+      .signal-viewport {
+        height: clamp(390px, 58svh, 590px);
+        border-radius: 24px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .signal-kicker {
+        margin-bottom: 16px;
+      }
+
+      .signal-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .signal-proof li:last-child {
+        display: none;
+      }
+
+      .signal-hud {
+        top: 12px;
+        right: 12px;
+        left: 12px;
+      }
+
+      .signal-status {
+        max-width: 58%;
+        font-size: 13px;
+      }
+
+      .signal-hint {
+        right: 12px;
+        bottom: 12px;
+        left: 12px;
+      }
+
+      html.lab-concept-page:not(.lab-concept-embed) .signal-hint {
+        bottom: calc(92px + env(safe-area-inset-bottom));
+      }
+    }
+
+    @media (max-height: 560px) and (orientation: landscape) {
+      .signal-stage {
+        min-height: 100svh;
+        grid-template-columns: minmax(260px, 0.74fr) minmax(400px, 1.26fr);
+        padding-top: max(86px, calc(env(safe-area-inset-top) + 76px));
+      }
+
+      .signal-copy h1 {
+        font-size: clamp(48px, 8.5vw, 70px);
+      }
+
+      .signal-lede {
+        margin-top: 16px;
+        font-size: 16px;
+      }
+
+      .signal-actions,
+      .signal-proof {
+        margin-top: 16px;
+      }
+
+      .signal-viewport {
+        height: calc(100svh - 110px);
+        min-height: 360px;
+      }
+    }
+
+    html.lab-concept-embed .signal-stage {
+      min-height: 100svh;
+      padding-top: max(20px, env(safe-area-inset-top));
+    }
+
+    html.lab-concept-embed .signal-kicker {
+      margin-bottom: 14px;
+    }
+
+    html.lab-concept-embed .signal-actions,
+    html.lab-concept-embed .signal-proof {
+      display: none;
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .signal-readout,
+      .signal-status,
+      .signal-hint span {
+        background: #0a0c12;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="signal-stage">
+    <section class="signal-copy" aria-labelledby="signal-title">
+      <p class="signal-kicker">Interactive brand study · Signal Field</p>
+      <h1 id="signal-title">Touch one block. <span>Move the city.</span></h1>
+      <p class="signal-lede">A live signal field for showing what interaction can feel like: tap any block to transmit, drag to reframe the city, and pinch to move closer.</p>
+      <div class="signal-actions">
+        <button class="signal-button signal-button--primary" type="button" data-pulse>
+          <span class="signal-button__spark" aria-hidden="true"></span>
+          Send a signal
+        </button>
+        <button class="signal-button" type="button" data-reset>Reset the field</button>
+      </div>
+      <ul class="signal-proof" aria-label="Experience capabilities">
+        <li>Touch reactive</li>
+        <li>Procedural WebGL</li>
+        <li>Device aware</li>
+      </ul>
+    </section>
+
+    <section class="signal-viewport" data-viewport aria-label="Signal field demonstration">
+      <canvas
+        id="hero-canvas"
+        role="img"
+        tabindex="0"
+        aria-label="Interactive neon city signal field. Tap or press Enter to send a pulse, drag to orbit, and pinch or scroll to zoom."
+      ></canvas>
+
+      <div class="signal-loader" data-loader role="status" aria-live="polite">
+        <span>Wiring the city</span>
+        <i aria-hidden="true"></i>
+      </div>
+
+      <div class="signal-fallback" data-fallback hidden>
+        <div class="signal-fallback__city" aria-hidden="true">
+          <i style="--tower:46%"></i>
+          <i style="--tower:72%"></i>
+          <i style="--tower:58%"></i>
+          <i style="--tower:96%"></i>
+          <i style="--tower:64%"></i>
+          <i style="--tower:82%"></i>
+        </div>
+        <h2 data-fallback-title>Signal field paused.</h2>
+        <p data-fallback-copy>The city is still here as a lightweight view. Reload when WebGL is available.</p>
+        <button class="signal-button" type="button" data-retry>Reload the field</button>
+      </div>
+
+      <div class="signal-hud">
+        <p class="signal-readout" aria-hidden="true"><i></i><span data-readout>Field ready</span></p>
+        <p class="signal-status" data-status role="status" aria-live="polite" aria-atomic="true">Tap a block to begin</p>
+      </div>
+
+      <p class="signal-hint"><span>Tap to transmit · drag to orbit · pinch to zoom</span></p>
+    </section>
+  </main>
+
+  <script type="module">
+    const canvas = document.querySelector('#hero-canvas');
+    const viewport = document.querySelector('[data-viewport]');
+    const loader = document.querySelector('[data-loader]');
+    const fallback = document.querySelector('[data-fallback]');
+    const fallbackTitle = document.querySelector('[data-fallback-title]');
+    const fallbackCopy = document.querySelector('[data-fallback-copy]');
+    const retryButton = document.querySelector('[data-retry]');
+    const pulseButton = document.querySelector('[data-pulse]');
+    const resetButton = document.querySelector('[data-reset]');
+    const readout = document.querySelector('[data-readout]');
+    const status = document.querySelector('[data-status]');
+
+    retryButton.addEventListener('click', () => location.reload());
+
+    function showFallback(title, copy) {
+      loader.classList.add('is-ready');
+      fallbackTitle.textContent = title;
+      fallbackCopy.textContent = copy;
+      fallback.hidden = false;
+      canvas.hidden = true;
+    }
+
+    async function startSignalField() {
+      let THREE;
+      let OrbitControls;
+
+      try {
+        [THREE, { OrbitControls }] = await Promise.all([
+          import('https://esm.sh/three@0.164.1'),
+          import('https://esm.sh/three@0.164.1/examples/jsm/controls/OrbitControls.js')
+        ]);
+      } catch (error) {
+        showFallback(
+          'The live field could not load.',
+          'The interactive library is unavailable right now. The lightweight city view is still ready to show.'
+        );
+        return;
+      }
+
+      const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const phoneQuery = matchMedia('(max-width: 700px)');
+      const lowPower = phoneQuery.matches || (navigator.hardwareConcurrency || 8) <= 4;
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x080a10);
+      scene.fog = new THREE.FogExp2(0x080a10, 0.026);
+
+      const camera = new THREE.PerspectiveCamera(44, 1, 0.1, 80);
+      const defaultCamera = new THREE.Vector3(8.6, 7.2, 13.8);
+      const defaultTarget = new THREE.Vector3(0, 2.25, 0);
+      camera.position.copy(defaultCamera);
+
+      let renderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: !lowPower,
+          alpha: false,
+          powerPreference: lowPower ? 'default' : 'high-performance'
+        });
+      } catch (error) {
+        showFallback(
+          'WebGL is unavailable.',
+          'This browser cannot open the live field, so a lightweight city view is shown instead.'
+        );
+        return;
+      }
+
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.02;
+
+      const controls = new OrbitControls(camera, canvas);
+      controls.target.copy(defaultTarget);
+      controls.enableDamping = !reducedMotion;
+      controls.dampingFactor = 0.075;
+      controls.enablePan = false;
+      controls.minDistance = 7;
+      controls.maxDistance = 23;
+      controls.minPolarAngle = Math.PI * 0.18;
+      controls.maxPolarAngle = Math.PI * 0.48;
+      controls.rotateSpeed = 0.62;
+      controls.zoomSpeed = 0.82;
+      controls.update();
+
+      const world = new THREE.Group();
+      scene.add(world);
+
+      scene.add(new THREE.HemisphereLight(0x6178b5, 0x160b09, 1.35));
+      const keyLight = new THREE.DirectionalLight(0xffa66e, 2.4);
+      keyLight.position.set(-7, 13, 9);
+      scene.add(keyLight);
+      const edgeLight = new THREE.DirectionalLight(0x4f8df7, 1.6);
+      edgeLight.position.set(10, 8, -10);
+      scene.add(edgeLight);
+
+      const groundMaterial = new THREE.MeshStandardMaterial({
+        color: 0x0b0d14,
+        roughness: 0.48,
+        metalness: 0.62
+      });
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(38, 38), groundMaterial);
+      ground.rotation.x = -Math.PI / 2;
+      world.add(ground);
+
+      const grid = new THREE.GridHelper(38, lowPower ? 30 : 44, 0x4f8df7, 0x173157);
+      grid.position.y = 0.012;
+      grid.material.transparent = true;
+      grid.material.opacity = 0.36;
+      world.add(grid);
+
+      const interactionPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(34, 34),
+        new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
+      );
+      interactionPlane.rotation.x = -Math.PI / 2;
+      interactionPlane.position.y = 0.04;
+      world.add(interactionPlane);
+
+      const towerData = [
+        [-5.6, -3.4, 1.55, 3.9, 0xf97316],
+        [-3.6, -3.8, 1.15, 5.7, 0x4f8df7],
+        [-1.5, -3.2, 1.4, 3.4, 0x22b8d6],
+        [1.2, -3.7, 1.7, 6.5, 0xf97316],
+        [3.8, -3.3, 1.2, 4.4, 0x4f8df7],
+        [5.7, -2.8, 1.45, 3.2, 0x22b8d6],
+        [-6.2, 0.1, 1.35, 5.1, 0x4f8df7],
+        [-3.6, 0.3, 1.65, 3.7, 0xf97316],
+        [3.7, 0.2, 1.55, 5.6, 0x22b8d6],
+        [6.1, 0.5, 1.2, 4.1, 0xf97316],
+        [-5.2, 3.5, 1.7, 4.5, 0x22b8d6],
+        [-2.7, 3.7, 1.2, 6.1, 0xf97316],
+        [2.9, 3.8, 1.55, 4.8, 0x4f8df7],
+        [5.3, 3.2, 1.35, 5.4, 0xf97316]
+      ];
+
+      const towers = [];
+      const towerHitTargets = [];
+      const boxGeometryCache = new Map();
+
+      function towerGeometry(width, height) {
+        const key = `${width}:${height}`;
+        if (!boxGeometryCache.has(key)) {
+          boxGeometryCache.set(key, new THREE.BoxGeometry(width, height, width));
+        }
+        return boxGeometryCache.get(key);
+      }
+
+      towerData.forEach(([x, z, width, height, colorValue], index) => {
+        const group = new THREE.Group();
+        group.position.set(x, 0, z);
+        group.scale.y = reducedMotion ? 1 : 0.001;
+
+        const color = new THREE.Color(colorValue);
+        const bodyMaterial = new THREE.MeshStandardMaterial({
+          color: color.clone().multiplyScalar(0.16),
+          emissive: color,
+          emissiveIntensity: 0.36,
+          roughness: 0.28,
+          metalness: 0.58
+        });
+        const body = new THREE.Mesh(towerGeometry(width, height), bodyMaterial);
+        body.position.y = height / 2;
+        body.userData.towerIndex = index;
+        group.add(body);
+        towerHitTargets.push(body);
+
+        const edges = new THREE.LineSegments(
+          new THREE.EdgesGeometry(body.geometry),
+          new THREE.LineBasicMaterial({
+            color,
+            transparent: true,
+            opacity: 0.82
+          })
+        );
+        body.add(edges);
+
+        const windowMaterial = new THREE.MeshBasicMaterial({
+          color: 0xffd2a8,
+          transparent: true,
+          opacity: 0.72
+        });
+        const rows = Math.max(2, Math.floor(height / 0.72));
+        for (let row = 1; row < rows; row += 1) {
+          const strip = new THREE.Mesh(
+            new THREE.BoxGeometry(width * 0.64, 0.045, 0.028),
+            windowMaterial
+          );
+          strip.position.set(0, -height / 2 + row * (height / rows), width / 2 + 0.018);
+          body.add(strip);
+        }
+
+        const beaconMaterial = new THREE.MeshBasicMaterial({ color });
+        const beacon = new THREE.Mesh(
+          new THREE.SphereGeometry(0.085, 10, 8),
+          beaconMaterial
+        );
+        beacon.position.y = height + 0.18;
+        group.add(beacon);
+
+        group.userData = {
+          bodyMaterial,
+          beacon,
+          baseX: x,
+          baseZ: z,
+          height,
+          phase: index * 0.57,
+          shock: 0
+        };
+        world.add(group);
+        towers.push(group);
+      });
+
+      const core = new THREE.Group();
+      core.position.set(0, 0, 0.15);
+      world.add(core);
+
+      const mastMaterial = new THREE.MeshStandardMaterial({
+        color: 0x36170d,
+        emissive: 0xf97316,
+        emissiveIntensity: 2.4,
+        roughness: 0.2,
+        metalness: 0.72
+      });
+      const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.22, 4.8, 12), mastMaterial);
+      mast.position.y = 2.4;
+      core.add(mast);
+
+      const coreLight = new THREE.PointLight(0xf97316, lowPower ? 22 : 34, 13, 2);
+      coreLight.position.y = 2.7;
+      core.add(coreLight);
+
+      const orbitRings = [];
+      [0.8, 1.2, 1.7].forEach((radius, index) => {
+        const ring = new THREE.Mesh(
+          new THREE.TorusGeometry(radius, 0.025, 8, lowPower ? 32 : 56),
+          new THREE.MeshBasicMaterial({
+            color: index === 1 ? 0x4f8df7 : 0xf97316,
+            transparent: true,
+            opacity: 0.7,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+          })
+        );
+        ring.position.y = 2.5 + index * 0.34;
+        ring.rotation.set(Math.PI * (0.42 + index * 0.08), index * 0.8, 0);
+        core.add(ring);
+        orbitRings.push(ring);
+      });
+
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2();
+      const pointerGoal = new THREE.Vector2();
+      const pointerNow = new THREE.Vector2();
+      const pulses = [];
+      const links = [];
+      let pulseNumber = 0;
+      let introStart = 0;
+      let introSignalSent = false;
+      let lastFrameTime = 0;
+      let rafId = 0;
+      let heroVisible = true;
+      let labVisible = true;
+      let motionPaused = false;
+      let contextLost = false;
+      let pointerStart = null;
+
+      function eased(value) {
+        const clamped = Math.min(1, Math.max(0, value));
+        return 1 - Math.pow(1 - clamped, 4);
+      }
+
+      function worldPointFromEvent(event) {
+        const rect = canvas.getBoundingClientRect();
+        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.setFromCamera(pointer, camera);
+
+        const towerHits = raycaster.intersectObjects(towerHitTargets, false);
+        if (towerHits.length) {
+          const hit = towerHits[0].point.clone();
+          hit.y = 0.08;
+          return hit;
+        }
+
+        const groundHits = raycaster.intersectObject(interactionPlane, false);
+        return groundHits.length ? groundHits[0].point.clone() : new THREE.Vector3(0, 0.08, 0);
+      }
+
+      function disposePulse(pulse) {
+        world.remove(pulse.mesh);
+        pulse.mesh.geometry.dispose();
+        pulse.mesh.material.dispose();
+      }
+
+      function disposeLink(link) {
+        world.remove(link.mesh);
+        link.mesh.geometry.dispose();
+        link.mesh.material.dispose();
+      }
+
+      function clearEffects() {
+        pulses.splice(0).forEach(disposePulse);
+        links.splice(0).forEach(disposeLink);
+      }
+
+      function sendSignal(origin = new THREE.Vector3(0, 0.08, 0), announce = true) {
+        if (reducedMotion) clearEffects();
+        pulseNumber += 1;
+        const pulseMaterial = new THREE.MeshBasicMaterial({
+          color: pulseNumber % 2 ? 0xf97316 : 0x4f8df7,
+          transparent: true,
+          opacity: reducedMotion ? 0.42 : 0.92,
+          side: THREE.DoubleSide,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
+        });
+        const pulseMesh = new THREE.Mesh(
+          new THREE.RingGeometry(0.92, 1, lowPower ? 40 : 64),
+          pulseMaterial
+        );
+        pulseMesh.rotation.x = -Math.PI / 2;
+        pulseMesh.position.copy(origin);
+        pulseMesh.scale.setScalar(reducedMotion ? 4.8 : 0.12);
+        world.add(pulseMesh);
+        pulses.push({ mesh: pulseMesh, age: reducedMotion ? 0.7 : 0, origin: origin.clone() });
+
+        const linkPositions = [];
+        towers.forEach((tower) => {
+          const distance = origin.distanceTo(tower.position);
+          tower.userData.shock = Math.max(tower.userData.shock, Math.max(0.28, 1 - distance / 14));
+          linkPositions.push(
+            origin.x, 0.12, origin.z,
+            tower.position.x, tower.userData.height * 0.58, tower.position.z
+          );
+        });
+        const linkGeometry = new THREE.BufferGeometry();
+        linkGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linkPositions, 3));
+        const linkMaterial = new THREE.LineBasicMaterial({
+          color: pulseNumber % 2 ? 0xf97316 : 0x4f8df7,
+          transparent: true,
+          opacity: reducedMotion ? 0.2 : 0.68,
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
+        });
+        const linkMesh = new THREE.LineSegments(linkGeometry, linkMaterial);
+        world.add(linkMesh);
+        links.push({ mesh: linkMesh, age: reducedMotion ? 0.7 : 0 });
+
+        viewport.style.setProperty('--signal-x', `${50 + (origin.x / 18) * 50}%`);
+        viewport.style.setProperty('--signal-y', `${56 + (origin.z / 18) * 34}%`);
+        readout.textContent = `Signal ${String(pulseNumber).padStart(2, '0')}`;
+        if (announce) {
+          status.textContent = `Signal moving across ${towers.length} blocks`;
+          if (navigator.vibrate) navigator.vibrate(8);
+        }
+
+        requestFrame();
+      }
+
+      function resetExperience(announce = true) {
+        clearEffects();
+        pulseNumber = 0;
+        introStart = performance.now();
+        introSignalSent = false;
+        camera.position.copy(defaultCamera);
+        controls.target.copy(defaultTarget);
+        controls.update();
+        world.rotation.set(0, 0, 0);
+        pointerGoal.set(0, 0);
+        pointerNow.set(0, 0);
+        towers.forEach((tower) => {
+          tower.scale.set(1, reducedMotion ? 1 : 0.001, 1);
+          tower.userData.shock = 0;
+          tower.userData.bodyMaterial.emissiveIntensity = 0.36;
+        });
+        readout.textContent = 'Field ready';
+        status.textContent = reducedMotion ? 'Settled field · tap to transmit' : 'Tap a block to begin';
+        if (announce) status.textContent = 'Field reset and ready';
+        requestFrame();
+      }
+
+      function resize() {
+        const width = Math.max(1, viewport.clientWidth);
+        const height = Math.max(1, viewport.clientHeight);
+        const phone = phoneQuery.matches;
+        camera.aspect = width / height;
+        camera.fov = phone ? 50 : 44;
+        camera.updateProjectionMatrix();
+        const cap = phone ? 1.5 : 2;
+        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, cap));
+        renderer.setSize(width, height, false);
+        requestFrame();
+      }
+
+      function isRenderable() {
+        return labVisible && heroVisible && !document.hidden && !contextLost;
+      }
+
+      function keepsAnimating() {
+        return isRenderable() && !reducedMotion && !motionPaused;
+      }
+
+      function cancelFrame() {
+        if (!rafId) return;
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+
+      function requestFrame() {
+        if (rafId || !isRenderable()) return;
+        rafId = requestAnimationFrame(render);
+      }
+
+      function updateScene(time, delta) {
+        const elapsed = Math.max(0, (time - introStart) / 1000);
+        const intro = reducedMotion ? 1 : eased(elapsed / 1.05);
+
+        towers.forEach((tower, index) => {
+          const towerIntro = reducedMotion
+            ? 1
+            : eased((elapsed - index * 0.035) / 0.78);
+          const shock = tower.userData.shock;
+          const breath = reducedMotion ? 0 : Math.sin(time * 0.0007 + tower.userData.phase) * 0.012;
+          tower.scale.y = Math.max(0.001, towerIntro * (1 + breath + shock * 0.12));
+          tower.userData.bodyMaterial.emissiveIntensity = 0.36 + shock * 2.5;
+          tower.userData.beacon.scale.setScalar(1 + shock * 1.8);
+          tower.userData.shock = Math.max(0, shock - delta * 1.7);
+        });
+
+        core.scale.setScalar(0.78 + intro * 0.22);
+        coreLight.intensity = (lowPower ? 22 : 34) * intro;
+        pointerNow.lerp(pointerGoal, Math.min(1, delta * 5.5));
+        world.rotation.y += (pointerNow.x * 0.055 - world.rotation.y) * Math.min(1, delta * 2.8);
+        world.rotation.x += (-pointerNow.y * 0.018 - world.rotation.x) * Math.min(1, delta * 2.8);
+
+        orbitRings.forEach((ring, index) => {
+          ring.rotation.z += delta * (index % 2 ? -0.34 : 0.28);
+          ring.material.opacity = 0.45 + Math.sin(time * 0.0015 + index) * 0.18;
+        });
+
+        for (let index = pulses.length - 1; index >= 0; index -= 1) {
+          const pulse = pulses[index];
+          pulse.age += delta;
+          const progress = Math.min(1, pulse.age / 1.28);
+          pulse.mesh.scale.setScalar(0.12 + eased(progress) * 11.5);
+          pulse.mesh.material.opacity = Math.max(0, 0.92 * (1 - progress));
+          if (progress >= 1) {
+            disposePulse(pulse);
+            pulses.splice(index, 1);
+          }
+        }
+
+        for (let index = links.length - 1; index >= 0; index -= 1) {
+          const link = links[index];
+          link.age += delta;
+          link.mesh.material.opacity = Math.max(0, 0.68 * (1 - link.age / 0.72));
+          if (link.age >= 0.72) {
+            disposeLink(link);
+            links.splice(index, 1);
+          }
+        }
+
+        if (!introSignalSent && elapsed > 0.72) {
+          introSignalSent = true;
+          sendSignal(new THREE.Vector3(0, 0.08, 0), false);
+        }
+      }
+
+      function render(time) {
+        rafId = 0;
+        if (!isRenderable()) return;
+
+        const delta = lastFrameTime
+          ? Math.min((time - lastFrameTime) / 1000, 0.05)
+          : 1 / 60;
+        lastFrameTime = time;
+
+        if (keepsAnimating()) {
+          updateScene(time, delta);
+        } else if (reducedMotion) {
+          towers.forEach((tower) => {
+            tower.scale.y = 1;
+            tower.userData.bodyMaterial.emissiveIntensity = 0.72 + tower.userData.shock;
+            tower.userData.beacon.scale.setScalar(1 + tower.userData.shock);
+          });
+          coreLight.intensity = lowPower ? 18 : 26;
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+
+        if (keepsAnimating()) requestFrame();
+      }
+
+      pulseButton.addEventListener('click', () => sendSignal());
+      resetButton.addEventListener('click', () => resetExperience());
+
+      canvas.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        sendSignal();
+      });
+
+      canvas.addEventListener('pointermove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        pointerGoal.set(
+          ((event.clientX - rect.left) / rect.width) * 2 - 1,
+          ((event.clientY - rect.top) / rect.height) * 2 - 1
+        );
+        requestFrame();
+      }, { passive: true });
+
+      canvas.addEventListener('pointerdown', (event) => {
+        pointerStart = {
+          id: event.pointerId,
+          x: event.clientX,
+          y: event.clientY,
+          time: performance.now()
+        };
+      }, { passive: true });
+
+      canvas.addEventListener('pointerup', (event) => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const distance = Math.hypot(
+          event.clientX - pointerStart.x,
+          event.clientY - pointerStart.y
+        );
+        const duration = performance.now() - pointerStart.time;
+        pointerStart = null;
+        if (distance <= 9 && duration <= 460) {
+          sendSignal(worldPointFromEvent(event));
+        }
+      }, { passive: true });
+
+      canvas.addEventListener('pointercancel', () => {
+        pointerStart = null;
+      }, { passive: true });
+
+      controls.addEventListener('change', requestFrame);
+
+      document.addEventListener('lab:motion', (event) => {
+        motionPaused = Boolean(event.detail?.paused);
+        cancelFrame();
+        requestFrame();
+      });
+
+      document.addEventListener('lab:visibility', (event) => {
+        labVisible = event.detail?.active !== false;
+        if (!labVisible) cancelFrame();
+        else requestFrame();
+      });
+
+      addEventListener('message', (event) => {
+        if (event.origin !== location.origin || !event.data) return;
+        if (event.data.type === 'lab:visibility') {
+          labVisible = event.data.active !== false;
+          if (!labVisible) cancelFrame();
+          else requestFrame();
+        }
+        if (event.data.type === 'lab:motion') {
+          motionPaused = Boolean(event.data.paused);
+          cancelFrame();
+          requestFrame();
         }
       });
+
+      document.addEventListener('lab:replay', (event) => {
+        event.preventDefault();
+        resetExperience(false);
+        status.textContent = 'Replay started';
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) cancelFrame();
+        else {
+          lastFrameTime = performance.now();
+          requestFrame();
+        }
+      });
+
+      const viewportObserver = new IntersectionObserver((entries) => {
+        heroVisible = entries[0]?.isIntersecting !== false;
+        if (!heroVisible) cancelFrame();
+        else requestFrame();
+      }, { threshold: 0.01 });
+      viewportObserver.observe(viewport);
+
+      const resizeObserver = new ResizeObserver(resize);
+      resizeObserver.observe(viewport);
+      addEventListener('orientationchange', resize, { passive: true });
+
+      canvas.addEventListener('webglcontextlost', (event) => {
+        event.preventDefault();
+        contextLost = true;
+        cancelFrame();
+        showFallback(
+          'The signal field paused.',
+          'The graphics context was interrupted. Reload to reconnect the live city.'
+        );
+      });
+
+      canvas.addEventListener('webglcontextrestored', () => {
+        status.textContent = 'Graphics restored · reload to reconnect';
+      });
+
+      resize();
+      resetExperience(false);
+      renderer.compile(scene, camera);
+      renderer.render(scene, camera);
+      loader.classList.add('is-ready');
+      status.textContent = reducedMotion
+        ? 'Settled field · tap to transmit'
+        : 'Tap a block to begin';
+      requestFrame();
+    }
+
+    startSignalField().catch(() => {
+      showFallback(
+        'The live field stopped early.',
+        'A lightweight city view is shown so the concept remains available.'
+      );
     });
+  </script>
 
-    neonLetters.forEach(bar => {
-      const targetIntensity = neonHoverIntensity > 0.5 ? 3.5 : 2.0;
-      bar.material.emissiveIntensity += (targetIntensity - bar.material.emissiveIntensity) * 0.05;
-    });
-
-    controls.autoRotate = true;
-  }
-
-  if(elapsed >= 0.8) {
-    dataStreamPaths.forEach(path => {
-      path.t += path.speed * 0.016;
-      if(path.t > 1) path.t = 0;
-    });
-
-    emberVelocities.forEach((e, i) => {
-      e.y -= 0.01;
-      e.life -= 0.008;
-      if(e.life < 0) e.life = 1;
-
-      emberPositions[i*3] += e.x;
-      emberPositions[i*3+1] += e.y;
-      emberPositions[i*3+2] += e.z;
-
-      emberColors[i*3] = 1;
-      emberColors[i*3+1] = 0.4 * e.life;
-      emberColors[i*3+2] = 0;
-      emberAlphas[i] = e.life;
-    });
-    embersGeo.attributes.position.needsUpdate = true;
-    embersGeo.attributes.color.needsUpdate = true;
-    embersGeo.attributes.alpha.needsUpdate = true;
-  }
-
-  sparkles.forEach((s, idx) => {
-    s.pos.add(s.vel);
-    s.vel.y -= 0.01;
-    s.life -= 0.01;
-    if(s.life < 0) sparkles.splice(idx, 1);
-  });
-
-  ambientParticles.userData.opacity += (0.4 - ambientParticles.userData.opacity) * 0.02;
-  ambientParticles.material.opacity = ambientParticles.userData.opacity;
-
-  if(elapsed - lastShootingStarTime > nextShootingStarDelay) {
-    lastShootingStarTime = elapsed;
-    nextShootingStarDelay = 5 + Math.random() * 4;
-    shootingStarAge = 0;
-    const startPos = new THREE.Vector3((Math.random() - 0.5) * 20, 15, (Math.random() - 0.5) * 20);
-    const endPos = new THREE.Vector3((Math.random() - 0.5) * 15, -5, (Math.random() - 0.5) * 15);
-    if(shootingStarLine) scene.remove(shootingStarLine);
-    const ssGeo = new THREE.BufferGeometry().setFromPoints([startPos, endPos]);
-    shootingStarLine = new THREE.Line(ssGeo, shootingStarMat);
-    shootingStarMat.opacity = 1;
-    scene.add(shootingStarLine);
-  }
-  if(shootingStarLine) {
-    shootingStarAge = elapsed - lastShootingStarTime;
-    shootingStarMat.opacity = Math.max(0, 1 - shootingStarAge / 0.4);
-    if(shootingStarMat.opacity <= 0) { scene.remove(shootingStarLine); shootingStarLine = null; }
-  }
-
-  if(hasScrolled) {
-    const scrollPct = Math.min(window.scrollY / 500, 1);
-    camera.position.z = 10 - scrollPct * 2;
-    camera.position.y = 3 + scrollPct * 1;
-  }
-
-  controls.update();
-  composer.render();
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize', () => {
-  const newW = canvas.clientWidth;
-  const newH = canvas.clientHeight;
-  if(newW !== W || newH !== H) {
-    canvas.width = newW;
-    canvas.height = newH;
-    camera.aspect = newW / newH;
-    camera.updateProjectionMatrix();
-    renderer.setSize(newW, newH);
-    composer.setSize(newW, newH);
-  }
-});
-
-animate();
-</script>
-
-<script defer src="/examples/lab/assets/lab-return.js"></script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

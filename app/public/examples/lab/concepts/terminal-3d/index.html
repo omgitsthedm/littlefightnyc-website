@@ -8,6 +8,80 @@
       name="description"
       content="Premium 3D website starter with Three.js, GSAP, Lenis, and cinematic postprocessing."
     />
+    <script>
+      (() => {
+        const nativeRaf = window.requestAnimationFrame.bind(window);
+        const nativeCancel = window.cancelAnimationFrame.bind(window);
+        const callbacks = new Map();
+        let nextId = 1;
+        let hostActive = true;
+        let motionPaused = false;
+
+        if (matchMedia("(pointer: coarse)").matches && devicePixelRatio > 1.5) {
+          try {
+            Object.defineProperty(window, "devicePixelRatio", {
+              configurable: true,
+              get: () => 1.5
+            });
+          } catch {}
+        }
+
+        function shouldRun() {
+          return hostActive && !motionPaused && document.visibilityState === "visible";
+        }
+
+        function schedule(id, entry) {
+          entry.nativeId = nativeRaf((time) => {
+            if (!callbacks.has(id)) return;
+            callbacks.delete(id);
+            entry.callback(time);
+          });
+        }
+
+        window.requestAnimationFrame = (callback) => {
+          const id = nextId++;
+          const entry = { callback, nativeId: 0 };
+          callbacks.set(id, entry);
+          if (shouldRun()) schedule(id, entry);
+          return id;
+        };
+
+        window.cancelAnimationFrame = (id) => {
+          const entry = callbacks.get(id);
+          if (entry?.nativeId) nativeCancel(entry.nativeId);
+          callbacks.delete(id);
+        };
+
+        function sync() {
+          if (shouldRun()) {
+            callbacks.forEach((entry, id) => {
+              if (!entry.nativeId) schedule(id, entry);
+            });
+          } else {
+            callbacks.forEach((entry) => {
+              if (entry.nativeId) nativeCancel(entry.nativeId);
+              entry.nativeId = 0;
+            });
+          }
+        }
+
+        document.addEventListener("lab:visibility", (event) => {
+          hostActive = event.detail?.active !== false;
+          sync();
+        });
+        document.addEventListener("lab:motion", (event) => {
+          motionPaused = event.detail?.paused === true;
+          sync();
+        });
+        window.addEventListener("message", (event) => {
+          if (event.origin !== location.origin || !event.data) return;
+          if (event.data.type === "lab:visibility") hostActive = event.data.active !== false;
+          if (event.data.type === "lab:motion") motionPaused = event.data.paused === true;
+          sync();
+        });
+        document.addEventListener("visibilitychange", sync);
+      })();
+    </script>
     <script type="module" crossorigin src="assets/index-DvF386rg.js"></script>
     <link rel="stylesheet" crossorigin href="assets/index-D-tURxUO.css">
     <style>
@@ -20,10 +94,11 @@
       .terminal-visual__tower::after{content:"";position:absolute;right:-13%;bottom:-2%;width:12%;height:94%;border:1px solid rgba(56,189,248,.18);background:#06101a;transform:skewY(36deg);transform-origin:bottom left}
       .terminal-visual__orbit{position:absolute;right:7%;bottom:4%;width:74%;aspect-ratio:1;border:1px solid rgba(56,189,248,.18);border-radius:50%;transform:rotateX(72deg);box-shadow:0 0 50px rgba(56,189,248,.05);animation:terminal-orbit 18s linear infinite}
       .terminal-visual__orbit::after{content:"";position:absolute;top:50%;left:-4px;width:8px;height:8px;border-radius:50%;background:#f97316;box-shadow:0 0 18px #f97316}
-      .terminal-visual__readout{position:absolute;top:7%;left:6%;display:grid;gap:7px;color:#93adc0;font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase}
-      .terminal-visual__readout strong{color:#e7f5ff;font-size:12px}
+      .terminal-visual__readout{position:absolute;top:7%;left:6%;display:grid;gap:7px;color:#93adc0;font:600 16px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;text-transform:uppercase}
+      .terminal-visual__readout strong{color:#e7f5ff;font-size:16px}
       .terminal-visual__readout span{color:#38bdf8}
       .terminal-visual__axis{position:absolute;right:5%;top:9%;bottom:9%;width:1px;background:linear-gradient(transparent,#f97316 30%,#38bdf8 68%,transparent)}
+      .ghost-link{min-height:44px;display:inline-flex;align-items:center}
       .lil-gui{display:none!important}
       @keyframes terminal-orbit{to{transform:rotateX(72deg) rotateZ(360deg)}}
       @keyframes terminal-window-shift{to{transform:translateY(7px);opacity:.9}}

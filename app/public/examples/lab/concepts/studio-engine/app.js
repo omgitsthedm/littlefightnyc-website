@@ -1,6 +1,6 @@
 const STORAGE_KEY = "lfnyc-studio-engine-v4";
 const PAYLOAD_VERSION = 4;
-const APP_TITLE = "Little Fight NYC Design Engine v1.2";
+const APP_TITLE = "Little Fight NYC Studio Engine | Local Rules";
 
 const MODE_LABELS = {
   quick: "Quick Mode",
@@ -152,7 +152,7 @@ const PROFILE_RULES = [
     palette: { primary: "#ff7a33", secondary: "#17141c", accent: "#f7eee7" },
     offer: "Natural beauty treatments with an elevated, confidence-building experience.",
     imagery: "warm portrait lighting, stone textures, calm editorial interiors",
-    heatmap: "Move trust proof beside the primary CTA for stronger booking intent."
+    heatmap: "Place verified trust proof beside the primary CTA when booking is the main action."
   },
   {
     key: "home-service",
@@ -166,7 +166,7 @@ const PROFILE_RULES = [
     palette: { primary: "#ff6600", secondary: "#10243d", accent: "#f2ede9" },
     offer: "Fast service, clean communication, and dependable follow-through.",
     imagery: "clean utility graphics, high-visibility badges, grounded neighborhood cues",
-    heatmap: "Lift the phone CTA above the fold to increase same-session contact."
+    heatmap: "Keep the phone CTA above the fold when calls are the chosen primary action."
   },
   {
     key: "legal",
@@ -180,7 +180,7 @@ const PROFILE_RULES = [
     palette: { primary: "#e8712a", secondary: "#121826", accent: "#f3ece5" },
     offer: "Trusted advisory support delivered with clarity and authority.",
     imagery: "editorial typography, deep surfaces, restrained highlights",
-    heatmap: "Lead with a direct consultation CTA and one proof statement near the fold."
+    heatmap: "Lead with a direct consultation CTA and one verified proof statement near the fold."
   },
   {
     key: "agency",
@@ -194,7 +194,7 @@ const PROFILE_RULES = [
     palette: { primary: "#ff6600", secondary: "#0f1014", accent: "#efe6df" },
     offer: "High-impact creative work that makes the next decision easier to say yes to.",
     imagery: "graphic framing, editorial crops, kinetic orange lighting",
-    heatmap: "Keep the project CTA visible through the first scroll for stronger intent."
+    heatmap: "Keep the project CTA visible through the first scroll when it is the primary action."
   },
   {
     key: "clinic",
@@ -208,7 +208,7 @@ const PROFILE_RULES = [
     palette: { primary: "#ff6b2e", secondary: "#142021", accent: "#f4f0ea" },
     offer: "Clear care pathways that reduce friction and build trust quickly.",
     imagery: "soft surfaces, clinical brightness, approachable detail shots",
-    heatmap: "Bring care-plan clarity above the FAQ to improve confidence before booking."
+    heatmap: "Explain the care path before the FAQ so visitors know what booking involves."
   },
   {
     key: "hospitality",
@@ -222,7 +222,7 @@ const PROFILE_RULES = [
     palette: { primary: "#ff7e3b", secondary: "#1d1715", accent: "#f3ece2" },
     offer: "Service-led hospitality that turns curiosity into immediate reservations.",
     imagery: "warm interiors, tactile surfaces, cinematic hospitality details",
-    heatmap: "A reservation CTA near immersive imagery lifts first-session action."
+    heatmap: "Place the reservation CTA near the imagery when reservations are the primary action."
   },
   {
     key: "tattoo",
@@ -236,7 +236,7 @@ const PROFILE_RULES = [
     palette: { primary: "#ff6600", secondary: "#0b0d11", accent: "#f1e8df" },
     offer: "Striking custom work with a clear booking path and unforgettable atmosphere.",
     imagery: "neon grids, sharp chrome, atmospheric shadows, orange phosphor glow",
-    heatmap: "Use strong artist proof near the booking CTA to legitimize the edge."
+    heatmap: "Place verified artist work near the booking CTA so the visual claim has proof."
   },
   {
     key: "generic",
@@ -261,9 +261,9 @@ const DEMO_DRAFT = {
   industry: "",
   primaryOffer: "",
   primaryCta: "",
-  phone: "(480) 555-0184",
-  email: "hello@desertaura.com",
-  websiteUrl: "desertaura.example.com",
+  phone: "",
+  email: "",
+  websiteUrl: "",
   servicesText: "Injectables\nSkin renewal\nMembership care",
   templateStyle: "",
   brandPrimary: DEFAULT_PALETTE.primary,
@@ -282,9 +282,9 @@ const STARTER_PREVIEWS = [
     industry: "Financial Advisory",
     primaryOffer: "Strategic financial guidance for high-growth operators",
     primaryCta: "Schedule a strategy call",
-    phone: "(312) 555-0140",
-    email: "hello@northlineadvisory.com",
-    websiteUrl: "northlineadvisory.com",
+    phone: "",
+    email: "",
+    websiteUrl: "",
     servicesText: "Planning\nAdvisory\nRetainer support",
     templateStyle: "2",
     brandPrimary: "#6e7cff",
@@ -301,9 +301,9 @@ const STARTER_PREVIEWS = [
     industry: "Wellness Clinic",
     primaryOffer: "Whole-body treatment plans with a calm booking path",
     primaryCta: "Book an intake",
-    phone: "(512) 555-0138",
-    email: "hello@marrowwellness.com",
-    websiteUrl: "marrowwellness.com",
+    phone: "",
+    email: "",
+    websiteUrl: "",
     servicesText: "Diagnostics\nTreatment plans\nFollow-up care",
     templateStyle: "7",
     brandPrimary: "#53c5b9",
@@ -320,9 +320,9 @@ const STARTER_PREVIEWS = [
     industry: "Creative Studio",
     primaryOffer: "Editorial brand systems for ambitious hospitality launches",
     primaryCta: "Start the concept",
-    phone: "(323) 555-0146",
-    email: "studio@cinderatelier.com",
-    websiteUrl: "cinderatelier.com",
+    phone: "",
+    email: "",
+    websiteUrl: "",
     servicesText: "Brand systems\nLaunch creative\nEditorial direction",
     templateStyle: "5",
     brandPrimary: "#d56647",
@@ -339,9 +339,9 @@ const STARTER_PREVIEWS = [
     industry: "Hospitality",
     primaryOffer: "Design-led stays and private group bookings",
     primaryCta: "Reserve now",
-    phone: "(805) 555-0111",
-    email: "stay@driftguesthouse.com",
-    websiteUrl: "driftguesthouse.com",
+    phone: "",
+    email: "",
+    websiteUrl: "",
     servicesText: "Rooms\nEvents\nPrivate stays",
     templateStyle: "9",
     brandPrimary: "#82a7c9",
@@ -358,9 +358,9 @@ const STARTER_PREVIEWS = [
     industry: "Home Services",
     primaryOffer: "Emergency electrical service with instant trust cues",
     primaryCta: "Call now",
-    phone: "(720) 555-0125",
-    email: "dispatch@atlashome.com",
-    websiteUrl: "atlashome.com",
+    phone: "",
+    email: "",
+    websiteUrl: "",
     servicesText: "Emergency response\nInstallations\nMaintenance",
     templateStyle: "6",
     brandPrimary: "#5b8df6",
@@ -757,7 +757,7 @@ function setViewport(viewport) {
   saveState();
 }
 
-function setMobilePane(pane) {
+function setMobilePane(pane, options = {}) {
   const nextPane = ["scene", "signal", "brain"].includes(String(pane)) ? String(pane) : "scene";
   state.activeMobilePane = nextPane;
   els.appShell.dataset.mobilePane = nextPane;
@@ -766,7 +766,23 @@ function setMobilePane(pane) {
     const active = button.dataset.mobilePaneButton === nextPane;
     button.classList.toggle("active", active);
     button.setAttribute("aria-selected", String(active));
+    button.tabIndex = active ? 0 : -1;
   });
+
+  els.mobilePanels.forEach((panel) => {
+    const active = panel.dataset.mobilePane === nextPane;
+    panel.setAttribute("aria-hidden", String(isCompactLayout() && !active));
+  });
+
+  if (options.reveal && isCompactLayout()) {
+    const activePanel = els.mobilePanels.find((panel) => panel.dataset.mobilePane === nextPane);
+    window.requestAnimationFrame(() => {
+      activePanel?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+  }
 }
 
 function setVariant(variant) {
@@ -925,7 +941,7 @@ function loadStarterDraft() {
   const storageKey = "lfnyc-starter-preview-id";
   const existingId = window.sessionStorage.getItem(storageKey);
   const existing = STARTER_PREVIEWS.find((item) => item.id === existingId);
-  const selected = existing || STARTER_PREVIEWS[Math.floor(Math.random() * STARTER_PREVIEWS.length)];
+  const selected = existing || STARTER_PREVIEWS[0];
   window.sessionStorage.setItem(storageKey, selected.id);
   return normalizeDraft(selected);
 }
@@ -1071,27 +1087,27 @@ function createHeroBody(profile, concept) {
 
 function createProofLine(profile, concept) {
   if (profile.key === "med-spa") {
-    return "Clients choose a calm consultation, natural-looking results, and an elevated experience from start to finish.";
+    return "Add verified treatment examples, practitioner credentials, or a real client review before publishing.";
   }
   if (profile.key === "home-service") {
-    return "People come back for quick response times, clear communication, and work that feels dependable.";
+    return "Add the verified service area, response process, credentials, and real reviews before publishing.";
   }
   if (profile.key === "legal") {
-    return "Clients value practical guidance, careful preparation, and clear communication at every stage.";
+    return "Add verified credentials, practice details, and approved client proof before publishing.";
   }
   if (profile.key === "agency") {
-    return "Teams trust the mix of sharp strategy, strong creative, and a process that keeps momentum moving.";
+    return "Add real project work, an approved client quote, or a concrete process artifact before publishing.";
   }
   if (profile.key === "clinic") {
-    return "Patients come for thoughtful care, clearer next steps, and a smoother first-visit experience.";
+    return "Add verified clinician credentials, care information, and approved patient proof before publishing.";
   }
   if (profile.key === "hospitality") {
-    return "Guests remember the warmth, the details, and how easy it feels to book with confidence.";
+    return "Add real property imagery, verified amenities, and approved guest proof before publishing.";
   }
   if (profile.key === "tattoo") {
-    return "Clients come for custom work, a distinct point of view, and a booking process that feels dialed in.";
+    return "Add real artist work, studio policies, and approved client proof before publishing.";
   }
-  return "Clients choose clear communication, polished service, and a smoother path from interest to action.";
+  return "Add real work, verified credentials, or an approved customer quote before publishing.";
 }
 
 function createServiceBody(service, concept, index) {
@@ -1139,7 +1155,7 @@ function createFaqs(concept) {
       answer: `${concept.businessName} is a strong fit for ${concept.audience}.`
     },
     {
-      question: "What makes this different?",
+      question: "What proof belongs here?",
       answer: concept.proofLine
     }
   ];
@@ -1189,10 +1205,10 @@ function getPreviewContent(profile, concept) {
     ],
     supportCards: [
       { label: "Featured Service", value: concept.primaryOffer },
-      { label: "Why Clients Choose Us", value: concept.proofLine },
-      { label: "Start Here", value: `${concept.primaryCta} or call ${concept.phone}.` }
+      { label: "Proof Slot", value: concept.proofLine },
+      { label: "Primary Action", value: concept.primaryCta }
     ],
-    whyChooseHeading: "Why clients choose us",
+    whyChooseHeading: "Proof to add",
     whyChooseBody: concept.proofLine
   };
 
@@ -1316,30 +1332,21 @@ function getPreviewContent(profile, concept) {
 }
 
 function buildVariantScores(profile, signalStrength, mode) {
-  const base = 6.5 + signalStrength / 42;
-  const safe = round1(clamp(base + VARIANT_CONFIGS.safe.scoreBias + (profile.key === "legal" ? 0.3 : 0), 5.9, 9.6));
-  const bold = round1(
-    clamp(base + VARIANT_CONFIGS.bold.scoreBias + (profile.key === "agency" || profile.key === "med-spa" ? 0.2 : 0), 6.2, 9.7)
-  );
-  const experimental = round1(
-    clamp(
-      base +
-        VARIANT_CONFIGS.experimental.scoreBias +
-        (mode === "dream" ? 0.6 : 0) +
-        (profile.key === "tattoo" ? 0.5 : 0),
-      5.7,
-      9.4
-    )
-  );
-
-  return { safe, bold, experimental };
+  void profile;
+  void signalStrength;
+  void mode;
+  return {
+    safe: "Available",
+    bold: "Available",
+    experimental: "Available"
+  };
 }
 
 function buildSuggestions(concept) {
   const suggestions = [];
 
   if (concept.confidences.proof < 55) {
-    suggestions.push("Add a trust signal or stat to lift proof confidence.");
+    suggestions.push("Add a verified trust signal to complete the proof section.");
   }
   if (!state.draft.servicesText.trim()) {
     suggestions.push("Name 2 to 3 services if you want tighter service cards.");
@@ -1348,7 +1355,7 @@ function buildSuggestions(concept) {
     suggestions.push("Add a phone number if the concept should prioritize faster contact.");
   }
   if (state.draft.mode === "prompt" && state.draft.promptInput.trim().split(" ").length < 6) {
-    suggestions.push("Give the prompt a clearer niche or offer for stronger inference.");
+    suggestions.push("Give the prompt a clearer niche or offer for a tighter rule match.");
   }
   if (state.draft.mode === "dream") {
     suggestions.push("Dream Mode gets stronger when you pair a mood with a business type.");
@@ -1359,31 +1366,31 @@ function buildSuggestions(concept) {
 }
 
 function buildOutputs(signalStrength) {
+  void signalStrength;
   return [
     {
       label: "Landing Page",
-      status: signalStrength > 45 ? "Ready" : "Scaffolding",
-      detail: "Live previewable"
+      status: "Preview",
+      detail: "Rendered in this browser"
     },
     {
       label: "Full Site",
-      status: signalStrength > 62 ? "Mapped" : "Concepting",
-      detail: "Structure inferred"
+      status: "Outline",
+      detail: "Five local sections"
     },
     {
       label: "Share Pack",
-      status: signalStrength > 35 ? "Derived" : "Queued",
-      detail: "Link, markdown, CTA"
+      status: "Export",
+      detail: "URL and Markdown"
     }
   ];
 }
 
 function buildHeatmap(profile, signalStrength) {
-  const lift = clamp(Math.round(10 + signalStrength / 4), 12, 31);
+  void signalStrength;
   return {
-    title: "Heatmap Simulation",
-    body: profile.heatmap,
-    lift
+    title: "CTA Placement Rule",
+    body: profile.heatmap
   };
 }
 
@@ -1397,9 +1404,9 @@ function buildConcept(draft) {
   const industry = analysis.industry;
   const primaryOffer = analysis.offer;
   const primaryCta = analysis.cta;
-  const phone = draft.phone || "(555) 010-0000";
-  const email = draft.email || `hello@${slugify(businessName || "concept")}.studio`;
-  const websiteUrl = normalizeUrl(draft.websiteUrl || `${slugify(businessName || "concept")}.lfnyc.preview`);
+  const phone = draft.phone.trim();
+  const email = draft.email.trim();
+  const websiteUrl = normalizeUrl(draft.websiteUrl);
   const services = analysis.services;
   const audience = analysis.audience;
 
@@ -1583,16 +1590,15 @@ function buildMarkdown(brief) {
 ## Homepage Structure
 ${brief.reasoning.structure.map((section) => `- ${section}`).join("\n")}
 
-## Confidence
+## Brief Coverage
 - Hero: ${brief.reasoning.confidences.hero}%
 - Services: ${brief.reasoning.confidences.services}%
 - Proof: ${brief.reasoning.confidences.proof}%
 - FAQ: ${brief.reasoning.confidences.faq}%
 - Contact: ${brief.reasoning.confidences.contact}%
 
-## Heatmap Simulation
+## CTA Placement Rule
 - Recommendation: ${brief.reasoning.heatmap.body}
-- Predicted lift: ${brief.reasoning.heatmap.lift}%
 
 ## Suggestions
 ${brief.reasoning.suggestions.map((item) => `- ${item}`).join("\n")}
@@ -1645,7 +1651,8 @@ function renderConfidenceList(concept) {
   ];
   const average = Math.round(entries.reduce((sum, [, value]) => sum + value, 0) / entries.length);
 
-  els.confidenceHeadline.textContent = average >= 80 ? "Confidence is high" : average >= 60 ? "Confidence is climbing" : "Signal needs reinforcement";
+  els.confidenceHeadline.textContent =
+    average >= 80 ? "Brief coverage is high" : average >= 60 ? "Brief coverage is growing" : "Add details to improve coverage";
   els.confidenceList.innerHTML = entries
     .map(
       ([label, value]) => `
@@ -1672,7 +1679,7 @@ function renderVariants(concept) {
       return `
         <button class="variant-card ${active ? "active" : ""}" data-variant="${escapeHtml(key)}" type="button">
           <span class="variant-label">${escapeHtml(variant.label)}</span>
-          <strong>${scoreMap[key]}</strong>
+          <strong>${active ? "Selected" : scoreMap[key]}</strong>
           <p>${escapeHtml(variant.note)}</p>
         </button>
       `;
@@ -1707,7 +1714,7 @@ function renderOutputs(concept) {
 
   els.heatmapCard.innerHTML = `
     <span class="brain-card-tag">${escapeHtml(concept.heatmap.title)}</span>
-    <strong>Predicted click lift: ${concept.heatmap.lift}%</strong>
+    <strong>Rule-based layout note</strong>
     <p>${escapeHtml(concept.heatmap.body)}</p>
   `;
 }
@@ -1765,9 +1772,9 @@ function renderBrain() {
       5
   );
 
-  els.brainSummary.textContent = `${concept.businessName} is leaning ${concept.tone}. Avg confidence ${confidenceAverage}%.`;
+  els.brainSummary.textContent = `${concept.businessName} matches the ${concept.tone} rule set. Brief coverage is ${confidenceAverage}%.`;
   els.brainStatus.textContent =
-    confidenceAverage >= 80 ? "Vector Lock" : confidenceAverage >= 60 ? "Adaptive Grid" : "Low Signal";
+    confidenceAverage >= 80 ? "Brief well covered" : confidenceAverage >= 60 ? "Brief taking shape" : "More detail needed";
 
   renderDecisionList(concept);
   renderConfidenceList(concept);
@@ -1780,11 +1787,19 @@ function renderSectionAlert(label, value) {
   if (value >= 60) {
     return "";
   }
-  return `<div class="section-alert">${escapeHtml(label)} confidence ${value}%</div>`;
+  return `<div class="section-alert">${escapeHtml(label)} brief coverage ${value}%</div>`;
 }
 
 function renderSiteMarkup(concept) {
   const palette = concept.palette;
+  const contactDetails =
+    [
+      concept.phone ? `<p>${escapeHtml(concept.phone)}</p>` : "",
+      concept.email ? `<p>${escapeHtml(concept.email)}</p>` : "",
+      concept.websiteHost ? `<p>${escapeHtml(concept.websiteHost)}</p>` : ""
+    ]
+      .filter(Boolean)
+      .join("") || "<p>Contact details not provided. Add them in the Brief pane.</p>";
   const navItems = concept.navItems
     .map((item) => `<span>${escapeHtml(item)}</span>`)
     .join("");
@@ -1921,9 +1936,7 @@ function renderSiteMarkup(concept) {
             ${renderSectionAlert("Contact", concept.confidences.contact)}
             <p class="site-kicker">START HERE</p>
             <h4>${escapeHtml(concept.primaryCta)}</h4>
-            <p>${escapeHtml(concept.phone)}</p>
-            <p>${escapeHtml(concept.email)}</p>
-            <p>${escapeHtml(concept.websiteHost)}</p>
+            ${contactDetails}
           </article>
           <article class="site-card site-card-contrast">
             <p class="site-kicker">${escapeHtml(concept.whyChooseHeading)}</p>
@@ -1980,8 +1993,8 @@ function renderDeviceFrame(concept, type) {
 function renderScene() {
   const concept = state.concept;
   els.sceneTitle.textContent = `${concept.businessName} / ${concept.template.label}`;
-  els.liveStatus.textContent = concept.signalStrength > 60 ? "LIVE VECTOR / LOCKED" : "LIVE VECTOR / WARMING";
-  els.sceneMeta.textContent = `${concept.structure.length} sectors / 3 variants / ${concept.signalStrength}% signal`;
+  els.liveStatus.textContent = "LOCAL PREVIEW / ACTIVE";
+  els.sceneMeta.textContent = `${concept.structure.length} sections / 3 variants / ${concept.signalStrength}% brief coverage`;
 
   let frames = "";
   if (state.selectedViewport === "desktop") {
@@ -2302,21 +2315,10 @@ function shareConcept() {
   });
 }
 
-function publishConcept() {
-  startForgeSequence(
-    "Publishing concept",
-    [
-      "Signal locked",
-      "Snapshot written",
-      "Markdown package prepared",
-      "Shareable concept URL minted"
-    ],
-    () => {
-      const shareUrl = state.concept.shareUrl;
-      window.history.replaceState({}, "", shareUrl);
-      shareConcept();
-    }
-  );
+function saveShareLink() {
+  const shareUrl = state.concept.shareUrl;
+  window.history.replaceState({}, "", shareUrl);
+  shareConcept();
 }
 
 function loadDemo() {
@@ -2331,20 +2333,9 @@ function loadDemo() {
   setMode("prompt");
   hydrateForm(state.draft);
   setViewport(state.selectedViewport);
-  startForgeSequence(
-    "Forging demo concept",
-    [
-      "Signal intake received",
-      "AI inference shaping structure",
-      "Brand palette resolving",
-      "Preview frames rendering"
-    ],
-    () => {
-      refresh({ reason: "Demo load" });
-      setMobilePane("scene");
-      showToast("Demo concept ready");
-    }
-  );
+  refresh({ reason: "Demo load" });
+  setMobilePane("scene");
+  showToast("Fictional sample loaded");
 }
 
 function restoreFromUrl() {
@@ -2453,8 +2444,29 @@ function init() {
 
   els.mobilePaneButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      setMobilePane(button.dataset.mobilePaneButton);
+      setMobilePane(button.dataset.mobilePaneButton, { reveal: true });
     });
+  });
+
+  els.mobileWorkspace.addEventListener("keydown", (event) => {
+    const activeIndex = els.mobilePaneButtons.indexOf(document.activeElement);
+    if (activeIndex < 0 || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+    const lastIndex = els.mobilePaneButtons.length - 1;
+    const nextIndex =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? lastIndex
+          : event.key === "ArrowRight"
+            ? (activeIndex + 1) % els.mobilePaneButtons.length
+            : (activeIndex - 1 + els.mobilePaneButtons.length) % els.mobilePaneButtons.length;
+    const nextButton = els.mobilePaneButtons[nextIndex];
+    setMobilePane(nextButton.dataset.mobilePaneButton, { reveal: true });
+    nextButton.focus();
   });
 
   els.studioForm.addEventListener("input", handleFormInput);
@@ -2463,7 +2475,7 @@ function init() {
     setMenuOpen(false);
     loadDemo();
   });
-  els.publishButton.addEventListener("click", publishConcept);
+  els.publishButton.addEventListener("click", saveShareLink);
   els.shareButton.addEventListener("click", shareConcept);
   els.exportMarkdownButton.addEventListener("click", exportMarkdown);
   els.downloadMarkdownButton.addEventListener("click", () => {
@@ -2551,6 +2563,7 @@ function init() {
     if (isCompactLayout() && state.selectedViewport === "duo") {
       setViewport("mobile");
     }
+    setMobilePane(state.activeMobilePane);
   });
 }
 

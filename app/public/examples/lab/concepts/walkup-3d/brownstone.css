@@ -5,6 +5,8 @@
   --bs-line: rgba(243, 241, 235, 0.18);
   --bs-signal: #f97316;
   --bs-panel: rgba(8, 9, 13, 0.76);
+  --bs-panel-strong: rgba(8, 9, 13, 0.92);
+  --bs-blue: #60a5fa;
   --bs-display: "Oswald", ui-sans-serif, system-ui, sans-serif;
   --bs-body: "Barlow", ui-sans-serif, system-ui, sans-serif;
   --bs-mono: "JetBrains Mono", ui-monospace, monospace;
@@ -63,11 +65,18 @@ a {
 
 body.is-inspecting {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body.is-inspecting .brownstone-canvas {
   z-index: 30;
   pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+}
+
+body.is-inspecting .brownstone-canvas:active {
+  cursor: grabbing;
 }
 
 body.is-inspecting .brownstone-story,
@@ -80,11 +89,29 @@ body.is-inspecting .brownstone-help {
 .brownstone-fallback {
   display: grid;
   place-content: center;
+  justify-items: center;
   padding: 32px;
   background:
     radial-gradient(circle at 70% 35%, rgba(249, 115, 22, 0.16), transparent 28rem),
     var(--bs-bg);
   text-align: center;
+}
+
+.brownstone-fallback::before {
+  content: "";
+  width: min(210px, 54vw);
+  aspect-ratio: 0.74;
+  margin-bottom: 32px;
+  border: 8px solid #b4aa98;
+  border-bottom-width: 18px;
+  background:
+    linear-gradient(#f97316 0 0) 24% 24% / 18% 18% no-repeat,
+    linear-gradient(#111a25 0 0) 76% 24% / 18% 18% no-repeat,
+    linear-gradient(#111a25 0 0) 24% 55% / 18% 18% no-repeat,
+    linear-gradient(#f97316 0 0) 76% 55% / 18% 18% no-repeat,
+    linear-gradient(#24130d 0 0) 50% 100% / 24% 28% no-repeat,
+    #742c21;
+  box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.34);
 }
 
 .brownstone-fallback[hidden] {
@@ -114,7 +141,7 @@ body.is-inspecting .brownstone-help {
 }
 
 .brownstone-loader span {
-  font: 600 13px/1 var(--bs-mono);
+  font: 600 16px/1 var(--bs-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -154,7 +181,7 @@ body.is-inspecting .brownstone-help {
 .brownstone-actions button,
 .brownstone-copy button,
 .brownstone-copy a {
-  min-height: 46px;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -175,11 +202,35 @@ body.is-inspecting .brownstone-help {
     background 180ms ease;
 }
 
-.brownstone-actions button:hover,
-.brownstone-copy button:hover,
-.brownstone-copy a:hover {
-  border-color: rgba(249, 115, 22, 0.72);
-  transform: translateY(-2px);
+.brownstone-actions button {
+  min-width: 112px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 9px 16px;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.brownstone-action__meta {
+  color: var(--bs-muted);
+  font: 600 16px/1 var(--bs-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brownstone-actions button[aria-pressed="true"] .brownstone-action__meta {
+  color: rgba(17, 18, 23, 0.66);
+}
+
+@media (hover: hover) {
+  .brownstone-actions button:hover,
+  .brownstone-copy button:hover,
+  .brownstone-copy a:hover,
+  .brownstone-inspector button:hover {
+    border-color: rgba(249, 115, 22, 0.72);
+    transform: translateY(-2px);
+  }
 }
 
 .brownstone-actions button:active,
@@ -194,18 +245,14 @@ body.is-inspecting .brownstone-help {
   color: #111217;
 }
 
-body.is-inspecting [data-inspect] {
-  position: fixed;
-  top: max(92px, calc(env(safe-area-inset-top) + 70px));
-  right: 24px;
+body.is-inspecting .brownstone-actions {
   z-index: 70;
+}
+
+body.is-inspecting [data-inspect] {
   border-color: var(--bs-signal);
   background: var(--bs-signal);
   color: #111217;
-}
-
-body.is-inspecting [data-time] {
-  display: none;
 }
 
 .brownstone-rail {
@@ -222,15 +269,15 @@ body.is-inspecting [data-time] {
 }
 
 .brownstone-rail button {
-  min-height: 42px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 0;
+  padding: 0 2px;
   border: 0;
   background: transparent;
   color: rgba(243, 241, 235, 0.56);
-  font: 600 12px/1 var(--bs-mono);
+  font: 600 16px/1 var(--bs-body);
   cursor: pointer;
   transition: color 180ms ease, transform 180ms var(--bs-ease);
 }
@@ -305,7 +352,7 @@ body.is-inspecting [data-time] {
   display: block;
   margin: 0 0 18px;
   color: var(--bs-signal);
-  font: 600 12px/1 var(--bs-mono);
+  font: 600 16px/1 var(--bs-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -338,12 +385,172 @@ body.is-inspecting [data-time] {
   text-wrap: pretty;
 }
 
+.brownstone-copy__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.brownstone-copy__actions a,
+.brownstone-copy__actions button {
+  margin-top: 0;
+}
+
 .brownstone-copy a,
-.brownstone-copy button {
+.brownstone-copy button:not(.brownstone-copy__secondary) {
   margin-top: 28px;
   background: var(--bs-signal);
   border-color: var(--bs-signal);
   color: #111217;
+}
+
+.brownstone-copy__actions a,
+.brownstone-copy__actions button:not(.brownstone-copy__secondary) {
+  margin-top: 0;
+}
+
+.brownstone-copy .brownstone-copy__secondary {
+  margin-top: 0;
+  background: var(--bs-panel);
+  color: var(--bs-ink);
+}
+
+.brownstone-inspector {
+  position: fixed;
+  left: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 65;
+  width: min(440px, calc(100vw - 48px));
+  padding: 24px;
+  border: 1px solid rgba(249, 115, 22, 0.48);
+  border-radius: 32px;
+  background: var(--bs-panel-strong);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 32px 90px rgba(0, 0, 0, 0.44);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  backdrop-filter: blur(24px) saturate(120%);
+}
+
+.brownstone-inspector[hidden] {
+  display: none;
+}
+
+.brownstone-inspector__eyebrow,
+.brownstone-inspector__gesture {
+  margin: 0;
+  font: 600 16px/1.35 var(--bs-mono);
+}
+
+.brownstone-inspector__eyebrow {
+  color: var(--bs-signal);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brownstone-inspector__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.brownstone-inspector h2 {
+  margin: 0;
+  font: 700 clamp(30px, 4vw, 42px) / 0.98 var(--bs-display);
+  text-wrap: balance;
+}
+
+.brownstone-inspector__heading span {
+  flex: none;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.1);
+  color: var(--bs-blue);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.brownstone-inspector > p:not(.brownstone-inspector__eyebrow, .brownstone-inspector__gesture) {
+  margin: 14px 0 0;
+  color: var(--bs-muted);
+  font-size: 18px;
+  line-height: 1.42;
+}
+
+.brownstone-inspector__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.brownstone-inspector button {
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--bs-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bs-ink);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 180ms var(--bs-ease),
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.brownstone-inspector [data-window-light] {
+  border-color: var(--bs-signal);
+  background: var(--bs-signal);
+  color: #111217;
+}
+
+.brownstone-inspector button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.brownstone-inspector__gesture {
+  margin-top: 16px;
+  color: var(--bs-muted);
+}
+
+.brownstone-status {
+  position: fixed;
+  top: max(168px, calc(env(safe-area-inset-top) + 148px));
+  left: 50%;
+  z-index: 72;
+  max-width: min(420px, calc(100vw - 32px));
+  margin: 0;
+  padding: 11px 16px;
+  border: 1px solid var(--bs-line);
+  border-radius: 999px;
+  background: var(--bs-panel-strong);
+  color: var(--bs-ink);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -8px);
+  transition: opacity 180ms ease, transform 180ms var(--bs-ease);
+}
+
+.brownstone-status:empty {
+  visibility: hidden;
+}
+
+.brownstone-status.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .brownstone-help {
@@ -357,7 +564,7 @@ body.is-inspecting [data-time] {
   border-radius: 12px;
   background: var(--bs-panel);
   color: var(--bs-muted);
-  font: 500 12px/1.2 var(--bs-mono);
+  font: 500 16px/1.3 var(--bs-body);
   transform: translateX(-50%);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
@@ -370,14 +577,15 @@ body.is-inspecting [data-time] {
 
 @media (max-width: 760px) {
   .brownstone-actions {
-    top: max(12px, env(safe-area-inset-top));
+    top: calc(env(safe-area-inset-top) + 12px);
     right: 12px;
   }
 
   .brownstone-actions button {
-    min-height: 42px;
-    padding-inline: 14px;
-    font-size: 13px;
+    min-width: 102px;
+    min-height: 48px;
+    padding: 8px 13px;
+    font-size: 16px;
   }
 
   .brownstone-rail {
@@ -388,19 +596,28 @@ body.is-inspecting [data-time] {
     flex-direction: row;
     justify-content: space-between;
     overflow-x: auto;
-    padding: 7px;
+    gap: 4px;
+    padding: 8px;
     border: 1px solid var(--bs-line);
     border-radius: 16px;
     background: var(--bs-panel);
     transform: none;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
     -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
   }
 
   .brownstone-rail button {
     min-width: max-content;
-    min-height: 36px;
-    padding: 0 9px;
+    min-height: 44px;
+    padding: 0 12px;
+    scroll-snap-align: center;
+  }
+
+  .brownstone-rail::-webkit-scrollbar {
+    display: none;
   }
 
   .brownstone-rail button::after {
@@ -419,7 +636,7 @@ body.is-inspecting [data-time] {
     min-height: 100dvh;
     align-items: flex-end;
     justify-content: flex-start;
-    padding: 88px 12px 154px;
+    padding: 88px 12px 176px;
   }
 
   .brownstone-copy {
@@ -436,6 +653,34 @@ body.is-inspecting [data-time] {
     font-size: clamp(44px, 14vw, 68px);
   }
 
+  .brownstone-copy__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .brownstone-copy__actions > * {
+    width: 100%;
+  }
+
+  .brownstone-inspector {
+    right: 12px;
+    bottom: calc(94px + env(safe-area-inset-bottom));
+    left: 12px;
+    width: auto;
+    max-height: calc(100dvh - 176px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .brownstone-inspector__gesture {
+    display: none;
+  }
+
+  .brownstone-status {
+    top: calc(env(safe-area-inset-top) + 76px);
+  }
+
   .brownstone-help {
     display: none;
   }
@@ -449,10 +694,22 @@ body.is-inspecting [data-time] {
   }
 }
 
-html.lab-concept-embed .brownstone-actions,
+@media (min-width: 761px) and (max-width: 900px) {
+  .brownstone-inspector {
+    bottom: calc(94px + env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 176px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow-y: auto;
+  }
+}
+
 html.lab-concept-embed .brownstone-rail,
 html.lab-concept-embed .brownstone-help {
   display: none;
+}
+
+html.lab-concept-embed .brownstone-actions {
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
 }
 
 html.lab-concept-embed .brownstone-chapter {
@@ -460,8 +717,13 @@ html.lab-concept-embed .brownstone-chapter {
 }
 
 @media (max-width: 460px) {
-  .brownstone-actions [data-time] {
+  .brownstone-action__meta {
     display: none;
+  }
+
+  .brownstone-actions button {
+    min-width: auto;
+    padding-inline: 15px;
   }
 }
 
@@ -469,7 +731,9 @@ html.lab-concept-embed .brownstone-chapter {
   .brownstone-actions button,
   .brownstone-copy,
   .brownstone-help,
-  .brownstone-rail {
+  .brownstone-rail,
+  .brownstone-inspector,
+  .brownstone-status {
     background: #0b0d12;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -492,5 +756,25 @@ html.lab-concept-embed .brownstone-chapter {
   .brownstone-copy {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .brownstone-actions {
+    top: calc(env(safe-area-inset-top) + 10px);
+  }
+
+  .brownstone-inspector {
+    right: auto;
+    bottom: calc(env(safe-area-inset-bottom) + 12px);
+    left: calc(env(safe-area-inset-left) + 12px);
+    width: min(410px, 48vw);
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    padding: 18px;
+  }
+
+  .brownstone-inspector__gesture {
+    display: none;
   }
 }

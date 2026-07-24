@@ -14,7 +14,10 @@
   var featureFrame = null;
   var frameObserver = null;
   var previewTimer = 0;
+  var loadTimer = 0;
   var activePath = '';
+  var canHoverPreview = window.matchMedia &&
+    window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 561px)').matches;
 
   function revealRows() {
     if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -33,6 +36,7 @@
 
   function select(row) {
     if (!frame || !row) return;
+    deactivateFeature();
     var path = row.getAttribute('data-preview');
     rows.forEach(function (item) { item.classList.toggle('is-previewing', item === row); });
     title.textContent = row.getAttribute('data-title') || row.textContent.trim();
@@ -40,16 +44,30 @@
     link.href = row.href;
     idle.hidden = true;
     if (path === activePath) return;
+    if (frame.contentWindow) {
+      frame.contentWindow.postMessage({ type: 'lab:visibility', active: false }, location.origin);
+    }
     activePath = path;
     frame.classList.remove('is-loaded');
     loading.hidden = false;
+    loading.textContent = 'Opening the live build';
     frame.src = path;
+    clearTimeout(loadTimer);
+    loadTimer = setTimeout(function () {
+      if (frame.classList.contains('is-loaded')) return;
+      loading.textContent = 'Preview unavailable. Open the full build to continue.';
+    }, 9000);
   }
 
   if (frame) {
+    frame.referrerPolicy = 'same-origin';
     frame.addEventListener('load', function () {
+      clearTimeout(loadTimer);
       loading.hidden = true;
       frame.classList.add('is-loaded');
+      if (frame.contentWindow) {
+        frame.contentWindow.postMessage({ type: 'lab:visibility', active: true }, location.origin);
+      }
     });
   }
 
@@ -60,6 +78,7 @@
     featureFrame.src = '/examples/lab/concepts/walkup-3d/index.html?embed=1';
     featureFrame.title = 'Live preview of the Brownstone Walk-Up';
     featureFrame.tabIndex = -1;
+    featureFrame.referrerPolicy = 'same-origin';
     featureFrame.setAttribute('data-feature-frame', '');
     featureFrame.addEventListener('load', function () {
       featureStage.classList.add('is-live');
@@ -71,16 +90,30 @@
     if (frameObserver) frameObserver.observe(featureFrame);
   }
 
+  function deactivateFeature() {
+    if (!featureFrame) return;
+    if (frameObserver) frameObserver.unobserve(featureFrame);
+    if (featureFrame.contentWindow) {
+      featureFrame.contentWindow.postMessage({ type: 'lab:visibility', active: false }, location.origin);
+    }
+    featureFrame.remove();
+    featureFrame = null;
+    featureStage.classList.remove('is-live');
+    featureActivate.disabled = false;
+  }
+
   if (featureActivate) featureActivate.addEventListener('click', activateFeature);
 
-  rows.forEach(function (row) {
-    function schedule() {
-      clearTimeout(previewTimer);
-      previewTimer = setTimeout(function () { select(row); }, 100);
-    }
-    row.addEventListener('pointerenter', schedule);
-    row.addEventListener('focus', schedule);
-  });
+  if (canHoverPreview) {
+    rows.forEach(function (row) {
+      function schedule() {
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(function () { select(row); }, 100);
+      }
+      row.addEventListener('pointerenter', schedule);
+      row.addEventListener('focus', schedule);
+    });
+  }
 
   if ('IntersectionObserver' in window) {
     frameObserver = new IntersectionObserver(function (entries) {

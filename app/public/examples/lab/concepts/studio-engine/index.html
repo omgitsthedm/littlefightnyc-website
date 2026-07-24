@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="LFNYC Studio Engine is an internal AI-native website forge for rapidly generating service-business concepts."
+      content="LFNYC Studio Engine is a browser-based concept tool that applies visible local rules to a service-business brief."
     />
-    <title>Little Fight NYC Design Engine v1.2</title>
+    <title>Little Fight NYC Studio Engine | Local Rules</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,19 +23,6 @@
     <div class="grid-plane" aria-hidden="true"></div>
     <div class="noise-layer" aria-hidden="true"></div>
     <div class="scanline-layer" aria-hidden="true"></div>
-    <div class="particle-field" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
     <div class="app-shell" id="appShell">
       <header class="topbar glass-panel">
         <div class="brand-group">
@@ -48,6 +35,7 @@
             <p class="eyebrow">Little Fight NYC / Internal Only</p>
             <h1>Studio Engine</h1>
             <p class="subhead">Minimal signal in. Website concept out.</p>
+            <p class="local-disclosure">Fixed browser rules. Fictional samples. No model, API, or publishing service.</p>
           </div>
         </div>
 
@@ -69,7 +57,7 @@
           </article>
           <article class="metric-card metric-card-signal">
             <div class="metric-row">
-              <span class="metric-label">Signal Strength</span>
+              <span class="metric-label">Brief Coverage</span>
               <strong id="signalPercent">18%</strong>
             </div>
             <div class="signal-meter" aria-hidden="true">
@@ -81,19 +69,40 @@
         <div class="topbar-actions">
           <button class="ghost-button" id="contrastButton" type="button">High Contrast</button>
           <button class="ghost-button" id="exportMarkdownButton" type="button">Export Markdown</button>
-          <button class="primary-button" id="publishButton" type="button">Publish Concept</button>
+          <button class="primary-button" id="publishButton" type="button">Save Share Link</button>
         </div>
       </header>
 
       <nav class="mobile-workspace glass-panel" role="tablist" aria-label="Mobile workspace">
-        <button class="mobile-pane-chip active" data-mobile-pane-button="scene" type="button" role="tab" aria-selected="true">
+        <button
+          class="mobile-pane-chip active"
+          data-mobile-pane-button="scene"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="scenePanel"
+        >
           Preview
         </button>
-        <button class="mobile-pane-chip" data-mobile-pane-button="signal" type="button" role="tab" aria-selected="false">
-          Input
+        <button
+          class="mobile-pane-chip"
+          data-mobile-pane-button="signal"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="signalPanel"
+        >
+          Brief
         </button>
-        <button class="mobile-pane-chip" data-mobile-pane-button="brain" type="button" role="tab" aria-selected="false">
-          AI Brain
+        <button
+          class="mobile-pane-chip"
+          data-mobile-pane-button="brain"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="brainPanel"
+        >
+          Rules
         </button>
       </nav>
 
@@ -103,7 +112,7 @@
             <div>
               <p class="eyebrow">Signal Input</p>
               <h2>Ready when you are.</h2>
-              <p class="panel-copy">Answer the essentials. The engine fills the rest.</p>
+              <p class="panel-copy">Answer the essentials. Local matching rules suggest the rest.</p>
             </div>
             <button class="ghost-button" id="loadDemoButton" type="button">Load Demo</button>
           </div>
@@ -133,8 +142,8 @@
             </article>
             <article class="workflow-step">
               <span>03</span>
-              <strong>Publish</strong>
-              <p>Share the concept</p>
+              <strong>Share</strong>
+              <p>Save a URL or file</p>
             </article>
           </div>
 
@@ -142,7 +151,7 @@
             <section class="mode-panel" data-mode-panel="quick">
               <div class="section-head">
                 <span class="section-tag">30 Second Intake</span>
-                <p>Enter the core signal. The engine handles structure, copy, palette, and layout logic.</p>
+                <p>Enter the core signal. Browser rules suggest structure, copy, palette, and layout.</p>
               </div>
               <div class="field-grid">
                 <label class="field">
@@ -278,12 +287,12 @@
           </form>
         </section>
 
-        <section class="glass-panel scene-panel" data-mobile-pane="scene">
+        <section class="glass-panel scene-panel" id="scenePanel" data-mobile-pane="scene">
           <div class="panel-kicker scene-kicker">
             <div>
               <p class="eyebrow">Live Website Scene</p>
               <h2 id="sceneTitle">Signal-to-site cockpit</h2>
-              <p class="panel-copy">Live render as the signal gets stronger.</p>
+              <p class="panel-copy">The preview updates as the brief gains useful fields.</p>
             </div>
 
             <div class="scene-controls">
@@ -322,8 +331,8 @@
           </div>
 
           <div class="live-ribbon">
-            <span id="liveStatus">LIVE RENDER / ACTIVE</span>
-            <span id="sceneMeta">5 sections / 3 variants / local inference</span>
+            <span id="liveStatus">LOCAL PREVIEW / ACTIVE</span>
+            <span id="sceneMeta">5 sections / 3 variants / local rules</span>
           </div>
 
           <div class="scene-stage" id="sceneStage">
@@ -333,21 +342,21 @@
               <span class="hud-beam"></span>
               <span class="hud-ticks"></span>
             </div>
-            <button class="ai-orb" id="aiOrbButton" type="button" aria-label="Open command palette">
+            <button class="ai-orb" id="aiOrbButton" type="button" aria-label="Open local rule controls">
               <span class="orb-core"></span>
             </button>
             <div class="device-stack" id="deviceStack"></div>
           </div>
         </section>
 
-        <aside class="glass-panel brain-panel" data-mobile-pane="brain">
+        <aside class="glass-panel brain-panel" id="brainPanel" data-mobile-pane="brain">
           <div class="panel-kicker">
             <div>
-              <p class="eyebrow">AI Brain</p>
-              <h2>System decisions</h2>
-              <p class="panel-copy" id="brainSummary">Local inference. Confidence rises with better signal.</p>
+              <p class="eyebrow">Local Rulebook</p>
+              <h2>Rule decisions</h2>
+              <p class="panel-copy" id="brainSummary">Browser-only rules match the brief. No model or remote API is running.</p>
             </div>
-            <div class="brain-badge" id="brainStatus">Local Intelligence</div>
+            <div class="brain-badge" id="brainStatus">No model or API</div>
           </div>
 
           <div class="brain-scroll">
@@ -361,8 +370,8 @@
 
             <section class="brain-card">
               <div class="brain-card-head">
-                <span class="brain-card-tag">Confidence</span>
-                <strong id="confidenceHeadline">Sections adapting in real time</strong>
+                <span class="brain-card-tag">Brief Coverage</span>
+                <strong id="confidenceHeadline">Coverage updates from completed fields</strong>
               </div>
               <div class="confidence-list" id="confidenceList"></div>
             </section>
@@ -378,7 +387,7 @@
             <section class="brain-card">
               <div class="brain-card-head">
                 <span class="brain-card-tag">Suggestions</span>
-                <strong>Mutation prompts</strong>
+                <strong>Rule adjustments</strong>
               </div>
               <div class="suggestion-list" id="suggestionList"></div>
             </section>
@@ -386,7 +395,7 @@
             <section class="brain-card">
               <div class="brain-card-head">
                 <span class="brain-card-tag">Outputs</span>
-                <strong>Deployable package</strong>
+                <strong>Preview and export</strong>
               </div>
               <div class="output-grid" id="outputGrid"></div>
               <div class="heatmap-card" id="heatmapCard"></div>
@@ -396,7 +405,7 @@
       </main>
 
       <footer class="bottom-dock glass-panel">
-        <button class="dock-button" id="commandPaletteButton" type="button">⌘K Command Palette</button>
+        <button class="dock-button" id="commandPaletteButton" type="button">⌘K Rule Controls</button>
         <div class="dock-lights" aria-hidden="true">
           <span></span>
           <span></span>
@@ -420,8 +429,8 @@
       <div class="command-palette glass-panel" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
         <div class="command-head">
           <div>
-            <p class="eyebrow">Command Palette</p>
-            <h2 id="commandTitle">Mutate the concept</h2>
+            <p class="eyebrow">Local Rule Controls</p>
+            <h2 id="commandTitle">Adjust the concept</h2>
           </div>
           <button class="ghost-button" id="closeCommandButton" type="button">Close</button>
         </div>
@@ -429,7 +438,7 @@
         <form id="commandForm" class="command-form">
           <label class="field">
             <span>Command</span>
-            <small>Use natural language. Example: make this more premium.</small>
+            <small>Rules recognize choices such as “more premium,” “less copy,” or “focus on calls.”</small>
             <input id="commandInput" name="commandInput" autocomplete="off" />
           </label>
         </form>
@@ -442,7 +451,7 @@
     <div class="loading-overlay" id="loadingOverlay" hidden>
       <div class="loading-card glass-panel">
         <p class="eyebrow">LFNYC Studio Engine</p>
-        <h2 id="loadingTitle">Forging concept</h2>
+        <h2 id="loadingTitle">Applying local rules</h2>
         <div class="loading-bar" aria-hidden="true">
           <span id="loadingBarFill"></span>
         </div>

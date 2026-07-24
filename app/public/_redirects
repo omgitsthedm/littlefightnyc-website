@@ -65,6 +65,14 @@
 /field-guide/    /examples/                 301
 /field-guide     /examples/                 301
 
+# --- The Lab shorthand — the obvious spoken URL should reach the real hub
+/labs/*          /examples/lab/:splat        301
+/labs/           /examples/lab/             301
+/labs            /examples/lab/             301
+/lab/*           /examples/lab/:splat        301
+/lab/            /examples/lab/             301
+/lab             /examples/lab/             301
+
 # --- Legacy article URLs — each legacy slug now lives at /journal/{slug}/
 /blog/cybersecurity-for-small-business.html  /journal/cybersecurity-for-small-business/  301
 /blog/nyc-small-business-digital.html        /journal/nyc-small-business-digital/        301

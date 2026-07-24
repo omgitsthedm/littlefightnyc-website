@@ -2,96 +2,167 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Little Fight NYC animated storefront growth illustration.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta
+    name="description"
+    content="An interactive Little Fight NYC concept showing how disconnected storefront tools become one clear customer and operations system."
+  >
   <title>Little Fight NYC | Growth Street</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="page">
     <header class="hero">
-      <p class="eyebrow">Little Fight NYC Concept</p>
-      <h1>Single-Row Growth Street</h1>
-      <p class="lede">Five storefront industries, touching wall-to-wall. Each service adds a floor and pushes business growth upward.</p>
-      <button id="replayBtn" class="btn" type="button">Replay Animation</button>
+      <div class="hero-copy">
+        <p class="eyebrow">Little Fight NYC Lab</p>
+        <h1>Wire the whole block.</h1>
+        <p class="lede">
+          Five storefronts. Four useful signals. Switch between scattered tools and one connected customer path.
+        </p>
+      </div>
+
+      <div class="state-switch" role="group" aria-label="Compare system states">
+        <button class="state-button is-active" type="button" data-state-button="before" aria-pressed="true">
+          Before
+          <span>Scattered tools</span>
+        </button>
+        <button class="state-button" type="button" data-state-button="after" aria-pressed="false">
+          Connected
+          <span>One clear path</span>
+        </button>
+      </div>
     </header>
 
-    <section class="street-stage" id="streetStage" aria-label="Animated row of five storefront industries growing with added services.">
-      <div class="service-layer" id="serviceLayer" aria-hidden="true"></div>
+    <section
+      class="street-stage"
+      id="streetStage"
+      data-system-state="before"
+      aria-labelledby="stageTitle"
+      aria-describedby="stageStatus"
+    >
+      <div class="stage-topline">
+        <div>
+          <p class="stage-label">Interactive system map</p>
+          <h2 id="stageTitle">Tap a signal to run it through the block.</h2>
+        </div>
+        <p class="stage-status" id="stageStatus" aria-live="polite">Before: each shop handles the path separately.</p>
+      </div>
 
-      <ul class="street-row" aria-hidden="true">
-        <li class="building perry" data-slug="perry" style="--storefront-h: 166px;">
-          <div class="tower">
-            <div class="floors"></div>
-            <div class="storefront">
-              <span class="name">Bakery</span>
-              <span class="awning scallop"></span>
-              <span class="round-window">🥖</span>
-              <span class="door"></span>
-              <span class="display"></span>
-            </div>
-          </div>
-        </li>
+      <div class="signal-controls" role="group" aria-label="System signals">
+        <button class="signal-button" type="button" data-signal="find">
+          <span class="signal-number">01</span>
+          <span>Find</span>
+        </button>
+        <button class="signal-button" type="button" data-signal="act">
+          <span class="signal-number">02</span>
+          <span>Book or buy</span>
+        </button>
+        <button class="signal-button" type="button" data-signal="run">
+          <span class="signal-number">03</span>
+          <span>Run the work</span>
+        </button>
+        <button class="signal-button" type="button" data-signal="return">
+          <span class="signal-number">04</span>
+          <span>Come back</span>
+        </button>
+      </div>
 
-        <li class="building bleecker" data-slug="bleecker" style="--storefront-h: 210px;">
-          <div class="tower">
-            <div class="floors"></div>
-            <div class="storefront">
-              <span class="name">Cafe</span>
-              <span class="awning flat"></span>
-              <span class="drip-edge"></span>
-              <span class="chalkboard"></span>
-              <span class="icon-window">☕</span>
-              <span class="door"></span>
-            </div>
-          </div>
-        </li>
+      <div class="block-viewport" tabindex="0" aria-label="Storefront system map. Swipe horizontally on smaller screens.">
+        <div class="signal-rail" aria-hidden="true">
+          <span class="rail-line"></span>
+          <span class="rail-pulse"></span>
+        </div>
 
-        <li class="building village" data-slug="village" style="--storefront-h: 232px;">
-          <div class="tower">
-            <div class="floors"></div>
-            <div class="storefront formal">
-              <span class="name">Realty</span>
-              <span class="arched-row">
-                <span></span><span></span><span></span>
-              </span>
-              <span class="door gold"></span>
-              <span class="display"></span>
-            </div>
-          </div>
-        </li>
+        <ul class="street-row">
+          <li class="building" data-shop="Bakery">
+            <article class="shop-card">
+              <div class="roof" aria-hidden="true"><span class="roof-node"></span></div>
+              <div class="upper-windows" aria-hidden="true"><span></span><span></span></div>
+              <div class="storefront">
+                <h3>Bakery</h3>
+                <div class="shop-window" aria-hidden="true"></div>
+                <div class="shop-door" aria-hidden="true"></div>
+              </div>
+              <p class="shop-signal">No shared path</p>
+            </article>
+          </li>
 
-        <li class="building orchard" data-slug="orchard" style="--storefront-h: 192px;">
-          <div class="tower">
-            <div class="floors"></div>
-            <div class="storefront">
-              <span class="name">Hotel</span>
-              <span class="awning striped"></span>
-              <span class="display"></span>
-              <span class="flower-box"></span>
-              <span class="door arch"></span>
-            </div>
-          </div>
-        </li>
+          <li class="building building-tall" data-shop="Cafe">
+            <article class="shop-card">
+              <div class="roof" aria-hidden="true"><span class="roof-node"></span></div>
+              <div class="upper-windows upper-windows-three" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div class="storefront">
+                <h3>Cafe</h3>
+                <div class="shop-window shop-window-wide" aria-hidden="true"></div>
+                <div class="shop-door" aria-hidden="true"></div>
+              </div>
+              <p class="shop-signal">No shared path</p>
+            </article>
+          </li>
 
-        <li class="building vestry" data-slug="vestry" style="--storefront-h: 178px;">
-          <div class="tower">
-            <div class="floors"></div>
-            <div class="storefront">
-              <span class="name">Dining</span>
-              <span class="lights" aria-hidden="true"></span>
-              <span class="canopy"></span>
-              <span class="icon-window">🍷</span>
-              <span class="door"></span>
-              <span class="display"></span>
-            </div>
-          </div>
-        </li>
-      </ul>
+          <li class="building building-mid" data-shop="Realty">
+            <article class="shop-card">
+              <div class="roof" aria-hidden="true"><span class="roof-node"></span></div>
+              <div class="upper-windows" aria-hidden="true"><span></span><span></span></div>
+              <div class="storefront">
+                <h3>Realty</h3>
+                <div class="shop-window shop-window-arched" aria-hidden="true"></div>
+                <div class="shop-door" aria-hidden="true"></div>
+              </div>
+              <p class="shop-signal">No shared path</p>
+            </article>
+          </li>
+
+          <li class="building building-tall" data-shop="Hotel">
+            <article class="shop-card">
+              <div class="roof" aria-hidden="true"><span class="roof-node"></span></div>
+              <div class="upper-windows upper-windows-three" aria-hidden="true"><span></span><span></span><span></span></div>
+              <div class="storefront">
+                <h3>Hotel</h3>
+                <div class="shop-window" aria-hidden="true"></div>
+                <div class="shop-door shop-door-arched" aria-hidden="true"></div>
+              </div>
+              <p class="shop-signal">No shared path</p>
+            </article>
+          </li>
+
+          <li class="building" data-shop="Dining">
+            <article class="shop-card">
+              <div class="roof" aria-hidden="true"><span class="roof-node"></span></div>
+              <div class="upper-windows" aria-hidden="true"><span></span><span></span></div>
+              <div class="storefront">
+                <h3>Dining</h3>
+                <div class="shop-window shop-window-wide" aria-hidden="true"></div>
+                <div class="shop-door" aria-hidden="true"></div>
+              </div>
+              <p class="shop-signal">No shared path</p>
+            </article>
+          </li>
+        </ul>
+      </div>
+
+      <div class="playback">
+        <button class="play-button" id="replayBtn" type="button">Connect and replay</button>
+        <button class="pause-button" id="pauseBtn" type="button" disabled>Pause</button>
+        <p class="power-note" id="powerNote">Animation pauses when this tab is hidden.</p>
+      </div>
+    </section>
+
+    <section class="system-key" aria-labelledby="systemKeyTitle">
+      <div>
+        <p class="stage-label">What changes</p>
+        <h2 id="systemKeyTitle">The storefront stays itself. The path stops breaking.</h2>
+      </div>
+      <dl>
+        <div><dt>Find</dt><dd>Website and search point to the same useful answer.</dd></div>
+        <div><dt>Book or buy</dt><dd>The next action is obvious on touch, keyboard, and desktop.</dd></div>
+        <div><dt>Run the work</dt><dd>Intake reaches the people doing the job.</dd></div>
+        <div><dt>Come back</dt><dd>Follow-up uses information the customer chose to share.</dd></div>
+      </dl>
     </section>
   </main>
 
   <script src="app.js" defer></script>
-<script defer src="/examples/lab/assets/lab-return.js"></script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

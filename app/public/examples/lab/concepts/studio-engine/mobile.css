@@ -5,7 +5,7 @@
 @media (max-width: 1080px) {
   .mobile-workspace {
     position: sticky;
-    top: 10px;
+    top: max(8px, env(safe-area-inset-top));
     z-index: 9;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -15,7 +15,7 @@
   }
 
   .mobile-pane-chip {
-    min-height: 44px;
+    min-height: 48px;
     padding: 0 10px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -58,6 +58,7 @@
   .scene-panel,
   .brain-panel {
     padding: 16px;
+    scroll-margin-top: 84px;
   }
 
   .scene-panel {
@@ -207,7 +208,7 @@
   .topbar-actions .ghost-button,
   .topbar-actions .primary-button {
     width: auto;
-    min-height: 42px;
+    min-height: 44px;
     padding: 0 10px;
     font-size: 0.74rem;
   }
@@ -227,7 +228,7 @@
   .mode-chip,
   .segmented-chip {
     width: auto;
-    min-height: 42px;
+    min-height: 44px;
     padding: 0 10px;
   }
 

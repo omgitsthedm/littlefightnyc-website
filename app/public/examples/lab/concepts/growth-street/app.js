@@ -1,182 +1,245 @@
 const stage = document.getElementById("streetStage");
-const serviceLayer = document.getElementById("serviceLayer");
-const replayBtn = document.getElementById("replayBtn");
-const buildingNodes = Array.from(document.querySelectorAll(".building"));
+const replayButton = document.getElementById("replayBtn");
+const pauseButton = document.getElementById("pauseBtn");
+const powerNote = document.getElementById("powerNote");
+const status = document.getElementById("stageStatus");
+const stateButtons = Array.from(document.querySelectorAll("[data-state-button]"));
+const signalButtons = Array.from(document.querySelectorAll("[data-signal]"));
+const buildings = Array.from(document.querySelectorAll(".building"));
 
-const growthPlan = [
+const signalPlan = [
   {
-    slug: "perry",
-    services: ["Website", "SEO", "WiFi Fix", "Branding"]
+    id: "find",
+    label: "Find",
+    summary: "Find: the useful answer stays consistent across the block.",
+    shopLabels: ["Menu found", "Hours found", "Listings aligned", "Rooms found", "Menu found"]
   },
   {
-    slug: "bleecker",
-    services: ["Website", "SEO", "WiFi Fix", "Branding", "Reviews"]
+    id: "act",
+    label: "Book or buy",
+    summary: "Book or buy: every storefront presents one obvious next action.",
+    shopLabels: ["Order ready", "Pickup ready", "Inquiry ready", "Booking ready", "Table ready"]
   },
   {
-    slug: "village",
-    services: ["Website", "SEO", "WiFi Fix", "Branding", "CRM", "Analytics"]
+    id: "run",
+    label: "Run the work",
+    summary: "Run the work: intake reaches the person responsible for the next step.",
+    shopLabels: ["Order routed", "Queue routed", "Lead routed", "Stay routed", "Booking routed"]
   },
   {
-    slug: "orchard",
-    services: ["Website", "SEO", "WiFi Fix", "Branding"]
-  },
-  {
-    slug: "vestry",
-    services: ["Website", "SEO", "WiFi Fix", "Branding", "Reservations"]
+    id: "return",
+    label: "Come back",
+    summary: "Come back: follow-up uses only information the customer chose to share.",
+    shopLabels: ["Follow-up ready", "Visit saved", "Follow-up ready", "Stay saved", "Visit saved"]
   }
 ];
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let timers = [];
-let hasPlayedOnView = false;
+const mediaReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+const lowPower =
+  Boolean(connection?.saveData) ||
+  (Number.isFinite(navigator.hardwareConcurrency) && navigator.hardwareConcurrency <= 2);
 
-function queueTimer(callback, delay) {
-  const timerId = window.setTimeout(callback, delay);
-  timers.push(timerId);
+let activeSignalIndex = -1;
+let playing = false;
+let paused = false;
+let timerId = 0;
+let activationTimerId = 0;
+let playedOnView = false;
+let hostVisible = true;
+let hostMotionPaused = false;
+
+function clearSequenceTimer() {
+  window.clearTimeout(timerId);
+  timerId = 0;
 }
 
-function clearTimers() {
-  timers.forEach((timerId) => window.clearTimeout(timerId));
-  timers = [];
+function clearActivationTimer() {
+  window.clearTimeout(activationTimerId);
+  activationTimerId = 0;
 }
 
-function floorBottom(level, storefrontHeight, floorHeight, floorGap) {
-  return storefrontHeight + (level * (floorHeight + floorGap));
+function playbackBlocked() {
+  return document.hidden || !hostVisible || hostMotionPaused;
 }
 
-function buildFloors() {
-  growthPlan.forEach((plan) => {
-    const building = buildingNodes.find((node) => node.dataset.slug === plan.slug);
-    if (!building) return;
-
-    const holder = building.querySelector(".floors");
-    if (!holder) return;
-
-    holder.textContent = "";
-
-    const style = getComputedStyle(building);
-    const storefrontHeight = parseFloat(style.getPropertyValue("--storefront-h")) || 160;
-    const floorHeight = parseFloat(style.getPropertyValue("--floor-h")) || 44;
-    const floorGap = parseFloat(style.getPropertyValue("--floor-gap")) || 6;
-
-    plan.services.forEach((service, index) => {
-      const floor = document.createElement("div");
-      floor.className = "service-floor";
-      floor.style.bottom = `${floorBottom(index, storefrontHeight, floorHeight, floorGap)}px`;
-
-      const label = document.createElement("span");
-      label.className = "floor-label";
-      label.textContent = service;
-
-      floor.appendChild(label);
-      holder.appendChild(floor);
-    });
+function updateStateButtons(nextState) {
+  stateButtons.forEach((button) => {
+    const active = button.dataset.stateButton === nextState;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
   });
 }
 
-function getBuildingFloors(building) {
-  return Array.from(building.querySelectorAll(".service-floor"));
+function resetSignals() {
+  clearSequenceTimer();
+  clearActivationTimer();
+  stage.classList.remove("is-running");
+  signalButtons.forEach((button) => button.classList.remove("is-active"));
+  buildings.forEach((building) => {
+    building.classList.remove("is-active");
+    building.querySelector(".shop-signal").textContent =
+      stage.dataset.systemState === "after" ? "Ready for a signal" : "No shared path";
+  });
+  activeSignalIndex = -1;
 }
 
-function spawnMoneySplash(building, level) {
-  if (prefersReducedMotion) return;
+function setSystemState(nextState, options = {}) {
+  const safeState = nextState === "after" ? "after" : "before";
+  playing = false;
+  paused = false;
+  pauseButton.disabled = true;
+  pauseButton.textContent = "Pause";
+  stage.dataset.systemState = safeState;
+  updateStateButtons(safeState);
+  resetSignals();
+  status.textContent =
+    safeState === "after"
+      ? "Connected: choose a signal or replay the full path."
+      : "Before: each shop handles the path separately.";
 
-  const stageRect = stage.getBoundingClientRect();
-  const buildingRect = building.getBoundingClientRect();
-  const style = getComputedStyle(building);
-  const storefrontHeight = parseFloat(style.getPropertyValue("--storefront-h")) || 160;
-  const floorHeight = parseFloat(style.getPropertyValue("--floor-h")) || 44;
-  const floorGap = parseFloat(style.getPropertyValue("--floor-gap")) || 6;
-
-  const x = buildingRect.left - stageRect.left + buildingRect.width * 0.5;
-  const y = buildingRect.bottom - stageRect.top - floorBottom(level, storefrontHeight, floorHeight, floorGap) - floorHeight * 0.6;
-
-  for (let i = 0; i < 4; i += 1) {
-    const money = document.createElement("span");
-    money.className = "money-splash";
-    money.textContent = "$";
-
-    const dx = (Math.random() * 52) - 26;
-    const dy = -1 * (42 + Math.random() * 62);
-    const jitterX = (Math.random() * 22) - 11;
-
-    money.style.setProperty("--x", `${x + jitterX}px`);
-    money.style.setProperty("--y", `${y}px`);
-    money.style.setProperty("--dx", `${dx}px`);
-    money.style.setProperty("--dy", `${dy}px`);
-
-    serviceLayer.appendChild(money);
-
-    requestAnimationFrame(() => money.classList.add("burst"));
-    queueTimer(() => money.classList.add("fade"), 420);
-    queueTimer(() => money.remove(), 760);
+  if (options.focusSignal && safeState === "after") {
+    signalButtons[0]?.focus();
   }
 }
 
-function setFinalState() {
-  buildingNodes.forEach((building) => {
-    getBuildingFloors(building).forEach((floor) => floor.classList.add("is-visible"));
+function activateSignal(index) {
+  const signal = signalPlan[index];
+  if (!signal) return;
+
+  clearActivationTimer();
+  activeSignalIndex = index;
+  stage.dataset.systemState = "after";
+  updateStateButtons("after");
+  stage.classList.remove("is-running");
+  void stage.offsetWidth;
+  stage.classList.add("is-running");
+
+  signalButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.signal === signal.id);
   });
+
+  buildings.forEach((building, shopIndex) => {
+    building.classList.add("is-active");
+    building.querySelector(".shop-signal").textContent = signal.shopLabels[shopIndex];
+  });
+
+  status.textContent = signal.summary;
+  activationTimerId = window.setTimeout(() => {
+    activationTimerId = 0;
+    if (activeSignalIndex !== index) return;
+    buildings.forEach((building) => building.classList.remove("is-active"));
+  }, mediaReduced.matches ? 0 : 520);
 }
 
-function resetState() {
-  clearTimers();
-  serviceLayer.textContent = "";
-
-  buildingNodes.forEach((building) => {
-    getBuildingFloors(building).forEach((floor) => floor.classList.remove("is-visible"));
-  });
+function finishSequence() {
+  clearSequenceTimer();
+  clearActivationTimer();
+  playing = false;
+  paused = false;
+  pauseButton.disabled = true;
+  pauseButton.textContent = "Pause";
+  stage.classList.remove("is-running");
+  status.textContent = "Connected: the four signals now share one clear path.";
 }
 
-function runSequence() {
-  if (prefersReducedMotion) {
-    setFinalState();
+function scheduleNext() {
+  clearSequenceTimer();
+  if (!playing || paused || playbackBlocked()) return;
+
+  const nextIndex = activeSignalIndex + 1;
+  if (nextIndex >= signalPlan.length) {
+    finishSequence();
     return;
   }
 
-  let cursor = 260;
+  activateSignal(nextIndex);
+  timerId = window.setTimeout(scheduleNext, mediaReduced.matches ? 80 : 1050);
+}
 
-  growthPlan.forEach((plan) => {
-    const building = buildingNodes.find((node) => node.dataset.slug === plan.slug);
-    if (!building) return;
+function playSequence() {
+  setSystemState("after");
+  playing = true;
+  paused = false;
+  pauseButton.disabled = false;
+  pauseButton.textContent = "Pause";
+  status.textContent = "Connecting the block.";
+  scheduleNext();
+}
 
-    const floors = getBuildingFloors(building);
+function togglePause() {
+  if (!playing) return;
 
-    floors.forEach((floor, floorIndex) => {
-      queueTimer(() => {
-        floor.classList.add("is-visible");
-        spawnMoneySplash(building, floorIndex);
-      }, cursor + floorIndex * 420);
-    });
+  paused = !paused;
+  pauseButton.textContent = paused ? "Resume" : "Pause";
+  status.textContent = paused
+    ? `Paused after ${signalPlan[Math.max(activeSignalIndex, 0)].label}.`
+    : "Sequence resumed.";
 
-    cursor += floors.length * 420 + 300;
+  if (paused) {
+    clearSequenceTimer();
+    clearActivationTimer();
+  } else {
+    scheduleNext();
+  }
+}
+
+function syncPlaybackLifecycle() {
+  if (playbackBlocked()) {
+    clearSequenceTimer();
+    clearActivationTimer();
+    return;
+  }
+  if (playing && !paused && !timerId) scheduleNext();
+}
+
+stateButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setSystemState(button.dataset.stateButton, { focusSignal: button.dataset.stateButton === "after" });
   });
-}
-
-function play() {
-  resetState();
-  runSequence();
-}
-
-buildFloors();
-if (prefersReducedMotion) {
-  setFinalState();
-}
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && !hasPlayedOnView) {
-        hasPlayedOnView = true;
-        play();
-      }
-    });
-  },
-  { threshold: 0.45 }
-);
-
-observer.observe(stage);
-
-replayBtn.addEventListener("click", () => {
-  play();
 });
+
+signalButtons.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    playing = false;
+    paused = false;
+    pauseButton.disabled = true;
+    pauseButton.textContent = "Pause";
+    clearSequenceTimer();
+    activateSignal(index);
+  });
+});
+
+replayButton.addEventListener("click", playSequence);
+pauseButton.addEventListener("click", togglePause);
+
+document.addEventListener("visibilitychange", syncPlaybackLifecycle);
+document.addEventListener("lab:visibility", (event) => {
+  hostVisible = event.detail?.active !== false;
+  syncPlaybackLifecycle();
+});
+document.addEventListener("lab:motion", (event) => {
+  hostMotionPaused = event.detail?.paused === true;
+  syncPlaybackLifecycle();
+});
+
+if (mediaReduced.matches) {
+  powerNote.textContent = "Reduced motion is on. Signals change without travel animation.";
+} else if (lowPower) {
+  powerNote.textContent = "Low-power mode detected. Tap replay when you are ready.";
+} else {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.some((entry) => entry.isIntersecting);
+      if (visible && !playedOnView) {
+        playedOnView = true;
+        playSequence();
+        observer.disconnect();
+      }
+    },
+    { threshold: 0.55 }
+  );
+  observer.observe(stage);
+}
+
+setSystemState("before");

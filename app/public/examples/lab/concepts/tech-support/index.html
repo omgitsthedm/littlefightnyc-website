@@ -1520,6 +1520,97 @@
       transform: scale(1.05);
       box-shadow: 0 6px 16px rgba(255, 90, 0, 0.4);
     }
+
+    .city-scroll-shell {
+      width: 100%;
+    }
+
+    .city-swipe-hint {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .hero-container {
+        min-width: 0;
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .hero-content,
+      .hero-visual {
+        min-width: 0;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .city-swipe-hint {
+        display: block;
+        margin: 0 0 10px;
+        color: var(--text-secondary);
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .city-scroll-shell {
+        width: 100% !important;
+        max-width: 100%;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-radius: 12px;
+        overscroll-behavior-inline: contain;
+        scroll-snap-type: inline proximity;
+        scrollbar-color: #FF5A00 rgba(0, 0, 0, 0.08);
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .city-scroll-shell .illustration {
+        width: 620px;
+        max-width: none;
+        scroll-snap-align: start;
+      }
+
+      .city-buildings-row {
+        left: 4%;
+        right: auto;
+        width: 92%;
+        max-width: none;
+        gap: 2%;
+      }
+
+      .city-building {
+        width: 15% !important;
+      }
+
+      .city-hotel,
+      .city-restaurant {
+        width: 22% !important;
+      }
+
+      .city-floor-label,
+      .city-shop-sign {
+        font-size: 16px !important;
+        line-height: 1.1;
+        letter-spacing: 0;
+        white-space: normal;
+        overflow-wrap: normal;
+        word-break: normal;
+      }
+
+      .city-service-floor.is-visible {
+        min-height: 52px;
+      }
+
+      .city-replay-btn {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        min-height: 44px;
+        width: max-content;
+        margin: 12px 0 0 auto;
+        padding: 8px 16px;
+        font-size: 16px;
+      }
+    }
   </style>
 
   <!-- Fonts: Lexend (Headings/UI) & Caveat (Accents) -->
@@ -1691,7 +1782,9 @@
           <p class="hero-note">👋 First hour of consulting is free !</p>
         </div>
         <div class="hero-visual">
-          <div class="illustration" id="streetStage">
+          <p class="city-swipe-hint">Swipe the block to inspect every storefront.</p>
+          <div class="city-scroll-shell" tabindex="0" aria-label="Scrollable storefront system map">
+            <div class="illustration" id="streetStage">
             <!-- NYC Skyline silhouette -->
             <div class="city-skyline-bg"></div>
             <div class="city-sky"></div>
@@ -1849,11 +1942,12 @@
                 </div>
               </div>
             </div>
-            <div class="city-sidewalk"></div>
-            <!-- Replay button --><button id="replayBtn" class="city-replay-btn" type="button"
-              aria-label="Replay growth animation"><i class="mdi mdi-replay" aria-hidden="true"></i>Replay
-            </button>
+              <div class="city-sidewalk"></div>
+            </div>
           </div>
+          <!-- Replay button --><button id="replayBtn" class="city-replay-btn" type="button"
+            aria-label="Replay growth animation"><i class="mdi mdi-replay" aria-hidden="true"></i>Replay
+          </button>
         </div>
       </div>
     </section>
@@ -2156,8 +2250,7 @@
             </div>
           </div>
           <div class="form-container">
-            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden"
-                name="form-name" value="contact" />
+            <form name="contact-demo" data-lab-demo-form>
               <!-- Honeypot for spam protection -->
               <p class="hidden" style="display: none" aria-hidden="true"><label>Don't fill this out:
                   <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
@@ -2174,7 +2267,8 @@
                     name="location" id="contact-location" class="form-input"
                     placeholder="Tell us a little bit about what's on your mind (e.g., 'My Wi-Fi is slow' or 'I need a new website')..."
                     style="min-height: 100px; padding-top: 12px"></textarea></div><button type="submit"
-                  class="btn btn-primary" style="width: 100%">Get in Touch </button>
+                  class="btn btn-primary" style="width: 100%">Run demo </button>
+              <p class="lab-demo-form-status" data-demo-form-status role="status" hidden></p>
             </form>
           </div>
         </div>
@@ -2247,6 +2341,19 @@
         });
       }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
       document.querySelectorAll('.sr-reveal').forEach(function (el) { obs.observe(el); });
+    })();
+  </script>
+  <script>
+    (function () {
+      var form = document.querySelector('[data-lab-demo-form]');
+      var status = document.querySelector('[data-demo-form-status]');
+      if (!form || !status) return;
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        form.reset();
+        status.hidden = false;
+        status.textContent = 'Demo complete — no information was sent.';
+      });
     })();
   </script>
 <script defer src="/examples/lab/assets/lab-return.js"></script>

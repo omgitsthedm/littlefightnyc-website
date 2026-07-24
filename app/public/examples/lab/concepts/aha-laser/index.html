@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AHA Laser Poster</title>
-  <meta name="description" content="AHA neon laser poster with animated carve-on reveal." />
-  <meta name="theme-color" content="#000000" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>AHA Laser Studio</title>
+  <meta name="description" content="A touch-friendly AHA neon laser poster with replay, speed, intensity, and reduced-motion controls." />
+  <meta name="theme-color" content="#050507" />
   <meta property="og:title" content="AHA Laser Poster" />
   <meta property="og:description" content="Neon laser-draw poster animation for After Hours Agenda." />
   <meta property="og:type" content="website" />
@@ -20,12 +20,33 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <style>
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("/assets/fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Barlow";
+      src: url("/assets/fonts/barlow-latin-700-normal.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+    }
+
     :root{
       /* ===== TUNING ===== */
-      --bg: #000;
+      color-scheme: dark;
+      --bg: #050507;
       --pink: #ff2bd6;
       --pinkSoft: #ff9af2;
       --whiteHot: #ffd0f7;
+      --pathOpacity: 0.95;
+      --hotOpacity: 0.75;
+      --softOpacity: 0.55;
+      --scanlineOpacity: 0.25;
 
       --drawDuration: 3.6s;     /* how long the carve-on takes */
       --stagger: 0.12s;         /* delay between layers */
@@ -33,27 +54,48 @@
 
       --laserSweepDuration: 1.8s;
       --laserSweepDelay: 0.2s;
+      --mobileSweepDuration: 4.2s;
+      --mobileSweepDelay: 1.1s;
     }
 
     html, body {
+      min-width: 320px;
       height: 100%;
       margin: 0;
       background: var(--bg);
       overflow: hidden;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: "Barlow", system-ui, sans-serif;
+    }
+
+    .visually-hidden{
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     .wrap{
-      height: 100%;
+      box-sizing: border-box;
+      height: 100dvh;
+      min-height: 100dvh;
       display: grid;
       place-items: center;
-      padding: 24px;
+      padding:
+        max(96px, calc(env(safe-area-inset-top) + 88px))
+        max(18px, calc(env(safe-area-inset-right) + 12px))
+        max(218px, calc(env(safe-area-inset-bottom) + 208px))
+        max(18px, calc(env(safe-area-inset-left) + 12px));
       transition: opacity 320ms ease;
     }
 
     svg{
       width: min(1200px, 95vw);
-      max-height: 92vh;
+      max-height: calc(100dvh - 228px);
       height: auto;
       display: block;
     }
@@ -66,7 +108,7 @@
       stroke-linejoin: round;
       vector-effect: non-scaling-stroke;
       filter: url(#neonGlow);
-      opacity: 0.95;
+      opacity: var(--pathOpacity);
 
       /* dash animation set in JS per-path for correct length */
       stroke-dasharray: 1;
@@ -76,7 +118,7 @@
 
     .laser-path.hot{
       stroke: var(--whiteHot);
-      opacity: 0.75;
+      opacity: var(--hotOpacity);
       stroke-width: 2.6;
       filter: url(#hotGlow);
       mix-blend-mode: screen;
@@ -84,7 +126,7 @@
 
     .laser-path.soft{
       stroke: var(--pinkSoft);
-      opacity: 0.55;
+      opacity: var(--softOpacity);
       stroke-width: 2.2;
       filter: url(#softGlow);
       mix-blend-mode: screen;
@@ -111,7 +153,7 @@
         rgba(0,0,0,0) 6px
       );
       mix-blend-mode: overlay;
-      opacity: 0.25;
+      opacity: var(--scanlineOpacity);
     }
 
     /* A moving “laser bar” sweep */
@@ -219,31 +261,137 @@
       100% { transform: translateX(175vw) skewX(-10deg); opacity: 0; }
     }
 
-    .replay-btn{
+    .poster-controls{
       position: fixed;
-      right: 18px;
-      bottom: 18px;
       z-index: 60;
-      border: 1px solid rgba(255, 43, 214, 0.7);
-      background: rgba(0, 0, 0, 0.65);
-      color: #ffd0f7;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font: 600 12px/1 "IBM Plex Mono", "Courier New", monospace;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: background 160ms ease, transform 160ms ease;
-      backdrop-filter: blur(2px);
+      left: 50%;
+      bottom: max(92px, calc(env(safe-area-inset-bottom) + 86px));
+      width: min(760px, calc(100vw - 28px - env(safe-area-inset-left) - env(safe-area-inset-right)));
+      padding: 10px;
+      border: 1px solid rgba(255, 154, 242, 0.34);
+      border-radius: 20px;
+      background: rgba(10, 8, 13, 0.86);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 18px 64px rgba(0, 0, 0, 0.56);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      transform: translateX(-50%);
     }
 
-    .replay-btn:hover{
-      background: rgba(255, 43, 214, 0.18);
-      transform: translateY(-1px);
+    .progress-row{
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 4px 6px;
+      color: #ffd0f7;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.72rem;
+    }
+
+    .scene-progress{
+      width: 100%;
+      height: 8px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      accent-color: var(--pink);
+    }
+
+    .scene-progress::-webkit-progress-bar{
+      border-radius: inherit;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .scene-progress::-webkit-progress-value{
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--pink), var(--whiteHot));
+    }
+
+    .scene-progress::-moz-progress-bar{
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--pink), var(--whiteHot));
+    }
+
+    .control-row{
+      display: grid;
+      grid-template-columns: minmax(112px, 0.8fr) minmax(150px, 1fr) minmax(230px, 1.5fr);
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .replay-btn,
+    .control-field{
+      min-height: 48px;
+      border: 1px solid rgba(255, 154, 242, 0.3);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.065);
+      color: #fff0fc;
+    }
+
+    .replay-btn{
+      padding: 0 16px;
+      background: var(--pink);
+      color: #24011e;
+      font-family: "Barlow", sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        background 160ms ease,
+        transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .replay-btn:hover,
+    .replay-btn:focus-visible{
+      background: #ff66e2;
     }
 
     .replay-btn:active{
-      transform: translateY(0);
+      transform: scale(0.98);
+    }
+
+    .control-field{
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      padding: 0 10px;
+      color: #cfc5cd;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.68rem;
+    }
+
+    .control-field select{
+      width: 100%;
+      min-height: 44px;
+      border: 0;
+      background: transparent;
+      color: #fff0fc;
+      font: 700 0.95rem/1 "Barlow", sans-serif;
+    }
+
+    .control-field input[type="range"]{
+      width: 100%;
+      min-width: 80px;
+      height: 44px;
+      margin: 0;
+      accent-color: var(--pink);
+    }
+
+    .replay-btn:focus-visible,
+    .control-field select:focus-visible,
+    .control-field input:focus-visible{
+      outline: 3px solid #ffd0f7;
+      outline-offset: 3px;
+    }
+
+    .replay-btn:disabled,
+    .control-field select:disabled{
+      cursor: not-allowed;
+      opacity: 0.58;
     }
 
     body.reduced-motion .laser-path{
@@ -261,6 +409,14 @@
       animation: none !important;
     }
 
+    @media (prefers-reduced-transparency: reduce) {
+      .poster-controls{
+        background: #110d14;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+
     @media (max-width: 780px) {
       :root{
         --drawDuration: 5.4s;
@@ -270,12 +426,16 @@
       }
 
       .wrap{
-        padding: 8px;
+        padding:
+          max(194px, calc(env(safe-area-inset-top) + 184px))
+          max(8px, env(safe-area-inset-right))
+          max(96px, calc(env(safe-area-inset-bottom) + 88px))
+          max(8px, env(safe-area-inset-left));
       }
 
       svg{
-        width: 100vw;
-        max-height: 96vh;
+        width: 100%;
+        max-height: calc(100dvh - 290px);
       }
 
       .laserbar{
@@ -283,11 +443,19 @@
         filter: blur(0.8px);
       }
 
-      .replay-btn{
-        right: 10px;
-        bottom: 10px;
-        padding: 9px 11px;
-        font-size: 11px;
+      .poster-controls{
+        top: max(8px, calc(env(safe-area-inset-top) + 6px));
+        bottom: auto !important;
+        width: calc(100vw - 20px - env(safe-area-inset-left) - env(safe-area-inset-right));
+        border-radius: 18px;
+      }
+
+      .control-row{
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .control-field.intensity-field{
+        grid-column: 1 / -1;
       }
 
       .laser-path{
@@ -325,7 +493,7 @@
       }
 
       body.mobile-simple.scene-ready .laserbar{
-        animation: sweepMobile 4.2s linear 1.1s infinite !important;
+        animation: sweepMobile var(--mobileSweepDuration) linear var(--mobileSweepDelay) infinite !important;
       }
 
       /* While mobile draw is running, keep effects light; restore glow after carve completes. */
@@ -357,10 +525,48 @@
         pointer-events: all;
       }
     }
+
+    @media (orientation: landscape) and (max-height: 560px) {
+      .wrap{
+        padding:
+          max(6px, env(safe-area-inset-top))
+          min(320px, calc(42vw + env(safe-area-inset-right)))
+          max(76px, calc(env(safe-area-inset-bottom) + 70px))
+          max(8px, env(safe-area-inset-left));
+      }
+
+      svg{
+        max-height: calc(100dvh - 84px);
+      }
+
+      .poster-controls{
+        top: 50%;
+        right: max(10px, calc(env(safe-area-inset-right) + 8px));
+        bottom: auto !important;
+        left: auto;
+        width: min(300px, calc(42vw - 18px));
+        padding: 7px;
+        transform: translateY(-50%);
+      }
+
+      .progress-row{
+        min-height: 32px;
+        padding-bottom: 2px;
+      }
+
+      .control-row{
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .control-field.intensity-field{
+        grid-column: 1 / -1;
+      }
+    }
   </style>
 </head>
 <body>
   <main class="wrap">
+    <h1 class="visually-hidden">AHA Laser Studio</h1>
     <svg id="posterSvg" viewBox="0 0 1600 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AHA neon laser poster">
       <defs>
         <!-- Neon glows -->
@@ -508,7 +714,43 @@
     <div class="loader-text">LOADING<span class="loader-dots">...</span></div>
   </div>
 
-  <button id="replayBtn" class="replay-btn" type="button" aria-label="Replay animation">Replay</button>
+  <aside class="poster-controls" aria-label="Laser poster controls">
+    <div class="progress-row">
+      <span id="progressLabel">Drawing</span>
+      <progress
+        id="sceneProgress"
+        class="scene-progress"
+        max="100"
+        value="0"
+        aria-label="Poster drawing progress"
+      ></progress>
+      <output id="progressValue" for="sceneProgress">0%</output>
+    </div>
+    <div class="control-row">
+      <button id="replayBtn" class="replay-btn" type="button">Replay</button>
+      <label class="control-field">
+        <span>Speed</span>
+        <select id="speedControl" aria-label="Drawing speed">
+          <option value="0.75">Slow</option>
+          <option value="1" selected>Normal</option>
+          <option value="1.25">Fast</option>
+          <option value="1.5">Turbo</option>
+        </select>
+      </label>
+      <label class="control-field intensity-field">
+        <span>Glow</span>
+        <input
+          id="intensityControl"
+          type="range"
+          min="45"
+          max="100"
+          value="82"
+          step="1"
+          aria-label="Laser glow intensity"
+        />
+      </label>
+    </div>
+  </aside>
 
   <div class="laserbar" aria-hidden="true"></div>
   <div class="scanlines" aria-hidden="true"></div>
@@ -525,6 +767,11 @@
 
     const svg = document.getElementById('posterSvg');
     const replayBtn = document.getElementById('replayBtn');
+    const speedControl = document.getElementById('speedControl');
+    const intensityControl = document.getElementById('intensityControl');
+    const sceneProgress = document.getElementById('sceneProgress');
+    const progressLabel = document.getElementById('progressLabel');
+    const progressValue = document.getElementById('progressValue');
     const frameOuter = document.getElementById('frameOuter');
     const frameInner = document.getElementById('frameInner');
     const dividerLine = document.getElementById('dividerLine');
@@ -574,14 +821,23 @@
     let flickerTimer = null;
     let flickerStartTimeout = null;
     let mobileGlowTimer = null;
+    let progressTimer = null;
     let lastMobileMode = null;
+    let resizeFrame = null;
+    let hostActive = true;
+    let motionPaused = false;
 
     const lowPowerDevice = (
       (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4) ||
       (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4)
     );
-    let reducedMotion = reducedMotionQuery.matches || lowPowerDevice;
+    let reducedMotion = reducedMotionQuery.matches;
     if (reducedMotion) body.classList.add('reduced-motion');
+    if (lowPowerDevice) body.classList.add('low-power');
+
+    function activityAllowed() {
+      return hostActive && !motionPaused && document.visibilityState === 'visible';
+    }
 
     function assignPathData() {
       const ahaD = PATHS.aha.d;
@@ -626,6 +882,73 @@
 
     const paths = Array.from(document.querySelectorAll('.laser-path'));
     const mobileDrawPaths = paths.filter((el) => el.classList.contains('mobile-draw'));
+
+    function applySpeedVariables() {
+      const speed = Number(speedControl.value) || 1;
+      const mobile = mobileQuery.matches;
+      const root = document.documentElement;
+      root.style.setProperty('--drawDuration', `${((mobile ? 5.4 : 3.6) / speed).toFixed(3)}s`);
+      root.style.setProperty('--stagger', `${((mobile ? 0.16 : 0.12) / speed).toFixed(3)}s`);
+      root.style.setProperty('--laserSweepDuration', `${((mobile ? 2.8 : 1.8) / speed).toFixed(3)}s`);
+      root.style.setProperty('--laserSweepDelay', `${((mobile ? 5.2 : 0.2) / speed).toFixed(3)}s`);
+      root.style.setProperty('--mobileSweepDuration', `${(4.2 / speed).toFixed(3)}s`);
+      root.style.setProperty('--mobileSweepDelay', `${(1.1 / speed).toFixed(3)}s`);
+    }
+
+    function applyIntensity() {
+      const intensity = Number(intensityControl.value) / 100;
+      const root = document.documentElement;
+      root.style.setProperty('--pathOpacity', (0.5 + (intensity * 0.5)).toFixed(2));
+      root.style.setProperty('--hotOpacity', (0.4 + (intensity * 0.5)).toFixed(2));
+      root.style.setProperty('--softOpacity', (0.25 + (intensity * 0.4)).toFixed(2));
+      root.style.setProperty('--scanlineOpacity', (0.05 + (intensity * 0.23)).toFixed(2));
+    }
+
+    function updateProgress(value, label = 'Drawing') {
+      const rounded = Math.round(Math.max(0, Math.min(100, value)));
+      sceneProgress.value = rounded;
+      progressValue.value = `${rounded}%`;
+      progressLabel.textContent = label;
+    }
+
+    function startProgress() {
+      if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+      }
+
+      if (reducedMotion) {
+        updateProgress(100, 'Static mode');
+        return;
+      }
+      if (!activityAllowed()) return;
+
+      const visiblePaths = mobileQuery.matches ? mobileDrawPaths : paths;
+      const styles = getComputedStyle(document.documentElement);
+      const drawMs = (parseFloat(styles.getPropertyValue('--drawDuration')) || 3.6) * 1000;
+      const staggerMs = (parseFloat(styles.getPropertyValue('--stagger')) || 0.12) * 1000;
+      const totalMs = drawMs + (Math.max(0, visiblePaths.length - 1) * staggerMs);
+      const initialProgress = Math.max(0, Math.min(100, Number(sceneProgress.value) || 0));
+      const start = performance.now();
+      updateProgress(initialProgress);
+
+      progressTimer = setInterval(() => {
+        const progress = initialProgress + (((performance.now() - start) / totalMs) * 100);
+        if (progress >= 100) {
+          clearInterval(progressTimer);
+          progressTimer = null;
+          updateProgress(100, 'Ready');
+          return;
+        }
+        updateProgress(progress);
+      }, 80);
+    }
+
+    function syncControlState() {
+      replayBtn.textContent = reducedMotion ? 'Reset poster' : 'Replay';
+      speedControl.disabled = reducedMotion;
+      if (reducedMotion) updateProgress(100, 'Static mode');
+    }
 
     if (mobileQuery.matches && !reducedMotion) {
       body.classList.add('mobile-booting');
@@ -673,10 +996,14 @@
         clearTimeout(mobileGlowTimer);
         mobileGlowTimer = null;
       }
+      if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+      }
     }
 
     function restartFlicker(mobile) {
-      if (!sceneReady || mobile || reducedMotion) return;
+      if (!sceneReady || mobile || reducedMotion || lowPowerDevice || !activityAllowed()) return;
 
       if (flickerTimer) clearInterval(flickerTimer);
       if (flickerStartTimeout) clearTimeout(flickerStartTimeout);
@@ -699,7 +1026,7 @@
         clearTimeout(mobileGlowTimer);
         mobileGlowTimer = null;
       }
-      if (reducedMotion) return;
+      if (reducedMotion || !activityAllowed()) return;
 
       if (!mobile) {
         body.classList.add('mobile-glow-on');
@@ -716,6 +1043,7 @@
     function applyLayout() {
       const mobile = mobileQuery.matches;
       const profile = mobile ? MOBILE : DESKTOP;
+      applySpeedVariables();
       body.classList.toggle('mobile-simple', mobile);
       if (!mobile) body.classList.remove('mobile-glow-on');
 
@@ -777,6 +1105,7 @@
       syncMobileGlow(mobile);
       lastMobileMode = mobile;
       restartFlicker(mobile);
+      startProgress();
     }
 
     function bootstrapScene() {
@@ -814,6 +1143,7 @@
       stopTimers();
       sceneReady = false;
       lastMobileMode = null;
+      updateProgress(0);
       body.classList.remove('scene-ready');
       body.classList.remove('mobile-glow-on');
       const mobile = mobileQuery.matches;
@@ -823,18 +1153,68 @@
     }
 
     replayBtn.addEventListener('click', replayScene);
+    speedControl.addEventListener('change', () => {
+      applySpeedVariables();
+      replayScene();
+    });
+    intensityControl.addEventListener('input', applyIntensity);
 
     if (reducedMotionQuery.addEventListener) {
       reducedMotionQuery.addEventListener('change', () => {
-        reducedMotion = reducedMotionQuery.matches || lowPowerDevice;
+        reducedMotion = reducedMotionQuery.matches;
         body.classList.toggle('reduced-motion', reducedMotion);
+        syncControlState();
         replayScene();
       });
     }
 
+    function syncActivity() {
+      if (!activityAllowed()) {
+        stopTimers();
+        return;
+      }
+      if (!sceneReady) return;
+      const mobile = mobileQuery.matches;
+      syncMobileGlow(mobile);
+      restartFlicker(mobile);
+      if (!reducedMotion && Number(sceneProgress.value) < 100) startProgress();
+    }
+
+    document.addEventListener('lab:visibility', (event) => {
+      hostActive = event.detail?.active !== false;
+      syncActivity();
+    });
+    document.addEventListener('lab:motion', (event) => {
+      motionPaused = event.detail?.paused === true;
+      syncActivity();
+    });
+    window.addEventListener('message', (event) => {
+      if (event.origin !== location.origin || !event.data) return;
+      if (event.data.type === 'lab:visibility') hostActive = event.data.active !== false;
+      if (event.data.type === 'lab:motion') motionPaused = event.data.paused === true;
+      syncActivity();
+    });
+    document.addEventListener('visibilitychange', syncActivity);
+
+    function scheduleLayout() {
+      if (resizeFrame) cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = null;
+        applyLayout();
+      });
+    }
+
+    applySpeedVariables();
+    applyIntensity();
+    syncControlState();
     bootstrapScene();
-    window.addEventListener('resize', applyLayout);
-    window.addEventListener('orientationchange', applyLayout);
+    window.addEventListener('resize', scheduleLayout, { passive: true });
+    window.addEventListener('orientationchange', scheduleLayout, { passive: true });
+    window.addEventListener('pagehide', () => {
+      stopTimers();
+      if (resizeFrame) cancelAnimationFrame(resizeFrame);
+      resizeFrame = null;
+    }, { once: true });
   </script>
 <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>

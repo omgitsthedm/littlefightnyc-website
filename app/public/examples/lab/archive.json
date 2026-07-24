@@ -6,7 +6,12 @@
   "sourceFiles": 160,
   "htmlPages": 47,
   "concepts": 11,
-  "liveFiles": 165,
+  "liveFiles": 173,
+  "upgradeVersion": 2,
+  "upgradeDate": "2026-07-23",
+  "capabilitySuites": 4,
+  "enhancedConcepts": 11,
+  "upgradeFocus": "Touch-first capability workbenches for phone, tablet, and desktop",
   "flagshipUpgrade": "Living Instrument",
   "flagshipUpgradeDate": "2026-07-21",
   "recoveredFiles": [

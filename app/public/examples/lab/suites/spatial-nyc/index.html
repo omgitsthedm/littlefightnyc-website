@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" data-suite="spatial-nyc">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Spatial NYC | The Lab | Little Fight NYC</title>
+  <meta name="description" content="Explore procedural New York architecture, touch-ready 3D inspection, and scroll-linked spatial storytelling from Little Fight NYC.">
+  <meta name="theme-color" content="#07080c">
+  <link rel="canonical" href="https://littlefightnyc.com/examples/lab/suites/spatial-nyc/">
+  <link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
+  <link rel="stylesheet" href="/examples/lab/assets/suite.css">
+  <script defer src="/examples/lab/assets/suite.js"></script>
+</head>
+<body>
+  <a class="suite-skip" href="#workbench">Skip to the workbench</a>
+  <header class="suite-bar">
+    <a class="suite-brand" href="/" aria-label="Little Fight NYC home">
+      <img src="/examples/lab/assets/favicon.svg" width="34" height="24" alt="">
+      <span>LITTLEFIGHT<span>NYC</span></span>
+    </a>
+    <nav class="suite-navigation" data-suite-navigation aria-label="Capability suites"></nav>
+    <a class="suite-back" href="/examples/lab/">All Labs</a>
+  </header>
+
+  <main class="suite-main" data-suite-root>
+    <section class="suite-hero" aria-labelledby="suite-title">
+      <div class="suite-hero__copy">
+        <p class="suite-label">Architecture you can enter</p>
+        <h1 id="suite-title">Spatial NYC</h1>
+        <p class="suite-hero__lede">Walk a procedural brownstone, inspect its facade, then shift into a cinematic city-scale build.</p>
+      </div>
+      <div class="suite-hero__proof" aria-label="Suite details">
+        <div><strong data-suite-count>Two working builds</strong><span>One connected spatial workbench</span></div>
+        <div><strong>Touch, pointer, keyboard</strong><span>Designed for phones, tablets, and desktops</span></div>
+      </div>
+    </section>
+
+    <section class="suite-workbench" id="workbench" aria-labelledby="workbench-title">
+      <aside class="suite-sidebar">
+        <header class="suite-sidebar__head">
+          <h2 id="workbench-title">Live workbench</h2>
+          <p>Choose a build. The stage stays interactive.</p>
+        </header>
+        <div class="suite-concepts" data-concept-navigation role="tablist" aria-label="Spatial builds"></div>
+        <p class="suite-keyboard-note">Arrow keys switch builds. D changes the preview width. P pauses motion.</p>
+      </aside>
+
+      <div class="suite-stage" data-suite-stage>
+        <div class="suite-stage__toolbar">
+          <div class="suite-view-controls" aria-label="Preview width">
+            <button class="suite-control" type="button" data-suite-view="auto">Auto</button>
+            <button class="suite-control" type="button" data-suite-view="phone">Phone</button>
+            <button class="suite-control" type="button" data-suite-view="tablet">Tablet</button>
+            <button class="suite-control" type="button" data-suite-view="desktop">Desktop</button>
+          </div>
+          <div class="suite-stage__actions">
+            <button class="suite-control" type="button" data-pause-suite aria-pressed="false">Pause motion</button>
+            <button class="suite-control" type="button" data-fullscreen-suite>Full screen</button>
+          </div>
+        </div>
+
+        <div class="suite-device">
+          <div class="suite-frame-shell" data-frame-shell data-view="desktop">
+            <div class="suite-loading" data-suite-loading role="status">Preparing the spatial stage</div>
+            <iframe
+              data-suite-frame
+              title="Spatial NYC live build"
+              allow="fullscreen"
+            ></iframe>
+          </div>
+        </div>
+
+        <div class="suite-stage__footer">
+          <div class="suite-stage__copy">
+            <span data-concept-type>Spatial build</span>
+            <strong data-concept-title>Loading</strong>
+            <p data-concept-description>Preparing the selected build.</p>
+          </div>
+          <a class="suite-open" data-open-concept href="/examples/lab/">Open build</a>
+          <div class="suite-stepper">
+            <button type="button" data-previous-concept aria-label="Previous build">←</button>
+            <span class="suite-status" data-suite-status aria-live="polite">Loading workbench</span>
+            <button type="button" data-next-concept aria-label="Next build">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="suite-capability-section" aria-labelledby="capability-title">
+      <h2 id="capability-title">What this suite proves.</h2>
+      <ol class="suite-capabilities" data-suite-capabilities></ol>
+    </section>
+  </main>
+
+  <footer class="suite-footer">
+    <p>Designed, hosted and cared for by <a href="/">Little Fight NYC</a>.</p>
+    <a href="/tech-audit/?intent=website&amp;source=lab-spatial">Bring us the difficult idea</a>
+  </footer>
+
+  <noscript>
+    <p><a href="/examples/lab/concepts/walkup-3d/">Open Brownstone Walk-Up</a></p>
+    <p><a href="/examples/lab/concepts/terminal-3d/">Open Cinematic 3D</a></p>
+  </noscript>
+</body>
+</html>

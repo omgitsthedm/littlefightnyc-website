@@ -12,7 +12,7 @@
 <meta name="theme-color" content="#0b0b10" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../assets/css/styles.css" />
 <style>
   h1,h2,h3,.brand .word,nav.primary a,.btn,.badge,summary,label{font-family:"Space Grotesk", ui-sans-serif, system-ui;}
@@ -24,7 +24,7 @@
 <meta property="og:description" content="Chef Drew services: catering, private events, brand collaborations, and live cooking experiences." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.iam-cooking.com/services/" />
-<meta property="og:image" content="../assets/brand/og-image.jpg" />
+<meta property="og:image" content="../assets/photos/hero.webp" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FoodEstablishment", "name": "I Am Cooking", "url": "https://www.iam-cooking.com/", "email": "iamcookingcaters@gmail.com", "areaServed": ["New York, NY", "Manhattan", "Brooklyn", "Queens", "Bronx", "New Jersey"], "sameAs": ["https://www.instagram.com/iamcooking/", "https://www.tiktok.com/@iamcooking", "https://www.youtube.com/@IAmCooking_"]}</script>
@@ -40,7 +40,7 @@
       <img src="../assets/brand/logo-header.webp" alt="I Am Cooking" />
     </a>
 
-    <nav class="primary" data-nav>
+    <nav class="primary" id="primary-navigation" data-nav>
       <a href="../index.html">Home</a>
       <a href="index.html" aria-current="page">Services</a>
       <a href="../press/index.html">Press</a>
@@ -50,7 +50,7 @@
 
     <div class="actions">
       <a class="btn primary small" href="../contact/index.html">Book Chef Drew</a>
-      <button class="hamburger" type="button" data-nav-toggle aria-label="Open menu" aria-expanded="false">
+      <button class="hamburger" type="button" data-nav-toggle aria-label="Open menu" aria-controls="primary-navigation" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>

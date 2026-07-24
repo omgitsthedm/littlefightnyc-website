@@ -2,104 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Scroll-driven pill expansion demo inspired by Rivian: pinned section, rapid image sequence, full-screen reveal, and optimized WebP assets." />
-  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="4" y="16" width="56" height="32" rx="16" fill="%23101010"/></svg>' />
-  <title>Little Fight - GSAP Scrollytelling Pill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#08080a" />
+  <meta name="description" content="An interactive Little Fight NYC motion study: sixteen New York moments become one touch-friendly cinematic frame." />
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect x="4" y="16" width="56" height="32" rx="16" fill="%23f97316"/></svg>' />
+  <title>NYC in Motion | Little Fight Lab</title>
   <style>
-    :root {
-      --bg-light: #e8e6dc;
-      --bg-dark: #101010;
-      --text: #111;
-      --pill-w: min(72vw, 1040px);
-      --pill-h: min(38vw, 540px);
-      --pill-r: 999px;
+    @font-face {
+      font-family: "Oswald";
+      src: url("/assets/fonts/oswald-latin-wght-normal.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 200 700;
+      font-display: swap;
     }
 
-    * { box-sizing: border-box; }
-
-    html,
-    body {
-      margin: 0;
-      width: 100%;
-      min-height: 100%;
-      overflow-x: hidden;
-      font-family: "Avenir Next", "SF Pro Display", "Segoe UI", sans-serif;
-      color: var(--text);
-      background: var(--bg-light);
+    @font-face {
+      font-family: "Barlow";
+      src: url("/assets/fonts/barlow-latin-400-normal.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
     }
 
-    .section {
-      width: 100%;
-      position: relative;
-      scroll-snap-align: start;
+    @font-face {
+      font-family: "Barlow";
+      src: url("/assets/fonts/barlow-latin-700-normal.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
     }
 
-    .intro {
-      min-height: 108vh;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 24px;
-      background:
-        radial-gradient(1200px 600px at 15% -10%, #fff 0%, rgba(255,255,255,0) 64%),
-        linear-gradient(150deg, #f1f0e9, #d9d5c7);
-    }
-
-    .intro h1 {
-      margin: 0;
-      font-size: clamp(2rem, 5.4vw, 4.8rem);
-      line-height: 0.98;
-      letter-spacing: -0.035em;
+    @font-face {
+      font-family: "JetBrains Mono";
+      src: url("/assets/fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2");
+      font-style: normal;
       font-weight: 500;
+      font-display: swap;
     }
 
-    .intro p {
-      margin: 12px 0 0;
-      opacity: 0.68;
-      font-size: clamp(0.92rem, 1.6vw, 1.08rem);
-      letter-spacing: 0.01em;
+    :root {
+      color-scheme: dark;
+      --bg: #08080a;
+      --panel: rgba(11, 11, 14, 0.78);
+      --paper: #f7f2e9;
+      --muted: #c8c3ba;
+      --orange: #f97316;
+      --blue: #3b82f6;
+      --progress: 0;
+      --pill-radius: 999px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100%;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--paper);
+      font-family: "Barlow", system-ui, sans-serif;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
     }
 
     .showcase {
-      height: 100vh;
-      background: var(--bg-dark);
+      position: relative;
+      min-height: 100dvh;
       overflow: hidden;
       isolation: isolate;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(59, 130, 246, 0.17), transparent 38%),
+        var(--bg);
     }
 
-    .showcase-bg {
+    .stage {
       position: absolute;
       inset: 0;
-      background: #0f0f0f;
-      opacity: 0;
-      z-index: 0;
-      will-change: opacity;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
     }
 
     .pill {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: var(--pill-w);
-      height: var(--pill-h);
-      border-radius: var(--pill-r);
+      width: 100vw;
+      height: 100dvh;
       overflow: hidden;
-      transform: translate(-50%, -50%);
-      box-shadow:
-        0 24px 90px rgba(0,0,0,0.46),
-        0 5px 18px rgba(0,0,0,0.35);
-      z-index: 2;
-      will-change: width, height, border-radius, box-shadow;
+      border-radius: var(--pill-radius);
+      background: #151519;
+      box-shadow: 0 34px 120px rgba(0, 0, 0, 0.62);
+      transform: translate3d(-50%, -50%, 0) scale(0.74, 0.62);
+      transform-origin: center;
+      will-change: transform;
     }
 
     .media {
       position: absolute;
-      inset: 0;
-      background: #151515;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+      inset: -1px;
+      overflow: hidden;
+      background: #151519;
+      touch-action: pan-y pinch-zoom;
+      cursor: grab;
+    }
+
+    .media:active {
+      cursor: grabbing;
     }
 
     .frame {
@@ -109,9 +135,10 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transform: scale(1.022);
-      transition: opacity 85ms linear, transform 380ms cubic-bezier(0.2, 1, 0.3, 1);
-      will-change: opacity;
+      transform: scale(1.035);
+      transition:
+        opacity 180ms linear,
+        transform 420ms var(--ease);
     }
 
     .frame.active {
@@ -123,300 +150,824 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0) 58%, rgba(0,0,0,0.4) 100%);
-      opacity: var(--overlay-opacity, 1);
-      transition: opacity 220ms linear;
+      z-index: 2;
       pointer-events: none;
-      z-index: 3;
+      background:
+        linear-gradient(180deg, rgba(4, 4, 6, 0.62) 0%, transparent 34%),
+        linear-gradient(0deg, rgba(4, 4, 6, 0.84) 0%, transparent 45%);
+    }
+
+    .story-head {
+      position: absolute;
+      z-index: 4;
+      top: max(22px, calc(env(safe-area-inset-top) + 16px));
+      left: max(20px, calc(env(safe-area-inset-left) + 20px));
+      width: min(620px, calc(100vw - 40px));
+      pointer-events: none;
+      opacity: calc(1 - (var(--progress) * 1.7));
+      transform: translate3d(0, calc(var(--progress) * -24px), 0);
+    }
+
+    .eyebrow,
+    .chapter {
+      margin: 0;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      color: #ffd7ba;
+    }
+
+    h1 {
+      max-width: 11ch;
+      margin: 0.45rem 0 0;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(2.9rem, 7.2vw, 6.4rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+    }
+
+    .story-copy {
+      max-width: 37ch;
+      margin: 0.8rem 0 0;
+      color: #eee9df;
+      font-size: clamp(1rem, 1.8vw, 1.16rem);
+      line-height: 1.45;
+    }
+
+    .caption {
+      position: absolute;
+      z-index: 4;
+      left: max(20px, calc(env(safe-area-inset-left) + 20px));
+      bottom: max(238px, calc(env(safe-area-inset-bottom) + 228px));
+      max-width: min(610px, calc(100vw - 40px));
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.62);
+    }
+
+    .chapter {
+      color: #a9c8ff;
+    }
+
+    .caption h2 {
+      margin: 0.4rem 0 0;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(1.75rem, 4.5vw, 3.4rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .caption p {
+      max-width: 42ch;
+      margin: 0.45rem 0 0;
+      color: #eee9df;
+      font-size: 1rem;
+      line-height: 1.42;
+    }
+
+    .controls {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      bottom: max(84px, calc(env(safe-area-inset-bottom) + 78px));
+      width: min(760px, calc(100vw - 24px));
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 18px 60px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(18px) saturate(135%);
+      -webkit-backdrop-filter: blur(18px) saturate(135%);
+      transform: translateX(-50%);
+    }
+
+    .scrub-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .scrubber {
+      width: 100%;
+      height: 44px;
+      margin: 0;
+      accent-color: var(--orange);
+      cursor: ew-resize;
+    }
+
+    .frame-count {
+      min-width: 54px;
+      color: #fff3e9;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 1rem;
+      text-align: right;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr minmax(132px, 1.4fr) 1fr;
+      gap: 8px;
+    }
+
+    .control-btn {
+      min-width: 0;
+      min-height: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--paper);
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        transform 160ms var(--ease),
+        background 160ms ease,
+        border-color 160ms ease;
+    }
+
+    .control-btn.primary {
+      border-color: #f97316;
+      background: var(--orange);
+      color: #1c0c02;
+    }
+
+    .control-btn:hover,
+    .control-btn:focus-visible {
+      border-color: rgba(255, 255, 255, 0.52);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .control-btn.primary:hover,
+    .control-btn.primary:focus-visible {
+      border-color: #ffb37d;
+      background: #ff8a37;
+    }
+
+    .control-btn:active {
+      transform: scale(0.98);
+    }
+
+    .control-btn:focus-visible,
+    .scrubber:focus-visible,
+    .media:focus-visible {
+      outline: 3px solid #9cc3ff;
+      outline-offset: 3px;
+    }
+
+    .gesture-hint {
+      margin: 8px 0 0;
+      color: #d3cec5;
+      font-size: 0.82rem;
+      text-align: center;
     }
 
     .after {
-      min-height: 120vh;
+      min-height: 86dvh;
       display: grid;
       place-items: center;
-      text-align: center;
-      padding: 56px 24px;
-      background: #121212;
-      color: #f3f3ef;
+      padding:
+        80px
+        max(24px, env(safe-area-inset-right))
+        max(80px, calc(env(safe-area-inset-bottom) + 40px))
+        max(24px, env(safe-area-inset-left));
+      background:
+        radial-gradient(circle at 20% 20%, rgba(249, 115, 22, 0.15), transparent 34%),
+        radial-gradient(circle at 76% 72%, rgba(59, 130, 246, 0.13), transparent 36%),
+        #0c0c0f;
+    }
+
+    .after-inner {
+      width: min(920px, 100%);
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.8fr);
+      align-items: end;
+      gap: clamp(36px, 8vw, 96px);
     }
 
     .after h2 {
+      max-width: 10ch;
       margin: 0;
-      font-size: clamp(1.9rem, 5vw, 4.2rem);
-      font-weight: 500;
-      letter-spacing: -0.03em;
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.88;
+      text-transform: uppercase;
     }
 
     .after p {
-      margin: 12px 0 0;
-      opacity: 0.72;
-      font-size: clamp(0.95rem, 1.65vw, 1.15rem);
+      max-width: 32ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
     }
 
-    @media (max-width: 860px) {
-      :root {
-        --pill-w: min(54vw, 300px);
-        --pill-h: min(92vw, 560px);
+    .after button {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 767px) {
+      .pill {
+        transform: translate3d(-50%, -50%, 0) scale(0.9, 0.68);
       }
 
-      .intro { min-height: 98vh; }
+      .story-head {
+        top: max(18px, calc(env(safe-area-inset-top) + 12px));
+      }
+
+      h1 {
+        max-width: 11ch;
+        font-size: clamp(2.55rem, 12.5vw, 4.3rem);
+      }
+
+      .story-copy {
+        max-width: 28ch;
+        margin-top: 0.55rem;
+        font-size: 1rem;
+      }
+
+      .caption {
+        bottom: max(248px, calc(env(safe-area-inset-bottom) + 238px));
+      }
+
+      .caption h2 {
+        max-width: 14ch;
+      }
+
+      .caption #frameCopy {
+        display: none;
+      }
+
+      .controls {
+        border-radius: 18px;
+      }
+
+      .gesture-hint {
+        min-height: 20px;
+      }
+
+      .after-inner {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .after p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (min-width: 681px) {
+      .story-head {
+        top: max(108px, calc(env(safe-area-inset-top) + 100px));
+      }
+    }
+
+    @media (max-width: 420px) {
+      .button-row {
+        grid-template-columns: 48px 1fr 48px;
+      }
+
+      .control-btn .long-label {
+        display: none;
+      }
+    }
+
+    @media (orientation: landscape) and (max-height: 560px) {
+      .story-copy,
+      .caption #frameCopy,
+      .gesture-hint {
+        display: none;
+      }
+
+      .story-head {
+        width: 46vw;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 8vw, 4.2rem);
+      }
+
+      .caption {
+        left: auto;
+        right: max(20px, calc(env(safe-area-inset-right) + 20px));
+        bottom: max(162px, calc(env(safe-area-inset-bottom) + 150px));
+        width: 42vw;
+        text-align: right;
+      }
+
+      .controls {
+        width: min(720px, calc(100vw - 32px));
+      }
+
+      .scrubber {
+        height: 44px;
+      }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .controls {
+        background: #17171b;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .pill {
+        border-radius: 0;
+        transform: translate3d(-50%, -50%, 0) scale(1);
+      }
+
+      .frame,
+      .control-btn,
+      .story-head {
+        transition: none;
+      }
+
+      .story-head {
+        opacity: 1;
+        transform: none;
+      }
     }
   </style>
 </head>
 <body>
-  <main id="main">
-    <section class="section intro">
-      <div>
-        <h1>Scroll Into Motion</h1>
-        <p>Pinned sequence: lock, flip, expand, release.</p>
+  <main>
+    <section class="showcase" id="showcase" aria-label="Sixteen-frame New York motion story">
+      <div class="stage">
+        <div class="pill" id="pill">
+          <div
+            class="media"
+            id="media"
+            role="group"
+            tabindex="0"
+            aria-label="New York street sequence. Swipe horizontally or use the controls."
+          >
+            <img
+              class="frame active"
+              src="assets/nyc-streets-businesses1-2.webp"
+              alt=""
+              width="1600"
+              height="1067"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </div>
+
+      <header class="story-head">
+        <p class="eyebrow">Little Fight Motion Playground</p>
+        <h1>New York comes alive.</h1>
+        <p class="story-copy">Sixteen real moments move from street energy to the businesses we help build.</p>
+      </header>
+
+      <div class="caption" aria-live="polite" aria-atomic="true">
+        <p class="chapter" id="chapterLabel">Street pulse</p>
+        <h2 id="frameTitle">The city opens</h2>
+        <p id="frameCopy">Storefronts, sidewalks, and the people who keep New York moving.</p>
+      </div>
+
+      <div class="controls" aria-label="Story controls">
+        <div class="scrub-row">
+          <label class="sr-only" for="storyScrubber">Choose a story frame</label>
+          <input
+            class="scrubber"
+            id="storyScrubber"
+            type="range"
+            min="0"
+            max="15"
+            value="0"
+            step="1"
+          />
+          <output class="frame-count" id="frameCount" for="storyScrubber">01 / 16</output>
+        </div>
+        <div class="button-row">
+          <button class="control-btn" id="previousBtn" type="button" aria-label="Previous frame">
+            ← <span class="long-label">Previous</span>
+          </button>
+          <button class="control-btn primary" id="replayBtn" type="button">Play all</button>
+          <button class="control-btn" id="nextBtn" type="button" aria-label="Next frame">
+            <span class="long-label">Next</span> →
+          </button>
+        </div>
+        <p class="gesture-hint">Swipe the image, drag the timeline, or use the buttons.</p>
       </div>
     </section>
 
-    <section class="section showcase" id="showcase">
-      <div class="showcase-bg" id="showcaseBg"></div>
-      <div class="pill" id="pill">
-        <div class="media" id="media"></div>
-      </div>
-    </section>
-
-    <section class="section after" id="afterScene">
-      <div>
-        <h2>Next Scene</h2>
-        <p>Sequence complete. Scroll continues normally.</p>
+    <section class="after" id="afterScene">
+      <div class="after-inner">
+        <h2>A frame that behaves.</h2>
+        <div>
+          <p>Scroll, touch, keyboard, and reduced-motion modes all tell the same story without trapping the viewer.</p>
+          <button class="control-btn primary" id="returnBtn" type="button">Replay the story</button>
+        </div>
       </div>
     </section>
   </main>
 
   <script>
-    const sources = [
-      "assets/nyc-streets-businesses1-2.webp",
-      "assets/nyc-streets-businesses2-2.webp",
-      "assets/nyc-streets-businesses3-2.webp",
-      "assets/nyc-streets-businesses4-2.webp",
-      "assets/nyc-streets-businesses5.webp",
-      "assets/nyc-streets-businesses6.webp",
-      "assets/nyc-streets-businesses7.webp",
-      "assets/nyc-cafes1-2.webp",
-      "assets/nyc-cafes2-2.webp",
-      "assets/nyc-grand-central-busy-2.webp",
-      "assets/nyc-brooklyn-2.webp",
-      "assets/nyc-small-business-owner-2.webp",
-      "assets/nyc-outdoor-bar-2.webp",
-      "assets/nyc-retail-2.webp",
-      "assets/nyc-web-design.webp",
-      "assets/website-design-nyc-1.webp"
-    ];
+    (() => {
+      const framesData = [
+        { src: "assets/nyc-streets-businesses1-2.webp", chapter: "Street pulse", title: "The city opens", copy: "Storefronts, sidewalks, and the people who keep New York moving." },
+        { src: "assets/nyc-streets-businesses2-2.webp", chapter: "Street pulse", title: "Every block has rhythm", copy: "Good digital work starts by noticing how the real place behaves." },
+        { src: "assets/nyc-streets-businesses3-2.webp", chapter: "Street pulse", title: "Attention moves fast", copy: "The clearest signal wins when everyone is moving at city speed." },
+        { src: "assets/nyc-streets-businesses4-2.webp", chapter: "Street pulse", title: "Presence lives outside", copy: "A business should feel as recognizable online as it does from the sidewalk." },
+        { src: "assets/nyc-streets-businesses5.webp", chapter: "Storefront energy", title: "Character over templates", copy: "Local businesses deserve a digital presence with their own shape and voice." },
+        { src: "assets/nyc-streets-businesses6.webp", chapter: "Storefront energy", title: "Make the signal obvious", copy: "Identity, navigation, and action should work together in a single glance." },
+        { src: "assets/nyc-streets-businesses7.webp", chapter: "Storefront energy", title: "Built for the busy hour", copy: "The experience has to stay useful when customers and staff are both in motion." },
+        { src: "assets/nyc-retail-2.webp", chapter: "Storefront energy", title: "From window to checkout", copy: "Each touchpoint should feel like the same business, not a stack of disconnected tools." },
+        { src: "assets/nyc-cafes1-2.webp", chapter: "Third places", title: "A room with a point of view", copy: "Hospitality begins before the door opens, often on a phone screen." },
+        { src: "assets/nyc-cafes2-2.webp", chapter: "Third places", title: "Small details carry trust", copy: "Menus, booking, Wi-Fi, and payments should disappear into the experience." },
+        { src: "assets/nyc-outdoor-bar-2.webp", chapter: "Third places", title: "Moments become memory", copy: "Campaigns work harder when the experience is worth sharing." },
+        { src: "assets/nyc-grand-central-busy-2.webp", chapter: "Third places", title: "Clarity under pressure", copy: "The right interface makes the next action obvious, even in a crowd." },
+        { src: "assets/nyc-small-business-owner-2.webp", chapter: "Built with owners", title: "Start with the operator", copy: "The person running the business knows where technology creates friction." },
+        { src: "assets/nyc-brooklyn-2.webp", chapter: "Built with owners", title: "Local does not mean small", copy: "A focused system can feel world-class without losing its neighborhood identity." },
+        { src: "assets/nyc-web-design.webp", chapter: "Built with owners", title: "Make the tool fit", copy: "The best solution follows the real workflow instead of forcing another generic platform." },
+        { src: "assets/website-design-nyc-1.webp", chapter: "Built with owners", title: "Ship something people feel", copy: "Useful technology can still be vivid, tactile, and unmistakably yours." }
+      ];
 
-    const showcase = document.getElementById("showcase");
-    const bg = document.getElementById("showcaseBg");
-    const pill = document.getElementById("pill");
-    const media = document.getElementById("media");
+      const showcase = document.getElementById("showcase");
+      const pill = document.getElementById("pill");
+      const media = document.getElementById("media");
+      const chapterLabel = document.getElementById("chapterLabel");
+      const frameTitle = document.getElementById("frameTitle");
+      const frameCopy = document.getElementById("frameCopy");
+      const scrubber = document.getElementById("storyScrubber");
+      const frameCount = document.getElementById("frameCount");
+      const previousBtn = document.getElementById("previousBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const replayBtn = document.getElementById("replayBtn");
+      const returnBtn = document.getElementById("returnBtn");
+      const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const lowPowerDevice = (
+        (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4) ||
+        (typeof navigator.deviceMemory === "number" && navigator.deviceMemory <= 4)
+      );
 
-    const frames = [];
-    let activeIndex = 0;
-    let prewarmStarted = false;
-    let timelineInitialized = false;
-    let engineLoading = false;
+      const frameElements = [media.querySelector(".frame")];
+      let activeIndex = 0;
+      let currentProgress = 0;
+      let preloadStarted = false;
+      let engineLoading = false;
+      let scrollTrigger = null;
+      let previewRaf = 0;
+      let isPreviewing = false;
+      let requestedIndex = 0;
+      let pointerStart = null;
+      let destroyed = false;
+      let hostActive = true;
+      let motionPaused = false;
+      let resumePreview = false;
 
-    function clamp(v, min, max) {
-      return Math.min(max, Math.max(min, v));
-    }
+      const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+      const mix = (from, to, amount) => from + ((to - from) * amount);
+      const easeOutExpo = (amount) => amount === 1 ? 1 : 1 - Math.pow(2, -10 * amount);
 
-    function mix(a, b, t) {
-      return a + (b - a) * t;
-    }
+      function activityAllowed() {
+        return hostActive && !motionPaused && document.visibilityState === "visible" && !destroyed;
+      }
 
-    function easeOutExpo(t) {
-      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-    }
-
-    function easeInOutCubic(t) {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
-
-    function preloadFrames() {
-      media.style.backgroundImage = `url("${sources[0]}")`;
-
-      sources.forEach((src, idx) => {
-        const img = document.createElement("img");
-        img.className = "frame" + (idx === 0 ? " active" : "");
-        img.alt = "Sequence frame " + (idx + 1);
-        img.decoding = "async";
-        img.fetchPriority = idx < 2 ? "high" : "low";
-        if (idx < 2) {
-          img.src = src;
-          img.dataset.ready = "1";
-        } else {
-          img.dataset.src = src;
+      function buildFrames() {
+        framesData.slice(1).forEach((frame, index) => {
+          const img = document.createElement("img");
+          img.className = "frame";
+          img.alt = "";
+          img.width = 1600;
+          img.height = 1067;
+          img.decoding = "async";
+          img.loading = "eager";
+          img.dataset.src = frame.src;
           img.dataset.ready = "0";
-        }
-        media.appendChild(img);
-        frames.push(img);
-      });
-    }
+          media.appendChild(img);
+          frameElements[index + 1] = img;
+        });
+      }
 
-    function prewarmSequenceFrames() {
-      if (prewarmStarted) return;
-      prewarmStarted = true;
-
-      let i = 2;
-      const pump = () => {
-        if (i >= frames.length) return;
-        const frame = frames[i];
-        if (frame && frame.dataset.src && frame.dataset.ready !== "1") {
+      function prewarmFrames() {
+        if (preloadStarted || !activityAllowed()) return;
+        preloadStarted = true;
+        let index = 1;
+        const frameLimit = (lowPowerDevice || window.innerWidth < 768)
+          ? Math.min(frameElements.length, 6)
+          : frameElements.length;
+        const pump = () => {
+          if (!activityAllowed()) {
+            preloadStarted = false;
+            return;
+          }
+          if (index >= frameLimit) return;
+          const frame = frameElements[index];
           frame.src = frame.dataset.src;
           frame.dataset.ready = "1";
-        }
-        i += 1;
-        setTimeout(pump, 28);
-      };
-      pump();
-    }
-
-    function setFrame(index) {
-      const safe = clamp(index, 0, frames.length - 1);
-      let resolved = safe;
-
-      if (!frames[resolved] || frames[resolved].dataset.ready !== "1") {
-        while (resolved > 0 && frames[resolved].dataset.ready !== "1") {
-          resolved -= 1;
-        }
+          index += 1;
+          window.setTimeout(pump, lowPowerDevice ? 110 : 42);
+        };
+        pump();
       }
 
-      if (resolved === activeIndex) return;
-
-      if (frames[activeIndex]) frames[activeIndex].classList.remove("active");
-      frames[resolved].classList.add("active");
-      activeIndex = resolved;
-    }
-
-    function rapidSequenceIndex(progress) {
-      const flipStart = 0.12;
-      const flipEnd = 0.72;
-      const t = clamp((progress - flipStart) / (flipEnd - flipStart), 0, 1);
-
-      if (t >= 1) return frames.length - 1;
-
-      const loops = 8;
-      const playable = Math.max(1, frames.length - 1);
-      const step = Math.floor(t * playable * loops);
-      return step % playable;
-    }
-
-    function render(progress) {
-      const p = clamp(progress, 0, 1);
-
-      const mobile = window.innerWidth <= 860;
-      const startW = mobile ? Math.min(window.innerWidth * 0.52, 290) : Math.min(window.innerWidth * 0.68, 980);
-      const startH = mobile ? Math.min(window.innerWidth * 0.9, 540) : Math.min(window.innerWidth * 0.36, 500);
-
-      const expandStart = 0.1;
-      const expandEnd = 0.88;
-      const expandT = clamp((p - expandStart) / (expandEnd - expandStart), 0, 1);
-      const expandEase = easeOutExpo(expandT);
-
-      const w = mix(startW, window.innerWidth, expandEase);
-      const h = mix(startH, window.innerHeight, expandEase);
-      const rStart = Math.max(58, startH * 0.5);
-      const r = mix(rStart, 0, easeInOutCubic(expandT));
-
-      pill.style.setProperty("--pill-w", w.toFixed(2) + "px");
-      pill.style.setProperty("--pill-h", h.toFixed(2) + "px");
-      pill.style.setProperty("--pill-r", r.toFixed(2) + "px");
-
-      const shA = mix(0.46, 0.04, p);
-      const shB = mix(0.35, 0.02, p);
-      pill.style.boxShadow = `0 24px 90px rgba(0,0,0,${shA.toFixed(3)}), 0 5px 18px rgba(0,0,0,${shB.toFixed(3)})`;
-
-      bg.style.opacity = clamp((p - 0.02) * 1.26, 0, 1).toFixed(3);
-      media.style.setProperty("--overlay-opacity", p > 0.86 ? "0" : "1");
-
-      setFrame(rapidSequenceIndex(p));
-    }
-
-    function initTimeline() {
-      if (timelineInitialized) return;
-      if (!window.gsap || !window.ScrollTrigger) return;
-
-      gsap.registerPlugin(ScrollTrigger);
-
-      ScrollTrigger.create({
-        trigger: showcase,
-        start: "top top",
-        end: "+=3800",
-        pin: true,
-        scrub: 0.34,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onEnter: () => prewarmSequenceFrames(),
-        onEnterBack: () => prewarmSequenceFrames(),
-        onUpdate: self => {
-          render(self.progress);
-        }
-      });
-
-      ScrollTrigger.refresh();
-      timelineInitialized = true;
-    }
-
-    function loadScript(src) {
-      return new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = src;
-        s.async = true;
-        s.onload = () => resolve();
-        s.onerror = () => reject(new Error("Failed to load " + src));
-        document.head.appendChild(s);
-      });
-    }
-
-    async function ensureAnimationEngine() {
-      if (timelineInitialized || engineLoading) return;
-      engineLoading = true;
-      try {
-        if (!window.gsap) await loadScript("vendor/gsap.min.js");
-        if (!window.ScrollTrigger) await loadScript("vendor/ScrollTrigger.min.js");
-        initTimeline();
-      } catch (_) {
-        // If script loading fails, page still works as static content.
-      } finally {
-        engineLoading = false;
+      function ensureFrameLoaded(index, onReady) {
+        const frame = frameElements[index];
+        if (!frame) return false;
+        if (index === 0 || (frame.dataset.ready === "1" && frame.complete)) return true;
+        if (onReady) frame.addEventListener("load", onReady, { once: true });
+        frame.src = frame.dataset.src;
+        frame.dataset.ready = "1";
+        return frame.complete;
       }
-    }
 
-    function setupEngineBoot() {
-      const io = new IntersectionObserver(
-        entries => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              ensureAnimationEngine();
-              prewarmSequenceFrames();
-              io.disconnect();
-              break;
-            }
+      function updateCopy(index) {
+        const frame = framesData[index];
+        chapterLabel.textContent = frame.chapter;
+        frameTitle.textContent = frame.title;
+        frameCopy.textContent = frame.copy;
+        frameCount.value = `${String(index + 1).padStart(2, "0")} / ${framesData.length}`;
+        scrubber.value = String(index);
+        media.setAttribute("aria-label", `${frame.chapter}. ${frame.title}. Swipe horizontally or use the controls.`);
+      }
+
+      function setFrame(index) {
+        const nextIndex = clamp(Math.round(index), 0, framesData.length - 1);
+        requestedIndex = nextIndex;
+        if (nextIndex === activeIndex) {
+          updateCopy(nextIndex);
+          return;
+        }
+
+        const activate = () => {
+          if (requestedIndex !== nextIndex || destroyed) return;
+          frameElements[activeIndex]?.classList.remove("active");
+          frameElements[nextIndex]?.classList.add("active");
+          activeIndex = nextIndex;
+        };
+
+        if (!ensureFrameLoaded(nextIndex, activate)) {
+          updateCopy(nextIndex);
+          return;
+        }
+
+        frameElements[activeIndex]?.classList.remove("active");
+        frameElements[nextIndex]?.classList.add("active");
+        activeIndex = nextIndex;
+        updateCopy(nextIndex);
+      }
+
+      function render(progress) {
+        const value = clamp(progress, 0, 1);
+        currentProgress = value;
+        document.documentElement.style.setProperty("--progress", value.toFixed(4));
+
+        const mobile = window.innerWidth < 768;
+        const startScaleX = mobile ? 0.9 : 0.74;
+        const startScaleY = mobile ? 0.68 : 0.62;
+        const expandAmount = easeOutExpo(clamp((value - 0.05) / 0.78, 0, 1));
+        const scaleX = mix(startScaleX, 1, expandAmount);
+        const scaleY = mix(startScaleY, 1, expandAmount);
+        const radius = mix(mobile ? 72 : 220, 0, expandAmount);
+
+        pill.style.transform = `translate3d(-50%, -50%, 0) scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)})`;
+        pill.style.setProperty("--pill-radius", `${radius.toFixed(1)}px`);
+
+        const sequenceAmount = clamp((value - 0.06) / 0.84, 0, 1);
+        setFrame(Math.floor(sequenceAmount * (framesData.length - 0.001)));
+      }
+
+      function stopPreview() {
+        if (previewRaf) cancelAnimationFrame(previewRaf);
+        previewRaf = 0;
+        isPreviewing = false;
+        replayBtn.textContent = "Play all";
+      }
+
+      function playAll(resume = false) {
+        stopPreview();
+        prewarmFrames();
+
+        if (reducedMotionQuery.matches) {
+          render(0);
+          return;
+        }
+
+        isPreviewing = true;
+        replayBtn.textContent = "Pause";
+        const startProgress = resume ? currentProgress : 0;
+        const start = performance.now();
+        const duration = lowPowerDevice ? 5600 : 4600;
+
+        const tick = (now) => {
+          if (!isPreviewing || destroyed) return;
+          const elapsed = clamp((now - start) / duration, 0, 1);
+          const eased = elapsed < 0.5
+            ? 4 * elapsed * elapsed * elapsed
+            : 1 - Math.pow(-2 * elapsed + 2, 3) / 2;
+          render(mix(startProgress, 1, eased));
+
+          if (elapsed < 1) {
+            previewRaf = requestAnimationFrame(tick);
+          } else {
+            stopPreview();
           }
-        },
-        { rootMargin: "20% 0px 20% 0px" }
-      );
-      io.observe(showcase);
+        };
 
-      if ("requestIdleCallback" in window) {
-        requestIdleCallback(() => ensureAnimationEngine(), { timeout: 3200 });
-      } else {
-        setTimeout(() => ensureAnimationEngine(), 2800);
+        previewRaf = requestAnimationFrame(tick);
       }
-    }
 
-    preloadFrames();
-    render(0);
+      function moveBy(amount) {
+        stopPreview();
+        const nextIndex = clamp(requestedIndex + amount, 0, framesData.length - 1);
+        render(0.06 + ((nextIndex / (framesData.length - 1)) * 0.84));
+      }
 
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(() => prewarmSequenceFrames(), { timeout: 4600 });
-    } else {
-      setTimeout(() => prewarmSequenceFrames(), 3600);
-    }
-    setupEngineBoot();
+      function loadScript(src) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.async = true;
+          script.onload = resolve;
+          script.onerror = () => reject(new Error(`Unable to load ${src}`));
+          document.head.appendChild(script);
+        });
+      }
+
+      async function ensureAnimationEngine() {
+        if (engineLoading || scrollTrigger || reducedMotionQuery.matches || !activityAllowed()) return;
+        engineLoading = true;
+        try {
+          if (!window.gsap) await loadScript("vendor/gsap.min.js");
+          if (!window.ScrollTrigger) await loadScript("vendor/ScrollTrigger.min.js");
+          if (destroyed) return;
+
+          window.gsap.registerPlugin(window.ScrollTrigger);
+          scrollTrigger = window.ScrollTrigger.create({
+            trigger: showcase,
+            start: "top top",
+            end: () => `+=${lowPowerDevice ? 2300 : 3400}`,
+            pin: true,
+            scrub: lowPowerDevice ? false : 0.28,
+            anticipatePin: lowPowerDevice ? 0 : 1,
+            invalidateOnRefresh: true,
+            onEnter: prewarmFrames,
+            onEnterBack: prewarmFrames,
+            onUpdate: (self) => {
+              if (!isPreviewing) render(self.progress);
+            }
+          });
+          window.ScrollTrigger.refresh();
+        } catch (_) {
+          document.body.classList.add("engine-fallback");
+        } finally {
+          engineLoading = false;
+        }
+      }
+
+      function bootEngine() {
+        if (reducedMotionQuery.matches || !("IntersectionObserver" in window)) return;
+        const observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            ensureAnimationEngine();
+            prewarmFrames();
+            observer.disconnect();
+          }
+        }, { rootMargin: "25% 0px" });
+        observer.observe(showcase);
+
+        const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 1200));
+        idle(ensureAnimationEngine);
+      }
+
+      previousBtn.addEventListener("click", () => moveBy(-1));
+      nextBtn.addEventListener("click", () => moveBy(1));
+      replayBtn.addEventListener("click", () => {
+        if (isPreviewing) stopPreview();
+        else playAll();
+      });
+      returnBtn.addEventListener("click", () => {
+        showcase.scrollIntoView({ behavior: reducedMotionQuery.matches ? "auto" : "smooth" });
+        window.setTimeout(playAll, reducedMotionQuery.matches ? 0 : 420);
+      });
+
+      scrubber.addEventListener("input", () => {
+        stopPreview();
+        const index = Number(scrubber.value);
+        render(0.06 + ((index / (framesData.length - 1)) * 0.84));
+      });
+
+      media.addEventListener("pointerdown", (event) => {
+        pointerStart = { x: event.clientX, y: event.clientY };
+      });
+
+      media.addEventListener("pointerup", (event) => {
+        if (!pointerStart) return;
+        const dx = event.clientX - pointerStart.x;
+        const dy = event.clientY - pointerStart.y;
+        pointerStart = null;
+        if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy)) {
+          moveBy(dx < 0 ? 1 : -1);
+        }
+      });
+
+      media.addEventListener("pointercancel", () => {
+        pointerStart = null;
+      });
+
+      media.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          moveBy(-1);
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          moveBy(1);
+        } else if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          if (isPreviewing) stopPreview();
+          else playAll();
+        }
+      });
+
+      reducedMotionQuery.addEventListener?.("change", () => {
+        stopPreview();
+        if (reducedMotionQuery.matches) {
+          scrollTrigger?.kill(true);
+          scrollTrigger = null;
+          render(0.06 + ((activeIndex / (framesData.length - 1)) * 0.84));
+        } else {
+          bootEngine();
+        }
+      });
+
+      function syncActivity() {
+        if (!activityAllowed()) {
+          resumePreview = resumePreview || isPreviewing;
+          stopPreview();
+          scrollTrigger?.disable(false);
+          return;
+        }
+        scrollTrigger?.enable();
+        prewarmFrames();
+        if (resumePreview && !reducedMotionQuery.matches) {
+          resumePreview = false;
+          playAll(true);
+        } else {
+          bootEngine();
+        }
+      }
+
+      document.addEventListener("lab:visibility", (event) => {
+        hostActive = event.detail?.active !== false;
+        syncActivity();
+      });
+      document.addEventListener("lab:motion", (event) => {
+        motionPaused = event.detail?.paused === true;
+        syncActivity();
+      });
+      window.addEventListener("message", (event) => {
+        if (event.origin !== location.origin || !event.data) return;
+        if (event.data.type === "lab:visibility") hostActive = event.data.active !== false;
+        if (event.data.type === "lab:motion") motionPaused = event.data.paused === true;
+        syncActivity();
+      });
+      document.addEventListener("visibilitychange", syncActivity);
+
+      window.addEventListener("resize", () => render(currentProgress), { passive: true });
+      window.addEventListener("pagehide", () => {
+        destroyed = true;
+        stopPreview();
+        scrollTrigger?.kill(true);
+        scrollTrigger = null;
+      }, { once: true });
+
+      buildFrames();
+      updateCopy(0);
+      render(0);
+      bootEngine();
+
+      const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 1800));
+      idle(prewarmFrames);
+    })();
   </script>
-<script defer src="/examples/lab/assets/lab-return.js"></script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

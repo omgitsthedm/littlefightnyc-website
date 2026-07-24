@@ -1,32 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Little Fight NYC | We Fix The Tech Slowing Down Your Business</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta
     name="description"
-    content="Little Fight NYC builds websites, automations, and digital tools for New York City small businesses ready to punch above their weight."
+    content="A Little Fight NYC interactive concept showing how an owned, connected system can help a small business compete with a larger stack."
   >
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@500;700;800&display=swap"
-    rel="stylesheet"
-  >
+  <title>Little Fight NYC | Goliath System</title>
   <style>
     :root {
-      --bg: #070a11;
-      --panel: rgba(11, 15, 24, 0.96);
-      --panel-soft: rgba(14, 19, 30, 0.94);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f2f4f8;
-      --muted: #9ea7b7;
-      --orange: #fe5800;
-      --orange-deep: #e44f00;
-      --orange-soft: rgba(254, 88, 0, 0.18);
-      --blue-soft: rgba(8, 145, 178, 0.16);
-      --shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+      color-scheme: dark;
+      --ink: #07080b;
+      --panel: #12141a;
+      --panel-2: #1a1d24;
+      --line: #343943;
+      --text: #f5f2ec;
+      --muted: #abb0ba;
+      --orange: #f97316;
+      --orange-light: #ffb27b;
+      --blue: #60a5fa;
+      --radius: 28px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     * {
@@ -35,911 +30,819 @@
 
     html {
       scroll-behavior: smooth;
+      background: var(--ink);
     }
 
-    html,
     body {
+      min-width: 320px;
       margin: 0;
-      min-height: 100%;
-    }
-
-    body {
-      min-height: 100vh;
-      padding: 12px 12px 28px;
-      color: var(--text);
-      font-family: "Manrope", sans-serif;
-      overflow-x: hidden;
       background:
-        radial-gradient(circle at 14% 10%, rgba(254, 88, 0, 0.12), transparent 24%),
-        radial-gradient(circle at 86% 14%, rgba(8, 145, 178, 0.08), transparent 22%),
-        linear-gradient(180deg, #04070d 0%, #070b13 54%, #04070d 100%);
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.28;
-      pointer-events: none;
-      z-index: -1;
+        linear-gradient(rgba(96, 165, 250, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(96, 165, 250, 0.03) 1px, transparent 1px),
+        var(--ink);
+      background-size: 56px 56px;
+      color: var(--text);
+      font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     }
 
     a {
       color: inherit;
     }
 
-    .site-shell {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      align-items: center;
+    button {
+      font: inherit;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .panel {
-      width: min(calc(100vw - 24px), 1180px);
-      border-radius: 28px;
-      border: 1px solid var(--border);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
-        var(--panel);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .panel::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: radial-gradient(circle at center, black 42%, transparent 100%);
-      pointer-events: none;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(254, 88, 0, 0.08);
-      border: 1px solid rgba(254, 88, 0, 0.12);
-      color: #ff9d6e;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .pill::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--orange);
-      box-shadow: 0 0 12px rgba(254, 88, 0, 0.5);
-    }
-
-    .site-hero {
-      min-height: calc(100vh - 24px);
-      display: flex;
-      flex-direction: column;
-      padding: 22px 24px 28px;
+    .shell {
+      width: min(1240px, calc(100% - 32px));
+      margin: 0 auto;
+      padding:
+        max(16px, env(safe-area-inset-top))
+        0
+        max(34px, env(safe-area-inset-bottom));
     }
 
     .masthead {
+      position: sticky;
+      top: 12px;
+      z-index: 10;
       display: flex;
+      gap: 24px;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      position: relative;
-      z-index: 2;
+      min-height: 64px;
+      padding: 10px 12px 10px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      background: rgba(12, 14, 18, 0.92);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
     }
 
-    .brand-lockup {
+    .brand {
       display: inline-flex;
-      align-items: center;
       gap: 10px;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
+      align-items: center;
+      min-height: 44px;
+      color: var(--text);
+      font-weight: 800;
+      text-decoration: none;
     }
 
     .brand-mark {
-      width: 24px;
-      height: 24px;
       display: grid;
+      width: 32px;
+      height: 32px;
       place-items: center;
-      border-radius: 8px;
-      background: linear-gradient(135deg, var(--orange), #ff7a38);
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      box-shadow: 0 0 18px rgba(254, 88, 0, 0.24);
+      border-radius: 10px;
+      background: var(--orange);
+      color: #241006;
+      font-size: 0.78rem;
     }
 
     .nav {
       display: flex;
+      gap: 4px;
       align-items: center;
-      gap: 22px;
-      color: #a3acbc;
-      font-size: 0.84rem;
     }
 
     .nav a {
-      text-decoration: none;
-      transition: color 0.18s ease;
-    }
-
-    .nav a:hover {
-      color: #fff;
-    }
-
-    .nav-cta {
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--orange), #ff7a38);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      box-shadow: 0 8px 22px rgba(254, 88, 0, 0.22);
-    }
-
-    .hero-main {
-      flex: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 0.84fr) minmax(320px, 0.9fr);
-      gap: 24px;
-      align-items: center;
-      padding: 52px 0 18px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-copy h1 {
-      margin: 18px 0 0;
-      max-width: 9ch;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(3rem, 7.2vw, 5.8rem);
-      line-height: 0.96;
-      letter-spacing: -0.06em;
-    }
-
-    .hero-copy h1 .accent {
-      color: var(--orange);
-    }
-
-    .hero-copy p {
-      margin: 18px 0 0;
-      max-width: 34ch;
-      color: var(--muted);
-      font-size: clamp(1rem, 1.8vw, 1.15rem);
-      line-height: 1.75;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .button {
       display: inline-flex;
+      min-height: 44px;
       align-items: center;
-      justify-content: center;
-      padding: 14px 20px;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.94rem;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-1px);
-    }
-
-    .button-primary {
-      background: linear-gradient(135deg, var(--orange), #ff7a38);
-      color: #fff;
-      box-shadow: 0 10px 26px rgba(254, 88, 0, 0.22);
-    }
-
-    .button-secondary {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #e5e9f2;
-    }
-
-    .hero-art {
-      position: relative;
-      min-height: 420px;
-      overflow: hidden;
-      border-radius: 24px;
-      background:
-        radial-gradient(circle at 24% 30%, rgba(254, 88, 0, 0.16), transparent 28%),
-        radial-gradient(circle at 74% 28%, rgba(255, 255, 255, 0.05), transparent 24%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 38%);
-    }
-
-    .hero-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(50px);
-      opacity: 0.4;
-    }
-
-    .hero-orb.o1 {
-      left: -4%;
-      top: 24%;
-      width: 220px;
-      height: 220px;
-      background: rgba(254, 88, 0, 0.52);
-    }
-
-    .hero-orb.o2 {
-      right: -6%;
-      bottom: 20%;
-      width: 180px;
-      height: 180px;
-      background: rgba(8, 145, 178, 0.26);
-    }
-
-    .hero-city {
-      position: absolute;
-      inset: auto 0 0 0;
-      height: 65%;
-      opacity: 0.38;
-    }
-
-    .hero-city .tower {
-      position: absolute;
-      bottom: 0;
-      border-radius: 8px 8px 0 0;
-      background:
-        linear-gradient(180deg, rgba(56, 62, 76, 0.92), rgba(22, 26, 36, 0.98)),
-        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 5px, transparent 5px 10px);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
-    }
-
-    .hero-city .tower::after {
-      content: "";
-      position: absolute;
-      inset: 14% 22%;
-      background:
-        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0 4px, transparent 4px 10px),
-        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 8px, transparent 8px 16px);
-      opacity: 0.16;
-    }
-
-    .hero-city .t1 { left: 8%; width: 10%; height: 28%; }
-    .hero-city .t2 { left: 20%; width: 8%; height: 44%; }
-    .hero-city .t3 { left: 31%; width: 12%; height: 38%; }
-    .hero-city .t4 { left: 47%; width: 9%; height: 64%; }
-    .hero-city .t5 { left: 60%; width: 14%; height: 48%; }
-    .hero-city .t6 { left: 78%; width: 12%; height: 36%; }
-
-    .hero-floor {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 30%;
-      background:
-        linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.02) 26%, rgba(255, 255, 255, 0.04)),
-        linear-gradient(90deg, transparent 0 12%, rgba(255, 255, 255, 0.08) 12% 18%, transparent 18% 36%, rgba(255, 255, 255, 0.08) 36% 42%, transparent 42% 60%, rgba(255, 255, 255, 0.08) 60% 66%, transparent 66% 100%);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .scroll-cue {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: #7e8797;
-      font-size: 0.76rem;
-      text-align: center;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .scroll-cue::before {
-      content: "↓";
-      color: #c8cfdb;
-      font-size: 1rem;
-    }
-
-    .section {
-      padding: 56px 24px;
-    }
-
-    .section-header {
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .section-header h2 {
-      margin: 14px 0 0;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(2.2rem, 4.8vw, 3.6rem);
-      line-height: 1;
-      letter-spacing: -0.05em;
-    }
-
-    .section-header p {
-      max-width: 58ch;
-      margin: 16px auto 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      color: #ff9d6e;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.82rem;
-      font-style: italic;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 32px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card {
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: var(--panel-soft);
-      overflow: hidden;
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
-    }
-
-    .card-preview {
-      position: relative;
-      height: 170px;
-      background: linear-gradient(180deg, rgba(20, 26, 42, 0.96), rgba(14, 18, 28, 0.98));
-      overflow: hidden;
-    }
-
-    .card-preview::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.45;
-    }
-
-    .card-status {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 5px 8px;
+      padding: 0 15px;
       border-radius: 999px;
-      background: rgba(254, 88, 0, 0.1);
-      border: 1px solid rgba(254, 88, 0, 0.16);
-      color: #ff9d6e;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.62rem;
+      color: var(--muted);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    .nav .nav-action {
+      background: var(--orange);
+      color: #241006;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(460px, 1.18fr);
+      gap: clamp(32px, 6vw, 86px);
+      align-items: center;
+      min-height: calc(100dvh - 92px);
+      padding: clamp(48px, 7vw, 92px) 8px;
+    }
+
+    .kicker {
+      margin: 0 0 14px;
+      color: var(--orange-light);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    .preview-storefront .local-mini {
-      position: absolute;
-      left: 18%;
-      bottom: 22%;
-      width: 26%;
-      height: 40%;
-      border-radius: 16px 16px 12px 12px;
-      background: linear-gradient(180deg, #ffbc96 0%, #ff9a63 14%, var(--orange) 14%, var(--orange-deep) 100%);
-      box-shadow: 0 10px 24px rgba(254, 88, 0, 0.18);
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
     }
 
-    .preview-storefront .local-mini::before {
-      content: "";
-      position: absolute;
-      left: 10%;
-      right: 10%;
-      top: 12%;
-      height: 16%;
-      border-radius: 8px;
-      background: repeating-linear-gradient(90deg, #fff2ea 0 10px, #ff7d3a 10px 20px);
+    h1 {
+      max-width: 8ch;
+      margin-bottom: 22px;
+      font-size: clamp(3.7rem, 8.6vw, 7.7rem);
+      line-height: 0.86;
+      letter-spacing: -0.07em;
     }
 
-    .preview-storefront .local-mini::after {
-      content: "";
-      position: absolute;
-      left: 40%;
-      bottom: 0;
-      width: 20%;
-      height: 34%;
-      border-radius: 8px 8px 0 0;
-      background: rgba(10, 14, 22, 0.62);
-    }
-
-    .preview-storefront .chain-mini {
-      position: absolute;
-      right: 12%;
-      bottom: 22%;
-      width: 32%;
-      height: 46%;
-      border-radius: 20px 20px 14px 14px;
-      background: linear-gradient(180deg, #9199ab 0%, #656d7d 54%, #313846 100%);
-      opacity: 0.9;
-    }
-
-    .preview-storefront .chain-mini::before {
-      content: "";
-      position: absolute;
-      inset: 14% auto -10% -42%;
-      width: 72%;
-      background: linear-gradient(90deg, rgba(8, 12, 20, 0.56), rgba(8, 12, 20, 0));
-      filter: blur(12px);
-    }
-
-    .preview-storefront .beam-mini {
-      position: absolute;
-      left: 44%;
-      bottom: 40%;
-      width: 18%;
-      height: 3px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--orange), #0891b2);
-      box-shadow: 0 0 14px rgba(254, 88, 0, 0.24);
-    }
-
-    .preview-impact {
-      background:
-        radial-gradient(circle at 12% 50%, rgba(255, 51, 51, 0.46), transparent 28%),
-        radial-gradient(circle at 82% 52%, rgba(255, 107, 107, 0.36), transparent 26%),
-        radial-gradient(circle at 52% 78%, rgba(255, 71, 87, 0.28), transparent 22%),
-        linear-gradient(180deg, #0a0a0a, #07070b);
-    }
-
-    .preview-impact .impact-text {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      color: #f4f5f8;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      line-height: 0.92;
-      letter-spacing: -0.05em;
-    }
-
-    .preview-tech .corp-block {
-      position: absolute;
-      left: 16%;
-      bottom: 26%;
-      width: 18%;
-      height: 40%;
-      border-radius: 8px 8px 0 0;
-      background: linear-gradient(180deg, #1a1e2d, #151824);
-      border: 1px solid #2a2f45;
-      opacity: 0.78;
-    }
-
-    .preview-tech .corp-block::before {
-      content: "";
-      position: absolute;
-      inset: 12% 18%;
-      background:
-        repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 4px, transparent 4px 10px),
-        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 8px, transparent 8px 16px);
-      opacity: 0.22;
-    }
-
-    .preview-tech .biz-core {
-      position: absolute;
-      right: 20%;
-      bottom: 34%;
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--orange), #ff6b35);
-      box-shadow: 0 0 28px rgba(254, 88, 0, 0.28);
-    }
-
-    .preview-tech .biz-core::before,
-    .preview-tech .biz-core::after {
-      content: "";
-      position: absolute;
-      inset: -22px;
-      border-radius: 50%;
-      border: 2px dashed rgba(8, 145, 178, 0.35);
-    }
-
-    .preview-tech .biz-core::after {
-      inset: -40px;
-      border-color: rgba(254, 88, 0, 0.26);
-    }
-
-    .preview-tech .node {
-      position: absolute;
-      right: 13%;
-      bottom: 26%;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #0d1120;
-      border: 1px solid #0891b2;
-      box-shadow: 0 0 12px rgba(8, 145, 178, 0.22);
-    }
-
-    .preview-tech .node.n2 {
-      right: 30%;
-      bottom: 22%;
-      border-color: var(--orange);
-    }
-
-    .preview-tech .stream {
-      position: absolute;
-      left: 44%;
-      bottom: 46%;
-      width: 32%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #0891b2, var(--orange), transparent);
-      opacity: 0.84;
-    }
-
-    .card-body {
-      padding: 18px 18px 16px;
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 1.04rem;
-      line-height: 1.3;
-    }
-
-    .card p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.65;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .tag {
-      padding: 5px 8px;
-      border-radius: 999px;
-      background: rgba(8, 145, 178, 0.1);
-      border: 1px solid rgba(8, 145, 178, 0.16);
-      color: #5bd3ef;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 26px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .service-card {
-      padding: 22px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: var(--panel-soft);
-    }
-
-    .service-card h3 {
-      margin: 14px 0 0;
-      font-size: 1.08rem;
-    }
-
-    .service-card p {
-      margin: 10px 0 0;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .service-card .pill {
-      padding: 5px 9px;
-      font-size: 0.62rem;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-      gap: 24px;
-      margin-top: 20px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .about-grid p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    .about-note {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: var(--panel-soft);
-      color: #dbe1ec;
-      line-height: 1.7;
-    }
-
-    .site-footer {
-      width: min(calc(100vw - 24px), 1180px);
-      padding: 6px 12px 0;
-      text-align: center;
-      color: #7e8797;
-      font-size: 0.8rem;
-      line-height: 1.7;
-    }
-
-    .site-footer strong {
+    h1 span {
       color: var(--orange);
     }
 
-    @media (max-width: 940px) {
-      .hero-main,
-      .about-grid,
-      .services-grid,
-      .cards {
-        grid-template-columns: 1fr;
-      }
+    .hero-copy > p:not(.kicker) {
+      max-width: 37ch;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
+      line-height: 1.6;
+    }
 
-      .site-hero {
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .button,
+    .challenge-button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button-primary,
+    .challenge-button {
+      border: 1px solid var(--orange);
+      background: var(--orange);
+      color: #241006;
+    }
+
+    .button-secondary {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .button:active,
+    .challenge-button:active,
+    .experiment-card:active {
+      transform: translateY(1px);
+    }
+
+    .challenge {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+    }
+
+    .challenge-head {
+      display: flex;
+      gap: 18px;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .challenge-label {
+      margin: 0 0 7px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .challenge-head h2 {
+      margin-bottom: 0;
+      font-size: clamp(1.45rem, 3vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .challenge-button {
+      flex: 0 0 auto;
+    }
+
+    .challenge-stage {
+      display: grid;
+      grid-template-columns: 1fr 88px 1fr;
+      gap: 16px;
+      align-items: stretch;
+      min-height: 410px;
+      padding: 24px;
+    }
+
+    .fighter {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: #0c0e13;
+      transition:
+        transform 360ms var(--ease),
+        border-color 240ms ease,
+        background-color 240ms ease;
+    }
+
+    .fighter-label {
+      margin: 0;
+      color: var(--muted);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .fighter h3 {
+      margin: 7px 0 20px;
+      font-size: 1.35rem;
+    }
+
+    .stack {
+      display: grid;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .stack-item {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-2);
+      color: var(--muted);
+      font-size: 0.9rem;
+      transition:
+        transform 300ms var(--ease),
+        border-color 220ms ease,
+        color 220ms ease,
+        background-color 220ms ease;
+    }
+
+    .stack-item span:last-child {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.72rem;
+    }
+
+    .versus {
+      display: grid;
+      place-items: center;
+      color: #858b96;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .local .system-line {
+      position: absolute;
+      right: 21px;
+      bottom: 46px;
+      left: 21px;
+      height: 3px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 680ms var(--ease);
+    }
+
+    .local .system-line::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -1px;
+      width: 13px;
+      height: 13px;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 6px rgba(249, 115, 22, 0.16);
+    }
+
+    .challenge[data-equipped="true"] .local {
+      transform: translateY(-8px);
+      border-color: var(--orange);
+      background: #15120f;
+    }
+
+    .challenge[data-equipped="true"] .local .stack-item {
+      border-color: rgba(249, 115, 22, 0.48);
+      background: #21170f;
+      color: var(--text);
+      transform: translateX(calc(var(--item-index) * 2px));
+    }
+
+    .challenge[data-equipped="true"] .local .system-line {
+      transform: scaleX(1);
+    }
+
+    .challenge[data-equipped="true"] .goliath {
+      transform: scale(0.97);
+      opacity: 0.72;
+    }
+
+    .challenge-status {
+      min-height: 54px;
+      margin: 0;
+      padding: 15px 24px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .challenge-status strong {
+      color: var(--orange-light);
+    }
+
+    .experiments {
+      padding: clamp(64px, 10vw, 118px) 0;
+    }
+
+    .section-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(280px, 0.45fr);
+      gap: 40px;
+      align-items: end;
+      padding: 0 8px 30px;
+    }
+
+    .section-intro h2 {
+      max-width: 10ch;
+      margin-bottom: 0;
+      font-size: clamp(2.8rem, 6vw, 5.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.06em;
+    }
+
+    .section-intro > p {
+      margin-bottom: 4px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .experiment-list {
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .experiment-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) auto;
+      gap: 22px;
+      align-items: center;
+      min-height: 152px;
+      padding: 22px 26px;
+      background: var(--panel);
+      text-decoration: none;
+      transition: background-color 180ms ease, color 180ms ease;
+    }
+
+    .experiment-card:hover,
+    .experiment-card:focus-visible {
+      background: var(--orange);
+      color: #241006;
+    }
+
+    .experiment-number {
+      color: var(--orange-light);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: clamp(1.9rem, 4vw, 3.5rem);
+      font-weight: 800;
+    }
+
+    .experiment-card:hover .experiment-number,
+    .experiment-card:focus-visible .experiment-number,
+    .experiment-card:hover .experiment-copy p,
+    .experiment-card:focus-visible .experiment-copy p,
+    .experiment-card:hover .experiment-meta,
+    .experiment-card:focus-visible .experiment-meta {
+      color: #3e1a08;
+    }
+
+    .experiment-copy h3 {
+      margin-bottom: 8px;
+      font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+    }
+
+    .experiment-copy p {
+      max-width: 58ch;
+      margin-bottom: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .experiment-meta {
+      display: grid;
+      gap: 6px;
+      min-width: 126px;
+      color: var(--muted);
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.76rem;
+      text-align: right;
+    }
+
+    .experiment-meta strong {
+      color: inherit;
+      font-size: 0.82rem;
+    }
+
+    .capabilities {
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      gap: clamp(34px, 7vw, 88px);
+      padding: 0 8px clamp(64px, 9vw, 110px);
+    }
+
+    .capabilities h2 {
+      margin-bottom: 0;
+      font-size: clamp(2.4rem, 5vw, 4.7rem);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+    }
+
+    .capability-list {
+      display: grid;
+      gap: 1px;
+      margin: 0;
+      background: var(--line);
+    }
+
+    .capability-list > div {
+      display: grid;
+      grid-template-columns: minmax(140px, 0.4fr) minmax(0, 1fr);
+      gap: 18px;
+      min-height: 116px;
+      padding: 22px;
+      background: var(--ink);
+    }
+
+    .capability-list dt {
+      color: var(--orange-light);
+      font-weight: 800;
+    }
+
+    .capability-list dd {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .footer {
+      display: flex;
+      gap: 24px;
+      justify-content: space-between;
+      padding: 26px 8px 8px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .footer a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--orange-light);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
         min-height: auto;
       }
 
-      .hero-main {
-        padding-top: 34px;
+      .hero-copy {
+        max-width: 720px;
       }
 
-      .hero-art {
-        min-height: 320px;
+      h1 {
+        max-width: 9ch;
       }
 
-      .nav {
-        gap: 14px;
-        font-size: 0.8rem;
+      .challenge {
+        width: 100%;
+      }
+
+      .section-intro,
+      .capabilities {
+        grid-template-columns: 1fr;
+      }
+
+      .section-intro h2 {
+        max-width: 14ch;
       }
     }
 
-    @media (max-width: 700px) {
-      body {
-        padding-bottom: 20px;
-      }
-
-      .panel {
-        width: calc(100vw - 24px);
-      }
-
-      .site-hero,
-      .section {
-        padding-left: 18px;
-        padding-right: 18px;
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 20px, 1240px);
       }
 
       .masthead {
-        flex-wrap: wrap;
+        position: relative;
+        top: 0;
+        align-items: stretch;
+        border-radius: 24px;
+      }
+
+      .brand span:last-child {
+        display: none;
+      }
+
+      .brand {
+        min-width: 44px;
+        justify-content: center;
       }
 
       .nav {
+        flex: 1;
+        justify-content: flex-end;
+      }
+
+      .nav a {
+        padding-inline: 12px;
+      }
+
+      .nav a:nth-child(2) {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 52px;
+      }
+
+      h1 {
+        font-size: clamp(3.8rem, 19vw, 5.7rem);
+      }
+
+      .challenge-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .challenge-button {
         width: 100%;
-        justify-content: space-between;
       }
 
-      .hero-copy h1 {
-        max-width: 10ch;
+      .challenge-stage {
+        grid-template-columns: 1fr;
+        min-height: 0;
       }
 
-      .hero-actions {
-        gap: 10px;
+      .versus {
+        min-height: 44px;
       }
 
-      .button {
-        width: 100%;
+      .experiment-card {
+        grid-template-columns: 54px minmax(0, 1fr);
+        gap: 14px;
+        min-height: 168px;
+        padding: 20px;
       }
 
-      .hero-art {
-        min-height: 260px;
+      .experiment-meta {
+        grid-column: 2;
+        min-width: 0;
+        text-align: left;
       }
 
-      .preview-impact .impact-text {
-        font-size: 1rem;
+      .capability-list > div {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 <body>
-  <div class="site-shell" role="main">
-    <section class="panel site-hero" id="top" aria-label="Little Fight NYC hero section">
-      <header class="masthead">
-        <div class="brand-lockup">
-          <div class="brand-mark">LF</div>
-          <span>Little Fight NYC</span>
-        </div>
+  <div class="shell">
+    <header class="masthead">
+      <a class="brand" href="/examples/lab/" aria-label="Little Fight NYC Lab home">
+        <span class="brand-mark" aria-hidden="true">LF</span>
+        <span>Little Fight NYC Lab</span>
+      </a>
+      <nav class="nav" aria-label="Concept navigation">
+        <a href="#challenge">Challenge</a>
+        <a href="#experiments">Experiments</a>
+        <a class="nav-action" href="/examples/lab/">All labs</a>
+      </nav>
+    </header>
 
-        <nav class="nav" aria-label="Primary">
-          <a href="index.html#ring">The Ring</a>
-          <a href="index.html#services">Services</a>
-          <a href="index.html#about">About</a>
-          <a href="index.html#services" class="nav-cta">Get Started</a>
-        </nav>
-      </header>
-
-      <div class="hero-main">
+    <main>
+      <section class="hero" aria-labelledby="heroTitle">
         <div class="hero-copy">
-          <div class="pill">NYC Small Business Tech</div>
-          <h1>
-            We fix the tech
-            <span class="accent">slowing down</span>
-            your business.
-          </h1>
-          <p>Websites, automations, and digital tools — built scrappy and smart for New York City businesses that punch above their weight.</p>
-
+          <p class="kicker">David versus the default stack</p>
+          <h1 id="heroTitle">Small team. <span>Serious system.</span></h1>
+          <p>
+            Tap the proof object. Watch a pile of separate tools become one owned path from first click to follow-up.
+          </p>
           <div class="hero-actions">
-            <a href="index.html#services" class="button button-primary">Book a Free Consult</a>
-            <a href="index.html#ring" class="button button-secondary">See Our Work ↓</a>
+            <a class="button button-primary" href="#challenge">Run the challenge</a>
+            <a class="button button-secondary" href="#experiments">Open experiments</a>
           </div>
         </div>
 
-        <div class="hero-art" aria-hidden="true">
-          <div class="hero-orb o1"></div>
-          <div class="hero-orb o2"></div>
-          <div class="hero-city">
-            <div class="tower t1"></div>
-            <div class="tower t2"></div>
-            <div class="tower t3"></div>
-            <div class="tower t4"></div>
-            <div class="tower t5"></div>
-            <div class="tower t6"></div>
+        <article class="challenge" id="challenge" data-equipped="false" aria-labelledby="challengeTitle">
+          <header class="challenge-head">
+            <div>
+              <p class="challenge-label">Interactive proof</p>
+              <h2 id="challengeTitle">Separate tools versus one path</h2>
+            </div>
+            <button class="challenge-button" id="equipButton" type="button" aria-pressed="false">
+              Connect the local side
+            </button>
+          </header>
+
+          <div class="challenge-stage">
+            <section class="fighter goliath" aria-labelledby="goliathTitle">
+              <p class="fighter-label">The default stack</p>
+              <h3 id="goliathTitle">Separate subscriptions</h3>
+              <div class="stack">
+                <div class="stack-item"><span>Website</span><span>Separate</span></div>
+                <div class="stack-item"><span>Intake</span><span>Separate</span></div>
+                <div class="stack-item"><span>Follow-up</span><span>Separate</span></div>
+              </div>
+            </section>
+
+            <div class="versus" aria-hidden="true">versus</div>
+
+            <section class="fighter local" aria-labelledby="localTitle">
+              <p class="fighter-label">The local operator</p>
+              <h3 id="localTitle">One owned system</h3>
+              <div class="stack">
+                <div class="stack-item" style="--item-index: 1"><span>Website</span><span>Connected</span></div>
+                <div class="stack-item" style="--item-index: 2"><span>Intake</span><span>Connected</span></div>
+                <div class="stack-item" style="--item-index: 3"><span>Follow-up</span><span>Connected</span></div>
+              </div>
+              <span class="system-line" aria-hidden="true"></span>
+            </section>
           </div>
-          <div class="hero-floor"></div>
+
+          <p class="challenge-status" id="challengeStatus" aria-live="polite">
+            <strong>Ready.</strong> The local side has the same three jobs, but they do not share context yet.
+          </p>
+        </article>
+      </section>
+
+      <section class="experiments" id="experiments" aria-labelledby="experimentsTitle">
+        <header class="section-intro">
+          <div>
+            <p class="kicker">Open now</p>
+            <h2 id="experimentsTitle">The live work is the proof.</h2>
+          </div>
+          <p>Every row opens a working experiment. Touch it, use the keyboard, rotate the device, and take it apart.</p>
+        </header>
+
+        <div class="experiment-list">
+          <a class="experiment-card" href="/examples/lab/concepts/growth-street/">
+            <span class="experiment-number">01</span>
+            <span class="experiment-copy">
+              <h3>Growth Street</h3>
+              <p>Connect four real customer-path signals across five storefronts, then pause or replay the sequence.</p>
+            </span>
+            <span class="experiment-meta"><strong>Open experiment</strong><span>Touch + keyboard</span></span>
+          </a>
+
+          <a class="experiment-card" href="/examples/lab/concepts/hero/">
+            <span class="experiment-number">02</span>
+            <span class="experiment-copy">
+              <h3>NYC Block Hero</h3>
+              <p>Explore a controlled 3D neighborhood system with a lighter static path for reduced motion and low-power devices.</p>
+            </span>
+            <span class="experiment-meta"><strong>Open experiment</strong><span>3D + fallback</span></span>
+          </a>
+
+          <a class="experiment-card" href="/examples/lab/concepts/studio-engine/">
+            <span class="experiment-number">03</span>
+            <span class="experiment-copy">
+              <h3>Studio Engine</h3>
+              <p>Shape a local service-business concept with transparent browser rules, editable inputs, and real export controls.</p>
+            </span>
+            <span class="experiment-meta"><strong>Open experiment</strong><span>Rules + export</span></span>
+          </a>
         </div>
-      </div>
+      </section>
 
-      <div class="scroll-cue">Scroll to explore</div>
-    </section>
-
-    <section class="panel section" id="ring" aria-labelledby="ring-heading">
-      <div class="section-header">
-        <div class="eyebrow">Step into the ring</div>
-        <h2 id="ring-heading">The Ring</h2>
-        <p>Live prototypes, experiments, and proof-of-concepts. This is where we test ideas before they hit production.</p>
-      </div>
-
-      <div class="cards">
-        <article class="card">
-          <div class="card-preview preview-storefront" aria-hidden="true">
-            <div class="card-status">Live</div>
-            <div class="local-mini"></div>
-            <div class="beam-mini"></div>
-            <div class="chain-mini"></div>
+      <section class="capabilities" aria-labelledby="capabilityTitle">
+        <div>
+          <p class="kicker">What this demonstrates</p>
+          <h2 id="capabilityTitle">Capability without theater.</h2>
+        </div>
+        <dl class="capability-list">
+          <div>
+            <dt>Interaction</dt>
+            <dd>Every primary object works with touch and keyboard, with visible focus and controls large enough for a phone.</dd>
           </div>
-          <div class="card-body">
-            <h3>Neighborhood Takeover Hero</h3>
-            <p>Street-level storefront story showing big chains pressing in and local businesses getting equipped to fight back.</p>
-            <div class="tag-row">
-              <span class="tag">HTML/CSS</span>
-              <span class="tag">NYC</span>
-              <span class="tag">Storytelling</span>
-            </div>
+          <div>
+            <dt>Adaptation</dt>
+            <dd>The composition changes intentionally for iPhone, iPad, and desktop instead of simply shrinking.</dd>
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card-preview preview-impact" aria-hidden="true">
-            <div class="card-status">Live</div>
-            <div class="impact-text">Small Business<br>Big Impact<br>Little Fight.</div>
+          <div>
+            <dt>Restraint</dt>
+            <dd>Reduced motion and low-power paths keep the idea intact without making the device pay for the spectacle.</dd>
           </div>
-          <div class="card-body">
-            <h3>Small Business Big Impact</h3>
-            <p>Abstract, punchy hero direction built for fast emotional impact and strong calls-to-action above the fold.</p>
-            <div class="tag-row">
-              <span class="tag">Brand</span>
-              <span class="tag">Hero Copy</span>
-              <span class="tag">CTA</span>
-            </div>
-          </div>
-        </article>
+        </dl>
+      </section>
+    </main>
 
-        <article class="card">
-          <div class="card-preview preview-tech" aria-hidden="true">
-            <div class="card-status">Live</div>
-            <div class="corp-block"></div>
-            <div class="stream"></div>
-            <div class="biz-core"></div>
-            <div class="node n1"></div>
-            <div class="node n2"></div>
-          </div>
-          <div class="card-body">
-            <h3>Tech Stack Hero</h3>
-            <p>David-versus-Goliath concept where custom tech becomes the equalizer for small businesses competing with big corporations.</p>
-            <div class="tag-row">
-              <span class="tag">Tech Stack</span>
-              <span class="tag">Animation</span>
-              <span class="tag">Conversion</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section" id="services" aria-labelledby="services-heading">
-      <div class="section-header">
-        <div class="eyebrow">What we build</div>
-        <h2 id="services-heading">Services</h2>
-        <p>We help New York City small businesses move faster, look sharper, and stop losing momentum to bad tech.</p>
-      </div>
-
-      <div class="services-grid">
-        <article class="service-card">
-          <div class="pill">Websites</div>
-          <h3>Custom sites that feel credible fast</h3>
-          <p>Conversion-first websites built to answer what you do, who you help, and why a visitor should trust you in the first few seconds.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="pill">Automations</div>
-          <h3>Systems that remove busywork</h3>
-          <p>Lead routing, follow-up, notifications, scheduling, and internal workflows that help small teams act bigger without adding friction.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="pill">Digital Tools</div>
-          <h3>Practical tools built around real work</h3>
-          <p>Dashboards, quoting tools, intake flows, and operational improvements designed around how your business actually runs day to day.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="panel section" id="about" aria-labelledby="about-heading">
-      <div class="section-header">
-        <div class="eyebrow">Built in New York</div>
-        <h2 id="about-heading">About Little Fight NYC</h2>
-      </div>
-
-      <div class="about-grid">
-        <p>Little Fight NYC exists for the businesses that keep neighborhoods alive but get squeezed by bad software, slow websites, and bigger competitors with more resources. We build the practical tech that helps smaller teams look credible, move faster, and punch above their weight.</p>
-        <div class="about-note">We work best with owners who need clean thinking, fast execution, and a partner who understands that “simple” usually means harder thinking, not less. Our default is premium, trustworthy, and built to perform on desktop and mobile.</div>
-      </div>
-    </section>
-
-    <footer class="site-footer">
-      <div>© 2026 Little Fight NYC. All rights reserved. Built in New York.</div>
-      <div><strong>Designed, Hosted and Cared For by LittleFightNYC.com</strong></div>
+    <footer class="footer">
+      <span>Little Fight NYC Lab</span>
+      <a href="/examples/lab/">Back to all experiments</a>
     </footer>
   </div>
-<script defer src="/examples/lab/assets/lab-return.js"></script>
+
+  <script>
+    const challenge = document.getElementById("challenge");
+    const equipButton = document.getElementById("equipButton");
+    const challengeStatus = document.getElementById("challengeStatus");
+
+    function setEquipped(equipped) {
+      challenge.dataset.equipped = String(equipped);
+      equipButton.setAttribute("aria-pressed", String(equipped));
+      equipButton.textContent = equipped ? "Disconnect the path" : "Connect the local side";
+      challengeStatus.innerHTML = equipped
+        ? "<strong>Connected.</strong> Website, intake, and follow-up now pass the job forward as one system."
+        : "<strong>Ready.</strong> The local side has the same three jobs, but they do not share context yet.";
+    }
+
+    equipButton.addEventListener("click", () => {
+      setEquipped(challenge.dataset.equipped !== "true");
+    });
+
+    if (new URLSearchParams(window.location.search).has("embed")) {
+      document.querySelectorAll('a[href^="/examples/lab/"]').forEach((link) => {
+        link.target = "_blank";
+        link.rel = "noopener";
+      });
+    }
+
+    setEquipped(false);
+  </script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>
