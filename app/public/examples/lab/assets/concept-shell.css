@@ -528,6 +528,10 @@ html[data-lab-concept="tech-support"] body {
 
 html[data-lab-concept="tech-support"] .hero { overflow: hidden; }
 
+html[data-lab-concept="tech-support"] .hero-badge {
+  font-size: 16px;
+}
+
 html[data-lab-concept="tech-support"] :is(
   .nav-links a,
   .city-replay-btn,

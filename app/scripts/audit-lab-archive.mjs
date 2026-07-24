@@ -153,6 +153,14 @@ for (const route of expectedSuiteRoutes) {
 
 for (const file of htmlFiles) {
   const source = fs.readFileSync(file, "utf8");
+  for (const match of source.matchAll(/<iframe\b[^>]*\bsandbox=["']([^"']*)["'][^>]*>/gi)) {
+    const sandboxTokens = new Set(match[1].split(/\s+/).filter(Boolean));
+    if (sandboxTokens.has("allow-scripts") && sandboxTokens.has("allow-same-origin")) {
+      failures.push(
+        `${path.relative(labRoot, file)} uses an ineffective allow-scripts + allow-same-origin sandbox`,
+      );
+    }
+  }
   const references = [...source.matchAll(/(?:href|src|poster)=["']([^"']+)["']/gi)].map(
     (match) => match[1],
   );
