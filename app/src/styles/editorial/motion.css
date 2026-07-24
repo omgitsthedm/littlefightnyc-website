@@ -1,16 +1,17 @@
 /* Motion system (Axiom Momentum + editorial restraint).
  * One motion language: native route crossfades, tactile press feedback, and
- * choreographed reveals. transform/opacity only — never layout-triggering.
- * Everything collapses under prefers-reduced-motion. */
+ * meaningful state changes. Sections render complete on first paint; entrance
+ * reveals are intentionally not part of the global vocabulary. Transform and
+ * opacity only — never layout-triggering. Reduced motion always wins. */
 
 /* ---- Route transitions (View Transitions API) ---------------------------- */
 /* A clean crossfade between pages — Apple-grade, native, no re-mount jank. */
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root) {
-    animation: lf-vt-out 160ms cubic-bezier(0.4, 0, 1, 1) both;
+    animation: lf-vt-out var(--m-signal-ms) var(--m-signal-ease) both;
   }
   ::view-transition-new(root) {
-    animation: lf-vt-in 240ms cubic-bezier(0, 0, 0.2, 1) both;
+    animation: lf-vt-in var(--m-settle-ms) var(--m-settle-ease) both;
   }
 }
 @keyframes lf-vt-out {
@@ -42,8 +43,8 @@ html[data-vt-route] .lf-page-enter {
  * scripted transitions only. */
 @media (prefers-reduced-motion: no-preference) {
   html[data-vt-route]::view-transition-group(*) {
-    animation-duration: 380ms;
-    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    animation-duration: var(--m-settle-ms);
+    animation-timing-function: var(--m-settle-ease);
   }
 }
 
@@ -51,7 +52,7 @@ html[data-vt-route] .lf-page-enter {
 /* The page content re-keys on navigation and plays a fade + rise. Nav/footer
  * are siblings so they never re-mount or flash. Reduced-motion = instant. */
 .lf-page-enter {
-  animation: lf-page-in 440ms cubic-bezier(0, 0, 0.2, 1) both;
+  animation: lf-page-in var(--m-settle-ms) var(--m-settle-ease) both;
 }
 @keyframes lf-page-in {
   from { opacity: 0; transform: translateY(12px); }
@@ -61,46 +62,17 @@ html[data-vt-route] .lf-page-enter {
   .lf-page-enter { animation: none; }
 }
 
-/* ---- Choreographed reveals ---------------------------------------------- */
-/* Editorial entry: fade + 16px rise, ease-out; lists stagger 80ms via --lf-i.
- * Elements start hidden and reveal when [data-revealed="true"] is set by the
- * useScrollReveal hook (which reveals instantly under reduced-motion). */
-.lf-editorial [data-reveal] {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 420ms cubic-bezier(0, 0, 0.2, 1),
-    transform 420ms cubic-bezier(0, 0, 0.2, 1);
-  transition-delay: calc(var(--lf-i, 0) * 80ms);
-  will-change: transform, opacity;
-}
-.lf-editorial [data-reveal][data-revealed="true"] {
-  opacity: 1;
-  transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .lf-editorial [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
 /* ---- Tactile press feedback --------------------------------------------- */
 /* Every primary interactive surface presses in slightly when tapped. */
 @media (prefers-reduced-motion: no-preference) {
-  .lf-editorial .lf-momentum__cta-button:active,
   .lf-editorial .lf-audit__submit:active,
   .lf-editorial .lf-post__cta-row a:active,
   .lf-editorial .lf-contact-block__channel:active,
-  .lf-editorial .lf-hero__channel:active,
   .lf-editorial .lf-hero__action:active,
   .lf-editorial .lf-nav__start:active,
-  .lf-editorial .lf-momentum__card--cap:active,
-  .lf-editorial .lf-visual-index__item:active,
-  .lf-editorial .lf-work__tile:active {
+  .lf-editorial .lf-visual-index__item:active {
     transform: translateY(1px) scale(0.994);
-    transition-duration: 90ms;
+    transition-duration: var(--m-signal-ms);
   }
 }
 
@@ -109,7 +81,6 @@ html[data-vt-route] .lf-page-enter {
  * once per hover, never loops. Desktop pointers only; reduced-motion never
  * sees it (whole block is gated). */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .lf-editorial .lf-momentum__cta-button,
   .lf-editorial .lf-fight__cta,
   .lf-editorial .lf-audit__submit,
   .lf-editorial .lf-hero__action--website,
@@ -118,7 +89,6 @@ html[data-vt-route] .lf-page-enter {
     position: relative;
     overflow: hidden;
   }
-  .lf-editorial .lf-momentum__cta-button::after,
   .lf-editorial .lf-fight__cta::after,
   .lf-editorial .lf-audit__submit::after,
   .lf-editorial .lf-hero__action--website::after,
@@ -136,13 +106,12 @@ html[data-vt-route] .lf-page-enter {
     transform: translateX(-130%);
     pointer-events: none;
   }
-  .lf-editorial .lf-momentum__cta-button:hover::after,
   .lf-editorial .lf-fight__cta:hover::after,
   .lf-editorial .lf-audit__submit:hover:not(:disabled)::after,
   .lf-editorial .lf-hero__action--website:hover::after,
   .lf-editorial .lf-nav__start:hover::after,
   .lf-editorial .lf-nav__panel-fit:hover::after {
-    animation: lf-cta-sheen 700ms var(--lf-ease-out) 1 both;
+    animation: lf-cta-sheen var(--m-reveal-ms) var(--m-reveal-ease) 1 both;
   }
 }
 @keyframes lf-cta-sheen {
@@ -155,9 +124,9 @@ html[data-vt-route] .lf-page-enter {
 /* Chrome condenses + gains a glass floor once the page scrolls past the hero. */
 .lf-nav {
   transition:
-    background-color var(--lf-time-base) var(--lf-ease-standard),
-    box-shadow var(--lf-time-base) var(--lf-ease-standard),
-    backdrop-filter var(--lf-time-base) var(--lf-ease-standard);
+    background-color var(--m-settle-ms) var(--m-settle-ease),
+    box-shadow var(--m-settle-ms) var(--m-settle-ease),
+    backdrop-filter var(--m-settle-ms) var(--m-settle-ease);
 }
 .lf-nav[data-scrolled="true"] {
   background: color-mix(in srgb, var(--lf-ink) 78%, transparent);

@@ -8,6 +8,7 @@ type Props = {
   client: string;
   slug: string;
   url: string;
+  captureDate: string;
 };
 
 function domain(url: string) {
@@ -22,23 +23,52 @@ function capturePath(slug: string, device: Device) {
   return `/assets/case-${slug}-explore${device === "mobile" ? "-mobile" : ""}.webp`;
 }
 
-export default function LiveSiteExplorer({ client, slug, url }: Props) {
-  const [device, setDevice] = useState<Device>("desktop");
+export default function LiveSiteExplorer({
+  client,
+  slug,
+  url,
+  captureDate,
+}: Props) {
+  const [device, setDevice] = useState<Device>(() => (
+    typeof window !== "undefined" && window.matchMedia("(max-width: 620px)").matches
+      ? "mobile"
+      : "desktop"
+  ));
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const formattedCaptureDate = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${captureDate}T00:00:00Z`));
 
   function chooseDevice(next: Device) {
     if (next === device) return;
     setLoading(true);
+    setLoadError(false);
     setDevice(next);
     viewportRef.current?.scrollTo({ top: 0, behavior: "auto" });
   }
 
   return (
-    <>
+    <section
+      className="lf-work-showcase__live-site"
+      aria-label={`${client} live website capture`}
+    >
       <div className="lf-work-showcase__toolbar">
-        <span className="lf-work-showcase__domain">{domain(url)}</span>
-        <div className="lf-work-showcase__devices" aria-label="Preview size">
+        <span className="lf-work-showcase__capture-meta">
+          <strong className="lf-work-showcase__domain">{domain(url)}</strong>
+          <span>
+            Captured <time dateTime={captureDate}>{formattedCaptureDate}</time>
+          </span>
+        </span>
+        <div
+          className="lf-work-showcase__devices"
+          role="group"
+          aria-label="Choose capture size"
+        >
           <button
             type="button"
             aria-label="Desktop preview"
@@ -68,22 +98,36 @@ export default function LiveSiteExplorer({ client, slug, url }: Props) {
         ref={viewportRef}
         className={`lf-work-showcase__viewport lf-work-showcase__viewport--${device}`}
         role="region"
-        aria-label={`${client} ${device} site preview. Scroll this frame to explore.`}
+        aria-label={`${client} ${device} website capture. Scroll inside this frame to explore.`}
+        aria-busy={loading}
         tabIndex={0}
       >
-        {loading && <span className="lf-work-showcase__loading">Loading current capture</span>}
+        {loading && !loadError && (
+          <span className="lf-work-showcase__loading" aria-live="polite">
+            Loading {device} capture
+          </span>
+        )}
+        {loadError && (
+          <span className="lf-work-showcase__loading" role="alert">
+            This capture could not load. The live site is still available above.
+          </span>
+        )}
         <img
           key={`${slug}-${device}`}
           className={loading ? "is-loading" : "is-loaded"}
           src={capturePath(slug, device)}
-          alt={`${client} live website, captured July 21, 2026`}
+          alt={`${client} live website ${device} capture from ${formattedCaptureDate}`}
           width={device === "desktop" ? 1200 : 390}
           height={device === "desktop" ? 2000 : 2400}
           loading="lazy"
           decoding="async"
           onLoad={() => setLoading(false)}
+          onError={() => {
+            setLoading(false);
+            setLoadError(true);
+          }}
         />
       </div>
-    </>
+    </section>
   );
 }

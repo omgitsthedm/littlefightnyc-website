@@ -1,8 +1,16 @@
+import { Fragment } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { ArrowUpRight, Award, LockKeyhole } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
+import ProofPassport, { ProofStatus } from "@/components/editorial/ProofPassport";
 import ProjectWalkthrough from "@/components/editorial/ProjectWalkthrough";
+import {
+  caseProofLabel,
+  caseProofPriority,
+  hasPublicCapture,
+} from "@/components/editorial/caseProof";
 import ShareButton from "@/components/ShareButton";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
@@ -26,7 +34,28 @@ export default function CaseStudyDetail() {
 
   if (!study) return <Navigate to="/examples/" replace />;
 
-  const related = caseStudies.filter((entry) => entry.slug !== study.slug).slice(0, 3);
+  const related = caseStudies
+    .filter(
+      (entry) =>
+        entry.slug !== study.slug
+        && entry.showcase.availability === "public"
+        && Boolean(entry.url),
+    )
+    .sort((first, second) => {
+      const firstSharedServices = first.services.filter((service) =>
+        study.services.includes(service)
+      ).length;
+      const secondSharedServices = second.services.filter((service) =>
+        study.services.includes(service)
+      ).length;
+
+      return (
+        secondSharedServices - firstSharedServices
+        || caseProofPriority(first) - caseProofPriority(second)
+      );
+    })
+    .slice(0, 3);
+  const includesLiveCapture = hasPublicCapture(study);
   const serviceLinks = study.services
     .map((service) => ({ slug: service, label: serviceLabel(service) }))
     .filter((service): service is { slug: string; label: string } => Boolean(service.label));
@@ -56,12 +85,10 @@ export default function CaseStudyDetail() {
       <div className="lf-case__hero-band">
         <div className="lf-case__hero-band-inner">
           <span className="lf-case__hero-badge">
-            {study.showcase.availability === "private"
-              ? (study.showcase.privacyLabel ?? "Private production system")
-              : "Shipped and live"}
+            {caseProofLabel(study)}
           </span>
           <span className="lf-case__hero-actions">
-            {study.showcase.availability === "public" ? (
+            {study.showcase.availability === "public" && study.url ? (
               <a
                 className="lf-case__hero-live"
                 href={study.url}
@@ -95,16 +122,9 @@ export default function CaseStudyDetail() {
               <p>{study.result}</p>
             </header>
 
-            {study.metrics && study.metrics.length > 0 && (
-              <dl className="lf-case-next__metrics" aria-label={`${study.client} project results`}>
-                {study.metrics.map((metric) => (
-                  <div key={metric.label}>
-                    <dt>{metric.value}</dt>
-                    <dd>{metric.label}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
+            <div className="lf-case-next__passport">
+              <ProofPassport study={study} />
+            </div>
 
             <aside className="lf-case-next__details" aria-label="Project details">
               <div>
@@ -119,20 +139,16 @@ export default function CaseStudyDetail() {
                 <span>Services</span>
                 <strong>
                   {serviceLinks.map((service, index) => (
-                    <span key={service.slug}>
+                    <Fragment key={service.slug}>
                       {index > 0 && ", "}
                       <Link to={`/services/${service.slug}/`}>{service.label}</Link>
-                    </span>
+                    </Fragment>
                   ))}
                 </strong>
               </div>
               <div>
                 <span>Availability</span>
-                <strong>
-                  {study.showcase.availability === "private"
-                    ? (study.showcase.privacyLabel ?? "Private, in production")
-                    : "Public, live"}
-                </strong>
+                <strong>{caseProofLabel(study)}</strong>
               </div>
             </aside>
           </div>
@@ -141,10 +157,24 @@ export default function CaseStudyDetail() {
         <section className="lf-case-next__live" aria-labelledby="lf-case-live-title">
           <div className="lf-case-next__live-inner">
             <header>
-              <h2 id="lf-case-live-title">Walk through the build.</h2>
-              <p>Choose a stage to see how the work moves from input to a result the business uses.</p>
+              <h2 id="lf-case-live-title">
+                {includesLiveCapture ? "Open the live build." : "Walk through the build."}
+              </h2>
+              <p>
+                {includesLiveCapture
+                  ? "Switch between desktop and phone captures, then follow the working path from input to result."
+                  : "Choose a stage to see how the work moves from input to a result the business uses."}
+              </p>
             </header>
             <div className="lf-case-next__explorer">
+              {includesLiveCapture && (
+                <LiveSiteExplorer
+                  client={study.client}
+                  slug={study.slug}
+                  url={study.url}
+                  captureDate={study.showcase.proof.captureDate!}
+                />
+              )}
               <ProjectWalkthrough key={study.slug} study={study} />
             </div>
           </div>
@@ -170,7 +200,7 @@ export default function CaseStudyDetail() {
       {related.length > 0 && (
         <section className="lf-case-next__related" aria-labelledby="lf-case-related-title">
           <div className="lf-case-next__related-inner">
-            <h2 id="lf-case-related-title">More live work.</h2>
+            <h2 id="lf-case-related-title">More public work.</h2>
             <ul>
               {related.map((entry) => (
                 <li key={entry.slug}>
@@ -189,6 +219,10 @@ export default function CaseStudyDetail() {
                       />
                     </span>
                     <span className="lf-case-next__related-copy">
+                      <ProofStatus
+                        study={entry}
+                        className="lf-case-next__related-status"
+                      />
                       <small>{entry.showcase.context}</small>
                       <strong>{entry.showcase.label}</strong>
                       <span>{entry.title}</span>

@@ -4,6 +4,14 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { build as esbuildBundle } from "esbuild";
 import { prepareIndustryHtml, prepareLegacyHtml } from "../src/lib/legacy-html-core.mjs";
+import {
+  NOT_FOUND_PAGE,
+  glossaryPages,
+  industryPage,
+  journalPage,
+  localePages,
+  serviceAreaPages,
+} from "./metadata-source.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
@@ -127,115 +135,6 @@ const areaServed = [
   }))
 ];
 
-function serviceAreaPages() {
-  const services = seoData.matrix?.services ?? [];
-  const areas = seoData.matrix?.areas ?? [];
-
-  return areas.flatMap((area) =>
-    services.map((service) => ({
-      path: `/areas/${area.slug}/${service.slug}/`,
-      // Thin/recombined programmatic pages (areas × services share the same FAQ
-      // and a lead-in that reuses area + service copy). noindex protects the
-      // site's quality signal — the substantial /areas/<hub>/ pages and the four
-      // /services/ pages carry the local SEO. Enriching these into genuinely
-      // differentiated, indexable pages is a future content project.
-      noindex: true,
-      title: `${service.label} in ${area.name} | Little Fight NYC`,
-      description: `${service.label} help for ${area.name} businesses. Little Fight fixes websites, tools, Google signals, and handoffs that slow daily work.`,
-      h1: `${service.label} for ${area.name} businesses.`,
-      shortAnswer: `Short answer: ${area.name} businesses need ${service.plain}. Little Fight keeps what works, fixes what drags, and avoids another bloated monthly bill when a smaller move will do.`,
-      type: "Service",
-      serviceName: `${service.serviceName} in ${area.name}`,
-      image: service.image ?? area.image,
-      faq: [
-        {
-          question: `Does Little Fight work with ${area.name} businesses?`,
-          answer: `Yes. Little Fight helps ${area.name} businesses with websites, IT support, local search visibility, tool cleanup, and practical business systems.`
-        },
-        {
-          question: `Should I start with ${service.label} or a Tech Audit?`,
-          answer:
-            "If the problem touches more than one page, tool, person, or monthly bill, start with the free Tech Audit so the first fix is not guessed."
-        }
-      ]
-    }))
-  );
-}
-
-function brandedTitle(title, maxLength = 60) {
-  const suffix = " | Little Fight NYC";
-  const withBrand = `${title}${suffix}`;
-  return withBrand.length <= maxLength ? withBrand : title;
-}
-
-const journalSeoTitles = {
-  "read-your-monthly-software-bill": "Audit Your Monthly Software Bill | Little Fight NYC",
-  "set-up-google-business-profile-nyc": "Set Up Google Business Profile NYC | Little Fight NYC",
-  "migrate-off-squarespace-without-breaking-booking": "Migrate Off Squarespace Safely | Little Fight NYC",
-  "keep-connect-replace-build-framework": "Keep Connect Replace or Build | Little Fight NYC",
-};
-
-const journalSeoDescriptions = {
-  "keep-connect-replace-build-framework":
-    "A practical framework for deciding whether to keep, connect, replace, or build a business tool before spending on another platform.",
-};
-
-const journalImages = {
-  "cybersecurity-for-small-business": "/assets/journal-cat-notebook.webp",
-  "nyc-small-business-digital": "/assets/journal-cat-notebook.webp",
-  "protecting-kids-from-ai": "/assets/journal-cat-notebook.webp",
-  "airtable-vs-notion-vs-monday-small-business": "/assets/journal-cat-software-guide.webp",
-  "custom-business-system-vs-saas-subscriptions": "/assets/journal-cat-software-guide.webp",
-  "shopify-vs-squarespace-nyc-retail": "/assets/journal-cat-software-guide.webp",
-  "square-appointments-vs-glossgenius-nyc-salons": "/assets/journal-cat-software-guide.webp",
-  "square-vs-toast-manhattan-restaurants": "/assets/journal-cat-software-guide.webp",
-  "webflow-vs-squarespace-manhattan-small-business": "/assets/journal-cat-software-guide.webp",
-  "ai-google-broke-the-internet-websites-survive": "/assets/journal-cat-essay.webp",
-  "what-google-looks-for-business-website": "/assets/journal-cat-essay.webp",
-  "why-business-websites-will-be-invisible": "/assets/journal-cat-essay.webp",
-  "read-your-monthly-software-bill": "/assets/journal-cat-how-to.webp",
-  "set-up-google-business-profile-nyc": "/assets/journal-cat-how-to.webp",
-  "migrate-off-squarespace-without-breaking-booking": "/assets/journal-cat-how-to.webp",
-  "keep-connect-replace-build-framework": "/assets/journal-cat-how-to.webp",
-  "spot-developer-about-to-ghost": "/assets/journal-cat-how-to.webp",
-};
-
-function journalTitle(post) {
-  return journalSeoTitles[post.slug] ?? brandedTitle(post.title);
-}
-
-function journalDescription(post) {
-  return journalSeoDescriptions[post.slug] ?? post.description;
-}
-
-function glossaryPages() {
-  const terms = seoData.glossaryTerms ?? [];
-  const indexPage = {
-    path: "/glossary/",
-    title: "Small Business Tech Glossary | Little Fight NYC",
-    description: "Plain-English definitions for small business websites, IT support, local search, software costs, and business systems for NYC owners.",
-    h1: "Useful words. No vendor fog.",
-    shortAnswer:
-      "Short answer: these are the terms New York business owners run into when websites, tools, Google, and workflow start costing real money.",
-    type: "CollectionPage",
-    image: "/assets/typing.webp"
-  };
-
-  const termPages = terms.map((term) => ({
-    path: `/glossary/${term.slug}/`,
-    title: `${term.term} Definition | Little Fight NYC`,
-    description: term.definition,
-    h1: term.term,
-    shortAnswer: `Short answer: ${term.plain}`,
-    type: "DefinedTerm",
-    image: "/assets/typing.webp",
-    faq: term.faq,
-    term
-  }));
-
-  return [indexPage, ...termPages];
-}
-
 let libraryJournalLinks = [];
 
 async function journalPages() {
@@ -249,69 +148,22 @@ async function journalPages() {
     label: post.title,
   }));
 
-  const journalPostPages = journal.map((post) => ({
-    path: `/journal/${post.slug}/`,
-    title: journalTitle(post),
-    description: journalDescription(post),
-    shortAnswer: journalDescription(post),
-    h1: post.title,
-    type: "Article",
-    // Per-post branded art wins when it exists on disk (kept in lockstep
-    // with src/data/journalArt.ts), then the legacy slug map, then default.
-    image: existsSync(path.join(appRoot, "public/assets", `journal-${post.slug}.webp`))
-      ? `/assets/journal-${post.slug}.webp`
-      : (journalImages[post.slug] ?? "/assets/manhattan.webp"),
-    // Authored FAQ ships as FAQPage rich-results schema (same emit path the
-    // answers/glossary pages use).
-    faq: post.faq,
-    journalPost: post,
-  }));
-
-  const industryDetailPages = industries.map((entry) => ({
-    path: `/industries/${entry.slug}/`,
-    title: `${entry.title.replace(" Help", "")} Tech Help | Little Fight NYC`,
-    description: entry.description,
-    shortAnswer: entry.description,
-    h1: entry.title.replace(" Help", ""),
-    type: "WebPage",
-    image: entry.image || "/assets/manhattan.webp",
-    industry: entry,
-  }));
+  const hasDedicatedJournalImage = (slug) =>
+    existsSync(path.join(appRoot, "public/assets", `journal-${slug}.webp`));
+  const journalPostPages = journal.map((post) =>
+    journalPage(post, hasDedicatedJournalImage),
+  );
+  const industryDetailPages = industries.map(industryPage);
 
   return [...journalPostPages, ...industryDetailPages];
 }
 
 const pages = [
   ...basePages,
-  ...serviceAreaPages(),
-  ...glossaryPages(),
+  ...serviceAreaPages(seoData),
+  ...glossaryPages(seoData),
   ...(await journalPages()),
-  // The complete pitch in Spanish — custom snapshot + hreflang pair with home.
-  {
-    path: "/es/",
-    locale: "es",
-    title: "Páginas web y tecnología en español | Little Fight NYC",
-    description:
-      "Páginas web, soporte técnico y software propio para pequeños negocios de Nueva York. Vea trabajo real, llame o empiece un plan gratis.",
-    h1: "Su página web trae clientes. Nosotros la mantenemos andando.",
-    shortAnswer:
-      "Little Fight NYC en español: páginas web, soporte técnico, consultoría gratis y software propio para negocios pequeños de Nueva York.",
-    type: "WebPage",
-    image: "/assets/og-tugboat.jpg",
-  },
-  // The complete pitch in Simplified Chinese — same model as /es/.
-  {
-    path: "/zh/",
-    locale: "zh",
-    title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
-    description:
-      "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码和数据归您；电话、短信或邮件都由真人回复。服务纽约五大区。",
-    h1: "您的网站带来顾客。我们让它一直好用。",
-    shortAnswer:
-      "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码归您。",
-    type: "WebPage",
-    image: "/assets/og-tugboat.jpg",
-  },
+  ...localePages(),
 ];
 
 // Enrich pages with authored data from site.ts: real dates for freshness
@@ -416,17 +268,22 @@ function absoluteAsset(asset = "/assets/og-tugboat.jpg") {
   return asset.startsWith("http") ? asset : `${siteUrl}${asset}`;
 }
 
-function isoDateFromDisplay(value, fallback = "2026-05-07") {
-  if (!value) return fallback;
+function authoredIsoDate(value) {
+  if (!value) return "";
   const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? fallback : parsed.toISOString().slice(0, 10);
+  return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
+}
+
+function isoDateFromDisplay(value, fallback = "2026-05-07") {
+  return authoredIsoDate(value) || fallback;
 }
 
 function publishedDateFor(page) {
-  return isoDateFromDisplay(
-    page.published || page.journalPost?.published || page.journalPost?.updated,
-    "2026-05-07"
-  );
+  const authored = authoredIsoDate(page.published || page.journalPost?.published);
+  if (authored) return authored;
+  // An update date proves that a post existed by then, but it does not prove
+  // its publication date. Omit the unknown claim instead of relabeling it.
+  return isJournalArticle(page) ? "" : "2026-05-07";
 }
 
 // Real freshness signals: authored dates win; generated content pages carry
@@ -435,7 +292,12 @@ function publishedDateFor(page) {
 // teaches crawlers to distrust the sitemap entirely.
 function modifiedDateFor(page) {
   const authored = page.updated || page.journalPost?.updated;
-  if (authored) return isoDateFromDisplay(authored, lastmod);
+  if (authored) {
+    const normalized = authoredIsoDate(authored);
+    if (normalized) return normalized;
+    if (isJournalArticle(page)) return publishedDateFor(page);
+  }
+  if (isJournalArticle(page)) return publishedDateFor(page);
   if (/^\/(areas|glossary|industries)\/.+/.test(page.path)) return "2026-07-07";
   return lastmod;
 }
@@ -684,13 +546,13 @@ function foundationSchemas(page) {
     "about": { "@id": `${siteUrl}/#localbusiness` },
     "inLanguage": page.locale === "zh" ? "zh" : page.locale === "es" ? "es" : "en-US",
     "publisher": publisher,
-    "datePublished": publishedDate,
-    "dateModified": modifiedDate,
     "speakable": {
       "@type": "SpeakableSpecification",
       "cssSelector": ["h1", ".short-answer"]
     }
   };
+  if (publishedDate) webPage.datePublished = publishedDate;
+  if (modifiedDate) webPage.dateModified = modifiedDate;
 
   if (isArticlePage(page)) {
     webPage.author = {
@@ -803,13 +665,13 @@ function routeImagePreload(page) {
   const homeHero = "/assets/hero-soho-crosswalk.webp";
   const asset = page.path === "/" ? homeHero : page.image;
 
-  // Tech Audit renders the After Hours Agenda case image, not its social-card
-  // asset. This route branch must precede the generic WebP guard because its
-  // SEO image is the JPG brand card, while its actual LCP is a WebP.
+  // The same static file serves both /tech-audit/ modes. The general intake
+  // renders After Hours Agenda while ?intent=website renders Hair By Rachel
+  // Charles. A static image hint is therefore wrong for one of the two modes
+  // and can force a wasted download on the highest-intent path. Let the
+  // hydrated route request the image it actually renders.
   if (page.path === "/tech-audit/") {
-    const base = "/assets/case-after-hours-agenda";
-    const srcset = [480, 640, 900].map((w) => `${base}-${w}.webp ${w}w`).join(", ");
-    return `<link rel="preload" href="${base}-900.webp" imagesrcset="${srcset}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+    return "";
   }
 
   if (!asset?.endsWith(".webp")) return "";
@@ -1003,10 +865,14 @@ function managedHead(page) {
     `<meta name="twitter:image" content="${escapeAttr(image)}">`,
     isArticle ? `<link rel="author" href="${siteUrl}/">` : "",
     isArticle ? `<meta property="article:author" content="Little Fight NYC">` : "",
-    isArticle ? `<meta property="article:published_time" content="${pagePublished}">` : "",
-    isArticle ? `<meta property="article:modified_time" content="${pageModified}">` : "",
-    `<meta name="datePublished" content="${pagePublished}">`,
-    `<meta name="dateModified" content="${pageModified}">`,
+    isArticle && pagePublished
+      ? `<meta property="article:published_time" content="${pagePublished}">`
+      : "",
+    isArticle && pageModified
+      ? `<meta property="article:modified_time" content="${pageModified}">`
+      : "",
+    pagePublished ? `<meta name="datePublished" content="${pagePublished}">` : "",
+    pageModified ? `<meta name="dateModified" content="${pageModified}">` : "",
     `<script type="application/ld+json" data-seo>${schema}</script>`
   ].filter(Boolean).join("\n    ");
 }
@@ -1427,6 +1293,28 @@ function articleMeta(page) {
   const published = publishedDateFor(page);
   const modified = modifiedDateFor(page);
 
+  if (isJournalArticle(page)) {
+    const publishedLabel = page.journalPost?.published?.trim() ?? "";
+    const updatedLabel = page.journalPost?.updated?.trim() ?? "";
+    const claims = [];
+    if (published && publishedLabel) {
+      claims.push(
+        `Published <time itemprop="datePublished" datetime="${published}">${escapeHtml(publishedLabel)}</time>`,
+      );
+    }
+    if (modified && updatedLabel && modified !== published) {
+      claims.push(
+        `Updated <time itemprop="dateModified" datetime="${modified}">${escapeHtml(updatedLabel)}</time>`,
+      );
+    }
+    const claimHtml = claims.length > 0 ? ` · ${claims.join(" · ")}` : "";
+    return `
+      <p class="lf-seo__byline byline" itemprop="author" itemscope itemtype="https://schema.org/Organization">
+        By <span class="author" itemprop="name">Little Fight NYC</span>${claimHtml}
+      </p>
+    `;
+  }
+
   if (!isArticlePage(page)) {
     return `
       <p class="lf-seo__byline">
@@ -1635,11 +1523,11 @@ function snapshot(page) {
     .lf-seo .lf-seo__nav { display: flex; align-items: center; gap: 22px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
     .lf-seo .lf-seo__brand { font-family: ${display}; font-weight: 700; font-size: 20px; letter-spacing: 0; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-links { display: flex; gap: 20px; align-items: center; }
-    .lf-seo .lf-seo__nav-links a { color: #A1A1AA; font-size: 15px; font-weight: 500; }
+    .lf-seo .lf-seo__nav-links a { min-height: 44px; display: inline-flex; align-items: center; color: #A1A1AA; font-size: 16px; font-weight: 500; }
     .lf-seo .lf-seo__nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
-    .lf-seo .lf-seo__replies { font-family: ${mono}; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8A94; }
-    .lf-seo .lf-seo__phone { font-size: 15px; font-weight: 600; color: #FFFFFF; }
-    .lf-seo .lf-seo__nav-cta { background: #F97316; color: #050507; font-weight: 700; font-size: 14px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
+    .lf-seo .lf-seo__replies { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8A94; }
+    .lf-seo .lf-seo__phone { min-height: 44px; display: inline-flex; align-items: center; font-size: 16px; font-weight: 600; color: #FFFFFF; }
+    .lf-seo .lf-seo__nav-cta { min-height: 44px; display: inline-flex; align-items: center; background: #F97316; color: #050507; font-weight: 700; font-size: 16px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
     @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
     .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; display: flex; align-items: flex-end; isolation: isolate; }
     .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: 0; }
@@ -1652,18 +1540,18 @@ function snapshot(page) {
     .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 30px; }
     .lf-seo .lf-seo__home-cta { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 30px; }
     .lf-seo .lf-seo__pill { display: flex; flex-direction: column; gap: 3px; padding: 17px 26px; border-radius: 18px; background: rgba(20, 22, 28, 0.72); border: 1px solid #27272A; color: #FFFFFF; font-weight: 700; font-size: 18px; min-width: 240px; text-decoration: none; }
-    .lf-seo .lf-seo__pill span { font-weight: 400; font-size: 14px; color: #A1A1AA; }
+    .lf-seo .lf-seo__pill span { font-weight: 400; font-size: 16px; color: #A1A1AA; }
     .lf-seo .lf-seo__pill--primary { background: #F97316; border-color: #F97316; color: #050507; }
     .lf-seo .lf-seo__pill--primary span { color: rgba(5, 5, 7, 0.72); }
     .lf-seo .lf-seo__home-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; list-style: none; padding: 0; margin: 0; }
-    .lf-seo .lf-seo__home-trust li { font-family: ${mono}; font-size: 13px; letter-spacing: 0.02em; color: #A1A1AA; }
+    .lf-seo .lf-seo__home-trust li { font-family: ${mono}; font-size: 16px; letter-spacing: 0.02em; color: #A1A1AA; }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
-    .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
+    .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
     .lf-seo .lf-seo__links { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 980px; }
     .lf-seo .lf-seo__links li { border-top: 1px solid #27272A; padding-top: 10px; }
     .lf-seo .lf-seo__refs { display: flex; flex-wrap: wrap; gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 860px; }
-    .lf-seo .lf-seo__cta { font-family: ${mono}; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #71717A; margin-top: 32px; }
+    .lf-seo .lf-seo__cta { font-family: ${mono}; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: #71717A; margin-top: 32px; }
     .lf-seo .lf-seo__cta-number { display: block; font-family: ${sans}; font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem); color: #FFFFFF; margin-top: 8px; letter-spacing: -0.025em; }
     .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #A1A1AA; }
     .lf-seo footer nav { display: flex; flex-wrap: wrap; gap: 12px 18px; }
@@ -1683,7 +1571,6 @@ function snapshot(page) {
           width="1600"
           height="1200"
           fetchpriority="high"
-          decoding="async"
         />
       </picture>
       <div class="lf-seo__home-hero-copy">
@@ -1772,7 +1659,7 @@ function snapshot(page) {
         <span class="lf-seo__nav-right">
           <span class="lf-seo__replies">Replies at 9am ET</span>
           <a class="lf-seo__phone" href="tel:+16463600318">${site.phoneDisplay}</a>
-          <a class="lf-seo__nav-cta" href="/tech-audit/?intent=website">Start a project</a>
+          <a class="lf-seo__nav-cta" href="/tech-audit/?intent=website">Plan my website</a>
         </span>
       </header>
       <main id="main-content">
@@ -1820,12 +1707,13 @@ function sitemap() {
   // Real per-page lastmod (authored dates win); changefreq/priority dropped —
   // crawlers ignore them and uniform values only signaled the dates were fake.
   const urls = pages.filter((page) => !page.noindex).map((page) => {
+    const modified = modifiedDateFor(page);
     return [
       "  <url>",
       `    <loc>${absoluteUrl(page.path)}</loc>`,
-      `    <lastmod>${modifiedDateFor(page)}</lastmod>`,
+      modified ? `    <lastmod>${modified}</lastmod>` : "",
       "  </url>"
-    ].join("\n");
+    ].filter(Boolean).join("\n");
   });
   urls.push([
     "  <url>",
@@ -1887,18 +1775,7 @@ for (const page of pages) {
   await writeRoute(page);
 }
 
-const notFound = {
-  path: "/404.html",
-  title: "Page Not Found | Little Fight NYC",
-  description: "This Little Fight NYC page moved. Book a free Tech Audit or contact Little Fight for small business website, IT, or systems help.",
-  h1: "This page moved.",
-  shortAnswer: "Short answer: start with the messy setup and Little Fight will route you to the right help.",
-  type: "WebPage",
-  image: "/assets/og-tugboat.jpg",
-  noindex: true
-};
-
-await writeFile(path.join(distRoot, "404.html"), renderPage(notFound));
+await writeFile(path.join(distRoot, "404.html"), renderPage(NOT_FOUND_PAGE));
 await writeFile(path.join(distRoot, "sitemap.xml"), sitemap());
 await writeFile(path.join(distRoot, "image-sitemap.xml"), imageSitemap());
 await writeFile(path.join(distRoot, "sitemap-index.xml"), sitemapIndex());

@@ -1,7 +1,7 @@
 ---
-version: "littlefight-axiom-momentum-2026-07-06"
+version: "littlefight-axiom-momentum-2026-07-23"
 name: "Little Fight NYC — Axiom Momentum"
-description: "The Little Fight NYC design system, evolved to a product-OS soul from the Axiom 'Momentum' system. Near-black ground, Inter display, one orange lead signal, blue as a real accent, 32px card language, snappy restrained motion. Source of truth for tokens lives in src/styles/editorial/tokens.css."
+description: "The Little Fight NYC design system: near-black ground, Oswald poster headings, Barlow body, one orange lead signal, blue as a supporting accent, fluid responsive primitives, 32px card language, and restrained motion. Source of truth for tokens lives in src/styles/editorial/tokens.css."
 mode: dark
 colors:
   primary: "#F97316"      # orange — the lead signal (--lf-fight)
@@ -14,24 +14,24 @@ colors:
   border: "#27272A"       # rules, dividers (--lf-hairline)
   text-primary: "#FFFFFF" # (--lf-bone)
   text-secondary: "#A1A1AA" # (--lf-bone-soft)
-  text-tertiary: "#71717A"  # captions, marginalia (--lf-bone-dim)
+  text-tertiary: "#8A8A94"  # captions, marginalia (--lf-bone-dim)
 typography:
-  display: "Oswald"       # Boxing Poster v7 (2026-07-15) — weight 700, 0 tracking (--lf-display)
-  body: "Barlow"          # 400/500/600 (--lf-serif/--lf-sans); JetBrains Mono for labels
+  display: "Oswald"       # Boxing Poster v7 (2026-07-15) — weight 700, 0 tracking (--lf-heading)
+  body: "Barlow"          # 400/500/600 (--lf-body); JetBrains Mono for labels
   label: "JetBrains Mono" # 500, uppercase, 0.08em (--lf-mono)
 spacing:
   base: "8px"
   gap: "16px"
   card-padding: "24px"
-  section-padding: "128px"  # --lf-space-10, editorial breathing
+  section-padding: "clamp(64px, 8vw, 128px)"  # --lf-section-space
 radius:
   sm: "12px"
   control: "32px"
   card: "32px"
   pill: "9999px"
 motion:
-  snappy: "180ms"           # hovers, bento reveals (--lf-time-snappy)
-  base: "320ms"             # section transitions
+  signal: "180ms"           # decisive state feedback (--m-signal-ms)
+  settle: "320ms"           # ordinary transitions (--m-settle-ms)
   ease-standard: "cubic-bezier(0.22, 0.61, 0.36, 1)"
   ease-out: "cubic-bezier(0.22, 1, 0.36, 1)"
 ---
@@ -44,8 +44,8 @@ seeded from the Axiom "Momentum" design system and reconciled with the Little Fi
 ## Overview
 
 Right-sized tech for New York's owner-operated shops, presented as one calm operating
-system. The look is product-OS, not marketing-brochure: near-black ground, Inter at
-display scale, a single orange lead signal, blue as a genuine second accent, generously
+system. The look is product-OS, not marketing-brochure: near-black ground, Oswald poster
+headings over readable Barlow body, a single orange lead signal, blue as a supporting accent, generously
 rounded (32px) surface cards, and restrained motion.
 
 ## Commercial hierarchy
@@ -62,9 +62,10 @@ action visually dominant, preserve a direct urgent-help path, and disclose owned
 the higher-value continuation. The customer-facing phrase is **software you own**; the stable
 route remains `/services/business-systems/`.
 
-**Tokens are the source of truth** — every color, type, radius, and motion value lives in
-`src/styles/editorial/tokens.css` under `.lf-editorial`. Components consume `var(--lf-*)`;
-they never hardcode hex. Changing a token cascades site-wide.
+**Tokens are the source of truth** — shared color, type, spacing, radius, control, layout,
+and motion values live in `src/styles/editorial/tokens.css` under `.lf-editorial`.
+Components consume semantic variables instead of repeating foundation values. Canvas-only
+instrument physics may stay local when it has no DOM equivalent.
 
 ## Colors
 
@@ -75,43 +76,55 @@ blue supports (labels, one CTA surface, accents) and must never out-shout the or
 
 ## Typography
 
-**Inter** carries both display and body — Fraunces was retired 2026-07-06 (removed ~80KB
-from first paint). Display distinction comes from weight (`700`, `--lf-display-weight`) and
-negative tracking (`-0.03em`, `--lf-display-tracking`), not a serif face. Italic emphasis
-uses real Inter italic (400/600). Labels and technical metadata use **JetBrains Mono**,
-uppercase, `0.08em` tracking.
+**Oswald** carries headings and prominent names at weight `700` through
+`--lf-heading`. **Barlow** carries body, lists, controls, and italic emphasis through
+`--lf-body`. Labels and technical metadata use **JetBrains Mono**, uppercase, `0.08em`
+tracking. `--lf-serif`, `--lf-display`, and `--lf-sans` are compatibility aliases only;
+new work uses the semantic tokens.
 
 ## Layout
 
-Deliberate, stable spacing on an 8px base. Max width `1440px`. Bento/feature sections use a
-6-column grid that collapses to 1 column at 640px. Editorial rhythm (large `section-padding`)
-is preserved — the product-OS shift is in surface + type, not density.
+Deliberate spacing sits on an 8px base with a `1440px` maximum shell.
+`--lf-page-gutter` flows from `20px` to `64px`; `--lf-section-space` flows from
+`64px` to `128px`; readable copy defaults to `--lf-measure-reading` (`68ch`).
+
+The canonical viewport bands are compact below `48rem`, composed from `48rem` to
+`79.99rem`, and expansive at `80rem` and above. Use `.lf-container` for the fluid,
+safe-area-aware page shell and `.lf-shell-grid` for new 4/8/12-column layouts. Components
+that can appear in more than one shell should respond to their own width: wrap the boundary
+in `.lf-cq` and put `.lf-cq-grid` on its child. Existing pages migrate opportunistically;
+do not rewrite route markup just to adopt a helper.
 
 ## Components
 
 - **Cards / bento tiles** — `--lf-paper` surface, `1px` `--lf-hairline` border, `32px`
   radius (`--lf-radius-card`). Hover lifts `-4px` with an orange-tinted border/background
-  over `--lf-time-snappy`.
-- **Buttons / CTAs** — pill radius (`9999px`), orange fill on the primary action, `>=48px`
-  tap target, snappy hover to `--lf-ember`.
+  over `--m-signal-ms`. `.lf-surface` is the shared opt-in primitive.
+- **Buttons / CTAs** — pill radius (`9999px`), orange fill on the primary action,
+  `--lf-control-height` (`48px`) for ordinary controls, and a global `44px` minimum target.
+  `.lf-control` supplies the shared geometry; hover uses `--lf-fight-hover`.
 - **Icon chips** — `44px`, `--lf-radius-sm`, orange glyph on a 12% orange wash.
 - **Labels** — `.lf-mono`, uppercase, tertiary or accent color.
-- Reference implementation: `src/components/editorial/MomentumSection.tsx` (the Momentum
-  bento feature section on the home page).
+- **Composition** — `.lf-stack`, `.lf-cluster`, `.lf-auto-grid`, `.lf-measure`, and
+  `.lf-section` are opt-in layout primitives in `src/styles/editorial/primitives.css`.
 
 ## Motion
 
-Snappy and restrained. Hovers and bento reveals run `180ms` (`--lf-time-snappy`) on
-`--lf-ease-standard`; section entrances use scroll-reveal (`useScrollReveal`) with a per-tile
-stagger (`calc(var(--i) * 70ms)`). Everything collapses instantly under
-`prefers-reduced-motion: reduce`.
+Snappy and restrained. Ordinary state feedback uses the named `signal` (`180ms`) and
+`settle` (`320ms`) intents from `--m-*`; route transitions and tactile feedback consume the
+same vocabulary. `src/kernel/motion.ts` mirrors the five names for canvas. Sections render
+complete on first paint—global scroll-gated entrances are retired. Bespoke storytelling or
+instrument motion must remain transform/opacity based, have a communication job, and collapse
+under `prefers-reduced-motion: reduce`.
 
 ## Guardrails
 
-- Do not reintroduce a serif display face; Inter is the display voice now.
+- Keep Oswald on headings and Barlow on body; do not use the legacy `--lf-serif` name in new work.
 - Do not let blue rival orange — orange is the single lead signal.
 - Keep cards on the 32px radius language; editorial hairline rules stay sharp (`0`).
-- Never hardcode color/spacing/radius in a component — add or use a token.
+- Use semantic foundation tokens for repeated color/spacing/radius/motion values.
+- Preserve a `44px` interactive target, visible keyboard focus, 16px type floor, safe-area
+  insets, and wrapping for long or translated text.
 - Preserve the LiFi footer line ("Designed, Hosted and Cared For by LittleFightNYC.com").
 
 ---

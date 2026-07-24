@@ -35,6 +35,10 @@
 }
 
 .lf-editorial .lf-es__top-phone {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--lf-space-2);
   color: var(--lf-bone);
   font-family: var(--lf-display);
   font-weight: 700;
@@ -339,16 +343,18 @@
 }
 
 .lf-editorial .lf-es__foot-link {
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding-inline: var(--lf-space-2);
   color: var(--lf-bone-soft);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .lf-editorial button.lf-es__foot-link {
-  padding: 0;
+  padding-inline: var(--lf-space-2);
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -358,5 +364,26 @@
   .lf-es__top,
   .lf-es__foot {
     padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@supports (padding: max(0px)) {
+  .lf-es__top,
+  .lf-es__foot {
+    padding-left: max(var(--lf-margin-mobile), env(safe-area-inset-left));
+    padding-right: max(var(--lf-margin-mobile), env(safe-area-inset-right));
+  }
+
+  .lf-es__main {
+    padding-left: max(var(--lf-margin-mobile), env(safe-area-inset-left));
+    padding-right: max(var(--lf-margin-mobile), env(safe-area-inset-right));
+  }
+
+  @media (min-width: 768px) {
+    .lf-es__top,
+    .lf-es__foot {
+      padding-left: max(var(--lf-margin-tablet), env(safe-area-inset-left));
+      padding-right: max(var(--lf-margin-tablet), env(safe-area-inset-right));
+    }
   }
 }

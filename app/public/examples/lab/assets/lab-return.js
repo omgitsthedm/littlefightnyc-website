@@ -5,7 +5,7 @@
     {
       slug: 'walkup-3d',
       href: '/examples/lab/concepts/walkup-3d/',
-      title: 'Brownstone Story',
+      title: 'Brownstone Walk-Up',
       type: 'Spatial story',
       suite: 'spatial-nyc',
       suiteTitle: 'Spatial NYC',
@@ -68,7 +68,7 @@
     {
       slug: 'tech-support',
       href: '/examples/lab/concepts/tech-support/',
-      title: 'Tech Support Time Machine',
+      title: 'Tech Support Site',
       type: 'Full website',
       suite: 'business-systems',
       suiteTitle: 'Systems Lab',
@@ -87,7 +87,7 @@
       slug: 'hero',
       href: '/examples/lab/concepts/hero/',
       title: 'Hero Prototype',
-      type: 'Interactive brand study',
+      type: 'Brand study',
       suite: 'brand-campaign',
       suiteTitle: 'Campaign Studio',
       hint: 'Move or drag through the signal field. Tap to send a new pulse.'

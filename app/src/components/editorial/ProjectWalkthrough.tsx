@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Boxes, Globe2, LockKeyhole, Network, ShoppingBag } from "lucide-react";
 import type { CaseStudy } from "@/data/site";
+import { caseProofLabel } from "./caseProof";
 import "./ProjectWalkthrough.css";
 
 function ProjectIcon({ kind }: { kind: string }) {
@@ -39,9 +40,7 @@ export default function ProjectWalkthrough({ study }: { study: CaseStudy }) {
         <span
           className={`lf-project-walkthrough__availability lf-project-walkthrough__availability--${study.showcase.availability}`}
         >
-          {study.showcase.availability === "private"
-            ? (study.showcase.privacyLabel ?? "Private production system")
-            : "Live in production"}
+          {caseProofLabel(study)}
         </span>
       </header>
 

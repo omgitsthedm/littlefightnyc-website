@@ -13,6 +13,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { journalDates } from "./metadata-source.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, "..", "src", "data");
@@ -27,15 +28,18 @@ function countWords(html) {
     .filter(Boolean).length;
 }
 
-const index = posts.map((p) => ({
-  slug: p.slug,
-  category: p.category,
-  title: p.title,
-  description: p.description,
-  published: p.published,
-  updated: p.updated,
-  wordCount: countWords(p.html),
-}));
+const index = posts.map((p) => {
+  const dates = journalDates(p);
+  return {
+    slug: p.slug,
+    category: p.category,
+    title: p.title,
+    description: p.description,
+    published: dates.published,
+    updated: dates.updated,
+    wordCount: countWords(p.html),
+  };
+});
 
 writeFileSync(
   join(dataDir, "journal-index.json"),

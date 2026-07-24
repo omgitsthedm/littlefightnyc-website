@@ -52,7 +52,10 @@
 }
 
 .lf-quiet-foot__brand-link {
-  font-family: var(--lf-serif);
+  min-height: var(--lf-control-min);
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--lf-heading);
   font-weight: 600;
   font-size: var(--lf-text-md);
   letter-spacing: 0;
@@ -149,6 +152,8 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
   padding: 0;
   color: var(--lf-bone);
   background: transparent;
@@ -168,7 +173,9 @@
 .lf-quiet-foot__company a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
+  min-width: 44px;
 }
 
 .lf-quiet-foot__nav a:hover,

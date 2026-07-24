@@ -1,5 +1,5 @@
-/* CommandPalette — keyboard quick-nav overlay. Button appearance rules are
-   scoped under .lf-editorial so they beat the `.lf-editorial button` reset. */
+/* CommandPalette — keyboard quick-nav overlay. Button appearance stays scoped
+   to the editorial system while the shared :where() reset remains low-weight. */
 
 .lf-cmdk {
   position: fixed;
@@ -8,7 +8,11 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(1rem, 12vh, 9rem) var(--lf-space-4) var(--lf-space-4);
+  padding:
+    max(clamp(1rem, 12vh, 9rem), var(--lf-safe-top))
+    max(var(--lf-space-4), var(--lf-safe-right))
+    max(var(--lf-space-4), var(--lf-safe-bottom))
+    max(var(--lf-space-4), var(--lf-safe-left));
 }
 
 .lf-editorial .lf-cmdk__backdrop {
@@ -19,7 +23,7 @@
   background: rgba(5, 7, 12, 0.72);
   backdrop-filter: blur(6px);
   cursor: pointer;
-  animation: lf-cmdk-fade 160ms ease both;
+  animation: lf-cmdk-fade var(--m-signal-ms) var(--m-signal-ease) both;
 }
 
 .lf-cmdk__panel {
@@ -33,7 +37,7 @@
   border-radius: var(--lf-radius-card);
   overflow: hidden;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-  animation: lf-cmdk-rise 200ms cubic-bezier(0, 0, 0.2, 1) both;
+  animation: lf-cmdk-rise var(--m-settle-ms) var(--m-settle-ease) both;
 }
 
 .lf-cmdk__field {
@@ -44,6 +48,14 @@
   border-bottom: 1px solid var(--lf-hairline);
   color: var(--lf-bone-dim);
   flex: none;
+  transition:
+    border-color var(--m-signal-ms) var(--m-signal-ease),
+    box-shadow var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-cmdk__field:focus-within {
+  border-bottom-color: var(--lf-fight);
+  box-shadow: inset 0 -2px 0 var(--lf-fight);
 }
 
 .lf-editorial .lf-cmdk__input {
@@ -52,11 +64,16 @@
   border: none;
   background: transparent;
   color: var(--lf-bone);
-  font-family: var(--lf-sans);
+  font-family: var(--lf-body);
   font-size: var(--lf-text-md);
   padding: 0;
   outline: none;
 }
+
+.lf-editorial .lf-cmdk__input:focus-visible {
+  box-shadow: none;
+}
+
 .lf-cmdk__input::placeholder { color: var(--lf-bone-dim); }
 
 .lf-cmdk__kbd {
@@ -89,7 +106,7 @@
   align-items: center;
   gap: var(--lf-space-3);
   width: 100%;
-  min-height: 44px;
+  min-height: var(--lf-control-min);
   padding: 10px var(--lf-space-3);
   border: none;
   border-radius: 12px;
@@ -135,4 +152,16 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-editorial .lf-cmdk__backdrop,
   .lf-cmdk__panel { animation: none; }
+}
+
+@media (forced-colors: active) {
+  .lf-editorial .lf-cmdk__input:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .lf-cmdk__field:focus-within {
+    border-bottom-color: Highlight;
+    box-shadow: none;
+  }
 }

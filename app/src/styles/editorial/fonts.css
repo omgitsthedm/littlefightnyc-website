@@ -13,10 +13,10 @@
 /* Oswald — variable, wght 200-700 (family "Oswald Variable"): the DISPLAY face. */
 @import "@fontsource-variable/oswald/index.css";
 
-/* Barlow — the BODY face (static weights: 400 body, 500/600/700 UI + italics). */
+/* Barlow — the BODY face. Two regular files cover the family efficiently:
+ * browsers map 500 to 400 and 600 to 700, preserving the intended hierarchy
+ * without making a phone fetch four near-identical regular font files. */
 @import "@fontsource/barlow/400.css";
-@import "@fontsource/barlow/500.css";
-@import "@fontsource/barlow/600.css";
 @import "@fontsource/barlow/700.css";
 @import "@fontsource/barlow/400-italic.css";
 @import "@fontsource/barlow/600-italic.css";

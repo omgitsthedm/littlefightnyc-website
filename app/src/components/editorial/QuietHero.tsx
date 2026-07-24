@@ -79,7 +79,6 @@ export default function QuietHero() {
             height="1200"
             alt=""
             loading="eager"
-            decoding="async"
             fetchPriority="high"
           />
         </picture>

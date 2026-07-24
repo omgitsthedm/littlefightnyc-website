@@ -3,9 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <!-- Platform + connection classes applied before first paint. External (not
-         inline) so it satisfies the site CSP `script-src 'self'`. -->
-    <script src="/boot.js"></script>
+    <!-- Platform + connection classes are progressive enhancement. Deferring
+         this tiny same-origin file keeps it out of the first-paint path while
+         preserving the site's strict `script-src 'self'` policy. -->
+    <script src="/boot.js" defer></script>
     <title>Little Fight NYC | Websites, IT Support, and Better Systems</title>
     <meta
       name="description"

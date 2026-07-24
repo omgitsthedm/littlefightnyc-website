@@ -21,7 +21,7 @@
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-9);
+  gap: var(--lf-space-5);
 }
 
 .lf-journal__group-label {
@@ -42,6 +42,30 @@
 
 .lf-journal__item {
   border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-journal__more {
+  min-height: var(--lf-control-height);
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lf-space-2);
+  padding-inline: var(--lf-control-padding-inline);
+  color: var(--lf-bone);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-control);
+  background: var(--lf-paper);
+  font-family: var(--lf-body);
+  font-weight: 700;
+  transition:
+    color var(--m-signal-ms) var(--m-signal-ease),
+    border-color var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-editorial .lf-journal__more:hover {
+  color: var(--lf-fight);
+  border-color: var(--lf-fight);
 }
 
 .lf-journal__link {
@@ -543,6 +567,236 @@
 
 /* Journal category filter bar. Button appearance rules are scoped under
    .lf-editorial so they beat the `.lf-editorial button` reset (0,2,0 > 0,1,1). */
+
+/* Library wayfinding: three plain-language doors and one real search field. */
+.lf-library-find {
+  padding: var(--lf-space-8) var(--lf-margin-mobile);
+  border-bottom: 1px solid var(--lf-hairline);
+  background:
+    radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--lf-blue) 16%, transparent), transparent 36%),
+    var(--lf-paper-2);
+}
+
+.lf-library-find__inner {
+  max-width: var(--lf-max-w);
+  margin-inline: auto;
+}
+
+.lf-library-find__intro {
+  display: grid;
+  gap: var(--lf-space-2);
+  margin-bottom: var(--lf-space-6);
+}
+
+.lf-library-find__eyebrow {
+  margin: 0;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lf-library-find__intro h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-2xl);
+  line-height: 1;
+}
+
+.lf-library-find__doors {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-3);
+}
+
+.lf-library-find__door {
+  min-width: 0;
+  min-height: 120px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--lf-space-4);
+  padding: var(--lf-space-5);
+  color: var(--lf-bone);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: color-mix(in srgb, var(--lf-paper) 90%, transparent);
+  text-decoration: none;
+  transition:
+    transform var(--lf-time-snappy) var(--lf-ease-standard),
+    border-color var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-library-find__door:hover,
+.lf-library-find__door:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 50%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-fight) 5%, var(--lf-paper));
+  transform: translateY(var(--lf-lift));
+}
+
+.lf-library-find__door:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
+}
+
+.lf-library-find__door > svg:first-child {
+  width: 28px;
+  height: 28px;
+  color: var(--lf-fight);
+}
+
+.lf-library-find__door > svg:last-child {
+  width: 18px;
+  height: 18px;
+  color: var(--lf-bone-dim);
+}
+
+.lf-library-find__door span {
+  display: grid;
+  gap: var(--lf-space-2);
+}
+
+.lf-library-find__door strong {
+  font-family: var(--lf-display);
+  font-size: var(--lf-text-md);
+  line-height: 1.1;
+}
+
+.lf-library-find__door small {
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.45;
+}
+
+.lf-library-find__search {
+  position: relative;
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-5);
+  padding-inline: var(--lf-space-5);
+  color: var(--lf-bone);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-control);
+  background: var(--lf-ink);
+}
+
+.lf-library-find__search:focus-within {
+  border-color: var(--lf-fight);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lf-fight) 24%, transparent);
+}
+
+.lf-library-find__search > svg {
+  width: 22px;
+  height: 22px;
+  color: var(--lf-fight);
+}
+
+.lf-library-find__search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.lf-library-find__search input {
+  min-width: 0;
+  min-height: 58px;
+  width: 100%;
+  padding: 0;
+  color: var(--lf-bone);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: 500 var(--lf-text-base) / 1.2 var(--lf-sans);
+}
+
+.lf-library-find__search input::placeholder {
+  color: var(--lf-bone-dim);
+  opacity: 1;
+}
+
+.lf-editorial .lf-library-find__search button,
+.lf-editorial .lf-library-empty button {
+  min-height: 44px;
+  padding-inline: var(--lf-space-4);
+  color: var(--lf-bone);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-control);
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lf-library-find__status {
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+}
+
+.lf-library-empty {
+  padding: var(--lf-space-6);
+  border: 1px dashed var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  text-align: center;
+}
+
+.lf-library-empty h2 {
+  margin: 0;
+  color: var(--lf-bone);
+  font: 700 var(--lf-text-lg) / 1.1 var(--lf-display);
+}
+
+.lf-library-empty p {
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone-soft);
+}
+
+.lf-library-empty--journal {
+  max-width: var(--lf-max-w);
+  margin: var(--lf-space-6) auto var(--lf-space-9);
+}
+
+.lf-library-empty--journal button {
+  margin-top: var(--lf-space-4);
+}
+
+@media (min-width: 768px) {
+  .lf-library-find {
+    padding: var(--lf-space-9) var(--lf-margin-tablet);
+  }
+
+  .lf-library-find__doors {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-library-find {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-library-find__door {
+    transition: none;
+  }
+
+  .lf-library-find__door:hover,
+  .lf-library-find__door:focus-visible {
+    transform: none;
+  }
+}
+
 .lf-journal-filter {
   padding: var(--lf-space-6) var(--lf-margin-mobile) 0;
 }
@@ -588,6 +842,11 @@
   background: var(--lf-fight);
   border-color: var(--lf-fight);
   color: var(--lf-ink);
+}
+
+.lf-editorial .lf-journal-filter__chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 .lf-journal-filter__count {
   font-family: var(--lf-mono);

@@ -107,6 +107,10 @@ function postTime(published: string): number {
 export default function Library() {
   const posts = journal as unknown as Post[];
   const [filter, setFilter] = useState<Filter>("all");
+  const [query, setQuery] = useState("");
+  const [openClusters, setOpenClusters] = useState(() => new Set(["urgent"]));
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const normalizedQuery = query.trim().toLocaleLowerCase();
 
   const sorted = useMemo(
     () => [...posts].sort((a, b) => postTime(b.published) - postTime(a.published)),
@@ -119,9 +123,18 @@ export default function Library() {
     count: posts.filter((p) => p.category === cat).length,
   })).filter((c) => c.count > 0);
 
-  const visible = filter === "all" ? sorted : sorted.filter((p) => p.category === filter);
+  const visible = (filter === "all" ? sorted : sorted.filter((p) => p.category === filter))
+    .filter((post) => {
+      if (!normalizedQuery) return true;
+      return [post.title, post.description, CATEGORY_LABEL[post.category]]
+        .join(" ")
+        .toLocaleLowerCase()
+        .includes(normalizedQuery);
+    });
   const featured = visible[0];
   const rows = visible.slice(1);
+  const displayedRows = normalizedQuery || showAllPosts ? rows : rows.slice(0, 8);
+  const hiddenRowCount = rows.length - displayedRows.length;
 
   const featuredRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
   const listRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
@@ -143,6 +156,26 @@ export default function Library() {
         ]
       : []),
   ];
+  const visibleClusters = clusters
+    .map((cluster) => ({
+      ...cluster,
+      guides: cluster.slugs
+        .map((slug) => guideBySlug.get(slug))
+        .filter((guide) => guide !== undefined)
+        .filter((guide) => {
+          if (!normalizedQuery) return true;
+          return [guide.question, guide.short]
+            .join(" ")
+            .toLocaleLowerCase()
+            .includes(normalizedQuery);
+        }),
+    }))
+    .filter((cluster) => cluster.guides.length > 0);
+  const answerResultCount = visibleClusters.reduce(
+    (total, cluster) => total + cluster.guides.length,
+    0,
+  );
+  const totalResults = answerResultCount + visible.length;
 
   return (
     <>
@@ -157,7 +190,7 @@ export default function Library() {
             <span className="lf-em">Free.</span>
           </>
         }
-        dek="Straight answers to the questions NYC owners actually ask, plus how-tos, essays, and software comparisons from the field. Short, plain, and not trying to sell you a thing."
+        dek="Straight answers to the questions NYC owners actually ask, plus practical guides and field notes. Useful whether you hire us or not."
         image={{
           src: "/assets/hero-ind-bookshop.webp",
           alt: "A reader browsing the shelves of an independent New York bookshop",
@@ -166,6 +199,81 @@ export default function Library() {
         }}
       />
 
+      <section className="lf-library-find" aria-labelledby="lf-library-find-title">
+        <div className="lf-library-find__inner">
+          <div className="lf-library-find__intro">
+            <p className="lf-library-find__eyebrow">Start with your situation</p>
+            <h2 id="lf-library-find-title">What do you need today?</h2>
+          </div>
+
+          <div className="lf-library-find__doors">
+            <a
+              className="lf-library-find__door"
+              href="#answers-urgent"
+              onClick={() =>
+                setOpenClusters((current) => new Set(current).add("urgent"))
+              }
+            >
+              <ServerCrash aria-hidden="true" />
+              <span>
+                <strong>Fix something</strong>
+                <small>Website, email, POS, Google, or another urgent problem.</small>
+              </span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a
+              className="lf-library-find__door"
+              href="#answers-compare"
+              onClick={() =>
+                setOpenClusters((current) => new Set(current).add("compare"))
+              }
+            >
+              <TableProperties aria-hidden="true" />
+              <span>
+                <strong>Choose a tool</strong>
+                <small>Clear comparisons before you spend money or rebuild.</small>
+              </span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a className="lf-library-find__door" href="#journal">
+              <LibraryIcon aria-hidden="true" />
+              <span>
+                <strong>Learn the system</strong>
+                <small>How-tos, field notes, and ideas for running the business better.</small>
+              </span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
+
+          <label className="lf-library-find__search">
+            <SearchCheck aria-hidden="true" />
+            <span className="lf-library-find__search-label">Search the Library</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setFilter("all");
+                setShowAllPosts(false);
+              }}
+              placeholder="Try “Wi-Fi,” “website,” or “Square vs Toast”"
+              autoComplete="off"
+            />
+            {query && (
+              <button type="button" onClick={() => setQuery("")}>
+                Clear
+              </button>
+            )}
+          </label>
+
+          <p className="lf-library-find__status" aria-live="polite">
+            {normalizedQuery
+              ? `${totalResults} result${totalResults === 1 ? "" : "s"} for “${query.trim()}”`
+              : `${answerGuides.length} straight answers and ${posts.length} field notes`}
+          </p>
+        </div>
+      </section>
+
       {/* ── Straight answers — the pain-first stream ── */}
       <section
         id="answers"
@@ -173,23 +281,36 @@ export default function Library() {
         aria-label="All owner answers, grouped by symptom"
       >
         <div className="lf-answers-hub__inner">
-          {clusters.map((cluster, clusterIndex) => {
-            const guides = cluster.slugs
-              .map((slug) => guideBySlug.get(slug))
-              .filter((guide) => guide !== undefined);
-            if (guides.length === 0) return null;
+          {visibleClusters.map((cluster) => (
+              <details
+                id={`answers-${cluster.key}`}
+                key={cluster.key}
+                className="lf-answers-hub__cluster"
+                open={Boolean(normalizedQuery) || openClusters.has(cluster.key)}
+                onToggle={(event) => {
+                  if (normalizedQuery) return;
+                  const isOpen = event.currentTarget.open;
+                  setOpenClusters((current) => {
+                    const next = new Set(current);
+                    if (isOpen) next.add(cluster.key);
+                    else next.delete(cluster.key);
+                    return next;
+                  });
+                }}
+              >
+                <summary className="lf-answers-hub__head">
+                  <span className="lf-answers-hub__heading">
+                    <span className="lf-answers-hub__label">{cluster.label}</span>
+                    <span className="lf-answers-hub__title">{cluster.title}</span>
+                  </span>
+                  <span className="lf-answers-hub__count">
+                    {cluster.guides.length}
+                    <span aria-hidden="true" className="lf-answers-hub__toggle" />
+                  </span>
+                </summary>
 
-            return (
-              <section key={cluster.key} className="lf-answers-hub__cluster">
-                <header className="lf-answers-hub__head">
-                  <p className="lf-answers-hub__label">
-                    {String(clusterIndex + 1).padStart(2, "0")} · {cluster.label}
-                  </p>
-                  <h2 className="lf-answers-hub__title">{cluster.title}</h2>
-                </header>
-
-                <div className="lf-answers-hub__grid" data-count={guides.length}>
-                  {guides.map((guide, guideIndex) => {
+                <div className="lf-answers-hub__grid" data-count={cluster.guides.length}>
+                  {cluster.guides.map((guide, guideIndex) => {
                     const GuideIcon = ANSWER_ICON_BY_SLUG[guide.slug] ?? CircleHelp;
                     return (
                       <Link
@@ -213,9 +334,14 @@ export default function Library() {
                     );
                   })}
                 </div>
-              </section>
-            );
-          })}
+              </details>
+          ))}
+          {normalizedQuery && answerResultCount === 0 && (
+            <div className="lf-library-empty">
+              <h2>No straight answer matched that phrase.</h2>
+              <p>Try a shorter term, or browse the field notes below.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -228,7 +354,11 @@ export default function Library() {
               className="lf-journal-filter__chip"
               data-active={filter === "all"}
               aria-pressed={filter === "all"}
-              onClick={() => setFilter("all")}
+              onClick={() => {
+                setFilter("all");
+                setShowAllPosts(false);
+              }}
+              disabled={Boolean(normalizedQuery)}
             >
               All <span className="lf-journal-filter__count">{posts.length}</span>
             </button>
@@ -239,7 +369,11 @@ export default function Library() {
                 className="lf-journal-filter__chip"
                 data-active={filter === c.category}
                 aria-pressed={filter === c.category}
-                onClick={() => setFilter(c.category)}
+                onClick={() => {
+                  setFilter(c.category);
+                  setShowAllPosts(false);
+                }}
+                disabled={Boolean(normalizedQuery)}
               >
                 {c.label} <span className="lf-journal-filter__count">{c.count}</span>
               </button>
@@ -259,7 +393,7 @@ export default function Library() {
               border: 0,
             }}
           >
-            {visible.length} posts shown
+            {visible.length} field notes shown
           </p>
         </div>
 
@@ -316,15 +450,12 @@ export default function Library() {
             <div ref={listRef} className="lf-journal__inner" data-reveal>
               <p className="lf-journal__group-label">All entries</p>
               <ol className="lf-journal__list">
-                {rows.map((post, i) => (
+                {displayedRows.map((post) => (
                   <li key={post.slug} className="lf-journal__item">
                     <Link
                       to={`/journal/${post.slug}/`}
                       className="lf-journal__link lf-journal__link--thumb"
                     >
-                      <span className="lf-journal__num">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
                       <span className="lf-journal__thumb" aria-hidden="true">
                         <img {...skelImg}
                           src={POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category]}
@@ -356,8 +487,25 @@ export default function Library() {
                   </li>
                 ))}
               </ol>
+              {hiddenRowCount > 0 && (
+                <button
+                  type="button"
+                  className="lf-journal__more"
+                  onClick={() => setShowAllPosts(true)}
+                >
+                  Show all {visible.length} entries
+                  <span aria-hidden="true">↓</span>
+                </button>
+              )}
             </div>
           </section>
+        )}
+        {normalizedQuery && visible.length === 0 && (
+          <div className="lf-library-empty lf-library-empty--journal">
+            <h2>No field note matched that phrase.</h2>
+            <p>Clear the search to browse every entry.</p>
+            <button type="button" onClick={() => setQuery("")}>Show everything</button>
+          </div>
         )}
       </section>
 

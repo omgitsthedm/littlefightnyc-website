@@ -10,6 +10,7 @@ import ShareButton from "@/components/ShareButton";
 import journalIndex from "@/data/journal-index.json";
 import { POST_IMAGE, CATEGORY_LABEL, CATEGORY_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
+import { authoredDate } from "@/lib/authoredDate";
 import "@/styles/editorial/journal.css";
 
 // Meta only (no html) — the ~250KB of post bodies is split OUT of this chunk.
@@ -39,15 +40,6 @@ function loadBody(slug: string): Promise<string> {
 
 // Branded per-post art (same visual language as the category art) — per-post
 // stock photos retired 2026-07-12 (the donut-on-a-ghosting-article era is over).
-
-function displayDate(post: PostMeta) {
-  return post.published || post.updated || "May 7, 2026";
-}
-
-function dateTimeValue(value: string) {
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? "2026-05-07" : parsed.toISOString().slice(0, 10);
-}
 
 /** Long-post threshold for the sticky mini-TOC (real word count). */
 const TOC_MIN_WORDS = 1200;
@@ -126,7 +118,8 @@ export default function JournalPost() {
   // Only trust `prepared` when it belongs to the post currently on screen.
   const ready = prepared && prepared.slug === post.slug ? prepared : null;
   const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
-  const published = displayDate(post);
+  const published = authoredDate(post.published);
+  const updated = authoredDate(post.updated);
   const toc = ready?.toc ?? [];
   const hasToc = toc.length >= 2;
 
@@ -179,14 +172,18 @@ export default function JournalPost() {
             >
               <span itemProp="name">Little Fight NYC</span>
             </span>
-            <span aria-hidden="true"> · </span>
-            <span>Published </span>
-            <time itemProp="datePublished" dateTime={dateTimeValue(published)}>{published}</time>
-            {post.updated && post.updated !== published && (
+            {published && (
+              <>
+                <span aria-hidden="true"> · </span>
+                <span>Published </span>
+                <time itemProp="datePublished" dateTime={published.iso}>{published.label}</time>
+              </>
+            )}
+            {updated && updated.iso !== published?.iso && (
               <>
                 <span aria-hidden="true"> · </span>
                 <span>Updated </span>
-                <time itemProp="dateModified" dateTime={dateTimeValue(post.updated)}>{post.updated}</time>
+                <time itemProp="dateModified" dateTime={updated.iso}>{updated.label}</time>
               </>
             )}
             <span aria-hidden="true"> · </span>

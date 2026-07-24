@@ -35,17 +35,18 @@
 }
 
 .lf-nav__brand {
+  min-height: var(--lf-control-min);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--lf-serif);
+  font-family: var(--lf-heading);
   font-weight: 600;
   font-size: var(--lf-text-base);
   letter-spacing: -0.01em;
   color: var(--lf-bone);
   text-decoration: none;
   white-space: nowrap;
-  transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: color var(--m-signal-ms) var(--m-signal-ease);
 }
 
 /* Tugboat logomark in the nav — orange signal, sized to the wordmark. Draws in
@@ -116,7 +117,7 @@
   display: none;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 80rem) {
   .lf-nav__primary {
     display: flex;
     align-items: center;
@@ -197,7 +198,7 @@
   display: none;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 80rem) {
   .lf-nav__actions .lf-nav__open {
     display: inline-flex;
     margin-inline-end: var(--lf-space-1);
@@ -279,7 +280,7 @@
     box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 80rem) {
   .lf-nav__start {
     display: inline-flex;
     margin-inline-start: var(--lf-space-5);
@@ -348,7 +349,7 @@
   outline-offset: 2px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 80rem) {
   .lf-nav__toggle {
     display: none;
   }

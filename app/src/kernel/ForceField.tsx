@@ -20,7 +20,6 @@
  */
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { motionVars } from "./motion";
 import { ForceContext, NEUTRAL, type Forces } from "./force-context";
 import "./force-field.css";
 
@@ -28,18 +27,11 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
-/** Inject the motion grammar's CSS vars once, so DOM and canvas share exact numbers. */
-function registerMotionVars() {
-  const root = document.documentElement;
-  for (const [k, v] of Object.entries(motionVars)) root.style.setProperty(k, v);
-}
-
 export function ForceFieldProvider({ children }: { children: ReactNode }) {
   const forces = useRef<Forces>({ ...NEUTRAL });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    registerMotionVars();
 
     const root = document.documentElement;
     const write = (f: Forces) => {

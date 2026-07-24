@@ -9,6 +9,7 @@ import './index.css'
 import './styles/editorial/fonts.css'
 import './styles/editorial/tokens.css'
 import './styles/editorial/base.css'
+import './styles/editorial/primitives.css'
 import './styles/editorial/motion.css'
 // Last — neutralizes the scroll-reveal entrance states so the site loads
 // "all at once" (see reveal-static.css). Imported after base/motion so it wins.

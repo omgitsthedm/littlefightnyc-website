@@ -2,20 +2,20 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 36px;
-  padding: 6px 12px;
+  min-height: var(--lf-control-min);
+  padding: 6px var(--lf-space-4);
   background: transparent;
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-pill);
   color: var(--lf-bone);
-  font-family: var(--lf-sans);
+  font-family: var(--lf-body);
   font-size: var(--lf-text-xs);
   font-weight: 600;
   letter-spacing: 0.02em;
   cursor: pointer;
   transition:
-    border-color var(--lf-time-snappy) var(--lf-ease-standard),
-    background-color var(--lf-time-snappy) var(--lf-ease-standard);
+    border-color var(--m-signal-ms) var(--m-signal-ease),
+    background-color var(--m-signal-ms) var(--m-signal-ease);
 }
 
 .lf-share:hover,
@@ -29,9 +29,4 @@
 .lf-share svg {
   flex: none;
   color: var(--lf-fight);
-}
-
-/* Full 44px touch target on real touch devices (kept compact for mouse). */
-@media (pointer: coarse) {
-  .lf-share { min-height: 44px; padding-inline: 16px; }
 }

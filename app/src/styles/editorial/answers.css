@@ -359,30 +359,82 @@
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--lf-space-8);
+  gap: var(--lf-space-4);
 }
 
 .lf-answers-hub__head {
-  margin-bottom: var(--lf-space-5);
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lf-space-5);
+  padding: var(--lf-space-5) 0;
+  border-top: 1px solid var(--lf-hairline);
+  cursor: pointer;
+  list-style: none;
+}
+
+.lf-answers-hub__head::-webkit-details-marker {
+  display: none;
+}
+
+.lf-answers-hub__heading {
+  display: grid;
+  gap: var(--lf-space-2);
+}
+
+.lf-answers-hub__count {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-3);
+  flex: none;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+}
+
+.lf-answers-hub__toggle {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--lf-hairline);
+  border-radius: 50%;
+}
+
+.lf-answers-hub__toggle::before,
+.lf-answers-hub__toggle::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 14px;
+  height: 1px;
+  background: var(--lf-fight);
+  transform: translate(-50%, -50%);
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-answers-hub__toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.lf-answers-hub__cluster[open] .lf-answers-hub__toggle::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.lf-answers-hub__head:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
 }
 
 .lf-answers-hub__label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 var(--lf-space-3);
+  display: block;
+  margin: 0;
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lf-fight);
-}
-
-.lf-answers-hub__label::after {
-  content: "";
-  flex: 1;
-  border-top: 1px solid var(--lf-hairline);
 }
 
 .lf-answers-hub__title {
@@ -400,6 +452,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--lf-space-4);
+  padding: var(--lf-space-2) 0 var(--lf-space-7);
 }
 
 @media (min-width: 720px) {
@@ -520,6 +573,14 @@
 }
 
 @media (max-width: 479px) {
+  .lf-answers-hub__head {
+    gap: var(--lf-space-3);
+  }
+
+  .lf-answers-hub__title {
+    font-size: var(--lf-text-md);
+  }
+
   .lf-answers-hub__card {
     grid-template-columns: 72px 1fr;
     gap: var(--lf-space-3);
@@ -532,6 +593,13 @@
   .lf-answers-hub__thumb svg {
     width: 28px;
     height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-answers-hub__toggle::before,
+  .lf-answers-hub__toggle::after {
+    transition: none;
   }
 }
 

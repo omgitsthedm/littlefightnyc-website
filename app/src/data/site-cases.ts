@@ -1,6 +1,12 @@
 /* Split out of site.ts so content routes load ONLY their own data slice
  * (this array was part of the ~200KB shared site chunk). Pure data, no icons. */
 
+export type CaseProofStatus =
+  | "public-live"
+  | "owned-live"
+  | "private-client"
+  | "private-concept";
+
 export type CaseStudy = {
   type: string;
   title: string;
@@ -16,13 +22,21 @@ export type CaseStudy = {
   published?: string;
   updated?: string;
   body?: string[];
-  metrics?: Array<{ value: string; label: string }>;
+  metrics?: Array<{
+    value: string;
+    label: string;
+    evidence: "build" | "outcome";
+  }>;
   showcase: {
     label: string;
     kind: string;
     context: string;
     availability: "public" | "private";
     privacyLabel?: string;
+    proof: {
+      status: CaseProofStatus;
+      captureDate?: string;
+    };
     stages: Array<{ label: string; detail: string }>;
     heroPosition?: string;
     heroPositionMobile?: string;
@@ -36,9 +50,17 @@ export const caseStudies: CaseStudy[] = [
     url: "",
     slug: "army-navy-bags",
     metrics: [
-      { value: "5 landmarks", label: "The shop joins a real neighborhood walk" },
-      { value: "1 tap", label: "Call or get directions from a phone" },
-      { value: "98/100", label: "Fast mobile performance" },
+      {
+        value: "5 landmarks",
+        label: "The shop joins a real neighborhood walk",
+        evidence: "build",
+      },
+      {
+        value: "1 tap",
+        label: "Call or get directions from a phone",
+        evidence: "outcome",
+      },
+      { value: "98/100", label: "Fast mobile performance", evidence: "outcome" },
     ],
     showcase: {
       label: "A neighborhood shop people can find",
@@ -46,6 +68,7 @@ export const caseStudies: CaseStudy[] = [
       context: "Lower East Side retail",
       availability: "private",
       privacyLabel: "Private client concept",
+      proof: { status: "private-concept" },
       heroPosition: "center 52%",
       heroPositionMobile: "56% center",
       stages: [
@@ -96,15 +119,28 @@ export const caseStudies: CaseStudy[] = [
     url: "https://ccfilms.net",
     slug: "cc-films",
     metrics: [
-      { value: "Official source", label: "Behaves like one, not a brochure" },
-      { value: "Schema + headers", label: "Hardened for search + crawlers" },
-      { value: "Netlify + GitHub", label: "Existing deploy path kept" },
+      {
+        value: "Official source",
+        label: "Behaves like one, not a brochure",
+        evidence: "outcome",
+      },
+      {
+        value: "Schema + headers",
+        label: "Hardened for search + crawlers",
+        evidence: "build",
+      },
+      {
+        value: "Netlify + GitHub",
+        label: "Existing deploy path kept",
+        evidence: "build",
+      },
     ],
     showcase: {
       label: "Official film source",
       kind: "Website",
       context: "Independent film company",
       availability: "public",
+      proof: { status: "public-live", captureDate: "2026-07-21" },
       stages: [
         { label: "Gather", detail: "Trailer, credits, reviews, premiere photos, and release facts come together in one official source." },
         { label: "Prove", detail: "Press and festival audiences get fast paths to the film, company, cast, and coverage." },
@@ -132,15 +168,24 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.getdeckspace.com",
     slug: "deckspace",
     metrics: [
-      { value: "Live", label: "getdeckspace.com" },
-      { value: "3 jobs", label: "Onboard guide · social · memory layer" },
-      { value: "Kept", label: "The nostalgic heart of cruising" },
+      { value: "Live", label: "getdeckspace.com", evidence: "outcome" },
+      {
+        value: "3 jobs",
+        label: "Onboard guide, social network, memory layer",
+        evidence: "build",
+      },
+      {
+        value: "Kept",
+        label: "The nostalgic heart of cruising",
+        evidence: "outcome",
+      },
     ],
     showcase: {
       label: "Cruise guest network",
       kind: "Public product",
       context: "Life at sea",
       availability: "public",
+      proof: { status: "public-live", captureDate: "2026-07-21" },
       stages: [
         { label: "Orient", detail: "Guests find voyage details, venue hours, shops, bars, restaurants, and what is happening next." },
         { label: "Connect", detail: "Profiles and shared events turn a ship full of strangers into a temporary neighborhood." },
@@ -168,15 +213,24 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.hairbyrachelcharles.com",
     slug: "hair-by-rachel-charles",
     metrics: [
-      { value: "100", label: "Lighthouse, across the board" },
-      { value: "2 weeks", label: "Instagram-only → real booking site" },
-      { value: "Square", label: "Booking kept — clients already knew it" },
+      { value: "100", label: "Lighthouse, across the board", evidence: "outcome" },
+      {
+        value: "2 weeks",
+        label: "Instagram-only to real booking site",
+        evidence: "outcome",
+      },
+      {
+        value: "Square",
+        label: "Booking kept because clients already knew it",
+        evidence: "build",
+      },
     ],
     showcase: {
       label: "Salon booking flow",
       kind: "Website",
       context: "Solo stylist",
       availability: "public",
+      proof: { status: "public-live", captureDate: "2026-07-21" },
       heroPosition: "center 10%",
       heroPositionMobile: "82% 10%",
       stages: [
@@ -206,15 +260,24 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.afterhoursagenda.com",
     slug: "after-hours-agenda",
     metrics: [
-      { value: "Next.js 14", label: "Custom build, no platform lock-in" },
-      { value: "1 day", label: "To ship a new product drop" },
-      { value: "Square + Printful", label: "Payments + fulfillment wired" },
+      {
+        value: "Next.js 14",
+        label: "Custom build, no platform lock-in",
+        evidence: "build",
+      },
+      { value: "1 day", label: "To ship a new product drop", evidence: "outcome" },
+      {
+        value: "Square + Printful",
+        label: "Payments + fulfillment wired",
+        evidence: "build",
+      },
     ],
     showcase: {
       label: "Custom storefront",
       kind: "Website + commerce",
       context: "Independent streetwear",
       availability: "public",
+      proof: { status: "owned-live", captureDate: "2026-07-21" },
       stages: [
         { label: "Catalog", detail: "One JSON master holds the products, prices, and drop details without hardcoded storefront content." },
         { label: "Sell", detail: "A custom Next.js experience keeps the brand intact while Square handles payment." },
@@ -242,15 +305,28 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.clearhelp.org",
     slug: "clearhelp",
     metrics: [
-      { value: "3 sites", label: "One shared Supabase backend" },
-      { value: "Per-site CI", label: "Independent deploys on push" },
-      { value: "Real-time", label: "Intake routing, no copying" },
+      {
+        value: "3 sites",
+        label: "One shared Supabase backend",
+        evidence: "build",
+      },
+      {
+        value: "Per-site CI",
+        label: "Independent deploys on push",
+        evidence: "build",
+      },
+      {
+        value: "Real-time",
+        label: "Intake routing, no copying",
+        evidence: "outcome",
+      },
     ],
     showcase: {
       label: "Connected intake system",
       kind: "Connected system",
       context: "Help service",
       availability: "public",
+      proof: { status: "public-live", captureDate: "2026-07-21" },
       stages: [
         { label: "Receive", detail: "The public site gives people a clear place to ask for help without exposing the working system behind it." },
         { label: "Route", detail: "Intake moves through one shared Supabase backend in real time, with no copying between tools." },
@@ -275,18 +351,31 @@ export const caseStudies: CaseStudy[] = [
   {
     type: "Creative agency",
     client: "Public House Creative",
-    url: "https://www.publichousecreative.com",
+    url: "",
     slug: "public-house-creative",
     metrics: [
-      { value: "3 tools → 1", label: "Estimates in one source of truth" },
-      { value: "Every number", label: "Audits back to its source" },
-      { value: "In production", label: "Runs on the team's real bids" },
+      {
+        value: "3 tools to 1",
+        label: "Estimates in one source of truth",
+        evidence: "outcome",
+      },
+      {
+        value: "Every number",
+        label: "Audits back to its source",
+        evidence: "build",
+      },
+      {
+        value: "In production",
+        label: "Runs on the team's real bids",
+        evidence: "outcome",
+      },
     ],
     showcase: {
       label: "Private estimating software",
       kind: "Private software",
       context: "Custom cabinetry team",
       availability: "private",
+      proof: { status: "private-client" },
       stages: [
         { label: "Collect", detail: "Site photos, blueprints, notes, and scope emails enter one structured project record." },
         { label: "Resolve", detail: "Rooms and price drivers get classified while the estimator keeps control of the final judgment." },
@@ -315,15 +404,20 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.grandfundingllc.com",
     slug: "grand-funding-llc",
     metrics: [
-      { value: "Type-led", label: "No finance-site cliches" },
-      { value: "Schema", label: "Org · FinancialService · Person" },
-      { value: "Live", label: "grandfundingllc.com" },
+      { value: "Type-led", label: "No finance-site cliches", evidence: "build" },
+      {
+        value: "Schema",
+        label: "Organization, FinancialService, Person",
+        evidence: "build",
+      },
+      { value: "Live", label: "grandfundingllc.com", evidence: "outcome" },
     ],
     showcase: {
       label: "Credible finance landing",
       kind: "Website",
       context: "Funding business",
       availability: "public",
+      proof: { status: "public-live", captureDate: "2026-07-21" },
       stages: [
         { label: "Explain", detail: "A quiet, type-led page says what the business offers without leaning on generic finance imagery." },
         { label: "Reassure", detail: "Structured company, service, and founder information creates a credible public record." },
@@ -351,15 +445,20 @@ export const caseStudies: CaseStudy[] = [
     url: "https://venuecircuit.app",
     slug: "venuecircuit",
     metrics: [
-      { value: "Live", label: "venuecircuit.app · open beta" },
-      { value: "~90 seconds", label: "To close a night" },
-      { value: "Every number", label: "Drills to the receipt behind it" },
+      { value: "Live", label: "venuecircuit.app, open beta", evidence: "outcome" },
+      { value: "~90 seconds", label: "To close a night", evidence: "outcome" },
+      {
+        value: "Every number",
+        label: "Drills to the receipt behind it",
+        evidence: "build",
+      },
     ],
     showcase: {
       label: "Venue financial software",
       kind: "Public product",
       context: "Independent venues",
       availability: "public",
+      proof: { status: "owned-live", captureDate: "2026-07-21" },
       stages: [
         { label: "Close", detail: "Bar, door, staff, splits, and payouts enter one nightly close that takes about 90 seconds." },
         { label: "Separate", detail: "Venue money and promoter money stay distinct instead of blurring together in a spreadsheet." },
@@ -390,9 +489,21 @@ export const caseStudies: CaseStudy[] = [
     url: "",
     slug: "brothers-pizzeria",
     metrics: [
-      { value: "1998", label: "Shop history corrected and centered" },
-      { value: "16px+", label: "Reading floor on phones and tablets" },
-      { value: "Every price", label: "Carried into the new experience" },
+      {
+        value: "1998",
+        label: "Shop history corrected and centered",
+        evidence: "build",
+      },
+      {
+        value: "16px+",
+        label: "Reading floor on phones and tablets",
+        evidence: "outcome",
+      },
+      {
+        value: "Every price",
+        label: "Carried into the new experience",
+        evidence: "outcome",
+      },
     ],
     showcase: {
       label: "Heritage built into the order",
@@ -400,6 +511,7 @@ export const caseStudies: CaseStudy[] = [
       context: "Family pizzeria · Peoria",
       availability: "private",
       privacyLabel: "Private client concept",
+      proof: { status: "private-concept" },
       stages: [
         { label: "Recognize", detail: "Butcher paper, tomato red, basil green, and a real slice make the first screen feel like a neighborhood pizzeria instead of a restaurant template." },
         { label: "Trust", detail: "Johnny's 1979 move west, the shop's 1998 opening, and real customer words arrive before the menu." },

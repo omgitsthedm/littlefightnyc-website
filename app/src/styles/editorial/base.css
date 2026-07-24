@@ -8,7 +8,7 @@
 .lf-editorial {
   background: var(--lf-ink);
   color: var(--lf-bone);
-  font-family: var(--lf-sans);
+  font-family: var(--lf-body);
   font-size: var(--lf-text-base);
   line-height: 1.55;
   letter-spacing: 0;
@@ -53,27 +53,25 @@ body:has(.lf-editorial) {
   }
 }
 
-.lf-editorial *,
-.lf-editorial *::before,
-.lf-editorial *::after {
+.lf-editorial :where(*),
+.lf-editorial :where(*)::before,
+.lf-editorial :where(*)::after {
   box-sizing: border-box;
   border-radius: 0;
 }
 
-.lf-editorial img,
-.lf-editorial picture,
-.lf-editorial video {
+.lf-editorial :where(img, picture, video) {
   max-width: 100%;
   display: block;
 }
 
-.lf-editorial a {
+.lf-editorial :where(a) {
   color: inherit;
   text-decoration: none;
   touch-action: manipulation;
 }
 
-.lf-editorial button {
+.lf-editorial :where(button) {
   font-family: inherit;
   background: none;
   border: none;
@@ -86,14 +84,23 @@ body:has(.lf-editorial) {
   user-select: none;
 }
 
-.lf-editorial h1,
-.lf-editorial h2,
-.lf-editorial h3,
-.lf-editorial h4,
-.lf-editorial p,
-.lf-editorial ul,
-.lf-editorial ol,
-.lf-editorial figure {
+.lf-editorial :where(
+  button,
+  [role="button"],
+  input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea,
+  summary
+) {
+  min-block-size: var(--lf-control-min);
+}
+
+.lf-editorial :where(input, select, textarea) {
+  font-family: inherit;
+  font-size: max(1rem, 1em);
+}
+
+.lf-editorial :where(h1, h2, h3, h4, p, ul, ol, figure) {
   margin: 0;
   padding: 0;
 }
@@ -101,15 +108,28 @@ body:has(.lf-editorial) {
 /* Editorial line-breaking. balance for short titles, pretty for body so
    widows/orphans don't strand a single word on the last line.
    Both gracefully degrade — older browsers ignore. */
-.lf-editorial h1,
-.lf-editorial h2,
-.lf-editorial h3,
-.lf-editorial h4 {
+.lf-editorial :where(h1, h2, h3, h4) {
   text-wrap: balance;
 }
 
-.lf-editorial p {
+.lf-editorial :where(p) {
   text-wrap: pretty;
+}
+
+/* Long URLs, translated copy, and narrow cards should wrap rather than force
+   horizontal scroll. CJK keeps native line-breaking rules instead of being
+   split with Latin-centric word breaks. */
+.lf-editorial :where(h1, h2, h3, h4, p, li, dd, dt, figcaption, label) {
+  overflow-wrap: anywhere;
+}
+
+.lf-editorial :where(pre, code, kbd, samp) {
+  overflow-wrap: normal;
+}
+
+.lf-editorial :where(:lang(zh), :lang(ja), :lang(ko)) {
+  word-break: normal;
+  line-break: strict;
 }
 
 /* Reserve the scrollbar gutter so short↔long route changes don't shift the
@@ -129,8 +149,7 @@ html {
   scroll-margin-top: clamp(72px, 10vh, 120px);
 }
 
-.lf-editorial ul,
-.lf-editorial ol {
+.lf-editorial :where(ul, ol) {
   list-style: none;
 }
 
@@ -151,6 +170,13 @@ html {
   box-shadow: 0 0 0 4px var(--lf-fight-ring);
 }
 
+@media (forced-colors: active) {
+  .lf-editorial :focus-visible {
+    outline-color: Highlight;
+    box-shadow: none;
+  }
+}
+
 /* Press feedback — every link and button gets a hair of press inertia.
    No layout shift (uses transform). Skipped on keyboard focus. */
 .lf-editorial a:active:not(:disabled),
@@ -165,7 +191,7 @@ html {
    grid) — real arrows are always bare <span aria-hidden="true">→</span>. */
 .lf-editorial a > span[aria-hidden="true"]:not([class]):last-child {
   display: inline-block;
-  transition: transform var(--lf-time-fast) var(--lf-ease-out-quart);
+  transition: transform var(--m-signal-ms) var(--m-signal-ease);
   will-change: transform;
 }
 .lf-editorial a:hover > span[aria-hidden="true"]:not([class]):last-child {
@@ -211,22 +237,12 @@ html {
 
 /* Page container */
 .lf-editorial .lf-container {
+  container: lf-shell / inline-size;
   width: 100%;
   max-width: var(--lf-max-w);
   margin: 0 auto;
-  padding-inline: var(--lf-margin-mobile);
-}
-
-@media (min-width: 768px) {
-  .lf-editorial .lf-container {
-    padding-inline: var(--lf-margin-tablet);
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-editorial .lf-container {
-    padding-inline: var(--lf-margin-desktop);
-  }
+  padding-left: max(var(--lf-page-gutter), var(--lf-safe-left));
+  padding-right: max(var(--lf-page-gutter), var(--lf-safe-right));
 }
 
 /* Hairline rule primitive */
@@ -246,30 +262,27 @@ html {
 }
 
 .lf-editorial .lf-italic {
-  font-family: var(--lf-serif);
+  font-family: var(--lf-body);
   font-style: italic;
 }
 
 .lf-editorial .lf-display {
-  font-family: var(--lf-display);
+  font-family: var(--lf-heading);
   font-weight: var(--lf-display-weight);
   line-height: 1.05;
-  /* Inter needs negative tracking at display sizes to read as display. */
   letter-spacing: var(--lf-display-tracking);
 }
 
+.lf-editorial .lf-body-type,
 .lf-editorial .lf-serif-body {
-  font-family: var(--lf-serif);
+  font-family: var(--lf-body);
   font-weight: 400;
   line-height: 1.55;
 }
 
-/* Typeface split, done safely. --lf-serif is back to Inter (so ALL body prose,
-   deks, and italics stay Inter by default — a missed selector just reads Inter,
-   never unreadable display type). The Bricolage display face lands ONLY on the
-   headings / titles / prominent names listed here, forced with !important so it
-   wins over each component's own --lf-serif rule without editing ~35 files. The
-   neon sign uses --lf-display directly, so it's Bricolage regardless. */
+/* Safe compatibility bridge while historical component sheets migrate off
+   --lf-serif. Semantic --lf-body/--lf-heading are canonical; this selector
+   keeps every established heading in Oswald without changing route markup. */
 .lf-editorial h1,
 .lf-editorial h2,
 .lf-editorial h3,
@@ -302,13 +315,13 @@ html {
 .lf-editorial .lf-visual-index__title,
 .lf-editorial .lf-visual-index__item-title,
 .lf-editorial .lf-line__text {
-  font-family: var(--lf-display) !important;
+  font-family: var(--lf-heading) !important;
   /* Oswald is CONDENSED: the negative tracking these headings inherited from
      the old Inter/Bricolage era (tuned as tight as -0.04em across ~110 rules)
      makes a condensed face's letters touch. Neutralize tracking on the display
      group only — Barlow body/labels keep their own (fine on a non-condensed
-     face). One rule beats editing every component sheet. */
-  letter-spacing: 0 !important;
+     face). One compatibility rule beats a risky cross-route mass rewrite. */
+  letter-spacing: var(--lf-display-tracking) !important;
 }
 
 /* Image load-in skeleton: a subtle shimmer fills the image's (already
@@ -353,81 +366,6 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
   font-feature-settings: "tnum", "lnum", "kern", "liga";
 }
 
-/* ─── One-time list reveals ────────────────────────────────────
-   Each item lifts + fades the first time it scrolls into view,
-   stamped by lib/listReveal (IntersectionObserver, reveal-once).
-   Items without the stamp yet stay put; the old view() timeline
-   approach re-hid content on scroll-up and voided print/capture. */
-.lf-editorial .lf-cases__item[data-lf-reveal="pending"],
-.lf-editorial .lf-studio__item[data-lf-reveal="pending"],
-.lf-editorial .lf-sd-issues__item[data-lf-reveal="pending"],
-.lf-editorial .lf-sd-fallacies__item[data-lf-reveal="pending"],
-.lf-editorial .lf-answers-index__item[data-lf-reveal="pending"],
-.lf-editorial .lf-archive__entry[data-lf-reveal="pending"],
-.lf-editorial .lf-svc__card[data-lf-reveal="pending"] {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.lf-editorial .lf-cases__item[data-lf-reveal],
-.lf-editorial .lf-studio__item[data-lf-reveal],
-.lf-editorial .lf-sd-issues__item[data-lf-reveal],
-.lf-editorial .lf-sd-fallacies__item[data-lf-reveal],
-.lf-editorial .lf-answers-index__item[data-lf-reveal],
-.lf-editorial .lf-archive__entry[data-lf-reveal],
-.lf-editorial .lf-svc__card[data-lf-reveal] {
-  transition:
-    opacity 700ms cubic-bezier(0.25, 1, 0.5, 1),
-    transform 700ms cubic-bezier(0.25, 1, 0.5, 1);
-  transition-delay: calc(var(--lf-i, 0) * 70ms);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lf-editorial .lf-cases__item,
-  .lf-editorial .lf-studio__item,
-  .lf-editorial .lf-sd-issues__item,
-  .lf-editorial .lf-sd-fallacies__item,
-  .lf-editorial .lf-answers-index__item,
-  .lf-editorial .lf-archive__entry,
-  .lf-editorial .lf-svc__card {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
-/* ─── Inline image scroll-reveal ───────────────────────────────
-   For figures/images inside long-form content. Subtle clip-path
-   reveal from bottom plus slight scale settle, stamped once by
-   lib/listReveal so it never repeats or re-hides. */
-.lf-editorial .lf-post__inner img[data-lf-reveal="pending"],
-.lf-editorial .lf-answer-page img[data-lf-reveal="pending"],
-.lf-editorial figure img[data-lf-reveal="pending"],
-.lf-editorial .lf-img-reveal[data-lf-reveal="pending"] {
-  clip-path: inset(0 0 100% 0);
-  transform: scale(1.02);
-}
-
-.lf-editorial .lf-post__inner img[data-lf-reveal],
-.lf-editorial .lf-answer-page img[data-lf-reveal],
-.lf-editorial figure img[data-lf-reveal],
-.lf-editorial .lf-img-reveal[data-lf-reveal] {
-  transition:
-    clip-path 900ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lf-editorial .lf-post__inner img,
-  .lf-editorial .lf-answer-page img,
-  .lf-editorial figure img,
-  .lf-editorial .lf-img-reveal {
-    clip-path: none !important;
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
 /* ─── Breathing room (David, 2026-07-12: "everything is too close and
    running into each other — needs a slight, small aspect of separation
    to make context more digestible.") ─────────────────────────────────
@@ -454,38 +392,22 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
 .lf-editorial .lf-home-faq {
   max-width: var(--lf-max-w);
   margin-inline: auto;
-  padding: 0 var(--lf-margin-mobile) var(--lf-space-8);
+  padding:
+    0
+    max(var(--lf-page-gutter), var(--lf-safe-right))
+    var(--lf-section-space)
+    max(var(--lf-page-gutter), var(--lf-safe-left));
 }
 
 /* Real-human proof before the final contact decision on the standalone home. */
 .lf-editorial .lf-home-founder {
   max-width: var(--lf-max-w);
   margin-inline: auto;
-  padding: 0 var(--lf-margin-mobile) var(--lf-space-8);
-}
-
-@media (min-width: 768px) {
-  .lf-editorial .lf-home-founder {
-    padding: 0 var(--lf-margin-tablet) var(--lf-space-9);
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-editorial .lf-home-founder {
-    padding: 0 var(--lf-margin-desktop) var(--lf-space-9);
-  }
-}
-
-@media (min-width: 768px) {
-  .lf-editorial .lf-home-faq {
-    padding: 0 var(--lf-margin-tablet) var(--lf-space-9);
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-editorial .lf-home-faq {
-    padding: 0 var(--lf-margin-desktop) var(--lf-space-9);
-  }
+  padding:
+    0
+    max(var(--lf-page-gutter), var(--lf-safe-right))
+    var(--lf-section-space)
+    max(var(--lf-page-gutter), var(--lf-safe-left));
 }
 
 /* Skip-to-content link — visually hidden until keyboard-focused, then
@@ -493,7 +415,7 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
 .lf-editorial .lf-skip-link {
   position: absolute;
   top: -100px;
-  left: 16px;
+  left: max(var(--lf-space-4), var(--lf-safe-left));
   z-index: 100;
   padding: 10px 16px;
   background: var(--lf-fight);
@@ -503,9 +425,9 @@ img[data-img-skel][data-loaded] { background: none; animation: none; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: top 160ms var(--lf-ease-out-quart);
+  transition: top var(--m-signal-ms) var(--m-signal-ease);
 }
 
 .lf-editorial .lf-skip-link:focus {
-  top: 16px;
+  top: max(var(--lf-space-4), var(--lf-safe-top));
 }

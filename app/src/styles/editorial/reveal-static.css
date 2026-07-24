@@ -2,25 +2,20 @@
    STATIC LOAD — the site loads "all at once". Every section is present the
    instant it's in the DOM; nothing waits to fade/slide/draw in on scroll.
 
-   The two reveal systems (useScrollReveal → data-revealed, listReveal →
-   data-lf-reveal) now set their SHOWN state immediately on mount, before paint.
-   The only residue is a mount-frame fade on lazy-loaded sections (their
-   opacity:0 entrance state paints for one frame before the attribute flips).
-   This sheet removes that: it forces the entrance base-states visible and kills
-   the entrance transition, so the appearance is instant.
+   useScrollReveal now sets its SHOWN state immediately on mount, before paint.
+   Lazy-loaded component sheets can still carry historical opacity:0 entrance
+   states. This compatibility sheet forces those established component parts
+   visible, so late chunks cannot flash or strand content.
 
-   Scope is deliberate — ONLY entrance opacity + its transition. transform and
-   clip-path are left alone (some dataviz nodes position via transform; their
-   final value is applied by the data-revealed shown-state with the transition
-   gone, so they land correctly and instantly). Hover, neon glow/flicker,
-   ambient field, and count-ups are untouched.
+   Scope is deliberate — only entrance visibility, clipping, and transition are
+   neutralized. Transform is left alone because some dataviz nodes use it for
+   positioning; their shown-state applies the final value instantly. Hover,
+   neon glow/flicker, ambient field, and count-ups are untouched.
    ============================================================================ */
 
 .lf-editorial :is(
   /* editorial content sections */
   .lf-signature__stat,
-  .lf-momentum__card, .lf-momentum__head,
-  .lf-work__tile,
   .lf-clients__card,
   .lf-case__beat, .lf-case__ship,
   .lf-fight__side,

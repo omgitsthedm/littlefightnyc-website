@@ -35,6 +35,38 @@ const AREA_ROUTE_SLUG: Record<string, string> = {
   "tech-consulting": "local-search",
 };
 
+const LAB_BY_SERVICE: Record<string, {
+  href: string;
+  label: string;
+  title: string;
+  description: string;
+}> = {
+  "custom-local-websites": {
+    href: "/examples/lab/suites/brand-campaign/",
+    label: "Campaign Studio",
+    title: "See how one business can feel unmistakably itself.",
+    description: "Responsive brand worlds, kinetic type, and conversion paths built to work together on a phone, tablet, or desktop.",
+  },
+  "tech-consulting": {
+    href: "/examples/lab/suites/business-systems/",
+    label: "Systems Lab",
+    title: "Turn a messy business signal into a clear operating tool.",
+    description: "Interactive models show how we map the problem, compare the current state, and make the next decision visible.",
+  },
+  "it-support": {
+    href: "/examples/lab/suites/motion-playground/",
+    label: "Motion Playground",
+    title: "See status, feedback, and recovery communicate in motion.",
+    description: "Small interactions make complex systems easier to understand without slowing down the person trying to use them.",
+  },
+  "business-systems": {
+    href: "/examples/lab/suites/spatial-nyc/",
+    label: "Spatial NYC",
+    title: "Explore a complex system as a place you can understand.",
+    description: "Spatial interfaces, touch controls, and graceful low-power fallbacks show how ambitious ideas can stay usable.",
+  },
+};
+
 // Per-service closing band — the last line matches the page you just read.
 const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   "tech-consulting": {
@@ -107,16 +139,8 @@ function WebsiteAcquisitionBlock() {
               </Link>
             </div>
             <div className="lf-sd-web__owner">
-              <img
-                src="/assets/founder-david-marsh-128.webp"
-                alt=""
-                width={96}
-                height={96}
-                loading="lazy"
-                decoding="async"
-              />
               <p>
-                <strong>David Marsh, founder.</strong> One accountable owner on every project.{" "}
+                <strong>One accountable project lead.</strong> The person who understands the work stays close from the first read through launch.{" "}
                 <Link to="/about/">How we work</Link>
               </p>
             </div>
@@ -214,9 +238,17 @@ export default function ServiceDetail() {
         <div className="lf-sd-deep__inner">
           <p className="lf-sd-deep__label">What this service actually does</p>
           <div className="lf-sd-deep__prose">
-            {service.whatItDoes.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
+            <p>{service.whatItDoes[0]}</p>
+            {service.whatItDoes.length > 1 && (
+              <details className="lf-sd-disclosure lf-sd-disclosure--prose">
+                <summary>Read the working details</summary>
+                <div>
+                  {service.whatItDoes.slice(1).map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
+              </details>
+            )}
           </div>
           <EditorialFigure
             src={service.image}
@@ -232,44 +264,45 @@ export default function ServiceDetail() {
         <div className="lf-sd-issues__inner">
           <header className="lf-sd-issues__head">
             <p className="lf-sd-issues__label">Common issues we see</p>
-            <h2 className="lf-sd-issues__title">What we actually walk into.</h2>
+            <h2 className="lf-sd-issues__title">What shows up in the real world.</h2>
           </header>
-          <ol className="lf-sd-issues__list">
+          <div className="lf-sd-issues__list">
             {service.commonIssues.map((issue, i) => (
-              <li key={i} className="lf-sd-issues__item">
-                <span className="lf-sd-issues__numeral" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+              <details key={i} className="lf-sd-issues__item">
+                <summary>
+                  <span className="lf-sd-issues__item-title">{issue.title}</span>
+                  <span className="lf-sd-disclosure__plus" aria-hidden="true" />
+                </summary>
                 <div className="lf-sd-issues__body">
-                  <h3 className="lf-sd-issues__item-title">{issue.title}</h3>
                   <p className="lf-sd-issues__item-text">{issue.body}</p>
                 </div>
-              </li>
+              </details>
             ))}
-          </ol>
+          </div>
         </div>
       </section>
 
       <section className="lf-sd-fallacies">
         <div className="lf-sd-fallacies__inner">
           <header className="lf-sd-fallacies__head">
-            <p className="lf-sd-fallacies__label">Common fallacies</p>
-            <h2 className="lf-sd-fallacies__title">What people are usually wrong about.</h2>
+            <p className="lf-sd-fallacies__label">Decisions owners ask about</p>
+            <h2 className="lf-sd-fallacies__title">What changes the right answer.</h2>
           </header>
-          <dl className="lf-sd-fallacies__list">
+          <div className="lf-sd-fallacies__list">
             {service.fallacies.map((f, i) => (
-              <div key={i} className="lf-sd-fallacies__item">
-                <dt className="lf-sd-fallacies__myth">
-                  <span className="lf-sd-fallacies__tag">Myth</span>
-                  <span className="lf-sd-fallacies__myth-text">"{f.myth}"</span>
-                </dt>
-                <dd className="lf-sd-fallacies__reality">
-                  <span className="lf-sd-fallacies__tag lf-sd-fallacies__tag--reality">Reality</span>
+              <details key={i} className="lf-sd-fallacies__item">
+                <summary className="lf-sd-fallacies__myth">
+                  <span className="lf-sd-fallacies__tag">The question</span>
+                  <span className="lf-sd-fallacies__myth-text">{f.myth}</span>
+                  <span className="lf-sd-disclosure__plus" aria-hidden="true" />
+                </summary>
+                <div className="lf-sd-fallacies__reality">
+                  <span className="lf-sd-fallacies__tag lf-sd-fallacies__tag--reality">What matters</span>
                   <span>{f.reality}</span>
-                </dd>
-              </div>
+                </div>
+              </details>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
@@ -277,21 +310,48 @@ export default function ServiceDetail() {
         <section className="lf-sd-faq">
           <div className="lf-sd-faq__inner">
             <h2 className="lf-sd-faq__title">Owner questions, answered plainly.</h2>
-            <dl className="lf-sd-faq__list">
+            <div className="lf-sd-faq__list">
               {service.faq.map((item) => (
-                <div key={item.question} className="lf-sd-faq__item">
-                  <dt className="lf-sd-faq__q">{item.question}</dt>
-                  <dd className="lf-sd-faq__a">{item.answer}</dd>
-                </div>
+                <details key={item.question} className="lf-sd-faq__item">
+                  <summary className="lf-sd-faq__q">
+                    <span>{item.question}</span>
+                    <span className="lf-sd-disclosure__plus" aria-hidden="true" />
+                  </summary>
+                  <p className="lf-sd-faq__a">{item.answer}</p>
+                </details>
               ))}
-            </dl>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {LAB_BY_SERVICE[service.slug] && (
+        <section className="lf-sd-lab" aria-labelledby="lf-sd-lab-title">
+          <div className="lf-sd-lab__inner">
+            <div>
+              <p>{LAB_BY_SERVICE[service.slug].label}</p>
+              <h2 id="lf-sd-lab-title">{LAB_BY_SERVICE[service.slug].title}</h2>
+            </div>
+            <div>
+              <p>{LAB_BY_SERVICE[service.slug].description}</p>
+              <a href={LAB_BY_SERVICE[service.slug].href}>
+                Try the live experiments <span aria-hidden="true">↗</span>
+              </a>
+            </div>
           </div>
         </section>
       )}
 
       <section className="lf-sd-local">
         <div className="lf-sd-local__inner">
-          <p className="lf-sd-local__label">Neighborhood pages</p>
+          <details className="lf-sd-local__disclosure">
+            <summary>
+              <span>
+                <span className="lf-sd-local__label">Neighborhood pages</span>
+                <strong>Find the version written for your part of New York.</strong>
+              </span>
+              <span className="lf-sd-disclosure__plus" aria-hidden="true" />
+            </summary>
           <ul className="lf-sd-local__list">
             {areaPages.map((area) => (
               <li key={area.slug}>
@@ -305,6 +365,7 @@ export default function ServiceDetail() {
               </li>
             ))}
           </ul>
+          </details>
         </div>
       </section>
 

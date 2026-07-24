@@ -1,0 +1,179 @@
+.lf-proof-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 34px;
+  padding: 0 12px;
+  color: var(--lf-bone-soft);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 30%, var(--lf-hairline));
+  border-radius: var(--lf-radius-pill);
+  background: color-mix(in srgb, var(--lf-fight) 9%, var(--lf-paper-2));
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+}
+
+.lf-proof-status--private-client,
+.lf-proof-status--private-concept {
+  color: var(--lf-blue-soft);
+  border-color: color-mix(in srgb, var(--lf-blue) 36%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-blue) 9%, var(--lf-paper-2));
+}
+
+.lf-proof-status--owned-live {
+  color: var(--lf-bone);
+  border-color: color-mix(in srgb, var(--lf-bone) 24%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-bone) 6%, var(--lf-paper-2));
+}
+
+.lf-proof-passport {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 16%, transparent);
+  border-radius: var(--lf-radius-card);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--lf-fight) 7%, transparent), transparent 48%),
+    var(--lf-paper-2);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--lf-bone) 8%, transparent) inset;
+}
+
+.lf-proof-passport__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--lf-space-3);
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-proof-passport__head p {
+  margin: 0 0 0.35rem;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lf-proof-passport__head strong {
+  display: block;
+  color: var(--lf-bone);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-base);
+  line-height: 1.25;
+}
+
+.lf-proof-passport__dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3) var(--lf-space-6);
+  margin: 0;
+  padding: var(--lf-space-3) clamp(1.1rem, 2.5vw, 1.6rem);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-proof-passport__dates div {
+  display: flex;
+  align-items: baseline;
+  gap: var(--lf-space-2);
+}
+
+.lf-proof-passport__dates dt,
+.lf-proof-passport__dates dd {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.35;
+}
+
+.lf-proof-passport__dates dt {
+  color: var(--lf-bone-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lf-proof-passport__dates dd {
+  color: var(--lf-bone-soft);
+}
+
+.lf-proof-passport__evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lf-proof-passport__evidence > section {
+  min-width: 0;
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+}
+
+.lf-proof-passport__evidence > section + section {
+  border-left: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-proof-passport__evidence h3 {
+  margin: 0 0 var(--lf-space-3);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lf-proof-passport__evidence dl {
+  display: grid;
+  gap: var(--lf-space-3);
+  margin: 0;
+}
+
+.lf-proof-passport__evidence dl > div {
+  min-width: 0;
+}
+
+.lf-proof-passport__evidence dt {
+  color: var(--lf-fight);
+  font-family: var(--lf-heading);
+  font-size: clamp(1.35rem, 2.3vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.lf-proof-passport__evidence dd {
+  max-width: 34ch;
+  margin: 0.4rem 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-xs);
+  line-height: 1.4;
+}
+
+@media (max-width: 580px) {
+  .lf-proof-passport__head {
+    align-items: flex-start;
+  }
+
+  .lf-proof-passport__evidence {
+    grid-template-columns: 1fr;
+  }
+
+  .lf-proof-passport__evidence > section + section {
+    border-top: 1px solid var(--lf-hairline);
+    border-left: 0;
+  }
+
+  .lf-proof-passport__dates {
+    display: grid;
+    gap: var(--lf-space-2);
+  }
+
+  .lf-proof-passport__dates div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--lf-space-1);
+    justify-content: initial;
+  }
+}

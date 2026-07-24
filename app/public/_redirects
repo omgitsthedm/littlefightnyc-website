@@ -50,6 +50,11 @@
 /services/local-seo-and-google-ads-nyc/*       /services/tech-consulting/        301
 /tech-consulting-small-business/*              /services/business-systems/       301
 /services/tech-consulting-small-business/*     /services/business-systems/       301
+/services/apple-device-setup-and-management/*  /services/it-support/              301
+/services/pos-and-register-setup-nyc/*          /services/it-support/              301
+/services/smart-home-services-nyc/*             /services/it-support/              301
+/services/branding-and-identity-design/*        /services/custom-local-websites/   301
+/services/ecommerce-setup-shopify-square-woocommerce/*  /services/custom-local-websites/  301
 /nyc-websites-it-support/*                     /services/                        301
 /software-cost-calculator/*                    /answers/reduce-monthly-software-costs-small-business/  301
 
@@ -58,6 +63,7 @@
 /work            /services/                 301
 /industries/     /examples/#industries      301
 /industries      /examples/#industries      301
+/industries.html /examples/#industries      301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301
 

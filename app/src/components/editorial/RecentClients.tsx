@@ -1,18 +1,69 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ScanSearch } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useScrollReveal } from "./useScrollReveal";
 import { caseStudies } from "@/data/site";
+import type { CaseStudy } from "@/data/site";
+import { ProofStatus } from "./ProofPassport";
 import "./RecentClients.css";
 
 /**
- * Recent work — outcome-led project maps. Each card shows how the work moves
- * instead of asking a visitor to decode a homepage screenshot.
+ * Recent work - public, checkable proof before any sales claim.
  */
 const FEATURED_SLUGS = [
-  "army-navy-bags",
   "hair-by-rachel-charles",
+  "cc-films",
   "venuecircuit",
 ] as const;
+
+function DeferredProofImage({ study, featured }: { study: CaseStudy; featured: boolean }) {
+  const frameRef = useRef<HTMLSpanElement | null>(null);
+  const [ready, setReady] = useState(
+    () => typeof window !== "undefined" && !("IntersectionObserver" in window),
+  );
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setReady(true);
+        observer.disconnect();
+      },
+      { rootMargin: "200px 0px" },
+    );
+
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <span
+      ref={frameRef}
+      className={`lf-clients__preview${ready ? " lf-clients__preview--ready" : ""}`}
+      aria-busy={!ready}
+    >
+      {ready ? (
+        <img
+          src={`/assets/case-${study.slug}-explore${featured ? "" : "-mobile"}.webp`}
+          alt={`${study.client} live website captured at ${featured ? "desktop" : "phone"} size`}
+          width={featured ? 1200 : 390}
+          height={featured ? 2000 : 2400}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+        />
+      ) : (
+        <span className="lf-clients__preview-placeholder" aria-hidden="true">
+          Live proof
+        </span>
+      )}
+    </span>
+  );
+}
 
 export default function RecentClients() {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.12 });
@@ -26,11 +77,11 @@ export default function RecentClients() {
       <div className="lf-clients__inner">
         <div className="lf-clients__head">
           <div>
-            <p className="lf-mono lf-clients__label">Shipped proof</p>
-            <h2 className="lf-clients__heading">See the work before the pitch.</h2>
+            <p className="lf-mono lf-clients__label">Live work</p>
+            <h2 className="lf-clients__heading">Tap through the proof.</h2>
             <p className="lf-clients__lede">
-              A neighborhood storefront, a booking flow, and a venue financial product.
-              Follow the working path for each one.
+              A booking site, an official film source, and our own venue product.
+              Open each case, then open the live work.
             </p>
           </div>
           <Link to="/examples/" className="lf-clients__all">
@@ -46,26 +97,17 @@ export default function RecentClients() {
               className={`lf-clients__card${i === 0 ? " lf-clients__card--feature" : ""}`}
               style={{ ["--lf-i" as string]: i }}
             >
-              <span
-                className="lf-clients__flow"
-                aria-label={`${study.showcase.label} project flow`}
-                style={
-                  { "--lf-client-stage-count": study.showcase.stages.length } as React.CSSProperties
-                }
-              >
-                {study.showcase.stages.map((stage) => (
-                  <span className="lf-clients__flow-stage" key={stage.label}>
-                    <span className="lf-clients__flow-dot" aria-hidden="true" />
-                    <span>{stage.label}</span>
-                  </span>
-                ))}
-              </span>
+              <DeferredProofImage study={study} featured={i === 0} />
               <span className="lf-clients__meta">
+                <ProofStatus study={study} className="lf-clients__status" />
                 <span className="lf-mono lf-clients__type">{study.showcase.context}</span>
                 <span className="lf-clients__client">{study.showcase.label}</span>
                 <span className="lf-clients__title">{study.title}</span>
                 {study.metrics && (
-                  <span className="lf-clients__facts" aria-label={`${study.showcase.label} project results`}>
+                  <span
+                    className="lf-clients__facts"
+                    aria-label={`${study.showcase.label} build facts and delivered results`}
+                  >
                     {study.metrics.slice(0, 3).map((metric) => (
                       <span className="lf-clients__fact" key={metric.label}>
                         <strong>{metric.value}</strong>

@@ -1,0 +1,97 @@
+/* Little Fight NYC — shared responsive primitives
+ *
+ * These are opt-in contracts for new and migrated work. Existing route markup
+ * does not need a mass rewrite: .lf-container already owns the fluid shell.
+ */
+
+.lf-editorial .lf-section {
+  padding-block: var(--lf-section-space);
+}
+
+.lf-editorial .lf-measure {
+  inline-size: min(100%, var(--lf-measure-reading));
+}
+
+.lf-editorial .lf-measure--compact {
+  inline-size: min(100%, var(--lf-measure-compact));
+}
+
+.lf-editorial .lf-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lf-stack-space, var(--lf-space-5));
+}
+
+.lf-editorial .lf-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-cluster-space, var(--lf-space-3));
+}
+
+.lf-editorial .lf-auto-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit, minmax(min(100%, var(--lf-grid-min, 18rem)), 1fr));
+  gap: var(--lf-grid-gap, var(--lf-column-gap));
+}
+
+.lf-editorial .lf-surface {
+  padding: var(--lf-card-padding-fluid);
+  background: var(--lf-card-bg);
+  border: var(--lf-card-border);
+  border-radius: var(--lf-radius-card);
+}
+
+.lf-editorial .lf-control {
+  min-block-size: var(--lf-control-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lf-space-2);
+  padding-inline: var(--lf-control-padding-inline);
+}
+
+/* Canonical viewport bands: compact <48rem, composed 48–79.99rem, expansive
+   >=80rem. The class only supplies columns; components still own their spans. */
+.lf-editorial .lf-shell-grid {
+  --lf-shell-columns: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--lf-shell-columns), minmax(0, 1fr));
+  gap: var(--lf-column-gap);
+}
+
+@media (min-width: 48rem) {
+  .lf-editorial .lf-shell-grid {
+    --lf-shell-columns: 8;
+  }
+}
+
+@media (min-width: 80rem) {
+  .lf-editorial .lf-shell-grid {
+    --lf-shell-columns: 12;
+  }
+}
+
+/* Container-query helper: put .lf-cq on the component boundary and
+   .lf-cq-grid on its child layout. Narrow components stack even in wide pages. */
+.lf-editorial .lf-cq {
+  container: lf-component / inline-size;
+}
+
+.lf-editorial .lf-cq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-cq-gap, var(--lf-column-gap));
+}
+
+@container lf-component (min-width: 42rem) {
+  .lf-editorial .lf-cq-grid {
+    grid-template-columns:
+      repeat(var(--lf-cq-columns, 2), minmax(0, 1fr));
+  }
+}
+
+.lf-editorial :where(.lf-stack, .lf-cluster, .lf-auto-grid, .lf-shell-grid, .lf-cq-grid) > * {
+  min-inline-size: 0;
+}

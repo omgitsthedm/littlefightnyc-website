@@ -3,11 +3,11 @@ import { MapPin, Wrench, Waypoints } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
-import FaqList from "@/components/editorial/FaqList";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import { areaPages, services } from "@/data/site";
+import "@/styles/editorial/area-detail.css";
 
 const AREA_ROUTE_SLUG: Record<string, string> = {
   "custom-local-websites": "websites",
@@ -152,6 +152,34 @@ export default function AreaDetail() {
         }}
       />
 
+      <section className="lf-area-start" aria-labelledby="lf-area-start-title">
+        <div className="lf-area-start__inner">
+          <header className="lf-area-start__head">
+            <p className="lf-area-start__eyebrow">Start with your situation</p>
+            <h2 id="lf-area-start-title">What needs to work better?</h2>
+            <p>Pick the closest problem. Each path stays specific to {area.name}.</p>
+          </header>
+
+          <nav className="lf-area-start__routes" aria-label={`Ways to start in ${area.name}`}>
+            <a href="#visibility">
+              <span>Get found</span>
+              <strong>Customers cannot find the right information.</strong>
+              <small>Check search, hours, trust, and the first phone screen.</small>
+            </a>
+            <a href="#customer-path">
+              <span>Make action easier</span>
+              <strong>Calls, bookings, orders, or inquiries drop off.</strong>
+              <small>Trace the path from local search to a completed next step.</small>
+            </a>
+            <a href="#first-move">
+              <span>Get a plan</span>
+              <strong>You need a first move, not another tool.</strong>
+              <small>Start with the highest-impact fix for this neighborhood.</small>
+            </a>
+          </nav>
+        </div>
+      </section>
+
       <section className="lf-content-section">
         <div className="lf-content-grid">
           <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
@@ -165,9 +193,21 @@ export default function AreaDetail() {
           >
             <EditorialBody dropcap>
               <p>{area.intro}</p>
-              <h2>The businesses here</h2>
-              <p>{area.businessLandscape}</p>
             </EditorialBody>
+            <h2 className="lf-area-disclosure__heading">
+              What shapes business in {area.name}
+            </h2>
+            <details className="lf-area-disclosure">
+              <summary>
+                <span>Local context</span>
+                <strong>Read the neighborhood context</strong>
+                <span className="lf-area-disclosure__state" aria-hidden="true" />
+              </summary>
+              <div className="lf-area-disclosure__body">
+                <h3>The businesses here</h3>
+                <p>{area.businessLandscape}</p>
+              </div>
+            </details>
           </article>
 
           {AREA_FIGURE[area.slug] && (
@@ -182,21 +222,30 @@ export default function AreaDetail() {
             </div>
           )}
 
-          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+          <article
+            id="visibility"
+            className="lf-content-tile lf-content-tile--half lf-content-tile--quiet lf-area-anchor"
+          >
             <EditorialBody>
               <h2>How customers find you</h2>
               <p>{area.localSearchReality}</p>
             </EditorialBody>
           </article>
 
-          <aside className="lf-content-tile lf-content-tile--half lf-content-tile--tablet-full lf-content-tile--signal">
+          <aside
+            id="first-move"
+            className="lf-content-tile lf-content-tile--half lf-content-tile--tablet-full lf-content-tile--signal lf-area-anchor"
+          >
             <PullQuote cite={`First move in ${area.name}`}>{area.firstMove}</PullQuote>
           </aside>
 
-          <section className="lf-content-tile lf-content-tile--full">
+          <section
+            id="customer-path"
+            className="lf-content-tile lf-content-tile--full lf-area-anchor"
+          >
             <p className="lf-content-tile__label">
               <Wrench size={14} strokeWidth={2} aria-hidden="true" />
-              What we fix here
+              What we would inspect first
             </p>
             <ul className="lf-content-list" data-count={area.whatWeFixHere.length}>
               {area.whatWeFixHere.map((fix) => (
@@ -206,21 +255,46 @@ export default function AreaDetail() {
           </section>
 
           <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
-            <FaqList title={`Owning a business in ${area.name}`} items={area.faq} />
+            <div className="lf-area-faq" aria-labelledby="lf-area-faq-title">
+              <header className="lf-area-faq__head">
+                <p>Questions from local owners</p>
+                <h2 id="lf-area-faq-title">Owning a business in {area.name}</h2>
+              </header>
+              <div className="lf-area-faq__list">
+                {area.faq.map((item) => (
+                  <details key={item.question} className="lf-area-faq__item">
+                    <summary>
+                      <span>{item.question}</span>
+                      <span className="lf-area-disclosure__state" aria-hidden="true" />
+                    </summary>
+                    <p>{item.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
           </section>
 
           <section className="lf-content-tile lf-content-tile--full">
-            <p className="lf-content-tile__label">Services in {area.name}</p>
-            <ul className="lf-content-list lf-content-list--links" data-count={services.length}>
-              {services.map((service) => (
-                <li key={service.slug}>
-                  <Link to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}>
-                    <span className="lf-content-link__label">{service.eyebrow}</span>
-                    <span className="lf-content-link__title">{service.headline}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <h2 className="lf-area-disclosure__heading">Services in {area.name}</h2>
+            <details className="lf-area-disclosure lf-area-disclosure--services">
+              <summary>
+                <span>Ways we help</span>
+                <strong>See every service available here</strong>
+                <span className="lf-area-disclosure__state" aria-hidden="true" />
+              </summary>
+              <div className="lf-area-disclosure__body">
+                <ul className="lf-content-list lf-content-list--links" data-count={services.length}>
+                  {services.map((service) => (
+                    <li key={service.slug}>
+                      <Link to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}>
+                        <span className="lf-content-link__label">{service.eyebrow}</span>
+                        <span className="lf-content-link__title">{service.headline}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </details>
           </section>
 
           {nearby.length > 0 && (

@@ -1,6 +1,9 @@
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import TugAvatar from "@/components/editorial/TugAvatar";
+import routeMeta from "@/data/route-meta.json";
+
+const notFound = routeMeta.notFound;
 
 export default function NotFound() {
   return (
@@ -9,11 +12,11 @@ export default function NotFound() {
         eyebrow="404 · Not Found"
         title={
           <>
-            This page got<br />{" "}
-            <span className="lf-em">knocked out.</span>
+            {notFound.headingLead}<br />{" "}
+            <span className="lf-em">{notFound.headingEmphasis}</span>
           </>
         }
-        dek="Probably our fault. The page may have moved, been retired, or never existed at all. The good stuff is below — or call (646) 360-0318 if you needed something specific."
+        dek={notFound.dek}
       />
 
       <TugAvatar />

@@ -132,6 +132,23 @@ for (const concept of manifest.concepts || []) {
   }
 }
 
+for (const concept of manifest.concepts || []) {
+  const route = `/examples/lab/concepts/${concept.slug}/`;
+  const escapedRoute = route.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const hubEntry = hub.match(
+    new RegExp(`<a[^>]+href="${escapedRoute}"[\\s\\S]*?</a>`),
+  )?.[0];
+  if (!hubEntry) continue;
+  const hubTitle = hubEntry.match(/\bdata-title="([^"]+)"/)?.[1];
+  const hubType = hubEntry.match(/\bdata-type="([^"]+)"/)?.[1];
+  if (hubTitle !== concept.title) {
+    failures.push(`${concept.slug} hub title is "${hubTitle}", expected "${concept.title}"`);
+  }
+  if (hubType !== concept.type) {
+    failures.push(`${concept.slug} hub type is "${hubType}", expected "${concept.type}"`);
+  }
+}
+
 const expectedConceptRoutes = new Set(
   manifestSlugs.map((slug) => `/examples/lab/concepts/${slug}/`),
 );
@@ -213,6 +230,28 @@ if (
 for (const suiteSlug of suiteSlugs) {
   if (!returnScript.includes(`suite: '${suiteSlug}'`)) {
     failures.push(`concept return controls do not include suite: ${suiteSlug}`);
+  }
+}
+for (const concept of manifest.concepts || []) {
+  const escapedSlug = concept.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const returnEntry = returnScript.match(
+    new RegExp(`slug: '${escapedSlug}',[\\s\\S]*?hint: '[^']*'`),
+  )?.[0];
+  if (!returnEntry) {
+    failures.push(`concept return controls do not include concept: ${concept.slug}`);
+    continue;
+  }
+  const returnTitle = returnEntry.match(/\btitle: '([^']+)'/)?.[1];
+  const returnType = returnEntry.match(/\btype: '([^']+)'/)?.[1];
+  if (returnTitle !== concept.title) {
+    failures.push(
+      `${concept.slug} return-control title is "${returnTitle}", expected "${concept.title}"`,
+    );
+  }
+  if (returnType !== concept.type) {
+    failures.push(
+      `${concept.slug} return-control type is "${returnType}", expected "${concept.type}"`,
+    );
   }
 }
 

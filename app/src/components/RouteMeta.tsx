@@ -14,11 +14,18 @@ type MetaPage = {
   path: string;
   title: string;
   description: string;
+  h1?: string;
   image?: string;
+  type?: string;
+  noindex?: boolean;
+  locale?: string;
+  published?: string;
+  updated?: string;
 };
 
 const site = routeMeta.site;
 const pages = routeMeta.pages as MetaPage[];
+const notFoundPage = routeMeta.notFound as MetaPage;
 const siteUrl = site.url.replace(/\/$/, "");
 
 function routePath(pathname: string) {
@@ -28,28 +35,6 @@ function routePath(pathname: string) {
 
 function absoluteUrl(path: string) {
   return `${siteUrl}${path === "/" ? "/" : path}`;
-}
-
-function fallbackPage(path: string): MetaPage | undefined {
-  if (path.startsWith("/journal/")) {
-    return {
-      path,
-      title: "Little Fight Journal Article | Little Fight NYC",
-      description:
-        "A Little Fight NYC journal article for New York small business owners comparing websites, IT support, software bills, search, and workflow.",
-      image: "/assets/manhattan.webp",
-    };
-  }
-
-  if (path.startsWith("/industries/")) {
-    return {
-      path,
-      title: "NYC Industry Tech Help | Little Fight NYC",
-      description:
-        "Technology help for a New York City business type, including websites, local search, IT support, workflow cleanup, and practical systems.",
-      image: "/assets/manhattan.webp",
-    };
-  }
 }
 
 function setMeta(name: string, content: string, property = false) {
@@ -82,6 +67,16 @@ function setLink(rel: string, href: string) {
   link.href = href;
 }
 
+function removeLink(rel: string) {
+  document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`)?.remove();
+}
+
+function isoDate(value: string | undefined) {
+  if (!value?.trim()) return "";
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
+}
+
 function setAlternate(hreflang: string, href: string) {
   let link = document.head.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
 
@@ -95,29 +90,52 @@ function setAlternate(hreflang: string, href: string) {
   link.href = href;
 }
 
+function removeAlternate(hreflang: string) {
+  document.head
+    .querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`)
+    ?.remove();
+}
+
 export default function RouteMeta() {
   const location = useLocation();
 
   useEffect(() => {
     const path = routePath(location.pathname);
-    const page = pages.find((item) => item.path === path) ?? fallbackPage(path) ?? pages[0];
+    const page = pages.find((item) => item.path === path) ?? notFoundPage;
     const canonical = absoluteUrl(page.path);
     const image = page.image?.startsWith("http") ? page.image : absoluteUrl(page.image ?? "/assets/og-tugboat.jpg");
-    const isArticle = page.title.includes(" | Little Fight NYC") && (
-      page.path.startsWith("/journal/") ||
-      page.path.startsWith("/answers/") ||
-      page.path.startsWith("/case-studies/")
-    );
+    const isArticle = page.type === "Article";
+    const published = isoDate(page.published);
+    const modified = isoDate(page.updated) || published;
+    const locale = page.locale === "zh" ? "zh_CN" : page.locale === "es" ? "es_US" : "en_US";
 
-    document.documentElement.lang = "en";
+    document.documentElement.lang = page.locale === "zh" ? "zh" : page.locale === "es" ? "es" : "en";
     document.title = page.title;
     setMeta("description", page.description);
     if (isArticle) {
       setMeta("author", "Little Fight NYC");
+      setMeta("article:author", "Little Fight NYC", true);
+      setLink("author", `${siteUrl}/`);
     } else {
       removeMeta("author");
+      removeMeta("article:author", true);
+      removeLink("author");
     }
-    setMeta("robots", "index, follow, max-image-preview:large");
+    if (isArticle && published) {
+      setMeta("article:published_time", published, true);
+      setMeta("datePublished", published);
+    } else {
+      removeMeta("article:published_time", true);
+      removeMeta("datePublished");
+    }
+    if (isArticle && modified) {
+      setMeta("article:modified_time", modified, true);
+      setMeta("dateModified", modified);
+    } else {
+      removeMeta("article:modified_time", true);
+      removeMeta("dateModified");
+    }
+    setMeta("robots", page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large");
     setMeta("geo.region", "US-NY");
     setMeta("geo.placename", "New York");
     setMeta("geo.position", `${site.latitude};${site.longitude}`);
@@ -126,6 +144,7 @@ export default function RouteMeta() {
     setMeta("og:description", page.description, true);
     setMeta("og:url", canonical, true);
     setMeta("og:type", isArticle ? "article" : "website", true);
+    setMeta("og:locale", locale, true);
     setMeta("og:image", image, true);
     setMeta("twitter:card", "summary_large_image");
     setMeta("twitter:title", page.title);
@@ -134,6 +153,13 @@ export default function RouteMeta() {
     setLink("canonical", canonical);
     setAlternate("en-US", canonical);
     setAlternate("x-default", canonical);
+    if (page.path === "/") {
+      setAlternate("es", `${siteUrl}/es/`);
+      setAlternate("zh", `${siteUrl}/zh/`);
+    } else {
+      removeAlternate("es");
+      removeAlternate("zh");
+    }
 
     const sendPageView = () => trackPageView(canonical, page.title);
     if (window.requestIdleCallback) {

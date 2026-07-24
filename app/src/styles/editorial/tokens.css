@@ -1,5 +1,5 @@
-/* Little Fight NYC — Design Tokens (v6 — Axiom Momentum)
- * Product-OS soul: near-black ground, Inter display, one orange lead,
+/* Little Fight NYC — Design Tokens (v7 — Axiom Momentum)
+ * Product-OS soul: near-black ground, Oswald display, one orange lead,
  * blue as a real accent. Evolved from the Axiom "Momentum" system and
  * reconciled with the Little Fight brand. See app/DESIGN.md.
  */
@@ -47,15 +47,15 @@
   --lf-text-4xl: clamp(5rem, 3rem + 9vw, 13rem);              /* 80-208px */
   --lf-text-5xl: clamp(6rem, 4rem + 12vw, 18rem);             /* 96-288px — Press Strike scale */
 
-  /* Type families — v7 "Boxing Poster": Oswald (condensed grotesque) carries
-   * ALL display/headings at 700; Barlow carries body/lists/paragraphs at 400;
-   * JetBrains Mono for small labels. --lf-serif is the historical DISPLAY token
-   * name but is now the BODY face (Barlow) — a missed heading selector just
-   * reads Barlow, never an unreadable display face. --lf-display is the poster
-   * headline stack; Barlow is the fallback so headings stay solid pre-load. */
-  --lf-serif: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --lf-display: "Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --lf-sans: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Type families — semantic names are canonical. Oswald (condensed grotesque)
+   * carries headings at 700; Barlow carries body/lists/paragraphs; JetBrains
+   * Mono carries functional labels. The historical --lf-serif alias now points
+   * to --lf-body for compatibility while component sheets migrate safely. */
+  --lf-body: "Barlow", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --lf-heading: "Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --lf-serif: var(--lf-body);       /* deprecated compatibility alias */
+  --lf-display: var(--lf-heading);  /* compatibility alias */
+  --lf-sans: var(--lf-body);        /* compatibility alias */
   --lf-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* Display tuning — Oswald is CONDENSED, so it wants ~0 tracking (negative
@@ -83,8 +83,20 @@
   --lf-margin-desktop: 64px;
   --lf-column-gap: 32px;
   --lf-max-w: 1440px;
-  --lf-chip: 44px;             /* standard icon-chip square (Axiom tap target) */
-  --lf-lift: -4px;            /* standard hover translateY lift for cards/controls */
+  --lf-page-gutter: clamp(var(--lf-margin-mobile), 6.25vw, var(--lf-margin-desktop));
+  --lf-measure-reading: 68ch;
+  --lf-measure-compact: 48ch;
+  --lf-section-space: clamp(var(--lf-space-8), 8vw, var(--lf-space-10));
+  --lf-card-padding-fluid: clamp(var(--lf-space-5), 3.3vw, var(--lf-space-7));
+  --lf-control-min: 44px;
+  --lf-control-height: 48px;
+  --lf-control-padding-inline: clamp(var(--lf-space-4), 2vw, var(--lf-space-5));
+  --lf-safe-top: env(safe-area-inset-top, 0px);
+  --lf-safe-right: env(safe-area-inset-right, 0px);
+  --lf-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --lf-safe-left: env(safe-area-inset-left, 0px);
+  --lf-chip: var(--lf-control-min); /* standard icon-chip square (Axiom tap target) */
+  --lf-lift: -4px;                  /* standard hover translateY lift for cards/controls */
 
   /* Radius — Axiom card language. Editorial rules stay sharp (0); surfaces round. */
   --lf-radius-sm: 12px;
@@ -93,7 +105,7 @@
   --lf-radius-pill: 9999px;
 
   /* Card system (Axiom) */
-  --lf-card-padding: 24px;
+  --lf-card-padding: var(--lf-space-5);
   --lf-card-bg: var(--lf-paper);
   --lf-card-border: 1px solid var(--lf-hairline);
 
@@ -116,6 +128,20 @@
   /* Spring — a restrained physical overshoot for diagram node pop-ins.
    * Transform-only; never used on opacity (overshoot > 1 would clip). */
   --lf-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Cross-surface motion grammar. DOM motion reads these tokens directly;
+   * app/src/kernel/motion.ts mirrors the same five named intents for canvas.
+   * Signal/settle are ordinary UI motion and stay at or below 400ms. */
+  --m-signal-ms: var(--lf-time-snappy);
+  --m-signal-ease: var(--lf-ease-standard);
+  --m-settle-ms: var(--lf-time-base);
+  --m-settle-ease: var(--lf-ease-out);
+  --m-reveal-ms: var(--lf-time-slow);
+  --m-reveal-ease: var(--lf-ease-out);
+  --m-consolidate-ms: 900ms;
+  --m-consolidate-ease: var(--lf-ease-out);
+  --m-weenie-ms: 1200ms;
+  --m-weenie-ease: var(--lf-ease-in-out);
 
   /* Z-index */
   --lf-z-content: 1;
