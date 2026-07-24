@@ -59,7 +59,9 @@ for = "/brand-kit/*"
 for = "/brand-kit/assets/*"
 
   [headers.values]
-  Cache-Control = "public, max-age=604800"
+  # Brand assets are intentionally updated in place. Revalidate so an owner
+  # never downloads a stale kit or sees an old lockup after a release.
+  Cache-Control = "public, max-age=0, must-revalidate"
 
 # The retired Lab subdomain is preserved as a static gallery under
 # /examples/lab/. Its standalone concept pages use inline scripts, Google
