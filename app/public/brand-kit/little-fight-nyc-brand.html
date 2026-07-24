@@ -1,289 +1,522 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Little Fight NYC — The Book</title>
-<meta name="description" content="The Little Fight NYC brand. The Tugboat, the color, the type, and how it lives.">
-<meta name="theme-color" content="#06080f">
-<link rel="canonical" href="https://littlefightnyc.com/brand-kit/little-fight-nyc-brand.html">
-<link rel="icon" href="/brand-kit/assets/favicon/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/brand-kit/assets/favicon/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --orange:#f97316; --orange-soft:#fb923c;
-    --midnight:#06080f; --panel:#0a0d18; --line:#0e1220; --hair:#0e1220;
-    --ink:#f0f2f8; --muted:#a1a1aa; --faint:#6b7280;
-    --disp:"Oswald","Oswald Fallback",system-ui,sans-serif;
-    --body:"Barlow","Barlow Fallback",system-ui,sans-serif;
-    --mono:"JetBrains Mono",ui-monospace,monospace;
-  }
-  /* metric-ish fallbacks so it's bulletproof offline */
-  @font-face{font-family:"Oswald Fallback";src:local("Arial Narrow");size-adjust:103%;ascent-override:105%}
-  @font-face{font-family:"Barlow Fallback";src:local("Helvetica Neue"),local("Arial");size-adjust:100%}
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--midnight);color:var(--ink);font-family:var(--body);font-weight:400;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  .page{max-width:1000px;margin:0 auto;padding:0 clamp(1.3rem,5vw,3.5rem)}
-  h1,h2,h3,.disp{font-family:var(--disp);font-weight:700;line-height:.95;letter-spacing:.005em;margin:0}
-  .mono{font-family:var(--mono)}
-  .fig{font-family:var(--mono);font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:var(--orange)}
-  .sub{color:var(--muted);max-width:56ch;font-size:1.06rem}
-  hr{border:0;border-top:1px solid var(--line);margin:0}
-  use{color:currentColor}
-  section{padding:clamp(4rem,10vw,8rem) 0}
-  .num{font-family:var(--mono);color:var(--faint);font-size:.8rem;letter-spacing:.2em}
-
-  /* COVER */
-  .cover{min-height:96vh;display:flex;flex-direction:column;justify-content:center;padding-top:8vh;position:relative}
-  .cover::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(900px 520px at 20% 10%,rgba(249,115,22,.14),transparent 62%)}
-  .cover .mark{width:clamp(150px,26vw,300px);color:var(--orange);display:block;margin-bottom:2.2rem}
-  .cover h1{font-size:clamp(3.6rem,15vw,10.5rem);letter-spacing:-.01em}
-  .cover h1 .o{color:var(--orange)}
-  .cover .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin-bottom:1.6rem}
-  .cover .tag{margin-top:1.4rem;color:var(--muted);font-size:1.2rem;max-width:40ch}
-  .scroll{position:absolute;bottom:2.4rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.3em;color:var(--faint)}
-
-  /* IDEA */
-  .idea .big{font-family:var(--disp);font-weight:600;font-size:clamp(2.2rem,6vw,4rem);line-height:1.02;max-width:20ch}
-  .idea .big em{color:var(--orange);font-style:normal}
-
-  /* MARK studies */
-  .studies{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:2.4rem}
-  .cell{display:flex;align-items:center;justify-content:center;min-height:240px}
-  .cell.orange{background:var(--orange);color:#fff}
-  .cell.mid{background:var(--midnight);color:#fff}
-  .cell.mid.o{color:var(--orange)}
-  .cell.light{background:#f0f0ec;color:var(--midnight)}
-  .cell svg{width:150px;height:132px}
-  .grid-note{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.6rem;margin-top:2.4rem}
-  .grid-note h3{font-size:1.15rem;margin-bottom:.3rem}
-  .grid-note p{color:var(--muted);font-size:.95rem;margin:0}
-  .detail{display:flex;align-items:center;gap:2.4rem;flex-wrap:wrap;margin-top:3rem;padding:2.4rem;border:1px solid var(--line);border-radius:20px;background:var(--panel)}
-  .detail .z{width:150px;height:132px;color:var(--orange);flex-shrink:0}
-  .detail .z svg{width:100%;height:100%}
-
-  /* WORDMARK */
-  .lock{display:flex;align-items:center;gap:1.3rem;justify-content:center}
-  .lock .wm{font-family:var(--disp);font-weight:700;font-size:clamp(2rem,6vw,3.6rem);letter-spacing:.02em}
-  .lock .wm .o{color:var(--orange)}
-  .lockbox{border:1px solid var(--line);border-radius:20px;padding:clamp(2rem,6vw,4rem);display:flex;align-items:center;justify-content:center;background:var(--panel)}
-  .lockbox svg{width:clamp(70px,10vw,110px);height:auto;color:var(--orange)}
-
-  /* COLOR */
-  .swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-top:2.4rem}
-  .sw{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
-  .sw .c{height:140px}
-  .sw .m{padding:1rem 1.1rem;background:var(--panel)}
-  .sw .nm{font-family:var(--disp);font-weight:600;font-size:1.05rem}
-  .sw .hx{font-family:var(--mono);font-size:.76rem;color:var(--muted);margin-top:.15rem}
-  .sw .ro{font-size:.85rem;color:var(--muted);margin-top:.5rem}
-
-  /* TYPE */
-  .type{display:grid;gap:2.4rem;margin-top:2.4rem}
-  .tspec{border-top:1px solid var(--line);padding-top:1.8rem}
-  .tspec .fam{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--orange);margin-bottom:.8rem}
-  .tspec .big{font-size:clamp(2.6rem,8vw,5rem);line-height:.98}
-  .tspec .set{font-size:1.5rem;line-height:1.35;max-width:36ch}
-  .tspec .a{color:var(--faint);word-spacing:.06em;margin-top:.6rem;font-size:.95rem}
-
-  /* APPLICATIONS */
-  .apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;margin-top:2.4rem}
-  .app{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--panel)}
-  .app .stage{padding:2.4rem;display:flex;align-items:center;justify-content:center;min-height:280px;background:radial-gradient(130% 130% at 50% 0,#0e122000,#06080f)}
-  .app .lbl{padding:.9rem 1.1rem;border-top:1px solid var(--line);font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--muted)}
-  /* card */
-  .card{width:300px;aspect-ratio:1.72;border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 30px 70px -34px #000;background:var(--midnight);border:1px solid #252f45}
-  .card .top{display:flex;align-items:center;gap:.7rem}
-  .card .top svg{width:34px;height:30px;color:var(--orange)}
-  .card .top .w{font-family:var(--disp);font-weight:700;font-size:1rem}
-  .card .top .w .o{color:var(--orange)}
-  .card .nm{font-weight:600}
-  .card .dt{font-family:var(--mono);font-size:.66rem;color:var(--muted)}
-  /* avatar */
-  .av{width:150px;height:150px;border-radius:34px;background:var(--orange);display:flex;align-items:center;justify-content:center}
-  .av svg{width:96px;height:84px;color:#fff}
-  /* signage */
-  .sign{display:flex;align-items:center;gap:1rem;padding:1.4rem 1.8rem;border-radius:14px;background:#06080f;border:1px solid #252f45;box-shadow:0 0 60px -14px rgba(249,115,22,.5)}
-  .sign svg{width:56px;height:49px;color:var(--orange)}
-  .sign .w{font-family:var(--disp);font-weight:700;font-size:1.5rem}
-  .sign .w .o{color:var(--orange)}
-  /* tattoo card */
-  .ink{width:230px;height:230px;border-radius:16px;background:#0a0a0a;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 30px 70px -34px #000}
-  .ink svg{width:150px;height:132px;color:#f0f2f8}
-  .ink::after{content:"for the skin";position:absolute;bottom:12px;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:#3a3a3a}
-
-  /* VOICE + colophon */
-  .voice .q{font-family:var(--disp);font-weight:600;font-size:clamp(1.8rem,5vw,3rem);line-height:1.08;max-width:22ch}
-  .voice .q em{color:var(--orange);font-style:normal}
-  .colophon{padding:3rem 0 5rem;color:var(--faint);font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-  @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Little Fight NYC | Brand Kit</title>
+  <meta name="description" content="The Little Fight NYC brand operating guide: story, identity, voice, imagery, motion, proof, project timelines, and showcase rules.">
+  <meta name="theme-color" content="#050507">
+  <link rel="canonical" href="https://littlefightnyc.com/brand-kit/">
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta property="og:title" content="Little Fight NYC | Brand Kit">
+  <meta property="og:description" content="Small crew. Heavy pull. The complete Little Fight NYC brand operating guide.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://littlefightnyc.com/brand-kit/">
+  <meta property="og:image" content="https://littlefightnyc.com/brand-kit/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Little Fight NYC | Brand Kit">
+  <meta name="twitter:description" content="Small crew. Heavy pull. The complete Little Fight NYC brand operating guide.">
+  <meta name="twitter:image" content="https://littlefightnyc.com/brand-kit/assets/og-image.png">
+  <link rel="stylesheet" href="brand-kit.css">
+  <script src="brand-kit.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to the guide</a>
 
-<!-- ============ THE MARK (inline, reusable) ============ -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="tug" viewBox="0 0 838.016418 562.406218"><g transform="translate(-297.159815,611.589160) scale(0.100000,-0.100000)"
-fill="currentColor" stroke="none">
-<path d="M6050 6114 c-317 -39 -527 -140 -620 -299 -42 -70 -38 -357 6 -506
-17 -57 20 -58 111 -24 189 70 312 107 448 136 128 27 475 30 623 5 51 -8 99
--13 107 -9 18 6 20 85 5 195 -5 40 -14 105 -19 145 -30 230 -198 349 -506 358
--66 2 -136 1 -155 -1z"/>
-<path d="M8860 5354 c-152 -16 -582 -54 -908 -79 -326 -25 -534 -168 -639
--439 -32 -82 -44 -234 -41 -541 4 -311 -2 -337 -84 -409 -50 -43 -86 -59 -165
--72 -39 -6 -43 -4 -61 26 -11 17 -22 48 -26 68 -20 126 -56 422 -61 507 -4 55
--13 143 -20 195 -7 52 -16 129 -20 170 -9 103 -32 235 -45 259 -42 80 -614
-120 -811 57 -24 -8 -91 -29 -149 -47 -134 -41 -282 -112 -315 -150 -29 -35
--33 -95 -14 -208 5 -35 16 -132 24 -215 17 -180 51 -493 65 -591 16 -115 13
--189 -8 -208 -27 -24 -99 -35 -281 -42 -343 -12 -525 -91 -693 -297 -135 -166
--174 -337 -158 -685 9 -192 11 -198 52 -212 67 -24 1232 -9 1543 19 61 5 184
-14 275 20 150 10 459 46 585 69 28 5 79 12 115 16 65 6 161 23 295 52 39 8 90
-19 115 24 97 20 147 56 337 243 222 219 296 271 461 331 72 26 224 60 312 69
-30 4 87 13 125 21 146 30 243 47 330 61 50 7 144 25 210 39 66 14 149 30 185
-36 36 5 117 21 180 36 63 14 150 34 192 43 42 9 84 22 92 30 20 16 21 104 2
-260 -8 63 -17 178 -21 255 -3 77 -10 176 -15 220 -5 44 -14 145 -20 225 -16
-204 -41 324 -90 422 -97 193 -244 318 -461 394 -73 25 -281 40 -389 28z m420
--582 c59 -26 108 -75 136 -137 26 -58 59 -299 70 -510 10 -189 2 -200 -141
--215 -44 -4 -125 -13 -180 -19 -55 -6 -149 -15 -210 -21 -60 -5 -155 -15 -210
--21 -154 -16 -212 -3 -275 63 -41 45 -59 109 -71 267 -17 213 -9 347 23 396
-83 127 183 168 478 195 69 6 152 15 185 20 80 11 140 6 195 -18z"/>
-<path d="M10910 3414 c-30 -7 -118 -25 -195 -39 -77 -14 -174 -32 -215 -40
--173 -34 -250 -48 -340 -60 -52 -8 -149 -25 -215 -40 -66 -14 -149 -30 -185
--36 -36 -5 -94 -16 -130 -24 -177 -40 -249 -55 -290 -60 -25 -3 -74 -12 -110
--20 -116 -25 -223 -46 -310 -60 -47 -7 -107 -18 -135 -24 -105 -22 -213 -42
--300 -56 -219 -34 -315 -90 -490 -286 -107 -119 -155 -162 -249 -223 -74 -49
--231 -113 -316 -131 -206 -42 -369 -72 -450 -80 -30 -3 -100 -12 -155 -20
--153 -22 -452 -53 -625 -65 -85 -6 -202 -15 -259 -20 -506 -45 -1428 -36
--2266 22 -479 33 -451 32 -522 13 -190 -52 -231 -306 -122 -761 16 -66 36
--138 44 -160 9 -21 22 -52 28 -69 53 -134 166 -309 251 -389 158 -147 285
--213 506 -262 122 -27 888 -35 3235 -31 2488 3 2311 -1 2575 61 176 41 267 74
-427 155 376 187 669 473 900 876 78 137 179 375 198 465 4 19 22 87 40 150
-103 364 149 896 92 1058 -27 76 -65 126 -117 152 -47 24 -210 27 -300 4z
-m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
--136 -333 -47 -29 -55 -31 -155 -31 -100 0 -108 2 -155 31 -209 128 -187 444
-38 549 71 33 163 34 232 1z"/>
-</g></symbol>
-</svg>
-
-<!-- COVER -->
-<header class="cover page">
-  <div class="kicker">Little Fight NYC · Brand · The Book · v1 mmxxvi</div>
-  <svg class="mark"><use href="#tug"/></svg>
-  <h1>LITTLE FIGHT<br><span class="o">NYC</span></h1>
-  <p class="tag">Right-sized websites, tools, and local muscle for New York's small businesses. The little guy who moves the big guy.</p>
-  <div class="scroll">↓ THE BOOK</div>
-</header>
-
-<hr class="page-line"><div class="page"><hr></div>
-
-<!-- IDEA -->
-<section class="idea page">
-  <div class="num">01 — The idea</div>
-  <p class="big" style="margin-top:1.6rem">A tugboat is small, stout, and unglamorous — and it pulls <em>ships ten thousand times its size</em> through the busiest harbor on earth.</p>
-  <p class="sub" style="margin-top:1.8rem">That is the entire brand. Not a metaphor we reach for — the one we are. Little Fight is the tug for the corner store, the family practice, the two-person shop: we fix the tech dragging you down so you can pull weight far above your size, against companies with a hundred times your budget. The mark is the promise, drawn.</p>
-</section>
-
-<div class="page"><hr></div>
-
-<!-- MARK -->
-<section class="page">
-  <div class="num">02 — The mark</div>
-  <h2 style="font-size:clamp(2rem,5vw,3.2rem);margin-top:1rem">The Tugboat</h2>
-  <div class="studies">
-    <div class="cell orange"><svg><use href="#tug"/></svg></div>
-    <div class="cell mid o"><svg><use href="#tug"/></svg></div>
-    <div class="cell mid"><svg><use href="#tug"/></svg></div>
-    <div class="cell light"><svg><use href="#tug"/></svg></div>
-  </div>
-  <div class="grid-note">
-    <div><h3>One color, always</h3><p>Solid silhouette, true negative space. It reverses on any ground — orange, midnight, paper, skin. Never gradient it, outline it, or add a second color.</p></div>
-    <div><h3>The smoke means work</h3><p>The rising curl is the tug under load — it's doing something. Keep it. It's the difference between an icon and a character.</p></div>
-    <div><h3>Give it water</h3><p>The two waterline strokes are part of the mark at large sizes. Drop them only below 24px, where the boat rides alone.</p></div>
-  </div>
-  <div class="detail">
-    <div class="z"><svg><use href="#tug"/></svg></div>
-    <div>
-      <div class="fig">Anatomy</div>
-      <p class="sub" style="margin-top:.6rem">Raised bow (the push), stout belly (the weight it carries), three portholes and a lit wheelhouse (someone's aboard at 1 a.m.), a bold stack, and a curl of smoke. Every part earns its place. Clear space equals the height of the stack; minimum size 20px.</p>
+  <header class="site-nav">
+    <div class="shell nav-inner">
+      <a class="brand-link" href="#top" aria-label="Little Fight NYC brand kit home">
+        <img src="assets/logo/mark-orange.svg" alt="" width="42" height="28">
+        <span class="brand-name">LITTLE FIGHT <span>NYC</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Brand kit sections">
+        <a href="#story">Story</a>
+        <a href="#system">System</a>
+        <a href="#voice">Voice</a>
+        <a href="#imagery">Imagery</a>
+        <a href="#proof">Proof</a>
+        <a href="#showcase">Lab</a>
+      </nav>
+      <a class="button" href="assets/downloads/little-fight-nyc-brand-kit.zip" download>Download kit</a>
     </div>
-  </div>
-</section>
+  </header>
 
-<div class="page"><hr></div>
+  <main id="content">
+    <section class="shell hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">Little Fight NYC brand system</p>
+        <h1 id="hero-title">Make tech work.</h1>
+        <p class="hero-lead">Custom websites, working systems, and software you own. Built for small business.</p>
+        <div class="hero-actions">
+          <a class="button" href="assets/downloads/little-fight-nyc-brand-kit.zip" download>Download kit</a>
+          <a class="button button-secondary" href="#story">Read the rules</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="assets/imagery/shop-systems-hero.webp" alt="Empty New York shop counter before opening, with a point-of-sale terminal, receipt printer, router, and shelves ready for business" width="1440" height="960">
+        <img class="hero-mark" src="assets/logo/mark-orange.svg" alt="" width="838" height="562">
+        <p class="hero-photo-note">Small crew.<br>Heavy pull.</p>
+      </div>
+    </section>
 
-<!-- WORDMARK -->
-<section class="page">
-  <div class="num">03 — Lockup</div>
-  <h2 style="font-size:clamp(2rem,5vw,3.2rem);margin:1rem 0 2rem">Mark + word</h2>
-  <div class="lockbox">
-    <div class="lock"><svg><use href="#tug"/></svg><span class="wm">LITTLE FIGHT <span class="o">NYC</span></span></div>
-  </div>
-  <p class="sub" style="margin-top:1.6rem">Wordmark is Oswald 700, all caps, tight. The mark leads; "NYC" carries the orange. Stack it (mark over LITTLE&nbsp;FIGHT over NYC) only where width is tight.</p>
-</section>
+    <section class="shell section" id="story" aria-labelledby="story-title">
+      <div class="section-head">
+        <h2 id="story-title">The whole brand in one sentence.</h2>
+        <p>We give small businesses the technology advantage that usually comes with a much bigger team.</p>
+      </div>
 
-<div class="page"><hr></div>
+      <div class="story-board">
+        <div class="story-core">
+          <blockquote>Small businesses have enough to fight. Their technology should not be one.</blockquote>
+          <p>The tugboat is the promise: a small, sturdy craft moving something much larger.</p>
+        </div>
+        <div class="brand-foundation">
+          <div class="foundation-item">
+            <span>Position</span>
+            <strong>A hands-on NYC technology firm for owner-operated businesses.</strong>
+          </div>
+          <div class="foundation-item">
+            <span>Promise</span>
+            <strong>The technology fits the business.</strong>
+          </div>
+          <div class="foundation-item">
+            <span>Fight</span>
+            <strong>Bloat, lock-in, broken workflows, and vague vendors.</strong>
+          </div>
+        </div>
+      </div>
 
-<!-- COLOR -->
-<section class="page">
-  <div class="num">04 — Color</div>
-  <h2 style="font-size:clamp(2rem,5vw,3.2rem);margin:1rem 0 .4rem">Two colors and the dark</h2>
-  <p class="sub">Discipline is the point. Orange is the only loud thing on the page — spend it like it's expensive. Everything else gets out of its way.</p>
-  <div class="swatches">
-    <div class="sw"><div class="c" style="background:#f97316"></div><div class="m"><div class="nm">Fight Orange</div><div class="hx">#F97316</div><div class="ro">The signal. One per view.</div></div></div>
-    <div class="sw"><div class="c" style="background:#fb923c"></div><div class="m"><div class="nm">Ember</div><div class="hx">#FB923C</div><div class="ro">Hover, glow, smoke.</div></div></div>
-    <div class="sw"><div class="c" style="background:#06080f;border:1px solid #0e1220"></div><div class="m"><div class="nm">Midnight</div><div class="hx">#06080F</div><div class="ro">The night street. The ground.</div></div></div>
-    <div class="sw"><div class="c" style="background:#f0f2f8"></div><div class="m"><div class="nm">Bone</div><div class="hx">#f0f2f8</div><div class="ro">Ink on dark. Muted #a1a1aa.</div></div></div>
-  </div>
-</section>
+      <div class="story-route" aria-label="The narrative every Little Fight page follows">
+        <article class="route-step">
+          <h3>Name the fight</h3>
+          <p>Your website should bring business. Your tools should save time. Your tech should work.</p>
+        </article>
+        <article class="route-step">
+          <h3>Cut the drag</h3>
+          <p>Fix what is broken. Connect what works. Replace only what slows the business down.</p>
+        </article>
+        <article class="route-step">
+          <h3>Leave ownership</h3>
+          <p>The client owns the code, data, domain, hosting, and documentation.</p>
+        </article>
+      </div>
 
-<div class="page"><hr></div>
+      <div class="audience-grid">
+        <article class="audience audience-urgent">
+          <h3>Urgent owner</h3>
+          <p>Something is broken now. Lead with calm, a direct path to help, and the next useful action.</p>
+        </article>
+        <article class="audience audience-evaluating">
+          <h3>Evaluating owner</h3>
+          <p>They are deciding if we are capable enough to trust. Lead with real work, ownership, and clear process.</p>
+        </article>
+      </div>
+    </section>
 
-<!-- TYPE -->
-<section class="page">
-  <div class="num">05 — Type</div>
-  <h2 style="font-size:clamp(2rem,5vw,3.2rem);margin:1rem 0 .4rem">Loud, then plain</h2>
-  <p class="sub">Two faces, no exceptions. Condensed caps that read like a fight poster; a plain, humane body that sounds like a person. Used with conviction, restraint reads as confidence.</p>
-  <div class="type">
-    <div class="tspec"><div class="fam">Display — Oswald 700</div><div class="big disp">PUNCH ABOVE YOUR SIZE.</div><div class="a disp">ABCDEFGHIJKLMNOPQRSTUVWXYZ · 0123456789</div></div>
-    <div class="tspec"><div class="fam">Body — Barlow</div><div class="set">We fix the tech slowing down your business — plainly, quickly, and honestly. No jargon, no fear, no corporate fog.</div><div class="a">Regular · Medium · Semibold · Italic</div></div>
-    <div class="tspec"><div class="fam">Technical — JetBrains Mono</div><div class="set mono" style="font-size:1.15rem">littlefightnyc.com · #F97316 · replies at 9am et</div><div class="a">Metadata, values, the small print that proves we build.</div></div>
-  </div>
-</section>
+    <section class="shell section" id="system" aria-labelledby="system-title">
+      <div class="section-head">
+        <h2 id="system-title">One mark. One working system.</h2>
+        <p>The tugboat stays recognizable. Everything around it now matches the live Axiom Momentum design system.</p>
+      </div>
 
-<div class="page"><hr></div>
+      <div class="logo-layout">
+        <div class="logo-stage">
+          <img src="assets/logo/mark-ink.svg" alt="Little Fight NYC tugboat mark in near-black" width="838" height="562">
+        </div>
+        <div class="logo-rules">
+          <div class="clearspace">
+            <div class="clearspace-frame">
+              <img src="assets/logo/mark-white.svg" alt="Tugboat mark shown inside its clear-space boundary" width="838" height="562">
+              <span>1 smokestack minimum</span>
+            </div>
+          </div>
+          <div class="rule-box">
+            <h3>Use it clean</h3>
+            <ul>
+              <li>Use the supplied white, near-black, or orange file.</li>
+              <li>Keep clear space equal to one smokestack.</li>
+              <li>Use at 20px only for favicons. Use 32px or larger everywhere else.</li>
+              <li>For CSS-controlled inline art, use the currentColor master.</li>
+            </ul>
+          </div>
+          <div class="rule-box">
+            <h3>Never alter it</h3>
+            <ul>
+              <li>Do not stretch, rotate, outline, shadow, or add a gradient.</li>
+              <li>Do not place it over a busy image without a solid ground or strong scrim.</li>
+              <li>Do not redraw the wordmark in another typeface.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-<!-- APPLICATIONS -->
-<section class="page">
-  <div class="num">06 — In the world</div>
-  <h2 style="font-size:clamp(2rem,5vw,3.2rem);margin:1rem 0 .4rem">Where it lives</h2>
-  <p class="sub">Fewer things, each one right.</p>
-  <div class="apps">
-    <div class="app"><div class="stage"><div class="card"><div class="top"><svg><use href="#tug"/></svg><span class="w">LITTLE FIGHT <span class="o">NYC</span></span></div><div><div class="nm">David Marsh</div><div class="dt">founder · littlefightnyc.com · 646 360 0318</div></div></div></div><div class="lbl">BUSINESS CARD · uncoated stock · 85×55mm</div></div>
-    <div class="app"><div class="stage"><div class="av"><svg><use href="#tug"/></svg></div></div><div class="lbl">SOCIAL AVATAR / APP ICON · orange, no wordmark</div></div>
-    <div class="app"><div class="stage"><div class="sign"><svg><use href="#tug"/></svg><span class="w">LITTLE FIGHT <span class="o">NYC</span></span></div></div><div class="lbl">SIGNAGE · illuminated, midnight ground</div></div>
-    <div class="app"><div class="stage"><div class="ink"><svg><use href="#tug"/></svg></div></div><div class="lbl">THE MARK ALONE · merch, stamps, and yes — the skin</div></div>
-  </div>
-</section>
+      <div class="system-grid">
+        <div>
+          <h3>Color has a job</h3>
+          <p class="hero-lead">Orange leads. Blue supports. Everything else creates calm contrast.</p>
+          <div class="palette" aria-label="Brand colors. Activate a swatch to copy its value.">
+            <button class="swatch" type="button" data-copy="#F97316" style="background:#f97316;--swatch-ink:#050507" aria-label="Copy Fight Orange hex value">
+              <strong>Fight Orange</strong>
+              <span>#F97316</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#3B82F6" style="background:#3b82f6;--swatch-ink:#ffffff" aria-label="Copy Support Blue hex value">
+              <strong>Support Blue</strong>
+              <span>#3B82F6</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#050507" style="background:#050507;--swatch-ink:#ffffff" aria-label="Copy Ground hex value">
+              <strong>Ground</strong>
+              <span>#050507</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#1A1C23" style="background:#1a1c23;--swatch-ink:#ffffff" aria-label="Copy Surface hex value">
+              <strong>Surface</strong>
+              <span>#1A1C23</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#12141A" style="background:#12141a;--swatch-ink:#ffffff" aria-label="Copy Recessed Surface hex value">
+              <strong>Recessed</strong>
+              <span>#12141A</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#FFFFFF" style="background:#ffffff;--swatch-ink:#050507" aria-label="Copy Primary Text hex value">
+              <strong>Primary Text</strong>
+              <span>#FFFFFF</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#A1A1AA" style="background:#a1a1aa;--swatch-ink:#050507" aria-label="Copy Secondary Text hex value">
+              <strong>Secondary Text</strong>
+              <span>#A1A1AA</span>
+            </button>
+            <button class="swatch" type="button" data-copy="#27272A" style="background:#27272a;--swatch-ink:#ffffff" aria-label="Copy Border hex value">
+              <strong>Border</strong>
+              <span>#27272A</span>
+            </button>
+          </div>
+        </div>
 
-<div class="page"><hr></div>
+        <div>
+          <h3>Type stays direct</h3>
+          <p class="hero-lead">Big statements are condensed. Reading stays easy. Labels stay functional.</p>
+          <div class="type-stack">
+            <div class="type-specimen">
+              <span>Oswald Variable 700</span>
+              <div class="type-display">PULL ABOVE YOUR SIZE.</div>
+            </div>
+            <div class="type-specimen">
+              <span>Barlow 400 and 700</span>
+              <div class="type-body">Plain English for owners who have customers, staff, and a business to run.</div>
+            </div>
+            <div class="type-specimen">
+              <span>JetBrains Mono 500 and 700</span>
+              <div class="type-mono">LABELS / DATES / STATUS / VERIFIED FACTS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- VOICE -->
-<section class="voice page">
-  <div class="num">07 — Voice</div>
-  <p class="q" style="margin-top:1.4rem">Plain. Confident. <em>Always in the corner of the little guy.</em></p>
-  <p class="sub" style="margin-top:1.6rem">We don't sell solutions. We fix the tech slowing down your business. Short sentences. Real numbers. New York time. Every footer, everywhere: <span class="mono" style="color:var(--muted)">Designed, Hosted and Cared For by LittleFightNYC.com</span></p>
-</section>
+    <section class="shell section" id="voice" aria-labelledby="voice-title">
+      <div class="section-head">
+        <h2 id="voice-title">Speak to the owner, not the industry.</h2>
+        <p>Use short sentences, familiar words, and concrete outcomes. Confidence comes from clarity and proof.</p>
+      </div>
 
-<div class="page"><hr></div>
+      <div class="pillars" aria-label="Little Fight messaging pillars">
+        <article class="pillar">
+          <strong>FIND</strong>
+          <h3>Be found</h3>
+          <p>Custom websites built for speed, search, local relevance, and the way customers choose.</p>
+        </article>
+        <article class="pillar">
+          <strong>FIX</strong>
+          <h3>Keep moving</h3>
+          <p>Bring us the broken booking, payments, email, devices, Wi-Fi, or website. We diagnose first.</p>
+        </article>
+        <article class="pillar">
+          <strong>CUT</strong>
+          <h3>Cut the drag</h3>
+          <p>Keep useful tools, connect what should talk, and stop paying for software that creates more work.</p>
+        </article>
+        <article class="pillar">
+          <strong>OWN</strong>
+          <h3>Own what fits</h3>
+          <p>When generic software stops fitting, build the focused system the business actually needs.</p>
+        </article>
+      </div>
 
-<footer class="colophon page">
-  <span>© mmxxvi Little Fight NYC · The Book · v1</span>
-  <span>The Tugboat — hand-drawn, one color, built to pull weight above its size.</span>
-</footer>
+      <div class="voice-grid">
+        <div class="voice-panel voice-say">
+          <h3>Say this</h3>
+          <p class="voice-example">Your business has outgrown the template.</p>
+          <p class="voice-example">Show us what is broken.</p>
+          <p class="voice-example">Stop renting the workaround.</p>
+          <p class="voice-example">Small crew. Heavy pull.</p>
+        </div>
+        <div class="voice-panel voice-avoid">
+          <h3>Avoid this</h3>
+          <p class="voice-example">Seamless digital solutions for modern enterprises.</p>
+          <p class="voice-example">Wix is bad for Google.</p>
+          <p class="voice-example">Guaranteed first-page rankings.</p>
+          <p class="voice-example">Replace every tool with one platform.</p>
+        </div>
+      </div>
+    </section>
 
+    <section class="shell section" id="imagery" aria-labelledby="imagery-title">
+      <div class="section-head">
+        <p class="eyebrow">Business-first imagery</p>
+        <h2 id="imagery-title">Show the place where work happens.</h2>
+        <p>Storefronts, counters, inventory, devices, cables, menus, screens, and the systems behind the day.</p>
+      </div>
+
+      <div class="scene-grid">
+        <figure class="scene">
+          <img src="assets/imagery/storefront-beauty-supply.webp" alt="Neighborhood beauty supply storefront with hand-painted signs and a glass entry door" width="900" height="900" loading="lazy">
+          <figcaption>The storefront</figcaption>
+        </figure>
+        <figure class="scene">
+          <img src="assets/imagery/counter-pos.webp" alt="Small business point-of-sale counter with card reader, tip jar, and a blurred worker in the background" width="900" height="600" loading="lazy">
+          <figcaption>The counter system</figcaption>
+        </figure>
+        <figure class="scene">
+          <img src="assets/imagery/retail-rack.webp" alt="Clothing rack filled with jeans inside an independent retail shop" width="1200" height="900" loading="lazy">
+          <figcaption>The working inventory</figcaption>
+        </figure>
+      </div>
+
+      <div class="image-rules">
+        <article class="image-rule">
+          <h3>The business is the subject</h3>
+          <p>Lead with the environment, product, tool, counter, or customer path.</p>
+        </article>
+        <article class="image-rule">
+          <h3>People are context</h3>
+          <p>Use no people when possible. If present, keep them incidental, candid, distant, or softly out of focus.</p>
+        </article>
+        <article class="image-rule">
+          <h3>Lived-in, not broken</h3>
+          <p>Show real constraints with dignity. Never turn a small business into a disaster scene.</p>
+        </article>
+      </div>
+
+      <div class="motion-board" aria-labelledby="motion-title">
+        <div class="consolidator" aria-hidden="true">
+          <div class="many">
+            <span aria-hidden="true">&nbsp;</span>
+            <span aria-hidden="true">&nbsp;</span>
+            <span aria-hidden="true">&nbsp;</span>
+            <span aria-hidden="true">&nbsp;</span>
+          </div>
+          <div class="pull-line"></div>
+          <div class="one-system">
+            <img src="assets/logo/mark-ink.svg" alt="" width="838" height="562">
+          </div>
+        </div>
+        <div class="motion-rules">
+          <article class="motion-rule">
+            <h3 id="motion-title">Many into one</h3>
+            <p>Motion should show scattered tools becoming one calm system.</p>
+          </article>
+          <article class="motion-rule">
+            <h3>Weight before flash</h3>
+            <p>Objects pull, settle, and follow through. Nothing teleports or bounces for decoration.</p>
+          </article>
+          <article class="motion-rule">
+            <h3>Reward, never tax</h3>
+            <p>Content is complete on first paint. No splash, scroll jail, cursor follower, or required animation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="proof" aria-labelledby="proof-title">
+      <div class="section-head">
+        <h2 id="proof-title">A strong claim carries a receipt.</h2>
+        <p>Use verified facts, shipped work, working demonstrations, and dated milestones. Never decorate with invented numbers.</p>
+      </div>
+
+      <div class="claims">
+        <article class="claim">
+          <strong>14 days</strong>
+          <p>Custom small-business websites go live in 14 days, or the client does not pay.</p>
+        </article>
+        <article class="claim">
+          <strong>Always free</strong>
+          <p>Consulting removes uncertainty before paid work begins.</p>
+        </article>
+        <article class="claim">
+          <strong>2 hours</strong>
+          <p>Callback target from 9am to 9pm Eastern Time.</p>
+        </article>
+        <article class="claim">
+          <strong>You own it</strong>
+          <p>Code, domain, data, hosting, and documentation stay with the client.</p>
+        </article>
+      </div>
+
+      <div class="claim-rule">
+        <h3>The claims ledger is mandatory.</h3>
+        <p>Every claim needs a source, owner, last-verified date, and approved placements. Never invent project dates, outcomes, percentages, status, or testimonials. If a timeline is reconstructed, label it clearly.</p>
+      </div>
+
+      <div class="section-head" style="margin-top:clamp(64px,8vw,112px)">
+        <h2>Show what is moving now.</h2>
+        <p>Create the public project record when the deposit clears. Keep it useful, current, and safe to share.</p>
+      </div>
+
+      <ol class="timeline" aria-label="Standard public project timeline">
+        <li class="timeline-item">
+          <strong>Deposit received</strong>
+          <span>Record begins</span>
+        </li>
+        <li class="timeline-item">
+          <strong>Discovery</strong>
+          <span>Business mapped</span>
+        </li>
+        <li class="timeline-item">
+          <strong>Working proof</strong>
+          <span>Something real</span>
+        </li>
+        <li class="timeline-item">
+          <strong>Owner review</strong>
+          <span>Feedback and training</span>
+        </li>
+        <li class="timeline-item">
+          <strong>Live</strong>
+          <span>Verified launch</span>
+        </li>
+        <li class="timeline-item">
+          <strong>Care</strong>
+          <span>Support and iteration</span>
+        </li>
+      </ol>
+
+      <div class="timeline-contract">
+        <div>
+          <h3>Every record shows</h3>
+          <p>Start date, current milestone, latest completed work, next milestone, days in motion, last verified date, and client approval.</p>
+        </div>
+        <div>
+          <h3>Every record protects</h3>
+          <p>Private systems, credentials, source, customer data, internal discussion, and any detail the client has not approved.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="showcase" aria-labelledby="showcase-title">
+      <div class="showcase-board">
+        <div class="showcase-main">
+          <h2 id="showcase-title">The Lab is a showroom.</h2>
+          <p>Open the experience. Let people play. Explain what it proves. Make the next exhibit easy to reach.</p>
+        </div>
+        <div class="showcase-rules">
+          <div>
+            <h3>One click at most</h3>
+            <p>The Lab index opens the live experience directly. No introduction page between the visitor and the work.</p>
+          </div>
+          <div>
+            <h3>Ten-second value</h3>
+            <p>Within ten seconds, a visitor can try it, see what changed, and understand why it matters.</p>
+          </div>
+          <div>
+            <h3>Keep exploration open</h3>
+            <p>Place replay, reset, context, and the next exhibit beside the experience. No nested reading maze.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="never-show">
+        <h3>Never surface developer plumbing</h3>
+        <p>No GitHub links, repository names, source code, copy code, share code, download code, commit hashes, file trees, package details, schemas, or private client infrastructure. The Lab proves capability through the experience itself.</p>
+      </div>
+    </section>
+
+    <section class="shell section" id="standards" aria-labelledby="standards-title">
+      <div class="section-head">
+        <p class="eyebrow">Brand Kit v2.0</p>
+        <h2 id="standards-title">Make it clear. Keep it current.</h2>
+        <p>Clarity, accessibility, and governance are part of the brand, not a cleanup pass.</p>
+      </div>
+
+      <div class="standards-grid">
+        <div class="standards-panel">
+          <h3>Access is a brand rule</h3>
+          <ul class="policy-list">
+            <li>Use a 16px absolute type floor. Body copy normally sits at 18px to 20px.</li>
+            <li>Keep touch targets at least 44px and keyboard focus clearly visible.</li>
+            <li>Never rely on color alone to communicate state.</li>
+            <li>Write alt text for meaning, not visual decoration.</li>
+            <li>Allow long translations, CJK text, long URLs, and 200 percent zoom.</li>
+            <li>Respect reduced motion and keep the complete page available without JavaScript.</li>
+          </ul>
+        </div>
+
+        <div class="standards-panel governance">
+          <div class="source">
+            <span>Design source</span>
+            <strong>app/DESIGN.md</strong>
+          </div>
+          <div class="source">
+            <span>Token source</span>
+            <strong>app/src/styles/editorial/tokens.css</strong>
+          </div>
+          <div class="source">
+            <span>Public guide and assets</span>
+            <strong>littlefightnyc.com/brand-kit/</strong>
+          </div>
+          <div class="source">
+            <span>Version and owner</span>
+            <strong>2.0.0, updated July 24, 2026<br>hello@littlefightnyc.com</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="downloads" aria-label="Brand kit downloads">
+        <a class="download" href="assets/downloads/little-fight-nyc-brand-kit.zip" download>
+          <strong>Download kit</strong>
+          <span>ZIP with guide, assets, fonts, and tokens</span>
+        </a>
+        <a class="download" href="assets/downloads/BRAND-KIT.md" download>
+          <strong>Brand spec</strong>
+          <span>BRAND-KIT.md</span>
+        </a>
+        <a class="download" href="assets/color/tokens.json" download>
+          <strong>Design tokens</strong>
+          <span>tokens.json</span>
+        </a>
+        <a class="download" href="assets/color/palette.css" download>
+          <strong>CSS tokens</strong>
+          <span>palette.css</span>
+        </a>
+        <a class="download" href="assets/color/tokens.schema.json" download>
+          <strong>Token schema</strong>
+          <span>tokens.schema.json</span>
+        </a>
+        <a class="download" href="assets/logo/mark-currentcolor.svg" download>
+          <strong>Inline mark</strong>
+          <span>currentColor SVG master</span>
+        </a>
+      </div>
+
+      <div class="changelog">
+        <h3>What changed in v2.0</h3>
+        <ul class="policy-list">
+          <li>Aligned color, type, radius, spacing, and motion with Axiom Momentum.</li>
+          <li>Added positioning, audience states, messaging pillars, voice, and claim rules.</li>
+          <li>Added business-environment imagery and the many-into-one motion grammar.</li>
+          <li>Added current-work timelines, the Lab showcase contract, and accessibility standards.</li>
+          <li>Corrected contact details, logo-file guidance, token schema, fonts, and archive contents.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell site-footer">
+    <span>Designed, Hosted and Cared For by LittleFightNYC.com</span>
+    <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>
+  </footer>
+
+  <div class="toast" data-toast data-show="false" role="status" aria-live="polite">Copied</div>
 </body>
 </html>

@@ -4,104 +4,88 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Systems Lab | The Lab | Little Fight NYC</title>
-  <meta name="description" content="Shape a service concept, compare operating states, and inspect complete responsive business systems from Little Fight NYC.">
-  <meta name="theme-color" content="#07080c">
+  <meta name="description" content="Try three working small-business system experiments from Little Fight NYC.">
+  <meta name="theme-color" content="#050507">
   <link rel="canonical" href="https://littlefightnyc.com/examples/lab/suites/business-systems/">
   <link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/lf-fonts.css">
   <link rel="stylesheet" href="/examples/lab/assets/suite.css">
-  <script defer src="/examples/lab/assets/suite.js"></script>
 </head>
 <body>
-  <a class="suite-skip" href="#workbench">Skip to the workbench</a>
+  <a class="suite-skip" href="#builds">Skip to the builds</a>
   <header class="suite-bar">
     <a class="suite-brand" href="/" aria-label="Little Fight NYC home">
       <img src="/examples/lab/assets/favicon.svg" width="34" height="24" alt="">
       <span>LITTLEFIGHT<span>NYC</span></span>
     </a>
-    <nav class="suite-navigation" data-suite-navigation aria-label="Capability suites"></nav>
-    <a class="suite-back" href="/examples/lab/">All Labs</a>
+    <a class="suite-back" href="/examples/lab/">Back to The Lab</a>
   </header>
 
-  <main class="suite-main" data-suite-root>
+  <main class="suite-main">
     <section class="suite-hero" aria-labelledby="suite-title">
-      <div class="suite-hero__copy">
-        <p class="suite-label">From a messy signal to an owned tool</p>
+      <div>
+        <p class="suite-label">From daily friction to a useful tool</p>
         <h1 id="suite-title">Systems Lab</h1>
-        <p class="suite-hero__lede">Shape a service concept, compare operating states, and inspect the complete earlier site.</p>
       </div>
-      <div class="suite-hero__proof" aria-label="Suite details">
-        <div><strong data-suite-count>Three working builds</strong><span>One connected systems workbench</span></div>
-        <div><strong>Inputs become decisions</strong><span>Every control changes a visible outcome</span></div>
+      <p class="suite-hero__lede">Three ways to make the business behind the screen easier to run.</p>
+    </section>
+
+    <section class="suite-picker" id="builds" aria-labelledby="builds-title">
+      <header class="suite-picker__head">
+        <h2 id="builds-title">Pick a problem.</h2>
+        <p>Each choice opens the full interaction in one click.</p>
+      </header>
+      <div class="suite-builds" data-count="3">
+        <a class="suite-build" data-suite-concept href="/examples/lab/concepts/studio-engine/">
+          <div class="suite-build__media">
+            <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/pos_system_tip_jar.webp" width="1800" height="1200" alt="Tip jar and point-of-sale equipment on a shop counter">
+          </div>
+          <div class="suite-build__copy">
+            <span>Interactive business tool</span>
+            <h3>Studio Engine</h3>
+            <p>Give it a business signal, then watch a focused website direction take shape.</p>
+            <strong>Try it <span aria-hidden="true">↗</span></strong>
+          </div>
+        </a>
+        <a class="suite-build" data-suite-concept href="/examples/lab/concepts/growth-street/">
+          <div class="suite-build__media">
+            <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_retail.webp" width="1350" height="1800" alt="Coffee and retail goods arranged on shop shelves">
+          </div>
+          <div class="suite-build__copy">
+            <span>Systems story</span>
+            <h3>Growth Street</h3>
+            <p>A row of storefronts changes as the systems behind them connect.</p>
+            <strong>Try it <span aria-hidden="true">↗</span></strong>
+          </div>
+        </a>
+        <a class="suite-build" data-suite-concept href="/examples/lab/concepts/tech-support/">
+          <div class="suite-build__media">
+            <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_cafes2.webp" width="1800" height="1336" alt="The working counter inside a New York cafe">
+          </div>
+          <div class="suite-build__copy">
+            <span>Complete website</span>
+            <h3>Tech Support Site</h3>
+            <p>An earlier service website preserved as a complete, working business world.</p>
+            <strong>Try it <span aria-hidden="true">↗</span></strong>
+          </div>
+        </a>
       </div>
     </section>
 
-    <section class="suite-workbench" id="workbench" aria-labelledby="workbench-title">
-      <aside class="suite-sidebar">
-        <header class="suite-sidebar__head">
-          <h2 id="workbench-title">Live workbench</h2>
-          <p>Move from a raw business signal to an operating concept.</p>
-        </header>
-        <div class="suite-concepts" data-concept-navigation role="tablist" aria-label="Systems builds"></div>
-        <p class="suite-keyboard-note">Arrow keys switch builds. D changes the preview width. P pauses motion.</p>
-      </aside>
-
-      <div class="suite-stage" data-suite-stage>
-        <div class="suite-stage__toolbar">
-          <div class="suite-view-controls" aria-label="Preview width">
-            <button class="suite-control" type="button" data-suite-view="auto">Auto</button>
-            <button class="suite-control" type="button" data-suite-view="phone">Phone</button>
-            <button class="suite-control" type="button" data-suite-view="tablet">Tablet</button>
-            <button class="suite-control" type="button" data-suite-view="desktop">Desktop</button>
-          </div>
-          <div class="suite-stage__actions">
-            <button class="suite-control" type="button" data-pause-suite aria-pressed="false">Pause motion</button>
-            <button class="suite-control" type="button" data-fullscreen-suite>Full screen</button>
-          </div>
-        </div>
-
-        <div class="suite-device">
-          <div class="suite-frame-shell" data-frame-shell data-view="desktop">
-            <div class="suite-loading" data-suite-loading role="status">Preparing the systems stage</div>
-            <iframe
-              data-suite-frame
-              title="Systems Lab live build"
-              allow="fullscreen"
-            ></iframe>
-          </div>
-        </div>
-
-        <div class="suite-stage__footer">
-          <div class="suite-stage__copy">
-            <span data-concept-type>Systems build</span>
-            <strong data-concept-title>Loading</strong>
-            <p data-concept-description>Preparing the selected build.</p>
-          </div>
-          <a class="suite-open" data-open-concept href="/examples/lab/">Open build</a>
-          <div class="suite-stepper">
-            <button type="button" data-previous-concept aria-label="Previous build">←</button>
-            <span class="suite-status" data-suite-status aria-live="polite">Loading workbench</span>
-            <button type="button" data-next-concept aria-label="Next build">→</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="suite-capability-section" aria-labelledby="capability-title">
-      <h2 id="capability-title">What this suite proves.</h2>
-      <ol class="suite-capabilities" data-suite-capabilities></ol>
+    <section class="suite-proof" aria-labelledby="proof-title">
+      <h2 id="proof-title">What it proves.</h2>
+      <ul>
+        <li>Interactive concept modeling</li>
+        <li>Clear before-and-after states</li>
+        <li>Responsive business tools</li>
+        <li>Plain-language decisions</li>
+      </ul>
     </section>
   </main>
 
   <footer class="suite-footer">
     <p>Designed, hosted and cared for by <a href="/">Little Fight NYC</a>.</p>
-    <a href="/tech-audit/?intent=website&amp;source=lab-systems">Bring us the difficult idea</a>
+    <a href="/examples/lab/">See every build</a>
   </footer>
-
-  <noscript>
-    <p><a href="/examples/lab/concepts/studio-engine/">Open Studio Engine</a></p>
-    <p><a href="/examples/lab/concepts/growth-street/">Open Growth Street</a></p>
-    <p><a href="/examples/lab/concepts/tech-support/">Open Tech Support Site</a></p>
-  </noscript>
 </body>
 </html>

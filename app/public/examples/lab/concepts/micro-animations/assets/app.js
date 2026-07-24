@@ -1,6 +1,5 @@
 const filterButtons = Array.from(document.querySelectorAll('.filter-pill'));
 const cards = Array.from(document.querySelectorAll('.service-card'));
-const codeButtons = Array.from(document.querySelectorAll('.code-toggle'));
 const filterStatus = document.getElementById('filter-status');
 const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 const replayTimers = new Map();
@@ -141,98 +140,6 @@ filterButtons.forEach((button) => {
   button.setAttribute('aria-pressed', String(button.classList.contains('is-active')));
   button.addEventListener('click', () => {
     setFilter(button.dataset.filter || 'all');
-  });
-});
-
-async function copySnippet(text) {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-
-  const textarea = document.createElement('textarea');
-  textarea.value = text;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'fixed';
-  textarea.style.opacity = '0';
-  document.body.appendChild(textarea);
-  textarea.select();
-  const copied = document.execCommand('copy');
-  textarea.remove();
-  if (!copied) throw new Error('Copy command was unavailable.');
-}
-
-function downloadSnippet(text, name) {
-  const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  link.href = url;
-  link.download = `${slug}-snippet.txt`;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
-}
-
-codeButtons.forEach((button, index) => {
-  const panel = button.nextElementSibling;
-  const code = panel.querySelector('code');
-  const card = button.closest('.service-card');
-  const name = cardName(card);
-  const panelId = `snippet-panel-${index + 1}`;
-
-  panel.id = panelId;
-  button.setAttribute('aria-controls', panelId);
-  button.textContent = 'Inspect snippet';
-
-  const actions = document.createElement('div');
-  actions.className = 'snippet-actions';
-
-  const copyButton = document.createElement('button');
-  copyButton.className = 'snippet-action';
-  copyButton.type = 'button';
-  copyButton.textContent = 'Copy snippet';
-
-  const downloadButton = document.createElement('button');
-  downloadButton.className = 'snippet-action';
-  downloadButton.type = 'button';
-  downloadButton.textContent = 'Download .txt';
-
-  const note = document.createElement('p');
-  note.className = 'snippet-note';
-  note.textContent = 'Focused excerpt, not a full component.';
-
-  actions.append(copyButton, downloadButton, note);
-  panel.appendChild(actions);
-
-  button.addEventListener('click', () => {
-    const willOpen = panel.hasAttribute('hidden');
-    panel.toggleAttribute('hidden', !willOpen);
-    button.setAttribute('aria-expanded', String(willOpen));
-    button.textContent = willOpen ? 'Close snippet' : 'Inspect snippet';
-  });
-
-  copyButton.addEventListener('click', async () => {
-    try {
-      await copySnippet(code.textContent.trim());
-      copyButton.textContent = 'Copied';
-      announce(`${name} snippet copied.`);
-      window.setTimeout(() => {
-        copyButton.textContent = 'Copy snippet';
-      }, 1600);
-    } catch (_) {
-      copyButton.textContent = 'Copy unavailable';
-      announce('Copy is unavailable in this browser. Select the snippet text instead.');
-      window.setTimeout(() => {
-        copyButton.textContent = 'Copy snippet';
-      }, 2200);
-    }
-  });
-
-  downloadButton.addEventListener('click', () => {
-    downloadSnippet(code.textContent.trim(), name);
-    announce(`${name} snippet downloaded as a text file.`);
   });
 });
 

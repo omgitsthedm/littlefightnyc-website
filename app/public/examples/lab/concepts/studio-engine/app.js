@@ -395,7 +395,6 @@ const els = {
   previewMenuButton: document.getElementById("previewMenuButton"),
   previewMenu: document.getElementById("previewMenu"),
   previewLoadDemoButton: document.getElementById("previewLoadDemoButton"),
-  downloadMarkdownButton: document.getElementById("downloadMarkdownButton"),
   focusSignalButton: document.getElementById("focusSignalButton"),
   aiOrbButton: document.getElementById("aiOrbButton"),
   deviceStack: document.getElementById("deviceStack"),
@@ -1379,9 +1378,9 @@ function buildOutputs(signalStrength) {
       detail: "Five local sections"
     },
     {
-      label: "Share Pack",
-      status: "Export",
-      detail: "URL and Markdown"
+      label: "Saved View",
+      status: "Ready",
+      detail: "Kept in the page address"
     }
   ];
 }
@@ -2318,7 +2317,7 @@ function shareConcept() {
 function saveShareLink() {
   const shareUrl = state.concept.shareUrl;
   window.history.replaceState({}, "", shareUrl);
-  shareConcept();
+  showToast("This view is now kept in the page address");
 }
 
 function loadDemo() {
@@ -2476,12 +2475,8 @@ function init() {
     loadDemo();
   });
   els.publishButton.addEventListener("click", saveShareLink);
-  els.shareButton.addEventListener("click", shareConcept);
-  els.exportMarkdownButton.addEventListener("click", exportMarkdown);
-  els.downloadMarkdownButton.addEventListener("click", () => {
-    setMenuOpen(false);
-    exportMarkdown();
-  });
+  els.shareButton.addEventListener("click", loadDemo);
+  els.exportMarkdownButton.addEventListener("click", loadDemo);
   els.previewMenuButton.addEventListener("click", () => {
     setMenuOpen(els.previewMenu.hidden);
   });

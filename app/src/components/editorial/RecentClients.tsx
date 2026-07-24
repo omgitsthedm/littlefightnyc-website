@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, ScanSearch } from "lucide-react";
 import { caseStudies } from "@/data/site";
 import ProjectReviewGrid from "./ProjectReviewGrid";
+import ProjectMomentum from "./ProjectMomentum";
 import "./RecentClients.css";
 
 /**
@@ -9,8 +10,8 @@ import "./RecentClients.css";
  */
 const FEATURED_SLUGS = [
   "hair-by-rachel-charles",
-  "cc-films",
-  "venuecircuit",
+  "after-hours-agenda",
+  "grand-funding-llc",
 ] as const;
 
 export default function RecentClients() {
@@ -23,11 +24,11 @@ export default function RecentClients() {
       <div className="lf-clients__inner">
         <div className="lf-clients__head">
           <div>
-            <p className="lf-mono lf-clients__label">Live work</p>
-            <h2 className="lf-clients__heading">Current projects, one clear view.</h2>
+            <p className="lf-mono lf-clients__label">Shipped work</p>
+            <h2 className="lf-clients__heading">Real work, one clear view.</h2>
             <p className="lf-clients__lede">
-              Review each project the same way: what shipped, what changed, and
-              where the work is live.
+              See the business problem, the build, and the result. Private
+              systems stay closed; approved results are shown.
             </p>
           </div>
           <Link to="/examples/" className="lf-clients__all">
@@ -37,14 +38,16 @@ export default function RecentClients() {
 
         <ProjectReviewGrid studies={featured} variant="home" />
 
+        <ProjectMomentum variant="embedded" />
+
         <aside className="lf-clients__scan" aria-label="Free website scan">
           <span className="lf-clients__scan-icon" aria-hidden="true">
             <ScanSearch size={24} strokeWidth={1.75} />
           </span>
           <div className="lf-clients__scan-copy">
-            <p className="lf-mono lf-clients__scan-label">Start with the free read</p>
-            <h3>Get a practical website plan before you spend.</h3>
-            <p>Send the current site and the goal. A real person reviews it and replies with the clearest next move. No meeting required.</p>
+            <p className="lf-mono lf-clients__scan-label">Start with the free review</p>
+            <h3>Show us the site you have now.</h3>
+            <p>We will tell you what to keep, what to fix, and whether a custom build is worth it. Consulting is free.</p>
           </div>
           <a
             className="lf-clients__scan-cta"

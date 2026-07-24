@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "suites": [
     {
       "slug": "spatial-nyc",
@@ -7,7 +7,7 @@
       "title": "Spatial NYC",
       "label": "Architecture you can enter",
       "headline": "A New York building becomes the interface.",
-      "description": "Walk a procedural brownstone, inspect its facade, then shift into a cinematic city-scale build.",
+      "description": "Walk a procedural brownstone, touch its facade, then shift into a cinematic city-scale build.",
       "featuredConcept": "walkup-3d",
       "concepts": [
         "walkup-3d",
@@ -15,7 +15,7 @@
       ],
       "capabilities": [
         "Procedural 3D architecture",
-        "Touch and pointer inspection",
+        "Touch and pointer exploration",
         "Scroll-linked spatial story",
         "Low-power and static fallbacks"
       ]
@@ -25,7 +25,7 @@
       "shortTitle": "Motion",
       "title": "Motion Playground",
       "label": "Movement with a communication job",
-      "headline": "Control the rhythm, then inspect the craft.",
+      "headline": "Control the rhythm, then feel the difference.",
       "description": "Scrub a scroll story, replay service interactions, and tune a laser-drawn campaign poster.",
       "featuredConcept": "pill-scroll",
       "concepts": [
@@ -46,7 +46,7 @@
       "title": "Systems Lab",
       "label": "From a messy signal to an owned tool",
       "headline": "See the business change as its systems connect.",
-      "description": "Shape a service concept, compare operating states, and inspect the complete earlier site.",
+      "description": "Shape a service concept, compare operating states, and tour the complete earlier site.",
       "featuredConcept": "studio-engine",
       "concepts": [
         "studio-engine",
@@ -57,7 +57,7 @@
         "Interactive concept modeling",
         "Clear before-and-after states",
         "Responsive product previews",
-        "Exportable project briefs"
+        "Plain-language decisions"
       ]
     },
     {
@@ -107,14 +107,14 @@
     {
       "slug": "micro-animations",
       "title": "Micro-Animations",
-      "type": "Interaction study",
+      "type": "Interaction arcade",
       "description": "Service ideas translated into small, readable moments of motion.",
       "suite": "motion-playground"
     },
     {
       "slug": "aha-laser",
       "title": "AHA Laser Poster",
-      "type": "Client motion concept",
+      "type": "Responsive poster",
       "description": "A laser-cut poster becomes a responsive typographic performance.",
       "suite": "motion-playground",
       "client": true
@@ -122,21 +122,21 @@
     {
       "slug": "studio-engine",
       "title": "Studio Engine",
-      "type": "Interactive design system",
-      "description": "A local concept generator with real controls, layouts, and export paths.",
+      "type": "Interactive business tool",
+      "description": "A local concept generator with real controls, layouts, and visible decisions.",
       "suite": "business-systems"
     },
     {
       "slug": "growth-street",
       "title": "Growth Street",
-      "type": "Systems study",
+      "type": "Systems story",
       "description": "A row of storefronts changes as the systems behind them improve.",
       "suite": "business-systems"
     },
     {
       "slug": "tech-support",
       "title": "Tech Support Site",
-      "type": "Full website",
+      "type": "Complete website",
       "description": "The earlier full service site, preserved as a complete working branch.",
       "suite": "business-systems"
     },
@@ -157,7 +157,7 @@
     {
       "slug": "chef-drew",
       "title": "I Am Cooking",
-      "type": "Client concept",
+      "type": "Hospitality concept",
       "description": "Chef Drew's catering world with appetite, motion, and booking paths.",
       "suite": "brand-campaign",
       "client": true

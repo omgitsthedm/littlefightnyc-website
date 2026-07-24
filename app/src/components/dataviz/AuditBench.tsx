@@ -211,7 +211,7 @@ export default function AuditBench() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: a shop's scattered problems — slow site, manual booking, tool sprawl, missed calls, no follow-up — are mapped and consolidated into one clear system, one clear next step."
+      aria-label="A shop's slow site, manual booking, extra tools, missed calls, and missing follow-up are mapped into one clear system and one clear next step."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

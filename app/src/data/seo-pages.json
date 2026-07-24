@@ -18,7 +18,7 @@
       "path": "/",
       "title": "Little Fight NYC | Websites, IT Support & Custom Software",
       "description": "Little Fight NYC builds websites that bring in business, fixes urgent tech, gives free consulting, and creates custom software small businesses own.",
-      "h1": "Websites bring business. We keep it running.",
+      "h1": "Your business is custom. Your website should be too.",
       "shortAnswer": "Short answer: Little Fight NYC builds websites for New York small businesses, fixes urgent tech, gives free consulting, and replaces bloated subscriptions with focused software clients own.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg"
@@ -27,7 +27,7 @@
       "path": "/services/",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
       "description": "Website design, urgent IT support, free tech consulting, and custom software for NYC small businesses that need a clear first move.",
-      "h1": "Pick what's broken. We take it from there.",
+      "h1": "Start with the problem. We build the right fix.",
       "shortAnswer": "Short answer: Little Fight NYC starts with the website, supports the tech behind it, gives free consulting, and builds focused software the business owns when generic tools no longer fit.",
       "type": "CollectionPage",
       "image": "/assets/hero-services-crossing.webp"
@@ -171,7 +171,7 @@
       "path": "/examples/",
       "title": "NYC Work & Small Business Answers | Little Fight NYC",
       "description": "Real examples of our NYC work, plus plain answers on websites, IT support, local SEO, and software costs.",
-      "h1": "Proof, maps, and plain answers.",
+      "h1": "See what works. Try what is next.",
       "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
       "type": "CollectionPage",
       "image": "/assets/hero-examples-market.webp"
@@ -786,7 +786,7 @@
       "path": "/about/",
       "title": "About Little Fight NYC | NYC Small Business Tech",
       "description": "Little Fight NYC helps New York small business owners get working websites, reliable IT, stronger Google visibility, and systems that fit.",
-      "h1": "Built for small business fights.",
+      "h1": "Small firm. Heavy pull.",
       "shortAnswer": "Short answer: Little Fight NYC helps local businesses get better websites, working tech, stronger Google visibility, and practical systems. Call (646) 360-0318 or use the Tech Audit.",
       "type": "AboutPage",
       "image": "/assets/owner.webp",

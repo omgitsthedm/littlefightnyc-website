@@ -4,12 +4,10 @@ import { rr, glow, DISP, MONO, useInstrumentCanvas } from "./instrument";
 /**
  * MoneyLeaving — the "software you own" argument, drawn.
  *
- * The owner's monthly software bill climbs in real time as recognizable,
- * specifically-priced invoices (booking, payments, website, email/texts,
- * payroll) stack up on the desk — $545/mo, $6,540/yr on auto-pay. A hard stop
- * then collapses the whole pile into ONE owned invoice ("PAID ONCE · $0") and
- * the monthly bill turns green $0 — "$6,540 back a year." One causal image: the
- * bill climbs *because* these tools recur, and owning the build stops it.
+ * Recognizable monthly tools stack up on the desk. The pile then consolidates
+ * into one owned build. The instrument communicates recurring-tool drag and
+ * many-to-one ownership without inventing prices or promising a zero-dollar
+ * operating cost.
  *
  * Rendered on a <canvas> (2D). Responsive to its container: a wide card lays the
  * number LEFT / pile RIGHT; a tall phone stacks number-over-pile. Pauses when
@@ -17,20 +15,8 @@ import { rr, glow, DISP, MONO, useInstrumentCanvas } from "./instrument";
  * single settled frame — the full itemized loss — with no animation.
  */
 
-type Bill = [label: string, amount: number];
-// Real, recognizable monthly software an owner-operated shop actually auto-pays,
-// with specific (not rounded) prices. Sum is the monthly bill shown climbing.
-const BILLS: Bill[] = [
-  ["BOOKING", 69],
-  ["PAYMENTS", 149],
-  ["WEBSITE", 39],
-  ["EMAIL & TEXTS", 99],
-  ["PAYROLL", 189],
-];
-const TOTAL = BILLS.reduce((s, b) => s + b[1], 0); // 545 / month
+const BILLS = ["BOOKING", "PAYMENTS", "WEBSITE", "EMAIL & TEXTS", "PAYROLL"] as const;
 const T = { perBill: 640, stop: 640, own: 3000 };
-
-const money = (v: number) => "$" + Math.round(v).toLocaleString("en-US");
 
 type Sim = {
   phase: 0 | 1 | 2;
@@ -58,7 +44,7 @@ function step(S: Sim, now: number) {
     while (S.landed < want) {
       S.bills.push({ born: S.landed * T.perBill, rot: (Math.random() - 0.5) * 0.14, dx: Math.random() - 0.5 });
       S.landed++;
-      S.drained += BILLS[S.landed - 1][1];
+      S.drained += 1;
     }
     if (S.landed >= BILLS.length && pt > BILLS.length * T.perBill + 520) {
       S.phase = 1;
@@ -138,7 +124,7 @@ function draw(
     rot: number,
     a: number,
     name: string,
-    amt: number,
+    cadence: string,
     ghost: boolean,
     stamp: boolean,
   ) => {
@@ -171,16 +157,16 @@ function draw(
     cx.font = "500 " + Math.max(9, (hb * 0.4) | 0) + "px " + MONO;
     cx.textAlign = "right";
     cx.fillText(ghost ? "PAID ONCE" : "AUTO-PAY", bw / 2 - 10, -bh + hb * 0.54);
-    // body strip (visible on EVERY stacked card): CATEGORY .......... $amount
+    // Body strip stays visible on every stacked card.
     cx.fillStyle = "rgba(40,36,32,.82)";
     cx.font = "600 " + Math.max(10, (bh * 0.2) | 0) + "px " + MONO;
     cx.textAlign = "left";
     cx.textBaseline = "middle";
     cx.fillText(name, -bw / 2 + 10, -bh * 0.28);
     cx.fillStyle = "#1a1a1e";
-    cx.font = "700 " + ((bh * 0.34) | 0) + "px " + DISP;
+    cx.font = "700 " + Math.max(9, (bh * 0.22) | 0) + "px " + MONO;
     cx.textAlign = "right";
-    cx.fillText(money(amt), bw / 2 - 10, -bh * 0.26);
+    cx.fillText(cadence, bw / 2 - 10, -bh * 0.26);
     if (stamp) {
       cx.save();
       cx.rotate(-0.16);
@@ -202,11 +188,20 @@ function draw(
     S.bills.forEach((b, i) => {
       const age = (S.phase === 0 ? now - S.t0 : 1e9) - b.born;
       const y = deskY - i * spread + lerp(-84, 0, eoBack(clamp(age / 380, 0, 1)));
-      invoice(pileX + b.dx * bw * 0.12, y, b.rot, clamp(age / 160, 0, 1), BILLS[i][0], BILLS[i][1], false, false);
+      invoice(
+        pileX + b.dx * bw * 0.12,
+        y,
+        b.rot,
+        clamp(age / 160, 0, 1),
+        BILLS[i],
+        "MONTHLY",
+        false,
+        false,
+      );
     });
     cx.textAlign = "center";
     cx.textBaseline = "middle";
-    const heat = clamp(S.drained / TOTAL, 0, 1);
+    const heat = clamp(S.drained / BILLS.length, 0, 1);
     cx.globalCompositeOperation = "lighter";
     cx.globalAlpha = 0.1 + heat * 0.16;
     cx.drawImage(GR, numX - 90, numY - 90, 180, 180);
@@ -214,13 +209,13 @@ function draw(
     cx.globalCompositeOperation = "source-over";
     cx.fillStyle = "rgba(200,205,215,.8)";
     cx.font = "500 " + Math.max(10, (numFs * 0.22) | 0) + "px " + MONO;
-    cx.fillText("EVERY MONTH", numX, labY);
+    cx.fillText("RECURRING TOOLS", numX, labY);
     cx.fillStyle = "#fff";
     cx.font = "700 " + (numFs | 0) + "px " + DISP;
-    cx.fillText(money(S.drained), numX, numY);
+    cx.fillText(`${S.drained} MONTHLY`, numX, numY);
     cx.fillStyle = "#F87171";
-    cx.font = "700 " + ((numFs * 0.34) | 0) + "px " + DISP;
-    cx.fillText("= " + money(S.drained * 12) + " a year", numX, subY);
+    cx.font = "700 " + ((numFs * 0.28) | 0) + "px " + DISP;
+    cx.fillText("MORE BILLS. MORE STEPS.", numX, subY);
     if (S.flash > 0.02) {
       cx.fillStyle = "rgba(255,255,255," + S.flash * 0.4 + ")";
       cx.fillRect(0, 0, W, H);
@@ -236,36 +231,21 @@ function draw(
     cx.globalAlpha = S.own;
     cx.fillStyle = "rgba(120,200,150,.85)";
     cx.font = "500 " + Math.max(10, (numFs * 0.22) | 0) + "px " + MONO;
-    cx.fillText("EVERY MONTH", numX, labY);
+    cx.fillText("RIGHT-SIZED SYSTEM", numX, labY);
     cx.fillStyle = "#eaf6ee";
-    cx.font = "700 " + (numFs | 0) + "px " + DISP;
-    cx.fillText("$0", numX, numY);
-    const R = numFs * 0.16;
-    const chx = numX - numFs * 1.9;
-    const chy = subY;
-    cx.strokeStyle = "#4ADE80";
-    cx.lineWidth = 2.2;
-    cx.beginPath();
-    cx.arc(chx, chy, R, 0, 7);
-    cx.stroke();
-    cx.lineWidth = 2.6;
-    cx.lineCap = "round";
-    cx.beginPath();
-    cx.moveTo(chx - R * 0.5, chy);
-    cx.lineTo(chx - R * 0.05, chy + R * 0.45);
-    cx.lineTo(chx + R * 0.5, chy - R * 0.5);
-    cx.stroke();
+    cx.font = "700 " + ((numFs * 0.82) | 0) + "px " + DISP;
+    cx.fillText("ONE OWNED TOOL", numX, numY);
     cx.fillStyle = "rgba(200,210,215,.92)";
-    cx.font = "600 " + ((numFs * 0.32) | 0) + "px " + DISP;
-    cx.fillText("$" + (TOTAL * 12).toLocaleString("en-US") + " back a year", numX + R * 0.6, subY);
+    cx.font = "600 " + ((numFs * 0.27) | 0) + "px " + DISP;
+    cx.fillText("BUILT AROUND THE WORK", numX, subY);
     const y = lerp(deskY, deskY - spread * 1.2, eoc(S.own));
-    invoice(pileX, y, 0, S.own, "ONE BUILD", 0, true, true);
+    invoice(pileX, y, 0, S.own, "ONE BUILD", "OWNED", true, true);
     cx.globalAlpha = S.own;
     cx.fillStyle = "rgba(161,161,170,.9)";
     cx.font = "400 " + ((bh * 0.36) | 0) + "px " + DISP;
     cx.textAlign = "center";
     cx.textBaseline = "middle";
-    cx.fillText("No more monthly bills.", pileX, deskY + (H - deskY) * 0.5);
+    cx.fillText("Keep useful tools. Replace the drag.", pileX, deskY + (H - deskY) * 0.5);
     cx.globalAlpha = 1;
   }
 }
@@ -276,7 +256,7 @@ function settledSim(now: number): Sim {
   const S = freshSim(now);
   S.t0 = now - (BILLS.length * T.perBill + 1400);
   S.landed = BILLS.length;
-  S.drained = TOTAL;
+  S.drained = BILLS.length;
   S.bills = BILLS.map((_, i) => ({ born: i * T.perBill, rot: (i - 2) * 0.05, dx: (i - 2) * 0.3 }));
   return S;
 }
@@ -311,7 +291,7 @@ export default function MoneyLeaving() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: a small business's monthly software invoices — booking, payments, website, email and texts, payroll — stack up on a desk to $545 a month, $6,540 a year on auto-pay; then the pile collapses into one owned build, paid once, and the monthly bill drops to $0 — $6,540 back a year."
+      aria-label="Animation: five recurring business tools stack up as separate monthly bills. The pile then consolidates into one owned tool built around the work."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

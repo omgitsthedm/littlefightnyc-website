@@ -261,7 +261,7 @@ export default function TheFreeRead() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: four lanes — the tool stack and costs, the website, the Google profile and lead path, and the workflow — feed the free read; the findings then sort themselves into one ranked punch list, ordered by customer impact, then cost, then what can wait, with the top item to fix first highlighted. The first hour is free."
+      aria-label="Your tools and costs, website, Google profile, lead path, and workflow feed one free review. The findings become a ranked list ordered by customer impact, cost, and what can wait. The first item to fix is highlighted. The first hour is free."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

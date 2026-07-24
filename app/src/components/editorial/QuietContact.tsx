@@ -51,8 +51,8 @@ type Props = {
 };
 
 export default function QuietContact({
-  heading = "Start with the right next step.",
-  lede = "Call, text, or email. A real person reads it and tells you the next move. No phone tree, no ticket number.",
+  heading = "Show us what is slowing the business down.",
+  lede = "Call, text, email, or use the form. We will give you the clearest next move in plain English.",
 }: Props) {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
 
@@ -111,7 +111,7 @@ export default function QuietContact({
 
         <p className="lf-contact-block__fine">
           No pitch, no spam. Whatever you send goes straight to the person who
-          does the work — never to a list.
+          does the work, never to a list.
         </p>
       </div>
     </section>

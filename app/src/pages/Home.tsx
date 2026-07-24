@@ -4,7 +4,6 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
-import BlueprintFrame from "@/components/editorial/BlueprintFrame";
 import { importWithRetry } from "@/lib/importWithRetry";
 import { watchListReveals } from "@/lib/listReveal";
 
@@ -37,15 +36,9 @@ export default function Home() {
         <Suspense fallback={null}>
             {/* Proof follows the hook. One New York point of view follows the
                 proof, then four plain ways to help, then the contact door. */}
-            <BlueprintFrame index={1} label="Shipped proof">
-              <RecentClients />
-            </BlueprintFrame>
-            <BlueprintFrame index={2} label="The fight">
-              <TheFight />
-            </BlueprintFrame>
-            <BlueprintFrame index={3} label="What we do">
-              <TheFour />
-            </BlueprintFrame>
+            <RecentClients />
+            <TheFight />
+            <TheFour />
             <QuietContact />
         </Suspense>
       </main>

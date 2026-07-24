@@ -657,8 +657,8 @@ function setInspecting(nextInspecting) {
   document.body.classList.toggle('is-inspecting', inspecting);
   document.documentElement.toggleAttribute('data-brownstone-inspecting', inspecting);
   inspectButton.setAttribute('aria-pressed', String(inspecting));
-  inspectButton.setAttribute('aria-label', inspecting ? 'Close facade inspector' : 'Open facade inspector');
-  inspectLabel.textContent = inspecting ? 'Done' : 'Inspect';
+  inspectButton.setAttribute('aria-label', inspecting ? 'Close facade controls' : 'Explore the facade');
+  inspectLabel.textContent = inspecting ? 'Done' : 'Explore';
   controls.enabled = inspecting;
   controls.enableDamping = !staticMotion && !motionPaused;
   if (inspecting) {
@@ -671,7 +671,7 @@ function setInspecting(nextInspecting) {
     story.setAttribute('aria-hidden', 'true');
     floorRail.setAttribute('aria-hidden', 'true');
     help.setAttribute('aria-hidden', 'true');
-    announceStatus('Facade inspector open.');
+    announceStatus('Facade controls open.');
   } else {
     story.inert = false;
     floorRail.inert = false;

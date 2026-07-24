@@ -104,11 +104,11 @@ export default function FieldGuide() {
         icon={LayoutGrid}
         title={
           <>
-            Live work.<br />
-            <span className="lf-accent">Working ideas.</span>
+            See what works.<br />
+            <span className="lf-accent">Try what is next.</span>
           </>
         }
-        dek="See current client work, run the Audit, or open a Lab concept. Everything here works."
+        dek="Client work, working products, and Lab experiments. Open anything here in one click."
         image={{
           src: "/assets/hero-examples-market.webp",
           alt: "A Manhattan Chinatown market with handwritten price signs and fresh seafood",
@@ -123,19 +123,19 @@ export default function FieldGuide() {
       <section className="lf-ex-tools" aria-labelledby="lf-ex-tools-title">
         <div ref={toolsRef} className="lf-ex-tools__inner" data-reveal>
           <header className="lf-ex-tools__head">
-            <h2 id="lf-ex-tools-title">Open the work directly.</h2>
-            <p>Use a working Lab build, run the Audit, or open a live product. No preview gate required.</p>
+            <h2 id="lf-ex-tools-title">Open it. Try it. No maze.</h2>
+            <p>Use a Lab build, run the Audit, or open a live product. No account and no preview gate.</p>
           </header>
 
           <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
             <div className="lf-ex-lab-direct__head">
               <div>
-                <p>9 public experiments</p>
-                <h3 id="lf-ex-lab-title">The Lab, without the maze.</h3>
-                <span>Open any build from here. The curated suites remain available if you want the guided version.</span>
+                <p>9 working experiments</p>
+                <h3 id="lf-ex-lab-title">The Lab is a playground.</h3>
+                <span>Open a build and start exploring. Nothing technical to read first.</span>
               </div>
               <a href="/examples/lab/" data-no-vt>
-                View the complete Lab
+                Open the Lab
                 <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
               </a>
             </div>
@@ -188,7 +188,7 @@ export default function FieldGuide() {
               <span className="lf-ex-tool__copy">
                 <span className="lf-ex-tool__type">Live personal software</span>
                 <strong>VERA</strong>
-                <span>A robot that hunts NYC apartments every night — checks city records, finds the real landlord, skips the scams.</span>
+                <span>A robot that hunts NYC apartments every night, checks city records, finds the real landlord, and skips the scams.</span>
                 <span className="lf-ex-tool__open">
                   Ride along with VERA
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
@@ -210,7 +210,7 @@ export default function FieldGuide() {
               <span className="lf-ex-tool__copy">
                 <span className="lf-ex-tool__type">Just for fun</span>
                 <strong>The MySpace Demo</strong>
-                <span>A client's profile rebuilt like it's 2006 — Top 8 and all. Custom means anything you can picture.</span>
+                <span>A client's profile rebuilt like it is 2006, Top 8 and all. Custom means anything you can picture.</span>
                 <span className="lf-ex-tool__open">
                   Open the throwback
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
@@ -228,7 +228,7 @@ export default function FieldGuide() {
               Find a business like yours.
             </h2>
             <p className="lf-ex-head__dek">
-              Restaurants, salons, law offices, shops, clinics, creative studios, and professional services.
+              See how the same principles work at a counter, in a chair, or behind an office door.
             </p>
           </header>
           <ul className="lf-ex-industries__band">

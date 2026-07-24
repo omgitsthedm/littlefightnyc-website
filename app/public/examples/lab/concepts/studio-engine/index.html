@@ -32,7 +32,7 @@
             <span>NYC</span>
           </div>
           <div>
-            <p class="eyebrow">Little Fight NYC / Internal Only</p>
+            <p class="eyebrow">Little Fight NYC / Working Showcase</p>
             <h1>Studio Engine</h1>
             <p class="subhead">Minimal signal in. Website concept out.</p>
             <p class="local-disclosure">Fixed browser rules. Fictional samples. No model, API, or publishing service.</p>
@@ -68,8 +68,8 @@
 
         <div class="topbar-actions">
           <button class="ghost-button" id="contrastButton" type="button">High Contrast</button>
-          <button class="ghost-button" id="exportMarkdownButton" type="button">Export Markdown</button>
-          <button class="primary-button" id="publishButton" type="button">Save Share Link</button>
+          <button class="ghost-button" id="exportMarkdownButton" type="button">Load Sample</button>
+          <button class="primary-button" id="publishButton" type="button">Keep This View</button>
         </div>
       </header>
 
@@ -142,8 +142,8 @@
             </article>
             <article class="workflow-step">
               <span>03</span>
-              <strong>Share</strong>
-              <p>Save a URL or file</p>
+              <strong>Review</strong>
+              <p>Keep the useful view</p>
             </article>
           </div>
 
@@ -317,13 +317,6 @@
                 </button>
                 <div class="menu-panel" id="previewMenu" hidden>
                   <button class="menu-item" id="previewLoadDemoButton" type="button">Load Demo</button>
-                  <a class="menu-item" href="docs/service-business-netlify-tool-spec.md" target="_blank" rel="noreferrer">
-                    Open Spec
-                  </a>
-                  <a class="menu-item" href="schemas/service-business-brief.schema.json" target="_blank" rel="noreferrer">
-                    Open Schema
-                  </a>
-                  <button class="menu-item" id="downloadMarkdownButton" type="button">Download Markdown File</button>
                   <button class="menu-item" id="focusSignalButton" type="button">Edit Info</button>
                 </div>
               </div>
@@ -395,7 +388,7 @@
             <section class="brain-card">
               <div class="brain-card-head">
                 <span class="brain-card-tag">Outputs</span>
-                <strong>Preview and export</strong>
+                <strong>Preview choices</strong>
               </div>
               <div class="output-grid" id="outputGrid"></div>
               <div class="heatmap-card" id="heatmapCard"></div>
@@ -405,7 +398,7 @@
       </main>
 
       <footer class="bottom-dock glass-panel">
-        <button class="dock-button" id="commandPaletteButton" type="button">⌘K Rule Controls</button>
+        <button class="dock-button" id="commandPaletteButton" type="button">Tune Direction</button>
         <div class="dock-lights" aria-hidden="true">
           <span></span>
           <span></span>
@@ -414,12 +407,12 @@
         </div>
 
         <div class="version-cluster">
-          <span class="dock-label">Version History</span>
+          <span class="dock-label">Recent Changes</span>
           <div class="version-history" id="versionHistory"></div>
         </div>
 
         <div class="dock-actions">
-          <button class="dock-button" id="shareButton" type="button">Share Link</button>
+          <button class="dock-button" id="shareButton" type="button">Load Sample</button>
           <button class="dock-button" id="dockFocusSignalButton" type="button">Edit Signal</button>
         </div>
       </footer>

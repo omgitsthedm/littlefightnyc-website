@@ -2,7 +2,6 @@ import PageHero from "@/components/editorial/PageHero";
 import { BadgeCheck, Users } from "lucide-react";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
-import PullQuote from "@/components/editorial/PullQuote";
 import StatBlock from "@/components/editorial/StatBlock";
 import FounderCard from "@/components/editorial/FounderCard";
 import ProcessFlow from "@/components/editorial/ProcessFlow";
@@ -24,10 +23,10 @@ export default function About() {
         icon={Users}
         title={
           <>
-            Built for <span className="lf-em">small business fights.</span>
+            Small firm. <span className="lf-em">Heavy pull.</span>
           </>
         }
-        dek="Practical websites, reliable support, and owned tools for NYC small businesses. Honest scope. Free consulting."
+        dek="Custom websites, practical support, and owned tools from a team that stays close to the work."
         image={{
           src: "/assets/about-empire-diner.webp",
           alt: "The chrome-clad Empire Diner glowing on a Manhattan corner at night",
@@ -40,43 +39,30 @@ export default function About() {
         <div className="lf-about-story__inner">
           <div className="lf-about-story__lead">
             <article className="lf-about-story__copy">
-              <h2 id="lf-about-story-title">Why Little Fight exists.</h2>
-              <EditorialBody dropcap>
+              <h2 id="lf-about-story-title">Small businesses have enough to fight.</h2>
+              <EditorialBody>
                 <p>
-                  Most of the businesses that keep a neighborhood worth living in
-                  are the ones with the least time and the smallest tech budget.
-                  The bodega open at 11pm. The salon between the dry cleaner and
-                  the bagel shop. The pharmacy that knows the patient by name.
-                  They are the places people rely on. They are also the ones
-                  getting outspent on tools by chains with full tech teams.
+                  The shops, salons, restaurants, clinics, and offices that keep
+                  a block alive rarely have an internal tech team. They still
+                  need a website people can find and tools the staff can trust.
                 </p>
                 <p>
-                  Little Fight closes that gap. Not by selling more software. Not
-                  by pitching a giant overhaul. By doing the practical work:
-                  sites that explain the business plainly, support that picks up
-                  when something breaks, search visibility that tells the truth,
-                  and small systems that make the day move.
+                  Little Fight closes that gap. We keep what works, fix what
+                  drags, and build only when the better tool earns its place.
                 </p>
               </EditorialBody>
             </article>
 
             <div className="lf-about-story__figure">
               <EditorialFigure
-                src="/assets/figure-bagel-counter.webp"
-                alt="A bagel shop counterman mid-shift, racks of plain, whole wheat, and cinnamon raisin behind him"
-                number="01"
-                caption="The places that make a block worth living on usually have the least time and the smallest tech budget."
+                src="/assets/interior-spice-shop.webp"
+                alt="A narrow neighborhood spice shop lined with stocked shelves and baskets by the front door"
+                caption="The technology should fit the business behind the front door."
                 width={1600}
                 height={1200}
               />
             </div>
           </div>
-
-          <aside className="lf-about-story__quote">
-            <PullQuote cite="How the work usually starts">
-              Most owners assume the answer is a rebuild. It almost never is.
-            </PullQuote>
-          </aside>
 
           <section className="lf-about-story__promises">
             <StatBlock
@@ -87,17 +73,17 @@ export default function About() {
             />
           </section>
 
-          <FounderCard photoSrc="/assets/founder-david-marsh.webp" />
+          <FounderCard sceneSrc="/images/brand-scenes/restaurant-counter.webp" />
 
           <section
             className="lf-about-story__direct"
             aria-labelledby="lf-about-direct-title"
           >
-            <h2 id="lf-about-direct-title">Start with the real problem.</h2>
+            <h2 id="lf-about-direct-title">Bring us the real problem.</h2>
             <div>
               <p>
-                Wi-Fi, email, booking, point-of-sale, and website problems are
-                business problems. None are too small or too basic to bring up.
+                Website, Wi-Fi, email, booking, payment, and device problems
+                become business problems fast. None are too basic to bring up.
               </p>
               <p>
                 Call <a href="tel:+16463600318">(646) 360-0318</a> or{" "}

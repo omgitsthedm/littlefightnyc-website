@@ -1,4 +1,5 @@
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 import { areaPages, caseStudies, services } from "@/data/site";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
@@ -12,8 +13,8 @@ import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/service-detail.css";
 
 const FIGURE_CAPTION: Record<string, string> = {
-  "tech-consulting": "The unglamorous middle of the stack — where the money quietly leaks.",
-  "it-support": "The register, the reader, the tablet — the tools the day actually runs on.",
+  "tech-consulting": "The middle of the stack is where time and money often leak.",
+  "it-support": "The register, reader, and tablet are the tools the day runs on.",
   "custom-local-websites": "Built for your block, not picked from a template menu.",
   "business-systems": "One source of truth instead of a stack of spreadsheets and memory.",
 };
@@ -42,28 +43,28 @@ const LAB_BY_SERVICE: Record<string, {
   description: string;
 }> = {
   "custom-local-websites": {
-    href: "/examples/lab/suites/brand-campaign/",
-    label: "Campaign Studio",
-    title: "See how one business can feel unmistakably itself.",
-    description: "Responsive brand worlds, kinetic type, and conversion paths built to work together on a phone, tablet, or desktop.",
+    href: "/examples/lab/concepts/goliath/",
+    label: "Live experiment",
+    title: "See a business idea at full volume.",
+    description: "A direct brand campaign you can open and use right now.",
   },
   "tech-consulting": {
-    href: "/examples/lab/suites/business-systems/",
-    label: "Systems Lab",
-    title: "Turn a messy business signal into a clear operating tool.",
-    description: "Interactive models show how we map the problem, compare the current state, and make the next decision visible.",
+    href: "/examples/lab/concepts/growth-street/",
+    label: "Live experiment",
+    title: "Watch small changes improve the whole street.",
+    description: "A working scene shows how connected systems create momentum.",
   },
   "it-support": {
-    href: "/examples/lab/suites/motion-playground/",
-    label: "Motion Playground",
-    title: "See status, feedback, and recovery communicate in motion.",
-    description: "Small interactions make complex systems easier to understand without slowing down the person trying to use them.",
+    href: "/examples/lab/concepts/micro-animations/",
+    label: "Live experiment",
+    title: "See clear feedback in motion.",
+    description: "Small interactions show what happened and what to do next.",
   },
   "business-systems": {
-    href: "/examples/lab/suites/spatial-nyc/",
-    label: "Spatial NYC",
-    title: "Explore a complex system as a place you can understand.",
-    description: "Spatial interfaces, touch controls, and graceful low-power fallbacks show how ambitious ideas can stay usable.",
+    href: "/examples/lab/concepts/terminal-3d/",
+    label: "Live experiment",
+    title: "Explore a complex system as a place.",
+    description: "A working spatial interface makes the parts easier to understand.",
   },
 };
 
@@ -79,7 +80,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",
-    lede: "Tell us about your business. If we build your site, it is live in 14 days — or you don't pay.",
+    lede: "Tell us about your business. If we build your site, it is live in 14 days or you don't pay.",
   },
   "business-systems": {
     heading: "Tired of running it all by hand?",
@@ -191,7 +192,7 @@ export default function ServiceDetail() {
   return (
     <>
       <PageHero
-        eyebrow={`Service · ${service.verb}`}
+        eyebrow={service.verb}
         icon={service.icon}
         title={<>{service.headline}</>}
         dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
@@ -214,7 +215,7 @@ export default function ServiceDetail() {
           </article>
 
           <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--quiet lf-sd__aside">
-            <p className="lf-sd__aside-label">What's included</p>
+            <p className="lf-sd__aside-label">What you get</p>
             <ul className="lf-sd__aside-list">
               {service.includes.map((item) => (
                 <li key={item}>{item}</li>
@@ -236,7 +237,7 @@ export default function ServiceDetail() {
 
       <section className="lf-sd-deep">
         <div className="lf-sd-deep__inner">
-          <p className="lf-sd-deep__label">What this service actually does</p>
+          <p className="lf-sd-deep__label">What the work does</p>
           <div className="lf-sd-deep__prose">
             <p>{service.whatItDoes[0]}</p>
             {service.whatItDoes.length > 1 && (
@@ -263,8 +264,8 @@ export default function ServiceDetail() {
       <section className="lf-sd-issues">
         <div className="lf-sd-issues__inner">
           <header className="lf-sd-issues__head">
-            <p className="lf-sd-issues__label">Common issues we see</p>
-            <h2 className="lf-sd-issues__title">What shows up in the real world.</h2>
+            <p className="lf-sd-issues__label">Common problems</p>
+            <h2 className="lf-sd-issues__title">What owners bring us.</h2>
           </header>
           <div className="lf-sd-issues__list">
             {service.commonIssues.map((issue, i) => (
@@ -285,8 +286,8 @@ export default function ServiceDetail() {
       <section className="lf-sd-fallacies">
         <div className="lf-sd-fallacies__inner">
           <header className="lf-sd-fallacies__head">
-            <p className="lf-sd-fallacies__label">Decisions owners ask about</p>
-            <h2 className="lf-sd-fallacies__title">What changes the right answer.</h2>
+            <p className="lf-sd-fallacies__label">Before you decide</p>
+            <h2 className="lf-sd-fallacies__title">The right answer depends on the work.</h2>
           </header>
           <div className="lf-sd-fallacies__list">
             {service.fallacies.map((f, i) => (
@@ -335,7 +336,8 @@ export default function ServiceDetail() {
             <div>
               <p>{LAB_BY_SERVICE[service.slug].description}</p>
               <a href={LAB_BY_SERVICE[service.slug].href}>
-                Try the live experiments <span aria-hidden="true">↗</span>
+                Open the experiment
+                <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
               </a>
             </div>
           </div>

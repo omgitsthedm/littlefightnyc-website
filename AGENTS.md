@@ -2,10 +2,9 @@
 
 ## Source Of Truth
 
-Last verified: 2026-07-20.
+Last verified: 2026-07-24.
 
-Repo (off iCloud): `~/Code/LiFi NYC/Clients/LittleFightNYC/Brand/Website/littlefightnyc-website`
-(Desktop path `~/Desktop/LiFi NYC/Clients/LittleFightNYC/...` is a same-name symlink into `~/Code`.)
+Repo (off iCloud): `~/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`
 
 Production work happens in the React/Vite app under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
 
@@ -58,6 +57,31 @@ Brand anchors that should stay intact:
 - React 19 + Vite + TypeScript SPA, prerendered for SEO, Netlify delivery (see Tech Stack above)
 - WCAG-aware contrast, responsive intent, and reduced-motion respect
 - Performance and polish should coexist; motion is welcome when it helps clarity or delight
+
+### Brand message
+
+- Core idea: **Small businesses have enough to fight. Their technology should not be one of them.**
+- Category: **Serious technology for small businesses.**
+- Promise: make the technology fit the business, not the business fit the technology.
+- Customer story: name the fight, see the work, cut the drag, build the right
+  thing, prove it works, and stay with it.
+- Messaging jobs: **Be found. Keep moving. Cut the drag. Own what fits.**
+- Competitive copy attacks bloat, lock-in, poor fit, and vendor runaround. It
+  never blames an owner for choosing a familiar platform, falsely claims that a
+  site builder cannot rank, or promises search rankings.
+- Exact cost, delivery-time, and outcome claims require current evidence.
+
+### Image and showcase rules
+
+- Lead with recognizable business environments: counters, storefronts, booking
+  stations, shelves, devices, receipts, cables, and back offices.
+- People should be absent, distant, blurred, or incidental unless a real,
+  approved client image is the proof.
+- Generated environments are illustrative atmosphere, never client evidence.
+  Real screenshots, dates, and approved client records carry proof.
+- The public Lab is a showroom, not a repository. Never expose GitHub,
+  repository metadata, source code, code-copy/share controls, specs, schemas, or
+  package details. A visitor should reach the working experience in one click.
 
 ### Design Principles
 1. Make every page prove competence quickly: what Little Fight does, who it helps, why it is trustworthy, and what to do next should be obvious fast.

@@ -364,7 +364,7 @@ export default function LeadsCaught() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: leads arrive from four channels — a phone call, a contact form, an Instagram DM, a Saturday walk-in — and, with nothing tracking them, fall straight past and slip away; then one orange intake layer slides in across the bottom and catches every falling lead, routing each to follow-up with none lost."
+      aria-label="Leads arrive through phone calls, contact forms, Instagram messages, and Saturday walk-ins. Without one place to track them, they slip away. One intake system catches each lead and routes it to follow-up."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

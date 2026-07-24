@@ -1,8 +1,9 @@
 # Little Fight NYC — Source of Truth
 
-Last verified: 2026-07-20 (canonical Git, Netlify, and live reconciliation).
+Last verified: 2026-07-24 (canonical Git path and clean worktree re-verified
+before the Brand Kit v2 implementation).
 
-This repository (`Brand/Website/littlefightnyc-website/`) is THE source of truth for
+This repository (`Little Fight NYC Business/Website/littlefightnyc-website/`) is THE source of truth for
 `https://littlefightnyc.com`. Branch **`main` is canonical** and the site **auto-deploys
 from `main`**.
 

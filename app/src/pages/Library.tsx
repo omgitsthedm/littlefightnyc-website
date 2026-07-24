@@ -191,10 +191,10 @@ export default function Library() {
         }
         dek="Straight answers to the questions NYC owners actually ask, plus practical guides and field notes. Useful whether you hire us or not."
         image={{
-          src: "/assets/hero-ind-bookshop.webp",
-          alt: "A reader browsing the shelves of an independent New York bookshop",
-          width: 1600,
-          height: 1200,
+          src: "/images/brand-scenes/shop-back-office.webp",
+          alt: "A small shop back office with orders, tools, and business systems ready for the day",
+          width: 1672,
+          height: 941,
         }}
       />
 

@@ -6,6 +6,7 @@ import QuietContact from "@/components/editorial/QuietContact";
 import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
 import ProofPassport, { ProofStatus } from "@/components/editorial/ProofPassport";
 import ProjectWalkthrough from "@/components/editorial/ProjectWalkthrough";
+import ProjectMomentum from "@/components/editorial/ProjectMomentum";
 import {
   caseProofLabel,
   caseProofPriority,
@@ -196,6 +197,8 @@ export default function CaseStudyDetail() {
           </div>
         </section>
       </article>
+
+      <ProjectMomentum slug={study.slug} variant="detail" />
 
       {related.length > 0 && (
         <section className="lf-case-next__related" aria-labelledby="lf-case-related-title">

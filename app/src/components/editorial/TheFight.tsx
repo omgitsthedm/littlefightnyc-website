@@ -20,16 +20,19 @@ export default function TheFight() {
   return (
     <section className="lf-fight" aria-labelledby="lf-fight-title">
       <header ref={headRef} className="lf-fight__head" data-reveal>
-        <p className="lf-fight__eyebrow">The fight · every day in New York</p>
-        <h2 id="lf-fight-title" className="lf-fight__title">
+        <p className="lf-fight__eyebrow">Small businesses have enough to fight</p>
+        <h2
+          id="lf-fight-title"
+          className="lf-fight__title"
+          aria-label="The chains versus your block"
+        >
           <span className="lf-fight__fighter">The chains</span>
           <span className="lf-fight__vs" aria-hidden="true">vs</span>
           <span className="lf-fight__fighter lf-fight__fighter--us">your block</span>
         </h2>
         <p className="lf-fight__lede">
-          Whole Foods didn't out-work your block — it out-tooled it. The
-          delivery apps skim every order. The chains walked in with a tech
-          team. So that's what we are: <strong>yours.</strong>
+          Big chains start with a tech team, a fast website, connected tools,
+          and someone who answers. Your business should have that advantage too.
         </p>
       </header>
 
@@ -39,8 +42,8 @@ export default function TheFight() {
 
       <div ref={closeRef} className="lf-fight__close" data-reveal>
         <p className="lf-fight__close-line">
-          The bar. The clinic. The hardware store. The law firm. The places
-          that make a block worth living on — with a tech team of their own.
+          The bar, clinic, shop, and law office deserve technology that works
+          without becoming another job.
         </p>
         <Link
           to="/tech-audit/"
@@ -48,7 +51,7 @@ export default function TheFight() {
           data-lf-event="tech_audit_intent"
           data-lf-label="home_fight"
         >
-          Put us in your corner
+          Start a free review
           <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
         </Link>
       </div>

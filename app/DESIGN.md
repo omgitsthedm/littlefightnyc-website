@@ -1,5 +1,5 @@
 ---
-version: "littlefight-axiom-momentum-2026-07-23"
+version: "littlefight-axiom-momentum-2026-07-24"
 name: "Little Fight NYC — Axiom Momentum"
 description: "The Little Fight NYC design system: near-black ground, Oswald poster headings, Barlow body, one orange lead signal, blue as a supporting accent, fluid responsive primitives, 32px card language, and restrained motion. Source of truth for tokens lives in src/styles/editorial/tokens.css."
 mode: dark
@@ -47,6 +47,32 @@ Right-sized tech for New York's owner-operated shops, presented as one calm oper
 system. The look is product-OS, not marketing-brochure: near-black ground, Oswald poster
 headings over readable Barlow body, a single orange lead signal, blue as a supporting accent, generously
 rounded (32px) surface cards, and restrained motion.
+
+## Brand platform
+
+**Core idea:** Small businesses have enough to fight. Their technology should
+not be one of them.
+
+**Category:** Serious technology for small businesses.
+
+**Promise:** Make the technology fit the business, not the business fit the
+technology.
+
+The site repeats one customer story rather than inventing a new pitch on every
+route:
+
+1. Name the fight.
+2. See the work.
+3. Cut the drag.
+4. Build the right thing.
+5. Prove it works.
+6. Stay with it.
+
+The four plain-language jobs are **Be found**, **Keep moving**, **Cut the
+drag**, and **Own what fits**. Competitive language targets poor fit, bloat,
+lock-in, and vendor runaround. It does not shame owners, claim that template
+platforms cannot rank, promise rankings, or publish exact savings without
+current evidence.
 
 ## Commercial hierarchy
 
@@ -116,6 +142,39 @@ same vocabulary. `src/kernel/motion.ts` mirrors the five names for canvas. Secti
 complete on first paint—global scroll-gated entrances are retired. Bespoke storytelling or
 instrument motion must remain transform/opacity based, have a communication job, and collapse
 under `prefers-reduced-motion: reduce`.
+
+## Imagery
+
+The primary subject is the business at work: storefronts, counters, booking
+stations, shelves, devices, receipts, cables, back offices, and shipped
+products. People are absent, distant, blurred, or visually incidental unless a
+real approved client image is the proof.
+
+Generated environments are illustrative and must never be presented as a
+client location, testimonial, or case-study result. Use real screenshots,
+verified dates, and approved client records for proof. Avoid generic offices,
+posed teams, AI faces, skyline postcards, holographic UI, and abstract filler.
+
+## Project timelines
+
+Public timelines begin from a verified start event and use named states:
+**Started**, **In the field**, **Mapping**, **Building**, **Working proof**,
+**Client review or training**, **Live**, and **Supporting**.
+
+Every current-work record needs a real start date, current state, latest
+completed milestone, last verified date, next milestone, privacy status, and
+client approval. Label forecasts separately. An older reconstructed history may
+omit the calendar start date only when the source record does not contain one;
+it must be marked `reconstructed`, carry a last-verified date and publication
+approval, and say that exact dates are not published. Never invent dates,
+percentages, savings, or outcomes.
+
+## Lab showcase
+
+The Lab is a showroom, not a repository. The index opens each working experience
+directly, with concise context and a clear return path. Never publish GitHub or
+repository links, source code, code-copy/share controls, commit metadata,
+schemas, specs, packages, dependencies, or file trees.
 
 ## Guardrails
 

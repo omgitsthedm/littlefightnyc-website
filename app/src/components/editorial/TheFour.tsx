@@ -28,35 +28,31 @@ import "./TheFour.css";
 
 const PILLARS = [
   {
-    num: "01",
-    name: "Web Design",
-    line: "A fast, clear website built to bring in calls, bookings, and sales.",
+    name: "Custom Websites",
+    line: "Fast, clear, easy to find, and built around how your customers choose.",
     to: "/services/custom-local-websites/",
-    cta: "See website work",
+    cta: "See custom websites",
     Viz: SiteInFourteen,
   },
   {
-    num: "02",
-    name: "Tech Support",
-    line: "When the register, Wi-Fi, or computer breaks, a real person fixes it.",
+    name: "Broken Tech",
+    line: "When the register, Wi-Fi, booking, or email fails, we find the real problem.",
     to: "/services/it-support/",
-    cta: "See how support works",
+    cta: "Get tech help",
     Viz: WhoAnswers,
   },
   {
-    num: "03",
-    name: "Consulting",
-    line: "We find what is wasting time or money, then tell you what to fix first.",
+    name: "Free Consulting",
+    line: "We understand the setup, find what is slowing the business, and tell you what to fix first.",
     to: "/services/tech-consulting/",
-    cta: "Get the free read",
+    cta: "Get a free review",
     Viz: TheFreeRead,
   },
   {
-    num: "04",
-    name: "Personalized Software",
-    line: "We replace awkward monthly software with a tool built for your business.",
+    name: "Software You Own",
+    line: "When monthly software makes the work harder, we build the focused tool that fits.",
     to: "/services/business-systems/",
-    cta: "See software you own",
+    cta: "See owned software",
     Viz: MoneyLeaving,
   },
 ] as const;
@@ -80,7 +76,6 @@ function Pillar({
       style={{ ["--lf-i" as string]: index }}
     >
       <div className="lf-four__copy">
-        <span className="lf-four__num" aria-hidden="true">{pillar.num}</span>
         <h3 className="lf-four__name">{pillar.name}</h3>
         <p className="lf-four__line">{pillar.line}</p>
         <Link to={pillar.to} className="lf-four__cta">
@@ -102,16 +97,16 @@ export default function TheFour() {
       <header ref={headRef} className="lf-four__head" data-reveal>
         <p className="lf-four__eyebrow">What we do</p>
         <h2 id="lf-four-title" className="lf-four__title">
-          Your website and tech. <span className="lf-four__em">Handled.</span>
+          One firm. <span className="lf-four__em">Four ways we help.</span>
         </h2>
         <p className="lf-four__dek">
-          Tell us what is not working. We will explain the fix in plain English,
-          build it, and keep it working.
+          Start with the problem in front of you. We keep what works and change
+          only what earns its place.
         </p>
       </header>
       <div className="lf-four__list">
         {PILLARS.map((p, i) => (
-          <Pillar key={p.num} pillar={p} flip={i % 2 === 1} index={i} />
+          <Pillar key={p.name} pillar={p} flip={i % 2 === 1} index={i} />
         ))}
       </div>
     </section>

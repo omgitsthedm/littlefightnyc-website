@@ -1,0 +1,186 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://littlefightnyc.com/brand-kit/assets/color/tokens.schema.json",
+  "title": "Little Fight NYC brand tokens",
+  "description": "Validation schema for the downloadable Little Fight NYC token file.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "name",
+    "version",
+    "updated",
+    "source",
+    "color",
+    "type",
+    "spacing",
+    "radius",
+    "motion",
+    "mark",
+    "contact",
+    "footer"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "name": {
+      "const": "Little Fight NYC"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "color": {
+      "type": "object",
+      "minProperties": 8,
+      "additionalProperties": {
+        "$ref": "#/definitions/colorToken"
+      }
+    },
+    "type": {
+      "type": "object",
+      "required": ["heading", "body", "label"],
+      "additionalProperties": {
+        "$ref": "#/definitions/typeToken"
+      }
+    },
+    "spacing": {
+      "type": "object",
+      "minProperties": 4,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "radius": {
+      "type": "object",
+      "required": ["small", "control", "card", "pill"],
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "motion": {
+      "type": "object",
+      "required": ["signal", "settle", "rules"],
+      "properties": {
+        "signal": {
+          "$ref": "#/definitions/motionToken"
+        },
+        "settle": {
+          "$ref": "#/definitions/motionToken"
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "mark": {
+      "type": "object",
+      "required": [
+        "name",
+        "idea",
+        "fixedColorFiles",
+        "currentColorFile",
+        "minimumSize",
+        "clearspace"
+      ]
+    },
+    "contact": {
+      "type": "string",
+      "format": "email"
+    },
+    "footer": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "definitions": {
+    "colorToken": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "css", "role"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "css": {
+          "type": "string",
+          "pattern": "^--[a-z0-9-]+$"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "typeToken": {
+      "type": "object",
+      "required": ["family", "css", "use"],
+      "properties": {
+        "family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fallback": {
+          "type": "string",
+          "minLength": 1
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 900
+        },
+        "weights": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 900
+          }
+        },
+        "css": {
+          "type": "string",
+          "pattern": "^--[a-z0-9-]+$"
+        },
+        "use": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "motionToken": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration", "easing"],
+      "properties": {
+        "duration": {
+          "type": "string",
+          "pattern": "^[0-9]+ms$"
+        },
+        "easing": {
+          "type": "string",
+          "pattern": "^cubic-bezier\\(.+\\)$"
+        }
+      }
+    }
+  }
+}

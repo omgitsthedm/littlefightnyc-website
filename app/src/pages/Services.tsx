@@ -21,25 +21,25 @@ import "@/styles/editorial/services-hub.css";
    to state the same four services three times in a row.) */
 const ENTRY_ROUTES = [
   {
-    label: "I need a website that brings in business",
+    label: "I need a custom website",
     slug: "custom-local-websites",
     icon: Globe2,
     priority: "primary",
   },
   {
-    label: "Something is broken today",
+    label: "Something is broken",
     slug: "it-support",
     icon: Headphones,
     priority: "support",
   },
   {
-    label: "I want a free second opinion",
+    label: "I need a free second opinion",
     slug: "tech-consulting",
     icon: Search,
     priority: "consulting",
   },
   {
-    label: "Our software costs too much",
+    label: "Monthly software is slowing us down",
     slug: "business-systems",
     icon: Workflow,
     priority: "software",
@@ -59,15 +59,15 @@ export default function Services() {
   return (
     <>
       <PageHero
-        eyebrow="Websites first"
+        eyebrow="Custom websites first"
         icon={Layers}
         title={
           <>
-            Pick what's broken.<br />{" "}
-            <span className="lf-accent">We take it from there.</span>
+            Start with the problem.<br />{" "}
+            <span className="lf-accent">We build the right fix.</span>
           </>
         }
-        dek="Start with a website that pulls in customers. Add the rest only when you actually need it. Nobody upsells you here."
+        dek="Custom website, urgent repair, free advice, or owned software. Pick the problem in front of you."
         image={{
           src: "/assets/hero-services-crossing.webp",
           alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",
@@ -114,8 +114,8 @@ export default function Services() {
       <VisualIndex
         id="studio"
         eyebrow="Studio"
-        title="The software can be yours."
-        dek="When subscriptions are expensive and the workflow is too specific, we build the missing tool. You own the code, data, hosting, and docs."
+        title="Stop renting the workaround."
+        dek="When software costs more than it solves, we build the focused tool. You own the code, data, hosting, and docs."
         items={studioOverview}
         variant="compact"
       />

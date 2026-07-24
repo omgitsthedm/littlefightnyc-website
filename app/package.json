@@ -19,10 +19,11 @@
     "audit:mobile-lifecycle": "node scripts/audit-mobile-lifecycle.mjs",
     "audit:repo-boundary": "node scripts/audit-repo-boundary.mjs",
     "audit:signal": "node scripts/audit-signal.mjs",
+    "audit:brand": "node scripts/audit-brand-system.mjs",
     "audit:metadata": "node scripts/audit-metadata-parity.mjs",
     "audit:integrity": "node scripts/audit-site-integrity.mjs",
     "audit:case-explorer": "node scripts/audit-case-study-explorer.mjs",
-    "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal",
+    "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand",
     "preview": "vite preview"
   },
   "dependencies": {

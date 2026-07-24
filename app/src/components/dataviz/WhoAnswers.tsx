@@ -271,7 +271,7 @@ function draw(
     tone = RED;
   } else if (S.phase === 2) {
     label = wide ? "A REAL PERSON PICKS UP · 9AM–9PM ET" : "A REAL PERSON · 9AM–9PM ET";
-    line = wide ? "Not a ticket into the void — someone's already on it." : "Someone's already on it.";
+    line = wide ? "Not a ticket. Someone's already on it." : "Someone's already on it.";
     tone = "rgba(250,190,140,.95)";
   } else if (S.phase === 3) {
     label = "BACK UP";
@@ -327,7 +327,7 @@ export default function WhoAnswers() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: the tools a shop runs on — register, card reader, Wi-Fi, website — sit healthy; then one goes down mid-day. Instead of a ticket into the void, an orange response moves along a timeline: a real person picks up 9am to 9pm Eastern, a callback within 2 hours, on-site within 24 hours when it needs hands — until the tool is back up."
+      aria-label="A shop's register, card reader, Wi-Fi, and website are running. One goes down during the day. A real person picks up from 9am to 9pm Eastern, calls back within 2 hours, and can be on-site within 24 hours when the problem needs hands."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

@@ -281,7 +281,7 @@ export default function SiteInFourteen() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Animation: a custom website assembles in a browser frame while a day counter climbs from 1 to 14 — navigation, hero, content rows and footer snap into place — then on day 14 it goes live at yourshop.com. Live in 14 days, or you don't pay."
+      aria-label="A custom website comes together as the day counter moves from 1 to 14. The navigation, main message, content, and footer lock into place. On day 14, the site goes live at yourshop.com. Live in 14 days, or you don't pay."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

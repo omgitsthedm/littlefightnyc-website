@@ -1560,25 +1560,22 @@ function snapshot(page) {
   const homeBody = `
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC">
       <picture>
-        <source media="(max-width: 767px)" srcset="/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w" sizes="100vw" type="image/webp" />
-        <source media="(max-width: 1279px)" srcset="/assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w" sizes="100vw" type="image/webp" />
-        <source srcset="/assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w, /assets/hero-soho-crosswalk-1600.webp 1600w" sizes="100vw" type="image/webp" />
         <img
-          src="/assets/hero-soho-crosswalk-480.webp"
-          srcset="/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w, /assets/hero-soho-crosswalk-1600.webp 1600w"
+          src="/images/brand-scenes/storefronts-dawn.webp"
+          srcset="/images/brand-scenes/storefronts-dawn-480.webp 480w, /images/brand-scenes/storefronts-dawn-900.webp 900w, /images/brand-scenes/storefronts-dawn-1200.webp 1200w, /images/brand-scenes/storefronts-dawn.webp 1672w"
           sizes="100vw"
-          alt="SoHo crosswalk and storefronts at street level in New York City"
-          width="1600"
-          height="1200"
+          alt=""
+          width="1672"
+          height="941"
           fetchpriority="high"
         />
       </picture>
       <div class="lf-seo__home-hero-copy">
-        <h1>Websites bring business. <em>We keep it running.</em></h1>
-        <p class="lf-seo__home-sub">We build your website, pick up when the tech breaks, and kill the monthly software bills bleeding you dry. What we build, you own.</p>
+        <h1>Your business is custom. <em>Your website should be too.</em></h1>
+        <p class="lf-seo__home-sub">Fast, findable websites. Urgent tech help. Software you own when monthly tools cost more than they solve.</p>
         <div class="lf-seo__home-cta">
-          <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free talk. Then a real plan.</span></a>
-          <a class="lf-seo__pill" href="tel:+16463600318">Get urgent tech help<span>Call ${site.phoneDisplay}</span></a>
+          <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free first read. Clear next step.</span></a>
+          <a class="lf-seo__pill" href="tel:+16463600318">Fix broken tech<span>Call ${site.phoneDisplay}</span></a>
         </div>
         <ul class="lf-seo__home-trust">
           <li>NYC. We show up.</li>

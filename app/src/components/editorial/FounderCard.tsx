@@ -4,47 +4,49 @@ import { useScrollReveal } from "./useScrollReveal";
 import "./FounderCard.css";
 
 /**
- * FounderCard — the "how we work" block (About page only). Leads with the
- * operating standard and the company's ambition, with David attributed as
- * founder rather than positioned as a one-person help line. A branded
- * monogram panel (display Inter over an orange-to-blue ambient wash) sits
- * beside the copy and the real phone number. When a real founder photo
- * exists, pass `photoSrc` and it drops into the same slot.
+ * The small-firm operating standard, shown through an illustrative business
+ * environment instead of a personality portrait.
  */
-export default function FounderCard({ photoSrc }: { photoSrc?: string }) {
+export default function FounderCard({
+  sceneSrc = "/images/brand-scenes/restaurant-counter.webp",
+}: {
+  sceneSrc?: string;
+}) {
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.2 });
+  const sceneResponsive = responsiveImageProps(
+    sceneSrc,
+    "(max-width: 640px) 100vw, 42vw",
+    [480, 900, 1200],
+  );
+  const sceneSrcSet = "srcSet" in sceneResponsive && sceneResponsive.srcSet
+    ? `${sceneResponsive.srcSet}, ${sceneSrc} 1672w`
+    : undefined;
 
   return (
     <aside ref={ref} className="lf-founder" aria-label="How Little Fight NYC works">
-      <div className="lf-founder__panel" aria-hidden={photoSrc ? undefined : true}>
-        {photoSrc ? (
-          <img
-            className="lf-founder__photo"
-            src={photoSrc}
-            {...responsiveImageProps(photoSrc, "(max-width: 640px) 100vw, 260px", [480, 640])}
-            alt="David Marsh, founder of Little Fight NYC"
-            loading="lazy"
-            decoding="async"
-          />
-        ) : (
-          <>
-            <span className="lf-founder__monogram">DM</span>
-            <span className="lf-founder__panel-label">Little Fight NYC</span>
-          </>
-        )}
+      <div className="lf-founder__panel">
+        <img
+          className="lf-founder__photo"
+          src={sceneSrc}
+          srcSet={sceneSrcSet}
+          sizes={sceneResponsive.sizes}
+          alt="A point-of-sale counter inside a neighborhood restaurant"
+          width="1672"
+          height="941"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <div className="lf-founder__body">
-        <p className="lf-founder__eyebrow">How we work</p>
+        <p className="lf-founder__eyebrow">Small on purpose</p>
         <p className="lf-founder__name">
-          David Marsh
-          <span className="lf-founder__role">, Founder</span>
+          One accountable firm
         </p>
         <p className="lf-founder__line">
-          Little Fight runs on a real standard: one accountable owner on every
-          project, a two-hour callback window, and on-site help within a day
-          when it's urgent. We're building the tech service company New York's
-          small businesses deserve. The one the chains never sent.
+          The person who learns the business stays close to the work. Fewer
+          handoffs, clear responsibility, a two-hour callback window, and
+          on-site help within a day when it is urgent.
         </p>
         <p className="lf-founder__meta">
           <a className="lf-founder__tel" href="tel:+16463600318">

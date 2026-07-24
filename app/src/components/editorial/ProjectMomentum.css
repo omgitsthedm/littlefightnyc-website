@@ -1,0 +1,374 @@
+.lf-momentum {
+  padding: clamp(var(--lf-space-8), 7vw, var(--lf-space-10)) var(--lf-margin-mobile);
+  color: var(--lf-bone);
+  background:
+    radial-gradient(72% 52% at 4% 6%, rgba(59, 130, 246, 0.08), transparent 62%),
+    var(--lf-ink);
+  border-block: 1px solid var(--lf-hairline);
+}
+
+.lf-momentum__inner {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+}
+
+.lf-momentum__head {
+  display: grid;
+  gap: var(--lf-space-4);
+  margin-bottom: clamp(var(--lf-space-6), 4vw, var(--lf-space-8));
+}
+
+.lf-momentum__label {
+  margin: 0 0 var(--lf-space-3);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-momentum__head h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2.7rem, 5vw, 5.25rem);
+  font-weight: 700;
+  letter-spacing: var(--lf-display-tracking);
+  line-height: 0.98;
+}
+
+.lf-momentum__head > p {
+  max-width: 50ch;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
+}
+
+.lf-momentum__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-5);
+}
+
+.lf-momentum__project {
+  min-width: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-card-bg);
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--m-settle-ms) var(--m-settle-ease),
+    transform var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-momentum__inner[data-revealed="true"] .lf-momentum__project {
+  opacity: 1;
+  transform: none;
+}
+
+.lf-momentum__inner[data-revealed="true"] .lf-momentum__project:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+.lf-momentum__project:hover {
+  border-color: color-mix(in srgb, var(--lf-fight) 44%, var(--lf-hairline));
+}
+
+.lf-momentum__scene {
+  min-width: 0;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  border-bottom: 1px solid var(--lf-hairline);
+  background: var(--lf-paper-2);
+}
+
+.lf-momentum__scene img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transform: scale(1.025);
+  transition: transform var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-momentum__project:hover .lf-momentum__scene img {
+  transform: scale(1);
+}
+
+.lf-momentum__body {
+  min-width: 0;
+  padding: clamp(var(--lf-space-4), 3vw, var(--lf-space-6));
+}
+
+.lf-momentum__project-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--lf-space-3);
+}
+
+.lf-momentum__project-head span {
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+}
+
+.lf-editorial .lf-momentum__project-head h3 {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.lf-momentum__state {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 600;
+}
+
+.lf-editorial .lf-momentum__project-head a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: var(--lf-space-4);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-control);
+  color: var(--lf-bone);
+  font-size: var(--lf-text-xs);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lf-editorial .lf-momentum__project-head a:hover,
+.lf-editorial .lf-momentum__project-head a:focus-visible {
+  border-color: var(--lf-fight);
+  color: var(--lf-fight);
+}
+
+.lf-momentum__summary {
+  max-width: 52ch;
+  margin: var(--lf-space-4) 0 var(--lf-space-6);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+}
+
+.lf-momentum__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--lf-momentum-columns, 2), minmax(0, 1fr));
+  gap: var(--lf-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-momentum__track[data-count="3"] {
+  --lf-momentum-columns: 3;
+}
+
+.lf-momentum__track::before,
+.lf-momentum__track::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.lf-momentum__track::before {
+  background: var(--lf-hairline);
+}
+
+.lf-momentum__track::after {
+  background: linear-gradient(90deg, var(--lf-fight), var(--lf-blue));
+  transform: scaleX(0);
+  transition: transform 900ms var(--m-settle-ease) 160ms;
+}
+
+.lf-momentum__inner[data-revealed="true"] .lf-momentum__track::after {
+  transform: scaleX(1);
+}
+
+.lf-momentum__track li {
+  position: relative;
+  min-width: 0;
+  padding-top: var(--lf-space-5);
+}
+
+.lf-momentum__track li::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--lf-fight);
+  border-radius: 50%;
+  background: var(--lf-paper);
+  transform: scale(0);
+  transition: transform var(--m-signal-ms) var(--m-signal-ease);
+  transition-delay: calc(260ms + var(--lf-i, 0) * 150ms);
+}
+
+.lf-momentum__inner[data-revealed="true"] .lf-momentum__track li::before {
+  transform: scale(1);
+}
+
+.lf-momentum__time {
+  display: block;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+}
+
+.lf-momentum__track strong {
+  display: block;
+  margin-top: var(--lf-space-2);
+  color: var(--lf-bone);
+  font-size: var(--lf-text-sm);
+  line-height: 1.2;
+}
+
+.lf-momentum__track p {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-xs);
+  line-height: 1.45;
+}
+
+.lf-momentum__source {
+  margin: var(--lf-space-5) 0 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.4;
+}
+
+.lf-momentum[data-variant="detail"] {
+  padding-block: clamp(var(--lf-space-7), 6vw, var(--lf-space-9));
+}
+
+.lf-momentum[data-variant="embedded"] {
+  margin-top: clamp(var(--lf-space-7), 6vw, var(--lf-space-9));
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.lf-momentum[data-variant="embedded"] .lf-momentum__head {
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-editorial .lf-momentum[data-variant="embedded"] .lf-momentum__head h2 {
+  font-size: clamp(2.25rem, 4vw, 4rem);
+}
+
+.lf-momentum[data-variant="embedded"] .lf-momentum__scene,
+.lf-momentum[data-variant="embedded"] .lf-momentum__summary,
+.lf-momentum[data-variant="embedded"] .lf-momentum__track p {
+  display: none;
+}
+
+.lf-momentum[data-variant="embedded"] .lf-momentum__project {
+  grid-template-rows: 1fr;
+}
+
+.lf-momentum[data-variant="embedded"] .lf-momentum__body {
+  padding: var(--lf-space-5);
+}
+
+.lf-momentum[data-variant="embedded"] .lf-momentum__track {
+  margin-top: var(--lf-space-5);
+}
+
+.lf-momentum[data-variant="detail"] .lf-momentum__grid[data-count="1"] {
+  max-width: 980px;
+}
+
+@media (min-width: 768px) {
+  .lf-momentum {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-momentum__head {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+    align-items: end;
+  }
+
+  .lf-momentum__grid[data-count="2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-momentum {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+@media (max-width: 560px) {
+  .lf-momentum__track {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--lf-space-5);
+    padding-left: var(--lf-space-5);
+  }
+
+  .lf-momentum__track::before,
+  .lf-momentum__track::after {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 5px;
+    width: 2px;
+    height: auto;
+    transform-origin: center top;
+  }
+
+  .lf-momentum__track::after {
+    transform: scaleY(0);
+  }
+
+  .lf-momentum__inner[data-revealed="true"] .lf-momentum__track::after {
+    transform: scaleY(1);
+  }
+
+  .lf-momentum__track li {
+    padding-top: 0;
+  }
+
+  .lf-momentum__track li::before {
+    top: 4px;
+    left: calc(-1 * var(--lf-space-5));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-momentum__project,
+  .lf-momentum__scene img,
+  .lf-momentum__track::after,
+  .lf-momentum__track li::before {
+    opacity: 1;
+    transform: none !important;
+    transition: none !important;
+  }
+}

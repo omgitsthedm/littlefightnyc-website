@@ -37,9 +37,9 @@ export default function ProcessFlow() {
   return (
     <section className="lf-process" aria-labelledby="lf-process-heading">
       <div className="lf-process__inner">
-        <p className="lf-mono lf-process__kicker">How the work goes</p>
+        <p className="lf-mono lf-process__kicker">How we work</p>
         <h2 id="lf-process-heading" className="lf-display lf-process__title">
-          The order is always the same.
+          Understand. Fix. Simplify. Build.
         </h2>
 
         <div ref={ref} className="lf-process__flow">
@@ -61,9 +61,6 @@ export default function ProcessFlow() {
                     <Icon size={22} strokeWidth={1.75} />
                   </span>
                   <p className="lf-process__step-head">
-                    <span className="lf-mono lf-process__step-num">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
                     <span className="lf-process__step-label">{step.label}</span>
                   </p>
                   <p className="lf-process__step-copy">{step.copy}</p>

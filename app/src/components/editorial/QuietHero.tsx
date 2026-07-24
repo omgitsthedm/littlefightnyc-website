@@ -54,29 +54,12 @@ export default function QuietHero() {
     <section className="lf-hero" aria-label="Little Fight NYC">
       <div className="lf-hero__image" aria-hidden="true">
         <picture>
-          <source
-            media="(max-width: 767px)"
-            srcSet="/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w"
-            sizes="100vw"
-            type="image/webp"
-          />
-          <source
-            media="(max-width: 1279px)"
-            srcSet="/assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w"
-            sizes="100vw"
-            type="image/webp"
-          />
-          <source
-            srcSet="/assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w, /assets/hero-soho-crosswalk-1600.webp 1600w"
-            sizes="100vw"
-            type="image/webp"
-          />
           <img
-            src="/assets/hero-soho-crosswalk-480.webp"
-            srcSet="/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w, /assets/hero-soho-crosswalk-1200.webp 1200w, /assets/hero-soho-crosswalk-1600.webp 1600w"
+            src="/images/brand-scenes/storefronts-dawn.webp"
+            srcSet="/images/brand-scenes/storefronts-dawn-480.webp 480w, /images/brand-scenes/storefronts-dawn-900.webp 900w, /images/brand-scenes/storefronts-dawn-1200.webp 1200w, /images/brand-scenes/storefronts-dawn.webp 1672w"
             sizes="100vw"
-            width="1600"
-            height="1200"
+            width="1672"
+            height="941"
             alt=""
             loading="eager"
             fetchPriority="high"
@@ -87,20 +70,20 @@ export default function QuietHero() {
       <div ref={claimRef} className="lf-hero__content">
         {/* The letter-split spans garble screen-reader output ("T e c h f o r…"),
             so the real sentence lives on the h1 and the visual letters are hidden. */}
-        <h1 className="lf-hero__claim" aria-label="Websites bring business. We keep it running.">
+        <h1 className="lf-hero__claim" aria-label="Your business is custom. Your website should be too.">
           <span aria-hidden="true">
-            <span className="lf-hero__line">{cascade("Websites bring business.", 0, "a")}</span>
+            <span className="lf-hero__line">{cascade("Your business is custom.", 0, "a")}</span>
             {" "}
             <span className="lf-hero__line lf-hero__claim-em">
-              {cascade("We keep it running.", 26, "b")}
+              {cascade("Your website should be too.", 25, "b")}
             </span>
           </span>
         </h1>
 
         <div className="lf-hero__brief">
           <p>
-            We build websites that bring in customers, fix broken tech, and
-            replace expensive software. You own everything.
+            Fast, findable websites. Urgent tech help. Software you own when
+            monthly tools cost too much and make the work harder.
           </p>
         </div>
 
@@ -114,14 +97,14 @@ export default function QuietHero() {
             <Globe2 size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
               <strong>Plan my website</strong>
-              <span>Free talk. Then a real plan.</span>
+              <span>Free review. Clear next step.</span>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
           <a className="lf-hero__action lf-hero__action--support" href="tel:+16463600318">
             <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
-              <strong>Get urgent tech help</strong>
+              <strong>Fix broken tech</strong>
               <span>Call (646) 360-0318</span>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
