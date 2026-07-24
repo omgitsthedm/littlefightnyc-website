@@ -6,7 +6,8 @@
  * scale drift with one rAF-throttled passive scroll listener.
  *
  * On Chromium this is a no-op (the CSS animation handles it). It never runs
- * under reduced-motion. Transform-only, so it stays on the compositor.
+ * under reduced-motion or on touch-first devices. Mobile gets the complete,
+ * static image instead of paying for a scroll listener and layer updates.
  */
 
 const SELECTOR =
@@ -27,6 +28,7 @@ export function initHeroParallax(): void {
   // Chromium drives this via CSS `animation-timeline: view()` — leave it alone.
   if (CSS.supports("animation-timeline: view()")) return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia("(pointer: coarse), (hover: none)").matches) return;
 
   let ticking = false;
 

@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { HAS_TRANSLATIONS } from "@/i18n/available";
+import { importWithRetry } from "@/lib/importWithRetry";
 
 /**
  * Language picker gate. This file carries NO i18next — it just checks whether
@@ -10,7 +11,9 @@ import { HAS_TRANSLATIONS } from "@/i18n/available";
  * HAS_TRANSLATIONS flips true and the real switcher (which pulls in i18next)
  * loads as its own chunk. Zero cost until there's something to switch to.
  */
-const LanguageSwitcherInner = lazy(() => import("./LanguageSwitcherInner"));
+const LanguageSwitcherInner = lazy(() =>
+  importWithRetry(() => import("./LanguageSwitcherInner")),
+);
 
 export default function LanguageSwitcher() {
   if (!HAS_TRANSLATIONS) return null;

@@ -68,6 +68,38 @@ html.is-safari .lf-editorial :focus-visible {
   outline-color: var(--lf-fight);
 }
 
+/* ─── Touch-device scroll stability ───────────────────────────────
+ * Mobile browsers already spend more of their memory budget on the page's
+ * high-DPI imagery. Do not add continuously changing inherited variables,
+ * scroll-driven image layers, or live backdrop blurs to that budget.
+ *
+ * The content and hierarchy stay identical. Fine-pointer desktop devices keep
+ * the full motion system; touch-first phones and tablets get a stable static
+ * composition that does not ask WebKit to repaint/composite on every frame.
+ */
+@media (pointer: coarse), (hover: none) {
+  .lf-editorial .lf-nav,
+  .lf-editorial .lf-nav[data-scrolled="true"] {
+    background: rgba(5, 7, 12, 0.98);
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    transition:
+      background-color var(--m-settle-ms) var(--m-settle-ease),
+      box-shadow var(--m-settle-ms) var(--m-settle-ease);
+  }
+
+  .lf-editorial .lf-hero__action--support {
+    background: var(--lf-paper);
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .lf-editorial .lf-owner-story__media img,
+  .lf-editorial .lf-fight__steps::before {
+    animation: none !important;
+  }
+}
+
 /* ─── Slow connections / data-saver ───────────────────────────────
  * On slow networks the priority is readable text and usable CTAs, not
  * motion. Disable expensive animations, backdrop blurs, and continuous

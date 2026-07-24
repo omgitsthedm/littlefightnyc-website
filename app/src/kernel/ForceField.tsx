@@ -27,6 +27,10 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
+const hasFineHoverPointer = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia?.("(hover: hover) and (pointer: fine)")?.matches === true;
+
 export function ForceFieldProvider({ children }: { children: ReactNode }) {
   const forces = useRef<Forces>({ ...NEUTRAL });
 
@@ -42,8 +46,11 @@ export function ForceFieldProvider({ children }: { children: ReactNode }) {
       root.style.setProperty("--scroll-progress", f.scrollProgress.toFixed(4));
     };
 
-    // Reduced motion: publish a calm, complete resting state and never tick.
-    if (prefersReducedMotion()) {
+    // Touch devices do not have a useful pointer-parallax interaction, and
+    // publishing inherited root variables on every scroll frame is expensive
+    // on mobile WebKit. Keep the complete resting state and do not install the
+    // pointer/scroll ticker unless the device has a real fine hover pointer.
+    if (prefersReducedMotion() || !hasFineHoverPointer()) {
       forces.current = { ...NEUTRAL };
       write(NEUTRAL);
       return;

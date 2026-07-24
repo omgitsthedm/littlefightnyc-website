@@ -45,8 +45,8 @@ function PathImage({ image, alt }: { image: string; alt: string }) {
   return (
     <picture>
       <source
-        srcSet={`/images/brand-scenes/${image}-480.webp 480w, /images/brand-scenes/${image}-640.webp 640w, /images/brand-scenes/${image}-900.webp 900w, /images/brand-scenes/${image}-1200.webp 1200w, /images/brand-scenes/${image}.webp 1672w`}
-        sizes="(min-width: 960px) 38vw, 100vw"
+        srcSet={`/images/brand-scenes/${image}-480.webp 480w, /images/brand-scenes/${image}-640.webp 640w, /images/brand-scenes/${image}-900.webp 900w`}
+        sizes="(min-width: 960px) 38vw, calc(100vw - 4rem)"
         type="image/webp"
       />
       <img

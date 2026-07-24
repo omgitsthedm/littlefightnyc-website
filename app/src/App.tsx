@@ -5,33 +5,43 @@ import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
 import GlobalViewTransitions from "@/components/GlobalViewTransitions";
 import TugSail from "@/components/editorial/TugSail";
-import EditorialShell from "@/components/editorial/EditorialShell";
 import SiteNotices from "@/components/SiteNotices";
+import { importWithRetry } from "@/lib/importWithRetry";
 import Home from "@/pages/Home";
-import About from "@/pages/About";
-import CaseStudyDetail from "@/pages/CaseStudyDetail";
-import Contact from "@/pages/Contact";
-import FieldGuide from "@/pages/FieldGuide";
-import ServiceDetail from "@/pages/ServiceDetail";
-import Services from "@/pages/Services";
 
-const AnswerGuide = lazy(() => import("@/pages/AnswerGuide"));
-const AreaDetail = lazy(() => import("@/pages/AreaDetail"));
-const Areas = lazy(() => import("@/pages/Areas"));
-const Espanol = lazy(() => import("@/pages/Espanol"));
-const Glossary = lazy(() => import("@/pages/Glossary"));
-const GlossaryTerm = lazy(() => import("@/pages/GlossaryTerm"));
-const IndustryDetail = lazy(() => import("@/pages/IndustryDetail"));
-const JournalPost = lazy(() => import("@/pages/JournalPost"));
-const Legal = lazy(() => import("@/pages/Legal"));
-const Library = lazy(() => import("@/pages/Library"));
-const Nationwide = lazy(() => import("@/pages/Nationwide"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
-const ServiceAreaDetail = lazy(() => import("@/pages/ServiceAreaDetail"));
-const StudioDetail = lazy(() => import("@/pages/StudioDetail"));
-const TechAudit = lazy(() => import("@/pages/TechAudit"));
-const Thanks = lazy(() => import("@/pages/Thanks"));
-const Zhongwen = lazy(() => import("@/pages/Zhongwen"));
+// A transient mobile/CDN failure gets one quiet retry before the ErrorBoundary
+// considers a guarded full refresh. This protects in-progress scroll/form state
+// from being discarded for a one-off route chunk miss.
+function lazyRoute<T extends ComponentType<unknown>>(
+  importer: () => Promise<{ default: T }>,
+) {
+  return lazy(() => importWithRetry(importer));
+}
+
+const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
+const About = lazyRoute(() => import("@/pages/About"));
+const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
+const Areas = lazyRoute(() => import("@/pages/Areas"));
+const CaseStudyDetail = lazyRoute(() => import("@/pages/CaseStudyDetail"));
+const Contact = lazyRoute(() => import("@/pages/Contact"));
+const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
+const Espanol = lazyRoute(() => import("@/pages/Espanol"));
+const FieldGuide = lazyRoute(() => import("@/pages/FieldGuide"));
+const Glossary = lazyRoute(() => import("@/pages/Glossary"));
+const GlossaryTerm = lazyRoute(() => import("@/pages/GlossaryTerm"));
+const IndustryDetail = lazyRoute(() => import("@/pages/IndustryDetail"));
+const JournalPost = lazyRoute(() => import("@/pages/JournalPost"));
+const Legal = lazyRoute(() => import("@/pages/Legal"));
+const Library = lazyRoute(() => import("@/pages/Library"));
+const Nationwide = lazyRoute(() => import("@/pages/Nationwide"));
+const NotFound = lazyRoute(() => import("@/pages/NotFound"));
+const ServiceAreaDetail = lazyRoute(() => import("@/pages/ServiceAreaDetail"));
+const ServiceDetail = lazyRoute(() => import("@/pages/ServiceDetail"));
+const Services = lazyRoute(() => import("@/pages/Services"));
+const StudioDetail = lazyRoute(() => import("@/pages/StudioDetail"));
+const TechAudit = lazyRoute(() => import("@/pages/TechAudit"));
+const Thanks = lazyRoute(() => import("@/pages/Thanks"));
+const Zhongwen = lazyRoute(() => import("@/pages/Zhongwen"));
 
 function RouteFallback() {
   return (
@@ -74,7 +84,11 @@ export default function App() {
         <Route path="zh" element={route(Zhongwen)} />
 
         <Route
-          element={<EditorialShell />}
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <EditorialShell />
+            </Suspense>
+          }
         >
           <Route path="services" element={route(Services)} />
           <Route path="services/:slug" element={route(ServiceDetail)} />

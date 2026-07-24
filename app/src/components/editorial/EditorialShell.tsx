@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { importWithRetry } from "@/lib/importWithRetry";
 
 // fonts/tokens/base are imported once at the entry (src/main.tsx). Only the
 // shell-specific overrides stay here.
@@ -9,7 +10,9 @@ import "@/styles/editorial/tiled-layout.css";
 // RouteMeta keeps <head> in sync on client-side navigation. The prerendered
 // HTML already carries correct per-page meta on first paint, so it's not on the
 // critical path — lazy-load it off the shell's eager chunk.
-const RouteMeta = lazy(() => import("@/components/RouteMeta"));
+const RouteMeta = lazy(() =>
+  importWithRetry(() => import("@/components/RouteMeta")),
+);
 import { watchListReveals } from "@/lib/listReveal";
 import QuietNav from "./QuietNav";
 import QuietFooter from "./QuietFooter";
