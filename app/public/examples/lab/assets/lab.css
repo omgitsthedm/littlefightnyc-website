@@ -876,6 +876,14 @@ main {
 }
 
 @media (max-width: 520px) {
+  .lab-bar {
+    gap: 12px;
+  }
+
+  .lab-bar__nav a:first-child {
+    display: none;
+  }
+
   .lab-feature__play {
     right: 14px;
     bottom: 14px;
