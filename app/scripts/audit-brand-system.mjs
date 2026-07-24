@@ -111,6 +111,8 @@ if (tokens?.contact !== "hello@littlefightnyc.com") {
 const brandHtml = await read("public/brand-kit/index.html");
 const standaloneHtml = await read("public/brand-kit/little-fight-nyc-brand.html");
 const brandCss = await read("public/brand-kit/brand-kit.css");
+const publicFooter = await read("src/components/editorial/QuietFooter.tsx");
+const prerenderScript = await read("scripts/prerender-seo.mjs");
 const canvaGuide = await readFile(
   path.join(repoRoot, "canva_brand_kit_little_fight_nyc.md"),
   "utf8",
@@ -152,6 +154,21 @@ for (const requiredText of [
   if (!brandHtml.includes(requiredText)) {
     fail(`brand-kit/index.html: missing ${JSON.stringify(requiredText)}`);
   }
+}
+
+for (const [label, text] of [
+  ["brand-kit/index.html", brandHtml],
+  ["brand-kit/little-fight-nyc-brand.html", standaloneHtml],
+]) {
+  if (!/<meta\s+name="robots"\s+content="noindex, nofollow, noarchive">/i.test(text)) {
+    fail(`${label}: internal guide must carry noindex, nofollow, noarchive`);
+  }
+}
+if (publicFooter.includes('to: "/brand-kit/"')) {
+  fail("QuietFooter.tsx: internal Brand Kit must not be linked from public navigation");
+}
+if (/absoluteUrl\(\s*["']\/brand-kit\/["']\s*\)/.test(prerenderScript)) {
+  fail("prerender-seo.mjs: internal Brand Kit must not be added to the sitemap");
 }
 
 for (const relativePath of [
