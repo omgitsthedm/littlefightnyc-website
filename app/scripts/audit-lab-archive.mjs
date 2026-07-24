@@ -19,7 +19,16 @@ function existsAsRoute(target) {
 }
 
 function localTarget(reference, sourceFile) {
-  const clean = reference.split("#", 1)[0].split("?", 1)[0];
+  let clean = reference.split("#", 1)[0].split("?", 1)[0];
+  const sameOrigin = clean.match(
+    /^https?:\/\/(?:www\.)?littlefightnyc\.com(\/.*)$/i,
+  );
+  if (sameOrigin) {
+    if (!/\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?)$/i.test(sameOrigin[1])) {
+      return null;
+    }
+    clean = sameOrigin[1];
+  }
   if (!clean || /^(?:https?:|mailto:|tel:|data:|javascript:|#)/i.test(clean)) {
     return null;
   }
@@ -33,13 +42,16 @@ function localTarget(reference, sourceFile) {
 const failures = [];
 const files = walk(labRoot);
 const htmlFiles = files.filter((file) => file.endsWith(".html"));
-const textFiles = files.filter((file) => /\.(?:css|html|js|json|txt|xml)$/i.test(file));
+const textFiles = files.filter((file) =>
+  /\.(?:css|html|js|json|txt|webmanifest|xml)$/i.test(file),
+);
 
 if (files.length < 160) failures.push(`expected at least 160 hosted files, found ${files.length}`);
 if (htmlFiles.length < 47) failures.push(`expected at least 47 HTML pages, found ${htmlFiles.length}`);
 
 const hubPath = path.join(labRoot, "index.html");
 const hub = fs.readFileSync(hubPath, "utf8");
+const hubStyles = fs.readFileSync(path.join(labRoot, "assets", "lab.css"), "utf8");
 const manifestPath = path.join(labRoot, "concepts.json");
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 const conceptLinks = [...hub.matchAll(/<a\b(?=[^>]*\bdata-concept-card\b)[^>]*\bhref="([^"]+)"/g)].map(
@@ -48,6 +60,16 @@ const conceptLinks = [...hub.matchAll(/<a\b(?=[^>]*\bdata-concept-card\b)[^>]*\b
 
 if (conceptLinks.length !== 11) {
   failures.push(`expected 11 concept links, found ${conceptLinks.length}`);
+}
+
+if (
+  /\[data-reveal\]\s*\{[^}]*\b(?:opacity\s*:\s*0|visibility\s*:\s*hidden)\b/is.test(
+    hubStyles,
+  )
+) {
+  failures.push(
+    "Lab showroom content is hidden by default; reveal motion must enhance visible static content",
+  );
 }
 
 for (const reference of conceptLinks) {
@@ -182,6 +204,35 @@ for (const file of htmlFiles) {
     const target = localTarget(reference, file);
     if (target && !existsAsRoute(target)) {
       failures.push(`${path.relative(labRoot, file)} -> ${reference}`);
+    }
+  }
+}
+
+for (const file of textFiles) {
+  const source = fs.readFileSync(file, "utf8");
+  const relative = path.relative(labRoot, file);
+  const inlineAssetReferences = new Set(
+    [
+      ...source.matchAll(
+        /["']([^"'?#\s]+\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?)(?:[?#][^"']*)?)["']/gi,
+      ),
+    ]
+      .map((match) => match[1])
+      .filter((reference) =>
+        /^(?:https?:\/\/(?:www\.)?littlefightnyc\.com\/|\/?(?:\.\.?\/)*)[a-z0-9_@%+.,~/-]+\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?)(?:[?#][^"']*)?$/i.test(
+          reference,
+        ),
+      ),
+  );
+  for (const reference of inlineAssetReferences) {
+    const target = localTarget(reference, file);
+    if (
+      target &&
+      (!fs.existsSync(target) ||
+        !fs.statSync(target).isFile() ||
+        fs.statSync(target).size === 0)
+    ) {
+      failures.push(`${relative} contains a broken inline asset path: ${reference}`);
     }
   }
 }

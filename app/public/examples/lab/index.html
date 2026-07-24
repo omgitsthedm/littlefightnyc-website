@@ -11,7 +11,6 @@
   <link rel="preload" href="/assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/lf-fonts.css">
   <link rel="stylesheet" href="/examples/lab/assets/lab.css">
-  <script defer src="/examples/lab/assets/lab.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#showroom">Skip to the builds</a>
@@ -48,6 +47,7 @@
           height="800"
           alt="Night view of the interactive Brownstone Walk-Up"
           fetchpriority="high"
+          decoding="async"
         >
         <img
           class="lab-hero__counter"
@@ -55,6 +55,7 @@
           width="1800"
           height="1200"
           alt="A point-of-sale counter in a New York small business"
+          decoding="async"
         >
       </a>
     </section>
@@ -65,7 +66,7 @@
     </section>
 
     <div id="showroom">
-      <section class="showroom-group showroom-group--spatial" aria-labelledby="spatial-title" data-reveal>
+      <section class="showroom-group showroom-group--spatial" aria-labelledby="spatial-title">
         <header class="showroom-group__head">
           <h2 id="spatial-title">Walk inside it.</h2>
           <p>Architecture becomes a place to move, touch, and remember.</p>
@@ -73,7 +74,7 @@
         <div class="concept-shelf concept-shelf--duo">
           <a class="concept-card concept-card--feature" data-concept-card href="/examples/lab/concepts/walkup-3d/">
             <div class="concept-card__media">
-              <img src="/examples/lab/assets/brownstone-poster.webp?v=2" width="1280" height="800" alt="Brownstone Walk-Up at night" loading="lazy">
+              <img src="/examples/lab/assets/brownstone-poster.webp?v=2" width="1280" height="800" alt="Brownstone Walk-Up at night" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Spatial story</span>
@@ -86,7 +87,7 @@
 
           <a class="concept-card" data-concept-card href="/examples/lab/concepts/terminal-3d/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_brooklyn.webp" width="1350" height="1800" alt="New York buildings seen from the street" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_brooklyn.webp" width="1350" height="1800" alt="New York buildings seen from the street" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Spatial website</span>
@@ -99,7 +100,7 @@
         </div>
       </section>
 
-      <section class="showroom-group showroom-group--motion" aria-labelledby="motion-title" data-reveal>
+      <section class="showroom-group showroom-group--motion" aria-labelledby="motion-title">
         <header class="showroom-group__head">
           <h2 id="motion-title">Make movement useful.</h2>
           <p>Motion points, explains, and answers. It never blocks the door.</p>
@@ -107,7 +108,7 @@
         <div class="concept-shelf concept-shelf--three">
           <a class="concept-card concept-card--wide" data-concept-card href="/examples/lab/concepts/pill-scroll/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/pill-scroll/assets/nyc-streets-businesses3-2.webp" width="1600" height="1378" alt="A working kitchen entrance on a New York side street" loading="lazy">
+              <img src="/examples/lab/concepts/pill-scroll/assets/nyc-streets-businesses3-2.webp" width="1600" height="1378" alt="A working kitchen entrance on a New York side street" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Motion study</span>
@@ -120,7 +121,7 @@
 
           <a class="concept-card" data-concept-card href="/examples/lab/concepts/micro-animations/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_web_design.webp" width="1800" height="1200" alt="Website work in a small-business setting" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_web_design.webp" width="1800" height="1200" alt="Website work in a small-business setting" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Interaction arcade</span>
@@ -146,7 +147,7 @@
         </div>
       </section>
 
-      <section class="showroom-group showroom-group--systems" aria-labelledby="systems-title" data-reveal>
+      <section class="showroom-group showroom-group--systems" aria-labelledby="systems-title">
         <header class="showroom-group__head">
           <h2 id="systems-title">Fix what happens behind the counter.</h2>
           <p>Turn daily friction into a tool the business can understand and own.</p>
@@ -154,7 +155,7 @@
         <div class="concept-shelf concept-shelf--systems">
           <a class="concept-card concept-card--tall" data-concept-card href="/examples/lab/concepts/studio-engine/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/pos_system_tip_jar.webp" width="1800" height="1200" alt="Tip jar and point-of-sale equipment on a shop counter" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/pos_system_tip_jar.webp" width="1800" height="1200" alt="Tip jar and point-of-sale equipment on a shop counter" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Interactive business tool</span>
@@ -167,7 +168,7 @@
 
           <a class="concept-card" data-concept-card href="/examples/lab/concepts/growth-street/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_retail.webp" width="1350" height="1800" alt="Coffee and retail goods arranged on shop shelves" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_retail.webp" width="1350" height="1800" alt="Coffee and retail goods arranged on shop shelves" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Systems story</span>
@@ -180,7 +181,7 @@
 
           <a class="concept-card" data-concept-card href="/examples/lab/concepts/tech-support/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_cafes2.webp" width="1800" height="1336" alt="The working counter inside a New York cafe" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_cafes2.webp" width="1800" height="1336" alt="The working counter inside a New York cafe" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Complete website</span>
@@ -193,7 +194,7 @@
         </div>
       </section>
 
-      <section class="showroom-group showroom-group--campaign" aria-labelledby="campaign-title" data-reveal>
+      <section class="showroom-group showroom-group--campaign" aria-labelledby="campaign-title">
         <header class="showroom-group__head">
           <h2 id="campaign-title">Give the business a world.</h2>
           <p>Strong visual direction without losing the offer or the next step.</p>
@@ -214,7 +215,7 @@
 
           <a class="concept-card" data-concept-card href="/examples/lab/concepts/hero/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_outdoor_bar.webp" width="1800" height="1200" alt="Tables and service areas at a New York outdoor bar" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_outdoor_bar.webp" width="1800" height="1200" alt="Tables and service areas at a New York outdoor bar" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Brand study</span>
@@ -227,7 +228,7 @@
 
           <a class="concept-card concept-card--wide" data-concept-card href="/examples/lab/concepts/chef-drew/">
             <div class="concept-card__media">
-              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_bagels.webp" width="1800" height="1200" alt="Food prepared for service in a New York shop" loading="lazy">
+              <img src="/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_bagels.webp" width="1800" height="1200" alt="Food prepared for service in a New York shop" loading="eager" decoding="sync">
             </div>
             <div class="concept-card__copy">
               <span class="concept-card__type">Hospitality concept</span>
@@ -241,7 +242,7 @@
       </section>
     </div>
 
-    <section class="lab-close" aria-labelledby="lab-close-title" data-reveal>
+    <section class="lab-close" aria-labelledby="lab-close-title">
       <div>
         <p>Have something difficult?</p>
         <h2 id="lab-close-title">Show us the problem.</h2>

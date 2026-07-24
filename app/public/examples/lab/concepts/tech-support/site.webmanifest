@@ -4,13 +4,13 @@
   "description": "Friendly IT support for NYC small businesses",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
+      "src": "/examples/lab/concepts/tech-support/favicon-16x16.png",
+      "sizes": "16x16",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
+      "src": "/examples/lab/concepts/tech-support/favicon-32x32.png",
+      "sizes": "32x32",
       "type": "image/png"
     }
   ],
