@@ -662,7 +662,7 @@ function foundationSchemas(page) {
 }
 
 function routeImagePreload(page) {
-  const homeHero = "/assets/hero-soho-crosswalk.webp";
+  const homeHero = "/images/brand-scenes/storefronts-dawn.webp";
   const asset = page.path === "/" ? homeHero : page.image;
 
   // The same static file serves both /tech-audit/ modes. The general intake
@@ -677,20 +677,16 @@ function routeImagePreload(page) {
   if (!asset?.endsWith(".webp")) return "";
 
   if (page.path === "/") {
-    // Mirror QuietHero's <picture> art-direction EXACTLY (same media splits,
-    // same candidate sets, sizes=100vw). The snapshot hero uses the same
-    // <picture>, so preload → snapshot paint → hydrated hero all resolve to
-    // ONE identical asset. (The old single-srcset preload disagreed with the
-    // hydrated picture and the LCP image downloaded twice.)
-    const b = "/assets/hero-soho-crosswalk";
-    const sets = [
-      { media: "(max-width: 767px)", srcset: `${b}-480.webp 480w, ${b}-640.webp 640w` },
-      { media: "(min-width: 768px) and (max-width: 1279px)", srcset: `${b}-640.webp 640w, ${b}-900.webp 900w, ${b}-1200.webp 1200w` },
-      { media: "(min-width: 1280px)", srcset: `${b}-900.webp 900w, ${b}-1200.webp 1200w, ${b}-1600.webp 1600w` },
-    ];
-    return sets
-      .map((s) => `<link rel="preload" media="${escapeAttr(s.media)}" imagesrcset="${escapeAttr(s.srcset)}" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`)
-      .join("\n    ");
+    // Mirror QuietHero and the prerender snapshot exactly so first paint,
+    // hydration, and the LCP preload all resolve to one storefront scene.
+    const base = "/images/brand-scenes/storefronts-dawn";
+    const srcset = [
+      `${base}-480.webp 480w`,
+      `${base}-900.webp 900w`,
+      `${base}-1200.webp 1200w`,
+      `${base}.webp 1672w`,
+    ].join(", ");
+    return `<link rel="preload" href="${base}-1200.webp" imagesrcset="${srcset}" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
 
   // The website service now leads with real shipped work instead of the

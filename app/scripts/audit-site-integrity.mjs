@@ -200,6 +200,18 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
   failures.push("brand-kit/index.html is missing its main landmark");
 }
 
+const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
+const homeHero = "/images/brand-scenes/storefronts-dawn";
+if (
+  !homeDocument.includes(`rel="preload" href="${homeHero}-1200.webp"`) ||
+  !homeDocument.includes(`${homeHero}.webp 1672w`)
+) {
+  failures.push("home image preload does not match the current QuietHero scene");
+}
+if (/data-route-preload[^>]+hero-soho-crosswalk/i.test(homeDocument)) {
+  failures.push("home still preloads the retired SoHo hero image");
+}
+
 if (failures.length > 0) {
   console.error(`Site integrity audit failed (${failures.length}):`);
   for (const failure of failures) console.error(`- ${failure}`);
