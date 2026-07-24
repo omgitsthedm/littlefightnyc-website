@@ -27,7 +27,7 @@ const COVERAGE: Record<string, Record<string, string | null>> = {
     websites: "Portfolio & inquiry",
     "it-support": null,
     "local-search": "Local visibility",
-    "business-systems": "Lightweight workflow",
+    "business-systems": "Simple follow-up",
   },
   // "Website, consult scheduling, intake, email on your own domain, referral
   //  tracking, and document flow for solo and small law firms"
@@ -42,7 +42,7 @@ const COVERAGE: Record<string, Record<string, string | null>> = {
     websites: "Trust pages",
     "it-support": "Booking & intake",
     "local-search": "Local visibility",
-    "business-systems": "Workflow systems",
+    "business-systems": "Daily routines",
   },
   // "Service pages, lead qualification, customer list, proposals, reporting,
   //  and local visibility" + the page's own "Open IT support" link
@@ -83,7 +83,7 @@ export default function CoverageMatrix() {
     <div ref={ref} className="lf-covmatrix">
       <p className="lf-covmatrix__kicker">Coverage</p>
       <p className="lf-covmatrix__dek">
-        Any trade, same read — what each industry page maps to the four services.
+        See the four ways we help each kind of business.
       </p>
       <div className="lf-covmatrix__scroll">
         <table className="lf-covmatrix__table">
@@ -112,14 +112,18 @@ export default function CoverageMatrix() {
                   {SERVICES.map((service) => {
                     const noun = row?.[service.slug] ?? null;
                     return (
-                      <td key={service.slug} data-covered={noun ? "true" : undefined}>
+                      <td
+                        key={service.slug}
+                        data-covered={noun ? "true" : undefined}
+                        data-service={service.label}
+                      >
                         {noun ? (
-                          <>
+                          <span className="lf-covmatrix__value">
                             <span className="lf-covmatrix__mark" aria-hidden="true" />
                             <span className="lf-covmatrix__noun">{noun}</span>
-                          </>
+                          </span>
                         ) : (
-                          <span aria-hidden="true">—</span>
+                          <span className="lf-covmatrix__value">Not listed</span>
                         )}
                       </td>
                     );

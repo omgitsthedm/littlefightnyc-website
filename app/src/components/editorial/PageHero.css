@@ -39,9 +39,9 @@
   gap: clamp(2rem, 5vw, 4.5rem);
 }
 
-/* Choreographed entrance: eyebrow → title → dek → image stagger when
-   the section reveals. Each element opacity/translateY-shifts
-   from a hidden initial state to revealed. Uses transform + opacity only. */
+/* Choreographed entrance: eyebrow → title → dek stagger when the section
+   reveals. Primary copy is readable from first paint; motion adds a short
+   translate only and never gates the page behind a fade. */
 .lf-pagehero__eyebrow,
 .lf-pagehero__title,
 .lf-pagehero__dek {
@@ -50,20 +50,13 @@
   will-change: transform, opacity;
 }
 
-.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__eyebrow,
-.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__title,
-.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__dek {
-  opacity: 0;
-  transform: translateY(14px);
-}
-
 .lf-pagehero__inner[data-revealed="true"] .lf-pagehero__eyebrow { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 0ms both; }
 .lf-pagehero__inner[data-revealed="true"] .lf-pagehero__title   { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 90ms both; }
 .lf-pagehero__inner[data-revealed="true"] .lf-pagehero__dek     { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 180ms both; }
 
 @keyframes lf-pagehero-enter {
   from {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(14px);
   }
   to {
@@ -143,11 +136,11 @@
 }
 
 .lf-pagehero__title {
-  font-family: var(--lf-serif);
-  font-weight: 600;
-  font-size: clamp(3rem, 7.5vw, 6.8rem);
-  line-height: 1.02;
-  letter-spacing: -0.032em;
+  font-family: var(--lf-display);
+  font-weight: var(--lf-display-weight);
+  font-size: clamp(3rem, 7.2vw, 6.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.038em;
   color: var(--lf-bone);
   margin: 0;
   max-width: 12.5ch;
@@ -169,8 +162,8 @@
 .lf-pagehero__title i,
 .lf-pagehero__title .lf-em {
   color: var(--lf-fight);
-  font-style: italic;
-  font-weight: 600;
+  font-style: normal;
+  font-weight: var(--lf-display-weight);
 }
 
 .lf-pagehero__title .lf-accent {
@@ -178,10 +171,10 @@
 }
 
 .lf-pagehero__dek {
-  font-family: var(--lf-serif);
-  font-style: italic;
-  font-size: clamp(1.05rem, 1vw, 1.25rem);
-  line-height: 1.43;
+  font-family: var(--lf-body);
+  font-style: normal;
+  font-size: clamp(1.1rem, 1.2vw, 1.3rem);
+  line-height: 1.5;
   color: var(--lf-bone-soft);
   letter-spacing: -0.005em;
   max-width: 50ch;
@@ -261,7 +254,7 @@
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  min-height: min(78vh, 46rem);
+  min-height: min(68vh, 40rem);
   border-bottom: 1px solid var(--lf-hairline);
 }
 
@@ -383,10 +376,6 @@
   opacity: 1;
   transform: translateY(0);
 }
-.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__quick {
-  opacity: 0;
-  transform: translateY(14px);
-}
 .lf-pagehero__inner[data-revealed="true"] .lf-pagehero__quick {
   animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 270ms both;
 }
@@ -452,11 +441,6 @@
 .lf-pagehero__chips {
   opacity: 1;
   transform: translateY(0);
-}
-.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__display,
-.lf-pagehero__inner:not([data-revealed="true"]) .lf-pagehero__chips {
-  opacity: 0;
-  transform: translateY(14px);
 }
 .lf-pagehero__inner[data-revealed="true"] .lf-pagehero__display { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 60ms both; }
 .lf-pagehero__inner[data-revealed="true"] .lf-pagehero__chips   { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 260ms both; }

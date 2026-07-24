@@ -35,12 +35,12 @@ export default function Areas() {
         icon={MapPin}
         title={
           <>
-            The neighborhoods{" "}
+            Every New York business{" "}
             <br />
-            <span className="lf-em">we show up in.</span>
+            <span className="lf-em">has a local story.</span>
           </>
         }
-        dek="Little Fight works across New York City, with on-site visits usually within 24 hours. These are the Manhattan, Brooklyn, and Queens neighborhoods where we're in the most shops, salons, bars, and back offices."
+        dek="We work across all five boroughs, with on-site visits usually within 24 hours. Start with your neighborhood and the kind of problem in front of you."
         image={{
           src: "/assets/nyc-street-crowd.webp",
           alt: "A busy New York street at dusk",
@@ -59,8 +59,8 @@ export default function Areas() {
 
       <VisualIndex
         eyebrow="Neighborhoods"
-        title="Eighteen patches of the same fight."
-        dek="Every neighborhood breaks in its own way. Pick yours to see what we usually walk into there."
+        title="Find your neighborhood."
+        dek="See the local customer habits, common technology problems, and the first move we would inspect there."
         variant="grid"
         items={areaPages.map((area) => ({
           eyebrow: `ZIP ${area.zipCodes.join(" · ")}`,

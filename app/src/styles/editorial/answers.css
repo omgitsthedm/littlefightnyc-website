@@ -508,6 +508,7 @@
 }
 
 .lf-answers-hub__thumb {
+  position: relative;
   display: grid;
   place-items: center;
   width: 64px;
@@ -522,12 +523,15 @@
 }
 
 .lf-answers-hub__thumb svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: block;
   width: 30px;
   height: 30px;
-  margin: auto;
+  margin: 0;
   flex: none;
-  transform: translate(0, 0);
+  transform: translate(-50%, -50%);
   transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
@@ -652,9 +656,9 @@
 
 /* Micro-interaction: the article-specific symbol answers the card lift. */
 .lf-answers-hub__card:hover .lf-answers-hub__thumb svg {
-  transform: scale(1.08);
+  transform: translate(-50%, -50%) scale(1.08);
 }
 @media (prefers-reduced-motion: reduce) {
   .lf-answers-hub__thumb svg { transition: none; }
-  .lf-answers-hub__card:hover .lf-answers-hub__thumb svg { transform: none; }
+  .lf-answers-hub__card:hover .lf-answers-hub__thumb svg { transform: translate(-50%, -50%); }
 }

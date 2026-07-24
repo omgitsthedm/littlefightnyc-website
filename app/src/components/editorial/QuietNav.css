@@ -117,10 +117,16 @@
   display: none;
 }
 
-@media (min-width: 80rem) {
+@media (min-width: 64rem) {
   .lf-nav__primary {
     display: flex;
     align-items: center;
+    gap: 0;
+  }
+}
+
+@media (min-width: 80rem) {
+  .lf-nav__primary {
     gap: var(--lf-space-2);
   }
 }
@@ -137,6 +143,7 @@
   letter-spacing: -0.005em;
   color: var(--lf-bone-soft);
   text-decoration: none;
+  white-space: nowrap;
   border-radius: var(--lf-radius-sm);
   transition: color var(--lf-time-snappy) var(--lf-ease-standard);
 }
@@ -242,6 +249,28 @@
   white-space: nowrap;
 }
 
+.lf-nav__phone-icon {
+  flex: none;
+  color: var(--lf-fight);
+}
+
+.lf-nav__phone-short {
+  display: none;
+  font-family: var(--lf-sans);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+}
+
+@media (min-width: 64rem) and (max-width: 74.99rem) {
+  .lf-nav__phone-number {
+    display: none;
+  }
+
+  .lf-nav__phone-short {
+    display: inline;
+  }
+}
+
 /* Preserve the phone as a one-line action on 320px devices. */
 @media (max-width: 380px) {
   .lf-nav__inner {
@@ -252,6 +281,16 @@
   .lf-nav__phone-number { font-size: var(--lf-text-sm); }
   .lf-nav__phone { padding-inline: 0; }
   .lf-nav__toggle { margin-inline-start: 0; }
+}
+
+@media (max-width: 479px) {
+  .lf-nav__phone-number {
+    display: none;
+  }
+
+  .lf-nav__phone-short {
+    display: inline;
+  }
 }
 
 @media (min-width: 768px) {
@@ -280,9 +319,15 @@
     box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-@media (min-width: 80rem) {
+@media (min-width: 64rem) {
   .lf-nav__start {
     display: inline-flex;
+    margin-inline-start: var(--lf-space-2);
+  }
+}
+
+@media (min-width: 80rem) {
+  .lf-nav__start {
     margin-inline-start: var(--lf-space-5);
   }
 }
@@ -349,7 +394,7 @@
   outline-offset: 2px;
 }
 
-@media (min-width: 80rem) {
+@media (min-width: 64rem) {
   .lf-nav__toggle {
     display: none;
   }

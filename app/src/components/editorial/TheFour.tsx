@@ -1,112 +1,102 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { useScrollReveal } from "./useScrollReveal";
-import SiteInFourteen from "@/components/dataviz/SiteInFourteen";
-import WhoAnswers from "@/components/dataviz/WhoAnswers";
-import TheFreeRead from "@/components/dataviz/TheFreeRead";
-import MoneyLeaving from "@/components/dataviz/MoneyLeaving";
 import "./TheFour.css";
 
-/**
- * TheFour — the four things we do, each PROVEN by its living instrument.
- *
- * David's brief: the home page is four items of focus — Web Design, Tech
- * Support, Consulting, Personalized Software — organized so a first-time
- * visitor knows exactly who we are and what they get. Each pillar carries the
- * bespoke canvas instrument from its service page (same shared physics
- * harness — one consistent motion world across the whole site):
- *
- *   01 Web Design            → SiteInFourteen (a site assembles, ships day 14)
- *   02 Tech Support          → WhoAnswers (it breaks → a human answers, timed)
- *   03 Consulting            → TheFreeRead (findings sort into a ranked list)
- *   04 Personalized Software → MoneyLeaving (the monthly bills pile → owned)
- *
- * Alternating editorial layout (copy/instrument sides swap per row) on
- * desktop; stacked on phones. Every instrument pauses off-screen and plays a
- * settled frame under reduced motion — the harness handles all of it.
- */
-
-const PILLARS = [
+const PATHS = [
   {
-    name: "Custom Websites",
-    line: "Fast, clear, easy to find, and built around how your customers choose.",
+    name: "A website that earns trust",
+    situation: "People hear your name, search for you, and need a reason to call.",
+    outcome: "A fast custom site that sounds like the business, works on every phone, and is easy to find.",
     to: "/services/custom-local-websites/",
-    cta: "See custom websites",
-    Viz: SiteInFourteen,
+    cta: "See how websites work",
+    image: "storefronts-dawn",
+    alt: "New York storefronts opening at dawn",
   },
   {
-    name: "Broken Tech",
-    line: "When the register, Wi-Fi, booking, or email fails, we find the real problem.",
+    name: "Help when tech breaks",
+    situation: "The register, Wi-Fi, email, booking, or printer stops the day.",
+    outcome: "We find the real problem, fix it, and leave clear instructions.",
     to: "/services/it-support/",
     cta: "Get tech help",
-    Viz: WhoAnswers,
+    image: "restaurant-counter",
+    alt: "A restaurant counter set up for service",
   },
   {
-    name: "Free Consulting",
-    line: "We understand the setup, find what is slowing the business, and tell you what to fix first.",
+    name: "A free second opinion",
+    situation: "A vendor says you need more software, but the answer does not feel right.",
+    outcome: "We look at the whole setup and tell you what to keep, fix, or skip.",
     to: "/services/tech-consulting/",
-    cta: "Get a free review",
-    Viz: TheFreeRead,
+    cta: "Get a second opinion",
+    image: "shop-back-office",
+    alt: "A neighborhood shop back office with everyday business tools",
   },
   {
-    name: "Software You Own",
-    line: "When monthly software makes the work harder, we build the focused tool that fits.",
+    name: "Software that fits the work",
+    situation: "The monthly tool costs too much and still acts like a difficult spreadsheet.",
+    outcome: "We build the focused tool your team needs, and you own it.",
     to: "/services/business-systems/",
-    cta: "See owned software",
-    Viz: MoneyLeaving,
+    cta: "See software you own",
+    image: "salon-systems",
+    alt: "A salon work area with booking and payment tools",
   },
 ] as const;
 
-function Pillar({
-  pillar,
-  flip,
-  index,
-}: {
-  pillar: (typeof PILLARS)[number];
-  flip: boolean;
-  index: number;
-}) {
-  const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.15 });
-  const { Viz } = pillar;
+function PathImage({ image, alt }: { image: string; alt: string }) {
   return (
-    <div
-      ref={ref}
-      className={`lf-four__pillar${flip ? " lf-four__pillar--flip" : ""}${index === 0 ? " lf-four__pillar--primary" : ""}`}
-      data-reveal
-      style={{ ["--lf-i" as string]: index }}
-    >
-      <div className="lf-four__copy">
-        <h3 className="lf-four__name">{pillar.name}</h3>
-        <p className="lf-four__line">{pillar.line}</p>
-        <Link to={pillar.to} className="lf-four__cta">
-          {pillar.cta}
-          <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
-        </Link>
-      </div>
-      <div className="lf-four__viz">
-        <Viz />
-      </div>
-    </div>
+    <picture>
+      <source
+        srcSet={`/images/brand-scenes/${image}-480.webp 480w, /images/brand-scenes/${image}-640.webp 640w, /images/brand-scenes/${image}-900.webp 900w, /images/brand-scenes/${image}-1200.webp 1200w, /images/brand-scenes/${image}.webp 1672w`}
+        sizes="(min-width: 960px) 38vw, 100vw"
+        type="image/webp"
+      />
+      <img
+        src={`/images/brand-scenes/${image}-900.webp`}
+        width="900"
+        height="507"
+        loading="lazy"
+        decoding="async"
+        alt={alt}
+      />
+    </picture>
   );
 }
 
 export default function TheFour() {
-  const headRef = useScrollReveal<HTMLElement>({ threshold: 0.3 });
   return (
     <section className="lf-four" aria-labelledby="lf-four-title">
-      <header ref={headRef} className="lf-four__head" data-reveal>
-        <p className="lf-four__eyebrow">What we do</p>
+      <header className="lf-four__head">
+        <p className="lf-four__eyebrow">Start with the problem</p>
         <h2 id="lf-four-title" className="lf-four__title">
-          One firm. <span className="lf-four__em">Four ways we help.</span>
+          You do not need to know the tech word.
         </h2>
         <p className="lf-four__dek">
-          Start with the problem in front of you. We keep what works and change
-          only what earns its place.
+          Tell us what is getting in the way. We will show you the useful next
+          move, the cost, and what can stay exactly as it is.
         </p>
       </header>
-      <div className="lf-four__list">
-        {PILLARS.map((p, i) => (
-          <Pillar key={p.name} pillar={p} flip={i % 2 === 1} index={i} />
+
+      <div className="lf-four__grid">
+        {PATHS.map((path, index) => (
+          <article
+            className={`lf-four__path${index === 0 ? " lf-four__path--lead" : ""}`}
+            key={path.name}
+          >
+            <div className="lf-four__image">
+              <PathImage image={path.image} alt={path.alt} />
+              <span className="lf-four__number" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <div className="lf-four__copy">
+              <h3 className="lf-four__name">{path.name}</h3>
+              <p className="lf-four__situation">{path.situation}</p>
+              <p className="lf-four__outcome">{path.outcome}</p>
+              <Link className="lf-four__cta" to={path.to}>
+                {path.cta}
+                <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+              </Link>
+            </div>
+          </article>
         ))}
       </div>
     </section>

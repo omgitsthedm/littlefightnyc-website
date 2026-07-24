@@ -20,19 +20,35 @@ const orderedStudies = SHOWCASE_ORDER
   .map((slug) => caseStudies.find((study) => study.slug === slug))
   .filter((study): study is NonNullable<typeof study> => Boolean(study));
 
-export default function WorkShowcase() {
+export default function WorkShowcase({
+  mode = "featured",
+}: {
+  mode?: "featured" | "archive";
+}) {
+  const studies = mode === "featured"
+    ? orderedStudies.slice(0, 3)
+    : orderedStudies.slice(3);
+
   return (
-    <section className="lf-work-showcase" aria-labelledby="lf-work-showcase-title">
+    <section
+      className="lf-work-showcase"
+      aria-labelledby={`lf-work-showcase-${mode}-title`}
+    >
       <div className="lf-work-showcase__inner">
         <header className="lf-work-showcase__head">
-          <h2 id="lf-work-showcase-title">See the work. Skip the pitch.</h2>
+          <h2 id={`lf-work-showcase-${mode}-title`}>
+            {mode === "featured"
+              ? "See the work. Skip the pitch."
+              : "More work. Same clear read."}
+          </h2>
           <p>
-            Every project uses the same format: the problem, what changed, the
-            result, and what you can open.
+            {mode === "featured"
+              ? "Start with three public results, then step into the Lab and try what we are exploring next."
+              : "Every remaining project uses the same format: the problem, what changed, the result, and what you can open."}
           </p>
         </header>
-        <ProjectReviewGrid studies={orderedStudies} />
-        <ProjectMomentum variant="embedded" />
+        <ProjectReviewGrid studies={studies} />
+        {mode === "archive" && <ProjectMomentum variant="embedded" />}
       </div>
     </section>
   );

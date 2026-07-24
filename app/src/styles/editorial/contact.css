@@ -1,509 +1,486 @@
-/* Contact page — Fast Help expanded with editorial framing. */
-
-
-/* ============================================================
-   /contact/ — real content: response window, coverage map, FAQ.
-   ============================================================ */
-
-.lf-contact-start {
-  padding: var(--lf-space-7) var(--lf-margin-mobile);
+.lf-contact-page {
+  color: var(--lf-bone);
   background: var(--lf-ink);
+}
+
+.lf-contact-choice,
+.lf-contact-next,
+.lf-contact-ready {
+  padding: clamp(var(--lf-space-8), 7vw, var(--lf-space-9))
+    var(--lf-page-gutter);
+}
+
+.lf-contact-choice {
+  scroll-margin-top: 6rem;
   border-bottom: 1px solid var(--lf-hairline);
 }
 
-.lf-contact-start__inner {
-  width: 100%;
-  max-width: var(--lf-max-w);
+.lf-contact-choice__inner,
+.lf-contact-next__inner,
+.lf-contact-ready__inner {
+  width: min(100%, var(--lf-max-w));
   margin-inline: auto;
 }
 
-.lf-contact-start header {
-  max-width: 62ch;
-  margin-bottom: var(--lf-space-5);
+.lf-contact-choice__head,
+.lf-contact-next__head {
+  display: grid;
+  gap: var(--lf-space-3);
+  max-width: 62rem;
 }
 
-.lf-contact-start header p,
-.lf-contact-faq header p {
-  margin: 0 0 var(--lf-space-2);
+.lf-contact-choice__head > p:first-child,
+.lf-contact-next__head > p:first-child,
+.lf-contact-ready__eyebrow,
+.lf-contact-choice__route-top {
+  margin: 0;
   color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-xs);
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.lf-contact-start header h2,
-.lf-contact-faq header h2 {
+.lf-editorial .lf-contact-choice__head h2,
+.lf-editorial .lf-contact-next__head h2,
+.lf-editorial .lf-contact-ready__copy h2 {
   margin: 0;
   color: var(--lf-bone);
   font-family: var(--lf-heading);
-  font-size: clamp(var(--lf-text-lg), 5vw, var(--lf-text-xl));
   font-weight: var(--lf-display-weight);
   letter-spacing: var(--lf-display-tracking);
-  line-height: 1;
+  text-wrap: balance;
 }
 
-.lf-contact-start__routes {
+.lf-editorial .lf-contact-choice__head h2 {
+  max-width: 14ch;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.95;
+}
+
+.lf-contact-choice__head > p:last-child,
+.lf-contact-next__head > p:last-child,
+.lf-contact-ready__copy > p,
+.lf-contact-ready__coverage p {
+  max-width: var(--lf-measure-reading);
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-base);
+  line-height: 1.6;
+}
+
+.lf-contact-choice__routes {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--lf-space-3);
+  margin-top: clamp(var(--lf-space-6), 5vw, var(--lf-space-8));
+  border-block: 1px solid var(--lf-hairline);
 }
 
-.lf-contact-start__routes a {
+.lf-editorial .lf-contact-choice__route {
+  position: relative;
   min-width: 0;
-  min-height: 44px;
-  padding: var(--lf-space-4);
+  min-height: 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-7));
   color: var(--lf-bone);
-  background: var(--lf-paper-2);
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
+  background: transparent;
   text-decoration: none;
   transition:
-    border-color var(--m-signal-ms) var(--m-signal-ease),
-    background-color var(--m-signal-ms) var(--m-signal-ease),
-    transform var(--m-signal-ms) var(--m-signal-ease);
+    color var(--m-signal-ms) var(--m-signal-ease),
+    background-color var(--m-signal-ms) var(--m-signal-ease);
 }
 
-.lf-contact-start__routes a:first-child {
+.lf-editorial .lf-contact-choice__route + .lf-contact-choice__route {
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-contact-choice__route--primary {
   color: var(--lf-ink);
   background: var(--lf-fight);
-  border-color: var(--lf-fight);
 }
 
-.lf-contact-start__routes a:hover,
-.lf-contact-start__routes a:focus-visible {
-  border-color: var(--lf-fight);
-  transform: translateY(-2px);
+.lf-contact-choice__route-top {
+  display: inline-flex;
+  gap: var(--lf-space-2);
+  align-items: center;
 }
 
-.lf-contact-start__routes a:not(:first-child):hover,
-.lf-contact-start__routes a:not(:first-child):focus-visible {
-  background: var(--lf-card-bg);
-}
-
-.lf-contact-start__routes a:focus-visible {
-  outline: 2px solid var(--lf-blue);
-  outline-offset: 3px;
-}
-
-.lf-contact-start__routes span,
-.lf-contact-start__routes strong,
-.lf-contact-start__routes small {
-  display: block;
-  overflow-wrap: anywhere;
-}
-
-.lf-contact-start__routes span {
-  margin-bottom: var(--lf-space-3);
-  color: var(--lf-fight);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-xs);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.lf-contact-start__routes a:first-child span {
+.lf-contact-choice__route--primary .lf-contact-choice__route-top {
   color: currentColor;
 }
 
-.lf-contact-start__routes strong {
+.lf-contact-choice__route > strong {
+  max-width: 16ch;
+  margin-top: var(--lf-space-5);
   font-family: var(--lf-heading);
-  font-size: var(--lf-text-md);
-  line-height: 1.12;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1;
+  overflow-wrap: anywhere;
 }
 
-.lf-contact-start__routes small {
-  margin-top: var(--lf-space-2);
+.lf-contact-choice__route > small {
+  max-width: 39ch;
+  margin-top: var(--lf-space-4);
   color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
   font-size: var(--lf-text-sm);
   line-height: 1.5;
 }
 
-.lf-contact-start__routes a:first-child small {
-  color: color-mix(in srgb, var(--lf-ink) 76%, transparent);
+.lf-contact-choice__route--primary > small {
+  color: color-mix(in srgb, var(--lf-ink) 78%, transparent);
 }
 
-.lf-contact-window,
-.lf-contact-map {
-  padding: clamp(2.5rem, 6vw, 5rem) var(--lf-margin-mobile);
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-@media (min-width: 768px) {
-  .lf-contact-window,
-  .lf-contact-map {
-    padding-inline: var(--lf-margin-tablet);
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-contact-window,
-  .lf-contact-map {
-    padding-inline: var(--lf-margin-desktop);
-  }
-}
-
-.lf-contact-window__inner,
-.lf-contact-map__inner {
-  max-width: var(--lf-max-w);
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-.lf-contact-window__head {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.6rem, 1.2vw, 1rem);
-}
-
-.lf-contact-window__eyebrow {
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--lf-fight);
-  margin: 0;
-}
-
-.lf-contact-window__title {
-  font-family: var(--lf-body);
-  font-weight: var(--lf-display-weight);
-  letter-spacing: var(--lf-display-tracking);
-  font-size: clamp(1.9rem, 3.6vw, 3.2rem);
-  line-height: 1.02;
-  color: var(--lf-bone);
-  margin: 0;
-}
-
-.lf-contact-map__dek {
-  font-size: var(--lf-text-base);
-  line-height: 1.55;
-  color: var(--lf-bone-soft);
-  max-width: 52ch;
-  margin: 0;
-}
-
-.lf-contact-window__note {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6em;
-  min-width: 0;
-  margin: 0;
-  font-size: var(--lf-text-sm);
-  color: var(--lf-bone-soft);
-  overflow-wrap: anywhere;
-}
-
-.lf-contact-window__note svg {
-  color: var(--lf-fight);
-  flex: none;
-}
-
-/* The response path and the four promises belong to one decision surface.
-   Pair them on wide screens instead of stretching two sparse bands across
-   separate viewports. */
-.lf-contact-operations {
-  padding: var(--lf-space-7) var(--lf-margin-mobile);
-  background: var(--lf-ink);
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-.lf-contact-process {
-  padding: var(--lf-space-4) var(--lf-margin-mobile) var(--lf-space-7);
-  background: var(--lf-ink);
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-.lf-contact-process__head {
-  width: 100%;
-  max-width: var(--lf-max-w);
-  margin: 0 auto var(--lf-space-4);
-}
-
-.lf-contact-process__head p {
-  margin: 0 0 var(--lf-space-2);
-  color: var(--lf-fight);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-xs);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.lf-contact-process__head h2 {
-  max-width: 18ch;
-  margin: 0;
-  color: var(--lf-bone);
-  font-family: var(--lf-heading);
-  font-size: clamp(var(--lf-text-lg), 5vw, var(--lf-text-xl));
-  font-weight: var(--lf-display-weight);
-  line-height: 1;
-}
-
-.lf-contact-process > details {
-  width: 100%;
-  max-width: var(--lf-max-w);
-  margin-inline: auto;
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-}
-
-.lf-contact-process > details > summary,
-.lf-contact-map__coverage > summary,
-.lf-contact-faq__list summary {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  column-gap: var(--lf-space-3);
-  min-height: 64px;
-  padding: var(--lf-space-4);
-  color: var(--lf-bone);
-  cursor: pointer;
-  list-style: none;
-}
-
-.lf-contact-process summary::-webkit-details-marker,
-.lf-contact-map__coverage summary::-webkit-details-marker,
-.lf-contact-faq__list summary::-webkit-details-marker {
-  display: none;
-}
-
-.lf-contact-process summary > span,
-.lf-contact-map__coverage summary > span {
-  grid-column: 1;
-  color: var(--lf-fight);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-xs);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.lf-contact-process summary > strong,
-.lf-contact-map__coverage summary > strong {
-  grid-column: 1;
-  margin: 0;
-  color: var(--lf-bone);
-  font-family: var(--lf-heading);
-  font-size: var(--lf-text-md);
-  font-weight: 600;
-  line-height: 1.15;
-}
-
-.lf-contact-process summary > i {
-  grid-row: 1;
-}
-
-.lf-contact-process summary > i,
-.lf-contact-map__coverage summary > i,
-.lf-contact-faq__list summary > i {
-  position: relative;
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  width: 44px;
-  height: 44px;
-  border: 1px solid var(--lf-hairline);
-  border-radius: 50%;
-}
-
-.lf-contact-process summary > i::before,
-.lf-contact-process summary > i::after,
-.lf-contact-map__coverage summary > i::before,
-.lf-contact-map__coverage summary > i::after,
-.lf-contact-faq__list summary > i::before,
-.lf-contact-faq__list summary > i::after {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 14px;
-  height: 2px;
-  background: var(--lf-fight);
-  border-radius: var(--lf-radius-pill);
-  content: "";
-  transform: translate(-50%, -50%);
-}
-
-.lf-contact-process summary > i::after,
-.lf-contact-map__coverage summary > i::after,
-.lf-contact-faq__list summary > i::after {
-  transform: translate(-50%, -50%) rotate(90deg);
+.lf-contact-choice__route > svg:last-child {
+  margin-top: auto;
+  padding-top: var(--lf-space-5);
+  box-sizing: content-box;
   transition: transform var(--m-signal-ms) var(--m-signal-ease);
 }
 
-.lf-contact-process details[open] > summary > i::after,
-.lf-contact-map__coverage[open] > summary > i::after,
-.lf-contact-faq__list details[open] > summary > i::after {
-  transform: translate(-50%, -50%) rotate(0);
-}
-
-.lf-contact-process summary:focus-visible,
-.lf-contact-map__coverage summary:focus-visible,
-.lf-contact-faq__list summary:focus-visible {
-  outline: 2px solid var(--lf-fight);
-  outline-offset: 3px;
-}
-
-.lf-contact-process .lf-contact-operations {
-  padding: 0;
-  border-bottom: 0;
-}
-
-.lf-contact-process .lf-contact-operations__inner {
-  padding: 0 var(--lf-space-4) var(--lf-space-4);
-}
-
-.lf-contact-operations__inner {
-  width: 100%;
-  max-width: var(--lf-max-w);
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--lf-space-4);
-}
-
-.lf-contact-operations__inner > .lf-contact-window,
-.lf-contact-operations__inner > .lf-tpi {
-  min-width: 0;
-  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
+.lf-editorial .lf-contact-choice__route:hover,
+.lf-editorial .lf-contact-choice__route:focus-visible {
   background: var(--lf-paper);
 }
 
-.lf-contact-operations .lf-contact-window__inner,
-.lf-contact-operations .lf-tpi__inner {
-  max-width: none;
+.lf-editorial .lf-contact-choice__route--primary:hover,
+.lf-editorial .lf-contact-choice__route--primary:focus-visible {
+  color: var(--lf-ink);
+  background: var(--lf-fight-hover);
 }
 
-@media (min-width: 768px) {
-  .lf-contact-operations {
-    padding-inline: var(--lf-margin-tablet);
-  }
-
-  .lf-contact-process,
-  .lf-contact-start {
-    padding-inline: var(--lf-margin-tablet);
-  }
-
-  .lf-contact-start__routes {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lf-contact-start__routes a:last-child {
-    grid-column: 1 / -1;
-  }
+.lf-contact-choice__route:hover > svg:last-child,
+.lf-contact-choice__route:focus-visible > svg:last-child {
+  transform: translateX(4px);
 }
 
-@media (min-width: 900px) {
-  .lf-contact-operations__inner {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  }
+.lf-editorial .lf-contact-choice__route:focus-visible {
+  z-index: 1;
+  outline: 3px solid var(--lf-fight-ring);
+  outline-offset: -3px;
 }
 
-@media (min-width: 1024px) {
-  .lf-contact-start__routes {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .lf-contact-start__routes a:last-child {
-    grid-column: auto;
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-contact-operations {
-    padding-inline: var(--lf-margin-desktop);
-  }
-
-  .lf-contact-process,
-  .lf-contact-start {
-    padding-inline: var(--lf-margin-desktop);
-  }
-}
-
-/* ─── The Direct Line band ─────────────────────────────────────── */
-
-.lf-contact-line {
-  padding: var(--lf-space-8) var(--lf-margin-mobile) 0;
-  background: var(--lf-ink);
-}
-
-.lf-contact-line__inner {
-  max-width: 1080px;
-  margin-inline: auto;
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-  padding: var(--lf-space-5);
-}
-
-.lf-contact-map__coverage {
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-}
-
-.lf-contact-map__coverage > div {
-  min-width: 0;
-  padding: 0 var(--lf-space-4) var(--lf-space-4);
-}
-
-.lf-contact-faq {
-  margin-top: var(--lf-space-4);
-}
-
-.lf-contact-faq header {
-  max-width: 56ch;
-  margin-bottom: var(--lf-space-4);
-}
-
-.lf-contact-faq__list {
-  border-top: 1px solid var(--lf-hairline);
-}
-
-.lf-contact-faq__list > details {
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-.lf-contact-faq__list summary > span {
-  font-family: var(--lf-heading);
-  font-size: var(--lf-text-md);
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.lf-contact-faq__list summary > i {
-  grid-row: 1;
-}
-
-.lf-contact-faq__list details > p {
-  max-width: 64ch;
-  margin: 0;
-  padding: 0 calc(44px + var(--lf-space-3)) var(--lf-space-4) var(--lf-space-4);
+.lf-contact-choice__email {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-2);
+  align-items: center;
+  margin: var(--lf-space-5) 0 0;
   color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
   font-size: var(--lf-text-base);
-  line-height: 1.65;
+}
+
+.lf-contact-choice__email svg {
+  color: var(--lf-fight);
+}
+
+.lf-contact-choice__email a,
+.lf-contact-ready__coverage a {
+  color: var(--lf-bone);
+  font-weight: 700;
+  text-decoration-color: var(--lf-fight);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
   overflow-wrap: anywhere;
 }
 
-@media (min-width: 768px) {
-  .lf-contact-line { padding-inline: var(--lf-margin-tablet); }
+.lf-contact-choice__email a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 
-@media (min-width: 1280px) {
-  .lf-contact-line { padding-inline: var(--lf-margin-desktop); }
+.lf-contact-choice__email a:hover,
+.lf-contact-ready__coverage a:hover {
+  color: var(--lf-fight);
+}
+
+.lf-contact-choice__email a:focus-visible,
+.lf-contact-ready__coverage a:focus-visible {
+  outline: 3px solid var(--lf-fight-ring);
+  outline-offset: 3px;
+}
+
+.lf-contact-next {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--lf-blue) 6%, transparent),
+      transparent 44%
+    ),
+    var(--lf-paper-2);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-contact-next__head h2 {
+  max-width: 15ch;
+  font-size: clamp(2.75rem, 6vw, 5.8rem);
+  line-height: 0.96;
+}
+
+.lf-contact-next__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: clamp(var(--lf-space-7), 6vw, var(--lf-space-9)) 0 0;
+  padding: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  list-style: none;
+  counter-reset: contact-step;
+}
+
+.lf-contact-next__steps::after {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 2px;
+  background: var(--lf-fight);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.lf-contact-next__steps > li {
+  min-width: 0;
+  padding: var(--lf-space-5) 0 var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
+  counter-increment: contact-step;
+}
+
+.lf-contact-next__steps > li::before {
+  display: block;
+  margin-bottom: var(--lf-space-5);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  content: "0" counter(contact-step);
+}
+
+.lf-editorial .lf-contact-next__steps h3 {
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-xl);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.lf-contact-next__steps p {
+  max-width: 39ch;
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-base);
+  line-height: 1.55;
+}
+
+.lf-contact-next__promises {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin: var(--lf-space-7) 0 0;
+  border-block: 1px solid var(--lf-hairline);
+}
+
+.lf-contact-next__promises > div {
+  min-width: 0;
+  padding: var(--lf-space-5) 0;
+}
+
+.lf-contact-next__promises > div + div {
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-contact-next__promises dt {
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-xl);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lf-contact-next__promises dd {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-sm);
+  line-height: 1.45;
+}
+
+.lf-contact-ready {
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-contact-ready__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-6);
+  align-items: center;
+}
+
+.lf-contact-ready__figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.lf-contact-ready__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--lf-radius-card);
+}
+
+.lf-contact-ready__figure figcaption {
+  margin-top: var(--lf-space-3);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+}
+
+.lf-contact-ready__copy {
+  min-width: 0;
+}
+
+.lf-contact-ready__eyebrow {
+  margin-bottom: var(--lf-space-3);
+}
+
+.lf-editorial .lf-contact-ready__copy h2 {
+  max-width: 13ch;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  line-height: 0.96;
+}
+
+.lf-contact-ready__copy > p {
+  margin-top: var(--lf-space-5);
+}
+
+.lf-contact-ready__safety,
+.lf-contact-ready__coverage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  align-items: start;
+  margin: var(--lf-space-6) 0 0;
+  padding-top: var(--lf-space-5);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-contact-ready__safety {
+  color: var(--lf-bone);
+}
+
+.lf-contact-ready__safety svg,
+.lf-contact-ready__coverage > svg {
+  margin-top: 0.18em;
+  color: var(--lf-fight);
+}
+
+.lf-contact-ready__coverage p {
+  margin: 0;
+}
+
+@media (min-width: 48rem) {
+  .lf-contact-choice__routes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-editorial .lf-contact-choice__route + .lf-contact-choice__route {
+    border-top: 0;
+    border-left: 1px solid var(--lf-hairline);
+  }
+
+  .lf-editorial .lf-contact-choice__route:last-child {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--lf-hairline);
+    border-left: 0;
+  }
+
+  .lf-contact-next__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-contact-next__steps > li {
+    padding-inline: var(--lf-space-5);
+  }
+
+  .lf-contact-next__steps > li + li {
+    border-left: 1px solid var(--lf-hairline);
+  }
+
+  .lf-contact-next__promises {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-contact-next__promises > div {
+    padding-inline: var(--lf-space-5);
+  }
+
+  .lf-contact-next__promises > div + div {
+    border-top: 0;
+    border-left: 1px solid var(--lf-hairline);
+  }
+}
+
+@media (min-width: 64rem) {
+  .lf-contact-choice__routes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lf-editorial .lf-contact-choice__route:last-child {
+    grid-column: auto;
+    border-top: 0;
+    border-left: 1px solid var(--lf-hairline);
+  }
+
+  .lf-contact-ready__inner {
+    grid-template-columns: minmax(0, 7fr) minmax(24rem, 5fr);
+    gap: clamp(var(--lf-space-7), 7vw, var(--lf-space-10));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lf-contact-next__steps::after {
+    animation: lf-contact-next-line 850ms var(--m-settle-ease) 160ms both;
+  }
+}
+
+@keyframes lf-contact-next-line {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-contact-start__routes a,
-  .lf-contact-process summary > i::after,
-  .lf-contact-map__coverage summary > i::after,
-  .lf-contact-faq__list summary > i::after {
+  .lf-contact-choice__route,
+  .lf-contact-choice__route > svg:last-child {
     transition: none;
+  }
+
+  .lf-contact-choice__route:hover > svg:last-child,
+  .lf-contact-choice__route:focus-visible > svg:last-child {
+    transform: none;
+  }
+
+  .lf-contact-next__steps::after {
+    transform: scaleX(1);
+  }
+}
+
+@media (forced-colors: active) {
+  .lf-editorial .lf-contact-choice__route--primary {
+    color: Canvas;
+    background: CanvasText;
+  }
+
+  .lf-contact-next__steps::after {
+    background: Highlight;
   }
 }

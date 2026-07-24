@@ -1,186 +1,216 @@
 import { Link } from "react-router-dom";
-import { MessageSquare, UserRound } from "lucide-react";
+import {
+  ArrowRight,
+  ClipboardCheck,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  ShieldCheck,
+} from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
-import QuietContact from "@/components/editorial/QuietContact";
-import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
-import TheDirectLine from "@/components/dataviz/TheDirectLine";
-import TimelineStrip from "@/components/dataviz/TimelineStrip";
-import TimePromiseInstrument from "@/components/editorial/TimePromiseInstrument";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/contact.css";
 
-const CONTACT_FAQ = [
+const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}+16463600318`;
+
+const NEXT_STEPS = [
   {
-    question: "How fast will you answer?",
-    answer:
-      "From 9am to 9pm New York time, a real person picks up. If you leave a message, we call back within 2 hours.",
+    title: "Tell us what changed",
+    copy: "Use ordinary words. A website address, screenshot, bill, or the thing a customer could not do is enough to begin.",
   },
   {
-    question: "Does the first talk cost money?",
-    answer:
-      "No. Consulting is always free. If you do not need us, we will say so and point you the right way.",
+    title: "We check the path",
+    copy: "We look at the surrounding website, account, tool, or handoff before we name the fix.",
   },
   {
-    question: "What happens after I write to you?",
-    answer:
-      "We read it the same day. Then we call, text, or email you back — whichever you asked for. No spam, no pressure, no long forms.",
+    title: "You get a clear next move",
+    copy: "We explain what to keep, what needs attention, and what the work would involve before anything changes.",
   },
-];
+] as const;
+
+const RESPONSE_PROMISES = [
+  { value: "Free", label: "Consulting, always" },
+  { value: "2 hours", label: "Missed-call callback, 9am-9pm ET" },
+  { value: "24 hours", label: "Urgent on-site help" },
+] as const;
 
 export default function Contact() {
-  const windowRef = useScrollReveal<HTMLDivElement>({ threshold: 0.15 });
-  const mapRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+  const backOfficeScene = "/images/brand-scenes/shop-back-office.webp";
 
   return (
-    <>
+    <div className="lf-contact-page">
       <PageHero
         eyebrow="Contact"
         icon={MessageSquare}
         title={
           <>
-            Tell us what's<br />
-            {" "}
-            <span className="lf-em">going on.</span>
+            Tell us what feels <span className="lf-em">stuck.</span>
           </>
         }
-        dek="Broken today? Call. Messy but not urgent? Start a Tech Audit. You do not need the technical name for the problem. Tell us what the day looks like and we will help name the next move."
+        dek="Call or text now. For a website, send the address. You do not need the technical name."
         image={{
           src: "/assets/hero-contact-door.webp",
-          alt: "A warm-lit shop doorway glowing at dusk in New York — the door is open",
+          alt: "A warm-lit shop doorway open at dusk in New York",
           width: 1600,
           height: 1200,
         }}
       />
 
-      <section className="lf-contact-start" aria-labelledby="lf-contact-start-title">
-        <div className="lf-contact-start__inner">
-          <header>
-            <p>Choose the fastest path</p>
-            <h2 id="lf-contact-start-title">Start with what is happening now.</h2>
-          </header>
-
-          <nav className="lf-contact-start__routes" aria-label="Ways to contact Little Fight NYC">
-            <a href="tel:+16463600318">
-              <span>Broken today</span>
-              <strong>Call (646) 360-0318</strong>
-              <small>Best when work, sales, access, or customers are blocked.</small>
-            </a>
-            <Link to="/tech-audit/">
-              <span>Messy, not urgent</span>
-              <strong>Start a free Tech Audit</strong>
-              <small>Best when the problem crosses the website, tools, bills, or workflow.</small>
-            </Link>
-            <a href="#contact">
-              <span>Something else</span>
-              <strong>Choose call, text, email, or form</strong>
-              <small>Use the channel that is easiest from where you are.</small>
-            </a>
-          </nav>
-        </div>
-      </section>
-
-      {/* The page's promise, drawn as a race: their phone maze vs our one
-          straight orange line. */}
-      <section className="lf-contact-line" aria-label="No phone tree — a real person answers">
-        <div className="lf-contact-line__inner">
-          <TheDirectLine />
-        </div>
-      </section>
-
-      <section className="lf-contact-process" aria-labelledby="lf-contact-process-title">
-        <header className="lf-contact-process__head">
-          <p>Response promise</p>
-          <h2 id="lf-contact-process-title">What happens after you reach out</h2>
-        </header>
-        <details>
-          <summary>
-            <strong>Open the response timeline and promises</strong>
-            <i aria-hidden="true" />
-          </summary>
-
-          <div className="lf-contact-operations">
-            <div className="lf-contact-operations__inner">
-              {/* What happens when you reach out — the response window, drawn. */}
-              <section className="lf-contact-window" aria-labelledby="lf-contact-window-title">
-                <div ref={windowRef} className="lf-contact-window__inner" data-reveal>
-                  <header className="lf-contact-window__head">
-                    <p className="lf-contact-window__eyebrow">What happens next</p>
-                    <h2 id="lf-contact-window-title" className="lf-contact-window__title">
-                      You reach out. We set the next move.
-                    </h2>
-                  </header>
-
-                  <TimelineStrip
-                    label="What happens after you contact Little Fight NYC"
-                    summary="You call, text, email, or send the form. From 9am to 9pm New York time, Little Fight NYC reviews the situation and follows up. If you leave a message, we return it within 2 hours. Consulting is always free."
-                    beats={[
-                      { label: "You reach out", sub: "Call, text, email, or form" },
-                      { label: "Context reviewed", sub: "9am-9pm ET" },
-                      { label: "Callback in 2 hours", sub: "If we miss you", marker: true },
-                    ]}
-                    badge="Consulting is free"
-                    vertical
-                  />
-
-                  <p className="lf-contact-window__note">
-                    <UserRound size={16} strokeWidth={2} aria-hidden="true" />
-                    No phone tree. No ticket maze. Start with the problem and get a clear path forward.
-                  </p>
-                </div>
-              </section>
-
-              {/* The four promises against a live 24h NYC clock. */}
-              <TimePromiseInstrument />
-            </div>
-          </div>
-        </details>
-      </section>
-
-      {/* Where we work — the coverage map. */}
-      <section className="lf-contact-map" aria-labelledby="lf-contact-map-title">
-        <div ref={mapRef} className="lf-contact-map__inner" data-reveal>
-          <header className="lf-contact-window__head">
-            <p className="lf-contact-window__eyebrow">Where we work</p>
-            <h2 id="lf-contact-map-title" className="lf-contact-window__title">
-              Close enough to show up.
-            </h2>
-            <p className="lf-contact-map__dek">
-              We are based in Manhattan and work across these neighborhoods.
-              When something breaks, we can be on site within 24 hours.
+      <section
+        id="contact"
+        className="lf-contact-choice"
+        aria-labelledby="lf-contact-choice-title"
+      >
+        <div className="lf-contact-choice__inner">
+          <header className="lf-contact-choice__head">
+            <p>Start here</p>
+            <h2 id="lf-contact-choice-title">Pick the easiest way to begin.</h2>
+            <p>
+              No account. No phone tree. No perfect brief. Choose the option
+              that matches what is happening today.
             </p>
           </header>
-          <details className="lf-contact-map__coverage">
-            <summary>
-              <span>Neighborhood coverage</span>
-              <strong>Open the service map</strong>
-              <i aria-hidden="true" />
-            </summary>
-            <div>
-              <MiniMapNYC compact />
-            </div>
-          </details>
 
-          <section className="lf-contact-faq" aria-labelledby="lf-contact-faq-title">
-            <header>
-              <p>Before you call</p>
-              <h2 id="lf-contact-faq-title">Three quick answers</h2>
-            </header>
-            <div className="lf-contact-faq__list">
-              {CONTACT_FAQ.map((item) => (
-                <details key={item.question}>
-                  <summary>
-                    <span>{item.question}</span>
-                    <i aria-hidden="true" />
-                  </summary>
-                  <p>{item.answer}</p>
-                </details>
-              ))}
-            </div>
-          </section>
+          <nav className="lf-contact-choice__routes" aria-label="Ways to contact Little Fight NYC">
+            <Link
+              className="lf-contact-choice__route lf-contact-choice__route--primary"
+              to="/tech-audit/?intent=website&source=contact"
+              data-lf-event="website_plan_intent"
+            >
+              <span className="lf-contact-choice__route-top">
+                <ClipboardCheck size={22} strokeWidth={1.9} aria-hidden="true" />
+                Website review
+              </span>
+              <strong>Send us your website</strong>
+              <small>
+                Get a free first read on what to keep, what is unclear, and what
+                should change first.
+              </small>
+              <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+            </Link>
+
+            <a className="lf-contact-choice__route" href="tel:+16463600318">
+              <span className="lf-contact-choice__route-top">
+                <Phone size={22} strokeWidth={1.9} aria-hidden="true" />
+                Call
+              </span>
+              <strong>(646) 360-0318</strong>
+              <small>
+                Best when email, booking, payments, Wi-Fi, access, or customers
+                are blocked now.
+              </small>
+              <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+            </a>
+
+            <a className="lf-contact-choice__route" href={SMS_URL}>
+              <span className="lf-contact-choice__route-top">
+                <MessageSquare size={22} strokeWidth={1.9} aria-hidden="true" />
+                Text
+              </span>
+              <strong>(646) 360-0318</strong>
+              <small>
+                Best when you are at the counter and need to send a short note
+                or screenshot.
+              </small>
+              <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+            </a>
+          </nav>
+
+          <p className="lf-contact-choice__email">
+            <Mail size={19} strokeWidth={1.9} aria-hidden="true" />
+            Prefer email?{" "}
+            <a
+              className="lf-contact-choice__email-link"
+              href="mailto:hello@littlefightnyc.com"
+            >
+              hello@littlefightnyc.com
+            </a>
+          </p>
         </div>
       </section>
 
-      <QuietContact />
-    </>
+      <section className="lf-contact-next" aria-labelledby="lf-contact-next-title">
+        <div className="lf-contact-next__inner">
+          <header className="lf-contact-next__head">
+            <p>What happens next</p>
+            <h2 id="lf-contact-next-title">
+              A short conversation. A clear next move.
+            </h2>
+            <p>
+              You stay in control. We explain the problem and the options
+              before any paid work or system change begins.
+            </p>
+          </header>
+
+          <ol className="lf-contact-next__steps">
+            {NEXT_STEPS.map((step) => (
+              <li key={step.title}>
+                <h3>{step.title}</h3>
+                <p>{step.copy}</p>
+              </li>
+            ))}
+          </ol>
+
+          <dl className="lf-contact-next__promises" aria-label="Response promises">
+            {RESPONSE_PROMISES.map((promise) => (
+              <div key={promise.label}>
+                <dt>{promise.value}</dt>
+                <dd>{promise.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="lf-contact-ready" aria-labelledby="lf-contact-ready-title">
+        <div className="lf-contact-ready__inner">
+          <figure className="lf-contact-ready__figure">
+            <img
+              src={backOfficeScene}
+              {...responsiveImageProps(
+                backOfficeScene,
+                "(min-width: 1024px) 48vw, 100vw",
+                [480, 640, 900, 1200],
+              )}
+              alt="A small shop back office with inventory notes, labels, and connected devices"
+              width={1672}
+              height={941}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Illustrative business environment. Not client evidence.</figcaption>
+          </figure>
+
+          <div className="lf-contact-ready__copy">
+            <p className="lf-contact-ready__eyebrow">Bring what you have</p>
+            <h2 id="lf-contact-ready-title">A screenshot is enough to start.</h2>
+            <p>
+              If you have the website address, the exact error, a recent bill,
+              or the time the problem happened, send it. If you do not, tell us
+              what you or the customer tried to do.
+            </p>
+
+            <p className="lf-contact-ready__safety">
+              <ShieldCheck size={21} strokeWidth={1.9} aria-hidden="true" />
+              Never send passwords, recovery codes, payment details, or private
+              customer information.
+            </p>
+
+            <div className="lf-contact-ready__coverage">
+              <MapPin size={21} strokeWidth={1.9} aria-hidden="true" />
+              <p>
+                Based in Manhattan and working across New York City. When an
+                urgent problem needs hands, on-site help is available within 24
+                hours.{" "}
+                <Link className="lf-contact-ready__coverage-link" to="/areas/">
+                  See where we work.
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

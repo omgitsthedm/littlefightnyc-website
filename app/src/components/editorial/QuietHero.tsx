@@ -82,8 +82,9 @@ export default function QuietHero() {
 
         <div className="lf-hero__brief">
           <p>
-            Fast, findable websites. Urgent tech help. Software you own when
-            monthly tools cost too much and make the work harder.
+            Websites customers can find. Help when technology breaks. Focused
+            tools you own. We keep what works and explain every step in plain
+            English.
           </p>
         </div>
 
@@ -96,16 +97,16 @@ export default function QuietHero() {
           >
             <Globe2 size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
-              <strong>Plan my website</strong>
-              <span>Free review. Clear next step.</span>
+              <strong>Get my website plan</strong>
+              <span>Show us what you have. The first look is free.</span>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
           <a className="lf-hero__action lf-hero__action--support" href="tel:+16463600318">
             <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
-              <strong>Fix broken tech</strong>
-              <span>Call (646) 360-0318</span>
+              <strong>Call about broken tech</strong>
+              <span>(646) 360-0318 · A person answers.</span>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </a>

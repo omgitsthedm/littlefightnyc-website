@@ -22,7 +22,7 @@ export default function StudioDetail() {
   return (
     <>
       <PageHero
-        eyebrow={`Studio · ${project.kind}`}
+        eyebrow={`Working software · ${project.kind}`}
         icon={Sparkles}
         title={<>{project.name}</>}
         dek={project.oneline}
@@ -53,16 +53,12 @@ export default function StudioDetail() {
                 {project.status}
               </p>
             </div>
-            <div className="lf-studio-detail__meta-item">
-              <p className="lf-studio-detail__meta-label">Stack</p>
-              <p className="lf-studio-detail__meta-value">{project.stack.join(" · ")}</p>
-            </div>
             {project.external && (
               <div className="lf-studio-detail__meta-item">
-                <p className="lf-studio-detail__meta-label">Live</p>
+                <p className="lf-studio-detail__meta-label">Try it</p>
                 <p className="lf-studio-detail__meta-value">
                   <a className="lf-studio-detail__live" href={project.external} target="_blank" rel="noopener noreferrer">
-                    Visit ↗
+                    Open the project ↗
                   </a>
                 </p>
               </div>
@@ -73,7 +69,7 @@ export default function StudioDetail() {
             <p className="lf-case-detail__byline">
               <span>Little Fight NYC</span>
               <span aria-hidden="true"> · </span>
-              <span>From the Studio</span>
+              <span>Built around a real job</span>
             </p>
 
             <EditorialBody dropcap>
@@ -89,7 +85,7 @@ export default function StudioDetail() {
       {related.length > 0 && (
         <section className="lf-case-detail-related">
           <div className="lf-case-detail-related__inner">
-            <p className="lf-case-detail-related__label">More from the Studio</p>
+            <p className="lf-case-detail-related__label">More working tools</p>
             <ol className="lf-case-detail-related__list">
               {related.map((r, i) => (
                 <li key={r.slug}>
@@ -108,7 +104,10 @@ export default function StudioDetail() {
         </section>
       )}
 
-      <QuietContact />
+      <QuietContact
+        heading="Does your software make the work harder?"
+        lede="Show us the spreadsheet, subscription, or repeated task. We will tell you whether a focused tool is worth building."
+      />
     </>
   );
 }

@@ -7,10 +7,10 @@ import { useOpenNow } from "@/lib/openNow";
 import "./QuietNav.css";
 
 const NAV_LINKS = [
-  { label: "Services", to: "/services/" },
-  { label: "Examples", to: "/examples/" },
+  { label: "What we fix", to: "/services/" },
+  { label: "Work", to: "/examples/" },
   { label: "About", to: "/about/" },
-  { label: "Library", to: "/library/" },
+  { label: "Answers", to: "/library/" },
   { label: "Contact", to: "/contact/" },
 ] as const;
 
@@ -59,6 +59,18 @@ export default function QuietNav() {
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
+  }, []);
+
+  // The mobile drawer cannot survive into the desktop layout. Close it as
+  // soon as a resize or device rotation crosses the toggle breakpoint so the
+  // page never remains scroll-locked or inert without a visible close button.
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const closeAtDesktop = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", closeAtDesktop);
+    return () => desktop.removeEventListener("change", closeAtDesktop);
   }, []);
 
   // While open: Escape closes (returns focus to the toggle), and Tab is
@@ -154,6 +166,8 @@ export default function QuietNav() {
             align="right"
             ariaLabel="Call or text (646) 360-0318"
           >
+            <Phone className="lf-nav__phone-icon" size={17} strokeWidth={1.9} aria-hidden="true" />
+            <span className="lf-nav__phone-short">Call</span>
             <span className="lf-nav__phone-number">(646) 360-0318</span>
           </PhoneAction>
 
@@ -163,7 +177,7 @@ export default function QuietNav() {
             data-lf-event="website_plan_intent"
             data-lf-label="nav_desktop"
           >
-            Plan my website
+            Get my website plan
             <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
           </Link>
 
@@ -229,7 +243,7 @@ export default function QuietNav() {
                   onClick={() => setOpen(false)}
                   className="lf-nav__panel-fit"
                 >
-                  Plan my website
+                  Get my website plan
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
                 </Link>
                 <div className="lf-nav__panel-reach">

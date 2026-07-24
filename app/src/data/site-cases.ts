@@ -213,7 +213,7 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.hairbyrachelcharles.com",
     slug: "hair-by-rachel-charles",
     metrics: [
-      { value: "100", label: "Lighthouse, across the board", evidence: "outcome" },
+      { value: "One tap", label: "From search to booking", evidence: "outcome" },
       {
         value: "2 weeks",
         label: "Instagram-only to real booking site",
@@ -243,11 +243,11 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
     updated: "2026-07-12",
-    title: "From Instagram-only to a real booking flow.",
+    title: "From Instagram-only to a website people can find and book.",
     problem: "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
     kept: "The Square Appointments setup her clients already knew.",
     changed: "Built a mobile-first website with a Square booking embed. Set up the Google Business Profile from scratch. Wired neighborhood-specific SEO across the site.",
-    result: "A real booking funnel that shows up in local searches. Lighthouse 100s across the board. Bookings now arrive without a DM tag.",
+    result: "A clear booking path that appears in local searches. New clients can find the studio, see the work, and book without a string of messages.",
     body: [
       "When we first sat down with Rachel, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed. The site started as a question. What if every new client could find her, see the work, and book without a single message?",
       "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. A mobile-first page with her portfolio, the location, a Square booking embed, and a clear path to the studio. We set up her Google Business Profile from scratch. Address, hours, categories, photos, FAQs. Then we wired the site to back it up. The whole job took two weeks.",
@@ -261,8 +261,8 @@ export const caseStudies: CaseStudy[] = [
     slug: "after-hours-agenda",
     metrics: [
       {
-        value: "Next.js 14",
-        label: "Custom build, no platform lock-in",
+        value: "Custom",
+        label: "Built for the brand, not a template",
         evidence: "build",
       },
       { value: "1 day", label: "To ship a new product drop", evidence: "outcome" },
@@ -288,7 +288,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
     updated: "2026-07-12",
-    title: "E-commerce that doesn't drown the brand.",
+    title: "An online store that keeps the brand's character.",
     problem: "A streetwear brand with a real point of view needed a real storefront. But Shopify's templates were going to flatten everything that made the brand interesting.",
     kept: "The brand identity, the product designs, and the NYC nightlife voice.",
     changed: "A custom Next.js 14 build. Square handles payments. Printful handles shipping. The whole catalog runs through one JSON master. No hardcoded prices. No platform lock-in.",
@@ -404,10 +404,10 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.grandfundingllc.com",
     slug: "grand-funding-llc",
     metrics: [
-      { value: "Type-led", label: "No finance-site cliches", evidence: "build" },
+      { value: "Clear", label: "No finance-site cliches", evidence: "build" },
       {
-        value: "Schema",
-        label: "Organization, FinancialService, Person",
+        value: "Easy to find",
+        label: "Business details written for search",
         evidence: "build",
       },
       { value: "Live", label: "grandfundingllc.com", evidence: "outcome" },

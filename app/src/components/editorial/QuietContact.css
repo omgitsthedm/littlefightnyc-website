@@ -1,312 +1,255 @@
-/* Closing contact — four clear doors, then proof. */
+/* Closing handoff: two obvious doors, then a short explanation of what happens. */
 
 .lf-contact-block {
-  padding: var(--lf-space-10) var(--lf-margin-mobile);
-  /* The preceding section already supplies a full bottom pad on the SAME dark
-     ground, so the block's "deliberate pause" top stacked into a 250-320px
-     void on every page. Halve the top; keep the generous bottom before the
-     footer. */
-  padding-top: var(--lf-space-7);
-  background: var(--lf-ink);
-  display: flex;
-  justify-content: center;
-  /* Terminal CTA (only the footer sits below it): skip off-screen layout+paint.
-     `auto <length>` stores the real height after first layout so reveal never
-     jumps; any slack only moves the footer/scroll-thumb, not visible content. */
-  content-visibility: auto;
-  contain-intrinsic-size: auto 720px;
-}
-
-@media (min-width: 768px) {
-  .lf-contact-block {
-    padding: var(--lf-space-11) var(--lf-margin-tablet);
-    padding-top: var(--lf-space-8);
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-contact-block {
-    padding: var(--lf-space-12) var(--lf-margin-desktop);
-    padding-top: var(--lf-space-8);
-  }
+  padding: clamp(4.5rem, 9vw, 9rem) var(--lf-margin-mobile);
+  border-top: 1px solid var(--lf-hairline);
+  background:
+    linear-gradient(130deg, color-mix(in srgb, var(--lf-fight) 7%, transparent), transparent 45%),
+    var(--lf-ink);
 }
 
 .lf-contact-block__inner {
-  width: 100%;
-  max-width: var(--lf-max-w);
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: var(--lf-space-7);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity var(--lf-time-cinematic) var(--lf-ease-out-quart),
-              transform var(--lf-time-cinematic) var(--lf-ease-out-quart);
-}
-
-.lf-contact-block[data-revealed="true"] .lf-contact-block__inner {
-  opacity: 1;
-  transform: translateY(0);
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
 }
 
 .lf-contact-block__head {
   display: grid;
   gap: var(--lf-space-4);
-  max-width: 56rem;
+  max-width: 66rem;
 }
 
-.lf-contact-block__eyebrow {
+.lf-contact-block__eyebrow,
+.lf-contact-block__next-label {
+  margin: 0;
+  color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
+  font-size: var(--lf-text-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lf-fight);
 }
 
 .lf-contact-block__title {
-  font-family: var(--lf-serif);
-  font-weight: 700;
-  font-size: var(--lf-text-2xl);
-  line-height: 1.05;
-  letter-spacing: -0.025em;
-  color: var(--lf-bone);
+  max-width: 14ch;
   margin: 0;
-}
-
-@media (min-width: 768px) {
-  .lf-contact-block__title {
-    font-size: var(--lf-text-3xl);
-  }
-}
-
-@media (min-width: 1280px) {
-  .lf-contact-block__title {
-    /* text-4xl (up to 208px) over-scaled — the "step." descender collided with
-       the dek. text-3xl is still a big statement with room to breathe. */
-    font-size: var(--lf-text-3xl);
-    padding-bottom: 0.08em;
-  }
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: -0.045em;
+  line-height: 0.94;
 }
 
 .lf-contact-block__dek {
   max-width: 54ch;
+  margin: 0;
+  color: var(--lf-bone-soft);
   font-family: var(--lf-serif);
   font-size: var(--lf-text-md);
-  line-height: 1.42;
-  letter-spacing: -0.004em;
-  color: var(--lf-bone-soft);
+  line-height: 1.48;
 }
 
-.lf-contact-block__channels {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.lf-contact-block__doors {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--lf-space-4);
+  margin-top: clamp(2.5rem, 6vw, 5rem);
 }
 
-@media (min-width: 560px) {
-  .lf-contact-block__channels {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .lf-contact-block__channels {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.lf-contact-block__channels li {
-  min-width: 0;
-  display: flex;
-}
-
-/* Channel = a real card-button (Axiom Momentum language).
- * Scoped under .lf-editorial to win over the base `button` reset
- * (background/border/padding) for the Text channel's <button>. */
-.lf-editorial .lf-contact-block__channel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.lf-editorial .lf-contact-block__door {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   gap: var(--lf-space-4);
-  min-height: 160px;
-  height: 100%;
-  width: 100%;
-  padding: var(--lf-space-5);
+  align-items: center;
+  min-height: 10rem;
+  padding: clamp(1.4rem, 3.5vw, 2.5rem);
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-card);
-  text-decoration: none;
-  appearance: none;
   color: var(--lf-bone);
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
   background: var(--lf-card-bg);
-  transition:
-    transform var(--lf-time-snappy) var(--lf-ease-standard),
+  text-decoration: none;
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard),
     border-color var(--lf-time-snappy) var(--lf-ease-standard),
     background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-contact-block__channel:hover,
-.lf-editorial .lf-contact-block__channel:focus-visible {
+.lf-editorial .lf-contact-block__door--plan {
+  border-color: var(--lf-fight);
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+}
+
+.lf-editorial .lf-contact-block__door:hover,
+.lf-editorial .lf-contact-block__door:focus-visible {
   transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
-  background: color-mix(in srgb, var(--lf-fight) 6%, var(--lf-card-bg));
-}
-.lf-contact-block__channel:focus-visible {
-  outline: 2px solid var(--lf-fight);
-  outline-offset: 3px;
 }
 
-.lf-contact-block__channel-top {
-  display: flex;
-  align-items: center;
-  gap: var(--lf-space-3);
+.lf-editorial .lf-contact-block__door--urgent:hover,
+.lf-editorial .lf-contact-block__door--urgent:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-blue) 65%, var(--lf-hairline));
+  background: color-mix(in srgb, var(--lf-blue) 9%, var(--lf-card-bg));
 }
 
-.lf-contact-block__channel-icon {
+.lf-editorial .lf-contact-block__door--plan:hover,
+.lf-editorial .lf-contact-block__door--plan:focus-visible {
+  border-color: var(--lf-fight-hover);
+  background: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-contact-block__door:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
+}
+
+.lf-contact-block__door-icon {
   display: inline-flex;
+  width: 48px;
+  height: 48px;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex: none;
-  border-radius: var(--lf-radius-sm);
-  color: var(--lf-fight);
-  background: color-mix(in srgb, var(--lf-fight) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lf-fight) 30%, transparent);
+  border: 1px solid currentColor;
+  border-radius: 999px;
 }
 
-.lf-contact-block__channel-label {
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--lf-bone-soft);
-}
-
-.lf-contact-block__channel-go {
-  margin-left: auto;
-  color: var(--lf-bone-dim);
-  transition:
-    transform var(--lf-time-snappy) var(--lf-ease-standard),
-    color var(--lf-time-snappy) var(--lf-ease-standard);
-}
-.lf-contact-block__channel:hover .lf-contact-block__channel-go,
-.lf-contact-block__channel:focus-visible .lf-contact-block__channel-go {
-  color: var(--lf-fight);
-  transform: translate(2px, -2px);
-}
-
-.lf-contact-block__channel-detail {
-  margin-top: auto;
-  font-family: var(--lf-display);
-  font-weight: 600;
-  /* Sized so the longest value (the email) fits the 4-up card on one line;
-   * break-word is only a safety net so it can never clip. Floor 1rem — the
-   * 16px legibility minimum (mobile cards are full-width, the email fits). */
-  font-size: clamp(1rem, 0.86rem + 0.5vw, 1.1rem);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--lf-bone);
-  overflow-wrap: break-word;
-}
-
-.lf-contact-block__channel-note {
-  font-size: var(--lf-text-sm);
-  color: var(--lf-bone-soft);
-  line-height: 1.35;
-}
-
-/* Primary door — the Tech Audit form, flagged with the blue accent */
-.lf-editorial .lf-contact-block__channel--primary {
-  background: var(--lf-card-bg); /* fallback: color-mix-in-gradient drops entirely without support */
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--lf-blue) 12%, var(--lf-card-bg)), var(--lf-card-bg));
-  border-color: color-mix(in srgb, var(--lf-blue) 34%, var(--lf-hairline));
-}
-.lf-contact-block__channel--primary .lf-contact-block__channel-icon {
-  color: var(--lf-blue);
-  background: color-mix(in srgb, var(--lf-blue) 14%, transparent);
-  border-color: color-mix(in srgb, var(--lf-blue) 34%, transparent);
-}
-.lf-editorial .lf-contact-block__channel--primary:hover,
-.lf-editorial .lf-contact-block__channel--primary:focus-visible {
-  border-color: color-mix(in srgb, var(--lf-blue) 60%, var(--lf-hairline));
-  background: color-mix(in srgb, var(--lf-blue) 10%, var(--lf-card-bg));
-}
-.lf-contact-block__channel--primary:hover .lf-contact-block__channel-go,
-.lf-contact-block__channel--primary:focus-visible .lf-contact-block__channel-go {
-  color: var(--lf-blue);
-}
-
-/* Promise strip — four time-bound brand promises, mono label + italic qualifier */
-.lf-contact-block__promises {
-  list-style: none;
-  margin: var(--lf-space-2) 0 0;
-  padding: var(--lf-space-5) 0 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--lf-space-5) var(--lf-space-4);
-  text-align: left;
-}
-
-@media (min-width: 560px) {
-  .lf-contact-block__promises {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 768px) {
-  .lf-contact-block__promises {
-    gap: var(--lf-space-5) var(--lf-space-4);
-    margin-top: var(--lf-space-8);
-    padding-top: var(--lf-space-6);
-  }
-}
-
-@media (min-width: 1024px) {
-  .lf-contact-block__promises {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.lf-contact-block__promises li {
+.lf-contact-block__door-copy {
   display: flex;
+  min-width: 0;
   flex-direction: column;
-  gap: var(--lf-space-2);
-  padding-inline: var(--lf-space-5);
+  gap: 0.35rem;
 }
 
-.lf-contact-block__promises span {
+.lf-contact-block__door-copy strong {
+  font-family: var(--lf-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.lf-contact-block__door-label {
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  letter-spacing: 0.12em;
+  font-size: var(--lf-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.lf-contact-block__door-copy > span:last-child {
+  font-size: var(--lf-text-sm);
+  line-height: 1.4;
+  opacity: 0.78;
+}
+
+.lf-contact-block__other {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3) var(--lf-space-6);
+  margin-top: var(--lf-space-5);
+}
+
+.lf-editorial .lf-contact-block__other a,
+.lf-editorial .lf-contact-block__other button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
+  border: 0;
+  color: var(--lf-bone-soft);
+  background: transparent;
+  font: inherit;
+  font-size: var(--lf-text-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lf-editorial .lf-contact-block__other a:hover,
+.lf-editorial .lf-contact-block__other button:hover {
   color: var(--lf-fight);
 }
 
-.lf-contact-block__promises em {
-  font-family: var(--lf-serif);
-  font-style: italic;
-  font-size: var(--lf-text-sm);
-  color: var(--lf-bone-soft);
-  letter-spacing: -0.005em;
-  line-height: 1.3;
+.lf-contact-block__next {
+  margin-top: clamp(3rem, 7vw, 6rem);
+  padding-top: var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
 }
 
-/* Data-respect fine print — reassurance in context (§2.5), right under the
-   channels and promises rather than buried in a FAQ. Scoped under
-   .lf-editorial so the base `.lf-editorial p` rule (0,1,1) can't out-rank it. */
-.lf-editorial .lf-contact-block__fine {
-  margin: var(--lf-space-4) 0 0;
-  padding-inline: var(--lf-space-5);
+.lf-contact-block__next ol {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-5);
+  margin: var(--lf-space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-contact-block__next li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  align-items: start;
+}
+
+.lf-contact-block__next li > span {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--lf-hairline);
+  border-radius: 999px;
+  color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  letter-spacing: 0.04em;
+  font-size: var(--lf-text-xs);
+  font-weight: 700;
+}
+
+.lf-contact-block__next p {
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+}
+
+.lf-contact-block__next strong {
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-contact-block__fine {
+  max-width: 64ch;
+  margin: clamp(2rem, 5vw, 4rem) 0 0;
   color: var(--lf-bone-dim);
-  text-align: left;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  line-height: 1.5;
+}
+
+@media (min-width: 760px) {
+  .lf-contact-block {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-contact-block__doors {
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  }
+
+  .lf-contact-block__next ol {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .lf-contact-block {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-contact-block__door {
+    transition: none;
+  }
+
+  .lf-editorial .lf-contact-block__door:hover,
+  .lf-editorial .lf-contact-block__door:focus-visible {
+    transform: none;
+  }
 }

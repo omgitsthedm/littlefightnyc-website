@@ -109,6 +109,12 @@
   text-transform: uppercase;
 }
 
+.lf-covmatrix__value {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
 .lf-covmatrix__sr {
   position: absolute;
   width: 1px;
@@ -121,9 +127,9 @@
   border: 0;
 }
 
-/* Staggered row reveal off the band's data-revealed. */
+/* Rows are readable before JavaScript; the matrix never waits on a reveal. */
 .lf-covmatrix tbody tr {
-  opacity: 0;
+  opacity: 1;
   transition: opacity var(--lf-time-base) var(--lf-ease-out);
   transition-delay: calc(var(--lf-i, 0) * 70ms);
 }
@@ -131,37 +137,91 @@
   opacity: 1;
 }
 
-/* Phones: keep the REAL coverage nouns (a dots-only grid conveyed almost
-   nothing) and let the table scroll horizontally inside its own container — the
-   page never scrolls. The industry column sticks to the left so you keep row
-   context while scrolling across the four services. */
+/* Phones: turn each row into a labeled card. No horizontal maze or hidden
+   columns, and every service relationship is readable at first glance. */
 @media (max-width: 719px) {
+  .lf-covmatrix__scroll {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
   .lf-covmatrix__table {
-    min-width: 600px;
+    min-width: 0;
+    display: block;
   }
-  .lf-covmatrix__table th,
-  .lf-covmatrix__table td {
-    padding: 10px 12px;
-  }
-  .lf-covmatrix__table thead th {
-    font-size: var(--lf-text-2xs);
-    letter-spacing: 0.08em;
+
+  .lf-covmatrix__table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
     white-space: nowrap;
   }
-  .lf-covmatrix__table tbody th {
-    font-size: var(--lf-text-2xs);
+
+  .lf-covmatrix__table tbody {
+    display: grid;
+    gap: var(--lf-space-3);
   }
-  /* Sticky industry column — needs an opaque bg so scrolled cells pass behind. */
-  .lf-covmatrix__table thead th:first-child,
-  .lf-covmatrix__table tbody th {
-    position: sticky;
-    left: 0;
-    z-index: 1;
+
+  .lf-covmatrix__table tbody tr {
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--lf-hairline);
+    border-radius: var(--lf-radius-card);
     background: var(--lf-paper-2);
-    border-right: 1px solid var(--lf-hairline);
   }
-  .lf-covmatrix__table thead th:first-child {
+
+  .lf-covmatrix__table th,
+  .lf-covmatrix__table td {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.8fr) minmax(0, 1.2fr);
+    align-items: center;
+    gap: var(--lf-space-3);
+    min-height: 52px;
+    padding: var(--lf-space-3) var(--lf-space-4);
+    border: 0;
+    border-bottom: 1px solid var(--lf-hairline);
+  }
+
+  .lf-covmatrix__table tbody td:last-child {
+    border-bottom: 0;
+  }
+
+  .lf-covmatrix__table tbody th {
+    display: block;
+    padding: 0;
+    font-size: var(--lf-text-base);
+    white-space: normal;
     background: var(--lf-paper);
+  }
+
+  .lf-covmatrix__table tbody th a {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    padding: var(--lf-space-3) var(--lf-space-4);
+    border: 0;
+  }
+
+  .lf-covmatrix__table td::before {
+    content: attr(data-service);
+    color: var(--lf-bone-dim);
+    font-size: var(--lf-text-2xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .lf-covmatrix__noun {
+    text-transform: none;
+  }
+
+  .lf-covmatrix__value {
+    grid-column: 2;
   }
 }
 

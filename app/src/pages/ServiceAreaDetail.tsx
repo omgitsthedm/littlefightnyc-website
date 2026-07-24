@@ -44,7 +44,7 @@ export default function ServiceAreaDetail() {
             <span className="lf-em">{area.name}.</span>
           </>
         }
-        dek={`${service.eyebrow} for ${area.name} businesses — Little Fight keeps what works and fixes what drags.`}
+        dek={`${service.eyebrow} for ${area.name} businesses. We keep what works and fix what gets in the way.`}
         image={{
           src: service.image,
           alt: `${service.eyebrow} help in ${area.name}`,

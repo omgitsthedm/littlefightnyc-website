@@ -15,7 +15,6 @@ import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import WorkShowcase from "@/components/editorial/WorkShowcase";
 import CoverageMatrix from "@/components/dataviz/CoverageMatrix";
-import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import industries from "@/data/industries.json";
 import "@/styles/editorial/examples.css";
 
@@ -42,61 +41,94 @@ const LAB_BUILDS = [
     type: "Spatial story",
     description: "Climb a New York walk-up from street level to the water tower.",
     href: "/examples/lab/concepts/walkup-3d/",
+    image: "/examples/lab/assets/brownstone-poster.webp?v=2",
+    alt: "Night view of the interactive Brownstone Walk-Up",
+    width: 1280,
+    height: 800,
   },
   {
     title: "Cinematic 3D",
     type: "Spatial website",
     description: "Architecture, atmosphere, and scroll-driven story in a working site.",
     href: "/examples/lab/concepts/terminal-3d/",
+    image: "/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_brooklyn.webp",
+    alt: "New York buildings seen from the street",
+    width: 1349,
+    height: 1800,
   },
   {
     title: "Scroll Into Motion",
     type: "Motion study",
     description: "A single object changes meaning as the page moves through it.",
     href: "/examples/lab/concepts/pill-scroll/",
+    image: "/examples/lab/concepts/pill-scroll/assets/nyc-streets-businesses3-2.webp",
+    alt: "A working kitchen entrance on a New York side street",
+    width: 1600,
+    height: 1378,
   },
   {
     title: "Micro-Animations",
     type: "Interaction study",
     description: "Service ideas translated into small, readable moments of motion.",
     href: "/examples/lab/concepts/micro-animations/",
+    image: "/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_web_design.webp",
+    alt: "Website work in a small-business setting",
+    width: 1200,
+    height: 1800,
   },
   {
     title: "Studio Engine",
     type: "Design system",
     description: "A live concept generator with controls, layouts, and export paths.",
     href: "/examples/lab/concepts/studio-engine/",
+    image: "/examples/lab/concepts/tech-support/images/lf-photo-set/pos_system_tip_jar.webp",
+    alt: "Tip jar and point-of-sale equipment on a shop counter",
+    width: 1800,
+    height: 1200,
   },
   {
     title: "Growth Street",
     type: "Generative study",
     description: "A storefront row changes as the systems behind it improve.",
     href: "/examples/lab/concepts/growth-street/",
+    image: "/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_retail.webp",
+    alt: "Coffee and retail goods arranged on shop shelves",
+    width: 1350,
+    height: 1800,
   },
   {
     title: "Goliath",
     type: "Brand campaign",
     description: "Sharp type, hard contrast, and direct action at full volume.",
     href: "/examples/lab/concepts/goliath/",
+    image: "/examples/lab/concepts/pill-scroll/assets/nyc-grand-central-busy-2.webp",
+    alt: "New Yorkers moving through Grand Central Terminal",
+    width: 1600,
+    height: 1062,
   },
   {
     title: "Hero Prototype",
     type: "Brand study",
     description: "A homepage direction built around one clear promise.",
     href: "/examples/lab/concepts/hero/",
+    image: "/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_outdoor_bar.webp",
+    alt: "Tables and service areas at a New York outdoor bar",
+    width: 1200,
+    height: 1800,
   },
   {
     title: "Tech Support Site",
     type: "Full website",
     description: "An earlier complete service site preserved as a working branch.",
     href: "/examples/lab/concepts/tech-support/",
+    image: "/examples/lab/concepts/tech-support/images/lf-photo-set/nyc_cafes2.webp",
+    alt: "The working counter inside a New York cafe",
+    width: 1800,
+    height: 1336,
   },
 ] as const;
 
 export default function FieldGuide() {
-  const toolsRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
-  const industriesRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
-
   return (
     <>
       <PageHero
@@ -118,38 +150,74 @@ export default function FieldGuide() {
         }}
       />
 
-      <WorkShowcase />
+      <WorkShowcase mode="featured" />
 
       <section className="lf-ex-tools" aria-labelledby="lf-ex-tools-title">
-        <div ref={toolsRef} className="lf-ex-tools__inner" data-reveal>
+        <div className="lf-ex-tools__inner">
           <header className="lf-ex-tools__head">
+            <p className="lf-ex-tools__kind">Illustrative Lab work</p>
             <h2 id="lf-ex-tools-title">Open it. Try it. No maze.</h2>
-            <p>Use a Lab build, run the Audit, or open a live product. No account and no preview gate.</p>
+            <p>
+              The client proof is above. The Lab is where we test new visual
+              ideas. Every build below opens the real experience in one click.
+            </p>
           </header>
 
           <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
             <div className="lf-ex-lab-direct__head">
               <div>
                 <p>9 working experiments</p>
-                <h3 id="lf-ex-lab-title">The Lab is a playground.</h3>
-                <span>Open a build and start exploring. Nothing technical to read first.</span>
+                <h3 id="lf-ex-lab-title">Choose a direction and step inside.</h3>
+                <span>
+                  These are experiments, not client results. They show what a
+                  website can feel like before a business chooses the direction.
+                </span>
               </div>
               <a href="/examples/lab/" data-no-vt>
-                Open the Lab
+                See all Lab builds
                 <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
               </a>
             </div>
             <div className="lf-ex-lab-direct__grid">
               {LAB_BUILDS.map((build) => (
                 <a key={build.href} href={build.href} data-no-vt>
-                  <span>{build.type}</span>
-                  <strong>{build.title}</strong>
-                  <p>{build.description}</p>
-                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+                  <span className="lf-ex-lab-card__media">
+                    <img
+                      src={build.image}
+                      alt={build.alt}
+                      width={build.width}
+                      height={build.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                  <span className="lf-ex-lab-card__copy">
+                    <span className="lf-ex-lab-card__type">{build.type}</span>
+                    <strong>{build.title}</strong>
+                    <span className="lf-ex-lab-card__description">
+                      {build.description}
+                    </span>
+                    <span className="lf-ex-lab-card__open">
+                      Try it
+                      <ArrowUpRight
+                        size={17}
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </span>
                 </a>
               ))}
             </div>
           </section>
+
+          <header className="lf-ex-tools__product-head">
+            <h3>Working tools you can use now.</h3>
+            <p>
+              These are live products and public experiments, separate from
+              client proof and ready to open.
+            </p>
+          </header>
 
           <div className="lf-ex-tools__grid">
             <a className="lf-ex-tool lf-ex-tool--audit" href="/examples/audit/" data-no-vt>
@@ -221,8 +289,10 @@ export default function FieldGuide() {
         </div>
       </section>
 
+      <WorkShowcase mode="archive" />
+
       <section id="industries" className="lf-ex-industries" aria-labelledby="lf-ex-ind-title">
-        <div ref={industriesRef} className="lf-ex-industries__inner" data-reveal>
+        <div className="lf-ex-industries__inner">
           <header className="lf-ex-head">
             <h2 id="lf-ex-ind-title" className="lf-ex-head__title">
               Find a business like yours.

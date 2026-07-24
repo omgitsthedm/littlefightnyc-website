@@ -1,20 +1,19 @@
 // fonts/tokens/base are imported once at the entry (src/main.tsx) so their
 // @font-face rules live in a single stylesheet (no duplicate font downloads).
 
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
-import { importWithRetry } from "@/lib/importWithRetry";
+import OwnerStories from "@/components/editorial/OwnerStories";
+import RecentClients from "@/components/editorial/RecentClients";
+import TheFight from "@/components/editorial/TheFight";
+import TheFour from "@/components/editorial/TheFour";
+import QuietContact from "@/components/editorial/QuietContact";
+import QuietFooter from "@/components/editorial/QuietFooter";
+import StickyHelpBar from "@/components/editorial/StickyHelpBar";
+import CommandPalette from "@/components/editorial/CommandPalette";
 import { watchListReveals } from "@/lib/listReveal";
-
-const RouteMeta = lazy(() => importWithRetry(() => import("@/components/RouteMeta")));
-const RecentClients = lazy(() => importWithRetry(() => import("@/components/editorial/RecentClients")));
-const TheFight = lazy(() => importWithRetry(() => import("@/components/editorial/TheFight")));
-const TheFour = lazy(() => importWithRetry(() => import("@/components/editorial/TheFour")));
-const QuietContact = lazy(() => importWithRetry(() => import("@/components/editorial/QuietContact")));
-const QuietFooter = lazy(() => importWithRetry(() => import("@/components/editorial/QuietFooter")));
-const StickyHelpBar = lazy(() => importWithRetry(() => import("@/components/editorial/StickyHelpBar")));
-const CommandPalette = lazy(() => importWithRetry(() => import("@/components/editorial/CommandPalette")));
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -26,27 +25,20 @@ export default function Home() {
 
   return (
     <div className="lf-editorial" id="top" ref={rootRef}>
-      <Suspense fallback={null}>
-        <RouteMeta />
-      </Suspense>
+      <RouteMeta />
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />
       <main id="main-content">
         <QuietHero />
-        <Suspense fallback={null}>
-            {/* Proof follows the hook. One New York point of view follows the
-                proof, then four plain ways to help, then the contact door. */}
-            <RecentClients />
-            <TheFight />
-            <TheFour />
-            <QuietContact />
-        </Suspense>
+        <OwnerStories />
+        <RecentClients />
+        <TheFour />
+        <TheFight />
+        <QuietContact />
       </main>
-      <Suspense fallback={null}>
-        <StickyHelpBar />
-        <QuietFooter />
-        <CommandPalette />
-      </Suspense>
+      <StickyHelpBar />
+      <QuietFooter />
+      <CommandPalette />
     </div>
   );
 }

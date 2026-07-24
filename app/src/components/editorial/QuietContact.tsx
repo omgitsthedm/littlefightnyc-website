@@ -1,40 +1,7 @@
 import { Link } from "react-router-dom";
-import { Phone, MessageSquare, Mail, ClipboardCheck, ArrowUpRight } from "lucide-react";
-import { useScrollReveal } from "./useScrollReveal";
+import { ArrowUpRight, Globe2, Mail, MessageSquare, Phone } from "lucide-react";
 import { trackEvent } from "@/lib/analyticsClient";
 import "./QuietContact.css";
-
-const CONTACT_CHANNELS = [
-  {
-    icon: Phone,
-    label: "Call",
-    detail: "(646) 360-0318",
-    href: "tel:+16463600318",
-    note: "When something is broken",
-  },
-  {
-    icon: MessageSquare,
-    label: "Text",
-    detail: "(646) 360-0318",
-    action: "text",
-    note: "When you are at the counter",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    detail: "hello@littlefightnyc.com",
-    href: "mailto:hello@littlefightnyc.com",
-    note: "For the longer version",
-  },
-  {
-    icon: ClipboardCheck,
-    label: "Form",
-    detail: "Tech Audit",
-    to: "/tech-audit/",
-    note: "When the problem has parts",
-    primary: true,
-  },
-] as const;
 
 const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}+16463600318`;
 
@@ -44,74 +11,86 @@ function openTextMessage() {
 }
 
 type Props = {
-  /** Per-page closing line — e.g. "Want a build like this?" on a case page. */
   heading?: string;
-  /** Per-page support line under the heading. */
   lede?: string;
 };
 
 export default function QuietContact({
-  heading = "Show us what is slowing the business down.",
-  lede = "Call, text, email, or use the form. We will give you the clearest next move in plain English.",
+  heading = "Show us what you have.",
+  lede = "You do not need a brief or the right tech words. Tell us what the business needs to do, or what stopped working.",
 }: Props) {
-  const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
-
   return (
-    <section id="contact" ref={ref} className="lf-contact-block" aria-label="Contact Little Fight NYC">
+    <section id="contact" className="lf-contact-block" aria-label="Contact Little Fight NYC">
       <div className="lf-contact-block__inner">
-        <div className="lf-contact-block__head">
-          <p className="lf-contact-block__eyebrow">Call. Text. Email. Form.</p>
+        <header className="lf-contact-block__head">
+          <p className="lf-contact-block__eyebrow">Talk to the person doing the work</p>
           <h2 className="lf-contact-block__title">{heading}</h2>
           <p className="lf-contact-block__dek">{lede}</p>
+        </header>
+
+        <div className="lf-contact-block__doors" aria-label="Choose how to start">
+          <a className="lf-contact-block__door lf-contact-block__door--urgent" href="tel:+16463600318">
+            <span className="lf-contact-block__door-icon" aria-hidden="true">
+              <Phone size={23} strokeWidth={1.8} />
+            </span>
+            <span className="lf-contact-block__door-copy">
+              <span className="lf-contact-block__door-label">Something is broken</span>
+              <strong>Call about broken tech</strong>
+              <span>(646) 360-0318</span>
+            </span>
+            <ArrowUpRight size={20} strokeWidth={2} aria-hidden="true" />
+          </a>
+
+          <Link
+            className="lf-contact-block__door lf-contact-block__door--plan"
+            to="/tech-audit/?intent=website&source=contact_block"
+            data-lf-event="website_plan_intent"
+            data-lf-label="contact_block"
+          >
+            <span className="lf-contact-block__door-icon" aria-hidden="true">
+              <Globe2 size={23} strokeWidth={1.8} />
+            </span>
+            <span className="lf-contact-block__door-copy">
+              <span className="lf-contact-block__door-label">I want a better setup</span>
+              <strong>Get my website plan</strong>
+              <span>The first look and recommendation are free.</span>
+            </span>
+            <ArrowUpRight size={20} strokeWidth={2} aria-hidden="true" />
+          </Link>
         </div>
 
-        <ul className="lf-contact-block__channels" aria-label="Contact options">
-          {CONTACT_CHANNELS.map((channel) => {
-            const Icon = channel.icon;
-            const isPrimary = "primary" in channel && channel.primary;
-            const inner = (
-              <>
-                <span className="lf-contact-block__channel-top">
-                  <span className="lf-contact-block__channel-icon" aria-hidden="true">
-                    <Icon size={20} strokeWidth={1.75} />
-                  </span>
-                  <span className="lf-contact-block__channel-label">{channel.label}</span>
-                  <ArrowUpRight
-                    className="lf-contact-block__channel-go"
-                    size={16}
-                    strokeWidth={2}
-                    aria-hidden="true"
-                  />
-                </span>
-                <span className="lf-contact-block__channel-detail">{channel.detail}</span>
-                <span className="lf-contact-block__channel-note">{channel.note}</span>
-              </>
-            );
-            const cls = `lf-contact-block__channel${isPrimary ? " lf-contact-block__channel--primary" : ""}`;
-            return (
-              <li key={channel.label}>
-                {"to" in channel ? (
-                  <Link className={cls} to={channel.to}>{inner}</Link>
-                ) : "action" in channel ? (
-                  <button className={cls} type="button" onClick={openTextMessage}>{inner}</button>
-                ) : (
-                  <a className={cls} href={channel.href}>{inner}</a>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        <div className="lf-contact-block__other" aria-label="More contact options">
+          <button type="button" onClick={openTextMessage}>
+            <MessageSquare size={18} strokeWidth={1.8} aria-hidden="true" />
+            Text (646) 360-0318
+          </button>
+          <a href="mailto:hello@littlefightnyc.com">
+            <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
+            hello@littlefightnyc.com
+          </a>
+        </div>
 
-        <ul className="lf-contact-block__promises" aria-label="What you can expect">
-          <li><span>Free consult</span><em>Always</em></li>
-          <li><span>14-day websites</span><em>Or you don't pay</em></li>
-          <li><span>24-hour on-sites</span><em>When something breaks</em></li>
-          <li><span>2-hour callbacks</span><em>9am-9pm Eastern</em></li>
-        </ul>
+        <div className="lf-contact-block__next" aria-label="What happens next">
+          <p className="lf-contact-block__next-label">What happens next</p>
+          <ol>
+            <li>
+              <span>1</span>
+              <p><strong>We listen.</strong> You explain the business in your words.</p>
+            </li>
+            <li>
+              <span>2</span>
+              <p><strong>We look.</strong> We check what exists and what is getting in the way.</p>
+            </li>
+            <li>
+              <span>3</span>
+              <p><strong>You decide.</strong> You get a clear next move before any paid work.</p>
+            </li>
+          </ol>
+        </div>
 
         <p className="lf-contact-block__fine">
-          No pitch, no spam. Whatever you send goes straight to the person who
-          does the work, never to a list.
+          Consulting is free. Website work carries our 14-day promise. Your
+          domain, code, and business data stay yours.
         </p>
       </div>
     </section>

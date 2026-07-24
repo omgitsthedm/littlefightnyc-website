@@ -179,17 +179,17 @@ export default function Library() {
   return (
     <>
       <PageHero
-        eyebrow="The Library"
+        eyebrow="Plain-English answers"
         icon={LibraryIcon}
         title={
           <>
-            Everything we know.
+            Start with what happened.
             <br />
             {" "}
-            <span className="lf-em">Free.</span>
+            <span className="lf-em">Find the next move.</span>
           </>
         }
-        dek="Straight answers to the questions NYC owners actually ask, plus practical guides and field notes. Useful whether you hire us or not."
+        dek="Website down, Google wrong, email failing, or a software bill that makes no sense? Search the problem in your own words."
         image={{
           src: "/images/brand-scenes/shop-back-office.webp",
           alt: "A small shop back office with orders, tools, and business systems ready for the day",
@@ -204,6 +204,26 @@ export default function Library() {
             <p className="lf-library-find__eyebrow">Start with your situation</p>
             <h2 id="lf-library-find-title">What do you need today?</h2>
           </div>
+
+          <label className="lf-library-find__search">
+            <SearchCheck aria-hidden="true" />
+            <span className="lf-library-find__search-label">Describe the problem</span>
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => {
+                setQuery(event.target.value);
+                setFilter("all");
+              }}
+              placeholder="Try “email stopped,” “website,” or “Square vs Toast”"
+              autoComplete="off"
+            />
+            {query && (
+              <button type="button" onClick={() => setQuery("")}>
+                Clear
+              </button>
+            )}
+          </label>
 
           <div className="lf-library-find__doors">
             <a
@@ -243,26 +263,6 @@ export default function Library() {
               <ArrowUpRight aria-hidden="true" />
             </a>
           </div>
-
-          <label className="lf-library-find__search">
-            <SearchCheck aria-hidden="true" />
-            <span className="lf-library-find__search-label">Search the Library</span>
-            <input
-              type="search"
-              value={query}
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setFilter("all");
-              }}
-              placeholder="Try “Wi-Fi,” “website,” or “Square vs Toast”"
-              autoComplete="off"
-            />
-            {query && (
-              <button type="button" onClick={() => setQuery("")}>
-                Clear
-              </button>
-            )}
-          </label>
 
           <p className="lf-library-find__status" aria-live="polite">
             {normalizedQuery

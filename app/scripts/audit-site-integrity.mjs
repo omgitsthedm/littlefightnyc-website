@@ -14,6 +14,8 @@ import { fileURLToPath } from "node:url";
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const distRoot = path.join(appRoot, "dist");
 const routeMetaPath = path.join(appRoot, "src", "data", "route-meta.json");
+const navIndexPath = path.join(appRoot, "src", "data", "nav-index.json");
+const seoPagesPath = path.join(appRoot, "src", "data", "seo-pages.json");
 const redirectsPath = path.join(appRoot, "public", "_redirects");
 const siteOrigin = "https://littlefightnyc.com";
 const failures = [];
@@ -141,6 +143,43 @@ for (const missing of missingReferences.keys()) {
 }
 
 const routeMeta = JSON.parse(await readFile(routeMetaPath, "utf8"));
+const navIndex = JSON.parse(await readFile(navIndexPath, "utf8"));
+const seoData = JSON.parse(await readFile(seoPagesPath, "utf8"));
+const catalogedRoutes = new Map(
+  (routeMeta.pages ?? []).map((route) => [route.path, route]),
+);
+
+// Service detail pages build their neighborhood links client-side from
+// `areaPages`, which also feeds the generated Neighborhoods nav index. Cross
+// that client-authored area catalog with the canonical service matrix so a
+// neighborhood can never ship links to service-area pages the build omitted.
+const clientAreaSlugs = navIndex
+  .filter((item) => item.group === "Neighborhoods")
+  .map((item) => item.to.match(/^\/areas\/([^/]+)\/$/)?.[1])
+  .filter(Boolean);
+const matrixServiceSlugs = (seoData.matrix?.services ?? [])
+  .map((service) => service.slug)
+  .filter(Boolean);
+
+if (clientAreaSlugs.length === 0) {
+  failures.push("client neighborhood catalog is empty");
+}
+if (matrixServiceSlugs.length === 0) {
+  failures.push("service-area matrix is empty");
+}
+
+for (const areaSlug of clientAreaSlugs) {
+  for (const serviceSlug of matrixServiceSlugs) {
+    const expectedPath = `/areas/${areaSlug}/${serviceSlug}/`;
+    const catalogedRoute = catalogedRoutes.get(expectedPath);
+    if (!catalogedRoute) {
+      failures.push(`client service-area route was not cataloged: ${expectedPath}`);
+    } else if (catalogedRoute.noindex !== true) {
+      failures.push(`client service-area route must remain noindex: ${expectedPath}`);
+    }
+  }
+}
+
 for (const route of routeMeta.pages ?? []) {
   if (!(await resolves(route.path))) {
     failures.push(`cataloged route was not generated: ${route.path}`);

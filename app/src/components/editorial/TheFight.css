@@ -1,122 +1,239 @@
-/* TheFight — the fight card. Boxing-poster type at full scale; the tape
-   instrument carries the drama. Signal law: orange = "your block"/us, the vs
-   mark, and the CTA. Everything else stays steel and bone. */
+/* The operating promise: preserve the business, change only what helps it. */
 
 .lf-fight {
-  padding: var(--lf-space-11) var(--lf-margin-mobile);
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgba(31, 91, 190, 0.10) 0%, transparent 55%),
-    var(--lf-ink);
+  padding: clamp(4.5rem, 9vw, 9rem) var(--lf-margin-mobile);
   overflow: clip;
+  border-top: 1px solid var(--lf-hairline);
+  background:
+    radial-gradient(90% 90% at 82% 8%, rgba(37, 99, 235, 0.15), transparent 62%),
+    var(--lf-ink);
+}
+
+.lf-editorial .lf-fight__inner {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
 }
 
 .lf-editorial .lf-fight__head {
-  max-width: 1312px;
-  margin: 0 auto var(--lf-space-7);
-  text-align: center;
+  display: grid;
+  gap: var(--lf-space-4);
+  max-width: 68rem;
 }
 
-.lf-editorial .lf-fight__eyebrow {
+.lf-editorial .lf-fight__eyebrow,
+.lf-editorial .lf-fight__close-label {
+  margin: 0;
+  color: var(--lf-fight);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lf-bone-dim);
-  margin: 0 0 var(--lf-space-5);
 }
 
-/* Poster type — the biggest words on the page after the hero. */
 .lf-editorial .lf-fight__title {
-  font-family: var(--lf-display);
-  font-weight: var(--lf-display-weight);
-  text-transform: uppercase;
-  line-height: 0.92;
-  margin: 0 0 var(--lf-space-5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.05em;
-}
-
-.lf-editorial .lf-fight__fighter {
-  font-size: var(--lf-text-3xl);
-  letter-spacing: 0.01em;
+  max-width: 14ch;
+  margin: 0;
   color: var(--lf-bone);
-}
-
-.lf-editorial .lf-fight__fighter--us {
-  color: var(--lf-fight);
-  text-shadow: 0 0 34px rgba(249, 115, 22, 0.35);
-}
-
-.lf-editorial .lf-fight__vs {
-  font-size: var(--lf-text-lg);
-  color: var(--lf-fight);
-  font-style: italic;
-  letter-spacing: 0.3em;
-  padding-left: 0.3em; /* optically recenter the tracked caps */
+  font-family: var(--lf-display);
+  font-size: clamp(3rem, 7.2vw, 7rem);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: -0.045em;
+  line-height: 0.92;
 }
 
 .lf-editorial .lf-fight__lede {
-  font-size: var(--lf-text-md);
+  max-width: 58ch;
+  margin: var(--lf-space-2) 0 0;
   color: var(--lf-bone-soft);
-  max-width: 56ch;
-  margin: 0 auto;
+  font-family: var(--lf-serif);
+  font-size: var(--lf-text-md);
+  line-height: 1.5;
 }
 
-.lf-editorial .lf-fight__lede strong {
-  color: var(--lf-fight);
+.lf-editorial .lf-fight__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin: clamp(3rem, 7vw, 6rem) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.lf-editorial .lf-fight__steps::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  width: 2px;
+  height: 100%;
+  transform: scaleY(1);
+  transform-origin: top;
+  background: linear-gradient(var(--lf-fight), color-mix(in srgb, var(--lf-blue) 76%, transparent));
+}
+
+@supports (animation-timeline: view()) {
+  .lf-editorial .lf-fight__steps::before {
+    animation: lf-fight-line linear both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 70%;
+  }
+
+  @keyframes lf-fight-line {
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
+  }
+}
+
+.lf-editorial .lf-fight__steps li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0 var(--lf-space-4);
+  padding: 0 0 var(--lf-space-7);
+}
+
+.lf-editorial .lf-fight__step-number {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 2.1rem;
+  height: 2.1rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--lf-fight);
+  border-radius: 999px;
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: 1rem;
   font-weight: 700;
 }
 
-.lf-editorial .lf-fight__tape {
-  max-width: 1080px;
-  margin: 0 auto;
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-  padding: var(--lf-space-5) var(--lf-space-5) var(--lf-space-4);
+.lf-editorial .lf-fight__steps h3 {
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.lf-editorial .lf-fight__steps p {
+  grid-column: 2;
+  max-width: 38ch;
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.48;
 }
 
 .lf-editorial .lf-fight__close {
-  max-width: 1312px;
-  margin: var(--lf-space-7) auto 0;
-  text-align: center;
+  display: grid;
+  gap: var(--lf-space-5);
+  align-items: center;
+  margin-top: var(--lf-space-2);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 42%, var(--lf-hairline));
+  border-radius: var(--lf-radius-card);
+  background: color-mix(in srgb, var(--lf-fight) 5%, var(--lf-card-bg));
 }
 
 .lf-editorial .lf-fight__close-line {
+  max-width: 54ch;
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone);
   font-size: var(--lf-text-md);
-  color: var(--lf-bone-soft);
-  max-width: 56ch;
-  margin: 0 auto var(--lf-space-5);
+  line-height: 1.45;
 }
 
 .lf-editorial .lf-fight__cta {
   display: inline-flex;
+  min-height: 54px;
   align-items: center;
-  gap: 10px;
-  min-height: 56px;
-  padding: 0 var(--lf-space-7);
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0 var(--lf-space-5);
   border-radius: var(--lf-radius-control);
-  background: var(--lf-fight);
   color: var(--lf-ink);
-  font-weight: 700;
+  background: var(--lf-fight);
   font-size: var(--lf-text-base);
+  font-weight: 700;
+  text-align: center;
   text-decoration: none;
-  transition:
-    background var(--lf-time-snappy) var(--lf-ease-standard),
-    transform var(--lf-time-snappy) var(--lf-ease-standard);
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard),
+    background-color var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
 .lf-editorial .lf-fight__cta:hover {
+  transform: translateY(-3px);
   background: var(--lf-fight-hover);
-  transform: translateY(var(--lf-lift));
 }
 
-@media (min-width: 768px) {
-  .lf-fight { padding-inline: var(--lf-margin-tablet); }
+.lf-editorial .lf-fight__cta:focus-visible {
+  outline: 2px solid var(--lf-bone);
+  outline-offset: 4px;
 }
 
-@media (min-width: 1280px) {
-  .lf-fight { padding-inline: var(--lf-margin-desktop); }
+@media (min-width: 720px) {
+  .lf-fight {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-editorial .lf-fight__steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lf-editorial .lf-fight__steps::before {
+    top: 1rem;
+    left: 1rem;
+    width: calc(75% + 1rem);
+    height: 2px;
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  @supports (animation-timeline: view()) {
+    .lf-editorial .lf-fight__steps::before {
+      animation-name: lf-fight-line-wide;
+    }
+
+    @keyframes lf-fight-line-wide {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+  }
+
+  .lf-editorial .lf-fight__steps li {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 3.5rem auto auto;
+    padding: 0 var(--lf-space-5) 0 0;
+  }
+
+  .lf-editorial .lf-fight__steps h3,
+  .lf-editorial .lf-fight__steps p {
+    grid-column: 1;
+  }
+
+  .lf-editorial .lf-fight__close {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .lf-fight {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-fight__steps::before {
+    animation: none;
+    transform: none;
+  }
+
+  .lf-editorial .lf-fight__cta {
+    transition: none;
+  }
 }

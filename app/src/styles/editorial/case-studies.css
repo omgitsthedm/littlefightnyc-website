@@ -830,6 +830,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 .lf-case__hero-live {
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   gap: 0.35em;

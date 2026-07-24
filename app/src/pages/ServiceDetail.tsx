@@ -1,13 +1,11 @@
-import { Link, Navigate, useLocation, useParams } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
-import { areaPages, caseStudies, services } from "@/data/site";
+import { Link, Navigate, useParams } from "react-router-dom";
+import { caseStudies, services } from "@/data/site";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
-import ShareButton from "@/components/ShareButton";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/service-detail.css";
@@ -31,43 +29,6 @@ const LEGACY_SLUG_MAP: Record<string, string> = {
   "local-search": "tech-consulting",
 };
 
-const AREA_ROUTE_SLUG: Record<string, string> = {
-  "custom-local-websites": "websites",
-  "tech-consulting": "local-search",
-};
-
-const LAB_BY_SERVICE: Record<string, {
-  href: string;
-  label: string;
-  title: string;
-  description: string;
-}> = {
-  "custom-local-websites": {
-    href: "/examples/lab/concepts/goliath/",
-    label: "Live experiment",
-    title: "See a business idea at full volume.",
-    description: "A direct brand campaign you can open and use right now.",
-  },
-  "tech-consulting": {
-    href: "/examples/lab/concepts/growth-street/",
-    label: "Live experiment",
-    title: "Watch small changes improve the whole street.",
-    description: "A working scene shows how connected systems create momentum.",
-  },
-  "it-support": {
-    href: "/examples/lab/concepts/micro-animations/",
-    label: "Live experiment",
-    title: "See clear feedback in motion.",
-    description: "Small interactions show what happened and what to do next.",
-  },
-  "business-systems": {
-    href: "/examples/lab/concepts/terminal-3d/",
-    label: "Live experiment",
-    title: "Explore a complex system as a place.",
-    description: "A working spatial interface makes the parts easier to understand.",
-  },
-};
-
 // Per-service closing band — the last line matches the page you just read.
 const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   "tech-consulting": {
@@ -87,10 +48,6 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
     lede: "Tell us how your day works. We will show you what the software should be doing for you instead.",
   },
 };
-
-function areaRouteSlug(serviceSlug: string) {
-  return AREA_ROUTE_SLUG[serviceSlug] ?? serviceSlug;
-}
 
 function WebsiteAcquisitionBlock() {
   const proof = caseStudies.find((study) => study.slug === "hair-by-rachel-charles");
@@ -133,10 +90,10 @@ function WebsiteAcquisitionBlock() {
                 data-lf-event="website_plan_intent"
                 data-lf-label="website_service_proof"
               >
-                Plan my website
+                Get my website plan
               </Link>
               <Link className="lf-sd-web__secondary" to={`/case-studies/${proof.slug}/`}>
-                Read the case study
+                See what changed
               </Link>
             </div>
             <div className="lf-sd-web__owner">
@@ -179,7 +136,6 @@ function WebsiteAcquisitionBlock() {
 
 export default function ServiceDetail() {
   const { slug } = useParams();
-  const { pathname } = useLocation();
   const resolved = slug && LEGACY_SLUG_MAP[slug] ? LEGACY_SLUG_MAP[slug] : slug;
   if (slug && LEGACY_SLUG_MAP[slug]) {
     return <Navigate to={`/services/${resolved}/`} replace />;
@@ -239,17 +195,9 @@ export default function ServiceDetail() {
         <div className="lf-sd-deep__inner">
           <p className="lf-sd-deep__label">What the work does</p>
           <div className="lf-sd-deep__prose">
-            <p>{service.whatItDoes[0]}</p>
-            {service.whatItDoes.length > 1 && (
-              <details className="lf-sd-disclosure lf-sd-disclosure--prose">
-                <summary>Read the working details</summary>
-                <div>
-                  {service.whatItDoes.slice(1).map((para, i) => (
-                    <p key={i}>{para}</p>
-                  ))}
-                </div>
-              </details>
-            )}
+            {service.whatItDoes.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </div>
           <EditorialFigure
             src={service.image}
@@ -269,15 +217,15 @@ export default function ServiceDetail() {
           </header>
           <div className="lf-sd-issues__list">
             {service.commonIssues.map((issue, i) => (
-              <details key={i} className="lf-sd-issues__item">
-                <summary>
-                  <span className="lf-sd-issues__item-title">{issue.title}</span>
-                  <span className="lf-sd-disclosure__plus" aria-hidden="true" />
-                </summary>
+              <article key={i} className="lf-sd-issues__item lf-sd-issues__item--visible">
+                <span className="lf-sd-issues__numeral" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <div className="lf-sd-issues__body">
+                  <h3 className="lf-sd-issues__item-title">{issue.title}</h3>
                   <p className="lf-sd-issues__item-text">{issue.body}</p>
                 </div>
-              </details>
+              </article>
             ))}
           </div>
         </div>
@@ -291,17 +239,16 @@ export default function ServiceDetail() {
           </header>
           <div className="lf-sd-fallacies__list">
             {service.fallacies.map((f, i) => (
-              <details key={i} className="lf-sd-fallacies__item">
-                <summary className="lf-sd-fallacies__myth">
+              <article key={i} className="lf-sd-fallacies__item lf-sd-fallacies__item--visible">
+                <div className="lf-sd-fallacies__myth">
                   <span className="lf-sd-fallacies__tag">The question</span>
                   <span className="lf-sd-fallacies__myth-text">{f.myth}</span>
-                  <span className="lf-sd-disclosure__plus" aria-hidden="true" />
-                </summary>
+                </div>
                 <div className="lf-sd-fallacies__reality">
                   <span className="lf-sd-fallacies__tag lf-sd-fallacies__tag--reality">What matters</span>
                   <span>{f.reality}</span>
                 </div>
-              </details>
+              </article>
             ))}
           </div>
         </div>
@@ -313,32 +260,11 @@ export default function ServiceDetail() {
             <h2 className="lf-sd-faq__title">Owner questions, answered plainly.</h2>
             <div className="lf-sd-faq__list">
               {service.faq.map((item) => (
-                <details key={item.question} className="lf-sd-faq__item">
-                  <summary className="lf-sd-faq__q">
-                    <span>{item.question}</span>
-                    <span className="lf-sd-disclosure__plus" aria-hidden="true" />
-                  </summary>
+                <article key={item.question} className="lf-sd-faq__item lf-sd-faq__item--visible">
+                  <h3 className="lf-sd-faq__q">{item.question}</h3>
                   <p className="lf-sd-faq__a">{item.answer}</p>
-                </details>
+                </article>
               ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {LAB_BY_SERVICE[service.slug] && (
-        <section className="lf-sd-lab" aria-labelledby="lf-sd-lab-title">
-          <div className="lf-sd-lab__inner">
-            <div>
-              <p>{LAB_BY_SERVICE[service.slug].label}</p>
-              <h2 id="lf-sd-lab-title">{LAB_BY_SERVICE[service.slug].title}</h2>
-            </div>
-            <div>
-              <p>{LAB_BY_SERVICE[service.slug].description}</p>
-              <a href={LAB_BY_SERVICE[service.slug].href}>
-                Open the experiment
-                <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
-              </a>
             </div>
           </div>
         </section>
@@ -346,28 +272,13 @@ export default function ServiceDetail() {
 
       <section className="lf-sd-local">
         <div className="lf-sd-local__inner">
-          <details className="lf-sd-local__disclosure">
-            <summary>
-              <span>
-                <span className="lf-sd-local__label">Neighborhood pages</span>
-                <strong>Find the version written for your part of New York.</strong>
-              </span>
-              <span className="lf-sd-disclosure__plus" aria-hidden="true" />
-            </summary>
-          <ul className="lf-sd-local__list">
-            {areaPages.map((area) => (
-              <li key={area.slug}>
-                <Link
-                  className="lf-sd-local__link"
-                  to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}
-                >
-                  <span>{service.eyebrow}</span>
-                  <strong>{area.name}</strong>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          </details>
+          <Link className="lf-sd-local__hub-link" to="/areas/">
+            <span>
+              <span className="lf-sd-local__label">Neighborhood pages</span>
+              <strong>Find the version written for your part of New York.</strong>
+            </span>
+            <span aria-hidden="true">View neighborhoods →</span>
+          </Link>
         </div>
       </section>
 
@@ -387,14 +298,6 @@ export default function ServiceDetail() {
           </ul>
         </div>
       </section>
-
-      <div className="lf-sd-share">
-        <ShareButton
-          title={service.headline}
-          text={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
-          url={`https://littlefightnyc.com${pathname}`}
-        />
-      </div>
 
       <QuietContact
         heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what's broken."}

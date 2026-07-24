@@ -197,17 +197,10 @@ export default function AreaDetail() {
             <h2 className="lf-area-disclosure__heading">
               What shapes business in {area.name}
             </h2>
-            <details className="lf-area-disclosure">
-              <summary>
-                <span>Local context</span>
-                <strong>Read the neighborhood context</strong>
-                <span className="lf-area-disclosure__state" aria-hidden="true" />
-              </summary>
-              <div className="lf-area-disclosure__body">
-                <h3>The businesses here</h3>
-                <p>{area.businessLandscape}</p>
-              </div>
-            </details>
+            <div className="lf-area-context">
+              <p className="lf-area-context__label">The businesses here</p>
+              <p>{area.businessLandscape}</p>
+            </div>
           </article>
 
           {AREA_FIGURE[area.slug] && (
@@ -276,25 +269,20 @@ export default function AreaDetail() {
 
           <section className="lf-content-tile lf-content-tile--full">
             <h2 className="lf-area-disclosure__heading">Services in {area.name}</h2>
-            <details className="lf-area-disclosure lf-area-disclosure--services">
-              <summary>
-                <span>Ways we help</span>
-                <strong>See every service available here</strong>
-                <span className="lf-area-disclosure__state" aria-hidden="true" />
-              </summary>
-              <div className="lf-area-disclosure__body">
-                <ul className="lf-content-list lf-content-list--links" data-count={services.length}>
-                  {services.map((service) => (
-                    <li key={service.slug}>
-                      <Link to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}>
-                        <span className="lf-content-link__label">{service.eyebrow}</span>
-                        <span className="lf-content-link__title">{service.headline}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </details>
+            <p className="lf-area-services__intro">
+              Choose the situation that matches the business. Every path starts
+              with what already works in {area.name}.
+            </p>
+            <ul className="lf-content-list lf-content-list--links" data-count={services.length}>
+              {services.map((service) => (
+                <li key={service.slug}>
+                  <Link to={`/areas/${area.slug}/${areaRouteSlug(service.slug)}/`}>
+                    <span className="lf-content-link__label">{service.eyebrow}</span>
+                    <span className="lf-content-link__title">{service.headline}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
 
           {nearby.length > 0 && (

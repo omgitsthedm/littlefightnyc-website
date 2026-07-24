@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowUpRight, Award, LockKeyhole } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
@@ -12,7 +12,6 @@ import {
   caseProofPriority,
   hasPublicCapture,
 } from "@/components/editorial/caseProof";
-import ShareButton from "@/components/ShareButton";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
 
@@ -30,7 +29,6 @@ function displayDomain(url: string): string {
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();
-  const { pathname } = useLocation();
   const study = caseStudies.find((entry) => entry.slug === slug);
 
   if (!study) return <Navigate to="/examples/" replace />;
@@ -105,12 +103,6 @@ export default function CaseStudyDetail() {
                 Client access only
               </span>
             )}
-            <ShareButton
-              title={`${study.showcase.label}: ${study.title}`}
-              text={study.title}
-              url={`https://littlefightnyc.com${pathname}`}
-              label="Share"
-            />
           </span>
         </div>
       </div>
@@ -164,7 +156,7 @@ export default function CaseStudyDetail() {
               <p>
                 {includesLiveCapture
                   ? "Switch between desktop and phone captures, then follow the working path from input to result."
-                  : "Choose a stage to see how the work moves from input to a result the business uses."}
+                  : "Every stage is shown below, from the first customer need to the result the business uses."}
               </p>
             </header>
             <div className="lf-case-next__explorer">

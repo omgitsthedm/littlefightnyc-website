@@ -1,142 +1,229 @@
-/* TheFour — the four items of focus, each proven by its instrument.
-   Editorial asymmetry: rows alternate copy/instrument sides on desktop.
-   Signal law: orange = the number, the em, and the CTA (acts) — nothing else. */
+/* Four plain entry points. Real business environments replace abstract diagrams. */
 
 .lf-four {
-  padding: var(--lf-space-10) var(--lf-margin-mobile);
+  padding: clamp(4.5rem, 8vw, 8rem) var(--lf-margin-mobile);
+  border-top: 1px solid var(--lf-hairline);
   background: var(--lf-ink);
 }
 
+.lf-editorial .lf-four__head,
+.lf-editorial .lf-four__grid {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+}
+
 .lf-editorial .lf-four__head {
-  max-width: 1312px;
-  margin: 0 auto var(--lf-space-8);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  margin-bottom: clamp(2.5rem, 5vw, 5rem);
 }
 
 .lf-editorial .lf-four__eyebrow {
+  margin: 0;
+  color: var(--lf-fight);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--lf-bone-dim);
-  margin: 0 0 var(--lf-space-3);
 }
 
 .lf-editorial .lf-four__title {
+  max-width: 16ch;
+  margin: 0;
+  color: var(--lf-bone);
   font-family: var(--lf-display);
+  font-size: clamp(2.6rem, 6vw, 5.75rem);
   font-weight: var(--lf-display-weight);
-  font-size: var(--lf-text-2xl);
-  line-height: 1.0;
-  margin: 0 0 var(--lf-space-4);
-}
-
-.lf-editorial .lf-four__em {
-  color: var(--lf-fight);
+  letter-spacing: -0.035em;
+  line-height: 0.96;
 }
 
 .lf-editorial .lf-four__dek {
-  font-size: var(--lf-text-md);
+  max-width: 54ch;
+  margin: var(--lf-space-2) 0 0;
   color: var(--lf-bone-soft);
-  max-width: 52ch;
-  margin: 0;
+  font-size: var(--lf-text-md);
+  line-height: 1.48;
 }
 
-.lf-editorial .lf-four__list {
-  max-width: 1312px;
-  margin-inline: auto;
+.lf-editorial .lf-four__grid {
   display: grid;
-  gap: var(--lf-space-8);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-4);
 }
 
-.lf-editorial .lf-four__pillar {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--lf-space-5);
-  align-items: center;
-  border-top: 1px solid var(--lf-hairline);
-  padding-top: var(--lf-space-7);
-}
-
-.lf-editorial .lf-four__pillar--primary {
-  padding: var(--lf-space-6);
-  border-top-color: var(--lf-fight);
+.lf-editorial .lf-four__path {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-  box-shadow: inset 4px 0 0 var(--lf-fight);
+  background: var(--lf-card-bg);
 }
 
-.lf-editorial .lf-four__num {
+.lf-editorial .lf-four__image {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--lf-paper-2);
+}
+
+.lf-editorial .lf-four__image picture,
+.lf-editorial .lf-four__image img {
   display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lf-editorial .lf-four__image img {
+  object-fit: cover;
+  filter: saturate(0.82) contrast(1.05);
+  transition: transform 700ms var(--lf-ease-out-quart), filter 300ms ease;
+}
+
+.lf-editorial .lf-four__path:hover .lf-four__image img {
+  transform: scale(1.025);
+  filter: saturate(1) contrast(1.03);
+}
+
+.lf-editorial .lf-four__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 54%, rgba(5, 7, 12, 0.66));
+  pointer-events: none;
+}
+
+.lf-editorial .lf-four__number {
+  position: absolute;
+  right: var(--lf-space-4);
+  bottom: var(--lf-space-3);
+  z-index: 1;
+  color: var(--lf-bone);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-sm);
-  color: var(--lf-fight);
-  letter-spacing: 0.14em;
-  margin-bottom: var(--lf-space-3);
+  letter-spacing: 0.12em;
+}
+
+.lf-editorial .lf-four__copy {
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
 }
 
 .lf-editorial .lf-four__name {
+  margin: 0;
+  color: var(--lf-bone);
   font-family: var(--lf-display);
+  font-size: clamp(1.8rem, 3vw, 3rem);
   font-weight: var(--lf-display-weight);
-  font-size: var(--lf-text-xl);
-  line-height: 1.02;
-  margin: 0 0 var(--lf-space-3);
+  letter-spacing: -0.025em;
+  line-height: 1;
 }
 
-.lf-editorial .lf-four__line {
-  font-size: var(--lf-text-md);
+.lf-editorial .lf-four__situation,
+.lf-editorial .lf-four__outcome {
+  margin: var(--lf-space-4) 0 0;
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+}
+
+.lf-editorial .lf-four__situation {
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-four__outcome {
   color: var(--lf-bone-soft);
-  max-width: 44ch;
-  margin: 0 0 var(--lf-space-5);
 }
 
 .lf-editorial .lf-four__cta {
   display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  width: fit-content;
   min-height: 48px;
-  padding: 0 var(--lf-space-6);
-  border-radius: var(--lf-radius-control);
-  background: var(--lf-fight);
-  color: var(--lf-ink);
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: var(--lf-space-5);
+  color: var(--lf-fight);
+  font-size: var(--lf-text-sm);
   font-weight: 700;
   text-decoration: none;
-  transition: background var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-four__cta:hover {
-  background: var(--lf-fight-hover);
+.lf-editorial .lf-four__cta svg {
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-.lf-editorial .lf-four__viz {
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-  padding: var(--lf-space-4) var(--lf-space-5);
-  overflow: hidden;
+.lf-editorial .lf-four__cta:hover svg,
+.lf-editorial .lf-four__cta:focus-visible svg {
+  transform: translate(2px, -2px);
 }
 
-/* Desktop: alternate sides — the editorial asymmetry doctrine. */
-@media (min-width: 960px) {
+.lf-editorial .lf-four__cta:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 4px;
+}
+
+@media (min-width: 720px) {
+  .lf-four {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-editorial .lf-four__head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    align-items: end;
+  }
+
+  .lf-editorial .lf-four__eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .lf-editorial .lf-four__dek {
+    margin: 0 0 0 auto;
+  }
+
+  .lf-editorial .lf-four__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-editorial .lf-four__path--lead {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.14fr) minmax(20rem, 0.86fr);
+  }
+
+  .lf-editorial .lf-four__path--lead .lf-four__image {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (min-width: 1080px) {
   .lf-four {
     padding-inline: var(--lf-margin-desktop);
   }
-  .lf-editorial .lf-four__pillar {
-    grid-template-columns: minmax(320px, 5fr) 7fr;
-    gap: var(--lf-space-8);
+
+  .lf-editorial .lf-four__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
-  .lf-editorial .lf-four__pillar--primary {
-    grid-template-columns: minmax(320px, 4fr) minmax(0, 8fr);
-    padding: var(--lf-space-7);
+
+  .lf-editorial .lf-four__path--lead {
+    grid-column: 1 / -1;
   }
-  .lf-editorial .lf-four__pillar--flip .lf-four__copy {
-    order: 2;
-  }
-  .lf-editorial .lf-four__pillar--flip .lf-four__viz {
-    order: 1;
+
+  .lf-editorial .lf-four__path:not(.lf-four__path--lead) {
+    grid-column: span 2;
   }
 }
 
-@media (min-width: 768px) and (max-width: 959px) {
-  .lf-four {
-    padding-inline: var(--lf-margin-tablet);
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-four__image img,
+  .lf-editorial .lf-four__cta svg {
+    transition: none;
+  }
+
+  .lf-editorial .lf-four__path:hover .lf-four__image img {
+    transform: none;
   }
 }

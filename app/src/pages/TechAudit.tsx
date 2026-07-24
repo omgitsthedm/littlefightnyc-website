@@ -5,7 +5,6 @@ import { Link, useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
-import AuditBench from "@/components/dataviz/AuditBench";
 import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
@@ -18,10 +17,10 @@ type FieldName = "name" | "business" | "contact" | "message";
 type Step = 1 | 2 | 3;
 
 const OUTCOMES = [
-  "An initial website scope",
-  "An urgent recovery plan",
-  "A ranked list of what to fix first",
-  "A clear recommendation if a project can wait",
+  "What to keep",
+  "What to fix first",
+  "The clearest next move",
+  "An honest answer if the work can wait",
 ];
 
 const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
@@ -200,7 +199,9 @@ export default function TechAudit() {
     activeDraft?.message || composeMessage(initialSymptom, activeDraft?.urgency ?? null),
     websiteUrl,
   );
-  const [step, setStep] = useState<Step>(websiteIntent ? 3 : (activeDraft?.step ?? 1));
+  // Open on the real form. Owners can describe the problem in their own words
+  // without completing a symptom quiz first.
+  const [step, setStep] = useState<Step>(3);
   const [symptom, setSymptom] = useState<string | null>(initialSymptom);
   const [urgency, setUrgency] = useState<string | null>(activeDraft?.urgency ?? null);
   const [message, setMessage] = useState(initialMessage);
@@ -220,12 +221,6 @@ export default function TechAudit() {
   const hapticStep = useHaptic(8);
   const hapticSubmit = useHaptic([12, 40, 12]);
   const hapticError = useHaptic([26, 40, 26]);
-  const stepTitle = websiteIntent && step === 3
-    ? "Where should we send your plan?"
-    : websiteIntent && step === 1
-      ? "What needs to change on your website?"
-      : STEP_TITLES[step];
-
   // Move focus to the step heading on step change (not on first paint).
   useEffect(() => {
     if (!mountedRef.current) {
@@ -410,52 +405,28 @@ export default function TechAudit() {
         </section>
       ) : (
         <PageHero
-          eyebrow="Tech Audit"
+          eyebrow="Free second opinion"
           icon={ClipboardCheck}
           title={(
           <>
-            Show us the<br />
+            Tell us what is<br />
             {" "}
-            <span className="lf-em">moving parts.</span>
+            <span className="lf-em">getting in the way.</span>
           </>
           )}
-          dek="Use this when the problem has parts. Tell us what feels broken, expensive, slow, or disconnected. We reply within two hours from 9am-9pm Eastern. Consulting is always free."
+          dek="One short form. Tell us what feels broken, expensive, slow, or confusing in your own words. A person reads it and replies with a clear next move."
           image={{
-            src: "/assets/case-after-hours-agenda.webp",
-            alt: "Homepage built for After Hours Agenda",
-            width: 1600,
-            height: 1200,
+            src: "/images/brand-scenes/shop-back-office.webp",
+            alt: "A small business back office with the everyday tools that keep the day moving",
+            width: 1672,
+            height: 941,
           }}
         />
       )}
 
       <section className={`lf-audit${websiteIntent ? " lf-audit--website" : ""}`}>
-        {!websiteIntent && (
-          <div className="lf-audit__bench">
-            <AuditBench />
-          </div>
-        )}
         <div className="lf-audit__inner">
           <div className="lf-audit__flow">
-            {!websiteIntent && (
-              <div className="lf-audit__progress">
-                <p className="lf-audit__progress-label" aria-live="polite">
-                  Step {step} of 3 <span className="lf-audit__sr"> - {stepTitle}</span>
-                </p>
-                <div
-                  className={`lf-audit__progress-bar${payoff ? " is-payoff" : ""}`}
-                  aria-hidden="true"
-                >
-                  {([1, 2, 3] as const).map((s) => (
-                    <span
-                      key={s}
-                      className={`lf-audit__progress-seg${s <= step ? " is-done" : ""}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
             {step === 1 && (
               <div className="lf-audit__step">
                 <h2
@@ -762,7 +733,7 @@ export default function TechAudit() {
                       </>
                     ) : (
                       <>
-                        {websiteIntent ? "Send website brief" : "Send Tech Audit brief"}{" "}
+                        {websiteIntent ? "Send my website plan request" : "Send my note"}{" "}
                         <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
@@ -780,17 +751,6 @@ export default function TechAudit() {
                   </p>
                 </form>
 
-                {!websiteIntent && (
-                  <div className="lf-audit__step-nav lf-audit__step-nav--below">
-                    <button
-                      type="button"
-                      className="lf-audit__back"
-                      onClick={() => setStep(2)}
-                    >
-                      <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
-                    </button>
-                  </div>
-                )}
               </div>
             )}
 

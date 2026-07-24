@@ -1,10 +1,11 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { Building2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import AuditMapDiagram from "@/components/dataviz/AuditMapDiagram";
 import industries from "@/data/industries.json";
 import { prepareIndustryHtml } from "@/lib/legacyHtml";
+import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/journal.css";
 import "@/styles/editorial/industry.css";
 
@@ -27,6 +28,151 @@ type IndustryStart = {
   title: string;
   detail: string;
   to: string;
+};
+
+type IndustryRecognition = {
+  situation: string;
+  stays: string;
+  easier: string;
+  image: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    widths: number[];
+  };
+  proof?: {
+    to: string;
+    label: string;
+  };
+};
+
+const INDUSTRY_RECOGNITION: Record<string, IndustryRecognition> = {
+  "galleries-creative-studios": {
+    situation:
+      "The work has a point of view. The website should help people see it and know how to inquire.",
+    stays:
+      "The work, the voice, the curatorial choices, and the way you build relationships.",
+    easier:
+      "Current work is easy to browse. Visits and events are clear. Inquiries reach the right person.",
+    image: {
+      src: "/assets/hero-ind-bookshop.webp",
+      alt: "Books and creative objects arranged inside a neighborhood shop",
+      width: 1600,
+      height: 1200,
+      widths: [480, 640, 900],
+    },
+    proof: {
+      to: "/case-studies/cc-films/",
+      label: "See what changed",
+    },
+  },
+  "law-firms": {
+    situation:
+      "The practice has decades of trust. The website and office accounts may still depend on one person who knows where everything is.",
+    stays:
+      "The firm name, its reputation, client relationships, legal judgment, and the tools that still work.",
+    easier:
+      "The site reflects the practice today. Consults reach the right person. The domain, email, and accounts are documented and owned by the firm.",
+    image: {
+      src: "/images/owner-stories/family-law-office.webp",
+      alt: "A long-running law office with legal books, paper files, an older desktop, and a newer laptop",
+      width: 1672,
+      height: 941,
+      widths: [480, 640, 900, 1200],
+    },
+  },
+  "medical-wellness-practices": {
+    situation:
+      "Patients trust the care. They should not have to fight the website, phone, forms, and booking just to get started.",
+    stays:
+      "Clinical judgment, patient privacy, staff routines, and the systems that already meet the practice's needs.",
+    easier:
+      "Services are clear. The request path works on a phone. Staff can see the next handoff without exposing private patient information.",
+    image: {
+      src: "/assets/hero-ind-pharmacy-neon.webp",
+      alt: "A neighborhood pharmacy counter seen through a glowing storefront",
+      width: 1600,
+      height: 1200,
+      widths: [480, 640, 900],
+    },
+  },
+  "professional-services": {
+    situation:
+      "Your expertise grew through referrals. New clients still check online first, and the next generation needs a setup it can own.",
+    stays:
+      "The firm name, expertise, relationships, working methods, and useful tools.",
+    easier:
+      "Services and proof are clear. Inquiries have an owner. Website, domain, email, and software access no longer live in one person's head.",
+    image: {
+      src: "/images/owner-stories/family-law-office.webp",
+      alt: "A long-running professional office with books, paper files, an older desktop, and a newer laptop",
+      width: 1672,
+      height: 941,
+      widths: [480, 640, 900, 1200],
+    },
+    proof: {
+      to: "/case-studies/public-house-creative/",
+      label: "See what changed",
+    },
+  },
+  "restaurants-bars": {
+    situation:
+      "The food and the room already bring people back. Online, guests just need the right menu, hours, and reservation path.",
+    stays:
+      "The menu, the hospitality, the regulars, and the tools the staff already trusts.",
+    easier:
+      "Hours agree everywhere. The menu works on a phone. Reservations and event requests reach the right person.",
+    image: {
+      src: "/images/owner-stories/neighborhood-bistro.webp",
+      alt: "An intimate neighborhood bistro with set tables, a handwritten reservation book, and a small booking screen",
+      width: 1672,
+      height: 941,
+      widths: [480, 640, 900, 1200],
+    },
+    proof: {
+      to: "/case-studies/brothers-pizzeria/",
+      label: "See what changed",
+    },
+  },
+  "retail-ecommerce": {
+    situation:
+      "The shelf and the register work. Trouble starts when the website, pickup, and inventory tell customers different things.",
+    stays:
+      "The products, the staff, the shop's character, the customer experience, and the POS when it still fits.",
+    easier:
+      "Product facts agree. Pickup is clear. Customers can find the right item without creating another manual check for staff.",
+    image: {
+      src: "/assets/interior-jeans-rack.webp",
+      alt: "Clothing racks inside an independent neighborhood shop",
+      width: 2400,
+      height: 1600,
+      widths: [480, 640, 900],
+    },
+    proof: {
+      to: "/case-studies/army-navy-bags/",
+      label: "See what changed",
+    },
+  },
+  "salons-wellness": {
+    situation:
+      "Regulars know who to book. New clients need to see the services, the work, and the next open time without phone tag.",
+    stays:
+      "The chairs, the skill, the regulars, the phone number, and the booking tool when clients already know it.",
+    easier:
+      "Services are clear. Booking and reminders line up. Google shows the right facts. Rebooking does not depend on one person's memory.",
+    image: {
+      src: "/images/owner-stories/neighborhood-barber.webp",
+      alt: "An empty neighborhood barbershop with familiar chairs, mirrors, an appointment book, and a small booking screen",
+      width: 1672,
+      height: 941,
+      widths: [480, 640, 900, 1200],
+    },
+    proof: {
+      to: "/case-studies/hair-by-rachel-charles/",
+      label: "See what changed",
+    },
+  },
 };
 
 const DEFAULT_STARTS: IndustryStart[] = [
@@ -159,15 +305,17 @@ const INDUSTRY_STARTS: Record<string, IndustryStart[]> = {
 };
 
 /**
- * Lift the authored "Audit map" section out of the legacy body so it can render
+ * Lift the authored "Fit map" or "Audit map" section out of the legacy body so it can render
  * as a real customer-path diagram (AuditMapDiagram) instead of borderless prose.
  * Splits at the section boundary, so both remaining chunks stay balanced.
- * Returns null when the section is missing — the body then renders untouched.
+ * Returns null when the section is missing. The body then renders untouched.
  */
 function extractAuditMap(
   body: string,
 ): { before: string; after: string; pieces: AuditMapPieces } | null {
-  const match = body.match(/<section>\s*<p>\s*Audit map\s*<\/p>([\s\S]*?)<\/section>/i);
+  const match = body.match(
+    /<section>\s*<p>\s*(?:Audit|Fit) map\s*<\/p>([\s\S]*?)<\/section>/i,
+  );
   if (!match || match.index === undefined) return null;
 
   const inner = match[1];
@@ -212,11 +360,9 @@ function dropOrphanClosers(html: string, tag: string): string {
   return out;
 }
 
-/* The legacy source leaves whitespace-only <li>/<article> husks behind (they
- * render as an empty bullet and an empty bordered card — the parser closes a
- * bare `<article>` opener the moment `</section>` arrives), and each section's
- * short leading <p> is an eyebrow, not prose. Tidy both — markup only, no
- * authored words touched. */
+/* The legacy source leaves whitespace-only list, article, and section husks
+ * behind. It also includes an empty "On this page" scaffold. Remove those
+ * structural leftovers while leaving the authored words and links intact. */
 function tidyLegacyBody(body: string): string {
   let tidied = body
     .replace(/<li>\s*<\/li>/gi, "")
@@ -224,64 +370,16 @@ function tidyLegacyBody(body: string): string {
     .replace(/<article>\s*<\/article>/gi, "")
     .replace(/<article>\s*(?=<\/section>)/gi, "")
     .replace(
+      /<section>\s*<p class="lf-post__kicker">\s*On this page\s*<\/p>\s*<\/section>/gi,
+      "",
+    )
+    .replace(
       /<section>\s*<p>([^<]{2,40})<\/p>\s*(?=<h2)/gi,
       '<section><p class="lf-post__kicker">$1</p>',
     );
   tidied = dropOrphanClosers(tidied, "article");
   tidied = dropOrphanClosers(tidied, "li");
-  return tidied;
-}
-
-function plainText(html: string): string {
-  return html
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/gi, " ")
-    .replace(/&amp;/gi, "&")
-    .replace(/&mdash;|&ndash;/gi, " ")
-    .replace(/&#(?:x27|39);|&apos;/gi, "'")
-    .replace(/&quot;/gi, '"')
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-/**
- * Keep the opening and primary audit map visible, then turn supporting
- * sections into semantic disclosures so phone users can scan before reading.
- * The full authored HTML remains in the document.
- */
-function addProgressiveDisclosure(body: string, keepFirstContactRow = false): string {
-  let keptContactRow = false;
-
-  return body.replace(
-    /<section(?:\s[^>]*)?>([\s\S]*?)<\/section>/gi,
-    (section, inner: string) => {
-      if (/lf-post__cta-row/i.test(inner) && keepFirstContactRow && !keptContactRow) {
-        keptContactRow = true;
-        return section;
-      }
-
-      const visibleText = plainText(inner);
-      if (/^On this page$/i.test(visibleText)) return "";
-
-      const hasNumberedCards = /<article(?:\s[^>]*)?>\s*<span>\s*0?1\s*<\/span>/i.test(inner);
-      const firstParagraph = inner.match(/^\s*<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/i);
-      const heading = inner.match(/<h2(?:\s[^>]*)?>([\s\S]*?)<\/h2>/i);
-      const kicker = hasNumberedCards
-        ? "Owner checklist"
-        : plainText(firstParagraph?.[1] ?? "") || "Industry guide";
-      const title = hasNumberedCards
-        ? "The three parts to check first"
-        : plainText(heading?.[1] ?? "") || "Read the next part";
-
-      let content = inner;
-      if (!hasNumberedCards) {
-        if (firstParagraph) content = content.replace(firstParagraph[0], "");
-        if (heading) content = content.replace(heading[0], "");
-      }
-
-      return `<section class="lf-industry-disclosure"><header><span>${kicker}</span><h2>${title}</h2></header><details><summary><strong>Open this section</strong><i aria-hidden="true"></i></summary><div class="lf-industry-disclosure__body">${content}</div></details></section>`;
-    },
-  );
+  return tidied.replace(/<section>\s*<\/section>/gi, "");
 }
 
 export default function IndustryDetail() {
@@ -293,47 +391,116 @@ export default function IndustryDetail() {
 
   const { headline, body } = prepareIndustryHtml(entry.html);
   const heroTitle = headline || entry.title.replace(" Help", "");
-  // Extract FIRST — tidyLegacyBody rewrites the <p>Audit map</p> marker into a
+  // Extract first. tidyLegacyBody rewrites the map marker into a
   // kicker, which would hide the section from the extractor.
   const rawAudit = extractAuditMap(body);
   const audit = rawAudit && {
     ...rawAudit,
-    before: addProgressiveDisclosure(tidyLegacyBody(rawAudit.before), true),
-    after: addProgressiveDisclosure(tidyLegacyBody(rawAudit.after)),
+    before: tidyLegacyBody(rawAudit.before),
+    after: tidyLegacyBody(rawAudit.after),
   };
-  const tidied = addProgressiveDisclosure(tidyLegacyBody(body), true);
+  const tidied = tidyLegacyBody(body);
   const industryName = entry.title.replace(" Help", "");
   const startingPoints = INDUSTRY_STARTS[entry.slug] ?? DEFAULT_STARTS;
+  const recognition = INDUSTRY_RECOGNITION[entry.slug] ?? {
+    situation:
+      "The business already works. The technology should support it without changing what customers and staff value.",
+    stays: "The reputation, relationships, useful tools, and working habits.",
+    easier:
+      "People can find the right information, take the next step, and reach the right person.",
+    image: {
+      src: entry.image ?? "/assets/coworking-laptops.webp",
+      alt: `A familiar working environment for ${industryName.toLowerCase()}`,
+      width: 1800,
+      height: 1200,
+      widths: [480, 640, 900],
+    },
+  };
 
   return (
-    <>
+    <div className="lf-industry-page">
       <PageHero
-        eyebrow="Industry"
-        icon={Building2}
+        eyebrow={`For ${industryName}`}
         title={<>{heroTitle}</>}
         dek={entry.description}
-        image={entry.image ? {
-          src: entry.image,
-          alt: entry.title.replace(" Help", ""),
-          width: 1800,
-          height: 1200,
-        } : undefined}
       />
+
+      <section
+        className="lf-industry-recognition"
+        aria-labelledby="lf-industry-recognition-title"
+      >
+        <div className="lf-industry-recognition__inner">
+          <div className="lf-industry-recognition__copy">
+            <p className="lf-industry-recognition__label">
+              Does this feel familiar?
+            </p>
+            <h2 id="lf-industry-recognition-title">
+              {recognition.situation}
+            </h2>
+
+            <dl className="lf-industry-recognition__outcomes">
+              <div>
+                <dt>What stays</dt>
+                <dd>{recognition.stays}</dd>
+              </div>
+              <div>
+                <dt>What gets easier</dt>
+                <dd>{recognition.easier}</dd>
+              </div>
+            </dl>
+
+            {recognition.proof && (
+              <Link
+                className="lf-industry-recognition__proof"
+                to={recognition.proof.to}
+                aria-label={`${recognition.proof.label} for ${industryName}`}
+              >
+                {recognition.proof.label}
+                <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+              </Link>
+            )}
+          </div>
+
+          <figure className="lf-industry-recognition__figure">
+            <div className="lf-industry-recognition__media">
+              <img
+                src={recognition.image.src}
+                {...responsiveImageProps(
+                  recognition.image.src,
+                  "(min-width: 1280px) 46vw, (min-width: 768px) 48vw, 100vw",
+                  recognition.image.widths,
+                )}
+                alt={recognition.image.alt}
+                width={recognition.image.width}
+                height={recognition.image.height}
+                fetchPriority="high"
+                decoding="async"
+              />
+            </div>
+            <figcaption>Illustrative scene. Not client evidence.</figcaption>
+          </figure>
+        </div>
+      </section>
 
       <section className="lf-industry-start" aria-labelledby="lf-industry-start-title">
         <div className="lf-industry-start__inner">
           <header>
-            <p>Start with the pressure point</p>
-            <h2 id="lf-industry-start-title">What is getting in the way?</h2>
-            <span>Three practical starting points for {industryName.toLowerCase()}.</span>
+            <h2 id="lf-industry-start-title">Where should we start?</h2>
+            <p>
+              Pick the line that sounds closest. You do not need to diagnose the
+              technology first.
+            </p>
           </header>
 
           <nav className="lf-industry-start__routes" aria-label={`Starting points for ${industryName}`}>
             {startingPoints.map((point) => (
               <Link key={`${point.eyebrow}-${point.to}`} to={point.to}>
-                <span>{point.eyebrow}</span>
-                <strong>{point.title}</strong>
-                <small>{point.detail}</small>
+                <span className="lf-industry-start__kind">{point.eyebrow}</span>
+                <span className="lf-industry-start__route-copy">
+                  <strong>{point.title}</strong>
+                  <small>{point.detail}</small>
+                </span>
+                <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
               </Link>
             ))}
           </nav>
@@ -369,6 +536,6 @@ export default function IndustryDetail() {
       </article>
 
       <QuietContact />
-    </>
+    </div>
   );
 }

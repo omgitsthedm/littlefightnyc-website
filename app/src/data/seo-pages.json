@@ -1582,6 +1582,56 @@
         ],
         "shortNeed": "strong search visibility and easy first visits for thousands of brand-new residents",
         "image": "/assets/interior-grocery.webp"
+      },
+      {
+        "slug": "greenwich-village",
+        "name": "Greenwich Village",
+        "zipCodes": [
+          "10003",
+          "10011",
+          "10012"
+        ],
+        "shortNeed": "fast mobile pages, correct late-night hours, and booking or ticket links that work mid-walk",
+        "image": "/assets/hero-greenwich-arch.webp"
+      },
+      {
+        "slug": "financial-district",
+        "name": "Financial District",
+        "zipCodes": [
+          "10004",
+          "10005",
+          "10006",
+          "10007",
+          "10038"
+        ],
+        "shortNeed": "fast lunch-hour decisions and systems that also reach the neighborhood's growing residential crowd",
+        "image": "/assets/hero-fidi-love-gate.webp"
+      },
+      {
+        "slug": "the-bronx",
+        "name": "The Bronx",
+        "zipCodes": [
+          "10451",
+          "10453",
+          "10458",
+          "10462",
+          "10467"
+        ],
+        "shortNeed": "correct bilingual-friendly listings, fast mobile pages, and simple tools that protect loyal referrals",
+        "image": "/assets/hero-bronx-stadium.webp"
+      },
+      {
+        "slug": "staten-island",
+        "name": "Staten Island",
+        "zipCodes": [
+          "10301",
+          "10304",
+          "10306",
+          "10312",
+          "10314"
+        ],
+        "shortNeed": "trustworthy reviews, clear service-area visibility, and a site that turns referrals into calls",
+        "image": "/assets/hero-si-ferry-terminal.webp"
       }
     ]
   },

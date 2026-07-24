@@ -610,6 +610,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--lf-space-3);
+  margin-top: var(--lf-space-5);
 }
 
 .lf-library-find__door {
@@ -679,7 +680,7 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--lf-space-3);
-  margin-top: var(--lf-space-5);
+  margin-top: 0;
   padding-inline: var(--lf-space-5);
   color: var(--lf-bone);
   border: 1px solid var(--lf-hairline);

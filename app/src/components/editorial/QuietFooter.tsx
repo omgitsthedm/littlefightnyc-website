@@ -32,26 +32,26 @@ const footerGroups: Array<{
   links: Array<{ label: string; to: string; external?: boolean }>;
 }> = [
   {
-    title: "Services",
+    title: "What we fix",
     links: [
-      { label: "Custom Local Websites", to: "/services/custom-local-websites/" },
-      { label: "IT Support", to: "/services/it-support/" },
-      { label: "Tech Consulting", to: "/services/tech-consulting/" },
+      { label: "Custom websites", to: "/services/custom-local-websites/" },
+      { label: "Broken tech", to: "/services/it-support/" },
+      { label: "Free second opinion", to: "/services/tech-consulting/" },
       { label: "Software You Own", to: "/services/business-systems/" },
     ],
   },
   {
-    title: "Proof",
+    title: "Work",
     links: [
-      { label: "Live Work", to: "/examples/" },
-      { label: "The Lab", to: "/examples/lab/", external: true },
-      { label: "The Audit", to: "/examples/audit/", external: true },
+      { label: "See every project", to: "/examples/" },
+      { label: "Try the Lab", to: "/examples/lab/", external: true },
+      { label: "See a site audit", to: "/examples/audit/", external: true },
     ],
   },
   {
     title: "Explore",
     links: [
-      { label: "The Library", to: "/library/" },
+      { label: "Plain-English answers", to: "/library/" },
       { label: "NYC Neighborhoods", to: "/areas/" },
       { label: "Websites Nationwide", to: "/nationwide/" },
     ],
@@ -71,7 +71,7 @@ export default function QuietFooter() {
             <p>New York City · Since 2021 · Still picking up the phone</p>
           </div>
           <nav className="lf-quiet-foot__company" aria-label="Company and legal">
-            <Link to="/tech-audit/">Tech Audit</Link>
+            <Link to="/tech-audit/">Get a free second opinion</Link>
             <Link to="/about/">About</Link>
             <Link to="/contact/">Contact</Link>
             <Link to="/privacy/">Privacy</Link>
@@ -141,12 +141,12 @@ export default function QuietFooter() {
           <p className="lf-quiet-foot__legal">
             © {year} Little Fight NYC. All rights reserved.
           </p>
-          {/* Renders null until a second language bundle exists — see src/i18n. */}
+          {/* Renders null until a second language bundle exists. */}
           <LanguageSwitcher />
         </div>
 
         <p className="lf-quiet-foot__signature">
-          Designed, Hosted and Cared For by{" "}
+          Designed, hosted, and cared for by{" "}
           <a
             href="https://littlefightnyc.com"
             rel="author"

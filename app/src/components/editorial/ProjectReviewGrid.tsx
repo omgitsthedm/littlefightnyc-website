@@ -33,6 +33,14 @@ export default function ProjectReviewGrid({
               height={1200}
               loading="lazy"
               decoding="async"
+              style={
+                variant === "all"
+                  ? {
+                      objectPosition:
+                        study.showcase.heroPosition ?? "center center",
+                    }
+                  : undefined
+              }
             />
           </div>
 
@@ -41,8 +49,12 @@ export default function ProjectReviewGrid({
               <ProofStatus study={study} className="lf-project-review__status" />
               <span>{study.showcase.context}</span>
             </div>
-            <h3>{study.showcase.label}</h3>
-            <p className="lf-project-review__title">{study.title}</p>
+            <h3>
+              {variant === "all" ? study.client : study.showcase.label}
+            </h3>
+            <p className="lf-project-review__title">
+              {variant === "all" ? study.showcase.label : study.title}
+            </p>
             <p className="lf-project-review__result">{study.result}</p>
 
             {study.metrics && study.metrics.length > 0 && (

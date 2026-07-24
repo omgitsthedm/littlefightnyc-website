@@ -433,23 +433,23 @@ export const services: Service[] = [
 
 export const agencyProcess = [
   {
-    label: "Read the business",
-    copy: "We look at the site, tools, search presence, and workflow before naming the fix.",
+    label: "Learn the business",
+    copy: "We look at the website, the tools, and the way the day works before naming the fix.",
     icon: FileSearch,
   },
   {
-    label: "Fix the leak",
+    label: "Fix what costs you",
     copy: "If something is costing calls, bookings, payments, or trust, it moves first.",
     icon: MousePointerClick,
   },
   {
-    label: "Clean the stack",
-    copy: "Keep the useful tools. Cut the monthly drag. Connect what should already be talking.",
+    label: "Keep what works",
+    copy: "Keep the useful tools. Cut the monthly waste. Connect the parts that should already work together.",
     icon: ReceiptText,
   },
   {
-    label: "Build what fits",
-    copy: "When off-the-shelf software is too big or too wrong, build the missing piece.",
+    label: "Build the missing piece",
+    copy: "When ready-made software is too big or simply wrong, we build the smaller tool the team needs.",
     icon: Sparkles,
   },
 ];

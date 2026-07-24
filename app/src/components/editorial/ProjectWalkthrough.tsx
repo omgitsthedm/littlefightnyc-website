@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Boxes, Globe2, LockKeyhole, Network, ShoppingBag } from "lucide-react";
 import type { CaseStudy } from "@/data/site";
 import { caseProofLabel } from "./caseProof";
@@ -15,17 +14,7 @@ function ProjectIcon({ kind }: { kind: string }) {
 }
 
 export default function ProjectWalkthrough({ study }: { study: CaseStudy }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeStage = study.showcase.stages[activeIndex] ?? study.showcase.stages[0];
-  const tabPrefix = `lf-project-${study.slug}`;
-
-  if (!activeStage) return null;
-
-  function focusStage(index: number) {
-    const nextIndex = (index + study.showcase.stages.length) % study.showcase.stages.length;
-    setActiveIndex(nextIndex);
-    document.getElementById(`${tabPrefix}-tab-${nextIndex}`)?.focus();
-  }
+  if (study.showcase.stages.length === 0) return null;
 
   return (
     <section className="lf-project-walkthrough" aria-label={`${study.showcase.label} walkthrough`}>
@@ -44,60 +33,23 @@ export default function ProjectWalkthrough({ study }: { study: CaseStudy }) {
         </span>
       </header>
 
-      <div
+      <ol
         className="lf-project-walkthrough__stages"
-        role="tablist"
-        aria-label="Project flow"
+        aria-label="How the project works"
         style={{ "--lf-stage-count": study.showcase.stages.length } as React.CSSProperties}
       >
-        {study.showcase.stages.map((stage, index) => (
-          <button
+        {study.showcase.stages.map((stage) => (
+          <li
             key={stage.label}
-            id={`${tabPrefix}-tab-${index}`}
-            type="button"
-            role="tab"
-            aria-selected={index === activeIndex}
-            aria-controls={`${tabPrefix}-panel`}
-            tabIndex={index === activeIndex ? 0 : -1}
-            onClick={() => setActiveIndex(index)}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-                event.preventDefault();
-                focusStage(index + 1);
-              }
-              if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-                event.preventDefault();
-                focusStage(index - 1);
-              }
-              if (event.key === "Home") {
-                event.preventDefault();
-                focusStage(0);
-              }
-              if (event.key === "End") {
-                event.preventDefault();
-                focusStage(study.showcase.stages.length - 1);
-              }
-            }}
           >
             <span className="lf-project-walkthrough__marker" aria-hidden="true" />
-            <span>{stage.label}</span>
-          </button>
+            <div>
+              <h4>{stage.label}</h4>
+              <p>{stage.detail}</p>
+            </div>
+          </li>
         ))}
-      </div>
-
-      <div
-        key={activeStage.label}
-        id={`${tabPrefix}-panel`}
-        className="lf-project-walkthrough__detail"
-        role="tabpanel"
-        aria-labelledby={`${tabPrefix}-tab-${activeIndex}`}
-      >
-        <span aria-hidden="true">{String(activeIndex + 1).padStart(2, "0")}</span>
-        <div>
-          <h4>{activeStage.label}</h4>
-          <p>{activeStage.detail}</p>
-        </div>
-      </div>
+      </ol>
     </section>
   );
 }

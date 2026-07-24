@@ -224,6 +224,35 @@
   line-height: 1.65;
 }
 
+.lf-area-context {
+  margin-top: var(--lf-space-4);
+  padding-top: var(--lf-space-4);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-area-context__label {
+  margin: 0 0 var(--lf-space-3);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lf-area-context > p:last-child,
+.lf-area-services__intro {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.65;
+}
+
+.lf-area-services__intro {
+  margin: var(--lf-space-3) 0 var(--lf-space-5);
+}
+
 .lf-area-disclosure--services {
   margin-top: var(--lf-space-3);
 }

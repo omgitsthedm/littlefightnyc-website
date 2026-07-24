@@ -145,6 +145,42 @@ html {
   interpolate-size: allow-keywords;
 }
 
+.lf-route-fallback {
+  width: min(calc(100% - 2 * var(--lf-margin-mobile)), var(--lf-max-w));
+  min-height: 18rem;
+  display: grid;
+  align-content: center;
+  gap: var(--lf-space-4);
+  margin-inline: auto;
+  padding-block: var(--lf-space-8);
+}
+
+.lf-route-fallback > span {
+  display: block;
+  height: 1rem;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-hairline);
+}
+
+.lf-route-fallback > span:first-child {
+  width: min(9rem, 42%);
+}
+
+.lf-route-fallback > span:nth-child(2) {
+  width: min(34rem, 88%);
+  height: 3rem;
+}
+
+.lf-route-fallback > span:last-child {
+  width: min(26rem, 70%);
+}
+
+@media (min-width: 768px) {
+  .lf-route-fallback {
+    width: min(calc(100% - 2 * var(--lf-margin-tablet)), var(--lf-max-w));
+  }
+}
+
 .lf-editorial :target {
   scroll-margin-top: clamp(72px, 10vh, 120px);
 }

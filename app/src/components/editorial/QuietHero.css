@@ -176,8 +176,8 @@
   display: inline-block;
   transform: translateY(0);
   opacity: 1;
-  animation: lf-hero-char-rise 760ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  animation-delay: calc(180ms + var(--lf-i, 0) * 14ms);
+  animation: lf-hero-char-rise 520ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(60ms + var(--lf-i, 0) * 5ms);
   will-change: transform, opacity;
   white-space: pre;
 }
@@ -192,8 +192,8 @@ html[data-snap="1"] .lf-hero__char {
 
 @keyframes lf-hero-char-rise {
   from {
-    transform: translateY(110%);
-    opacity: 0;
+    transform: translateY(18%);
+    opacity: 1;
   }
   to {
     transform: translateY(0);
