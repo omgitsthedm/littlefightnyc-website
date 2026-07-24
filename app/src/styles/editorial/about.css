@@ -1,0 +1,156 @@
+.lf-about-story {
+  padding: clamp(var(--lf-space-8), 7vw, var(--lf-space-10)) var(--lf-margin-mobile);
+  background: var(--lf-ink);
+}
+
+.lf-about-story__inner {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+}
+
+.lf-about-story__lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-5);
+  align-items: stretch;
+}
+
+.lf-about-story__copy,
+.lf-about-story__figure {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+}
+
+.lf-about-story__copy {
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-8));
+}
+
+.lf-editorial .lf-about-story__copy h2 {
+  max-width: 15ch;
+  margin: 0 0 var(--lf-space-6);
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2.7rem, 5vw, 5rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lf-about-story__copy .lf-body {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.lf-about-story__figure {
+  padding: 0;
+  background: var(--lf-paper-2);
+}
+
+.lf-about-story__figure .lf-fig {
+  height: 100%;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.lf-about-story__figure .lf-fig__frame {
+  height: auto;
+  min-height: 22rem;
+}
+
+.lf-about-story__figure .lf-fig__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lf-about-story__quote {
+  max-width: 980px;
+  margin: var(--lf-space-5) auto 0;
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-7));
+  border-left: 4px solid var(--lf-fight);
+  background: color-mix(in srgb, var(--lf-fight) 6%, var(--lf-paper));
+}
+
+.lf-about-story__quote .lf-pullquote {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.lf-about-story__promises {
+  margin-top: var(--lf-space-7);
+}
+
+.lf-about-story__promises .lf-stats {
+  margin: 0;
+}
+
+.lf-about-story__inner > .lf-founder {
+  margin: var(--lf-space-7) 0 0;
+}
+
+.lf-about-story__direct {
+  display: grid;
+  gap: var(--lf-space-4);
+  margin-top: var(--lf-space-7);
+  padding-top: var(--lf-space-6);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-about-story__direct h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lf-about-story__direct p {
+  max-width: 64ch;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.65;
+}
+
+.lf-about-story__direct p + p {
+  margin-top: var(--lf-space-3);
+}
+
+.lf-about-story__direct a {
+  color: var(--lf-bone);
+  text-decoration-color: var(--lf-fight);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.lf-about-story__direct a:hover {
+  color: var(--lf-fight);
+}
+
+@media (min-width: 768px) {
+  .lf-about-story {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-about-story__direct {
+    grid-template-columns: minmax(240px, 0.7fr) minmax(0, 1.3fr);
+    align-items: start;
+  }
+}
+
+@media (min-width: 980px) {
+  .lf-about-story__lead {
+    grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-about-story {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}

@@ -36,6 +36,63 @@ const INDUSTRY_ICONS: Record<string, LucideIcon> = {
   "salons-wellness": Scissors,
 };
 
+const LAB_BUILDS = [
+  {
+    title: "Brownstone Walk-Up",
+    type: "Spatial story",
+    description: "Climb a New York walk-up from street level to the water tower.",
+    href: "/examples/lab/concepts/walkup-3d/",
+  },
+  {
+    title: "Cinematic 3D",
+    type: "Spatial website",
+    description: "Architecture, atmosphere, and scroll-driven story in a working site.",
+    href: "/examples/lab/concepts/terminal-3d/",
+  },
+  {
+    title: "Scroll Into Motion",
+    type: "Motion study",
+    description: "A single object changes meaning as the page moves through it.",
+    href: "/examples/lab/concepts/pill-scroll/",
+  },
+  {
+    title: "Micro-Animations",
+    type: "Interaction study",
+    description: "Service ideas translated into small, readable moments of motion.",
+    href: "/examples/lab/concepts/micro-animations/",
+  },
+  {
+    title: "Studio Engine",
+    type: "Design system",
+    description: "A live concept generator with controls, layouts, and export paths.",
+    href: "/examples/lab/concepts/studio-engine/",
+  },
+  {
+    title: "Growth Street",
+    type: "Generative study",
+    description: "A storefront row changes as the systems behind it improve.",
+    href: "/examples/lab/concepts/growth-street/",
+  },
+  {
+    title: "Goliath",
+    type: "Brand campaign",
+    description: "Sharp type, hard contrast, and direct action at full volume.",
+    href: "/examples/lab/concepts/goliath/",
+  },
+  {
+    title: "Hero Prototype",
+    type: "Brand study",
+    description: "A homepage direction built around one clear promise.",
+    href: "/examples/lab/concepts/hero/",
+  },
+  {
+    title: "Tech Support Site",
+    type: "Full website",
+    description: "An earlier complete service site preserved as a working branch.",
+    href: "/examples/lab/concepts/tech-support/",
+  },
+] as const;
+
 export default function FieldGuide() {
   const toolsRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
   const industriesRef = useScrollReveal<HTMLDivElement>({ threshold: 0.2 });
@@ -66,33 +123,35 @@ export default function FieldGuide() {
       <section className="lf-ex-tools" aria-labelledby="lf-ex-tools-title">
         <div ref={toolsRef} className="lf-ex-tools__inner" data-reveal>
           <header className="lf-ex-tools__head">
-            <h2 id="lf-ex-tools-title">Try what we can build.</h2>
-            <p>Working prototypes for new ideas, plus a real website diagnostic you can run now.</p>
+            <h2 id="lf-ex-tools-title">Open the work directly.</h2>
+            <p>Use a working Lab build, run the Audit, or open a live product. No preview gate required.</p>
           </header>
 
-          <div className="lf-ex-tools__grid">
-            <a className="lf-ex-tool lf-ex-tool--lab" href="/examples/lab/" data-no-vt>
-              <span className="lf-ex-tool__media">
-                <img
-                  src="/examples/lab/assets/brownstone-poster.webp"
-                  alt="The interactive 3D Brownstone Walk-Up at night"
-                  width="1280"
-                  height="800"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </span>
-              <span className="lf-ex-tool__copy">
-                <span className="lf-ex-tool__type">11 working prototypes</span>
-                <strong>The Lab</strong>
-                <span>3D spaces, motion systems, storefront ideas, brand concepts, and real interface experiments.</span>
-                <span className="lf-ex-tool__open">
-                  Open The Lab
+          <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
+            <div className="lf-ex-lab-direct__head">
+              <div>
+                <p>9 public experiments</p>
+                <h3 id="lf-ex-lab-title">The Lab, without the maze.</h3>
+                <span>Open any build from here. The curated suites remain available if you want the guided version.</span>
+              </div>
+              <a href="/examples/lab/" data-no-vt>
+                View the complete Lab
+                <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
+              </a>
+            </div>
+            <div className="lf-ex-lab-direct__grid">
+              {LAB_BUILDS.map((build) => (
+                <a key={build.href} href={build.href} data-no-vt>
+                  <span>{build.type}</span>
+                  <strong>{build.title}</strong>
+                  <p>{build.description}</p>
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-                </span>
-              </span>
-            </a>
+                </a>
+              ))}
+            </div>
+          </section>
 
+          <div className="lf-ex-tools__grid">
             <a className="lf-ex-tool lf-ex-tool--audit" href="/examples/audit/" data-no-vt>
               <span className="lf-ex-tool__media">
                 <img

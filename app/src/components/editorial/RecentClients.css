@@ -1,18 +1,9 @@
-/* Recent work — outcome-led project maps as a visual grid. */
+/* Recent work, shown in one consistent review format. */
 
 .lf-clients {
-  padding: var(--lf-space-9) var(--lf-margin-mobile);
-  /* The scan CTA leaves this section's bottom padding empty; halve it so it
-     shares one gap with WorkGrid below instead of stacking a double void. */
-  padding-bottom: var(--lf-space-7);
-  background: var(--lf-ink);
+  padding: clamp(var(--lf-space-8), 7vw, var(--lf-space-10)) var(--lf-margin-mobile);
   border-top: 1px solid var(--lf-hairline);
-}
-@media (min-width: 768px) {
-  .lf-clients { padding: var(--lf-space-10) var(--lf-margin-tablet); padding-bottom: var(--lf-space-8); }
-}
-@media (min-width: 1280px) {
-  .lf-clients { padding: var(--lf-space-10) var(--lf-margin-desktop); padding-bottom: var(--lf-space-8); }
+  background: var(--lf-ink);
 }
 
 .lf-clients__inner {
@@ -28,246 +19,56 @@
   gap: var(--lf-space-5);
   margin-bottom: var(--lf-space-7);
 }
-@media (min-width: 840px) {
-  .lf-clients__head {
-    flex-direction: row;
-    align-items: flex-end;
-  }
-}
+
 .lf-editorial .lf-clients__label {
-  color: var(--lf-fight);
   margin-bottom: var(--lf-space-3);
+  color: var(--lf-fight);
 }
+
 .lf-clients__heading {
-  max-width: 16ch;
+  max-width: 20ch;
+  color: var(--lf-bone);
   font-family: var(--lf-heading);
   font-size: var(--lf-text-2xl);
   font-weight: 700;
-  line-height: 1.05;
   letter-spacing: -0.035em;
-  color: var(--lf-bone);
+  line-height: 1.05;
 }
+
 .lf-editorial .lf-clients__lede {
   max-width: 48ch;
-  /* Clear the Oswald heading's descenders — space-4 read as almost touching. */
   margin-top: var(--lf-space-5);
+  color: var(--lf-bone-soft);
   font-size: var(--lf-text-base);
   line-height: 1.5;
-  color: var(--lf-bone-soft);
 }
+
 .lf-clients__all {
   display: inline-flex;
   align-items: center;
   gap: 0.35em;
   color: var(--lf-bone-soft);
-  text-decoration: none;
   font-size: var(--lf-text-sm);
   font-weight: 600;
+  text-decoration: none;
   transition: color var(--m-signal-ms) var(--m-signal-ease);
 }
-.lf-clients__all:hover { color: var(--lf-fight); }
+
+.lf-clients__all:hover {
+  color: var(--lf-fight);
+}
+
 .lf-clients__all:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 4px;
 }
-/* Full 44px touch target on real touch devices. */
-@media (pointer: coarse) {
-  .lf-clients__all { min-height: 44px; }
-}
 
-/* ---- Grid: one lead proof with two compact supporting builds ---- */
-.lf-clients__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--lf-space-4);
-}
-@media (min-width: 640px) {
-  .lf-clients__grid { grid-template-columns: repeat(2, 1fr); }
-}
-.lf-clients__card--feature { grid-column: 1 / -1; }
-
-@media (min-width: 960px) {
-  .lf-clients__grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
-  }
-  .lf-clients__card--feature {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-  }
-  .lf-clients__card:not(.lf-clients__card--feature) {
-    grid-column: 2;
-    display: grid;
-    grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1.2fr);
-  }
-  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__preview {
-    height: 100%;
-    min-height: 260px;
-  }
-  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__meta {
-    padding: var(--lf-space-4);
-  }
-  .lf-clients__card:not(.lf-clients__card--feature) .lf-clients__fact:nth-child(n + 3) {
-    display: none;
-  }
-  .lf-clients__card--feature .lf-clients__preview {
-    height: 420px;
-    min-height: 420px;
-  }
-}
-
-/* ---- Card ---- */
-.lf-clients__card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-card-bg);
-  text-decoration: none;
-  color: var(--lf-bone);
-  /* reveal */
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 520ms cubic-bezier(0, 0, 0.2, 1),
-    transform 520ms cubic-bezier(0, 0, 0.2, 1),
-    border-color var(--m-signal-ms) var(--m-signal-ease);
-  transition-delay: calc(var(--lf-i, 0) * 80ms);
-}
-.lf-clients__grid[data-revealed="true"] .lf-clients__card {
-  opacity: 1;
-  transform: none;
-  transition-delay: calc(var(--lf-i, 0) * 80ms), calc(var(--lf-i, 0) * 80ms), 0ms;
-}
-.lf-clients__card:hover,
-.lf-clients__card:focus-visible {
-  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
-}
-.lf-clients__card:focus-visible {
-  outline: 2px solid var(--lf-fight);
-  outline-offset: 3px;
-}
-
-.lf-clients__preview {
-  position: relative;
-  height: clamp(230px, 58vw, 330px);
-  min-height: 230px;
-  display: block;
-  overflow: hidden;
-  background: var(--lf-paper-2);
-  box-shadow: inset 0 0 0 1px var(--lf-hairline);
-}
-
-.lf-clients__preview-placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--lf-bone-dim);
-  background:
-    radial-gradient(circle at 76% 24%, color-mix(in srgb, var(--lf-blue) 14%, transparent), transparent 38%),
-    linear-gradient(145deg, color-mix(in srgb, var(--lf-fight) 8%, transparent), transparent 54%);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.lf-clients__preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform var(--m-reveal-ms) var(--m-reveal-ease);
-}
-
-.lf-clients__card:hover .lf-clients__preview img,
-.lf-clients__card:focus-visible .lf-clients__preview img {
-  transform: scale(1.025);
-}
-
-.lf-clients__meta {
-  display: flex;
-  flex-direction: column;
-  gap: var(--lf-space-2);
-  padding: var(--lf-space-5);
-}
-.lf-clients__status {
-  margin-bottom: var(--lf-space-1);
-}
-.lf-clients__type { color: var(--lf-bone-dim); }
-.lf-clients__client {
-  font-family: var(--lf-heading);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  font-size: var(--lf-text-md);
-  line-height: 1.1;
-  color: var(--lf-bone);
-}
-.lf-clients__title {
-  font-size: var(--lf-text-sm);
-  line-height: 1.45;
-  color: var(--lf-bone-soft);
-}
-.lf-clients__facts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--lf-space-3);
-  margin-top: var(--lf-space-3);
-  padding-top: var(--lf-space-4);
-  border-top: 1px solid var(--lf-hairline);
-}
-.lf-clients__fact {
-  display: flex;
-  flex-direction: column;
-  gap: var(--lf-space-1);
-  min-width: 0;
-}
-.lf-clients__fact strong {
-  color: var(--lf-fight);
-  font-family: var(--lf-heading);
-  font-size: var(--lf-text-lg);
-  line-height: 1;
-}
-.lf-clients__fact > span {
-  color: var(--lf-bone-dim);
-  font-size: var(--lf-text-2xs);
-  line-height: 1.35;
-}
-@media (min-width: 640px) {
-  .lf-clients__card--feature .lf-clients__facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.lf-clients__go {
-  position: absolute;
-  top: var(--lf-space-4);
-  right: var(--lf-space-4);
-  color: var(--lf-bone);
-  background: rgba(5, 7, 12, 0.6); /* solid fallback: --lf-ink @60% for Safari <16.2 */
-  background: color-mix(in srgb, var(--lf-ink) 60%, transparent);
-  backdrop-filter: blur(6px);
-  border-radius: var(--lf-radius-pill);
-  padding: 6px;
-  transition:
-    transform var(--m-signal-ms) var(--m-signal-ease),
-    color var(--m-signal-ms) var(--m-signal-ease);
-}
-.lf-clients__card:hover .lf-clients__go,
-.lf-clients__card:focus-visible .lf-clients__go {
-  color: var(--lf-fight);
-  transform: translate(2px, -2px);
-}
-
-/* Lower-commitment conversion step, deliberately placed after real proof. */
 .lf-clients__scan {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: var(--lf-space-4);
   align-items: center;
-  margin-top: var(--lf-space-6);
+  margin-top: var(--lf-space-5);
   padding: var(--lf-space-5);
   border: 1px solid color-mix(in srgb, var(--lf-blue) 38%, var(--lf-hairline));
   border-radius: var(--lf-radius-card);
@@ -275,26 +76,34 @@
 }
 
 .lf-clients__scan-icon {
+  width: 48px;
+  height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
   color: var(--lf-blue-soft);
   border: 1px solid color-mix(in srgb, var(--lf-blue) 34%, transparent);
   border-radius: var(--lf-radius-sm);
   background: color-mix(in srgb, var(--lf-blue) 14%, transparent);
 }
-.lf-clients__scan-copy { min-width: 0; }
-.lf-clients__scan-label { color: var(--lf-blue-soft); }
+
+.lf-clients__scan-copy {
+  min-width: 0;
+}
+
+.lf-clients__scan-label {
+  color: var(--lf-blue-soft);
+}
+
 .lf-clients__scan-copy h3 {
   margin-top: var(--lf-space-2);
+  color: var(--lf-bone);
   font-family: var(--lf-heading);
   font-size: var(--lf-text-lg);
-  line-height: 1.1;
   letter-spacing: var(--lf-display-tracking);
-  color: var(--lf-bone);
+  line-height: 1.1;
 }
+
 .lf-clients__scan-copy > p:last-child {
   max-width: 62ch;
   margin-top: var(--lf-space-2);
@@ -302,33 +111,45 @@
   font-size: var(--lf-text-sm);
   line-height: 1.5;
 }
+
 .lf-editorial .lf-clients__scan-cta {
   grid-column: 1 / -1;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--lf-space-2);
-  min-height: 48px;
   padding-inline: var(--lf-space-5);
   color: var(--lf-bone);
-  /* --lf-blue (#3B82F6) gave light text only 3.68:1 (fails WCAG AA), and the
-     old hover (--lf-blue-soft) is LIGHTER so it failed harder. Deep blue-600/700
-     keeps a prominent solid CTA while clearing AA with light text both states. */
-  background: #2563eb;
   border-radius: var(--lf-radius-control);
-  text-decoration: none;
+  background: #2563eb;
   font-weight: 700;
+  text-decoration: none;
   transition:
     transform var(--m-signal-ms) var(--m-signal-ease),
     background var(--m-signal-ms) var(--m-signal-ease);
 }
+
 .lf-editorial .lf-clients__scan-cta:hover {
-  transform: translateY(var(--lf-lift));
   background: #1d4ed8;
+  transform: translateY(var(--lf-lift));
 }
+
 .lf-editorial .lf-clients__scan-cta:focus-visible {
   outline: 2px solid var(--lf-blue-soft);
   outline-offset: 3px;
+}
+
+@media (pointer: coarse) {
+  .lf-clients__all {
+    min-height: 44px;
+  }
+}
+
+@media (min-width: 768px) {
+  .lf-clients {
+    padding-inline: var(--lf-margin-tablet);
+  }
 }
 
 @media (min-width: 820px) {
@@ -336,11 +157,27 @@
     grid-template-columns: auto minmax(0, 1fr) auto;
     padding: var(--lf-space-6);
   }
-  .lf-editorial .lf-clients__scan-cta { grid-column: auto; }
+
+  .lf-editorial .lf-clients__scan-cta {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 840px) {
+  .lf-clients__head {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+@media (min-width: 1280px) {
+  .lf-clients {
+    padding-inline: var(--lf-margin-desktop);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-clients__card { opacity: 1; transform: none; transition: none; }
-  .lf-clients__preview img { transition: none; }
-  .lf-editorial .lf-clients__scan-cta { transition: none; }
+  .lf-editorial .lf-clients__scan-cta {
+    transition: none;
+  }
 }

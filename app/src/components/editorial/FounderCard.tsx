@@ -38,13 +38,13 @@ export default function FounderCard({ photoSrc }: { photoSrc?: string }) {
         <p className="lf-founder__eyebrow">How we work</p>
         <p className="lf-founder__name">
           David Marsh
-          <span className="lf-founder__role"> · Founder</span>
+          <span className="lf-founder__role">, Founder</span>
         </p>
         <p className="lf-founder__line">
           Little Fight runs on a real standard: one accountable owner on every
           project, a two-hour callback window, and on-site help within a day
           when it's urgent. We're building the tech service company New York's
-          small businesses deserve — the one the chains never sent.
+          small businesses deserve. The one the chains never sent.
         </p>
         <p className="lf-founder__meta">
           <a className="lf-founder__tel" href="tel:+16463600318">

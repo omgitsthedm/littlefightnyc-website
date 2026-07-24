@@ -474,9 +474,9 @@
 
 .lf-answers-hub__card {
   display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: var(--lf-space-4);
-  align-items: start;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  align-items: center;
   padding: var(--lf-space-4);
   background: var(--lf-paper);
   border: var(--lf-card-border);
@@ -508,11 +508,10 @@
 }
 
 .lf-answers-hub__thumb {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 96px;
-  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  aspect-ratio: 1;
   border-radius: var(--lf-radius-sm);
   overflow: hidden;
   color: var(--lf-fight);
@@ -523,8 +522,10 @@
 }
 
 .lf-answers-hub__thumb svg {
-  width: 34px;
-  height: 34px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: auto;
   flex: none;
   transform: translate(0, 0);
   transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
@@ -582,17 +583,17 @@
   }
 
   .lf-answers-hub__card {
-    grid-template-columns: 72px 1fr;
+    grid-template-columns: 56px minmax(0, 1fr);
     gap: var(--lf-space-3);
   }
 
   .lf-answers-hub__thumb {
-    width: 72px;
+    width: 56px;
   }
 
   .lf-answers-hub__thumb svg {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 }
 

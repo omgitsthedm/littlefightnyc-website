@@ -168,6 +168,27 @@ main,
   margin-inline: auto;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.lab-hero {
+  order: 1;
+}
+
+.lab-statement {
+  order: 2;
+}
+
+.concepts {
+  order: 3;
+}
+
+.lab-suites {
+  order: 4;
+}
+
 .lab-hero {
   min-height: calc(100dvh - 68px);
   display: grid;

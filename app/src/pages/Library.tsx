@@ -108,8 +108,9 @@ export default function Library() {
   const posts = journal as unknown as Post[];
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
-  const [openClusters, setOpenClusters] = useState(() => new Set(["urgent"]));
-  const [showAllPosts, setShowAllPosts] = useState(false);
+  const [openClusters, setOpenClusters] = useState(
+    () => new Set([...ANSWER_CLUSTERS.map((cluster) => cluster.key), "more"]),
+  );
   const normalizedQuery = query.trim().toLocaleLowerCase();
 
   const sorted = useMemo(
@@ -133,8 +134,6 @@ export default function Library() {
     });
   const featured = visible[0];
   const rows = visible.slice(1);
-  const displayedRows = normalizedQuery || showAllPosts ? rows : rows.slice(0, 8);
-  const hiddenRowCount = rows.length - displayedRows.length;
 
   const featuredRef = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
   const listRef = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
@@ -254,7 +253,6 @@ export default function Library() {
               onChange={(event) => {
                 setQuery(event.target.value);
                 setFilter("all");
-                setShowAllPosts(false);
               }}
               placeholder="Try “Wi-Fi,” “website,” or “Square vs Toast”"
               autoComplete="off"
@@ -356,7 +354,6 @@ export default function Library() {
               aria-pressed={filter === "all"}
               onClick={() => {
                 setFilter("all");
-                setShowAllPosts(false);
               }}
               disabled={Boolean(normalizedQuery)}
             >
@@ -371,7 +368,6 @@ export default function Library() {
                 aria-pressed={filter === c.category}
                 onClick={() => {
                   setFilter(c.category);
-                  setShowAllPosts(false);
                 }}
                 disabled={Boolean(normalizedQuery)}
               >
@@ -450,7 +446,7 @@ export default function Library() {
             <div ref={listRef} className="lf-journal__inner" data-reveal>
               <p className="lf-journal__group-label">All entries</p>
               <ol className="lf-journal__list">
-                {displayedRows.map((post) => (
+                {rows.map((post) => (
                   <li key={post.slug} className="lf-journal__item">
                     <Link
                       to={`/journal/${post.slug}/`}
@@ -487,16 +483,6 @@ export default function Library() {
                   </li>
                 ))}
               </ol>
-              {hiddenRowCount > 0 && (
-                <button
-                  type="button"
-                  className="lf-journal__more"
-                  onClick={() => setShowAllPosts(true)}
-                >
-                  Show all {visible.length} entries
-                  <span aria-hidden="true">↓</span>
-                </button>
-              )}
             </div>
           </section>
         )}

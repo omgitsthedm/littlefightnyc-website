@@ -712,7 +712,7 @@ a:hover .lf-ex-rows__media img {
   margin: 0;
   color: var(--lf-bone);
   font-family: var(--lf-display);
-  font-size: clamp(3.2rem, 7vw, 6.8rem);
+  font-size: clamp(3rem, 5vw, 5rem);
   font-weight: var(--lf-display-weight);
   line-height: 0.95;
   text-transform: uppercase;
@@ -725,9 +725,120 @@ a:hover .lf-ex-rows__media img {
   font-size: var(--lf-text-md);
 }
 
+.lf-ex-lab-direct {
+  margin-bottom: var(--lf-space-7);
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-7));
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-ink);
+}
+
+.lf-ex-lab-direct__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--lf-space-5);
+  margin-bottom: var(--lf-space-5);
+}
+
+.lf-ex-lab-direct__head p {
+  margin: 0 0 var(--lf-space-2);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-ex-lab-direct__head h3 {
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1;
+}
+
+.lf-ex-lab-direct__head div > span {
+  display: block;
+  max-width: 62ch;
+  margin-top: var(--lf-space-3);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+}
+
+.lf-editorial .lf-ex-lab-direct__head > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--lf-fight);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lf-ex-lab-direct__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-3);
+}
+
+.lf-editorial .lf-ex-lab-direct__grid > a {
+  position: relative;
+  min-width: 0;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--lf-space-5);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-bone);
+  background: var(--lf-paper-2);
+  text-decoration: none;
+  transition:
+    transform var(--m-signal-ms) var(--m-signal-ease),
+    border-color var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-editorial .lf-ex-lab-direct__grid > a:hover,
+.lf-editorial .lf-ex-lab-direct__grid > a:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
+  transform: translateY(var(--lf-lift));
+}
+
+.lf-ex-lab-direct__grid a > span {
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+}
+
+.lf-ex-lab-direct__grid a > strong {
+  margin-top: var(--lf-space-3);
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-lg);
+  line-height: 1;
+}
+
+.lf-ex-lab-direct__grid a > p {
+  margin: var(--lf-space-3) var(--lf-space-5) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.45;
+}
+
+.lf-ex-lab-direct__grid a > svg {
+  position: absolute;
+  right: var(--lf-space-4);
+  bottom: var(--lf-space-4);
+  color: var(--lf-bone-dim);
+}
+
 .lf-ex-tools__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--lf-space-5);
   align-items: stretch;
 }
@@ -768,7 +879,7 @@ a:hover .lf-ex-rows__media img {
 }
 
 .lf-ex-tool--audit .lf-ex-tool__media {
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
 }
 
 .lf-ex-tool--vera .lf-ex-tool__media,
@@ -843,25 +954,30 @@ a:hover .lf-ex-rows__media img {
 
 @media (min-width: 768px) {
   .lf-ex-tools { padding-inline: var(--lf-margin-tablet); }
+
+  .lf-ex-lab-direct__grid,
+  .lf-ex-tools__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1280px) {
   .lf-ex-tools { padding-inline: var(--lf-margin-desktop); }
+
+  .lf-ex-lab-direct__grid,
+  .lf-ex-tools__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 820px) {
-  .lf-ex-tools__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .lf-ex-tool--audit .lf-ex-tool__media {
-    aspect-ratio: 16 / 10;
-  }
+  .lf-ex-tool__media { aspect-ratio: 16 / 10; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lf-editorial .lf-ex-tool,
-  .lf-ex-tool__media img {
+  .lf-ex-tool__media img,
+  .lf-editorial .lf-ex-lab-direct__grid > a {
     transition: none;
   }
 }
