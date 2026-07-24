@@ -12,6 +12,7 @@
     "predev": "node scripts/split-journal.mjs && node scripts/build-route-meta.mjs && node scripts/build-nav-index.mjs",
     "dev": "vite",
     "build": "node scripts/split-journal.mjs && node scripts/build-route-meta.mjs && node scripts/build-nav-index.mjs && tsc -b && vite build && node scripts/prerender-seo.mjs && node scripts/audit-metadata-parity.mjs",
+    "postbuild": "npm run audit:case-explorer",
     "lint": "eslint .",
     "audit:audit": "node scripts/audit-audit-archive.mjs",
     "audit:lab": "node scripts/audit-lab-archive.mjs",
@@ -20,6 +21,7 @@
     "audit:signal": "node scripts/audit-signal.mjs",
     "audit:metadata": "node scripts/audit-metadata-parity.mjs",
     "audit:integrity": "node scripts/audit-site-integrity.mjs",
+    "audit:case-explorer": "node scripts/audit-case-study-explorer.mjs",
     "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal",
     "preview": "vite preview"
   },

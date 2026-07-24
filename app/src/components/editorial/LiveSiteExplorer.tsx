@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { ArrowUpRight, Monitor, Smartphone } from "lucide-react";
-import "./WorkShowcase.css";
+import "./LiveSiteExplorer.css";
 
 type Device = "desktop" | "mobile";
 
@@ -54,18 +54,19 @@ export default function LiveSiteExplorer({
 
   return (
     <section
-      className="lf-work-showcase__live-site"
+      className="lf-live-explorer"
+      data-live-site-explorer
       aria-label={`${client} live website capture`}
     >
-      <div className="lf-work-showcase__toolbar">
-        <span className="lf-work-showcase__capture-meta">
-          <strong className="lf-work-showcase__domain">{domain(url)}</strong>
+      <div className="lf-live-explorer__toolbar">
+        <span className="lf-live-explorer__capture-meta">
+          <strong className="lf-live-explorer__domain">{domain(url)}</strong>
           <span>
             Captured <time dateTime={captureDate}>{formattedCaptureDate}</time>
           </span>
         </span>
         <div
-          className="lf-work-showcase__devices"
+          className="lf-live-explorer__devices"
           role="group"
           aria-label="Choose capture size"
         >
@@ -96,19 +97,19 @@ export default function LiveSiteExplorer({
 
       <div
         ref={viewportRef}
-        className={`lf-work-showcase__viewport lf-work-showcase__viewport--${device}`}
+        className={`lf-live-explorer__viewport lf-live-explorer__viewport--${device}`}
         role="region"
         aria-label={`${client} ${device} website capture. Scroll inside this frame to explore.`}
         aria-busy={loading}
         tabIndex={0}
       >
         {loading && !loadError && (
-          <span className="lf-work-showcase__loading" aria-live="polite">
+          <span className="lf-live-explorer__loading" aria-live="polite">
             Loading {device} capture
           </span>
         )}
         {loadError && (
-          <span className="lf-work-showcase__loading" role="alert">
+          <span className="lf-live-explorer__loading" role="alert">
             This capture could not load. The live site is still available above.
           </span>
         )}

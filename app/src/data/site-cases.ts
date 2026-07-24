@@ -140,7 +140,7 @@ export const caseStudies: CaseStudy[] = [
       kind: "Website",
       context: "Independent film company",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-21" },
+      proof: { status: "public-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Gather", detail: "Trailer, credits, reviews, premiere photos, and release facts come together in one official source." },
         { label: "Prove", detail: "Press and festival audiences get fast paths to the film, company, cast, and coverage." },
@@ -230,7 +230,7 @@ export const caseStudies: CaseStudy[] = [
       kind: "Website",
       context: "Solo stylist",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-21" },
+      proof: { status: "public-live", captureDate: "2026-07-23" },
       heroPosition: "center 10%",
       heroPositionMobile: "82% 10%",
       stages: [
@@ -277,7 +277,7 @@ export const caseStudies: CaseStudy[] = [
       kind: "Website + commerce",
       context: "Independent streetwear",
       availability: "public",
-      proof: { status: "owned-live", captureDate: "2026-07-21" },
+      proof: { status: "owned-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Catalog", detail: "One JSON master holds the products, prices, and drop details without hardcoded storefront content." },
         { label: "Sell", detail: "A custom Next.js experience keeps the brand intact while Square handles payment." },
@@ -326,7 +326,7 @@ export const caseStudies: CaseStudy[] = [
       kind: "Connected system",
       context: "Help service",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-21" },
+      proof: { status: "public-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Receive", detail: "The public site gives people a clear place to ask for help without exposing the working system behind it." },
         { label: "Route", detail: "Intake moves through one shared Supabase backend in real time, with no copying between tools." },
@@ -417,7 +417,7 @@ export const caseStudies: CaseStudy[] = [
       kind: "Website",
       context: "Funding business",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-21" },
+      proof: { status: "public-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Explain", detail: "A quiet, type-led page says what the business offers without leaning on generic finance imagery." },
         { label: "Reassure", detail: "Structured company, service, and founder information creates a credible public record." },
@@ -458,7 +458,7 @@ export const caseStudies: CaseStudy[] = [
       kind: "Public product",
       context: "Independent venues",
       availability: "public",
-      proof: { status: "owned-live", captureDate: "2026-07-21" },
+      proof: { status: "owned-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Close", detail: "Bar, door, staff, splits, and payouts enter one nightly close that takes about 90 seconds." },
         { label: "Separate", detail: "Venue money and promoter money stay distinct instead of blurring together in a spreadsheet." },
