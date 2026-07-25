@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=24 <25",
+    "npm": ">=10"
+  },
   "browserslist": [
     "defaults",
     "iOS >= 15",
@@ -11,7 +15,8 @@
   "scripts": {
     "predev": "node scripts/split-journal.mjs && node scripts/build-route-meta.mjs && node scripts/build-nav-index.mjs",
     "dev": "vite",
-    "build": "node scripts/split-journal.mjs && node scripts/build-route-meta.mjs && node scripts/build-nav-index.mjs && tsc -b && vite build && node scripts/prerender-seo.mjs && node scripts/audit-metadata-parity.mjs",
+    "generate:social-cards": "node scripts/generate-social-cards.mjs",
+    "build": "node scripts/split-journal.mjs && node scripts/build-route-meta.mjs && node scripts/build-nav-index.mjs && tsc -b && vite build && node scripts/prerender-seo.mjs && node scripts/write-release-metadata.mjs && node scripts/audit-metadata-parity.mjs",
     "postbuild": "npm run audit:case-explorer",
     "lint": "eslint .",
     "audit:audit": "node scripts/audit-audit-archive.mjs",
@@ -23,7 +28,16 @@
     "audit:metadata": "node scripts/audit-metadata-parity.mjs",
     "audit:integrity": "node scripts/audit-site-integrity.mjs",
     "audit:case-explorer": "node scripts/audit-case-study-explorer.mjs",
+    "audit:quality-manifest": "node scripts/audit-quality-manifest.mjs",
+    "audit:release": "node scripts/audit-release-readiness.mjs",
+    "test:browser": "playwright test",
+    "test:browser:chromium": "playwright test --project=chromium-desktop --project=chromium-mobile",
     "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand",
+    "quality:fast": "npm run lint && npm run build && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:quality-manifest",
+    "quality:full": "npm run quality && npm run audit:quality-manifest && npm run test:browser",
+    "quality:release": "npm run quality:full && npm run audit:release",
+    "quality:live": "node scripts/verify-live.mjs",
+    "quality:maintenance": "npm run quality:full && npm audit --omit=dev --audit-level=high",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -39,7 +53,9 @@
     "react-router-dom": "^7.15.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "1.62.0",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",

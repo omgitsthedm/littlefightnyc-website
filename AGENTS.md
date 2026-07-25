@@ -8,6 +8,17 @@ Repo (off iCloud): `~/Code/LiFi NYC/Little Fight NYC Business/Website/littlefigh
 
 Production work happens in the React/Vite app under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
 
+Verified production revision:
+- Git/Netlify/live: `df7c90ded191d909648ed86401fc5816809648ec`
+  (`df7c90d`)
+- Netlify state: ready
+- Last-known-good rollback: `df7c90d`
+
+The local `main` candidate is based on that release. Candidate files are not
+live merely because they exist locally. Verify local `HEAD`, `origin/main`, and
+Netlify independently; the candidate production release has not been
+authorized or executed.
+
 Netlify project:
 - Site name: `littlefightnyc`
 - Site ID: `0907d8fe-7018-48db-a6be-1f906e4b2619`
@@ -16,17 +27,19 @@ Netlify project:
 
 See `SOURCE_OF_TRUTH.md` before major edits.
 
-## Tech Stack & Architecture (current — 2026-07-07)
+## Tech Stack & Architecture (current — 2026-07-24)
 
 - **App:** React 19 + TypeScript + Vite 7 in `app/`. Routing = React Router 7 (`react-router-dom`, `BrowserRouter` + `<Routes>`). Icons = `lucide-react`.
 - **Routing / layout:** `src/App.tsx` defines all routes. Most pages inherit `EditorialShell` (QuietNav + QuietFooter + StickyHelpBar + RouteMeta + **CommandPalette**). ⚠️ The home page `/` is a **standalone layout** (its own `.lf-editorial` wrapper, own nav/footer) — it does NOT use EditorialShell, so any shell-only global (e.g. CommandPalette) must **also** be rendered in `Home.tsx`.
-- **Rendering:** client-rendered SPA. `src/main.tsx` uses `createRoot` (not hydrate). At build, `scripts/prerender-seo.mjs` writes one static `index.html` per route (currently 184) with full `<head>` SEO + JSON-LD (FAQPage, BreadcrumbList, LocalBusiness/ProfessionalService, DefinedTerm, Article, HowTo) and a lightweight SEO `snapshot()` in `#root` that `createRoot` replaces on load. ⚠️ So the visible body is **JS-gated** (not true SSR). Home below-the-fold mounts via `useDeferredSections()` on the next idle frame.
-- **Data (source of truth):** `src/data/site.ts` — `services`, `caseStudies` (+`metrics`), `answerGuides`, `areaPages`, `glossaryTerms`, `studioProjects`, `navItems`. Plus `journal.json`, `industries.json`. ⚠️ `src/data/seo-pages.json` is the **prerender's** SEO/schema source and is a **separate copy** — keep FAQ/meta in sync with `site.ts` (a node splice syncs area/glossary faq; scratch payloads at the session scratchpad).
+- **Rendering:** client-rendered SPA. `src/main.tsx` uses `createRoot` (not hydrate). The build writes a static `index.html` snapshot for each generated route, then the client replaces that snapshot. Current metadata inventory: **200 routes, 127 indexable, 73 noindex**. The home page mounts its complete section sequence directly. First-response and hydrated H1 text must remain equal; the Playwright suite checks all 127 indexed routes.
+- **Data (source of truth):** `src/data/site.ts` is the public facade over split service, case, answer, area, glossary, and studio modules; journal and industry data remain separate. `src/data/seo-pages.json` feeds prerender/search metadata and must stay synchronized through the metadata generation/parity tooling. Do not hand-edit generated `route-meta.json`.
 - **Design system:** Axiom Momentum tokens in `src/styles/editorial/tokens.css` (bg `#050507`, orange `#F97316`, blue `#3B82F6` accent, `--lf-heading` Oswald + `--lf-body` Barlow). Shared responsive contracts live in `src/styles/editorial/primitives.css`. Section content is static-first; motion.css owns route/tactile state motion.
 - **CSS gotchas:** (1) the shared reset is intentionally low-specificity via `:where()`; component classes should own their fill/border/padding without escalation. (2) global anchor color is also low-specificity, but CTA foregrounds should still be explicit for contrast. (3) use `rgba()` not `color-mix()` inside gradients.
-- **Build/deploy:** `cd app && npm run build` = `tsc -b && vite build && node scripts/prerender-seo.mjs`. ⚠️ **Prod build strips `console.log`** — debug built/live code with `window.__flags`, not console.
-- **Conversion + infra:** `/tech-audit/` submits via Netlify Forms (registration in `app/public/__forms.html` — new form fields must be added there too). The retired Twilio voice webhook has been removed; the public phone number remains a normal `tel:` contact path. Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) live in root `netlify.toml`. **Redirects live ONLY in `app/public/_redirects`**. Analytics is denied by default and consent-gated: GA4, Clarity, and TikTok load only after a visitor allows analytics, then boot after the existing delay.
-- **Quality bar (live-verified 2026-07-07):** Lighthouse Home 92 / Services 90 perf, BP + SEO 100, CLS 0, TBT 0; Accessibility 100 (post contrast-fix); squirrelscan full = 83/B (ceiling = by-design HTML caching + service-area streetAddress omission + trailing-slash canonicalization).
+- **Runtime/build:** Node 24 is pinned by root `.nvmrc` and package engine declarations. `npm run build` regenerates data/navigation, type-checks, builds, prerenders, writes release metadata, and audits metadata parity. ⚠️ **Prod build strips `console.log`** — debug built/live code with `window.__flags`, not console.
+- **Conversion + infra:** `/tech-audit/` submits via Netlify Forms (registration in `app/public/__forms.html` — new form fields must be added there too). Twilio and the AI phone agent are retired and **not a service**. The public number is an ordinary `tel:`/`sms:` path; after hours, callers leave a normal message. Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) live in root `netlify.toml`. **Redirects live ONLY in `app/public/_redirects`**. Analytics is denied by default and consent-gated: GA4, Clarity, and TikTok load only after a visitor allows analytics, then boot after the existing delay.
+- **Website Audit:** `/examples/audit/` is a live service-enabled surface, not a static demo. Eight Netlify Functions plus shared helpers accept a URL/email, run background work, persist job/report/view/engagement/rate-limit state in Netlify Blobs, deliver reports, and expire them through scheduled cleanup. Treat provider calls, environment values, stored state, delivery, privacy, and incident handling as production boundaries; never copy secrets or submitted data into source or evidence files.
+- **Quality Spine (local candidate):** `.lifi/quality.yml`, debt/dead-code ledgers, and `quality:fast`, `quality:full`, `quality:release`, `quality:live`, and `quality:maintenance` now exist. The Playwright suite covers Chromium desktop, Chromium mobile/touch, Firefox desktop, and WebKit mobile, plus axe, form validation, Library interaction, mobile scroll lifecycle, and indexed-route H1 parity. The clean candidate passed `quality:release` locally under Node 24.18.0 with **32/32 browser checks** and revision-matched artifact validation. Do not call it production-ready until an authorized push yields a ready deploy and revision-matched live verification succeeds.
+- **Verified production quality history:** the 2026-07-07 Lighthouse/squirrelscan numbers remain point-in-time evidence for that earlier release, not validation of the current local candidate.
 
 ## Design Context
 

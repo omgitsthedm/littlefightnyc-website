@@ -72,6 +72,41 @@ function expectEqual(label, actual, expected) {
   }
 }
 
+function absoluteAsset(asset) {
+  if (/^https?:\/\//i.test(asset)) return asset;
+  return `${routeMeta.site.url.replace(/\/$/, "")}${asset.startsWith("/") ? asset : `/${asset}`}`;
+}
+
+function expectSocialMeta(label, html, page) {
+  const share = page.share;
+  if (!share) {
+    failures.push(`${label}: generated route metadata is missing its share record`);
+    return;
+  }
+
+  const image = absoluteAsset(share.image);
+  expectEqual(`${label} og:site_name`, metaContent(html, "property", "og:site_name"), routeMeta.site.name);
+  expectEqual(`${label} og:image`, metaContent(html, "property", "og:image"), image);
+  expectEqual(`${label} og:image:type`, metaContent(html, "property", "og:image:type"), share.type);
+  expectEqual(
+    `${label} og:image:width`,
+    metaContent(html, "property", "og:image:width"),
+    share.width ? String(share.width) : "",
+  );
+  expectEqual(
+    `${label} og:image:height`,
+    metaContent(html, "property", "og:image:height"),
+    share.height ? String(share.height) : "",
+  );
+  expectEqual(`${label} og:image:alt`, metaContent(html, "property", "og:image:alt"), share.alt);
+  expectEqual(`${label} twitter:image`, metaContent(html, "name", "twitter:image"), image);
+  expectEqual(
+    `${label} twitter:image:alt`,
+    metaContent(html, "name", "twitter:image:alt"),
+    share.alt,
+  );
+}
+
 const paths = routeMeta.pages.map((page) => page.path);
 const duplicatePaths = paths.filter((routePath, index) => paths.indexOf(routePath) !== index);
 if (duplicatePaths.length > 0) {
@@ -97,6 +132,7 @@ for (const page of routeMeta.pages) {
     metaContent(html, "name", "robots"),
     page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large",
   );
+  expectSocialMeta(page.path, html, page);
   if (!page.locale) {
     const navCta = html.match(
       /<a\b([^>]*)class="[^"]*\blf-seo__nav-cta\b[^"]*"([^>]*)>([\s\S]*?)<\/a>/i,
@@ -168,6 +204,7 @@ expectEqual(
 );
 expectEqual("404 H1", firstTagText(notFoundHtml, "h1"), routeMeta.notFound.h1);
 expectEqual("404 robots", metaContent(notFoundHtml, "name", "robots"), "noindex, follow");
+expectSocialMeta("404", notFoundHtml, routeMeta.notFound);
 
 const techAuditHtml = await readFile(routeFile("/tech-audit/"), "utf8");
 const techAuditImagePreloads = [...techAuditHtml.matchAll(/<link\b[^>]*rel="preload"[^>]*>/gi)]

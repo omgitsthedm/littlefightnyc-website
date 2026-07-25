@@ -16,6 +16,13 @@ type MetaPage = {
   description: string;
   h1?: string;
   image?: string;
+  share?: {
+    image: string;
+    type: string;
+    width?: number;
+    height?: number;
+    alt: string;
+  };
   type?: string;
   noindex?: boolean;
   locale?: string;
@@ -103,7 +110,14 @@ export default function RouteMeta() {
     const path = routePath(location.pathname);
     const page = pages.find((item) => item.path === path) ?? notFoundPage;
     const canonical = absoluteUrl(page.path);
-    const image = page.image?.startsWith("http") ? page.image : absoluteUrl(page.image ?? "/assets/og-tugboat.jpg");
+    const share = page.share ?? {
+      image: page.image ?? "/assets/og-tugboat.jpg",
+      type: "image/jpeg",
+      width: 1200,
+      height: 630,
+      alt: `Little Fight NYC: ${page.h1 || page.title}`,
+    };
+    const image = share.image.startsWith("http") ? share.image : absoluteUrl(share.image);
     const isArticle = page.type === "Article";
     const published = isoDate(page.published);
     const modified = isoDate(page.updated) || published;
@@ -144,12 +158,20 @@ export default function RouteMeta() {
     setMeta("og:description", page.description, true);
     setMeta("og:url", canonical, true);
     setMeta("og:type", isArticle ? "article" : "website", true);
+    setMeta("og:site_name", site.name, true);
     setMeta("og:locale", locale, true);
     setMeta("og:image", image, true);
+    setMeta("og:image:type", share.type, true);
+    if (share.width) setMeta("og:image:width", String(share.width), true);
+    else removeMeta("og:image:width", true);
+    if (share.height) setMeta("og:image:height", String(share.height), true);
+    else removeMeta("og:image:height", true);
+    setMeta("og:image:alt", share.alt, true);
     setMeta("twitter:card", "summary_large_image");
     setMeta("twitter:title", page.title);
     setMeta("twitter:description", page.description);
     setMeta("twitter:image", image);
+    setMeta("twitter:image:alt", share.alt);
     setLink("canonical", canonical);
     setAlternate("en-US", canonical);
     setAlternate("x-default", canonical);

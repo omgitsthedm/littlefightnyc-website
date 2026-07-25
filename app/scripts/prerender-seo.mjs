@@ -11,6 +11,7 @@ import {
   journalPage,
   localePages,
   serviceAreaPages,
+  shareForPage,
 } from "./metadata-source.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -599,7 +600,9 @@ function foundationSchemas(page) {
     });
   }
 
-  // Journal HowTo posts — emit structured steps as HowTo schema (AEO money node)
+  // Authored procedural posts retain semantic HowTo markup when their visible
+  // steps match. Google no longer shows HowTo rich results, so this is content
+  // structure rather than a special-result or AI-search promise.
   if (page.journalPost && page.journalPost.category === "howto" && Array.isArray(page.journalPost.steps)) {
     graph.push({
       "@type": "HowTo",
@@ -815,7 +818,8 @@ function journalBodyModulePreload(page) {
 
 function managedHead(page) {
   const canonical = absoluteUrl(page.path);
-  const image = absoluteAsset(page.image);
+  const share = shareForPage(page, site.name);
+  const image = absoluteAsset(share.image);
   const schema = JSON.stringify(foundationSchemas(page));
   const pagePublished = publishedDateFor(page);
   const pageModified = modifiedDateFor(page);
@@ -853,12 +857,18 @@ function managedHead(page) {
     `<meta property="og:description" content="${escapeAttr(page.description)}">`,
     `<meta property="og:url" content="${escapeAttr(canonical)}">`,
     `<meta property="og:type" content="${isArticle ? "article" : "website"}">`,
+    `<meta property="og:site_name" content="${escapeAttr(site.name)}">`,
     `<meta property="og:locale" content="${page.locale === "zh" ? "zh_CN" : page.locale === "es" ? "es_US" : "en_US"}">`,
     `<meta property="og:image" content="${escapeAttr(image)}">`,
+    `<meta property="og:image:type" content="${escapeAttr(share.type)}">`,
+    share.width ? `<meta property="og:image:width" content="${share.width}">` : "",
+    share.height ? `<meta property="og:image:height" content="${share.height}">` : "",
+    `<meta property="og:image:alt" content="${escapeAttr(share.alt)}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<meta name="twitter:title" content="${escapeAttr(page.title)}">`,
     `<meta name="twitter:description" content="${escapeAttr(page.description)}">`,
     `<meta name="twitter:image" content="${escapeAttr(image)}">`,
+    `<meta name="twitter:image:alt" content="${escapeAttr(share.alt)}">`,
     isArticle ? `<link rel="author" href="${siteUrl}/">` : "",
     isArticle ? `<meta property="article:author" content="Little Fight NYC">` : "",
     isArticle && pagePublished
@@ -876,7 +886,7 @@ function managedHead(page) {
 function stripManagedHead(html) {
   return html
     .replace(/<title>[\s\S]*?<\/title>\s*/i, "")
-    .replace(/\s*<meta\s+(?:name|property)="(?:description|author|robots|geo\.region|geo\.placename|geo\.position|ICBM|og:title|og:description|og:url|og:type|og:image|twitter:card|twitter:title|twitter:description|twitter:image|article:author|article:published_time|article:modified_time)"[^>]*>/gi, "")
+    .replace(/\s*<meta\s+(?:name|property)="(?:description|author|robots|geo\.region|geo\.placename|geo\.position|ICBM|og:title|og:description|og:url|og:type|og:site_name|og:locale|og:image|og:image:type|og:image:width|og:image:height|og:image:alt|twitter:card|twitter:title|twitter:description|twitter:image|twitter:image:alt|article:author|article:published_time|article:modified_time)"[^>]*>/gi, "")
     .replace(/\s*<meta\s+name="(?:datePublished|dateModified)"[^>]*>/gi, "")
     .replace(/\s*<link\s+rel="(?:canonical|author)"[^>]*>/gi, "")
     .replace(/\s*<link\s+rel="(?:preload|modulepreload)"[^>]*data-route-preload[^>]*>/gi, "")
@@ -1397,7 +1407,7 @@ function zhSnapshot() {
       </style>
       <header><strong>Little Fight NYC</strong> · <a href="tel:+16463600318">(646) 360-0318</a></header>
       <main>
-      <h1>您的网站带来顾客。<em>我们让它一直好用。</em></h1>
+      <h1>网站按您的生意来做。<em>技术出问题时，有真人帮您。</em></h1>
       <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
       <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">规划我的网站</a></p>
       <p class="es-sub">咨询免费。先给您一份清楚的方案，再由您决定。</p>
@@ -1456,7 +1466,7 @@ function esSnapshot() {
         · <a href="tel:+16463600318">${site.phoneDisplay}</a>
       </header>
       <main>
-        <h1>Su página web trae clientes. <em>Nosotros la mantenemos andando.</em></h1>
+        <h1>Una página web hecha para su negocio. <em>Ayuda real cuando algo falla.</em></h1>
         <p class="es-sub">Hacemos su página web, contestamos cuando la tecnología falla, y acabamos con las cuotas mensuales que se comen su ganancia. Lo que construimos, es suyo.</p>
         <p>
           <a class="es-cta" href="tel:+16463600318">Llámenos: ${site.phoneDisplay}</a>
@@ -1779,4 +1789,4 @@ await writeFile(path.join(distRoot, "site.webmanifest"), await manifest());
   await writeFile(swPath, sw.replace(/const CACHE_NAME = "[^"]+";/, `const CACHE_NAME = "littlefightnyc-${stamp}";`));
 }
 
-console.log(`Prerendered ${pages.length} SEO/AEO routes.`);
+console.log(`Prerendered ${pages.length} search-visible routes.`);

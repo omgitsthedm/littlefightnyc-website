@@ -118,7 +118,7 @@ export default function FieldGuide() {
         icon={LayoutGrid}
         title={
           <>
-            See what works.<br />
+            See what works.<br />{" "}
             <span className="lf-accent">Try what is next.</span>
           </>
         }

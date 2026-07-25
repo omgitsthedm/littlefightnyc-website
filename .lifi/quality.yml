@@ -1,0 +1,511 @@
+schema_version: 1
+manifest_id: "littlefightnyc-website"
+updated_at: "2026-07-24"
+
+quality_charter:
+  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
+  version: null
+  owner: null
+  status: "ABSENT_VERIFIED_2026-07-24"
+  note: "The central charter does not exist at the required path. No version or policy owner is inferred."
+
+surface: service-enabled
+risk_tier: moderate
+risk_rationale: >-
+  The public site collects contact details through Netlify Forms. The Website
+  Audit Lab also accepts a public URL and email, starts background work, stores
+  report/status/engagement data in Netlify Blobs, and can send results to
+  external providers. There are no user accounts, payments, or multi-tenant
+  authenticated application roles.
+hybrid_surfaces:
+  - path: "/examples/audit/"
+    class: "service-enabled"
+    note: "Public audit intake with background processing, AI assistance, persistent report state, email delivery, and optional CRM/alert delivery."
+  - path: "/examples/lab/"
+    class: "marketing-showcase"
+    note: "Static experimental showroom; source and repository controls are prohibited."
+  - path: "/brand-kit/"
+    class: "internal-static"
+    note: "Unlisted internal brand reference and downloadable asset package."
+
+owner: "David Marsh"
+backup_owner: null
+canonical_repo: "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website"
+remote: "https://github.com/omgitsthedm/littlefightnyc-website.git"
+branch: "main"
+framework: "React 19 + TypeScript + Vite 7; prerendered route snapshots; Netlify Functions"
+adapter: "react-vite-netlify"
+package_manager: "npm"
+lockfile: "package-lock.json and app/package-lock.json"
+runtime: "Node 24 is pinned in the repository and Netlify configuration; the full local quality lane passes under Node 24.18.0, while the next production build still needs revision-matched verification."
+runtime_evidence:
+  local_node: "24.18.0 (npx node@24)"
+  local_npm: "10.9.8"
+  repository_pin: ".nvmrc 24; package engines Node >=24 <25 and npm >=10"
+  netlify_pin: "NODE_VERSION=24"
+  status: "LOCAL_CLEAN_RELEASE_VERIFIED_PRODUCTION_PENDING"
+host_provider: "Netlify"
+host_project_id: "0907d8fe-7018-48db-a6be-1f906e4b2619"
+production_target: "https://littlefightnyc.com"
+production_branch: "main"
+deploy_model: "GitHub main -> Netlify auto-build -> auto-publish"
+last_verified_live_revision: "df7c90ded191d909648ed86401fc5816809648ec"
+last_known_good_release: "df7c90ded191d909648ed86401fc5816809648ec"
+
+commands:
+  install: "npm ci && npm --prefix app ci"
+  generate: "npm --prefix app run predev"
+  build: "npm --prefix app run build"
+  preview: "npm --prefix app run preview"
+  typecheck: "npm --prefix app exec -- tsc -b"
+  lint: "npm --prefix app run lint"
+  unit: ""
+  integration: ""
+  contract: ""
+  e2e: "npm --prefix app run test:browser"
+  quality_fast: "npm run quality:fast"
+  quality_full: "npm run quality:full"
+  quality_release: "npm run quality:release"
+  quality_live: "npm run quality:live"
+  quality_maintenance: "npm run quality:maintenance"
+command_availability:
+  available_now:
+    - "npm ci"
+    - "npm --prefix app ci"
+    - "npm --prefix app run predev"
+    - "npm --prefix app run build"
+    - "npm --prefix app run preview"
+    - "npm --prefix app exec -- tsc -b"
+    - "npm --prefix app run lint"
+    - "npm --prefix app run quality"
+    - "npm run quality:fast"
+    - "npm run quality:full"
+    - "npm run quality:release"
+    - "npm run quality:live"
+    - "npm run quality:maintenance"
+    - "npm --prefix app run test:browser"
+  planned_not_implemented: []
+  missing_capabilities:
+    - "unit/component test command"
+    - "provider contract test command"
+    - "visual-regression command"
+    - "retained CI artifact and field-performance evidence policy"
+
+critical_journeys:
+  - id: "website-plan"
+    audience: "Owner evaluating a new or repaired website"
+    path:
+      - "Home or service page"
+      - "/tech-audit/?intent=website"
+      - "Validate and submit tech-audit-scratch"
+      - "/thanks/"
+      - "Netlify Forms capture"
+      - "Configured Little Fight inbox delivery"
+    success: "The visitor receives a clear confirmation and Little Fight receives the complete inquiry."
+    external_gate: "EXT-001"
+  - id: "urgent-support"
+    audience: "Owner with broken technology"
+    path:
+      - "Any primary route"
+      - "Telephone, SMS, or email action"
+      - "Human response inside the published window"
+    success: "The visitor reaches a real support channel without a form barrier."
+    external_gate: "OPS-001"
+  - id: "proof-exploration"
+    audience: "Owner evaluating trust and capability"
+    path:
+      - "/examples/"
+      - "Uniform project card"
+      - "/case-studies/:slug/"
+      - "Public live site or clearly labeled private proof"
+    success: "The visitor can distinguish public, owned, private-client, and concept evidence."
+  - id: "lab-showroom"
+    audience: "Visitor exploring creative capability"
+    path:
+      - "/examples/"
+      - "Visible Lab preview"
+      - "/examples/lab/concepts/:slug/"
+      - "Return to Examples"
+    success: "A working experiment opens in one click with no source-code or repository controls."
+  - id: "owner-answer"
+    audience: "Owner starting with a problem"
+    path:
+      - "/library/"
+      - "Search or pain-first category"
+      - "/answers/:slug/ or /journal/:slug/"
+      - "Relevant service or Tech Audit"
+    success: "The visitor gets a useful answer before any sales action."
+  - id: "website-audit"
+    audience: "Owner requesting a public website audit"
+    path:
+      - "/examples/audit/"
+      - "Submit public URL and email"
+      - "run-audit function"
+      - "One-time-token background job"
+      - "Status polling"
+      - "Generated report"
+      - "Email and optional CRM/alert delivery"
+    success: "A valid report is generated, stored, served, and delivered without leaking secrets or accepting private-network targets."
+    external_gate: "EXT-001"
+  - id: "language-path"
+    audience: "Spanish- or Chinese-reading owner"
+    path:
+      - "/es/ or /zh/"
+      - "Localized service explanation"
+      - "Telephone or website-plan action"
+    success: "The visitor reaches the same help without an English-only navigation barrier."
+  - id: "consent-control"
+    audience: "Any visitor"
+    path:
+      - "Essential-only first visit"
+      - "Open analytics choices"
+      - "Grant or deny"
+      - "Reopen and change choice"
+    success: "No optional vendor starts before opt-in; changing back to essential-only stops new app events."
+  - id: "mobile-update-resilience"
+    audience: "Mobile visitor during or after a deploy"
+    path:
+      - "Navigate or scroll with a controlled service worker"
+      - "Encounter a transient route-chunk failure"
+      - "One quiet import retry"
+      - "Guarded fallback without a service-worker-forced reload"
+    success: "The session, scroll position, and in-progress form are not discarded by an automatic update."
+
+route_classes:
+  - id: "spa-home"
+    source: "app/src/pages/Home.tsx"
+    cataloged_count: 1
+    index_policy: "index"
+  - id: "spa-services"
+    source: "app/src/pages/Services.tsx and ServiceDetail.tsx"
+    cataloged_count: 5
+    index_policy: "index"
+  - id: "spa-case-studies"
+    source: "app/src/data/site-cases.ts"
+    cataloged_count: 10
+    index_policy: "index when approved; proof status remains explicit"
+  - id: "spa-answers"
+    source: "app/src/data/site.ts"
+    cataloged_count: 27
+    index_policy: "index"
+  - id: "spa-journal"
+    source: "app/src/data/journal-index.json and journal-bodies"
+    cataloged_count: 37
+    index_policy: "index"
+  - id: "spa-areas"
+    source: "app/src/data/seo-pages.json matrix and area data"
+    cataloged_count: 91
+    noindex_count: 73
+    index_policy: "area hubs may index; service-area matrix routes remain noindex pending route-fanout decision"
+  - id: "spa-industries"
+    source: "app/src/data/industries.json"
+    cataloged_count: 7
+    index_policy: "index"
+  - id: "spa-glossary"
+    source: "app/src/data/site-glossary.ts"
+    cataloged_count: 7
+    index_policy: "index"
+  - id: "spa-studio"
+    source: "app/src/data/site.ts"
+    cataloged_count: 3
+    index_policy: "index only when claims and public state remain supportable"
+  - id: "spa-other"
+    source: "app/src/App.tsx and authored SEO data"
+    cataloged_count: 12
+    index_policy: "route-specific"
+  - id: "lab-static-showroom"
+    source: "app/public/examples/lab/"
+    inventory: "4 suites and 11 manifest concepts"
+    index_policy: "route-specific; preserved client concepts may be noindex"
+  - id: "audit-static-and-dynamic"
+    source: "app/public/examples/audit/ and netlify/functions/"
+    inventory: "10 static HTML files plus generated report routes and API endpoints"
+    index_policy: "audit shell route-specific; generated reports and functions are noindex"
+  - id: "brand-kit-internal"
+    source: "app/public/brand-kit/"
+    inventory: "Internal HTML reference plus downloadable brand assets"
+    index_policy: "unlisted internal surface"
+  - id: "standalone-public-compatibility"
+    source: "app/public/_redirects and standalone public directories"
+    inventory: "Legacy URL aliases, VERA proxy routes, MySpace demo, manifests, robots, sitemaps, and 404"
+    index_policy: "preserve explicit redirect/noindex decisions"
+
+roles:
+  - "anonymous visitor"
+  - "prospective owner or operator"
+  - "Little Fight lead recipient"
+  - "Little Fight site/content operator"
+  - "programmatic Audit client using AUDIT_API_KEY"
+  - "Netlify scheduled/background runtime"
+
+lifecycle_states:
+  - surface: "SPA route"
+    states: ["prerendered", "hydrating", "loading chunk", "retrying chunk", "ready", "route error", "404", "offline fallback"]
+  - surface: "Tech Audit form"
+    states: ["empty", "draft saved", "invalid", "submitting", "provider accepted", "thanks", "delivery unverified"]
+  - surface: "Website Audit job"
+    states: ["queued", "analyzing", "generating", "finishing", "complete", "error", "expired"]
+  - surface: "analytics consent"
+    states: ["unset-essential-only", "granted", "denied", "changed"]
+  - surface: "service worker"
+    states: ["installing", "waiting until tabs close", "active", "offline network-first fallback"]
+  - surface: "proof"
+    states: ["public-live", "owned-live", "private-client", "private-concept", "approval pending"]
+
+integrations:
+  - name: "Netlify Hosting and Git deploy"
+    direction: "GitHub main -> Netlify"
+    data: "source, build output, deploy metadata"
+    required: true
+  - name: "Netlify Forms"
+    direction: "browser -> Netlify Forms -> configured inbox"
+    data: "name, business, phone/email, message, intent, attribution"
+    required: true
+    external_proof: "EXT-001"
+  - name: "Netlify Functions"
+    direction: "browser/internal function calls -> Netlify runtime"
+    data: "Audit URL, email, job token, report state"
+    required: true
+  - name: "Netlify Blobs"
+    direction: "functions <-> Netlify Blobs"
+    data: "audit status, jobs, rate limits, pages, metadata, views, engagement"
+    required: true
+  - name: "Google PageSpeed Insights"
+    direction: "Audit background function -> Google"
+    data: "submitted public URL and Lighthouse response"
+    required: true
+    fallback: "Fallback scores/findings exist; provider failure must remain visible in operations evidence."
+  - name: "Anthropic Messages API"
+    direction: "Audit background function -> Anthropic"
+    data: "public website text, scores, domain context"
+    required: false
+    fallback: "Deterministic local findings"
+  - name: "Gmail SMTP"
+    direction: "Audit background function -> audit requester"
+    data: "requester email, company/domain, grade, report URL"
+    required: true
+    external_proof: "EXT-001"
+  - name: "Notion CRM"
+    direction: "Audit background function -> Notion"
+    data: "lead identity, domain, email, score band, report URL"
+    required: false
+  - name: "Telegram"
+    direction: "Audit background function -> Little Fight alert channel"
+    data: "lead identity, domain, email, grade, report URL"
+    required: false
+  - name: "GA4, Microsoft Clarity, and TikTok"
+    direction: "consented browser -> analytics providers"
+    data: "sanitized events, performance/error summaries, route and device buckets"
+    required: false
+    consent: "denied by default"
+  - name: "Weather.gov"
+    direction: "browser -> public weather endpoint"
+    data: "latest KNYC observation; no visitor identity intended"
+    required: false
+  - name: "CARTO map tiles through Leaflet"
+    direction: "browser -> CARTO"
+    data: "tile requests for maps that enter the viewport"
+    required: false
+  - name: "VERA pipeline proxy"
+    direction: "public /vera/data and /vera/artifacts routes -> vera-pipeline.netlify.app"
+    data: "public VERA data and artifacts"
+    required: false
+  - name: "Netlify Lighthouse build plugin"
+    direction: "Netlify build -> Lighthouse plugin"
+    data: "build preview performance report"
+    required: false
+
+data_boundaries:
+  - id: "public-content"
+    classification: "public"
+    flow: "repository -> Netlify CDN -> anonymous browser/crawlers"
+  - id: "lead-intake"
+    classification: "contact and business inquiry data"
+    flow: "browser -> Netlify Forms -> configured Little Fight inbox"
+    rule: "No passwords, private customer data, or secrets."
+  - id: "audit-intake"
+    classification: "contact data plus a public website URL"
+    flow: "browser -> Netlify Functions/Blobs -> PageSpeed/Anthropic -> email and optional Notion/Telegram"
+    rule: "Private/internal network targets are rejected; one-time job authorization is consumed before expensive work."
+  - id: "audit-observation"
+    classification: "pseudonymous operational analytics"
+    flow: "request IP and user agent -> daily-rotating hash -> audit-views Blob"
+    rule: "Raw IP is not stored by application code; stored view history is capped."
+  - id: "consented-analytics"
+    classification: "sanitized behavioral and reliability telemetry"
+    flow: "browser -> GA4/Clarity/TikTok only after explicit opt-in"
+    rule: "Form values, names, emails, phone numbers, full query URLs, and stack traces are excluded."
+  - id: "service-worker-cache"
+    classification: "public first-party GET responses"
+    flow: "CDN -> browser Cache Storage"
+    rule: "No POST, function, or cross-origin request caching; updates do not force takeover or reload."
+  - id: "secrets"
+    classification: "credentials"
+    flow: "Netlify environment -> server functions only"
+    rule: "Never place credentials or values in this manifest, repository, logs, browser bundles, or evidence."
+
+dynamic_entry_points:
+  - "app/src/App.tsx React route graph"
+  - "app/src/data/route-meta.json generated 200-route catalog"
+  - "app/src/data/nav-index.json generated navigation catalog"
+  - "app/src/data/journal-index.json generated journal catalog"
+  - "app/public/examples/lab/concepts.json manifest"
+  - "app/public/_redirects compatibility and proxy routes"
+  - "app/public/__forms.html Netlify Forms registration"
+  - "netlify/functions/*.mts public, internal, background, and scheduled functions"
+
+generated_entry_points:
+  - "app/src/data/route-meta.json"
+  - "app/src/data/nav-index.json"
+  - "app/src/data/journal-index.json"
+  - "app/dist/**"
+  - "prerendered route index.html files"
+  - "sitemap.xml, image-sitemap.xml, sitemap-index.xml, robots.txt, and llms.txt"
+  - "dynamic Website Audit report HTML and OG SVG responses"
+
+functions:
+  - name: "run-audit"
+    path: "/examples/audit/api/run-audit"
+    kind: "request"
+  - name: "run-audit-background"
+    path: "/.netlify/functions/run-audit-background"
+    kind: "background"
+  - name: "check-status"
+    path: "/examples/audit/api/status"
+    kind: "request"
+  - name: "serve-audit"
+    path: "/examples/audit/report/*"
+    kind: "request"
+  - name: "og-image"
+    path: "/examples/audit/api/og"
+    kind: "request"
+  - name: "record-engagement"
+    path: "/examples/audit/api/record-engagement"
+    kind: "request"
+  - name: "report-views"
+    path: "/examples/audit/api/report-views"
+    kind: "request"
+  - name: "cleanup-expired"
+    path: "scheduled function"
+    kind: "scheduled"
+
+workers:
+  - name: "public service worker"
+    source: "app/public/sw.js"
+    registration: "app/public/register-sw.js"
+    behavior: "network-first navigation; stale-while-revalidate static assets; passive activation after controlled tabs close"
+
+jobs:
+  - name: "Website Audit background pipeline"
+    trigger: "one-time-token call from run-audit"
+    work: "PageSpeed, site scrape, optional Anthropic, HTML generation, Blob writes, email, optional Notion and Telegram"
+    retry_reconciliation: "partial best-effort provider handling exists; end-to-end delivery monitor remains open"
+  - name: "expired Audit cleanup"
+    trigger: "0 3 * * *"
+    work: "delete expired 30-day report pages, metadata, views, status, and orphaned job tokens"
+  - name: "scheduled quality maintenance"
+    trigger: null
+    work: "not implemented"
+
+webhooks:
+  - name: "Netlify Forms capture and notification"
+    direction: "provider-managed"
+    status: "configured in markup; live capture and inbox delivery require external proof"
+  - name: "Audit background invocation"
+    direction: "internal function-to-function HTTP"
+    status: "one-time-token protected"
+  - name: "other inbound webhooks"
+    status: "none verified"
+
+browsers:
+  - name: "Chromium"
+    required: true
+  - name: "WebKit"
+    required: true
+    emphasis: "iPhone/Safari chunk loading, scrolling, service-worker updates, and form preservation"
+  - name: "Firefox"
+    required: true
+  - name: "Safari + VoiceOver"
+    required: true
+    mode: "manual critical-journey gate"
+
+viewports:
+  - "320x568"
+  - "375x667"
+  - "390x844"
+  - "768x1024"
+  - "1024x768"
+  - "1440x900"
+  - "1920x1080"
+
+performance_budgets:
+  field_p75:
+    lcp_ms_max: 2500
+    inp_ms_max: 200
+    cls_max: 0.1
+  lab_regression:
+    mobile_lighthouse_median_min: 90
+    runs: 3
+  rendering:
+    target_fps: 60
+    simplify_below_fps: 50
+  consent:
+    optional_vendor_requests_before_grant_max: 0
+asset_budgets:
+  entry_javascript_raw_bytes_max: 375000
+  entry_css_raw_bytes_max: 135000
+  largest_lazy_route_javascript_raw_bytes_max: 165000
+  first_party_fonts_total_raw_bytes_max: 130000
+  standard_responsive_image_raw_bytes_max: 450000
+  lab_showcase_thumbnail_raw_bytes_max: 120000
+  social_share_card_raw_bytes_max: 600000
+  route_catalog_count_min: 200
+  generated_html_count_min: 220
+budget_baseline:
+  source: ".lifi/evidence/baselines/2026-07-24.md"
+  enforcement: "Manifest and release-artifact checks are implemented; numeric asset, visual, and field-performance enforcement remains incomplete."
+
+monitors:
+  - name: "consent-gated RUM"
+    coverage: "Core Web Vitals and sanitized client errors"
+    status: "implemented; provider/account review external"
+  - name: "Netlify Lighthouse build plugin"
+    coverage: "build-time Lighthouse"
+    status: "configured; thresholds and retained evidence not proven in repository"
+  - name: "monthly Tech Audit form delivery test"
+    coverage: "browser -> Netlify Forms -> inbox"
+    status: "documented manual procedure; current completion evidence missing"
+  - name: "Website Audit status and expiration"
+    coverage: "Blob-backed job state and daily cleanup logs"
+    status: "implemented; alert ownership not documented"
+  - name: "external route, asset, metadata, and revision synthetic"
+    coverage: "production"
+    status: "implemented under quality:live; a post-change production run remains pending"
+  - name: "social preview platform validation"
+    coverage: "Meta, LinkedIn, and X"
+    status: "missing external verification"
+
+maintenance_tier: "CONDITIONAL — owner exists; backup owner, funded SLA, cadence, and alert ownership are unresolved"
+exceptions:
+  - "QSP-001"
+  - "QSP-002"
+  - "QSP-003"
+  - "EXT-001"
+  - "RES-001"
+  - "PROOF-001"
+  - "OPS-001"
+  - "EXT-002"
+  - "SOCIAL-001"
+  - "SEO-001"
+  - "DEP-001"
+  - "DEP-002"
+
+ledgers:
+  dead_code: ".lifi/dead-code-candidates.yml"
+  debt_and_exceptions: ".lifi/debt-and-exceptions.yml"
+evidence:
+  summary_dir: ".lifi/evidence"
+  baseline: ".lifi/evidence/baselines/2026-07-24.md"
+  ci_artifact_policy: "UNDEFINED — add retained browser, accessibility, visual, performance, and live-smoke artifacts with the quality command implementation"
+  retention_policy: "Version baseline summaries; never commit secrets, form submissions, client data, raw IPs, provider payloads, or production logs."
+independent_verifier: null

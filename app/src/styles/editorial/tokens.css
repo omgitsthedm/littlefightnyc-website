@@ -16,6 +16,7 @@
   --lf-bone-soft: #A1A1AA;    /* secondary type (Axiom text-secondary) */
   --lf-bone-dim: #8A8A94;     /* tertiary type — captions, marginalia (AA-safe on --lf-ink, ~5.9:1) */
   --lf-fight: #F97316;        /* THE orange — Axiom lead signal (resting) */
+  --lf-fight-on-light: #C2410C; /* orange ink on white/light surfaces — 5.18:1 on #FFF */
   /* Perceptually-uniform OKLCH signal ramp. #F97316 ≈ oklch(0.705 0.187 47.6);
      the interactive states step ONLY in lightness at the same hue + chroma, so
      hover/active read as one signal at different energies (equal ΔL = equal

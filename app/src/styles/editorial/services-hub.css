@@ -250,7 +250,7 @@
 }
 
 .lf-svc-assurance__list li > span {
-  color: var(--lf-fight);
+  color: var(--lf-fight-on-light);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
 }

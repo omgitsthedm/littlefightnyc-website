@@ -15,6 +15,9 @@ command = "cd app && npm ci && npm run build"
 publish = "app/dist"
 publishOrigin = "config"
 
+[build.environment]
+NODE_VERSION = "24"
+
 [[headers]]
 for = "/*"
 

@@ -1,7 +1,7 @@
 # Little Fight NYC — Voice Doctrine
 
 > Private doctrine. Drives every word on every page.
-> Last updated: May 6, 2026 — David's confirmed direction.
+> Last updated: July 24, 2026 — David's confirmed direction; retired phone-agent language removed.
 
 ## The mission (the WHY)
 
@@ -38,12 +38,11 @@ Every page should signal this without bragging:
 
 **What makes Little Fight different (the proof points):**
 1. **Founder picks up the phone.** No account managers, no ticket queue, no "we'll route you to the right team."
-2. **24-hour live AI phone agent.** Off-hours, the phone still answers — captures the issue, prioritizes, and routes urgent calls to David. Most NYC IT shops send you to voicemail at 5:01pm.
-3. **Tools the chains use, sized for the corner shop.** We build the same kind of websites, dashboards, automations, and IT setups that big chains have — sized for what a NYC small business can afford.
-4. **Real numbers, honest scoping.** No "contact for quote." Where pricing is fixed, we post it. Where it varies, we say what determines it. Most agencies hide pricing because they're hoping to anchor high.
-5. **14 days or you don't pay** (websites). Specific time-bound guarantees most agencies won't make.
-6. **Always fair for small business.** Even if not a fit, we refer to someone who is. We'd rather lose the work than let a NYC shop pay the wrong vendor.
-7. **NYC time.** 9am–9pm Eastern, real human. Not "global support" code for a call center in another timezone.
+2. **Tools the chains use, sized for the corner shop.** We build the same kind of websites, dashboards, automations, and IT setups that big chains have — sized for what a NYC small business can afford.
+3. **Real numbers, honest scoping.** Explain what determines price. Publish a number only when it is current, approved, and traceable. Never invent precision to sound confident.
+4. **14 days or you don't pay** (websites), only under the current written eligibility, timing, dependency, and remedy terms.
+5. **Always fair for small business.** Even if not a fit, we refer to someone who is. We'd rather lose the work than let a NYC shop pay the wrong vendor.
+6. **NYC time.** 9am–9pm Eastern, real human. Not "global support" code for a call center in another timezone.
 
 When pitching the differentiation, **don't list it like marketing.** Show it through specifics: "If you call (646) 360-0318, David picks up." That's the proof. Not "world-class customer service" (forbidden phrase).
 
@@ -70,7 +69,7 @@ Both are tired. Both are busy. Both are suspicious of polish. Both want a real p
 **Yes:**
 - Blunt. "Tell us what's broken."
 - Direct. "Call us. We'll fix it or tell you who can."
-- Specific. "$200 an hour, on-location, after a proper intake."
+- Specific. State an approved rate or explain what determines it. Never make up a number.
 - Confident. "We pick up the phone."
 
 **No:**
@@ -86,10 +85,10 @@ NYC blunt is *honest*, not *performative*.
 1. **Short sentences.** 8–12 words max. Most under 10.
 2. **Plain words.** "Computer broken" not "device experiencing issues."
 3. **No marketing voice.** "We pick up" not "exceptional customer service."
-4. **Real specifics.** "$200 an hour" not "competitive rates."
+4. **Real specifics.** Use an approved number, scope, or response window; otherwise explain the variable plainly.
 5. **Name the channels.** "Call. Text. Email. Form." Not "reach out."
 6. **Hours stated plainly.** "9am–9pm Eastern" not "during business hours."
-7. **AI as a tool, not a feature.** "AI takes messages" not "intelligent virtual assistant."
+7. **No AI phone-agent language.** The phone is a normal call/text line. After hours, callers leave a message.
 8. **Care without sycophancy.** "If we can't help, we'll tell you who can."
 9. **No "we'd love to" / "we'd be happy to" / "feel free to" / "please don't hesitate."**
 10. **First-person plural** ("we") for actions; **first-person singular** ("David") when it's a real human moment.
@@ -112,7 +111,7 @@ NYC blunt is *honest*, not *performative*.
 | "Empower" | "Help" |
 | "Journey" | "Path" or just say what happens |
 | "Schedule a consultation" | "Tell us what you need" |
-| "Free quote" | "First hour free" or specific number |
+| "Free quote" | "Free first look" or explain the approved next step |
 
 ## The 30-second test
 
@@ -137,7 +136,7 @@ Every page must show all four, side-by-side, equal visual weight:
 3. **Email** — `hello@littlefightnyc.com` — `mailto:`
 4. **Form** — `/tech-audit/`
 
-**Hours line under them:** "9am–9pm Eastern: a human answers. After hours: AI takes the message and David calls back."
+**Hours line under them:** "9am–9pm Eastern: a human answers. After hours: leave a message."
 
 Don't hide channels behind dropdowns. Don't say "preferred contact method." Let people pick.
 
@@ -147,13 +146,13 @@ Don't hide channels behind dropdowns. Don't say "preferred contact method." Let 
 **Little Fight:** "Tell us what's broken. We'll fix it or tell you who can."
 
 **Generic agency:** "Our team of expert technicians provides exceptional 24/7 IT support."
-**Little Fight:** "We pick up 9am–9pm. AI takes after-hours messages."
+**Little Fight:** "We pick up 9am–9pm. After hours, leave a message."
 
 **Generic agency:** "Discover how our innovative solutions can transform your business."
 **Little Fight:** "Software costing too much? Tell us what you're paying for. We'll say if there's a cheaper way."
 
 **Generic agency:** "We're committed to delivering exceptional results."
-**Little Fight:** "If we miss the deadline, you don't pay."
+**Little Fight:** "The scope names the deadline and what happens if we miss it."
 
 ## When to keep the brand metaphor
 

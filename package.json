@@ -1,6 +1,10 @@
 {
   "name": "littlefightnyc-workspace",
   "private": true,
+  "engines": {
+    "node": ">=24 <25",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "npm --prefix app run dev",
     "build": "npm --prefix app run build",
@@ -9,7 +13,15 @@
     "audit:audit": "npm --prefix app run audit:audit",
     "audit:mobile-lifecycle": "npm --prefix app run audit:mobile-lifecycle",
     "audit:repo-boundary": "npm --prefix app run audit:repo-boundary",
-    "audit:signal": "npm --prefix app run audit:signal"
+    "audit:signal": "npm --prefix app run audit:signal",
+    "audit:quality-manifest": "npm --prefix app run audit:quality-manifest",
+    "audit:release": "npm --prefix app run audit:release",
+    "test:browser": "npm --prefix app run test:browser",
+    "quality:fast": "npm --prefix app run quality:fast",
+    "quality:full": "npm --prefix app run quality:full",
+    "quality:release": "npm --prefix app run quality:release",
+    "quality:live": "npm --prefix app run quality:live",
+    "quality:maintenance": "npm --prefix app run quality:maintenance"
   },
   "dependencies": {
     "@netlify/blobs": "^8.2.0",

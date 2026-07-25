@@ -43,6 +43,31 @@ export const NOT_FOUND_PAGE = {
   noindex: true,
 };
 
+export function shareForPage(page, siteName = "Little Fight NYC") {
+  const authored = page.share ?? {};
+  const image = authored.image || page.image || "/assets/og-tugboat.jpg";
+  const extension = image.split(/[?#]/, 1)[0].split(".").pop()?.toLowerCase();
+  const type =
+    authored.type ||
+    (extension === "jpg" || extension === "jpeg"
+      ? "image/jpeg"
+      : extension === "png"
+        ? "image/png"
+        : extension === "webp"
+          ? "image/webp"
+          : "application/octet-stream");
+  const knownSocialRatio =
+    image.startsWith("/assets/social/") || image.startsWith("/assets/og-");
+
+  return {
+    image,
+    type,
+    width: authored.width || (knownSocialRatio ? 1200 : undefined),
+    height: authored.height || (knownSocialRatio ? 630 : undefined),
+    alt: authored.alt || `${siteName}: ${page.h1 || page.title}`,
+  };
+}
+
 function brandedTitle(title, maxLength = 60) {
   const suffix = " | Little Fight NYC";
   const withBrand = `${title}${suffix}`;
@@ -161,7 +186,7 @@ export function glossaryPages(seoData) {
       title: "Small Business Tech Glossary | Little Fight NYC",
       description:
         "Plain-English definitions for small business websites, IT support, local search, software costs, and business systems for NYC owners.",
-      h1: "Useful words. No vendor fog.",
+      h1: "Useful words, no vendor fog.",
       shortAnswer:
         "Short answer: these are the terms New York business owners run into when websites, tools, Google, and workflow start costing real money.",
       type: "CollectionPage",
@@ -181,13 +206,33 @@ export function glossaryPages(seoData) {
   ];
 }
 
+function firstAuthoredH1(html, fallback) {
+  const match = typeof html === "string" ? html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i) : null;
+  if (!match) return fallback;
+
+  return match[1]
+    .replace(/<[^>]+>/g, " ")
+    .replaceAll("&rsquo;", "’")
+    .replaceAll("&lsquo;", "‘")
+    .replaceAll("&rdquo;", "”")
+    .replaceAll("&ldquo;", "“")
+    .replaceAll("&mdash;", "—")
+    .replaceAll("&ndash;", "–")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&#39;", "'")
+    .replaceAll("&quot;", '"')
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function industryPage(entry) {
+  const fallbackH1 = entry.title.replace(" Help", "");
   return {
     path: `/industries/${entry.slug}/`,
-    title: `${entry.title.replace(" Help", "")} Tech Help | Little Fight NYC`,
+    title: `${fallbackH1} Tech Help | Little Fight NYC`,
     description: entry.description,
     shortAnswer: entry.description,
-    h1: entry.title.replace(" Help", ""),
+    h1: firstAuthoredH1(entry.html, fallbackH1),
     type: "WebPage",
     image: entry.image || "/assets/manhattan.webp",
     industry: entry,
@@ -202,7 +247,7 @@ export function localePages() {
       title: "Páginas web y tecnología en español | Little Fight NYC",
       description:
         "Páginas web, soporte técnico y software propio para pequeños negocios de Nueva York. Vea trabajo real, llame o empiece un plan gratis.",
-      h1: "Su página web trae clientes. Nosotros la mantenemos andando.",
+      h1: "Una página web hecha para su negocio. Ayuda real cuando algo falla.",
       shortAnswer:
         "Little Fight NYC en español: páginas web, soporte técnico, consultoría gratis y software propio para negocios pequeños de Nueva York.",
       type: "WebPage",
@@ -214,7 +259,7 @@ export function localePages() {
       title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
       description:
         "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码和数据归您；电话、短信或邮件都由真人回复。服务纽约五大区。",
-      h1: "您的网站带来顾客。我们让它一直好用。",
+      h1: "网站按您的生意来做。技术出问题时，有真人帮您。",
       shortAnswer:
         "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码归您。",
       type: "WebPage",

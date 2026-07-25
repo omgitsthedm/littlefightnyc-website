@@ -7,9 +7,10 @@
  * hydrated metadata in lockstep without shipping the full SEO/schema payload
  * to every visitor.
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join } from "node:path";
+import { build as esbuildBundle } from "esbuild";
 import {
   NOT_FOUND_PAGE,
   glossaryPages,
@@ -17,6 +18,7 @@ import {
   journalPage,
   localePages,
   serviceAreaPages,
+  shareForPage,
 } from "./metadata-source.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -27,8 +29,31 @@ const seoData = JSON.parse(readFileSync(join(dataDir, "seo-pages.json"), "utf8")
 const journal = JSON.parse(readFileSync(join(dataDir, "journal-index.json"), "utf8"));
 const industries = JSON.parse(readFileSync(join(dataDir, "industries.json"), "utf8"));
 
+// Bundle the app's answer-art map so hydrated navigation and first-response
+// metadata resolve the same authored artwork from one source of truth.
+const prerenderDir = join(appDir, "node_modules", ".prerender");
+const answersArtOut = join(prerenderDir, "answers-art-route-meta.mjs");
+mkdirSync(prerenderDir, { recursive: true });
+await esbuildBundle({
+  entryPoints: [join(dataDir, "answersArt.ts")],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: answersArtOut,
+  logLevel: "silent",
+});
+const { answerArt } = await import(pathToFileURL(answersArtOut).href);
+
 function hasDedicatedJournalImage(slug) {
   return existsSync(join(assetsDir, `journal-${slug}.webp`));
+}
+
+function withRenderedAnswerArt(page) {
+  const answerMatch = page.path.match(/^\/answers\/([^/]+)\/$/);
+  if (!answerMatch) return page;
+
+  const image = answerArt(answerMatch[1]);
+  return existsSync(join(appDir, "public", image)) ? { ...page, image } : page;
 }
 
 function clientMeta(page) {
@@ -37,6 +62,7 @@ function clientMeta(page) {
     title: page.title,
     description: page.description,
     image: page.image,
+    share: shareForPage(page, seoData.site.name),
     type: page.type,
     noindex: page.noindex === true || undefined,
     locale: page.locale,
@@ -52,7 +78,7 @@ const pages = [
   ...journal.map((post) => journalPage(post, hasDedicatedJournalImage)),
   ...industries.map(industryPage),
   ...localePages(),
-].map(clientMeta);
+].map(withRenderedAnswerArt).map(clientMeta);
 
 const duplicatePaths = pages
   .map((page) => page.path)
@@ -63,6 +89,7 @@ if (duplicatePaths.length > 0) {
 
 const out = {
   site: {
+    name: seoData.site.name,
     url: seoData.site.url,
     latitude: seoData.site.latitude,
     longitude: seoData.site.longitude,

@@ -1,0 +1,254 @@
+schema_version: 1
+updated_at: "2026-07-24"
+quality_charter:
+  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
+  version: null
+  status: "ABSENT_VERIFIED_2026-07-24"
+
+policy:
+  default_status: "open"
+  suppression_rule: >-
+    A check, advisory, route class, provider gate, or critical journey may not
+    be suppressed, skipped, or silently narrowed without a named owner, written
+    reason, compensating control, review date, and retained close evidence.
+  accepted_risk_rule: >-
+    Open debt is not accepted risk. Acceptance requires an explicit approver,
+    bounded scope, expiration, mitigation, and rollback or escalation trigger.
+  evidence_rule: "Do not store secrets, form submissions, client data, raw IPs, provider payloads, or production logs in this ledger."
+
+items:
+  - id: "QSP-001"
+    type: "governance"
+    status: "open"
+    risk: "moderate"
+    finding: "The central Quality Charter is absent at the required canonical path, so no version, approver, amendment process, or shared minimum gate can be inherited."
+    evidence:
+      - "Verified absent on 2026-07-24: /Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
+      - ".lifi/quality.yml records version: null rather than inventing a charter version."
+    impact: "Repository-local policy can drift from agency expectations and exceptions lack a central approval authority."
+    mitigation:
+      - "Use this repository-local manifest and ledgers as a conditional baseline."
+      - "Create and approve the central charter, then reconcile this manifest against its exact version."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Canonical charter file exists with version and owner."
+      - "Repository manifest records that exact version and any approved deviations."
+
+  - id: "QSP-002"
+    type: "quality-automation"
+    status: "open"
+    risk: "high"
+    finding: "The new quality:fast, quality:full, quality:release, quality:live, and quality:maintenance commands establish a reproducible spine, but coverage and retained evidence remain incomplete."
+    evidence:
+      - "The five root commands delegate to app scripts; quality:full includes Playwright across Chromium, Firefox, and WebKit with axe A/AA checks."
+      - "No visual-regression baseline, provider-contract suite, unit/component suite, numeric field-performance gate, or retained CI artifact policy was verified."
+    impact: "Visual, provider, component-level, performance, and integration regressions can still escape the current route-focused release checks."
+    mitigation:
+      - "Extend the existing tiers without weakening route, accessibility, runtime-error, overflow, reduced-motion, release-artifact, and live-revision checks."
+      - "Add visual baselines, provider contracts, numeric performance/asset gates, and retained machine-readable and human-readable artifacts."
+      - "Expand browser coverage from representative routes to all high-risk stateful journeys."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "A clean checkout produces retained browser, accessibility, visual, performance, contract, and live evidence through the declared tiers."
+      - "Each critical journey and integration boundary has an automated gate or an explicit external evidence owner."
+
+  - id: "QSP-003"
+    type: "runtime-reproducibility"
+    status: "pending_verification"
+    risk: "moderate"
+    finding: "Node 24 is pinned in .nvmrc, package engines, and Netlify configuration; clean installs and the revision-bound quality:release lane pass locally under Node 24.18.0. The next revision-matched production build/runtime still needs verification."
+    evidence:
+      - "Local baseline on 2026-07-24: Node 22.22.3 and npm 10.9.8."
+      - "Current working tree declares .nvmrc 24, package engines Node >=24 <25/npm >=10, and Netlify NODE_VERSION=24."
+      - "On 2026-07-24, npm run quality:full passed under Node 24.18.0/npm 10.9.8, including 200-route build/parity checks and 32 Playwright tests across Chromium, Firefox, and WebKit."
+      - "The same full lane passed again after clean root and app npm ci installs under Node 24.18.0."
+      - "The clean local candidate then passed quality:release, including revision-matched release.json, 200 generated routes, identity assets, sitemaps, and public recovery files."
+      - "The verified live baseline predates this runtime pin; no candidate production build exists yet."
+    impact: "Until an authorized candidate is built and verified by Netlify, the effective production build/runtime can still differ from the clean local evidence."
+    mitigation:
+      - "After an authorized release, verify the effective Netlify build/runtime and live revision report the same candidate."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Repository and Netlify report the same supported runtime."
+      - "Clean install, build, release, and live checks pass on that runtime."
+
+  - id: "EXT-001"
+    type: "external-delivery-proof"
+    status: "open"
+    risk: "high"
+    finding: "Current end-to-end evidence for Tech Audit form capture/inbox delivery and Website Audit report email delivery is missing."
+    evidence:
+      - "Provider registration markup and delivery code exist."
+      - "The repository does not prove current Netlify Forms capture, configured inbox receipt, Gmail SMTP delivery, spam placement, or failure alerting."
+    impact: "A visitor can receive an on-site confirmation while the lead or generated report fails to reach its intended recipient."
+    mitigation:
+      - "Run a production-safe test submission and Website Audit delivery with controlled test identities."
+      - "Verify provider capture, inbox receipt, reply path, spam handling, and alert behavior without committing submitted data."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Dated, redacted provider-capture and inbox-receipt evidence for both journeys."
+      - "Documented alert/escalation behavior for delivery failure."
+
+  - id: "RES-001"
+    type: "audience-research"
+    status: "open"
+    risk: "moderate"
+    finding: "No current interview or prototype-test evidence was verified for the older, multilingual, technology-wary New York owner audiences named in the product brief."
+    evidence:
+      - "Current copy and journeys intentionally address barber, restaurant, legal, service, and neighborhood-business needs."
+      - "No dated comprehension, trust, task-completion, or language usability sessions were found in the repository baseline."
+    impact: "The site may feel clear internally while still creating uncertainty or friction for the people it most needs to reassure."
+    mitigation:
+      - "Test the core value story and contact journeys with representative owners, including Spanish- and Chinese-reading participants."
+      - "Measure comprehension, trust, perceived risk, task completion, and words that create confusion."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Dated research summary with participant boundaries and consent-safe notes."
+      - "Prioritized changes traced to observed behavior and a follow-up validation."
+
+  - id: "PROOF-001"
+    type: "claims-and-approvals"
+    status: "open"
+    risk: "high"
+    finding: "Case-study quotes, outcomes, timings, privacy labels, and public-link states require an explicit approval inventory."
+    evidence:
+      - "The route catalog contains 10 case-study routes with mixed public, owned, private-client, and concept proof states."
+      - "The repository alone cannot establish client permission or current factual approval for every claim."
+    impact: "Unapproved or stale proof can damage client trust and create reputational or contractual risk."
+    mitigation:
+      - "Create a per-case claims ledger with source, approver, approved wording, date, link status, and expiration/review trigger."
+      - "Keep private proof unlinked and clearly labeled until approval is documented."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Every published quote, metric, timeline, logo, screenshot, and link maps to a dated approval."
+      - "Browser and source inspection confirm private hostnames are absent from public output."
+
+  - id: "OPS-001"
+    type: "operations"
+    status: "open"
+    risk: "high"
+    finding: "Backup ownership, funded support level, maintenance cadence, alert ownership, and escalation targets are not documented."
+    evidence:
+      - ".lifi/quality.yml names David Marsh as owner and backup_owner: null."
+      - "The site promises direct human help and runs forms, functions, background work, storage, email, scheduled cleanup, and consent-gated monitoring."
+    impact: "Lead delivery, Audit jobs, deploy failures, or provider incidents can remain unresolved when the primary owner is unavailable."
+    mitigation:
+      - "Name a backup operator with minimum access and a documented escalation path."
+      - "Define funded response windows, maintenance cadence, alert destinations, and restore responsibilities."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Named backup acknowledges access and runbook."
+      - "Published service boundary matches an approved funded SLA and tested alert route."
+
+  - id: "EXT-002"
+    type: "external-account-validation"
+    status: "open"
+    risk: "moderate"
+    finding: "Authenticated provider and account state could not be validated from repository evidence."
+    evidence:
+      - "Open surfaces include Netlify site/forms/functions/environment, Google Business Profile, Search Console, DataForSEO, analytics providers, SMTP, optional Notion, and optional Telegram."
+      - "No secrets or account payloads were accessed or copied into this baseline."
+    impact: "Code can be correct while account linkage, permissions, quotas, domains, notifications, or measurement remain misconfigured."
+    mitigation:
+      - "Validate each enabled provider in its authenticated console using a redacted checklist."
+      - "Record owner, purpose, least-privilege access, quota/billing state, and a dated functional test."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Redacted provider checklist with date, owner, project/account identity, and functional result."
+      - "Disabled optional providers are explicitly marked disabled rather than assumed working."
+
+  - id: "SOCIAL-001"
+    type: "social-metadata"
+    status: "open"
+    risk: "moderate"
+    finding: "Meta, LinkedIn, and X share previews have not been externally validated for representative route classes."
+    evidence:
+      - "Metadata and OG-image surfaces exist, but platform caches and card rendering are external behavior."
+      - "No dated debugger/checker artifacts were verified in the repository baseline."
+    impact: "Shared links can show the wrong title, description, image, crop, URL, or stale card despite valid local HTML."
+    mitigation:
+      - "Validate home, service, case study, answer, journal, Lab, and Website Audit report examples in platform tools."
+      - "Re-scrape after fixes and retain redacted screenshots or result summaries."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Dated Meta, LinkedIn, and X validation for each representative route class."
+      - "Card images meet declared size/weight, crop, contrast, and text-safe-area requirements."
+
+  - id: "SEO-001"
+    type: "information-architecture"
+    status: "open"
+    risk: "moderate"
+    finding: "The intended long-term route-fanout policy is unresolved for a 200-route catalog containing 91 area-related routes and 73 noindex routes."
+    evidence:
+      - "Generated route-meta.json baseline: 200 total routes."
+      - "Area distribution: 91 routes; total noindex distribution: 73 routes."
+    impact: "Large low-value or overlapping route families can dilute maintenance attention, confuse navigation, or create future indexation risk if policy changes accidentally."
+    mitigation:
+      - "Decide which route families serve distinct owner intent and which should consolidate, redirect, remain noindex, or retire."
+      - "Measure search performance and content uniqueness before changing index policy."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Approved route-class decision matrix with user intent, index policy, canonical/redirect behavior, and owner."
+      - "Sitemap, metadata, internal-link, crawl, and live-route evidence match the decision."
+
+  - id: "DEP-001"
+    type: "dependency-security"
+    status: "open"
+    risk: "high"
+    finding: "react-router is within the reported affected range for GHSA-qwww-vcr4-c8h2 (>=7.12.0 <8.3.0)."
+    evidence:
+      - "The application currently uses react-router-dom 7.15 in a client-side SPA."
+      - "Repository review did not find React Server Components mode or affected server actions in use, so the vulnerable path appears unlikely to be reachable; this is a bounded assessment, not a dismissal."
+    impact: "If RSC mode or affected actions are introduced or already reachable through an unrecognized path, crafted input could exercise the advisory."
+    mitigation:
+      - "Confirm the affected feature conditions against the primary advisory and the app route/runtime architecture."
+      - "Track a tested compatible upgrade path outside the affected range."
+      - "Do not force a downgrade or unreviewed major jump; re-check immediately if RSC or server actions are added."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Dependency tree shows a non-affected compatible version."
+      - "Clean install, build, browser journeys, prerender, and live checks pass."
+      - "A dependency scan no longer reports GHSA-qwww-vcr4-c8h2."
+
+  - id: "DEP-002"
+    type: "dependency-security"
+    status: "open"
+    risk: "high"
+    finding: "brace-expansion is reported through development/tooling transitive paths for GHSA-3jxr-9vmj-r5cp and GHSA-mh99-v99m-4gvg; fixes are available."
+    evidence:
+      - "The affected package is present in development/tooling dependency paths rather than an identified browser or Netlify Function runtime path."
+      - "No package changes were made in this ledger-only baseline."
+    impact: "Malicious or unexpectedly complex patterns processed by affected tooling could create denial-of-service or resource-exhaustion exposure in developer or CI contexts."
+    mitigation:
+      - "Resolve the exact dependency paths and apply the smallest clean compatible remediation."
+      - "Re-run clean install, dependency audit, build, lint, generation, and quality tiers."
+      - "Avoid blanket audit suppression or unrelated major upgrades."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Lockfiles resolve only fixed brace-expansion versions on affected paths."
+      - "A clean dependency scan no longer reports either advisory."
+      - "Tooling, build, generation, and release checks pass without suppression."

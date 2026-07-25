@@ -1,0 +1,208 @@
+schema_version: 1
+updated_at: "2026-07-24"
+quality_charter:
+  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
+  version: null
+  status: "ABSENT_VERIFIED_2026-07-24"
+
+policy:
+  default: "protect"
+  rule: >-
+    Static-analysis non-reachability is not deletion proof. A candidate may be
+    removed only after its runtime, generated, provider, compatibility, and
+    content contracts are mapped; a reversible deletion is validated across
+    affected route classes and critical journeys; and the evidence is retained.
+  required_before_deletion:
+    - "Name the exact file, export, route, asset, redirect, function, or data record."
+    - "Prove no direct, dynamic-import, manifest, generated-data, provider, crawler, or historical-URL consumer."
+    - "Run build, route, browser, accessibility, visual, and live checks appropriate to the surface."
+    - "Record owner approval, rollback path, and retained evidence."
+  forbidden_shortcuts:
+    - "Do not infer safety from grep or bundle reachability alone."
+    - "Do not delete generated inputs because generated output exists."
+    - "Do not delete public files, redirects, noindex routes, or compatibility aliases merely because navigation does not link them."
+    - "Do not delete a function helper because it is not a deployable endpoint."
+  sweep_status: "No deletion sweep was performed in this baseline."
+
+protected_surfaces:
+  - id: "DYN-001"
+    surface: "React SPA route graph and generated route catalog"
+    paths:
+      - "app/src/App.tsx"
+      - "app/src/data/route-meta.json"
+    status: "protected_not_candidate"
+    evidence: "The generated catalog contains 200 route records and is consumed by prerender, metadata, navigation, and route-quality behavior."
+    contracts:
+      - "React Router matching and lazy imports"
+      - "prerender route enumeration"
+      - "metadata and index/noindex policy"
+      - "404 and historical route behavior"
+    decision: "Preserve until route-fanout and generated-data contracts are tested."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Route inventory diff plus build, prerender, browser, metadata, sitemap, and live-route evidence."
+
+  - id: "DYN-002"
+    surface: "Generated navigation and journal data"
+    paths:
+      - "app/src/data/nav-index.json"
+      - "app/src/data/journal-index.json"
+      - "app/src/data/journal-bodies/**"
+    status: "protected_not_candidate"
+    evidence: "Generated navigation covers 65 entries and the journal index covers 37 entries."
+    contracts:
+      - "Library search and navigation"
+      - "journal route resolution"
+      - "prerender and sitemap generation"
+    decision: "Treat sources and generated outputs as paired contracts."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Generator provenance, zero-orphan inventory, build, search, route, and sitemap evidence."
+
+  - id: "LAB-001"
+    surface: "Lab static archive, concepts, thumbnails, and audits"
+    paths:
+      - "app/public/examples/lab/**"
+    status: "protected_not_candidate"
+    evidence: "The Lab manifest declares version 3, four suites, and 11 concepts; public files are a showcase and compatibility surface."
+    contracts:
+      - "one-click concept routes"
+      - "concept manifest and thumbnail references"
+      - "preserved client/concept URLs"
+      - "Lab audit records and noindex decisions"
+    decision: "Preserve the complete showcase graph; source-code controls remain prohibited in the public UI."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Manifest reachability, thumbnail/file integrity, all concept routes, noindex, visual, and live-link evidence."
+
+  - id: "AUDIT-001"
+    surface: "Website Audit static shell, generated reports, functions, and Blob stores"
+    paths:
+      - "app/public/examples/audit/**"
+      - "netlify/functions/**"
+    status: "protected_not_candidate"
+    evidence: "Eight deployed function surfaces plus shared helpers support intake, background execution, status, report serving, OG output, engagement, views, and expiration cleanup."
+    contracts:
+      - "public and programmatic Audit intake"
+      - "one-time background job authorization"
+      - "Netlify Blobs stores and 30-day expiration"
+      - "PageSpeed, Anthropic fallback, Gmail SMTP, optional Notion and Telegram"
+      - "report routes, OG cards, view and engagement recording"
+    decision: "Treat endpoint handlers, background/scheduled exports, templates, and helpers as one protected service graph."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Local and deployed function inventory, provider-contract tests, job lifecycle, report delivery, expiration, security, and live evidence."
+
+  - id: "BRAND-001"
+    surface: "Internal brand kit and downloadable assets"
+    paths:
+      - "app/public/brand-kit/**"
+    status: "protected_not_candidate"
+    evidence: "The unlisted internal route is an intentional reference and download surface even when absent from public navigation."
+    contracts:
+      - "direct private URL"
+      - "download links and archive contents"
+      - "brand token and asset provenance"
+    decision: "Unlinked does not mean unused; preserve until every download is inventoried and owner-approved."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Owner approval plus direct-route, download integrity, MIME, filename, archive, and browser evidence."
+
+  - id: "SW-001"
+    surface: "Passive service-worker lifecycle and route-chunk recovery"
+    paths:
+      - "app/public/sw.js"
+      - "app/public/register-sw.js"
+      - "app/src/components/ErrorBoundary.tsx"
+    status: "protected_not_candidate"
+    evidence: "These files jointly preserve mobile sessions through passive activation, network-first navigation, and one guarded import retry."
+    contracts:
+      - "controlled-tab update lifecycle"
+      - "offline and cache behavior"
+      - "route chunk failure recovery"
+      - "form and scroll preservation"
+    decision: "Do not simplify either half without a multi-tab deploy lifecycle test."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Chromium/WebKit/Firefox multi-tab update, offline, route-chunk failure, scroll, and form-preservation evidence."
+
+  - id: "FORM-001"
+    surface: "Netlify Forms registration and thanks route"
+    paths:
+      - "app/public/__forms.html"
+      - "app/src/pages/TechAudit.tsx"
+      - "app/src/pages/Thanks.tsx"
+    status: "protected_not_candidate"
+    evidence: "Static registration markup is a provider discovery contract and may not have a normal in-app import."
+    contracts:
+      - "tech-audit-scratch provider registration"
+      - "client-side validation and draft state"
+      - "POST acceptance and thanks redirect"
+      - "configured inbox notification"
+    decision: "Preserve until Netlify account and inbox delivery are externally verified."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Built markup inspection, provider registration, browser submission, inbox receipt, duplicate/error, and thanks-route evidence."
+
+  - id: "COMPAT-001"
+    surface: "Redirects, aliases, crawler files, localized routes, and standalone public compatibility files"
+    paths:
+      - "app/public/_redirects"
+      - "app/public/404.html"
+      - "app/public/robots.txt"
+      - "app/public/sitemap*.xml"
+      - "app/public/llms.txt"
+      - "app/public/es/**"
+      - "app/public/zh/**"
+    status: "protected_not_candidate"
+    evidence: "These are consumed by Netlify, search crawlers, direct historical links, VERA proxy clients, and non-English visitors rather than ordinary module imports."
+    contracts:
+      - "historical URL continuity"
+      - "noindex and crawler policy"
+      - "sitemap discovery"
+      - "VERA proxy routes"
+      - "Spanish and Chinese direct-entry journeys"
+    decision: "Preserve until every external route and crawler contract is mapped."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Redirect matrix, status/header checks, crawler parsing, localized journey, VERA consumer, and live historical-link evidence."
+
+  - id: "ASSET-001"
+    surface: "Dynamically resolved images, fonts, manifests, and public assets"
+    paths:
+      - "app/public/**"
+      - "app/src/assets/**"
+    status: "protected_not_candidate"
+    evidence: "Assets can be referenced through data files, CSS, generated HTML, Web App manifests, social metadata, and direct public URLs."
+    contracts:
+      - "data-driven image paths"
+      - "CSS URLs and font faces"
+      - "manifest icons"
+      - "prerendered metadata and social cards"
+      - "download and direct-link surfaces"
+    decision: "Protect by default; classify exact files individually before removal."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Case-sensitive reference graph, build output, route screenshots, metadata, manifest, download, and live 404 evidence."
+
+  - id: "FUNC-001"
+    surface: "Function helpers and shared templates"
+    paths:
+      - "netlify/functions/lib/**"
+    status: "protected_not_candidate"
+    evidence: "Shared modules such as templates.mts are runtime dependencies even though Netlify does not deploy them as standalone endpoints."
+    contracts:
+      - "function bundling"
+      - "report generation"
+      - "provider and data-store helpers"
+    decision: "Assess with the full function bundle graph, never endpoint enumeration alone."
+    owner: "David Marsh"
+    review_by: null
+    deletion_proof_required: "Function bundle inspection, type/build checks, endpoint and background-job tests, generated-report comparison, and deployed smoke evidence."
+
+candidates: []
+
+decision_log:
+  - date: "2026-07-24"
+    decision: "No file or surface is accepted as dead code."
+    rationale: "This task established protection boundaries and evidence requirements; it did not run a deletion proof."

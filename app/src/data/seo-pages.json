@@ -21,16 +21,30 @@
       "h1": "Your business is custom. Your website should be too.",
       "shortAnswer": "Short answer: Little Fight NYC builds websites for New York small businesses, fixes urgent tech, gives free consulting, and replaces bloated subscriptions with focused software clients own.",
       "type": "WebPage",
-      "image": "/assets/og-tugboat.jpg"
+      "image": "/assets/og-tugboat.jpg",
+      "share": {
+        "image": "/assets/social/og-home.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC over New York storefronts at dawn: Your business is custom. Your website should be too."
+      }
     },
     {
       "path": "/services/",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
       "description": "Website design, urgent IT support, free tech consulting, and custom software for NYC small businesses that need a clear first move.",
-      "h1": "Start with the problem. We build the right fix.",
+      "h1": "You explain the day. We find the useful fix.",
       "shortAnswer": "Short answer: Little Fight NYC starts with the website, supports the tech behind it, gives free consulting, and builds focused software the business owns when generic tools no longer fit.",
       "type": "CollectionPage",
-      "image": "/assets/hero-services-crossing.webp"
+      "image": "/assets/hero-services-crossing.webp",
+      "share": {
+        "image": "/assets/social/og-services.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC service card over a New York street: One partner for the technology your business depends on."
+      }
     },
     {
       "path": "/services/custom-local-websites/",
@@ -41,6 +55,13 @@
       "type": "Service",
       "serviceName": "Custom local websites for NYC small businesses",
       "image": "/assets/hero-laptop.webp",
+      "share": {
+        "image": "/assets/social/og-websites.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC custom website card with shipped salon work: A website that makes the phone ring."
+      },
       "faq": [
         {
           "question": "Do I need a new website, or just a cleanup?",
@@ -64,6 +85,13 @@
       "shortAnswer": "Short answer: you don't have to be in New York to get the New York treatment. We build custom websites for small businesses in all 50 states, live in 14 days, and you own every line of it. The consult is free and a real person answers.",
       "type": "WebPage",
       "image": "/assets/hero-nationwide-wtc.webp",
+      "share": {
+        "image": "/assets/social/og-nationwide.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC nationwide website card over a New York street: Built in New York. Works anywhere."
+      },
       "paragraphs": [
         "Every main street in America has the same fight. The chains have tech teams. The corner shop has a template site from 2019 and a contact form nobody answers. We fix that for a living in New York \u2014 and a website does not care about zip codes.",
         "How a remote build works: you call, text, or email. We talk about your business \u2014 free, like always. Then we build. You watch it come together and tell us what is right and what is wrong. In 14 days it is live. If it is not, you do not pay.",
@@ -97,6 +125,13 @@
       "type": "Service",
       "serviceName": "Small business IT support",
       "image": "/assets/typing.webp",
+      "share": {
+        "image": "/assets/social/og-it-support.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC IT support card over a restaurant counter: Fast help when the basics break."
+      },
       "faq": [
         {
           "question": "Do you help when something is broken today?",
@@ -117,6 +152,13 @@
       "type": "Service",
       "serviceName": "Tech consulting for NYC small businesses",
       "image": "/assets/local-business-base.webp",
+      "share": {
+        "image": "/assets/social/og-tech-consulting.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC consulting card over a small-business back office: Know what to keep, cut, fix, or build."
+      },
       "faq": [
         {
           "question": "How long does a consult take?",
@@ -137,6 +179,13 @@
       "type": "Service",
       "serviceName": "Custom software for NYC small businesses",
       "image": "/assets/manhattan.webp",
+      "share": {
+        "image": "/assets/social/og-business-systems.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC software card over a salon workstation: Stop renting software that fights the way you work."
+      },
       "faq": [
         {
           "question": "Is custom always better than software?",
@@ -152,10 +201,17 @@
       "path": "/tech-audit/",
       "title": "Free Tech Audit for NYC Small Businesses | Little Fight NYC",
       "description": "Book a free Tech Audit. A real person reads your website, tools, Google presence, and monthly costs \u2014 then tells you what to fix first.",
-      "h1": "Show us the moving parts.",
+      "h1": "Tell us what is getting in the way.",
       "shortAnswer": "Short answer: the Tech Audit is a free, human review of your business tech \u2014 website, tools, Google, and monthly costs. You get a straight answer, not a pitch.",
       "type": "ContactPage",
       "image": "/assets/og-tugboat.jpg",
+      "share": {
+        "image": "/assets/social/og-tech-audit.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC free Tech Audit card over a small-business back office: Show us what feels broken."
+      },
       "faq": [
         {
           "question": "Is the Tech Audit a quote?",
@@ -174,16 +230,30 @@
       "h1": "See what works. Try what is next.",
       "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
       "type": "CollectionPage",
-      "image": "/assets/hero-examples-market.webp"
+      "image": "/assets/hero-examples-market.webp",
+      "share": {
+        "image": "/assets/social/og-examples.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC examples card over a neighborhood market: See what changed."
+      }
     },
     {
       "path": "/library/",
       "title": "The Library: Owner Answers & Field Notes | Little Fight NYC",
       "description": "Everything Little Fight NYC knows, free: straight answers to real owner questions, plus how-tos, essays, and software comparisons from working with NYC small businesses.",
-      "h1": "Everything we know. Free.",
+      "h1": "Start with what happened. Find the next move.",
       "shortAnswer": "Short answer: the Library is every answer and field note Little Fight NYC has published \u2014 owner questions answered plainly, plus how-tos, essays, and software comparisons. Free, no selling.",
       "type": "CollectionPage",
-      "image": "/assets/hero-ind-bookshop.webp"
+      "image": "/assets/hero-ind-bookshop.webp",
+      "share": {
+        "image": "/assets/social/og-library.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC owner Library card in a neighborhood shop: Plain-English help for real business problems."
+      }
     },
     {
       "path": "/answers/website-form-not-working-small-business/",
@@ -786,10 +856,17 @@
       "path": "/about/",
       "title": "About Little Fight NYC | NYC Small Business Tech",
       "description": "Little Fight NYC helps New York small business owners get working websites, reliable IT, stronger Google visibility, and systems that fit.",
-      "h1": "Small firm. Heavy pull.",
+      "h1": "Small firm. Serious pull.",
       "shortAnswer": "Short answer: Little Fight NYC helps local businesses get better websites, working tech, stronger Google visibility, and practical systems. Call (646) 360-0318 or use the Tech Audit.",
       "type": "AboutPage",
       "image": "/assets/owner.webp",
+      "share": {
+        "image": "/assets/social/og-about.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC about card over a New York diner at night: Small firm. Serious technology."
+      },
       "faq": [
         {
           "question": "Who runs Little Fight NYC?",
@@ -814,16 +891,23 @@
       "path": "/contact/",
       "title": "Contact Little Fight NYC | Call, Text, Email, Form",
       "description": "Call, text, email, or use the Tech Audit to reach Little Fight NYC. Websites, IT support, local visibility, software cleanup, and business systems.",
-      "h1": "Tell us what's going on.",
+      "h1": "Tell us what feels stuck.",
       "shortAnswer": "Short answer: call or text (646) 360-0318. Email hello@littlefightnyc.com. Or start a Tech Audit when the problem has moving parts.",
       "type": "ContactPage",
-      "image": "/assets/hero-contact-door.webp"
+      "image": "/assets/hero-contact-door.webp",
+      "share": {
+        "image": "/assets/social/og-contact.jpg",
+        "type": "image/jpeg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Little Fight NYC contact card over an open shop door at night: Tell us what is going on."
+      }
     },
     {
       "path": "/privacy/",
       "title": "Privacy Policy | Little Fight NYC",
       "description": "Little Fight NYC privacy policy. Forms, private information, contact details, safe account access, and data handling.",
-      "h1": "Privacy, plain.",
+      "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Account access uses safer handoffs.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg"
@@ -832,7 +916,7 @@
       "path": "/terms/",
       "title": "Terms and Work Scope | Little Fight NYC",
       "description": "Little Fight NYC terms. Scope, quotes, project promises, safe account access, and written approvals before work begins.",
-      "h1": "Terms and scope, plain.",
+      "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: Little Fight confirms scope, price, access needs, and timelines in writing before work begins.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg"
@@ -841,7 +925,7 @@
       "path": "/areas/",
       "title": "NYC Neighborhoods We Serve | Little Fight NYC",
       "description": "Little Fight NYC works across New York City. See the Manhattan, Brooklyn, and Queens neighborhoods we serve most.",
-      "h1": "The neighborhoods we show up in.",
+      "h1": "Every New York business has a local story.",
       "shortAnswer": "Little Fight NYC serves law firms, bars, shops, salons, restaurants, and owner-run teams across Manhattan, Brooklyn, and Queens. On-site visits usually within 24 hours. Callbacks within 2 hours, 9am to 9pm ET.",
       "type": "WebPage",
       "image": "/assets/nyc-street-crowd.webp"

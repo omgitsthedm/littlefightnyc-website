@@ -2,58 +2,97 @@
 
 > **Read this first.** If you are a person or an AI agent picking this up cold, this file tells you what LittleFight NYC is, exactly where it stands, what to do next, and where everything lives. One screen to orientation.
 >
-> **Last updated:** 2026-07-20 · **Updated by:** Codex (LiFi NYC) · **Stage:** Live flagship; audit and layout pass closed
+> **Last updated:** 2026-07-24 · **Updated by:** Codex (LiFi NYC) · **Stage:** Verified live flagship; local reinvention candidate in validation
 
 ---
 
 ## 1. What it is
 LittleFight NYC (LFNYC) is **the agency's own flagship marketing/shopfront website** — `https://littlefightnyc.com`. It sells right-sized websites, tools, local visibility, and business systems to small/mid New York businesses. It is a **live, public production site** held to an Apple-tier craft bar (it is the agency's own storefront, so it is the reference standard for everything else).
 
-## 2. Current state (2026-07-20)
-- **Status:** Site complete and in maintain/elevate mode. The mobile lifecycle, repository boundary, privacy/measurement path, conversion surfaces, shared contact block, production polish, and density-aware sitewide layout pass are live and verified. Latest application release: `fb61c52`.
-- **Live URL:** https://littlefightnyc.com/ — verify the exact deployed revision in Netlify during every release.
+## 2. Current state (2026-07-24)
+- **Verified production:** `df7c90ded191d909648ed86401fc5816809648ec`
+  (`df7c90d`) is the ready Netlify release currently verified on
+  https://littlefightnyc.com/ and `www`. It is the last-known-good rollback
+  point.
+- **Local candidate:** local `main` contains Quality Spine, runtime pin,
+  browser-quality, social-share identity, and route metadata/H1 parity work
+  based on `df7c90d`. Verify local `HEAD` before quoting the candidate SHA.
+- **Release state:** the local candidate passes the clean release lane but is
+  **not production-authorized, pushed, or deployed**. It is not production.
+- **Browser state:** `quality:full` passed under Node 24.18.0, including
+  **32/32 Playwright checks** across desktop/mobile Chromium, desktop Firefox,
+  and mobile WebKit. Release and live verification remain separate gates.
 - **Git:** `main` is the production branch. Use `git status --short` and compare the Netlify deployed commit before calling it synced.
 - **Branch:** `main` ✅ (canonical; the intended default).
 - ⚠️ **This repo AUTO-DEPLOYS from `main`** (push → Netlify auto-build → live in ~40s). This is a deliberate **exception** to LiFi's usual manual-deploy rule. Do **NOT** run `netlify deploy --prod` manually (caused the 2026-06-30 divergence incident).
-- **Biggest open lever is off-site:** Google Business Profile, not the code — see §5.
-- **Latest closeout:** `SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md`.
+- **Phone service:** Twilio and the AI phone agent are retired. The public
+  number remains an ordinary call/text line; AI answering is not a service.
+- **Governance:** [SITE-REINVENTION-DOSSIER.md](SITE-REINVENTION-DOSSIER.md)
+  records the open owner, research, proof, service, external, and care gates.
 
 ## 3. Where everything lives
 | Thing | Location |
 |---|---|
-| **Canonical code** | `~/Code/LiFi NYC/Clients/LittleFightNYC/Brand/Website/littlefightnyc-website` — edit + push from here (`~/Code` is canonical; the `~/Desktop/...` path is a same-name symlink into `~/Code`). App source lives under `app/`. |
+| **Canonical code** | `~/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website` — app source lives under `app/`. |
 | **GitHub** | `github.com/omgitsthedm/littlefightnyc-website` |
 | **Hosting** | Netlify project `littlefightnyc` (site ID `0907d8fe-7018-48db-a6be-1f906e4b2619`) → https://littlefightnyc.com — **auto-deploy from `main`** |
-| **Database** | None (static prerendered SPA; `/tech-audit/` posts via Netlify Forms) |
+| **Data / persistence** | `/tech-audit/` posts through Netlify Forms. The public Website Audit uses Netlify Functions plus Blob stores for job, status, report, view, engagement, and rate-limit state; scheduled cleanup expires reports. There is no traditional relational database. |
 | **Design / handoff material** | In-repo: `DESIGN_LANGUAGE.md`, `docs/UIUX-DOCTRINE.md`, `VOICE.md`, `SOURCE_OF_TRUTH.md`, `HANDOFF.md`; design tokens in `app/src/styles/editorial/tokens.css` |
 | **Secrets / build env** | Netlify build env (e.g. `VITE_GA_ID` for GA4); nothing sensitive committed |
-| **Related sibling property** | **The Lab** — `lab.littlefightnyc.com`, repo `omgitsthedm/littlefight-lab`, code at `~/Code/LiFi NYC/Clients/LittleFightNYC/Lab`. **Separate project with its own status doc** — THIS doc covers the MAIN site only. |
+| **Related sibling property** | **The Lab source repo** — `omgitsthedm/littlefight-lab`, code at `~/Code/LiFi NYC/Little Fight NYC Business/Website/Lab`. The main site also serves a public showcase beneath `/examples/lab/`; source-repo work remains a separate lane. |
 
 ## 4. What's done
-Mature React 19 + TypeScript + Vite 7 SPA (React Router 7) with build-time SEO prerendering (`scripts/prerender-seo.mjs` currently writes 182 static routes with full JSON-LD: FAQPage, BreadcrumbList, LocalBusiness/ProfessionalService, DefinedTerm, Article, HowTo). Delivered scope includes: full content build-out (services, case studies with honest metrics, answer guides, neighborhood/area hubs, glossary, journal, industries, studio), the **Axiom Momentum** design system, the **"Boxing Poster" type system** (Oswald-700 condensed display + Barlow-400 body, self-hosted via @fontsource), motion/route-transition system, command palette (Cmd/Ctrl-K), perf splits (site.ts + journal body chunking), WCAG 2.1 AA work, security headers, complete orange browser-chrome, proof-first homepage ordering, and a shortened website-lead route. Current automated gates cover lint, production build, mobile lifecycle, repo boundary, signal-law discipline, dependency vulnerabilities, and browser smoke tests.
+The verified production baseline is a React 19 + TypeScript + Vite 7 SPA with
+build-time prerendering, Netlify Forms, consent-gated analytics, security
+headers, Axiom Momentum, a proof-first homepage, service/case-study/Library
+routes, Spanish and Chinese landing pages, a directly explorable public Lab
+showcase, and a service-enabled Website Audit backed by Netlify Functions,
+background processing, Blob persistence, report/email delivery, and scheduled
+cleanup.
+
+The current generated inventory has **200 routes: 127 indexable and 73
+noindex**, including 72 noindex area/service combinations.
+
+The local candidate adds:
+
+- `.lifi/quality.yml` plus debt/dead-code governance and
+  `quality:fast/full/release/live/maintenance`;
+- Node 24 pinning in `.nvmrc` and package engines;
+- Chromium desktop, Chromium mobile/touch, Firefox desktop, and WebKit mobile
+  Playwright projects with axe and interaction checks;
+- indexed-route first-response versus hydrated-H1 parity coverage;
+- route-level share identity/social cards and metadata generation;
+- release metadata, readiness, and live-verification tooling.
+
+These candidate capabilities pass `quality:release` locally under Node 24.
+That is release-artifact evidence, not production or external-provider proof.
 
 ## 5. What's next (immediate)
-Site is in "maintain + proactively elevate" mode; no blocking bug backlog. Open items (from CLAUDE.md / AGENTS.md):
-- Verify every `main` push reaches a `ready` Netlify production deploy before announcing it.
+The verified site remains live while the local candidate is validated:
+
+- Obtain explicit production release authorization before pushing `main`.
+- After an authorized push, verify the ready Netlify deploy and new live SHA
+  before announcing release.
 - Collect approval-backed client outcomes and quotes using `CLIENT-PROOF-COLLECTION.md`; do not invent testimonials.
 - Run the acquisition experiments one at a time and record raw counts using `CONVERSION-MEASUREMENT.md`.
 - Complete the authenticated Google actions in `SEARCH-ACQUISITION-RUNBOOK.md`; repository work alone cannot submit Search Console or edit the Business Profile.
-- ⚠️ **Google Business Profile is the traffic bottleneck — NOT the site.** June GBP: 54 views, 0 calls/clicks/interactions. Needs work in Business Profile Manager (David's login): confirm URL + call button, add photos/categories/services, post, get reviews.
 - Once David provides GBP URL + social handles: populate `site.sameAs` and add real `streetAddress`/registered address to LocalBusiness schema for NAP/entity strength (`streetAddress` intentionally omitted today — service-area business).
 - **⏳ Awaiting David's DataForSEO key** to stand up OpenSEO keyword-volume/competitor audit (paid key; not started until provided).
-- Deferred perf/UX polish items are catalogued in the 2026-07-14 CLAUDE.md "Deferred" note.
+- Complete the owner/research/service/care evidence requested in
+  `SITE-REINVENTION-DOSSIER.md`; code cannot satisfy those gates by itself.
 
 ## 6. How to run / build / deploy
 ```bash
-cd "~/Code/LiFi NYC/Clients/LittleFightNYC/Brand/Website/littlefightnyc-website/app"
-npm ci
-npm run dev          # Vite dev (runs split-journal + build-route-meta + build-nav-index first)
-npm run build        # split-journal + route-meta + nav-index + tsc -b + vite build + prerender-seo
-npm run lint         # eslint
-npm run preview      # vite preview
+cd "~/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website"
+nvm use
+npm --prefix app ci
+npm run quality:fast
+npm run quality:full       # includes the four-project browser suite
+npm run quality:release    # release candidate gate; must pass on one exact commit
+npm run quality:live       # read-only live verification; does not submit forms
 
-# DEPLOY = git push to main (auto-build). From the REPO ROOT:
-#   git add -A && git commit -m "..." && git push origin main
+# DEPLOY, only after explicit production authorization:
+#   git push origin main
 # Netlify runs `cd app && npm ci && npm run build`, publishes `app/dist`, live in ~40s.
 # ⚠️ NEVER `netlify deploy --prod` manually on this repo.
 ```
@@ -68,6 +107,14 @@ Note: `app/package.json` holds the implementation scripts. The root `package.jso
 - **Redirects live ONLY in `app/public/_redirects`** (toml-only redirect rules are dead). New Netlify Form fields must also be registered in `app/public/__forms.html`.
 - Home `/` is a **standalone layout** (not `EditorialShell`) — shell-only globals must also be rendered in `Home.tsx`.
 - No fabricated metrics on case studies (honest, verifiable facts only).
+- The browser suite has no approved visual baselines and never submits the Tech
+  Audit. A browser run is green only when the complete configured suite passes.
+- Do not advertise or restore Twilio/AI phone-agent behavior. Calls and texts
+  use the public number directly; after-hours callers leave a normal message.
 
 ## 8. Deeper docs (read in this order)
-`SOURCE_OF_TRUTH.md` → `AGENTS.md` (tech stack + gotchas) → `HANDOFF.md` → `SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md` → `CLAUDE.md` (dated session log, newest first) → `DESIGN_LANGUAGE.md` / `docs/UIUX-DOCTRINE.md` → `VOICE.md` → `_qa/` audit reports (gitignored, session-local).
+`SOURCE_OF_TRUTH.md` → `SITE-REINVENTION-DOSSIER.md` → `AGENTS.md`
+(tech stack + gotchas) → `HANDOFF.md` →
+`SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md` → `CLAUDE.md`
+(dated session log, newest first) → `DESIGN_LANGUAGE.md` /
+`docs/UIUX-DOCTRINE.md` → `VOICE.md`.
