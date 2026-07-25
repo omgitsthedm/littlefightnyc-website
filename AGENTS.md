@@ -2,22 +2,24 @@
 
 ## Source Of Truth
 
-Last verified: 2026-07-24.
+Last verified: 2026-07-25.
 
 Repo (off iCloud): `~/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`
 
 Production work happens in the React/Vite app under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
 
-Verified production revision:
-- Git/Netlify/live: `df7c90ded191d909648ed86401fc5816809648ec`
-  (`df7c90d`)
-- Netlify state: ready
-- Last-known-good rollback: `df7c90d`
+Verified Quality Spine application release:
+- Git release commit: `d02b93549ad79cc2a904f3220d2a06b1643f114a`
+  (`d02b935`)
+- Netlify deploy: `6a642637809f6e0008ac8831`, state `ready`
+- Production release marker: `/release.json`
+- Previous rollback point: `df7c90ded191d909648ed86401fc5816809648ec`
 
-The local `main` candidate is based on that release. Candidate files are not
-live merely because they exist locally. Verify local `HEAD`, `origin/main`, and
-Netlify independently; the candidate production release has not been
-authorized or executed.
+`d02b935` was explicitly authorized, pushed to `main`, auto-deployed, and
+revision-matched against production on 2026-07-25. Because later documentation
+commits can advance `main` without changing the application behavior described
+here, always compare local `HEAD`, GitHub `main`, Netlify, and live
+`/release.json` before quoting the current production SHA.
 
 Netlify project:
 - Site name: `littlefightnyc`
@@ -38,8 +40,8 @@ See `SOURCE_OF_TRUTH.md` before major edits.
 - **Runtime/build:** Node 24 is pinned by root `.nvmrc` and package engine declarations. `npm run build` regenerates data/navigation, type-checks, builds, prerenders, writes release metadata, and audits metadata parity. ⚠️ **Prod build strips `console.log`** — debug built/live code with `window.__flags`, not console.
 - **Conversion + infra:** `/tech-audit/` submits via Netlify Forms (registration in `app/public/__forms.html` — new form fields must be added there too). Twilio and the AI phone agent are retired and **not a service**. The public number is an ordinary `tel:`/`sms:` path; after hours, callers leave a normal message. Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) live in root `netlify.toml`. **Redirects live ONLY in `app/public/_redirects`**. Analytics is denied by default and consent-gated: GA4, Clarity, and TikTok load only after a visitor allows analytics, then boot after the existing delay.
 - **Website Audit:** `/examples/audit/` is a live service-enabled surface, not a static demo. Eight Netlify Functions plus shared helpers accept a URL/email, run background work, persist job/report/view/engagement/rate-limit state in Netlify Blobs, deliver reports, and expire them through scheduled cleanup. Treat provider calls, environment values, stored state, delivery, privacy, and incident handling as production boundaries; never copy secrets or submitted data into source or evidence files.
-- **Quality Spine (local candidate):** `.lifi/quality.yml`, debt/dead-code ledgers, and `quality:fast`, `quality:full`, `quality:release`, `quality:live`, and `quality:maintenance` now exist. The Playwright suite covers Chromium desktop, Chromium mobile/touch, Firefox desktop, and WebKit mobile, plus axe, form validation, Library interaction, mobile scroll lifecycle, and indexed-route H1 parity. The clean candidate passed `quality:release` locally under Node 24.18.0 with **32/32 browser checks** and revision-matched artifact validation. Do not call it production-ready until an authorized push yields a ready deploy and revision-matched live verification succeeds.
-- **Verified production quality history:** the 2026-07-07 Lighthouse/squirrelscan numbers remain point-in-time evidence for that earlier release, not validation of the current local candidate.
+- **Quality Spine (released):** `.lifi/quality.yml`, debt/dead-code ledgers, and `quality:fast`, `quality:full`, `quality:release`, `quality:live`, and `quality:maintenance` now exist. The Playwright suite covers Chromium desktop, Chromium mobile/touch, Firefox desktop, and WebKit mobile, plus axe, form validation, Library interaction, mobile scroll lifecycle, and indexed-route H1 parity. Release `d02b935` passed `quality:release` locally under Node 24.18.0 with **32/32 browser checks**, reached a ready Node 24 Netlify deploy, passed revision-matched `quality:live`, passed a **200/200** route sweep and **78/78** share-image check, and passed an independent 390×844 mobile scroll/crash smoke. These checks do not prove form inbox or provider delivery.
+- **Verified production quality history:** the 2026-07-07 Lighthouse/squirrelscan numbers remain point-in-time evidence for an earlier release; the 2026-07-25 release evidence above governs the Quality Spine application baseline.
 
 ## Design Context
 

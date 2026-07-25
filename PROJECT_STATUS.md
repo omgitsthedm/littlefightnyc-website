@@ -2,26 +2,26 @@
 
 > **Read this first.** If you are a person or an AI agent picking this up cold, this file tells you what LittleFight NYC is, exactly where it stands, what to do next, and where everything lives. One screen to orientation.
 >
-> **Last updated:** 2026-07-24 · **Updated by:** Codex (LiFi NYC) · **Stage:** Verified live flagship; local reinvention candidate in validation
+> **Last updated:** 2026-07-25 · **Updated by:** Codex (LiFi NYC) · **Stage:** Quality Spine released and verified; business/evidence gates remain open
 
 ---
 
 ## 1. What it is
 LittleFight NYC (LFNYC) is **the agency's own flagship marketing/shopfront website** — `https://littlefightnyc.com`. It sells right-sized websites, tools, local visibility, and business systems to small/mid New York businesses. It is a **live, public production site** held to an Apple-tier craft bar (it is the agency's own storefront, so it is the reference standard for everything else).
 
-## 2. Current state (2026-07-24)
-- **Verified production:** `df7c90ded191d909648ed86401fc5816809648ec`
-  (`df7c90d`) is the ready Netlify release currently verified on
-  https://littlefightnyc.com/ and `www`. It is the last-known-good rollback
-  point.
-- **Local candidate:** local `main` contains Quality Spine, runtime pin,
-  browser-quality, social-share identity, and route metadata/H1 parity work
-  based on `df7c90d`. Verify local `HEAD` before quoting the candidate SHA.
-- **Release state:** the local candidate passes the clean release lane but is
-  **not production-authorized, pushed, or deployed**. It is not production.
-- **Browser state:** `quality:full` passed under Node 24.18.0, including
+## 2. Current state (2026-07-25)
+- **Verified application release:** `d02b93549ad79cc2a904f3220d2a06b1643f114a`
+  (`d02b935`) reached ready Netlify deploy `6a642637809f6e0008ac8831`
+  and was revision-matched on https://littlefightnyc.com/ and `www`.
+  Live `/release.json` is authoritative for the current deployed Git SHA.
+- **Previous rollback point:** `df7c90ded191d909648ed86401fc5816809648ec`
+  (`df7c90d`).
+- **Release state:** the Quality Spine, runtime pin, browser-quality,
+  social-share identity, and route metadata/H1 parity work is live.
+- **Browser state:** `quality:release` passed under Node 24.18.0, including
   **32/32 Playwright checks** across desktop/mobile Chromium, desktop Firefox,
-  and mobile WebKit. Release and live verification remain separate gates.
+  and mobile WebKit. Post-deploy checks passed `quality:live`, **200/200**
+  routes, **78/78** share images, and an independent mobile scroll/crash smoke.
 - **Git:** `main` is the production branch. Use `git status --short` and compare the Netlify deployed commit before calling it synced.
 - **Branch:** `main` ✅ (canonical; the intended default).
 - ⚠️ **This repo AUTO-DEPLOYS from `main`** (push → Netlify auto-build → live in ~40s). This is a deliberate **exception** to LiFi's usual manual-deploy rule. Do **NOT** run `netlify deploy --prod` manually (caused the 2026-06-30 divergence incident).
@@ -53,7 +53,7 @@ cleanup.
 The current generated inventory has **200 routes: 127 indexable and 73
 noindex**, including 72 noindex area/service combinations.
 
-The local candidate adds:
+The released Quality Spine baseline adds:
 
 - `.lifi/quality.yml` plus debt/dead-code governance and
   `quality:fast/full/release/live/maintenance`;
@@ -64,15 +64,15 @@ The local candidate adds:
 - route-level share identity/social cards and metadata generation;
 - release metadata, readiness, and live-verification tooling.
 
-These candidate capabilities pass `quality:release` locally under Node 24.
-That is release-artifact evidence, not production or external-provider proof.
+These capabilities passed `quality:release` locally under Node 24 and
+revision-matched live verification after deployment. They are production
+evidence, but not external form-inbox or provider-delivery proof.
 
 ## 5. What's next (immediate)
-The verified site remains live while the local candidate is validated:
+The verified Quality Spine release is live. Immediate follow-through is:
 
-- Obtain explicit production release authorization before pushing `main`.
-- After an authorized push, verify the ready Netlify deploy and new live SHA
-  before announcing release.
+- Keep GitHub `main`, Netlify, and `/release.json` revision-matched after every
+  future authorized release.
 - Collect approval-backed client outcomes and quotes using `CLIENT-PROOF-COLLECTION.md`; do not invent testimonials.
 - Run the acquisition experiments one at a time and record raw counts using `CONVERSION-MEASUREMENT.md`.
 - Complete the authenticated Google actions in `SEARCH-ACQUISITION-RUNBOOK.md`; repository work alone cannot submit Search Console or edit the Business Profile.

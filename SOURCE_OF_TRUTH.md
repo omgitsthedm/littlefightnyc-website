@@ -1,7 +1,7 @@
 # Little Fight NYC — Source of Truth
 
-Last verified: 2026-07-24 (canonical Git path, GitHub `main`, ready Netlify
-deploy, and the live apex/`www` revision re-verified).
+Last verified: 2026-07-25 (canonical Git path, GitHub `main`, ready Netlify
+deploy, live release marker, and the apex/`www` application re-verified).
 
 This repository (`Little Fight NYC Business/Website/littlefightnyc-website/`) is THE source of truth for
 `https://littlefightnyc.com`. Branch **`main` is canonical** and the site **auto-deploys
@@ -16,18 +16,22 @@ from `main`**.
 - Publish directory: `app/dist`
 - **Deploy mechanism: GitHub `main` → Netlify auto-build → auto-publish.**
   (As of 2026-06-30 `main` equals the live source; pushing `main` deploys production.)
-- Production application release
-  `df7c90ded191d909648ed86401fc5816809648ec` (`df7c90d`) is the verified
-  ready Netlify release currently served on the apex and `www` domains.
-- `df7c90d` is the current last-known-good production rollback point.
+- Quality Spine application release
+  `d02b93549ad79cc2a904f3220d2a06b1643f114a` (`d02b935`) was published by
+  ready Netlify deploy `6a642637809f6e0008ac8831` and verified on the apex
+  and `www` domains.
+- Live `/release.json` is authoritative for the current deployed Git revision.
+- `df7c90ded191d909648ed86401fc5816809648ec` (`df7c90d`) is the previous
+  rollback point.
 
-## Current local candidate — not production
+## Current released application baseline
 
-The local `main` candidate is based on `df7c90d`. It is not the live release
-and has not been authorized, pushed, or deployed. Inspect local `HEAD`,
-`origin/main`, and Netlify before describing its exact state.
+Release `d02b935` was explicitly authorized, pushed to GitHub `main`,
+auto-deployed, and verified live on 2026-07-25. Inspect local `HEAD`,
+GitHub `main`, Netlify, and `/release.json` before describing the current
+revision because later documentation-only commits can advance the Git SHA.
 
-The candidate currently includes:
+The released baseline includes:
 
 - a Quality Spine in `.lifi/` and the five standard quality command lanes;
 - a Node 24 pin through `.nvmrc` and package engine declarations;
@@ -37,12 +41,14 @@ The candidate currently includes:
 - generated share-card identity and route-level social metadata work;
 - route metadata, prerender, and H1-parity corrections.
 
-The integrated candidate passed `quality:release` from a clean commit under
-Node 24.18.0, including **32/32 browser checks** across Chromium, Firefox, and
-WebKit plus revision-matched release-artifact validation. That is local
-candidate evidence, not production approval. Every future handoff or release
-must repeat the exact-commit gate and perform revision-matched live
-verification after an authorized push.
+The integrated release passed `quality:release` from a clean commit under Node
+24.18.0, including **32/32 browser checks** across Chromium, Firefox, and
+WebKit plus revision-matched release-artifact validation. After deployment it
+passed `quality:live`, a **200/200** route/title/canonical/indexing sweep,
+**78/78** share-image checks, and an independent mobile scroll/crash smoke.
+No form was submitted, so inbox and provider delivery remain separate external
+gates. Every future release must repeat the exact-commit gate and
+revision-matched live verification after an authorized push.
 
 ## Deploy workflow (the only one you need)
 

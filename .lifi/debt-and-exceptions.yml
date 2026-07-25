@@ -58,19 +58,20 @@ items:
 
   - id: "QSP-003"
     type: "runtime-reproducibility"
-    status: "pending_verification"
+    status: "closed"
     risk: "moderate"
-    finding: "Node 24 is pinned in .nvmrc, package engines, and Netlify configuration; clean installs and the revision-bound quality:release lane pass locally under Node 24.18.0. The next revision-matched production build/runtime still needs verification."
+    finding: "Node 24 is pinned in .nvmrc, package engines, and Netlify configuration; clean installs and the revision-bound quality:release lane passed locally under Node 24.18.0, and release d02b935 reached a revision-matched Node 24 Netlify production deploy."
     evidence:
       - "Local baseline on 2026-07-24: Node 22.22.3 and npm 10.9.8."
       - "Current working tree declares .nvmrc 24, package engines Node >=24 <25/npm >=10, and Netlify NODE_VERSION=24."
       - "On 2026-07-24, npm run quality:full passed under Node 24.18.0/npm 10.9.8, including 200-route build/parity checks and 32 Playwright tests across Chromium, Firefox, and WebKit."
       - "The same full lane passed again after clean root and app npm ci installs under Node 24.18.0."
-      - "The clean local candidate then passed quality:release, including revision-matched release.json, 200 generated routes, identity assets, sitemaps, and public recovery files."
-      - "The verified live baseline predates this runtime pin; no candidate production build exists yet."
-    impact: "Until an authorized candidate is built and verified by Netlify, the effective production build/runtime can still differ from the clean local evidence."
+      - "The clean release candidate passed quality:release, including revision-matched release.json, 200 generated routes, identity assets, sitemaps, and public recovery files, before becoming production release d02b935."
+      - "Netlify deploy 6a642637809f6e0008ac8831 reached ready for exact commit d02b93549ad79cc2a904f3220d2a06b1643f114a with all eight Functions on nodejs24.x."
+      - "Live /release.json reported the exact clean main revision; quality:live, the 200-route sweep, and the independent mobile smoke passed."
+    impact: "Closed for the d02b935 application release. Reopen if the declared runtime, build image, package engines, or deployment path changes."
     mitigation:
-      - "After an authorized release, verify the effective Netlify build/runtime and live revision report the same candidate."
+      - "Keep Node declarations synchronized and repeat clean install, release, deploy-runtime, and live revision checks for every runtime-affecting release."
     owner: "David Marsh"
     review_by: null
     accepted_risk_expiry: null

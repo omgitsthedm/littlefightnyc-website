@@ -4,7 +4,9 @@
 **Scope:** Main public site at `https://littlefightnyc.com`  
 **Canonical checkout:** `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`  
 **Mandate:** Little Fight NYC Master Client/Project Reinvention Handoff, July 2026  
-**Current readiness:** `AMBER` — bounded discovery, stabilization, evidence work, and reversible prototypes may continue; broad reinvention and release approval remain gated.
+**Current readiness:** `AMBER` — the 2026-07-25 Quality Spine release is
+verified live; additional reinvention directions, stronger claims, and
+service/funding commitments remain gated.
 
 This is the durable decision and evidence record for the main site. It
 separates facts verified in the checkout from business assertions, external
@@ -13,39 +15,47 @@ authority for a commit, push, production deploy, new commercial promise, or
 publication of unapproved client material; any such authority must come from
 the owner’s separately stated scope.
 
+**Release addendum — 2026-07-25:** David explicitly authorized the integrated
+candidate for production. Commit `d02b93549ad79cc2a904f3220d2a06b1643f114a`
+was pushed to `main`; Netlify deploy `6a642637809f6e0008ac8831` reached
+`ready`; revision-matched live, 200-route, share-image, and mobile scroll/crash
+checks passed. No form or external-provider delivery test was submitted. This
+release does not approve the still-open audience, proof, funding, service,
+measurement, or care gates below.
+
 ## 1. Status and classification
 
 | Dimension | Current classification | Basis |
 | --- | --- | --- |
-| Portfolio state | `LIVE / ACTIVE — ELEVATION IN PROGRESS` | The site is the agency storefront. Production revision `df7c90d` is verified ready and live; the local candidate based on it is not production. |
+| Portfolio state | `LIVE / ACTIVE — ELEVATION IN PROGRESS` | The site is the agency storefront. Quality Spine application release `d02b935` is verified ready and live; future elevation directions remain gated. |
 | Investment lane | `SIGNATURE CANDIDATE` | The agency’s own site warrants signature-level ambition, but amount, capacity, production schedule, and maintenance tier are not yet recorded. This is not an `E3` approval. |
 | Experience type | `SERVICE-ENABLED MARKETING SITE` | `/tech-audit/` collects business and contact details through Netlify Forms. The public Website Audit also accepts a URL and email, starts background Functions work, persists job/report state in Netlify Blobs, and can deliver results through external providers. |
 | Consequence tier | `MODERATE` | A failed or delayed form/audit can lose a lead or report, and the workflows handle contact details plus persistent audit state. There are no accounts, billing, or authenticated multi-tenant roles, but the Function, Blob, provider, scheduled-cleanup, privacy, and incident boundaries are live operational responsibilities. |
 | Current creative system | `AXIOM MOMENTUM — INCUMBENT, NOT ELEVATION-APPROVED` | The implemented design constitution is documented in [app/DESIGN.md](app/DESIGN.md). No first-party research and three-direction approval record currently closes `E1`. |
-| Release authority | `LOCAL CANDIDATE BLOCKED UNTIL EXPLICITLY APPROVED` | `main` auto-deploys. The candidate has not been authorized, pushed, or deployed; this dossier grants no release authority. |
+| Release authority | `2026-07-25 RELEASE EXECUTED; FUTURE RELEASES REQUIRE NEW AUTHORITY` | David authorized release `d02b935`, which auto-deployed successfully. This dossier grants no standing authority for later production changes. |
 
 ## 2. Exact current baseline
 
-### Verified locally on 2026-07-24
+### Verified locally on 2026-07-24 and released on 2026-07-25
 
 - Repository root and working directory both resolved to the canonical checkout above.
 - Branch: `main`.
 - Session-start local HEAD and `origin/main`:
   `df7c90ded191d909648ed86401fc5816809648ec`.
 - Origin: `https://github.com/omgitsthedm/littlefightnyc-website.git`.
-- Production revision `df7c90d` is verified as the ready Netlify release served
-  on the apex and `www` domains and is the current last-known-good rollback.
-- The working tree was clean immediately before this work began. The local
-  candidate is based on `df7c90d`; it is not live merely because it exists in
-  the canonical checkout. Verify current `HEAD`, `origin/main`, and Netlify
-  independently.
+- The session began from verified production revision `df7c90d`; it remains
+  the previous rollback point.
+- The working tree was clean immediately before this work began. The integrated
+  candidate based on `df7c90d` became released application baseline `d02b935`
+  through ready Netlify deploy `6a642637809f6e0008ac8831`. Verify current
+  `HEAD`, GitHub `main`, Netlify, and `/release.json` independently.
 - Generated route metadata contains **200 pages**:
   - **127 indexable**;
   - **73 noindex**;
   - **72 noindex area/service combinations**.
 - Application source is under `app/`: React 19, TypeScript, Vite 7, React Router, build-time route snapshots/prerendering, and Netlify Forms.
 - The Tech Audit form is registered in [app/public/__forms.html](app/public/__forms.html) and submitted from [app/src/pages/TechAudit.tsx](app/src/pages/TechAudit.tsx).
-- The local candidate has a Quality Spine in [.lifi/quality.yml](.lifi/quality.yml),
+- The released application has a Quality Spine in [.lifi/quality.yml](.lifi/quality.yml),
   debt/dead-code ledgers, and all five standard command lanes:
   `quality:fast`, `quality:full`, `quality:release`, `quality:live`, and
   `quality:maintenance`.
@@ -56,13 +66,13 @@ the owner’s separately stated scope.
   scroll lifecycle, form validation, Library interaction, and all-indexed-route
   first-response/hydrated-H1 parity.
 - Route-level share identity, generated social-card assets, release metadata,
-  and route metadata/H1 parity corrections are present in the local candidate.
+  and route metadata/H1 parity corrections are present in the released baseline.
 - `quality:full` passed under Node 24.18.0/npm 10.9.8, including **32/32**
   browser checks across desktop/mobile Chromium, desktop Firefox, and mobile
-  WebKit. This is local candidate evidence, not release authority or a live
-  production pass.
+  WebKit. After release, `quality:live`, the 200-route sweep, 78 share-image
+  checks, and an independent 390×844 mobile scroll/crash smoke passed.
 
-### Production linkage and candidate boundary
+### Production linkage and release boundary
 
 - [SOURCE_OF_TRUTH.md](SOURCE_OF_TRUTH.md), [AGENTS.md](AGENTS.md), and [netlify.toml](netlify.toml) identify:
   - Netlify site name `littlefightnyc`;
@@ -70,18 +80,20 @@ the owner’s separately stated scope.
   - build command `cd app && npm ci && npm run build`;
   - publish directory `app/dist`;
   - GitHub `main` → Netlify auto-build → production.
-- The linked GitHub/Netlify/live production evidence identifies `df7c90d` as
-  the ready current release.
-- The candidate SHA must always be read from current local `HEAD`. No candidate
-  production release has been authorized or executed.
+- The linked GitHub/Netlify/live production evidence identifies `d02b935` as
+  the released application baseline and `6a642637809f6e0008ac8831` as its ready
+  production deploy.
+- Current production SHA must always be read from live `/release.json` and
+  compared with GitHub `main`; a documentation-only commit may advance the Git
+  revision without changing the application behavior recorded here.
 
 ### Open truth debt
 
-- The clean candidate passed the full release tier locally under Node 24,
-  including 32/32 browser checks and revision-matched artifact validation.
-  Production authorization and live verification remain separate.
-- Route metadata/H1 parity and share identity work are still candidate work;
-  production parity and social-platform rendering have not been verified.
+- The clean release passed the full tier locally under Node 24, including
+  32/32 browser checks and revision-matched artifact validation, then passed
+  revision-matched production verification.
+- Route metadata/H1 parity and share identity work is live. Social-platform
+  debugger/cache rendering remains externally unverified.
 - The public Lab experience is served beneath `/examples/lab/` by
   [netlify.toml](netlify.toml), while the separate Lab repository remains a
   distinct implementation/source lane.
@@ -102,7 +114,7 @@ Gate status is evidence-based. `CONDITIONAL PASS` permits only the named bounded
 | `E2 — OPERABLE` | **BLOCKED** | A frontstage Tech Audit flow and conversion path exist. [CONVERSION-MEASUREMENT.md](CONVERSION-MEASUREMENT.md) defines a controlled delivery test. | Name the form-delivery inbox and human owner; verify a controlled submission end to end; document response, escalation, missed-lead recovery, service capacity, scope/approval behavior, and support owner. | Do not publish stronger response, delivery, or support promises. |
 | `E3 — FUNDED` | **BLOCKED** | The incumbent system and likely production needs are documented. | Record approved amount and currency, funding owner, committed/deferred scope, production schedule, asset/vendor costs, rights, implementation capacity, contingency, and funded maintenance tier. | No high-production direction, broad build, commissioned asset plan, or release schedule may be treated as committed. |
 | `E4 — LEARNABLE` | **CONDITIONAL PASS** | [CONVERSION-MEASUREMENT.md](CONVERSION-MEASUREMENT.md) defines consent boundaries, funnel events, reliability views, a lead-loop test, and an experiment queue. [SEARCH-ACQUISITION-RUNBOOK.md](SEARCH-ACQUISITION-RUNBOOK.md) defines search/listing review steps. | Verify analytics properties and event receipt, record current baselines, name the decision owner, create the experiment register, and attach exact production commits and observation windows. | Measurement preparation may continue; no release candidate is approved until the live instrumentation path is proven. |
-| `E5 — DURABLE` | **BLOCKED** | The local candidate adds the Quality Spine, standard command lanes, release/live verification tooling, browser coverage, security headers, privacy defaults, and an auto-deploy source path. | Prove those lanes on an exact commit; fund and name the Care and Reliability SLA; add incident escalation, renewals, access succession, form/CRM monitoring, rights/claim expiry, dependency/security/accessibility/performance cadence, backup/restore evidence, and sunset ownership. | The project cannot be closed as durable or left without an accountable care owner. |
+| `E5 — DURABLE` | **BLOCKED** | The released application includes the Quality Spine, standard command lanes, release/live verification tooling, browser coverage, security headers, privacy defaults, and an auto-deploy source path; exact-commit local and live lanes passed for `d02b935`. | Fund and name the Care and Reliability SLA; add incident escalation, renewals, access succession, form/CRM monitoring, rights/claim expiry, dependency/security/accessibility/performance cadence, backup/restore evidence, and sunset ownership. | The project cannot be closed as durable or left without an accountable care owner. |
 
 **Current gate owners:** unassigned unless an existing artifact explicitly names one. Silence never means approval.  
 **Gate review date:** owner to schedule after the evidence requests in Section 11 are answered.
@@ -250,23 +262,23 @@ Each transition needs an accountable owner and a recoverable failure path. A tha
 
 | Artifact | Use in this dossier | Current caveat |
 | --- | --- | --- |
-| [SOURCE_OF_TRUTH.md](SOURCE_OF_TRUTH.md) | Canonical repository, `df7c90d` live baseline, Netlify linkage, deploy model, candidate boundary, source map. | Reverify after every authorized release. |
-| [AGENTS.md](AGENTS.md) | Current project operating rules, architecture, route inventory, candidate quality boundary, brand rules. | Candidate browser work is not a pass until the complete suite succeeds. |
-| [PROJECT_STATUS.md](PROJECT_STATUS.md) | Current cold-start summary separating verified production from the local candidate. | Keep it synchronized with each exact release and gate decision. |
+| [SOURCE_OF_TRUTH.md](SOURCE_OF_TRUTH.md) | Canonical repository, `d02b935` application baseline, Netlify linkage, deploy model, release boundary, source map. | Reverify live `/release.json` after every authorized release. |
+| [AGENTS.md](AGENTS.md) | Current project operating rules, architecture, route inventory, released quality boundary, brand rules. | Browser evidence does not replace form/provider delivery proof. |
+| [PROJECT_STATUS.md](PROJECT_STATUS.md) | Current cold-start summary of the verified release and open external/business gates. | Keep it synchronized with each release and gate decision. |
 | [app/DESIGN.md](app/DESIGN.md) | Incumbent Axiom Momentum constitution, commercial hierarchy, imagery, motion, timeline, Lab, and Small Craft rules. | Implemented incumbent, not an `E1` research approval. |
 | [DESIGN_LANGUAGE.md](DESIGN_LANGUAGE.md) | Supporting visual and copy rules. | Reconcile any overlap against the newer token and design constitution. |
 | [VOICE.md](VOICE.md) | Plain-language and audience doctrine. | Requires audience testing and route-level enforcement. |
 | [CLIENT-PROOF-COLLECTION.md](CLIENT-PROOF-COLLECTION.md) | Proof-record schema, evidence questions, collection order, approval request. | Process template; completed client approvals are not attached. |
 | [CONVERSION-MEASUREMENT.md](CONVERSION-MEASUREMENT.md) | Consent boundary, funnel, reliability view, lead-loop test, experiment queue. | External property/event receipt and current baselines are not attached. |
 | [SEARCH-ACQUISITION-RUNBOOK.md](SEARCH-ACQUISITION-RUNBOOK.md) | Search Console, Business Profile, and monthly acquisition work. | Authenticated actions and current external evidence require owner access. |
-| [SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md](SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md) | Exact evidence for the earlier `fb61c52` release and that session’s changes. | Historical point-in-time evidence; current production is `df7c90d`. |
+| [SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md](SESSION-2026-07-20-AUDIT-CONVERSION-LAYOUT-CLOSEOUT.md) | Exact evidence for the earlier `fb61c52` release and that session’s changes. | Historical point-in-time evidence; the Quality Spine application baseline is `d02b935`. |
 | [HANDOFF.md](HANDOFF.md) | Historical project handoff context. | Treat as a snapshot and verify against current source. |
 | [app/src/data/route-meta.json](app/src/data/route-meta.json) | Generated route inventory used for the 200/73/72 baseline above. | Generated artifact; regenerate after content/route changes. |
-| [.lifi/quality.yml](.lifi/quality.yml) | Quality charter, applicability, commands, evidence and maintenance policy. | Clean local release lane passed; production/live evidence is pending. |
+| [.lifi/quality.yml](.lifi/quality.yml) | Quality charter, applicability, commands, evidence and maintenance policy. | Local and production release evidence passed; external delivery gates remain open. |
 | [.lifi/debt-and-exceptions.yml](.lifi/debt-and-exceptions.yml) | Debt and exception ledger. | Maintain with every approved exception or retired debt item. |
 | [.lifi/dead-code-candidates.yml](.lifi/dead-code-candidates.yml) | Reachability/deletion-candidate governance. | A candidate record is not deletion authority. |
 | [.nvmrc](.nvmrc) | Node 24 runtime pin. | CI/Netlify runtime must be checked against it. |
-| [app/playwright.config.ts](app/playwright.config.ts) / [app/tests/quality-smoke.spec.ts](app/tests/quality-smoke.spec.ts) | Four-project browser, axe, interaction, mobile lifecycle, and indexed-route H1 parity suite. | `quality:full` passed under Node 24.18.0 with 32/32 browser checks; release/live gates remain separate. |
+| [app/playwright.config.ts](app/playwright.config.ts) / [app/tests/quality-smoke.spec.ts](app/tests/quality-smoke.spec.ts) | Four-project browser, axe, interaction, mobile lifecycle, and indexed-route H1 parity suite. | `quality:release` passed under Node 24.18.0 with 32/32 browser checks; live and mobile smoke also passed for `d02b935`. |
 | [app/package.json](app/package.json) | Build, audit, browser, and five Quality Spine command lanes. | The clean local release lane passed; repeat it for every changed candidate. |
 
 ## 11. Owner and external evidence needed
@@ -296,8 +308,9 @@ Each transition needs an accountable owner and a recoverable failure path. A tha
 
 ### Production and external systems
 
-- Exact candidate commit, explicit release approval, and—only after an
-  authorized push—the new Netlify deploy SHA/status and rollback evidence.
+- Retain `d02b935` release approval, Netlify deploy
+  `6a642637809f6e0008ac8831`, ready status, live-verification evidence, and
+  rollback point; repeat the record for every future authorized release.
 - Controlled production form capture and inbox receipt.
 - GA4/Clarity configuration and event receipt; current raw baselines; consent proof.
 - Search Console, Bing, Business Profile, social profile, and social-preview evidence.
@@ -306,9 +319,9 @@ Each transition needs an accountable owner and a recoverable failure path. A tha
 
 ## 12. Exact next sequence
 
-1. **Hold the verified baseline:** keep `df7c90d` as the known-good live release
-   while the local candidate is validated. Do not describe candidate
-   files as deployed.
+1. **Hold the verified release:** use `d02b935` as the released application
+   baseline and `df7c90d` as the previous rollback point. Read live
+   `/release.json` before quoting the current deployment SHA.
 2. **Close `E0`:** assign decision rights, ambition, capacity, review deadlines, independent verification, authority boundary, and release approver.
 3. **Maintain the installed Quality Spine:** the clean revision-bound release
    tier is green under Node 24. Repeat it on every changed candidate and keep
@@ -319,9 +332,9 @@ Each transition needs an accountable owner and a recoverable failure path. A tha
 7. **Pass `E1`, `E2`, and `E3`:** select and sign the Experience Constitution only after evidence; commit the production scope, funding, asset plan, schedule, capacity, rights, contingency, and care tier.
 8. **Implement the approved gaps site-wide:** content/IA, proof density, route hierarchy, imagery, one signature interaction, Lab access, schema/crawler policy, responsive states, static/reduced-motion behavior, and social identity.
 9. **Pass `E4`:** verify analytics/consent/event receipt, baselines, guardrails, experiment register, and decision owner before approving one exact release candidate.
-10. **Verify and release only with explicit authority:** run full independent accessibility, performance, browser, form, metadata, social, security, and release checks; obtain explicit production authorization; push the approved commit to `main`; verify the new ready auto-deploy SHA and controlled lead delivery.
+10. **Verify future releases only with explicit authority:** run full independent accessibility, performance, browser, form, metadata, social, security, and release checks; obtain new production authorization; push the approved commit to `main`; verify the new ready auto-deploy SHA and controlled lead delivery.
 11. **Pass `E5`:** complete 24–72-hour stabilization, the 7/28/90-day learning reviews, funded care/incident/renewal/rights cadences, transfer/succession, debt handling, and sunset ownership.
 
 Until those gates pass, the safe status is:
 
-> **PRODUCTION `df7c90d` IS VERIFIED READY AND LIVE. THE LOCAL CANDIDATE PASSES THE FULL NODE 24 QUALITY LANE BUT IS NOT AUTHORIZED OR RELEASED. REINVENTION DIRECTIONS REMAIN UNAPPROVED CONCEPTS.**
+> **QUALITY SPINE APPLICATION RELEASE `d02b935` IS VERIFIED READY AND LIVE. REVISION-MATCHED LOCAL, ROUTE, ASSET, AND MOBILE CHECKS PASSED. FORM/PROVIDER DELIVERY AND THE REMAINING REINVENTION DIRECTIONS ARE STILL OPEN GATES.**

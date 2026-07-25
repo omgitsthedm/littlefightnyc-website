@@ -1,6 +1,6 @@
 schema_version: 1
 manifest_id: "littlefightnyc-website"
-updated_at: "2026-07-24"
+updated_at: "2026-07-25"
 
 quality_charter:
   source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
@@ -37,20 +37,20 @@ framework: "React 19 + TypeScript + Vite 7; prerendered route snapshots; Netlify
 adapter: "react-vite-netlify"
 package_manager: "npm"
 lockfile: "package-lock.json and app/package-lock.json"
-runtime: "Node 24 is pinned in the repository and Netlify configuration; the full local quality lane passes under Node 24.18.0, while the next production build still needs revision-matched verification."
+runtime: "Node 24 is pinned in the repository and Netlify configuration; release d02b935 passed the full local lane under Node 24.18.0 and reached a revision-matched Node 24 Netlify production deploy."
 runtime_evidence:
   local_node: "24.18.0 (npx node@24)"
   local_npm: "10.9.8"
   repository_pin: ".nvmrc 24; package engines Node >=24 <25 and npm >=10"
   netlify_pin: "NODE_VERSION=24"
-  status: "LOCAL_CLEAN_RELEASE_VERIFIED_PRODUCTION_PENDING"
+  status: "LOCAL_AND_PRODUCTION_RELEASE_VERIFIED"
 host_provider: "Netlify"
 host_project_id: "0907d8fe-7018-48db-a6be-1f906e4b2619"
 production_target: "https://littlefightnyc.com"
 production_branch: "main"
 deploy_model: "GitHub main -> Netlify auto-build -> auto-publish"
-last_verified_live_revision: "df7c90ded191d909648ed86401fc5816809648ec"
-last_known_good_release: "df7c90ded191d909648ed86401fc5816809648ec"
+last_verified_live_revision: "d02b93549ad79cc2a904f3220d2a06b1643f114a"
+last_known_good_release: "d02b93549ad79cc2a904f3220d2a06b1643f114a"
 
 commands:
   install: "npm ci && npm --prefix app ci"
@@ -480,7 +480,7 @@ monitors:
     status: "implemented; alert ownership not documented"
   - name: "external route, asset, metadata, and revision synthetic"
     coverage: "production"
-    status: "implemented under quality:live; a post-change production run remains pending"
+    status: "implemented under quality:live; revision-matched production run passed for release d02b935"
   - name: "social preview platform validation"
     coverage: "Meta, LinkedIn, and X"
     status: "missing external verification"
@@ -489,7 +489,6 @@ maintenance_tier: "CONDITIONAL — owner exists; backup owner, funded SLA, caden
 exceptions:
   - "QSP-001"
   - "QSP-002"
-  - "QSP-003"
   - "EXT-001"
   - "RES-001"
   - "PROOF-001"
