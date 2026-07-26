@@ -818,7 +818,10 @@ function focusSignalInput() {
   if (isCompactLayout()) {
     setMobilePane("signal");
   }
-  els.signalPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  els.signalPanel.scrollIntoView({
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "start"
+  });
   const fieldId =
     state.draft.mode === "prompt" ? "promptInput" : state.draft.mode === "dream" ? "dreamPrompt" : "businessName";
   const field = document.getElementById(fieldId);

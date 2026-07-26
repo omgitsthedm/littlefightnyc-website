@@ -240,6 +240,10 @@ a {
   transform: translateY(0);
 }
 
+html.lab-concept-page:not(.lab-concept-embed) .app-shell {
+  padding-bottom: 94px;
+}
+
 .glass-panel {
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
@@ -1811,6 +1815,10 @@ h2 {
   background: rgba(12, 12, 16, 0.94);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow);
+}
+
+html.lab-concept-page:not(.lab-concept-embed) .toast {
+  bottom: calc(88px + env(safe-area-inset-bottom));
 }
 
 @keyframes drift {

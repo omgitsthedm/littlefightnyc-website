@@ -753,16 +753,9 @@ textarea{
   }
 }
 
-@media (min-width:681px){
-  html.lab-concept-page:not(.lab-concept-embed) header.site-header{
-    top:96px;
-    margin-top:96px;
-  }
-
-  html.lab-concept-page:not(.lab-concept-embed) .hero .inner,
-  html.lab-concept-page:not(.lab-concept-embed) main > .section:first-child{
-    padding-top:104px;
-  }
+/* Clearance for the fixed bottom Lab shell bar injected by lab-return.js */
+html.lab-concept-page:not(.lab-concept-embed) body{
+  padding-bottom:calc(96px + env(safe-area-inset-bottom, 0px));
 }
 
 @media (max-width:520px){

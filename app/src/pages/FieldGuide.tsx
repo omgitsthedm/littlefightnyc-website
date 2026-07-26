@@ -39,7 +39,7 @@ const LAB_BUILDS = [
   {
     title: "Brownstone Walk-Up",
     type: "Spatial story",
-    description: "Climb a New York walk-up from street level to the water tower.",
+    description: "Climb a walk-up from the curb to the water tower. Proof a homepage can feel like a place.",
     href: "/examples/lab/concepts/walkup-3d/",
     poster: "/images/lab-showcase/brownstone-walkup",
     alt: "Night view of the interactive Brownstone Walk-Up",
@@ -47,7 +47,7 @@ const LAB_BUILDS = [
   {
     title: "Cinematic 3D",
     type: "Spatial website",
-    description: "Architecture, atmosphere, and scroll-driven story in a working site.",
+    description: "A working site built from architecture, light, and scroll-driven story. Premium feel, no template.",
     href: "/examples/lab/concepts/terminal-3d/",
     poster: "/images/lab-showcase/cinematic-3d",
     alt: "New York buildings seen from the street",
@@ -55,7 +55,7 @@ const LAB_BUILDS = [
   {
     title: "Scroll Into Motion",
     type: "Motion study",
-    description: "A single object changes meaning as the page moves through it.",
+    description: "One frame carries sixteen New York moments. Motion that explains instead of decorating.",
     href: "/examples/lab/concepts/pill-scroll/",
     poster: "/images/lab-showcase/scroll-motion",
     alt: "A working kitchen entrance on a New York side street",
@@ -63,7 +63,7 @@ const LAB_BUILDS = [
   {
     title: "Micro-Animations",
     type: "Interaction study",
-    description: "Service ideas translated into small, readable moments of motion.",
+    description: "Eleven services, each explained in a small, replayable moment of motion.",
     href: "/examples/lab/concepts/micro-animations/",
     poster: "/images/lab-showcase/micro-animations",
     alt: "Website work in a small-business setting",
@@ -71,7 +71,7 @@ const LAB_BUILDS = [
   {
     title: "Studio Engine",
     type: "Design system",
-    description: "A live concept generator with controls, layouts, and export paths.",
+    description: "A live concept generator. Change the brief and watch the site redesign itself.",
     href: "/examples/lab/concepts/studio-engine/",
     poster: "/images/lab-showcase/studio-engine",
     alt: "Tip jar and point-of-sale equipment on a shop counter",
@@ -79,7 +79,7 @@ const LAB_BUILDS = [
   {
     title: "Growth Street",
     type: "Generative study",
-    description: "A storefront row changes as the systems behind it improve.",
+    description: "Five storefronts light up as the systems behind them connect.",
     href: "/examples/lab/concepts/growth-street/",
     poster: "/images/lab-showcase/growth-street",
     alt: "Coffee and retail goods arranged on shop shelves",
@@ -87,7 +87,7 @@ const LAB_BUILDS = [
   {
     title: "Goliath",
     type: "Brand campaign",
-    description: "Sharp type, hard contrast, and direct action at full volume.",
+    description: "Sharp type, hard contrast, and direct action. The loud end of the brand dial.",
     href: "/examples/lab/concepts/goliath/",
     poster: "/images/lab-showcase/goliath",
     alt: "New Yorkers moving through Grand Central Terminal",
@@ -95,15 +95,31 @@ const LAB_BUILDS = [
   {
     title: "Hero Prototype",
     type: "Brand study",
-    description: "A homepage direction built around one clear promise.",
+    description: "A homepage built around one clear promise, with a signal field you can touch.",
     href: "/examples/lab/concepts/hero/",
     poster: "/images/lab-showcase/hero-prototype",
     alt: "Tables and service areas at a New York outdoor bar",
   },
   {
+    title: "AHA Laser Poster",
+    type: "Client poster",
+    description: "A laser-drawn poster for After Hours Agenda. You control the speed and the glow.",
+    href: "/examples/lab/concepts/aha-laser/",
+    poster: "/images/lab-showcase/aha-laser",
+    alt: "Neon pink AHA laser poster with animated frame",
+  },
+  {
+    title: "I Am Cooking",
+    type: "Client concept",
+    description: "Chef Drew's catering world. Appetite, motion, and a booking path that works.",
+    href: "/examples/lab/concepts/chef-drew/",
+    poster: "/images/lab-showcase/chef-drew",
+    alt: "Chef Drew hospitality concept homepage with bold headline",
+  },
+  {
     title: "Tech Support Site",
     type: "Full website",
-    description: "An earlier complete service site preserved as a working branch.",
+    description: "Our earlier complete service site, preserved and still working.",
     href: "/examples/lab/concepts/tech-support/",
     poster: "/images/lab-showcase/tech-support",
     alt: "The working counter inside a New York cafe",
@@ -148,11 +164,12 @@ export default function FieldGuide() {
           <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
             <div className="lf-ex-lab-direct__head">
               <div>
-                <p>9 working experiments</p>
+                <p>11 working builds</p>
                 <h3 id="lf-ex-lab-title">Choose a direction and step inside.</h3>
                 <span>
-                  These are experiments, not client results. They show what a
-                  website can feel like before a business chooses the direction.
+                  Most are experiments, two are client builds we can show. Each
+                  one previews what a website can feel like before a business
+                  chooses its direction.
                 </span>
               </div>
               <a href="/examples/lab/" data-no-vt>

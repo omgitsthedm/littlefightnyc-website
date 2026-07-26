@@ -556,7 +556,7 @@ body.is-inspecting [data-inspect] {
 .brownstone-help {
   position: fixed;
   left: 50%;
-  bottom: 22px;
+  bottom: calc(94px + env(safe-area-inset-bottom));
   z-index: 20;
   margin: 0;
   padding: 9px 14px;

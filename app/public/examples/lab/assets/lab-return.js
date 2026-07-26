@@ -88,15 +88,11 @@
       return concept.slug === match[1];
     });
     if (!item) return null;
-    var siblings = concepts.filter(function (concept) {
-      return concept.suite === item.suite;
-    });
+    // Tour order spans every build so prev/next never dead-ends in a small suite.
     return {
       item: item,
-      siblings: siblings,
-      index: siblings.findIndex(function (concept) {
-        return concept.slug === item.slug;
-      })
+      siblings: concepts,
+      index: concepts.indexOf(item)
     };
   }
 
@@ -179,7 +175,8 @@
     var title = document.createElement('strong');
     title.textContent = current.item.title;
     var type = document.createElement('span');
-    type.textContent = current.item.type;
+    type.textContent = current.item.type + ' · ' +
+      (current.index + 1) + ' of ' + current.siblings.length;
     identity.append(title, type);
 
     var actions = document.createElement('div');

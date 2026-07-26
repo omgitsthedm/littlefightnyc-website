@@ -2392,15 +2392,15 @@ footer::after {
 }
 
 /* Page load transition */
+/* Opacity-only: a transform here would leave body as the containing block
+   for position: fixed elements (nav, back-to-top) and break them. */
 @keyframes pageReveal {
   from {
     opacity: 0;
-    transform: translateY(6px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -2579,4 +2579,9 @@ body {
   .back-to-top {
     transition: none !important;
   }
+}
+
+/* Clearance for the fixed bottom Lab shell bar injected by lab-return.js */
+html.lab-concept-page:not(.lab-concept-embed) body {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }

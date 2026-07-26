@@ -86,7 +86,7 @@
       "slug": "walkup-3d",
       "title": "Brownstone Walk-Up",
       "type": "Spatial story",
-      "description": "Climb a New York walk-up from street level to the water tower.",
+      "description": "Climb a walk-up from the curb to the water tower. Proof a homepage can feel like a place.",
       "suite": "spatial-nyc",
       "featured": true
     },
@@ -94,28 +94,28 @@
       "slug": "terminal-3d",
       "title": "Cinematic 3D",
       "type": "Spatial website",
-      "description": "Architecture, atmosphere, and scroll-driven story inside a working site.",
+      "description": "A working site built from architecture, light, and scroll-driven story. Premium feel, no template.",
       "suite": "spatial-nyc"
     },
     {
       "slug": "pill-scroll",
       "title": "Scroll Into Motion",
       "type": "Motion study",
-      "description": "A single object changes meaning as the page moves through it.",
+      "description": "One frame carries sixteen New York moments. Motion that explains instead of decorating.",
       "suite": "motion-playground"
     },
     {
       "slug": "micro-animations",
       "title": "Micro-Animations",
       "type": "Interaction arcade",
-      "description": "Service ideas translated into small, readable moments of motion.",
+      "description": "Eleven services, each explained in a small, replayable moment of motion.",
       "suite": "motion-playground"
     },
     {
       "slug": "aha-laser",
       "title": "AHA Laser Poster",
       "type": "Responsive poster",
-      "description": "A laser-cut poster becomes a responsive typographic performance.",
+      "description": "A laser-drawn poster for After Hours Agenda. You control the speed and the glow.",
       "suite": "motion-playground",
       "client": true
     },
@@ -123,42 +123,42 @@
       "slug": "studio-engine",
       "title": "Studio Engine",
       "type": "Interactive business tool",
-      "description": "A local concept generator with real controls, layouts, and visible decisions.",
+      "description": "A live concept generator. Change the brief and watch the site redesign itself.",
       "suite": "business-systems"
     },
     {
       "slug": "growth-street",
       "title": "Growth Street",
       "type": "Systems story",
-      "description": "A row of storefronts changes as the systems behind them improve.",
+      "description": "Five storefronts light up as the systems behind them connect.",
       "suite": "business-systems"
     },
     {
       "slug": "tech-support",
       "title": "Tech Support Site",
       "type": "Complete website",
-      "description": "The earlier full service site, preserved as a complete working branch.",
+      "description": "Our earlier complete service site, preserved and still working.",
       "suite": "business-systems"
     },
     {
       "slug": "goliath",
       "title": "Goliath",
       "type": "Brand campaign",
-      "description": "Little Fight at its loudest with sharp type, hard contrast, and direct action.",
+      "description": "Sharp type, hard contrast, and direct action. The loud end of the brand dial.",
       "suite": "brand-campaign"
     },
     {
       "slug": "hero",
       "title": "Hero Prototype",
       "type": "Brand study",
-      "description": "A complete homepage direction built around one clear promise.",
+      "description": "A homepage built around one clear promise, with a signal field you can touch.",
       "suite": "brand-campaign"
     },
     {
       "slug": "chef-drew",
       "title": "I Am Cooking",
       "type": "Hospitality concept",
-      "description": "Chef Drew's catering world with appetite, motion, and booking paths.",
+      "description": "Chef Drew's catering world. Appetite, motion, and a booking path that works.",
       "suite": "brand-campaign",
       "client": true
     }

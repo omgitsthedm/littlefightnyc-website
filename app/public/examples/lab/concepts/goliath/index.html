@@ -7,7 +7,9 @@
     name="description"
     content="A Little Fight NYC interactive concept showing how an owned, connected system can help a small business compete with a larger stack."
   >
-  <title>Little Fight NYC | Goliath System</title>
+  <title>Goliath | The Lab · Little Fight NYC</title>
+    <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
+    <meta name="theme-color" content="#0b0b0d" />
   <style>
     :root {
       color-scheme: dark;
@@ -550,6 +552,10 @@
     button:focus-visible {
       outline: 3px solid var(--blue);
       outline-offset: 3px;
+    }
+
+    html.lab-concept-page:not(.lab-concept-embed) .shell {
+      padding-bottom: max(96px, calc(env(safe-area-inset-bottom) + 88px));
     }
 
     @media (max-width: 960px) {
