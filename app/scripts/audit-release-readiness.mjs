@@ -8,6 +8,7 @@ const appRoot = path.resolve(here, "..");
 const repoRoot = path.resolve(appRoot, "..");
 const distRoot = path.join(appRoot, "dist");
 const failures = [];
+const expectedRouteCount = 203;
 
 function git(args, fallback = "") {
   try {
@@ -71,8 +72,10 @@ for (const relative of [
 const routeMeta = JSON.parse(
   await readFile(path.join(appRoot, "src", "data", "route-meta.json"), "utf8"),
 );
-if (routeMeta.pages.length !== 200) {
-  failures.push(`expected 200 generated routes, found ${routeMeta.pages.length}`);
+if (routeMeta.pages.length !== expectedRouteCount) {
+  failures.push(
+    `expected ${expectedRouteCount} generated routes, found ${routeMeta.pages.length}`,
+  );
 }
 
 const home = await readFile(path.join(distRoot, "index.html"), "utf8");
@@ -95,7 +98,7 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Release artifact verified at ${revision.slice(0, 12)}: 200 routes, identity edges, sitemaps, and public recovery files are present.`,
+    `Release artifact verified at ${revision.slice(0, 12)}: ${expectedRouteCount} routes, identity edges, sitemaps, and public recovery files are present.`,
   );
   console.log(
     "External form delivery, authenticated analytics/search, social debugger, and owner-evidence gates remain governed by SITE-REINVENTION-DOSSIER.md.",

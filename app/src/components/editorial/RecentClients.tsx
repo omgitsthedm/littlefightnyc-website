@@ -10,8 +10,9 @@ import "./RecentClients.css";
  */
 const FEATURED_SLUGS = [
   "hair-by-rachel-charles",
-  "after-hours-agenda",
+  "cc-films",
   "grand-funding-llc",
+  "logan-loans",
 ] as const;
 
 export default function RecentClients() {
@@ -27,8 +28,8 @@ export default function RecentClients() {
             <p className="lf-mono lf-clients__label">Shipped work</p>
             <h2 className="lf-clients__heading">See what changed.</h2>
             <p className="lf-clients__lede">
-              The business, what was getting in the way, what we built, and
-              where it stands now. One clear format for every project.
+              Four live websites. Each one opens on the client&apos;s own
+              domain, with real desktop, iPad, and phone proof first.
             </p>
           </div>
           <Link to="/examples/" className="lf-clients__all">

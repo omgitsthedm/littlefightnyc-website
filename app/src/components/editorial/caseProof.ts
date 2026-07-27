@@ -3,6 +3,7 @@ import type { CaseProofStatus, CaseStudy } from "@/data/site";
 const PROOF_STATUS_LABELS: Record<CaseProofStatus, string> = {
   "public-live": "Public work, live",
   "owned-live": "Little Fight product, live",
+  "case-only": "Client work, case study only",
   "private-client": "Private client system",
   "private-concept": "Private client concept",
 };
@@ -10,8 +11,9 @@ const PROOF_STATUS_LABELS: Record<CaseProofStatus, string> = {
 const PROOF_STATUS_PRIORITY: Record<CaseProofStatus, number> = {
   "public-live": 0,
   "owned-live": 1,
-  "private-client": 2,
-  "private-concept": 3,
+  "case-only": 2,
+  "private-client": 3,
+  "private-concept": 4,
 };
 
 const PROOF_DATE_FORMATTER = new Intl.DateTimeFormat("en-US", {
@@ -36,10 +38,6 @@ export function formatCaseProofDate(date?: string) {
   return Number.isNaN(parsed.getTime()) ? date : PROOF_DATE_FORMATTER.format(parsed);
 }
 
-export function hasPublicCapture(study: CaseStudy) {
-  return Boolean(
-    study.showcase.availability === "public"
-      && study.url
-      && study.showcase.proof.captureDate,
-  );
+export function hasCaseCapture(study: CaseStudy) {
+  return Boolean(study.showcase.proof.captureDate);
 }

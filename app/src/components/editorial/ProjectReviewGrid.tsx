@@ -1,4 +1,9 @@
-import { ArrowRight, ArrowUpRight, LockKeyhole } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  LockKeyhole,
+  MonitorCheck,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import type { CaseStudy } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
@@ -24,7 +29,7 @@ export default function ProjectReviewGrid({
               {...responsiveImageProps(
                 study.image,
                 variant === "home"
-                  ? "(min-width: 1120px) 30vw, (min-width: 720px) 46vw, 100vw"
+                  ? "(min-width: 720px) 46vw, 100vw"
                   : "(min-width: 900px) 46vw, 100vw",
                 [480, 640, 900],
               )}
@@ -79,6 +84,11 @@ export default function ProjectReviewGrid({
                 Open live
                 <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
               </a>
+            ) : study.showcase.proof.status === "case-only" ? (
+              <span className="lf-project-review__private">
+                <MonitorCheck size={15} strokeWidth={1.8} aria-hidden="true" />
+                {study.showcase.privacyLabel ?? "Case study only"}
+              </span>
             ) : (
               <span className="lf-project-review__private">
                 <LockKeyhole size={15} strokeWidth={1.8} aria-hidden="true" />

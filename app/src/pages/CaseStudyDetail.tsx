@@ -1,6 +1,11 @@
 import { Fragment } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { ArrowUpRight, Award, LockKeyhole } from "lucide-react";
+import {
+  ArrowUpRight,
+  Award,
+  LockKeyhole,
+  MonitorCheck,
+} from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
@@ -10,7 +15,7 @@ import ProjectMomentum from "@/components/editorial/ProjectMomentum";
 import {
   caseProofLabel,
   caseProofPriority,
-  hasPublicCapture,
+  hasCaseCapture,
 } from "@/components/editorial/caseProof";
 import { caseStudies, services } from "@/data/site";
 import "@/styles/editorial/case-studies.css";
@@ -54,7 +59,8 @@ export default function CaseStudyDetail() {
       );
     })
     .slice(0, 3);
-  const includesLiveCapture = hasPublicCapture(study);
+  const includesCapture = hasCaseCapture(study);
+  const isCaseOnly = study.showcase.proof.status === "case-only";
   const serviceLinks = study.services
     .map((service) => ({ slug: service, label: serviceLabel(service) }))
     .filter((service): service is { slug: string; label: string } => Boolean(service.label));
@@ -97,10 +103,15 @@ export default function CaseStudyDetail() {
                 {displayDomain(study.url)}
                 <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
               </a>
+            ) : isCaseOnly ? (
+              <span className="lf-case__hero-private">
+                <MonitorCheck size={14} strokeWidth={1.8} aria-hidden="true" />
+                {study.showcase.privacyLabel ?? "Case study only"}
+              </span>
             ) : (
               <span className="lf-case__hero-private">
                 <LockKeyhole size={14} strokeWidth={1.8} aria-hidden="true" />
-                Client access only
+                {study.showcase.privacyLabel ?? "Client access only"}
               </span>
             )}
           </span>
@@ -151,21 +162,27 @@ export default function CaseStudyDetail() {
           <div className="lf-case-next__live-inner">
             <header>
               <h2 id="lf-case-live-title">
-                {includesLiveCapture ? "Open the live build." : "Walk through the build."}
+                {includesCapture
+                  ? study.url
+                    ? "Explore the responsive build."
+                    : "Explore the responsive proof."
+                  : "Walk through the build."}
               </h2>
               <p>
-                {includesLiveCapture
-                  ? "Switch between desktop and phone captures, then follow the working path from input to result."
+                {includesCapture
+                  ? "See the available screens as one system, then scroll each real capture and follow the working path from need to result."
                   : "Every stage is shown below, from the first customer need to the result the business uses."}
               </p>
             </header>
             <div className="lf-case-next__explorer">
-              {includesLiveCapture && (
+              {includesCapture && (
                 <LiveSiteExplorer
+                  key={`explorer-${study.slug}`}
                   client={study.client}
                   slug={study.slug}
-                  url={study.url}
+                  url={study.url || undefined}
                   captureDate={study.showcase.proof.captureDate!}
+                  devices={study.showcase.proof.captureDevices}
                 />
               )}
               <ProjectWalkthrough key={study.slug} study={study} />

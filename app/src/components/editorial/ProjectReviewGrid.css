@@ -80,7 +80,8 @@
 }
 
 .lf-project-review__status.lf-proof-status--private-client,
-.lf-project-review__status.lf-proof-status--private-concept {
+.lf-project-review__status.lf-proof-status--private-concept,
+.lf-project-review__status.lf-proof-status--case-only {
   color: var(--lf-blue-soft);
 }
 
@@ -223,12 +224,6 @@
 
   .lf-project-review-grid[data-variant="all"] .lf-project-review h3 {
     font-size: clamp(2rem, 3vw, 3rem);
-  }
-}
-
-@media (min-width: 1120px) {
-  .lf-project-review-grid[data-variant="home"] {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

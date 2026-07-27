@@ -1,10 +1,10 @@
 /**
- * Post-build contract for every public case-study explorer.
+ * Post-build contract for every captured case-study explorer.
  *
  * The explorer's capture paths are assembled at runtime, so the general HTML
  * integrity audit cannot see them. This gate reads the canonical case data,
- * checks both capture variants, and proves the component-owned CSS and runtime
- * code made it into the production build.
+ * checks every declared device capture, enforces the custom-domain link rule,
+ * and proves the component-owned CSS and runtime code made it into the build.
  */
 
 import { createHash } from "node:crypto";
@@ -34,6 +34,38 @@ const explorerCssPath = path.join(
 );
 const caseDetailPath = path.join(appRoot, "src", "pages", "CaseStudyDetail.tsx");
 const failures = [];
+const validDevices = new Set(["desktop", "tablet", "mobile"]);
+const forbiddenHostSuffixes = [
+  ".netlify.app",
+  ".vercel.app",
+  ".pages.dev",
+  ".github.io",
+  ".web.app",
+  ".firebaseapp.com",
+];
+const captureContracts = {
+  desktop: {
+    suffix: "",
+    width: 1200,
+    minimumHeight: 1000,
+    maximumHeight: 2400,
+    minimumBytes: 50_000,
+  },
+  tablet: {
+    suffix: "-tablet",
+    width: 1024,
+    minimumHeight: 1400,
+    maximumHeight: 3000,
+    minimumBytes: 50_000,
+  },
+  mobile: {
+    suffix: "-mobile",
+    width: 390,
+    minimumHeight: 1200,
+    maximumHeight: 3000,
+    minimumBytes: 40_000,
+  },
+};
 
 function fail(message) {
   failures.push(message);
@@ -140,6 +172,30 @@ function assertCssContract(root, label) {
   requireCss(
     root,
     label,
+    ".lf-live-explorer__stage",
+    "position",
+    exact("relative"),
+    "relative",
+  );
+  requireCss(
+    root,
+    label,
+    ".lf-live-explorer__device-set",
+    "position",
+    exact("relative"),
+    "relative",
+  );
+  requireCss(
+    root,
+    label,
+    ".lf-live-explorer__device-screen img",
+    "object-fit",
+    exact("cover"),
+    "cover",
+  );
+  requireCss(
+    root,
+    label,
     ".lf-live-explorer__toolbar",
     "display",
     exact("grid"),
@@ -212,6 +268,14 @@ function assertCssContract(root, label) {
   requireCss(
     root,
     label,
+    ".lf-live-explorer__viewport--tablet img",
+    "width",
+    (value) => value.replaceAll(" ", "").includes("min(100%,1024px)"),
+    "a 1024px maximum",
+  );
+  requireCss(
+    root,
+    label,
     ".lf-live-explorer__viewport--mobile img",
     "width",
     (value) => value.replaceAll(" ", "").includes("min(100%,390px)"),
@@ -262,24 +326,68 @@ const bundle = await esbuildBundle({
 const caseModule = await import(
   `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString("base64")}`
 );
-const publicCases = caseModule.caseStudies.filter(
-  (study) => study.showcase?.availability === "public" && Boolean(study.url),
-);
+const allCases = caseModule.caseStudies;
 
-if (publicCases.length === 0) {
-  fail("canonical case data contains no public case-study explorers");
+for (const study of allCases) {
+  const linkPolicy = study.showcase?.linkPolicy;
+  const url = study.url?.trim() ?? "";
+
+  if (linkPolicy === "custom-domain" && !url) {
+    fail(`${study.slug}: custom-domain link policy requires a URL`);
+  }
+  if (linkPolicy === "case-only" && url) {
+    fail(`${study.slug}: case-only link policy forbids an external URL`);
+  }
+  if (study.showcase?.proof?.status === "case-only" && url) {
+    fail(`${study.slug}: case-only proof must not expose an external URL`);
+  }
+
+  if (url) {
+    try {
+      const parsed = new URL(url);
+      const hostname = parsed.hostname.toLowerCase();
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        fail(`${study.slug}: external case URL must use HTTP or HTTPS`);
+      }
+      if (!hostname.includes(".") || hostname === "localhost") {
+        fail(`${study.slug}: external case URL is not a custom domain`);
+      }
+      if (
+        forbiddenHostSuffixes.some(
+          (suffix) => hostname === suffix.slice(1) || hostname.endsWith(suffix),
+        )
+      ) {
+        fail(`${study.slug}: external case URL points to a hosting subdomain`);
+      }
+    } catch {
+      fail(`${study.slug}: external case URL is invalid`);
+    }
+  }
 }
 
-for (const study of publicCases) {
+const capturedCases = allCases.filter(
+  (study) => Boolean(study.showcase?.proof?.captureDate),
+);
+
+if (capturedCases.length === 0) {
+  fail("canonical case data contains no captured case-study explorers");
+}
+
+let declaredCaptureCount = 0;
+
+for (const study of capturedCases) {
   const captureDate = study.showcase?.proof?.captureDate;
   if (
     typeof captureDate !== "string" ||
     !/^\d{4}-\d{2}-\d{2}$/.test(captureDate) ||
     Number.isNaN(Date.parse(`${captureDate}T00:00:00Z`))
   ) {
-    fail(`${study.slug}: public case is missing a valid ISO captureDate`);
+    fail(`${study.slug}: captured case is missing a valid ISO captureDate`);
   }
-  if (!["public-live", "owned-live"].includes(study.showcase?.proof?.status)) {
+  if (
+    study.showcase?.availability === "public"
+    && !["public-live", "owned-live"].includes(study.showcase?.proof?.status)
+  ) {
     fail(`${study.slug}: public case has an incompatible proof status`);
   }
 
@@ -293,24 +401,30 @@ for (const study of publicCases) {
     fail(`${study.slug}: generated case-study route is missing`);
   }
 
-  const captures = [
-    {
-      device: "desktop",
-      filename: `case-${study.slug}-explore.webp`,
-      width: 1200,
-      minimumHeight: 1000,
-      maximumHeight: 2400,
-      minimumBytes: 50_000,
-    },
-    {
-      device: "mobile",
-      filename: `case-${study.slug}-explore-mobile.webp`,
-      width: 390,
-      minimumHeight: 1200,
-      maximumHeight: 3000,
-      minimumBytes: 40_000,
-    },
-  ];
+  const declaredDevices = study.showcase?.proof?.captureDevices
+    ?? ["desktop", "mobile"];
+  if (!Array.isArray(declaredDevices) || declaredDevices.length === 0) {
+    fail(`${study.slug}: captured case must declare at least one device`);
+    continue;
+  }
+  if (new Set(declaredDevices).size !== declaredDevices.length) {
+    fail(`${study.slug}: captured devices must be unique`);
+  }
+
+  const captures = [];
+  for (const device of declaredDevices) {
+    if (!validDevices.has(device)) {
+      fail(`${study.slug}: unsupported capture device ${device}`);
+      continue;
+    }
+    const contract = captureContracts[device];
+    captures.push({
+      device,
+      filename: `case-${study.slug}-explore${contract.suffix}.webp`,
+      ...contract,
+    });
+  }
+  declaredCaptureCount += captures.length;
   const deviceHashes = [];
 
   for (const capture of captures) {
@@ -355,8 +469,11 @@ for (const study of publicCases) {
     }
   }
 
-  if (deviceHashes.length === 2 && deviceHashes[0] === deviceHashes[1]) {
-    fail(`${study.slug}: desktop and mobile captures are identical`);
+  if (
+    deviceHashes.length === captures.length
+    && new Set(deviceHashes).size !== deviceHashes.length
+  ) {
+    fail(`${study.slug}: declared device captures must be visually distinct files`);
   }
 }
 
@@ -408,6 +525,7 @@ if (
   !builtJs.includes("data-live-site-explorer") ||
   !builtJs.includes("/assets/case-") ||
   !builtJs.includes("-explore") ||
+  !builtJs.includes("-tablet") ||
   !builtJs.includes("-mobile")
 ) {
   fail("built JavaScript is missing the connected case-study explorer");
@@ -420,5 +538,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Case-study explorer: ${publicCases.length} public cases, ${publicCases.length * 2} captures, component CSS, routes, and built runtime passed.`,
+  `Case-study explorer: ${capturedCases.length} captured cases, ${declaredCaptureCount} device captures, custom-domain links, component CSS, routes, and built runtime passed.`,
 );

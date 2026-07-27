@@ -16,7 +16,8 @@
 }
 
 .lf-proof-status--private-client,
-.lf-proof-status--private-concept {
+.lf-proof-status--private-concept,
+.lf-proof-status--case-only {
   color: var(--lf-blue-soft);
   border-color: color-mix(in srgb, var(--lf-blue) 36%, var(--lf-hairline));
   background: color-mix(in srgb, var(--lf-blue) 9%, var(--lf-paper-2));

@@ -4,8 +4,11 @@
 export type CaseProofStatus =
   | "public-live"
   | "owned-live"
+  | "case-only"
   | "private-client"
   | "private-concept";
+
+export type CaseCaptureDevice = "desktop" | "tablet" | "mobile";
 
 export type CaseStudy = {
   type: string;
@@ -33,9 +36,11 @@ export type CaseStudy = {
     context: string;
     availability: "public" | "private";
     privacyLabel?: string;
+    linkPolicy?: "custom-domain" | "case-only";
     proof: {
       status: CaseProofStatus;
       captureDate?: string;
+      captureDevices?: CaseCaptureDevice[];
     };
     stages: Array<{ label: string; detail: string }>;
     heroPosition?: string;
@@ -52,23 +57,32 @@ export const caseStudies: CaseStudy[] = [
     metrics: [
       {
         value: "5 landmarks",
-        label: "The shop joins a real neighborhood walk",
+        label: "Turn the shop into a neighborhood stop",
         evidence: "build",
       },
       {
-        value: "1 tap",
-        label: "Call or get directions from a phone",
+        value: "Store + FAQ",
+        label: "Structured data for local discovery",
+        evidence: "build",
+      },
+      {
+        value: "3 screens",
+        label: "Desktop, iPad, and phone proof",
         evidence: "outcome",
       },
-      { value: "98/100", label: "Fast mobile performance", evidence: "outcome" },
     ],
     showcase: {
-      label: "A neighborhood shop people can find",
+      label: "The Lower East Side as a field guide",
       kind: "Private website concept",
       context: "Lower East Side retail",
       availability: "private",
       privacyLabel: "Private client concept",
-      proof: { status: "private-concept" },
+      linkPolicy: "case-only",
+      proof: {
+        status: "private-concept",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
       heroPosition: "center 52%",
       heroPositionMobile: "56% center",
       stages: [
@@ -97,20 +111,20 @@ export const caseStudies: CaseStudy[] = [
     image: "/assets/case-army-navy-bags.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-23",
-    updated: "2026-07-23",
-    title: "A dated WordPress page became a reason to visit the block.",
+    updated: "2026-07-27",
+    title: "A packed neighborhood shop became part of the walk.",
     problem:
-      "A long-running Lower East Side shop had history, character, and shelves people could get lost in. Its dated WordPress site mostly acted like an old listing. It did not show new residents or travelers why the store belonged in their day.",
+      "A long-running Lower East Side shop had history, character, and shelves people could get lost in. Its old website mostly acted like a listing. It did not show a new neighbor or traveler why the store belonged in their day.",
     kept:
       "The weathered awning, the packed-in shop, the real products, the old-school personality, the address, the phone number, and the feeling that this place could only exist on the Lower East Side.",
     changed:
-      "Built a fast, phone-first website around a simple visit. Real shop photos show the place. Clear product groups explain what is inside. Local search facts help people find it. A real neighborhood map places the store beside five familiar stops, and one-tap directions make the last few blocks easy.",
+      "Built a fast, phone-first field guide around a simple visit. Real shop photos show the place. Clear product groups explain what is inside. Store and FAQ schema clarify the facts. A neighborhood map places the shop beside five familiar stops, with directions always close.",
     result:
-      "A private client concept designed to turn online curiosity into foot traffic. It does not pretend the shop is a big chain. It shows new neighbors and travelers why Army & Navy Bags belongs on their Lower East Side walk.",
+      "A private client concept designed to turn online curiosity into a real stop. It does not pretend the shop is a chain. It shows why Army & Navy Bags belongs on a Lower East Side walk, then proves the experience across desktop, iPad, and phone.",
     body: [
       "This is a private client concept, not a public client launch. Think of the old WordPress site like a faded paper sign: it said the shop existed, but it did not help a new person understand why to go. Army & Navy Bags is the opposite of a plain listing. The store is narrow, packed, useful, strange, and full of Lower East Side character. The website needed to make that feeling easy to understand on a phone.",
       "We kept the scuffed awning, the real shelves, the military bags, jackets, patches, hats, and the people inside. Then we made the path simple. First, see what kind of place this is. Next, see what it carries. Then check the hours, call, or get directions. There is no giant menu to learn and no shiny store template pretending the shop is something it is not.",
-      "The neighborhood map does one extra job. It shows Army & Navy Bags beside Katz's, Russ & Daughters, Yonah Schimmel's, and Essex Market. In little-kid terms: if someone is already going there, the map says, 'The bag shop is right around the corner.' That turns the website from a digital business card into a reason to add one more stop to the day. Fast pages, clear local facts, and one-tap directions make it easier for that person to reach the real front door.",
+      "The neighborhood map does one extra job. It shows Army & Navy Bags beside Katz's, Russ & Daughters, Yonah Schimmel's, and Essex Market. If someone is already going there, the map says the bag shop is right around the corner. That turns the website from a digital business card into a reason to add one more stop. Clear local facts, Store and FAQ schema, and one-tap directions make the last few blocks easy.",
     ],
   },
   {
@@ -120,46 +134,52 @@ export const caseStudies: CaseStudy[] = [
     slug: "cc-films",
     metrics: [
       {
-        value: "Official source",
-        label: "Behaves like one, not a brochure",
+        value: "5 pages",
+        label: "One official path through the film",
+        evidence: "build",
+      },
+      {
+        value: "224 photos",
+        label: "Premiere archive kept cinematic",
+        evidence: "build",
+      },
+      {
+        value: "100",
+        label: "Fresh Lighthouse performance audit",
         evidence: "outcome",
-      },
-      {
-        value: "Schema + headers",
-        label: "Hardened for search + crawlers",
-        evidence: "build",
-      },
-      {
-        value: "Netlify + GitHub",
-        label: "Existing deploy path kept",
-        evidence: "build",
       },
     ],
     showcase: {
-      label: "Official film source",
+      label: "An analog screening room for Marrow",
       kind: "Website",
       context: "Independent film company",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-23" },
+      linkPolicy: "custom-domain",
+      proof: {
+        status: "public-live",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
       stages: [
         { label: "Gather", detail: "Trailer, credits, reviews, premiere photos, and release facts come together in one official source." },
-        { label: "Prove", detail: "Press and festival audiences get fast paths to the film, company, cast, and coverage." },
-        { label: "Publish", detail: "Structured data, headers, sitemap signals, and the existing deploy path keep every update credible." },
+        { label: "Screen", detail: "Five focused pages and an analog theater atmosphere give the film room to feel like a film." },
+        { label: "Archive", detail: "A 224-photo premiere gallery stays fast and navigable from desktop through phone." },
+        { label: "Publish", detail: "Structured data, headers, sitemap signals, and the existing release path keep every update credible." },
       ],
     },
     image: "/assets/case-cc-films.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
-    updated: "2026-07-12",
-    title: "A clearer official home for a debut horror feature.",
-    problem: "CC Films had a live site for Marrow. But the page needed to read as the film's official source. Fast, structured, credible, and useful to press, festival audiences, and search systems.",
-    kept: "The analog horror mood, the Marrow poster and trailer, premiere photos, review coverage, core credits, and the existing Netlify/GitHub setup.",
-    changed: "Reworked the homepage and gallery order. Sharpened the film and company story. Added privacy and AI-readable reference pages. Fixed schema, sitemap, and header signals. Versioned assets to clear stale caches before going live.",
-    result: "A production-ready official site at ccfilms.net. Clearer press paths, stronger film proof, better crawler context, hardened headers, and an easier update path for festival and release news.",
+    updated: "2026-07-27",
+    title: "A debut horror feature got an official home that feels like cinema.",
+    problem: "CC Films had the raw material for Marrow, but it needed one official source that could serve audiences, press, festivals, reviewers, and search systems without flattening the film into a generic entertainment template.",
+    kept: "The analog horror mood, the Marrow poster and trailer, premiere photography, review coverage, core credits, and the existing GitHub-to-Netlify release path.",
+    changed: "Reframed the site as an analog screening room across five focused pages. Organized 224 premiere photos into a usable archive, sharpened film and company context, and repaired schema, sitemap, header, privacy, and crawler signals.",
+    result: "A fast official film source at ccfilms.net with a fresh 100 Lighthouse performance audit. The experience holds its cinematic tone on desktop, iPad, and phone while giving every audience a clearer next step.",
     body: [
       "CC Films is the Dallas-based production company behind Marrow, a debut psychological horror feature. It was directed by Mitch McLeod and produced by CC Films under executive producer Carlos R. Cortez. The site has one narrow but important job. Give press, festival audiences, reviewers, and search systems one official place for the film. Watch the trailer. See the cast and credits. Browse premiere photos. Find the right next step.",
-      "The site already had the right raw material. A strong poster. A trailer. Festival-premiere context. Review coverage. Known cast names. A gallery of premiere photos. We kept the analog, VHS-flavored mood and the existing Netlify/GitHub deploy path. The work was making the site behave like an official source instead of a loose brochure. Clearer sections. Better first-screen proof. Fewer places where a visitor or crawler had to guess.",
-      "We rebuilt the homepage around the film. We tightened the gallery and press paths. We added a privacy page and llms.txt, repaired schema and sitemap signals, hardened headers, and versioned the CSS/JS so the live deploy stopped serving stale files. The result is a modern ccfilms.net that can carry the film through press, festival, and release news without losing its cinematic tone.",
+      "The site already had the right raw material. A strong poster. A trailer. Festival-premiere context. Review coverage. Known cast names. A deep gallery of premiere photos. We kept the analog, VHS-flavored mood and the existing release path. The work was making the site behave like an official source instead of a loose brochure, with fewer places where a visitor or crawler had to guess.",
+      "We rebuilt the experience around five focused pages and treated the 224-photo archive like a real premiere record. We tightened press paths, added privacy and AI-readable context, repaired schema and sitemap signals, hardened headers, and cleared stale assets before launch. The result is a modern ccfilms.net that can carry the film through press, festival, and release news without losing its cinematic tone.",
     ],
   },
   {
@@ -210,48 +230,63 @@ export const caseStudies: CaseStudy[] = [
   {
     type: "Solo stylist salon",
     client: "Hair By Rachel Charles",
-    url: "https://www.hairbyrachelcharles.com",
+    url: "https://hairbyrachelcharles.com",
     slug: "hair-by-rachel-charles",
     metrics: [
-      { value: "One tap", label: "From search to booking", evidence: "outcome" },
       {
-        value: "2 weeks",
-        label: "Instagram-only to real booking site",
-        evidence: "outcome",
+        value: "49 routes",
+        label: "Services and local intent mapped clearly",
+        evidence: "build",
+      },
+      {
+        value: "5 share cards",
+        label: "Art-directed social entry points",
+        evidence: "build",
       },
       {
         value: "Square",
-        label: "Booking kept because clients already knew it",
+        label: "The booking habit clients already knew",
         evidence: "build",
+      },
+      {
+        value: "Own domain",
+        label: "Live at hairbyrachelcharles.com",
+        evidence: "outcome",
       },
     ],
     showcase: {
-      label: "Salon booking flow",
+      label: "A bright editorial chair in Chelsea",
       kind: "Website",
-      context: "Solo stylist",
+      context: "Independent stylist",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-23" },
+      linkPolicy: "custom-domain",
+      proof: {
+        status: "public-live",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
       heroPosition: "center 10%",
       heroPositionMobile: "82% 10%",
       stages: [
-        { label: "Find", detail: "A new Google Business Profile and neighborhood search signals make the studio visible beyond Instagram." },
-        { label: "Trust", detail: "Rachel's face, work, location, and services answer the questions a first-time client has before booking." },
-        { label: "Book", detail: "The Square setup clients already knew stays in place, now inside a clear mobile booking path." },
+        { label: "Find", detail: "Forty-nine indexable routes give services and neighborhood searches a precise destination beyond Instagram." },
+        { label: "Feel", detail: "Electric yellow, close-cropped work, and Rachel's own voice make the site feel like her chair, not a salon template." },
+        { label: "Trust", detail: "Rachel's face, portfolio, location, service details, and policies answer the questions a first-time client has." },
+        { label: "Book", detail: "The Square setup clients already knew stays in place inside a clear path that works on every screen." },
       ],
     },
     image: "/assets/case-hair-by-rachel-charles.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
-    updated: "2026-07-12",
-    title: "From Instagram-only to a website people can find and book.",
+    updated: "2026-07-27",
+    title: "An Instagram business became a searchable editorial booking system.",
     problem: "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
-    kept: "The Square Appointments setup her clients already knew.",
-    changed: "Built a mobile-first website with a Square booking embed. Set up the Google Business Profile from scratch. Wired neighborhood-specific SEO across the site.",
-    result: "A clear booking path that appears in local searches. New clients can find the studio, see the work, and book without a string of messages.",
+    kept: "Rachel's point of view, the work itself, and the Square Appointments setup her clients already knew.",
+    changed: "Built a bold mobile-first site with 49 indexable routes, precise service and neighborhood context, five art-directed social cards, and a direct path into Square. Set up the Google Business Profile from scratch.",
+    result: "A distinctive public home at hairbyrachelcharles.com. New clients can discover the studio, understand Rachel's work, and reach the familiar booking flow from desktop, iPad, or phone.",
     body: [
       "When we first sat down with Rachel, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed. The site started as a question. What if every new client could find her, see the work, and book without a single message?",
-      "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. A mobile-first page with her portfolio, the location, a Square booking embed, and a clear path to the studio. We set up her Google Business Profile from scratch. Address, hours, categories, photos, FAQs. Then we wired the site to back it up. The whole job took two weeks.",
-      "Bookings now arrive through the site. Clients find her in search instead of tagging her in DMs. Lighthouse scores landed at 100 across the board. Rachel kept her DMs for client relationships. The booking funnel moved off her phone.",
+      "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. Electric yellow, confident type, close-cropped work, and Rachel's own voice give the experience a point of view before the booking button appears. We also set up her Google Business Profile from scratch and wired the site to support it.",
+      "The finished system covers 49 indexable routes for services, questions, and local intent, with five art-directed social cards for the moments people share. Square remains the booking destination. The website does the work before it: discovery, recognition, trust, and a clean handoff from any screen.",
     ],
   },
   {
@@ -404,39 +439,53 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.grandfundingllc.com",
     slug: "grand-funding-llc",
     metrics: [
-      { value: "Clear", label: "No finance-site cliches", evidence: "build" },
       {
-        value: "Easy to find",
-        label: "Business details written for search",
+        value: "80 pages",
+        label: "A complete search and answer system",
         evidence: "build",
       },
-      { value: "Live", label: "grandfundingllc.com", evidence: "outcome" },
+      {
+        value: "18 share cards",
+        label: "Route-specific social previews",
+        evidence: "build",
+      },
+      {
+        value: "Own domain",
+        label: "Live at grandfundingllc.com",
+        evidence: "outcome",
+      },
     ],
     showcase: {
-      label: "Credible finance landing",
+      label: "A desert-night lending library",
       kind: "Website",
-      context: "Funding business",
+      context: "Arizona funding business",
       availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-23" },
+      linkPolicy: "custom-domain",
+      proof: {
+        status: "public-live",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
       stages: [
-        { label: "Explain", detail: "A quiet, type-led page says what the business offers without leaning on generic finance imagery." },
-        { label: "Reassure", detail: "Structured company, service, and founder information creates a credible public record." },
-        { label: "Capture", detail: "One clear contact path gives partners and prospects an obvious next step." },
+        { label: "Orient", detail: "A desert-night visual system gives the firm a recognizable Arizona point of view without borrowed finance imagery." },
+        { label: "Explain", detail: "Eighty pages separate services, audiences, locations, questions, and reference material into answerable paths." },
+        { label: "Reassure", detail: "Structured company, service, policy, and founder context creates a clearer public record." },
+        { label: "Connect", detail: "Every route leads to a measured contact path while regulated language stays under client control." },
       ],
     },
     image: "/assets/case-grand-funding-llc.webp",
     services: ["custom-local-websites"],
     published: "2026-05-13",
-    updated: "2026-07-12",
-    title: "A clean public face for a finance business.",
-    problem: "A funding LLC needed a credible public landing page. Investor-grade look, a clear product summary, and an easy contact path. And none of the tired finance-site cliches.",
-    kept: "The team's positioning and the calls-to-action they already use.",
-    changed: "Built a quiet, type-led landing page. One clear lead capture. Structured contact info. Meta and schema set up for trust signals.",
-    result: "A site partners and prospects can actually share. Professional without sounding generic.",
+    updated: "2026-07-27",
+    title: "A finance landing page grew into a full answer system.",
+    problem: "A funding LLC needed a credible public presence that could explain a complex category without the glass towers, stock handshakes, and vague promises that make finance sites look interchangeable.",
+    kept: "The team's approved positioning, contact paths, policy boundaries, and the language they use to describe the business.",
+    changed: "Built an 80-page desert-night editorial system for services, audiences, locations, questions, and reference content. Added structured company context, controlled conversion paths, and 18 route-specific social cards.",
+    result: "A distinctive public resource at grandfundingllc.com. Partners and prospects can move from a broad question to a precise answer on any screen, while claims and regulated language remain explicitly client-controlled.",
     body: [
       "Grand Funding is a financial funding business. Finance sites have a template problem: glass towers, stock handshakes, the word 'solutions.' Those defaults exist because trust is hard to show. But to the exact partners this site must convince, a template reads as risk. The brief was to be credible without one borrowed cliche.",
-      "We kept the team's positioning and the way they describe what they do. No invented mission statement. The design carries the trust with typography instead of decoration. A quiet, type-led landing with one clear lead capture and structured contact info. The schema markup backs it up: Organization, FinancialService, and Person for the founder.",
-      "The result is a public landing page partners and prospects can share without a second thought. Professional, restrained, and intentional. It does not sound like every other LLC website on the internet.",
+      "We kept the team's approved positioning and the way they describe what they do. No invented mission statement and no unapproved lending claims. The design carries trust through typography, deep desert color, restrained motion, and visible structure. Company, service, policy, and founder context give both people and answer systems a cleaner public record.",
+      "What began as a landing page became an 80-page library. Services, audiences, locations, questions, and references each get a clear route, with 18 art-directed cards for the pages people share. The result is a public site partners and prospects can navigate without a second thought, from a wide desktop to the phone in their hand.",
     ],
   },
   {
@@ -495,9 +544,9 @@ export const caseStudies: CaseStudy[] = [
         evidence: "build",
       },
       {
-        value: "16px+",
-        label: "Reading floor on phones and tablets",
-        evidence: "outcome",
+        value: "3 screens",
+        label: "Desktop, iPad, and phone proof",
+        evidence: "build",
       },
       {
         value: "Every price",
@@ -511,7 +560,12 @@ export const caseStudies: CaseStudy[] = [
       context: "Family pizzeria · Peoria",
       availability: "private",
       privacyLabel: "Private client concept",
-      proof: { status: "private-concept" },
+      linkPolicy: "case-only",
+      proof: {
+        status: "private-concept",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
       stages: [
         { label: "Recognize", detail: "Butcher paper, tomato red, basil green, and a real slice make the first screen feel like a neighborhood pizzeria instead of a restaurant template." },
         { label: "Trust", detail: "Johnny's 1979 move west, the shop's 1998 opening, and real customer words arrive before the menu." },
@@ -519,19 +573,239 @@ export const caseStudies: CaseStudy[] = [
         { label: "Carry", detail: "A matching brand kit gives the client the logo, colors, type, voice, and facts for future menus, signs, and ads." },
       ],
     },
-    image: "/assets/case-brothers-pizza.webp",
+    image: "/assets/case-brothers-pizzeria.webp",
     services: ["custom-local-websites"],
     published: "2026-07-23",
-    updated: "2026-07-23",
-    title: "A pizzeria website that finally feels like the place.",
+    updated: "2026-07-27",
+    title: "A digital menu became a family handbill.",
     problem: "The first proof worked as a digital menu, but it looked like a generic black restaurant template. It buried the family story, reduced the shop's history to badges, and squeezed the price grid on phones and tablets.",
     kept: "The logo, full menu, every price, hours, contact facts, phone-first ordering, real food photography, and the true family story: Johnny came west in 1979 and opened this shop in 1998.",
     changed: "Rebuilt the whole experience as a printed neighborhood handbill. The family story and customer voices now lead. Butcher paper, tomato red, basil green, heavy sign-painter type, and a real slice carry the character. The menu stacks cleanly on small screens, reading text stays at sixteen points or larger, and the call action remains thumb-sized.",
-    result: "A private client concept with a recognizable point of view: family story first, menu second, phone ordering always close. It stays composed from a 390px phone through a 1440px desktop, carries every price, and includes a matching brand kit for future materials.",
+    result: "A private client concept with a recognizable point of view: family story first, menu second, phone ordering always close. It stays composed across desktop, iPad, and phone, carries every price, and includes a matching brand kit for future materials.",
     body: [
       "This is a private client concept, not a public storefront. Johnny brought his pizza passion to Arizona in 1979 and opened the Cactus Road shop in 1998. The first proof got the menu online, but not the feeling of the place. It was a dark digital menu with a few history badges attached. The family story, the regulars, and the New York-to-Peoria journey were doing none of the work.",
       "The second pass treated the whole page like something that could have been taped in the shop window. Aged butcher paper replaced the black canvas. Tomato red and basil green came from the language of old pizzeria signs. Heavy block type, a real slice on a paper plate, and customer quotes made the first screen recognizable before anyone reached the menu. The story moved ahead of specials and ordering because heritage only matters when people can feel it.",
       "The operational work stayed underneath the character. Every menu item and price carried over. Long price lines stack instead of pushing the phone page sideways. Reading text stays at sixteen points or larger, visible controls clear a forty-four-pixel target, and the call action remains close throughout the page. The client also gets a matching brand kit for future signs, menus, ads, and social work without having to reverse-engineer the website.",
+    ],
+  },
+  {
+    type: "Independent music company",
+    client: "Legacy Music Group",
+    url: "",
+    slug: "legacy-music-group",
+    metrics: [
+      {
+        value: "22 routes",
+        label: "Artists, services, booking, and company context",
+        evidence: "build",
+      },
+      {
+        value: "97",
+        label: "Fresh Lighthouse performance audit",
+        evidence: "outcome",
+      },
+      {
+        value: "3 screens",
+        label: "Desktop, iPad, and phone proof",
+        evidence: "build",
+      },
+    ],
+    showcase: {
+      label: "The control room after dark",
+      kind: "Client release candidate",
+      context: "Independent music company",
+      availability: "private",
+      privacyLabel: "Case study only",
+      linkPolicy: "case-only",
+      proof: {
+        status: "case-only",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
+      stages: [
+        {
+          label: "Listen",
+          detail: "The first screen establishes the label's atmosphere before it asks a visitor to choose a path.",
+        },
+        {
+          label: "Sequence",
+          detail: "Twenty-two routes separate artists, services, booking, company context, and supporting information.",
+        },
+        {
+          label: "Prove",
+          detail: "Metadata, structured context, responsive behavior, and a fresh performance audit make the release easier to verify.",
+        },
+        {
+          label: "Release",
+          detail: "The full build is ready for its final approved photography, booking connection, and client-owned domain.",
+        },
+      ],
+    },
+    image: "/assets/case-legacy-music-group.webp",
+    services: ["custom-local-websites", "tech-consulting"],
+    published: "2026-07-27",
+    updated: "2026-07-27",
+    title: "A music company got a real world, not a record-label template.",
+    problem:
+      "Legacy Music Group needed more than a dark landing page. Artists, services, booking, company context, and search systems all needed a coherent official source without sanding away the independent label's character.",
+    kept:
+      "The music-first identity, the independent spirit, the artist focus, and the sense that the company belongs in a control room after everyone else has gone home.",
+    changed:
+      "Built a 22-route editorial system with distinct paths for artists, services, booking, company information, and reference content. Added responsive layouts, structured metadata, and a cinematic control-room design that stays legible on every screen.",
+    result:
+      "A client release candidate with a fresh 97 Lighthouse performance audit and complete desktop, iPad, and phone proof. The case is public here, but an external link stays withheld until the approved build is on a client-owned domain.",
+    body: [
+      "Music-company sites often collapse into one of two defaults: a black poster with no useful path, or a corporate roster template with no atmosphere. Legacy Music Group needed both sides at once. Visitors should feel the label immediately, then find an artist, understand the services, or reach booking without decoding the page.",
+      "We built the experience like a late-night control room. Deep contrast, precise type, luminous signals, and measured movement create the mood. Underneath it is a 22-route information system for the roster, services, booking, company details, policies, and answer-ready reference content. The visual world never has to carry information it cannot prove.",
+      "The current release candidate has been checked across desktop, iPad, and phone, with a fresh 97 Lighthouse performance audit. Final approved photography, the production booking connection, and the client-owned domain remain release gates. Until that last gate is real, Little Fight shows the work inside this case study and does not send visitors to a temporary hosting address.",
+    ],
+  },
+  {
+    type: "Phoenix painting contractor",
+    client: "Chromatic Painting & Design",
+    url: "",
+    slug: "chromatic-painting-design",
+    metrics: [
+      {
+        value: "18 pages",
+        label: "Services, questions, and local intent mapped",
+        evidence: "build",
+      },
+      {
+        value: "3 share cards",
+        label: "Art-directed social entry points",
+        evidence: "build",
+      },
+      {
+        value: "Review gated",
+        label: "Deliberately noindex before approval",
+        evidence: "outcome",
+      },
+    ],
+    showcase: {
+      label: "Phoenix, repainted",
+      kind: "Client review build",
+      context: "Painting and design",
+      availability: "private",
+      privacyLabel: "Case study only",
+      linkPolicy: "case-only",
+      proof: {
+        status: "case-only",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
+      stages: [
+        {
+          label: "Locate",
+          detail: "Phoenix light, color, and place give the contractor a specific world instead of another neutral service template.",
+        },
+        {
+          label: "Explain",
+          detail: "Eighteen pages separate services, questions, and local intent into clear customer paths.",
+        },
+        {
+          label: "Share",
+          detail: "Three art-directed social cards make the first impression intentional wherever a route appears.",
+        },
+        {
+          label: "Gate",
+          detail: "Noindex and review controls keep the work out of search until the client facts and media are approved.",
+        },
+      ],
+    },
+    image: "/assets/case-chromatic-painting-design.webp",
+    services: ["custom-local-websites", "tech-consulting"],
+    published: "2026-07-27",
+    updated: "2026-07-27",
+    title: "A painting contractor site began with Phoenix itself.",
+    problem:
+      "Painting websites tend to look interchangeable: white rooms, a row of service cards, and a quote button. Chromatic needed a useful customer path with a visual identity rooted in the city and enough structure to answer real service questions.",
+    kept:
+      "The approved business identity, the real service scope, the Phoenix market, and the practical path from a question to a project conversation.",
+    changed:
+      "Built an 18-page review experience around Phoenix color and light. Separated services, local intent, and common questions, then added three route-specific social cards, responsive proof, and deliberate noindex controls for the approval period.",
+    result:
+      "A distinctive client review build that reads clearly from desktop through phone while staying out of search until facts and media are approved. The work is shown here, with no temporary hosting link presented as a public launch.",
+    body: [
+      "A contractor does not become more trustworthy because a template puts a paint roller beside a rounded quote form. The useful proof is specificity. Where the company works, what it does, what a customer should expect, and whether the page feels considered before anyone asks for a project.",
+      "The design starts with Phoenix rather than generic home-improvement imagery. Strong blocks of color, sun-washed surfaces, and direct typography make the site recognizable. Eighteen pages give services, local intent, project questions, and policy information their own clear destinations. Three art-directed social cards keep that identity intact when a page is shared.",
+      "This is still a client review build. Noindex controls are intentional, and final facts and approved media remain gates before a public release. The responsive screenshots document the real work now. An external link will appear only when the approved site has a client-owned domain.",
+    ],
+  },
+  {
+    type: "Arizona lending website",
+    client: "Logan Loans",
+    url: "https://logan.loans",
+    slug: "logan-loans",
+    metrics: [
+      {
+        value: "58 routes",
+        label: "A complete public information system",
+        evidence: "build",
+      },
+      {
+        value: "48 indexable",
+        label: "Focused pages available to search",
+        evidence: "build",
+      },
+      {
+        value: "5 forms",
+        label: "Registered paths for distinct questions",
+        evidence: "build",
+      },
+      {
+        value: "Own domain",
+        label: "Live at logan.loans",
+        evidence: "outcome",
+      },
+    ],
+    showcase: {
+      label: "A warmer way through lending questions",
+      kind: "Website",
+      context: "Arizona lending information",
+      availability: "public",
+      linkPolicy: "custom-domain",
+      proof: {
+        status: "public-live",
+        captureDate: "2026-07-27",
+        captureDevices: ["desktop", "tablet", "mobile"],
+      },
+      stages: [
+        {
+          label: "Orient",
+          detail: "A warm Arizona editorial system replaces the cold blue visual shorthand common to financial websites.",
+        },
+        {
+          label: "Answer",
+          detail: "Fifty-eight routes separate services, locations, questions, policies, and supporting information.",
+        },
+        {
+          label: "Route",
+          detail: "Five registered forms give different customer questions a specific next step without forcing one generic funnel.",
+        },
+        {
+          label: "Clarify",
+          detail: "Forty-eight indexable pages and extensive structured context help search and answer systems identify the right source.",
+        },
+      ],
+    },
+    image: "/assets/case-logan-loans.webp",
+    services: ["custom-local-websites", "tech-consulting"],
+    published: "2026-07-27",
+    updated: "2026-07-27",
+    title: "A financial website became a warm, structured Arizona guide.",
+    problem:
+      "Lending is dense, regulated, and full of repeated questions. Logan Loans needed a public site that could separate those questions cleanly, guide different visitors to the right form, and remain readable without leaning on generic blue-bank design.",
+    kept:
+      "The approved business facts, service boundaries, contact paths, and client-controlled policy language.",
+    changed:
+      "Built a 58-route financial editorial system with 48 indexable pages, five registered forms, extensive structured context, and a responsive Arizona visual language. Search, social, and answer-system entry points each lead to a specific source.",
+    result:
+      "A public custom-domain site at logan.loans that makes a large information set feel calm on desktop, iPad, and phone. The architecture improves clarity while regulated terms and claims remain under client control.",
+    body: [
+      "Financial websites often try to make a difficult category feel simple by hiding the detail. That can create a clean first screen and a confusing second step. Logan Loans needed the opposite: a warm entry point with enough structure to let a visitor find the exact page, question, policy, or form they came for.",
+      "The visual system takes its cues from Arizona rather than a generic bank. Warm fields, editorial typography, calm spacing, and strong route labels make the experience feel human without turning the subject into lifestyle marketing. Underneath it are 58 routes, 48 of them intentionally indexable, plus extensive structured context for search and answer systems.",
+      "Five registered forms keep different conversations from collapsing into one generic lead funnel. The work is architectural as much as visual: establish the question, show the relevant context, and provide a clear next step. The live site does that on its own domain while approved financial language remains explicitly client-controlled.",
     ],
   },
 ];

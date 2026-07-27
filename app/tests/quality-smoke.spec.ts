@@ -86,8 +86,8 @@ const ROUTES: readonly RouteContract[] = [
     key: "rachel",
     label: "Hair By Rachel Charles case study",
     path: "/case-studies/hair-by-rachel-charles/",
-    title: "Hair By Rachel Charles — Case Study | Little Fight NYC",
-    h1: /Salon booking flow/i,
+    title: "Hair By Rachel Charles Website Case Study | Little Fight NYC",
+    h1: /A bright editorial chair in Chelsea/i,
     criticalLink: 'a[href="/services/custom-local-websites/"]',
     tags: ["@chromium-desktop", "@chromium-mobile", "@webkit-mobile"],
   },
@@ -345,7 +345,7 @@ test(
     expect(
       indexedRoutes,
       "The indexed route baseline changed; review the route policy and update the expected count intentionally.",
-    ).toHaveLength(127);
+    ).toHaveLength(130);
 
     type H1Mismatch = {
       path: string;

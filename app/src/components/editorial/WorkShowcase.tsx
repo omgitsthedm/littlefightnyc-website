@@ -7,13 +7,16 @@ const SHOWCASE_ORDER = [
   "hair-by-rachel-charles",
   "cc-films",
   "grand-funding-llc",
+  "logan-loans",
+  "legacy-music-group",
+  "army-navy-bags",
+  "brothers-pizzeria",
+  "chromatic-painting-design",
   "clearhelp",
   "deckspace",
   "after-hours-agenda",
   "venuecircuit",
   "public-house-creative",
-  "army-navy-bags",
-  "brothers-pizzeria",
 ] as const;
 
 const orderedStudies = SHOWCASE_ORDER
@@ -26,8 +29,8 @@ export default function WorkShowcase({
   mode?: "featured" | "archive";
 }) {
   const studies = mode === "featured"
-    ? orderedStudies.slice(0, 3)
-    : orderedStudies.slice(3);
+    ? orderedStudies.slice(0, 4)
+    : orderedStudies.slice(4);
 
   return (
     <section
@@ -38,13 +41,13 @@ export default function WorkShowcase({
         <header className="lf-work-showcase__head">
           <h2 id={`lf-work-showcase-${mode}-title`}>
             {mode === "featured"
-              ? "See the work. Skip the pitch."
+              ? "Four current sites. Four real domains."
               : "More work. Same clear read."}
           </h2>
           <p>
             {mode === "featured"
-              ? "Start with three public results, then step into the Lab and try what we are exploring next."
-              : "Every remaining project uses the same format: the problem, what changed, the result, and what you can open."}
+              ? "Each site below opens on the client's own custom domain. The case study shows the real desktop, iPad, and phone build before you leave."
+              : "Private concepts and earlier shipped work stay in the case-study library. An external link appears only when the work is live on its own domain."}
           </p>
         </header>
         <ProjectReviewGrid studies={studies} />

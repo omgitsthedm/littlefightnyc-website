@@ -18,7 +18,11 @@ import type { LucideIcon } from "lucide-react";
  * import keeps working; Vite tree-shakes each consumer to just its slice. */
 export type { AnswerGuide } from "./site-answers";
 export { answerGuides, answerServiceBridge } from "./site-answers";
-export type { CaseProofStatus, CaseStudy } from "./site-cases";
+export type {
+  CaseCaptureDevice,
+  CaseProofStatus,
+  CaseStudy,
+} from "./site-cases";
 export { caseStudies } from "./site-cases";
 export type { GlossaryTerm } from "./site-glossary";
 export { glossaryTerms } from "./site-glossary";
