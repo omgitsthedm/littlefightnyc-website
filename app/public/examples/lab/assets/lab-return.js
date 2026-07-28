@@ -4,10 +4,10 @@
   var concepts = [
     {
       slug: 'walkup-3d',
-      title: 'Brownstone Walk-Up',
-      type: 'Spatial story',
+      title: 'Six-Story Walk-Up',
+      type: 'Capability build',
       suite: 'spatial-nyc',
-      hint: 'Scroll the floors. Choose Explore, then tap the windows.'
+      hint: 'Drag to spin the block. Pinch to lean in.'
     },
     {
       slug: 'terminal-3d',
