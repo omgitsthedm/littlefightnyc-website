@@ -617,7 +617,7 @@ for (const r of CAR_ROUTES) {
   r.axis = axis; r.sign = sign;
 }
 
-if (!reduceMotion) {
+{
   const carColors = [ACCENTS.cyan, ACCENTS.magenta, ACCENTS.amber, ACCENTS.lime, ACCENTS.violet, ACCENTS.coral];
   [0, 0, 1, 1, 2, 3].forEach((ri, i) => {
     const route = CAR_ROUTES[ri];
@@ -673,7 +673,7 @@ function pedMesh() {
 const CURB_N = new THREE.Vector3(4.2, 0, 3.55);
 const CURB_S = new THREE.Vector3(4.2, 0, 0.55);
 
-if (!reduceMotion) {
+{
   for (let i = 0; i < 10; i++) {
     const m = pedMesh();
     m.position.set(rand(-12, 12), 0, 3.55);
@@ -747,7 +747,7 @@ function pedStep(a, dt, t) {
 }
 
 /* -- courier -- */
-if (!reduceMotion) {
+{
   const g = new THREE.Group();
   const deck = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.06, 0.14), new THREE.MeshStandardMaterial({ color: '#1c1240', roughness: 0.5 }));
   deck.position.y = 0.09;
@@ -850,7 +850,6 @@ for (let i = 0; i < 18; i++) {
 }
 
 function spawnPulse(from, to, color) {
-  if (reduceMotion) return;
   const p = PULSE_POOL.find((x) => !x.active);
   if (!p) return;
   p.active = true;
@@ -927,7 +926,7 @@ const BEAM_P1 = new THREE.Vector3();
 const BEAM_P2 = new THREE.Vector3(-30, 13, -38);
 
 function fireBeam() {
-  if (reduceMotion || beam.active) return;
+  if (beam.active) return;
   beam.active = true;
   beam.t = 0;
   rotGroup.updateMatrixWorld();
@@ -967,7 +966,6 @@ train.group.visible = false;
 scene.add(train.group);
 
 function trainStep(dt) {
-  if (reduceMotion) return;
   if (train.t < 0) {
     train.next -= dt;
     const nightish = dayT > 0.45 || dayT < 0.13;
@@ -992,7 +990,7 @@ function trainStep(dt) {
 
 /* ================= renovation arc ================= */
 
-const reno = { stage: reduceMotion ? 99 : 0, t: 0, boot: -1 };
+const reno = { stage: 0, t: 0, boot: -1 };
 
 function renoStep(dt) {
   if (!renoRefs || reno.stage >= 99) return;
@@ -1033,16 +1031,7 @@ function renoStep(dt) {
   }
 }
 
-if (reduceMotion && renoRefs) {
-  const R = renoRefs;
-  R.edge.opacity = 0.95; R.front.opacity = 0.4; R.doorMat.opacity = 0.55; R.awnEdge.opacity = 1;
-  R.sign.map = signTexture('TACOS', R.accent);
-  R.signRec.dead = false;
-  R.scaf.visible = false;
-  R.bodyMat.color.set('#2e1c56');
-  sim.renoOpen = true;
-  sim.biz[5].orders = Math.floor(rand(6, 14));
-}
+
 
 /* -- dying Z -- */
 let pizzaFull = null, pizzaDying = null;
@@ -1507,7 +1496,7 @@ function frame() {
   clockTime += dt;
   const t = clockTime;
 
-  if (!reduceMotion) dayT = (dayT + dt / DAY_LEN) % 1;
+  dayT = (dayT + dt / DAY_LEN) % 1;
   const D = sampleDay(dayT);
   applyDay(D);
   skyStep();
@@ -1568,7 +1557,7 @@ function frame() {
   dyingZStep(dt);
   trainStep(dt);
   beamStep(dt);
-  if (!reduceMotion) {
+  {
     for (const a of agents.cars) carStep(a, dt);
     for (const a of agents.peds) pedStep(a, dt, t);
     if (agents.courier) courierStep(agents.courier, dt);
@@ -1577,7 +1566,7 @@ function frame() {
     for (const a of agents.cars) a.m.userData.head.material.opacity = headOn ? 0.9 : 0.12;
   }
 
-  if (!reduceMotion) {
+  {
     for (const p of pulseTargets) {
       const f = p.kind === 'grid' ? D.grid : D.win;
       p.mat.emissiveIntensity = p.base * f * (0.86 + 0.14 * Math.sin(t * p.speed + p.phase));
@@ -1591,11 +1580,12 @@ function frame() {
     }
     for (const s of signMats) {
       if (s.dead) { s.mat.opacity = 0.5; continue; }
-      if (s.busy > 0) {
+      if (s.busy > 0 && !reduceMotion) {
         s.busy -= dt;
         s.mat.opacity = Math.random() < 0.5 ? 0.5 : 1;
         if (s.busy <= 0) s.mat.opacity = 1;
       } else {
+        s.busy = 0;
         s.mat.opacity = Math.min(1, 0.55 + 0.45 * D.sign);
         s.t -= dt;
         if (s.t <= 0) { s.t = rand(5, 13); s.busy = 0.3; }
