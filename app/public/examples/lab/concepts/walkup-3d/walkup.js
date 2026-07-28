@@ -101,19 +101,50 @@ function backdropTexture() {
   sky.addColorStop(0.86, '#25254a');
   sky.addColorStop(1, '#332947');
   g.fillStyle = sky; g.fillRect(0, 0, 2048, 512);
-  // stars
-  for (let i = 0; i < 90; i++) {
-    g.fillStyle = `rgba(220,230,255,${rand(0.08, 0.5)})`;
-    g.fillRect(rand(0, 2048), rand(0, 210), rand(0.6, 1.8), rand(0.6, 1.8));
+  // starfield — dense, varied, brighter high in the sky
+  for (let i = 0; i < 420; i++) {
+    const sy = rand(0, 415);
+    const a = rand(0.16, 0.95) * (1 - sy / 640);
+    g.fillStyle = `rgba(226,233,255,${a.toFixed(3)})`;
+    g.beginPath(); g.arc(rand(0, 2048), sy, rand(0.5, 1.7), 0, Math.PI * 2); g.fill();
   }
-  // moon glow
-  const mg = g.createRadialGradient(330, 70, 3, 330, 70, 58);
-  mg.addColorStop(0, 'rgba(215,226,255,0.32)');
-  mg.addColorStop(0.25, 'rgba(205,218,255,0.10)');
+  // a faint drift of micro-stars, like a thin milky band
+  for (let i = 0; i < 160; i++) {
+    const bx = rand(0, 2048);
+    const by = 265 + Math.sin(bx / 340) * 55 + rand(-30, 30);
+    g.fillStyle = `rgba(214,224,250,${rand(0.05, 0.2).toFixed(3)})`;
+    g.beginPath(); g.arc(bx, by, rand(0.4, 0.9), 0, Math.PI * 2); g.fill();
+  }
+  // a handful of hero stars with cross sparkle
+  for (let i = 0; i < 12; i++) {
+    const sx = rand(40, 2008), sy = rand(225, 385), sr = rand(2.6, 4.6);
+    const halo = g.createRadialGradient(sx, sy, 0.5, sx, sy, sr * 2.2);
+    halo.addColorStop(0, 'rgba(240,246,255,0.95)');
+    halo.addColorStop(0.4, 'rgba(226,235,255,0.25)');
+    halo.addColorStop(1, 'rgba(226,235,255,0)');
+    g.fillStyle = halo;
+    g.beginPath(); g.arc(sx, sy, sr * 2.2, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = 'rgba(238,244,255,0.55)';
+    g.lineWidth = 0.8;
+    g.beginPath(); g.moveTo(sx - sr * 2.6, sy); g.lineTo(sx + sr * 2.6, sy); g.stroke();
+    g.beginPath(); g.moveTo(sx, sy - sr * 2.6); g.lineTo(sx, sy + sr * 2.6); g.stroke();
+  }
+  // crescent moon, lit limb facing the scene
+  const mx = 505, my = 262, mr = 19;
+  g.fillStyle = 'rgba(242,246,255,0.98)';
+  g.beginPath(); g.arc(mx, my, mr, 0, Math.PI * 2); g.fill();
+  const cutSky = g.createLinearGradient(0, 0, 0, 512);
+  cutSky.addColorStop(0, '#04060d');
+  cutSky.addColorStop(0.55, '#111a36');
+  cutSky.addColorStop(0.86, '#25254a');
+  cutSky.addColorStop(1, '#332947');
+  g.fillStyle = cutSky;
+  g.beginPath(); g.arc(mx - mr * 0.5, my - mr * 0.22, mr * 0.94, 0, Math.PI * 2); g.fill();
+  const mg = g.createRadialGradient(mx + mr * 0.35, my + mr * 0.18, 2, mx + mr * 0.35, my + mr * 0.18, mr * 3.6);
+  mg.addColorStop(0, 'rgba(215,226,255,0.20)');
+  mg.addColorStop(0.4, 'rgba(205,218,255,0.07)');
   mg.addColorStop(1, 'rgba(205,218,255,0)');
-  g.fillStyle = mg; g.fillRect(0, 0, 2048, 512);
-  g.fillStyle = 'rgba(234,240,255,0.95)';
-  g.beginPath(); g.arc(330, 70, 9, 0, Math.PI * 2); g.fill();
+  g.fillStyle = mg; g.fillRect(mx - mr * 5, my - mr * 5, mr * 10, mr * 10);
   // skyline layers
   const layer = (baseY, color, winAlpha) => {
     g.fillStyle = color;
@@ -445,43 +476,24 @@ let beacon, beaconLight;
   }
   bld.add(collectMerged(courses, M.stoneDark, { shadow: false }));
 
-  /* stoop + entrance at bay 0 */
+  /* street-level entrance at bay 0 */
   {
     const doorX = bays[0];
-    const stoop = new THREE.Group();
-    const steps = 6, stepH = (GARDEN_H + 0.28) / steps;
-    for (let i = 0; i < steps; i++) {
-      const st = box(1.5, stepH, 0.34, M.base, 0, stepH / 2 + i * stepH, -i * 0.3);
-      st.castShadow = true; st.receiveShadow = true;
-      stoop.add(st);
-    }
-    for (const sx of [-0.82, 0.82]) {
-      const cheek = box(0.16, GARDEN_H + 0.5, steps * 0.32 + 0.2, M.base, sx, (GARDEN_H + 0.5) / 2, -(steps * 0.3) / 2 + 0.1);
-      cheek.castShadow = true;
-      stoop.add(cheek);
-      const rail = box(0.05, 0.5, steps * 0.32, M.metalDark, sx, GARDEN_H + 0.68, -(steps * 0.3) / 2 + 0.06);
-      stoop.add(rail);
-      for (let i = 0; i < 5; i++) stoop.add(box(0.03, 0.44, 0.03, M.metalDark, sx, GARDEN_H + 0.42, -i * 0.36 + 0.62));
-    }
-    stoop.position.set(doorX, 0, B.d / 2 + 0.92);
-    stoop.rotation.y = Math.PI;
-    bld.add(stoop);
-
-    const doorFrame = box(1.24, 2.2, 0.14, M.stone, doorX, GARDEN_H + 1.12, B.d / 2 + 0.04);
-    const door = box(0.96, 1.9, 0.08, M.door, doorX, GARDEN_H + 0.97, B.d / 2 + 0.08);
+    const doorFrame = box(1.24, 2.3, 0.14, M.stone, doorX, 1.17, B.d / 2 + 0.04);
+    const door = box(0.96, 2.0, 0.08, M.door, doorX, 1.02, B.d / 2 + 0.08);
     door.castShadow = true;
     const transomMat = new THREE.MeshStandardMaterial({ color: '#1c130a', emissive: '#ffc890', emissiveIntensity: 3.4, roughness: 0.4 });
     const transom = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.26), transomMat);
-    transom.position.set(doorX, GARDEN_H + 2.06, B.d / 2 + 0.09);
+    transom.position.set(doorX, 2.18, B.d / 2 + 0.09);
     bld.add(doorFrame, door, transom);
     const lanternMat = new THREE.MeshStandardMaterial({ color: '#2a1c0c', emissive: '#ffd9a0', emissiveIntensity: 4.2, roughness: 0.5 });
     for (const lx of [doorX - 0.66, doorX + 0.66]) {
       const lantern = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.22, 0.12), lanternMat);
-      lantern.position.set(lx, GARDEN_H + 1.62, B.d / 2 + 0.1);
+      lantern.position.set(lx, 1.78, B.d / 2 + 0.1);
       bld.add(lantern);
     }
     const stoopLight = new THREE.PointLight('#ffc27a', 5.2, 8, 2);
-    stoopLight.position.set(doorX, GARDEN_H + 1.75, B.d / 2 + 0.85);
+    stoopLight.position.set(doorX, 1.9, B.d / 2 + 0.85);
     bld.add(stoopLight);
   }
 
