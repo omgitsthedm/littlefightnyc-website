@@ -1,113 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="lab-concept-page">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Brownstone Walk-Up | The Lab · Little Fight NYC</title>
-  <meta name="description" content="Climb a procedural New York brownstone from street level to the water tower in this interactive spatial story from Little Fight NYC.">
-  <meta name="theme-color" content="#07080c">
-  <link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/lf-fonts.css">
-  <link rel="stylesheet" href="brownstone.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#05070f" />
+  <title>Six-Story Walk-Up | The Lab · Little Fight NYC</title>
+  <meta name="description" content="A cinematic New York block corner rendered live in the browser. One 3D asset that sells real estate, games, and film." />
+  <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="walkup.css" />
 </head>
 <body>
-  <div class="brownstone-loader" data-loader role="status" aria-live="polite">
-    <span>Building the block</span>
-    <i aria-hidden="true"></i>
+  <canvas class="stage" data-scene aria-label="Cinematic three-dimensional model of a six-story New York walk-up at night, slowly rotating. Drag to spin it."></canvas>
+
+  <header class="plate" data-plate>
+    <p class="plate__eyebrow">The Lab · Build 01</p>
+    <h1 class="plate__title">Six-Story<br />Walk-Up.</h1>
+    <p class="plate__line">One living asset. Real estate&nbsp;· Games&nbsp;· Cinema.</p>
+  </header>
+
+  <p class="hint" data-hint>Drag to spin · pinch to lean in</p>
+
+  <div class="veil" data-veil aria-hidden="true">
+    <p class="veil__mark">SIX-STORY WALK-UP</p>
+    <span class="veil__bar"><span class="veil__fill" data-veil-fill></span></span>
   </div>
 
-  <canvas class="brownstone-canvas" data-scene aria-label="Interactive three-dimensional New York brownstone"></canvas>
-  <div class="brownstone-fallback" data-fallback hidden>
-    <strong>The Brownstone needs WebGL.</strong>
-    <p>Your browser can still read the full story below.</p>
-  </div>
+  <noscript>
+    <p class="fallback">This build needs JavaScript — it renders a live 3D New York walk-up.</p>
+  </noscript>
 
-  <div class="brownstone-actions" aria-label="Brownstone controls">
-    <button type="button" data-time aria-label="Change time of day, currently night">
-      <span class="brownstone-action__meta">Light</span>
-      <span data-time-label>Night</span>
-    </button>
-    <button type="button" data-inspect aria-pressed="false" aria-label="Explore the facade">
-      <span class="brownstone-action__meta">Explore</span>
-      <span data-inspect-label>Explore</span>
-    </button>
-  </div>
-
-  <nav class="brownstone-rail" aria-label="Brownstone floors">
-    <button type="button" class="is-active" data-target="street">Street</button>
-    <button type="button" data-target="stoop">Stoop</button>
-    <button type="button" data-target="parlor">Parlor</button>
-    <button type="button" data-target="escape">Fire escape</button>
-    <button type="button" data-target="roof">Roof</button>
-  </nav>
-
-  <main class="brownstone-story">
-    <section class="brownstone-chapter brownstone-chapter--hero" id="street" data-chapter="street" aria-labelledby="street-title">
-      <div class="brownstone-copy">
-        <p class="brownstone-kicker">A spatial story from The Lab</p>
-        <h1 id="street-title">Climb the brownstone.</h1>
-        <p>Move from curb to water tower, then touch the facade and wake each room yourself.</p>
-        <div class="brownstone-copy__actions">
-          <a href="#stoop">Start at the stoop</a>
-          <button type="button" class="brownstone-copy__secondary" data-quick-inspect>Touch the facade</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="brownstone-chapter" id="stoop" data-chapter="stoop" aria-labelledby="stoop-title">
-      <div class="brownstone-copy">
-        <span class="brownstone-place">Street level</span>
-        <h2 id="stoop-title">The stoop is the handshake.</h2>
-        <p>Stone, iron, and one warm door make a threshold feel like an invitation.</p>
-      </div>
-    </section>
-
-    <section class="brownstone-chapter brownstone-chapter--right" id="parlor" data-chapter="parlor" aria-labelledby="parlor-title">
-      <div class="brownstone-copy">
-        <span class="brownstone-place">Parlor floor</span>
-        <h2 id="parlor-title">Every window implies a life.</h2>
-        <p>Light turns a model into a place. The facade stops being geometry and starts holding stories.</p>
-      </div>
-    </section>
-
-    <section class="brownstone-chapter" id="escape" data-chapter="escape" aria-labelledby="escape-title">
-      <div class="brownstone-copy">
-        <span class="brownstone-place">Above the avenue</span>
-        <h2 id="escape-title">The fire escape draws the rhythm.</h2>
-        <p>A practical structure becomes the building's signature line, repeated across every floor.</p>
-      </div>
-    </section>
-
-    <section class="brownstone-chapter brownstone-chapter--right" id="roof" data-chapter="roof" aria-labelledby="roof-title">
-      <div class="brownstone-copy">
-        <span class="brownstone-place">Roofline</span>
-        <h2 id="roof-title">The city keeps going.</h2>
-        <p>At the water tower, the single building becomes part of a larger system: block, skyline, borough.</p>
-        <button type="button" data-replay>Return to the street</button>
-      </div>
-    </section>
-  </main>
-
-  <aside class="brownstone-inspector" data-inspector hidden aria-label="Facade controls">
-    <p class="brownstone-inspector__eyebrow">Facade controls</p>
-    <div class="brownstone-inspector__heading">
-      <h2 data-window-title>Select a window</h2>
-      <span data-window-state>Ready</span>
-    </div>
-    <p data-window-note>Tap a window to explore its frame, sash, sill, and light.</p>
-    <div class="brownstone-inspector__actions">
-      <button type="button" data-previous-window>Previous window</button>
-      <button type="button" data-next-window>Next window</button>
-      <button type="button" data-window-light disabled>Switch this light</button>
-      <button type="button" data-reset-view>Reset view</button>
-    </div>
-    <p class="brownstone-inspector__gesture">Tap a window · drag to orbit · pinch or scroll to zoom</p>
-  </aside>
-
-  <p class="brownstone-status" data-status role="status" aria-live="polite" aria-atomic="true"></p>
-  <p class="brownstone-help" data-help>Choose a floor, or open Explore and touch the facade.</p>
-
-  <script type="module" src="brownstone.js"></script>
+  <script type="module" src="walkup.js"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

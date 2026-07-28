@@ -7,7 +7,7 @@
       "title": "Spatial NYC",
       "label": "Architecture you can enter",
       "headline": "A New York building becomes the interface.",
-      "description": "Walk a procedural brownstone, touch its facade, then shift into a cinematic city-scale build.",
+      "description": "A New York block corner becomes a living asset, then a cinematic city-scale build.",
       "featuredConcept": "walkup-3d",
       "concepts": [
         "walkup-3d",
@@ -84,9 +84,9 @@
   "concepts": [
     {
       "slug": "walkup-3d",
-      "title": "Brownstone Walk-Up",
-      "type": "Spatial story",
-      "description": "Climb a walk-up from the curb to the water tower. Proof a homepage can feel like a place.",
+      "title": "Six-Story Walk-Up",
+      "type": "Capability build",
+      "description": "A living NYC block corner in real-time 3D. One asset that sells real estate, games, and cinema.",
       "suite": "spatial-nyc",
       "featured": true
     },

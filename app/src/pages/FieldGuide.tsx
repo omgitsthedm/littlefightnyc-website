@@ -37,12 +37,12 @@ const INDUSTRY_ICONS: Record<string, LucideIcon> = {
 
 const LAB_BUILDS = [
   {
-    title: "Brownstone Walk-Up",
-    type: "Spatial story",
-    description: "Climb a walk-up from the curb to the water tower. Proof a homepage can feel like a place.",
+    title: "Six-Story Walk-Up",
+    type: "Capability build",
+    description: "A living NYC block corner in real-time 3D. One asset that sells real estate, games, and cinema.",
     href: "/examples/lab/concepts/walkup-3d/",
     poster: "/images/lab-showcase/brownstone-walkup",
-    alt: "Night view of the interactive Brownstone Walk-Up",
+    alt: "Night view of the Six-Story Walk-Up diorama",
   },
   {
     title: "Cinematic 3D",
