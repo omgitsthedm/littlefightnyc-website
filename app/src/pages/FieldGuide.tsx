@@ -47,7 +47,7 @@ const LAB_BUILDS = [
   {
     title: "Neon District",
     type: "Capability build",
-    description: "A vibrant Tron-style business district in live 3D. Tap the beacons — every scale of business in one glowing block.",
+    description: "A living Tron-style district with a day-night cycle, simulated traffic, and beacons wired to live numbers.",
     href: "/examples/lab/concepts/terminal-3d/",
     poster: "/images/lab-showcase/cinematic-3d",
     alt: "Vibrant neon 3D business district at dusk",

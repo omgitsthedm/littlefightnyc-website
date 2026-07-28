@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#1d0f3d" />
   <title>Neon District | The Lab · Little Fight NYC</title>
-  <meta name="description" content="A vibrant Tron-style business district in live 3D. Fly the block, tap the beacons, read the signals — small business to big business in one glowing neighborhood." />
+  <meta name="description" content="A living Tron-style business district: day cycles into neon night, traffic obeys the signals, and every glowing dot taps into a running simulation of the block." />
   <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,30 +13,32 @@
   <link rel="stylesheet" href="district.css" />
 </head>
 <body>
-  <canvas class="stage" data-scene aria-label="Vibrant neon 3D business district, slowly rotating. Drag to orbit, pinch to zoom, tap a glowing beacon to fly to it and read its data point."></canvas>
+  <canvas class="stage" data-scene aria-label="A living neon 3D business district with day and night, traffic, and pedestrians. Drag to orbit, pinch to zoom, tap a glowing beacon to read its live numbers."></canvas>
 
   <header class="plate" data-plate>
     <p class="plate__eyebrow">The Lab · Build 02</p>
     <h1 class="plate__title">Neon<br />District.</h1>
-    <p class="plate__line">Every scale of business, one glowing block. Tap a beacon.</p>
+    <p class="plate__line">A living block. Watch it run — then tap a beacon.</p>
   </header>
 
   <p class="hint" data-hint>Drag to orbit · pinch to zoom · tap a beacon</p>
 
-  <aside class="card" data-card aria-live="polite" hidden>
-    <span class="card__bar" data-card-bar></span>
-    <p class="card__kicker" data-card-kicker>Signal</p>
-    <h2 class="card__title" data-card-title>—</h2>
-    <p class="card__body" data-card-body>—</p>
-    <div class="card__row">
-      <span class="card__index" data-card-index>1 / 6</span>
-      <span class="card__controls">
-        <button class="card__btn" data-card-prev aria-label="Previous beacon">‹</button>
-        <button class="card__btn" data-card-next aria-label="Next beacon">›</button>
-        <button class="card__btn card__btn--close" data-card-close aria-label="Close and fly back">×</button>
+  <aside class="chip" data-chip hidden>
+    <span class="chip__bar" data-chip-bar></span>
+    <div class="chip__head">
+      <p class="chip__kicker" data-chip-kicker>Signal</p>
+      <span class="chip__controls">
+        <button class="chip__btn" data-chip-prev aria-label="Previous beacon">‹</button>
+        <button class="chip__btn" data-chip-next aria-label="Next beacon">›</button>
+        <button class="chip__btn chip__btn--close" data-chip-close aria-label="Close">×</button>
       </span>
     </div>
+    <h2 class="chip__title" data-chip-title>—</h2>
+    <p class="chip__body" data-chip-body>—</p>
+    <dl class="chip__stats" data-chip-stats></dl>
   </aside>
+
+  <div class="hud" data-hud hidden aria-hidden="true"></div>
 
   <div class="veil" data-veil aria-hidden="true">
     <p class="veil__mark">NEON DISTRICT</p>
@@ -44,7 +46,7 @@
   </div>
 
   <noscript>
-    <p class="fallback">This build needs JavaScript — it renders a live 3D neon district.</p>
+    <p class="fallback">This build needs JavaScript — it renders a living 3D neon district.</p>
   </noscript>
 
   <script type="module" src="district.js"></script>
