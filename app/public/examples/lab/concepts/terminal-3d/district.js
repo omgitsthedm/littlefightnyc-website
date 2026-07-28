@@ -3,6 +3,7 @@ import { EffectComposer } from 'https://esm.sh/three@0.164.1/examples/jsm/postpr
 import { RenderPass } from 'https://esm.sh/three@0.164.1/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'https://esm.sh/three@0.164.1/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { ShaderPass } from 'https://esm.sh/three@0.164.1/examples/jsm/postprocessing/ShaderPass.js';
+import { mergeGeometries } from 'https://esm.sh/three@0.164.1/examples/jsm/utils/BufferGeometryUtils.js';
 
 /* ================= setup ================= */
 
@@ -252,45 +253,110 @@ function skyBlend(t) {
 
 function gridTexture() {
   const c = document.createElement('canvas');
-  c.width = 1024; c.height = 704;
+  c.width = 2048; c.height = 1408;
   const g = c.getContext('2d');
-  g.fillStyle = '#221040'; g.fillRect(0, 0, 1024, 704);
-  const cell = 32;
-  g.strokeStyle = 'rgba(122,84,214,0.4)'; g.lineWidth = 1;
-  for (let x = 0; x <= 1024; x += cell) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 704); g.stroke(); }
-  for (let y = 0; y <= 704; y += cell) { g.beginPath(); g.moveTo(0, y); g.lineTo(1024, y); g.stroke(); }
-  const major = g.createLinearGradient(0, 0, 1024, 704);
-  major.addColorStop(0, 'rgba(51,230,255,0.9)');
-  major.addColorStop(0.5, 'rgba(160,107,255,0.9)');
-  major.addColorStop(1, 'rgba(255,62,200,0.9)');
-  g.strokeStyle = major; g.lineWidth = 2.5;
-  for (let x = 0; x <= 1024; x += cell * 4) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 704); g.stroke(); }
-  for (let y = 0; y <= 704; y += cell * 4) { g.beginPath(); g.moveTo(0, y); g.lineTo(1024, y); g.stroke(); }
-  // painted crosswalks + stop lines at each intersection (grid: 26x18 world units)
-  const X = (wx) => (wx + 13) / 26 * 1024;
-  const Y = (wz) => (wz + 9) / 18 * 704;
-  const zebra = (wx, wz0, wz1) => {
-    g.fillStyle = 'rgba(240,240,255,0.72)';
-    for (let i = 0; i < 6; i++) g.fillRect(X(wx) - 26 + i * 10, Y(wz0), 6, Y(wz1) - Y(wz0));
+  const X = (wx) => (wx + 13) / 26 * 2048;
+  const Y = (wz) => (wz + 9) / 18 * 1408;
+  const W = (wu) => wu / 26 * 2048;
+  const H = (wu) => wu / 18 * 1408;
+
+  // parcels base
+  g.fillStyle = '#1c0e38'; g.fillRect(0, 0, 2048, 1408);
+  g.strokeStyle = 'rgba(122,84,214,0.22)'; g.lineWidth = 1;
+  for (let u = -13; u <= 13; u++) { g.beginPath(); g.moveTo(X(u), 0); g.lineTo(X(u), 1408); g.stroke(); }
+  for (let u = -9; u <= 9; u++) { g.beginPath(); g.moveTo(0, Y(u)); g.lineTo(2048, Y(u)); g.stroke(); }
+
+  // sidewalks: paving + expansion joints
+  const paveBand = (z0, z1) => {
+    g.fillStyle = '#2a1854';
+    g.fillRect(0, Y(z0), 2048, Y(z1) - Y(z0));
+    g.strokeStyle = 'rgba(8,4,20,0.5)'; g.lineWidth = 2;
+    for (let u = -13; u <= 13; u += 1) { g.beginPath(); g.moveTo(X(u), Y(z0)); g.lineTo(X(u), Y(z1)); g.stroke(); }
+  };
+  paveBand(3.0, 5.65);   // back-of-shops walk
+  paveBand(5.65, 9);     // front promenade
+  paveBand(-5.9, -4.6);  // back-avenue north walk
+  paveBand(-9, -7.6);    // south edge walk
+
+  // streets: asphalt
+  const aveFill = '#120822';
+  g.fillStyle = aveFill;
+  g.fillRect(0, Y(0.9), 2048, H(2.1));
+  g.fillRect(0, Y(-7.6), 2048, H(1.7));
+  g.fillRect(X(3.3), 0, W(1.8), 1408);
+  g.fillRect(X(-7.0), 0, W(1.8), 1408);
+
+  // lane dashes (skip intersections)
+  const dashRow = (wz) => {
+    g.fillStyle = 'rgba(51,230,255,0.45)';
+    for (let px = 0; px < 2048; px += 46) {
+      const wx = px / 2048 * 26 - 13;
+      if ((wx > -7.4 && wx < -4.8) || (wx > 2.9 && wx < 5.5)) continue;
+      g.fillRect(px, Y(wz) - 2, 26, 4);
+    }
+  };
+  const dashCol = (wx) => {
+    g.fillStyle = 'rgba(51,230,255,0.45)';
+    for (let py = 0; py < 1408; py += 46) {
+      const wz = py / 1408 * 18 - 9;
+      if ((wz > 0.5 && wz < 3.4) || (wz > -8.0 && wz < -5.5)) continue;
+      g.fillRect(X(wx) - 2, py, 4, 26);
+    }
+  };
+  dashRow(1.95); dashRow(-6.75);
+  dashCol(4.2); dashCol(-6.1);
+
+  // curbs
+  g.fillStyle = 'rgba(240,240,255,0.4)';
+  for (const wz of [0.9, 3.0, -5.9, -7.6]) g.fillRect(0, Y(wz) - 1.5, 2048, 3);
+  for (const wx of [3.3, 5.1, -7.0, -5.2]) g.fillRect(X(wx) - 1.5, 0, 3, 1408);
+
+  // crosswalks + stop lines at all four corners
+  const zebraV = (wx, wz0, wz1) => {
+    g.fillStyle = 'rgba(240,240,255,0.75)';
+    for (let i = 0; i < 6; i++) g.fillRect(X(wx) - 34 + i * 12.5, Y(wz0) + 5, 7, Y(wz1) - Y(wz0) - 10);
   };
   const zebraH = (wz, wx0, wx1) => {
-    g.fillStyle = 'rgba(240,240,255,0.72)';
-    for (let i = 0; i < 6; i++) g.fillRect(X(wx0), Y(wz) - 22 + i * 9, X(wx1) - X(wx0), 5);
-  };
-  const stopLine = (wx, wz0, wz1) => {
-    g.fillStyle = 'rgba(240,240,255,0.85)';
-    g.fillRect(X(wx) - 2, Y(wz0), 5, Y(wz1) - Y(wz0));
+    g.fillStyle = 'rgba(240,240,255,0.75)';
+    for (let i = 0; i < 6; i++) g.fillRect(X(wx0) + 5, Y(wz) - 30 + i * 11, X(wx1) - X(wx0) - 10, 6);
   };
   for (const ix of [-6.1, 4.2]) {
-    zebra(ix, 0.9, 3.0);      // across front avenue
-    zebra(ix, -7.6, -5.9);    // across back avenue
-    stopLine(ix - 1.55, 0.9, 3.0);
-    stopLine(ix + 1.55, -7.6, -5.9);
+    zebraV(ix, 0.9, 3.0);
+    zebraV(ix, -7.6, -5.9);
   }
-  zebraH(1.95, 3.3, 5.1);
-  zebraH(-6.75, -7.0, -5.2);
+  zebraH(1.95, 3.3, 5.1); zebraH(1.95, -7.0, -5.2);
+  zebraH(-6.75, 3.3, 5.1); zebraH(-6.75, -7.0, -5.2);
+  g.fillStyle = 'rgba(240,240,255,0.85)';
+  for (const ix of [-6.1, 4.2]) {
+    g.fillRect(X(ix - 1.6) - 2, Y(0.9), 4, H(2.1));
+    g.fillRect(X(ix + 1.6) - 2, Y(-7.6), 4, H(1.7));
+  }
+
+  // plaza: circular paving, concentric rings
+  const px2 = X(9.4), py2 = Y(7.3), pr = W(1.9);
+  g.fillStyle = '#241245';
+  g.beginPath(); g.arc(px2, py2, pr, 0, Math.PI * 2); g.fill();
+  g.strokeStyle = 'rgba(51,230,255,0.35)'; g.lineWidth = 3;
+  for (const rr of [0.35, 0.65, 0.95]) { g.beginPath(); g.arc(px2, py2, pr * rr, 0, Math.PI * 2); g.stroke(); }
+  g.strokeStyle = 'rgba(51,230,255,0.18)';
+  for (let a2 = 0; a2 < 12; a2++) {
+    g.beginPath(); g.moveTo(px2, py2);
+    g.lineTo(px2 + Math.cos(a2 / 12 * Math.PI * 2) * pr, py2 + Math.sin(a2 / 12 * Math.PI * 2) * pr);
+    g.stroke();
+  }
+
+  // pocket park
+  g.fillStyle = '#0f2e1c';
+  g.fillRect(X(-12.6), Y(-1.6), W(3.8), H(2.2));
+  g.strokeStyle = 'rgba(157,255,62,0.4)'; g.lineWidth = 3;
+  g.strokeRect(X(-12.6), Y(-1.6), W(3.8), H(2.2));
+  g.fillStyle = 'rgba(240,240,255,0.15)';
+  g.fillRect(X(-12.6), Y(-0.65), W(3.8), H(0.35));
+  g.fillRect(X(-10.9), Y(-1.6), W(0.35), H(2.2));
+
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 4;
   return t;
 }
 
@@ -391,6 +457,9 @@ const edgeMats = [];
 const signMats = [];
 const builders = [];
 const orbSprites = [];
+const treeCanopies = [];
+const ripples = [];
+const textRedraws = [];
 
 /* -- slab + floor -- */
 {
@@ -602,24 +671,154 @@ const TOWER_POS = new THREE.Vector3(7.6, 0, -3.2);
     rotGroup.add(g);
     builders.push({ group: g, order: 3 });
   }
-  const treeAccents = [ACCENTS.lime, ACCENTS.cyan, ACCENTS.violet, ACCENTS.lime, ACCENTS.cyan, ACCENTS.violet];
-  [[-12.4, 5.9], [-7.8, 5.9], [-0.2, 5.9], [8.3, 5.9], [12.4, 5.9], [11.8, -4.9]].forEach(([tx2, tz2], i) => {
+  // real trees: displaced foliage clumps in lit tree pits
+  const canopyDark = new THREE.MeshStandardMaterial({ color: '#2f7a55', roughness: 0.85 });
+  const canopyLight = new THREE.MeshStandardMaterial({ color: '#46a86e', roughness: 0.8 });
+  const foliageClump = (r) => {
+    const geo = new THREE.IcosahedronGeometry(r, 1);
+    const pos = geo.attributes.position;
+    const v3 = new THREE.Vector3();
+    for (let vi = 0; vi < pos.count; vi++) {
+      v3.fromBufferAttribute(pos, vi);
+      v3.multiplyScalar(1 + (rng() - 0.5) * 0.4);
+      pos.setXYZ(vi, v3.x, v3.y * (0.85 + rng() * 0.18), v3.z);
+    }
+    geo.computeVertexNormals();
+    return geo;
+  };
+  const mkTree = (tx2, tz2, s2 = 1) => {
     const g = new THREE.Group();
-    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.07, 1.1, 6), new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.8 }));
-    trunk.position.y = 0.55;
+    const pit = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.03, 0.95), new THREE.MeshStandardMaterial({ color: '#0d0620', roughness: 1 }));
+    pit.position.y = 0.015;
+    g.add(pit);
+    const rimMat = new THREE.LineBasicMaterial({ color: ACCENTS.lime, transparent: true, opacity: 0.45 });
+    const rim2 = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(0.95, 0.03, 0.95)), rimMat);
+    rim2.position.y = 0.03;
+    g.add(rim2);
+    edgeMats.push(rimMat);
+    const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.06 * s2, 0.09 * s2, 1.25 * s2, 8), new THREE.MeshStandardMaterial({ color: '#33203f', roughness: 0.95 }));
+    trunk.position.y = 0.62 * s2;
     g.add(trunk);
-    const ballMat = new THREE.LineBasicMaterial({ color: treeAccents[i], transparent: true, opacity: 0.85 });
-    const ball = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.72, 1)), ballMat);
-    ball.position.y = 1.65;
-    g.add(ball);
-    edgeMats.push(ballMat);
+    const darkGeos = [], lightGeos = [];
+    for (let ci = 0; ci < 6; ci++) {
+      const geo = foliageClump(rand(0.34, 0.58) * s2);
+      geo.translate(rand(-0.5, 0.5) * s2, 1.55 * s2 + rand(-0.15, 0.5) * s2, rand(-0.5, 0.5) * s2);
+      (ci % 3 === 0 ? lightGeos : darkGeos).push(geo);
+    }
+    const canopy = new THREE.Group();
+    canopy.add(new THREE.Mesh(mergeGeometries(darkGeos, false), canopyDark));
+    canopy.add(new THREE.Mesh(mergeGeometries(lightGeos, false), canopyLight));
+    g.add(canopy);
+    treeCanopies.push(canopy);
     g.position.set(tx2, 0, tz2);
     rotGroup.add(g);
     builders.push({ group: g, order: 2 });
+  };
+  [[-11.7, 7.6], [-6.5, 7.6], [-1.3, 7.6], [11.9, 7.5, 0.9],
+   [-9.4, 3.35, 0.85], [-0.2, 3.35, 0.85], [9.6, 3.35, 0.85],
+   [-11.8, -0.9], [-9.6, 0.1, 0.9]].forEach(([tx2, tz2, s2]) => mkTree(tx2, tz2, s2 || 1));
+
+  // flower planters between the storefronts
+  const flowerColors = [ACCENTS.magenta, ACCENTS.amber, ACCENTS.coral, ACCENTS.lime];
+  [[-8.42], [-6.07], [-3.72], [-1.37], [0.98]].forEach(([fx2], pi2) => {
+    const g = new THREE.Group();
+    const potMat = new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.8 });
+    const pot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.3, 0.34), potMat);
+    pot.position.y = 0.15;
+    g.add(pot);
+    for (let fi = 0; fi < 3; fi++) {
+      const bud = new THREE.Sprite(new THREE.SpriteMaterial({ map: orbTexture(flowerColors[(pi2 + fi) % flowerColors.length]), transparent: true, opacity: 0.9, depthWrite: false }));
+      bud.scale.setScalar(0.16);
+      bud.position.set(-0.14 + fi * 0.14, 0.4, 0);
+      g.add(bud);
+    }
+    g.position.set(fx2, 0, 5.85);
+    rotGroup.add(g);
+    builders.push({ group: g, order: 1 });
   });
+
+  // fountain plaza
+  const fountain = new THREE.Group();
+  const basin = new THREE.Mesh(new THREE.CylinderGeometry(1.12, 1.2, 0.3, 24), new THREE.MeshStandardMaterial({ color: '#1c0f3a', roughness: 0.6 }));
+  basin.position.y = 0.15;
+  fountain.add(basin);
+  const waterMat = new THREE.MeshStandardMaterial({ color: '#0a2a3a', emissive: '#33e6ff', emissiveIntensity: 0.8, roughness: 0.2, metalness: 0.3 });
+  const water = new THREE.Mesh(new THREE.CylinderGeometry(0.98, 0.98, 0.06, 24), waterMat);
+  water.position.y = 0.31;
+  fountain.add(water);
+  pulseTargets.push({ mat: waterMat, base: 0.8, speed: 1.4, phase: 2, kind: 'grid' });
+  const basinRimMat = new THREE.LineBasicMaterial({ color: ACCENTS.cyan, transparent: true, opacity: 0.8 });
+  const basinRim = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.CylinderGeometry(1.12, 1.12, 0.02, 24)), basinRimMat);
+  basinRim.position.y = 0.31;
+  fountain.add(basinRim);
+  edgeMats.push(basinRimMat);
+  for (let ri2 = 0; ri2 < 3; ri2++) {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.014, 6, 32), new THREE.MeshBasicMaterial({ color: ACCENTS.cyan, transparent: true, opacity: 0 }));
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = 0.35;
+    fountain.add(ring);
+    ripples.push({ ring, t: ri2 * 0.66 });
+  }
+  const jet = new THREE.Sprite(new THREE.SpriteMaterial({ map: orbTexture('#8af2ff'), transparent: true, opacity: 0.85, depthWrite: false }));
+  jet.scale.setScalar(0.35);
+  jet.position.y = 0.6;
+  fountain.add(jet);
+  ripples.jet = jet;
+  fountain.position.set(9.4, 0, 7.3);
+  rotGroup.add(fountain);
+  builders.push({ group: fountain, order: 2 });
+
+  // benches: plaza trio + park pair
+  const mkBench = (bx2, bz2, ry2) => {
+    const g = new THREE.Group();
+    const seatMat = new THREE.MeshStandardMaterial({ color: '#180c30', roughness: 0.7 });
+    const seat = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.06, 0.26), seatMat);
+    seat.position.y = 0.3;
+    g.add(seat);
+    const back = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.24, 0.05), seatMat);
+    back.position.set(0, 0.5, -0.12);
+    g.add(back);
+    for (const lx2 of [-0.32, 0.32]) {
+      const leg = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.3, 0.2), seatMat);
+      leg.position.set(lx2, 0.15, 0);
+      g.add(leg);
+    }
+    const glowLine = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.015, 0.02), new THREE.MeshBasicMaterial({ color: ACCENTS.violet, transparent: true, opacity: 0.7 }));
+    glowLine.position.set(0, 0.34, 0.13);
+    g.add(glowLine);
+    g.position.set(bx2, 0, bz2);
+    g.rotation.y = ry2;
+    rotGroup.add(g);
+    builders.push({ group: g, order: 1 });
+  };
+  mkBench(8.0, 8.35, 2.4); mkBench(10.8, 8.35, -2.4); mkBench(9.4, 5.95, 0);
+  mkBench(-11.6, -0.15, Math.PI / 2); mkBench(-9.8, -0.6, -Math.PI / 2);
+
+  // string lights across the pocket park
+  {
+    const bulbCols = [ACCENTS.magenta, ACCENTS.amber, ACCENTS.cyan, ACCENTS.lime];
+    const p0 = new THREE.Vector3(-12.3, 1.7, -1.45);
+    const p1 = new THREE.Vector3(-9.0, 1.7, 0.45);
+    for (const pp of [p0, p1]) {
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 1.7, 6), new THREE.MeshStandardMaterial({ color: '#1a0d34', roughness: 0.7 }));
+      pole.position.set(pp.x, 0.85, pp.z);
+      rotGroup.add(pole);
+      builders.push({ group: pole, order: 1 });
+    }
+    for (let bi = 0; bi <= 13; bi++) {
+      const k2 = bi / 13;
+      const bp = p0.clone().lerp(p1, k2);
+      bp.y = 1.7 - Math.sin(Math.PI * k2) * 0.4;
+      const bulb = new THREE.Sprite(new THREE.SpriteMaterial({ map: orbTexture(bulbCols[bi % 4]), transparent: true, opacity: 0.9, depthWrite: false }));
+      bulb.scale.setScalar(0.14);
+      bulb.position.copy(bp);
+      rotGroup.add(bulb);
+      orbSprites.push(bulb);
+    }
+  }
 }
 
-/* -- NYC props -- */
+/* -- NYC props -- *//* -- NYC props -- */
 const steamPuffs = [];
 let billboardBorder = null;
 {
@@ -705,25 +904,37 @@ let billboardBorder = null;
   rotGroup.add(stand);
   builders.push({ group: stand, order: 2 });
 
-  // tower billboard
-  const bbTexC = document.createElement('canvas');
-  bbTexC.width = 512; bbTexC.height = 256;
-  const bg2 = bbTexC.getContext('2d');
-  bg2.fillStyle = '#12082a'; bg2.fillRect(0, 0, 512, 256);
-  bg2.font = '800 92px "Barlow Condensed", Arial, sans-serif';
-  bg2.textAlign = 'center'; bg2.textBaseline = 'middle';
-  bg2.shadowColor = '#ff3ec8'; bg2.shadowBlur = 30;
-  bg2.fillStyle = '#ffffff';
-  bg2.fillText('LITTLE FIGHT', 256, 106);
-  bg2.font = '700 44px "Barlow Condensed", Arial, sans-serif';
-  bg2.shadowColor = '#33e6ff'; bg2.shadowBlur = 22;
-  bg2.fillText('NEW YORK · NEW YORK', 256, 186);
-  const bbTex = new THREE.CanvasTexture(bbTexC);
-  bbTex.colorSpace = THREE.SRGBColorSpace;
-  const bb = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.7), new THREE.MeshBasicMaterial({ map: bbTex, transparent: true }));
-  bb.position.set(7.55, 5.4, -0.63);
+  // tower billboard — measured so nothing ever clips
+  const drawBillboard = () => {
+    const cnv2 = document.createElement('canvas');
+    cnv2.width = 768; cnv2.height = 384;
+    const bg2 = cnv2.getContext('2d');
+    bg2.fillStyle = '#12082a'; bg2.fillRect(0, 0, 768, 384);
+    bg2.textAlign = 'center'; bg2.textBaseline = 'middle';
+    const fitText = (txt, weight, maxSize, maxW, y2, glow) => {
+      let size = maxSize;
+      bg2.font = `${weight} ${size}px "Barlow Condensed", Arial, sans-serif`;
+      while (bg2.measureText(txt).width > maxW && size > 20) {
+        size -= 2;
+        bg2.font = `${weight} ${size}px "Barlow Condensed", Arial, sans-serif`;
+      }
+      bg2.shadowColor = glow; bg2.shadowBlur = 34;
+      bg2.fillStyle = '#ffffff';
+      bg2.fillText(txt, 384, y2);
+    };
+    fitText('LITTLE FIGHT', 800, 132, 660, 152, '#ff3ec8');
+    fitText('NEW YORK · NEW YORK', 700, 62, 620, 282, '#33e6ff');
+    const t2 = new THREE.CanvasTexture(cnv2);
+    t2.colorSpace = THREE.SRGBColorSpace;
+    return t2;
+  };
+  const bbTex = drawBillboard();
+  const bbMat = new THREE.MeshBasicMaterial({ map: bbTex, transparent: true });
+  const bb = new THREE.Mesh(new THREE.PlaneGeometry(3.15, 1.62), bbMat);
+  textRedraws.push(() => { bbMat.map = drawBillboard(); bbMat.needsUpdate = true; });
+  bb.position.set(7.45, 5.35, -0.63);
   rotGroup.add(bb);
-  billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.5, 1.8)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
+  billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.28, 1.74)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
   billboardBorder.position.copy(bb.position);
   billboardBorder.position.z += 0.001;
   rotGroup.add(billboardBorder);
@@ -898,6 +1109,21 @@ for (const r of CAR_ROUTES) {
   });
 }
 
+{
+  const parked = [
+    [-11.8, 2.72, 0, false], [-9.2, 2.72, 0, true], [0.5, 2.72, 0, false], [10.6, 2.72, 0, false],
+    [-2.0, -6.02, Math.PI, false], [7.2, -6.02, Math.PI, true],
+  ];
+  for (const [px3, pz3, ry3, isCab] of parked) {
+    const m = carMesh(isCab ? '#ffb02e' : pick([ACCENTS.violet, ACCENTS.cyan, ACCENTS.magenta]), isCab);
+    m.position.set(px3, 0.02, pz3);
+    m.rotation.y = ry3;
+    m.userData.head.material.opacity = 0.08;
+    rotGroup.add(m);
+    builders.push({ group: m, order: 2 });
+  }
+}
+
 function carStep(a, dt) {
   const r = a.route;
   const posAlong = a.t * r.len;
@@ -945,15 +1171,17 @@ function pedMesh() {
   return g;
 }
 
-const CURB_N = new THREE.Vector3(4.2, 0, 3.55);
+const CURB_N = new THREE.Vector3(4.2, 0, 3.35);
 const CURB_S = new THREE.Vector3(4.2, 0, 0.55);
 
 {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 14; i++) {
     const m = pedMesh();
-    m.position.set(rand(-12, 12), 0, 3.55);
+    const band = i < 8 ? 'prom' : 'ave';
+    const bz = band === 'prom' ? 6.35 : 3.35;
+    m.position.set(rand(-12, 12), 0, bz);
     rotGroup.add(m);
-    agents.peds.push({ m, state: 'stroll', side: 'N', target: rand(-12, 12), speed: rand(0.5, 0.85), wait: 0, shop: -1 });
+    agents.peds.push({ m, band, bz, state: 'stroll', side: 'N', target: rand(-12, 12), speed: rand(0.5, 0.85), wait: 0, shop: -1 });
   }
 }
 
@@ -968,13 +1196,13 @@ function pedStep(a, dt, t) {
       if (a.side === 'S') {
         if (roll < 0.6) { a.state = 'toCrossBack'; a.target = CURB_S.x; }
         else a.target = rand(1.8, 7.5);
-      } else if (roll < 0.42) {
+      } else if (a.band === 'prom' && roll < 0.5) {
         let idx = Math.floor(rng() * SHOPS.length);
         if (idx === 5 && !sim.renoOpen) idx = Math.floor(rng() * 5);
         a.shop = idx;
         a.state = 'toShop';
         a.target = shopDoors[idx].x;
-      } else if (roll < 0.52) {
+      } else if (a.band === 'ave' && roll < 0.35) {
         a.state = 'toCross';
         a.target = CURB_N.x;
       } else {
@@ -996,6 +1224,7 @@ function pedStep(a, dt, t) {
       a.m.visible = true;
       a.state = 'stroll';
       a.target = rand(-12, 12);
+      a.m.position.z = a.bz;
     }
   } else if (a.state === 'toCross' || a.state === 'toCrossBack') {
     const curb = a.state === 'toCross' ? CURB_N : CURB_S;
@@ -1099,7 +1328,7 @@ const BIZ = [
 ];
 
 const sim = {
-  tick: 0, events: 0, evtWindow: [], renoOpen: false,
+  tick: 0, events: 0, evtWindow: [], history: [], renoOpen: false,
   biz: BIZ.map((b, i) => ({
     orders: i === 5 ? 0 : Math.floor(rand(12, 70)),
     calls: Math.floor(rand(4, 26)),
@@ -1186,6 +1415,11 @@ function simStep(dt) {
     s.signalPct = THREE.MathUtils.clamp(s.signalPct + rand(-0.4, 0.45), 86, 99.4);
   }
   while (sim.evtWindow.length && clockTime - sim.evtWindow[0] > 60) sim.evtWindow.shift();
+  if (sim.tick % 4 === 0) {
+    sim.history.push(sim.evtWindow.length);
+    if (sim.history.length > 36) sim.history.shift();
+    if (chipIdx >= 0) chipStatsDirty = true;
+  }
 }
 
 /* -- milestone beam -- */
@@ -1307,6 +1541,25 @@ function renoStep(dt) {
 }
 
 
+
+/* redraw every canvas text after the display font loads (kills the clipped-Arial flash) */
+textRedraws.push(() => {
+  SHOPS.forEach((shop, i) => {
+    const rec = signMats[i];
+    if (!rec) return;
+    if (shop.renovation && !sim.renoOpen) {
+      rec.mat.map = signTexture('FOR LEASE', '#8a8aa0', { dim: true, size: 46 });
+    } else {
+      rec.mat.map = signTexture(shop.name, shop.accent);
+    }
+    rec.mat.needsUpdate = true;
+  });
+  pizzaFull = signTexture('PIZZA', ACCENTS.coral);
+  pizzaDying = signTexture('PIZ A', ACCENTS.coral);
+});
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => setTimeout(() => textRedraws.forEach((f) => f()), 80));
+}
 
 /* -- dying Z -- */
 let pizzaFull = null, pizzaDying = null;
@@ -1438,6 +1691,37 @@ function renderChipStats() {
     rows.push(['Clock', `${dayClock(dayT)} <em>${phaseName(dayT)}</em>`]);
   }
   chipStats.innerHTML = rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+  // sparkline: signals/min over the last few minutes
+  if (sim.history.length > 2) {
+    const cnv3 = document.createElement('canvas');
+    cnv3.width = 240; cnv3.height = 30;
+    const g3 = cnv3.getContext('2d');
+    const maxV = Math.max(4, ...sim.history);
+    g3.strokeStyle = b.accent;
+    g3.lineWidth = 2;
+    g3.beginPath();
+    sim.history.forEach((v2, i2) => {
+      const x2 = i2 / (sim.history.length - 1) * 236 + 2;
+      const y2 = 27 - (v2 / maxV) * 23;
+      if (i2 === 0) g3.moveTo(x2, y2); else g3.lineTo(x2, y2);
+    });
+    g3.stroke();
+    g3.globalAlpha = 0.18;
+    g3.lineTo(238, 29); g3.lineTo(2, 29); g3.closePath();
+    g3.fillStyle = b.accent;
+    g3.fill();
+    const holder = document.createElement('div');
+    holder.style.gridColumn = '1 / -1';
+    const dt2 = document.createElement('dt');
+    dt2.textContent = 'Signals / min · trend';
+    holder.appendChild(dt2);
+    cnv3.style.width = '100%';
+    cnv3.style.height = '15px';
+    cnv3.style.display = 'block';
+    cnv3.style.marginTop = '2px';
+    holder.appendChild(cnv3);
+    chipStats.appendChild(holder);
+  }
 }
 
 function chipTrack() {
@@ -1564,6 +1848,7 @@ const pointers = new Map();
 let pinchDist = 0;
 let clockTime = 0;
 let hudOn = false;
+let hoverIdx = -1;
 
 function pickBeacon(clientX, clientY) {
   ndc.set((clientX / innerWidth) * 2 - 1, -(clientY / innerHeight) * 2 + 1);
@@ -1647,7 +1932,8 @@ if (!isMobile) {
   canvas.addEventListener('pointermove', (e) => {
     if (dragging || mode === 'build') return;
     if (++hoverTick % 4 !== 0) return;
-    canvas.classList.toggle('is-hot', pickBeacon(e.clientX, e.clientY) >= 0);
+    hoverIdx = pickBeacon(e.clientX, e.clientY);
+    canvas.classList.toggle('is-hot', hoverIdx >= 0);
   });
 }
 
@@ -1869,10 +2155,23 @@ function frame() {
       }
     }
     for (const orb of orbSprites) orb.material.opacity = 0.25 + 0.7 * D.orb;
+    for (let ci2 = 0; ci2 < treeCanopies.length; ci2++) {
+      treeCanopies[ci2].rotation.z = Math.sin(t * 0.55 + ci2 * 1.7) * 0.02;
+      treeCanopies[ci2].rotation.x = Math.cos(t * 0.42 + ci2 * 1.1) * 0.014;
+    }
+    for (const rp of ripples) {
+      if (!rp.ring) continue;
+      rp.t += dt / 2.2;
+      if (rp.t > 1) rp.t -= 1;
+      const sc = 0.35 + rp.t * 2.6;
+      rp.ring.scale.setScalar(sc);
+      rp.ring.material.opacity = Math.sin(Math.PI * rp.t) * 0.55;
+    }
+    if (ripples.jet) ripples.jet.position.y = 0.6 + Math.sin(t * 2.4) * 0.07;
     const bs = 1.12 + 0.11 * Math.sin(t * 2.1);
     if (mode !== 'build') beaconSprites.forEach((s, i) => {
       const active = i === chipIdx;
-      s.scale.setScalar(active ? 0.92 : bs);
+      s.scale.setScalar(active ? 0.92 : (i === hoverIdx ? bs * 1.22 : bs));
       s.material.opacity = chipIdx >= 0 ? (active ? 0.7 : 0.35) : 0.98;
       s.position.y = BEACONS[i].anchor.y + Math.sin(t * 1.3 + i) * 0.12;
     });
