@@ -88,6 +88,10 @@ button {
     max(20px, calc(env(safe-area-inset-left) + 20px));
 }
 
+html.lab-concept-page:not(.lab-concept-embed) .page-shell {
+  padding-bottom: max(96px, calc(env(safe-area-inset-bottom) + 88px));
+}
+
 .page-header {
   display: grid;
   gap: 1rem;
