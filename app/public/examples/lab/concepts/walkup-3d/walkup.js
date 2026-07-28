@@ -173,6 +173,77 @@ function steamTexture() {
   return new THREE.CanvasTexture(c);
 }
 
+
+function interiorTextures() {
+  const mk = (draw) => {
+    const c = document.createElement('canvas');
+    c.width = 128; c.height = 192;
+    const g = c.getContext('2d');
+    const bg = g.createLinearGradient(0, 0, 0, 192);
+    bg.addColorStop(0, '#fff3dd');
+    bg.addColorStop(0.55, '#ffe1b0');
+    bg.addColorStop(1, '#e8b477');
+    g.fillStyle = bg; g.fillRect(0, 0, 128, 192);
+    // ceiling shadow + floor line
+    g.fillStyle = 'rgba(60,30,10,0.25)'; g.fillRect(0, 0, 128, 14);
+    g.fillStyle = 'rgba(60,30,10,0.30)'; g.fillRect(0, 168, 128, 24);
+    draw(g);
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  };
+  const ink = 'rgba(30,14,6,0.88)';
+  const soft = 'rgba(30,14,6,0.5)';
+  return [
+    mk((g) => { // curtains
+      g.fillStyle = soft;
+      g.beginPath(); g.moveTo(0, 0); g.quadraticCurveTo(34, 90, 8, 192); g.lineTo(0, 192); g.fill();
+      g.beginPath(); g.moveTo(128, 0); g.quadraticCurveTo(94, 90, 120, 192); g.lineTo(128, 192); g.fill();
+    }),
+    mk((g) => { // plant on sill
+      g.fillStyle = ink;
+      g.fillRect(52, 148, 26, 22);
+      for (let i = 0; i < 7; i++) {
+        g.beginPath();
+        g.ellipse(65 + Math.cos(i * 0.9) * 16, 132 - Math.abs(Math.sin(i * 1.3)) * 26, 5, 16, i * 0.5 - 0.8, 0, Math.PI * 2);
+        g.fill();
+      }
+    }),
+    mk((g) => { // standing figure
+      g.fillStyle = ink;
+      g.beginPath(); g.arc(58, 74, 11, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.moveTo(44, 192); g.lineTo(46, 108) ; g.quadraticCurveTo(58, 86, 72, 106); g.lineTo(76, 158); g.lineTo(66, 160); g.lineTo(64, 192); g.fill();
+    }),
+    mk((g) => { // floor lamp
+      g.fillStyle = ink;
+      g.fillRect(84, 96, 4, 78);
+      g.fillRect(70, 168, 34, 6);
+      g.beginPath(); g.moveTo(72, 96); g.lineTo(102, 96); g.lineTo(96, 70); g.lineTo(78, 70); g.fill();
+      const glow = g.createRadialGradient(87, 84, 2, 87, 84, 30);
+      glow.addColorStop(0, 'rgba(255,255,235,0.9)');
+      glow.addColorStop(1, 'rgba(255,255,235,0)');
+      g.fillStyle = glow; g.fillRect(50, 50, 76, 70);
+    }),
+    mk((g) => { // shelves
+      g.fillStyle = ink;
+      g.fillRect(18, 58, 92, 5); g.fillRect(18, 100, 92, 5); g.fillRect(18, 142, 92, 5);
+      g.fillStyle = soft;
+      for (const [x, y, w, h] of [[24, 38, 10, 20], [40, 42, 8, 16], [70, 34, 12, 24], [30, 80, 9, 20], [58, 84, 11, 16], [88, 78, 8, 22], [26, 124, 12, 18], [52, 128, 8, 14], [80, 120, 10, 22]]) g.fillRect(x, y, w, h);
+    }),
+    mk((g) => { // cat on sill
+      g.fillStyle = ink;
+      g.beginPath(); g.ellipse(64, 158, 26, 12, 0, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(86, 146, 9, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.moveTo(80, 140); g.lineTo(83, 131); g.lineTo(87, 139); g.fill();
+      g.beginPath(); g.moveTo(92, 140); g.lineTo(89, 131); g.lineTo(85, 139); g.fill();
+      g.fillRect(36, 150, 5, 16);
+    }),
+    mk(() => {}), // plain warm room
+    mk(() => {}),
+  ];
+}
+const INTERIORS = interiorTextures();
+
 /* ---------- materials ---------- */
 
 const brickTex = brickTexture();
@@ -189,7 +260,7 @@ const M = {
   stone: new THREE.MeshStandardMaterial({ color: '#6d5c4d', roughness: 0.85 }),
   stoneDark: new THREE.MeshStandardMaterial({ color: '#4a3d33', roughness: 0.88 }),
   frame: new THREE.MeshStandardMaterial({ color: '#181310', roughness: 0.72 }),
-  door: new THREE.MeshStandardMaterial({ color: '#241610', roughness: 0.6, metalness: 0.05 }),
+  door: new THREE.MeshStandardMaterial({ color: '#3a2416', roughness: 0.55, metalness: 0.05 }),
   metal: new THREE.MeshStandardMaterial({ color: '#171a1f', roughness: 0.55, metalness: 0.55 }),
   metalDark: new THREE.MeshStandardMaterial({ color: '#101216', roughness: 0.6, metalness: 0.4 }),
   roof: new THREE.MeshStandardMaterial({ color: '#191b20', roughness: 0.97 }),
@@ -199,9 +270,9 @@ const M = {
   wood: new THREE.MeshStandardMaterial({ color: '#4a3527', roughness: 0.9 }),
   woodDark: new THREE.MeshStandardMaterial({ color: '#221a14', roughness: 0.92 }),
   trunk: new THREE.MeshStandardMaterial({ color: '#2b2019', roughness: 1 }),
-  canopy: new THREE.MeshStandardMaterial({ color: '#2c4a37', roughness: 0.9, flatShading: true }),
-  neighborA: new THREE.MeshStandardMaterial({ color: '#463a44', roughness: 0.97 }),
-  neighborB: new THREE.MeshStandardMaterial({ color: '#403b4a', roughness: 0.97 }),
+  canopy: new THREE.MeshStandardMaterial({ color: '#2c4a37', roughness: 0.95 }),
+  neighborA: new THREE.MeshStandardMaterial({ color: '#352b33', roughness: 0.97 }),
+  neighborB: new THREE.MeshStandardMaterial({ color: '#312d3a', roughness: 0.97 }),
   hydrant: new THREE.MeshStandardMaterial({ color: '#571f1c', roughness: 0.6 }),
   glassDark: new THREE.MeshStandardMaterial({ color: '#0d1420', roughness: 0.25, metalness: 0.7 }),
   awning: new THREE.MeshStandardMaterial({ color: '#20262c', roughness: 0.9 }),
@@ -314,7 +385,8 @@ let beacon, beaconLight;
     const reveal = box(WIN_W + 0.1, WIN_H + 0.1, 0.02, M.frame, 0, 0, -depth);
     const frV = box(0.05, WIN_H, 0.03, M.frame, 0, 0, -depth + 0.03);
     const frH = box(WIN_W, 0.05, 0.03, M.frame, 0, 0.16, -depth + 0.03);
-    const glassMat = new THREE.MeshStandardMaterial({ color: '#0d1420', roughness: 0.3, metalness: 0.6, emissive: '#ffc38a', emissiveIntensity: 0 });
+    const glassMat = new THREE.MeshStandardMaterial({ color: '#182234', roughness: 0.45, metalness: 0.35, emissive: '#ffffff', emissiveIntensity: 0 });
+    glassMat.emissiveMap = INTERIORS[Math.floor(rng() * INTERIORS.length)];
     const glass = new THREE.Mesh(new THREE.PlaneGeometry(WIN_W - 0.04, WIN_H - 0.04), glassMat);
     glass.position.z = -depth + 0.015;
     const sill = box(WIN_W + 0.22, 0.09, 0.16, M.stone, 0, -WIN_H / 2 - 0.05, 0.02);
@@ -331,6 +403,7 @@ let beacon, beaconLight;
     if (side === 0) { g.position.set(fx, fy, B.d / 2 + depth + 0.002); }
     if (side === 1) { g.rotation.y = Math.PI / 2; g.position.set(B.w / 2 + depth + 0.002, fy, fx); }
     if (side === 2) { g.rotation.y = -Math.PI / 2; g.position.set(-B.w / 2 - depth - 0.002, fy, fx); }
+    if (side === 3) { g.rotation.y = Math.PI; g.position.set(fx, fy, -B.d / 2 - depth - 0.002); }
     bld.add(g);
     windows.push({ mat: glassMat, on: false, warm: true, base: 0 });
     return g;
@@ -348,16 +421,20 @@ let beacon, beaconLight;
   }
   for (const bx of [-0.88, 0.88, 2.32]) addWindow(0, bx, GARDEN_H / 2 + 0.16, { grille: true });
 
-  // sides: 3 columns × 6 floors (some blind)
+  // sides: 3 columns × 6 floors
   const sideCols = [-2.1, 0, 2.1];
   for (const side of [1, 2]) {
     for (let f = 0; f < FLOORS; f++) {
       const y = GARDEN_H + f * FLOOR_H + FLOOR_H / 2 + 0.06;
       for (const cx of sideCols) {
-        if (rng() < 0.24) continue;
         addWindow(side, cx, y);
       }
     }
+  }
+  // rear: 4 bays × 6 floors
+  for (let f = 0; f < FLOORS; f++) {
+    const y = GARDEN_H + f * FLOOR_H + FLOOR_H / 2 + 0.06;
+    for (const bx of bays) addWindow(3, bx, y, { ac: f > 0 && f < 5 });
   }
   void frameParts; void sillParts;
 
@@ -393,12 +470,18 @@ let beacon, beaconLight;
     const doorFrame = box(1.24, 2.2, 0.14, M.stone, doorX, GARDEN_H + 1.12, B.d / 2 + 0.04);
     const door = box(0.96, 1.9, 0.08, M.door, doorX, GARDEN_H + 0.97, B.d / 2 + 0.08);
     door.castShadow = true;
-    const transomMat = new THREE.MeshStandardMaterial({ color: '#1c130a', emissive: '#ffc890', emissiveIntensity: 2.7, roughness: 0.4 });
+    const transomMat = new THREE.MeshStandardMaterial({ color: '#1c130a', emissive: '#ffc890', emissiveIntensity: 3.4, roughness: 0.4 });
     const transom = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.26), transomMat);
     transom.position.set(doorX, GARDEN_H + 2.06, B.d / 2 + 0.09);
     bld.add(doorFrame, door, transom);
-    const stoopLight = new THREE.PointLight('#ffbe82', 2.6, 6, 2);
-    stoopLight.position.set(doorX, GARDEN_H + 1.7, B.d / 2 + 0.7);
+    const lanternMat = new THREE.MeshStandardMaterial({ color: '#2a1c0c', emissive: '#ffd9a0', emissiveIntensity: 4.2, roughness: 0.5 });
+    for (const lx of [doorX - 0.66, doorX + 0.66]) {
+      const lantern = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.22, 0.12), lanternMat);
+      lantern.position.set(lx, GARDEN_H + 1.62, B.d / 2 + 0.1);
+      bld.add(lantern);
+    }
+    const stoopLight = new THREE.PointLight('#ffc27a', 5.2, 8, 2);
+    stoopLight.position.set(doorX, GARDEN_H + 1.75, B.d / 2 + 0.85);
     bld.add(stoopLight);
   }
 
@@ -409,24 +492,25 @@ let beacon, beaconLight;
     const parts = [];
     for (let f = 1; f <= FLOORS - 1; f++) {
       const y = GARDEN_H + f * FLOOR_H + 0.14;
-      parts.push(box(half * 2, 0.05, 0.78, M.metal, cx, y, B.d / 2 + 0.42));
-      parts.push(box(half * 2, 0.04, 0.04, M.metal, cx, y + 0.52, B.d / 2 + 0.8));
-      parts.push(box(half * 2, 0.03, 0.03, M.metal, cx, y + 0.28, B.d / 2 + 0.8));
-      for (let p = 0; p <= 4; p++) parts.push(box(0.035, 0.56, 0.035, M.metal, cx - half + p * (half / 2), y + 0.28, B.d / 2 + 0.8));
-      // diagonal ladder to next floor
+      parts.push(box(half * 2, 0.05, 0.82, M.metal, cx, y, B.d / 2 + 0.44));
+      parts.push(box(half * 2, 0.035, 0.035, M.metal, cx, y + 0.58, B.d / 2 + 0.83));
+      parts.push(box(half * 2, 0.028, 0.028, M.metal, cx, y + 0.32, B.d / 2 + 0.83));
+      for (let p = 0; p <= 4; p++) parts.push(box(0.03, 0.6, 0.03, M.metal, cx - half + p * (half / 2), y + 0.3, B.d / 2 + 0.83));
+      // zigzag stair to the next platform, alternating direction each floor
       if (f < FLOORS - 1) {
-        const lad = new THREE.Group();
-        for (const lx of [-0.26, 0.26]) lad.add(box(0.04, FLOOR_H + 0.28, 0.04, M.metal, lx, 0, 0));
-        for (let r = 0; r < 6; r++) lad.add(box(0.5, 0.035, 0.035, M.metal, 0, -FLOOR_H / 2 + 0.2 + r * 0.28, 0));
-        lad.position.set(cx - 0.7, y + FLOOR_H / 2 + 0.1, B.d / 2 + 0.55);
-        lad.rotation.x = -0.34;
-        lad.updateMatrixWorld(true);
-        lad.traverse((n) => { if (n.isMesh) { n.updateMatrixWorld(true); const g2 = n.geometry.clone().applyMatrix4(n.matrixWorld); parts.push(new THREE.Mesh(g2, M.metal)); } });
+        const dir = f % 2 === 0 ? 1 : -1;
+        const stair = new THREE.Group();
+        for (const sx of [-0.24, 0.24]) stair.add(box(0.04, FLOOR_H * 1.18, 0.04, M.metal, sx, 0, 0));
+        for (let r = 0; r < 7; r++) stair.add(box(0.44, 0.032, 0.09, M.metal, 0, -FLOOR_H * 0.52 + r * (FLOOR_H * 1.04 / 6), 0));
+        stair.position.set(cx + dir * 0.72, y + FLOOR_H / 2 + 0.12, B.d / 2 + 0.56);
+        stair.rotation.x = -0.5;
+        stair.updateMatrixWorld(true);
+        stair.traverse((n) => { if (n.isMesh) { n.updateMatrixWorld(true); const g2 = n.geometry.clone().applyMatrix4(n.matrixWorld); parts.push(new THREE.Mesh(g2, M.metal)); } });
       }
     }
-    // hanging drop ladder
-    for (const lx of [1.3, 1.9]) parts.push(box(0.04, 1.15, 0.04, M.metal, lx, GARDEN_H + 0.95, B.d / 2 + 0.46));
-    for (let r = 0; r < 4; r++) parts.push(box(0.6, 0.035, 0.035, M.metal, 1.6, GARDEN_H + 0.5 + r * 0.3, B.d / 2 + 0.46));
+    // hanging drop ladder below the first platform
+    for (const lx of [1.38, 1.82]) parts.push(box(0.035, 1.2, 0.035, M.metal, lx, GARDEN_H + 0.98, B.d / 2 + 0.5));
+    for (let r = 0; r < 4; r++) parts.push(box(0.48, 0.03, 0.03, M.metal, 1.6, GARDEN_H + 0.52 + r * 0.3, B.d / 2 + 0.5));
     const merged = collectMerged(parts.map((p) => { p.updateMatrix(); return p; }), M.metal);
     fe.add(merged);
     bld.add(fe);
@@ -496,7 +580,7 @@ function neighbor(w, h, d, mat, litColor, litRatio) {
   const mass = box(w, h, d, mat, 0, h / 2, 0);
   mass.castShadow = true; mass.receiveShadow = true;
   g.add(mass);
-  g.add(box(w + 0.14, 0.14, d + 0.14, M.stoneDark, 0, h + 0.05, 0));
+  g.add(box(w + 0.14, 0.14, d + 0.14, M.roof, 0, h + 0.05, 0));
   const litParts = [], darkParts = [];
   const cols = Math.max(2, Math.floor(w / 1.15));
   const rows = Math.max(2, Math.floor(h / 1.6));
@@ -584,24 +668,40 @@ function streetLamp(x, z) {
 
 /* -- trees -- */
 const canopies = [];
+M.canopyLight = new THREE.MeshStandardMaterial({ color: '#3d5c46', roughness: 0.95 });
+function foliageGeo(r) {
+  const geo = new THREE.IcosahedronGeometry(r, 1);
+  const pos = geo.attributes.position;
+  const v = new THREE.Vector3();
+  for (let i = 0; i < pos.count; i++) {
+    v.fromBufferAttribute(pos, i);
+    const k = 1 + (rng() - 0.5) * 0.42;
+    v.multiplyScalar(k);
+    pos.setXYZ(i, v.x, v.y * (0.82 + rng() * 0.2), v.z);
+  }
+  geo.computeVertexNormals();
+  return geo;
+}
 function tree(x, z, s = 1) {
   const g = new THREE.Group();
   const pit = box(1.1, 0.05, 1.1, M.soil, 0, 0.12, 0);
   g.add(pit);
-  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.09 * s, 0.13 * s, 2.1 * s, 8), M.trunk);
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.09 * s, 0.14 * s, 2.1 * s, 8), M.trunk);
   trunk.position.y = 1.05 * s + 0.1;
   trunk.castShadow = true;
   g.add(trunk);
+  const limb = new THREE.Mesh(new THREE.CylinderGeometry(0.04 * s, 0.06 * s, 0.9 * s, 6), M.trunk);
+  limb.position.set(0.28 * s, 2.0 * s, 0.1 * s);
+  limb.rotation.z = -0.7;
+  g.add(limb);
   const canopy = new THREE.Group();
-  const blobGeo = new THREE.IcosahedronGeometry(1, 0);
-  for (let i = 0; i < 5; i++) {
-    const b = new THREE.Mesh(blobGeo, M.canopy);
-    b.position.set(rand(-0.7, 0.7) * s, rand(-0.2, 0.6) * s, rand(-0.7, 0.7) * s);
-    b.scale.setScalar(rand(0.55, 1.0) * s);
+  for (let i = 0; i < 9; i++) {
+    const b = new THREE.Mesh(foliageGeo(rand(0.42, 0.78) * s), i % 3 === 0 ? M.canopyLight : M.canopy);
+    b.position.set(rand(-0.85, 0.85) * s, rand(-0.3, 0.75) * s, rand(-0.85, 0.85) * s);
     b.castShadow = true;
     canopy.add(b);
   }
-  canopy.position.y = 2.35 * s;
+  canopy.position.y = 2.5 * s;
   g.add(canopy);
   canopies.push(canopy);
   g.position.set(x, 0, z);
@@ -621,19 +721,20 @@ rotGroup.add(tree(6.9, 3.3, 1.05), tree(-9.1, 3.4, 0.9));
 
 /* ---------- lighting ---------- */
 
-scene.add(new THREE.HemisphereLight('#42589a', '#221a28', 3.1));
-const moon = new THREE.DirectionalLight('#b3c4f5', 5.5);
+scene.add(new THREE.HemisphereLight('#4a5a94', '#241a24', 3.1));
+const moon = new THREE.DirectionalLight('#c9cfe6', 5.0);
 moon.position.set(-8, 22, 22);
 moon.castShadow = true;
 moon.shadow.mapSize.setScalar(isMobile ? 1024 : 2048);
 moon.shadow.camera.left = -15; moon.shadow.camera.right = 15;
 moon.shadow.camera.top = 20; moon.shadow.camera.bottom = -4;
 moon.shadow.camera.far = 70;
-moon.shadow.bias = -0.0006;
-moon.shadow.radius = 3;
+moon.shadow.bias = -0.0002;
+moon.shadow.normalBias = 0.035;
+moon.shadow.radius = 2;
 scene.add(moon);
 scene.add(moon.target);
-const streetBounce = new THREE.PointLight('#ff9d5c', 8.0, 22, 2);
+const streetBounce = new THREE.PointLight('#ff9d5c', 9.5, 22, 2);
 streetBounce.position.set(0, 2.0, 5.2);
 scene.add(streetBounce);
 
@@ -643,8 +744,12 @@ for (const w of windows) {
   const lit = rng() < 0.68;
   w.warm = rng() > 0.1;
   w.on = lit;
-  w.base = lit ? rand(2.1, 3.4) : 0;
-  if (!w.warm) { w.mat.emissive = new THREE.Color('#cfe2ff'); w.base = lit ? rand(1.3, 1.9) : 0; }
+  w.base = lit ? rand(1.45, 2.15) : 0;
+  if (!w.warm) {
+    w.mat.emissive = new THREE.Color('#cfe2ff');
+    w.mat.emissiveMap = null;
+    w.base = lit ? rand(1.1, 1.6) : 0;
+  }
   w.mat.emissiveIntensity = w.base;
   w.target = w.base;
   w.speed = 0;
@@ -657,7 +762,7 @@ function windowLife(t, dt) {
     nextToggle = t + rand(2.4, 5.6);
     const w = windows[Math.floor(rng() * windows.length)];
     w.on = !w.on;
-    w.target = w.on ? (w.warm ? rand(2.1, 3.4) : rand(1.3, 1.9)) : 0;
+    w.target = w.on ? (w.warm ? rand(1.45, 2.15) : rand(1.1, 1.6)) : 0;
   }
   for (const w of windows) {
     const cur = w.mat.emissiveIntensity;
@@ -696,9 +801,10 @@ function steamLife(dt) {
 /* ---------- framing + camera rig ---------- */
 
 const CENTER = new THREE.Vector3(0, 0, 0);
-let heroDist = 30, heroHeight = 7, heroAz = 0.62;
+let heroDist = 30, heroAz = 0.62;
+const HERO_POLAR = 1.22;
+let polar = HERO_POLAR, targetPolar = HERO_POLAR;
 let dollyFrac = 1, targetDollyFrac = 1;
-let pitchOff = 0, targetPitchOff = 0;
 
 function computeFraming() {
   const bb = new THREE.Box3().setFromObject(rotGroup);
@@ -713,11 +819,14 @@ function computeFraming() {
   const hFov = Math.atan(Math.tan(vFov) * aspect);
   const margin = aspect < 0.8 ? 0.95 : 0.98;
   heroDist = (sphere * margin) / Math.tan(Math.min(vFov, hFov));
-  heroHeight = cy + sphere * 0.16;
 }
 
-function placeCamera(az, dist, height, look = CENTER) {
-  camera.position.set(Math.sin(az) * dist, height, Math.cos(az) * dist);
+function placeCamera(az, dist, pol, look = CENTER) {
+  camera.position.set(
+    CENTER.x + Math.sin(pol) * Math.sin(az) * dist,
+    CENTER.y + Math.cos(pol) * dist,
+    CENTER.z + Math.sin(pol) * Math.cos(az) * dist
+  );
   camera.lookAt(look);
 }
 
@@ -726,7 +835,7 @@ function placeCamera(az, dist, height, look = CENTER) {
 let mode = reduceMotion ? 'live' : 'pan';
 let panT = 0;
 const PAN_DUR = 4.6;
-const panFrom = { az: heroAz + 0.9, dist: 0.34, height: 2.1 };
+const panFrom = { az: heroAz + 0.9, dist: 0.34, polar: 1.44 };
 const panLook = new THREE.Vector3(B.x - 2.3, 2.2, B.z + B.d / 2 + 0.9);
 const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
@@ -735,9 +844,9 @@ function panStep(dt) {
   const k = easeInOut(Math.min(1, panT / PAN_DUR));
   const az = THREE.MathUtils.lerp(panFrom.az, heroAz, k);
   const dist = THREE.MathUtils.lerp(heroDist * panFrom.dist, heroDist, k);
-  const height = THREE.MathUtils.lerp(panFrom.height, heroHeight, k);
+  const pol = THREE.MathUtils.lerp(panFrom.polar, HERO_POLAR, k);
   const look = panLook.clone().lerp(CENTER, k);
-  placeCamera(az, dist, height, look);
+  placeCamera(az, dist, pol, look);
   if (panT >= PAN_DUR) mode = 'live';
 }
 
@@ -779,7 +888,7 @@ canvas.addEventListener('pointermove', (e) => {
     const pts = [...pointers.values()];
     const d = Math.hypot(pts[0][0] - pts[1][0], pts[0][1] - pts[1][1]);
     if (pinchDist > 0) {
-      targetDollyFrac = THREE.MathUtils.clamp(targetDollyFrac * (pinchDist / d), 0.6, 1.1);
+      targetDollyFrac = THREE.MathUtils.clamp(targetDollyFrac * (pinchDist / d), 0.34, 1.12);
     }
     pinchDist = d;
     lastInteract = clockTime;
@@ -791,7 +900,7 @@ canvas.addEventListener('pointermove', (e) => {
   lastX = e.clientX; lastY = e.clientY;
   spinVel = dx * 0.0042;
   rotGroup.rotation.y += spinVel;
-  targetPitchOff = THREE.MathUtils.clamp(targetPitchOff - dy * 0.0016, -0.12, 0.1);
+  targetPolar = THREE.MathUtils.clamp(targetPolar - dy * 0.0035, 0.42, 1.42);
   lastInteract = clockTime;
 });
 
@@ -808,7 +917,7 @@ canvas.addEventListener('pointercancel', endPointer);
 
 canvas.addEventListener('wheel', (e) => {
   e.preventDefault();
-  targetDollyFrac = THREE.MathUtils.clamp(targetDollyFrac + e.deltaY * 0.0011, 0.6, 1.1);
+  targetDollyFrac = THREE.MathUtils.clamp(targetDollyFrac + e.deltaY * 0.0011, 0.34, 1.12);
   skipPan();
   lastInteract = clockTime;
 }, { passive: false });
@@ -846,7 +955,9 @@ const FinishShader = {
       float vig = smoothstep(0.92, 0.32, length(q));
       col.rgb *= mix(0.72, 1.0, vig);
       float g = hash(vUv * vec2(1920.0, 1080.0) + fract(uTime) * 60.0) - 0.5;
-      col.rgb += g * 0.028;
+      col.rgb *= vec3(1.07, 1.0, 0.90);
+      float lum = dot(col.rgb, vec3(0.299, 0.587, 0.114));
+      col.rgb += g * 0.012 * (0.35 + lum);
       gl_FragColor = col;
     }`,
 };
@@ -899,8 +1010,8 @@ function frame() {
       rotGroup.rotation.y += spinVel + IDLE_SPIN * easeInOut(idleBlend) * dt;
     }
     dollyFrac = THREE.MathUtils.damp(dollyFrac, targetDollyFrac, 4.5, dt);
-    pitchOff = THREE.MathUtils.damp(pitchOff, targetPitchOff, 5, dt);
-    placeCamera(heroAz, heroDist * dollyFrac, heroHeight + pitchOff * heroDist * 0.35);
+    polar = THREE.MathUtils.damp(polar, targetPolar, 5.5, dt);
+    placeCamera(heroAz, heroDist * dollyFrac, polar);
   } else {
     rotGroup.rotation.y += IDLE_SPIN * 0.4 * dt;
     panStep(dt);
@@ -932,7 +1043,7 @@ function frame() {
 frame();
 
 /* dev/verify hook */
-window.__walkupPose = (rotY, dolly = 1) => { rotGroup.rotation.y = rotY; targetDollyFrac = dolly; dollyFrac = dolly; lastInteract = clockTime; idleBlend = 0; };
+window.__walkupPose = (rotY, dolly = 1, pol = HERO_POLAR) => { rotGroup.rotation.y = rotY; targetDollyFrac = dolly; dollyFrac = dolly; targetPolar = pol; polar = pol; lastInteract = clockTime; idleBlend = 0; };
 window.__walkupInfo = () => ({
   calls: renderer.info.render.calls,
   tris: renderer.info.render.triangles,
