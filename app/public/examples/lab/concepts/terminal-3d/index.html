@@ -1,173 +1,53 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cinematic 3D | The Lab · Little Fight NYC</title>
-    <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
-    <meta name="theme-color" content="#0b0b0d" />
-    <meta
-      name="description"
-      content="A cinematic spatial website study built around architecture, light, depth, and movement."
-    />
-    <script>
-      (() => {
-        const nativeRaf = window.requestAnimationFrame.bind(window);
-        const nativeCancel = window.cancelAnimationFrame.bind(window);
-        const callbacks = new Map();
-        let nextId = 1;
-        let hostActive = true;
-        let motionPaused = false;
+<html lang="en" class="lab-concept-page">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1d0f3d" />
+  <title>Neon District | The Lab · Little Fight NYC</title>
+  <meta name="description" content="A vibrant Tron-style business district in live 3D. Fly the block, tap the beacons, read the signals — small business to big business in one glowing neighborhood." />
+  <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="district.css" />
+</head>
+<body>
+  <canvas class="stage" data-scene aria-label="Vibrant neon 3D business district, slowly rotating. Drag to orbit, pinch to zoom, tap a glowing beacon to fly to it and read its data point."></canvas>
 
-        if (matchMedia("(pointer: coarse)").matches && devicePixelRatio > 1.5) {
-          try {
-            Object.defineProperty(window, "devicePixelRatio", {
-              configurable: true,
-              get: () => 1.5
-            });
-          } catch {}
-        }
+  <header class="plate" data-plate>
+    <p class="plate__eyebrow">The Lab · Build 02</p>
+    <h1 class="plate__title">Neon<br />District.</h1>
+    <p class="plate__line">Every scale of business, one glowing block. Tap a beacon.</p>
+  </header>
 
-        function shouldRun() {
-          return hostActive && !motionPaused && document.visibilityState === "visible";
-        }
+  <p class="hint" data-hint>Drag to orbit · pinch to zoom · tap a beacon</p>
 
-        function schedule(id, entry) {
-          entry.nativeId = nativeRaf((time) => {
-            if (!callbacks.has(id)) return;
-            callbacks.delete(id);
-            entry.callback(time);
-          });
-        }
+  <aside class="card" data-card aria-live="polite" hidden>
+    <span class="card__bar" data-card-bar></span>
+    <p class="card__kicker" data-card-kicker>Signal</p>
+    <h2 class="card__title" data-card-title>—</h2>
+    <p class="card__body" data-card-body>—</p>
+    <div class="card__row">
+      <span class="card__index" data-card-index>1 / 6</span>
+      <span class="card__controls">
+        <button class="card__btn" data-card-prev aria-label="Previous beacon">‹</button>
+        <button class="card__btn" data-card-next aria-label="Next beacon">›</button>
+        <button class="card__btn card__btn--close" data-card-close aria-label="Close and fly back">×</button>
+      </span>
+    </div>
+  </aside>
 
-        window.requestAnimationFrame = (callback) => {
-          const id = nextId++;
-          const entry = { callback, nativeId: 0 };
-          callbacks.set(id, entry);
-          if (shouldRun()) schedule(id, entry);
-          return id;
-        };
+  <div class="veil" data-veil aria-hidden="true">
+    <p class="veil__mark">NEON DISTRICT</p>
+    <span class="veil__bar"><span class="veil__fill" data-veil-fill></span></span>
+  </div>
 
-        window.cancelAnimationFrame = (id) => {
-          const entry = callbacks.get(id);
-          if (entry?.nativeId) nativeCancel(entry.nativeId);
-          callbacks.delete(id);
-        };
+  <noscript>
+    <p class="fallback">This build needs JavaScript — it renders a live 3D neon district.</p>
+  </noscript>
 
-        function sync() {
-          if (shouldRun()) {
-            callbacks.forEach((entry, id) => {
-              if (!entry.nativeId) schedule(id, entry);
-            });
-          } else {
-            callbacks.forEach((entry) => {
-              if (entry.nativeId) nativeCancel(entry.nativeId);
-              entry.nativeId = 0;
-            });
-          }
-        }
-
-        document.addEventListener("lab:visibility", (event) => {
-          hostActive = event.detail?.active !== false;
-          sync();
-        });
-        document.addEventListener("lab:motion", (event) => {
-          motionPaused = event.detail?.paused === true;
-          sync();
-        });
-        window.addEventListener("message", (event) => {
-          if (event.origin !== location.origin || !event.data) return;
-          if (event.data.type === "lab:visibility") hostActive = event.data.active !== false;
-          if (event.data.type === "lab:motion") motionPaused = event.data.paused === true;
-          sync();
-        });
-        document.addEventListener("visibilitychange", sync);
-      })();
-    </script>
-    <script type="module" crossorigin src="assets/index-DvF386rg.js"></script>
-    <link rel="stylesheet" crossorigin href="assets/index-D-tURxUO.css">
-    <style>
-      #scene{position:relative;isolation:isolate;background:radial-gradient(circle at 68% 34%,rgba(56,189,248,.16),transparent 34%),linear-gradient(150deg,#071119,#0b1a27 58%,#071119)}
-      #scene canvas{position:absolute;inset:0;z-index:1;width:100%!important;height:100%!important}
-      .terminal-visual{position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(#000 72%,transparent)}
-      .terminal-visual::before{content:"";position:absolute;inset:10%;border:1px solid rgba(56,189,248,.18);clip-path:polygon(0 0,36% 0,36% 1px,100% 1px,100% 64%,calc(100% - 1px) 64%,calc(100% - 1px) 100%,58% 100%,58% calc(100% - 1px),0 calc(100% - 1px))}
-      .terminal-visual__tower{position:absolute;right:15%;bottom:8%;width:46%;height:76%;border:1px solid rgba(231,245,255,.24);background:repeating-linear-gradient(90deg,transparent 0 17%,rgba(231,245,255,.12) 17.2% 17.8%,transparent 18% 34%),repeating-linear-gradient(180deg,rgba(56,189,248,.04) 0 11%,rgba(231,245,255,.16) 11.2% 11.5%,rgba(7,17,25,.7) 11.8% 22%);box-shadow:-32px 34px 80px rgba(0,0,0,.42),inset 0 0 70px rgba(56,189,248,.08);transform:perspective(900px) rotateY(-13deg) skewY(-2deg);transform-origin:bottom right}
-      .terminal-visual__tower::before{content:"";position:absolute;inset:7% 9%;background:repeating-linear-gradient(90deg,rgba(249,115,22,.58) 0 10%,transparent 10% 24%),repeating-linear-gradient(180deg,rgba(249,115,22,.42) 0 5%,transparent 5% 13%);opacity:.72;filter:drop-shadow(0 0 9px rgba(249,115,22,.32));animation:terminal-window-shift 6s steps(3,end) infinite alternate}
-      .terminal-visual__tower::after{content:"";position:absolute;right:-13%;bottom:-2%;width:12%;height:94%;border:1px solid rgba(56,189,248,.18);background:#06101a;transform:skewY(36deg);transform-origin:bottom left}
-      .terminal-visual__orbit{position:absolute;right:7%;bottom:4%;width:74%;aspect-ratio:1;border:1px solid rgba(56,189,248,.18);border-radius:50%;transform:rotateX(72deg);box-shadow:0 0 50px rgba(56,189,248,.05);animation:terminal-orbit 18s linear infinite}
-      .terminal-visual__orbit::after{content:"";position:absolute;top:50%;left:-4px;width:8px;height:8px;border-radius:50%;background:#f97316;box-shadow:0 0 18px #f97316}
-      .terminal-visual__readout{position:absolute;top:7%;left:6%;display:grid;gap:7px;color:#93adc0;font:600 16px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;text-transform:uppercase}
-      .terminal-visual__readout strong{color:#e7f5ff;font-size:16px}
-      .terminal-visual__readout span{color:#38bdf8}
-      .terminal-visual__axis{position:absolute;right:5%;top:9%;bottom:9%;width:1px;background:linear-gradient(transparent,#f97316 30%,#38bdf8 68%,transparent)}
-      .ghost-link{min-height:44px;display:inline-flex;align-items:center}
-      .lil-gui{display:none!important}
-      @keyframes terminal-orbit{to{transform:rotateX(72deg) rotateZ(360deg)}}
-      @keyframes terminal-window-shift{to{transform:translateY(7px);opacity:.9}}
-      @media(max-width:980px){.terminal-visual__tower{right:12%;width:55%}.terminal-visual__readout{top:5%;left:5%}}
-      @media(prefers-reduced-motion:reduce){.terminal-visual__tower::before,.terminal-visual__orbit{animation:none}}
-    </style>
-  </head>
-  <body>
-    <main id="app">
-      <header class="site-header">
-        <div class="brand">Little Fight NYC / The Lab</div>
-        <span class="ghost-link">Working spatial study</span>
-      </header>
-
-      <section class="hero panel">
-        <div class="hero-copy">
-          <p class="eyebrow">Spatial Website Study</p>
-          <h1>Design-forward websites with cinematic 3D motion.</h1>
-          <p class="lead">
-            Architecture, light, and controlled depth create a memorable
-            path through the story.
-          </p>
-        </div>
-        <div id="scene" role="img" aria-label="3D creative scene">
-          <div class="terminal-visual" aria-hidden="true">
-            <div class="terminal-visual__readout"><span>Scene 03 / Live</span><strong>Vertical city system</strong><small>Depth · light · motion</small></div>
-            <div class="terminal-visual__orbit"></div>
-            <div class="terminal-visual__tower"></div>
-            <div class="terminal-visual__axis"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="panel split" id="story-1">
-        <div>
-          <p class="eyebrow">Direction</p>
-          <h2>Architecture that breathes.</h2>
-        </div>
-        <p>
-          Glass, glow, and controlled depth cues create a branded atmosphere
-          rather than a generic landing page.
-        </p>
-      </section>
-
-      <section class="panel split" id="story-2">
-        <div>
-          <p class="eyebrow">Motion</p>
-          <h2>Scroll-synced storytelling.</h2>
-        </div>
-        <p>
-          Camera movement, light shifts, and staged reveals follow user intent
-          with smooth inertial scrolling.
-        </p>
-      </section>
-
-      <section class="panel split" id="story-3">
-        <div>
-          <p class="eyebrow">Pipeline</p>
-          <h2>Production-ready asset flow.</h2>
-        </div>
-        <p>
-          Model optimization scripts (Draco + texture compression prep), CI
-          checks, and visual regression are prewired.
-        </p>
-      </section>
-    </main>
-
+  <script type="module" src="district.js"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

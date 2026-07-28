@@ -878,7 +878,7 @@ const pointers = new Map();
 let pinchDist = 0;
 
 canvas.addEventListener('pointerdown', (e) => {
-  canvas.setPointerCapture(e.pointerId);
+  try { canvas.setPointerCapture(e.pointerId); } catch { /* synthetic or stale pointer */ }
   pointers.set(e.pointerId, [e.clientX, e.clientY]);
   if (pointers.size === 1) {
     dragging = true;

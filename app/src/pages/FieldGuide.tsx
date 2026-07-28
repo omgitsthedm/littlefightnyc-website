@@ -45,12 +45,12 @@ const LAB_BUILDS = [
     alt: "Night view of the Six-Story Walk-Up diorama",
   },
   {
-    title: "Cinematic 3D",
-    type: "Spatial website",
-    description: "A working site built from architecture, light, and scroll-driven story. Premium feel, no template.",
+    title: "Neon District",
+    type: "Capability build",
+    description: "A vibrant Tron-style business district in live 3D. Tap the beacons — every scale of business in one glowing block.",
     href: "/examples/lab/concepts/terminal-3d/",
     poster: "/images/lab-showcase/cinematic-3d",
-    alt: "New York buildings seen from the street",
+    alt: "Vibrant neon 3D business district at dusk",
   },
   {
     title: "Scroll Into Motion",

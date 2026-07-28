@@ -11,10 +11,10 @@
     },
     {
       slug: 'terminal-3d',
-      title: 'Cinematic 3D',
-      type: 'Spatial website',
+      title: 'Neon District',
+      type: 'Capability build',
       suite: 'spatial-nyc',
-      hint: 'Scroll through the story. Drag the model when it appears.'
+      hint: 'Tap a beacon to fly in. Drag to orbit the block.'
     },
     {
       slug: 'pill-scroll',
