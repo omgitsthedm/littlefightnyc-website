@@ -304,7 +304,7 @@ function gridTexture() {
     }
   };
   dashRow(1.95); dashRow(-6.75);
-  dashCol(4.2); dashCol(-6.1);
+  dashCol(4.62); dashCol(-6.55);
 
   // curbs
   g.fillStyle = 'rgba(240,240,255,0.4)';
@@ -460,6 +460,7 @@ const orbSprites = [];
 const treeCanopies = [];
 const ripples = [];
 const textRedraws = [];
+const floorMatRefHolder = {};
 
 /* -- slab + floor -- */
 {
@@ -468,6 +469,7 @@ const textRedraws = [];
     color: '#2a1650', map: gridTex, emissive: '#ffffff', emissiveMap: gridTex,
     emissiveIntensity: 0.72, roughness: 0.65, metalness: 0.15,
   });
+  floorMatRefHolder.mat = floorMat;
   const floor = new THREE.Mesh(new THREE.BoxGeometry(SLAB_W, 0.3, SLAB_D), floorMat);
   floor.position.y = -0.15;
   rotGroup.add(floor);
@@ -530,6 +532,50 @@ const SHOPS = [
   { name: 'TACOS', accent: ACCENTS.violet, renovation: true },
 ];
 
+function displayTexture(kind, accent) {
+  const c2 = document.createElement('canvas');
+  c2.width = 256; c2.height = 108;
+  const g2 = c2.getContext('2d');
+  g2.fillStyle = '#0d0620'; g2.fillRect(0, 0, 256, 108);
+  g2.strokeStyle = accent; g2.fillStyle = accent;
+  g2.lineWidth = 4; g2.shadowColor = accent; g2.shadowBlur = 12;
+  g2.lineJoin = 'round'; g2.lineCap = 'round';
+  if (kind === 'PIZZA') {
+    g2.beginPath(); g2.moveTo(70, 26); g2.lineTo(120, 82); g2.lineTo(20, 82); g2.closePath(); g2.stroke();
+    g2.beginPath(); g2.arc(64, 62, 5, 0, 7); g2.fill();
+    g2.beginPath(); g2.arc(84, 74, 5, 0, 7); g2.fill();
+    g2.beginPath(); g2.arc(48, 76, 4, 0, 7); g2.fill();
+    for (let b2 = 0; b2 < 3; b2++) g2.strokeRect(158 + b2 * 30, 40, 16, 42);
+  } else if (kind === 'BODEGA') {
+    g2.strokeRect(24, 30, 208, 6); g2.strokeRect(24, 66, 208, 6);
+    for (let f2 = 0; f2 < 6; f2++) { g2.beginPath(); g2.arc(48 + f2 * 34, 52, 8, 0, 7); g2.fill(); }
+    for (let f2 = 0; f2 < 6; f2++) { g2.beginPath(); g2.arc(48 + f2 * 34, 88, 8, 0, 7); g2.stroke(); }
+  } else if (kind === 'CUTS') {
+    g2.strokeRect(38, 22, 26, 66);
+    for (let p2 = 0; p2 < 4; p2++) { g2.beginPath(); g2.moveTo(38, 34 + p2 * 16); g2.lineTo(64, 26 + p2 * 16); g2.stroke(); }
+    g2.beginPath(); g2.moveTo(120, 30); g2.lineTo(180, 84); g2.moveTo(180, 30); g2.lineTo(120, 84); g2.stroke();
+    g2.beginPath(); g2.arc(116, 88, 8, 0, 7); g2.stroke();
+    g2.beginPath(); g2.arc(184, 88, 8, 0, 7); g2.stroke();
+  } else if (kind === 'NAILS') {
+    for (let b2 = 0; b2 < 4; b2++) { g2.strokeRect(40 + b2 * 34, 52, 16, 34); g2.fillRect(43 + b2 * 34, 40, 10, 12); }
+    g2.beginPath();
+    g2.moveTo(200, 78); g2.bezierCurveTo(188, 52, 206, 40, 214, 58); g2.bezierCurveTo(222, 40, 240, 52, 228, 78); g2.closePath();
+    g2.stroke();
+  } else if (kind === 'CAFÉ') {
+    g2.strokeRect(60, 46, 44, 34);
+    g2.beginPath(); g2.arc(104, 60, 10, -1.4, 1.4); g2.stroke();
+    for (let st2 = 0; st2 < 2; st2++) { g2.beginPath(); g2.moveTo(72 + st2 * 16, 40); g2.quadraticCurveTo(78 + st2 * 16, 30, 72 + st2 * 16, 20); g2.stroke(); }
+    g2.beginPath(); g2.arc(180, 66, 26, 3.4, 6.1); g2.stroke();
+  } else {
+    g2.beginPath(); g2.arc(128, 78, 42, Math.PI, 0); g2.closePath(); g2.stroke();
+    g2.beginPath(); g2.moveTo(92, 74); g2.lineTo(104, 60); g2.lineTo(116, 74); g2.lineTo(128, 60); g2.lineTo(140, 74); g2.lineTo(152, 60); g2.lineTo(164, 74); g2.stroke();
+    for (let d2 = 0; d2 < 5; d2++) { g2.beginPath(); g2.arc(58 + d2 * 36, 22, 4, 0, 7); g2.fill(); }
+  }
+  const t2 = new THREE.CanvasTexture(c2);
+  t2.colorSpace = THREE.SRGBColorSpace;
+  return t2;
+}
+
 const STRIP_X0 = -9.6, UNIT_W = 2.35;
 const shopDoors = [];
 let renoRefs = null;
@@ -546,9 +592,9 @@ SHOPS.forEach((shop, i) => {
   edges.position.y = h / 2;
   g.add(edges);
   edgeMats.push(eMat);
-  const frontMat = new THREE.MeshBasicMaterial({ color: shop.accent, transparent: true, opacity: shop.renovation ? 0 : 0.4 });
-  const front = new THREE.Mesh(new THREE.PlaneGeometry(UNIT_W - 0.5, 0.72), frontMat);
-  front.position.set(0, 0.62, 1.57);
+  const frontMat = new THREE.MeshBasicMaterial({ map: displayTexture(shop.name, shop.accent), transparent: true, opacity: shop.renovation ? 0 : 0.92 });
+  const front = new THREE.Mesh(new THREE.PlaneGeometry(UNIT_W - 0.44, 0.8), frontMat);
+  front.position.set(0, 0.66, 1.57);
   g.add(front);
   const doorMat = new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: shop.renovation ? 0.06 : 0.55 });
   const door = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 1.15), doorMat);
@@ -593,7 +639,7 @@ SHOPS.forEach((shop, i) => {
 });
 
 /* -- mid-rises + tower -- */
-neonBuilding({ w: 4.4, h: 6.8, d: 4.2, x: -8.6, z: -3.6, accent: ACCENTS.violet, density: 0.55, order: 2, ry: 0.04 });
+neonBuilding({ w: 4.4, h: 6.8, d: 4.2, x: -9.2, z: -3.6, accent: ACCENTS.violet, density: 0.55, order: 2, ry: 0 });
 neonBuilding({ w: 3.4, h: 9.4, d: 3.4, x: -3.2, z: -4.6, accent: ACCENTS.cyan, density: 0.5, order: 3, ry: -0.03 });
 neonBuilding({ w: 3.8, h: 5.2, d: 3.6, x: 1.6, z: -3.8, accent: ACCENTS.amber, density: 0.6, order: 2 });
 
@@ -873,7 +919,7 @@ let billboardBorder = null;
     rotGroup.add(wt);
     builders.push({ group: wt, order: 3 });
   };
-  waterTower(-9.5, 6.84, -4.4, ACCENTS.violet);
+  waterTower(-10.1, 6.84, -4.4, ACCENTS.violet);
   waterTower(2.5, 5.24, -4.5, ACCENTS.amber);
 
   // steam grate
@@ -907,36 +953,37 @@ let billboardBorder = null;
   // tower billboard — measured so nothing ever clips
   const drawBillboard = () => {
     const cnv2 = document.createElement('canvas');
-    cnv2.width = 768; cnv2.height = 384;
+    cnv2.width = 640; cnv2.height = 640;
     const bg2 = cnv2.getContext('2d');
-    bg2.fillStyle = '#12082a'; bg2.fillRect(0, 0, 768, 384);
+    bg2.fillStyle = '#12082a'; bg2.fillRect(0, 0, 640, 640);
     bg2.textAlign = 'center'; bg2.textBaseline = 'middle';
-    const fitText = (txt, weight, maxSize, maxW, y2, glow) => {
+    const line = (txt, weight, maxSize, maxW, y2, glow, fill) => {
       let size = maxSize;
       bg2.font = `${weight} ${size}px "Barlow Condensed", Arial, sans-serif`;
       while (bg2.measureText(txt).width > maxW && size > 20) {
         size -= 2;
         bg2.font = `${weight} ${size}px "Barlow Condensed", Arial, sans-serif`;
       }
-      bg2.shadowColor = glow; bg2.shadowBlur = 34;
-      bg2.fillStyle = '#ffffff';
-      bg2.fillText(txt, 384, y2);
+      bg2.shadowColor = glow; bg2.shadowBlur = 14;
+      bg2.fillStyle = fill;
+      bg2.fillText(txt, 320, y2, maxW);
     };
-    fitText('LITTLE FIGHT', 800, 132, 660, 152, '#ff3ec8');
-    fitText('NEW YORK · NEW YORK', 700, 62, 620, 282, '#33e6ff');
+    line('LITTLE', 800, 224, 560, 152, '#ff3ec8', '#f0e6ff');
+    line('FIGHT', 800, 224, 560, 344, '#33e6ff', '#f0e6ff');
+    line('NEW YORK · NEW YORK', 700, 58, 560, 540, '#ffb02e', '#e8d9ff');
     const t2 = new THREE.CanvasTexture(cnv2);
     t2.colorSpace = THREE.SRGBColorSpace;
     return t2;
   };
   const bbTex = drawBillboard();
   const bbMat = new THREE.MeshBasicMaterial({ map: bbTex, transparent: true });
-  const bb = new THREE.Mesh(new THREE.PlaneGeometry(3.15, 1.62), bbMat);
+  const bb = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 2.9), bbMat);
   textRedraws.push(() => { bbMat.map = drawBillboard(); bbMat.needsUpdate = true; });
-  bb.position.set(7.45, 5.35, -0.63);
+  bb.position.set(7.6, 9.75, -1.17);
   rotGroup.add(bb);
-  billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.28, 1.74)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
+  billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.04, 3.04)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
   billboardBorder.position.copy(bb.position);
-  billboardBorder.position.z += 0.001;
+  billboardBorder.position.z += 0.005;
   rotGroup.add(billboardBorder);
 
   // street name signs at both intersections
@@ -979,17 +1026,140 @@ let billboardBorder = null;
     rotGroup.add(fe);
     edgeMats.push(mat2);
   };
-  fireEscape(-8.6, -1.47, 4.0, 6.4, 5, ACCENTS.violet);
+  fireEscape(-9.2, -1.47, 4.0, 6.4, 5, ACCENTS.violet);
   fireEscape(1.6, -1.97, 3.4, 4.9, 4, ACCENTS.amber);
+}
+
+/* -- sidewalk café outside CAFÉ + hot-dog cart -- */
+{
+  const mkTable = (tx3, tz3) => {
+    const g = new THREE.Group();
+    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 0.4, 8), new THREE.MeshStandardMaterial({ color: '#1a0d34', roughness: 0.6 }));
+    stem.position.y = 0.2;
+    g.add(stem);
+    const top = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.26, 0.03, 16), new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.5, metalness: 0.3 }));
+    top.position.y = 0.42;
+    g.add(top);
+    const rimMat = new THREE.LineBasicMaterial({ color: ACCENTS.amber, transparent: true, opacity: 0.7 });
+    const rim3 = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.26, 0.26, 0.01, 16)), rimMat);
+    rim3.position.y = 0.44;
+    g.add(rim3);
+    edgeMats.push(rimMat);
+    const candle = new THREE.Sprite(new THREE.SpriteMaterial({ map: orbTexture(ACCENTS.amber), transparent: true, opacity: 0.85, depthWrite: false }));
+    candle.scale.setScalar(0.12);
+    candle.position.y = 0.5;
+    g.add(candle);
+    orbSprites.push(candle);
+    for (const a3 of [0.8, 2.4, 4.2]) {
+      const stool = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.11, 0.26, 10), new THREE.MeshStandardMaterial({ color: '#180c30', roughness: 0.7 }));
+      stool.position.set(Math.cos(a3) * 0.42, 0.13, Math.sin(a3) * 0.42);
+      g.add(stool);
+    }
+    g.position.set(tx3, 0, tz3);
+    rotGroup.add(g);
+    builders.push({ group: g, order: 1 });
+  };
+  mkTable(-0.85, 6.35);
+  mkTable(0.45, 6.6);
+
+  // hot-dog cart with striped umbrella and its own steam
+  const cart = new THREE.Group();
+  const body2 = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.5, 0.5), new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.5, metalness: 0.3 }));
+  body2.position.y = 0.45;
+  cart.add(body2);
+  const trim = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.05, 0.52), new THREE.MeshBasicMaterial({ color: ACCENTS.coral }));
+  trim.position.y = 0.72;
+  cart.add(trim);
+  for (const wx3 of [-0.3, 0.3]) {
+    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.04, 12), new THREE.MeshStandardMaterial({ color: '#0d0620', roughness: 0.8 }));
+    wheel.rotation.x = Math.PI / 2;
+    wheel.position.set(wx3, 0.12, 0.26);
+    cart.add(wheel);
+  }
+  const umbCanvas = document.createElement('canvas');
+  umbCanvas.width = 128; umbCanvas.height = 32;
+  const ug = umbCanvas.getContext('2d');
+  for (let st3 = 0; st3 < 8; st3++) { ug.fillStyle = st3 % 2 ? '#ff6a4d' : '#fef7ff'; ug.fillRect(st3 * 16, 0, 16, 32); }
+  const umbTex = new THREE.CanvasTexture(umbCanvas);
+  umbTex.colorSpace = THREE.SRGBColorSpace;
+  const umb = new THREE.Mesh(new THREE.ConeGeometry(0.55, 0.28, 12), new THREE.MeshStandardMaterial({ map: umbTex, roughness: 0.7 }));
+  umb.position.y = 1.38;
+  cart.add(umb);
+  const umbPole = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.6, 6), new THREE.MeshStandardMaterial({ color: '#1a0d34', roughness: 0.6 }));
+  umbPole.position.y = 1.0;
+  cart.add(umbPole);
+  cart.position.set(2.7, 0, 6.3);
+  cart.rotation.y = -0.3;
+  rotGroup.add(cart);
+  builders.push({ group: cart, order: 1 });
+  const cartSteamTex = orbTexture('rgba(230,230,255,1)');
+  for (let i2 = 0; i2 < 2; i2++) {
+    const sp2 = new THREE.Sprite(new THREE.SpriteMaterial({ map: cartSteamTex, transparent: true, opacity: 0, depthWrite: false }));
+    sp2.position.set(2.85, 0.8, 6.25);
+    rotGroup.add(sp2);
+    steamPuffs.push({ sp: sp2, t: i2 * 1.6, dur: rand(2.8, 3.6), ox: 2.85, oy: 0.8, oz: 6.25 });
+  }
+}
+
+/* -- rain system: showers roll through, streets go wet and reflective -- */
+const weather = { v: 0, target: 0, next: reduceMotion ? 1e9 : rand(35, 70), dur: 0 };
+let rainLines = null;
+const floorMatRef = floorMatRefHolder.mat;
+{
+  const RAIN_N = 240;
+  const pos = new Float32Array(RAIN_N * 6);
+  for (let i2 = 0; i2 < RAIN_N; i2++) {
+    const x2 = rand(-13, 13), y2 = rand(0, 12), z2 = rand(-9, 9);
+    pos[i2 * 6] = x2; pos[i2 * 6 + 1] = y2; pos[i2 * 6 + 2] = z2;
+    pos[i2 * 6 + 3] = x2 + 0.06; pos[i2 * 6 + 4] = y2 - 0.55; pos[i2 * 6 + 5] = z2;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat3 = new THREE.LineBasicMaterial({ color: '#9ad4ff', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
+  rainLines = new THREE.LineSegments(geo, mat3);
+  rainLines.visible = false;
+  rotGroup.add(rainLines);
+}
+
+function weatherStep(dt) {
+  if (reduceMotion) return;
+  if (weather.dur > 0) {
+    weather.dur -= dt;
+    if (weather.dur <= 0) { weather.target = 0; weather.next = rand(50, 100); }
+  } else {
+    weather.next -= dt;
+    if (weather.next <= 0) { weather.target = 1; weather.dur = rand(24, 40); }
+  }
+  weather.v += (weather.target - weather.v) * Math.min(1, dt / 2.5);
+  const w2 = weather.v;
+  if (rainLines) {
+    rainLines.visible = w2 > 0.02;
+    rainLines.material.opacity = 0.3 * w2;
+    if (rainLines.visible) {
+      const p2 = rainLines.geometry.attributes.position;
+      for (let i2 = 0; i2 < p2.count / 2; i2++) {
+        let y1 = p2.getY(i2 * 2) - dt * 16;
+        if (y1 < 0) y1 += 12;
+        p2.setY(i2 * 2, y1);
+        p2.setY(i2 * 2 + 1, y1 - 0.55);
+      }
+      p2.needsUpdate = true;
+    }
+  }
+  if (floorMatRef) {
+    floorMatRef.roughness = 0.65 - 0.42 * w2;
+    floorMatRef.metalness = 0.15 + 0.45 * w2;
+  }
 }
 
 function steamStep(dt) {
   for (const p of steamPuffs) {
     p.t += dt;
-    if (p.t > p.dur) { p.t = 0; p.dur = rand(3.2, 4.2); }
+    if (p.t > p.dur) { p.t = 0; p.dur = rand(2.8, 4.2); }
     const k = p.t / p.dur;
-    p.sp.position.set(0.6 + Math.sin(p.t * 2.2) * 0.08 + k * 0.25, 0.15 + k * 1.5, 3.6);
-    p.sp.scale.setScalar(0.3 + k * 1.0);
+    const ox = p.ox ?? 0.6, oy = p.oy ?? 0.15, oz = p.oz ?? 3.6;
+    p.sp.position.set(ox + Math.sin(p.t * 2.2) * 0.08 + k * 0.22, oy + k * 1.3, oz);
+    p.sp.scale.setScalar(0.26 + k * 0.9);
     p.sp.material.opacity = Math.sin(Math.PI * k) * 0.16;
   }
 }
@@ -1078,10 +1248,10 @@ function carMesh(color, cab = false) {
 const CAR_ROUTES = [
   { dir: 'EW', from: new THREE.Vector3(-14.5, 0, 2.4), to: new THREE.Vector3(14.5, 0, 2.4), stops: [-7.65, 2.65] },
   { dir: 'EW', from: new THREE.Vector3(-14.5, 0, 1.5), to: new THREE.Vector3(14.5, 0, 1.5), stops: [-7.65, 2.65] },
-  { dir: 'EW', from: new THREE.Vector3(14.5, 0, -6.4), to: new THREE.Vector3(-14.5, 0, -6.4), stops: [5.75, -4.55] },
-  { dir: 'EW', from: new THREE.Vector3(14.5, 0, -7.2), to: new THREE.Vector3(-14.5, 0, -7.2), stops: [5.75, -4.55] },
-  { dir: 'NS', from: new THREE.Vector3(4.2, 0, 10), to: new THREE.Vector3(4.2, 0, -10), stops: [3.55, -5.35] },
-  { dir: 'NS', from: new THREE.Vector3(-6.1, 0, -10), to: new THREE.Vector3(-6.1, 0, 10), stops: [-8.15, 0.35] },
+  { dir: 'EW', from: new THREE.Vector3(14.5, 0, -6.45), to: new THREE.Vector3(-14.5, 0, -6.45), stops: [5.75, -4.55] },
+  { dir: 'EW', from: new THREE.Vector3(14.5, 0, -7.15), to: new THREE.Vector3(-14.5, 0, -7.15), stops: [5.75, -4.55] },
+  { dir: 'NS', from: new THREE.Vector3(4.62, 0, 5.55), to: new THREE.Vector3(4.62, 0, -8.9), stops: [3.55, -5.35] },
+  { dir: 'NS', from: new THREE.Vector3(-6.55, 0, -8.9), to: new THREE.Vector3(-6.55, 0, 5.55), stops: [-8.15, 0.35] },
 ];
 for (const r of CAR_ROUTES) {
   r.len = r.from.distanceTo(r.to);
@@ -1111,8 +1281,8 @@ for (const r of CAR_ROUTES) {
 
 {
   const parked = [
-    [-11.8, 2.72, 0, false], [-9.2, 2.72, 0, true], [0.5, 2.72, 0, false], [10.6, 2.72, 0, false],
-    [-2.0, -6.02, Math.PI, false], [7.2, -6.02, Math.PI, true],
+    [-11.5, 1.06, 0, false], [-3.6, 1.06, 0, true], [0.8, 1.06, 0, false], [10.9, 1.06, 0, false],
+    [-2.0, -6.0, Math.PI, false], [7.2, -6.0, Math.PI, true],
   ];
   for (const [px3, pz3, ry3, isCab] of parked) {
     const m = carMesh(isCab ? '#ffb02e' : pick([ACCENTS.violet, ACCENTS.cyan, ACCENTS.magenta]), isCab);
@@ -1148,10 +1318,8 @@ function carStep(a, dt) {
   if (a.t > 1) a.t -= 1;
   a.m.position.copy(r.from).lerp(r.to, a.t);
   a.m.position.y = 0.02;
-  const margin = r.axis === 'x'
-    ? Math.min(a.m.position.x + 13.4, 13.4 - a.m.position.x)
-    : Math.min(a.m.position.z + 9.2, 9.2 - a.m.position.z);
-  const vis = THREE.MathUtils.clamp(margin / 1.2, 0, 1);
+  const endDist = Math.min(a.t, 1 - a.t) * r.len;
+  const vis = THREE.MathUtils.clamp(endDist / 1.2, 0, 1);
   a.m.visible = vis > 0.05;
   a.m.scale.setScalar(Math.max(0.001, vis));
 }
@@ -1171,15 +1339,23 @@ function pedMesh() {
   return g;
 }
 
-const CURB_N = new THREE.Vector3(4.2, 0, 3.35);
-const CURB_S = new THREE.Vector3(4.2, 0, 0.55);
+const STREET_BANDS = [[3.2, 5.2], [-7.1, -5.1]];
+const safeX = (a2, b2) => {
+  for (let tries = 0; tries < 8; tries++) {
+    const x2 = rand(a2, b2);
+    if (!STREET_BANDS.some(([s2, e2]) => x2 > s2 && x2 < e2)) return x2;
+  }
+  return (a2 + b2) / 2;
+};
+const CURB_N = new THREE.Vector3(3.66, 0, 3.35);
+const CURB_S = new THREE.Vector3(3.66, 0, 0.55);
 
 {
   for (let i = 0; i < 14; i++) {
     const m = pedMesh();
     const band = i < 8 ? 'prom' : 'ave';
     const bz = band === 'prom' ? 6.35 : 3.35;
-    m.position.set(rand(-12, 12), 0, bz);
+    m.position.set(safeX(-12, 12), 0, bz);
     rotGroup.add(m);
     agents.peds.push({ m, band, bz, state: 'stroll', side: 'N', target: rand(-12, 12), speed: rand(0.5, 0.85), wait: 0, shop: -1 });
   }
@@ -1195,7 +1371,7 @@ function pedStep(a, dt, t) {
       const roll = rng();
       if (a.side === 'S') {
         if (roll < 0.6) { a.state = 'toCrossBack'; a.target = CURB_S.x; }
-        else a.target = rand(1.8, 7.5);
+        else a.target = rand(1.8, 3.1);
       } else if (a.band === 'prom' && roll < 0.5) {
         let idx = Math.floor(rng() * SHOPS.length);
         if (idx === 5 && !sim.renoOpen) idx = Math.floor(rng() * 5);
@@ -1206,7 +1382,7 @@ function pedStep(a, dt, t) {
         a.state = 'toCross';
         a.target = CURB_N.x;
       } else {
-        a.target = rand(-12, 12);
+        a.target = safeX(-12, 12);
       }
     }
   } else if (a.state === 'toShop') {
@@ -1223,7 +1399,7 @@ function pedStep(a, dt, t) {
     if (a.wait <= 0) {
       a.m.visible = true;
       a.state = 'stroll';
-      a.target = rand(-12, 12);
+      a.target = safeX(-12, 12);
       a.m.position.z = a.bz;
     }
   } else if (a.state === 'toCross' || a.state === 'toCrossBack') {
@@ -1245,7 +1421,7 @@ function pedStep(a, dt, t) {
       p.z = toZ;
       a.side = a.state === 'crossing' ? 'S' : 'N';
       a.state = 'stroll';
-      a.target = a.side === 'S' ? rand(1.8, 7.5) : rand(-12, 12);
+      a.target = a.side === 'S' ? rand(1.8, 3.1) : safeX(-12, 12);
     }
   }
 }
@@ -1268,7 +1444,7 @@ function pedStep(a, dt, t) {
   agents.courier = { m: g, state: 'idle', leg: 0, t: 0, path: [], deliveries: 0 };
 }
 
-const COURIER_DESTS = [new THREE.Vector3(-8.6, 0, -1.3), new THREE.Vector3(-3.2, 0, -2.6), new THREE.Vector3(1.6, 0, -1.7)];
+const COURIER_DESTS = [new THREE.Vector3(-9.2, 0, -1.3), new THREE.Vector3(-3.2, 0, -2.6), new THREE.Vector3(1.6, 0, -1.7)];
 
 function dispatchCourier() {
   const c = agents.courier;
@@ -1625,7 +1801,7 @@ function applyDay(D) {
 const BEACONS = [
   { anchor: new THREE.Vector3(-8.4, 3.9, 4.4), biz: 0, down: 1.5, dir: new THREE.Vector3(-0.25, 0.42, 1).normalize(), dist: 8, accent: ACCENTS.coral, kicker: 'Small business block', title: 'Live in two weeks.', body: 'A full storefront site — booking, payments, menus — launched fast. Watch the counter: every tick is the sim taking a real order.' },
   { anchor: new THREE.Vector3(-7.25, 3.7, 4.4), biz: 1, down: 1.4, dir: new THREE.Vector3(0.3, 0.36, 1).normalize(), dist: 7.5, accent: ACCENTS.lime, kicker: 'Local signal', title: 'Found by the neighborhood.', body: 'Local SEO points the block at one front door. Foot traffic here is literal — the walkers going in are the events.' },
-  { anchor: new THREE.Vector3(-8.6, 7.6, -3.6), biz: 6, down: 2.4, dir: new THREE.Vector3(-0.75, 0.35, 0.9).normalize(), dist: 9.5, accent: ACCENTS.violet, kicker: 'Growing teams', title: 'Systems that follow up.', body: 'Intake, scheduling, invoicing wired into one path. Office hours drive the curve — leads climb through the workday.' },
+  { anchor: new THREE.Vector3(-9.2, 7.6, -3.6), biz: 6, down: 2.4, dir: new THREE.Vector3(-0.75, 0.35, 0.9).normalize(), dist: 9.5, accent: ACCENTS.violet, kicker: 'Growing teams', title: 'Systems that follow up.', body: 'Intake, scheduling, invoicing wired into one path. Office hours drive the curve — leads climb through the workday.' },
   { anchor: new THREE.Vector3(7.6, 16, -3.2), biz: 7, down: 3.6, dir: new THREE.Vector3(0.85, 0.3, 1).normalize(), dist: 11.5, accent: ACCENTS.magenta, kicker: 'Big business polish', title: 'The whole block, one dashboard.', body: 'Every signal on the street flows up here. Twelve events fire a beam at the old skyline — the district announcing itself.' },
   { anchor: new THREE.Vector3(-1, 0.6, 1.9), biz: 7, down: 0.1, dir: new THREE.Vector3(0.15, 0.85, 0.7).normalize(), dist: 8.5, accent: ACCENTS.cyan, kicker: 'The grid', title: 'Every signal tracked.', body: 'Those pulses are orders, calls, and bookings in transit. Nothing loops — each one was caused by someone on this block.' },
   { anchor: new THREE.Vector3(11.6, 2.6, 5.6), biz: 7, down: 0.9, dir: new THREE.Vector3(0.7, 0.4, 1).normalize(), dist: 7.5, accent: ACCENTS.amber, kicker: 'The district', title: 'One studio, whole block.', body: 'LittleFight builds at every scale on this street. Traffic obeys the signals, businesses keep their own hours, and the city runs.' },
@@ -1660,6 +1836,7 @@ function chipOpenStatic(i) {
 }
 
 function chipOpen(i) {
+  attract.on = false;
   chipIdx = i;
   chipOpenStatic(i);
   chipEl.hidden = false;
@@ -2028,7 +2205,7 @@ function hudStep(dt) {
     `FPS ${Math.round(fpsAvg)} · CALLS ${info.calls} · TRIS ${(info.triangles / 1000).toFixed(0)}k\n` +
     `ENTITIES cars ${agents.cars.length} · peds ${agents.peds.length} · courier ${agents.courier && agents.courier.state !== 'idle' ? 'out' : 'home'}\n` +
     `SIM tick ${sim.tick} · events ${sim.events} · ${sim.evtWindow.length}/min · reno ${sim.renoOpen ? 'OPEN' : 'stage ' + reno.stage}\n` +
-    `CLOCK ${dayClock(dayT)} · ${phaseName(dayT)} · signal ${signal.state}`;
+    `CLOCK ${dayClock(dayT)} · ${phaseName(dayT)} · signal ${signal.state} · wx ${weather.v > 0.5 ? 'RAIN' : 'CLEAR'}`;
 }
 
 /* ================= loop ================= */
@@ -2114,6 +2291,7 @@ function frame() {
   // world systems — these never pause
   signalStep(dt);
   steamStep(dt);
+  weatherStep(dt);
   if (billboardBorder) billboardBorder.material.color.setHSL((t * 0.045) % 1, 0.85, 0.62);
   simStep(dt);
   renoStep(dt);
@@ -2203,3 +2381,4 @@ window.__districtCars = () => agents.cars.map((a) => ({ dir: a.route.dir, v: +a.
 window.__districtFocus = (i) => { if (i < 0) chipClose(); else chipOpen(i); };
 window.__districtDay = (t) => { dayT = ((t % 1) + 1) % 1; };
 window.__districtHud = () => { hudOn = !hudOn; hudEl.hidden = !hudOn; };
+window.__districtRain = (on) => { weather.target = on ? 1 : 0; weather.dur = on ? 30 : 0; weather.next = on ? 1e9 : rand(50, 100); };
