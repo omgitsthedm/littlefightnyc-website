@@ -57,20 +57,6 @@
       type: 'Brand campaign',
       suite: 'brand-campaign',
       hint: 'Scroll to paste the posters up. Scroll back to peel them off.'
-    },
-    {
-      slug: 'hero',
-      title: 'Hero Prototype',
-      type: 'Brand study',
-      suite: 'brand-campaign',
-      hint: 'Move through the signal field. Tap to send a new pulse.'
-    },
-    {
-      slug: 'chef-drew',
-      title: 'I Am Cooking',
-      type: 'Hospitality concept',
-      suite: 'brand-campaign',
-      hint: 'Open the menu and follow the booking path.'
     }
   ];
 

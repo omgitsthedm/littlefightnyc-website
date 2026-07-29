@@ -93,28 +93,12 @@ const LAB_BUILDS = [
     alt: "A colossal LITTLE FIGHT poster in orange pasted over a stack of street posters",
   },
   {
-    title: "Hero Prototype",
-    type: "Brand study",
-    description: "A homepage built around one clear promise, with a signal field you can touch.",
-    href: "/examples/lab/concepts/hero/",
-    poster: "/images/lab-showcase/hero-prototype",
-    alt: "Tables and service areas at a New York outdoor bar",
-  },
-  {
     title: "AHA Laser Poster",
     type: "Client poster",
     description: "A laser draws AHA's real letterforms, the tubes catch like neon, and the sign hangs on a pull-chain you can pull.",
     href: "/examples/lab/concepts/aha-laser/",
     poster: "/images/lab-showcase/aha-laser",
     alt: "The After Hours Agenda lockup lit in pink neon inside a double-tube frame",
-  },
-  {
-    title: "I Am Cooking",
-    type: "Client concept",
-    description: "Chef Drew's catering world. Appetite, motion, and a booking path that works.",
-    href: "/examples/lab/concepts/chef-drew/",
-    poster: "/images/lab-showcase/chef-drew",
-    alt: "Chef Drew hospitality concept homepage with bold headline",
   },
 ] as const;
 
@@ -156,7 +140,7 @@ export default function FieldGuide() {
           <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
             <div className="lf-ex-lab-direct__head">
               <div>
-                <p>10 working builds</p>
+                <p>8 working builds</p>
                 <h3 id="lf-ex-lab-title">Choose a direction and step inside.</h3>
                 <span>
                   Most are experiments, two are client builds we can show. Each

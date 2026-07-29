@@ -139,21 +139,6 @@
       "type": "Brand campaign",
       "description": "Ten typographic street posters wheatpasted one over the last — Little Fight versus the default stack, scrubbed by your scroll.",
       "suite": "brand-campaign"
-    },
-    {
-      "slug": "hero",
-      "title": "Hero Prototype",
-      "type": "Brand study",
-      "description": "A homepage built around one clear promise, with a signal field you can touch.",
-      "suite": "brand-campaign"
-    },
-    {
-      "slug": "chef-drew",
-      "title": "I Am Cooking",
-      "type": "Hospitality concept",
-      "description": "Chef Drew's catering world. Appetite, motion, and a booking path that works.",
-      "suite": "brand-campaign",
-      "client": true
     }
   ]
 }

@@ -137,3 +137,7 @@
 
 # Tech Support Site retired from the Lab (2026-07-29)
 /examples/lab/concepts/tech-support/* /examples/lab/ 301
+
+# Hero Prototype + I Am Cooking retired from the Lab (2026-07-29)
+/examples/lab/concepts/hero/* /examples/lab/ 301
+/examples/lab/concepts/chef-drew/* /examples/lab/ 301
