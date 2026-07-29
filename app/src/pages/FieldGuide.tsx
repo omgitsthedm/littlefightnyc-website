@@ -103,10 +103,10 @@ const LAB_BUILDS = [
   {
     title: "AHA Laser Poster",
     type: "Client poster",
-    description: "A laser-drawn poster for After Hours Agenda. You control the speed and the glow.",
+    description: "A laser draws AHA's real letterforms, the tubes catch like neon, and the sign hangs on a pull-chain you can pull.",
     href: "/examples/lab/concepts/aha-laser/",
     poster: "/images/lab-showcase/aha-laser",
-    alt: "Neon pink AHA laser poster with animated frame",
+    alt: "The After Hours Agenda lockup lit in pink neon inside a double-tube frame",
   },
   {
     title: "I Am Cooking",

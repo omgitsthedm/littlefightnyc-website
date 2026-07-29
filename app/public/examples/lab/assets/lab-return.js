@@ -35,7 +35,7 @@
       title: 'AHA Laser Poster',
       type: 'Responsive poster',
       suite: 'motion-playground',
-      hint: 'Turn the device sideways for the full poster, then tap Replay.'
+      hint: 'Watch the laser draw the brand — then pull the chain.'
     },
     {
       slug: 'studio-engine',

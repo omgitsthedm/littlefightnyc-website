@@ -1,0 +1,326 @@
+:root {
+  --ink: #f6f1ea;
+  --ink-dim: rgba(246, 241, 234, 0.64);
+  --pink: #ff2bd6;
+  --pink-soft: #ffd0f7;
+  --pink-core: #fff0fc;
+  --bg: #050308;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- intro / outro ---------- */
+
+.intro {
+  padding: max(96px, 13vh) max(24px, 6vw) 40px;
+  max-width: 880px;
+}
+
+.intro__eyebrow, .outro__eyebrow {
+  margin: 0 0 10px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.intro__title {
+  margin: 0 0 20px;
+  font-family: "Barlow Condensed", "Barlow", sans-serif;
+  font-weight: 800;
+  font-size: clamp(52px, 9vw, 112px);
+  line-height: 0.92;
+}
+
+.intro__lede {
+  margin: 0 0 14px;
+  max-width: 54ch;
+  font-size: clamp(15px, 1.8vw, 18px);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.intro__what {
+  margin: 0 0 18px;
+  max-width: 60ch;
+  font-size: clamp(13.5px, 1.5vw, 15.5px);
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+.intro__uses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.intro__uses li {
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 43, 214, 0.35);
+  border-radius: 999px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.intro__cue {
+  margin: 0;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.outro {
+  padding: 72px max(24px, 6vw) 140px;
+  max-width: 880px;
+}
+
+.outro__title {
+  margin: 0 0 16px;
+  font-family: "Barlow Condensed", "Barlow", sans-serif;
+  font-weight: 800;
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 0.95;
+}
+
+.outro__body {
+  margin: 0 0 12px;
+  max-width: 56ch;
+  font-size: clamp(14px, 1.6vw, 16.5px);
+  line-height: 1.6;
+}
+
+.outro__body--dim { color: var(--ink-dim); }
+
+.outro__cta {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 18px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  background: var(--pink);
+  color: #2a0322;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: transform 160ms var(--ease-out), box-shadow 200ms ease;
+  box-shadow: 0 8px 30px rgba(255, 43, 214, 0.3);
+}
+
+.outro__cta:hover { transform: translateY(-1px); box-shadow: 0 12px 42px rgba(255, 43, 214, 0.42); }
+.outro__cta:active { transform: scale(0.97); }
+
+.fallback { padding: 20vh 24px; text-align: center; color: var(--ink-dim); }
+
+/* ---------- the sign room ---------- */
+
+.stagewrap { padding: 12px max(20px, 3vw) 40px; }
+
+.signroom {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.sign {
+  position: relative;
+  width: 100%;
+  border-radius: 22px;
+  background:
+    radial-gradient(130% 110% at 50% 0%, rgba(255, 43, 214, 0.08), rgba(5, 3, 8, 0) 55%),
+    linear-gradient(180deg, #0a0610, #060309 70%, #050308);
+  border: 1px solid rgba(246, 241, 234, 0.08);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6), inset 0 0 80px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: box-shadow 700ms ease;
+}
+
+.signroom.is-off .sign {
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.75), inset 0 0 110px rgba(0, 0, 0, 0.8);
+}
+
+.sign__svg { display: block; width: 100%; height: auto; }
+
+/* room glow on the page behind the sign */
+.signroom::before {
+  content: "";
+  position: absolute;
+  inset: -12% -18%;
+  z-index: -1;
+  background: radial-gradient(50% 45% at 50% 45%, rgba(255, 43, 214, 0.16), rgba(5, 3, 8, 0) 70%);
+  opacity: 1;
+  transition: opacity 900ms ease;
+  pointer-events: none;
+}
+
+.signroom.is-off::before { opacity: 0.06; }
+
+.signroom__hint {
+  margin: 0;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.signroom.is-drawn .signroom__hint { opacity: 1; }
+
+/* ---------- svg tube states (classes applied by laser.js) ---------- */
+
+.tube .tube__fill,
+.tube .tube__bloom {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 450ms ease, visibility 0s linear 450ms;
+}
+
+.tube .tube__trace { opacity: 0.9; }
+
+.tube.is-lit .tube__fill,
+.tube.is-lit .tube__bloom {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 450ms ease, visibility 0s;
+}
+
+.tube.is-lit .tube__trace { opacity: 1; }
+
+.tube.is-lit.is-catching .tube__fill,
+.tube.is-lit.is-catching .tube__bloom {
+  animation: catch 460ms steps(1, end);
+}
+
+@keyframes catch {
+  0% { opacity: 0; }
+  18% { opacity: 1; }
+  30% { opacity: 0.15; }
+  42% { opacity: 1; }
+  55% { opacity: 0.4; }
+  68% { opacity: 1; }
+}
+
+/* idle micro flicker */
+.tube.is-flick .tube__fill,
+.tube.is-flick .tube__bloom {
+  animation: flick 140ms steps(1, end);
+}
+
+@keyframes flick {
+  0% { opacity: 1; }
+  35% { opacity: 0.35; }
+  60% { opacity: 1; }
+}
+
+/* powered-off: pale glass */
+.signroom.is-off .tube .tube__fill { opacity: 0; }
+.signroom.is-off .tube .tube__bloom { opacity: 0; }
+.signroom.is-off .tube .tube__trace { opacity: 0.16; }
+
+.tube__trace { transition: opacity 450ms ease; }
+
+/* slow breathing on the whole lit sign */
+.sign__breathe { animation: breathe 5.2s ease-in-out infinite; }
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+}
+
+.signroom.is-off .sign__breathe { animation: none; }
+
+/* laser head */
+.laserhead { opacity: 0; }
+.laserhead.is-on { opacity: 1; }
+
+/* ---------- pull chain ---------- */
+
+.chain {
+  position: absolute;
+  top: 0;
+  right: clamp(26px, 7%, 84px);
+  width: 44px;
+  height: 148px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: grab;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+  z-index: 5;
+}
+
+.chain:active { cursor: grabbing; }
+
+.chain__links {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.5px;
+  height: 112px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(246, 241, 234, 0.85) 0 4px,
+    rgba(246, 241, 234, 0.25) 4px 8px
+  );
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.chain__knob {
+  position: absolute;
+  top: 108px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 26px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #f0e7da, #b9ad9c 60%, #8f8474);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.signroom.is-off .chain__knob {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 0 14px rgba(255, 43, 214, 0.55);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 640px) {
+  .chain { height: 122px; }
+  .chain__links { height: 92px; }
+  .chain__knob { top: 88px; }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tube.is-lit.is-catching .tube__fill,
+  .tube.is-lit.is-catching .tube__bloom { animation: none; }
+  .tube.is-flick .tube__fill,
+  .tube.is-flick .tube__bloom { animation: none; }
+  .sign__breathe { animation: none; }
+}
