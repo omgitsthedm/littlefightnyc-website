@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap">
-  <link rel="stylesheet" href="street.css?v=2">
+  <link rel="stylesheet" href="street.css?v=3">
 </head>
 <body>
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
@@ -37,13 +37,7 @@
     <section class="ch ch--1" data-ch="1" aria-label="Chapter one — nobody knows">
       <div class="ch__grain" aria-hidden="true"></div>
       <div class="ch__scene scene1" data-scene="1" aria-hidden="true">
-        <div class="shop shop--dark" data-shop>
-          <div class="shop__awning"></div>
-          <p class="shop__sign">ROSIE'S FLOWERS</p>
-          <div class="shop__window"></div>
-          <div class="shop__door" data-door></div>
-          <div class="shop__buckets" aria-hidden="true"><span class="bucket"><i>🌷</i></span><span class="bucket"><i>🌻</i></span></div>
-        </div>
+        <div data-shop-mount="1"></div>
         <div class="cat" aria-hidden="true"><span class="cat__body"></span><span class="cat__tail"></span></div>
         <div class="walkway" data-walkway></div>
       </div>
@@ -58,13 +52,7 @@
     <section class="ch ch--2" data-ch="2" aria-label="Chapter two — the sign the whole city sees">
       <div class="ch__grain" aria-hidden="true"></div>
       <div class="ch__scene scene2" data-scene="2" aria-hidden="true">
-        <div class="shop" data-shop2>
-          <div class="shop__awning"></div>
-          <p class="shop__sign">ROSIE'S FLOWERS</p>
-          <div class="shop__window shop__window--lit"></div>
-          <div class="shop__door shop__door--lit"></div>
-          <div class="shop__buckets" aria-hidden="true"><span class="bucket"><i>🌷</i></span><span class="bucket"><i>🌻</i></span><span class="bucket"><i>💐</i></span></div>
-        </div>
+        <div data-shop-mount="2"></div>
         <div class="phone" aria-hidden="true">
           <div class="phone__screen"><i>🌷</i><b>rosies.nyc</b></div>
           <div class="phone__beam"></div>
@@ -84,13 +72,7 @@
       <div class="ch__scene scene3" data-scene="3" aria-hidden="true">
         <div class="moon" aria-hidden="true"></div>
         <div class="stars" data-nightstars></div>
-        <div class="shop shop--night">
-          <div class="shop__upstairs"><span class="zzz"><i>z</i><i>z</i><i>z</i></span></div>
-          <div class="shop__awning"></div>
-          <p class="shop__sign">ROSIE'S FLOWERS</p>
-          <div class="shop__window shop__window--glow"></div>
-          <div class="shop__door"></div>
-        </div>
+        <div data-shop-mount="3"></div>
         <div class="tickets" data-tickets></div>
       </div>
       <div class="ch__copy">
@@ -109,7 +91,7 @@
           <div class="talker__bubble">“best flowers<br>in brooklyn”</div>
         </div>
         <div class="starfield" data-starfield></div>
-        <div class="minishop" aria-hidden="true"><div class="minishop__awning"></div><p>ROSIE'S</p></div>
+        <div data-shop-mount="4"></div>
       </div>
       <div class="ch__copy">
         <p class="ch__kicker">Chapter four</p>
@@ -147,7 +129,7 @@
     <p class="fallback">This build needs JavaScript — the story animates as you scroll.</p>
   </noscript>
 
-  <script type="module" src="street.js?v=2"></script>
+  <script type="module" src="street.js?v=3"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

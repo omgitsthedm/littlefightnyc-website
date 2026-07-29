@@ -17,6 +17,40 @@ const chapters = $$('[data-ch]');
 
 const WALKER_COLORS = ['#e9564f', '#2e86c1', '#f2b134', '#7fb069', '#9b5de5', '#ff8fab', '#f3ecff'];
 
+/* ---------- ONE Rosie's, stamped everywhere ----------
+   The shop is a single template so it cannot drift between panels.
+   Only its state changes: lights, night, the upstairs floor, scale. */
+
+function mountShop(slot, { lit = false, night = false, upstairs = false, mini = false } = {}) {
+  const mount = $(`[data-shop-mount="${slot}"]`);
+  if (!mount) return null;
+  const shop = document.createElement('div');
+  shop.className = [
+    'shop',
+    lit ? 'shop--lit' : 'shop--dark',
+    night ? 'shop--night' : '',
+    mini ? 'shop--mini' : '',
+  ].filter(Boolean).join(' ');
+  shop.innerHTML = `
+    ${upstairs ? '<div class="shop__upstairs"><span class="zzz"><i>z</i><i>z</i><i>z</i></span></div>' : ''}
+    <div class="shop__awning"></div>
+    <span class="shop__hang" aria-hidden="true">🌿</span>
+    <p class="shop__sign">ROSIE'S FLOWERS</p>
+    <div class="shop__window">
+      <span class="shop__blooms" aria-hidden="true"><i>🌷</i><i>🌹</i><i>🌼</i><i>🌸</i></span>
+    </div>
+    <div class="shop__door"></div>
+    <span class="shop__pot" aria-hidden="true">🪴</span>
+    <div class="shop__buckets" aria-hidden="true"><span class="bucket"><i>🌷</i></span><span class="bucket"><i>🌻</i></span><span class="bucket"><i>💐</i></span></div>`;
+  mount.appendChild(shop);
+  return shop;
+}
+
+mountShop(1, { lit: false });
+mountShop(2, { lit: true });
+mountShop(3, { lit: true, night: true, upstairs: true });
+mountShop(4, { lit: true, mini: true });
+
 /* ---------- chapter 1 + 2: sidewalks of jellybean people ---------- */
 
 function buildWalkway(walkway, { total, entering, door }) {
@@ -48,8 +82,8 @@ function buildWalkway(walkway, { total, entering, door }) {
   window.addEventListener('resize', size);
 }
 
-buildWalkway($('[data-walkway]'), { total: 100, entering: 2, door: $('[data-door]') });
-buildWalkway($('[data-walkway2]'), { total: 46, entering: 14, door: $('[data-shop2] .shop__door') });
+buildWalkway($('[data-walkway]'), { total: 100, entering: 2, door: $('[data-shop-mount="1"] .shop__door') });
+buildWalkway($('[data-walkway2]'), { total: 46, entering: 14, door: $('[data-shop-mount="2"] .shop__door') });
 
 /* ---------- chapter 3: night stars + the ticket stack ---------- */
 
@@ -251,6 +285,16 @@ if (TESTMODE) {
     check('fourteen turn in after the website', $$('.walker--in', $('[data-walkway2]')).length === 14, '');
     check('door target measured', ($('[data-walkway]').style.getPropertyValue('--doorX') || '').includes('px'), $('[data-walkway]').style.getPropertyValue('--doorX'));
     check('grain texture on every chapter', $$('.ch__grain').length === 5 && !!document.getElementById('grain'), '');
+
+    /* one shop, everywhere the same */
+    const shops = $$('.shop');
+    const awnings = shops.map(s => getComputedStyle($('.shop__awning', s)).backgroundImage);
+    const facades = shops.map(s => getComputedStyle(s).backgroundColor);
+    check('four stamps of the same shop', shops.length === 4, shops.length);
+    check('every awning matches', awnings.every(a => a === awnings[0]), '');
+    check('every facade matches', facades.every(f => f === facades[0]), facades[0]);
+    check('flowers in every window', shops.every(s => $$('.shop__blooms i', s).length === 4), '');
+    check('plants + buckets at every shop', shops.every(s => $('.shop__hang', s) && $('.shop__pot', s) && $$('.bucket', s).length === 3), '');
 
     /* chapter 1 counter */
     window.__street.activate(1);
