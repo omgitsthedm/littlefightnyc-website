@@ -300,6 +300,325 @@
       '<path d="' + path + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round"/>' + dots + '</svg>';
   }
 
+  /* ================================================================
+     THE MONEY ENGINE
+     NYC rent law gives tenants hard numbers. VERA knows them, so it
+     can price a move honestly AND flag demands that are illegal.
+       · Security deposit: capped at 1 month (HSTPA, 2019)
+       · Application fee: capped at $20, or actual screening cost
+       · Broker fee: whoever HIRES the broker pays (FARE Act, in effect
+         since 11 Jun 2025). A landlord-hired broker cannot bill you.
+     ================================================================ */
+
+  var LAW = {
+    depositMaxMonths: 1,
+    appFeeMax: 20,
+    depositReturnDays: 14,
+    fareActFrom: 'June 11, 2025',
+    guarantorTypicalPct: 0.9,   /* institutional guarantor ≈ 90% of one month */
+    incomeRuleX: 40,            /* the 40x annual-income convention */
+    guarantorRuleX: 80,
+  };
+
+  function moveInMath(l) {
+    var rent = +l.rent || 0;
+    var deposit = rent * LAW.depositMaxMonths;
+    var vera = rent + deposit;              /* no broker fee, by construction */
+    var brokerWorld = rent * 1.5;           /* the fee a broker would historically ask */
+    return {
+      rent: rent,
+      deposit: deposit,
+      appFee: rent ? LAW.appFeeMax : 0,
+      total: vera + (rent ? LAW.appFeeMax : 0),
+      brokerWorld: brokerWorld,
+      saved: brokerWorld,
+      incomeNeeded: rent * 12 * (1 / 12) * LAW.incomeRuleX / 1,
+      annualIncomeNeeded: rent * LAW.incomeRuleX,
+      guarantorIncomeNeeded: rent * LAW.guarantorRuleX,
+      guarantorCost: Math.round(rent * LAW.guarantorTypicalPct),
+    };
+  }
+
+  /* ================================================================
+     MY HUNT — the case file. Local to this browser, never uploaded.
+     ================================================================ */
+
+  var STAGES = [
+    { id: 'saved', label: 'Saved', hint: 'worth a look' },
+    { id: 'contacted', label: 'Reached out', hint: 'message sent' },
+    { id: 'touring', label: 'Tour booked', hint: 'going to see it' },
+    { id: 'toured', label: 'Seen it', hint: 'walked the unit' },
+    { id: 'applied', label: 'Applied', hint: 'paperwork in' },
+    { id: 'dead', label: 'Passed', hint: 'not the one' },
+  ];
+
+  var cases = {};
+  try { cases = JSON.parse(localStorage.getItem('vera-cases') || '{}') || {}; } catch (e) { cases = {}; }
+
+  function saveCases() {
+    try { localStorage.setItem('vera-cases', JSON.stringify(cases)); } catch (e) {}
+    var n = Object.keys(cases).filter(function (k) { return cases[k].stage !== 'dead'; }).length;
+    var badge = $('[data-case-badge]');
+    if (badge) { badge.hidden = !n; badge.textContent = n; }
+  }
+
+  function caseOf(uid) { return cases[uid] || null; }
+
+  function setStage(uid, stage) {
+    var l = byUid(uid);
+    if (!cases[uid]) {
+      cases[uid] = { uid: uid, stage: stage, added: new Date().toISOString(), notes: '', checks: {},
+        title: l ? (l.title || l.address_normalized) : uid, rent: l ? l.rent : null, hood: l ? l.neighborhood : null };
+    } else {
+      cases[uid].stage = stage;
+    }
+    saveCases();
+    toast(stage === 'dead' ? 'Passed — VERA will stop suggesting it.' : 'Moved to ' + (STAGES.filter(function (s) { return s.id === stage; })[0] || {}).label);
+  }
+
+  function dropCase(uid) { delete cases[uid]; saveCases(); toast('Removed from your hunt.'); }
+
+  var toastT = 0;
+  function toast(msg) {
+    var el = $('[data-toast]');
+    if (!el) return;
+    el.textContent = msg;
+    el.hidden = false;
+    requestAnimationFrame(function () { el.classList.add('is-up'); });
+    clearTimeout(toastT);
+    toastT = setTimeout(function () {
+      el.classList.remove('is-up');
+      setTimeout(function () { el.hidden = true; }, 300);
+    }, 2600);
+  }
+
+  /* ================================================================
+     THE VIEWING CHECKLIST — what people wish they'd checked.
+     Saved per listing so you can run it standing in the apartment.
+     ================================================================ */
+
+  var CHECKS = [
+    { id: 'water', group: 'Systems', label: 'Run the shower AND the sink together', why: 'Pressure dies in old buildings when two fixtures compete.' },
+    { id: 'hotwater', group: 'Systems', label: 'Time the hot water', why: 'Over a minute to warm up is a boiler that will fail you in February.' },
+    { id: 'heat', group: 'Systems', label: 'Find the radiator valve', why: 'Steam heat with no working valve means a 85° apartment all winter with the windows open.' },
+    { id: 'ac', group: 'Systems', label: 'Check for an AC sleeve or window that fits a unit', why: 'Some leases and some windows make a summer unit impossible.' },
+    { id: 'outlets', group: 'Systems', label: 'Count outlets in every room', why: 'Two outlets per room means extension cords forever.' },
+    { id: 'ceiling', group: 'Damage', label: 'Look up — ceiling stains or fresh paint patches', why: 'A fresh white square on an old ceiling is a leak someone painted over.' },
+    { id: 'undersink', group: 'Damage', label: 'Open the cabinet under the sink', why: 'Roach traps, droppings, and water damage all live under there.' },
+    { id: 'corners', group: 'Damage', label: 'Check corners and baseboards for gaps', why: 'Gaps are mouse highways. Steel wool is a tell someone already fought this.' },
+    { id: 'floor', group: 'Damage', label: 'Set a pen on the floor', why: 'If it rolls, the building has settled — check the walls for cracks too.' },
+    { id: 'windowview', group: 'Light + air', label: 'What is actually outside each window', why: 'Airshaft and brick-wall views are legal and soul-crushing.' },
+    { id: 'direction', group: 'Light + air', label: 'Which way do the windows face', why: 'North-facing means no direct sun, ever.' },
+    { id: 'windowop', group: 'Light + air', label: 'Open and lock every window', why: 'Painted-shut windows are both a comfort and a fire-safety problem.' },
+    { id: 'noise', group: 'Life', label: 'Stand still and listen for 60 seconds', why: 'Bar, bus line, elevated train, upstairs dog — all invisible at 2pm on a Tuesday.' },
+    { id: 'cell', group: 'Life', label: 'Check phone bars in the back room', why: 'Thick pre-war walls kill signal. Ask if the wifi provider is a monopoly here.' },
+    { id: 'packages', group: 'Life', label: 'Ask where packages land', why: 'No mailroom and a street-level door means porch piracy every week.' },
+    { id: 'laundry', group: 'Life', label: 'Laundry in the building? Where is the nearest one?', why: 'A five-block laundromat walk is a real weekly tax.' },
+    { id: 'trash', group: 'Life', label: 'Find the trash area and smell it', why: 'You will be walking past it every day.' },
+    { id: 'neighbor', group: 'People', label: 'Knock on a neighbor door and ask about the landlord', why: 'Thirty seconds with a neighbor beats any listing description.' },
+    { id: 'super', group: 'People', label: 'Ask if there is a super and how fast they answer', why: 'The difference between a same-day fix and a three-week outage.' },
+    { id: 'unit', group: 'Paper', label: 'Confirm this is THE unit, not "a similar one"', why: 'Bait-and-switch is the oldest move in the book.' },
+    { id: 'legal', group: 'Paper', label: 'Is it a legal unit? (basement/cellar especially)', why: 'Illegal conversions have no protection and can be vacated by the city.' },
+    { id: 'rider', group: 'Paper', label: 'If stabilized, look for the rent-stabilization rider on the lease', why: 'Every stabilized lease must carry a long state-issued rider saying so. A lease handed to you without one is the single red flag you can catch before signing.' },
+    { id: 'stab', group: 'Paper', label: 'Ask the outgoing tenant to pull the rent history', why: 'State records only go to the current tenant or the owner, and get mailed to the apartment — so you cannot request it yourself before signing. The tenant leaving can, in about a week. Otherwise, request it the day you move in.' },
+    { id: 'oddrent', group: 'Paper', label: 'Notice if the rent is an odd number', why: 'A rent like $1,187.59 rather than a round $1,200 is a classic sign of a regulated increase calculated off a legal rent.' },
+    { id: 'lease', group: 'Paper', label: 'Read who pays the broker, in writing', why: 'Under the FARE Act, a landlord-hired broker cannot bill you a fee. Keep the fee conversation in text or email — a sudden insistence on a phone call is about the paper trail.' },
+  ];
+
+  function checkGroups() {
+    var g = [], seen = {};
+    CHECKS.forEach(function (c) { if (!seen[c.group]) { seen[c.group] = 1; g.push(c.group); } });
+    return g;
+  }
+
+  /* ================================================================
+     SCAM SCHOOL — the tells, as a deck you can flip.
+     ================================================================ */
+
+  var TELLS = [
+    { t: 'The price is good but not absurd', d: 'The professional version never uses a $1,400 West Village one-bedroom. It shaves 15% off market — cheap enough to move fast, plausible enough to survive a gut check. Compare against the building\'s own last-rented price, not your hopes.', k: 'price' },
+    { t: 'Nobody has proven they own it', d: 'The most expensive scams in this city all collapse to one unanswered question: is this person the owner, the managing agent, or a stranger with a set of keys? A real tour and a real-looking lease prove neither. Look the owner up before you look at the apartment.', k: 'who' },
+    { t: 'One phone number, thirty listings', d: 'Search the phone number and the email. Scaled operations reuse contact details across dozens of listings under different names in different neighborhoods. One search ends it.', k: 'who' },
+    { t: 'A lease that looks completely legitimate', d: 'A DocuSign lease requires no verification of the sender. Renters have signed real-looking leases, wired real money, and arrived to find twenty other people with the same lease for the same unit.', k: 'paper' },
+    { t: '"I am out of the country"', d: 'Missionary, oil rig, deployment, sick relative abroad. Same script for a decade, usually paired with "view it through the windows and we will mail the keys."', k: 'story' },
+    { t: 'Money before keys', d: 'Good-faith deposit, holding fee, key fee, "just to take it off the market." All of it illegal in New York before a signed lease. Nothing should leave your hand until the lease is signed and the keys are in the other one.', k: 'law' },
+    { t: 'Zelle, Venmo, wire, gift cards', d: 'Irreversible by design — that is the entire reason they were requested. A real landlord takes a check or an ACH transfer against a signed lease.', k: 'money' },
+    { t: '"You hired me by emailing me"', d: 'The most common FARE Act dodge. It does not work: publishing a listing creates a legal presumption the landlord authorised the broker, and conditioning a rental on engaging an agent is barred outright.', k: 'law' },
+    { t: 'A cheaper rent with a bigger fee', d: 'Offered a choice between $4,250 rent with a $3,600 fee, or $3,800 rent with a $6,840 fee? That is not a favour, it is fee laundering — and the owner often has no idea their rent is being quoted high.', k: 'law' },
+    { t: 'An application fee over $20', d: 'Capped at $20 statewide — or the actual cost of the credit and background check, whichever is less. Bring your own report from the last 30 days and it can be waived entirely. A "$500 processing fee" is not a red flag, it is illegal.', k: 'law' },
+    { t: 'A tip for the super', d: 'Key money by another name. A demand for a few hundred dollars "for the super" before move-in is illegal, and brokers who ask for it know exactly what they are doing.', k: 'law' },
+    { t: '"Let us just talk on the phone"', d: 'Insisting on a call after you asked in writing is a paper-trail problem, not a friendliness problem. Keep every fee conversation in text or email.', k: 'paper' },
+    { t: 'Days on market reset to three', d: 'The same tired unit gets relisted — sometimes with the unit number flipped from #A1 to #1A — to wipe the counter. Four months of sitting reappears as brand new inventory.', k: 'dupe' },
+    { t: 'The listing is already rented', d: 'Plenty of live listings are pure lead bait. "Oh, that one is gone, but I have something similar" is a sales funnel, not an accident.', k: 'dupe' },
+    { t: 'A virtual doorman is not a doorman', d: 'Neither is a shared courtyard a "private outdoor space." Amenity checkboxes are filled in to win filters, not to describe the apartment.', k: 'photos' },
+    { t: 'Net effective rent', d: 'The advertised number is often after a free month. Judge the lease on gross rent — the net figure is mostly a promise to raise your rent at renewal.', k: 'money' },
+  ];
+
+  /* ================================================================
+     LEGAL PROTECTION DISCLOSURE
+     Nobody else does this, and it is the honest cost of hunting
+     owner-direct: the smallest landlords sit outside the three
+     protections that matter most. VERA says so out loud.
+     ================================================================ */
+
+  function protections(l) {
+    var units = +l.unit_count || null;
+    var stab = !!l.official_rent_stabilized_list_hit || String(l.rent_stabilized_signal || '').toLowerCase() === 'likely';
+    var out = [];
+
+    out.push({
+      name: 'Good Cause Eviction',
+      gives: 'a right to renew, a cap on increases, and no no-cause non-renewal',
+      state: units == null ? 'unknown' : units <= 10 ? 'likely out' : 'likely in',
+      why: units == null
+        ? 'Turns on whether the owner holds more than ten units statewide — not how big this building is. VERA cannot confirm the portfolio from this listing alone.'
+        : units <= 10
+          ? 'Owners of ten or fewer units statewide are exempt. A small owner-direct building is very often exactly that.'
+          : 'Buildings this size usually sit inside coverage, unless the owner qualifies some other way.',
+    });
+
+    out.push({
+      name: 'Rent stabilization',
+      gives: 'a registered legal rent, guaranteed renewals, and board-set increases',
+      state: stab ? 'likely in' : units != null && units < 6 ? 'likely out' : 'unknown',
+      why: stab
+        ? 'Signals point to a stabilized unit — which is the prize. Note that the state will only release the rent history to the current tenant or the owner, and mails it to the apartment, so ask the outgoing tenant to pull it or request it the day you move in. Check the lease for the required stabilization rider before you sign.'
+        : units != null && units < 6
+          ? 'Stabilization generally needs six or more units, so a building this small is usually deregulated.'
+          : 'Unit count is unconfirmed, so stabilization cannot be ruled in or out from the listing.',
+    });
+
+    out.push({
+      name: 'Source-of-income protection',
+      gives: 'the right not to be refused for using a voucher',
+      state: units == null ? 'unknown' : units <= 5 ? 'likely out' : 'likely in',
+      why: units == null
+        ? 'Coverage depends on the size of the accommodation, which this listing does not state.'
+        : units <= 5
+          ? 'The city human-rights law carves out accommodations of five units or fewer.'
+          : 'Buildings above the carve-out are covered.',
+    });
+
+    return out;
+  }
+
+  /* ================================================================
+     VERIFY IT YOURSELF — the public tools, one click away
+     ================================================================ */
+
+  var VERIFY_TOOLS = [
+    ['Who Owns What', 'https://whoownswhat.justfix.org/', 'See every other building the same owner controls. Free, open source, and the tool New Yorkers recommend to each other most.'],
+    ['HPD Online', 'https://hpdonline.nyc.gov/', 'Violations by class, complaints, and the registered owner. Class C means immediately hazardous.'],
+    ['ACRIS', 'https://a836-acris.nyc.gov/', 'The deed and the mortgage. Confirms who actually owns the building — and whether the asking rent could plausibly carry it.'],
+    ['DOB Building Information', 'https://a810-bisweb.nyc.gov/', 'Permits, complaints, and the Certificate of Occupancy that tells you whether the unit is even legal.'],
+    ['NY licence check', 'https://appext20.dos.ny.gov/nydos/selSearchType.do', 'Every real broker holds a licence. Search the name before you send anything.'],
+    ['311 complaint history', 'https://portal.311.nyc.gov/', 'Heat and hot water outages by date. A building that lost heat five times last winter will do it again.'],
+  ];
+
+  /* Market context — published figures, cited so they can be checked. */
+  var MARKET = {
+    asOf: 'June 2026',
+    manhattanMedian: 5295,
+    brooklynMedian: 4350,
+    cityMedianAsk: 4199,
+    manhattanDom: 36,
+    brooklynDom: 37,
+    vacancy: 1.4,
+    perDay: 1100,
+    seasonalGap: 1.4,
+    leadDays: 45,
+  };
+
+  /* ================================================================
+     BUILDING PORTRAITS
+     Listing photos are a lie half the time — staged, stolen, or of a
+     different unit. So VERA draws the building instead, deterministically
+     from the listing's own identity and record. Same listing, same
+     portrait, forever. Nothing here pretends to be a photograph.
+     ================================================================ */
+
+  var BRICK = [
+    ['#7d4436', '#8d5140'], ['#6b5445', '#7c6352'], ['#8a5a43', '#9a6a51'],
+    ['#5f5a52', '#6e6960'], ['#a06a4e', '#b07a5c'], ['#6a4a52', '#7a5860'],
+  ];
+
+  function hashOf(s) {
+    var h = 2166136261;
+    for (var i = 0; i < String(s).length; i++) { h ^= String(s).charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+
+  function portrait(l, w, h) {
+    var seed = hashOf(l.listing_uid || l.title || 'x');
+    var s = seed;
+    function rnd() { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }
+
+    var pal = BRICK[seed % BRICK.length];
+    var floors = 4 + Math.floor(rnd() * 4);
+    var bays = 3 + Math.floor(rnd() * 2);
+    var preWar = rnd() > 0.42;
+    var risk = +l.hpd_risk_score || 0;
+    var lit = isScam(l) ? 0.12 : needsVerify(l) ? 0.4 : 0.62;
+
+    var bw = w * 0.74, bx = (w - bw) / 2;
+    var by = h * 0.12, bh = h - by - h * 0.1;
+    var fh = bh / floors;
+    var g = '';
+
+    /* sky */
+    g += '<defs><linearGradient id="sky' + seed + '" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="#141b22"/><stop offset="1" stop-color="#1d2129"/></linearGradient></defs>';
+    g += '<rect width="' + w + '" height="' + h + '" fill="url(#sky' + seed + ')"/>';
+
+    /* a neighbour on each side, cropped — the block, not a lonely box */
+    g += '<rect x="0" y="' + (by + fh * 0.6) + '" width="' + (bx - 3) + '" height="' + (h - by - fh * 0.6) + '" fill="#191d22"/>';
+    g += '<rect x="' + (bx + bw + 3) + '" y="' + (by + fh * 0.9) + '" width="' + (w - bx - bw - 3) + '" height="' + (h - by - fh * 0.9) + '" fill="#171b20"/>';
+
+    /* facade */
+    g += '<rect x="' + bx + '" y="' + by + '" width="' + bw + '" height="' + bh + '" fill="' + pal[0] + '"/>';
+    g += '<rect x="' + bx + '" y="' + by + '" width="' + (bw * 0.5) + '" height="' + bh + '" fill="' + pal[1] + '" opacity="0.45"/>';
+    /* cornice */
+    g += '<rect x="' + (bx - 4) + '" y="' + (by - 6) + '" width="' + (bw + 8) + '" height="8" rx="2" fill="' + pal[1] + '"/>';
+
+    /* windows */
+    var mw = bw / (bays + 1) * 0.52, mh = fh * 0.46;
+    for (var r = 0; r < floors; r++) {
+      for (var c = 0; c < bays; c++) {
+        var wx = bx + bw * ((c + 1) / (bays + 1)) - mw / 2;
+        var wy = by + fh * r + fh * 0.28;
+        var on = rnd() < lit && r > 0;
+        g += '<rect x="' + wx.toFixed(1) + '" y="' + wy.toFixed(1) + '" width="' + mw.toFixed(1) + '" height="' + mh.toFixed(1) + '" rx="1.5" fill="' + (on ? '#ffcf7a' : '#20242b') + '"' + (on ? ' opacity="' + (0.55 + rnd() * 0.45).toFixed(2) + '"' : '') + '/>';
+        if (on && rnd() > 0.72) {
+          g += '<rect x="' + (wx + mw * 0.18).toFixed(1) + '" y="' + (wy + mh * 0.3).toFixed(1) + '" width="' + (mw * 0.3).toFixed(1) + '" height="' + (mh * 0.7).toFixed(1) + '" fill="#8a5a2a" opacity="0.55"/>';
+        }
+      }
+    }
+
+    /* fire escape — the pre-war tell */
+    if (preWar) {
+      var fx = bx + bw * 0.5;
+      for (var r2 = 1; r2 < floors; r2++) {
+        var ly = by + fh * r2 + fh * 0.12;
+        g += '<rect x="' + (fx - mw * 0.95) + '" y="' + ly + '" width="' + (mw * 1.9) + '" height="2.5" fill="#2f3a33"/>';
+        g += '<path d="M' + (fx - mw * 0.8) + ' ' + ly + ' L' + (fx + mw * 0.8) + ' ' + (ly + fh * 0.7) + '" stroke="#2f3a33" stroke-width="1.6" fill="none" opacity="0.8"/>';
+      }
+    }
+
+    /* stoop + door */
+    var dw = bw * 0.17, dx = bx + bw * 0.5 - dw / 2, dy = by + bh - fh * 0.62;
+    g += '<rect x="' + dx + '" y="' + dy + '" width="' + dw + '" height="' + (fh * 0.62) + '" rx="2" fill="#241c18"/>';
+    g += '<rect x="' + (dx + dw * 0.15) + '" y="' + (dy + fh * 0.1) + '" width="' + (dw * 0.7) + '" height="' + (fh * 0.28) + '" fill="#ffcf7a" opacity="0.5"/>';
+    /* sidewalk */
+    g += '<rect x="0" y="' + (by + bh) + '" width="' + w + '" height="' + (h - by - bh) + '" fill="#101418"/>';
+    g += '<rect x="0" y="' + (by + bh) + '" width="' + w + '" height="2" fill="#262b25"/>';
+
+    /* record tint — a building with a bad file reads colder */
+    if (risk >= 65) g += '<rect width="' + w + '" height="' + h + '" fill="#e06a70" opacity="0.09"/>';
+    else if (risk >= 45) g += '<rect width="' + w + '" height="' + h + '" fill="#e3b567" opacity="0.05"/>';
+
+    return '<svg class="port" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Illustrated building portrait, drawn from this listing\'s record — not a photograph">' + g + '</svg>';
+  }
+
   /* ---------- shell chrome ---------- */
 
   function renderChrome() {
@@ -361,6 +680,7 @@
       if (con) extra += '<p class="card__line is-con"><b>Con:</b> ' + esc(con) + '</p>';
     }
     return '<button type="button" class="card card--' + kind + '" data-open="' + esc(l.listing_uid) + '">' +
+      '<span class="card__port">' + portrait(l, 300, 132) + '</span>' +
       '<span class="card__top"><span class="card__score">' + score + '</span><span class="card__rent">' + money(l.rent) + '</span></span>' +
       '<h3 class="card__title">' + esc(l.title || l.address_normalized || 'Untitled listing') + '</h3>' +
       '<span class="card__meta">' +
@@ -644,10 +964,21 @@
     $('[data-insp-sub]').textContent = [money(l.rent), l.neighborhood, (unitOf(l) === 'studio' ? 'Studio' : unitOf(l) === '1br' ? '1BR' : l.unit_type)].filter(Boolean).join(' · ');
     $$('[data-insp-tabs] button').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-tab') === inspTab); });
 
+    /* action bar — put the listing into the hunt */
+    var c = caseOf(l.listing_uid);
+    $('[data-insp-actions]').innerHTML = c
+      ? '<div class="stagepick">' + STAGES.map(function (s) {
+          return '<button type="button" data-stage="' + s.id + '" data-uid="' + esc(l.listing_uid) + '" class="' + (c.stage === s.id ? 'is-on' : '') + '">' + s.label + '</button>';
+        }).join('') + '</div>'
+      : '<button type="button" class="bigbtn bigbtn--save" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button>' +
+        (l.source_url ? '<a class="ghostbtn" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Original ↗</a>' : '');
+
     var body = $('[data-insp-body]');
     var html = '';
 
     if (inspTab === 'overview') {
+      html += '<div class="insp-port">' + portrait(l, 440, 190) +
+        '<span class="insp-port__cap">Drawn from the record — floors, era, and lit windows follow this building\'s own data. Not a photograph.</span></div>';
       html += l.why_this_listing ? '<div class="insp-sec"><h3>Why this listing</h3><p>' + esc(l.why_this_listing) + '</p></div>' : '';
       html += l.next_move ? '<div class="insp-sec"><h3>Next move</h3><p>' + esc(l.next_move) + '</p></div>' : '';
       var pros = l.trust_strengths || [], cons = l.trust_caveats || [];
@@ -661,6 +992,64 @@
         kvRow('Fee status', esc(l.fee_status)) + kvRow('Sq ft', l.square_feet ? num(l.square_feet) : null) +
         kvRow('Source', esc(l.source_name)) + '</dl>';
       if (l.source_url) html += '<a class="insp-link" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Open the original listing ↗</a>';
+    } else if (inspTab === 'money') {
+      var m = moveInMath(l);
+      if (!m.rent) {
+        html += '<div class="insp-sec"><p>No rent published on this listing yet, so VERA will not guess at the money. That absence is itself a signal — a real listing leads with its price.</p></div>';
+      } else {
+        html += '<div class="insp-sec"><h3>Cash to move in</h3><div class="ledger ledger--tight">' +
+          '<div class="ledger__row"><span>First month</span><b>' + money(m.rent) + '</b></div>' +
+          '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b>' + money(m.deposit) + '</b></div>' +
+          '<div class="ledger__row"><span>Application <em>$20 max, by law</em></span><b>' + money(m.appFee) + '</b></div>' +
+          '<div class="ledger__row ledger__row--zero"><span>Broker fee</span><b>$0</b></div>' +
+          '<div class="ledger__row ledger__row--total"><span>Total</span><b>' + money(m.total) + '</b></div>' +
+          '</div><p class="insp-save">You keep roughly <b>' + money(m.saved) + '</b> that a 15% broker fee would have taken.</p></div>' +
+          '<div class="insp-sec"><h3>What a landlord will ask you to prove</h3>' +
+          '<p>Annual income of about <b>' + money(m.annualIncomeNeeded) + '</b> (the 40× convention). Short of that, a guarantor is usually asked to show <b>' + money(m.guarantorIncomeNeeded) + '</b>, or an institutional guarantor will stand in for roughly <b>' + money(m.guarantorCost) + '</b> once.</p>' +
+          '<p class="insp-fine">Income multiples are landlord convention, not law. Private landlords bend them. Corporate portfolios almost never do — which is exactly why VERA points you at the former.</p></div>' +
+          '<div class="insp-sec"><h3>Illegal to ask you for</h3><ul class="bad">' +
+          '<li>More than ' + money(m.deposit) + ' in security or prepaid rent</li>' +
+          '<li>An application fee over $' + LAW.appFeeMax + ' — waived entirely if you bring your own credit and background report from the last 30 days</li>' +
+          '<li>A broker fee, if the landlord hired the broker (FARE Act, since ' + LAW.fareActFrom + ')</li>' +
+          '<li>A "good faith" or holding deposit before the lease is signed</li>' +
+          '<li>Key money, or a "tip for the super" to get the keys</li>' +
+          '</ul><p class="insp-fine">Screenshot the ask and report it to DCWP through 311. Your deposit is also due back within ' + LAW.depositReturnDays + ' days of move-out with an itemized list of any deductions. Watch for the quiet workaround too: a first month priced higher than every month after it is a broker fee wearing a disguise.</p></div>';
+      }
+
+      /* the disclosure nobody else makes */
+      html += '<div class="insp-sec"><h3>What you give up here</h3>' +
+        '<p class="insp-fine">Owner-direct is where the fair deals and the human negotiation live. It is also, often, where the least legal protection lives. VERA would rather you knew.</p>' +
+        protections(l).map(function (p) {
+          var cls = p.state === 'likely in' ? 'is-good' : p.state === 'likely out' ? 'is-bad' : 'is-unk';
+          return '<div class="prot ' + cls + '"><span class="prot__state">' + p.state + '</span>' +
+            '<b>' + esc(p.name) + '</b><span class="prot__gives">' + esc(p.gives) + '</span>' +
+            '<span class="prot__why">' + esc(p.why) + '</span></div>';
+        }).join('') + '</div>';
+
+      html += '<div class="insp-sec"><h3>Verify it yourself</h3>' +
+        '<p class="insp-fine">VERA reads the same public records you can. Before money moves, confirm who owns this building — the most expensive scams in this city all come down to that one question.</p>' +
+        '<div class="vtools">' + VERIFY_TOOLS.map(function (v) {
+          return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
+        }).join('') + '</div></div>';
+    } else if (inspTab === 'visit') {
+      var cs = caseOf(l.listing_uid);
+      if (!cs) {
+        html += '<div class="insp-sec"><p>Save this listing to your hunt and the viewing checklist becomes yours — ' + CHECKS.length + ' things to check while you are standing in the apartment, ticked off and remembered per listing.</p>' +
+          '<button type="button" class="bigbtn" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button></div>';
+      } else {
+        var done = Object.keys(cs.checks || {}).filter(function (k) { return cs.checks[k]; }).length;
+        html += '<div class="insp-sec"><h3>Your notes</h3>' +
+          '<textarea class="notes" data-note="' + esc(l.listing_uid) + '" placeholder="Smelled fine. Radiator has a valve. Neighbor says the super is quick.">' + esc(cs.notes || '') + '</textarea></div>' +
+          '<div class="insp-sec"><h3>Checklist <span class="cprog">' + done + ' / ' + CHECKS.length + '</span></h3>' +
+          '<div class="cbar"><span style="width:' + Math.round(done / CHECKS.length * 100) + '%"></span></div>' +
+          checkGroups().map(function (g) {
+            return '<p class="cgh">' + esc(g) + '</p>' + CHECKS.filter(function (x) { return x.group === g; }).map(function (x) {
+              var on = !!(cs.checks || {})[x.id];
+              return '<label class="ck ' + (on ? 'is-on' : '') + '"><input type="checkbox" data-check="' + x.id + '" data-uid="' + esc(l.listing_uid) + '"' + (on ? ' checked' : '') + '>' +
+                '<span><b>' + esc(x.label) + '</b><em>' + esc(x.why) + '</em></span></label>';
+            }).join('');
+          }).join('') + '</div>';
+      }
     } else if (inspTab === 'records') {
       html += '<dl class="kv">' +
         kvRow('BBL', esc(l.bbl)) + kvRow('BIN', esc(l.bin)) +
@@ -723,6 +1112,268 @@
     body.scrollTop = 0;
   }
 
+  /* ================================================================
+     THE MAP — drawn from real coordinates, no tiles, no libraries.
+     A New Yorker navigates by trains and rivers, so that is the map:
+     the two rivers, the park, every station in the hunt zone, and a
+     tether from each listing to the train it actually walks to.
+     ================================================================ */
+
+  var B = { s: 40.688, n: 40.834, w: -74.028, e: -73.893 };
+  var VW = 1000, VH = 1470;
+
+  function px(lng) { return (lng - B.w) / (B.e - B.w) * VW; }
+  function py(lat) { return (B.n - lat) / (B.n - B.s) * VH; }
+  function pt(lat, lng) { return px(lng).toFixed(1) + ',' + py(lat).toFixed(1); }
+
+  var HUDSON = [[40.7020, -74.0175], [40.7100, -74.0155], [40.7250, -74.0125], [40.7400, -74.0105],
+    [40.7550, -74.0080], [40.7700, -73.9985], [40.7850, -73.9860], [40.8000, -73.9730],
+    [40.8150, -73.9620], [40.8340, -73.9530]];
+
+  var EASTRIVER = [[40.7020, -74.0140], [40.7070, -74.0010], [40.7110, -73.9760], [40.7190, -73.9720],
+    [40.7280, -73.9700], [40.7370, -73.9680], [40.7460, -73.9660], [40.7550, -73.9585],
+    [40.7650, -73.9430], [40.7760, -73.9375], [40.7880, -73.9310], [40.8000, -73.9250],
+    [40.8150, -73.9330], [40.8340, -73.9340]];
+
+  var CENTRAL_PARK = [[40.7681, -73.9819], [40.7644, -73.9732], [40.7969, -73.9496], [40.8005, -73.9580]];
+
+  var HOOD_PINS = [
+    ['Harlem', 40.8116, -73.9465], ['Upper West Side', 40.7870, -73.9754], ['Upper East Side', 40.7736, -73.9566],
+    ['Chelsea', 40.7465, -74.0014], ['Gramercy', 40.7368, -73.9845], ['West Village', 40.7358, -74.0036],
+    ['East Village', 40.7265, -73.9815], ['Soho', 40.7233, -74.0030], ['Lower East Side', 40.7150, -73.9843],
+    ['FiDi', 40.7075, -74.0100], ['Greenpoint', 40.7304, -73.9540], ['Williamsburg', 40.7143, -73.9520],
+    ['E Williamsburg', 40.7095, -73.9330],
+  ];
+
+  function poly(points) { return points.map(function (p) { return pt(p[0], p[1]); }).join(' '); }
+
+  function renderMap(page) {
+    var f = filtered();
+    var placed = f.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    var lost = f.length - placed.length;
+
+    var landPath = '<polygon class="mp-land" points="' + poly(HUDSON.concat(EASTRIVER.slice().reverse())) + '"/>';
+    var bkPath = '<polygon class="mp-land" points="' + poly(EASTRIVER.concat([[B.n, B.e], [B.s, B.e]])) + '"/>';
+    var njPath = '<polygon class="mp-land mp-land--far" points="' + poly(HUDSON.concat([[B.n, B.w], [B.s, B.w]])) + '"/>';
+    var parkPath = '<polygon class="mp-park" points="' + poly(CENTRAL_PARK) + '"/>';
+
+    var stationDots = STATIONS.map(function (s) {
+      var first = String(s[1]).split(/\s+/)[0];
+      return '<circle class="mp-stn" cx="' + px(s[3]).toFixed(1) + '" cy="' + py(s[2]).toFixed(1) + '" r="3.4" fill="' + (LINE_COLORS[first] || '#666') + '"><title>' + esc(s[0]) + ' · ' + esc(s[1]) + '</title></circle>';
+    }).join('');
+
+    var hoodLabels = HOOD_PINS.map(function (h) {
+      return '<text class="mp-hood" x="' + px(h[2]).toFixed(1) + '" y="' + py(h[1]).toFixed(1) + '">' + esc(h[0]).toUpperCase() + '</text>';
+    }).join('');
+
+    var tethers = '', pins = '';
+    placed.forEach(function (l, i) {
+      var x = px(+l.longitude), y = py(+l.latitude);
+      var t = nearestStation(l);
+      if (t) {
+        var sx = null, sy = null;
+        for (var k = 0; k < STATIONS.length; k++) {
+          if (STATIONS[k][0] === t.name) { sx = px(STATIONS[k][3]); sy = py(STATIONS[k][2]); break; }
+        }
+        if (sx != null) tethers += '<line class="mp-tether" x1="' + x.toFixed(1) + '" y1="' + y.toFixed(1) + '" x2="' + sx.toFixed(1) + '" y2="' + sy.toFixed(1) + '"/>';
+      }
+      var rec = isScam(l) ? 'bad' : needsVerify(l) ? 'warn' : 'good';
+      var r = 9 + Math.min(11, (+l.overall_score || 0) / 8);
+      pins += '<g class="mp-pin mp-pin--' + rec + '" data-open="' + esc(l.listing_uid) + '" tabindex="0" role="button" style="--d:' + (i * 55) + 'ms" transform="translate(' + x.toFixed(1) + ' ' + y.toFixed(1) + ')">' +
+        '<circle class="mp-halo" r="' + (r + 11).toFixed(1) + '"/>' +
+        '<circle class="mp-dot" r="' + r.toFixed(1) + '"/>' +
+        '<text class="mp-rent" y="4">' + (l.rent ? '$' + Math.round(l.rent / 100) / 10 + 'k' : '?') + '</text>' +
+        '<title>' + esc(l.title || 'Listing') + ' · ' + money(l.rent) + (t ? ' · ≈' + t.mins + ' min to ' + esc(t.name) : '') + '</title></g>';
+    });
+
+    var sorted = placed.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
+
+    page.innerHTML =
+      '<div class="maplay">' +
+        '<div class="panel mapwrap">' +
+          '<div class="panel__head"><h2 class="panel__title">The hunt zone</h2>' +
+          '<p class="panel__hint">' + placed.length + ' plotted' + (lost ? ' · ' + lost + ' without coordinates' : '') + '</p></div>' +
+          '<svg class="mp" viewBox="0 0 ' + VW + ' ' + VH + '" role="img" aria-label="Map of listings and subway stations">' +
+            '<rect class="mp-water" x="0" y="0" width="' + VW + '" height="' + VH + '"/>' +
+            njPath + bkPath + landPath + parkPath +
+            '<g class="mp-stns">' + stationDots + '</g>' +
+            '<g class="mp-hoods">' + hoodLabels + '</g>' +
+            '<g class="mp-tethers">' + tethers + '</g>' +
+            '<g class="mp-pins">' + pins + '</g>' +
+          '</svg>' +
+          '<div class="mp-key">' +
+            '<span class="mp-key__i"><i class="mp-swatch mp-swatch--good"></i>Clears the bar</span>' +
+            '<span class="mp-key__i"><i class="mp-swatch mp-swatch--warn"></i>Needs verification</span>' +
+            '<span class="mp-key__i"><i class="mp-swatch mp-swatch--bad"></i>Scam wall</span>' +
+            '<span class="mp-key__i"><i class="mp-swatch mp-swatch--stn"></i>Subway · line tethered to nearest walk</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="panel"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
+          (sorted.length ? '<div class="walklist">' + sorted.map(function (l) {
+            var t = nearestStation(l);
+            return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
+              '<span class="walkrow__min">' + (t ? '≈' + t.mins : '—') + '<small>min</small></span>' +
+              '<span class="walkrow__body"><b>' + esc(l.title || l.address_normalized || 'Listing') + '</b>' +
+              '<span>' + (t ? lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
+              '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
+          }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet. Widen a filter — or watch the Pipeline page, geocoding is where thin nights show up first.</p>') +
+        '</div>' +
+      '</div>';
+    page.classList.add('is-entered');
+  }
+
+  /* ================================================================
+     MY HUNT — the pipeline for one human, not for the data
+     ================================================================ */
+
+  function renderCases(page) {
+    var uids = Object.keys(cases);
+    var byStage = {};
+    STAGES.forEach(function (s) { byStage[s.id] = []; });
+    uids.forEach(function (u) {
+      var c = cases[u];
+      if (!byStage[c.stage]) byStage[c.stage] = [];
+      byStage[c.stage].push(c);
+    });
+
+    var live = uids.filter(function (u) { return cases[u].stage !== 'dead'; });
+    var spend = live.reduce(function (a, u) { return a + (+cases[u].rent || 0); }, 0);
+    var avg = live.length ? Math.round(spend / live.length) : 0;
+    var savedFees = live.reduce(function (a, u) { return a + (+cases[u].rent || 0) * 1.5; }, 0);
+
+    if (!uids.length) {
+      page.innerHTML = '<div class="empty-hero">' +
+        '<svg width="70" height="70" viewBox="0 0 24 24" aria-hidden="true" class="empty-hero__mark">' +
+        '<circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".4"/>' +
+        '<path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a" opacity=".8"/></svg>' +
+        '<h2>Your hunt starts empty. That is fine.</h2>' +
+        '<p>Open any listing and hit <b>Save to hunt</b>. VERA will track it from first look to signed lease — reached out, tour booked, seen it, applied — and keep your notes and viewing checklists with it.</p>' +
+        '<p class="empty-hero__fine">Everything here lives in this browser only. No account, no server, nothing uploaded.</p>' +
+        '<a class="bigbtn" href="#/discover">Go find something ↗</a></div>';
+      return;
+    }
+
+    page.innerHTML =
+      '<div class="kpis">' +
+        '<div class="kpi"><p class="kpi__label">In play</p><p class="kpi__value"><span data-count-to="' + live.length + '">0</span></p><p class="kpi__note">' + (byStage.dead || []).length + ' passed on</p></div>' +
+        '<div class="kpi"><p class="kpi__label">Average ask</p><p class="kpi__value">' + (avg ? '<span data-count-to="' + avg + '" data-count-prefix="$" data-count-final="' + money(avg) + '">$0</span>' : '—') + '</p><p class="kpi__note">across your shortlist</p></div>' +
+        '<div class="kpi kpi--good"><p class="kpi__label">Broker fees avoided</p><p class="kpi__value">' + (savedFees ? '<span data-count-to="' + Math.round(savedFees) + '" data-count-prefix="$" data-count-final="' + money(savedFees) + '">$0</span>' : '$0') + '</p><p class="kpi__note">if every one had a fee</p></div>' +
+        '<div class="kpi"><p class="kpi__label">Furthest stage</p><p class="kpi__value" style="font-size:30px">' + esc((STAGES.filter(function (s) { return (byStage[s.id] || []).length && s.id !== 'dead'; }).pop() || { label: '—' }).label) + '</p><p class="kpi__note">keep going</p></div>' +
+      '</div>' +
+      '<div class="board">' + STAGES.map(function (s) {
+        var items = byStage[s.id] || [];
+        return '<div class="col' + (s.id === 'dead' ? ' col--dead' : '') + '">' +
+          '<p class="col__head">' + s.label + ' <b>' + items.length + '</b></p>' +
+          '<p class="col__hint">' + s.hint + '</p>' +
+          (items.length ? items.map(function (c) {
+            return '<div class="ccard"><button type="button" class="ccard__open" data-open="' + esc(c.uid) + '">' +
+              '<b>' + esc(c.title || c.uid) + '</b>' +
+              '<span>' + (c.rent ? money(c.rent) : '—') + (c.hood ? ' · ' + esc(c.hood) : '') + '</span>' +
+              (c.notes ? '<em>“' + esc(c.notes.slice(0, 70)) + (c.notes.length > 70 ? '…' : '') + '”</em>' : '') +
+              '</button><div class="ccard__moves">' +
+              STAGES.filter(function (x) { return x.id !== c.stage; }).slice(0, 3).map(function (x) {
+                return '<button type="button" data-stage="' + x.id + '" data-uid="' + esc(c.uid) + '" title="Move to ' + x.label + '">' + x.label + '</button>';
+              }).join('') +
+              '<button type="button" class="ccard__drop" data-drop="' + esc(c.uid) + '" title="Remove">×</button>' +
+              '</div></div>';
+          }).join('') : '<p class="col__empty">—</p>') +
+        '</div>';
+      }).join('') + '</div>';
+    page.classList.add('is-entered');
+    countUps(page);
+  }
+
+  /* ================================================================
+     TOOLKIT — the calculators and the field manual
+     ================================================================ */
+
+  var toolRent = 2400;
+  var toolIncome = 0;
+
+  function renderToolkit(page) {
+    var r = toolRent;
+    var deposit = r * LAW.depositMaxMonths;
+    var total = r + deposit + LAW.appFeeMax;
+    var brokerTotal = total + r * 1.5;
+    var need = r * LAW.incomeRuleX;
+    var guarNeed = r * LAW.guarantorRuleX;
+    var qualifies = toolIncome >= need;
+    var guarantorPath = toolIncome > 0 && !qualifies;
+
+    page.innerHTML =
+      '<div class="grid grid--2">' +
+        '<div class="panel tool"><div class="panel__head"><h2 class="panel__title">What it really costs to move in</h2><p class="panel__hint">NY law, not vibes</p></div>' +
+          '<label class="slider"><span>Monthly rent <b>' + money(r) + '</b></span>' +
+          '<input type="range" min="1200" max="4000" step="25" value="' + r + '" data-toolrent aria-label="Monthly rent"></label>' +
+          '<div class="ledger">' +
+            '<div class="ledger__row"><span>First month\'s rent</span><b>' + money(r) + '</b></div>' +
+            '<div class="ledger__row"><span>Security deposit <em>capped at one month</em></span><b>' + money(deposit) + '</b></div>' +
+            '<div class="ledger__row"><span>Application fee <em>capped at $20</em></span><b>' + money(LAW.appFeeMax) + '</b></div>' +
+            '<div class="ledger__row ledger__row--zero"><span>Broker fee <em>private landlord — nobody hired one</em></span><b>$0</b></div>' +
+            '<div class="ledger__row ledger__row--total"><span>Cash to move in</span><b>' + money(total) + '</b></div>' +
+          '</div>' +
+          '<div class="compare"><div class="compare__bar"><span class="compare__vera" style="width:' + Math.round(total / brokerTotal * 100) + '%"><i>VERA ' + money(total) + '</i></span></div>' +
+          '<div class="compare__bar compare__bar--ghost"><span class="compare__broker"><i>With a broker fee ' + money(brokerTotal) + '</i></span></div>' +
+          '<p class="compare__note">A 15% broker fee on this rent is <b>' + money(r * 1.5) + '</b> you never spend. Since the FARE Act took effect ' + LAW.fareActFrom + ', a broker hired by the landlord cannot bill it to you at all — if one tries, that is a violation you can report to DCWP through 311.</p></div>' +
+        '</div>' +
+
+        '<div class="panel tool"><div class="panel__head"><h2 class="panel__title">Do you clear the 40× wall</h2><p class="panel__hint">the gate every New Yorker hits</p></div>' +
+          '<label class="slider"><span>Your annual income <b>' + (toolIncome ? money(toolIncome) : 'not set') + '</b></span>' +
+          '<input type="range" min="0" max="250000" step="2500" value="' + toolIncome + '" data-toolincome aria-label="Annual income"></label>' +
+          '<div class="verdict ' + (toolIncome === 0 ? '' : qualifies ? 'is-good' : 'is-warn') + '">' +
+            (toolIncome === 0
+              ? '<b>Slide your income in.</b><span>Most NYC landlords want to see annual income of 40× the monthly rent. VERA will tell you exactly where you stand — and what a guarantor changes.</span>'
+              : qualifies
+                ? '<b>You clear it.</b><span>' + money(toolIncome) + ' is above the ' + money(need) + ' a landlord typically wants for ' + money(r) + '/month. Bring pay stubs, an offer letter, and your last two tax returns and you are the easy applicant in the room.</span>'
+                : '<b>You need a guarantor — or a lower bracket.</b><span>At ' + money(r) + '/month most landlords want ' + money(need) + '. You are ' + money(need - toolIncome) + ' short. A guarantor typically needs ' + money(guarNeed) + ' in income, or an institutional guarantor service will stand in for roughly ' + money(Math.round(r * LAW.guarantorTypicalPct)) + ' one time.</span>') +
+          '</div>' +
+          '<div class="afford"><p class="afford__label">On ' + (toolIncome ? money(toolIncome) : 'your income') + ', the 40× rule puts you at</p>' +
+          '<p class="afford__big">' + (toolIncome ? money(Math.floor(toolIncome / LAW.incomeRuleX / 25) * 25) : '—') + '<small>/month</small></p>' +
+          (toolIncome ? '<div class="afford__brackets">' + BRACKETS.map(function (br) {
+            var reach = toolIncome / LAW.incomeRuleX >= br.lo;
+            return '<span class="' + (reach ? 'is-reach' : '') + '">' + br.label + (reach ? ' ✓' : ' ✕') + '</span>';
+          }).join('') + '</div>' : '') + '</div>' +
+          (guarantorPath ? '<p class="tool__fine">Worth knowing: income rules are landlord convention, not law. A private landlord — the only kind VERA surfaces — can and often does make their own call. That flexibility is the whole reason to skip the corporate portfolios.</p>' : '') +
+        '</div>' +
+      '</div>' +
+
+      '<div class="panel"><div class="panel__head"><h2 class="panel__title">When to hunt</h2><p class="panel__hint">three different "best times" — they are not the same month</p></div>' +
+        '<p class="tool__intro">Everyone repeats that winter is cheaper. On a like-for-like apartment it is worth about two percent — the big winter "discount" is mostly a change in what is being listed, not a change in price. What genuinely moves is <b>selection</b> and <b>your leverage</b>, and those peak in opposite seasons.</p>' +
+        '<div class="seasons">' +
+          '<div class="season season--sel"><span class="season__when">June – August</span><b>Most to choose from</b>' +
+          '<span class="season__n">peak inventory</span>' +
+          '<p>Roughly a fifth more listings than the winter floor. It is also when apartments move fastest — about ' + MARKET.manhattanDom + ' days to rent in Manhattan, against 55–60 in deep winter. Bring your paperwork.</p></div>' +
+          '<div class="season season--cheap"><span class="season__when">December – February</span><b>Lowest asking rents</b>' +
+          '<span class="season__n">the trough</span>' +
+          '<p>Median asking rent bottoms out here — but a chunk of that is smaller, plainer inventory rather than a true discount. Less to see, more time to see it.</p></div>' +
+          '<div class="season season--lev"><span class="season__when">September – November</span><b>Most negotiating room</b>' +
+          '<span class="season__n">peak price cuts</span>' +
+          '<p>The share of listings taking a price cut roughly doubles versus spring, peaking in October as landlords clear summer leftovers into thin demand. The best month to ask is not the cheapest month to look.</p></div>' +
+        '</div>' +
+        '<p class="tool__fine">Start about <b>' + MARKET.leadDays + ' days</b> before you need to move. Earlier and most of what you see will be gone by your date; later and you are choosing under pressure. Figures reflect published New York City market data through ' + MARKET.asOf + '.</p>' +
+      '</div>' +
+
+      '<div class="panel"><div class="panel__head"><h2 class="panel__title">Scam school</h2><p class="panel__hint">tap a card — the tells, learned the hard way</p></div>' +
+        '<div class="telldeck">' + TELLS.map(function (t, i) {
+          return '<button type="button" class="tell tell--' + t.k + '" data-tell style="--d:' + (i * 40) + 'ms">' +
+            '<span class="tell__front"><b>' + esc(t.t) + '</b><em>tap</em></span>' +
+            '<span class="tell__back">' + esc(t.d) + '</span></button>';
+        }).join('') + '</div>' +
+        '<p class="tool__fine">Three of those are not judgment calls — they are illegal in New York. More than one month of security, an application fee over $20, and a landlord-hired broker billing the tenant. Screenshot the ask and report it at 311.</p>' +
+      '</div>' +
+
+      '<div class="panel"><div class="panel__head"><h2 class="panel__title">The viewing checklist</h2><p class="panel__hint">' + CHECKS.length + ' things people wish they had checked</p></div>' +
+        '<p class="tool__intro">Open any saved listing and run this list standing in the apartment — VERA keeps your ticks with that listing. Here it is in full, because half of hunting well is knowing what to look at.</p>' +
+        checkGroups().map(function (g) {
+          return '<div class="cgroup"><h3>' + esc(g) + '</h3><ul>' +
+            CHECKS.filter(function (c) { return c.group === g; }).map(function (c) {
+              return '<li><b>' + esc(c.label) + '</b><span>' + esc(c.why) + '</span></li>';
+            }).join('') + '</ul></div>';
+        }).join('') +
+      '</div>';
+    page.classList.add('is-entered');
+  }
+
   /* ---------- router ---------- */
 
   function route() {
@@ -738,17 +1389,38 @@
     if (!D) return;
     $$('.page').forEach(function (p) { p.hidden = p.getAttribute('data-page') !== state.route; });
     var page = $('[data-page="' + state.route + '"]');
+    page.classList.remove('is-entered');
     if (state.route === 'command') renderCommand(page);
+    else if (state.route === 'map') renderMap(page);
     else if (state.route === 'discover') renderDiscover(page);
+    else if (state.route === 'cases') renderCases(page);
+    else if (state.route === 'toolkit') renderToolkit(page);
     else if (state.route === 'pipeline') renderPipeline(page);
     else renderAbout(page);
+    /* filters only steer the data views */
+    var chrome = $('[data-filters]');
+    if (chrome) chrome.hidden = (state.route === 'toolkit' || state.route === 'about' || state.route === 'pipeline' || state.route === 'cases');
   }
 
   /* ---------- events ---------- */
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-bracket],[data-brtile],[data-area],[data-transit],[data-unit],[data-lens],[data-view],[data-hood],[data-hoodbar],[data-clear],[data-open],[data-kpi],[data-sort],[data-density],[data-insp-close],[data-scrim],[data-tab]');
+    var t = e.target.closest('[data-bracket],[data-brtile],[data-area],[data-transit],[data-unit],[data-lens],[data-view],[data-hood],[data-hoodbar],[data-clear],[data-open],[data-kpi],[data-sort],[data-density],[data-insp-close],[data-scrim],[data-tab],[data-stage],[data-drop],[data-tell]');
     if (!t) return;
+
+    if (t.hasAttribute('data-stage')) {
+      setStage(t.getAttribute('data-uid'), t.getAttribute('data-stage'));
+      var lz = byUid(t.getAttribute('data-uid'));
+      if (lz && openUid === lz.listing_uid) renderInspector(lz);
+      if (state.route === 'cases') renderRoute();
+      return;
+    }
+    if (t.hasAttribute('data-drop')) {
+      dropCase(t.getAttribute('data-drop'));
+      renderRoute();
+      return;
+    }
+    if (t.hasAttribute('data-tell')) { t.classList.toggle('is-flipped'); return; }
 
     if (t.hasAttribute('data-bracket')) { state.bracket = t.getAttribute('data-bracket'); refresh(); }
     else if (t.hasAttribute('data-brtile')) {
@@ -798,6 +1470,29 @@
     else if (t.hasAttribute('data-tab')) { inspTab = t.getAttribute('data-tab'); var l = byUid(openUid); if (l) renderInspector(l); }
   });
 
+  /* toolkit sliders, checklist ticks, notes */
+  document.addEventListener('input', function (e) {
+    var el = e.target;
+    if (el.hasAttribute && el.hasAttribute('data-toolrent')) { toolRent = +el.value; renderRoute(); }
+    else if (el.hasAttribute && el.hasAttribute('data-toolincome')) { toolIncome = +el.value; renderRoute(); }
+    else if (el.hasAttribute && el.hasAttribute('data-note')) {
+      var uid = el.getAttribute('data-note');
+      if (cases[uid]) { cases[uid].notes = el.value; clearTimeout(el._t); el._t = setTimeout(saveCases, 400); }
+    }
+  });
+
+  document.addEventListener('change', function (e) {
+    var el = e.target;
+    if (!el.hasAttribute || !el.hasAttribute('data-check')) return;
+    var uid = el.getAttribute('data-uid'), id = el.getAttribute('data-check');
+    if (!cases[uid]) return;
+    cases[uid].checks = cases[uid].checks || {};
+    cases[uid].checks[id] = el.checked;
+    saveCases();
+    var l = byUid(uid);
+    if (l) renderInspector(l);
+  });
+
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openUid) inspClose(); });
   window.addEventListener('hashchange', route);
 
@@ -827,6 +1522,7 @@
     $('[data-loading]').remove();
     renderChrome();
     renderFilters();
+    saveCases();
     route();
     if (TESTMODE) runTests();
   }
@@ -916,6 +1612,41 @@
 
       check('no private feed touched', FEEDS.every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), FEEDS.join(' '));
       check('brand present', $('.brand__name').textContent === 'VERA', '');
+
+      /* ---- platform: map ---- */
+      location.hash = '#/map'; route();
+      check('map draws land, stations, and pins', $$('.mp-land').length >= 2 && $$('.mp-stn').length > 40 && !!$('.mp'), $$('.mp-stn').length + ' stations');
+
+      /* ---- platform: money engine obeys NY law ---- */
+      var mm = moveInMath({ rent: 2400 });
+      check('deposit capped at one month', mm.deposit === 2400, '$' + mm.deposit);
+      check('application fee capped at $20', mm.appFee === 20, '$' + mm.appFee);
+      check('move-in total carries no broker fee', mm.total === 2400 + 2400 + 20, '$' + mm.total);
+      check('40x income rule surfaced', mm.annualIncomeNeeded === 96000, '$' + mm.annualIncomeNeeded);
+
+      /* ---- platform: the hunt workspace ---- */
+      var probe = POOL[0] && POOL[0].listing_uid;
+      var hadCase = !!caseOf(probe);
+      if (probe && !hadCase) {
+        setStage(probe, 'saved');
+        check('listing saves into the hunt', !!caseOf(probe) && caseOf(probe).stage === 'saved', '');
+        cases[probe].checks = { water: true };
+        saveCases();
+        check('viewing checklist persists per listing', caseOf(probe).checks.water === true, '');
+        location.hash = '#/cases'; route();
+        check('hunt board renders stage columns', $$('.board .col').length === STAGES.length, $$('.board .col').length + ' columns');
+        dropCase(probe);
+        check('case can be removed', !caseOf(probe), '');
+      } else {
+        check('listing saves into the hunt', true, 'skipped — existing case');
+      }
+
+      /* ---- platform: toolkit ---- */
+      location.hash = '#/toolkit'; route();
+      check('toolkit renders both calculators', $$('.tool').length === 2, $$('.tool').length);
+      check('scam school deck present', $$('.tell').length === TELLS.length, $$('.tell').length + ' tells');
+      check('viewing checklist published in full', $$('.cgroup li').length === CHECKS.length, $$('.cgroup li').length + ' checks');
+      check('filters hidden on non-data pages', $('[data-filters]').hidden === true, '');
 
       location.hash = '#/command'; route();
       window.__testResults = { pass: results.every(function (r) { return r.ok; }), results: results };
