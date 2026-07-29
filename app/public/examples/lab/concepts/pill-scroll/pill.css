@@ -58,11 +58,10 @@ html, body {
 /* ---------- intro ---------- */
 
 .intro {
-  min-height: 96vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 12vh max(24px, 6vw) 8vh;
+  padding: max(96px, 13vh) max(24px, 6vw) 48px;
   max-width: 880px;
 }
 
@@ -103,7 +102,7 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 0 0 40px;
+  margin: 0 0 26px;
   padding: 0;
   list-style: none;
 }
@@ -144,7 +143,7 @@ html, body {
 
 /* ---------- pinned stage ---------- */
 
-.pin { height: 520vh; }
+.pin { height: 430vh; }
 
 .stage {
   position: sticky;
@@ -250,11 +249,10 @@ html, body {
 /* ---------- outro ---------- */
 
 .outro {
-  min-height: 78vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 14vh max(24px, 6vw) max(120px, 16vh);
+  padding: 88px max(24px, 6vw) 140px;
   max-width: 880px;
 }
 

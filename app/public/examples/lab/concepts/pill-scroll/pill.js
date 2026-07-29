@@ -83,53 +83,53 @@ function progressNow() {
 
 /* phase map — one pure function of p */
 function apply(p) {
-  /* phases: 0–.10 pill idle · .10–.24 bloom · .24–.88 film · .88–.97 contract · tail rest */
+  /* phases: 0–.06 pill idle · .06–.20 bloom · .20–.90 film · .90–.97 contract · tail rest */
   let inset, radius;
-  if (p < 0.10) {
-    const breathe = Math.sin(p * 60) * 0.4;
-    inset = [PILL.top + breathe * 0.2, PILL.right - breathe, PILL.bottom + breathe * 0.2, PILL.left - breathe];
-    radius = 999;
-  } else if (p < 0.24) {
-    const k = ease((p - 0.10) / 0.14);
+  const R = 999;
+  if (p < 0.06) {
+    inset = [PILL.top, PILL.right, PILL.bottom, PILL.left];
+    radius = R;
+  } else if (p < 0.20) {
+    const k = ease((p - 0.06) / 0.14);
     inset = [lerp(PILL.top, 0, k), lerp(PILL.right, 0, k), lerp(PILL.bottom, 0, k), lerp(PILL.left, 0, k)];
-    radius = lerp(999, 0, ease(k));
-  } else if (p < 0.88) {
+    /* stay a capsule while growing — corners only sharpen as it meets the edges */
+    radius = k < 0.72 ? R : lerp(R, 0, ease((k - 0.72) / 0.28));
+  } else if (p < 0.90) {
     inset = [0, 0, 0, 0];
     radius = 0;
   } else if (p < 0.97) {
-    const k = ease((p - 0.88) / 0.09);
+    const k = ease((p - 0.90) / 0.07);
     inset = [lerp(0, PILL.top, k), lerp(0, PILL.right, k), lerp(0, PILL.bottom, k), lerp(0, PILL.left, k)];
-    radius = lerp(0, 999, ease(k));
+    radius = k < 0.28 ? lerp(0, R, ease(k / 0.28)) : R;
   } else {
     inset = [PILL.top, PILL.right, PILL.bottom, PILL.left];
-    radius = 999;
+    radius = R;
   }
   frame.style.clipPath = `inset(${inset[0]}% ${inset[1]}% ${inset[2]}% ${inset[3]}% round ${radius}px)`;
 
-  /* film: which moment, crossfade, ken burns */
-  const filmT = clamp((p - 0.24) / (0.88 - 0.24), 0, 1);
+  /* film: which moment, crossfade */
+  const filmT = clamp((p - 0.20) / (0.90 - 0.20), 0, 1);
   const seg = filmT * (MOMENTS.length - 0.0001);
   const idx = clamp(Math.floor(seg), 0, MOMENTS.length - 1);
   const local = seg - idx;
-  const FADE = 0.22;
+  const FADE = 0.3;
+  /* one shared, glacial push-in across the whole film — every layer aligns, cuts never jump */
+  const filmScale = (1.035 + filmT * 0.045).toFixed(4);
   imgs.forEach((im, i) => {
     let op = 0;
-    if (p < 0.24) op = i === 0 ? 1 : 0;
-    else if (p >= 0.88) op = i === MOMENTS.length - 1 ? 1 : 0;
+    if (p < 0.20) op = i === 0 ? 1 : 0;
+    else if (p >= 0.90) op = i === MOMENTS.length - 1 ? 1 : 0;
     else if (i === idx) op = 1;
     else if (i === idx + 1) op = local > 1 - FADE ? (local - (1 - FADE)) / FADE : 0;
     const on = op > 0.001;
     im.style.visibility = on ? 'visible' : 'hidden';
     if (!on) return;
     im.style.opacity = op.toFixed(3);
-    const dir = i % 2 === 0 ? 1 : -1;
-    const zoom = 1.06 + local * 0.05;
-    const panX = dir * lerp(-1.4, 1.4, local);
-    im.style.transform = `scale(${zoom.toFixed(4)}) translate(${panX.toFixed(2)}%, ${(local * -1.2).toFixed(2)}%)`;
+    im.style.transform = `scale(${filmScale})`;
   });
 
   /* words + counter + ticks */
-  const inFilm = p >= 0.22 && p < 0.9;
+  const inFilm = p >= 0.18 && p < 0.92;
   if (inFilm) {
     if (idx !== lastWordIdx) {
       lastWordIdx = idx;
@@ -150,7 +150,7 @@ function apply(p) {
     ticksEl.style.opacity = '0';
     lastWordIdx = -1;
   }
-  tag.style.opacity = p < 0.1 ? String(1 - p * 8) : p > 0.965 ? String((p - 0.965) / 0.035 * 0.9) : '0';
+  tag.style.opacity = p < 0.05 ? String(clamp(1 - p * 16, 0, 1)) : p > 0.965 ? String((p - 0.965) / 0.035 * 0.9) : '0';
 }
 
 function tick(ts) {
@@ -201,7 +201,7 @@ if (TESTMODE) {
       apply(0.31); const w2 = wordEl.textContent;
       apply(0.5); const w3 = wordEl.textContent;
       check('scrub reversible', w1 === w3 && w1 !== w2, `${w2}→${w1}`);
-      const half = 0.24 + (0.88 - 0.24) * (8.5 / 16);
+      const half = 0.20 + (0.90 - 0.20) * (8.5 / 16);
       apply(half);
       check('counter tracks film', countEl.textContent.startsWith('09'), countEl.textContent);
       apply(0);
