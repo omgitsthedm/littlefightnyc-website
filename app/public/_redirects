@@ -134,3 +134,6 @@
 
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404
+
+# Tech Support Site retired from the Lab (2026-07-29)
+/examples/lab/concepts/tech-support/* /examples/lab/ 301

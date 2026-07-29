@@ -116,14 +116,6 @@ const LAB_BUILDS = [
     poster: "/images/lab-showcase/chef-drew",
     alt: "Chef Drew hospitality concept homepage with bold headline",
   },
-  {
-    title: "Tech Support Site",
-    type: "Full website",
-    description: "Our earlier complete service site, preserved and still working.",
-    href: "/examples/lab/concepts/tech-support/",
-    poster: "/images/lab-showcase/tech-support",
-    alt: "The working counter inside a New York cafe",
-  },
 ] as const;
 
 export default function FieldGuide() {
@@ -164,7 +156,7 @@ export default function FieldGuide() {
           <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
             <div className="lf-ex-lab-direct__head">
               <div>
-                <p>11 working builds</p>
+                <p>10 working builds</p>
                 <h3 id="lf-ex-lab-title">Choose a direction and step inside.</h3>
                 <span>
                   Most are experiments, two are client builds we can show. Each

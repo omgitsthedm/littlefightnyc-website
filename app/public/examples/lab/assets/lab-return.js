@@ -52,13 +52,6 @@
       hint: 'Scroll the five chapters — every number is drawn, not charted.'
     },
     {
-      slug: 'tech-support',
-      title: 'Tech Support Site',
-      type: 'Complete website',
-      suite: 'business-systems',
-      hint: 'Move through the complete earlier service website.'
-    },
-    {
       slug: 'goliath',
       title: 'Goliath',
       type: 'Brand campaign',
