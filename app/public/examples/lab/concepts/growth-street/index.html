@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap">
-  <link rel="stylesheet" href="street.css?v=1">
+  <link rel="stylesheet" href="street.css?v=2">
 </head>
 <body>
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
@@ -42,7 +42,7 @@
           <p class="shop__sign">ROSIE'S FLOWERS</p>
           <div class="shop__window"></div>
           <div class="shop__door" data-door></div>
-          <div class="shop__buckets"><i>🌷</i><i>🌻</i></div>
+          <div class="shop__buckets" aria-hidden="true"><span class="bucket"><i>🌷</i></span><span class="bucket"><i>🌻</i></span></div>
         </div>
         <div class="cat" aria-hidden="true"><span class="cat__body"></span><span class="cat__tail"></span></div>
         <div class="walkway" data-walkway></div>
@@ -63,7 +63,7 @@
           <p class="shop__sign">ROSIE'S FLOWERS</p>
           <div class="shop__window shop__window--lit"></div>
           <div class="shop__door shop__door--lit"></div>
-          <div class="shop__buckets"><i>🌷</i><i>🌻</i><i>💐</i></div>
+          <div class="shop__buckets" aria-hidden="true"><span class="bucket"><i>🌷</i></span><span class="bucket"><i>🌻</i></span><span class="bucket"><i>💐</i></span></div>
         </div>
         <div class="phone" aria-hidden="true">
           <div class="phone__screen"><i>🌷</i><b>rosies.nyc</b></div>
@@ -147,7 +147,7 @@
     <p class="fallback">This build needs JavaScript — the story animates as you scroll.</p>
   </noscript>
 
-  <script type="module" src="street.js?v=1"></script>
+  <script type="module" src="street.js?v=2"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

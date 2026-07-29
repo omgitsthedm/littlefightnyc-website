@@ -148,12 +148,11 @@ html, body {
 
 .ch {
   position: relative;
-  min-height: 94vh;
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   align-items: center;
   gap: clamp(16px, 3vw, 44px);
-  padding: clamp(40px, 6vh, 72px) max(22px, 5vw);
+  padding: clamp(40px, 6vh, 64px) max(22px, 5vw);
   overflow: hidden;
   color: var(--story-ink);
 }
@@ -236,7 +235,7 @@ html, body {
 }
 
 /* scenes */
-.ch__scene { position: relative; height: clamp(340px, 52vh, 520px); z-index: 1; }
+.ch__scene { position: relative; height: clamp(330px, 46vh, 470px); z-index: 1; }
 
 /* entrance */
 .ch__copy, .ch__scene { opacity: 0; transform: translateY(26px); transition: opacity 600ms ease, transform 700ms var(--ease-out); }
@@ -343,16 +342,38 @@ html, body {
 
 .shop__door--lit { background: linear-gradient(180deg, #ffe4a8, #f7b45e); box-shadow: 0 0 26px rgba(255, 210, 130, 0.6); }
 
+/* flower buckets: real containers, planted on the sidewalk against the shop */
 .shop__buckets {
   position: absolute;
-  left: -4px;
-  bottom: -34px;
+  left: 12px;
+  bottom: -3px;
   display: flex;
-  gap: 6px;
-  font-size: 22px;
+  align-items: flex-end;
+  gap: 7px;
+  z-index: 3;
 }
 
-.shop__buckets i { font-style: normal; filter: drop-shadow(1px 2px 0 rgba(43, 26, 18, 0.3)); }
+.bucket {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 21px;
+  background: linear-gradient(180deg, #b9cdd8, #93aebc);
+  border: 2.5px solid var(--story-ink);
+  border-radius: 3px 3px 7px 7px;
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 12% 100%);
+}
+
+.bucket i {
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translateX(-50%);
+  font-style: normal;
+  font-size: 17px;
+  line-height: 1;
+  filter: drop-shadow(1px 1.5px 0 rgba(43, 26, 18, 0.3));
+}
 
 .shop__upstairs {
   position: absolute;
