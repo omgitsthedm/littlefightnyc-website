@@ -29,7 +29,7 @@ const CUTS = [
   { variant: 'lines', wipe: 'right', rot: 1.2, pal: CREAM, lines: ['You have a shop.', 'A phone.', 'And a |fight| in you.'] },
   { variant: 'giant', wipe: 'top', rot: -1.3, pal: ORANGE, word: 'LITTLE<br>FIGHT.' },
   { variant: 'lines', wipe: 'left', rot: 0.8, pal: BLACK, lines: ['One team.', 'One system.', 'One throw.'] },
-  { variant: 'lines', wipe: 'right', rot: -0.9, pal: CREAM, lines: ["David didn't need armor.", 'He needed |aim.|'] },
+  { variant: 'lines', wipe: 'right', rot: -0.9, pal: CREAM, lines: ["You don't need armor.", 'You need |aim.|'] },
   { variant: 'lines', wipe: 'top', rot: 1.0, pal: BLACK, lines: ['Aim is a website that loads', '|before doubt does.|'] },
   { variant: 'lines', wipe: 'left', rot: -1.0, pal: ORANGE, lines: ['Aim is one number', 'that rings a human.'] },
   { variant: 'shout', wipe: 'right', rot: 0.7, pal: BLACK, lines: ['PICK UP', '|THE STONE.|'] },

@@ -95,15 +95,15 @@ export default function About() {
             </div>
           </header>
 
-          <aside className="lf-about-founder" aria-label="Founder of Little Fight NYC">
+          <aside className="lf-about-founder" aria-label="The studio behind the work">
             <div className="lf-about-founder__identity">
-              <span>Founder</span>
-              <strong>David Marsh</strong>
+              <span>The studio</span>
+              <strong>Little Fight NYC</strong>
             </div>
             <p>
-              Little Fight NYC has worked this way since 2021. David stays
-              accountable for the scope, the decisions, and the final files
-              and instructions. You should never have to explain the business
+              Little Fight NYC has worked this way since 2021. One senior team
+              stays accountable for the scope, the decisions, and the final
+              files and instructions. You should never have to explain the business
               from the beginning every time the work moves.
             </p>
             <div className="lf-about-founder__meta">

@@ -87,7 +87,7 @@ const LAB_BUILDS = [
   {
     title: "Goliath",
     type: "Brand campaign",
-    description: "Ten typographic street posters wheatpasted one over the last — David versus the default stack, scrubbed by your scroll.",
+    description: "Ten typographic street posters wheatpasted one over the last — Little Fight versus the default stack, scrubbed by your scroll.",
     href: "/examples/lab/concepts/goliath/",
     poster: "/images/lab-showcase/goliath",
     alt: "A colossal LITTLE FIGHT poster in orange pasted over a stack of street posters",

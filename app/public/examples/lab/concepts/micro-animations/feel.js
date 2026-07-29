@@ -751,7 +751,7 @@ if (TESTMODE) {
     orderBtn.click();
     await sleep(150);
     check('empty name errors', field.classList.contains('is-err'), '');
-    nameInput.value = 'Dave';
+    nameInput.value = 'Rosie';
     nameInput.dispatchEvent(new Event('input'));
     orderBtn.click();
     await sleep(RM ? 700 : 1300);

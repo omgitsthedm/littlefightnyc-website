@@ -123,7 +123,7 @@
       el.innerHTML =
         state.lens === 'full'
           ? '<b>Private lens</b><span>full personal payload</span>'
-          : '<b>Live system</b><span>VERA works for David — you’re riding along.</span>';
+          : '<b>Live system</b><span>VERA works for the studio — you’re riding along.</span>';
     });
   }
 
