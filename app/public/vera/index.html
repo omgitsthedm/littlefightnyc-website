@@ -9,7 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%230c0e0d'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23868c85'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2016%20L16%207%20A9%209%200%200%201%2023.8%2011.5%20Z'%20fill='%234cc38a'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='1.8'%20fill='%23e9ece8'/%3E%3C/svg%3E">
   <link rel="preload" href="./assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./assets/css/vera.css?v=1">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=2">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -56,13 +56,12 @@
       </header>
 
       <div class="filters" data-filters>
-        <div class="filters__group" role="group" aria-label="Max rent">
-          <span class="filters__label">Rent</span>
-          <button type="button" data-rent="2000">≤$2,000</button>
-          <button type="button" data-rent="2400">≤$2,400</button>
-          <button type="button" data-rent="2800">≤$2,800</button>
-          <button type="button" data-rent="3200">≤$3,200</button>
-          <button type="button" data-rent="0" class="is-on">Any</button>
+        <div class="filters__group" role="group" aria-label="Price bracket">
+          <span class="filters__label">Bracket</span>
+          <button type="button" data-bracket="b1">≤ $2,000</button>
+          <button type="button" data-bracket="b2">$2,001–2,500</button>
+          <button type="button" data-bracket="b3">$2,501–3,000</button>
+          <button type="button" data-bracket="all" class="is-on">Any</button>
         </div>
         <div class="filters__group" role="group" aria-label="Unit type">
           <span class="filters__label">Unit</span>
@@ -70,15 +69,22 @@
           <button type="button" data-unit="1br">1BR</button>
           <button type="button" data-unit="all" class="is-on">Both</button>
         </div>
+        <div class="filters__group" role="group" aria-label="Subway walk">
+          <span class="filters__label">Subway</span>
+          <button type="button" data-transit="5">≤ 5 min</button>
+          <button type="button" data-transit="10">≤ 10 min</button>
+          <button type="button" data-transit="15">≤ 15 min</button>
+          <button type="button" data-transit="0" class="is-on">Any</button>
+        </div>
         <div class="filters__group filters__group--owner" role="group" aria-label="Ownership lens">
           <span class="filters__label">Owner</span>
           <button type="button" data-lens="noBrokers">No brokers</button>
           <button type="button" data-lens="noMgmt">No corporations</button>
           <button type="button" data-lens="privateFirst">Private first</button>
         </div>
-        <div class="filters__group filters__group--hoods" data-hood-group role="group" aria-label="Neighborhoods">
-          <span class="filters__label">Hoods</span>
-          <div class="filters__hoods" data-hoods></div>
+        <div class="filters__group filters__group--hoods" data-hood-group role="group" aria-label="Focus areas">
+          <span class="filters__label">Focus</span>
+          <div class="filters__hoods" data-areas></div>
         </div>
         <button type="button" class="filters__clear" data-clear hidden>Clear ×</button>
       </div>
@@ -120,6 +126,6 @@
   </div>
 
   <noscript><p class="fallback">VERA's console needs JavaScript — it renders a live data feed.</p></noscript>
-  <script src="./assets/js/vera.js?v=1" defer></script>
+  <script src="./assets/js/vera.js?v=2" defer></script>
 </body>
 </html>

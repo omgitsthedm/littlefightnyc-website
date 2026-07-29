@@ -16,17 +16,18 @@
   var usedFallbackPool = false;
 
   var state = {
-    rent: 0, unit: 'all', hoods: [], lens: { noBrokers: false, noMgmt: false, privateFirst: false },
+    bracket: 'all', unit: 'all', hoods: [], areas: [], transit: 0,
+    lens: { noBrokers: false, noMgmt: false, privateFirst: false },
     view: 'all', q: '', sort: { key: 'overall_score', dir: -1 }, density: 'comfortable', route: 'command',
   };
 
   try {
     var saved = JSON.parse(localStorage.getItem('vera-workspace') || 'null');
-    if (saved) { ['rent', 'unit', 'hoods', 'lens', 'view', 'density'].forEach(function (k) { if (saved[k] !== undefined) state[k] = saved[k]; }); }
+    if (saved) { ['bracket', 'unit', 'hoods', 'areas', 'transit', 'lens', 'view', 'density'].forEach(function (k) { if (saved[k] !== undefined) state[k] = saved[k]; }); }
   } catch (e) {}
 
   function persist() {
-    try { localStorage.setItem('vera-workspace', JSON.stringify({ rent: state.rent, unit: state.unit, hoods: state.hoods, lens: state.lens, view: state.view, density: state.density })); } catch (e) {}
+    try { localStorage.setItem('vera-workspace', JSON.stringify({ bracket: state.bracket, unit: state.unit, hoods: state.hoods, areas: state.areas, transit: state.transit, lens: state.lens, view: state.view, density: state.density })); } catch (e) {}
   }
 
   /* ---------- tiny utils ---------- */
@@ -45,6 +46,153 @@
     return Math.round(h / 24) + 'd ago';
   }
   function pct(x) { return Math.max(0, Math.min(100, +x || 0)); }
+
+  /* ---------- price brackets (the hunt's three lanes) ---------- */
+
+  var BRACKETS = [
+    { id: 'b1', label: '≤ $2,000', lo: 0, hi: 2000 },
+    { id: 'b2', label: '$2,001–2,500', lo: 2001, hi: 2500 },
+    { id: 'b3', label: '$2,501–3,000', lo: 2501, hi: 3000 },
+  ];
+
+  function bracketOf(rent) {
+    var r = +rent || 0;
+    if (!r) return null;
+    for (var i = 0; i < BRACKETS.length; i++) if (r >= BRACKETS[i].lo && r <= BRACKETS[i].hi) return BRACKETS[i].id;
+    return 'out';
+  }
+
+  /* ---------- focus areas (grouped neighborhoods) ---------- */
+
+  var AREAS = [
+    { id: 'dtm', label: 'Downtown MHTN', match: ['lower east side', 'east village', 'alphabet city', 'greenwich village', 'west village', 'soho', 'noho', 'nolita', 'little italy', 'chinatown', 'two bridges', 'tribeca', 'financial district', 'fidi', 'bowery', 'civic center', 'battery park', 'stuyvesant town', 'stuytown', 'gramercy', 'union square', 'flatiron', 'kips bay', 'murray hill'] },
+    { id: 'chelsea', label: 'Chelsea', match: ['chelsea', 'hudson yards', 'meatpacking'] },
+    { id: 'ues', label: 'Upper East Side', match: ['upper east side', 'yorkville', 'lenox hill', 'carnegie hill'] },
+    { id: 'uws', label: 'Upper West Side', match: ['upper west side', 'manhattan valley', 'lincoln square'] },
+    { id: 'harlem', label: 'Harlem', match: ['harlem', 'east harlem', 'spanish harlem', 'south harlem', 'central harlem', 'west harlem', 'manhattanville', 'hamilton heights', 'sugar hill'] },
+    { id: 'gpt', label: 'Greenpoint', match: ['greenpoint'] },
+    { id: 'wburg', label: 'Williamsburg', match: ['williamsburg'] },
+    { id: 'ewburg', label: 'E Williamsburg', match: ['east williamsburg', 'bushwick border'] },
+  ];
+
+  function areaOf(l) {
+    var h = String(l.neighborhood || '').toLowerCase();
+    if (!h) return null;
+    /* East Williamsburg must win before Williamsburg's substring does */
+    if (h.indexOf('east williamsburg') > -1) return 'ewburg';
+    for (var i = 0; i < AREAS.length; i++) {
+      for (var j = 0; j < AREAS[i].match.length; j++) {
+        if (h.indexOf(AREAS[i].match[j]) > -1) return AREAS[i].id;
+      }
+    }
+    return null;
+  }
+
+  /* ---------- subway proximity (computed; distances are ≈) ----------
+     Station coordinates for the focus areas, embedded so proximity works
+     entirely client-side from each listing's lat/lng. Walking pace 80m/min. */
+
+  var LINE_COLORS = { '1': '#EE352E', '2': '#EE352E', '3': '#EE352E', '4': '#00933C', '5': '#00933C', '6': '#00933C', '7': '#B933AD', 'A': '#0039A6', 'C': '#0039A6', 'E': '#0039A6', 'B': '#FF6319', 'D': '#FF6319', 'F': '#FF6319', 'M': '#FF6319', 'G': '#6CBE45', 'J': '#996633', 'Z': '#996633', 'L': '#A7A9AC', 'N': '#FCCC0A', 'Q': '#FCCC0A', 'R': '#FCCC0A', 'W': '#FCCC0A', 'S': '#808183' };
+
+  var STATIONS = [
+    /* downtown manhattan */
+    ['Delancey–Essex', 'F J M Z', 40.7183, -73.9881], ['2 Av', 'F', 40.7231, -73.9899], ['Bowery', 'J Z', 40.7203, -73.9939],
+    ['Grand St', 'B D', 40.7182, -73.9937], ['East Broadway', 'F', 40.7139, -73.9902], ['Canal St', 'N Q R W J Z 6', 40.7185, -74.0009],
+    ['Spring St', '6', 40.7223, -73.9973], ['Prince St', 'N R W', 40.7243, -73.9977], ['Broadway–Lafayette', 'B D F M 6', 40.7254, -73.9962],
+    ['Astor Pl', '6', 40.7300, -73.9911], ['8 St–NYU', 'N R W', 40.7303, -73.9926], ['W 4 St', 'A C E B D F M', 40.7323, -74.0003],
+    ['Christopher St', '1', 40.7334, -74.0029], ['Houston St', '1', 40.7284, -74.0054], ['Union Sq', '4 5 6 N Q R W L', 40.7359, -73.9906],
+    ['1 Av', 'L', 40.7308, -73.9817], ['3 Av', 'L', 40.7326, -73.9860], ['Chambers St', '1 2 3 A C', 40.7150, -74.0093],
+    ['Fulton St', '2 3 4 5 A C J Z', 40.7101, -74.0080], ['Wall St', '4 5 2 3', 40.7069, -74.0091], ['City Hall', 'R W', 40.7133, -74.0067],
+    ['Franklin St', '1', 40.7192, -74.0067], ['23 St', '6', 40.7398, -73.9866], ['28 St', '6', 40.7434, -73.9841], ['33 St', '6', 40.7461, -73.9820],
+    /* chelsea */
+    ['14 St', 'A C E L', 40.7402, -74.0019], ['14 St', '1 2 3', 40.7378, -73.9968], ['18 St', '1', 40.7410, -73.9979],
+    ['23 St', '1', 40.7440, -73.9955], ['23 St', 'C E', 40.7458, -73.9982], ['23 St', 'F M', 40.7429, -73.9928],
+    ['28 St', '1', 40.7471, -73.9934], ['34 St–Penn', '1 2 3 A C E', 40.7513, -73.9917],
+    /* upper east side */
+    ['59 St–Lex', '4 5 6 N R W', 40.7626, -73.9675], ['68 St–Hunter', '6', 40.7682, -73.9640], ['77 St', '6', 40.7736, -73.9600],
+    ['86 St', '4 5 6', 40.7794, -73.9559], ['96 St', '6', 40.7852, -73.9510], ['103 St', '6', 40.7906, -73.9474],
+    ['110 St', '6', 40.7952, -73.9440], ['72 St', 'Q', 40.7688, -73.9585], ['86 St', 'Q', 40.7779, -73.9519],
+    ['96 St', 'Q', 40.7841, -73.9473], ['63 St–Lex', 'F Q', 40.7645, -73.9660],
+    /* upper west side */
+    ['59 St–Columbus', '1 A B C D', 40.7682, -73.9819], ['66 St–Lincoln', '1', 40.7736, -73.9822], ['72 St', '1 2 3', 40.7787, -73.9820],
+    ['79 St', '1', 40.7839, -73.9799], ['86 St', '1', 40.7886, -73.9761], ['96 St', '1 2 3', 40.7937, -73.9722],
+    ['103 St', '1', 40.7994, -73.9683], ['110 St–Cathedral', '1', 40.8039, -73.9666], ['72 St', 'B C', 40.7756, -73.9760],
+    ['81 St–Museum', 'B C', 40.7813, -73.9722], ['86 St', 'B C', 40.7859, -73.9690], ['96 St', 'B C', 40.7917, -73.9646],
+    ['103 St', 'B C', 40.7963, -73.9613], ['110 St–CPN', 'B C', 40.8001, -73.9583],
+    /* harlem */
+    ['110 St–CPN', '2 3', 40.7990, -73.9520], ['116 St', '2 3', 40.8020, -73.9497], ['125 St', '2 3', 40.8076, -73.9455],
+    ['135 St', '2 3', 40.8140, -73.9407], ['116 St', '6', 40.7986, -73.9418], ['125 St', '4 5 6', 40.8045, -73.9375],
+    ['116 St', 'B C', 40.8051, -73.9546], ['125 St', 'A B C D', 40.8111, -73.9525], ['135 St', 'B C', 40.8179, -73.9476],
+    ['125 St', '1', 40.8151, -73.9585], ['137 St–City College', '1', 40.8220, -73.9536], ['145 St', 'A B C D', 40.8245, -73.9444],
+    /* greenpoint */
+    ['Greenpoint Av', 'G', 40.7313, -73.9542], ['Nassau Av', 'G', 40.7245, -73.9513],
+    /* williamsburg */
+    ['Bedford Av', 'L', 40.7172, -73.9567], ['Lorimer St', 'L', 40.7141, -73.9502], ['Metropolitan Av', 'G', 40.7127, -73.9512],
+    ['Graham Av', 'L', 40.7146, -73.9440], ['Marcy Av', 'J M Z', 40.7083, -73.9579], ['Hewes St', 'J M', 40.7069, -73.9534],
+    ['Broadway', 'G', 40.7061, -73.9503], ['Flushing Av', 'J M', 40.7003, -73.9412],
+    /* east williamsburg */
+    ['Grand St', 'L', 40.7118, -73.9403], ['Montrose Av', 'L', 40.7074, -73.9397], ['Morgan Av', 'L', 40.7062, -73.9331],
+    ['Jefferson St', 'L', 40.7066, -73.9229], ['DeKalb Av', 'L', 40.7037, -73.9181],
+  ];
+
+  var transitCache = {};
+
+  function nearestStation(l) {
+    if (!l || l.latitude == null || l.longitude == null) return null;
+    var key = l.listing_uid || (l.latitude + ',' + l.longitude);
+    if (transitCache[key] !== undefined) return transitCache[key];
+    var lat = +l.latitude, lng = +l.longitude;
+    var cosLat = Math.cos(lat * Math.PI / 180);
+    var best = null, bestD = Infinity;
+    for (var i = 0; i < STATIONS.length; i++) {
+      var s = STATIONS[i];
+      var dy = (lat - s[2]) * 111320;
+      var dx = (lng - s[3]) * 111320 * cosLat;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d < bestD) { bestD = d; best = s; }
+    }
+    var out = best && bestD < 3200 ? { name: best[0], lines: best[1], meters: Math.round(bestD), mins: Math.max(1, Math.round(bestD / 80)) } : null;
+    transitCache[key] = out;
+    return out;
+  }
+
+  function lineBullets(lines) {
+    return String(lines || '').split(/\s+/).filter(Boolean).slice(0, 6).map(function (ln) {
+      return '<i class="bul" style="background:' + (LINE_COLORS[ln] || '#555') + '">' + ln + '</i>';
+    }).join('');
+  }
+
+  function transitTag(l) {
+    var t = nearestStation(l);
+    if (!t) return '';
+    var cls = t.mins <= 5 ? 'tag--green' : t.mins <= 10 ? 'tag--blue' : '';
+    return '<span class="tag ' + cls + ' tag--transit">≈' + t.mins + ' min ' + lineBullets(t.lines) + ' ' + esc(t.name) + '</span>';
+  }
+
+  /* ---------- count-up: numbers that arrive, not appear ---------- */
+
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function countUps(root) {
+    if (RM) {
+      $$('[data-count-to]', root).forEach(function (el) { el.textContent = el.getAttribute('data-count-final'); });
+      return;
+    }
+    $$('[data-count-to]', root).forEach(function (el) {
+      var target = +el.getAttribute('data-count-to') || 0;
+      var final = el.getAttribute('data-count-final');
+      var prefix = el.getAttribute('data-count-prefix') || '';
+      var t0 = performance.now(), dur = 650;
+      function stepFn(ts) {
+        var k = Math.min((ts - t0) / dur, 1);
+        var e = 1 - Math.pow(1 - k, 3);
+        el.textContent = prefix + Math.round(target * e).toLocaleString('en-US');
+        if (k < 1) requestAnimationFrame(stepFn);
+        else if (final) el.textContent = final;
+      }
+      requestAnimationFrame(stepFn);
+    });
+  }
 
   /* ---------- listing lenses ---------- */
 
@@ -103,9 +251,14 @@
   function filtered() {
     var q = state.q.trim().toLowerCase();
     var out = POOL.filter(function (l) {
-      if (state.rent && (+l.rent || 0) > state.rent) return false;
+      if (state.bracket !== 'all' && bracketOf(l.rent) !== state.bracket) return false;
       if (state.unit !== 'all' && unitOf(l) !== state.unit) return false;
+      if (state.areas.length && state.areas.indexOf(areaOf(l)) === -1) return false;
       if (state.hoods.length && state.hoods.indexOf(l.neighborhood || 'Unknown') === -1) return false;
+      if (state.transit) {
+        var t = nearestStation(l);
+        if (!t || t.mins > state.transit) return false;
+      }
       if (state.lens.noBrokers && ownerRead(l).label === 'Broker') return false;
       if (state.lens.noMgmt && ownerRead(l).label === 'Corporate') return false;
       if (!(VIEWS[state.view] || VIEWS.all)(l)) return false;
@@ -165,15 +318,18 @@
   }
 
   function renderFilters() {
-    $$('[data-rent]').forEach(function (b) { b.classList.toggle('is-on', +b.getAttribute('data-rent') === state.rent); });
+    $$('[data-bracket]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-bracket') === state.bracket); });
     $$('[data-unit]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-unit') === state.unit); });
+    $$('[data-transit]').forEach(function (b) { b.classList.toggle('is-on', +b.getAttribute('data-transit') === state.transit); });
     $$('[data-lens]').forEach(function (b) { b.classList.toggle('is-on', !!state.lens[b.getAttribute('data-lens')]); });
     $$('[data-view]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-view') === state.view); });
-    var box = $('[data-hoods]');
-    box.innerHTML = HOODS.map(function (h) {
-      return '<button type="button" data-hood="' + esc(h.name) + '" class="' + (state.hoods.indexOf(h.name) > -1 ? 'is-on' : '') + '">' + esc(h.name) + ' <span style="opacity:.55">' + h.count + '</span></button>';
+    var counts = {};
+    POOL.forEach(function (l) { var a = areaOf(l); if (a) counts[a] = (counts[a] || 0) + 1; });
+    var box = $('[data-areas]');
+    box.innerHTML = AREAS.map(function (a) {
+      return '<button type="button" data-area="' + a.id + '" class="' + (state.areas.indexOf(a.id) > -1 ? 'is-on' : '') + '">' + esc(a.label) + ' <span style="opacity:.55">' + (counts[a.id] || 0) + '</span></button>';
     }).join('');
-    var dirty = state.rent || state.unit !== 'all' || state.hoods.length || state.lens.noBrokers || state.lens.noMgmt || state.lens.privateFirst || state.view !== 'all' || state.q;
+    var dirty = state.bracket !== 'all' || state.unit !== 'all' || state.hoods.length || state.areas.length || state.transit || state.lens.noBrokers || state.lens.noMgmt || state.lens.privateFirst || state.view !== 'all' || state.q;
     $('[data-clear]').hidden = !dirty;
   }
 
@@ -212,6 +368,7 @@
         '<span class="tag">' + esc(l.neighborhood || '—') + '</span>' +
         '<span class="tag">' + (unitOf(l) === 'studio' ? 'Studio' : unitOf(l) === '1br' ? '1BR' : esc(l.unit_type || '?')) + '</span>' +
         (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
+        transitTag(l) +
       '</span>' + extra + '</button>';
   }
 
@@ -247,7 +404,7 @@
     /* hood bars over current lens (minus hood filter itself, so it's navigational) */
     var hoodCounts = {};
     POOL.forEach(function (l) {
-      if (state.rent && (+l.rent || 0) > state.rent) return;
+      if (state.bracket !== 'all' && bracketOf(l.rent) !== state.bracket) return;
       if (state.unit !== 'all' && unitOf(l) !== state.unit) return;
       var h = l.neighborhood || 'Unknown';
       (hoodCounts[h] = hoodCounts[h] || { n: 0, rents: [] }).n++;
@@ -266,21 +423,44 @@
     (changes.price_changes || []).slice(0, 4).forEach(function (c) { feed.push({ b: (+c.price_change || 0) < 0 ? 'drop' : 'hike', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
     (changes.gone_listings || []).slice(0, 3).forEach(function (c) { feed.push({ b: 'gone', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
 
+    function cval(n) { return '<span data-count-to="' + (+n || 0) + '">0</span>'; }
+    function cmoney(m) { return m == null ? '—' : '<span data-count-to="' + Math.round(m) + '" data-count-prefix="$" data-count-final="' + money(m) + '">$0</span>'; }
+
+    /* the three bracket lanes — the hunt's price story at a glance */
+    var brTiles = BRACKETS.map(function (br) {
+      var inBr = POOL.filter(function (l) {
+        if (bracketOf(l.rent) !== br.id) return false;
+        if (state.unit !== 'all' && unitOf(l) !== state.unit) return false;
+        if (state.areas.length && state.areas.indexOf(areaOf(l)) === -1) return false;
+        return true;
+      });
+      var med = median(inBr.map(function (l) { return +l.rent; }).filter(Boolean));
+      var priv = inBr.filter(function (l) { return ownerRead(l).label === 'Private'; }).length;
+      var on = state.bracket === br.id;
+      return '<button type="button" class="brtile ' + (on ? 'is-on' : '') + '" data-brtile="' + br.id + '">' +
+        '<span class="brtile__label">' + br.label + '</span>' +
+        '<span class="brtile__n">' + cval(inBr.length) + '</span>' +
+        '<span class="brtile__meta">' + (med ? 'median ' + money(med) : 'no priced listings') + (priv ? ' · ' + priv + ' private' : '') + '</span>' +
+        '<span class="brtile__spark">' + '▮'.repeat(Math.min(24, inBr.length)) + '</span>' +
+      '</button>';
+    }).join('');
+
     page.innerHTML =
       (usedFallbackPool ? '<p class="notice">Feed is serving the pre-overhaul contract — pool view is limited to curated lanes until tonight\'s publish.</p>' : '') +
       '<div class="kpis">' +
-        kpi('In pool', f.length + '<small>/' + POOL.length + '</small>', 'under current lens', '', 'discover') +
-        kpi('New tonight', String(sm.new_today != null ? sm.new_today : fresh.length), (dc.gone || 0) + ' gone · ' + (dc.back || 0) + ' back', 'kpi--good', 'fresh') +
-        kpi('Median ask', rents.length ? money(median(rents)) : '—', rents.length + ' priced', '') +
-        kpi('Price drops', String(sm.price_drops || dc.price_drop || 0), (sm.price_hikes || dc.price_hike || 0) + ' hikes', (sm.price_drops || dc.price_drop) ? 'kpi--good' : '') +
-        kpi('Private landlords', String(privates.length), 'no broker, no corp', 'kpi--good', 'owner') +
-        kpi('Needs verification', String(verify.length), 'records pass pending', verify.length ? 'kpi--warn' : '', 'verify') +
-        kpi('Scam wall', String(scams.length), 'low authenticity', scams.length ? 'kpi--bad' : '', 'scam') +
+        kpi('In the net', cval(f.length) + '<small>/' + POOL.length + '</small>', 'under current lens', '', 'discover') +
+        kpi('New tonight', cval(sm.new_today != null ? sm.new_today : fresh.length), (dc.gone || 0) + ' gone · ' + (dc.back || 0) + ' back', 'kpi--good', 'fresh') +
+        kpi('Median ask', rents.length ? cmoney(median(rents)) : '—', rents.length + ' priced', '') +
+        kpi('Price drops', cval(sm.price_drops || dc.price_drop || 0), (sm.price_hikes || dc.price_hike || 0) + ' hikes', (sm.price_drops || dc.price_drop) ? 'kpi--good' : '') +
+        kpi('Private landlords', cval(privates.length), 'no broker, no corp', 'kpi--good', 'owner') +
+        kpi('Needs verify', cval(verify.length), 'records pass pending', verify.length ? 'kpi--warn' : '', 'verify') +
+        kpi('Scam wall', cval(scams.length), 'low authenticity', scams.length ? 'kpi--bad' : '', 'scam') +
       '</div>' +
+      '<div class="brackets">' + brTiles + '</div>' +
 
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Market pulse — records discovered per run</h2><p class="panel__hint">' + trends.length + ' runs</p></div>' +
-          (discovered.length ? sparkline(discovered, 560, 130, '#4cc38a') : '<p class="lane__empty">Trend history arrives with the next publishes.</p>') +
+          (discovered.length ? sparkline(discovered, 560, 190, '#4cc38a') : '<p class="lane__empty">Trend history arrives with the next publishes.</p>') +
           '<div class="strip" style="margin-top:12px">' + (D.sources || []).slice(0, 12).map(function (s) {
             var cls = s.status === 'healthy' ? 'is-ok' : s.status === 'partial' ? 'is-warn' : 'is-bad';
             return '<span class="chip ' + cls + '"><i></i>' + esc(s.source_name || '?') + '</span>';
@@ -309,6 +489,9 @@
         '<div class="lane lane--verify"><h2 class="lane__title">Needs verification</h2>' + (verify.length ? verify.slice(0, 4).map(function (l) { return listingCard(l, 'verify'); }).join('') : '<p class="lane__empty">Verification queue is clear.</p>') + '</div>' +
         '<div class="lane lane--scam"><h2 class="lane__title">Scam wall</h2>' + (scams.length ? scams.slice(0, 4).map(function (l) { return listingCard(l, 'scam'); }).join('') : '<p class="lane__empty">No low-authenticity listings under this lens.</p>') + '</div>' +
       '</div>';
+
+    page.classList.add('is-entered');
+    countUps(page);
   }
 
   /* ---------- discover page ---------- */
@@ -318,6 +501,7 @@
     { key: 'rent', label: 'Rent', render: function (l) { return money(l.rent); } },
     { key: 'title', label: 'Listing', render: function (l) { return '<span class="t-title">' + esc(l.title || l.address_normalized || '—') + '</span>'; } },
     { key: 'neighborhood', label: 'Hood', render: function (l) { return '<span class="t-dim">' + esc(l.neighborhood || '—') + '</span>'; } },
+    { key: 'transit_mins', label: 'Subway', render: function (l) { var t = nearestStation(l); return t ? '<span class="t-mono">≈' + t.mins + 'm</span> ' + lineBullets(t.lines) : '<span class="t-dim">—</span>'; } },
     { key: 'unit_type', label: 'Unit', render: function (l) { return unitOf(l) === 'studio' ? 'Studio' : unitOf(l) === '1br' ? '1BR' : esc(l.unit_type || '—'); } },
     { key: 'likely_independent_landlord_score', label: 'Owner', render: function (l) { var o = ownerRead(l); return '<span class="tag ' + o.cls + '">' + o.label + '</span>'; } },
     { key: 'rent_stabilized_signal', label: 'Stab.', render: function (l) { var s = stabilized(l); return s ? '<span class="tag ' + s.cls + '">' + s.label + '</span>' : '<span class="t-dim">—</span>'; } },
@@ -381,7 +565,7 @@
 
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Source reliability trend</h2><p class="panel__hint">avg across sweeps</p></div>' +
-          (rel.length ? sparkline(rel, 560, 120, '#74a9d8') : '<p class="lane__empty">Awaiting more runs.</p>') + '</div>' +
+          (rel.length ? sparkline(rel, 560, 170, '#74a9d8') : '<p class="lane__empty">Awaiting more runs.</p>') + '</div>' +
         '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2></div><dl class="kv">' +
           '<dt>Run id</dt><dd class="t-mono">' + esc(run.run_id || '—') + '</dd>' +
           '<dt>Cadence</dt><dd>' + esc(run.cadence || '—') + '</dd>' +
@@ -469,7 +653,9 @@
       var pros = l.trust_strengths || [], cons = l.trust_caveats || [];
       if (pros.length) html += '<div class="insp-sec"><h3>Working for it</h3><ul class="good">' + pros.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
       if (cons.length) html += '<div class="insp-sec"><h3>Working against it</h3><ul class="bad">' + cons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+      var tt = nearestStation(l);
       html += '<dl class="kv">' +
+        kvRow('Subway', tt ? '≈' + tt.mins + ' min walk · ' + lineBullets(tt.lines) + ' ' + esc(tt.name) : null) +
         kvRow('First seen', timeago(l.first_seen_at)) + kvRow('Last seen', timeago(l.last_seen_at)) +
         kvRow('Move-in cash', l.estimated_move_in_cash != null ? money(l.estimated_move_in_cash) : null) +
         kvRow('Fee status', esc(l.fee_status)) + kvRow('Sq ft', l.square_feet ? num(l.square_feet) : null) +
@@ -561,10 +747,21 @@
   /* ---------- events ---------- */
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-rent],[data-unit],[data-lens],[data-view],[data-hood],[data-hoodbar],[data-clear],[data-open],[data-kpi],[data-sort],[data-density],[data-insp-close],[data-scrim],[data-tab]');
+    var t = e.target.closest('[data-bracket],[data-brtile],[data-area],[data-transit],[data-unit],[data-lens],[data-view],[data-hood],[data-hoodbar],[data-clear],[data-open],[data-kpi],[data-sort],[data-density],[data-insp-close],[data-scrim],[data-tab]');
     if (!t) return;
 
-    if (t.hasAttribute('data-rent')) { state.rent = +t.getAttribute('data-rent'); refresh(); }
+    if (t.hasAttribute('data-bracket')) { state.bracket = t.getAttribute('data-bracket'); refresh(); }
+    else if (t.hasAttribute('data-brtile')) {
+      var brId = t.getAttribute('data-brtile');
+      state.bracket = state.bracket === brId ? 'all' : brId;
+      refresh();
+    }
+    else if (t.hasAttribute('data-area')) {
+      var aid = t.getAttribute('data-area'); var ai = state.areas.indexOf(aid);
+      if (ai > -1) state.areas.splice(ai, 1); else state.areas.push(aid);
+      refresh();
+    }
+    else if (t.hasAttribute('data-transit')) { state.transit = +t.getAttribute('data-transit'); refresh(); }
     else if (t.hasAttribute('data-unit')) { state.unit = t.getAttribute('data-unit'); refresh(); }
     else if (t.hasAttribute('data-lens')) { var k = t.getAttribute('data-lens'); state.lens[k] = !state.lens[k]; refresh(); }
     else if (t.hasAttribute('data-view')) { state.view = t.getAttribute('data-view'); refresh(); }
@@ -580,7 +777,7 @@
       refresh();
     }
     else if (t.hasAttribute('data-clear')) {
-      state.rent = 0; state.unit = 'all'; state.hoods = []; state.q = '';
+      state.bracket = 'all'; state.unit = 'all'; state.hoods = []; state.areas = []; state.transit = 0; state.q = '';
       state.lens = { noBrokers: false, noMgmt: false, privateFirst: false }; state.view = 'all';
       refresh();
     }
@@ -592,7 +789,7 @@
     else if (t.hasAttribute('data-sort')) {
       var sk = t.getAttribute('data-sort');
       if (state.sort.key === sk) state.sort.dir *= -1;
-      else state.sort = { key: sk, dir: sk === 'title' || sk === 'neighborhood' || sk === 'source_name' ? 1 : -1 };
+      else state.sort = { key: sk, dir: sk === 'title' || sk === 'neighborhood' || sk === 'source_name' || sk === 'transit_mins' ? 1 : -1 };
       renderRoute();
     }
     else if (t.hasAttribute('data-density')) { state.density = t.getAttribute('data-density'); persist(); renderRoute(); }
@@ -618,6 +815,10 @@
         if (l && l.listing_uid && !seen[l.listing_uid]) { seen[l.listing_uid] = 1; POOL.push(l); }
       });
     }
+    POOL.forEach(function (l) {
+      var t = nearestStation(l);
+      l.transit_mins = t ? t.mins : 9999;
+    });
     var hc = {};
     POOL.forEach(function (l) { var h = l.neighborhood || 'Unknown'; hc[h] = (hc[h] || 0) + 1; });
     HOODS = Object.keys(hc).map(function (h) { return { name: h, count: hc[h] }; }).sort(function (a, b) { return b.count - a.count; });
@@ -669,9 +870,19 @@
       check('kpi band renders', $$('[data-page="command"] .kpi').length >= 6, $$('.kpi').length);
 
       var before = filtered().length;
-      state.rent = 2400; var afterRent = filtered().length;
-      check('rent tier filters', afterRent <= before, before + ' -> ' + afterRent);
-      state.rent = 0;
+      state.bracket = 'b1';
+      var b1ok = filtered().every(function (l) { return bracketOf(l.rent) === 'b1'; });
+      check('bracket lane isolates ≤$2,000', b1ok, filtered().length + ' of ' + before);
+      state.bracket = 'all';
+
+      var withCoords = POOL.filter(function (l) { return l.latitude != null; });
+      var computed = withCoords.filter(function (l) { return nearestStation(l); });
+      check('subway proximity computed', withCoords.length === 0 || computed.length > 0, computed.length + '/' + withCoords.length + ' within reach');
+
+      state.areas = ['dtm'];
+      var areaOk = filtered().every(function (l) { return areaOf(l) === 'dtm'; });
+      check('focus area filter scopes downtown', areaOk, filtered().length + ' listings');
+      state.areas = [];
 
       state.lens.noBrokers = true; state.lens.noMgmt = true;
       var lensed = filtered();
