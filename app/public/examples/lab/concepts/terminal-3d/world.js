@@ -278,6 +278,33 @@ export function buildWorld(THREE, scene, opts) {
     return t;
   }
 
+  /* ---------- harbor: the world sits in water, horizon fades ---------- */
+  {
+    const water = new THREE.Mesh(
+      new THREE.CircleGeometry(90, 48),
+      new THREE.MeshStandardMaterial({ color: '#0a1230', roughness: 0.18, metalness: 0.55 })
+    );
+    water.rotation.x = -Math.PI / 2;
+    water.position.y = -0.62;
+    scene.add(water);
+    world.waterMat = water.material;
+    // mist ring blends the slab edge into the water
+    const mistC = document.createElement('canvas');
+    mistC.width = 256; mistC.height = 64;
+    const mg = mistC.getContext('2d');
+    const grad = mg.createLinearGradient(0, 0, 0, 64);
+    grad.addColorStop(0, 'rgba(44,22,86,0)');
+    grad.addColorStop(1, 'rgba(24,12,50,0.85)');
+    mg.fillStyle = grad; mg.fillRect(0, 0, 256, 64);
+    const mistT = new THREE.CanvasTexture(mistC);
+    const mist = new THREE.Mesh(
+      new THREE.CylinderGeometry(26, 30, 2.4, 48, 1, true),
+      new THREE.MeshBasicMaterial({ map: mistT, transparent: true, side: THREE.DoubleSide, depthWrite: false })
+    );
+    mist.position.y = -0.9;
+    scene.add(mist);
+  }
+
   /* ---------- slab + floor + reflectors ---------- */
   {
     const tex = groundTexture();
@@ -511,6 +538,12 @@ export function buildWorld(THREE, scene, opts) {
         world.billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.74, 2.74)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
         world.billboardBorder.position.set(0, 9.7, -(tiers[1].d / 2) - 0.095);
         g2.add(world.billboardBorder);
+        const bbRear = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6), bbMat);
+        bbRear.position.set(0, 9.7, (tiers[1].d / 2) + 0.09);
+        g2.add(bbRear);
+        const bbRearBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.74, 2.74)), world.billboardBorder.material);
+        bbRearBorder.position.set(0, 9.7, (tiers[1].d / 2) + 0.095);
+        g2.add(bbRearBorder);
       }
       roofClutter(g2, tiers[2].w, 15.5, tiers[2].d, b.accent, false);
     } else if (b.arch === 'warehouse') {
@@ -595,6 +628,9 @@ export function buildWorld(THREE, scene, opts) {
     const signBack = new THREE.Mesh(new THREE.BoxGeometry(Math.min(1.68, s.w + 0.06), 0.68, 0.1), new THREE.MeshStandardMaterial({ color: '#180c30', roughness: 0.7 }));
     signBack.position.set(0, h + 0.4, front + 0.23);
     g2.add(signBack);
+    const signRear = new THREE.Mesh(new THREE.PlaneGeometry(Math.min(1.6, s.w), 0.6), signMat);
+    signRear.position.set(0, h + 0.4, front + 0.3);
+    g2.add(signRear);
     world.signMats.push({ mat: signMat, t: rand(3, 10), busy: 0, dead: !!shop.renovation, name: shop.name, accent: shop.accent });
     g2.position.set(s.x, 0, s.z);
     G.add(g2);

@@ -6,6 +6,7 @@ import { EffectComposer } from 'https://esm.sh/three@0.164.1/examples/jsm/postpr
 import { RenderPass } from 'https://esm.sh/three@0.164.1/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'https://esm.sh/three@0.164.1/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { ShaderPass } from 'https://esm.sh/three@0.164.1/examples/jsm/postprocessing/ShaderPass.js';
+import { FXAAShader } from 'https://esm.sh/three@0.164.1/examples/jsm/shaders/FXAAShader.js';
 import { mergeGeometries } from 'https://esm.sh/three@0.164.1/examples/jsm/utils/BufferGeometryUtils.js';
 import { Reflector } from 'https://esm.sh/three@0.164.1/examples/jsm/objects/Reflector.js';
 import { CITY, ART, ACCENTS } from './city.js';
@@ -163,12 +164,19 @@ const FinishShader = {
       col.rgb = pow(col.rgb, vec3(0.98, 1.0, 0.96));
       float g = hash(vUv * vec2(1920.0, 1080.0) + fract(uTime) * 60.0) - 0.5;
       float lum = dot(col.rgb, vec3(0.299, 0.587, 0.114));
-      col.rgb += g * 0.011 * (0.3 + lum);
+      col.rgb += g * 0.006 * (0.3 + lum);
       gl_FragColor = col;
     }`,
 };
 const finishPass = new ShaderPass(FinishShader);
 composer.addPass(finishPass);
+const fxaa = new ShaderPass(FXAAShader);
+composer.addPass(fxaa);
+function setFxaaRes() {
+  const pr = renderer.getPixelRatio();
+  fxaa.material.uniforms.resolution.value.set(1 / (innerWidth * pr), 1 / (innerHeight * pr));
+}
+setFxaaRes();
 
 /* ---------- camera rig ---------- */
 const CENTER = new THREE.Vector3(0, 0, 0);
@@ -542,6 +550,65 @@ function photoMode() {
   });
 }
 
+/* ---------- tour + scenarios (the PGSimCity lessons) ---------- */
+const tourCard = $('[data-tour]');
+const tourTitle = $('[data-tour-title]');
+const tourBody = $('[data-tour-body]');
+const tourStep = $('[data-tour-step]');
+const TOUR = [
+  { title: 'Welcome to the district', body: 'A living city on a legal midtown grid — every street, sidewalk, and lot is derived, and a zoning validator makes overlap impossible. It runs whether you watch or not.', pose: { rotY: Math.PI - 0.32, dolly: 1, polar: 1.2 } },
+  { title: 'The small-business block', body: 'Six storefronts front the avenue. Watch the ticker — when a named citizen walks in, that IS the order. Every number here is caused.', beacon: 0 },
+  { title: 'Citizens with lives', body: 'Twenty named residents keep schedules: shifts, coffee runs, errands. Tap any walker anytime to read their day.', pose: { rotY: Math.PI - 0.1, dolly: 0.45, polar: 1.35 } },
+  { title: 'Traffic that obeys', body: 'One-way avenues, alternating one-way streets, six signalized corners. Cars queue at reds; walkers wait for their phase. Tap a cab to ride it.', pose: { rotY: Math.PI + 0.4, dolly: 0.5, polar: 1.3 } },
+  { title: 'Weather and time', body: 'A full day passes every three minutes — drag the sky to scrub it. Rain rolls through and the avenues go glossy.', pose: { rotY: Math.PI - 0.6, dolly: 0.7, polar: 1.05 } },
+  { title: 'The tower sees everything', body: 'Every signal on the block flows up. Twelve events fire a beam at the old skyline. This is the LittleFight pitch: one studio, whole block, all of it measured.', beacon: 3 },
+];
+let tourIdx = -1;
+function tourShow(i) {
+  tourIdx = i;
+  if (i < 0 || i >= TOUR.length) { tourCard.hidden = true; tourCard.classList.remove('is-open'); tourIdx = -1; return; }
+  const ch = TOUR[i];
+  attract.on = false;
+  chipClose();
+  endChaseSilent();
+  tourTitle.textContent = ch.title;
+  tourBody.textContent = ch.body;
+  tourStep.textContent = `${i + 1} / ${TOUR.length}`;
+  tourCard.hidden = false;
+  requestAnimationFrame(() => tourCard.classList.add('is-open'));
+  if (ch.beacon != null) easeToBeacon(ch.beacon);
+  else if (ch.pose) {
+    world.rotGroup.rotation.y = ch.pose.rotY;
+    startTween(freeCameraPos(0.56, heroDist * ch.pose.dolly, ch.pose.polar), CENTER.clone(), 1.6);
+  }
+  lastInteract = clockTime;
+}
+$('[data-tour-next]').addEventListener('click', () => tourShow(tourIdx + 1));
+$('[data-tour-end]').addEventListener('click', () => tourShow(-1));
+$('[data-rail-tour]').addEventListener('click', () => tourShow(0));
+$('[data-rail-lunch]').addEventListener('click', () => { S.dayT = 0.33; pushTicker('◆ SCENARIO — LUNCH RUSH: midday crowd incoming'); lastInteract = clockTime; });
+$('[data-rail-night]').addEventListener('click', () => { S.dayT = 0.8; pushTicker('◆ SCENARIO — NIGHT SHIFT: neon hours'); lastInteract = clockTime; });
+$('[data-rail-rain]').addEventListener('click', () => { const on = S.weather.target < 0.5; window.__districtRain(on); pushTicker(on ? '◆ SCENARIO — RAIN DELAY called in' : 'Rain called off'); lastInteract = clockTime; });
+$('[data-rail-open]').addEventListener('click', () => {
+  if (!S.reno.open && S.reno.stage < 2) { S.reno.stage = 1; S.reno.t = 17; pushTicker('◆ SCENARIO — GRAND OPENING fast-tracked'); }
+  else pushTicker(S.reno.open ? 'TACOS is already open — stop by' : 'Opening already underway');
+  lastInteract = clockTime;
+});
+$('[data-rail-order]').addEventListener('click', () => {
+  const shopsOpen = CITY.businesses.filter((b) => b.kind === 'shop' && (!b.renovation || S.reno.open));
+  const target = shopsOpen[Math.floor(Math.random() * shopsOpen.length)];
+  sys.economyEvent(target.id, { name: 'YOU' });
+  pushTicker(`YOU → ${target.name} · order placed — watch it flow to the tower`);
+  lastInteract = clockTime;
+});
+let timeFast = false;
+$('[data-rail-speed]').addEventListener('click', (e) => {
+  timeFast = !timeFast;
+  S.timeScale = timeFast ? 3 : 1;
+  e.currentTarget.textContent = timeFast ? '3×' : '1×';
+  e.currentTarget.classList.toggle('is-on', timeFast);
+});
+
 /* ---------- build-in ---------- */
 for (const b of world.builders) {
   b.delay = reduceMotion ? 0 : 0.5 + b.order * 0.5 + rng() * 0.35;
@@ -603,6 +670,7 @@ window.addEventListener('resize', () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   computeFraming();
+  setFxaaRes();
 });
 lookPoint.copy(CENTER);
 camera.position.copy(freeCameraPos(viewAz, heroDist, HERO_POLAR));

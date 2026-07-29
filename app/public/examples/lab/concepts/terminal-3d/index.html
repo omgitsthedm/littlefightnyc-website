@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="district.css?v=7" />
+  <link rel="stylesheet" href="district.css?v=8" />
 </head>
 <body>
   <canvas class="stage" data-scene aria-label="A living neon 3D business district with day and night, traffic, and pedestrians. Drag to orbit, pinch to zoom, tap a glowing beacon to read its live numbers."></canvas>
@@ -42,6 +42,26 @@
 
   <p class="ticker" data-ticker aria-live="off"></p>
 
+  <nav class="rail" aria-label="District controls">
+    <button class="rail__chip rail__chip--tour" data-rail-tour>▶ Tour</button>
+    <button class="rail__chip" data-rail-order>Place an order</button>
+    <button class="rail__chip" data-rail-lunch>Lunch rush</button>
+    <button class="rail__chip" data-rail-rain>Rain</button>
+    <button class="rail__chip" data-rail-night>Night</button>
+    <button class="rail__chip" data-rail-open>Grand opening</button>
+    <button class="rail__chip" data-rail-speed>1×</button>
+  </nav>
+
+  <aside class="tour" data-tour hidden>
+    <p class="tour__step" data-tour-step>1 / 6</p>
+    <h2 class="tour__title" data-tour-title>—</h2>
+    <p class="tour__body" data-tour-body>—</p>
+    <div class="tour__row">
+      <button class="tour__btn tour__btn--ghost" data-tour-end>End tour</button>
+      <button class="tour__btn" data-tour-next>Next →</button>
+    </div>
+  </aside>
+
   <button class="audio" data-audio aria-pressed="false" aria-label="Toggle district sound">♪</button>
 
   <div class="veil" data-veil aria-hidden="true">
@@ -53,7 +73,7 @@
     <p class="fallback">This build needs JavaScript — it renders a living 3D neon district.</p>
   </noscript>
 
-  <script type="module" src="main.js?v=2"></script>
+  <script type="module" src="main.js?v=3"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

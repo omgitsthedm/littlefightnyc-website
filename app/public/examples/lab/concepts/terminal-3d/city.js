@@ -207,7 +207,7 @@ for (const col of [colA, colB, colC]) {
   const L = lot(col, rowS);
   const [cx, cz] = lotCenter(L);
   const [lw, ld] = lotSize(L);
-  industrial.push({ arch: 'warehouse', x: +cx.toFixed(2), z: +(cz - 0.4).toFixed(2), w: +Math.min(lw, 4.8).toFixed(2), h: 2.6, d: +Math.min(ld - 0.8, 3.4).toFixed(2), accent: [ACCENTS.cyan, ACCENTS.amber, ACCENTS.lime][industrial.length], biz: 9, waterTower: industrial.length !== 1 });
+  industrial.push({ arch: 'warehouse', x: +cx.toFixed(2), z: +(cz - 0.4).toFixed(2), w: +Math.min(lw, 4.8).toFixed(2), h: 2.6, d: +Math.min(ld - 0.8, 3.4).toFixed(2), accent: [ACCENTS.cyan, ACCENTS.amber, ACCENTS.lime][industrial.length], biz: 9, waterTower: false });
 }
 buildings.push(...industrial);
 

@@ -698,7 +698,7 @@ export function makeSystems(THREE, world, opts) {
   /* ---------- master update ---------- */
   function update(dt) {
     state.clockTime += dt;
-    if (!reduceMotion && !state.timeHeld) state.dayT = (state.dayT + dt / DAY_LEN) % 1;
+    if (!reduceMotion && !state.timeHeld) state.dayT = (state.dayT + dt * (state.timeScale || 1) / DAY_LEN) % 1;
     state.phase = phaseName(state.dayT);
     signalStep(dt);
     simStep(dt);
