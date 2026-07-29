@@ -912,8 +912,13 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
   .kpi__value { font-size: 32px; }
   .inspector { width: 100vw; }
   .topbar__views { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
-  .filters { overflow-x: auto; flex-wrap: nowrap; }
+  .filters { overflow-x: auto; overflow-y: hidden; flex-wrap: nowrap; align-items: center; }
   .filters__group { flex-wrap: nowrap; }
+
+  /* The focus-area list keeps its own flex-wrap, so inside the nowrap scroll
+     track it stacked into a 428px column and pushed the whole dashboard off
+     the first screen. It rides the same horizontal scroll as everything else. */
+  .filters__hoods { flex-wrap: nowrap; }
 
   /* The toast sat at bottom:26px, directly underneath the fixed tab bar. */
   .toast { bottom: calc(84px + env(safe-area-inset-bottom)); }
