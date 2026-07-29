@@ -129,7 +129,9 @@
 # at /vera/; data proxies to the pipeline feed site (David's Mac publishes
 # nightly). Engine docs: ~/Code/Personal/vera-apartment-search/CLAUDE.md
 /VERA             /vera/                                                          301
-/vera/data/*      https://vera-pipeline.netlify.app/data/:splat       200
+# Only the sanitized public lens is proxied. hunt.json / dashboard.json
+# are private and no longer exist on the feed site at all.
+/vera/data/public.json https://vera-pipeline.netlify.app/data/public.json 200
 /vera/artifacts/* https://vera-pipeline.netlify.app/artifacts/:splat  200
 
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
