@@ -991,7 +991,7 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 
 .mapwrap { position: relative; }
 
-.mp { display: block; width: 100%; height: auto; max-height: 74vh; border-radius: var(--r-sm); overflow: visible; }
+.mp { display: block; width: 100%; height: auto; max-height: 74vh; border-radius: var(--r-sm); overflow: hidden; }
 
 .mp-water { fill: #0a1418; }
 .mp-land { fill: #14181a; stroke: #1f272a; stroke-width: 2; }

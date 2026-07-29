@@ -1158,8 +1158,16 @@
 
   function renderMap(page) {
     var f = filtered();
-    var placed = f.filter(function (l) { return l.latitude != null && l.longitude != null; });
-    var lost = f.length - placed.length;
+    var geo = f.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    // Only plot what actually falls inside the hunt zone. A listing in the far
+    // Bronx projects to coordinates outside the viewBox and, because the SVG
+    // must not clip its own pin halos, would otherwise draw loose on the page.
+    var placed = geo.filter(function (l) {
+      var la = +l.latitude, ln = +l.longitude;
+      return la >= B.s && la <= B.n && ln >= B.w && ln <= B.e;
+    });
+    var outside = geo.length - placed.length;
+    var lost = f.length - geo.length;
 
     var landPath = '<polygon class="mp-land" points="' + poly(HUDSON.concat(EASTRIVER.slice().reverse())) + '"/>';
     var bkPath = '<polygon class="mp-land" points="' + poly(EASTRIVER.concat([[B.n, B.e], [B.s, B.e]])) + '"/>';
@@ -1201,7 +1209,9 @@
       '<div class="maplay">' +
         '<div class="panel mapwrap">' +
           '<div class="panel__head"><h2 class="panel__title">The hunt zone</h2>' +
-          '<p class="panel__hint">' + placed.length + ' plotted' + (lost ? ' · ' + lost + ' without coordinates' : '') + '</p></div>' +
+          '<p class="panel__hint">' + placed.length + ' plotted' +
+            (outside ? ' · ' + outside + ' outside the zone' : '') +
+            (lost ? ' · ' + lost + ' without coordinates' : '') + '</p></div>' +
           '<svg class="mp" viewBox="0 0 ' + VW + ' ' + VH + '" role="img" aria-label="Map of listings and subway stations">' +
             '<rect class="mp-water" x="0" y="0" width="' + VW + '" height="' + VH + '"/>' +
             njPath + bkPath + landPath + parkPath +
