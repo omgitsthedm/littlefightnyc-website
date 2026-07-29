@@ -63,10 +63,10 @@ const LAB_BUILDS = [
   {
     title: "Micro-Animations",
     type: "Interaction study",
-    description: "Eleven services, each explained in a small, replayable moment of motion.",
+    description: "A tiny bodega app running on real spring physics — press, throw, hold, undo. Feedback you can feel.",
     href: "/examples/lab/concepts/micro-animations/",
     poster: "/images/lab-showcase/micro-animations",
-    alt: "Website work in a small-business setting",
+    alt: "A small ordering app beside a checklist of seven interaction moments",
   },
   {
     title: "Studio Engine",

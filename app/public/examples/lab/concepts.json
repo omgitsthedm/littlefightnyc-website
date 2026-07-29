@@ -108,7 +108,7 @@
       "slug": "micro-animations",
       "title": "Micro-Animations",
       "type": "Interaction arcade",
-      "description": "Eleven services, each explained in a small, replayable moment of motion.",
+      "description": "A tiny bodega app on real spring physics — press, throw, hold, undo. Feedback you can feel.",
       "suite": "motion-playground"
     },
     {

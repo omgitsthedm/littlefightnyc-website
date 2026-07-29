@@ -28,7 +28,7 @@
       title: 'Micro-Animations',
       type: 'Interaction arcade',
       suite: 'motion-playground',
-      hint: 'Tap a category, then tap any study to replay it.'
+      hint: 'Follow the coach — press, throw, hold, undo. Feel it answer.'
     },
     {
       slug: 'aha-laser',

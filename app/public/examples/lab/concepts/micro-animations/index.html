@@ -1,171 +1,120 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#08080a" />
-    <title>Micro-Animations | The Lab · Little Fight NYC</title>
-    <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
-    <meta name="description" content="Eleven touch-friendly service interaction studies built with pure HTML and CSS in the Little Fight NYC Lab.">
-    <link rel="stylesheet" href="assets/styles.css" />
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="page-header">
-        <p class="eyebrow">Little Fight Interaction Arcade</p>
-        <h1>Tiny moments with real feedback.</h1>
-        <p>Tap any study to replay it. Filter by the kind of business problem it helps explain.</p>
-      </header>
+<html lang="en" class="lab-concept-page">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0812" />
+  <title>Micro-Animations | The Lab · Little Fight NYC</title>
+  <meta name="description" content="A tiny bodega app where every press, flick, hold, and undo answers your finger with real spring physics. Feedback you can feel." />
+  <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="feel.css?v=1" />
+</head>
+<body>
+  <header class="intro">
+    <p class="intro__eyebrow">The Lab · Build 04</p>
+    <h1 class="intro__title">Feedback<br />you can feel.</h1>
+    <p class="intro__lede">Micro-interactions are the difference between software people tolerate and software people love. Everything in the little app below answers your finger with real physics — instantly, from wherever it currently is, at the speed you threw it.</p>
+    <p class="intro__what">This is the finish we put on working software: buttons that press back, sheets that catch your throw, deletes that make you mean it, mistakes that cost nothing. Each one is invisible on its own. Together they're why a product feels expensive.</p>
+    <ul class="intro__uses" aria-label="Where this craft ships">
+      <li>Checkouts</li><li>Booking flows</li><li>Menus + ordering</li><li>Dashboards</li>
+    </ul>
+  </header>
 
-      <section class="filter-bar" aria-label="Filter services">
-        <button class="filter-pill is-active" data-filter="all" type="button">All</button>
-        <button class="filter-pill" data-filter="web" type="button">Websites</button>
-        <button class="filter-pill" data-filter="systems" type="button">Business systems</button>
-        <button class="filter-pill" data-filter="brand" type="button">Brand + content</button>
-        <button class="filter-pill" data-filter="media" type="button">Photo + video</button>
-      </section>
-      <p class="filter-status" id="filter-status" aria-live="polite">Showing all 11 studies</p>
+  <main class="playground">
+    <aside class="rail" aria-label="The seven moments">
+      <p class="rail__title">Seven moments</p>
+      <ol class="rail__list" data-rail>
+        <li data-m="press"><b>Press</b><span>Buttons acknowledge on touch-down, not on release.</span></li>
+        <li data-m="throw"><b>Throw</b><span>The sheet catches your flick and lands where you meant.</span></li>
+        <li data-m="hold"><b>Hold</b><span>Destructive actions ask you to mean it.</span></li>
+        <li data-m="undo"><b>Undo</b><span>Mistakes cost nothing — the toast rides your swipe.</span></li>
+        <li data-m="slide"><b>Slide</b><span>Tabs move their color, not just their underline.</span></li>
+        <li data-m="flip"><b>Flip</b><span>Light to dark without a hard cut.</span></li>
+        <li data-m="commit"><b>Commit</b><span>Errors shake. Success settles.</span></li>
+      </ol>
+      <p class="rail__done" data-rail-done hidden>All seven felt. Free play — break nothing, feel everything.</p>
+    </aside>
 
-      <section class="cards-grid" id="cards-grid">
-        <article class="service-card" data-cats="web brand">
-          <div class="card-head">
-            <h2>Website Design + Build</h2>
-            <p>Responsive sites with clean UX and conversion-focused structure.</p>
-          </div>
-          <div class="micro micro-wireframe" aria-hidden="true">
-            <span class="wf-box"></span>
-            <span class="wf-line line-a"></span>
-            <span class="wf-line line-b"></span>
-            <span class="wf-line line-c"></span>
-            <span class="wf-cursor"></span>
-          </div>
-        </article>
+    <section class="device">
+      <div class="phone" data-phone data-theme="light">
+        <div class="coach" data-coach role="status"></div>
 
-        <article class="service-card" data-cats="systems">
-          <div class="card-head">
-            <h2>Hosting + Maintenance</h2>
-            <p>Reliable uptime, updates, and proactive site care.</p>
+        <header class="app-bar">
+          <p class="app-brand">LF&nbsp;BODEGA</p>
+          <div class="app-bar__side">
+            <button class="theme" data-theme-btn type="button" aria-label="Toggle dark mode">
+              <span class="theme__track"><span class="theme__knob" data-theme-knob></span></span>
+            </button>
+            <button class="bag" data-bag-btn type="button" aria-label="Open bag">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+              <span class="bag__badge" data-badge hidden>0</span>
+            </button>
           </div>
-          <div class="micro micro-cloud" aria-hidden="true">
-            <span class="cloud-shape"></span>
-            <span class="sync-ring"></span>
-            <span class="sync-dot"></span>
-          </div>
-        </article>
+        </header>
 
-        <article class="service-card" data-cats="web">
-          <div class="card-head">
-            <h2>SEO + AEO</h2>
-            <p>Search and answer-engine optimization with measurable growth.</p>
-          </div>
-          <div class="micro micro-search" aria-hidden="true">
-            <span class="lens"></span>
-            <span class="handle"></span>
-            <span class="scan"></span>
-          </div>
-        </article>
+        <div class="tabs" data-tabs>
+          <div class="tabs__base"><button type="button" data-tab="shop">Shop</button><button type="button" data-tab="saved">Saved</button></div>
+          <div class="tabs__active" data-tabs-active aria-hidden="true"><span>Shop</span><span>Saved</span></div>
+        </div>
 
-        <article class="service-card" data-cats="brand">
-          <div class="card-head">
-            <h2>Branding + Identity</h2>
-            <p>Distinct visual systems that make your brand instantly recognizable.</p>
-          </div>
-          <div class="micro micro-brand" aria-hidden="true">
-            <span class="brand-orb"></span>
-            <span class="brand-spark spark-a"></span>
-            <span class="brand-spark spark-b"></span>
-          </div>
-        </article>
+        <div class="panels">
+          <section class="panel is-on" data-panel="shop" aria-label="Shop"></section>
+          <section class="panel" data-panel="saved" aria-label="Saved">
+            <p class="panel__empty" data-saved-empty>Nothing saved yet.<br />Tap a heart in the shop.</p>
+            <div data-saved-list></div>
+          </section>
+        </div>
 
-        <article class="service-card" data-cats="brand">
-          <div class="card-head">
-            <h2>Graphic Design</h2>
-            <p>Campaign-ready graphics, print assets, and social visuals.</p>
-          </div>
-          <div class="micro micro-graphic" aria-hidden="true">
-            <span class="swatch swatch-a"></span>
-            <span class="swatch swatch-b"></span>
-            <span class="swatch swatch-c"></span>
-          </div>
-        </article>
+        <div class="scrim" data-scrim></div>
 
-        <article class="service-card" data-cats="brand web">
-          <div class="card-head">
-            <h2>Copywriting + Content</h2>
-            <p>Clear messaging tuned for audience, rankings, and conversion.</p>
+        <section class="sheet" data-sheet aria-label="Your bag">
+          <div class="sheet__grab" data-sheet-grab><span></span></div>
+          <div class="sheet__head">
+            <h2>Your bag</h2>
+            <p class="sheet__hint">Hold <b>✕</b> to remove an item</p>
           </div>
-          <div class="micro micro-copy" aria-hidden="true">
-            <span class="type-line t1"></span>
-            <span class="type-line t2"></span>
-            <span class="caret"></span>
+          <div class="sheet__items" data-bag-list></div>
+          <p class="sheet__empty" data-bag-empty>Bag's empty. Add something good.</p>
+          <div class="sheet__foot" data-sheet-foot hidden>
+            <div class="sheet__total"><span>Total</span><b data-total>$0.00</b></div>
+            <label class="field" data-field>
+              <span>Name for the order</span>
+              <input type="text" data-name autocomplete="off" spellcheck="false" placeholder="Who's it for?" />
+              <em class="field__err" data-field-err>Add a name so we can call it out</em>
+            </label>
+            <button class="order" data-order type="button"><span class="order__label" data-order-label>Place order</span></button>
           </div>
-        </article>
+          <div class="sheet__confirm" data-confirm hidden>
+            <span class="sheet__confirm-mark">✓</span>
+            <h3>Order in.</h3>
+            <p data-confirm-line>Pickup in 10 minutes.</p>
+          </div>
+        </section>
 
-        <article class="service-card" data-cats="media">
-          <div class="card-head">
-            <h2>Photography</h2>
-            <p>Brand and product photography with polished visual storytelling.</p>
-          </div>
-          <div class="micro micro-photo" aria-hidden="true">
-            <span class="cam-body"></span>
-            <span class="cam-lens"></span>
-            <span class="cam-flash"></span>
-          </div>
-        </article>
+        <div class="toast" data-toast hidden>
+          <p data-toast-text></p>
+          <button type="button" data-toast-undo>Undo</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        <article class="service-card" data-cats="media">
-          <div class="card-head">
-            <h2>Video Editing / Reels</h2>
-            <p>Fast, platform-ready edits designed for retention and engagement.</p>
-          </div>
-          <div class="micro micro-video" aria-hidden="true">
-            <span class="clap-top"></span>
-            <span class="clap-base"></span>
-            <span class="play-dot"></span>
-          </div>
-        </article>
+  <footer class="outro">
+    <p class="outro__eyebrow">What you just felt</p>
+    <h2 class="outro__title">Craft is cumulative.</h2>
+    <p class="outro__body">Nothing in that little app is decoration. Press response under 100&nbsp;ms, springs that inherit your velocity, rubber-banding at every edge, undo on every destructive act — details nobody names, everybody feels. We ship this finish on real checkouts, menus, and booking flows.</p>
+    <p class="outro__body outro__body--dim">Imagine your product feeling like this by default.</p>
+    <a class="outro__cta" href="/tech-audit/?intent=website&amp;source=lab">Make mine feel right&nbsp;↗</a>
+  </footer>
 
-        <article class="service-card" data-cats="systems web">
-          <div class="card-head">
-            <h2>E-commerce Setup</h2>
-            <p>Launch storefronts with smooth checkout and product management.</p>
-          </div>
-          <div class="micro micro-shop" aria-hidden="true">
-            <span class="bag"></span>
-            <span class="bag-handle"></span>
-            <span class="coin"></span>
-          </div>
-        </article>
+  <noscript>
+    <p class="fallback">This build needs JavaScript — it's an interactive physics playground.</p>
+  </noscript>
 
-        <article class="service-card" data-cats="systems web">
-          <div class="card-head">
-            <h2>Performance + Security</h2>
-            <p>Speed tuning, hardening, and monitoring for resilient delivery.</p>
-          </div>
-          <div class="micro micro-shield" aria-hidden="true">
-            <span class="shield"></span>
-            <span class="shield-check"></span>
-            <span class="shield-wave"></span>
-          </div>
-        </article>
-
-        <article class="service-card" data-cats="systems">
-          <div class="card-head">
-            <h2>Home Automation</h2>
-            <p>Connected lighting, controls, and routines tuned for daily flow.</p>
-          </div>
-          <div class="micro micro-home" aria-hidden="true">
-            <span class="home-shell"></span>
-            <span class="home-door"></span>
-            <span class="home-ring ring-a"></span>
-            <span class="home-ring ring-b"></span>
-            <span class="home-dot"></span>
-          </div>
-        </article>
-      </section>
-    </main>
-
-    <script src="assets/app.js" defer></script>
+  <script type="module" src="feel.js?v=1"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>
