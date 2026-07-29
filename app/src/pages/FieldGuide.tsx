@@ -79,10 +79,10 @@ const LAB_BUILDS = [
   {
     title: "Growth Street",
     type: "Generative study",
-    description: "Five storefronts light up as the systems behind them connect.",
+    description: "One flower shop, five chapters, every number wearing a costume — people are dots, orders are tickets, months are buildings.",
     href: "/examples/lab/concepts/growth-street/",
     poster: "/images/lab-showcase/growth-street",
-    alt: "Coffee and retail goods arranged on shop shelves",
+    alt: "An illustrated flower shop with a striped awning and a crowd of colorful dot-people walking past",
   },
   {
     title: "Goliath",

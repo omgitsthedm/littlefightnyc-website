@@ -49,7 +49,7 @@
       title: 'Growth Street',
       type: 'Systems story',
       suite: 'business-systems',
-      hint: 'Tap a signal to run it through the block. Replay connects every storefront.'
+      hint: 'Scroll the five chapters — every number is drawn, not charted.'
     },
     {
       slug: 'tech-support',
