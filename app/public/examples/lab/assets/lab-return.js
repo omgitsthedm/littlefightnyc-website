@@ -56,7 +56,7 @@
       title: 'Goliath',
       type: 'Brand campaign',
       suite: 'brand-campaign',
-      hint: 'Scroll the campaign like a stack of street posters.'
+      hint: 'Scroll to paste the posters up. Scroll back to peel them off.'
     },
     {
       slug: 'hero',
