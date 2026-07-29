@@ -1370,7 +1370,7 @@ function founderBlock(page) {
   if (page.path !== "/about/") return "";
   return `
     <h2>How we work</h2>
-    <p>Founded by David Marsh in 2021, Little Fight NYC runs on a real standard: one accountable owner on every project, a two-hour callback window, and on-site help within a day when it's urgent. We're building the tech service company New York's small businesses deserve — the one the chains never sent.</p>
+    <p>Founded in 2021, Little Fight NYC runs on a real standard: one accountable owner on every project, a two-hour callback window, and on-site help within a day when it's urgent. We're building the tech service company New York's small businesses deserve — the one the chains never sent.</p>
   `;
 }
 
