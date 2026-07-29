@@ -15,7 +15,7 @@ export function buildWorld(THREE, scene, opts) {
     laneMap: {}, signalPosts: [], shopDoorWorld: [],
   };
   const G = world.rotGroup;
-  G.rotation.y = -0.32;
+  G.rotation.y = Math.PI - 0.32;
   scene.add(G);
 
   /* ---------- shared textures ---------- */
@@ -148,15 +148,15 @@ export function buildWorld(THREE, scene, opts) {
     let bx = 20;
     for (let i = 0; i < 26; i++) {
       const h = seq[i % seq.length];
-      const [b0, b1] = CITY.skyline.bridge;
-      if (!(bx > b0 - 10 && bx < b0 + b1 + 30) && !(bx > CITY.skyline.empire - 8 && bx < CITY.skyline.empire + 92) && !(bx > CITY.skyline.chrysler - 8 && bx < CITY.skyline.chrysler + 82)) {
+      const [b0, b1] = ART.skyline.bridge;
+      if (!(bx > b0 - 10 && bx < b0 + b1 + 30) && !(bx > ART.skyline.empire - 8 && bx < ART.skyline.empire + 92) && !(bx > ART.skyline.chrysler - 8 && bx < ART.skyline.chrysler + 82)) {
         grid(bx, 452, 58, h, 5, Math.max(3, Math.round(h / 9)));
       }
       bx += 72;
     }
     // bridge
     {
-      const [bx0, bw] = CITY.skyline.bridge;
+      const [bx0, bw] = ART.skyline.bridge;
       const deckY = 430, towH = 96;
       g.fillStyle = P.skyC;
       g.fillRect(bx0, deckY, bw, 7);
@@ -178,11 +178,11 @@ export function buildWorld(THREE, scene, opts) {
     }
     // empire + chrysler
     {
-      const bx1 = CITY.skyline.empire;
+      const bx1 = ART.skyline.empire;
       grid(bx1, 452, 84, 92, 7, 11); grid(bx1 + 14, 360, 56, 46, 5, 6); grid(bx1 + 28, 314, 28, 26, 3, 3);
       g.fillStyle = P.skyC; g.fillRect(bx1 + 39, 268, 6, 22);
       g.fillStyle = `rgba(${P.winC},0.9)`; g.fillRect(bx1 + 40, 262, 4, 6);
-      const bx2 = CITY.skyline.chrysler;
+      const bx2 = ART.skyline.chrysler;
       grid(bx2, 452, 72, 96, 6, 12);
       g.fillStyle = P.skyC;
       for (let a = 0; a < 5; a++) g.fillRect(bx2 + 8 + a * 6, 356 - a * 14, 56 - a * 12, 16);
@@ -314,32 +314,12 @@ export function buildWorld(THREE, scene, opts) {
     }
   }
 
-  /* ---------- beveled shell helper + instanced windows ---------- */
-  function shellGeo(w, h, d, bevel = 0.06) {
-    const shape = new THREE.Shape();
-    const hw = w / 2 - bevel, hd = d / 2 - bevel;
-    shape.moveTo(-hw, -hd - bevel);
-    shape.lineTo(hw, -hd - bevel);
-    shape.quadraticCurveTo(hw + bevel, -hd - bevel, hw + bevel, -hd);
-    shape.lineTo(hw + bevel, hd);
-    shape.quadraticCurveTo(hw + bevel, hd + bevel, hw, hd + bevel);
-    shape.lineTo(-hw, hd + bevel);
-    shape.quadraticCurveTo(-hw - bevel, hd + bevel, -hw - bevel, hd);
-    shape.lineTo(-hw - bevel, -hd);
-    shape.quadraticCurveTo(-hw - bevel, -hd - bevel, -hw, -hd - bevel);
-    const geo = new THREE.ExtrudeGeometry(shape, { depth: h, bevelEnabled: false, curveSegments: 3 });
-    geo.rotateX(-Math.PI / 2);
-    geo.translate(0, h, 0);
-    geo.rotateX(Math.PI);
-    geo.translate(0, h, 0);
-    return geo;
-  }
-
-  const winSlots = []; // { pos, ry, sx, sy, biz, dark }
-  function facadeWindows(bx, bz, bry, w, h, d, y0, biz, dark, denseFront) {
-    const cols = Math.max(2, Math.round(w / 0.72));
-    const rows = Math.max(2, Math.round(h / 0.62));
-    const colsD = Math.max(2, Math.round(d / 0.72));
+  /* ---------- solid buildings with real detail (no inverted shells) ---------- */
+  const winSlots = [];
+  function facadeWindows(bx, bz, bry, w, h, d, y0, biz, dark, dense = 0.62) {
+    const cols = Math.max(2, Math.round(w / dense));
+    const rows = Math.max(2, Math.round(h / 0.6));
+    const colsD = Math.max(2, Math.round(d / dense));
     const faces = [
       { n: [0, 0, 1], half: d / 2, across: w, cols, ry: 0 },
       { n: [0, 0, -1], half: d / 2, across: w, cols, ry: Math.PI },
@@ -351,10 +331,10 @@ export function buildWorld(THREE, scene, opts) {
       for (let r = 0; r < rows; r++) {
         for (let k = 0; k < f.cols; k++) {
           const a = -f.across / 2 + (k + 0.5) * (f.across / f.cols);
-          const ly = y0 + 0.5 + (r + 0.35) * ((h - 0.9) / rows);
+          const ly = y0 + 0.55 + (r + 0.35) * ((h - 1.0) / rows);
           let lx, lz;
-          if (f.n[2] !== 0) { lx = a; lz = f.n[2] * (f.half + 0.035); }
-          else { lx = f.n[0] * (f.half + 0.035); lz = a; }
+          if (f.n[2] !== 0) { lx = a; lz = f.n[2] * (f.half + 0.045); }
+          else { lx = f.n[0] * (f.half + 0.045); lz = a; }
           const wx = bx + lx * cosr + lz * sinr;
           const wz = bz - lx * sinr + lz * cosr;
           winSlots.push({ x: wx, y: ly, z: wz, ry: f.ry + bry, sx: 0.34, sy: 0.4, biz, dark });
@@ -363,23 +343,59 @@ export function buildWorld(THREE, scene, opts) {
     }
   }
 
-  const shellMat = new THREE.MeshStandardMaterial({ color: '#2b1a52', roughness: 0.55, metalness: 0.25 });
-  const shellMatDark = new THREE.MeshStandardMaterial({ color: '#221542', roughness: 0.6, metalness: 0.2 });
+  const bodyMat = new THREE.MeshStandardMaterial({ color: '#2b1a52', roughness: 0.6, metalness: 0.2 });
+  const bodyMatDark = new THREE.MeshStandardMaterial({ color: '#221542', roughness: 0.65, metalness: 0.18 });
+  const trimMat = new THREE.MeshStandardMaterial({ color: '#3a2a66', roughness: 0.55, metalness: 0.3 });
+
+  function addDetail(g2, w, h, d, accent, { floors = true, pilasters = true, cornice = true } = {}) {
+    const parts = [];
+    if (cornice) {
+      const cap = new THREE.Mesh(new THREE.BoxGeometry(w + 0.24, 0.16, d + 0.24), trimMat);
+      cap.position.y = h + 0.08;
+      g2.add(cap);
+      const capGlow = new THREE.Mesh(new THREE.BoxGeometry(w - 0.3, 0.03, d - 0.3), new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.22 }));
+      capGlow.position.y = h + 0.18;
+      g2.add(capGlow);
+    }
+    if (floors) {
+      const nF = Math.max(2, Math.round(h / 1.3));
+      for (let f = 1; f < nF; f++) {
+        parts.push(((m) => { m.position.y = (h / nF) * f; return m; })(new THREE.Mesh(new THREE.BoxGeometry(w + 0.08, 0.055, d + 0.08), trimMat)));
+      }
+    }
+    if (pilasters) {
+      for (const [px, pz] of [[-w / 2, -d / 2], [w / 2, -d / 2], [-w / 2, d / 2], [w / 2, d / 2]]) {
+        parts.push(((m) => { m.position.set(px, h / 2, pz); return m; })(new THREE.Mesh(new THREE.BoxGeometry(0.14, h, 0.14), trimMat)));
+      }
+    }
+    if (parts.length) {
+      const geos = parts.map((p) => { p.updateMatrix(); return p.geometry.clone().applyMatrix4(p.matrix); });
+      const merged = new THREE.Mesh(mergeGeometries(geos, false), trimMat);
+      g2.add(merged);
+      geos.forEach((g3) => g3.dispose());
+    }
+  }
+
+  function baseStorefront(g2, w, d, accent) {
+    const band = new THREE.Mesh(new THREE.BoxGeometry(w + 0.06, 1.0, d + 0.06), bodyMatDark);
+    band.position.y = 0.5;
+    g2.add(band);
+    const glow = new THREE.Mesh(new THREE.BoxGeometry(w + 0.1, 0.05, d + 0.1), new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.8 }));
+    glow.position.y = 1.02;
+    g2.add(glow);
+  }
 
   function roofClutter(g2, w, h, d, accent, waterTower) {
-    const roofY = h;
-    const items = Math.max(2, Math.round(w * d / 8));
+    const items = Math.max(2, Math.round(w * d / 9));
     for (let i = 0; i < items; i++) {
-      const box = new THREE.Mesh(new THREE.BoxGeometry(rand(0.3, 0.7), rand(0.2, 0.45), rand(0.3, 0.6)), new THREE.MeshStandardMaterial({ color: '#3a2766', roughness: 0.8 }));
-      box.position.set(rand(-w / 2 + 0.5, w / 2 - 0.5), roofY + box.geometry.parameters.height / 2, rand(-d / 2 + 0.5, d / 2 - 0.5));
+      const bh = rand(0.2, 0.45);
+      const box = new THREE.Mesh(new THREE.BoxGeometry(rand(0.3, 0.7), bh, rand(0.3, 0.6)), new THREE.MeshStandardMaterial({ color: '#3a2766', roughness: 0.8 }));
+      box.position.set(rand(-w / 2 + 0.6, w / 2 - 0.6), h + bh / 2, rand(-d / 2 + 0.6, d / 2 - 0.6));
       g2.add(box);
     }
-    const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.02, rand(0.7, 1.3), 5), new THREE.MeshBasicMaterial({ color: '#8a8ab0' }));
-    ant.position.set(rand(-w / 3, w / 3), roofY + 0.5, rand(-d / 3, d / 3));
+    const ant = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.02, rand(0.7, 1.2), 5), new THREE.MeshBasicMaterial({ color: '#8a8ab0' }));
+    ant.position.set(rand(-w / 3, w / 3), h + 0.5, rand(-d / 3, d / 3));
     g2.add(ant);
-    const roofGlow = new THREE.Mesh(new THREE.BoxGeometry(w * 0.36, 0.07, d * 0.36), new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.85 }));
-    roofGlow.position.y = roofY + 0.035;
-    g2.add(roofGlow);
     if (waterTower) {
       const wt = new THREE.Group();
       for (const [lx, lz] of [[-0.22, -0.22], [0.22, -0.22], [-0.22, 0.22], [0.22, 0.22]]) {
@@ -395,7 +411,7 @@ export function buildWorld(THREE, scene, opts) {
       const ring = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.CylinderGeometry(0.345, 0.345, 0.02, 16)), ringMat);
       ring.position.y = 0.86; wt.add(ring);
       world.edgeMats.push(ringMat);
-      wt.position.set(-w / 2 + 0.75, roofY, -d / 2 + 0.75);
+      wt.position.set(-w / 2 + 0.8, h, -d / 2 + 0.8);
       g2.add(wt);
     }
   }
@@ -423,34 +439,40 @@ export function buildWorld(THREE, scene, opts) {
     world.edgeMats.push(mat);
   }
 
-  /* ---------- buildings from data ---------- */
+  const solid = (w, h, d, mat) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    m.position.y = h / 2;
+    return m;
+  };
+
   for (const b of CITY.buildings) {
     const g2 = new THREE.Group();
-    const dark = rng() < 0.25; // light hierarchy: some buildings sleep
+    const dark = b.arch !== 'tower' && rng() < 0.22;
     if (b.arch === 'tower') {
       const tiers = [
-        { w: 5.2, h: 7.5, d: 5.0, y: 0 },
-        { w: 4.0, h: 4.6, d: 3.9, y: 7.5 },
-        { w: 2.8, h: 3.4, d: 2.7, y: 12.1 },
+        { w: b.w, h: 7.5, d: b.d, y: 0 },
+        { w: b.w - 1.2, h: 4.6, d: b.d - 1.1, y: 7.5 },
+        { w: b.w - 2.4, h: 3.4, d: b.d - 2.3, y: 12.1 },
       ];
       for (const tr of tiers) {
-        const shell = new THREE.Mesh(shellGeo(tr.w, tr.h, tr.d), shellMat);
-        shell.position.y = tr.y;
-        g2.add(shell);
-        const eMat = new THREE.LineBasicMaterial({ color: b.accent, transparent: true, opacity: 0.95 });
-        const e = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(tr.w, tr.h, tr.d)), eMat);
-        e.position.y = tr.y + tr.h / 2;
-        g2.add(e);
-        world.edgeMats.push(eMat);
-        facadeWindows(b.x, b.z, b.ry || 0, tr.w, tr.h, tr.d, tr.y, b.biz, dark, false);
+        const body = solid(tr.w, tr.h, tr.d, bodyMat);
+        body.position.y = tr.y + tr.h / 2;
+        g2.add(body);
+        const dg = new THREE.Group();
+        dg.position.y = tr.y;
+        addDetail(dg, tr.w, tr.h, tr.d, b.accent);
+        g2.add(dg);
+        edgesFor(g2, tr.w, tr.h, tr.d, b.accent, tr.y);
+        facadeWindows(b.x, b.z, b.ry || 0, tr.w, tr.h, tr.d, tr.y, b.biz, false, 0.52);
       }
-      for (const sx of [-1.8, 1.8]) {
-        const strip = new THREE.Mesh(new THREE.BoxGeometry(0.1, 7.2, 0.1), new THREE.MeshBasicMaterial({ color: ACCENTS.cyan, transparent: true, opacity: 0.9 }));
-        strip.position.set(sx, 3.75, tiers[0].d / 2 + 0.08);
+      baseStorefront(g2, tiers[0].w, tiers[0].d, b.accent);
+      for (const sx of [-b.w / 2 + 0.6, b.w / 2 - 0.6]) {
+        const strip = new THREE.Mesh(new THREE.BoxGeometry(0.1, 7.0, 0.1), new THREE.MeshBasicMaterial({ color: ACCENTS.cyan, transparent: true, opacity: 0.9 }));
+        strip.position.set(sx, 3.7, -tiers[0].d / 2 - 0.06);
         g2.add(strip);
       }
       world.crownMat = new THREE.MeshBasicMaterial({ color: b.accent, transparent: true, opacity: 0.95 });
-      const crown = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.3, 3.0), world.crownMat);
+      const crown = new THREE.Mesh(new THREE.BoxGeometry(tiers[2].w + 0.3, 0.3, tiers[2].d + 0.3), world.crownMat);
       crown.position.y = 15.65;
       g2.add(crown);
       const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.6, 6), new THREE.MeshBasicMaterial({ color: '#ffffff' }));
@@ -473,32 +495,49 @@ export function buildWorld(THREE, scene, opts) {
             g3.fillStyle = fill;
             g3.fillText(txt, 320, y, maxW);
           };
-          line('LITTLE', 800, 224, 560, 152, '#ff3ec8', ART.signFill);
-          line('FIGHT', 800, 224, 560, 344, '#33e6ff', ART.signFill);
+          line('LITTLE', 800, 224, 560, 152, '#ff3ec8', '#f0e6ff');
+          line('FIGHT', 800, 224, 560, 344, '#33e6ff', '#f0e6ff');
           line('NEW YORK · NEW YORK', 700, 58, 560, 540, '#ffb02e', '#e8d9ff');
           const t = new THREE.CanvasTexture(c);
           t.colorSpace = THREE.SRGBColorSpace;
           return t;
         };
         const bbMat = new THREE.MeshBasicMaterial({ map: drawBillboard(), transparent: true });
-        const bb = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 2.9), bbMat);
-        bb.position.set(0, 9.75, 2.07);
+        const bb = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 2.6), bbMat);
+        bb.position.set(0, 9.7, -(tiers[1].d / 2) - 0.09);
+        bb.rotation.y = Math.PI;
         g2.add(bb);
         world.textRedraws.push(() => { bbMat.map = drawBillboard(); bbMat.needsUpdate = true; });
-        world.billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(3.04, 3.04)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
-        world.billboardBorder.position.set(0, 9.75, 2.075);
+        world.billboardBorder = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(2.74, 2.74)), new THREE.LineBasicMaterial({ color: ACCENTS.magenta, transparent: true, opacity: 0.95 }));
+        world.billboardBorder.position.set(0, 9.7, -(tiers[1].d / 2) - 0.095);
         g2.add(world.billboardBorder);
       }
-      roofClutter(g2, 2.8, 15.5, 2.7, b.accent, false);
-    } else {
-      const shell = new THREE.Mesh(shellGeo(b.w, b.h, b.d), dark ? shellMatDark : shellMat);
-      g2.add(shell);
+      roofClutter(g2, tiers[2].w, 15.5, tiers[2].d, b.accent, false);
+    } else if (b.arch === 'warehouse') {
+      const body = solid(b.w, b.h, b.d, dark ? bodyMatDark : bodyMat);
+      g2.add(body);
+      addDetail(g2, b.w, b.h, b.d, b.accent, { floors: false, cornice: false });
+      const lip = new THREE.Mesh(new THREE.BoxGeometry(b.w + 0.18, 0.12, b.d + 0.18), trimMat);
+      lip.position.y = b.h + 0.06;
+      g2.add(lip);
       edgesFor(g2, b.w, b.h, b.d, b.accent);
-      facadeWindows(b.x, b.z, b.ry || 0, b.w, b.h, b.d, 0, b.biz, dark, false);
+      const doorSlit = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.5), new THREE.MeshBasicMaterial({ color: b.accent, transparent: true, opacity: 0.35 }));
+      doorSlit.position.set(0, 0.78, -b.d / 2 - 0.03);
+      doorSlit.rotation.y = Math.PI;
+      g2.add(doorSlit);
+      roofClutter(g2, b.w, b.h, b.d, b.accent, !!b.waterTower);
+      facadeWindows(b.x, b.z, 0, b.w, b.h - 0.8, b.d, 0.7, b.biz, dark, 0.8);
+    } else {
+      const body = solid(b.w, b.h, b.d, dark ? bodyMatDark : bodyMat);
+      g2.add(body);
+      addDetail(g2, b.w, b.h, b.d, b.accent);
+      baseStorefront(g2, b.w, b.d, b.accent);
+      edgesFor(g2, b.w, b.h, b.d, b.accent);
+      facadeWindows(b.x, b.z, b.ry || 0, b.w, b.h, b.d, 0, b.biz, dark, 0.6);
       if (b.arch === 'deco') {
-        for (let s = 0; s < 3; s++) {
-          const cap = new THREE.Mesh(new THREE.BoxGeometry(b.w - 0.5 - s * 0.5, 0.28, b.d - 0.5 - s * 0.5), shellMat);
-          cap.position.y = b.h + 0.14 + s * 0.28;
+        for (let sc = 0; sc < 3; sc++) {
+          const cap = new THREE.Mesh(new THREE.BoxGeometry(b.w - 0.5 - sc * 0.5, 0.28, b.d - 0.5 - sc * 0.5), trimMat);
+          cap.position.y = b.h + 0.14 + sc * 0.28;
           g2.add(cap);
         }
         const capGlow = new THREE.Mesh(new THREE.BoxGeometry(b.w - 1.7, 0.1, b.d - 1.7), new THREE.MeshBasicMaterial({ color: b.accent, transparent: true, opacity: 0.9 }));
@@ -506,63 +545,71 @@ export function buildWorld(THREE, scene, opts) {
         g2.add(capGlow);
       }
       roofClutter(g2, b.w, b.h, b.d, b.accent, !!b.waterTower);
-      if (b.fireEscape) fireEscapeLines(g2, b.w, b.h, Math.round(b.h / 1.3), b.accent, b.d / 2 + 0.03);
+      if (b.fireEscape) fireEscapeLines(g2, b.w, b.h, Math.round(b.h / 1.3), b.accent, -b.d / 2 - 0.03);
     }
     g2.position.set(b.x, 0, b.z);
     g2.rotation.y = b.ry || 0;
     G.add(g2);
-    world.builders.push({ group: g2, order: b.arch === 'tower' ? 4 : 2 + (rng() < 0.5 ? 0 : 1) });
+    world.builders.push({ group: g2, order: b.arch === 'tower' ? 4 : b.arch === 'warehouse' ? 1 : 2 });
   }
 
-  /* ---------- storefront strip from data ---------- */
-  const strip = CITY.shopsStrip;
-  CITY.businesses.filter((z) => z.kind === 'shop').forEach((shop, i) => {
+  /* ---------- storefront strips: faces flush to the sidewalk line, facing the avenue ---------- */
+  const shopsSorted = CITY.shops.slice().sort((a, b2) => a.biz - b2.biz);
+  world.shopDoorWorld = [];
+  for (const s of shopsSorted) {
+    const shop = CITY.businesses[s.biz];
     const g2 = new THREE.Group();
-    const h = shop.renovation ? 2.6 : 2.3 + (i % 3) * 0.25;
-    const shell = new THREE.Mesh(shellGeo(strip.unitW - 0.14, h, strip.depth, 0.05), new THREE.MeshStandardMaterial({ color: shop.renovation ? '#221639' : '#2e1c56', roughness: 0.6, metalness: 0.2 }));
-    g2.add(shell);
-    const eMat = edgesFor(g2, strip.unitW - 0.14, h, strip.depth, shop.accent);
+    const h = shop.renovation ? 2.6 : 2.3 + (s.biz % 3) * 0.25;
+    const front = -s.d / 2; // south face = storefront, ON the lot line
+    const body = solid(s.w, h, s.d, new THREE.MeshStandardMaterial({ color: shop.renovation ? '#221639' : '#2e1c56', roughness: 0.6, metalness: 0.2 }));
+    g2.add(body);
+    const eMat = edgesFor(g2, s.w, h, s.d, shop.accent);
     if (shop.renovation) eMat.opacity = 0.18;
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(s.w + 0.14, 0.12, s.d + 0.14), trimMat);
+    cap.position.y = h + 0.06;
+    g2.add(cap);
     const frontMat = new THREE.MeshBasicMaterial({ map: displayTexture(shop.name, shop.accent), transparent: true, opacity: shop.renovation ? 0 : 0.92 });
-    const front = new THREE.Mesh(new THREE.PlaneGeometry(strip.unitW - 0.44, 0.8), frontMat);
-    front.position.set(0, 0.66, strip.depth / 2 + 0.02);
-    g2.add(front);
+    const disp = new THREE.Mesh(new THREE.PlaneGeometry(s.w - 0.3, 0.8), frontMat);
+    disp.position.set(0, 0.66, front - 0.02);
+    disp.rotation.y = Math.PI;
+    g2.add(disp);
     const doorMat = new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: shop.renovation ? 0.06 : 0.55 });
-    const door = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 1.15), doorMat);
-    door.position.set(strip.unitW / 2 - 0.62, 0.58, strip.depth / 2 + 0.021);
+    const door = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 1.15), doorMat);
+    door.position.set(s.w / 2 - 0.35, 0.58, front - 0.021);
+    door.rotation.y = Math.PI;
     g2.add(door);
-    const awn = new THREE.Mesh(new THREE.BoxGeometry(strip.unitW - 0.3, 0.06, 0.7), new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.8 }));
-    awn.position.set(0, 1.32, strip.depth / 2 + 0.3);
-    awn.rotation.x = 0.18;
+    const awn = new THREE.Mesh(new THREE.BoxGeometry(s.w - 0.2, 0.05, 0.55), new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.8 }));
+    awn.position.set(0, 1.32, front - 0.28);
+    awn.rotation.x = -0.18;
     g2.add(awn);
     const awnEdgeMat = new THREE.MeshBasicMaterial({ color: shop.accent, transparent: true, opacity: shop.renovation ? 0.1 : 1 });
-    const awnEdge = new THREE.Mesh(new THREE.BoxGeometry(strip.unitW - 0.3, 0.045, 0.05), awnEdgeMat);
-    awnEdge.position.set(0, 1.27, strip.depth / 2 + 0.65);
+    const awnEdge = new THREE.Mesh(new THREE.BoxGeometry(s.w - 0.2, 0.04, 0.05), awnEdgeMat);
+    awnEdge.position.set(0, 1.28, front - 0.55);
     g2.add(awnEdge);
     const startTex = shop.renovation ? signTexture('FOR LEASE', '#8a8aa0', { dim: true, size: 46 }) : signTexture(shop.name, shop.accent);
     const signMat = new THREE.MeshBasicMaterial({ map: startTex, transparent: true });
-    const sign = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 0.64), signMat);
-    sign.position.set(0, h + 0.42, strip.depth / 2 - 0.2);
+    const sign = new THREE.Mesh(new THREE.PlaneGeometry(Math.min(1.6, s.w), 0.6), signMat);
+    sign.position.set(0, h + 0.4, front + 0.16);
+    sign.rotation.y = Math.PI;
     g2.add(sign);
-    const signBack = new THREE.Mesh(new THREE.BoxGeometry(1.78, 0.72, 0.1), new THREE.MeshStandardMaterial({ color: '#180c30', roughness: 0.7 }));
-    signBack.position.set(0, h + 0.42, strip.depth / 2 - 0.27);
+    const signBack = new THREE.Mesh(new THREE.BoxGeometry(Math.min(1.68, s.w + 0.06), 0.68, 0.1), new THREE.MeshStandardMaterial({ color: '#180c30', roughness: 0.7 }));
+    signBack.position.set(0, h + 0.4, front + 0.23);
     g2.add(signBack);
     world.signMats.push({ mat: signMat, t: rand(3, 10), busy: 0, dead: !!shop.renovation, name: shop.name, accent: shop.accent });
-    const gx = strip.x0 + i * strip.unitW;
-    g2.position.set(gx, 0, strip.z);
+    g2.position.set(s.x, 0, s.z);
     G.add(g2);
     world.builders.push({ group: g2, order: 0 });
-    world.shopDoorWorld.push(new THREE.Vector3(gx + strip.unitW / 2 - 0.62, 0.16, strip.z + strip.depth / 2 + 0.1));
-    facadeWindows(gx, strip.z, 0, strip.unitW - 0.2, h - 1.1, strip.depth, 1.15, shop.id, shop.renovation, false);
+    world.shopDoorWorld.push(new THREE.Vector3(s.x + s.w / 2 - 0.35, 0.16, s.z - s.d / 2 - 0.25));
+    facadeWindows(s.x, s.z, 0, s.w - 0.1, h - 1.15, s.d, 1.2, s.biz, shop.renovation, 0.55);
     if (shop.renovation) {
       const scafMat = new THREE.LineBasicMaterial({ color: ACCENTS.cyan, transparent: true, opacity: 0 });
-      const scaf = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(strip.unitW + 0.3, h + 0.7, strip.depth + 0.4, 2, 3, 2)), scafMat);
+      const scaf = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(s.w + 0.3, h + 0.7, s.d + 0.4, 2, 3, 2)), scafMat);
       scaf.position.y = (h + 0.7) / 2;
       scaf.scale.y = 0.001;
       g2.add(scaf);
-      world.renoRefs = { group: g2, bodyMat: shell.material, edge: eMat, front: frontMat, doorMat, awnEdge: awnEdgeMat, sign: signMat, signRec: world.signMats[world.signMats.length - 1], scaf, scafMat, accent: shop.accent, h };
+      world.renoRefs = { group: g2, bodyMat: body.material, edge: eMat, front: frontMat, doorMat, awnEdge: awnEdgeMat, sign: signMat, signRec: world.signMats[world.signMats.length - 1], scaf, scafMat, accent: shop.accent, h };
     }
-  });
+  }
 
   /* windows instanced mesh (built after all slots collected) */
   {
@@ -794,7 +841,7 @@ export function buildWorld(THREE, scene, opts) {
 
   /* planters, trees, lamps, parked cars */
   const flowerCols = [ACCENTS.magenta, ACCENTS.amber, ACCENTS.coral, ACCENTS.lime];
-  CITY.planters.forEach((fx, pi) => {
+  CITY.shops.map((s) => s.x - s.w / 2 - 0.02).slice(0, 5).forEach((fx, pi) => {
     const g2 = new THREE.Group();
     const pot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.3, 0.34), new THREE.MeshStandardMaterial({ color: '#241245', roughness: 0.8 }));
     pot.position.y = 0.15;
@@ -805,7 +852,7 @@ export function buildWorld(THREE, scene, opts) {
       bud.position.set(-0.14 + fi * 0.14, 0.4, 0);
       g2.add(bud);
     }
-    g2.position.set(fx, 0, 5.85);
+    g2.position.set(fx, 0, CITY.shopFrontZ - 0.35);
     addBuilder(g2, 1);
   });
 

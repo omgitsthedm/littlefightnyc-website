@@ -208,9 +208,9 @@ export function makeSystems(THREE, world, opts) {
     const t = state.dayT;
     if (cz.state === 'walking') {
       const a = cz.path[cz.seg], b = cz.path[cz.seg + 1];
-      if (edgeKind(a, b) === 'cross' && cz.segT === 0 && state.signal.state !== 'NS') {
-        return; // wait at the curb for the walk phase
-      }
+      const ek = edgeKind(a, b);
+      if (ek === 'cross' && cz.segT === 0 && state.signal.state !== 'NS') return;
+      if (ek === 'street' && cz.segT === 0 && state.signal.state !== 'EW') return;
       const av = nodeV(a), bv = nodeV(b);
       const len = av.distanceTo(bv) || 0.001;
       cz.segT += (cz.speed * dt) / len;
@@ -289,7 +289,8 @@ export function makeSystems(THREE, world, opts) {
     G.add(m);
     PULSES.push({ m, active: false, a: new THREE.Vector3(), b: new THREE.Vector3(), t: 0, dur: 1 });
   }
-  const TOWER_BASE = new THREE.Vector3(7.6, 0.15, -0.5);
+  const towerB = CITY.buildings.find((b) => b.arch === 'tower');
+  const TOWER_BASE = new THREE.Vector3(towerB.x, 0.15, towerB.z + towerB.d / 2 + 0.6);
   function spawnPulse(from, color) {
     const p = PULSES.find((x) => !x.active);
     if (!p) return;
@@ -328,12 +329,13 @@ export function makeSystems(THREE, world, opts) {
     return { m: g, state: 'idle', leg: 0, t: 0, path: [], deliveries: 0 };
   })();
   state.courier = courier;
-  const COURIER_DESTS = [new THREE.Vector3(-9.2, 0, -1.3), new THREE.Vector3(-3.2, 0, -2.6), new THREE.Vector3(1.6, 0, -1.7)];
+  const COURIER_DESTS = CITY.buildings.filter((b) => b.arch !== 'tower' && b.arch !== 'warehouse').map((b) => new THREE.Vector3(b.x, 0, b.z + b.d / 2 + 0.5));
   function dispatchCourier() {
     if (!courier || courier.state !== 'idle') return;
     const dest = pick(COURIER_DESTS);
     const start = new THREE.Vector3(world.shopDoorWorld[0].x, 0.02, 3.0);
-    courier.path = [start, new THREE.Vector3(start.x, 0.02, 1.9), new THREE.Vector3(dest.x, 0.02, 1.9), new THREE.Vector3(dest.x, 0.02, dest.z)];
+    const laneZ = CITY.grid.AVENUE_Z[0] - 0.05;
+    courier.path = [start, new THREE.Vector3(start.x, 0.02, laneZ), new THREE.Vector3(dest.x, 0.02, laneZ), new THREE.Vector3(dest.x, 0.02, dest.z)];
     courier.leg = 0; courier.t = 0;
     courier.state = 'out';
     courier.m.visible = true;
@@ -374,7 +376,7 @@ export function makeSystems(THREE, world, opts) {
     if (reduceMotion || beam.active) return;
     beam.active = true; beam.t = 0;
     G.updateMatrixWorld();
-    BEAM_P0.set(7.6, 15.8, -3.2).applyMatrix4(G.matrixWorld);
+    BEAM_P0.set(towerB.x, 15.8, towerB.z).applyMatrix4(G.matrixWorld);
     BEAM_P1.copy(BEAM_P0).add(new THREE.Vector3(-8, 9, -10));
     onTicker('◆ MILESTONE — the district beams the old skyline');
   }

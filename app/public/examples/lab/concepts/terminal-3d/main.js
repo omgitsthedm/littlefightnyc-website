@@ -753,17 +753,17 @@ if (TESTMODE) {
     check('citizens present', S.citizens.length === 20, `n=${S.citizens.length}`);
     check('cars present', S.cars.length === CITY.fleet.length);
     check('fps healthy', fpsAvg > 40, `fps=${Math.round(fpsAvg)}`);
-    const bands = [[3.2, 5.2], [-7.1, -5.1]];
-    const laneZs = [2.4, 1.5, -6.45, -7.15];
+    import('./city.js').then((cm) => check('zoning legal', cm.validateZoning().length === 0));
+    const crossXs = CITY.grid.walkColXs.filter((x, i) => i % 2 === 1 || i % 2 === 0); // corner xs for zebra tolerance
     let walkersInRoad = 0;
     for (const cz of S.citizens) {
       if (!cz.m.visible) continue;
       const { x, z } = cz.m.position;
-      const inAve = laneZs.some((lz) => Math.abs(z - lz) < 0.3);
-      const inCross = bands.some(([a, b]) => x > a && x < b) && Math.abs(z) < 9;
-      const onZebra = Math.abs(x - 3.66) < 0.3;
-      if (inAve && !onZebra) walkersInRoad++;
-      if (inCross && !onZebra && (z > 0.9 && z < 3.0 || z > -7.6 && z < -5.9)) walkersInRoad++;
+      const inAve = CITY.roads.avenueBands.some((b) => z > b.z0 + 0.1 && z < b.z1 - 0.1);
+      const inCross = CITY.roads.crossBands.some((b) => x > b.x0 + 0.1 && x < b.x1 - 0.1);
+      const nearCorner = crossXs.some((cx) => Math.abs(x - cx) < 0.6);
+      if (inAve && !nearCorner) walkersInRoad++;
+      if (inCross && !CITY.roads.avenueBands.some((b) => z > b.z0 && z < b.z1) && Math.abs(z) < 11 && ![CITY.grid.walkRowsZ].flat().some((wz) => Math.abs(z - wz) < 0.6)) walkersInRoad++;
     }
     check('no walkers in roadway', walkersInRoad === 0, `violations=${walkersInRoad}`);
     const waitNS = () => new Promise((res) => { const iv = setInterval(() => { if (S.signal.state === 'NS') { clearInterval(iv); res(); } }, 100); });
