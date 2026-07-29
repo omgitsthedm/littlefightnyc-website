@@ -1,462 +1,71 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="LFNYC Studio Engine is a browser-based concept tool that applies visible local rules to a service-business brief."
-    />
-    <title>Studio Engine | The Lab · Little Fight NYC</title>
-    <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
-    <meta name="theme-color" content="#0b0b0d" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="mobile.css" />
-  </head>
-  <body>
-    <div class="stage-glow stage-glow-a" aria-hidden="true"></div>
-    <div class="stage-glow stage-glow-b" aria-hidden="true"></div>
-    <div class="grid-plane" aria-hidden="true"></div>
-    <div class="noise-layer" aria-hidden="true"></div>
-    <div class="scanline-layer" aria-hidden="true"></div>
-    <div class="app-shell" id="appShell">
-      <header class="topbar glass-panel">
-        <div class="brand-group">
-          <div class="brand-plate" aria-hidden="true">
-            <span>LITTLE</span>
-            <span>FIGHT</span>
-            <span>NYC</span>
-          </div>
-          <div>
-            <p class="eyebrow">Little Fight NYC / Working Showcase</p>
-            <h1>Studio Engine</h1>
-            <p class="subhead">Minimal signal in. Website concept out.</p>
-            <p class="local-disclosure">Fixed browser rules. Fictional samples. No model, API, or publishing service.</p>
-          </div>
-        </div>
+<html lang="en" class="lab-concept-page">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0812" />
+  <title>Studio Engine | The Lab · Little Fight NYC</title>
+  <meta name="description" content="Describe a business — or tap one — and watch a finished-looking site assemble itself: skeleton, type, color, imagery. Then re-skin it live." />
+  <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="engine.css?v=1" />
+</head>
+<body>
+  <header class="intro">
+    <p class="intro__eyebrow">The Lab · Build 06</p>
+    <h1 class="intro__title">Describe it.<br />Watch it happen.</h1>
+    <p class="intro__lede">Name a business and a finished-looking site assembles itself in front of you — structure first, then type, then color, then imagery. Change the vibe and the whole design re-skins live.</p>
+    <p class="intro__what">This is how we open discovery calls: sketching real directions in front of the client instead of promising decks later. One system, twelve looks, zero mockup theater — everything you're about to see is generated in your browser.</p>
+    <ul class="intro__uses" aria-label="Where this ships">
+      <li>Discovery calls</li><li>Pitch decks</li><li>Kickoff workshops</li><li>Direction sprints</li>
+    </ul>
+  </header>
 
-        <div class="console-strip" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-          <i></i>
-        </div>
-
-        <div class="topbar-metrics">
-          <article class="metric-card">
-            <span class="metric-label">Project</span>
-            <strong id="projectNameDisplay">Untitled Concept</strong>
-          </article>
-          <article class="metric-card">
-            <span class="metric-label">Mode</span>
-            <strong id="modeDisplay">Quick Mode</strong>
-          </article>
-          <article class="metric-card metric-card-signal">
-            <div class="metric-row">
-              <span class="metric-label">Brief Coverage</span>
-              <strong id="signalPercent">18%</strong>
-            </div>
-            <div class="signal-meter" aria-hidden="true">
-              <span id="signalMeterFill"></span>
-            </div>
-          </article>
-        </div>
-
-        <div class="topbar-actions">
-          <button class="ghost-button" id="contrastButton" type="button">High Contrast</button>
-          <button class="ghost-button" id="exportMarkdownButton" type="button">Load Sample</button>
-          <button class="primary-button" id="publishButton" type="button">Keep This View</button>
-        </div>
-      </header>
-
-      <nav class="mobile-workspace glass-panel" role="tablist" aria-label="Mobile workspace">
-        <button
-          class="mobile-pane-chip active"
-          data-mobile-pane-button="scene"
-          type="button"
-          role="tab"
-          aria-selected="true"
-          aria-controls="scenePanel"
-        >
-          Preview
-        </button>
-        <button
-          class="mobile-pane-chip"
-          data-mobile-pane-button="signal"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="signalPanel"
-        >
-          Brief
-        </button>
-        <button
-          class="mobile-pane-chip"
-          data-mobile-pane-button="brain"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="brainPanel"
-        >
-          Rules
-        </button>
-      </nav>
-
-      <main class="cockpit-layout">
-        <section class="glass-panel signal-panel" id="signalPanel" data-mobile-pane="signal">
-          <div class="panel-kicker">
-            <div>
-              <p class="eyebrow">Signal Input</p>
-              <h2>Ready when you are.</h2>
-              <p class="panel-copy">Answer the essentials. Local matching rules suggest the rest.</p>
-            </div>
-            <button class="ghost-button" id="loadDemoButton" type="button">Load Demo</button>
-          </div>
-
-          <div class="mode-switch" role="tablist" aria-label="Input modes">
-            <button class="mode-chip active" data-mode-button="quick" role="tab" aria-selected="true" type="button">
-              Quick
-            </button>
-            <button class="mode-chip" data-mode-button="prompt" role="tab" aria-selected="false" type="button">
-              Prompt
-            </button>
-            <button class="mode-chip" data-mode-button="dream" role="tab" aria-selected="false" type="button">
-              Dream
-            </button>
-          </div>
-
-          <div class="workflow-strip" aria-label="Workflow">
-            <article class="workflow-step active">
-              <span>01</span>
-              <strong>Describe</strong>
-              <p>Core signal first</p>
-            </article>
-            <article class="workflow-step">
-              <span>02</span>
-              <strong>Refine</strong>
-              <p>Only if needed</p>
-            </article>
-            <article class="workflow-step">
-              <span>03</span>
-              <strong>Review</strong>
-              <p>Keep the useful view</p>
-            </article>
-          </div>
-
-          <form id="studioForm" class="signal-form" novalidate>
-            <section class="mode-panel" data-mode-panel="quick">
-              <div class="section-head">
-                <span class="section-tag">30 Second Intake</span>
-                <p>Enter the core signal. Browser rules suggest structure, copy, palette, and layout.</p>
-              </div>
-              <div class="field-grid">
-                <label class="field">
-                  <span>Business Name</span>
-                  <input id="businessName" name="businessName" autocomplete="organization" />
-                </label>
-                <label class="field">
-                  <span>City</span>
-                  <input id="city" name="city" autocomplete="address-level2" />
-                </label>
-                <label class="field field-wide">
-                  <span>Industry</span>
-                  <input id="industry" name="industry" />
-                </label>
-                <label class="field field-wide">
-                  <span>Primary Offer</span>
-                  <input id="primaryOffer" name="primaryOffer" />
-                </label>
-                <label class="field field-wide">
-                  <span>Primary CTA</span>
-                  <input id="primaryCta" name="primaryCta" />
-                </label>
-              </div>
-            </section>
-
-            <section class="mode-panel" data-mode-panel="prompt" hidden>
-              <div class="section-head">
-                <span class="section-tag">Natural Language</span>
-                <p>Describe the business in one sentence.</p>
-              </div>
-              <label class="field">
-                <span>Prompt</span>
-                <small>One sentence is enough.</small>
-                <textarea id="promptInput" name="promptInput" rows="7"></textarea>
-              </label>
-            </section>
-
-            <section class="mode-panel" data-mode-panel="dream" hidden>
-              <div class="section-head">
-                <span class="section-tag">Concept Generator</span>
-                <p>Use a mood plus business type for an instant direction.</p>
-              </div>
-              <label class="field">
-                <span>Dream Prompt</span>
-                <small>Think mood plus business type.</small>
-                <textarea id="dreamPrompt" name="dreamPrompt" rows="7"></textarea>
-              </label>
-            </section>
-
-            <details class="signal-accordion" id="optionalSignalAccordion">
-              <summary>
-                <div>
-                  <span class="section-tag">Optional Signal</span>
-                  <strong>Tighten the brief</strong>
-                </div>
-                <span class="accordion-meta">Phone, services, URL</span>
-              </summary>
-              <div class="signal-accordion-body">
-                <div class="field-grid">
-                  <label class="field">
-                    <span>Phone</span>
-                    <input id="phone" name="phone" autocomplete="tel" />
-                  </label>
-                  <label class="field">
-                    <span>Email</span>
-                    <input id="email" name="email" type="email" autocomplete="email" />
-                  </label>
-                  <label class="field field-wide">
-                    <span>Website URL</span>
-                    <input id="websiteUrl" name="websiteUrl" autocomplete="url" />
-                  </label>
-                  <label class="field field-wide">
-                    <span>Services List</span>
-                    <textarea id="servicesText" name="servicesText" rows="4"></textarea>
-                  </label>
-                </div>
-              </div>
-            </details>
-
-            <details class="signal-accordion" id="styleControlAccordion">
-              <summary>
-                <div>
-                  <span class="section-tag">Style Control</span>
-                  <strong>Force the look</strong>
-                </div>
-                <span class="accordion-meta">Template and colors</span>
-              </summary>
-              <div class="signal-accordion-body">
-                <div class="field-grid">
-                  <label class="field field-wide">
-                    <span>Template Style</span>
-                    <select id="templateStyle" name="templateStyle">
-                      <option value="">Auto Select</option>
-                      <option value="1">1 / Modern Grid</option>
-                      <option value="2">2 / Elegant Editorial</option>
-                      <option value="3">3 / SaaS Sharp</option>
-                      <option value="4">4 / Luxury Minimal</option>
-                      <option value="5">5 / Studio Bold</option>
-                      <option value="6">6 / Local Trust</option>
-                      <option value="7">7 / Clinic Clean</option>
-                      <option value="8">8 / Neo Terminal</option>
-                      <option value="9">9 / Warm Hospitality</option>
-                      <option value="10">10 / High Contrast</option>
-                    </select>
-                  </label>
-                </div>
-
-                <div class="color-grid">
-                  <label class="color-field">
-                    <span>Primary</span>
-                    <div class="color-input-wrap">
-                      <input id="brandPrimary" name="brandPrimary" type="color" value="#ff6600" />
-                      <strong data-color-value="brandPrimary">#FF6600</strong>
-                    </div>
-                  </label>
-                  <label class="color-field">
-                    <span>Secondary</span>
-                    <div class="color-input-wrap">
-                      <input id="brandSecondary" name="brandSecondary" type="color" value="#121217" />
-                      <strong data-color-value="brandSecondary">#121217</strong>
-                    </div>
-                  </label>
-                  <label class="color-field">
-                    <span>Accent</span>
-                    <div class="color-input-wrap">
-                      <input id="brandAccent" name="brandAccent" type="color" value="#f2ede9" />
-                      <strong data-color-value="brandAccent">#F2EDE9</strong>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </details>
-          </form>
-        </section>
-
-        <section class="glass-panel scene-panel" id="scenePanel" data-mobile-pane="scene">
-          <div class="panel-kicker scene-kicker">
-            <div>
-              <p class="eyebrow">Live Website Scene</p>
-              <h2 id="sceneTitle">Signal-to-site cockpit</h2>
-              <p class="panel-copy">The preview updates as the brief gains useful fields.</p>
-            </div>
-
-            <div class="scene-controls">
-              <div class="segmented-control" aria-label="Viewport controls">
-                <button class="segmented-chip active" data-viewport-button="desktop" type="button">Desktop</button>
-                <button class="segmented-chip" data-viewport-button="mobile" type="button">Mobile</button>
-                <button class="segmented-chip" data-viewport-button="duo" type="button">Dual</button>
-              </div>
-
-              <div class="menu-wrap">
-                <button
-                  class="menu-button"
-                  id="previewMenuButton"
-                  type="button"
-                  aria-expanded="false"
-                  aria-controls="previewMenu"
-                  aria-label="Open preview menu"
-                >
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </button>
-                <div class="menu-panel" id="previewMenu" hidden>
-                  <button class="menu-item" id="previewLoadDemoButton" type="button">Load Demo</button>
-                  <button class="menu-item" id="focusSignalButton" type="button">Edit Info</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="live-ribbon">
-            <span id="liveStatus">LOCAL PREVIEW / ACTIVE</span>
-            <span id="sceneMeta">5 sections / 3 variants / local rules</span>
-          </div>
-
-          <div class="scene-stage" id="sceneStage">
-            <div class="scene-hud" aria-hidden="true">
-              <span class="hud-orbit"></span>
-              <span class="hud-orbit hud-orbit-secondary"></span>
-              <span class="hud-beam"></span>
-              <span class="hud-ticks"></span>
-            </div>
-            <button class="ai-orb" id="aiOrbButton" type="button" aria-label="Open local rule controls">
-              <span class="orb-core"></span>
-            </button>
-            <div class="device-stack" id="deviceStack"></div>
-          </div>
-        </section>
-
-        <aside class="glass-panel brain-panel" id="brainPanel" data-mobile-pane="brain">
-          <div class="panel-kicker">
-            <div>
-              <p class="eyebrow">Local Rulebook</p>
-              <h2>Rule decisions</h2>
-              <p class="panel-copy" id="brainSummary">Browser-only rules match the brief. No model or remote API is running.</p>
-            </div>
-            <div class="brain-badge" id="brainStatus">No model or API</div>
-          </div>
-
-          <div class="brain-scroll">
-            <section class="brain-card">
-              <div class="brain-card-head">
-                <span class="brain-card-tag">Decisions</span>
-                <strong id="decisionTone">Calibrating</strong>
-              </div>
-              <dl class="decision-list" id="decisionList"></dl>
-            </section>
-
-            <section class="brain-card">
-              <div class="brain-card-head">
-                <span class="brain-card-tag">Brief Coverage</span>
-                <strong id="confidenceHeadline">Coverage updates from completed fields</strong>
-              </div>
-              <div class="confidence-list" id="confidenceList"></div>
-            </section>
-
-            <section class="brain-card">
-              <div class="brain-card-head">
-                <span class="brain-card-tag">Directions</span>
-                <strong>Safe / Bold / Experimental</strong>
-              </div>
-              <div class="variant-grid" id="variantGrid"></div>
-            </section>
-
-            <section class="brain-card">
-              <div class="brain-card-head">
-                <span class="brain-card-tag">Suggestions</span>
-                <strong>Rule adjustments</strong>
-              </div>
-              <div class="suggestion-list" id="suggestionList"></div>
-            </section>
-
-            <section class="brain-card">
-              <div class="brain-card-head">
-                <span class="brain-card-tag">Outputs</span>
-                <strong>Preview choices</strong>
-              </div>
-              <div class="output-grid" id="outputGrid"></div>
-              <div class="heatmap-card" id="heatmapCard"></div>
-            </section>
-          </div>
-        </aside>
-      </main>
-
-      <footer class="bottom-dock glass-panel">
-        <button class="dock-button" id="commandPaletteButton" type="button">Tune Direction</button>
-        <div class="dock-lights" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div class="version-cluster">
-          <span class="dock-label">Recent Changes</span>
-          <div class="version-history" id="versionHistory"></div>
-        </div>
-
-        <div class="dock-actions">
-          <button class="dock-button" id="shareButton" type="button">Load Sample</button>
-          <button class="dock-button" id="dockFocusSignalButton" type="button">Edit Signal</button>
-        </div>
-      </footer>
-    </div>
-
-    <div class="command-overlay" id="commandOverlay" hidden>
-      <div class="command-palette glass-panel" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
-        <div class="command-head">
-          <div>
-            <p class="eyebrow">Local Rule Controls</p>
-            <h2 id="commandTitle">Adjust the concept</h2>
-          </div>
-          <button class="ghost-button" id="closeCommandButton" type="button">Close</button>
-        </div>
-
-        <form id="commandForm" class="command-form">
-          <label class="field">
-            <span>Command</span>
-            <small>Rules recognize choices such as “more premium,” “less copy,” or “focus on calls.”</small>
-            <input id="commandInput" name="commandInput" autocomplete="off" />
-          </label>
-        </form>
-
-        <div class="command-suggestions" id="commandSuggestions"></div>
-        <div class="command-log" id="commandLog"></div>
+  <main class="studio">
+    <section class="console" aria-label="Describe a business">
+      <form class="ask" data-ask>
+        <input class="ask__input" data-input type="text" autocomplete="off" spellcheck="false" aria-label="Describe a business" />
+        <button class="ask__go" type="submit">Build it</button>
+      </form>
+      <div class="picks" data-picks role="group" aria-label="Or tap a business">
+        <button type="button" data-pick="wine">🍷 Wine bar</button>
+        <button type="button" data-pick="barber">💈 Barbershop</button>
+        <button type="button" data-pick="bakery">🥐 Bakery</button>
+        <button type="button" data-pick="pilates">🧘 Pilates studio</button>
       </div>
-    </div>
+    </section>
 
-    <div class="loading-overlay" id="loadingOverlay" hidden>
-      <div class="loading-card glass-panel">
-        <p class="eyebrow">LFNYC Studio Engine</p>
-        <h2 id="loadingTitle">Applying local rules</h2>
-        <div class="loading-bar" aria-hidden="true">
-          <span id="loadingBarFill"></span>
+    <section class="stage" aria-label="The generated site">
+      <div class="frame" data-frame>
+        <div class="frame__bar">
+          <span class="frame__dots"><i></i><i></i><i></i></span>
+          <span class="frame__url" data-url>studioengine.local</span>
         </div>
-        <div class="loading-log" id="loadingLog"></div>
+        <div class="frame__body" data-site tabindex="0"></div>
       </div>
-    </div>
+      <div class="vibes" data-vibes role="group" aria-label="Change the vibe">
+        <button type="button" data-vibe="warm">Warm minimal</button>
+        <button type="button" data-vibe="bold">Bold editorial</button>
+        <button type="button" data-vibe="night">Late night</button>
+      </div>
+    </section>
+  </main>
 
-    <div class="toast" id="toast" hidden></div>
+  <footer class="outro">
+    <p class="outro__eyebrow">What you just felt</p>
+    <h2 class="outro__title">Design is a system,<br />not a mood board.</h2>
+    <p class="outro__body">Four businesses, three vibes, twelve complete looks — all from one set of rules for type, color, spacing, and imagery. That's why the re-skin is instant: the design was never a picture, it was a decision system. Your real project gets the same spine.</p>
+    <p class="outro__body outro__body--dim">Imagine picking your direction live, on the first call.</p>
+    <a class="outro__cta" href="/tech-audit/?intent=website&amp;source=lab">Sketch my site live&nbsp;↗</a>
+  </footer>
 
-    <script src="app.js" defer></script>
+  <noscript>
+    <p class="fallback">This build needs JavaScript — it generates the site in your browser.</p>
+  </noscript>
+
+  <script type="module" src="engine.js?v=1"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

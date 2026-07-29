@@ -71,10 +71,10 @@ const LAB_BUILDS = [
   {
     title: "Studio Engine",
     type: "Design system",
-    description: "A live concept generator. Change the brief and watch the site redesign itself.",
+    description: "Describe a business — or tap one — and a finished-looking site assembles itself. Change the vibe; it re-skins live.",
     href: "/examples/lab/concepts/studio-engine/",
     poster: "/images/lab-showcase/studio-engine",
-    alt: "Tip jar and point-of-sale equipment on a shop counter",
+    alt: "A generated barbershop website inside a browser frame with vibe switcher chips",
   },
   {
     title: "Growth Street",

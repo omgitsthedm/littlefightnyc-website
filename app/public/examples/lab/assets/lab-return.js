@@ -42,7 +42,7 @@
       title: 'Studio Engine',
       type: 'Interactive business tool',
       suite: 'business-systems',
-      hint: 'Load the sample, change a business signal, then watch the scene react.'
+      hint: 'Tap a business — watch it build. Then change the vibe.'
     },
     {
       slug: 'growth-street',
