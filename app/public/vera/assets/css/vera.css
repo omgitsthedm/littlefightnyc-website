@@ -175,6 +175,15 @@ a { color: inherit; }
 
 .deck { min-width: 0; display: flex; flex-direction: column; }
 
+/* Brand mark for the top bar and a legal footer for the deck. Both are
+   mobile-only: on desktop the rail already carries the brand and the
+   Brand/Terms/Privacy links, and the rail is hidden below 940px. */
+.topbar__brand,
+.deckfoot { display: none; }
+
+.deckfoot a { color: var(--dim); text-decoration: none; border-bottom: 1px solid var(--line); }
+.deckfoot a:hover { color: var(--green); border-color: var(--green); }
+
 .topbar {
   display: flex;
   align-items: center;
@@ -433,7 +442,6 @@ a { color: inherit; }
 
 /* charts */
 .chart svg { display: block; width: 100%; height: auto; }
-.chart .axis { font-family: var(--mono); font-size: 9px; fill: var(--mute); }
 
 .bars { display: grid; gap: 7px; }
 
@@ -474,7 +482,8 @@ a { color: inherit; }
 .bar__val { font-family: var(--mono); font-size: 13px; color: var(--dim); white-space: nowrap; }
 
 /* histogram */
-.hist { display: flex; align-items: flex-end; gap: 6px; height: 190px; padding-top: 6px; }
+.hist {
+  overflow-x: auto; display: flex; align-items: flex-end; gap: 6px; height: 190px; padding-top: 6px; }
 
 .hist__col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 5px; height: 100%; }
 
@@ -579,6 +588,9 @@ a { color: inherit; }
   padding: 7px 10px;
   border-radius: var(--r-sm);
   background: var(--panel-2);
+  /* grid items default to min-width:auto, which lets a long address
+     widen the whole page instead of ellipsing */
+  min-width: 0;
 }
 
 .feed__badge { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 4px; flex: none; }
@@ -586,7 +598,6 @@ a { color: inherit; }
 .feed__badge--drop { background: rgba(116, 169, 216, 0.14); color: var(--blue); }
 .feed__badge--hike { background: rgba(227, 181, 103, 0.14); color: var(--amber); }
 .feed__badge--gone { background: rgba(224, 106, 112, 0.12); color: var(--red); }
-.feed__badge--back { background: var(--panel); color: var(--dim); }
 
 .feed__what { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .feed__num { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
@@ -611,6 +622,7 @@ a { color: inherit; }
 .chip.is-ok i { background: var(--green); }
 .chip.is-warn i { background: var(--amber); }
 .chip.is-bad i { background: var(--red); }
+.chip.is-off i { background: var(--mute); }
 
 /* ---------- discover table ---------- */
 
@@ -639,7 +651,7 @@ a { color: inherit; }
   border: 1px solid var(--line-soft);
   border-radius: var(--r);
   background: var(--panel);
-  max-height: min(66vh, 720px);
+  max-height: min(66svh, 720px);
 }
 
 table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
@@ -745,7 +757,10 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 
 .inspector__close:hover { color: var(--ink); border-color: var(--mute); }
 
-.inspector__tabs { display: flex; gap: 2px; padding: 10px 14px 0; border-bottom: 1px solid var(--line-soft); }
+.inspector[hidden] { display: none; }
+
+.inspector__tabs {
+  overflow-x: auto; display: flex; gap: 2px; padding: 10px 14px 0; border-bottom: 1px solid var(--line-soft); }
 
 .inspector__tabs button {
   font: 500 12.5px var(--sans);
@@ -841,19 +856,84 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
     gap: 10px;
   }
 
-  .brand__tag, .rail__foot { display: none; }
-  .brand__name { font-size: 15px; }
-  .rail__nav { display: flex; flex: 1; justify-content: space-evenly; }
-  .rail__nav a { flex-direction: column; gap: 3px; font-size: 10px; padding: 5px 8px; }
+  /* The bottom bar is a tab bar: seven tabs and nothing else. The brand
+     and the legal links move to the top bar and the deck footer, which
+     is why .brand and .rail__foot can go entirely. */
+  .brand, .brand__tag, .rail__foot { display: none; }
+
+  .rail__nav {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .rail__nav a {
+    flex: 1 1 0;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    font-size: 10px;
+    padding: 6px 2px;
+    min-height: 44px;
+  }
+
+  .rail__nav a span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
   .rail__nav a.is-here { box-shadow: none; background: none; color: var(--green); }
 
-  .deck { padding-bottom: 84px; }
+  .topbar__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .deckfoot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 6px 18px;
+    margin: 0;
+    padding: 18px clamp(14px, 2vw, 28px) 8px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 11.5px;
+    color: var(--mute);
+  }
+
+  .deckfoot p { margin: 0; }
+
+  .deck { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
   .grid--2, .grid--3 { grid-template-columns: 1fr; }
   .kpi__value { font-size: 32px; }
   .inspector { width: 100vw; }
   .topbar__views { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
   .filters { overflow-x: auto; flex-wrap: nowrap; }
   .filters__group { flex-wrap: nowrap; }
+
+  /* The toast sat at bottom:26px, directly underneath the fixed tab bar. */
+  .toast { bottom: calc(84px + env(safe-area-inset-bottom)); }
+
+  /* The map is ~0.36 scale here, which rendered pins at a 3-6px radius and
+     the rent label at under 5px. Grow the halo — it is part of the pin's
+     hit area — and the label with it. The "closest to a train" list below
+     the map stays the precise way to pick a listing on a phone. */
+  .mp-halo { r: 40; opacity: 0.2; }
+  .mp-rent { font-size: 26px; }
+
+  /* Filter and view pills were 28px tall — the most-tapped controls in the app. */
+  .topbar__views button, .filters button { min-height: 40px; padding: 8px 13px; }
+  .stagepick button { min-height: 40px; }
+  .slider input[type="range"] { height: 40px; }
+
+  /* Anything that mutates or deletes saved work needs a real target. */
+  .ccard__moves button,
+  .ccard__drop { min-height: 34px; padding: 7px 11px; font-size: 12px; }
+  .inspector__close { width: 44px; height: 44px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1035,7 +1115,7 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 .mp-swatch--bad { background: var(--red); }
 .mp-swatch--stn { background: #EE352E; width: 8px; height: 8px; }
 
-.walklist { display: grid; gap: 7px; max-height: 68vh; overflow-y: auto; }
+.walklist { display: grid; gap: 7px; max-height: 68svh; overflow-y: auto; }
 
 .walkrow {
   display: grid;
@@ -1100,7 +1180,7 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 .tool { display: grid; gap: 14px; align-content: start; }
 
 .slider { display: grid; gap: 8px; }
-.slider > span { font-size: 14px; color: var(--dim); display: flex; justify-content: space-between; }
+.slider > span { font-size: 14px; color: var(--dim); display: flex; justify-content: space-between; gap: 10px; min-width: 0; flex-wrap: wrap; }
 .slider > span b { font-size: 22px; color: var(--ink); font-variant-numeric: tabular-nums; }
 
 .slider input[type="range"] { width: 100%; accent-color: var(--green); height: 26px; cursor: pointer; }
@@ -1239,8 +1319,36 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 /* ---------- building portraits ---------- */
 
 .card { padding: 0; overflow: hidden; gap: 0; }
-.card__port { display: block; line-height: 0; border-bottom: 1px solid var(--line-soft); }
+.card__port { display: block; position: relative; line-height: 0; border-bottom: 1px solid var(--line-soft); overflow: hidden; }
 .card .port { width: 100%; height: auto; display: block; }
+
+/* A real photo sits on top of the drawn portrait. If it fails to load the
+   script removes it and the illustration underneath is already in place. */
+.shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: var(--panel-2);
+}
+
+.shot__n {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  z-index: 1;
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: rgba(8, 10, 9, 0.72);
+  backdrop-filter: blur(6px);
+}
 .card__top { padding: 12px 14px 0; }
 .card__title { padding: 0 14px; }
 .card__meta { padding: 0 14px; }
@@ -1248,6 +1356,7 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 .card > *:last-child { padding-bottom: 13px; }
 
 .insp-port { position: relative; margin: -4px 0 18px; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--line-soft); }
+.insp-port__frame { display: block; position: relative; line-height: 0; }
 .insp-port .port { display: block; width: 100%; height: auto; }
 .insp-port__cap { display: block; padding: 8px 11px; font-size: 11.5px; line-height: 1.45; color: var(--mute); background: var(--panel-2); }
 

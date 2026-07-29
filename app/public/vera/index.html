@@ -12,7 +12,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230c0e0d'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23868c85'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2016%20L16%207%20A9%209%200%200%201%2023.8%2011.5%20Z'%20fill='%234cc38a'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='1.8'%20fill='%23e9ece8'/%3E%3C/svg%3E">
   <link rel="preload" href="./assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./assets/css/vera.css?v=6">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=7">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -48,6 +48,13 @@
 
     <div class="deck">
       <header class="topbar" data-topbar>
+        <a class="topbar__brand" href="#/command" aria-label="VERA — command">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
+          </svg>
+          <span>VERA</span>
+        </a>
         <div class="topbar__snapshot">
           <span class="pulse" data-pulse aria-hidden="true"></span>
           <span data-snapshot-line>Loading snapshot…</span>
@@ -112,6 +119,11 @@
           <p>VERA is sweeping the city…</p>
         </div>
       </main>
+
+      <footer class="deckfoot">
+        <p>A <a href="/">Little Fight NYC</a> system</p>
+        <p><a href="./brand/">Brand</a> · <a href="./terms/">Terms</a> · <a href="./privacy/">Privacy</a></p>
+      </footer>
     </div>
 
     <aside class="inspector" data-inspector aria-label="Listing inspector" hidden>
@@ -139,6 +151,6 @@
   </div>
 
   <noscript><p class="fallback">VERA's console needs JavaScript — it renders a live data feed.</p></noscript>
-  <script src="./assets/js/vera.js?v=6" defer></script>
+  <script src="./assets/js/vera.js?v=7" defer></script>
 </body>
 </html>

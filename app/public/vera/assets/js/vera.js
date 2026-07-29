@@ -218,6 +218,16 @@
     return !isScam(l) && String(l.verification_status || '').indexOf('verified') !== 0;
   }
 
+  // The engine publishes "ok"; only "healthy" was accepted, so a fully green
+  // pipeline rendered every source red right next to a green health pulse.
+  function srcCls(status) {
+    var s = String(status || '').toLowerCase();
+    if (s === 'ok' || s === 'healthy') return 'is-ok';
+    if (s === 'partial' || s === 'degraded') return 'is-warn';
+    if (s === 'disabled' || s === 'not_scheduled' || s === 'skipped') return 'is-off';
+    return 'is-bad';
+  }
+
   function isFresh(l) {
     if (l.change_badge === 'new') return true;
     if (!l.first_seen_at) return false;
@@ -234,8 +244,10 @@
   function riskCls(v) { v = +v || 0; return v < 40 ? 'risk--lo' : v < 65 ? 'risk--md' : 'risk--hi'; }
 
   function unitOf(l) {
-    if (String(l.unit_type || '').toLowerCase() === 'studio' || +l.beds === 0) return 'studio';
-    if (+l.beds === 1) return '1br';
+    // +null is 0, which quietly filed every bedroom-less record as a studio.
+    var beds = l.beds == null || l.beds === '' ? null : +l.beds;
+    if (String(l.unit_type || '').toLowerCase() === 'studio' || beds === 0) return 'studio';
+    if (beds === 1) return '1br';
     return 'other';
   }
 
@@ -531,10 +543,11 @@
 
   /* ================================================================
      BUILDING PORTRAITS
-     Listing photos are a lie half the time — staged, stolen, or of a
-     different unit. So VERA draws the building instead, deterministically
-     from the listing's own identity and record. Same listing, same
-     portrait, forever. Nothing here pretends to be a photograph.
+     The floor under every listing image. Drawn deterministically from the
+     listing's own identity and record, so the same listing gets the same
+     portrait forever. Where the post carries real photography it is layered
+     on top (see photoLayer); the portrait is what remains when a post has
+     no photo, or when the host refuses to serve it.
      ================================================================ */
 
   var BRICK = [
@@ -666,6 +679,40 @@
       (note ? '<p class="kpi__note">' + note + '</p>' : '') + '</div>';
   }
 
+  // Real listing photography. The drawn portrait stays in the DOM underneath
+  // every photo, so a dead, blocked, or hotlink-refused image degrades to the
+  // illustration instead of leaving a hole. Feeds carry a few relative paths
+  // that only resolve on the source site, so absolute https is the bar.
+  function photoOf(l) {
+    var urls = l && l.image_urls;
+    if (!urls || !urls.length) return null;
+    for (var i = 0; i < urls.length; i++) {
+      if (typeof urls[i] === 'string' && urls[i].slice(0, 8) === 'https://') return urls[i];
+    }
+    return null;
+  }
+
+  function photoLayer(l) {
+    var src = photoOf(l);
+    if (!src) return '';
+    var n = +l.image_count || (l.image_urls || []).length;
+    var where = l.title || l.address_normalized || 'this listing';
+    return '<img class="shot" src="' + esc(src) + '" loading="lazy" decoding="async" ' +
+      'alt="Listing photo for ' + esc(where) + '">' +
+      (n > 1 ? '<span class="shot__n">' + n + ' photos</span>' : '');
+  }
+
+  // Image error events do not bubble, so they have to be caught on the way down.
+  // An inline onerror would be dropped by the site CSP (script-src 'self').
+  document.addEventListener('error', function (e) {
+    var t = e.target;
+    if (t && t.tagName === 'IMG' && t.className === 'shot') {
+      var n = t.parentNode && t.parentNode.querySelector('.shot__n');
+      if (n) n.parentNode.removeChild(n);
+      t.parentNode.removeChild(t);
+    }
+  }, true);
+
   function listingCard(l, kind) {
     var o = ownerRead(l);
     var st = stabilized(l);
@@ -680,7 +727,7 @@
       if (con) extra += '<p class="card__line is-con"><b>Con:</b> ' + esc(con) + '</p>';
     }
     return '<button type="button" class="card card--' + kind + '" data-open="' + esc(l.listing_uid) + '">' +
-      '<span class="card__port">' + portrait(l, 300, 132) + '</span>' +
+      '<span class="card__port">' + portrait(l, 300, 132) + photoLayer(l) + '</span>' +
       '<span class="card__top"><span class="card__score">' + score + '</span><span class="card__rent">' + money(l.rent) + '</span></span>' +
       '<h3 class="card__title">' + esc(l.title || l.address_normalized || 'Untitled listing') + '</h3>' +
       '<span class="card__meta">' +
@@ -703,6 +750,13 @@
     var dc = ((D.daily_changes || {}).counts || {});
 
     var fits = f.filter(function (l) { return !isScam(l); }).slice().sort(function (a, b) { return (+b.overall_score || 0) - (+a.overall_score || 0); }).slice(0, 4);
+
+    // Almost nothing in the feed reads as "verified", so the verification lane
+    // and the best-fit lane resolved to the same four listings. Best fit wins
+    // the duplicate; verification shows what is actually behind it.
+    var inFit = {};
+    fits.forEach(function (l) { inFit[l.listing_uid] = 1; });
+    verify = verify.filter(function (l) { return !inFit[l.listing_uid]; });
 
     /* rent histogram buckets */
     var histHTML = '';
@@ -741,9 +795,16 @@
     var feed = [];
     (changes.new_listings || []).slice(0, 5).forEach(function (c) { feed.push({ b: 'new', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
     (changes.price_changes || []).slice(0, 4).forEach(function (c) { feed.push({ b: (+c.price_change || 0) < 0 ? 'drop' : 'hike', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
-    (changes.gone_listings || []).slice(0, 3).forEach(function (c) { feed.push({ b: 'gone', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
+    // gone_listings nests its readable fields under change_detail, unlike
+    // new_listings — reading them flat rendered a bare uid and no price.
+    (changes.gone_listings || []).slice(0, 3).forEach(function (c) {
+      var d = c.change_detail || c;
+      feed.push({ b: 'gone', t: d.title || c.title || c.listing_uid, n: money(d.last_rent != null ? d.last_rent : d.rent), hood: d.neighborhood || c.neighborhood });
+    });
 
-    function cval(n) { return '<span data-count-to="' + (+n || 0) + '">0</span>'; }
+    // data-count-final is what the reduced-motion path reads; without it every
+    // counter rendered blank instead of jumping straight to its value.
+    function cval(n) { var v = +n || 0; return '<span data-count-to="' + v + '" data-count-final="' + v + '">0</span>'; }
     function cmoney(m) { return m == null ? '—' : '<span data-count-to="' + Math.round(m) + '" data-count-prefix="$" data-count-final="' + money(m) + '">$0</span>'; }
 
     /* the three bracket lanes — the hunt's price story at a glance */
@@ -782,7 +843,7 @@
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Market pulse — records discovered per run</h2><p class="panel__hint">' + trends.length + ' runs</p></div>' +
           (discovered.length ? sparkline(discovered, 560, 190, '#4cc38a') : '<p class="lane__empty">Trend history arrives with the next publishes.</p>') +
           '<div class="strip" style="margin-top:12px">' + (D.sources || []).slice(0, 12).map(function (s) {
-            var cls = s.status === 'healthy' ? 'is-ok' : s.status === 'partial' ? 'is-warn' : 'is-bad';
+            var cls = srcCls(s.status);
             return '<span class="chip ' + cls + '"><i></i>' + esc(s.source_name || '?') + '</span>';
           }).join('') + '</div>' +
         '</div>' +
@@ -898,7 +959,7 @@
       '<div class="panel"><div class="panel__head"><h2 class="panel__title">Sources</h2><p class="panel__hint">' + srcs.length + ' registered</p></div>' +
       '<div style="overflow:auto"><table class="srctable"><thead><tr><th>Source</th><th>Status</th><th>Tier</th><th>Reliability</th><th>Last success</th></tr></thead><tbody>' +
         srcs.map(function (s) {
-          var cls = s.status === 'healthy' ? 'is-ok' : s.status === 'partial' ? 'is-warn' : 'is-bad';
+          var cls = srcCls(s.status);
           return '<tr><td>' + esc(s.source_name || '—') + '</td>' +
             '<td><span class="chip ' + cls + '"><i></i>' + esc(s.status || '—') + '</span></td>' +
             '<td class="t-mono">' + esc(s.tier != null ? s.tier : '—') + '</td>' +
@@ -986,8 +1047,12 @@
     var html = '';
 
     if (inspTab === 'overview') {
-      html += '<div class="insp-port">' + portrait(l, 440, 190) +
-        '<span class="insp-port__cap">Drawn from the record — floors, era, and lit windows follow this building\'s own data. Not a photograph.</span></div>';
+      var shot = photoLayer(l);
+      html += '<div class="insp-port"><span class="insp-port__frame">' + portrait(l, 440, 190) + shot + '</span>' +
+        '<span class="insp-port__cap">' + (shot
+          ? 'Listing photo, straight from the source post. Photos get staged, reused, and stolen — treat it as a claim to check in person, not proof.'
+          : 'No photo on this post, so VERA drew the building from the record — floors, era, and lit windows follow this building\'s own data.') +
+        '</span></div>';
       html += l.why_this_listing ? '<div class="insp-sec"><h3>Why this listing</h3><p>' + esc(l.why_this_listing) + '</p></div>' : '';
       html += l.next_move ? '<div class="insp-sec"><h3>Next move</h3><p>' + esc(l.next_move) + '</p></div>' : '';
       var pros = l.trust_strengths || [], cons = l.trust_caveats || [];
@@ -1492,8 +1557,20 @@
   /* toolkit sliders, checklist ticks, notes */
   document.addEventListener('input', function (e) {
     var el = e.target;
-    if (el.hasAttribute && el.hasAttribute('data-toolrent')) { toolRent = +el.value; renderRoute(); }
-    else if (el.hasAttribute && el.hasAttribute('data-toolincome')) { toolIncome = +el.value; renderRoute(); }
+    // A full renderRoute() on every input event replaced the very range input
+    // being dragged, so the pointer capture died and the slider moved one step
+    // per press. Track the value and update the read-out in place while the
+    // drag is live; the page rebuilds on 'change', when the thumb is released.
+    if (el.hasAttribute && el.hasAttribute('data-toolrent')) {
+      toolRent = +el.value;
+      var rOut = el.parentNode && el.parentNode.querySelector('b');
+      if (rOut) rOut.textContent = money(toolRent);
+    }
+    else if (el.hasAttribute && el.hasAttribute('data-toolincome')) {
+      toolIncome = +el.value;
+      var iOut = el.parentNode && el.parentNode.querySelector('b');
+      if (iOut) iOut.textContent = toolIncome ? money(toolIncome) : 'not set';
+    }
     else if (el.hasAttribute && el.hasAttribute('data-note')) {
       var uid = el.getAttribute('data-note');
       if (cases[uid]) { cases[uid].notes = el.value; clearTimeout(el._t); el._t = setTimeout(saveCases, 400); }
@@ -1502,14 +1579,30 @@
 
   document.addEventListener('change', function (e) {
     var el = e.target;
-    if (!el.hasAttribute || !el.hasAttribute('data-check')) return;
+    if (!el.hasAttribute) return;
+
+    // Thumb released — now it is safe to rebuild the toolkit around the value.
+    if (el.hasAttribute('data-toolrent') || el.hasAttribute('data-toolincome')) { renderRoute(); return; }
+
+    if (!el.hasAttribute('data-check')) return;
     var uid = el.getAttribute('data-uid'), id = el.getAttribute('data-check');
     if (!cases[uid]) return;
     cases[uid].checks = cases[uid].checks || {};
     cases[uid].checks[id] = el.checked;
     saveCases();
-    var l = byUid(uid);
-    if (l) renderInspector(l);
+
+    // Re-rendering the inspector here scrolled the body back to the top and
+    // replaced the checkbox mid-tap. The checklist is meant to be worked
+    // through standing in the apartment, so update the progress bar in place.
+    var box = el.closest ? el.closest('.ck') : null;
+    if (box) box.classList.toggle('is-on', el.checked);
+
+    var done = 0;
+    $$('[data-check][data-uid="' + uid + '"]').forEach(function (c) { if (c.checked) done++; });
+    var fill = $('.cbar span');
+    if (fill) fill.style.width = Math.round(done / CHECKS.length * 100) + '%';
+    var prog = $('.cprog');
+    if (prog) prog.textContent = done + ' / ' + CHECKS.length;
   });
 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openUid) inspClose(); });
@@ -1538,7 +1631,8 @@
     HOODS = Object.keys(hc).map(function (h) { return { name: h, count: hc[h] }; }).sort(function (a, b) { return b.count - a.count; });
     state.hoods = state.hoods.filter(function (h) { return hc[h]; });
 
-    $('[data-loading]').remove();
+    var loader = $('[data-loading]');
+    if (loader) loader.remove();
     renderChrome();
     renderFilters();
     saveCases();
@@ -1549,13 +1643,26 @@
   function boot(i) {
     i = i || 0;
     if (i >= FEEDS.length) {
-      $('[data-loading]').innerHTML = '<p>Could not reach the VERA feed. It publishes nightly — try again shortly.</p>';
+      var out = $('[data-loading]');
+      if (out) out.innerHTML = '<p>Could not reach the VERA feed. It publishes nightly — try again shortly.</p>';
       return;
     }
     fetch(FEEDS[i], { cache: 'no-cache' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(adopt)
-      .catch(function () { boot(i + 1); });
+      .then(function (data) {
+        // A render error is not a feed error. Catching both together made VERA
+        // silently refetch the next origin and re-run the same broken render
+        // against an already-removed loading node — blank screen, no clue why.
+        try {
+          adopt(data);
+        } catch (err) {
+          if (window.console && console.error) console.error('VERA could not render the feed', err);
+          var box = $('[data-loading]');
+          if (box) box.innerHTML = '<p>VERA reached the feed but could not draw it. Reload to try again.</p>';
+        }
+      }, function () {
+        boot(i + 1);
+      });
   }
 
   boot();
