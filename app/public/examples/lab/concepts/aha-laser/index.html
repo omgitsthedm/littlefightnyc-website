@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="laser.css?v=1" />
+  <link rel="stylesheet" href="laser.css?v=2" />
 </head>
 <body>
   <header class="intro">
@@ -34,6 +34,7 @@
   <main class="stagewrap">
     <section class="signroom" data-room aria-label="The AHA laser sign">
       <div class="sign" data-sign>
+        <div class="sign__backlight" aria-hidden="true"></div>
         <svg class="sign__svg" data-svg viewBox="0 0 1200 850" role="img" aria-label="AHA — After Hours Agenda — Established 2011 — Now in New York City"></svg>
         <button class="chain" data-chain type="button" aria-pressed="true" aria-label="Pull to switch the sign off or on">
           <span class="chain__links" data-chain-links></span>
@@ -57,7 +58,7 @@
   </noscript>
 
   <script src="assets/text-paths.js"></script>
-  <script type="module" src="laser.js?v=1"></script>
+  <script type="module" src="laser.js?v=2"></script>
   <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

@@ -273,10 +273,23 @@ class Spring {
 
 const rubberband = (over, dim, c = 0.55) => (over * dim * c) / (dim + c * Math.abs(over));
 
-const chainSpring = new Spring(0, {
-  response: 0.34, damping: 0.5,
-  onUpdate: (y) => { chain.style.transform = `translateY(${y.toFixed(2)}px)`; },
-});
+/* the chain is a real object: links pay out from the anchor as you pull,
+   and release seeds a length bounce plus a pendulum sway */
+const chainLinks = $('[data-chain-links]');
+const chainKnob = $('[data-chain-knob]');
+
+const CHAIN_REST = window.matchMedia('(max-width: 640px)').matches ? 92 : 112;
+const CHAIN_MAX_PULL = 170;
+
+function chainRender() {
+  const len = lenSpring.x;
+  chainLinks.style.height = `${len.toFixed(1)}px`;
+  chainKnob.style.top = `${(len - 4).toFixed(1)}px`;
+  chain.style.transform = `rotate(${angSpring.x.toFixed(2)}deg)`;
+}
+
+const lenSpring = new Spring(CHAIN_REST, { response: 0.36, damping: 0.42, onUpdate: chainRender });
+const angSpring = new Spring(0, { response: 0.75, damping: 0.26, onUpdate: chainRender });
 
 const PULL_COMMIT = 62;
 let chainDrag = null;
@@ -284,38 +297,51 @@ let chainHist = [];
 
 chain.addEventListener('pointerdown', (e) => {
   try { chain.setPointerCapture(e.pointerId); } catch (err) {}
-  chainDrag = { startY: e.clientY, startPos: chainSpring.x, pulled: false };
-  chainHist = [{ t: performance.now(), y: e.clientY }];
-  engine.set.delete(chainSpring);
+  chainDrag = { startX: e.clientX, startY: e.clientY, startLen: lenSpring.x, pulled: false };
+  chainHist = [{ t: performance.now(), x: e.clientX, y: e.clientY, ang: angSpring.x }];
+  engine.set.delete(lenSpring);
+  engine.set.delete(angSpring);
 });
 
 chain.addEventListener('pointermove', (e) => {
   if (!chainDrag) return;
-  chainHist.push({ t: performance.now(), y: e.clientY });
+  chainHist.push({ t: performance.now(), x: e.clientX, y: e.clientY, ang: angSpring.x });
   while (chainHist.length > 6) chainHist.shift();
-  let y = chainDrag.startPos + (e.clientY - chainDrag.startY);
-  if (Math.abs(e.clientY - chainDrag.startY) > 5) chainDrag.pulled = true;
-  if (y < 0) y = rubberband(y, 140);
-  if (y > 110) y = 110 + rubberband(y - 110, 140);
-  chainSpring.set(y);
+  const dy = e.clientY - chainDrag.startY;
+  const dx = e.clientX - chainDrag.startX;
+  if (Math.abs(dy) > 5 || Math.abs(dx) > 5) chainDrag.pulled = true;
+  /* length: pays out 1:1, tiny give upward, soft limit past max */
+  let len = chainDrag.startLen + dy;
+  if (len < CHAIN_REST) len = CHAIN_REST + rubberband(len - CHAIN_REST, 44);
+  const max = CHAIN_REST + CHAIN_MAX_PULL;
+  if (len > max) len = max + rubberband(len - max, 90);
+  lenSpring.set(len);
+  /* deflection: the chain tilts toward your finger, hinged at the anchor */
+  const ang = clamp(Math.atan2(dx, Math.max(len, 40)) * (180 / Math.PI), -24, 24);
+  angSpring.set(ang);
 });
 
 function chainRelease(e) {
   if (!chainDrag) return;
   const wasPull = chainDrag.pulled;
   chainDrag = null;
-  let vy = 0;
+  let vy = 0, angVel = 0;
   if (chainHist.length > 1) {
     const a = chainHist[0], b = chainHist[chainHist.length - 1];
-    vy = (b.y - a.y) / Math.max((b.t - a.t) / 1000, 0.008);
+    const dt = Math.max((b.t - a.t) / 1000, 0.008);
+    vy = (b.y - a.y) / dt;
+    angVel = (b.ang - a.ang) / dt;
   }
-  const committed = chainSpring.x > PULL_COMMIT;
-  chainSpring.to(0, vy * 0.5);
+  const committed = lenSpring.x - CHAIN_REST > PULL_COMMIT;
+  /* snap back: length rides your release speed, the sway gets a pendulum kick */
+  lenSpring.to(CHAIN_REST, vy * 0.6);
+  angSpring.to(0, angVel + (angSpring.x > 0 ? -1 : 1) * Math.min(Math.abs(vy) * 0.18, 90));
   if (committed) togglePower();
   else if (!wasPull) togglePower(); /* simple tap works too */
 }
 chain.addEventListener('pointerup', chainRelease);
 chain.addEventListener('pointercancel', chainRelease);
+chainRender();
 chain.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePower(); }
 });
@@ -357,6 +383,7 @@ window.__laser = {
     lit: tubes.filter(t => t.lit).map(t => t.key),
     lens: Object.fromEntries(tubes.map(t => [t.key, Math.round(t.len)])),
     headError: +lastHeadError.toFixed(2),
+    chain: { len: +lenSpring.x.toFixed(1), rest: CHAIN_REST, ang: +angSpring.x.toFixed(2) },
   }),
 };
 
@@ -386,14 +413,26 @@ if (TESTMODE) {
     check('laser head tracked path', RM || lastHeadError < 8, `err=${lastHeadError.toFixed(2)}`);
     check('no legacy control panel', !document.querySelector('select, input[type="range"]'), '');
 
-    /* chain pull toggles off */
+    /* chain pull: links pay out, then toggle commits */
     const rect = chain.getBoundingClientRect();
     const cxp = rect.left + rect.width / 2, cyp = rect.top + 10;
     fire(chain, 'pointerdown', { clientX: cxp, clientY: cyp });
-    for (let i = 1; i <= 6; i++) fire(chain, 'pointermove', { clientX: cxp, clientY: cyp + i * 15 });
-    fire(chain, 'pointerup', { clientX: cxp, clientY: cyp + 90 });
-    await sleep(700);
+    for (let i = 1; i <= 6; i++) fire(chain, 'pointermove', { clientX: cxp + i * 3, clientY: cyp + i * 15 });
+    const midLen = lenSpring.x;
+    const midAng = angSpring.x;
+    check('chain pays out when pulled', midLen > CHAIN_REST + 60, `len=${midLen.toFixed(0)} rest=${CHAIN_REST}`);
+    check('chain deflects toward finger', Math.abs(midAng) > 1, `ang=${midAng.toFixed(1)}`);
+    fire(chain, 'pointerup', { clientX: cxp + 18, clientY: cyp + 90 });
+    /* release: length snaps home and the sway wiggles through zero */
+    let sawSwing = false, sawReturn = false;
+    for (let i = 0; i < 14; i++) {
+      await sleep(60);
+      if (Math.abs(angSpring.x) > 0.6) sawSwing = true;
+      if (Math.abs(lenSpring.x - CHAIN_REST) < 12) sawReturn = true;
+    }
+    check('chain springs back with a wiggle', RM || (sawSwing && sawReturn), `swing=${sawSwing} return=${sawReturn}`);
     check('pull switches off', !powered && room.classList.contains('is-off'), `powered=${powered}`);
+    check('backlight present behind tubes', !!document.querySelector('.sign__backlight'), '');
     check('off = pale glass', getComputedStyle(ahaTube.trace).opacity < 0.3, getComputedStyle(ahaTube.trace).opacity);
 
     /* tap toggles back on with fast ignition */
