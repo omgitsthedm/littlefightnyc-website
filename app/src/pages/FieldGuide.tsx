@@ -55,10 +55,10 @@ const LAB_BUILDS = [
   {
     title: "Scroll Into Motion",
     type: "Motion study",
-    description: "One frame carries sixteen New York moments. Motion that explains instead of decorating.",
+    description: "A pill blooms into a sixteen-moment New York film. Your scroll is the editor — forward, back, freeze anywhere.",
     href: "/examples/lab/concepts/pill-scroll/",
     poster: "/images/lab-showcase/scroll-motion",
-    alt: "A working kitchen entrance on a New York side street",
+    alt: "A capsule-shaped frame revealing commuters inside Grand Central",
   },
   {
     title: "Micro-Animations",

@@ -21,7 +21,7 @@
       title: 'Scroll Into Motion',
       type: 'Motion study',
       suite: 'motion-playground',
-      hint: 'Swipe or scroll slowly. The same object keeps changing jobs.'
+      hint: 'Scroll slow — the pill blooms into a film. Drag back to rewind.'
     },
     {
       slug: 'micro-animations',
