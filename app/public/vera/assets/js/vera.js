@@ -912,7 +912,16 @@
 
   function renderAbout(page) {
     page.innerHTML = '<div class="about">' +
-      '<h1>The hunt, verified.</h1>' +
+      '<h1>Apartment hunting is a rigged information game. This levels it.</h1>' +
+      '<p style="font-size:17.5px;color:var(--ink)">The average New Yorker used to hand over about <b>$13,000</b> before getting a key. Most of what they were told along the way could not be checked. VERA exists because every fact that would have protected them is already public — scattered across six city systems nobody has time to read.</p>' +
+      '<h2>What it refuses to do</h2>' +
+      '<ul><li><b>No brokers.</b> Listings that come with a broker attached are filtered or flagged, never quietly passed along.</li>' +
+      '<li><b>No corporate portfolios.</b> The lens defaults to individual owners — the ones who can still make their own call on a person rather than a credit threshold.</li>' +
+      '<li><b>No lead generation.</b> Your details are never collected, so they can never be sold. There is no account to make.</li>' +
+      '<li><b>No pretending.</b> When VERA cannot verify something, it says so instead of scoring around it.</li></ul>' +
+      '<h2>And the part nobody else tells you</h2>' +
+      '<p>Hunting owner-direct has a cost, and burying it would make this just another sales pitch. The smallest landlords often sit <b>outside</b> Good Cause eviction protection, outside rent stabilization, and outside the source-of-income rules that make a voucher usable. That is a real trade for a fairer price and a human on the other end — so VERA shows you the trade on every listing rather than selling you the upside alone.</p>' +
+      '<h1 style="font-size:clamp(24px,3vw,34px);margin-top:30px">The hunt, verified.</h1>' +
       '<p><b>VERA</b> — Verified Evaluation for Rental Analysis — is a rental-intelligence system built for one job: finding an honest studio or one-bedroom in New York without wading through brokers, shell companies, and bait listings.</p>' +
       '<h2>What it does every night</h2>' +
       '<p>Six stages: <b>discover</b> sweeps the listing sources · <b>normalize</b> makes them comparable · <b>dedupe</b> collapses the reposts · <b>enrich</b> pulls the building\'s public record — HPD violations, DOB history, litigation, rent-stabilization lists · <b>score</b> weighs it all and writes its reasoning down · <b>publish</b> puts the sanitized result here.</p>' +
