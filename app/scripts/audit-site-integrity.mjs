@@ -195,6 +195,49 @@ for (const file of htmlFiles) {
     }
   }
 
+  // FAQPage markup must describe Q&A the reader can actually find. The JSON-LD
+  // emitter and the body builders used to read different sources, so 8 pages
+  // published 16 pairs that appeared nowhere on the page. Google's structured
+  // data policy treats markup describing invisible content as spam, and nothing
+  // here would have caught it — the JSON was valid, the page rendered fine.
+  if (html.includes('"FAQPage"')) {
+    const stripped = html
+      .replace(/<script[\s\S]*?<\/script>/gi, "")
+      .replace(/<style[\s\S]*?<\/style>/gi, "");
+    const visible = stripMarkup(stripped).replace(/\s+/g, " ");
+    for (const block of html.matchAll(
+      /<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi,
+    )) {
+      let parsed;
+      try {
+        parsed = JSON.parse(block[1]);
+      } catch {
+        failures.push(`${relative}: ld+json block does not parse`);
+        continue;
+      }
+      const stack = [parsed];
+      while (stack.length > 0) {
+        const node = stack.pop();
+        if (Array.isArray(node)) {
+          stack.push(...node);
+          continue;
+        }
+        if (!node || typeof node !== "object") continue;
+        if (node["@type"] === "FAQPage") {
+          for (const entry of node.mainEntity ?? []) {
+            const question = stripMarkup(String(entry?.name ?? "")).replace(/\s+/g, " ").trim();
+            if (question && !visible.includes(question.slice(0, 45))) {
+              failures.push(
+                `${relative}: FAQPage declares a question the page does not show — "${question.slice(0, 60)}"`,
+              );
+            }
+          }
+        }
+        stack.push(...Object.values(node).filter((v) => v && typeof v === "object"));
+      }
+    }
+  }
+
   for (const reference of references(html)) {
     const pathname = localPath(reference, relative);
     if (!pathname || pathname === "/") continue;

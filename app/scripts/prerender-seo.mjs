@@ -622,11 +622,13 @@ function foundationSchemas(page) {
     });
   }
 
-  if (Array.isArray(page.faq) && page.faq.length > 0) {
+  // Must be the FAQ the page renders, not page.faq — see resolvedFaqFor().
+  const emittedFaq = resolvedFaqFor(page);
+  if (Array.isArray(emittedFaq) && emittedFaq.length > 0) {
     graph.push({
       "@type": "FAQPage",
       "@id": `${canonical}#faq`,
-      "mainEntity": page.faq.map((item) => ({
+      "mainEntity": emittedFaq.map((item) => ({
         "@type": "Question",
         "name": item.question,
         "acceptedAnswer": {
@@ -1136,6 +1138,30 @@ function snapshotParagraphs(page) {
   return uniqueParagraphs(paragraphs).slice(0, 8);
 }
 
+/**
+ * The FAQ this page actually renders.
+ *
+ * The JSON-LD emitter read page.faq while the body builders each rendered a
+ * type-specific source — g.faq for answers, a.faq for areas, t.faq for
+ * glossary, s.faq ?? page.faq for services. Where those disagreed, the page
+ * published FAQPage markup describing Q&A a reader could not find: 16 pairs
+ * across 8 pages, question and answer both absent. Google's structured data
+ * policy requires FAQ content to be present on the source page, and markup
+ * describing invisible content is what a manual "Spammy structured markup"
+ * action is for.
+ *
+ * Both sides call this now, so the markup cannot describe anything the page
+ * does not render. Precedence mirrors the body builders exactly — change one
+ * and you must change the other, which is the point of them being adjacent.
+ */
+function resolvedFaqFor(page) {
+  if (page.answerGuide) return page.answerGuide.faq;
+  if (page.area) return page.area.faq;
+  if (page.glossaryTerm) return page.glossaryTerm.faq;
+  if (page.service) return page.service.faq ?? page.faq;
+  return page.faq;
+}
+
 function faqHtml(faq, title = "Common questions") {
   if (!Array.isArray(faq) || faq.length === 0) return "";
   return `
@@ -1163,7 +1189,7 @@ function authoredContentHtml(page) {
   if (Array.isArray(page.paragraphs) && page.paragraphs.length > 0) {
     return [
       paragraphsHtml(page.paragraphs),
-      faqHtml(page.faq ?? [], "Long-distance questions, answered plainly"),
+      faqHtml(resolvedFaqFor(page) ?? [], "Long-distance questions, answered plainly"),
     ].join("\n");
   }
   if (page.path === "/library/") {
@@ -1185,7 +1211,7 @@ function authoredContentHtml(page) {
       (g.sections ?? [])
         .map((s) => `<h2>${escapeHtml(s.heading)}</h2>\n<p>${escapeHtml(s.body)}</p>`)
         .join("\n"),
-      faqHtml(g.faq, "Quick answers"),
+      faqHtml(resolvedFaqFor(page), "Quick answers"),
       (() => {
         const bridge = siteContent.answerServiceBridge?.[g.slug];
         return bridge
@@ -1221,7 +1247,7 @@ function authoredContentHtml(page) {
       (a.whatWeFixHere?.length ?? 0) > 0
         ? `<h2>What we fix in ${escapeHtml(a.name)}</h2>\n<ul>${a.whatWeFixHere.map((x) => `<li>${escapeHtml(x)}</li>`).join("\n")}</ul>`
         : "",
-      faqHtml(a.faq, `${a.name} questions`),
+      faqHtml(resolvedFaqFor(page), `${a.name} questions`),
       (a.nearby?.length ?? 0) > 0 ? `<p>Nearby: ${a.nearby.map(escapeHtml).join(" · ")}.</p>` : "",
     ].join("\n");
   }
@@ -1233,7 +1259,7 @@ function authoredContentHtml(page) {
       t.howItWorks ? `<h2>How it works</h2>\n<p>${escapeHtml(t.howItWorks)}</p>` : "",
       t.example ? `<h2>A real example</h2>\n<p>${escapeHtml(t.example)}</p>` : "",
       t.costOfIgnoring ? `<h2>The cost of ignoring it</h2>\n<p>${escapeHtml(t.costOfIgnoring)}</p>` : "",
-      faqHtml(t.faq, "Quick answers"),
+      faqHtml(resolvedFaqFor(page), "Quick answers"),
     ].join("\n");
   }
 
@@ -1260,7 +1286,7 @@ function authoredContentHtml(page) {
       (s.fallacies?.length ?? 0) > 0
         ? `<h2>What people are usually wrong about</h2>\n${s.fallacies.map((f) => `<h3>${escapeHtml(f.myth)}</h3>\n<p>${escapeHtml(f.reality)}</p>`).join("\n")}`
         : "",
-      faqHtml(s.faq ?? page.faq),
+      faqHtml(resolvedFaqFor(page)),
     ].join("\n");
   }
 
