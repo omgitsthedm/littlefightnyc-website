@@ -317,3 +317,26 @@ items:
     close_evidence:
       - "Every indexed page's og:image is within tolerance of 1.91:1."
       - "No portrait or square image is used as a share card."
+
+  - id: "DEAD-002"
+    type: "dead-code"
+    status: "open"
+    risk: "low"
+    finding: "TechAudit.tsx carries a three-step symptom quiz that cannot be reached. Roughly 160 lines of JSX and handlers, plus two analytics events that can never fire."
+    evidence:
+      - "app/src/pages/TechAudit.tsx:204 initialises `useState<Step>(3)` with a literal, so the flow always opens on the form."
+      - "Every call site of pickSymptom, pickUrgency and skipToForm (lines 459, 478, 486, 521, 546) sits inside the `step === 1` or `step === 2` JSX, which never renders."
+      - "readDraft parses a saved `step` (line 144) but the state ignores it, so even a restored draft cannot enter step 1 or 2."
+      - "intake_step_1 and intake_step_2 are therefore unreachable analytics events."
+      - "Opening on the form is deliberate and documented at lines 202-203: owners describe the problem in their own words rather than completing a quiz first. That decision is correct under the Frontend Brief — friction wins."
+    impact: "No runtime cost; React never evaluates the unreachable branches. The cost is comprehension — 160 lines of the primary conversion page describe a flow that does not exist — plus dead weight in the chunk and two analytics events that will never report."
+    mitigation:
+      - "Remove the step 1 and 2 blocks, pickSymptom, pickUrgency, skipToForm, the payoff state, hapticStep, STEP_TITLES[1] and [2], and the step state itself."
+      - "Keep symptom and urgency: symptom is still set from the ?intent=website parameter and both feed hidden inputs at lines 588-589 and seed the message textarea."
+      - "Do it as its own change set with the submit path verified end to end. This is the primary conversion form and a regression costs real leads, so it should not ride along with unrelated cleanup."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "TechAudit.tsx has no unreachable step branches."
+      - "A live submission still delivers, and the hidden symptom/urgency inputs still carry their values."
