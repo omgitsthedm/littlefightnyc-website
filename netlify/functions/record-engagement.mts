@@ -32,24 +32,39 @@ function hashVisitor(ip: string, ua: string): string {
   return Math.abs(h).toString(36);
 }
 
-function corsHeaders(): Record<string, string> {
-  return {
+// The only caller is the report page itself (templates.mts posts to this from
+// the same origin), so "*" bought nothing and let any page on the internet
+// write to this store. Echo the site origin when it asks, and no
+// Access-Control-Allow-Origin at all otherwise — a browser will then refuse to
+// hand the response to a foreign page.
+const ALLOWED_ORIGINS = new Set([
+  "https://littlefightnyc.com",
+  "https://www.littlefightnyc.com",
+]);
+
+function corsHeaders(req?: Request): Record<string, string> {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
+    Vary: "Origin",
   };
+  const origin = req?.headers.get("origin");
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin;
+  }
+  return headers;
 }
 
 export default async (req: Request, context: Context) => {
   if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers: corsHeaders() });
+    return new Response(null, { status: 204, headers: corsHeaders(req) });
   }
 
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "POST only" }), {
       status: 405,
-      headers: corsHeaders(),
+      headers: corsHeaders(req),
     });
   }
 
@@ -60,7 +75,19 @@ export default async (req: Request, context: Context) => {
     if (!slug || !/^[a-z0-9-]+$/.test(slug)) {
       return new Response(JSON.stringify({ error: "Invalid slug" }), {
         status: 400,
-        headers: corsHeaders(),
+        headers: corsHeaders(req),
+      });
+    }
+
+    // The shape check said the key looked plausible, not that it named a real
+    // report. Any string matching [a-z0-9-]+ created a new permanently-retained
+    // blob, so the store could be filled with keys that correspond to nothing.
+    // A report has to exist before its reading can be recorded.
+    const metaStore = getStore("audit-meta");
+    if (!(await metaStore.get(slug, { type: "json" }))) {
+      return new Response(JSON.stringify({ error: "Unknown report" }), {
+        status: 404,
+        headers: corsHeaders(req),
       });
     }
 
@@ -127,13 +154,13 @@ export default async (req: Request, context: Context) => {
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
-      headers: corsHeaders(),
+      headers: corsHeaders(req),
     });
   } catch (err) {
     console.error("[engagement] error:", err);
     return new Response(JSON.stringify({ error: "Failed to record" }), {
       status: 500,
-      headers: corsHeaders(),
+      headers: corsHeaders(req),
     });
   }
 };

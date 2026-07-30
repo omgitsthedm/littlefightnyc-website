@@ -119,6 +119,21 @@ for (const store of [...written].sort()) {
   }
 }
 
+// ── 5. No function answers every origin ───────────────────────────────────────
+// record-engagement returned Access-Control-Allow-Origin: * on an endpoint that
+// writes a permanently-retained blob at a caller-chosen key, with no auth and
+// no rate limit. Its only real caller is the report page, same-origin, so the
+// wildcard bought nothing and let any page on the internet write to the store.
+for (const file of fnFiles) {
+  const source = await readFile(file, "utf8");
+  if (/"Access-Control-Allow-Origin":\s*"\*"/.test(source)) {
+    failures.push(
+      `${path.relative(repoRoot, file)}: returns Access-Control-Allow-Origin: * — ` +
+        "echo the site origin instead, or say here why any origin may call this",
+    );
+  }
+}
+
 if (failures.length > 0) {
   console.error("LLM coercion audit failed:");
   for (const failure of failures) console.error(`- ${failure}`);
@@ -126,5 +141,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "Function-safety audit passed: HaikuResult fully coerced, currency sink guarded, model prose escaped, and every blob store is purged.",
+  "Function-safety audit passed: HaikuResult fully coerced, currency sink guarded, model prose escaped, every blob store is purged, and no function answers every origin.",
 );
