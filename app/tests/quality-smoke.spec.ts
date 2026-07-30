@@ -990,3 +990,79 @@ test(
       .toBe("TR");
   },
 );
+
+test(
+  "route changes move focus and announce the page you landed on @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    // Reduced motion is the strongest proxy signal for assistive-technology
+    // users, and it was the only setting where this broke. RouteFocusManager
+    // used a single requestAnimationFrame, which on the first navigation away
+    // from Home lands in the window where the old tree is gone and the lazy
+    // route has not mounted: <main> null so focus stayed on <body>, <h1> null
+    // so the announcement fell back to a document.title that had not updated —
+    // the HOME page's title, read out while standing on About.
+    //
+    // Everyone else was saved by accident, because view transitions delay that
+    // frame past the remount. So the test has to run with reduced motion on, or
+    // it passes on the broken code.
+    for (const reducedMotion of ["reduce", "no-preference"] as const) {
+      const context = await browser.newContext({ reducedMotion });
+      const page = await context.newPage();
+
+      // The window this guards against only exists while the route's chunk is
+      // in flight. Served from disk it lands inside the first frame, so the bug
+      // does not reproduce locally at all and the first version of this test
+      // passed against the broken code. Measured the threshold on the reverted
+      // component: 0ms and 250ms both look fine, 800ms reproduces it — the
+      // announcement becomes the home page's document.title while standing on
+      // About. Hold route chunks back past that.
+      await page.route("**/assets/*.js", async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        await route.continue();
+      });
+
+      await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+
+      // The first hop off Home is the one that broke; the second is the control.
+      for (const [href, label] of [
+        ["/about/", "first hop off Home"],
+        ["/services/", "second hop"],
+      ] as const) {
+        await page.locator(`a[href="${href}"]`).first().click();
+        await page.waitForURL(`**${href}`);
+
+        await expect
+          .poll(
+            () =>
+              page.evaluate(() => {
+                const active = document.activeElement as HTMLElement | null;
+                return active?.id || active?.tagName || "";
+              }),
+            { message: `${reducedMotion}: focus was not moved to the landmark on the ${label}` },
+          )
+          .toBe("main-content");
+
+        // Compare on collapsed whitespace: headings here carry a line break,
+        // so innerText yields "\n" where the live region's textContent yields a
+        // space. That difference is presentational, not a mismatch in what the
+        // user is told.
+        const collapse = (value: string) => value.replace(/\s+/g, " ").trim();
+        const heading = collapse(await page.locator("h1").first().innerText());
+        await expect
+          .poll(
+            async () =>
+              collapse(
+                await page.evaluate(
+                  () =>
+                    document.querySelector('[aria-live="polite"]')?.textContent ?? "",
+                ),
+              ),
+            { message: `${reducedMotion}: the announcement did not match the page on the ${label}` },
+          )
+          .toBe(heading);
+      }
+
+      await context.close();
+    }
+  },
+);
