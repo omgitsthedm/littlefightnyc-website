@@ -1663,6 +1663,53 @@
 
   /* ---------- boot ---------- */
 
+  /* Listing titles arrive exactly as the source wrote them, and a fifth of them
+     are shouting, padded with underscore runs, or stacked with exclamation
+     marks: "____LIVE WORK LOFT____High Ceiling's_______Laundry______",
+     "PARK SLOPE SOUTH,NO FEE.SPACIOUS 1BR.ALL NEW KITCHEN". The title is the
+     most prominent text in the product, so the product looked like the scrape
+     it came from.
+
+     Only titles genuinely shouting get case-folded — over 75% caps across more
+     than eight letters — so deliberate mixed case is left alone. Folding runs
+     over word runs rather than whitespace tokens, because "1BR.ALL" is two
+     words and splitting on spaces would leave "1br.all". Unit counts, boroughs
+     and the usual NYC initialisms stay upper. The raw string is kept on
+     title_raw: nothing displays it, but discarding source data to make it
+     prettier is not ours to do. */
+  var TITLE_KEEP_UPPER = {
+    NYC: 1, LIC: 1, UES: 1, UWS: 1, LES: 1, EV: 1, WV: 1, FIDI: 1, BK: 1, BX: 1,
+    SI: 1, NJ: 1, MTA: 1, PH: 1, HDFC: 1, NYCHA: 1, SRO: 1, AC: 1, DW: 1,
+    BR: 1, BA: 1, BD: 1, CPN: 1, CPW: 1, JFK: 1, LGA: 1, OK: 1, TV: 1
+  };
+
+  function tidyTitle(raw) {
+    if (!raw) return '';
+    var t = String(raw)
+      .replace(/[_*=~]+/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      /* Close up " !" before collapsing runs, not after — otherwise "! !"
+         becomes "!!" once the space is removed and survives the collapse. */
+      .replace(/\s+([,.;:!?])/g, '$1')
+      .replace(/([!?])[!?]+/g, '$1')
+      .trim();
+
+    var letters = t.replace(/[^A-Za-z]/g, '');
+    var caps = letters.replace(/[^A-Z]/g, '').length;
+    if (!(letters.length > 8 && caps / letters.length > 0.75)) return t;
+
+    return t.replace(/[A-Za-z0-9']+/g, function (word) {
+      var up = word.toUpperCase();
+      if (TITLE_KEEP_UPPER[up]) return up;
+      var unit = word.match(/^(\d+)(BR|BA|BD|BED|BEDS|BATH|BATHS)$/i);
+      if (unit) return unit[1] + unit[2].toUpperCase();
+      /* 1F and 3R are apartment or floor labels; 50s and 90s are decades. */
+      if (/^\d+[A-Za-z]$/.test(word)) return /s$/i.test(word) ? word.toLowerCase() : up;
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    });
+  }
+
+
   function adopt(data) {
     D = data;
     if (Array.isArray(D.pool) && D.pool.length) {
@@ -1675,6 +1722,11 @@
         if (l && l.listing_uid && !seen[l.listing_uid]) { seen[l.listing_uid] = 1; POOL.push(l); }
       });
     }
+    /* One pass here rather than at ten render sites, so the table, cards, map
+       list, inspector and share text all agree. */
+    POOL.forEach(function (l) {
+      if (l && l.title) { l.title_raw = l.title; l.title = tidyTitle(l.title); }
+    });
     POOL.forEach(function (l) {
       var t = nearestStation(l);
       l.transit_mins = t ? t.mins : 9999;
