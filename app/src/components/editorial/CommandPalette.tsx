@@ -224,32 +224,35 @@ export default function CommandPalette() {
           {results.map((item, i) => {
             const Icon = item.icon;
             return (
+              // The option carries its own content and click handler. It used
+              // to wrap a real <button>, which is a nested-interactive axe
+              // violation: this is an aria-activedescendant listbox, so the
+              // input keeps DOM focus and the options are virtual. A focusable
+              // child contradicts that and put every result in the tab order.
+              // Keyboard behaviour is unaffected — Enter and the arrows are
+              // handled by onListKey on the dialog root, not by the button.
               <li
                 key={item.to}
                 id={`lf-cmdk-opt-${i}`}
                 role="option"
                 aria-selected={i === active}
                 data-idx={i}
+                className="lf-cmdk__item"
+                data-active={i === active}
+                onMouseMove={() => setActive(i)}
+                onClick={() => {
+                  navigate(item.to);
+                  close();
+                }}
               >
-                <button
-                  type="button"
-                  className="lf-cmdk__item"
-                  data-active={i === active}
-                  onMouseMove={() => setActive(i)}
-                  onClick={() => {
-                    navigate(item.to);
-                    close();
-                  }}
-                >
-                  <span className="lf-cmdk__item-icon" aria-hidden="true">
-                    <Icon size={16} strokeWidth={2} />
-                  </span>
-                  <span className="lf-cmdk__item-label">{item.label}</span>
-                  <span className="lf-cmdk__item-group">{item.group}</span>
-                  {i === active && (
-                    <CornerDownLeft className="lf-cmdk__item-enter" size={14} strokeWidth={2} aria-hidden="true" />
-                  )}
-                </button>
+                <span className="lf-cmdk__item-icon" aria-hidden="true">
+                  <Icon size={16} strokeWidth={2} />
+                </span>
+                <span className="lf-cmdk__item-label">{item.label}</span>
+                <span className="lf-cmdk__item-group">{item.group}</span>
+                {i === active && (
+                  <CornerDownLeft className="lf-cmdk__item-enter" size={14} strokeWidth={2} aria-hidden="true" />
+                )}
               </li>
             );
           })}
