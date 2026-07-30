@@ -182,6 +182,19 @@ for (const file of htmlFiles) {
   const title = stripMarkup(html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? "");
   if (!title) failures.push(`${relative}: missing document title`);
 
+  // The prerendered skip link is visually hidden until focused, so if it ever
+  // stops being emitted nobody looking at the page would notice — only a
+  // keyboard user on a slow connection, who has no way to report it. Assert it
+  // exists and that its target id is actually on the page.
+  if (html.includes('class="lf-seo"')) {
+    const skipHref = html.match(/class="lf-seo__skip"\s+href="#([^"]+)"/)?.[1];
+    if (!skipHref) {
+      failures.push(`${relative}: prerendered body has no skip link`);
+    } else if (!ids.includes(skipHref)) {
+      failures.push(`${relative}: skip link points at #${skipHref}, which no element carries`);
+    }
+  }
+
   for (const reference of references(html)) {
     const pathname = localPath(reference, relative);
     if (!pathname || pathname === "/") continue;

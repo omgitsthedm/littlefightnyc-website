@@ -1419,9 +1419,9 @@ function promisesBlock() {
   `;
 }
 
-// Fully-Spanish first-paint snapshot for /es/ — mirrors src/pages/Espanol.tsx
+// Fully-Chinese first-paint snapshot for /zh/ — mirrors src/pages/Chinese.tsx
 // (same content, same order) so hydration settles without a visible rewrite.
-// lang="es" on the wrapper so crawlers and screen readers get the right tongue.
+// lang="zh" on the wrapper so crawlers and screen readers get the right tongue.
 function zhSnapshot() {
   const sans = `"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, system-ui, sans-serif`;
   return `
@@ -1431,6 +1431,9 @@ function zhSnapshot() {
         .lf-seo h1 { font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.15; margin: 40px 0 20px; font-weight: 700; }
         .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
         .lf-seo a { color: #F97316; text-decoration: none; }
+        .lf-seo .lf-seo__skip { position: fixed; top: 12px; left: 12px; z-index: 1000; padding: 10px 14px; border-radius: 9999px; background: #F97316; color: #050507; font-weight: 700; transform: translateY(-140%); transition: transform 160ms ease; }
+        .lf-seo .lf-seo__skip:focus { transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .lf-seo .lf-seo__skip { transition-duration: 0.01ms; } }
         .lf-seo .es-sub { color: #A1A1AA; font-size: 1.15rem; max-width: 40em; }
         .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 28px; border-radius: 32px; margin: 18px 12px 0 0; }
         .lf-seo ul { list-style: none; padding: 0; }
@@ -1441,8 +1444,9 @@ function zhSnapshot() {
         .lf-seo .es-promises li { border-top: 1px solid #27272A; padding: 10px 0; font-weight: 600; }
         .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
       </style>
+      <a class="lf-seo__skip" href="#main-content">跳到主要内容</a>
       <header><strong>Little Fight NYC</strong> · <a href="tel:+16463600318">(646) 360-0318</a></header>
-      <main>
+      <main id="main-content">
       <h1>网站按您的生意来做。<em>技术出问题时，有真人帮您。</em></h1>
       <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
       <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">规划我的网站</a></p>
@@ -1476,6 +1480,9 @@ function zhSnapshot() {
     </div>`;
 }
 
+// Fully-Spanish first-paint snapshot for /es/ — mirrors src/pages/Espanol.tsx
+// (same content, same order) so hydration settles without a visible rewrite.
+// lang="es" on the wrapper so crawlers and screen readers get the right tongue.
 function esSnapshot() {
   const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
   const display = `"Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", sans-serif`;
@@ -1487,6 +1494,9 @@ function esSnapshot() {
         .lf-seo h1 { font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.05; margin: 40px 0 20px; }
         .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
         .lf-seo a { color: #F97316; text-decoration: none; }
+        .lf-seo .lf-seo__skip { position: fixed; top: 12px; left: 12px; z-index: 1000; padding: 10px 14px; border-radius: 9999px; background: #F97316; color: #050507; font-weight: 700; transform: translateY(-140%); transition: transform 160ms ease; }
+        .lf-seo .lf-seo__skip:focus { transform: translateY(0); }
+        @media (prefers-reduced-motion: reduce) { .lf-seo .lf-seo__skip { transition-duration: 0.01ms; } }
         .lf-seo .es-sub { color: #A1A1AA; font-size: 1.15rem; max-width: 56ch; }
         .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 28px; border-radius: 32px; margin: 18px 12px 0 0; }
         .lf-seo ul { list-style: none; padding: 0; }
@@ -1497,11 +1507,12 @@ function esSnapshot() {
         .lf-seo .es-promises li { border-top: 1px solid #27272A; padding: 10px 0; font-weight: 600; }
         .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
       </style>
+      <a class="lf-seo__skip" href="#main-content">Saltar al contenido</a>
       <header>
         <strong style="font-family:${display};font-size:20px;">Little Fight NYC</strong>
         · <a href="tel:+16463600318">${site.phoneDisplay}</a>
       </header>
-      <main>
+      <main id="main-content">
         <h1>Una página web hecha para su negocio. <em>Ayuda real cuando algo falla.</em></h1>
         <p class="es-sub">Hacemos su página web, contestamos cuando la tecnología falla, y acabamos con las cuotas mensuales que se comen su ganancia. Lo que construimos, es suyo.</p>
         <p>
@@ -1558,10 +1569,20 @@ function snapshot(page) {
   const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
   const display = `"Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", sans-serif`;
   const mono = `"JetBrains Mono", ui-monospace, Menlo, monospace`;
+  // lf-seo__skip mirrors the app's .lf-skip-link. The React shell renders its
+  // own, but this prerendered body is what a keyboard user gets before
+  // hydration and all a no-JS user ever gets — without it, their only route
+  // past five nav links and a phone number is to tab through them again on
+  // every page. Comments live out here: this style block ships on all 201
+  // pages and the minifier below only collapses whitespace, it does not strip
+  // comments.
   const inlineStyles = `
     .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
     .lf-seo h1, .lf-seo h2 { font-family: ${display}; font-weight: 700; letter-spacing: 0; }
     .lf-seo a { color: #F97316; text-decoration: none; }
+    .lf-seo .lf-seo__skip { position: fixed; top: 12px; left: 12px; z-index: 1000; padding: 10px 14px; border-radius: 9999px; background: #F97316; color: #050507; font-weight: 700; transform: translateY(-140%); transition: transform 160ms ease; }
+    .lf-seo .lf-seo__skip:focus { transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .lf-seo .lf-seo__skip { transition-duration: 0.01ms; } }
     .lf-seo .lf-seo__nav { display: flex; align-items: center; gap: 22px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
     .lf-seo .lf-seo__brand { font-family: ${display}; font-weight: 700; font-size: 20px; letter-spacing: 0; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-links { display: flex; gap: 20px; align-items: center; }
@@ -1686,6 +1707,7 @@ function snapshot(page) {
   return `
     <style>${minifiedStyles}</style>
     <div class="lf-seo" aria-label="${escapeAttr(page.h1)}">
+      <a class="lf-seo__skip" href="#main-content">Skip to content</a>
       <header class="lf-seo__nav">
         <a class="lf-seo__brand" href="/">Little Fight NYC</a>
         <nav class="lf-seo__nav-links" aria-label="Primary">
