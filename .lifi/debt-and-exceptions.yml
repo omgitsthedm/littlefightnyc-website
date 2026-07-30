@@ -427,3 +427,22 @@ items:
       - "No Lab concept page requests fonts.googleapis.com or fonts.gstatic.com."
       - "Each page still computes Barlow Condensed, and Fraunces where it did before."
       - "THIRD_PARTY_FONT_EXEMPT in app/scripts/audit-site-integrity.mjs is empty."
+
+  - id: "DEMO-001"
+    type: "stale-content"
+    status: "open"
+    risk: "low"
+    finding: "The Mike Ziemer demo links twice to https://www.flipaswitchstudios.com, which returns 404. The sibling brand flipaswitchcreative.com returns 200, so the domain has probably been renamed or retired."
+    evidence:
+      - "curl -o /dev/null -w '%{http_code}' -L https://www.flipaswitchstudios.com -> 404"
+      - "Two occurrences in app/public/myspace-demo/index.html: one social icon with aria-label \"Flip A Switch Studios\", one inline text link."
+      - "Every other outbound link on the page resolves 200: facebook.com/mikeziemer, instagram.com/mikeziemer, tiktok.com/@mikeziemer, mikeziemer.com, flipaswitchmusic.com, www.flipaswitchcreative.com."
+    impact: "A demo page presented to a real person contains two dead links to what is presented as one of their own brands. Small, but it is the kind of detail the demo exists to demonstrate care about."
+    mitigation:
+      - "Either drop both links, or repoint them — flipaswitchcreative.com is live and may be the successor."
+      - "Not decided here because which brand is current is David's knowledge, not something to infer from HTTP status. Editing a third party's presented brands unilaterally is the wrong call."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "No link in myspace-demo/index.html returns a non-2xx status."

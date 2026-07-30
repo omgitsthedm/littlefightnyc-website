@@ -98,6 +98,17 @@ for = "/examples/lab/*"
   X-Frame-Options = "SAMEORIGIN"
 
 # Preserve the old Lab's client-concept indexing boundary.
+# A demo built around a named third party — the page title is their name and
+# profession. Every other named-person demo here is noindexed (chef-drew, the
+# five client audit reports); this one was missed, so it was fully indexable and
+# competing with that person's own site from a domain that is not theirs. It is
+# shared by link, not found by search.
+[[headers]]
+for = "/myspace-demo/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
 [[headers]]
 for = "/examples/lab/concepts/chef-drew/*"
 
