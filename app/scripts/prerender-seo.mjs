@@ -346,6 +346,21 @@ const BREADCRUMB_PARENT_CANONICAL = {
   "/studio/": { path: "/services/", name: "Services" },
 };
 
+// /legal/, /privacy/ and /terms/ all render the same Legal component
+// (App.tsx:139-141) — three URLs, one document. Each was self-canonical, so
+// search saw three competing copies of the same body and had to pick. They
+// stay reachable, because people link to /privacy/ and expect it to resolve,
+// but the ranking signal now consolidates on the combined page whose title
+// actually covers both.
+const CANONICAL_ALIASES = {
+  "/privacy/": "/legal/",
+  "/terms/": "/legal/",
+};
+
+function canonicalPathFor(page) {
+  return CANONICAL_ALIASES[page.path] ?? page.path;
+}
+
 function breadcrumbFor(page) {
   const parts = page.path.split("/").filter(Boolean);
   const items = [{ name: "Home", path: "/" }];
@@ -384,7 +399,7 @@ function breadcrumbFor(page) {
 }
 
 function foundationSchemas(page) {
-  const canonical = absoluteUrl(page.path);
+  const canonical = absoluteUrl(canonicalPathFor(page));
   const organization = {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
@@ -844,7 +859,7 @@ function journalBodyModulePreload(page) {
 }
 
 function managedHead(page) {
-  const canonical = absoluteUrl(page.path);
+  const canonical = absoluteUrl(canonicalPathFor(page));
   const share = shareForPage(page, site.name);
   const image = absoluteAsset(share.image);
   const schema = JSON.stringify(foundationSchemas(page));
@@ -1677,7 +1692,7 @@ function snapshot(page) {
           <a href="/services/">Services</a>
           <a href="/examples/">Examples</a>
           <a href="/about/">About</a>
-          <a href="/journal/">Journal</a>
+          <a href="/library/">Library</a>
           <a href="/contact/">Contact</a>
         </nav>
         <span class="lf-seo__nav-right">
