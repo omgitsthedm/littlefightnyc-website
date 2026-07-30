@@ -632,6 +632,23 @@ test(
     expect(firstPartyPosts, "Validation allowed a first-party POST").toEqual([]);
     expect(new URL(page.url()).pathname).toBe("/tech-audit/");
 
+    // A blocked attempt must not be counted as a conversion. preventDefault
+    // stops the submission but not the bubbling, so the window-level analytics
+    // listener used to fire anyway — recording form_submit and
+    // tech_audit_submit, and setting the flag that marks this visitor as
+    // already converted so they stop being asked.
+    const submittedFlag = await page.evaluate(() => {
+      try {
+        return window.sessionStorage.getItem("lf_tech_audit_submitted");
+      } catch {
+        return "storage-unavailable";
+      }
+    });
+    expect(
+      submittedFlag,
+      "A validation-blocked submit was recorded as a conversion",
+    ).toBeNull();
+
     expectRuntimeClean(runtime);
   },
 );

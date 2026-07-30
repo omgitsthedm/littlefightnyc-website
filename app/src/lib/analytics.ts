@@ -389,6 +389,13 @@ export function installAnalyticsHooks() {
     const form = event.target instanceof HTMLFormElement ? event.target : null;
     if (!form) return;
 
+    // preventDefault() stops the submission but not the bubbling, so a
+    // validation-blocked attempt still reached this window-level listener.
+    // Every failed try was counted as a form_submit and a tech_audit_submit,
+    // and it set lf_tech_audit_submitted — so someone who never got past the
+    // required fields looked like a conversion and stopped being asked.
+    if (event.defaultPrevented) return;
+
     const formName = form.getAttribute("name") ?? "unknown";
     track("form_submit", { form_name: formName, page_path: window.location.pathname });
 
