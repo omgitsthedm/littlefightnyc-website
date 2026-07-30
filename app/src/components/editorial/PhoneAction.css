@@ -99,11 +99,20 @@
   padding-top: 14px;
 }
 
-.lf-phone-action__item:hover,
+/* The tint is a hover affordance. It used to be shared with :focus-visible,
+   and the `outline: none` that came with it cancelled the global focus ring
+   from base.css — same specificity, later in the sheet, so this won. That
+   left keyboard users a 2.48:1 halo against the menu (below the 3:1 floor)
+   and, under forced-colors, no focus indicator at all. Keep them separate so
+   :focus-visible inherits the 7.26:1 ring every other control gets. */
+.lf-phone-action__item:hover {
+  background: color-mix(in srgb, var(--lf-fight) 14%, transparent);
+  color: var(--lf-bone);
+}
+
 .lf-phone-action__item:focus-visible {
   background: color-mix(in srgb, var(--lf-fight) 14%, transparent);
   color: var(--lf-bone);
-  outline: none;
 }
 
 .lf-phone-action__verb {
