@@ -282,10 +282,6 @@ function authoredIsoDate(value) {
   return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
 }
 
-function isoDateFromDisplay(value, fallback = "2026-05-07") {
-  return authoredIsoDate(value) || fallback;
-}
-
 function publishedDateFor(page) {
   const authored = authoredIsoDate(page.published || page.journalPost?.published);
   if (authored) return authored;
@@ -938,12 +934,6 @@ function uniqueLinks(items) {
     return true;
   });
 }
-
-const generatedSiloLinks = pages
-  .filter((page) => page.path !== "/" && !page.noindex && !/^\/areas\/[^/]+\/[^/]+\/$/.test(page.path))
-  .map((page) => ({ href: page.path, label: pageLinkLabel(page) }));
-
-const coreLinks = uniqueLinks([...primaryLinks, ...generatedSiloLinks]);
 
 const serviceDetailToAreaSlug = {
   "/services/custom-local-websites/": "websites",
