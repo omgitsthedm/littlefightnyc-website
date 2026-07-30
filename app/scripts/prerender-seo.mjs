@@ -1423,53 +1423,58 @@ function zhSnapshot() {
     <div class="lf-seo" lang="zh">
       <style>
         .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
-        .lf-seo h1 { font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.15; margin: 40px 0 20px; font-weight: 700; }
-        .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
         .lf-seo a { color: #F97316; text-decoration: none; }
         .lf-seo .lf-seo__skip { position: fixed; top: 12px; left: 12px; z-index: 1000; padding: 10px 14px; border-radius: 9999px; background: #F97316; color: #050507; font-weight: 700; transform: translateY(-140%); transition: transform 160ms ease; }
         .lf-seo .lf-seo__skip:focus { transform: translateY(0); }
         @media (prefers-reduced-motion: reduce) { .lf-seo .lf-seo__skip { transition-duration: 0.01ms; } }
-        .lf-seo .es-sub { color: #A1A1AA; font-size: 1.15rem; max-width: 40em; }
-        .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 28px; border-radius: 32px; margin: 18px 12px 0 0; }
-        .lf-seo ul { list-style: none; padding: 0; }
-        .lf-seo .es-cards li { border: 1px solid #27272A; border-radius: 12px; padding: 20px; margin: 12px 0; background: #12141A; }
-        .lf-seo .es-cards h3 { color: #F97316; margin: 0 0 6px; }
-        .lf-seo .es-cards p { color: #A1A1AA; margin: 0; }
-        .lf-seo .es-fight { border-left: 3px solid #F97316; padding-left: 20px; font-size: 1.25rem; max-width: 30em; margin: 40px 0; }
-        .lf-seo .es-promises li { border-top: 1px solid #27272A; padding: 10px 0; font-weight: 600; }
+        .lf-seo h1 { font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.15; margin: 24px 0 20px; font-weight: 700; }
+        .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
+        .lf-seo h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.2; margin: 44px 0 16px; font-weight: 700; }
+        .lf-seo h3 { font-size: 1.1rem; margin: 24px 0 8px; color: #FFFFFF; }
+        .lf-seo .es-eyebrow { font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: #F97316; margin: 36px 0 0; }
+        .lf-seo .es-sub { color: #A1A1AA; font-size: 1.08rem; line-height: 1.6; max-width: 44em; }
+        .lf-seo .es-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 0; }
+        .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 26px; border-radius: 32px; }
+        .lf-seo .es-list { list-style: none; padding: 0; margin: 12px 0 0; max-width: 46em; }
+        .lf-seo .es-list li { border-top: 1px solid #27272A; padding: 10px 0; color: #D4D4D8; }
+        .lf-seo .es-card { border: 1px solid #27272A; border-radius: 12px; padding: 18px 20px; margin: 12px 0; background: #12141A; }
+        .lf-seo .es-card h3 { color: #F97316; margin: 0 0 6px; }
+        .lf-seo .es-card p { color: #A1A1AA; margin: 0; }
         .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
       </style>
       <a class="lf-seo__skip" href="#main-content">跳到主要内容</a>
       <header><strong>Little Fight NYC</strong> · <a href="tel:${site.phone}">${site.phoneDisplay}</a></header>
       <main id="main-content">
-      <h1>网站按您的生意来做。<em>技术出问题时，有真人帮您。</em></h1>
-      <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
-      <p><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">规划我的网站</a></p>
-      <p class="es-sub">咨询免费。先给您一份清楚的方案，再由您决定。</p>
-      <h2>我们做什么</h2>
-      <ul class="es-cards">
-        <li><h3>网站建设</h3><p>一个能让电话响起来的网站。电话、预约、收款、谷歌——全都好用，连在一起。</p></li>
-        <li><h3>技术支持</h3><p>网络、收银机、邮箱、收款出了问题？接电话的是真人，帮您修好。</p></li>
-        <li><h3>免费咨询</h3><p>我们告诉您哪些有用、哪些多余、先修哪个。如果您不需要我们，我们也会直说。</p></li>
-        <li><h3>自有软件</h3><p>别再按月租软件了。我们为您做一次工具——永远属于您。</p></li>
-      </ul>
-      <h2>已经上线、正在发挥作用的真实项目</h2>
-      <ul class="es-cards">
-        <li><h3>Hair By Rachel Charles</h3><p>从只靠私信预约，到真正好用的在线预约网站。Lighthouse 四项满分，两周上线。</p></li>
-        <li><h3>定制橱柜估价软件</h3><p>团队每天用在真实项目上的内部工作系统。3个工具变成1个可靠数据源。</p></li>
-        <li><h3>CC Films</h3><p>为独立电影打造更清楚、更可信的官方网站，并加固搜索结构、安全标头和发布流程。</p></li>
-      </ul>
-      <p class="es-fight">连锁大店来的时候带着技术团队。街角小店从来没有过。所以有了我们：让小生意用上同样的工具——没有大公司的账单。</p>
-      <h2>您可以放心的事</h2>
-      <ul class="es-promises">
-        <li>咨询永远免费。</li>
-        <li>14天上线您的网站——否则分文不收。</li>
-        <li>早9点到晚9点，2小时内回电。</li>
-        <li>代码、数据、一切：都归您。</li>
-      </ul>
-      <h2>聊聊吧</h2>
-      <p class="es-sub">打电话、发短信、发邮件都行——用您最习惯的语言写。回复您的是真人。没有机器人，没有工单号。</p>
-      <p><a class="es-cta" href="tel:${site.phone}">${site.phoneDisplay}</a></p>
+      <p class="es-eyebrow">为纽约小生意做清楚、好用的技术</p>
+      <h1>网站按您的生意来做。 技术出问题时，有真人帮您。</h1>
+      <p class="es-sub">我们不拿套版硬塞给您。我们做定制网站，修好已经出故障的设备和系统，也能把昂贵、难用的月费软件换成您自己拥有的工具。</p>
+      <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">给我一份清楚的方案</a></p>
+      <p class="es-sub">先免费帮您看一遍。给您清楚的方案，再由您决定。</p>
+      <ul class="es-list"><li>纽约五大区。我们可以上门。</li><li>2小时内回电。</li><li>做好的东西和控制权都归您。</li></ul>
+      <p class="es-eyebrow">先从今天最麻烦的事开始</p>
+      <h2>我们能帮您做这四件事。</h2>
+      <div class="es-card"><h3>定制网站</h3><p>按您的顾客、服务和做事方式来做。生意不用迁就模板。</p></div>
+      <div class="es-card"><h3>修好出故障的技术</h3><p>收款、网络、邮箱、收银机或预约出了问题，我们可以上门，也可以远程处理。</p></div>
+      <div class="es-card"><h3>先免费帮您看一遍</h3><p>告诉您什么该留、先修什么、哪些钱不用花。就算不需要我们，我们也会直说。</p></div>
+      <div class="es-card"><h3>您自己拥有的软件</h3><p>用一套更简单的专用工具，替换不合适的表格和月费软件。代码和数据归您。</p></div>
+      <p class="es-eyebrow">升级，不是全部推倒重来</p>
+      <h2>不推翻您的生意，只把麻烦拿掉。</h2>
+      <h3>继续保留</h3>
+      <ul class="es-list"><li>您的店名、电话号码、域名和品牌。</li><li>现在真正好用的工具。</li><li>您招呼顾客、完成工作的方式。</li></ul>
+      <h3>变得更轻松</h3>
+      <ul class="es-list"><li>让新顾客找到您，也看懂您做什么。</li><li>预约、收款和联系。</li><li>出问题时，知道该找谁。</li></ul>
+      <p class="es-sub">生意怎么做，您最清楚。我们先听您怎么工作，留下好用的，修掉添乱的。您不需要先变成技术专家。</p>
+      <p class="es-eyebrow">真实项目</p>
+      <h2>这些已经在为客户做事。</h2>
+      <ul class="es-list"><li>公开网站 Hair By Rachel Charles 从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。 Lighthouse 四项满分，两周上线</li><li>私人客户项目 私人报价系统 把真实报价流程集中到团队每天使用的一套系统里。 3个工具，1个可靠数据源</li><li>公开网站 CC Films 为独立电影打造更清楚、更可信的官方网站。 搜索结构、安全标头和发布流程全面加固</li></ul>
+      <p class="es-actions"><a class="es-cta" href="/examples/">查看所有真实案例</a></p>
+      <p class="es-eyebrow">没有意外</p>
+      <h2>从第一通电话，到上线以后。</h2>
+      <ul class="es-list"><li>先帮您看一遍，永远免费。</li><li>网站14天上线，否则不收费。</li><li>早9点到晚9点，2小时内回电。</li><li>代码、数据和说明文档都交到您手里。</li></ul>
+      <p class="es-eyebrow">回复您的是真人</p>
+      <h2>告诉我们哪里不顺。</h2>
+      <p class="es-sub">打电话、发短信或发邮件都行。写您最习惯的语言。没有机器人，也没有工单号。</p>
+      <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">${site.phoneDisplay}</a><a class="es-cta" href="sms:${site.phone}">发短信</a><a class="es-cta" href="mailto:hello@littlefightnyc.com">发邮件</a></p>
       </main>
       <footer>Little Fight NYC · 纽约 · 始于2021 · 依然有人接电话 · <a href="/">查看完整英文网站</a></footer>
     </div>`;
@@ -1485,67 +1490,68 @@ function esSnapshot() {
     <div class="lf-seo" lang="es">
       <style>
         .lf-seo { background: #050507; color: #FFFFFF; font-family: ${sans}; min-height: 100vh; padding: 32px 20px; box-sizing: border-box; }
-        .lf-seo h1, .lf-seo h2, .lf-seo h3 { font-family: ${display}; font-weight: 700; letter-spacing: 0; }
-        .lf-seo h1 { font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.05; margin: 40px 0 20px; }
-        .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
         .lf-seo a { color: #F97316; text-decoration: none; }
         .lf-seo .lf-seo__skip { position: fixed; top: 12px; left: 12px; z-index: 1000; padding: 10px 14px; border-radius: 9999px; background: #F97316; color: #050507; font-weight: 700; transform: translateY(-140%); transition: transform 160ms ease; }
         .lf-seo .lf-seo__skip:focus { transform: translateY(0); }
         @media (prefers-reduced-motion: reduce) { .lf-seo .lf-seo__skip { transition-duration: 0.01ms; } }
-        .lf-seo .es-sub { color: #A1A1AA; font-size: 1.15rem; max-width: 56ch; }
-        .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 28px; border-radius: 32px; margin: 18px 12px 0 0; }
-        .lf-seo ul { list-style: none; padding: 0; }
-        .lf-seo .es-cards li { border: 1px solid #27272A; border-radius: 12px; padding: 20px; margin: 12px 0; background: #12141A; }
-        .lf-seo .es-cards h3 { color: #F97316; margin: 0 0 6px; }
-        .lf-seo .es-cards p { color: #A1A1AA; margin: 0; }
-        .lf-seo .es-fight { border-left: 3px solid #F97316; padding-left: 20px; font-size: 1.3rem; max-width: 34em; margin: 40px 0; }
-        .lf-seo .es-promises li { border-top: 1px solid #27272A; padding: 10px 0; font-weight: 600; }
+        /* Oswald carries the Spanish headings the same way it does the English
+           pages. The Chinese snapshot deliberately does not use it — Oswald has
+           no CJK glyphs, so it would silently fall back mid-heading. */
+        .lf-seo h1, .lf-seo h2, .lf-seo h3 { font-family: ${display}; letter-spacing: -.01em; }
+        .lf-seo h1 { font-size: clamp(2rem, 6vw, 3.6rem); line-height: 1.15; margin: 24px 0 20px; font-weight: 700; }
+        .lf-seo h1 em { font-style: normal; color: #F97316; display: block; }
+        .lf-seo h2 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.2; margin: 44px 0 16px; font-weight: 700; }
+        .lf-seo h3 { font-size: 1.1rem; margin: 24px 0 8px; color: #FFFFFF; }
+        .lf-seo .es-eyebrow { font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: #F97316; margin: 36px 0 0; }
+        .lf-seo .es-sub { color: #A1A1AA; font-size: 1.08rem; line-height: 1.6; max-width: 44em; }
+        .lf-seo .es-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 18px 0 0; }
+        .lf-seo .es-cta { display: inline-block; background: #F97316; color: #050507; font-weight: 700; padding: 14px 26px; border-radius: 32px; }
+        .lf-seo .es-list { list-style: none; padding: 0; margin: 12px 0 0; max-width: 46em; }
+        .lf-seo .es-list li { border-top: 1px solid #27272A; padding: 10px 0; color: #D4D4D8; }
+        .lf-seo .es-card { border: 1px solid #27272A; border-radius: 12px; padding: 18px 20px; margin: 12px 0; background: #12141A; }
+        .lf-seo .es-card h3 { color: #F97316; margin: 0 0 6px; }
+        .lf-seo .es-card p { color: #A1A1AA; margin: 0; }
         .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
       </style>
       <a class="lf-seo__skip" href="#main-content">Saltar al contenido</a>
-      <header>
-        <strong style="font-family:${display};font-size:20px;">Little Fight NYC</strong>
-        · <a href="tel:${site.phone}">${site.phoneDisplay}</a>
-      </header>
+      <header><strong>Little Fight NYC</strong> · <a href="tel:${site.phone}">${site.phoneDisplay}</a></header>
       <main id="main-content">
-        <h1>Una página web hecha para su negocio. <em>Ayuda real cuando algo falla.</em></h1>
-        <p class="es-sub">Hacemos su página web, contestamos cuando la tecnología falla, y acabamos con las cuotas mensuales que se comen su ganancia. Lo que construimos, es suyo.</p>
-        <p>
-          <a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a>
-          <a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Planear mi sitio web</a>
-        </p>
-        <p class="es-sub">Consulta gratis. Primero un plan claro; después usted decide.</p>
-        <h2>Qué hacemos</h2>
-        <ul class="es-cards">
-          <li><h3>Páginas web</h3><p>Una página que hace sonar el teléfono. Llamadas, citas, pagos y Google — todo funcionando junto.</p></li>
-          <li><h3>Soporte técnico</h3><p>El internet, la caja, el correo, los pagos. Cuando algo falla, lo arregla una persona de verdad.</p></li>
-          <li><h3>Consultoría gratis</h3><p>Le decimos qué sirve, qué sobra y qué arreglar primero. Si no nos necesita, también se lo decimos.</p></li>
-          <li><h3>Software propio</h3><p>Deje de rentar programas. Construimos su herramienta una vez — y es suya para siempre.</p></li>
-        </ul>
-        <h2>Trabajo real que ya está funcionando</h2>
-        <ul class="es-cards">
-          <li><h3>Hair By Rachel Charles</h3><p>De citas por mensaje directo a una página real de reservas. 100 en Lighthouse y lista en 2 semanas.</p></li>
-          <li><h3>Software privado de presupuestos</h3><p>Un sistema privado que el equipo usa en presupuestos reales. 3 herramientas convertidas en 1 fuente de verdad.</p></li>
-          <li><h3>CC Films</h3><p>Una sede oficial más clara para una película independiente, con estructura, buscadores y publicación reforzados.</p></li>
-        </ul>
-        <p class="es-fight">Las cadenas grandes llegaron con equipos de tecnología. La tienda de la esquina nunca tuvo uno. Por eso existimos: para darle al negocio pequeño las mismas herramientas — sin las facturas de empresa grande.</p>
-        <h2>Lo que puede esperar</h2>
-        <ul class="es-promises">
-          <li>La consulta siempre es gratis.</li>
-          <li>Su página web en 14 días — o no paga.</li>
-          <li>Llamamos de vuelta en 2 horas, de 9am a 9pm.</li>
-          <li>El código, los datos, todo: suyo.</li>
-        </ul>
-        <h2>Hablemos</h2>
-        <p class="es-sub">Llame, mande un texto o escriba un correo — en el idioma que le quede cómodo. Le contesta una persona de verdad. Sin robots, sin número de ticket.</p>
-        <p><a class="es-cta" href="tel:${site.phone}">${site.phoneDisplay}</a></p>
+      <p class="es-eyebrow">TECNOLOGÍA CLARA PARA NEGOCIOS DE NUEVA YORK</p>
+      <h1>Una página web hecha para su negocio.<em>Ayuda real cuando algo falla.</em></h1>
+      <p class="es-sub">Construimos páginas a la medida, arreglamos la tecnología que ya tiene y reemplazamos software caro por herramientas que usted posee. Primero le damos una segunda opinión gratis.</p>
+      <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Quiero un plan claro</a></p>
+      <p class="es-sub">La segunda opinión es gratis. Primero un plan claro; después usted decide.</p>
+      <ul class="es-list"><li>Nueva York. Vamos hasta su negocio.</li><li>Devolvemos la llamada en 2 horas.</li><li>Usted conserva el control y la propiedad.</li></ul>
+      <p class="es-eyebrow">EMPIECE POR EL PROBLEMA DE HOY</p>
+      <h2>Esto es lo que hacemos.</h2>
+      <div class="es-card"><h3>Páginas web hechas para su negocio</h3><p>Diseñadas para sus clientes, sus servicios y su forma de trabajar. Su negocio no tiene que adaptarse a una plantilla.</p></div>
+      <div class="es-card"><h3>Arreglamos lo que falló</h3><p>Pagos, Wi-Fi, correo, caja o reservas. Vamos a su negocio o ayudamos a distancia.</p></div>
+      <div class="es-card"><h3>Segunda opinión gratis</h3><p>Le decimos qué conservar, qué arreglar primero y qué no vale la pena pagar. Si no nos necesita, también se lo decimos.</p></div>
+      <div class="es-card"><h3>Software que es suyo</h3><p>Reemplazamos hojas de cálculo y suscripciones que no encajan con una herramienta más simple. El código y los datos son suyos.</p></div>
+      <p class="es-eyebrow">UN CAMBIO SIN PERDER LO QUE YA SIRVE</p>
+      <h2>No cambiamos su negocio. Quitamos los obstáculos.</h2>
+      <h3>Lo que se queda</h3>
+      <ul class="es-list"><li>Su nombre, teléfono, dominio y marca.</li><li>Las herramientas que sí le sirven.</li><li>La forma en que atiende a sus clientes.</li></ul>
+      <h3>Lo que se vuelve más fácil</h3>
+      <ul class="es-list"><li>Que nuevos clientes lo encuentren y entiendan.</li><li>Reservar, pagar y comunicarse.</li><li>Saber a quién llamar cuando algo falla.</li></ul>
+      <p class="es-sub">Usted ya sabe llevar su negocio. Nosotros escuchamos cómo trabaja, conservamos lo que sirve y arreglamos lo que estorba. No tiene que volverse experto en tecnología.</p>
+      <p class="es-eyebrow">PROYECTOS REALES</p>
+      <h2>Esto ya está funcionando para clientes.</h2>
+      <ul class="es-list"><li>Sitio público Hair By Rachel Charles De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar. 100 en Lighthouse · lista en 2 semanas</li><li>Proyecto privado Sistema privado de presupuestos El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días. 3 herramientas, 1 fuente de verdad</li><li>Sitio público CC Films Una sede oficial más clara para una película independiente. Estructura, buscadores y publicación reforzados</li></ul>
+      <p class="es-actions"><a class="es-cta" href="/examples/">Ver todos los proyectos</a></p>
+      <p class="es-eyebrow">SIN SORPRESAS</p>
+      <h2>Desde la primera llamada hasta después del lanzamiento.</h2>
+      <ul class="es-list"><li>La segunda opinión siempre es gratis.</li><li>Su página web en 14 días o no paga.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m.</li><li>El código, los datos y la documentación quedan en sus manos.</li></ul>
+      <p class="es-eyebrow">UNA PERSONA DE VERDAD CONTESTA</p>
+      <h2>Cuéntenos qué está fallando.</h2>
+      <p class="es-sub">Llame, mande un texto o escriba un correo en el idioma que le quede cómodo. Sin robots y sin número de ticket.</p>
+      <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">${site.phoneDisplay}</a><a class="es-cta" href="sms:${site.phone}">Mandar texto</a><a class="es-cta" href="mailto:hello@littlefightnyc.com">Escribir correo</a></p>
       </main>
       <footer>
         <p>Little Fight NYC · Nueva York · Desde 2021 · Todavía contestamos el teléfono</p>
         <p><a href="/">Ver el sitio completo en inglés</a></p>
       </footer>
-    </div>
-  `;
+    </div>`;
 }
 
 function snapshot(page) {

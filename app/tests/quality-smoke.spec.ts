@@ -716,3 +716,41 @@ test(
     await expect(page.locator("#main-content")).toBeAttached();
   },
 );
+
+test(
+  "Spanish and Chinese first paint matches what hydration renders @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    // /es/ and /zh/ are the one place the site paints twice: a hand-authored
+    // snapshot in prerender-seo.mjs shows first, then the React page replaces
+    // it. Those two had silently drifted into separate translations — same
+    // twelve headings, completely different wording — so a Spanish speaker
+    // watched the page rewrite itself and crawlers indexed copy no visitor
+    // ever kept. Nothing failed while they disagreed, which is why it lasted.
+    for (const locale of ["es", "zh"] as const) {
+      const headings = async (javaScriptEnabled: boolean) => {
+        const context = await browser.newContext({ javaScriptEnabled });
+        const page = await context.newPage();
+        await page.goto(`${baseURL}/${locale}/`, {
+          waitUntil: javaScriptEnabled ? "networkidle" : "domcontentloaded",
+        });
+        const found = await page
+          .locator("main :is(h1, h2, h3)")
+          .allInnerTexts();
+        await context.close();
+        return found.map((text) => text.replace(/\s+/g, " ").trim());
+      };
+
+      const prerendered = await headings(false);
+      const hydrated = await headings(true);
+
+      expect(
+        prerendered.length,
+        `/${locale}/ prerendered no headings at all`,
+      ).toBeGreaterThan(0);
+      expect(
+        prerendered,
+        `/${locale}/ first paint and hydration disagree`,
+      ).toEqual(hydrated);
+    }
+  },
+);
