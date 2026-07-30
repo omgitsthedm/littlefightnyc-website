@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import PhoneAction from "./PhoneAction";
 import "./StickyHelpBar.css";
 
 export default function StickyHelpBar() {
@@ -28,14 +27,20 @@ export default function StickyHelpBar() {
 
   return (
     <div className="lf-sticky-help" aria-label="Get help quickly">
-      <PhoneAction
+      {/* A direct tel: link, not a disclosure. This cell used to open a
+          Call/Text menu, which cost two taps to dial on every route that
+          shows the bar, and never put the digits on screen. The header and
+          the Spanish page already do it this way. Text stays one tap away in
+          the nav panel, which is the right place for the second choice — a
+          third cell here would shrink every tap target on a 375px bar.
+          analytics.ts auto-tracks tel: clicks as phone_click. */}
+      <a
         className="lf-sticky-help__cell lf-sticky-help__cell--call"
-        align="left"
-        direction="up"
+        href="tel:+16463600318"
       >
         <span className="lf-mono lf-sticky-help__label">Tech help</span>
-        <span className="lf-sticky-help__detail">Call or text</span>
-      </PhoneAction>
+        <span className="lf-sticky-help__detail">(646) 360-0318</span>
+      </a>
       <Link
         className="lf-sticky-help__cell lf-sticky-help__cell--fit"
         to="/tech-audit/?intent=website"
