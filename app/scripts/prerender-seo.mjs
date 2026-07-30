@@ -952,8 +952,11 @@ const primaryLinks = [
   { href: "/library/", label: "The Library" },
   { href: "/tech-audit/", label: "Free Tech Audit" },
   { href: "/contact/", label: "Contact" },
-  { href: "/privacy/", label: "Privacy" },
-  { href: "/terms/", label: "Terms" },
+  // One entry, pointing at the canonical. /privacy/ and /terms/ render this
+  // same page and canonicalise to /legal/, so two entries meant every page
+  // linked one document twice while the canonical URL had no inbound link at
+  // all — which audit-site-integrity now refuses to let happen again.
+  { href: "/legal/", label: "Privacy & terms" },
 ];
 
 function pageLinkLabel(page) {
@@ -1056,10 +1059,39 @@ function contextualLinksFor(page) {
       { href: "/services/business-systems/", label: "Business Systems" },
       { href: "/examples/", label: "Owner answers and case studies" }
     );
+  } else if (HUB_CHILD_PREFIXES[page.path]) {
+    // 23 pages had no inbound link from anywhere in the prerendered HTML: 13
+    // case studies, 7 industries, 3 studio projects, 6 glossary terms (minus
+    // overlap). The sitemap lists them, so they are found — but in the HTML a
+    // crawler reads first, nothing pointed at them, so nothing pointed value at
+    // them either. On a site whose whole crawl model is prerender-first.
+    //
+    // The hub is not the path prefix. /case-studies and /industries redirect to
+    // /examples/, /studio redirects to /services/ (App.tsx:127-132), so those
+    // are the pages that must carry the links. Keyed off the real IA rather
+    // than the URL shape, because the two disagree here.
+    links.push(
+      ...pages
+        .filter((child) =>
+          HUB_CHILD_PREFIXES[page.path].some(
+            (prefix) => child.path.startsWith(prefix) && child.path !== prefix,
+          ),
+        )
+        .map((child) => ({ href: child.path, label: pageLinkLabel(child) })),
+    );
   }
 
   return links;
 }
+
+// Which hub actually carries each family of children. /areas/ is absent on
+// purpose: it already emits its 18 borough links, and the 90 neighbourhood
+// pages hang off those.
+const HUB_CHILD_PREFIXES = {
+  "/examples/": ["/case-studies/", "/industries/"],
+  "/services/": ["/studio/"],
+  "/glossary/": ["/glossary/"],
+};
 
 function usefulLinksFor(page) {
   return uniqueLinks([
@@ -1774,8 +1806,12 @@ function snapshot(page) {
       </main>
       <footer>
         <nav aria-label="Legal and company links">
-          <a href="/privacy/">Privacy</a>
-          <a href="/terms/">Terms</a>
+          <!-- One document, one link. /privacy/ and /terms/ render the same
+               Legal page and now canonicalise to /legal/, so linking both was
+               two labels for one page and left the canonical URL itself with no
+               inbound link anywhere on the site. Both words are still in the
+               label, because that is what people scan for. -->
+          <a href="/legal/">Privacy &amp; terms</a>
           <a href="/about/">About</a>
           <a href="/contact/">Contact</a>
         </nav>

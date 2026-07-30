@@ -75,7 +75,10 @@ export default function QuietFooter() {
             <Link to="/tech-audit/">Get a free second opinion</Link>
             <Link to="/about/">About</Link>
             <Link to="/contact/">Contact</Link>
-            <Link to="/privacy/">Privacy</Link>
+            {/* /privacy/ and /terms/ render this same page and canonicalise to
+                /legal/, so one link to the canonical rather than two labels for
+                one document. Both words stay in the label. */}
+            <Link to="/legal/">Privacy &amp; terms</Link>
             <button
               type="button"
               className="lf-quiet-foot__privacy-button"
@@ -83,7 +86,6 @@ export default function QuietFooter() {
             >
               Analytics choices
             </button>
-            <Link to="/terms/">Terms</Link>
             <Link to="/es/" lang="es">
               En español</Link>{" · "}<Link to="/zh/">中文
             </Link>

@@ -253,6 +253,47 @@ for (const missing of missingReferences.keys()) {
 
 const routeMeta = JSON.parse(await readFile(routeMetaPath, "utf8"));
 const navIndex = JSON.parse(await readFile(navIndexPath, "utf8"));
+
+// Every indexable page must be reachable by following links in the prerendered
+// HTML, not only after React mounts. 23 pages — case studies, industries,
+// studio projects, glossary terms — were in the sitemap but had no inbound link
+// anywhere in the static markup, so nothing pointed crawl value at them on a
+// site whose entire model is prerender-first. The sitemap hid it: they were
+// found, just never recommended by anything.
+const inboundTargets = new Set();
+for (const file of htmlFiles) {
+  const html = await readFile(file, "utf8");
+  const body = html.replace(/<script[\s\S]*?<\/script>/gi, "");
+  for (const match of body.matchAll(/href="(\/[^"#?]*)"/g)) {
+    inboundTargets.add(match[1].replace(/\/$/, "") + "/");
+  }
+}
+// A page that canonicalises elsewhere is an alias, not a destination —
+// /privacy/ and /terms/ both render the Legal page and point at /legal/.
+// Requiring inbound links to an alias would push the site back toward linking
+// one document under three URLs, which is what the canonical fixed.
+const canonicalAlias = new Set();
+for (const file of htmlFiles) {
+  const html = await readFile(file, "utf8");
+  const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
+  if (!canonical) continue;
+  const ownPath = "/" + path.relative(distRoot, file).replace(/index\.html$/, "");
+  const canonicalPath = canonical.replace(siteOrigin, "");
+  if (canonicalPath !== ownPath) canonicalAlias.add(ownPath);
+}
+
+for (const route of routeMeta.pages ?? []) {
+  const routePath = route.path;
+  if (!routePath || routePath === "/" || route.noindex) continue;
+  if (canonicalAlias.has(routePath)) continue;
+  if (!inboundTargets.has(routePath)) {
+    failures.push(
+      `${routePath} is indexable but nothing links to it in any prerendered body — ` +
+        `it is discoverable only via the sitemap or after hydration`,
+    );
+  }
+}
+
 const seoData = JSON.parse(await readFile(seoPagesPath, "utf8"));
 const catalogedRoutes = new Map(
   (routeMeta.pages ?? []).map((route) => [route.path, route]),
