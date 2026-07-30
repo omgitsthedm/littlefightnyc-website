@@ -295,3 +295,25 @@ items:
     close_evidence:
       - "es and zh bundles exist and the shared chrome renders in the active locale."
       - "Language follows the URL prefix on /es/ and /zh/ without a manual switch."
+
+  - id: "SOCIAL-002"
+    type: "asset-quality"
+    status: "open"
+    risk: "moderate"
+    finding: "125 of 205 indexed pages declare an og:image that is not close to the 1.91:1 ratio social platforms crop to for summary_large_image, and 19 of those are portrait or square."
+    evidence:
+      - "Measured from the built output 2026-07-29 once real dimensions were emitted: 1600x1200 (ratio 1.33) on 95 pages, 864x1184 (0.73, portrait) on 18, 2400x1600 (1.50) on 5, 2400x1603 on 2, 1440x1080 on 1, 1068x1800 (0.59, portrait) on 1."
+      - "Only 33 pages use a purpose-built 1200x630 card from /assets/social/."
+      - "The answers art (/assets/answers-*.webp) is editorial 4:3 artwork being reused as a share card."
+      - "WebP og:image support is uneven across platforms; the purpose-built cards are JPEG."
+    impact: "A portrait or 4:3 image in a 1.91:1 slot is centre-cropped, so the composition a reader sees in a share preview is not the one that was designed. On platforms that reject WebP the preview falls back to no image at all."
+    mitigation:
+      - "scripts/generate-social-cards.mjs already renders 1200x630 JPEG cards headlessly — extend its card list to the answers, journal, and area families rather than hand-cutting images."
+      - "Keep the editorial artwork for on-page use; the share card is a separate artifact."
+      - "Dimensions are now read from the file at build, so once the images change the tags follow automatically."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Every indexed page's og:image is within tolerance of 1.91:1."
+      - "No portrait or square image is used as a share card."

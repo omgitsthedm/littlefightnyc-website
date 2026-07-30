@@ -7,6 +7,89 @@
  * hand-maintained route list.
  */
 
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const PUBLIC_ROOT = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "public",
+);
+
+/**
+ * Real pixel dimensions for a share image, read from the file itself.
+ *
+ * og:image:width and og:image:height used to be emitted only when the path
+ * happened to start with /assets/social/ or /assets/og-, in which case they
+ * were hardcoded to 1200x630. Every other page — 177 of 231 — shipped an
+ * og:image with no dimensions at all, and the assumed 1200x630 would have
+ * been wrong for them anyway: the answers art is 1600x1200.
+ *
+ * Reading the header keeps the numbers honest for whatever image a page
+ * actually uses. Returns null for anything unreadable, and the tags are then
+ * omitted rather than guessed.
+ */
+const dimensionCache = new Map();
+
+function imageDimensions(imagePath) {
+  if (!imagePath.startsWith("/")) return null;
+  if (dimensionCache.has(imagePath)) return dimensionCache.get(imagePath);
+
+  const clean = imagePath.split(/[?#]/, 1)[0];
+  const file = path.join(PUBLIC_ROOT, clean.replace(/^\//, ""));
+  let result = null;
+
+  try {
+    const buf = fs.readFileSync(file);
+
+    if (buf.length >= 24 && buf.toString("ascii", 1, 4) === "PNG") {
+      result = { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+    } else if (buf.length >= 30 && buf.toString("ascii", 0, 4) === "RIFF" && buf.toString("ascii", 8, 12) === "WEBP") {
+      const format = buf.toString("ascii", 12, 16);
+      if (format === "VP8X") {
+        result = {
+          width: 1 + buf.readUIntLE(24, 3),
+          height: 1 + buf.readUIntLE(27, 3),
+        };
+      } else if (format === "VP8 ") {
+        result = {
+          width: buf.readUInt16LE(26) & 0x3fff,
+          height: buf.readUInt16LE(28) & 0x3fff,
+        };
+      } else if (format === "VP8L") {
+        const bits = buf.readUInt32LE(21);
+        result = {
+          width: (bits & 0x3fff) + 1,
+          height: ((bits >> 14) & 0x3fff) + 1,
+        };
+      }
+    } else if (buf.length >= 4 && buf[0] === 0xff && buf[1] === 0xd8) {
+      // JPEG: walk the segment chain to the first frame header.
+      let offset = 2;
+      while (offset < buf.length - 9) {
+        if (buf[offset] !== 0xff) { offset += 1; continue; }
+        const marker = buf[offset + 1];
+        const size = buf.readUInt16BE(offset + 2);
+        // SOF0-SOF15, excluding the non-frame DHT/JPG/DAC markers.
+        if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+          result = {
+            height: buf.readUInt16BE(offset + 5),
+            width: buf.readUInt16BE(offset + 7),
+          };
+          break;
+        }
+        offset += 2 + size;
+      }
+    }
+  } catch {
+    result = null;
+  }
+
+  dimensionCache.set(imagePath, result);
+  return result;
+}
+
 const JOURNAL_SEO_TITLES = {
   "read-your-monthly-software-bill": "Audit Your Monthly Software Bill | Little Fight NYC",
   "set-up-google-business-profile-nyc": "Set Up Google Business Profile NYC | Little Fight NYC",
@@ -56,14 +139,16 @@ export function shareForPage(page, siteName = "Little Fight NYC") {
         : extension === "webp"
           ? "image/webp"
           : "application/octet-stream");
-  const knownSocialRatio =
-    image.startsWith("/assets/social/") || image.startsWith("/assets/og-");
+  const measured = imageDimensions(image);
 
   return {
     image,
     type,
-    width: authored.width || (knownSocialRatio ? 1200 : undefined),
-    height: authored.height || (knownSocialRatio ? 630 : undefined),
+    // Authored values win, then the file's own header. Nothing is assumed:
+    // the old fallback hardcoded 1200x630 for two path prefixes and left
+    // everything else undefined.
+    width: authored.width || measured?.width,
+    height: authored.height || measured?.height,
     alt: authored.alt || `${siteName}: ${page.h1 || page.title}`,
   };
 }
