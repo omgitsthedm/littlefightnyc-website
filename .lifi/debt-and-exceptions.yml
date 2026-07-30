@@ -404,3 +404,26 @@ items:
     close_evidence:
       - "The Pipeline sources table shows real values in Tier, Reliability and Last success."
       - "The sidebar source count and the table count agree."
+
+  - id: "FONTS-001"
+    type: "third-party-request"
+    status: "open"
+    risk: "low"
+    finding: "Eight Lab concept pages still fetch a Google Fonts stylesheet, handing Google every visitor's IP and User-Agent before any consent interaction. Unlike the audit reports, these genuinely need it."
+    evidence:
+      - "All eight request Barlow Condensed: e.g. aha-laser asks for family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600."
+      - "Barlow Condensed is load-bearing — all eight concept stylesheets use it (laser.css, goliath.css, feel.css, pill.css, street.css, walkup.css, district.css, engine.css) — and unlike Barlow, Oswald and JetBrains Mono it is not self-hosted: absent from package.json and from public/assets/fonts/."
+      - "growth-street and studio-engine additionally render Fraunces; measured as status \"loaded\" and present in their computed font-family."
+      - "By contrast the five sample audit reports listed both Libre Baskerville and Lato as \"unloaded\" and used neither, so removing their link changed 0 of 1,152,000 pixels. Those are done."
+    impact: "Every visitor to a Lab concept page is disclosed to Google before opting in, on a site that otherwise makes zero third-party requests until consent. Eight pages, all linked from the Lab hub."
+    mitigation:
+      - "Self-host the two missing families the way the others already are: npm i @fontsource/barlow-condensed @fontsource-variable/fraunces, copy the woff2 into app/public/assets/fonts/, add @font-face blocks alongside the existing ones in app/public/assets/lf-fonts.css, then drop the three Google link tags from each of the eight pages."
+      - "Verify per page that computed font-family still resolves to Barlow Condensed (and Fraunces on growth-street and studio-engine) — a silent fallback to Arial would be a worse outcome than the leak."
+      - "Not done here because it adds two dependencies and touches the typography of eight builds David has iterated on repeatedly. Removing the link without self-hosting first would regress them."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "No Lab concept page requests fonts.googleapis.com or fonts.gstatic.com."
+      - "Each page still computes Barlow Condensed, and Fraunces where it did before."
+      - "THIRD_PARTY_FONT_EXEMPT in app/scripts/audit-site-integrity.mjs is empty."

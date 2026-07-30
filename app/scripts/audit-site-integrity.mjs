@@ -238,6 +238,44 @@ for (const file of htmlFiles) {
     }
   }
 
+  // The site makes no third-party request until a visitor opts in — except that
+  // five sample audit reports pulled a Google Fonts stylesheet, handing Google
+  // every reader's IP and User-Agent before any consent interaction, for two
+  // faces the pages never rendered (flagship.css overrode --font-heading and
+  // --font-body, so document.fonts listed Libre Baskerville and Lato as
+  // "unloaded"). Removing them changed zero pixels.
+  //
+  // The Lab concept pages are exempt for now, and the reason is specific: all
+  // eight request Barlow Condensed, which is genuinely load-bearing — every one
+  // of their stylesheets uses it, and unlike Barlow, Oswald and JetBrains Mono
+  // it is not self-hosted. growth-street and studio-engine also render
+  // Fraunces. Removing the link there would change the typography on eight
+  // builds, so it waits on self-hosting those two families. Logged as
+  // FONTS-001; the exemption is a list rather than a pattern so a new page
+  // cannot inherit it silently.
+  const THIRD_PARTY_FONT_EXEMPT = new Set([
+    "examples/lab/concepts/aha-laser/index.html",
+    "examples/lab/concepts/goliath/index.html",
+    "examples/lab/concepts/growth-street/index.html",
+    "examples/lab/concepts/micro-animations/index.html",
+    "examples/lab/concepts/pill-scroll/index.html",
+    "examples/lab/concepts/studio-engine/index.html",
+    "examples/lab/concepts/terminal-3d/index.html",
+    "examples/lab/concepts/walkup-3d/index.html",
+  ]);
+  if (!THIRD_PARTY_FONT_EXEMPT.has(relative.replaceAll(path.sep, "/"))) {
+    for (const [, host] of html.matchAll(
+      /<link\b[^>]*href="https?:\/\/([^/"]+)[^"]*"[^>]*>/gi,
+    )) {
+      if (/(?:^|\.)littlefightnyc\.com$/.test(host)) continue;
+      failures.push(
+        `${relative}: links a stylesheet or preconnect to ${host} — a third-party ` +
+          "request before consent. Self-host it, or add it to " +
+          "THIRD_PARTY_FONT_EXEMPT with the reason.",
+      );
+    }
+  }
+
   for (const reference of references(html)) {
     const pathname = localPath(reference, relative);
     if (!pathname || pathname === "/") continue;
