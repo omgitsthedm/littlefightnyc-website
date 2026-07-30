@@ -152,7 +152,13 @@ for = "/examples/audit/the-cosmetic-clinic/*"
 for = "/examples/audit/*"
 
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
+  # font-src omitted 'self', so every self-hosted brand face on the Audit Lab
+  # was refused and the section rendered in the OS UI font. Oswald, Barlow and
+  # JetBrains Mono all reported status "error" in document.fonts, with six
+  # blocked requests — invisible in review because a fallback still looks like
+  # a page, on the one part of the site whose whole job is showing the work.
+  # Every other font-src in this file already carries 'self' data:.
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
   Referrer-Policy = "strict-origin-when-cross-origin"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "DENY"

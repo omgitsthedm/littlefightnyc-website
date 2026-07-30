@@ -149,6 +149,26 @@ for (const file of [
   }
 }
 
+// The site self-hosts Oswald, Barlow and JetBrains Mono everywhere, so any CSP
+// that sets font-src without 'self' silently refuses the brand faces and the
+// page falls back to the OS UI font. That happened on /examples/audit/* — six
+// blocked requests, all three families reporting status "error" in
+// document.fonts — and nothing caught it, because a page in the wrong font
+// still renders, still passes axe, and still looks like a page in review.
+const netlifyToml = await readFile(path.join(repoRoot, "netlify.toml"), "utf8");
+const fontDirectives = [...netlifyToml.matchAll(/font-src ([^;"]+)/g)];
+if (fontDirectives.length === 0) {
+  fail("netlify.toml: no font-src directive found — has the CSP block moved?");
+}
+for (const [, directive] of fontDirectives) {
+  if (!directive.includes("'self'")) {
+    fail(
+      `netlify.toml: a font-src directive omits 'self' (${directive.trim()}) — ` +
+        "self-hosted brand fonts will be blocked and the page will render in fallbacks",
+    );
+  }
+}
+
 const brandHtml = await read("public/brand-kit/index.html");
 const standaloneHtml = await read("public/brand-kit/little-fight-nyc-brand.html");
 const brandCss = await read("public/brand-kit/brand-kit.css");
