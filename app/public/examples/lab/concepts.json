@@ -50,8 +50,7 @@
       "featuredConcept": "studio-engine",
       "concepts": [
         "studio-engine",
-        "growth-street",
-        "tech-support"
+        "growth-street"
       ],
       "capabilities": [
         "Interactive concept modeling",
@@ -66,12 +65,10 @@
       "title": "Campaign Studio",
       "label": "One idea, multiple visual systems",
       "headline": "Switch the voice without losing the point.",
-      "description": "Compare a kinetic hero, a high-contrast campaign, and a complete hospitality client world.",
+      "description": "A high-contrast wheatpaste campaign that argues its point in type alone.",
       "featuredConcept": "goliath",
       "concepts": [
-        "goliath",
-        "hero",
-        "chef-drew"
+        "goliath"
       ],
       "capabilities": [
         "Campaign art direction",

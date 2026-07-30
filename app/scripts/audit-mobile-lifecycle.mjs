@@ -132,16 +132,17 @@ assert.doesNotMatch(
   /\$\{image\}-1200\.webp|\$\{image\}\.webp 1672w/,
   "mobile service cards must not offer source images larger than their rendered card",
 );
+// The eight shipping Lab posters. "hero-prototype" and "tech-support" were
+// retired with their builds; "aha-laser" ships and was missing from this list.
 for (const slug of [
   "brownstone-walkup",
   "cinematic-3d",
   "scroll-motion",
   "micro-animations",
+  "aha-laser",
   "studio-engine",
   "growth-street",
   "goliath",
-  "hero-prototype",
-  "tech-support",
 ]) {
   for (const width of [480, 800]) {
     const thumbnail = await stat(

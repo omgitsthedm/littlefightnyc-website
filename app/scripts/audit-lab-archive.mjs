@@ -46,8 +46,11 @@ const textFiles = files.filter((file) =>
   /\.(?:css|html|js|json|txt|webmanifest|xml)$/i.test(file),
 );
 
-if (files.length < 160) failures.push(`expected at least 160 hosted files, found ${files.length}`);
-if (htmlFiles.length < 47) failures.push(`expected at least 47 HTML pages, found ${htmlFiles.length}`);
+// Floors, not targets. They dropped when the Lab was curated from 11 concepts
+// to 8 and the Vite-bundled builds were replaced by hand-written ones, which
+// removed a large number of hashed asset files.
+if (files.length < 70) failures.push(`expected at least 70 hosted files, found ${files.length}`);
+if (htmlFiles.length < 13) failures.push(`expected at least 13 HTML pages, found ${htmlFiles.length}`);
 
 const hubPath = path.join(labRoot, "index.html");
 const hub = fs.readFileSync(hubPath, "utf8");
@@ -58,8 +61,8 @@ const conceptLinks = [...hub.matchAll(/<a\b(?=[^>]*\bdata-concept-card\b)[^>]*\b
   (match) => match[1],
 );
 
-if (conceptLinks.length !== 11) {
-  failures.push(`expected 11 concept links, found ${conceptLinks.length}`);
+if (conceptLinks.length !== 8) {
+  failures.push(`expected 8 concept links, found ${conceptLinks.length}`);
 }
 
 if (
@@ -81,8 +84,8 @@ if (manifest.version !== 3) failures.push(`expected concepts manifest version 3,
 if (manifest.suites?.length !== 4) {
   failures.push(`expected 4 suites in concepts.json, found ${manifest.suites?.length ?? 0}`);
 }
-if (manifest.concepts?.length !== 11) {
-  failures.push(`expected 11 concepts in concepts.json, found ${manifest.concepts?.length ?? 0}`);
+if (manifest.concepts?.length !== 8) {
+  failures.push(`expected 8 concepts in concepts.json, found ${manifest.concepts?.length ?? 0}`);
 }
 const suiteSlugs = (manifest.suites || []).map((suite) => suite.slug);
 const manifestSlugs = (manifest.concepts || []).map((concept) => concept.slug);
@@ -222,7 +225,13 @@ for (const file of textFiles) {
         /^(?:https?:\/\/(?:www\.)?littlefightnyc\.com\/|\/?(?:\.\.?\/)*)[a-z0-9_@%+.,~/-]+\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?)(?:[?#][^"']*)?$/i.test(
           reference,
         ),
-      ),
+      )
+      // A bare filename carries no base, so it cannot be resolved from the
+      // string alone — pill.js keeps its film frames as bare names and builds
+      // `assets/${src}` at runtime. Validating those against the file's own
+      // directory reported all 16 working frames as broken. Only check
+      // references that actually state where they live.
+      .filter((reference) => reference.includes("/")),
   );
   for (const reference of inlineAssetReferences) {
     const target = localTarget(reference, file);
@@ -322,12 +331,24 @@ if (
   failures.push("the /labs shorthand redirects are incomplete");
 }
 
-const terminalBundle = fs.readFileSync(
-  path.join(labRoot, "concepts", "terminal-3d", "assets", "index-DvF386rg.js"),
-  "utf8",
-);
-if (!terminalBundle.includes("/examples/lab/concepts/terminal-3d/data/building.json")) {
-  failures.push("Terminal 3D data path is not scoped to the archive");
+// The spatial build is no longer a Vite bundle with a hashed filename and an
+// external data file — it is hand-written ES modules with no fetched data. The
+// original intent was that it stay scoped to the archive, so assert that
+// directly: every module it loads must be a relative sibling, never an
+// absolute site path that would break when the archive moves.
+const spatialRoot = path.join(labRoot, "concepts", "terminal-3d");
+const spatialModules = ["main.js", "world.js", "city.js", "systems.js"];
+for (const moduleName of spatialModules) {
+  const modulePath = path.join(spatialRoot, moduleName);
+  if (!fs.existsSync(modulePath)) {
+    failures.push(`missing spatial module: ${moduleName}`);
+    continue;
+  }
+  const source = fs.readFileSync(modulePath, "utf8");
+  const escapes = [...source.matchAll(/(?:import|fetch)\(\s*["'](\/[^"']+)["']/g)].map((m) => m[1]);
+  if (escapes.length > 0) {
+    failures.push(`spatial module ${moduleName} loads absolute paths, breaking archive scoping: ${escapes.join(", ")}`);
+  }
 }
 
 const fieldGuide = fs.readFileSync(path.join(appRoot, "src", "pages", "FieldGuide.tsx"), "utf8");
