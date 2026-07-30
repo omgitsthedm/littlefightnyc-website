@@ -594,7 +594,11 @@
 .lf-audit__field textarea {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid var(--lf-hairline);
+  /* The underline is the only thing marking where a field is, so it has to
+     clear the 3:1 non-text contrast floor. --lf-hairline is 1.37:1 on ink —
+     essentially invisible. --lf-bone-dim is 5.96:1 and stays neutral, leaving
+     the orange focus state clearly distinct from the resting one. */
+  border-bottom: 1px solid var(--lf-bone-dim);
   border-radius: 0;
   font-family: var(--lf-serif);
   font-size: var(--lf-text-md);
@@ -608,8 +612,12 @@
 
 .lf-audit__field input::placeholder,
 .lf-audit__field textarea::placeholder {
+  /* --lf-bone-dim is 5.96:1 on the ink ground, but the 0.7 opacity that used
+     to sit here dragged it to 3.37:1 — under the 4.5:1 AA floor for body text,
+     on the hint copy telling people what to type. The italic already
+     distinguishes a placeholder from entered text; the opacity was doing
+     nothing the style did not. */
   color: var(--lf-bone-dim);
-  opacity: 0.7;
   font-style: italic;
 }
 
