@@ -50,8 +50,10 @@ showcase, and a service-enabled Website Audit backed by Netlify Functions,
 background processing, Blob persistence, report/email delivery, and scheduled
 cleanup.
 
-The current generated inventory has **200 routes: 127 indexable and 73
-noindex**, including 72 noindex area/service combinations.
+The current generated inventory has **203 routes: 130 indexable and 73
+noindex**, including 72 noindex area/service combinations. Verified 2026-07-29
+against the build (`Prerendered 203 search-visible routes`) and the live
+sitemap (130 `<loc>` entries).
 
 The released Quality Spine baseline adds:
 

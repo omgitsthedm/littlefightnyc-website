@@ -49,8 +49,9 @@ measurement, or care gates below.
   candidate based on `df7c90d` became released application baseline `d02b935`
   through ready Netlify deploy `6a642637809f6e0008ac8831`. Verify current
   `HEAD`, GitHub `main`, Netlify, and `/release.json` independently.
-- Generated route metadata contains **200 pages**:
-  - **127 indexable**;
+- Generated route metadata contains **203 pages** (verified 2026-07-29 against
+  the build output and the live sitemap):
+  - **130 indexable**;
   - **73 noindex**;
   - **72 noindex area/service combinations**.
 - Application source is under `app/`: React 19, TypeScript, Vite 7, React Router, build-time route snapshots/prerendering, and Netlify Forms.
