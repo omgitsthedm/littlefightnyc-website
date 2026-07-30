@@ -18,10 +18,10 @@
     "audit:release": "npm --prefix app run audit:release",
     "test:browser": "npm --prefix app run test:browser",
     "quality:fast": "npm run typecheck:functions && npm --prefix app run quality:fast",
-    "quality:full": "npm --prefix app run quality:full",
-    "quality:release": "npm --prefix app run quality:release",
+    "quality:full": "npm run typecheck:functions && npm --prefix app run quality:full",
+    "quality:release": "npm run typecheck:functions && npm --prefix app run quality:release",
     "quality:live": "npm --prefix app run quality:live",
-    "quality:maintenance": "npm --prefix app run quality:maintenance",
+    "quality:maintenance": "npm run typecheck:functions && npm --prefix app run quality:maintenance",
     "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json"
   },
   "dependencies": {

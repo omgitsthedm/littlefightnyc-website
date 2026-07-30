@@ -11,7 +11,12 @@ pinned_version = "6"
 
 [build]
 base = "."
-command = "cd app && npm ci && npm run build"
+# The nine functions in netlify/functions are TypeScript that Netlify
+# transpiles without typechecking, and the app build only covers app/src —
+# so nothing on the deploy path ever checked them. A type error in a
+# function shipped green. typecheck:functions runs from the repo root and
+# needs app/node_modules, hence the order.
+command = "cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build"
 publish = "app/dist"
 publishOrigin = "config"
 
