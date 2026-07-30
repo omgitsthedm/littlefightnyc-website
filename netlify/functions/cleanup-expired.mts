@@ -6,12 +6,21 @@
 import type { Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 
+// One window's grace past the 24h rate-limit window in run-audit.mts, so a
+// counter is never dropped while it is still governing a live limit.
+const RATE_LIMIT_RETENTION_MS = 48 * 60 * 60 * 1000;
+
 export default async () => {
   const metaStore = getStore("audit-meta");
   const pageStore = getStore("audit-pages");
   const viewStore = getStore("audit-views");
   const statusStore = getStore("audit-status");
   const jobStore = getStore("audit-jobs");
+  // audit-engagement records how far each recipient read their report. It is
+  // keyed by the same slug, so it must die with the report — otherwise the
+  // behavioural profile of the person who read it survives the deletion the
+  // site advertises, and the URL returns 410 while the record lives on.
+  const engagementStore = getStore("audit-engagement");
 
   const now = new Date();
   let deleted = 0;
@@ -42,6 +51,7 @@ export default async () => {
         pageStore.delete(entry.key),
         viewStore.delete(entry.key),
         statusStore.delete(entry.key),
+        engagementStore.delete(entry.key),
         metaStore.delete(entry.key),
       ]);
 
@@ -72,6 +82,35 @@ export default async () => {
   }
   console.log(
     `[cleanup] Job tokens: checked ${jobs.blobs.length}, deleted ${deletedJobs}`,
+  );
+
+  // Rate-limit counters govern a 24h window, so an entry older than that has no
+  // remaining purpose. Nothing purged this store before, which meant a
+  // per-visitor record accumulated forever for a check that stopped mattering
+  // after a day. Keys are hashed now (run-audit.mts), but retaining them
+  // indefinitely would still be keeping data with no reason to exist.
+  const rateLimitStore = getStore({ name: "rate-limits", consistency: "strong" });
+  const rateCutoff = new Date(now.getTime() - RATE_LIMIT_RETENTION_MS);
+  const rateLimits = await rateLimitStore.list();
+  let deletedRateLimits = 0;
+  for (const entry of rateLimits.blobs) {
+    try {
+      const record = (await rateLimitStore.get(entry.key, { type: "json" })) as {
+        window_start?: string;
+      } | null;
+      const started = record?.window_start ? new Date(record.window_start) : null;
+      // Unparseable or missing window_start means we cannot prove it is still
+      // in use, and the window is only 24h — drop it rather than keep it.
+      if (!started || Number.isNaN(started.getTime()) || started <= rateCutoff) {
+        await rateLimitStore.delete(entry.key);
+        deletedRateLimits++;
+      }
+    } catch (err) {
+      console.error(`[cleanup] Error processing rate limit ${entry.key}:`, err);
+    }
+  }
+  console.log(
+    `[cleanup] Rate limits: checked ${rateLimits.blobs.length}, deleted ${deletedRateLimits}`,
   );
 };
 

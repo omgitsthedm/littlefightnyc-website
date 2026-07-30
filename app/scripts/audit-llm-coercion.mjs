@@ -20,7 +20,7 @@
  * the currency sink still guards its own input.
  */
 
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -90,6 +90,35 @@ for (const expr of new Set(unescaped)) {
   );
 }
 
+// ── 4. Every blob store is purged by something ────────────────────────────────
+// Two stores accumulated forever because nothing listed them: rate-limits held
+// a per-visitor record for a check that stopped mattering after 24h, and
+// audit-engagement kept a reading profile of each recipient after the report
+// itself was deleted and its URL started returning 410. Neither failed
+// anything. A store nobody purges is invisible until it is a disclosure.
+const fnDir = path.join(repoRoot, "netlify", "functions");
+const fnFiles = (await readdir(fnDir, { withFileTypes: true }))
+  .filter((e) => e.isFile() && e.name.endsWith(".mts"))
+  .map((e) => path.join(fnDir, e.name));
+
+const written = new Set();
+for (const file of fnFiles) {
+  const source = await readFile(file, "utf8");
+  for (const m of source.matchAll(/getStore\(\s*(?:\{\s*name:\s*)?"([a-z-]+)"/g)) {
+    written.add(m[1]);
+  }
+}
+
+const cleanup = await readFile(path.join(fnDir, "cleanup-expired.mts"), "utf8");
+for (const store of [...written].sort()) {
+  if (!cleanup.includes(`"${store}"`)) {
+    failures.push(
+      `netlify/functions/cleanup-expired.mts never purges the "${store}" blob store — ` +
+        `data written there is retained indefinitely`,
+    );
+  }
+}
+
 if (failures.length > 0) {
   console.error("LLM coercion audit failed:");
   for (const failure of failures) console.error(`- ${failure}`);
@@ -97,5 +126,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "LLM coercion audit passed: every HaikuResult field is coerced, the currency sink guards its input, and model prose is escaped.",
+  "Function-safety audit passed: HaikuResult fully coerced, currency sink guarded, model prose escaped, and every blob store is purged.",
 );

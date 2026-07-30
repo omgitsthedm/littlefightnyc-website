@@ -4,12 +4,38 @@
 
 import type { Context, Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
+import { createHash, createHmac } from "node:crypto";
 
 // ── Rate limit config ─────────────────────────────────────────
 const RATE_LIMIT_WINDOW_HOURS = 24;
 const RATE_LIMIT_MAX_PUBLIC = 3; // public form: 3 audits per IP per 24h
 const RATE_LIMIT_MAX_API = 500; // API key: 500 audits per 24h (Dakota)
 const JOB_TOKEN_TTL_MS = 30 * 60 * 1000;
+
+/**
+ * Derive the rate-limit key without writing the visitor's IP address down.
+ *
+ * This used to be `ip:${ip}` — the raw address, in plaintext, as the primary
+ * key of a blob store that nothing ever purged. Every person who ran a free
+ * audit left a permanent record, while serve-audit.mts stated in a comment that
+ * "we never store raw IPs".
+ *
+ * The day is folded in so the key changes with the 24h window it governs, and
+ * cleanup-expired now deletes the store, so a key cannot outlive its purpose.
+ *
+ * Honest about the strength: without RATE_LIMIT_SALT this is a bare SHA-256 of
+ * an IPv4 address, and the whole v4 space is enumerable — that is
+ * pseudonymisation, not anonymisation. Setting RATE_LIMIT_SALT to any random
+ * string upgrades it to a keyed HMAC that cannot be reversed by enumeration.
+ */
+function visitorRateKey(ip: string): string {
+  const day = new Date().toISOString().slice(0, 10);
+  const salt = process.env.RATE_LIMIT_SALT;
+  const digest = salt
+    ? createHmac("sha256", salt).update(`${ip}:${day}`).digest("hex")
+    : createHash("sha256").update(`${ip}:${day}`).digest("hex");
+  return `ip:${digest.slice(0, 32)}`;
+}
 
 function createJobToken(): string {
   const bytes = new Uint8Array(32);
@@ -164,7 +190,9 @@ export default async (req: Request, context: Context) => {
   // ── Rate limiting (IP-based for public, key-based for API) ─
   const rateLimitStore = getStore({ name: "rate-limits", consistency: "strong" });
   const ip = context.ip || req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const rateLimitKey = isAuthenticated ? `apikey:${SERVER_API_KEY.slice(-8)}` : `ip:${ip}`;
+  const rateLimitKey = isAuthenticated
+    ? `apikey:${SERVER_API_KEY.slice(-8)}`
+    : visitorRateKey(ip);
   const maxRequests = isAuthenticated ? RATE_LIMIT_MAX_API : RATE_LIMIT_MAX_PUBLIC;
 
   try {
