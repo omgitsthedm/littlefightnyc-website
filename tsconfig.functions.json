@@ -1,0 +1,23 @@
+{
+  // Netlify functions were outside every tsconfig: app/tsconfig.app.json
+  // includes only `src`, tsconfig.node.json only vite.config.ts, and the root
+  // is `"files": []`. So the declared types in netlify/ enforced nothing and
+  // `tsc -b` could not catch a whole class of bug there — which is how an
+  // unvalidated model reply reached raw HTML interpolation.
+  //
+  // Run with: npm run typecheck:functions
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "resolveJsonModule": true,
+    "types": []
+  },
+  "include": ["netlify/**/*.mts"]
+}

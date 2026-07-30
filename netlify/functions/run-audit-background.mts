@@ -358,7 +358,68 @@ Rules:
     .replace(/```\s*$/, "")
     .trim();
 
-  return JSON.parse(cleaned);
+  return coerceHaikuResult(JSON.parse(cleaned));
+}
+
+/**
+ * Coerce a model reply into the shape the templates assume.
+ *
+ * The parse result used to be cast straight to HaikuResult with no schema
+ * check. This directory is outside the TypeScript build, so the declared types
+ * enforce nothing at runtime, and the submitted site's own homepage text goes
+ * into the prompt verbatim — meaning a hostile page can influence these fields.
+ * The rendered report is served from the apex origin under
+ * `script-src 'unsafe-inline'`, so a wrong type here is a scripting vector,
+ * not a cosmetic bug. Anything unexpected is dropped rather than trusted.
+ */
+function coerceHaikuResult(raw: unknown): HaikuResult {
+  const src = (raw ?? {}) as Record<string, unknown>;
+  const str = (v: unknown, fallback = ""): string =>
+    typeof v === "string" ? v : v == null ? fallback : String(v);
+
+  const SEVERITIES = new Set(["critical", "warning", "info"]);
+  const findings = Array.isArray(src.findings)
+    ? (src.findings as unknown[]).filter((f) => f && typeof f === "object").map((f) => {
+        const item = f as Record<string, unknown>;
+        const severity = str(item.severity).toLowerCase();
+        return {
+          ...item,
+          title: str(item.title),
+          description: str(item.description),
+          severity: SEVERITIES.has(severity) ? severity : "info",
+        };
+      })
+    : [];
+
+  const roadmap = Array.isArray(src.roadmap)
+    ? (src.roadmap as unknown[]).filter((r) => r && typeof r === "object").map((r) => {
+        const step = r as Record<string, unknown>;
+        return {
+          phase: str(step.phase),
+          title: str(step.title),
+          items: Array.isArray(step.items) ? step.items.map((i) => str(i)) : [],
+        };
+      })
+    : [];
+
+  const percentile = Number(src.benchmarkPercentile);
+  const benchmarkPercentile =
+    Number.isFinite(percentile) && percentile > 0 && percentile <= 100
+      ? Math.round(percentile)
+      : undefined;
+
+  return {
+    ...src,
+    companyName: str(src.companyName),
+    niche: str(src.niche),
+    city: str(src.city),
+    state: str(src.state),
+    ctaText: str(src.ctaText),
+    executiveSummary: str(src.executiveSummary),
+    findings,
+    roadmap,
+    benchmarkPercentile,
+  } as unknown as HaikuResult;
 }
 
 /** Fallback when Haiku is unavailable */

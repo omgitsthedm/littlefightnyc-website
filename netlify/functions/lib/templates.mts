@@ -77,6 +77,24 @@ function minifyCSS(css: string): string {
     .trim();
 }
 
+/**
+ * A percentile that is safe to interpolate.
+ *
+ * benchmarkPercentile is typed `number`, but nothing enforces that: this
+ * directory sits outside the TypeScript build (no tsconfig references
+ * `netlify/`), and the value originates in an LLM reply that is JSON.parsed
+ * and cast without a schema check. It was interpolated raw into HTML served
+ * under `script-src 'unsafe-inline'`, and a truthy guard let a non-empty
+ * string through. Anything that is not a real 0-100 number is dropped.
+ */
+function pct(value: unknown): number | null {
+  const n = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(n)) return null;
+  const rounded = Math.round(n);
+  if (rounded <= 0 || rounded > 100) return null;
+  return rounded;
+}
+
 function esc(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -165,8 +183,9 @@ function executiveSummaryHTML(data: AuditData, cssClass: string = ""): string {
 
 /** Benchmark badge — "Better than X% of [niche] websites" */
 function benchmarkBadge(data: AuditData): string {
-  if (!data.benchmarkPercentile) return "";
-  return `<span class="benchmark-badge">Better than ${data.benchmarkPercentile}% of ${esc(data.niche.toLowerCase())} websites</span>`;
+  const value = pct(data.benchmarkPercentile);
+  if (value === null) return "";
+  return `<span class="benchmark-badge">Better than ${value}% of ${esc(data.niche.toLowerCase())} websites</span>`;
 }
 
 /** Priority roadmap section HTML */
@@ -411,7 +430,7 @@ function generateLivingInstrument(data: AuditData): string {
           </div>`).join("");
 
   const findingsHTML = data.findings.map((finding, index) => `
-        <li class="instrument-finding fade-up" data-severity="${finding.severity}">
+        <li class="instrument-finding fade-up" data-severity="${esc(String(finding.severity ?? ""))}">
           <span class="instrument-finding__index">${String(index + 1).padStart(2, "0")}</span>
           <h3>${esc(finding.title)}</h3>
           <p>${esc(finding.description)}</p>
@@ -435,8 +454,9 @@ function generateLivingInstrument(data: AuditData): string {
         </div>
       </section>` : "";
 
-  const benchmark = data.benchmarkPercentile
-    ? `<p class="instrument-benchmark">Ahead of ${data.benchmarkPercentile}% of comparable ${esc(data.niche.toLowerCase())} sites</p>`
+  const benchmarkPct = pct(data.benchmarkPercentile);
+  const benchmark = benchmarkPct !== null
+    ? `<p class="instrument-benchmark">Ahead of ${benchmarkPct}% of comparable ${esc(data.niche.toLowerCase())} sites</p>`
     : "";
 
   const summary = data.executiveSummary
