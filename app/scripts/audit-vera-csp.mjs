@@ -16,6 +16,12 @@
  *
  * So this asserts the two policies differ by exactly the pipeline origin, in
  * exactly connect-src, and nothing else.
+ *
+ * Scope, stated plainly: this proves the CSP permits the fallback. It does NOT
+ * prove the fallback works. As of 2026-07-30 it still does not — the pipeline
+ * origin sends no Access-Control-Allow-Origin header, so the browser blocks the
+ * response after CSP allows the request. That half is logged as VERA-CORS-001
+ * and has to be fixed on the other site.
  */
 
 import { readFile } from "node:fs/promises";

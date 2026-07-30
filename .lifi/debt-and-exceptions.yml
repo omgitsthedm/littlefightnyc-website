@@ -361,3 +361,25 @@ items:
     close_evidence:
       - "Running generate-social-cards.mjs leaves og-websites.jpg byte-identical."
       - "The rendered card shows the client name in full."
+
+  - id: "VERA-CORS-001"
+    type: "dead-redundancy"
+    status: "open"
+    risk: "medium"
+    finding: "VERA's second feed source still cannot fire. The CSP that blocked it is fixed; the pipeline origin sends no Access-Control-Allow-Origin header, so the browser blocks the response instead."
+    evidence:
+      - "app/public/vera/assets/js/vera.js:10 lists two feeds: './data/public.json' and 'https://vera-pipeline.netlify.app/data/public.json'."
+      - "Before the fix: 'Refused to connect because it violates the document Content Security Policy'. Fixed in netlify.toml by adding the origin to connect-src for /vera/*."
+      - "After the fix, from the live page: 'Access to fetch at https://vera-pipeline.netlify.app/data/public.json from origin https://littlefightnyc.com has been blocked by CORS policy: No Access-Control-Allow-Origin header is present'."
+      - "curl -I -H 'Origin: https://littlefightnyc.com' https://vera-pipeline.netlify.app/data/public.json returns 200 with no access-control-allow-origin header."
+    impact: "VERA appears to have two independent paths to its data and has one. The fallback exists for exactly the case where the _redirects proxy hop fails, and it would fail too — silently, at the moment nobody is watching. /vera/ is the live example prospects are invited to open."
+    mitigation:
+      - "The fix is one header on the OTHER site: vera-pipeline.netlify.app must send Access-Control-Allow-Origin: https://littlefightnyc.com on /data/public.json. In that repo (~/Code/Personal/vera-apartment-search, github.com/omgitsthedm/vera-apartment-search) add a public/_headers or netlify.toml entry for /data/*."
+      - "Not done here because it is a separate repository and a separate live deploy — an outward-facing change to a second site, which is David's call to make and ship."
+      - "Alternative if the redundancy is not wanted: delete FEEDS[1] from vera.js and the /vera/* connect-src exception with it. audit-vera-csp already fails if the origin is allowed while vera.js no longer references it, so the two cannot rot apart."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "A fetch of the pipeline feed from a page on littlefightnyc.com succeeds in the browser."
+      - "Or FEEDS[1] and the CSP exception are both gone and audit-vera-csp still passes."
