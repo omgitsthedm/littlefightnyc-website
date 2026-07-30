@@ -19,9 +19,22 @@ function onImgLoad(e: SyntheticEvent<HTMLImageElement>) {
   e.currentTarget.setAttribute("data-loaded", "");
 }
 
+/**
+ * A bitmap that never arrives left the shimmer running forever, because only
+ * `load` cleared it. On a bad connection the proof wall — the case-study grid
+ * carrying the site's whole credibility argument — filled with boxes animating
+ * "still loading" at something that had already given up. An honest empty box
+ * beats a permanent promise.
+ */
+function onImgError(e: SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.setAttribute("data-loaded", "");
+  e.currentTarget.setAttribute("data-failed", "");
+}
+
 /** Spread onto an `<img>` to give it a load-in skeleton. Stable references. */
 export const skelImg = {
   "data-img-skel": "",
   onLoad: onImgLoad,
+  onError: onImgError,
   ref: markLoaded,
 } as const;

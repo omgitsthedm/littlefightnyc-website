@@ -43,11 +43,21 @@ if (typeof window !== "undefined") {
   // them out of the entry chunk and load them at idle. Campaign attribution is
   // measurement rather than essential storage, so it follows the same opt-in.
   onIdle(() => {
-    void import("./lib/analytics").then((m) => m.installAnalyticsHooks());
-    void import("./lib/rum").then((m) => m.installRum());
+    // Each of these is optional. An unreachable chunk should stay a silent
+    // non-event rather than firing window.unhandledrejection into the console
+    // and any error monitoring — noise that buries the failures that matter.
+    // Same shape as the parallax loader below.
+    void import("./lib/analytics")
+      .then((m) => m.installAnalyticsHooks())
+      .catch(() => {});
+    void import("./lib/rum")
+      .then((m) => m.installRum())
+      .catch(() => {});
 
     const captureAttribution = () => {
-      void import("./lib/attribution").then((m) => m.captureAttribution());
+      void import("./lib/attribution")
+        .then((m) => m.captureAttribution())
+        .catch(() => {});
     };
     if (getAnalyticsConsent() === "granted") captureAttribution();
     onAnalyticsConsentChange((consent) => {

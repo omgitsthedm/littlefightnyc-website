@@ -1123,3 +1123,46 @@ test(
     await context.close();
   },
 );
+
+test(
+  "a broken image stops pretending to load @chromium-desktop",
+  async ({ page, baseURL }) => {
+    // skelImg had onLoad and a ref but no onError, so an image that never
+    // arrived kept its shimmer running forever. On a bad connection the proof
+    // wall — the case-study grid carrying the site's credibility argument —
+    // filled with boxes animating "still loading" at something that had already
+    // given up.
+    const blocked: string[] = [];
+    await page.route("**/*.{webp,jpg,jpeg,png,avif}", (route) => {
+      blocked.push(route.request().url());
+      return route.abort();
+    });
+
+    await page.goto(`${baseURL}/examples/`, { waitUntil: "domcontentloaded" });
+    // Scroll so lazily-loaded images are actually requested and can fail.
+    for (let screen = 0; screen < 6; screen += 1) {
+      await page.evaluate(() => window.scrollBy(0, 900));
+      await page.waitForTimeout(300);
+    }
+    expect(blocked.length, "no image requests were intercepted").toBeGreaterThan(0);
+
+    await expect
+      .poll(
+        () =>
+          page.evaluate(
+            () =>
+              [...document.querySelectorAll("img[data-img-skel][data-failed]")].filter(
+                (img) => getComputedStyle(img).animationName !== "none",
+              ).length,
+          ),
+        { message: "a failed image is still running the loading shimmer" },
+      )
+      .toBe(0);
+
+    // And the failure is actually being detected, not just absent.
+    expect(
+      await page.locator("img[data-img-skel][data-failed]").count(),
+      "no image was marked failed, so this proves nothing",
+    ).toBeGreaterThan(0);
+  },
+);
