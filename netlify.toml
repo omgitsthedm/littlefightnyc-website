@@ -97,24 +97,16 @@ for = "/examples/lab/*"
   Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://unpkg.com https://esm.sh; media-src 'self' https:; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
   X-Frame-Options = "SAMEORIGIN"
 
-# Preserve the old Lab's client-concept indexing boundary.
 # A demo built around a named third party — the page title is their name and
-# profession. Every other named-person demo here is noindexed (chef-drew, the
-# five client audit reports); this one was missed, so it was fully indexable and
-# competing with that person's own site from a domain that is not theirs. It is
-# shared by link, not found by search.
+# profession. The five client audit reports below already draw this boundary;
+# this page was missed, so it was fully indexable and competing with that
+# person's own site from a domain that is not theirs. It is shared by link, not
+# found by search.
 [[headers]]
 for = "/myspace-demo/*"
 
   [headers.values]
   X-Robots-Tag = "noindex, nofollow"
-
-[[headers]]
-for = "/examples/lab/concepts/chef-drew/*"
-
-  [headers.values]
-  X-Robots-Tag = "noindex, nofollow"
-
 [[headers]]
 for = "/examples/lab/concepts/aha-laser/*"
 
@@ -126,8 +118,7 @@ for = "/examples/lab/concepts/aha-laser/*"
 # and "critical"/"warning" language. None of those businesses asked to be
 # assessed in public under our brand. They stay reachable so the Audit Lab has
 # something real to demonstrate, but they must not be search-discoverable
-# against the practice's own name. Same boundary already applied to
-# /examples/lab/concepts/chef-drew/ above.
+# against the practice's own name. Same boundary as /myspace-demo/ above.
 #
 # Neither sitemap lists them, so this closes the remaining route: a crawler
 # following the one link from the Audit Lab index.
