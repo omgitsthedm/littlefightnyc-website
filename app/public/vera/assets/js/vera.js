@@ -298,10 +298,18 @@
   function sparkline(series, w, h, color) {
     if (!series.length) return '';
     var mx = Math.max.apply(null, series), mn = Math.min.apply(null, series);
+    /* A series that never varies is the normal case for a healthy pipeline —
+       source reliability sat at 72.2 for seven straight runs. The old maths
+       divided by a fallback span of 1 with (v - mn) always 0, which pinned
+       every point to h - 6: a flat line along the floor of an empty panel,
+       which reads as "zero" or "broken" when the truth is "steady". Draw a
+       constant series through the middle instead, where a level line means
+       level. */
+    var flat = mx === mn;
     var span = (mx - mn) || 1;
     var pts = series.map(function (v, i) {
       var x = series.length === 1 ? w / 2 : (i / (series.length - 1)) * (w - 8) + 4;
-      var y = h - 6 - ((v - mn) / span) * (h - 16);
+      var y = flat ? h / 2 : h - 6 - ((v - mn) / span) * (h - 16);
       return [x, y];
     });
     var path = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
@@ -949,7 +957,8 @@
       }).join('') + '</div>' +
 
       '<div class="grid grid--2">' +
-        '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Source reliability trend</h2><p class="panel__hint">avg across sweeps</p></div>' +
+        '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Source reliability trend</h2><p class="panel__hint">' +
+            (rel.length ? esc(num(rel[rel.length - 1], 1)) + '% · avg across ' + rel.length + ' sweeps' : 'avg across sweeps') + '</p></div>' +
           (rel.length ? sparkline(rel, 560, 170, '#74a9d8') : '<p class="lane__empty">Awaiting more runs.</p>') + '</div>' +
         '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2></div><dl class="kv">' +
           '<dt>Run id</dt><dd class="t-mono">' + esc(run.run_id || '—') + '</dd>' +

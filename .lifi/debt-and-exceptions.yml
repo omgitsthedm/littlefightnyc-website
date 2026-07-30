@@ -383,3 +383,24 @@ items:
     close_evidence:
       - "A fetch of the pipeline feed from a page on littlefightnyc.com succeeds in the browser."
       - "Or FEEDS[1] and the CSP exception are both gone and audit-vera-csp still passes."
+
+  - id: "VERA-FEED-001"
+    type: "upstream-data"
+    status: "open"
+    risk: "low"
+    finding: "The VERA Pipeline view shows three permanently empty columns and a source count that contradicts itself, because the feed does not carry the fields the view was built for."
+    evidence:
+      - "public.json `sources` entries carry only {source_name, status, enabled} — e.g. {\"source_name\": \"craigslist\", \"status\": \"ok\", \"enabled\": true}. No tier, reliability or last_success."
+      - "So Tier, Reliability and Last success render an em dash on all 10 rows: three of five columns are a wall of dashes."
+      - "`source_health` reports {active: 11, healthy: 11, partial: 0, broken: 0} while `sources` has 10 entries. The sidebar therefore says \"sources 11/11 healthy\" beside a table headed \"10 registered\"."
+    impact: "The Pipeline view is the page that argues VERA is a real system rather than a scraper. Three empty columns and two disagreeing counts undercut exactly that. Nothing is broken in the site code — the view renders what it is given."
+    mitigation:
+      - "Fix upstream in ~/Code/Personal/vera-apartment-search (github.com/omgitsthedm/vera-apartment-search): emit tier, reliability and last_success per source, and reconcile source_health.active with the length of sources."
+      - "Or, if those fields are not going to exist, drop the three columns from renderPipeline in app/public/vera/assets/js/vera.js and derive the health counts from the sources array so the two cannot disagree."
+      - "Not decided here because it is a question about what the pipeline should publish, and the fix belongs in the other repository either way."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "The Pipeline sources table shows real values in Tier, Reliability and Last success."
+      - "The sidebar source count and the table count agree."
