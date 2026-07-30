@@ -1139,27 +1139,46 @@ function snapshotParagraphs(page) {
 }
 
 /**
- * The FAQ this page actually renders.
+ * The one FAQ a page both renders and marks up.
  *
- * The JSON-LD emitter read page.faq while the body builders each rendered a
- * type-specific source — g.faq for answers, a.faq for areas, t.faq for
- * glossary, s.faq ?? page.faq for services. Where those disagreed, the page
- * published FAQPage markup describing Q&A a reader could not find: 16 pairs
- * across 8 pages, question and answer both absent. Google's structured data
- * policy requires FAQ content to be present on the source page, and markup
- * describing invisible content is what a manual "Spammy structured markup"
- * action is for.
+ * There were two sources and they disagreed. The JSON-LD emitter read
+ * page.faq (authored in seo-pages.json) while the body builders rendered a
+ * type-specific list — answerGuide.faq, area.faq, glossaryTerm.faq, or
+ * service.faq. Where the two differed, the page published FAQPage markup for
+ * Q&A a reader could not find: 16 pairs across 8 pages, question and answer
+ * both absent. Google's structured data policy requires FAQ content to be
+ * present on the page, and markup describing invisible content is what a
+ * manual "Spammy structured markup" action exists for.
  *
- * Both sides call this now, so the markup cannot describe anything the page
- * does not render. Precedence mirrors the body builders exactly — change one
- * and you must change the other, which is the point of them being adjacent.
+ * Resolving that by preferring one source would have quietly thrown the other
+ * away — on /answers/ the seo-pages.json entries are different questions, not
+ * stale duplicates, and they were written on purpose. So this returns the
+ * union: the rendered list first, then any authored entry not already asked.
+ * Both the body and the markup read it, so everything authored gets shown, and
+ * nothing is claimed that is not shown.
  */
 function resolvedFaqFor(page) {
-  if (page.answerGuide) return page.answerGuide.faq;
-  if (page.area) return page.area.faq;
-  if (page.glossaryTerm) return page.glossaryTerm.faq;
-  if (page.service) return page.service.faq ?? page.faq;
-  return page.faq;
+  const rendered =
+    (page.answerGuide && page.answerGuide.faq) ||
+    (page.area && page.area.faq) ||
+    (page.glossaryTerm && page.glossaryTerm.faq) ||
+    (page.service && page.service.faq) ||
+    [];
+  const authored = Array.isArray(page.faq) ? page.faq : [];
+  const seen = new Set(
+    (Array.isArray(rendered) ? rendered : []).map((item) =>
+      String(item.question ?? "").trim().toLowerCase(),
+    ),
+  );
+  const merged = [...(Array.isArray(rendered) ? rendered : [])];
+  for (const item of authored) {
+    const key = String(item.question ?? "").trim().toLowerCase();
+    if (key && !seen.has(key)) {
+      seen.add(key);
+      merged.push(item);
+    }
+  }
+  return merged;
 }
 
 function faqHtml(faq, title = "Common questions") {
