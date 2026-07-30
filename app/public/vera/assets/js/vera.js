@@ -1617,6 +1617,18 @@
 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openUid) inspClose(); });
 
+  /* The Discover table is 2000px wide and the viewport rarely is, so most of
+     its fourteen columns sit off to the right. The CSS fades the right edge to
+     say so; this removes the fade once there is nothing left to reach, so the
+     hint never lies. Delegated and passive — the table is re-rendered on every
+     filter change, so binding per-instance would leak listeners. */
+  document.addEventListener('scroll', function (e) {
+    var w = e.target;
+    if (!w || !w.classList || !w.classList.contains('tablewrap')) return;
+    var atEnd = w.scrollLeft + w.clientWidth >= w.scrollWidth - 2;
+    w.classList.toggle('is-scroll-end', atEnd);
+  }, true);
+
   /* Everything interactive here is activated by a delegated click listener, and
      that was the only way in: 226 Discover rows were not focusable at all, and
      the KPI tiles and map pins took focus and announced themselves as buttons

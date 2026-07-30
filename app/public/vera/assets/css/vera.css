@@ -669,6 +669,23 @@ a { color: inherit; }
   border-radius: var(--r);
   background: var(--panel);
   max-height: min(66svh, 720px);
+
+  /* The table is 2000px across fourteen columns. At 1440 that leaves five
+     visible, at 1280 four — and the cut fell mid-word ("UNI", "Stu"), which
+     reads as a broken layout rather than "there is more this way". It has
+     always scrolled; nothing said so.
+
+     The usual CSS-only scroll shadow paints gradients on this element and lets
+     the content slide over them. It does nothing here, because the table and
+     its cells carry their own opaque background and cover them. Masking the
+     element fades the content itself, which nothing can paint over. The class
+     is toggled from the real scroll position so the hint disappears at the end
+     rather than implying there is always more. */
+  mask-image: linear-gradient(to right, #000 calc(100% - 72px), rgba(0, 0, 0, 0.08));
+}
+
+.tablewrap.is-scroll-end {
+  mask-image: none;
 }
 
 table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
