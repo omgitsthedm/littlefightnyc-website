@@ -61,7 +61,10 @@ const PROOF = [
     client: "Hair By Rachel Charles",
     status: "Sitio público",
     line: "De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar.",
-    fact: "100 en Lighthouse · lista en 2 semanas",
+    // Medido 2026-07-30: accesibilidad 100, buenas prácticas 100, SEO 100,
+    // rendimiento 96 en móvil.
+    // .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
+    fact: "Accesibilidad, buenas prácticas y SEO en 100 · lista en 2 semanas",
     image: "/assets/case-hair-by-rachel-charles-900.webp",
     alt: "La página de reservas de Hair By Rachel Charles",
   },

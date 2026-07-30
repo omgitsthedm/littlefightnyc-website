@@ -61,7 +61,10 @@ const PROOF = [
     client: "Hair By Rachel Charles",
     status: "公开网站",
     line: "从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。",
-    fact: "Lighthouse 四项满分，两周上线",
+    // 原文称「四项满分」。2026-07-30 实测：无障碍 100、最佳实践 100、SEO 100，
+    // 性能 96（移动端）。
+    // .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
+    fact: "无障碍、最佳实践、SEO 均满分，两周上线",
     image: "/assets/case-hair-by-rachel-charles-900.webp",
     alt: "Hair By Rachel Charles 的在线预约网站",
   },

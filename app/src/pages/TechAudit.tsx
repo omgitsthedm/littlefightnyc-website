@@ -400,7 +400,10 @@ export default function TechAudit() {
                 fetchPriority="high"
                 decoding="async"
               />
-              <span>Hair By Rachel Charles: live in two weeks, with 100 Lighthouse scores.</span>
+              {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
+                    mobile: performance 96, accessibility 100, best practices 100, SEO 100.
+                    Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
+              <span>Hair By Rachel Charles: live in two weeks, perfect accessibility, best practices and SEO.</span>
             </Link>
           </div>
         </section>

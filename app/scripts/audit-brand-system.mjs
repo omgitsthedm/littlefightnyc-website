@@ -169,6 +169,44 @@ for (const [, directive] of fontDirectives) {
   }
 }
 
+// A published performance number is a claim about a named client, and a claim
+// nobody can substantiate is worse than no claim. Hair By Rachel Charles was
+// advertised as "100 Lighthouse scores" in English, "100 en Lighthouse" in
+// Spanish and "四项满分" — perfect in all four categories — in Chinese, with no
+// stored measurement behind any of them. Measured: 96 performance on mobile.
+// The strongest version went to the Chinese reader.
+//
+// House rule, set by the CC Films entry: if the copy names a Lighthouse score,
+// the same file cites an artifact under .lifi/evidence/lighthouse/, and that
+// file exists.
+const claimFiles = [
+  "src/pages/TechAudit.tsx",
+  "src/pages/Espanol.tsx",
+  "src/pages/Zhongwen.tsx",
+  "src/data/site-cases.ts",
+];
+for (const relativePath of claimFiles) {
+  const source = await read(relativePath);
+  if (!/Lighthouse/i.test(source)) continue;
+  const cited = [...source.matchAll(/\.lifi\/evidence\/lighthouse\/([\w.-]+\.md)/g)].map(
+    (match) => match[1],
+  );
+  if (cited.length === 0) {
+    fail(
+      `${relativePath}: names Lighthouse but cites no artifact under ` +
+        ".lifi/evidence/lighthouse/ — an unverifiable score about a named client",
+    );
+    continue;
+  }
+  for (const artifact of new Set(cited)) {
+    await requireFile(
+      path.join(repoRoot, ".lifi", "evidence", "lighthouse", artifact),
+      `.lifi/evidence/lighthouse/${artifact} (cited by ${relativePath})`,
+      200,
+    );
+  }
+}
+
 const brandHtml = await read("public/brand-kit/index.html");
 const standaloneHtml = await read("public/brand-kit/little-fight-nyc-brand.html");
 const brandCss = await read("public/brand-kit/brand-kit.css");
