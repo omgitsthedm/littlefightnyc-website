@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import routeMeta from "@/data/route-meta.json";
 import { trackPageView } from "@/lib/analyticsClient";
+import { authoredDate } from "@/lib/authoredDate";
 
 /**
  * Updates the tab title + meta on client-side navigation. The correct tags are
@@ -78,10 +79,9 @@ function removeLink(rel: string) {
   document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`)?.remove();
 }
 
+// Was a fourth copy of the same normalizer, with the same timezone bug.
 function isoDate(value: string | undefined) {
-  if (!value?.trim()) return "";
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
+  return authoredDate(value)?.iso ?? "";
 }
 
 function setAlternate(hreflang: string, href: string) {

@@ -174,6 +174,33 @@ export function journalImage(post, hasDedicatedImage = () => false) {
   return JOURNAL_CATEGORY_IMAGES[post.category] ?? "/assets/manhattan.webp";
 }
 
+/**
+ * Turn an authored calendar date into an ISO day, independent of build zone.
+ *
+ * Authors write a bare date ("March 4, 2026") — no time, no offset. new Date()
+ * reads that as local midnight and toISOString() then converts to UTC, so a
+ * build machine east of UTC moved every date a day earlier: Berlin turned
+ * March 4 into 2026-03-03 in <time datetime>, JSON-LD datePublished and
+ * sitemap lastmod alike. Netlify builds in UTC so it never showed, but the
+ * same commit produced different HTML depending on where it ran.
+ *
+ * Re-anchoring the parsed Y/M/D to UTC gives back the date the author wrote,
+ * from any zone. The app-side twin of this lives in src/lib/authoredDate.ts —
+ * the .ts/.mjs boundary keeps them from sharing one module.
+ */
+export function authoredIsoDate(value) {
+  const label = typeof value === "string" ? value.trim() : "";
+  if (!label) return "";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(label)) return label;
+  const parsed = new Date(label);
+  if (Number.isNaN(parsed.getTime())) return "";
+  return new Date(
+    Date.UTC(parsed.getFullYear(), parsed.getMonth(), parsed.getDate()),
+  )
+    .toISOString()
+    .slice(0, 10);
+}
+
 function validDateLabel(value) {
   const label = typeof value === "string" ? value.trim() : "";
   if (!label) return "";

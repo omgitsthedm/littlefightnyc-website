@@ -12,6 +12,7 @@ import {
   localePages,
   serviceAreaPages,
   shareForPage,
+  authoredIsoDate,
 } from "./metadata-source.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -274,12 +275,6 @@ function absoluteUrl(routePath = "/") {
 
 function absoluteAsset(asset = "/assets/og-tugboat.jpg") {
   return asset.startsWith("http") ? asset : `${siteUrl}${asset}`;
-}
-
-function authoredIsoDate(value) {
-  if (!value) return "";
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
 }
 
 function publishedDateFor(page) {

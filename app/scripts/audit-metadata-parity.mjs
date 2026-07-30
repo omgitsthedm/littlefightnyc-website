@@ -8,6 +8,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { authoredIsoDate } from "./metadata-source.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(here, "..");
@@ -60,11 +61,9 @@ function routeFile(routePath) {
   return path.join(distRoot, routePath.replace(/^\/|\/$/g, ""), "index.html");
 }
 
-function normalizedDate(value) {
-  if (!value?.trim()) return "";
-  const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? "" : parsed.toISOString().slice(0, 10);
-}
+// Shared with the prerenderer on purpose: if the gate normalized dates
+// differently than the generator, it would pass while the two disagreed.
+const normalizedDate = authoredIsoDate;
 
 function expectEqual(label, actual, expected) {
   if (actual !== expected) {
