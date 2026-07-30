@@ -1017,9 +1017,22 @@
 
   function byUid(uid) { for (var i = 0; i < POOL.length; i++) if (POOL[i].listing_uid === uid) return POOL[i]; return null; }
 
+  /* The panel is a modal: it covers the page and a scrim blocks the pointer.
+     Keyboard users got none of that. Focus stayed on the row behind it and Tab
+     walked the table under the scrim, so the detail a keyboard user had just
+     opened was the one thing they could not reach. */
+  var inspReturnFocus = null;
+
+  function inspFocusables() {
+    var panel = $('[data-inspector]');
+    if (!panel) return [];
+    return $$('a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])', panel)
+      .filter(function (el) { return el.offsetWidth > 0 || el.offsetHeight > 0; });
+  }
   function inspOpen(uid) {
     var l = byUid(uid);
     if (!l) return;
+    inspReturnFocus = document.activeElement;
     openUid = uid;
     inspTab = 'overview';
     $('[data-inspector]').hidden = false;
@@ -1034,10 +1047,23 @@
     $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     var row = $('[data-open="' + uid + '"]');
     if (row && row.tagName === 'TR') { row.classList.add('is-open'); row.setAttribute('aria-expanded', 'true'); }
+
+    /* Move into the dialog so the next Tab is inside it, and so a screen reader
+       announces the panel instead of leaving the user standing on the row. The
+       close button first: it is the way out, and the panel's aria-label is read
+       either way. */
+    var firstStop = $('[data-insp-close]') || $('[data-inspector]');
+    if (firstStop) firstStop.focus();
   }
 
   function inspClose() {
     openUid = null;
+    /* Back where they came from, not to the top of the document. If that
+       element has been re-rendered away since, drop it rather than throwing. */
+    var back = inspReturnFocus;
+    inspReturnFocus = null;
+    if (back && !document.contains(back)) back = null;
+    if (back && back.focus) setTimeout(function () { back.focus(); }, 0);
     $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     $('[data-inspector]').classList.remove('is-open');
     $('[data-scrim]').hidden = true;
@@ -1633,6 +1659,25 @@
   });
 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openUid) inspClose(); });
+
+  /* Keep Tab inside the dialog while it is up. Without this, Tab left the panel
+     and walked the table underneath the scrim — visible to the keyboard, hidden
+     behind an overlay, and unreachable by pointer. Wrapping at both ends is
+     what makes it a dialog rather than a panel that happens to be on top. */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab' || !openUid) return;
+    var stops = inspFocusables();
+    if (!stops.length) return;
+    var first = stops[0], last = stops[stops.length - 1];
+    var panel = $('[data-inspector]');
+    if (!panel.contains(document.activeElement)) {
+      e.preventDefault();
+      (e.shiftKey ? last : first).focus();
+      return;
+    }
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   /* The Discover table is 2000px wide and the viewport rarely is, so most of
      its fourteen columns sit off to the right. The CSS fades the right edge to

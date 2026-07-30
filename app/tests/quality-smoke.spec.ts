@@ -916,3 +916,77 @@ test(
     ).toBe(false);
   },
 );
+
+test(
+  "VERA's listing inspector behaves like a dialog @chromium-desktop",
+  async ({ page, baseURL }) => {
+    // The inspector covers the page and a scrim blocks the pointer, so it is a
+    // modal in every way except the ones that matter to a keyboard. Focus stayed
+    // on the row behind it and Tab walked the table under the scrim: the detail
+    // a keyboard user had just opened was the one thing they could not reach.
+    // Making the rows keyboard-operable is what made this reachable at all.
+    const feed = readFileSync(
+      new URL("./fixtures/vera-feed.json", import.meta.url),
+      "utf8",
+    );
+    await page.route("**/vera/data/public.json", (route) =>
+      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
+    );
+    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    const rows = page.locator("tr[data-open]");
+    await rows.first().waitFor();
+
+    const inspector = page.locator("[data-inspector]");
+    await expect(inspector).toHaveAttribute("role", "dialog");
+    await expect(inspector).toHaveAttribute("aria-modal", "true");
+
+    await rows.nth(2).focus();
+    await page.keyboard.press("Enter");
+    await expect(inspector).toHaveClass(/is-open/);
+
+    const focusIsInside = () =>
+      page.evaluate(() =>
+        document.querySelector("[data-inspector]")!.contains(document.activeElement),
+      );
+    expect(await focusIsInside(), "opening must move focus into the dialog").toBe(true);
+
+    // Tab must not escape, in either direction. Count the stops first and go
+    // past the end — a fixed number of presses smaller than the panel's own
+    // focusable count never reaches the boundary, so the wrap is never
+    // exercised and the check passes with no trap at all.
+    const stops = await page.evaluate(() => {
+      const panel = document.querySelector("[data-inspector]")!;
+      return [
+        ...panel.querySelectorAll(
+          'a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])',
+        ),
+      ].filter((el) => (el as HTMLElement).offsetWidth > 0 || (el as HTMLElement).offsetHeight > 0)
+        .length;
+    });
+    expect(stops, "no focusable controls found in the dialog").toBeGreaterThan(1);
+
+    for (let step = 0; step < stops + 3; step += 1) {
+      await page.keyboard.press("Tab");
+      expect(await focusIsInside(), `Tab ${step + 1} of ${stops + 3} left the dialog`).toBe(true);
+    }
+    for (let step = 0; step < stops + 3; step += 1) {
+      await page.keyboard.press("Shift+Tab");
+      expect(
+        await focusIsInside(),
+        `Shift+Tab ${step + 1} of ${stops + 3} left the dialog`,
+      ).toBe(true);
+    }
+
+    // Escape closes and hands focus back to the row that opened it.
+    await page.keyboard.press("Escape");
+    await expect(inspector).not.toHaveClass(/is-open/);
+    // The restore is deferred a tick so it lands after the panel finishes
+    // closing, so poll rather than reading activeElement immediately.
+    await expect
+      .poll(
+        () => page.evaluate(() => document.activeElement?.tagName),
+        { message: "closing must return focus to the row, not the top of the document" },
+      )
+      .toBe("TR");
+  },
+);

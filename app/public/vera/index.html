@@ -145,7 +145,11 @@
       </footer>
     </div>
 
-    <aside class="inspector" data-inspector aria-label="Listing inspector" hidden>
+    <!-- role/aria-modal so assistive tech announces this as a dialog and stops
+         reading the page behind it. vera.js moves focus in on open, traps Tab
+         while it is up, and returns focus to the row that opened it. -->
+    <aside class="inspector" data-inspector role="dialog" aria-modal="true"
+           aria-label="Listing inspector" tabindex="-1" hidden>
       <div class="inspector__head">
         <div>
           <p class="inspector__kicker" data-insp-kicker></p>
