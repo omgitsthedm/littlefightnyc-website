@@ -667,3 +667,35 @@ test(
     expectRuntimeClean(runtime);
   },
 );
+
+test(
+  "a malformed URL fragment does not blank the page @chromium-desktop @chromium-mobile",
+  async ({ page, baseURL }) => {
+    // decodeURIComponent throws URIError on these. RouteScrollManager decodes
+    // the fragment in a layout effect mounted outside the error boundary, so an
+    // unguarded throw unmounted the whole tree and served an empty #root.
+    // A clipped share link or a mangled email URL was enough to trigger it.
+    const malformed = ["#%", "#%zz", "#%E0%A4%A"];
+
+    for (const fragment of malformed) {
+      await page.goto(`${baseURL}/${fragment}`, { waitUntil: "domcontentloaded" });
+      await page.waitForLoadState("networkidle");
+
+      const rendered = await page.evaluate(() => {
+        const root = document.getElementById("root");
+        return {
+          children: root ? root.children.length : 0,
+          text: (document.body.innerText || "").trim().length,
+        };
+      });
+
+      expect(rendered.children, `#root should render for ${fragment}`).toBeGreaterThan(0);
+      expect(rendered.text, `page should have content for ${fragment}`).toBeGreaterThan(40);
+      await expect(page.locator("h1").first()).toBeVisible();
+    }
+
+    // A well-formed fragment must still scroll to its target.
+    await page.goto(`${baseURL}/#main-content`, { waitUntil: "domcontentloaded" });
+    await expect(page.locator("#main-content")).toBeAttached();
+  },
+);

@@ -21,7 +21,19 @@ export default function RouteScrollManager() {
 
     let cancelled = false;
     let attempts = 0;
-    const targetId = decodeURIComponent(hash.slice(1));
+    // decodeURIComponent throws URIError on a malformed escape — "#%", "#%zz",
+    // a truncated "#%E0%A4%A". This runs in a layout effect mounted outside the
+    // error boundary, so the throw took the whole tree down: littlefightnyc.com/#%
+    // rendered a blank page with an empty #root. A mangled share link or a
+    // clipped email URL was enough. Fall back to the raw fragment, which simply
+    // will not match an element id, and the existing retry path gives up
+    // gracefully and scrolls to top.
+    let targetId: string;
+    try {
+      targetId = decodeURIComponent(hash.slice(1));
+    } catch {
+      targetId = hash.slice(1);
+    }
 
     const scrollToHash = () => {
       if (cancelled) return;
