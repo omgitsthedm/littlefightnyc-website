@@ -332,6 +332,20 @@ const BREADCRUMB_WORDS = {
   gbp: "GBP", faq: "FAQ",
 };
 
+// Section roots that no longer exist as pages. Building a breadcrumb from the
+// URL alone pointed 87 of 130 indexed pages at a parent that 301s — every
+// /journal/ (37), /answers/ (27), /case-studies/ (13), /industries/ (7) and
+// /studio/ (3) crumb. Structured data should name the canonical destination,
+// not a hop, so each maps to where it actually lands. Fragments are dropped:
+// a breadcrumb item identifies a page, not a scroll position within one.
+const BREADCRUMB_PARENT_CANONICAL = {
+  "/journal/": { path: "/library/", name: "Library" },
+  "/answers/": { path: "/library/", name: "Library" },
+  "/case-studies/": { path: "/examples/", name: "Examples" },
+  "/industries/": { path: "/examples/", name: "Examples" },
+  "/studio/": { path: "/services/", name: "Services" },
+};
+
 function breadcrumbFor(page) {
   const parts = page.path.split("/").filter(Boolean);
   const items = [{ name: "Home", path: "/" }];
@@ -339,12 +353,22 @@ function breadcrumbFor(page) {
 
   for (const part of parts) {
     running += `/${part}`;
+    const path = `${running}/`;
+    const canonical = BREADCRUMB_PARENT_CANONICAL[path];
+    if (canonical) {
+      // Skip if the redirect target is already in the trail, so a page under
+      // /answers/ does not render Home > Library > Library.
+      if (!items.some((item) => item.path === canonical.path)) {
+        items.push({ name: canonical.name, path: canonical.path });
+      }
+      continue;
+    }
     items.push({
       name: part
         .split("-")
         .map((word) => BREADCRUMB_WORDS[word] ?? word[0].toUpperCase() + word.slice(1))
         .join(" "),
-      path: `${running}/`
+      path,
     });
   }
 
