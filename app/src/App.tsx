@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RouteMetaManager from "@/components/RouteMetaManager";
 import RouteScrollManager from "@/components/RouteScrollManager";
+import RouteFocusManager from "@/components/RouteFocusManager";
 import GlobalViewTransitions from "@/components/GlobalViewTransitions";
 import TugSail from "@/components/editorial/TugSail";
 import SiteNotices from "@/components/SiteNotices";
@@ -68,6 +69,7 @@ export default function App() {
     <>
       <RouteMetaManager />
       <RouteScrollManager />
+      <RouteFocusManager />
       <GlobalViewTransitions />
       <TugSail />
       <SiteNotices />
