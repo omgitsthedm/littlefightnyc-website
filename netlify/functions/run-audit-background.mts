@@ -168,6 +168,54 @@ interface SiteScrape {
   textSnippet: string; // plain-text summary for Haiku context
 }
 
+/**
+ * Hosts that must never be fetched on a visitor's behalf.
+ *
+ * run-audit.mts screens the SUBMITTED hostname, but that check happens once,
+ * on a string, in a different function. The scrape below used
+ * `redirect: "follow"`, so a public host could answer 302 with
+ * http://169.254.169.254/ and the platform would follow it into cloud
+ * metadata — the submitted hostname having passed inspection minutes earlier.
+ */
+const BLOCKED_SCRAPE_HOSTS = new Set([
+  "localhost",
+  "metadata.google.internal",
+  "metadata.google.com",
+]);
+
+function isBlockedScrapeHost(hostname: string): boolean {
+  const host = hostname.toLowerCase().replace(/^\[|\]$/g, "");
+  if (BLOCKED_SCRAPE_HOSTS.has(host)) return true;
+  if (host.endsWith(".localhost") || host.endsWith(".internal")) return true;
+  return /^(?:127\.|10\.|172\.(?:1[6-9]|2\d|3[01])\.|192\.168\.|169\.254\.|0\.|::1$|fc|fd|fe80:)/i.test(
+    host,
+  );
+}
+
+/** Fetch that re-screens the host at every redirect hop instead of once. */
+async function fetchScreened(
+  startUrl: string,
+  init: RequestInit,
+  maxHops = 4,
+): Promise<Response> {
+  let current = startUrl;
+  for (let hop = 0; hop <= maxHops; hop += 1) {
+    const parsed = new URL(current);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      throw new Error(`blocked scheme: ${parsed.protocol}`);
+    }
+    if (isBlockedScrapeHost(parsed.hostname)) {
+      throw new Error(`blocked host: ${parsed.hostname}`);
+    }
+    const res = await fetch(current, { ...init, redirect: "manual" });
+    if (res.status < 300 || res.status >= 400) return res;
+    const location = res.headers.get("location");
+    if (!location) return res;
+    current = new URL(location, current).toString();
+  }
+  throw new Error("too many redirects");
+}
+
 async function scrapeSite(url: string): Promise<SiteScrape> {
   const defaultColors: BrandColors = {
     primary: "#F97316",
@@ -176,13 +224,12 @@ async function scrapeSite(url: string): Promise<SiteScrape> {
   };
 
   try {
-    const res = await fetch(url, {
+    const res = await fetchScreened(url, {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (compatible; LiFiAuditBot/1.0; +https://littlefightnyc.com)",
       },
       signal: AbortSignal.timeout(8_000),
-      redirect: "follow",
     });
     if (!res.ok) return { brandColors: defaultColors, textSnippet: "" };
 
