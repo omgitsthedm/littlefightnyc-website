@@ -1433,3 +1433,42 @@ table.dt { border-collapse: collapse; width: 100%; min-width: 980px; }
 .season--cheap .season__n { color: var(--green); }
 .season--lev .season__n { color: var(--amber); }
 .season p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--dim); }
+
+/* ── Keyboard focus ────────────────────────────────────────────────────────
+   The Discover rows, KPI tiles and map pins are operable by keyboard now, but
+   there was no focus style anywhere in this file beyond a couple of inputs — a
+   row you can focus and cannot see focused is only half an answer. One visible
+   ring, on the same green the app already uses for its live/verified state.
+   :focus-visible so a mouse click does not leave a ring behind.               */
+[data-open]:focus-visible,
+[data-kpi]:focus-visible,
+[data-view]:focus-visible,
+[data-tab]:focus-visible,
+[data-sort]:focus-visible,
+[data-hood]:focus-visible,
+[data-lens]:focus-visible,
+[data-bracket]:focus-visible,
+[data-brtile]:focus-visible,
+[data-insp-close]:focus-visible {
+  outline: 2px solid #4cc38a;
+  outline-offset: 2px;
+}
+
+/* A table row cannot show an outline reliably across browsers, so give the row
+   itself a clear background and left marker instead. */
+tr[data-open]:focus-visible {
+  outline: 2px solid #4cc38a;
+  outline-offset: -2px;
+  background: rgba(76, 195, 138, 0.09);
+}
+
+/* SVG map pins take the ring on the group; outline-offset does not apply in
+   SVG, so widen the halo stroke to read as focus. */
+.mp-pin:focus-visible {
+  outline: none;
+}
+.mp-pin:focus-visible .mp-halo {
+  stroke: #4cc38a;
+  stroke-width: 3;
+  opacity: 1;
+}

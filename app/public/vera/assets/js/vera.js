@@ -912,7 +912,11 @@
         }).join('') +
       '</tr></thead><tbody>' +
         (f.length ? f.map(function (l) {
-          return '<tr data-open="' + esc(l.listing_uid) + '" class="' + (openUid === l.listing_uid ? 'is-open' : '') + '">' +
+          /* tabindex makes the row reachable; deliberately no role="button",
+             which would strip the row and cell semantics a screen-reader user
+             needs to read a data table. aria-expanded says whether this row is
+             the one whose inspector is open. */
+          return '<tr data-open="' + esc(l.listing_uid) + '" tabindex="0" aria-expanded="' + (openUid === l.listing_uid ? 'true' : 'false') + '" class="' + (openUid === l.listing_uid ? 'is-open' : '') + '">' +
             COLS.map(function (c) { return '<td>' + c.render(l) + '</td>'; }).join('') + '</tr>';
         }).join('') : '<tr><td colspan="' + COLS.length + '" style="padding:26px;color:var(--mute)">Nothing matches this lens. Widen a tier or clear a filter.</td></tr>') +
       '</tbody></table></div>';
@@ -1014,12 +1018,18 @@
     requestAnimationFrame(function () { $('[data-inspector]').classList.add('is-open'); });
     renderInspector(l);
     $$('#main tr.is-open, #main .card.is-open').forEach(function (el) { el.classList.remove('is-open'); });
+    /* aria-expanded is written at render time from openUid, and opening the
+       inspector does not re-render the table — without this the attribute says
+       false on the row that is actually open, which is worse than not claiming
+       anything at all. */
+    $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     var row = $('[data-open="' + uid + '"]');
-    if (row && row.tagName === 'TR') row.classList.add('is-open');
+    if (row && row.tagName === 'TR') { row.classList.add('is-open'); row.setAttribute('aria-expanded', 'true'); }
   }
 
   function inspClose() {
     openUid = null;
+    $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     $('[data-inspector]').classList.remove('is-open');
     $('[data-scrim]').hidden = true;
     setTimeout(function () { $('[data-inspector]').hidden = true; }, 280);
@@ -1606,6 +1616,28 @@
   });
 
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && openUid) inspClose(); });
+
+  /* Everything interactive here is activated by a delegated click listener, and
+     that was the only way in: 226 Discover rows were not focusable at all, and
+     the KPI tiles and map pins took focus and announced themselves as buttons
+     while ignoring Enter and Space. A keyboard or switch user could not open a
+     single listing — WCAG 2.1.1, Level A, on the product this site showcases.
+
+     Rather than duplicate the dispatch, synthesise the click the existing
+     listener already handles. Native buttons and links are skipped because the
+     browser already turns Enter and Space into a click for them, and doing it
+     twice would open the inspector and immediately close it again. */
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest('button, a[href], input, select, textarea, [contenteditable]')) return;
+    var hit = t.closest('[data-open],[data-kpi],[data-view],[data-tab],[data-sort],[data-hood],[data-lens],[data-bracket],[data-brtile],[data-area],[data-transit],[data-unit],[data-density],[data-stage],[data-insp-close]');
+    if (!hit) return;
+    e.preventDefault();   /* Space would otherwise scroll the page */
+    hit.click();
+  });
   window.addEventListener('hashchange', route);
 
   /* ---------- boot ---------- */

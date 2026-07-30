@@ -805,3 +805,63 @@ test(
     await context.close();
   },
 );
+
+test(
+  "VERA listings can be opened with the keyboard @chromium-desktop",
+  async ({ page, baseURL }) => {
+    // /vera/ is a vanilla-JS app outside the React build, so it gets no
+    // type checking and no lint. Everything interactive was wired to a single
+    // delegated click listener, and the only keydown handler in the file
+    // handled Escape. Measured on production: 226 Discover rows, 0 focusable;
+    // focus() left activeElement on BODY; Enter did nothing; click worked.
+    // A keyboard or switch user could not open one listing — WCAG 2.1.1,
+    // Level A, on the product this site showcases.
+    //
+    // The feed is proxied via _redirects, which vite preview does not apply,
+    // so serve a trimmed copy of the real payload.
+    const feed = readFileSync(
+      new URL("./fixtures/vera-feed.json", import.meta.url),
+      "utf8",
+    );
+    await page.route("**/vera/data/public.json", (route) =>
+      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
+    );
+
+    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    const rows = page.locator("tr[data-open]");
+    await rows.first().waitFor();
+
+    const total = await rows.count();
+    expect(total, "no listing rows rendered — the fixture may have gone stale").toBeGreaterThan(0);
+    expect(
+      await page.locator("tr[data-open][tabindex]").count(),
+      "every listing row must be reachable by keyboard",
+    ).toBe(total);
+
+    // Enter opens the inspector, and exactly one row reports itself expanded.
+    await rows.first().focus();
+    expect(await page.evaluate(() => document.activeElement?.tagName)).toBe("TR");
+    await page.keyboard.press("Enter");
+    await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
+    expect(await page.locator('tr[data-open][aria-expanded="true"]').count()).toBe(1);
+
+    // Escape closes it and the claim is withdrawn.
+    await page.keyboard.press("Escape");
+    await expect(page.locator("[data-inspector]")).not.toHaveClass(/is-open/);
+    expect(await page.locator('tr[data-open][aria-expanded="true"]').count()).toBe(0);
+
+    // Space activates too, and must not scroll the page instead.
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await rows.nth(1).focus();
+    await page.keyboard.press(" ");
+    await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
+    expect(await page.evaluate(() => window.scrollY), "Space must not scroll").toBe(0);
+
+    // A focusable row nobody can see focused is half a fix.
+    const outline = await rows.nth(2).evaluate((el) => {
+      el.focus();
+      return getComputedStyle(el).outlineStyle;
+    });
+    expect(outline, "focused rows need a visible ring").not.toBe("none");
+  },
+);
