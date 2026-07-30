@@ -530,7 +530,30 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
       /* ── Polling ── */
       function startPolling(id) {
         auditId = id;
+
+        // The loop used to run forever: every failure was swallowed and
+        // retried on the next tick, so if the background run died the visitor
+        // watched the bar creep for as long as they were willing to wait, with
+        // no message and no way out. The pipeline's own ceiling is a 60s model
+        // call, so three minutes is generous; after that, say so and give them
+        // the buttons back.
+        var POLL_CEILING = Math.ceil(180000 / pollInterval);
+        var polls = 0;
+
         pollTimer = setInterval(function () {
+          polls += 1;
+          if (polls > POLL_CEILING) {
+            stopPolling();
+            stopProgressAnimation();
+            showError(
+              'This audit is taking longer than expected. Your report may still arrive by email. ' +
+              'You can try again, or send the URL to hello@littlefightnyc.com and we will run it by hand.'
+            );
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Check my website';
+            return;
+          }
+
           fetch('/examples/audit/api/status?id=' + encodeURIComponent(auditId))
             .then(function (res) {
               if (!res.ok) throw new Error('Status check failed');
@@ -547,10 +570,13 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
                 stopPolling();
                 stopProgressAnimation();
                 showError(data.message || 'The audit encountered an error. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Check my website';
               }
             })
             .catch(function () {
-              /* Silently retry on next interval */
+              /* A single failed status check is normal — the ceiling above is
+                 what stops this running indefinitely. */
             });
         }, pollInterval);
       }
@@ -607,9 +633,29 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
             honeypot: hp
           })
         })
+        // The server answers with a real reason and a real status — "Valid
+        // email is required", a 429 when the daily cap is hit, 413 for an
+        // oversized payload. All of it used to be thrown away and replaced
+        // with "check your connection", which is wrong for every one of those
+        // and unhelpful for the person reading it.
         .then(function (res) {
-          if (!res.ok) throw new Error('Submission failed');
-          return res.json();
+          return res.json()
+            .catch(function () { return {}; })
+            .then(function (body) {
+              if (!res.ok) {
+                var reason =
+                  res.status === 429
+                    ? 'You have reached the free audit limit for today. Email hello@littlefightnyc.com and we will run one for you.'
+                    : body.error ||
+                      (res.status >= 500
+                        ? 'Our end had a problem starting the audit. Please try again in a moment.'
+                        : 'That submission was not accepted. Check the website address and email, then try again.');
+                var err = new Error(reason);
+                err.userMessage = reason;
+                throw err;
+              }
+              return body;
+            });
         })
         .then(function (data) {
           if (!data.id) throw new Error('No audit ID returned');
@@ -620,10 +666,14 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
           startProgressAnimation();
           startPolling(data.id);
         })
-        .catch(function () {
+        .catch(function (err) {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Check my website';
-          errorBanner.textContent = 'Could not start your audit. Please check your connection and try again.';
+          // A genuine network failure has no server message, so that is the
+          // only case where mentioning the connection is accurate.
+          errorBanner.textContent =
+            (err && err.userMessage) ||
+            'Could not reach the audit service. Please check your connection and try again.';
           errorBanner.classList.add('visible');
         });
       });
