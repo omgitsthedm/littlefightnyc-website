@@ -304,8 +304,12 @@ a { color: inherit; }
 /* ---------- KPI band: large format on purpose ---------- */
 
 .kpis {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(186px, 1fr));
+  /* Seven tiles never divide evenly, so a grid always left one stranded beside
+     a row of dead black — six-plus-one at 1440 and 1920, three-plus-one at
+     1024. Flex with grow lets whatever lands on the last row expand to fill it,
+     so the arrangement reads deliberate at every width instead of broken. */
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -315,6 +319,11 @@ a { color: inherit; }
   border-radius: var(--r);
   padding: 14px 16px 12px;
   cursor: default;
+  /* 240px basis keeps the widest value ("$2,200") comfortable; grow fills the
+     last row. */
+  flex: 1 1 240px;
+  /* Lets .kpi__value size against this tile rather than the window. */
+  container-type: inline-size;
 }
 
 .kpi--click { cursor: pointer; transition: border-color 140ms ease, transform 140ms ease; }
@@ -332,7 +341,15 @@ a { color: inherit; }
 
 .kpi__value {
   margin: 0;
-  font-size: clamp(38px, 4vw, 62px);
+  /* 4vw scaled the number with the WINDOW while auto-fit sized the tile by
+     COLUMN COUNT — decoupled, so at the six-column breakpoint the type outgrew
+     its box: "$2,200" needed 182px in a 154px tile at 1440, and collided with
+     the neighbouring tile's value so the two read as "$2,200 0".
+     The cqi line ties the number to the tile it lives in. The vw line above it
+     stays as the fallback for engines without container query units — an
+     invalid value there leaves the earlier declaration standing. */
+  font-size: clamp(34px, 3.2vw, 54px);
+  font-size: clamp(30px, 19cqi, 54px);
   font-weight: 680;
   line-height: 0.95;
   letter-spacing: -0.025em;
