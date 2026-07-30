@@ -13,7 +13,18 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          // "react-dom" alone never matched: the app imports "react-dom/client"
+          // (main.tsx) and "react-dom" (viewTransition.ts), and manualChunks
+          // keys are module specifiers, not packages. React DOM was therefore
+          // bundled into the app chunk — the least volatile dependency welded
+          // to the code that changes on every deploy, so returning visitors
+          // re-downloaded it each time. Both specifiers are listed now.
+          "react-vendor": [
+            "react",
+            "react-dom",
+            "react-dom/client",
+            "react-router-dom",
+          ],
           // Co-locate the used lucide icons into one cached chunk instead of ~15
           // separate 0.2–0.4KB micro-chunks (fewer HTTP requests). Tree-shaking
           // still drops unused icons — only imported ones enter the graph.
