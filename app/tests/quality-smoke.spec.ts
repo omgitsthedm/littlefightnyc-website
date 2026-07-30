@@ -754,3 +754,54 @@ test(
     }
   },
 );
+
+test(
+  "losing signal shows an offline page, not a blank one @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    // The audience is owners on phones — subways, basements, back rooms. The
+    // service worker used to fall back to the cached homepage for any
+    // navigation it could not fetch, which meant the browser got a 200 and the
+    // homepage's HTML under a different URL; React then hydrated, found a
+    // route chunk that was not cached either, and emptied the root. Measured
+    // offline: status 200, no h1, body of exactly 0 characters. A blank page
+    // reported as success.
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+    await page.evaluate(() => navigator.serviceWorker.ready);
+    if (!(await page.evaluate(() => Boolean(navigator.serviceWorker.controller)))) {
+      await page.reload({ waitUntil: "networkidle" });
+    }
+    expect(
+      await page.evaluate(() => Boolean(navigator.serviceWorker.controller)),
+      "service worker never took control, so this test proves nothing",
+    ).toBe(true);
+
+    await context.setOffline(true);
+
+    // A route this device has never opened, so there is no cached copy.
+    const response = await page.goto(`${baseURL}/services/it-support/`, {
+      waitUntil: "domcontentloaded",
+    });
+    expect(response?.status(), "offline navigation must not claim success").toBe(503);
+
+    const offline = await page.evaluate(() => ({
+      heading: document.querySelector("h1")?.textContent?.trim() ?? "",
+      characters: document.body.innerText.trim().length,
+      phone: document.querySelector('a[href^="tel:"]')?.getAttribute("href") ?? null,
+    }));
+    expect(offline.heading).toContain("offline");
+    expect(offline.characters, "offline page must not be blank").toBeGreaterThan(100);
+    expect(offline.phone, "the phone works when the web does not").toBeTruthy();
+
+    // A page that IS cached must still serve its real content offline.
+    await page.goto(`${baseURL}/`, { waitUntil: "domcontentloaded" });
+    expect(
+      (await page.evaluate(() => document.body.innerText.trim().length)),
+      "cached pages must still work offline",
+    ).toBeGreaterThan(1000);
+
+    await context.close();
+  },
+);

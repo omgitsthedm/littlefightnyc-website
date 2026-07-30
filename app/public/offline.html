@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>You are offline · Little Fight NYC</title>
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Served by the service worker when a navigation fails with no cached copy.
+       Everything is inline on purpose: at the moment this page is needed there
+       is no network, so a stylesheet or font request would fail too. No JS
+       either — this has to work when the app bundle is exactly what is
+       missing. -->
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0; min-height: 100vh; box-sizing: border-box;
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px 22px;
+      background: #050507; color: #FFFFFF;
+      font: 400 17px/1.6 -apple-system, "Segoe UI", system-ui, sans-serif;
+    }
+    main { max-width: 30rem; }
+    .mark {
+      font: 700 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      letter-spacing: .14em; text-transform: uppercase; color: #F97316;
+      margin: 0 0 22px;
+    }
+    h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.12; margin: 0 0 14px; font-weight: 700; }
+    p { color: #A1A1AA; margin: 0 0 14px; }
+    .call {
+      display: inline-flex; align-items: center; min-height: 48px;
+      margin-top: 12px; padding: 13px 24px; border-radius: 9999px;
+      background: #F97316; color: #050507; font-weight: 700; text-decoration: none;
+    }
+    .note { font-size: 15px; color: #8A8A94; margin-top: 26px; }
+    a.plain { color: #F97316; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="mark">Little Fight NYC</p>
+    <h1>You are offline.</h1>
+    <p>
+      This page has not been opened on this device before, so there is no saved
+      copy to show you. Nothing is broken on our end and nothing you did caused
+      this — the connection just is not there right now.
+    </p>
+    <p>
+      It will load normally once you have signal again. Subway, basement and
+      back-of-house are the usual culprits.
+    </p>
+    <p>
+      If something is broken right now and you need a person, the phone still
+      works even when the web does not.
+    </p>
+    <a class="call" href="tel:+16463600318">Call (646) 360-0318</a>
+    <p class="note">
+      Already back online? <a class="plain" href="/">Return to the homepage</a>.
+    </p>
+  </main>
+</body>
+</html>

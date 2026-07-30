@@ -1,6 +1,9 @@
-const CACHE_NAME = "littlefightnyc-20260713";
+const CACHE_NAME = "littlefightnyc-20260729";
+const OFFLINE_URL = "/offline.html";
+
 const SHELL_URLS = [
   "/",
+  OFFLINE_URL,
   "/favicon.svg",
   "/site.webmanifest",
   "/icon-192.png",
@@ -37,7 +40,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (request.mode === "navigate") {
-    event.respondWith(networkFirst(request, "/"));
+    event.respondWith(navigate(request));
     return;
   }
 
@@ -46,7 +49,24 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-async function networkFirst(request, fallbackUrl) {
+/**
+ * Navigations: network, then this page's own cached copy, then an honest
+ * offline page.
+ *
+ * This used to fall back to "/" — the cached homepage — for any navigation it
+ * could not fetch. The result was worse than an error. The browser got a 200
+ * and the homepage's HTML at, say, /services/it-support/; React then hydrated,
+ * saw a route whose lazy chunk was not cached either, and emptied the root.
+ * Measured offline on a real device profile: status 200, homepage <title>, no
+ * <h1>, and a body of exactly 0 characters. A blank white page, reported as
+ * success, with nothing to tell the visitor what happened.
+ *
+ * The audience for this site is small-business owners on phones — subways,
+ * basements, back rooms. Losing signal mid-visit is a normal Tuesday, not an
+ * edge case, so it should produce a page that says so and still offers the
+ * phone number.
+ */
+async function navigate(request) {
   const cache = await caches.open(CACHE_NAME);
 
   try {
@@ -56,7 +76,33 @@ async function networkFirst(request, fallbackUrl) {
     }
     return response;
   } catch {
-    return (await cache.match(request)) || cache.match(fallbackUrl);
+    // This exact page, if it has been seen before.
+    const cached = await cache.match(request);
+    if (cached) return cached;
+
+    // Otherwise say so, rather than serving a different page's HTML under this
+    // URL. 503 is the truth: temporarily unavailable, do not cache, do not index.
+    const offline = await cache.match(OFFLINE_URL);
+    if (offline) {
+      return new Response(await offline.blob(), {
+        status: 503,
+        statusText: "Offline",
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-store",
+        },
+      });
+    }
+
+    return new Response(
+      "<!doctype html><meta charset=utf-8><title>Offline</title>" +
+        "<p>You are offline. Call (646) 360-0318 if you need a person.",
+      {
+        status: 503,
+        statusText: "Offline",
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      },
+    );
   }
 }
 
