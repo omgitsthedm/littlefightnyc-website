@@ -105,6 +105,46 @@ for = "/examples/lab/concepts/aha-laser/*"
   [headers.values]
   X-Robots-Tag = "noindex, nofollow"
 
+# Sample audit reports name real, identifiable third-party businesses and
+# publish graded assessments of their websites — real domains, numeric scores,
+# and "critical"/"warning" language. None of those businesses asked to be
+# assessed in public under our brand. They stay reachable so the Audit Lab has
+# something real to demonstrate, but they must not be search-discoverable
+# against the practice's own name. Same boundary already applied to
+# /examples/lab/concepts/chef-drew/ above.
+#
+# Neither sitemap lists them, so this closes the remaining route: a crawler
+# following the one link from the Audit Lab index.
+[[headers]]
+for = "/examples/audit/ivy-infusions/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/examples/audit/marcus-medical/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/examples/audit/premier-plastic-surgery/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/examples/audit/skinsmart-dermatology/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/examples/audit/the-cosmetic-clinic/*"
+
+  [headers.values]
+  X-Robots-Tag = "noindex, nofollow"
+
 # The retired standalone Audit Lab is hosted under /examples/audit/. Its
 # preserved pages and generated reports use inline scripts plus Google Fonts,
 # so they need the standalone site's narrower policy instead of the main app's.

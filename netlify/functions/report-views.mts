@@ -1,6 +1,8 @@
 // report-views.mts — Returns view analytics for an audit report
 // GET /examples/audit/api/report-views?id=SLUG  → single report views
-// GET /examples/audit/api/report-views?all=true  → all reports with views (for Dakota polling)
+// GET /examples/audit/api/report-views?all=true  → all reports with views.
+//   REQUIRES AUDIT_ADMIN_TOKEN as `Authorization: Bearer <token>` or ?token=.
+//   Used by Dakota polling — that caller must send the token.
 
 import type { Context, Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
@@ -38,6 +40,40 @@ export default async (req: Request, context: Context) => {
   const slug = url.searchParams.get("id");
   const all = url.searchParams.get("all") === "true";
   const since = url.searchParams.get("since"); // ISO timestamp filter
+
+  // ── Bulk query is not public ─────────────────────────────
+  // ?all=true enumerates every audit report with view counts and engagement.
+  // The slugs are derived from the audited domains, so the response is a list
+  // of who has been audited — the lead pipeline. It was reachable by anyone
+  // with the URL. A single-report lookup by known slug stays open; only the
+  // enumeration is gated.
+  //
+  // Set AUDIT_ADMIN_TOKEN in the Netlify environment and send it as
+  // `Authorization: Bearer <token>` (or `?token=`). With no token configured
+  // the endpoint refuses rather than falling open.
+  if (all) {
+    const expected = (process.env.AUDIT_ADMIN_TOKEN ?? "").trim();
+    const header = req.headers.get("authorization") ?? "";
+    const bearer = header.toLowerCase().startsWith("bearer ")
+      ? header.slice(7).trim()
+      : "";
+    const supplied = bearer || (url.searchParams.get("token") ?? "").trim();
+
+    if (!expected) {
+      return new Response(
+        JSON.stringify({
+          error: "Bulk query is disabled until AUDIT_ADMIN_TOKEN is configured.",
+        }),
+        { status: 503, headers: corsHeaders() },
+      );
+    }
+    if (supplied !== expected) {
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: corsHeaders(),
+      });
+    }
+  }
 
   const viewStore = getStore({ name: "audit-views", consistency: "eventual" });
 

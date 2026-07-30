@@ -340,6 +340,26 @@ body.lf-audit-shell-page input:focus-visible {
   font-size: 0.78rem;
 }
 
+/* Point-of-collection disclosure under the email field. --lf-bone-soft is
+   #a1a1aa, which clears 4.5:1 on this page's --lf-paper ground. */
+.lf-audit-shell-page .field-note {
+  margin-top: 2px;
+  color: var(--lf-bone-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.lf-audit-shell-page .field-note a {
+  color: var(--lf-bone-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.lf-audit-shell-page .field-note a:hover,
+.lf-audit-shell-page .field-note a:focus-visible {
+  color: var(--lf-bone);
+}
+
 .lf-audit-shell-page .btn-primary,
 .lf-audit-shell-page .btn-retry,
 .lf-audit-shell-page .btn,
