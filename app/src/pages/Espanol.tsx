@@ -5,6 +5,7 @@ import TugMark from "@/components/editorial/TugMark";
 import { openConsentPreferences } from "@/lib/consent";
 import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 /**
  * /es/ is the complete pitch in Spanish. One fully Spanish page with its own
@@ -99,8 +100,8 @@ export default function Espanol() {
           <TugMark className="lf-es__mark" />
           Little Fight NYC
         </span>
-        <a className="lf-es__top-phone" href="tel:+16463600318">
-          (646) 360-0318
+        <a className="lf-es__top-phone" href={PHONE_HREF}>
+          {PHONE_DISPLAY}
         </a>
       </header>
 
@@ -123,9 +124,9 @@ export default function Espanol() {
             </p>
 
             <div className="lf-es__actions">
-              <a className="lf-es__cta lf-es__cta--primary" href="tel:+16463600318">
+              <a className="lf-es__cta lf-es__cta--primary" href={PHONE_HREF}>
                 <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
-                Llámenos: (646) 360-0318
+                Llámenos: {PHONE_DISPLAY}
               </a>
               <Link
                 className="lf-es__cta"
@@ -278,12 +279,12 @@ export default function Espanol() {
             </p>
           </div>
           <div className="lf-es__contact-actions">
-            <a className="lf-es__cta lf-es__cta--primary lf-es__cta--big" href="tel:+16463600318">
+            <a className="lf-es__cta lf-es__cta--primary lf-es__cta--big" href={PHONE_HREF}>
               <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
-              (646) 360-0318
+              {PHONE_DISPLAY}
             </a>
             <div className="lf-es__contact-links">
-              <a href="sms:+16463600318"><MessageSquare size={18} aria-hidden="true" /> Mandar texto</a>
+              <a href={SMS_HREF}><MessageSquare size={18} aria-hidden="true" /> Mandar texto</a>
               <a href="mailto:hello@littlefightnyc.com"><Mail size={18} aria-hidden="true" /> Escribir correo</a>
             </div>
           </div>

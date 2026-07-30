@@ -12,6 +12,7 @@ import { readAttribution } from "@/lib/attribution";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/tech-audit.css";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 type FieldName = "name" | "business" | "contact" | "message";
 type Step = 1 | 2 | 3;
@@ -743,7 +744,7 @@ export default function TechAudit() {
                   </p>
                   <p className="lf-audit__assurance">
                     Free consultation / No obligation / Response window: 9am-9pm Eastern /
-                    Urgent? Call <a href="tel:+16463600318">(646) 360-0318</a>
+                    Urgent? Call <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
                   </p>
                   <p className="lf-audit__assurance lf-audit__assurance--data">
                     Your details stay with Little Fight NYC. We use them only to understand
@@ -768,7 +769,7 @@ export default function TechAudit() {
           <aside className="lf-audit__aside">
             <p className="lf-audit__aside-label">Direct line</p>
             <PhoneAction className="lf-audit__aside-phone">
-              (646) 360-0318
+              {PHONE_DISPLAY}
             </PhoneAction>
             <p className="lf-audit__aside-note">
               9am-9pm Eastern. Call or text Little Fight NYC about urgent support, a

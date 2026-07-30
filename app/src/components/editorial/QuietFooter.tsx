@@ -5,6 +5,7 @@ import { OpenNowBadge } from "./QuietNav";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { openConsentPreferences } from "@/lib/consent";
 import "./QuietFooter.css";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 // Hydration-safe mobile check: server snapshot says desktop (plain lists),
 // the client corrects to accordions right after mount on small screens.
@@ -133,7 +134,7 @@ export default function QuietFooter() {
 
         <div className="lf-quiet-foot__bottom">
           <p className="lf-quiet-foot__contact">
-            <a href="tel:+16463600318">(646) 360-0318</a>
+            <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
             <OpenNowBadge />
             <span aria-hidden="true">·</span>
             <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>

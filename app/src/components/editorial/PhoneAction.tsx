@@ -1,10 +1,11 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { PHONE_DISPLAY, PHONE_E164, SMS_HREF } from "@/data/contact";
 import { trackEvent } from "@/lib/analyticsClient";
 import "./PhoneAction.css";
 
-const TEL = "+16463600318";
-const PRETTY = "(646) 360-0318";
-const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}${TEL}`;
+const TEL = PHONE_E164;
+const PRETTY = PHONE_DISPLAY;
+const SMS_URL = SMS_HREF;
 
 type Props = {
   className?: string;

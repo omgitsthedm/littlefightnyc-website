@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Globe2, Phone } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import "./QuietHero.css";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 // Plain-text split helper: each char becomes a <span> with a --lf-i index so
 // the CSS can stagger the cascade reveal. Chars are grouped into per-word
@@ -102,11 +103,11 @@ export default function QuietHero() {
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
-          <a className="lf-hero__action lf-hero__action--support" href="tel:+16463600318">
+          <a className="lf-hero__action lf-hero__action--support" href={PHONE_HREF}>
             <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
               <strong>Call about broken tech</strong>
-              <span>(646) 360-0318 · A person answers.</span>
+              <span>{PHONE_DISPLAY} · A person answers.</span>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </a>

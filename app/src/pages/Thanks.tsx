@@ -5,6 +5,7 @@ import QuietContact from "@/components/editorial/QuietContact";
 import TugAvatar from "@/components/editorial/TugAvatar";
 import { trackEvent } from "@/lib/analyticsClient";
 import "@/styles/editorial/thanks.css";
+import { PHONE_DISPLAY } from "@/data/contact";
 
 export default function Thanks() {
   const [leadIntent] = useState(() => {
@@ -68,7 +69,7 @@ export default function Thanks() {
         )}
         dek={websiteIntent
           ? "You did the hard part — you said what you want. A real person reads this today and calls you back with a clear next step, normally within two hours, 9am to 9pm Eastern. The consult is free, and nothing moves until the plan makes sense to you."
-          : "You did the hard part — you said something. A real person reads this today, not a queue. Expect a callback within two hours, 9am to 9pm Eastern. If it's urgent right now, call (646) 360-0318 and we'll triage the fire first."}
+          : `You did the hard part — you said something. A real person reads this today, not a queue. Expect a callback within two hours, 9am to 9pm Eastern. If it's urgent right now, call ${PHONE_DISPLAY} and we'll triage the fire first.`}
       />
 
       <section className="lf-thanks__handoff" aria-labelledby="thanks-next-title">

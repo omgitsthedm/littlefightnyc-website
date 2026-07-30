@@ -4,6 +4,7 @@ import OwnerStories from "@/components/editorial/OwnerStories";
 import QuietContact from "@/components/editorial/QuietContact";
 import { agencyProcess } from "@/data/site";
 import "@/styles/editorial/about.css";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 const STANDARDS = [
   { label: "Consulting", value: "Free, always" },
@@ -108,9 +109,9 @@ export default function About() {
             </p>
             <div className="lf-about-founder__meta">
               <span>New York City</span>
-              <a href="tel:+16463600318">
+              <a href={PHONE_HREF}>
                 <Phone size={18} strokeWidth={1.9} aria-hidden="true" />
-                (646) 360-0318
+                {PHONE_DISPLAY}
               </a>
             </div>
           </aside>

@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, Globe2, Mail, MessageSquare, Phone } from "lucide-react";
 import { trackEvent } from "@/lib/analyticsClient";
 import "./QuietContact.css";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
-const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}+16463600318`;
 
 function openTextMessage() {
-  trackEvent("sms_click", { placement: "contact_block", link_url: SMS_URL });
-  window.location.href = SMS_URL;
+  trackEvent("sms_click", { placement: "contact_block", link_url: SMS_HREF });
+  window.location.href = SMS_HREF;
 }
 
 type Props = {
@@ -29,14 +29,14 @@ export default function QuietContact({
         </header>
 
         <div className="lf-contact-block__doors" aria-label="Choose how to start">
-          <a className="lf-contact-block__door lf-contact-block__door--urgent" href="tel:+16463600318">
+          <a className="lf-contact-block__door lf-contact-block__door--urgent" href={PHONE_HREF}>
             <span className="lf-contact-block__door-icon" aria-hidden="true">
               <Phone size={23} strokeWidth={1.8} />
             </span>
             <span className="lf-contact-block__door-copy">
               <span className="lf-contact-block__door-label">Something is broken</span>
               <strong>Call about broken tech</strong>
-              <span>(646) 360-0318</span>
+              <span>{PHONE_DISPLAY}</span>
             </span>
             <ArrowUpRight size={20} strokeWidth={2} aria-hidden="true" />
           </a>
@@ -62,7 +62,7 @@ export default function QuietContact({
         <div className="lf-contact-block__other" aria-label="More contact options">
           <button type="button" onClick={openTextMessage}>
             <MessageSquare size={18} strokeWidth={1.8} aria-hidden="true" />
-            Text (646) 360-0318
+            Text {PHONE_DISPLAY}
           </button>
           <a href="mailto:hello@littlefightnyc.com">
             <Mail size={18} strokeWidth={1.8} aria-hidden="true" />

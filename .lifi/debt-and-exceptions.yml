@@ -340,3 +340,24 @@ items:
     close_evidence:
       - "TechAudit.tsx has no unreachable step branches."
       - "A live submission still delivers, and the hidden symptom/urgency inputs still carry their values."
+
+  - id: "SOCIAL-003"
+    type: "stale-asset"
+    status: "open"
+    risk: "low"
+    finding: "og-websites.jpg no longer matches what its own generator produces, so re-running scripts/generate-social-cards.mjs silently rewrites a client-facing share card."
+    evidence:
+      - "The card is built from assets/case-hair-by-rachel-charles-900.webp (scripts/generate-social-cards.mjs, the og-websites entry)."
+      - "That source has been replaced since the card was generated: it is now a multi-device composite, not the single full-bleed screenshot the committed card shows."
+      - "Regenerating on 2026-07-29 produced a different image (85,595 -> 89,005 bytes) with the client name clipped mid-word: 'RACHEL CHARLES' renders as 'EL / ES'."
+      - "No other card changed, so the drift is specific to this source image rather than to the renderer."
+    impact: "None while nobody regenerates. The trap is that adding any new card re-runs the whole script, so an unrelated change quietly ships a worse card for the websites service page."
+    mitigation:
+      - "Either point the og-websites entry at a source that crops well at 700x630, or tune its position/size for the current composite."
+      - "Then regenerate and confirm the client name is not clipped."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "Running generate-social-cards.mjs leaves og-websites.jpg byte-identical."
+      - "The rendered card shows the client name in full."

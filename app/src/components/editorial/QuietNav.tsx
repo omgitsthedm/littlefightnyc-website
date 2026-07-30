@@ -5,6 +5,7 @@ import PhoneAction from "./PhoneAction";
 import TugMark from "./TugMark";
 import { useOpenNow } from "@/lib/openNow";
 import "./QuietNav.css";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 const NAV_LINKS = [
   { label: "What we fix", to: "/services/" },
@@ -164,11 +165,11 @@ export default function QuietNav() {
           <PhoneAction
             className="lf-nav__phone"
             align="right"
-            ariaLabel="Call or text (646) 360-0318"
+            ariaLabel={`Call or text ${PHONE_DISPLAY}`}
           >
             <Phone className="lf-nav__phone-icon" size={17} strokeWidth={1.9} aria-hidden="true" />
             <span className="lf-nav__phone-short">Call</span>
-            <span className="lf-nav__phone-number">(646) 360-0318</span>
+            <span className="lf-nav__phone-number">{PHONE_DISPLAY}</span>
           </PhoneAction>
 
           <Link
@@ -247,11 +248,11 @@ export default function QuietNav() {
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
                 </Link>
                 <div className="lf-nav__panel-reach">
-                  <a className="lf-nav__panel-reach-btn" href="tel:+16463600318">
+                  <a className="lf-nav__panel-reach-btn" href={PHONE_HREF}>
                     <Phone size={16} strokeWidth={1.9} aria-hidden="true" />
                     Call
                   </a>
-                  <a className="lf-nav__panel-reach-btn" href="sms:+16463600318">
+                  <a className="lf-nav__panel-reach-btn" href={SMS_HREF}>
                     <MessageSquare size={16} strokeWidth={1.9} aria-hidden="true" />
                     Text
                   </a>

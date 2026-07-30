@@ -11,8 +11,8 @@ import {
 import PageHero from "@/components/editorial/PageHero";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/contact.css";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
-const SMS_URL = `${String.fromCharCode(115, 109, 115, 58)}+16463600318`;
 
 const NEXT_STEPS = [
   {
@@ -90,12 +90,12 @@ export default function Contact() {
               <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
             </Link>
 
-            <a className="lf-contact-choice__route" href="tel:+16463600318">
+            <a className="lf-contact-choice__route" href={PHONE_HREF}>
               <span className="lf-contact-choice__route-top">
                 <Phone size={22} strokeWidth={1.9} aria-hidden="true" />
                 Call
               </span>
-              <strong>(646) 360-0318</strong>
+              <strong>{PHONE_DISPLAY}</strong>
               <small>
                 Best when email, booking, payments, Wi-Fi, access, or customers
                 are blocked now.
@@ -103,12 +103,12 @@ export default function Contact() {
               <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
             </a>
 
-            <a className="lf-contact-choice__route" href={SMS_URL}>
+            <a className="lf-contact-choice__route" href={SMS_HREF}>
               <span className="lf-contact-choice__route-top">
                 <MessageSquare size={22} strokeWidth={1.9} aria-hidden="true" />
                 Text
               </span>
-              <strong>(646) 360-0318</strong>
+              <strong>{PHONE_DISPLAY}</strong>
               <small>
                 Best when you are at the counter and need to send a short note
                 or screenshot.

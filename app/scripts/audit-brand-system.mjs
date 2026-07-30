@@ -111,6 +111,44 @@ if (tokens?.contact !== "hello@littlefightnyc.com") {
   fail("tokens.json: canonical contact must be hello@littlefightnyc.com");
 }
 
+// The phone lives in two machine-readable places by necessity: seo-pages.json
+// is authoritative and drives the build, but it is deliberately kept out of
+// the client bundle, so components read src/data/contact.ts instead. Two
+// sources can drift, and a stale number in the nav is the kind of thing nobody
+// notices until a customer cannot reach anyone. Assert they agree.
+const seoSite = JSON.parse(await read("src/data/seo-pages.json")).site;
+const contactModule = await read("src/data/contact.ts");
+for (const [field, constant] of [
+  ["phone", "PHONE_E164"],
+  ["phoneDisplay", "PHONE_DISPLAY"],
+]) {
+  const declared = contactModule.match(
+    new RegExp(`export const ${constant} = "([^"]+)"`),
+  )?.[1];
+  if (!declared) {
+    fail(`contact.ts: ${constant} is missing or no longer a plain string`);
+  } else if (declared !== seoSite[field]) {
+    fail(
+      `contact.ts: ${constant} is ${declared}, but seo-pages.json site.${field} is ${seoSite[field]}`,
+    );
+  }
+}
+
+// Components should reach for those constants, not retype the number. Authored
+// prose (journal bodies, the 404 dek) is exempt — there the number is copy.
+for (const file of [
+  "src/components/editorial/QuietNav.tsx",
+  "src/components/editorial/QuietFooter.tsx",
+  "src/components/editorial/QuietContact.tsx",
+  "src/components/editorial/StickyHelpBar.tsx",
+  "src/components/editorial/PhoneAction.tsx",
+  "src/pages/Contact.tsx",
+]) {
+  if (/\(646\) 360-0318|\+?16463600318/.test(await read(file))) {
+    fail(`${file}: hardcodes the phone number; import it from @/data/contact`);
+  }
+}
+
 const brandHtml = await read("public/brand-kit/index.html");
 const standaloneHtml = await read("public/brand-kit/little-fight-nyc-brand.html");
 const brandCss = await read("public/brand-kit/brand-kit.css");

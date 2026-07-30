@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import "./StickyHelpBar.css";
+import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 export default function StickyHelpBar() {
   const { pathname } = useLocation();
@@ -36,10 +37,10 @@ export default function StickyHelpBar() {
           analytics.ts auto-tracks tel: clicks as phone_click. */}
       <a
         className="lf-sticky-help__cell lf-sticky-help__cell--call"
-        href="tel:+16463600318"
+        href={PHONE_HREF}
       >
         <span className="lf-mono lf-sticky-help__label">Tech help</span>
-        <span className="lf-sticky-help__detail">(646) 360-0318</span>
+        <span className="lf-sticky-help__detail">{PHONE_DISPLAY}</span>
       </a>
       <Link
         className="lf-sticky-help__cell lf-sticky-help__cell--fit"

@@ -1440,11 +1440,11 @@ function zhSnapshot() {
         .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #8A8A94; }
       </style>
       <a class="lf-seo__skip" href="#main-content">跳到主要内容</a>
-      <header><strong>Little Fight NYC</strong> · <a href="tel:+16463600318">(646) 360-0318</a></header>
+      <header><strong>Little Fight NYC</strong> · <a href="tel:${site.phone}">${site.phoneDisplay}</a></header>
       <main id="main-content">
       <h1>网站按您的生意来做。<em>技术出问题时，有真人帮您。</em></h1>
       <p class="es-sub">我们为您做网站，在技术出故障时马上响应，并帮您砍掉每月吃掉利润的软件费。我们做的一切，都归您所有。</p>
-      <p><a class="es-cta" href="tel:+16463600318">打电话：(646) 360-0318</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">规划我的网站</a></p>
+      <p><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">规划我的网站</a></p>
       <p class="es-sub">咨询免费。先给您一份清楚的方案，再由您决定。</p>
       <h2>我们做什么</h2>
       <ul class="es-cards">
@@ -1469,7 +1469,7 @@ function zhSnapshot() {
       </ul>
       <h2>聊聊吧</h2>
       <p class="es-sub">打电话、发短信、发邮件都行——用您最习惯的语言写。回复您的是真人。没有机器人，没有工单号。</p>
-      <p><a class="es-cta" href="tel:+16463600318">(646) 360-0318</a></p>
+      <p><a class="es-cta" href="tel:${site.phone}">${site.phoneDisplay}</a></p>
       </main>
       <footer>Little Fight NYC · 纽约 · 始于2021 · 依然有人接电话 · <a href="/">查看完整英文网站</a></footer>
     </div>`;
@@ -1505,13 +1505,13 @@ function esSnapshot() {
       <a class="lf-seo__skip" href="#main-content">Saltar al contenido</a>
       <header>
         <strong style="font-family:${display};font-size:20px;">Little Fight NYC</strong>
-        · <a href="tel:+16463600318">${site.phoneDisplay}</a>
+        · <a href="tel:${site.phone}">${site.phoneDisplay}</a>
       </header>
       <main id="main-content">
         <h1>Una página web hecha para su negocio. <em>Ayuda real cuando algo falla.</em></h1>
         <p class="es-sub">Hacemos su página web, contestamos cuando la tecnología falla, y acabamos con las cuotas mensuales que se comen su ganancia. Lo que construimos, es suyo.</p>
         <p>
-          <a class="es-cta" href="tel:+16463600318">Llámenos: ${site.phoneDisplay}</a>
+          <a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a>
           <a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Planear mi sitio web</a>
         </p>
         <p class="es-sub">Consulta gratis. Primero un plan claro; después usted decide.</p>
@@ -1538,7 +1538,7 @@ function esSnapshot() {
         </ul>
         <h2>Hablemos</h2>
         <p class="es-sub">Llame, mande un texto o escriba un correo — en el idioma que le quede cómodo. Le contesta una persona de verdad. Sin robots, sin número de ticket.</p>
-        <p><a class="es-cta" href="tel:+16463600318">${site.phoneDisplay}</a></p>
+        <p><a class="es-cta" href="tel:${site.phone}">${site.phoneDisplay}</a></p>
       </main>
       <footer>
         <p>Little Fight NYC · Nueva York · Desde 2021 · Todavía contestamos el teléfono</p>
@@ -1633,7 +1633,7 @@ function snapshot(page) {
         <p class="lf-seo__home-sub">Fast, findable websites. Urgent tech help. Software you own when monthly tools cost more than they solve.</p>
         <div class="lf-seo__home-cta">
           <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free first read. Clear next step.</span></a>
-          <a class="lf-seo__pill" href="tel:+16463600318">Fix broken tech<span>Call ${site.phoneDisplay}</span></a>
+          <a class="lf-seo__pill" href="tel:${site.phone}">Fix broken tech<span>Call ${site.phoneDisplay}</span></a>
         </div>
         <ul class="lf-seo__home-trust">
           <li>NYC. We show up.</li>
@@ -1654,7 +1654,7 @@ function snapshot(page) {
     ${linkList(proofLinks)}
     <div class="lf-seo__cta">
       <span>Call or book your free Tech Audit</span>
-      <a class="lf-seo__cta-number" href="tel:+16463600318">${site.phoneDisplay}</a>
+      <a class="lf-seo__cta-number" href="tel:${site.phone}">${site.phoneDisplay}</a>
       <p><a href="/tech-audit/">Book your free Tech Audit</a></p>
     </div>
   `;
@@ -1690,7 +1690,7 @@ function snapshot(page) {
     ${referenceBlock}
     <div class="lf-seo__cta">
       <span>${ctaCopy.label}</span>
-      <a class="lf-seo__cta-number" href="tel:+16463600318">${site.phoneDisplay}</a>
+      <a class="lf-seo__cta-number" href="tel:${site.phone}">${site.phoneDisplay}</a>
       <p><a href="/tech-audit/">${ctaCopy.link}</a></p>
     </div>
     </article>
@@ -1714,7 +1714,7 @@ function snapshot(page) {
         </nav>
         <span class="lf-seo__nav-right">
           <span class="lf-seo__replies">Replies at 9am ET</span>
-          <a class="lf-seo__phone" href="tel:+16463600318">${site.phoneDisplay}</a>
+          <a class="lf-seo__phone" href="tel:${site.phone}">${site.phoneDisplay}</a>
           <a class="lf-seo__nav-cta" href="/tech-audit/?intent=website">Plan my website</a>
         </span>
       </header>
