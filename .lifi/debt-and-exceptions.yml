@@ -274,3 +274,24 @@ items:
     close_evidence:
       - "A dated Lighthouse artifact exists for the Legacy Music Group build."
       - "The published figure matches that artifact and names its form factor."
+
+  - id: "I18N-001"
+    type: "scope"
+    status: "open"
+    risk: "low"
+    finding: "The site serves three language surfaces (/, /es/, /zh/) but ships translation resources for one. Shared React chrome — including the analytics-consent panel — renders in English regardless of locale."
+    evidence:
+      - "app/src/i18n/locales/ contains only en/common.json; config.ts states plainly that it 'wires the CAPABILITY to translate — it does not translate anything yet' and that per-locale prerendering is phase-2 work, intentionally not set up."
+      - "/es/ and /zh/ are hand-authored pages, not i18n-rendered; both serve correct <html lang> and localized titles, verified live 2026-07-29."
+      - "The consent panel is opt-in, not a banner: SiteNotices.tsx only renders it on the CONSENT_OPEN_EVENT fired from the footer, so it 'never covers the site on first arrival'. Confirmed absent on a fresh /es/ visit."
+    impact: "A Spanish or Chinese reader who deliberately opens Analytics choices gets an English panel. Limited blast radius, but it is the one place the language promise visibly breaks."
+    mitigation:
+      - "Do not translate single components piecemeal — a half-Spanish page reads worse than a consistent English one."
+      - "When phase-2 i18n happens, add es/zh common.json bundles (import.meta.glob picks them up with no config change) and drive language from the URL prefix rather than the switcher alone."
+      - "Translate the shared chrome as one unit: nav, CTAs, consent panel, footer."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "es and zh bundles exist and the shared chrome renders in the active locale."
+      - "Language follows the URL prefix on /es/ and /zh/ without a manual switch."
