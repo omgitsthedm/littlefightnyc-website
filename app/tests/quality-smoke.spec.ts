@@ -1166,3 +1166,84 @@ test(
     ).toBeGreaterThan(0);
   },
 );
+
+test(
+  "VERA tells assistive tech which filters and tabs are active @chromium-desktop",
+  async ({ page, baseURL }) => {
+    // Every toggle signalled its state with an `is-on` class and nothing else.
+    // Measured live: 36 filter toggles, 5 visually active, 0 with aria-pressed;
+    // 6 role="tab" buttons with 0 aria-selected. A screen reader could read the
+    // labels and never learn which lens, bracket or borough was applied — the
+    // whole filtering model was invisible.
+    const feed = readFileSync(
+      new URL("./fixtures/vera-feed.json", import.meta.url),
+      "utf8",
+    );
+    await page.route("**/vera/data/public.json", (route) =>
+      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
+    );
+    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    await page.locator("tr[data-open]").first().waitFor();
+
+    const TOGGLES =
+      "[data-bracket],[data-unit],[data-transit],[data-lens],[data-view]," +
+      "[data-area],[data-brtile],[data-hoodbar],[data-density],[data-stage],[data-hood]";
+
+    // aria-pressed must exist on every toggle and agree with the visual state.
+    const pressed = await page.evaluate((selector) => {
+      const all = [...document.querySelectorAll(selector)].filter(
+        (el) => el.getAttribute("role") !== "tab",
+      );
+      return {
+        total: all.length,
+        missing: all.filter((el) => !el.hasAttribute("aria-pressed")).length,
+        disagreeing: all.filter(
+          (el) =>
+            (el.getAttribute("aria-pressed") === "true") !==
+            el.classList.contains("is-on"),
+        ).length,
+      };
+    }, TOGGLES);
+    expect(pressed.total, "no toggles found, so this proves nothing").toBeGreaterThan(10);
+    expect(pressed.missing, "toggles without aria-pressed").toBe(0);
+    expect(pressed.disagreeing, "aria-pressed disagrees with the visual state").toBe(0);
+
+    // Every view needs exactly one h1 — six rendered none and About rendered two.
+    for (const view of ["command", "map", "discover", "cases", "toolkit", "pipeline", "about"]) {
+      await page.evaluate((hash) => {
+        window.location.hash = `#/${hash}`;
+      }, view);
+      await page.locator(`.page--${view === "cases" ? "cases" : view}:not([hidden])`).waitFor();
+      expect(
+        await page.locator(`.page:not([hidden]) h1`).count(),
+        `${view} must have exactly one h1`,
+      ).toBe(1);
+    }
+
+    // aria-selected must follow the open tab, not freeze on the first one.
+    await page.evaluate(() => {
+      window.location.hash = "#/discover";
+    });
+    await page.locator("tr[data-open]").first().click();
+    await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
+    for (const tab of ["money", "records", "owner"]) {
+      await page.locator(`[data-insp-tabs] button[data-tab="${tab}"]`).click();
+      await expect
+        .poll(
+          () =>
+            page.evaluate(
+              () =>
+                document
+                  .querySelector('[role="tab"][aria-selected="true"]')
+                  ?.getAttribute("data-tab") ?? "",
+            ),
+          { message: `aria-selected did not follow the ${tab} tab` },
+        )
+        .toBe(tab);
+      expect(
+        await page.locator('[role="tab"][aria-selected="true"]').count(),
+        "more than one tab claims to be selected",
+      ).toBe(1);
+    }
+  },
+);

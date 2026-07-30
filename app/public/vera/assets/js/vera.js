@@ -995,7 +995,10 @@
       '<li><b>No pretending.</b> When VERA cannot verify something, it says so instead of scoring around it.</li></ul>' +
       '<h2>And the part nobody else tells you</h2>' +
       '<p>Hunting owner-direct has a cost, and burying it would make this just another sales pitch. The smallest landlords often sit <b>outside</b> Good Cause eviction protection, outside rent stabilization, and outside the source-of-income rules that make a voucher usable. That is a real trade for a fairer price and a human on the other end — so VERA shows you the trade on every listing rather than selling you the upside alone.</p>' +
-      '<h1 style="font-size:clamp(24px,3vw,34px);margin-top:30px">The hunt, verified.</h1>' +
+      /* Was a second h1 on the same view, which leaves a screen-reader user with
+         two competing page titles and no way to tell which is the real one. It
+         is a section heading; the styling is unchanged. */
+      '<h2 style="font-size:clamp(24px,3vw,34px);margin-top:30px">The hunt, verified.</h2>' +
       '<p><b>VERA</b> — Verified Evaluation for Rental Analysis — is a rental-intelligence system built for one job: finding an honest studio or one-bedroom in New York without wading through brokers, shell companies, and bait listings.</p>' +
       '<h2>What it does every night</h2>' +
       '<p>Six stages: <b>discover</b> sweeps the listing sources · <b>normalize</b> makes them comparable · <b>dedupe</b> collapses the reposts · <b>enrich</b> pulls the building\'s public record — HPD violations, DOB history, litigation, rent-stabilization lists · <b>score</b> weighs it all and writes its reasoning down · <b>publish</b> puts the sanitized result here.</p>' +
@@ -1078,6 +1081,11 @@
     $('[data-insp-title]').textContent = l.title || l.address_normalized || 'Listing';
     $('[data-insp-sub]').textContent = [money(l.rent), l.neighborhood, (unitOf(l) === 'studio' ? 'Studio' : unitOf(l) === '1br' ? '1BR' : l.unit_type)].filter(Boolean).join(' · ');
     $$('[data-insp-tabs] button').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-tab') === inspTab); });
+    /* Switching tabs re-renders the inspector but not the route, so syncing only
+       from renderRoute left aria-selected frozen on whichever tab was open when
+       the panel mounted — the attribute was present and wrong, which is worse
+       than absent. Caught by clicking Money and watching Overview stay true. */
+    syncAriaState($('[data-inspector]'));
 
     /* action bar — put the listing into the hunt */
     var c = caseOf(l.listing_uid);
@@ -1522,6 +1530,55 @@
     renderRoute();
   }
 
+  /* Every toggle in this app signals its state with an `is-on` class and nothing
+     else. Measured live: 36 filter toggles, 5 of them visually active, 0 with
+     aria-pressed; and 6 role="tab" buttons with 0 aria-selected. So a screen
+     reader could read the labels and never learn which lens, bracket, borough
+     or tab was actually applied — the entire filtering model was invisible.
+     role="tab" without aria-selected is also an incomplete pattern: it promises
+     a tablist and then withholds the one attribute that makes it navigable.
+
+     Derived from the class rather than set at each of the eight or so template
+     sites that write `is-on` inline. One pass that reads the visual truth cannot
+     drift from it; eight hand-maintained attributes would.
+
+     Names each view too. Six of the seven rendered no h1 at all and started at
+     h2, so heading navigation gave a screen-reader user no title for the page
+     they were on, and About emitted two h1s. The heading is visually hidden
+     because these views are titled by the rail, not by a banner — the design is
+     right, the document outline was not. */
+  var VIEW_TITLES = {
+    command: 'Command \u2014 tonight\u2019s numbers',
+    map: 'Map \u2014 listings by location',
+    discover: 'Discover \u2014 every listing in the net',
+    cases: 'My hunt \u2014 saved listings',
+    toolkit: 'Toolkit \u2014 move-in costs and the 40\u00d7 wall',
+    pipeline: 'Pipeline \u2014 how tonight\u2019s data was built',
+    about: 'About VERA',
+  };
+
+  var ARIA_TOGGLES = '[data-bracket],[data-unit],[data-transit],[data-lens],[data-view],' +
+    '[data-area],[data-brtile],[data-hoodbar],[data-density],[data-stage],[data-hood]';
+
+  function syncAriaState(scope) {
+    var root = scope || document;
+    $$(ARIA_TOGGLES, root).forEach(function (el) {
+      if (el.getAttribute('role') === 'tab') return;
+      el.setAttribute('aria-pressed', el.classList.contains('is-on') ? 'true' : 'false');
+    });
+    $$('[role="tab"]', root).forEach(function (el) {
+      el.setAttribute('aria-selected', el.classList.contains('is-on') ? 'true' : 'false');
+    });
+  }
+
+  function nameView(page, route) {
+    if (!page || page.querySelector('h1')) return;
+    var h1 = document.createElement('h1');
+    h1.className = 'sr-only';
+    h1.textContent = VIEW_TITLES[route] || 'VERA';
+    page.insertBefore(h1, page.firstChild);
+  }
+
   function renderRoute() {
     if (!D) return;
     $$('.page').forEach(function (p) { p.hidden = p.getAttribute('data-page') !== state.route; });
@@ -1534,6 +1591,8 @@
     else if (state.route === 'toolkit') renderToolkit(page);
     else if (state.route === 'pipeline') renderPipeline(page);
     else renderAbout(page);
+    nameView(page, state.route);
+    syncAriaState();
     /* filters only steer the data views */
     var chrome = $('[data-filters]');
     if (chrome) chrome.hidden = (state.route === 'toolkit' || state.route === 'about' || state.route === 'pipeline' || state.route === 'cases');
