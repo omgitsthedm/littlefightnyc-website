@@ -1430,12 +1430,20 @@
                 ? '<b>You clear it.</b><span>' + money(toolIncome) + ' is above the ' + money(need) + ' a landlord typically wants for ' + money(r) + '/month. Bring pay stubs, an offer letter, and your last two tax returns and you are the easy applicant in the room.</span>'
                 : '<b>You need a guarantor — or a lower bracket.</b><span>At ' + money(r) + '/month most landlords want ' + money(need) + '. You are ' + money(need - toolIncome) + ' short. A guarantor typically needs ' + money(guarNeed) + ' in income, or an institutional guarantor service will stand in for roughly ' + money(Math.round(r * LAW.guarantorTypicalPct)) + ' one time.</span>') +
           '</div>' +
-          '<div class="afford"><p class="afford__label">On ' + (toolIncome ? money(toolIncome) : 'your income') + ', the 40× rule puts you at</p>' +
-          '<p class="afford__big">' + (toolIncome ? money(Math.floor(toolIncome / LAW.incomeRuleX / 25) * 25) : '—') + '<small>/month</small></p>' +
-          (toolIncome ? '<div class="afford__brackets">' + BRACKETS.map(function (br) {
-            var reach = toolIncome / LAW.incomeRuleX >= br.lo;
-            return '<span class="' + (reach ? 'is-reach' : '') + '">' + br.label + (reach ? ' ✓' : ' ✕') + '</span>';
-          }).join('') + '</div>' : '') + '</div>' +
+          /* With no income entered this was a label followed by a lone em dash
+             at clamp(38px, 4.6vw, 60px), which does not read as "no value yet"
+             — it reads as a redaction bar or a failed render. The verdict
+             directly above already says "Slide your income in." and explains
+             the rule, so an empty state here adds nothing. Render it once
+             there is a number to put in it. */
+          (toolIncome
+            ? '<div class="afford"><p class="afford__label">On ' + money(toolIncome) + ', the 40× rule puts you at</p>' +
+              '<p class="afford__big">' + money(Math.floor(toolIncome / LAW.incomeRuleX / 25) * 25) + '<small>/month</small></p>' +
+              '<div class="afford__brackets">' + BRACKETS.map(function (br) {
+                var reach = toolIncome / LAW.incomeRuleX >= br.lo;
+                return '<span class="' + (reach ? 'is-reach' : '') + '">' + br.label + (reach ? ' ✓' : ' ✕') + '</span>';
+              }).join('') + '</div></div>'
+            : '') +
           (guarantorPath ? '<p class="tool__fine">Worth knowing: income rules are landlord convention, not law. A private landlord — the only kind VERA surfaces — can and often does make their own call. That flexibility is the whole reason to skip the corporate portfolios.</p>' : '') +
         '</div>' +
       '</div>' +
