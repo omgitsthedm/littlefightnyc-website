@@ -865,3 +865,54 @@ test(
     expect(outline, "focused rows need a visible ring").not.toBe("none");
   },
 );
+
+test(
+  "VERA hides the views you are not looking at @chromium-desktop",
+  async ({ page, baseURL }) => {
+    // `hidden` lives in the UA stylesheet, so the author rule
+    // `.page { display: grid }` beat it and every inactive view stayed in
+    // layout. Empty ones measured zero and hid the problem; once a view had
+    // rendered, its box stayed. After visiting Discover, its table sat below
+    // the fold on Command, in the accessibility tree, and in innerText —
+    // 40,574 characters on a view with 3,490 characters of content.
+    const feed = readFileSync(
+      new URL("./fixtures/vera-feed.json", import.meta.url),
+      "utf8",
+    );
+    await page.route("**/vera/data/public.json", (route) =>
+      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
+    );
+
+    // Render Discover first so it has real content, then leave it.
+    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    await page.locator("tr[data-open]").first().waitFor();
+    await page.evaluate(() => {
+      window.location.hash = "#/command";
+    });
+    await page.locator(".page--command:not([hidden])").waitFor();
+
+    const leaked = await page.evaluate(() =>
+      [...document.querySelectorAll("#main .page[hidden]")]
+        .filter((section) => section.getBoundingClientRect().height > 0)
+        .map((section) => section.className),
+    );
+    expect(leaked, "a hidden view is still taking up layout").toEqual([]);
+
+    expect(
+      await page.evaluate(() =>
+        [...document.querySelectorAll("#main .page[hidden]")].every(
+          (section) => getComputedStyle(section).display === "none",
+        ),
+      ),
+      "every hidden view must compute to display:none",
+    ).toBe(true);
+
+    // The table from Discover must not be readable while on Command.
+    expect(
+      await page.evaluate(
+        () => document.querySelector("#main")?.innerText.includes("Score") ?? false,
+      ),
+      "Discover's table is still in the visible text of Command",
+    ).toBe(false);
+  },
+);

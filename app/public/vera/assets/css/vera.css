@@ -277,6 +277,14 @@ a { color: inherit; }
 .main { padding: clamp(16px, 2.4vw, 30px); flex: 1; min-width: 0; }
 
 .page { display: grid; gap: clamp(14px, 1.8vw, 22px); }
+/* `hidden` is a UA-stylesheet rule, so the author `display: grid` above beat it
+   and every inactive view stayed in layout. Most were empty and so measured
+   zero, but any view already rendered kept its box: after visiting Discover,
+   its 535px table sat below the fold on Command, in the accessibility tree, and
+   in the page's own innerText — which read 40,574 characters on a view with
+   3,490 characters of content. Same trap already handled for .filters and
+   .inspector below; .page was missed. */
+.page[hidden] { display: none; }
 
 .loading {
   display: grid;
