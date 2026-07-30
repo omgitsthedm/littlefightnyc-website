@@ -134,12 +134,13 @@
 /vera/data/public.json https://vera-pipeline.netlify.app/data/public.json 200
 /vera/artifacts/* https://vera-pipeline.netlify.app/artifacts/:splat  200
 
-# --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
-/*  /404.html  404
-
-# Tech Support Site retired from the Lab (2026-07-29)
+# --- Retired Lab builds (2026-07-29). Tech Support Site, Hero Prototype, and
+# I Am Cooking were removed when the Lab was curated to eight. These were
+# originally appended below the catch-all, which meant they never matched and
+# all three served a 404 instead of returning visitors to the hub.
 /examples/lab/concepts/tech-support/* /examples/lab/ 301
-
-# Hero Prototype + I Am Cooking retired from the Lab (2026-07-29)
 /examples/lab/concepts/hero/* /examples/lab/ 301
 /examples/lab/concepts/chef-drew/* /examples/lab/ 301
+
+# --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
+/*  /404.html  404

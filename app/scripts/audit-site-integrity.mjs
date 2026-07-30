@@ -101,6 +101,59 @@ const redirectRules = redirectsSource
   .filter(([source, , status]) => source && status && status !== "404")
   .map(([source, destination, status]) => ({ source, destination, status }));
 
+// Every rule in file order, including the 404 catch-all that redirectRules
+// deliberately drops. Shadowing is only detectable with the catch-all present,
+// and the catch-all is exactly what silently swallowed three retirement
+// redirects that were appended below it — they served 404s for a day while
+// this audit still passed, because the existing check only asks whether a
+// destination resolves, and /examples/lab/ resolves fine.
+const orderedRedirectRules = redirectsSource
+  .split(/\r?\n/)
+  .map((line) => line.replace(/\s+#.*$/, "").trim())
+  .filter((line) => line && !line.startsWith("#"))
+  .map((line) => line.split(/\s+/))
+  .filter(([source, destination]) => source && destination)
+  .map(([source, destination, status]) => ({ source, destination, status }));
+
+function patternMatches(pattern, pathname) {
+  if (pattern.endsWith("/*")) return pathname.startsWith(pattern.slice(0, -1));
+  if (pattern === "/*") return true;
+  return pattern === pathname;
+}
+
+// Resolve what an earlier rule would actually serve for a given path, so that
+// a redundant rule producing an identical result is not reported. /labs/* ->
+// /examples/lab/:splat already covers /labs/ with the same destination and
+// status; that pairing is deliberate and harmless. What matters is shadowing
+// that CHANGES the outcome — a 404 catch-all swallowing a 301, for instance.
+function resolveDestination(rule, pathname) {
+  if (!rule.destination.includes(":splat")) return rule.destination;
+  const prefix = rule.source.endsWith("/*") ? rule.source.slice(0, -1) : rule.source;
+  const splat = pathname.startsWith(prefix) ? pathname.slice(prefix.length) : "";
+  return rule.destination.replace(":splat", splat);
+}
+
+for (let i = 0; i < orderedRedirectRules.length; i += 1) {
+  const rule = orderedRedirectRules[i];
+  // Probe with the most specific path the rule can serve.
+  const probe = rule.source.endsWith("/*") ? rule.source.slice(0, -1) : rule.source;
+  for (let j = 0; j < i; j += 1) {
+    const earlier = orderedRedirectRules[j];
+    if (earlier.source === rule.source) continue;
+    if (!patternMatches(earlier.source, probe)) continue;
+
+    const earlierServes = resolveDestination(earlier, probe);
+    const ruleServes = resolveDestination(rule, probe);
+    if (earlierServes === ruleServes && earlier.status === rule.status) break;
+
+    failures.push(
+      `_redirects: "${rule.source}" can never fire — "${earlier.source}" appears earlier and serves ` +
+        `${earlierServes} (${earlier.status}) instead of ${ruleServes} (${rule.status})`,
+    );
+    break;
+  }
+}
+
 function redirected(pathname) {
   return redirectRules.some(({ source }) => {
     if (source.endsWith("/*")) {

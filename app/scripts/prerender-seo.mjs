@@ -129,7 +129,14 @@ const areaServed = [
     "10065",
     "10128"
   ].map((postalCode) => ({
-    "@type": "PostalCodeSpecification",
+    // DefinedRegion, not PostalCodeSpecification — that type has never existed
+    // in schema.org (https://schema.org/PostalCodeSpecification is a 404). This
+    // array is spread into areaServed on Organization, ProfessionalService, and
+    // Service, so the invalid @type shipped 40-60x per page. DefinedRegion is a
+    // subclass of Place, which areaServed accepts, and postalCode /
+    // addressCountry / addressRegion are all valid on it — so the ZIP-level
+    // local-SEO signal is preserved exactly, on a type that resolves.
+    "@type": "DefinedRegion",
     "postalCode": postalCode,
     "addressCountry": "US",
     "addressRegion": "NY"
