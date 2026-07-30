@@ -228,7 +228,7 @@ Update: tech-consulting also became an instrument (`TheFreeRead.tsx`, `6a81392`)
 — four lanes → "THE READ" → findings that SORT THEMSELVES into a ranked punch
 list (mechanic = prioritisation, deliberately distinct from AuditBench's
 consolidation). So it's now 4/4 service pages, not 3/4. FlowDiagram stays —
-AnswerDiagram + CaseDiagram still use it.
+AnswerDiagram still uses it. (CaseDiagram was removed 2026-07-29 — it had no importer.)
 
 
 The service pages' static diagrams became bespoke canvas instruments in the
@@ -245,7 +245,7 @@ MoneyLeaving/AuditBench mold (argue the pitch, don't diagram it):
 - **custom-local-websites → `SiteInFourteen.tsx`** (`1729621`): a site assembles
   in a browser frame as a day counter climbs 1→14 (orange build-sweep), then goes
   LIVE (green, "● yourshop.com LIVE") — "Live in 14 days. Or you don't pay."
-  Replaced the TimelineStrip (TimelineStrip stays — CaseDiagram/Contact/TechAudit
+  Replaced the TimelineStrip (TimelineStrip stays — Contact/TechAudit
   still use it).
 - **tech-consulting keeps its FlowDiagram** deliberately: its "free read → ranked
   punch list" is already embodied as an instrument by AuditBench on the sibling
