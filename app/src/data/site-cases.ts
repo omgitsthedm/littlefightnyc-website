@@ -144,8 +144,12 @@ export const caseStudies: CaseStudy[] = [
         evidence: "build",
       },
       {
-        value: "100",
-        label: "Fresh Lighthouse performance audit",
+        // Measured 2026-07-29, Lighthouse 13.4.1: 99 mobile, 100 desktop.
+        // Artifact: .lifi/evidence/lighthouse/ccfilms-2026-07-29.md
+        // The published figure is the mobile one — desktop scores are the
+        // easy half and say little about how the site actually feels.
+        value: "99",
+        label: "Lighthouse performance on mobile",
         evidence: "outcome",
       },
     ],
@@ -175,7 +179,7 @@ export const caseStudies: CaseStudy[] = [
     problem: "CC Films had the raw material for Marrow, but it needed one official source that could serve audiences, press, festivals, reviewers, and search systems without flattening the film into a generic entertainment template.",
     kept: "The analog horror mood, the Marrow poster and trailer, premiere photography, review coverage, core credits, and the existing GitHub-to-Netlify release path.",
     changed: "Reframed the site as an analog screening room across five focused pages. Organized 224 premiere photos into a usable archive, sharpened film and company context, and repaired schema, sitemap, header, privacy, and crawler signals.",
-    result: "A fast official film source at ccfilms.net with a fresh 100 Lighthouse performance audit. The experience holds its cinematic tone on desktop, iPad, and phone while giving every audience a clearer next step.",
+    result: "A fast official film source at ccfilms.net — 99 on mobile and 100 on desktop in a Lighthouse performance audit measured 29 July 2026. The experience holds its cinematic tone on desktop, iPad, and phone while giving every audience a clearer next step.",
     body: [
       "CC Films is the Dallas-based production company behind Marrow, a debut psychological horror feature. It was directed by Mitch McLeod and produced by CC Films under executive producer Carlos R. Cortez. The site has one narrow but important job. Give press, festival audiences, reviewers, and search systems one official place for the film. Watch the trailer. See the cast and credits. Browse premiere photos. Find the right next step.",
       "The site already had the right raw material. A strong poster. A trailer. Festival-premiere context. Review coverage. Known cast names. A deep gallery of premiere photos. We kept the analog, VHS-flavored mood and the existing release path. The work was making the site behave like an official source instead of a loose brochure, with fewer places where a visitor or crawler had to guess.",

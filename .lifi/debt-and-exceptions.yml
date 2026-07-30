@@ -253,3 +253,24 @@ items:
       - "Lockfiles resolve only fixed brace-expansion versions on affected paths."
       - "A clean dependency scan no longer reports either advisory."
       - "Tooling, build, generation, and release checks pass without suppression."
+
+  - id: "PROOF-002"
+    type: "claim-substantiation"
+    status: "open"
+    risk: "moderate"
+    finding: "The Legacy Music Group case publishes a 97 Lighthouse performance figure as evidence type \"outcome\", with no stored artifact and no externally reachable URL to re-measure against."
+    evidence:
+      - "app/src/data/site-cases.ts — slug legacy-music-group, stat value \"97\", label \"Fresh Lighthouse performance audit\", evidence: \"outcome\"."
+      - "The same case states the external link is withheld until the approved build sits on a client-owned domain, so the figure cannot be independently reproduced from outside."
+      - "The sibling CC Films claim was re-measured on 2026-07-29 and archived at .lifi/evidence/lighthouse/ccfilms-2026-07-29.md; no equivalent artifact exists for this one."
+    impact: "A published performance number that cannot be produced on request is indistinguishable from an invented one if a prospect or the client asks for the source."
+    mitigation:
+      - "Run Lighthouse against the current release-candidate URL and archive the report under .lifi/evidence/lighthouse/."
+      - "Publish the mobile figure rather than desktop, per Frontend Modernization Brief section 14."
+      - "If the number cannot be reproduced, restate the claim in terms that the build evidence does support."
+    owner: "David Marsh"
+    review_by: null
+    accepted_risk_expiry: null
+    close_evidence:
+      - "A dated Lighthouse artifact exists for the Legacy Music Group build."
+      - "The published figure matches that artifact and names its form factor."
