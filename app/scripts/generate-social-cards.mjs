@@ -109,6 +109,19 @@ const cards = [
     size: 96,
   },
   {
+    // /vera/ is a hand-authored page outside the React app, so it never got a
+    // card from the prerenderer. The 72nd Street IRT kiosk is deliberate: VERA
+    // scores subway proximity, and the block behind it is the residential
+    // Upper West Side the tool is actually searching.
+    file: "og-vera.jpg",
+    category: "VERA / NYC RENTAL INTELLIGENCE",
+    title: "Every listing checked against city records.",
+    note: "No brokers. No corporate landlords. No scams.",
+    image: "assets/hero-uws-72nd.webp",
+    position: "38% center",
+    size: 82,
+  },
+  {
     file: "og-nationwide.jpg",
     category: "CUSTOM WEBSITES / ALL 50 STATES",
     title: "Built in New York. Works anywhere.",
