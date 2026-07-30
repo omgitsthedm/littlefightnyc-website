@@ -104,8 +104,16 @@ function esc(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
+// The `number` annotation is a promise the compiler cannot keep here: this data
+// arrives as JSON from a language model, and the call sites reach it through an
+// `as unknown as` cast. String.prototype.toLocaleString exists and returns the
+// string unchanged, so a non-number used to pass straight through into the
+// report HTML unescaped. Coerce at the sink as well as the source — a future
+// field that forgets coercion should render "$0", not run.
 function formatCurrency(n: number): string {
-  return n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  const value = Number(n);
+  const safe = Number.isFinite(value) ? value : 0;
+  return safe.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 }
 
 function severityColor(severity: string, primary: string): string {

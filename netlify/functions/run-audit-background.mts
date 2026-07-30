@@ -455,6 +455,30 @@ function coerceHaikuResult(raw: unknown): HaikuResult {
       ? Math.round(percentile)
       : undefined;
 
+  // revenueImpact.low/high reach the report through formatCurrency, which is
+  // typed (n: number) but only ever calls n.toLocaleString(). String has that
+  // method too and returns the string verbatim, so a model-supplied string was
+  // interpolated into the report HTML unescaped — stored XSS on the apex
+  // origin, in a document the agency emails to prospects. The `...src` spread
+  // below carried it: every other field is overridden with a coerced value,
+  // this one was not, and the `as unknown as` cast stopped the compiler from
+  // ever pointing that out.
+  // Finite is not the same as plausible: "9e99" coerces cleanly and would print
+  // as a $9 nonillion revenue estimate in a report going to a small-business
+  // owner. Cap at a figure no honest estimate for this audience will reach.
+  const MAX_REVENUE_ESTIMATE = 10_000_000;
+  const money = (v: unknown, fallback: number): number => {
+    const n = Number(v);
+    if (!Number.isFinite(n) || n < 0) return fallback;
+    return Math.min(Math.round(n), MAX_REVENUE_ESTIMATE);
+  };
+  const rawImpact = (src.revenueImpact ?? {}) as Record<string, unknown>;
+  const revenueImpact = {
+    low: money(rawImpact.low, 0),
+    high: money(rawImpact.high, 0),
+    explanation: str(rawImpact.explanation),
+  };
+
   return {
     ...src,
     companyName: str(src.companyName),
@@ -465,6 +489,7 @@ function coerceHaikuResult(raw: unknown): HaikuResult {
     executiveSummary: str(src.executiveSummary),
     findings,
     roadmap,
+    revenueImpact,
     benchmarkPercentile,
   } as unknown as HaikuResult;
 }
