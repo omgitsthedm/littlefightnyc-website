@@ -9,9 +9,11 @@
  * Published (all `@property`-registered in force-field.css so the compositor can
  * interpolate them):
  *   --ptr-x, --ptr-y   pointer position, 0..1 of viewport (smoothed, inertial)
- *   --ptr-active       1 while the pointer is moving, eases to 0 at rest
- *   --scroll-vel       scroll velocity, roughly -1..1 (down positive), smoothed
- *   --scroll-progress  document scroll progress, 0..1
+ *
+ * --ptr-active, --scroll-vel and --scroll-progress were published here too,
+ * and nothing ever read them. They cost a scroll listener and three :root
+ * custom-property writes per frame, each invalidating style for the whole
+ * document. Removed 2026-07-29; re-add with a consumer, not before.
  *
  * Laws honored: reduced-motion → the ticker never runs and forces sit at neutral
  * rest (Law 7 / Reward-never-tax); tab hidden → paused; no subscribers → not
@@ -38,12 +40,13 @@ export function ForceFieldProvider({ children }: { children: ReactNode }) {
     if (typeof window === "undefined") return;
 
     const root = document.documentElement;
+    // Only --ptr-x and --ptr-y are read by anything (PageHero.css and
+    // QuietHero.css). --ptr-active, --scroll-vel and --scroll-progress were
+    // published on every frame and consumed by nobody: three inherited custom
+    // properties set on :root, each invalidating style for the whole document.
     const write = (f: Forces) => {
       root.style.setProperty("--ptr-x", f.ptrX.toFixed(4));
       root.style.setProperty("--ptr-y", f.ptrY.toFixed(4));
-      root.style.setProperty("--ptr-active", f.ptrActive.toFixed(4));
-      root.style.setProperty("--scroll-vel", f.scrollVel.toFixed(4));
-      root.style.setProperty("--scroll-progress", f.scrollProgress.toFixed(4));
     };
 
     // Touch devices do not have a useful pointer-parallax interaction, and
@@ -62,23 +65,10 @@ export function ForceFieldProvider({ children }: { children: ReactNode }) {
     let tx = 0.5,
       ty = 0.5,
       lastMoveAt = 0;
-    let lastScrollY = window.scrollY;
-    let scrollVelTarget = 0;
-
     const onMove = (e: PointerEvent) => {
       tx = clampUnit(e.clientX / window.innerWidth);
       ty = clampUnit(e.clientY / window.innerHeight);
       lastMoveAt = performance.now();
-      start();
-    };
-    const onScroll = () => {
-      const y = window.scrollY;
-      const dy = y - lastScrollY;
-      lastScrollY = y;
-      // normalize by a viewport-ish window; clamp to a sane band
-      scrollVelTarget = clamp(dy / 40, -1, 1);
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      forces.current.scrollProgress = clampUnit(y / max);
       start();
     };
 
@@ -88,18 +78,12 @@ export function ForceFieldProvider({ children }: { children: ReactNode }) {
       f.ptrX += (tx - f.ptrX) * 0.12;
       f.ptrY += (ty - f.ptrY) * 0.12;
       const movingRecently = now - lastMoveAt < 120;
-      f.ptrActive += ((movingRecently ? 1 : 0) - f.ptrActive) * 0.1;
-      // scroll velocity decays toward its target, then toward zero
-      f.scrollVel += (scrollVelTarget - f.scrollVel) * 0.2;
-      scrollVelTarget *= 0.85;
       write(f);
 
       // Sleep the ticker once everything has settled to rest — no wasted frames.
       const atRest =
         Math.abs(tx - f.ptrX) < 0.001 &&
         Math.abs(ty - f.ptrY) < 0.001 &&
-        f.ptrActive < 0.01 &&
-        Math.abs(f.scrollVel) < 0.001 &&
         !movingRecently;
       if (atRest || document.hidden) {
         running = false;
@@ -119,14 +103,11 @@ export function ForceFieldProvider({ children }: { children: ReactNode }) {
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
-    onScroll(); // seed scroll-progress at mount
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
@@ -136,7 +117,4 @@ export function ForceFieldProvider({ children }: { children: ReactNode }) {
 
 function clampUnit(v: number) {
   return v < 0 ? 0 : v > 1 ? 1 : v;
-}
-function clamp(v: number, a: number, b: number) {
-  return v < a ? a : v > b ? b : v;
 }

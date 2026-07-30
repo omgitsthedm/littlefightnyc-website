@@ -7,15 +7,16 @@
 
 import { createContext, useContext } from "react";
 
+// ptrActive, scrollVel and scrollProgress were part of this shape and were
+// published every frame, but nothing ever read them — so the type promised
+// more than the field was worth maintaining. Narrowed 2026-07-29 to what the
+// provider actually publishes and two stylesheets actually consume.
 export type Forces = {
   ptrX: number;
   ptrY: number;
-  ptrActive: number;
-  scrollVel: number;
-  scrollProgress: number;
 };
 
-export const NEUTRAL: Forces = { ptrX: 0.5, ptrY: 0.5, ptrActive: 0, scrollVel: 0, scrollProgress: 0 };
+export const NEUTRAL: Forces = { ptrX: 0.5, ptrY: 0.5 };
 
 export const ForceContext = createContext<{ get: () => Forces } | null>(null);
 

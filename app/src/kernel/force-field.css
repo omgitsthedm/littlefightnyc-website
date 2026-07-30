@@ -17,18 +17,8 @@
   inherits: true;
   initial-value: 0.5;
 }
-@property --ptr-active {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --scroll-vel {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-@property --scroll-progress {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
+/* --ptr-active, --scroll-vel and --scroll-progress were registered and
+ * published here too. Nothing ever read them — not one stylesheet, not one
+ * component — so they cost a scroll listener and three inherited :root writes
+ * per animation frame for no output. Removed 2026-07-29 along with the
+ * listener in ForceField.tsx. Re-register alongside a real consumer. */
