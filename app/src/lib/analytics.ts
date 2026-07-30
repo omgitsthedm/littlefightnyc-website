@@ -347,6 +347,68 @@ export function trackPageView(path: string, title: string) {
   }, true);
 }
 
+/**
+ * Expire the first-party cookies the vendors dropped.
+ *
+ * Withdrawing consent told each vendor to stop — gtag consent update, Clarity
+ * consentv2, ttq.revokeConsent — but left every cookie already on the device.
+ * Measured after granting then withdrawing on production: _ttp,
+ * _tt_enable_cookie, ttcsid and ttcsid_<id> all still on .littlefightnyc.com,
+ * expiring 2027-08-24. Thirteen months of a durable identifier tying that
+ * browser to a TikTok ad profile, outliving the opt-out meant to end it.
+ *
+ * Blocking future writes is not withdrawal while the identifier persists.
+ *
+ * Matched by prefix because vendors mint per-property names — ttcsid_<id>,
+ * _ga_<id>. Cleared across the bare host and the dot-prefixed domain, and both
+ * the root and current path, because a cookie is only removable by a write
+ * matching the domain and path it was set with, and we do not know which the
+ * vendor used.
+ *
+ * Out of reach: _ttp is also set on .tiktok.com. That is TikTok's cookie on
+ * TikTok's domain — no script on this origin can touch it. That one is between
+ * the visitor's browser and TikTok.
+ */
+const VENDOR_COOKIE_PREFIXES = [
+  "_ttp",
+  "_tt_enable_cookie",
+  "ttcsid",
+  "_ga",
+  "_gid",
+  "_gat",
+  "_clck",
+  "_clsk",
+  "CLID",
+];
+
+function clearVendorCookies() {
+  if (typeof document === "undefined") return;
+
+  const host = window.location.hostname;
+  const bare = host.replace(/^www\./, "");
+  const domains = [undefined, host, `.${host}`, bare, `.${bare}`];
+  const paths = ["/", window.location.pathname];
+
+  const present = document.cookie
+    .split(";")
+    .map((pair) => pair.split("=")[0]?.trim())
+    .filter((name): name is string => Boolean(name));
+
+  for (const name of new Set(present)) {
+    if (!VENDOR_COOKIE_PREFIXES.some((prefix) => name === prefix || name.startsWith(prefix))) {
+      continue;
+    }
+    for (const domain of domains) {
+      for (const path of paths) {
+        document.cookie =
+          `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=${path}` +
+          (domain ? `; domain=${domain}` : "") +
+          "; SameSite=Lax";
+      }
+    }
+  }
+}
+
 export function installAnalyticsHooks() {
   scheduleVendorBoot();
   let scrollTracked = false;
@@ -463,6 +525,7 @@ export function installAnalyticsHooks() {
       analytics_Storage: "denied",
     });
     window.ttq?.revokeConsent?.();
+    clearVendorCookies();
   });
 
   return () => {

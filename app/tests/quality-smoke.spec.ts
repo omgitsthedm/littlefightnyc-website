@@ -1066,3 +1066,60 @@ test(
     }
   },
 );
+
+test(
+  "withdrawing analytics consent removes the identifiers @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    // Withdrawal told each vendor to stop but left every cookie already on the
+    // device. Measured on production after granting then withdrawing: _ttp,
+    // _tt_enable_cookie, ttcsid and ttcsid_<id> still on .littlefightnyc.com,
+    // expiring 2027-08-24 — thirteen months of a durable identifier surviving
+    // the opt-out meant to end it.
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("lf_analytics_consent_v1", "granted");
+      } catch {
+        /* storage blocked; the assertions below still hold */
+      }
+    });
+    await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+
+    // The real pixels do not boot against a local build, so plant the cookies
+    // they leave — including the per-property names, which a fixed list of
+    // exact matches would miss.
+    await page.evaluate(() => {
+      const expires = new Date(Date.now() + 400 * 864e5).toUTCString();
+      for (const name of [
+        "_ttp",
+        "_tt_enable_cookie",
+        "ttcsid",
+        "ttcsid_ABC123",
+        "_ga",
+        "_ga_XYZ",
+        "_clck",
+      ]) {
+        document.cookie = `${name}=testvalue; expires=${expires}; path=/`;
+      }
+    });
+    expect((await context.cookies()).length, "fixture cookies were not set").toBeGreaterThan(0);
+
+    await page.evaluate(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "denied");
+      window.dispatchEvent(new CustomEvent("lf:analytics-consent", { detail: "denied" }));
+    });
+
+    await expect
+      .poll(
+        async () =>
+          (await context.cookies())
+            .map((cookie) => cookie.name)
+            .filter((name) => /^(_tt|ttcsid|_ga|_gid|_gat|_cl|CLID)/.test(name)),
+        { message: "vendor identifiers survived consent withdrawal" },
+      )
+      .toEqual([]);
+
+    await context.close();
+  },
+);
