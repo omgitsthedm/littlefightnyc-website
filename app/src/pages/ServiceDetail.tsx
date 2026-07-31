@@ -41,7 +41,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",
-    lede: "Tell us about your business. If we build your site, it is live in 14 days or you don't pay.",
+    lede: "Tell us about your business. If we build your site, it is live in 14 days or you don’t pay.",
   },
   "business-systems": {
     heading: "Tired of running it all by hand?",
@@ -300,7 +300,7 @@ export default function ServiceDetail() {
       </section>
 
       <QuietContact
-        heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what's broken."}
+        heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what’s broken."}
         lede={CLOSING_LINE[service.slug]?.lede}
       />
     </>

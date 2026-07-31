@@ -67,7 +67,7 @@ const AREA_FIGURE: Record<string, { src: string; alt: string; caption: string }>
   "greenwich-village": {
     src: "/assets/figure-greenwich-pizza.webp",
     alt: "A busy Greenwich Village pizza corner seen from above, people crossing toward it",
-    caption: "The line out the door didn't happen by accident.",
+    caption: "The line out the door didn’t happen by accident.",
   },
   "the-bronx": {
     src: "/assets/figure-bronx-pizza.webp",
@@ -82,7 +82,7 @@ const AREA_FIGURE: Record<string, { src: string; alt: string; caption: string }>
   chelsea: {
     src: "/assets/figure-chelsea-florist.webp",
     alt: "Chelsea Florist's storefront glowing pink at night, gate half open",
-    caption: "Open late, lit up, easy to find. That's the whole playbook.",
+    caption: "Open late, lit up, easy to find. That’s the whole playbook.",
   },
   "lower-east-side": {
     src: "/assets/figure-les-bottleshop.webp",
@@ -306,7 +306,7 @@ export default function AreaDetail() {
       </section>
 
       <QuietContact
-        heading={`Near ${area.name}? We're close.`}
+        heading={`Near ${area.name}? We’re close.`}
         lede="We work in your neighborhood. Call or text 9am-9pm New York time and we will set the right next move."
       />
     </>

@@ -8,7 +8,7 @@ import "@/styles/editorial/legacy-overrides.css";
 import "@/styles/editorial/tiled-layout.css";
 
 // RouteMeta keeps <head> in sync on client-side navigation. The prerendered
-// HTML already carries correct per-page meta on first paint, so it's not on the
+// HTML already carries correct per-page meta on first paint, so it’s not on the
 // critical path — lazy-load it off the shell's eager chunk.
 const RouteMeta = lazy(() =>
   importWithRetry(() => import("@/components/RouteMeta")),

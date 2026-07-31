@@ -65,7 +65,7 @@ const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
 
 const URGENCY_OPTIONS = [
   {
-    label: "It's hurting customers right now",
+    label: "It’s hurting customers right now",
     copy: "Broken checkout, dead site, or missed calls today.",
     icon: Flame,
   },
@@ -204,7 +204,7 @@ function writeDraft(draft: Draft): void {
   try {
     window.sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
   } catch {
-    /* storage unavailable — flow still works, it just won't remember */
+    /* storage unavailable — flow still works, it just won’t remember */
   }
 }
 
@@ -722,7 +722,7 @@ export default function TechAudit() {
                       <option value="text">Text me</option>
                       <option value="phone">Call me</option>
                       <option value="email">Email me</option>
-                      <option value="fastest">Whatever's fastest</option>
+                      <option value="fastest">Whatever’s fastest</option>
                     </select>
                   </div>
 

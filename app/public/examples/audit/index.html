@@ -544,7 +544,7 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
         // The loop used to run forever: every failure was swallowed and
         // retried on the next tick, so if the background run died the visitor
         // watched the bar creep for as long as they were willing to wait, with
-        // no message and no way out. The pipeline's own ceiling is a 60s model
+        // no message and no way out. The pipeline’s own ceiling is a 60s model
         // call, so three minutes is generous; after that, say so and give them
         // the buttons back.
         var POLL_CEILING = Math.ceil(180000 / pollInterval);

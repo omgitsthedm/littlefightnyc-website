@@ -47,7 +47,7 @@ export default function QuietNav() {
   const panelRef = useRef<HTMLDivElement>(null);
 
   // The panel closes on link tap (see the panel NavLinks) — no route-change
-  // effect, so there's no synchronous setState-in-effect.
+  // effect, so there’s no synchronous setState-in-effect.
 
   // Chrome condenses + gains a glass floor once the top sentinel leaves view.
   // IntersectionObserver avoids continuous main-thread work while scrolling.
@@ -79,7 +79,7 @@ export default function QuietNav() {
   useEffect(() => {
     if (!open) return;
 
-    // Lock background scroll so the page behind the modal drawer can't move.
+    // Lock background scroll so the page behind the modal drawer can’t move.
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 

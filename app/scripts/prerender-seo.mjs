@@ -770,7 +770,7 @@ function routeImagePreload(page) {
 
   // Inner pages whose og image IS the rendered PageHero hero (the hero-*
   // naming convention — og and PageHero were synced in the 2026-07-19 photo
-  // waves): preload with EXACTLY PageHero's srcset/sizes so the preload and
+  // waves): preload with EXACTLY PageHero’s srcset/sizes so the preload and
   // the hydrated <img> resolve to one identical candidate (the home-hero
   // lesson: a disagreeing preload double-downloads the LCP).
   if (/\/assets\/hero-[a-z0-9-]+\.webp$/.test(asset)) {
@@ -848,11 +848,11 @@ function siteModulePreload(page) {
 // Journal post bodies are lazy-loaded from a per-slug chunk (import.meta.glob in
 // JournalPost.tsx). Preload the EXACT body chunk for this post so it lands with
 // the route chunk and is ready by the time the component mounts — the loading
-// skeleton then never flashes over the snapshot's already-painted article. The
+// skeleton then never flashes over the snapshot’s already-painted article. The
 // chunk is named "<slug>-<hash>.js"; the hash segment is alphanumeric/underscore
-// (no dash), so this won't mis-match a longer slug that starts with this one.
+// (no dash), so this won’t mis-match a longer slug that starts with this one.
 // If naming ever changes and no match is found, we simply skip the hint (the
-// component's 220ms skeleton delay still prevents the flash on fast loads).
+// component’s 220ms skeleton delay still prevents the flash on fast loads).
 function journalBodyModulePreload(page) {
   const m = page.path.match(/^\/journal\/([^/]+)\/$/);
   if (!m) return "";
@@ -1186,7 +1186,7 @@ function snapshotParagraphs(page) {
  * type-specific list — answerGuide.faq, area.faq, glossaryTerm.faq, or
  * service.faq. Where the two differed, the page published FAQPage markup for
  * Q&A a reader could not find: 16 pairs across 8 pages, question and answer
- * both absent. Google's structured data policy requires FAQ content to be
+ * both absent. Google’s structured data policy requires FAQ content to be
  * present on the page, and markup describing invisible content is what a
  * manual "Spammy structured markup" action exists for.
  *
@@ -1235,7 +1235,7 @@ function paragraphsHtml(items) {
 
 // The real authored writing, emitted as crawler-visible HTML per page type.
 // Before this, GPTBot/ClaudeBot/PerplexityBot saw only a shortAnswer + stock
-// boilerplate on every route — the site's best content was JS-gated.
+// boilerplate on every route — the site’s best content was JS-gated.
 function authoredContentHtml(page) {
   if (page.path === "/areas/") {
     const links = siteContent.areaPages
@@ -1337,7 +1337,7 @@ function authoredContentHtml(page) {
     return [
       paragraphsHtml([s.plain, s.outcome, ...(s.whatItDoes ?? [])]),
       (s.includes?.length ?? 0) > 0
-        ? `<h2>What's included</h2>\n<ul>${s.includes.map((x) => `<li>${escapeHtml(x)}</li>`).join("\n")}</ul>`
+        ? `<h2>What’s included</h2>\n<ul>${s.includes.map((x) => `<li>${escapeHtml(x)}</li>`).join("\n")}</ul>`
         : "",
       (s.commonIssues?.length ?? 0) > 0
         ? `<h2>What we actually walk into</h2>\n<ul>${s.commonIssues.map((x) => `<li><strong>${escapeHtml(x.title ?? "")}</strong> ${escapeHtml(x.body ?? "")}</li>`).join("\n")}</ul>`
@@ -1356,13 +1356,13 @@ function authoredContentHtml(page) {
 
   if (page.industry?.html) {
     // Same pipeline the app uses (prepareIndustryHtml, NOT bare
-    // prepareLegacyHtml) — the app's IndustryDetail flattens the card
+    // prepareLegacyHtml) — the app’s IndustryDetail flattens the card
     // <article>s and lifts the duplicate <h1>; rendering the snapshot through
     // anything else re-introduces the drift this file exists to prevent.
     let body = prepareIndustryHtml(page.industry.html).body;
     // Crawler parity with AuditMapDiagram: the app draws the customer path as
     // a diagram; bots get the same stations as a semantic ordered list,
-    // inserted right after the Audit map section's heading. No match → body
+    // inserted right after the Audit map section’s heading. No match → body
     // ships unchanged (never risk breaking authored markup).
     const stations = AUDIT_MAP_PATHS[page.industry.slug] ?? GENERIC_AUDIT_PATH;
     const pathOl = `<p>The customer path we map:</p>\n<ol>${stations.map((s) => `<li>${escapeHtml(s)}</li>`).join("")}</ol>`;
@@ -1377,7 +1377,7 @@ function authoredContentHtml(page) {
 }
 
 // The Tech Audit intake form itself, statically — the #1 conversion page previously
-// had ZERO form markup before hydration (no-JS visitors couldn't submit).
+// had ZERO form markup before hydration (no-JS visitors couldn’t submit).
 function techAuditFormHtml(page) {
   if (page.path !== "/tech-audit/" && page.path !== "/tech-audit/") return "";
   return `
@@ -1395,7 +1395,7 @@ function techAuditFormHtml(page) {
           <option value="text">Text me</option>
           <option value="phone">Call me</option>
           <option value="email">Email me</option>
-          <option value="fastest">Whatever's fastest</option>
+          <option value="fastest">Whatever’s fastest</option>
         </select>
       </label></p>
       <p><label>What feels broken, expensive, slow, or disconnected? <textarea name="message" rows="5" required></textarea></label></p>
@@ -1486,7 +1486,7 @@ function founderBlock(page) {
   if (page.path !== "/about/") return "";
   return `
     <h2>How we work</h2>
-    <p>Founded in 2021, Little Fight NYC runs on a real standard: one accountable owner on every project, a two-hour callback window, and on-site help within a day when it's urgent. We're building the tech service company New York's small businesses deserve — the one the chains never sent.</p>
+    <p>Founded in 2021, Little Fight NYC runs on a real standard: one accountable owner on every project, a two-hour callback window, and on-site help within a day when it’s urgent. We’re building the tech service company New York’s small businesses deserve — the one the chains never sent.</p>
   `;
 }
 
@@ -1525,12 +1525,27 @@ function legalBlock(page) {
   `;
 }
 
-// The four time promises are the business's strongest trust signals and were
+// The four time promises are the business’s strongest trust signals and were
 // entirely absent from crawler-visible HTML. Every snapshot now carries them.
-function promisesBlock() {
+//
+// Three of the four travel. "On-site within 24 hours" does not: it is a New
+// York promise, and it was being appended to /nationwide/ — the page that
+// exists to explain remote work, that says a website does not care about zip
+// codes, and that describes how a remote build runs. A prospect in Phoenix read
+// the site offering to turn up at their door tomorrow.
+//
+// The page’s own copy already handles this honestly ("run it yourself, or keep
+// us on call, like our New York clients do"), so only the injected block was
+// out of step. It now drops the clause it cannot keep rather than restating
+// one the page has already answered better.
+function promisesBlock(page) {
+  const onSite =
+    page?.path === "/nationwide/"
+      ? ""
+      : " When something urgent breaks, we’re usually on-site within 24 hours.";
   return `
     <h2>What you can count on</h2>
-    <p>Every consult is free. Websites usually ship within 14 days — if our side misses the date, you don't pay. When something urgent breaks, we're usually on-site within 24 hours. Callbacks come within 2 hours, 9am–9pm Eastern.</p>
+    <p>Every consult is free. Websites usually ship within 14 days — if our side misses the date, you don’t pay.${onSite} Callbacks come within 2 hours, 9am–9pm Eastern.</p>
   `;
 }
 
@@ -1690,7 +1705,7 @@ function snapshot(page) {
   const sans = `"Barlow", -apple-system, "Segoe UI", system-ui, sans-serif`;
   const display = `"Oswald Variable", "Oswald", "Oswald Fallback", "Barlow", sans-serif`;
   const mono = `"JetBrains Mono", ui-monospace, Menlo, monospace`;
-  // lf-seo__skip mirrors the app's .lf-skip-link. The React shell renders its
+  // lf-seo__skip mirrors the app’s .lf-skip-link. The React shell renders its
   // own, but this prerendered body is what a keyboard user gets before
   // hydration and all a no-JS user ever gets — without it, their only route
   // past five nav links and a phone number is to tab through them again on
@@ -1773,7 +1788,7 @@ function snapshot(page) {
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
     ${methodBlock(page)}
-    ${promisesBlock()}
+    ${promisesBlock(page)}
     <h2>What we fix</h2>
     ${linkList(usefulLinksFor(page))}
     <h2>Recent proof</h2>
@@ -1811,7 +1826,7 @@ function snapshot(page) {
     ${legalBlock(page)}
     ${techAuditFormHtml(page)}
     ${wantsMethod ? methodBlock(page) : ""}
-    ${promisesBlock()}
+    ${promisesBlock(page)}
     <h2>Useful Little Fight paths</h2>
     ${linkList(usefulLinksFor(page))}
     ${referenceBlock}

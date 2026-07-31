@@ -9,7 +9,7 @@ import { importWithRetry } from "@/lib/importWithRetry";
  *
  * The moment a second `src/i18n/locales/<code>/common.json` lands,
  * HAS_TRANSLATIONS flips true and the real switcher (which pulls in i18next)
- * loads as its own chunk. Zero cost until there's something to switch to.
+ * loads as its own chunk. Zero cost until there’s something to switch to.
  */
 const LanguageSwitcherInner = lazy(() =>
   importWithRetry(() => import("./LanguageSwitcherInner")),

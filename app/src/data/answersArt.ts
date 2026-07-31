@@ -1,13 +1,13 @@
-/* answersArt — the /answers/ template's structural map.
+/* answersArt — the /answers/ template’s structural map.
  *
  * Three derived layers, all keyed off the authored guides in site.ts:
  *  1. slug → archetype: which of the 6 branded art pieces a guide carries
  *     (public/assets/answers-<archetype>.webp, generated in the journal-art
  *     language; scripts/prerender-seo.mjs mirrors this for og:image).
- *  2. clusters: the hub's symptom grouping — every slug appears exactly once.
+ *  2. clusters: the hub’s symptom grouping — every slug appears exactly once.
  *  3. verdicts: for guides whose authored copy contrasts two roads, the SAME
  *     contrast restated as a good-if / skip-if table. Every line is tightened
- *     from the guide's own sections in site.ts — nothing invented, nothing
+ *     from the guide’s own sections in site.ts — nothing invented, nothing
  *     priced.
  */
 
@@ -70,7 +70,7 @@ export type AnswerCluster = {
   key: string;
   /** Mono section label. */
   label: string;
-  /** The symptom, in the owner's words. */
+  /** The symptom, in the owner’s words. */
   title: string;
   slugs: string[];
 };
@@ -171,7 +171,7 @@ export type AnswerVerdict = {
   /** Mono kicker above the table. */
   kicker: string;
   columns: [AnswerVerdictColumn, AnswerVerdictColumn];
-  /** The guide's own honesty line, quoted under the table. */
+  /** The guide’s own honesty line, quoted under the table. */
   note?: string;
 };
 
@@ -336,7 +336,7 @@ export const ANSWER_VERDICTS: Record<string, AnswerVerdict> = {
         ],
         skipIf: [
           "You would force it to be a database — messy tables that hide errors",
-          "Nobody owns the workspace's tidiness — it decays into a junk drawer within months",
+          "Nobody owns the workspace’s tidiness — it decays into a junk drawer within months",
         ],
       },
     ],
@@ -418,7 +418,7 @@ export const ANSWER_VERDICTS: Record<string, AnswerVerdict> = {
           "You want one accountable person, a shorter timeline, and promises in writing",
         ],
         skipIf: [
-          "The scope genuinely needs a big firm's bench",
+          "The scope genuinely needs a big firm’s bench",
         ],
       },
     ],

@@ -234,7 +234,7 @@ function draw(
     cx.fillStyle = passed ? "rgba(250,180,120,.95)" : "rgba(190,195,205,.6)";
     cx.font = "500 " + Math.max(8, (H * (wide ? 0.028 : 0.024)) | 0) + "px " + MONO;
     cx.textAlign = "center";
-    // Narrow spine can't fit both labels on one line — stagger them. The
+    // Narrow spine can’t fit both labels on one line — stagger them. The
     // higher-x milestone goes ABOVE (the end labels IT BREAKS / BACK UP sit
     // below the spine, so a below label near the end would collide with them);
     // the middle one goes below, clear of everything. Wide keeps both above.

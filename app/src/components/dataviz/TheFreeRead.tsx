@@ -7,7 +7,7 @@ import { rr, glow, DISP, MONO, ORANGE, useInstrumentCanvas } from "./instrument"
  * Four lanes feed the free read — the tool stack + costs, the website, the
  * Google profile + lead path, the workflow. Out come the findings, which then
  * SORT themselves into one ranked punch list: what to fix first, ranked by
- * customer impact, then cost, then what can wait. One causal image: you don't
+ * customer impact, then cost, then what can wait. One causal image: you don’t
  * get a pile of problems, you get an ordered list — and the first hour is free.
  *
  * Distinct from AuditBench (which consolidates scattered problems into one
@@ -21,7 +21,7 @@ import { rr, glow, DISP, MONO, ORANGE, useInstrumentCanvas } from "./instrument"
  */
 
 const LANES = ["TOOL STACK + COSTS", "WEBSITE", "GOOGLE + LEADS", "WORKFLOW"] as const;
-// Short labels for the tall/phone layout, where four full labels won't fit across.
+// Short labels for the tall/phone layout, where four full labels won’t fit across.
 const LANES_SHORT = ["TOOLS + $", "SITE", "GOOGLE", "WORKFLOW"] as const;
 
 // Findings, in FINAL ranked order (index = rank). Scatter order is a fixed

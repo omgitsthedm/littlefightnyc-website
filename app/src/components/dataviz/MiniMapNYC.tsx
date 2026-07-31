@@ -40,8 +40,8 @@ const TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
 const TILE_ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
-// Brand values for Leaflet's canvas/SVG pane (mirrors --lf-fight / --lf-blue /
-// --lf-bone-dim — Leaflet options can't consume CSS custom properties).
+// Brand values for Leaflet’s canvas/SVG pane (mirrors --lf-fight / --lf-blue /
+// --lf-bone-dim — Leaflet options can’t consume CSS custom properties).
 const COLOR = {
   current: "#F97316",
   nearby: "#3B82F6",
@@ -64,7 +64,7 @@ export default function MiniMapNYC({
   const ref = useScrollReveal<HTMLElement>({ threshold: 0.2 });
   const mapRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  // failed: Leaflet itself couldn't boot. tilesFailed: Leaflet runs but the
+  // failed: Leaflet itself couldn’t boot. tilesFailed: Leaflet runs but the
   // Carto tiles error (offline, blocked CDN). Either way the branded ghost
   // grid stays visible — the container must NEVER read as a white box.
   const [failed, setFailed] = useState(false);
@@ -124,7 +124,7 @@ export default function MiniMapNYC({
           if (!disposed && !sawTile) setTilesFailed(true);
         });
         tiles.addTo(map);
-        // The canvas is aria-hidden (decorative wayfinding); Leaflet's
+        // The canvas is aria-hidden (decorative wayfinding); Leaflet’s
         // attribution link must not be tab-reachable inside it
         // (axe: aria-hidden-focus). Leaflet recreates the attribution DOM
         // whenever layers change, so sweep on every layeradd + whenReady,

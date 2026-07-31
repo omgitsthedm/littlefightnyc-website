@@ -99,7 +99,7 @@ export const caseStudies: CaseStudy[] = [
         {
           label: "Walk",
           detail:
-            "A real map puts the store beside Katz's, Russ & Daughters, Yonah Schimmel's, and Essex Market, so it can become part of a Lower East Side day.",
+            "A real map puts the store beside Katz’s, Russ & Daughters, Yonah Schimmel’s, and Essex Market, so it can become part of a Lower East Side day.",
         },
         {
           label: "Visit",
@@ -124,7 +124,7 @@ export const caseStudies: CaseStudy[] = [
     body: [
       "This is a private client concept, not a public client launch. Think of the old WordPress site like a faded paper sign: it said the shop existed, but it did not help a new person understand why to go. Army & Navy Bags is the opposite of a plain listing. The store is narrow, packed, useful, strange, and full of Lower East Side character. The website needed to make that feeling easy to understand on a phone.",
       "We kept the scuffed awning, the real shelves, the military bags, jackets, patches, hats, and the people inside. Then we made the path simple. First, see what kind of place this is. Next, see what it carries. Then check the hours, call, or get directions. There is no giant menu to learn and no shiny store template pretending the shop is something it is not.",
-      "The neighborhood map does one extra job. It shows Army & Navy Bags beside Katz's, Russ & Daughters, Yonah Schimmel's, and Essex Market. If someone is already going there, the map says the bag shop is right around the corner. That turns the website from a digital business card into a reason to add one more stop. Clear local facts, Store and FAQ schema, and one-tap directions make the last few blocks easy.",
+      "The neighborhood map does one extra job. It shows Army & Navy Bags beside Katz’s, Russ & Daughters, Yonah Schimmel’s, and Essex Market. If someone is already going there, the map says the bag shop is right around the corner. That turns the website from a digital business card into a reason to add one more stop. Clear local facts, Store and FAQ schema, and one-tap directions make the last few blocks easy.",
     ],
   },
   {
@@ -273,8 +273,8 @@ export const caseStudies: CaseStudy[] = [
       heroPositionMobile: "82% 10%",
       stages: [
         { label: "Find", detail: "Forty-nine indexable routes give services and neighborhood searches a precise destination beyond Instagram." },
-        { label: "Feel", detail: "Electric yellow, close-cropped work, and Rachel's own voice make the site feel like her chair, not a salon template." },
-        { label: "Trust", detail: "Rachel's face, portfolio, location, service details, and policies answer the questions a first-time client has." },
+        { label: "Feel", detail: "Electric yellow, close-cropped work, and Rachel’s own voice make the site feel like her chair, not a salon template." },
+        { label: "Trust", detail: "Rachel’s face, portfolio, location, service details, and policies answer the questions a first-time client has." },
         { label: "Book", detail: "The Square setup clients already knew stays in place inside a clear path that works on every screen." },
       ],
     },
@@ -284,12 +284,12 @@ export const caseStudies: CaseStudy[] = [
     updated: "2026-07-27",
     title: "An Instagram business became a searchable editorial booking system.",
     problem: "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
-    kept: "Rachel's point of view, the work itself, and the Square Appointments setup her clients already knew.",
+    kept: "Rachel’s point of view, the work itself, and the Square Appointments setup her clients already knew.",
     changed: "Built a bold mobile-first site with 49 indexable routes, precise service and neighborhood context, five art-directed social cards, and a direct path into Square. Set up the Google Business Profile from scratch.",
-    result: "A distinctive public home at hairbyrachelcharles.com. New clients can discover the studio, understand Rachel's work, and reach the familiar booking flow from desktop, iPad, or phone.",
+    result: "A distinctive public home at hairbyrachelcharles.com. New clients can discover the studio, understand Rachel’s work, and reach the familiar booking flow from desktop, iPad, or phone.",
     body: [
       "When we first sat down with Rachel, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed. The site started as a question. What if every new client could find her, see the work, and book without a single message?",
-      "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. Electric yellow, confident type, close-cropped work, and Rachel's own voice give the experience a point of view before the booking button appears. We also set up her Google Business Profile from scratch and wired the site to support it.",
+      "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. Electric yellow, confident type, close-cropped work, and Rachel’s own voice give the experience a point of view before the booking button appears. We also set up her Google Business Profile from scratch and wired the site to support it.",
       "The finished system covers 49 indexable routes for services, questions, and local intent, with five art-directed social cards for the moments people share. Square remains the booking destination. The website does the work before it: discovery, recognition, trust, and a clean handoff from any screen.",
     ],
   },
@@ -327,13 +327,13 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
     updated: "2026-07-12",
-    title: "An online store that keeps the brand's character.",
-    problem: "A streetwear brand with a real point of view needed a real storefront. But Shopify's templates were going to flatten everything that made the brand interesting.",
+    title: "An online store that keeps the brand’s character.",
+    problem: "A streetwear brand with a real point of view needed a real storefront. But Shopify’s templates were going to flatten everything that made the brand interesting.",
     kept: "The brand identity, the product designs, and the NYC nightlife voice.",
     changed: "A custom Next.js 14 build. Square handles payments. Printful handles shipping. The whole catalog runs through one JSON master. No hardcoded prices. No platform lock-in.",
     result: "A storefront that looks like the brand, not like a Shopify theme. Square payments and Printful shipping wired in. The owner can ship a new drop in a day.",
     body: [
-      "After Hours Agenda is Little Fight NYC's own streetwear experiment. It is the rare case where the agency is also the client, with all the dangers that brings. The brand was tight. The designs were ready. The audience was building. But the storefront was Shopify, and Shopify was flattening the brand. Every product page looked like every other Shopify product page, no matter what we put on it.",
+      "After Hours Agenda is Little Fight NYC’s own streetwear experiment. It is the rare case where the agency is also the client, with all the dangers that brings. The brand was tight. The designs were ready. The audience was building. But the storefront was Shopify, and Shopify was flattening the brand. Every product page looked like every other Shopify product page, no matter what we put on it.",
       "The choice was rebuild on Shopify with a custom theme, or rebuild off Shopify entirely. We rebuilt off. Next.js 14 with the App Router. Square for payments. Printful for shipping. The whole catalog runs through a single JSON master, so nothing is hardcoded. No platform lock-in. No theme pulling everything toward sameness.",
       "The result is a storefront that looks like the brand instead of the platform. Payments flow through Square. Orders go to Printful for shipping. New product drops take a day, not a sprint. The site is the brand.",
     ],
@@ -378,13 +378,13 @@ export const caseStudies: CaseStudy[] = [
     updated: "2026-07-12",
     title: "Multi-site setup with a real backend.",
     problem: "A help service needed three connected sites. One public, one for intake, one for admin. All sharing live data. All shipping on their own.",
-    kept: "The team's existing intake categories and naming.",
+    kept: "The team’s existing intake categories and naming.",
     changed: "Three Netlify sites sharing one Supabase backend. Intake routes in real time. Each site deploys on its own when the team pushes.",
     result: "A production multi-site with a database the team can actually look at. Each site ships on its own. Intake data flows where it should, with no copying.",
     body: [
       "ClearHelp is a help service that needed three sites. Public-facing, intake, and admin. All sharing data. All deploying on their own. All looking like one product. The challenge was simple to say and hard to solve. How do you ship three separate Netlify sites that act like one, with a real backend the team can see?",
-      "We kept the team's intake categories and naming, so the human side of the work did not change. We built the database layer in Supabase. The public site is static HTML with Netlify Forms feeding the intake site. The admin is a separate, login-protected Netlify deploy. Each site has its own CI, so the team can push to one without rebuilding the others.",
-      "The result is production. Three sites. One database. Real-time intake routing. Per-site deploys on every push. ClearHelp's team can look at their data, edit it, and ship updates to any site without breaking the others.",
+      "We kept the team’s intake categories and naming, so the human side of the work did not change. We built the database layer in Supabase. The public site is static HTML with Netlify Forms feeding the intake site. The admin is a separate, login-protected Netlify deploy. Each site has its own CI, so the team can push to one without rebuilding the others.",
+      "The result is production. Three sites. One database. Real-time intake routing. Per-site deploys on every push. ClearHelp’s team can look at their data, edit it, and ship updates to any site without breaking the others.",
     ],
   },
   {
@@ -405,7 +405,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         value: "In production",
-        label: "Runs on the team's real bids",
+        label: "Runs on the team’s real bids",
         evidence: "outcome",
       },
     ],
@@ -427,14 +427,14 @@ export const caseStudies: CaseStudy[] = [
     published: "2026-05-13",
     updated: "2026-07-12",
     title: "An internal cockpit for the work they actually run.",
-    problem: "Public House Creative needed one internal system for their estimating, classification, and reporting work. It had to replace a pile of spreadsheets, documents, and know-how that lived in people's heads.",
-    kept: "The estimator's judgment and the workflow categories the team already used.",
+    problem: "Public House Creative needed one internal system for their estimating, classification, and reporting work. It had to replace a pile of spreadsheets, documents, and know-how that lived in people’s heads.",
+    kept: "The estimator’s judgment and the workflow categories the team already used.",
     changed: "Built Cockpit, a private web app. Documents come in. Rooms and price drivers get sorted. The math checks itself. The report exports cleanly. The screens are dense but never cramped.",
     result: "The team runs the work through Cockpit. Estimates that lived in three tools now live in one. The math is honest. Any number can be traced back to its source. In production and in daily use.",
     body: [
-      "Public House Creative came to Little Fight with a real internal-systems problem. Estimating decides whether a job makes money before it starts. That work was spread across documents, spreadsheets, email threads, and the senior estimator's head. Every project dug up the same context again. Every quote took longer than it should. The team had outgrown the tools and was starting to feel it.",
-      "We built Cockpit. It is a private web app that turns the messy first pass of an estimate into something structured and checkable. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers, the variables that move the math, get resolved. The report exports. The screens show dense data without hiding anything, and never lie about confidence. The estimator's judgment makes the final call. The system just makes that call cheap.",
-      "Cockpit is in production. The team uses it on real estimates. The math is honest. New scope items, room types, and export formats land in days, not sprints. The system is becoming what the senior estimator's head used to hold. Now it scales past one person.",
+      "Public House Creative came to Little Fight with a real internal-systems problem. Estimating decides whether a job makes money before it starts. That work was spread across documents, spreadsheets, email threads, and the senior estimator’s head. Every project dug up the same context again. Every quote took longer than it should. The team had outgrown the tools and was starting to feel it.",
+      "We built Cockpit. It is a private web app that turns the messy first pass of an estimate into something structured and checkable. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers, the variables that move the math, get resolved. The report exports. The screens show dense data without hiding anything, and never lie about confidence. The estimator’s judgment makes the final call. The system just makes that call cheap.",
+      "Cockpit is in production. The team uses it on real estimates. The math is honest. New scope items, room types, and export formats land in days, not sprints. The system is becoming what the senior estimator’s head used to hold. Now it scales past one person.",
     ],
   },
   {
@@ -483,12 +483,12 @@ export const caseStudies: CaseStudy[] = [
     updated: "2026-07-27",
     title: "A finance landing page grew into a full answer system.",
     problem: "A funding LLC needed a credible public presence that could explain a complex category without the glass towers, stock handshakes, and vague promises that make finance sites look interchangeable.",
-    kept: "The team's approved positioning, contact paths, policy boundaries, and the language they use to describe the business.",
+    kept: "The team’s approved positioning, contact paths, policy boundaries, and the language they use to describe the business.",
     changed: "Built an 80-page desert-night editorial system for services, audiences, locations, questions, and reference content. Added structured company context, controlled conversion paths, and 18 route-specific social cards.",
     result: "A distinctive public resource at grandfundingllc.com. Partners and prospects can move from a broad question to a precise answer on any screen, while claims and regulated language remain explicitly client-controlled.",
     body: [
       "Grand Funding is a financial funding business. Finance sites have a template problem: glass towers, stock handshakes, the word 'solutions.' Those defaults exist because trust is hard to show. But to the exact partners this site must convince, a template reads as risk. The brief was to be credible without one borrowed cliche.",
-      "We kept the team's approved positioning and the way they describe what they do. No invented mission statement and no unapproved lending claims. The design carries trust through typography, deep desert color, restrained motion, and visible structure. Company, service, policy, and founder context give both people and answer systems a cleaner public record.",
+      "We kept the team’s approved positioning and the way they describe what they do. No invented mission statement and no unapproved lending claims. The design carries trust through typography, deep desert color, restrained motion, and visible structure. Company, service, policy, and founder context give both people and answer systems a cleaner public record.",
       "What began as a landing page became an 80-page library. Services, audiences, locations, questions, and references each get a clear route, with 18 art-directed cards for the pages people share. The result is a public site partners and prospects can navigate without a second thought, from a wide desktop to the phone in their hand.",
     ],
   },
@@ -524,16 +524,16 @@ export const caseStudies: CaseStudy[] = [
     updated: "2026-07-12",
     title: "Our own product: a financial OS for independent venues.",
     problem:
-      "Independent music venues close their nights in spreadsheets the next morning. Bar, door, staff, and promoter splits sit in different systems. The venue's money and the promoter's money blur together.",
+      "Independent music venues close their nights in spreadsheets the next morning. Bar, door, staff, and promoter splits sit in different systems. The venue’s money and the promoter’s money blur together.",
     kept: "The way GMs actually run a night. Bar, door, staff, splits. Modeled as it happens, not as software wishes it happened.",
     changed:
       "Built the whole product. A nightly close that takes about 90 seconds. Split tracking that keeps venue money and promoter money separate. Reports where every number drills down to the receipt behind it.",
     result:
       "Live to the public at venuecircuit.app in open beta. The GM closes the night in about 90 seconds instead of a spreadsheet marathon. The owner can trust the quarter without a forensic audit.",
     body: [
-      "VenueCircuit is the most ambitious thing Little Fight has shipped. Not a website. Not an internal tool. A complete software product, live to the public. Like After Hours Agenda, the agency is also the client here, with all the dangers that brings. Nobody to blame for scope. No one else's deadline to hide behind.",
-      "The product answers a question venue owners live with every night. Where did the money actually go? Bar, door, staff, promoter splits, and payouts all land in one place. The core rule: the venue's money and the promoter's money never blur together. Every number drills down to the receipt behind it. A GM can answer a question at midnight. The owner can trust the quarter.",
-      "It is live at venuecircuit.app in open beta. For a future client, this is the useful part. It is the same range Little Fight brings to a client's systems, turned all the way up. Proof the team can carry a system from first sketch to a public product people run their money through.",
+      "VenueCircuit is the most ambitious thing Little Fight has shipped. Not a website. Not an internal tool. A complete software product, live to the public. Like After Hours Agenda, the agency is also the client here, with all the dangers that brings. Nobody to blame for scope. No one else’s deadline to hide behind.",
+      "The product answers a question venue owners live with every night. Where did the money actually go? Bar, door, staff, promoter splits, and payouts all land in one place. The core rule: the venue’s money and the promoter’s money never blur together. Every number drills down to the receipt behind it. A GM can answer a question at midnight. The owner can trust the quarter.",
+      "It is live at venuecircuit.app in open beta. For a future client, this is the useful part. It is the same range Little Fight brings to a client’s systems, turned all the way up. Proof the team can carry a system from first sketch to a public product people run their money through.",
     ],
   },
   {
@@ -572,7 +572,7 @@ export const caseStudies: CaseStudy[] = [
       },
       stages: [
         { label: "Recognize", detail: "Butcher paper, tomato red, basil green, and a real slice make the first screen feel like a neighborhood pizzeria instead of a restaurant template." },
-        { label: "Trust", detail: "Johnny's 1979 move west, the shop's 1998 opening, and real customer words arrive before the menu." },
+        { label: "Trust", detail: "Johnny’s 1979 move west, the shop’s 1998 opening, and real customer words arrive before the menu." },
         { label: "Order", detail: "Every price stays readable on a phone or tablet, and the call action remains one thumb-tap away." },
         { label: "Carry", detail: "A matching brand kit gives the client the logo, colors, type, voice, and facts for future menus, signs, and ads." },
       ],
@@ -582,7 +582,7 @@ export const caseStudies: CaseStudy[] = [
     published: "2026-07-23",
     updated: "2026-07-27",
     title: "A digital menu became a family handbill.",
-    problem: "The first proof worked as a digital menu, but it looked like a generic black restaurant template. It buried the family story, reduced the shop's history to badges, and squeezed the price grid on phones and tablets.",
+    problem: "The first proof worked as a digital menu, but it looked like a generic black restaurant template. It buried the family story, reduced the shop’s history to badges, and squeezed the price grid on phones and tablets.",
     kept: "The logo, full menu, every price, hours, contact facts, phone-first ordering, real food photography, and the true family story: Johnny came west in 1979 and opened this shop in 1998.",
     changed: "Rebuilt the whole experience as a printed neighborhood handbill. The family story and customer voices now lead. Butcher paper, tomato red, basil green, heavy sign-painter type, and a real slice carry the character. The menu stacks cleanly on small screens, reading text stays at sixteen points or larger, and the call action remains thumb-sized.",
     result: "A private client concept with a recognizable point of view: family story first, menu second, phone ordering always close. It stays composed across desktop, iPad, and phone, carries every price, and includes a matching brand kit for future materials.",
@@ -629,7 +629,7 @@ export const caseStudies: CaseStudy[] = [
       stages: [
         {
           label: "Listen",
-          detail: "The first screen establishes the label's atmosphere before it asks a visitor to choose a path.",
+          detail: "The first screen establishes the label’s atmosphere before it asks a visitor to choose a path.",
         },
         {
           label: "Sequence",
@@ -651,7 +651,7 @@ export const caseStudies: CaseStudy[] = [
     updated: "2026-07-27",
     title: "A music company got a real world, not a record-label template.",
     problem:
-      "Legacy Music Group needed more than a dark landing page. Artists, services, booking, company context, and search systems all needed a coherent official source without sanding away the independent label's character.",
+      "Legacy Music Group needed more than a dark landing page. Artists, services, booking, company context, and search systems all needed a coherent official source without sanding away the independent label’s character.",
     kept:
       "The music-first identity, the independent spirit, the artist focus, and the sense that the company belongs in a control room after everyone else has gone home.",
     changed:

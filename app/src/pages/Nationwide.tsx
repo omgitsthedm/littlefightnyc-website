@@ -9,7 +9,7 @@ import "@/styles/editorial/nationwide.css";
 
 /**
  * /nationwide/ — the websites door for all 50 states (revenue doctrine
- * 2026-07-19: websites = the volume driver, and a website doesn't care about
+ * 2026-07-19: websites = the volume driver, and a website doesn’t care about
  * zip codes). The NYC-neighbor brand stays primary everywhere else; this is
  * ONE door for national intent, not a rebrand. Door Doctrine arc: recognition
  * → hope → proof (SiteInFourteen) → the promises → the door out.
@@ -22,7 +22,7 @@ const NATIONWIDE_FAQ = [
       "No. Photos, a phone call, and honest talk about how your business runs are enough. The work happens on calls and screens, wherever you are.",
   },
   {
-    question: "I'm on the West Coast. How do time zones work?",
+    question: "I’m on the West Coast. How do time zones work?",
     answer:
       "We answer 9am to 9pm Eastern. That is 6am to 6pm Pacific. Text or email whenever you want, and we call back inside 2 hours during those windows. The 14 days do not change.",
   },
@@ -100,7 +100,7 @@ export default function Nationwide() {
               <h2>Every promise travels</h2>
               <p>
                 The consult is free. A real person answers, 9am to 9pm Eastern.
-                Callbacks in 2 hours. And when it's done, the code, the domain,
+                Callbacks in 2 hours. And when it’s done, the code, the domain,
                 the content, and the written handoff are yours.
               </p>
             </EditorialBody>

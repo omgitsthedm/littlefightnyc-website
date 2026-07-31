@@ -29,9 +29,9 @@ export const areaPages: AreaPage[] = [
       "Bars, restaurants, galleries, shops, and studios compete in a packed neighborhood where people search nearby and decide fast.",
     firstMove: "Check the website, the Google profile, the booking or payment flow, and the follow-up.",
     intro:
-      "The Lower East Side runs on old tenement blocks that became one of the city's busiest nightlife and small-shop corridors. Orchard, Ludlow, Rivington, Delancey, and the rebuilt Essex Market. The businesses here are mostly owner-run. The person who signs the lease is usually the one behind the bar, in the kitchen, or steaming vintage on the rack.",
+      "The Lower East Side runs on old tenement blocks that became one of the city’s busiest nightlife and small-shop corridors. Orchard, Ludlow, Rivington, Delancey, and the rebuilt Essex Market. The businesses here are mostly owner-run. The person who signs the lease is usually the one behind the bar, in the kitchen, or steaming vintage on the rack.",
     businessLandscape:
-      "This is bar and restaurant country. Add vintage and thrift shops, tattoo studios, small galleries, music rooms, and cocktail dens. Most are one location, run hands-on. The pressure is real. Essex Crossing brought chain tenants and national restaurant groups onto blocks that used to be all independents. Delivery apps quietly take a cut of every kitchen's busiest hours. Vintage and record sellers now compete with Depop, eBay, and Instagram resellers who never pay LES rent. A one-room bar or gallery is up against operators with marketing staff and app deals it will never see.",
+      "This is bar and restaurant country. Add vintage and thrift shops, tattoo studios, small galleries, music rooms, and cocktail dens. Most are one location, run hands-on. The pressure is real. Essex Crossing brought chain tenants and national restaurant groups onto blocks that used to be all independents. Delivery apps quietly take a cut of every kitchen’s busiest hours. Vintage and record sellers now compete with Depop, eBay, and Instagram resellers who never pay LES rent. A one-room bar or gallery is up against operators with marketing staff and app deals it will never see.",
     localSearchReality:
       "Most people find a spot here on Google Maps. They scan what is open, close, and well-reviewed right now. Often mid-walk down Orchard, or after getting off the F at Delancey. Late-night 'open now' and 'happy hour near me' searches decide where a group of four ends up. Stale hours or a menu that will not load on a phone loses that table instantly. Tourists lean on Maps ratings. Locals lean on recent reviews and Instagram. Both have to be current. Chains win here because their listings are always right and their photos are fresh. Not because the food or the room is better.",
     whatWeFixHere: [
@@ -113,17 +113,17 @@ export const areaPages: AreaPage[] = [
       "Retail, galleries, design studios, and premium services need trust fast. Customers compare several options in one walk or one search.",
     firstMove: "Review the website, the local proof, the contact path, and whether staff still run on memory and spreadsheets.",
     intro:
-      "SoHo's cast-iron blocks went from artists' lofts to the most expensive retail corridor in the country. But between the global flagships, founder-run boutiques, galleries, showrooms, and design studios are still here. In SoHo, the bar for how a business looks is set by the Prada and Chanel windows next door. Whether the small operator likes it or not.",
+      "SoHo’s cast-iron blocks went from artists’ lofts to the most expensive retail corridor in the country. But between the global flagships, founder-run boutiques, galleries, showrooms, and design studios are still here. In SoHo, the bar for how a business looks is set by the Prada and Chanel windows next door. Whether the small operator likes it or not.",
     businessLandscape:
-      "The owner-run businesses here are fashion and home boutiques, art galleries, design studios, showrooms, and high-end salons and skincare rooms. They sit shoulder to shoulder with brand flagships and pop-ups that spend more on one window display than a small shop spends in a year. The pressure is heavy rent, global retailers who own the block's foot traffic, and e-commerce giants who catch the search before anyone reaches Broadway or West Broadway. A founder-run boutique has to look as credible online as a brand with a whole creative department. Otherwise the browsing customer assumes the big brand is safer.",
+      "The owner-run businesses here are fashion and home boutiques, art galleries, design studios, showrooms, and high-end salons and skincare rooms. They sit shoulder to shoulder with brand flagships and pop-ups that spend more on one window display than a small shop spends in a year. The pressure is heavy rent, global retailers who own the block’s foot traffic, and e-commerce giants who catch the search before anyone reaches Broadway or West Broadway. A founder-run boutique has to look as credible online as a brand with a whole creative department. Otherwise the browsing customer assumes the big brand is safer.",
     localSearchReality:
-      "SoHo runs on live comparison shopping. Someone standing on Spring Street searches a boutique's name, checks a gallery's current show, or compares three salons in one session. Tourists and visitors drive a lot of this. They judge fast, on photos, reviews, and whether the site looks premium on a phone. Small shops lose when the online presence looks thinner than the store. Or when a gallery's site never says what is on view this week. The flagships win on polish. An independent's site has to feel intentional, not improvised.",
+      "SoHo runs on live comparison shopping. Someone standing on Spring Street searches a boutique’s name, checks a gallery’s current show, or compares three salons in one session. Tourists and visitors drive a lot of this. They judge fast, on photos, reviews, and whether the site looks premium on a phone. Small shops lose when the online presence looks thinner than the store. Or when a gallery’s site never says what is on view this week. The flagships win on polish. An independent’s site has to feel intentional, not improvised.",
     whatWeFixHere: [
       "A boutique site that looks dated next to the flagships customers just walked past",
       "A gallery page that does not clearly show the current show or opening dates",
       "An appointment or private-shopping request with no clean path, so it gets missed",
       "Heavy, slow product images that hurt the premium impression",
-      "Client and lead details kept in one staffer's head or a scattered spreadsheet",
+      "Client and lead details kept in one staffer’s head or a scattered spreadsheet",
     ],
     faq: [
       {
@@ -137,7 +137,7 @@ export const areaPages: AreaPage[] = [
           "Not always. Many SoHo shops do better with a beautiful, fast site that drives visits, appointments, and private-shopping requests. We build for how you actually sell. Not a platform you will resent.",
       },
       {
-        question: "We're a small studio competing against firms with real marketing teams. Can we look as legit?",
+        question: "We’re a small studio competing against firms with real marketing teams. Can we look as legit?",
         answer:
           "Yes. A focused site with strong work, clear contact, and a tidy Google presence closes the gap. No marketing department needed. Clients judge the work and how easy you are to reach. We can make both excellent.",
       },
@@ -155,11 +155,11 @@ export const areaPages: AreaPage[] = [
       "Studios, galleries, salons, fitness, restaurants, and service firms compete for customers who search locally and expect fast answers.",
     firstMove: "Line up Google visibility, service pages, intake forms, booking, and follow-up into one clean path.",
     intro:
-      "Chelsea holds the city's densest cluster of contemporary art galleries in the West 20s. The High Line runs above 10th Avenue. A long spine of fitness studios, restaurants, and salons serves a walk-everywhere residential base. Many are owner-run. And they now sit in the shadow of Hudson Yards, the biggest private development in the country, a few blocks west.",
+      "Chelsea holds the city’s densest cluster of contemporary art galleries in the West 20s. The High Line runs above 10th Avenue. A long spine of fitness studios, restaurants, and salons serves a walk-everywhere residential base. Many are owner-run. And they now sit in the shadow of Hudson Yards, the biggest private development in the country, a few blocks west.",
     businessLandscape:
       "The independents here are art galleries, boutique fitness and pilates studios, salons and wellness rooms, restaurants, and service firms. Plus what remains of the old Flower District around 28th Street. The pressure comes from several sides. Hudson Yards pulled retail energy and chain tenants to the far west side. National gym brands like Equinox and boutique-fitness chains compete on every block. Delivery apps squeeze the restaurants. Bigger gallery operations open multiple spaces and dominate the online listings collectors check. A single-location studio or gallery is up against operators with real ad budgets and app deals.",
     localSearchReality:
-      "People find Chelsea businesses through 'near me' and neighborhood searches. 'Pilates Chelsea.' 'Galleries open today.' 'Dinner near the High Line.' Often while walking the area or coming off the 1, C, or E trains. High Line and gallery-crawl traffic mixes tourists with locals, so a business must look current to both. Small shops lose when the class schedule or gallery hours are wrong online. Or when a chain's spotless listing simply outranks them on Maps. The chains rarely win on quality here. They win on always-correct, review-rich profiles.",
+      "People find Chelsea businesses through 'near me' and neighborhood searches. 'Pilates Chelsea.' 'Galleries open today.' 'Dinner near the High Line.' Often while walking the area or coming off the 1, C, or E trains. High Line and gallery-crawl traffic mixes tourists with locals, so a business must look current to both. Small shops lose when the class schedule or gallery hours are wrong online. Or when a chain’s spotless listing simply outranks them on Maps. The chains rarely win on quality here. They win on always-correct, review-rich profiles.",
     whatWeFixHere: [
       "A fitness schedule that differs between Google, the website, and the booking app",
       "A gallery site that does not show the current show or hours for a Saturday crawl",
@@ -174,12 +174,12 @@ export const areaPages: AreaPage[] = [
           "Own the neighborhood searches they do not care about. Your specific service plus Chelsea, plus the blocks around the High Line. Tight local search and current reviews keep you visible to people already near your door. Those are the people who actually buy.",
       },
       {
-        question: "I run a studio on a national booking app. Isn't that enough visibility?",
+        question: "I run a studio on a national booking app. Isn’t that enough visibility?",
         answer:
           "The app catches people who already picked you. It does not win the person still deciding. That decision happens on Google and Maps. If your profile and site are weak there, the chain studio gets the search. We strengthen the front door the app cannot.",
       },
       {
-        question: "We're a gallery — collectors already know us. Why worry about the website?",
+        question: "We’re a gallery — collectors already know us. Why worry about the website?",
         answer:
           "New collectors, visitors, and press check the site for the current show and hours before they walk over. A stale page reads as a stale program. Making the show and hours easy to update is a small fix that protects a serious reputation.",
       },
@@ -201,7 +201,7 @@ export const areaPages: AreaPage[] = [
     businessLandscape:
       "The owner-run businesses here are delis and lunch spots, dry cleaners, tailors, and jewelers in the Diamond District. Plus small law firms, practices, and service firms serving the office crowd. Their pressure is specific. Fast-casual chains like Sweetgreen and Chipotle own the weekday lunch rush. Foot traffic swings hard with return-to-office patterns. Delivery apps take a cut of orders that used to be walk-ins. A deli or tailor here lives on office workers who now split the week between office and home. Every regular counts more than it used to. These operators compete on service and speed against chains with corporate apps and loyalty programs.",
     localSearchReality:
-      "Midtown search is fast and practical. 'Lunch near me.' 'Dry cleaner 10017.' 'Watch repair near Grand Central.' Typed by office workers with a narrow window and low patience. The crowd is weekday-heavy and commuter-driven. You are often found by someone who works nearby, does not live here, and will not hunt. Small shops lose when hours do not match the real office pattern. Or when there is no order-ahead or pickup path. Or when a chain's app simply removes the friction first. The chains win on convenience and speed. Not on quality.",
+      "Midtown search is fast and practical. 'Lunch near me.' 'Dry cleaner 10017.' 'Watch repair near Grand Central.' Typed by office workers with a narrow window and low patience. The crowd is weekday-heavy and commuter-driven. You are often found by someone who works nearby, does not live here, and will not hunt. Small shops lose when hours do not match the real office pattern. Or when there is no order-ahead or pickup path. Or when a chain’s app simply removes the friction first. The chains win on convenience and speed. Not on quality.",
     whatWeFixHere: [
       "Google hours that do not match the real weekday, weekend, and holiday pattern",
       "No order-ahead or pickup path, so the lunch rush goes to the chain with an app",
@@ -243,7 +243,7 @@ export const areaPages: AreaPage[] = [
     businessLandscape:
       "This is the neighborhood of solo and small-group dental and medical practices, dermatology, physical therapy, salons and blow-dry rooms, Madison Avenue boutiques, framers, and specialty food shops. The defining pressure is private-equity roll-ups. Dental groups and PE-backed medical groups are buying up independent practices. Urgent-care chains like CityMD and beauty chains chase the same appointment-minded clients. A solo dentist or independent salon now faces roll-ups that share marketing, central booking, and ad spend. Patients here have high expectations and quiet loyalty. But they research before they call.",
     localSearchReality:
-      "Upper East Side customers research carefully. 'Best dentist Upper East Side.' 'Dermatologist 10028.' 'Facial near me.' They weigh reviews, credentials, and how professional the site feels before booking anything personal or medical. This is a less walk-in, more careful crowd. The search happens at home or on the phone, then leads to a call or a booking. Independents lose when the site looks less credible than the PE-backed group's. Or when reviews are thin. Or when there is no easy way to request an appointment. The chains win on polish and booking ease. Not on the actual care.",
+      "Upper East Side customers research carefully. 'Best dentist Upper East Side.' 'Dermatologist 10028.' 'Facial near me.' They weigh reviews, credentials, and how professional the site feels before booking anything personal or medical. This is a less walk-in, more careful crowd. The search happens at home or on the phone, then leads to a call or a booking. Independents lose when the site looks less credible than the PE-backed group’s. Or when reviews are thin. Or when there is no easy way to request an appointment. The chains win on polish and booking ease. Not on the actual care.",
     whatWeFixHere: [
       "A practice site that looks less credible than the PE-backed group down the block",
       "An appointment request that forces a phone call instead of a simple online option",
@@ -264,7 +264,7 @@ export const areaPages: AreaPage[] = [
           "Keep the phone. But add an online request option too. The family members and newer patients who research you expect it. Offering both captures the caller and the researcher. Nobody gets forced through one channel.",
       },
       {
-        question: "Isn't a professional practice above worrying about Google reviews?",
+        question: "Isn’t a professional practice above worrying about Google reviews?",
         answer:
           "Not on the Upper East Side. Clients here quietly check reviews before anything personal or medical. A few recent, genuine reviews and an owner who replies signal a practice that is present and cared for. That is exactly what this clientele looks for.",
       },
@@ -292,9 +292,9 @@ export const areaPages: AreaPage[] = [
       "Neighborhood shops, studios, restaurants, practices, and service teams often need fewer tools and cleaner customer paths.",
     firstMove: "Find the biggest leak across the website, Google visibility, booking, payments, or follow-up.",
     intro:
-      "The Upper West Side is brownstone-lined and family-heavy. It is anchored by Lincoln Center, Central Park, and Riverside Park. It has a long tradition of neighborhood institutions like Zabar's and the independent shops along Broadway, Amsterdam, and Columbus. The businesses here are largely owner-run and built on relationships. They serve families and longtime residents who shop close to home.",
+      "The Upper West Side is brownstone-lined and family-heavy. It is anchored by Lincoln Center, Central Park, and Riverside Park. It has a long tradition of neighborhood institutions like Zabar’s and the independent shops along Broadway, Amsterdam, and Columbus. The businesses here are largely owner-run and built on relationships. They serve families and longtime residents who shop close to home.",
     businessLandscape:
-      "The independents here are neighborhood restaurants and cafes, kids' enrichment and music programs, pediatric and wellness practices, bookstores, hardware and specialty food shops, salons, and dry cleaners. The pressure is quieter than downtown but real. Chain pharmacies took corner after corner, then left storefronts empty. Delivery apps skim the local restaurants. National fitness and enrichment brands chase the family dollar. A family-run shop or kids' program here depends on trust built over years. But new parents and new arrivals still search first. These owners compete against chains and apps that never learned a single customer's name.",
+      "The independents here are neighborhood restaurants and cafes, kids’ enrichment and music programs, pediatric and wellness practices, bookstores, hardware and specialty food shops, salons, and dry cleaners. The pressure is quieter than downtown but real. Chain pharmacies took corner after corner, then left storefronts empty. Delivery apps skim the local restaurants. National fitness and enrichment brands chase the family dollar. A family-run shop or kids’ program here depends on trust built over years. But new parents and new arrivals still search first. These owners compete against chains and apps that never learned a single customer’s name.",
     localSearchReality:
       "Search here is practical and family-driven. 'Pediatric dentist Upper West Side.' 'Kids music classes near me.' 'Hardware store Amsterdam Avenue.' Often it is a parent solving a problem quickly. The crowd is local and repeat. So correct hours, an easy phone tap, and current reviews matter more than flashy design. Small shops lose when the listing is stale. Or when a class schedule is impossible to find. Or when a chain simply shows up first on Maps. The chains win on being easy to find. Not on the neighborhood knowledge these owners actually have.",
     whatWeFixHere: [
@@ -311,12 +311,12 @@ export const areaPages: AreaPage[] = [
           "Because the neighborhood keeps turning over. New families arrive all the time. They search before they ever walk in. A strong local presence keeps the flow of new regulars coming. That is what keeps a relationship business healthy.",
       },
       {
-        question: "I run a kids' program and registration is a mess. Can you simplify it?",
+        question: "I run a kids’ program and registration is a mess. Can you simplify it?",
         answer:
           "Yes. We make the schedule easy to find and the sign-up path clean. Parents register in a couple of taps instead of emailing back and forth. Less friction means fewer dropped sign-ups and far fewer admin headaches for you.",
       },
       {
-        question: "I feel like I'm paying for software I don't use. Can you help?",
+        question: "I feel like I’m paying for software I don’t use. Can you help?",
         answer:
           "That is common up here. Often the fix is fewer tools, not more. We look at what you actually use, cut what drags, and connect what is left. The shop runs cleaner and the monthly bill stops creeping.",
       },
@@ -334,14 +334,14 @@ export const areaPages: AreaPage[] = [
       "Restaurants, boutiques, salons, studios, and service businesses run on neighborhood trust and fast customer decisions.",
     firstMove: "Check the public website, local search signals, booking or contact path, and software bills.",
     intro:
-      "The West Village is Manhattan's most walkable and picture-perfect quarter. Winding, low-rise streets off the grid. Tree-lined blocks. Famous corridors like Bleecker Street that draw locals and visitors alike. The businesses here trade on charm and reputation. Most are owner-run restaurants, boutiques, and cafes where the founder is a fixture on the block.",
+      "The West Village is Manhattan’s most walkable and picture-perfect quarter. Winding, low-rise streets off the grid. Tree-lined blocks. Famous corridors like Bleecker Street that draw locals and visitors alike. The businesses here trade on charm and reputation. Most are owner-run restaurants, boutiques, and cafes where the founder is a fixture on the block.",
     businessLandscape:
-      "The independents are intimate restaurants and wine bars, boutiques and design shops, salons, cafes, and specialty food and wine stores. The neighborhood's retail history is a warning. Bleecker Street swung from independent shops to luxury flagships to empty windows as rents outran everyone. Delivery apps now squeeze the small kitchens that give the area its name. A boutique or restaurant here fights luxury brand spillover on one side. On the other, apps and e-commerce catch customers before they ever wander the block. The charm is the moat. But the online presence has to live up to the in-person experience, or the visitor never makes the trip.",
+      "The independents are intimate restaurants and wine bars, boutiques and design shops, salons, cafes, and specialty food and wine stores. The neighborhood’s retail history is a warning. Bleecker Street swung from independent shops to luxury flagships to empty windows as rents outran everyone. Delivery apps now squeeze the small kitchens that give the area its name. A boutique or restaurant here fights luxury brand spillover on one side. On the other, apps and e-commerce catch customers before they ever wander the block. The charm is the moat. But the online presence has to live up to the in-person experience, or the visitor never makes the trip.",
     localSearchReality:
       "The West Village runs on discovery and destination searches. 'Best restaurants West Village.' 'Wine bar near me.' 'Cute boutiques Bleecker Street.' The crowd is a heavy mix of tourists, date-nighters, and locals. Photos, recent reviews, and a clear reservation or hours answer decide where a visitor commits. Often while wandering with their phone out. Small shops lose when the site looks thinner than the storefront. Or when the reservation or menu link is buried. Or when a stale listing makes a loved spot look closed. Nobody wins here on ad budget. They win by looking as good online as they do on the street, and being effortless to act on.",
     whatWeFixHere: [
       "A restaurant site where the reservation link or menu is buried instead of one tap away",
-      "A boutique's online presence that looks thinner than the shop actually is",
+      "A boutique’s online presence that looks thinner than the shop actually is",
       "A Google profile with old photos or hours that makes a loved spot look closed",
       "Delivery apps skimming every order with no direct-order option for regulars",
       "A stack of overlapping subscriptions that could be fewer, cheaper tools",
@@ -353,12 +353,12 @@ export const areaPages: AreaPage[] = [
           "Because the tourists and date-nighters who fill your tables do not know you yet. They find you by searching while they wander. A site and profile that match how good the place really is turn that search into a reservation. Not a scroll-past.",
       },
       {
-        question: "Reservations come through an app I pay for. Isn't that covered?",
+        question: "Reservations come through an app I pay for. Isn’t that covered?",
         answer:
           "The app takes the booking. But the person still has to pick you first. That choice happens on Google, Maps, and your site. If those look weak, the reservation app never gets the chance. We strengthen the step before it.",
       },
       {
-        question: "Rents here are brutal and I'm watching costs. Will this add another bill?",
+        question: "Rents here are brutal and I’m watching costs. Will this add another bill?",
         answer:
           "Usually the opposite. We often find overlapping subscriptions to cut. Then we build a lean site and a clean local presence that does more for less. Fewer tools that actually work. Not another platform on the pile.",
       },
@@ -376,7 +376,7 @@ export const areaPages: AreaPage[] = [
       "Boutiques, restaurants, bars, venues, and studios ride heavy weekend foot traffic and compete for people who decide on their phones mid-walk.",
     firstMove: "Check the website on a phone, the Google profile, the reservation or ticket link, and what breaks when the weekend rush hits.",
     intro:
-      "Williamsburg is Brooklyn's busiest small-business strip. Bedford Avenue, North 6th, Grand Street, and the waterfront around Domino Park. The L train drops a crowd at Bedford Avenue all day, and the ferry adds more. Most businesses here are owner-run. The person who picked the records, hung the clothes, or built the menu is usually in the room.",
+      "Williamsburg is Brooklyn’s busiest small-business strip. Bedford Avenue, North 6th, Grand Street, and the waterfront around Domino Park. The L train drops a crowd at Bedford Avenue all day, and the ferry adds more. Most businesses here are owner-run. The person who picked the records, hung the clothes, or built the menu is usually in the room.",
     businessLandscape:
       "This is boutiques, vintage shops, record stores, restaurants, bars, music venues, coffee roasters, and small design studios. The pressure is heavy. National brands took storefronts on Bedford and North 6th, so an independent shop now sits next to a flagship with a whole marketing team. Delivery apps take a cut of every busy kitchen. Vintage sellers compete with online resale apps that never pay Brooklyn rent. And the week is lopsided. A huge share of the money walks in between Friday night and Sunday evening. If something online is broken on a Saturday, the week is hurt.",
     localSearchReality:
@@ -453,16 +453,16 @@ export const areaPages: AreaPage[] = [
     slug: "park-slope",
     name: "Park Slope",
     zipCodes: ["11215", "11217"],
-    headline: "Clear websites and reliable systems for Park Slope's family businesses.",
+    headline: "Clear websites and reliable systems for Park Slope’s family businesses.",
     shortAnswer:
-      "Short answer: Park Slope businesses need correct hours, easy booking, and pages that answer a parent's questions fast, because families here research before they walk in.",
+      "Short answer: Park Slope businesses need correct hours, easy booking, and pages that answer a parent’s questions fast, because families here research before they walk in.",
     localPattern:
-      "Family-facing services, medical and dental practices, kids' programs, boutiques, and cafes serve parents who check everything online first.",
+      "Family-facing services, medical and dental practices, kids’ programs, boutiques, and cafes serve parents who check everything online first.",
     firstMove: "Check the schedule, the booking path, the Google reviews, and whether a parent can get every answer on a phone in one minute.",
     intro:
       "Park Slope is brownstone Brooklyn at its most family-heavy. The shopping runs along Fifth Avenue and Seventh Avenue, with Prospect Park at the top of the hill. The customers are mostly households within a few blocks. Strollers, school pickups, weekend errands. The businesses are owner-run, and many have served the same families for years.",
     businessLandscape:
-      "This is pediatric, dental, and therapy practices, kids' classes and enrichment programs, boutiques, bookshops, toy stores, cafes and restaurants, vets, and salons. The pressure is quiet but constant. Chains and investor-backed practice groups chase the same family dollar. Delivery and booking apps put themselves between the shop and the customer. And the customers here are researchers. Parents compare, read reviews, and ask other parents online before trying anywhere new. A great local business with a thin online presence loses to a weaker one that simply answers questions better.",
+      "This is pediatric, dental, and therapy practices, kids’ classes and enrichment programs, boutiques, bookshops, toy stores, cafes and restaurants, vets, and salons. The pressure is quiet but constant. Chains and investor-backed practice groups chase the same family dollar. Delivery and booking apps put themselves between the shop and the customer. And the customers here are researchers. Parents compare, read reviews, and ask other parents online before trying anywhere new. A great local business with a thin online presence loses to a weaker one that simply answers questions better.",
     localSearchReality:
       "Search here is a parent solving a problem. 'Pediatric dentist Park Slope.' 'Toddler music class near me.' 'Vet open Saturday.' It happens from home, the playground, or mid-errand, and it ends in a booking or a visit. Reviews carry serious weight, because recommendations are how this neighborhood decides. A wrong opening time is expensive here. Nobody re-walks a stroller twice. The businesses that win make the schedule, the booking, and the reviews all easy to check in one quick look, with nothing hidden.",
     whatWeFixHere: [
@@ -479,7 +479,7 @@ export const areaPages: AreaPage[] = [
           "Because the recommendation now gets checked. A parent hears your name, then searches it. If the site is confusing or the reviews are thin, the recommendation loses power. A clear site and a healthy profile make every word-of-mouth mention count.",
       },
       {
-        question: "Registration for my kids' program is a mess of emails. Can that be simpler?",
+        question: "Registration for my kids’ program is a mess of emails. Can that be simpler?",
         answer:
           "Yes. We put the schedule where parents can find it and make sign-up a couple of taps instead of an email chain. Fewer dropped registrations, fewer repeated questions, and much less admin time for you.",
       },
@@ -500,9 +500,9 @@ export const areaPages: AreaPage[] = [
       "Short answer: DUMBO businesses need an online presence as sharp as the neighborhood, because the offices, galleries, and shops here get judged on polish fast.",
     localPattern:
       "Galleries, design studios, small product brands, and cafes serve a mix of office workers, clients, and weekend visitors who all judge on the first screen.",
-    firstMove: "Review the website against the neighborhood's standard, then the Google profile, the contact path, and how leads are tracked.",
+    firstMove: "Review the website against the neighborhood’s standard, then the Google profile, the contact path, and how leads are tracked.",
     intro:
-      "DUMBO is cobblestone streets and converted warehouses between the Brooklyn and Manhattan bridges. Brooklyn Bridge Park wraps the waterfront. Tech companies and design studios fill the lofts. Weekends bring crowds to photograph the bridge down Washington Street. It is one of the few neighborhoods where a small business's customers might be a Fortune 500 client and a tourist in the same hour.",
+      "DUMBO is cobblestone streets and converted warehouses between the Brooklyn and Manhattan bridges. Brooklyn Bridge Park wraps the waterfront. Tech companies and design studios fill the lofts. Weekends bring crowds to photograph the bridge down Washington Street. It is one of the few neighborhoods where a small business’s customers might be a Fortune 500 client and a tourist in the same hour.",
     businessLandscape:
       "This is art galleries, design and creative studios, small direct-to-consumer product brands with office space, photographers, event spaces, cafes, and a handful of shops and restaurants serving both office workers and visitors. The pressure is the standard. The neighbors are funded startups and established studios with real design budgets, so a thin website stands out here the way a broken window would. Studios and brands compete for clients citywide, not just on the block. And the foot traffic splits in two. Weekday office people, weekend tourists. A cafe or shop has to be findable and current for both.",
     localSearchReality:
@@ -537,18 +537,18 @@ export const areaPages: AreaPage[] = [
     slug: "astoria",
     name: "Astoria",
     zipCodes: ["11102", "11103", "11105", "11106"],
-    headline: "Websites, Google listings, and honest tech help for Astoria's family businesses.",
+    headline: "Websites, Google listings, and honest tech help for Astoria’s family businesses.",
     shortAnswer:
       "Short answer: Astoria businesses need correct listings, simple websites, and help in plain language, so loyal neighborhood customers and new arrivals can both find them.",
     localPattern:
       "Greek and Middle Eastern restaurants, bakeries, groceries, family shops, and medical offices run on loyalty but win new customers through search.",
     firstMove: "Check what a new neighbor sees when they search, then the hours, the menu or services, and the phone number on every listing.",
     intro:
-      "Astoria runs along 30th Avenue, Broadway, Ditmars Boulevard, and Steinway Street, at the ends of the N and W trains. It is one of the most mixed neighborhoods in the country. Greek tavernas and bakeries, Middle Eastern restaurants and groceries along Steinway, and family businesses from everywhere in between. Many shops here are second- or third-generation, and the owner's family is often behind the counter.",
+      "Astoria runs along 30th Avenue, Broadway, Ditmars Boulevard, and Steinway Street, at the ends of the N and W trains. It is one of the most mixed neighborhoods in the country. Greek tavernas and bakeries, Middle Eastern restaurants and groceries along Steinway, and family businesses from everywhere in between. Many shops here are second- or third-generation, and the owner’s family is often behind the counter.",
     businessLandscape:
       "This is restaurants and tavernas, bakeries, butchers and groceries, barbershops and salons, hardware stores, tailors, and a solid layer of medical, dental, and pharmacy offices serving the neighborhood. The pressure comes from two directions. Chains and delivery apps squeeze the food businesses the same way they do everywhere. And the neighborhood itself is changing. New residents arrive every year who do not know the old names. They find everything by phone. A beloved taverna with a wrong phone number online, or a bakery with no listing at all, is invisible to the exact people who would become its next regulars.",
     localSearchReality:
-      "The old customers do not need Google. The new ones use nothing else. 'Greek food Astoria.' 'Halal butcher near me.' 'Dentist 11103.' Searches here happen in more than one language, and the results decide which family business the new neighbor tries first. Reviews matter because the new arrival has no history here to lean on. The chains win when their listing is complete and the local legend's is empty. Not because anyone prefers the chain. Getting the listing right is how a forty-year-old business introduces itself to someone who moved in last month.",
+      "The old customers do not need Google. The new ones use nothing else. 'Greek food Astoria.' 'Halal butcher near me.' 'Dentist 11103.' Searches here happen in more than one language, and the results decide which family business the new neighbor tries first. Reviews matter because the new arrival has no history here to lean on. The chains win when their listing is complete and the local legend’s is empty. Not because anyone prefers the chain. Getting the listing right is how a forty-year-old business introduces itself to someone who moved in last month.",
     whatWeFixHere: [
       "A restaurant or bakery whose Google listing has a wrong number, old hours, or no menu",
       "A family shop with no website at all, invisible to new neighbors who search first",
@@ -590,7 +590,7 @@ export const areaPages: AreaPage[] = [
     businessLandscape:
       "This is gyms and fitness studios, vets and groomers, daycares, dental and medical offices, cafes and restaurants, dry cleaners, and salons. The ground-floor service layer of a tower neighborhood. The pressure is unusual. There is little old word of mouth, because almost everyone arrived recently. National chains take the prime tower retail with corporate budgets. And every new lease nearby is another wave of residents choosing a gym, a vet, and a coffee spot from scratch. The independents that win are the ones a new arrival finds first and trusts fast.",
     localSearchReality:
-      "Search is the front door here more than anywhere else we work. A new resident unpacks and searches. 'Gym near me.' 'Vet Long Island City.' 'Daycare 11101.' They have no neighbor to ask yet, so reviews and photos carry all the trust. The results of those first-week searches turn into habits that last for years. A business that is hard to find online is not losing one sale. It is losing a resident's entire routine to whoever showed up first and looked credible.",
+      "Search is the front door here more than anywhere else we work. A new resident unpacks and searches. 'Gym near me.' 'Vet Long Island City.' 'Daycare 11101.' They have no neighbor to ask yet, so reviews and photos carry all the trust. The results of those first-week searches turn into habits that last for years. A business that is hard to find online is not losing one sale. It is losing a resident’s entire routine to whoever showed up first and looked credible.",
     whatWeFixHere: [
       "A business invisible in 'near me' searches while new towers fill up around it",
       "Thin or old reviews, when reviews are the only trust signal new residents have",
@@ -600,7 +600,7 @@ export const areaPages: AreaPage[] = [
     ],
     faq: [
       {
-        question: "My storefront faces heavy foot traffic. Isn't that enough?",
+        question: "My storefront faces heavy foot traffic. Isn’t that enough?",
         answer:
           "Foot traffic helps, but new residents here decide by phone before they walk. They search, compare, and read reviews from the couch. The storefront closes the deal that search starts. If you are weak online, they walk past you to the place they already picked.",
       },
@@ -628,13 +628,13 @@ export const areaPages: AreaPage[] = [
       "Cafés, comedy rooms, music venues, bookshops, and student-serving services compete for a crowd that decides on the sidewalk.",
     firstMove: "Check what a first-time visitor sees: the Google profile, the hours, the menu or ticket link, and whether any of it works on a phone at night.",
     intro:
-      "Greenwich Village runs on layers. Washington Square Park in the middle, NYU wrapped around it, MacDougal Street's comedy rooms and late-night counters, Bleecker's storefronts, and the quiet blocks in between where the neighborhood actually lives. Tourists come for the arch. Students come for four years. The regulars have been at the same café table for twenty. A Village business serves all three crowds at once, every single day.",
+      "Greenwich Village runs on layers. Washington Square Park in the middle, NYU wrapped around it, MacDougal Street’s comedy rooms and late-night counters, Bleecker’s storefronts, and the quiet blocks in between where the neighborhood actually lives. Tourists come for the arch. Students come for four years. The regulars have been at the same café table for twenty. A Village business serves all three crowds at once, every single day.",
     businessLandscape:
       "This is café and venue country — comedy cellars, jazz rooms, indie theaters, late-night slices, bookshops, chess shops, and record stores that survived every era. Around NYU: tutors, therapists, test-prep, quick food, and every service a student needs. The pressure is real. Eighth Street keeps flipping to chains, NYU keeps expanding, and rents make every mediocre month dangerous. A room that seats sixty competes for attention with the entire internet. The Village institutions that last are the ones people can still FIND — the moment someone asks their phone where to go tonight.",
     localSearchReality:
       "Village search happens standing up. 'Comedy tonight.' 'Cafe near Washington Square open now.' 'Best slice MacDougal.' Tourists search mid-walk and pick from the map. Students search everything and trust reviews over signs. The crowd is already here — the only question is whose door they walk through. Wrong hours kill a Village business faster than anything, because the person standing outside a dark window at 9pm does not come back. Ticket links that break on a phone quietly empty a room that would have filled itself.",
     whatWeFixHere: [
-      "Hours on Google that don't match the door — fatal in a walk-up neighborhood",
+      "Hours on Google that don’t match the door — fatal in a walk-up neighborhood",
       "A ticket or reservation link that fails on a phone at 11pm",
       "A menu that lives in a blurry photo instead of a page Google can read",
       "A venue site that ranks below three aggregators for its own name",
@@ -649,12 +649,12 @@ export const areaPages: AreaPage[] = [
       {
         question: "My venue fills through word of mouth and Instagram. Why do I need a website?",
         answer:
-          "Because word of mouth ends at a search box. Someone hears about you, looks you up, and finds either a real page with tonight's lineup — or a dead link and a competitor's ad. Instagram warms them up. The website closes.",
+          "Because word of mouth ends at a search box. Someone hears about you, looks you up, and finds either a real page with tonight’s lineup — or a dead link and a competitor’s ad. Instagram warms them up. The website closes.",
       },
       {
         question: "NYU students find everything themselves. What is there to fix?",
         answer:
-          "Students find everything — including the fastest reason to pick somewhere else. Slow site, no online booking, unanswered reviews: each one is a swipe to the next option. Being findable isn't enough here. You have to be frictionless.",
+          "Students find everything — including the fastest reason to pick somewhere else. Slow site, no online booking, unanswered reviews: each one is a swipe to the next option. Being findable isn’t enough here. You have to be frictionless.",
       },
     ],
     nearby: ["west-village", "east-village", "soho"],
@@ -672,9 +672,9 @@ export const areaPages: AreaPage[] = [
     intro:
       "The Financial District is two neighborhoods in one zip code. By day: office towers and a lunch rush that decides in ninety seconds. By night and on weekends: one of the fastest-growing home neighborhoods in Manhattan. Families on Stone Street. Strollers by the Seaport. The businesses at street level — delis, barbers, tailors, dry cleaners, gyms — were built for the first crowd. Now they have to learn the second.",
     businessLandscape:
-      "Under the towers it's counter businesses. Delis and salad lines. Shoe repair, tailors, barbers, quick pharmacies. The services an office block runs on. Stone Street and the Seaport carry the restaurants. The Oculus filled up with chains, and the chains have apps and preorder lines. The independents got squeezed twice. Hybrid work thinned the weekday crowd. And the thousands of new residents upstairs? Most shops have never said one word to them. The FiDi shop that learns nights and weekends stops living and dying by Tuesday lunch.",
+      "Under the towers it’s counter businesses. Delis and salad lines. Shoe repair, tailors, barbers, quick pharmacies. The services an office block runs on. Stone Street and the Seaport carry the restaurants. The Oculus filled up with chains, and the chains have apps and preorder lines. The independents got squeezed twice. Hybrid work thinned the weekday crowd. And the thousands of new residents upstairs? Most shops have never said one word to them. The FiDi shop that learns nights and weekends stops living and dying by Tuesday lunch.",
     localSearchReality:
-      "FiDi search runs on a clock. At 11:45am it's 'lunch near me' from ten thousand desks at once. That race goes to whoever loads fastest with the menu one tap away. Nights and weekends belong to the residents. 'Barber financial district.' 'Dry cleaner water street.' 'Kids haircut fidi.' Two different searches. Same storefront. Most street-level businesses here only show up for the first one — if they show up at all. The second crowd is searching from apartments two blocks away, and nobody answers.",
+      "FiDi search runs on a clock. At 11:45am it’s 'lunch near me' from ten thousand desks at once. That race goes to whoever loads fastest with the menu one tap away. Nights and weekends belong to the residents. 'Barber financial district.' 'Dry cleaner water street.' 'Kids haircut fidi.' Two different searches. Same storefront. Most street-level businesses here only show up for the first one — if they show up at all. The second crowd is searching from apartments two blocks away, and nobody answers.",
     whatWeFixHere: [
       "A lunch spot invisible at 11:45am because the menu is a PDF nobody can load",
       "A Google profile that says nothing about weekend hours — while ten thousand residents search from upstairs",
@@ -691,12 +691,12 @@ export const areaPages: AreaPage[] = [
       {
         question: "The chains in the Oculus have apps and preorder. How does an independent compete?",
         answer:
-          "You don't out-app a chain — you out-neighbor it. Correct hours, a menu that loads instantly, online ordering that works, and reviews from people who actually know your name. The chain wins the tourist. You win the block, and blocks are loyal.",
+          "You don’t out-app a chain — you out-neighbor it. Correct hours, a menu that loads instantly, online ordering that works, and reviews from people who actually know your name. The chain wins the tourist. You win the block, and blocks are loyal.",
       },
       {
         question: "Do weekends even matter down here anymore?",
         answer:
-          "FiDi weekends stopped being dead years ago. Families on Stone Street, tourists at the Seaport, residents doing errands. If your hours, your listing, and your website still assume a Monday-to-Friday neighborhood, you're closed for the part of the week that's growing.",
+          "FiDi weekends stopped being dead years ago. Families on Stone Street, tourists at the Seaport, residents doing errands. If your hours, your listing, and your website still assume a Monday-to-Friday neighborhood, you’re closed for the part of the week that’s growing.",
       },
     ],
     nearby: ["soho", "lower-east-side"],
@@ -714,9 +714,9 @@ export const areaPages: AreaPage[] = [
     intro:
       "The Bronx runs on family businesses. Fordham Road is one of the busiest shopping strips in the city. Arthur Avenue is the real Little Italy — butchers, pasta makers, and bakeries that go back four generations. Hunts Point feeds half of New York. And on every block in between: auto shops, barbershops, botánicas, and kitchens run by the same families for decades. The customers here are the most loyal in the city. The tech help never showed up.",
     businessLandscape:
-      "This is the borough the agencies skip. Auto repair on Jerome Avenue. Dominican and Puerto Rican restaurants. West African markets. Albanian bakeries in Belmont. Most run cash-first, book by phone, and live on repeat customers. That loyalty is real power — but it doesn't reach new customers on its own. The chains on Fordham Road have apps and ad budgets. The family spots have better food, better service, and no website. That gap is the whole problem. It is also the whole opportunity.",
+      "This is the borough the agencies skip. Auto repair on Jerome Avenue. Dominican and Puerto Rican restaurants. West African markets. Albanian bakeries in Belmont. Most run cash-first, book by phone, and live on repeat customers. That loyalty is real power — but it doesn’t reach new customers on its own. The chains on Fordham Road have apps and ad budgets. The family spots have better food, better service, and no website. That gap is the whole problem. It is also the whole opportunity.",
     localSearchReality:
-      "Bronx search is mobile and it is bilingual. 'Mecánico cerca de mí.' 'Barbershop open now.' 'Dominican food grand concourse.' People search in Spanish and English, sometimes in the same sentence — and they call, they don't fill out forms. A business with a correct profile, real photos, and reviews in both languages owns its block. Most don't have any of that. Which means the first family business on each strip that gets it right wins big, fast.",
+      "Bronx search is mobile and it is bilingual. 'Mecánico cerca de mí.' 'Barbershop open now.' 'Dominican food grand concourse.' People search in Spanish and English, sometimes in the same sentence — and they call, they don’t fill out forms. A business with a correct profile, real photos, and reviews in both languages owns its block. Most don’t have any of that. Which means the first family business on each strip that gets it right wins big, fast.",
     whatWeFixHere: [
       "A Google profile with the old phone number — while the shop loses calls every day",
       "No website at all, so the chains take customers the family spot earned",
@@ -738,7 +738,7 @@ export const areaPages: AreaPage[] = [
       {
         question: "The chains on Fordham Road have apps and ads. How do I compete?",
         answer:
-          "You don't need their budget. You need your block. A correct profile, real photos, reviews from your actual customers, and a site that loads fast on a phone. The chains can't fake forty years on the avenue. Make sure Google knows about yours.",
+          "You don’t need their budget. You need your block. A correct profile, real photos, reviews from your actual customers, and a site that loads fast on a phone. The chains can’t fake forty years on the avenue. Make sure Google knows about yours.",
       },
     ],
     nearby: ["upper-west-side", "upper-east-side", "astoria"],
@@ -756,14 +756,14 @@ export const areaPages: AreaPage[] = [
     intro:
       "Staten Island is trades country. Vans with ladders, crews that start at seven, family names painted on truck doors. Hylan Boulevard is one of the longest commercial strips in the city. Victory and Forest carry the shops, the salons, and pizzerias people argue about at weddings. The ferry hauls commuters to Manhattan every morning, but the businesses here serve the island — house by house, job by job, referral by referral.",
     businessLandscape:
-      "Contractors, plumbers, electricians, landscapers, HVAC crews — the borough practically runs on them. Add the pizzerias and Italian delis with lines out the door, the salons, the auto shops, the family restaurants that have fed three generations. Almost all of it is referral business. Somebody's cousin knows a guy. That system works — until the cousin's recommendation meets an empty Google profile with two reviews and no photos. On Staten Island, your reputation is your business. The only question is whether the internet can see it.",
+      "Contractors, plumbers, electricians, landscapers, HVAC crews — the borough practically runs on them. Add the pizzerias and Italian delis with lines out the door, the salons, the auto shops, the family restaurants that have fed three generations. Almost all of it is referral business. Somebody’s cousin knows a guy. That system works — until the cousin’s recommendation meets an empty Google profile with two reviews and no photos. On Staten Island, your reputation is your business. The only question is whether the internet can see it.",
     localSearchReality:
       "This is a car borough. People search, then drive. 'Plumber Staten Island.' 'Pizza near me.' 'Nail salon New Dorp.' For the trades, the search happens at the worst moment — a burst pipe, a dead furnace — and whoever looks trustworthy and answerable gets the call. Reviews decide it. Fifty good reviews with an owner who replies beats a bigger crew with silence. For shops and restaurants, the profile is the storefront: hours, photos, and a menu that loads before the light changes.",
     whatWeFixHere: [
       "A contractor doing $500K a year in work with a Google profile that shows two reviews",
       "Referrals that die because the recommendation leads to no website at all",
       "A 'service area' setup done wrong, so the business shows up in the wrong towns",
-      "Booking and estimates that live on one phone — the owner's — and nowhere else",
+      "Booking and estimates that live on one phone — the owner’s — and nowhere else",
       "Great work with zero photos online, while a worse crew posts every job",
     ],
     faq: [
@@ -775,7 +775,7 @@ export const areaPages: AreaPage[] = [
       {
         question: "I run a service business with no storefront. Does local search still work?",
         answer:
-          "Yes — Google has a setup for exactly that, called a service-area business. Done right, you show up across the island without publishing your home address. Done wrong, you show up nowhere. It's one of the most common things we fix.",
+          "Yes — Google has a setup for exactly that, called a service-area business. Done right, you show up across the island without publishing your home address. Done wrong, you show up nowhere. It’s one of the most common things we fix.",
       },
       {
         question: "Do you actually come to Staten Island?",

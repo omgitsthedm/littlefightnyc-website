@@ -8,7 +8,7 @@ import { authoredDate } from "@/lib/authoredDate";
  * Updates the tab title + meta on client-side navigation. The correct tags are
  * already prerendered into every route's static HTML on first load, so this
  * only needs a slim {path,title,description,image} lookup — generated at build
- * by scripts/build-route-meta.mjs (see that file for why we don't ship the full
+ * by scripts/build-route-meta.mjs (see that file for why we don’t ship the full
  * seo-pages.json to the client).
  */
 type MetaPage = {

@@ -255,7 +255,7 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "best-web-designer-nyc-reddit",
     "question": "Best Web Designer NYC? What Reddit Actually Says",
-    "short": "Short answer: Reddit's advice is to check real portfolios, ask who actually does the work, and walk away from anyone who talks in jargon. That holds up. What it misses is fit: the right designer for a Midtown law firm is the wrong one for a Bushwick coffee shop.",
+    "short": "Short answer: Reddit’s advice is to check real portfolios, ask who actually does the work, and walk away from anyone who talks in jargon. That holds up. What it misses is fit: the right designer for a Midtown law firm is the wrong one for a Bushwick coffee shop.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -268,7 +268,7 @@ export const answerGuides: AnswerGuide[] = [
         "body": "When the threads settle, the advice is fairly consistent. Look at live sites the designer actually built, not just screenshots. Talk to a past client if you can. Get scope, timeline, and ownership in writing before money moves. Be suspicious of both extremes — the too-cheap offer that outsources everything, and the big-agency quote that buries you in strategy decks. And a point we agree with completely: the platform matters far less than the person. A careful builder on a modest tool beats a careless one on an expensive stack."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
+        "heading": "Where Reddit’s advice breaks down for NYC",
         "body": "Most of that advice assumes anywhere-USA. New York adds problems the threads rarely cover. Your competition is not the whole internet, it is the ten businesses within walking distance that show up in the map results before you do. Your customers are searching on phones, standing on a sidewalk, deciding in seconds — so mobile speed and a working directions button matter more than a clever homepage. And the local market is full of agencies priced for funded startups, quoting timelines and budgets that make no sense for a storefront."
       },
       {
@@ -308,11 +308,11 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The consensus",
-        "body": "Reddit's collective answer is surprisingly consistent: match the size of the help to the size of the job. Big agencies make sense for big scopes — brand overhauls, campaigns, complex builds with many moving parts. For a small-business website, most commenters steer people toward small studios and independents, where the person you meet is the person who builds. The most-repeated vetting question is a good one: ask exactly who will touch your project, by name and role. If the answer is vague, the work will be too."
+        "body": "Reddit’s collective answer is surprisingly consistent: match the size of the help to the size of the job. Big agencies make sense for big scopes — brand overhauls, campaigns, complex builds with many moving parts. For a small-business website, most commenters steer people toward small studios and independents, where the person you meet is the person who builds. The most-repeated vetting question is a good one: ask exactly who will touch your project, by name and role. If the answer is vague, the work will be too."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
-        "body": "New York complicates the picture. The city's agency market skews toward venture-backed startups and corporate clients, so a small business walking into that world often gets quoted like a startup — long discovery phases, retainers, deliverables you did not ask for. Meanwhile the word agency itself means almost nothing here; a two-person shop and a two-hundred-person firm both use it. And the threads rarely mention the thing NYC owners actually need: someone who understands neighborhood-level competition, local search, and customers who decide on their phones mid-walk."
+        "heading": "Where Reddit’s advice breaks down for NYC",
+        "body": "New York complicates the picture. The city’s agency market skews toward venture-backed startups and corporate clients, so a small business walking into that world often gets quoted like a startup — long discovery phases, retainers, deliverables you did not ask for. Meanwhile the word agency itself means almost nothing here; a two-person shop and a two-hundred-person firm both use it. And the threads rarely mention the thing NYC owners actually need: someone who understands neighborhood-level competition, local search, and customers who decide on their phones mid-walk."
       },
       {
         "heading": "Our honest take",
@@ -341,7 +341,7 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "small-business-it-support-nyc-reddit-recommendations",
     "question": "Small Business IT Support NYC: Reddit Recommendations, Vetted",
-    "short": "Short answer: Reddit's standard advice is solid. Find responsive local help, avoid long contracts, keep your own passwords. The part it undersells: in NYC, response time is everything. A remote-only provider cannot fix the dead router in your basement.",
+    "short": "Short answer: Reddit’s standard advice is solid. Find responsive local help, avoid long contracts, keep your own passwords. The part it undersells: in NYC, response time is everything. A remote-only provider cannot fix the dead router in your basement.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -351,10 +351,10 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The consensus",
-        "body": "The crowd's advice is decent. Find someone local and responsive rather than the cheapest remote option. Do not sign a long contract before a provider has earned trust on a few real jobs. Keep a documented list of every account, password, and renewal date in the business's own hands, so no single person's disappearance takes you down. Get response times in writing, not as a verbal promise. Threads consistently warn against enterprise-style managed service contracts sold to five-person shops — paying for a security operations center you will never use."
+        "body": "The crowd’s advice is decent. Find someone local and responsive rather than the cheapest remote option. Do not sign a long contract before a provider has earned trust on a few real jobs. Keep a documented list of every account, password, and renewal date in the business’s own hands, so no single person’s disappearance takes you down. Get response times in writing, not as a verbal promise. Threads consistently warn against enterprise-style managed service contracts sold to five-person shops — paying for a security operations center you will never use."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
+        "heading": "Where Reddit’s advice breaks down for NYC",
         "body": "Most managed-IT advice online assumes an office with dozens of computers. A New York storefront is a different animal: one router in a damp basement, a POS terminal, a couple of laptops, and a business that loses real money every hour something is down. Remote-only support cannot swap a fried switch in Queens. National providers quote response windows measured in business days, which is a joke when your dinner rush starts at six. What NYC businesses actually need is someone who answers fast and can physically show up."
       },
       {
@@ -394,11 +394,11 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "What Reddit gets right",
-        "body": "The good advice is genuinely good. Ask businesses like yours who they use — a referral from a shop with the same setup is worth more than any review site. Start with one small paid job and judge the communication, not just the fix. And the crown jewel of the genre: make sure you own your own accounts. Your domain, your email, your backups, your admin passwords — in the business's name, documented, where you can reach them. Owners who follow that one rule survive any provider's disappearance."
+        "body": "The good advice is genuinely good. Ask businesses like yours who they use — a referral from a shop with the same setup is worth more than any review site. Start with one small paid job and judge the communication, not just the fix. And the crown jewel of the genre: make sure you own your own accounts. Your domain, your email, your backups, your admin passwords — in the business’s name, documented, where you can reach them. Owners who follow that one rule survive any provider’s disappearance."
       },
       {
         "heading": "What Reddit gets wrong",
-        "body": "The referral advice has a New York problem: everyone's good guy is already stretched thin, and a great technician with too many clients becomes an unreachable one. Threads also treat solo-versus-company as the big decision, when the real issue is single point of failure — one person with no backup, no documentation, and no coverage when they are sick or slammed is fragile no matter how skilled. And almost nobody mentions putting response times in writing, which is the difference between a promise and a hope."
+        "body": "The referral advice has a New York problem: everyone’s good guy is already stretched thin, and a great technician with too many clients becomes an unreachable one. Threads also treat solo-versus-company as the big decision, when the real issue is single point of failure — one person with no backup, no documentation, and no coverage when they are sick or slammed is fragile no matter how skilled. And almost nobody mentions putting response times in writing, which is the difference between a promise and a hope."
       },
       {
         "heading": "Our honest take",
@@ -440,7 +440,7 @@ export const answerGuides: AnswerGuide[] = [
         "body": "The crowd lands in a sensible place. Squarespace is genuinely good for getting a clean site live fast, especially for portfolios, restaurants with simple menus, and service businesses that mostly need hours, photos, and a contact path. Designers earn their fee when you need custom features, serious local search work, integrations with booking or ordering tools — or when you have tried the DIY route and the site has sat half-finished for months. The most honest recurring comment: the tool was never the hard part; deciding what to say was."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
+        "heading": "Where Reddit’s advice breaks down for NYC",
         "body": "Generic advice assumes a site just needs to exist. In New York, your website is competing block by block. Template defaults do not write neighborhood-specific pages, structure your services the way locals search, or connect cleanly to your Google Business Profile — the things that decide whether you appear when someone two blocks away searches for what you sell. And the DIY time math is different here: the average NYC owner is already working the floor, doing the books, and handling staff. The weekend the site was supposed to take does not exist."
       },
       {
@@ -469,7 +469,7 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     "slug": "wix-vs-custom-website-reddit",
-    "question": "Wix vs Custom Website — Reddit's Take vs Ours",
+    "question": "Wix vs Custom Website — Reddit’s Take vs Ours",
     "short": "Short answer: Reddit is right that the old Wix-is-bad-for-Google claim is outdated, and right that you cannot take a Wix site with you when you leave. Wix is fine as a starting point. Custom earns its cost when the website is a revenue channel.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
@@ -480,11 +480,11 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The consensus",
-        "body": "Reddit has mostly caught up with reality. The claim that Wix sites cannot rank on Google is treated as outdated — the platform's basics are fine now, and commenters regularly point at local businesses ranking well on it. The lock-in complaint, though, is accurate and repeated constantly: a Wix site cannot be meaningfully exported, so leaving means rebuilding from scratch. On custom builds, the crowd is fairly wise — worth it when you need speed, integrations, or specific features; wasted money when a template covers the actual need."
+        "body": "Reddit has mostly caught up with reality. The claim that Wix sites cannot rank on Google is treated as outdated — the platform’s basics are fine now, and commenters regularly point at local businesses ranking well on it. The lock-in complaint, though, is accurate and repeated constantly: a Wix site cannot be meaningfully exported, so leaving means rebuilding from scratch. On custom builds, the crowd is fairly wise — worth it when you need speed, integrations, or specific features; wasted money when a template covers the actual need."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
-        "body": "The threads treat a website like a brochure. For a New York storefront it is closer to a front door. Your customers find you on a phone, often literally walking, and the difference between a site that loads instantly with a tap-to-call button and one that stutters through a template's extras is measured in missed customers. Neighborhood-level search is a knife fight here — the winners have pages structured around what locals actually type, tight connections to their Google profile, and real proof. Platform defaults, Wix or otherwise, do not do that work by themselves."
+        "heading": "Where Reddit’s advice breaks down for NYC",
+        "body": "The threads treat a website like a brochure. For a New York storefront it is closer to a front door. Your customers find you on a phone, often literally walking, and the difference between a site that loads instantly with a tap-to-call button and one that stutters through a template’s extras is measured in missed customers. Neighborhood-level search is a knife fight here — the winners have pages structured around what locals actually type, tight connections to their Google profile, and real proof. Platform defaults, Wix or otherwise, do not do that work by themselves."
       },
       {
         "heading": "Our honest take",
@@ -512,8 +512,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     "slug": "is-local-seo-worth-it-reddit",
-    "question": "Is Local SEO Worth It? Reddit's Verdict for NYC",
-    "short": "Short answer: Reddit's verdict is that SEO agencies are often a waste but local SEO itself is real — and that is basically correct. For NYC businesses, showing up in map results and neighborhood searches is worth serious effort. Much of it you can do yourself.",
+    "question": "Is Local SEO Worth It? Reddit’s Verdict for NYC",
+    "short": "Short answer: Reddit’s verdict is that SEO agencies are often a waste but local SEO itself is real — and that is basically correct. For NYC businesses, showing up in map results and neighborhood searches is worth serious effort. Much of it you can do yourself.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -526,7 +526,7 @@ export const answerGuides: AnswerGuide[] = [
         "body": "Reddit splits SEO into two piles, and it is a useful split. Pile one is the snake oil: guaranteed rankings, secret techniques, monthly retainers with reports nobody understands. Pile two is local SEO — the boring, legitimate work of a complete Google Business Profile, steady real reviews, accurate name and address everywhere, and pages that describe what you do and where. The crowd agrees pile two is real and mostly learnable. The most repeated advice is to fix your Google profile before paying anyone for anything, which is exactly right."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
+        "heading": "Where Reddit’s advice breaks down for NYC",
         "body": "Just fill out your Google profile is table-stakes advice, and in New York the table is crowded. Every decent competitor within ten blocks filled theirs out too. Here the margins are won on specificity. Build pages that match how locals search: by neighborhood, by service, by problem. Add real photos over stock, review volume that keeps pace with foot traffic, and a website that backs up what the profile claims. NYC businesses also face density quirks the threads skip: shared buildings, similar business names, and category competition that barely exists in smaller markets."
       },
       {
@@ -556,7 +556,7 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "google-business-profile-tips-reddit",
     "question": "Google Business Profile Tips Reddit Swears By — Checked by a Pro",
-    "short": "Short answer: Reddit's favorite tips are correct. Complete every field, use real photos, keep reviews steady, and pick the right category. The one it undersells: your primary category and review replies matter more than posting frequency. And keyword-stuffing your business name can get you suspended.",
+    "short": "Short answer: Reddit’s favorite tips are correct. Complete every field, use real photos, keep reviews steady, and pick the right category. The one it undersells: your primary category and review replies matter more than posting frequency. And keyword-stuffing your business name can get you suspended.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -566,7 +566,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The consensus",
-        "body": "The standard advice stack that Reddit repeats: fill out every single field, choose your categories carefully, upload real photos regularly, collect reviews at a steady pace and reply to them, keep your name, address, and phone identical everywhere, and post updates now and then. It is a good list. The crowd is also rightly cynical about shortcuts — fake reviews and keyword-stuffed business names come up constantly, usually in threads that end with someone's profile suspended and a long reinstatement wait."
+        "body": "The standard advice stack that Reddit repeats: fill out every single field, choose your categories carefully, upload real photos regularly, collect reviews at a steady pace and reply to them, keep your name, address, and phone identical everywhere, and post updates now and then. It is a good list. The crowd is also rightly cynical about shortcuts — fake reviews and keyword-stuffed business names come up constantly, usually in threads that end with someone’s profile suspended and a long reinstatement wait."
       },
       {
         "heading": "The pro check: what actually moves the needle",
@@ -574,7 +574,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "Where it gets harder in NYC",
-        "body": "Dense city, dense problems. Shared buildings and co-working addresses trip verification. Similar business names in the same category confuse Google's matching. Storefront-versus-service-area setup matters more here than the threads let on — configure it wrong and you can vanish from the neighborhoods you serve. And in crowded Manhattan and Brooklyn categories, a complete profile is just the entry fee; the ranking fight is won by reviews, proof, and the website behind the profile."
+        "body": "Dense city, dense problems. Shared buildings and co-working addresses trip verification. Similar business names in the same category confuse Google’s matching. Storefront-versus-service-area setup matters more here than the threads let on — configure it wrong and you can vanish from the neighborhoods you serve. And in crowded Manhattan and Brooklyn categories, a complete profile is just the entry fee; the ranking fight is won by reviews, proof, and the website behind the profile."
       },
       {
         "heading": "What to do next",
@@ -588,7 +588,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "question": "Is adding keywords to my business name a good idea?",
-        "answer": "No. It violates Google's guidelines and is a common suspension trigger. Use your real business name and put keywords in your description and services instead."
+        "answer": "No. It violates Google’s guidelines and is a common suspension trigger. Use your real business name and put keywords in your description and services instead."
       },
       {
         "question": "How many reviews do I need to compete in NYC?",
@@ -598,7 +598,7 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     "slug": "web-developer-ghosted-me-reddit",
-    "question": "Web Developer Ghosted You? Reddit's Advice, Improved",
+    "question": "Web Developer Ghosted You? Reddit’s Advice, Improved",
     "short": "Short answer: Reddit says document everything, dispute the payment, and warn others. Fair — but the first move is different: secure what you own. Get control of your domain, hosting, and email today, before you spend one minute on blame.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
@@ -609,11 +609,11 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The consensus",
-        "body": "Reddit's playbook: put everything in writing from now on, send one formal final notice, dispute the charge with your card company if the work was not delivered, consider small claims, and leave honest reviews. It is reasonable advice, and the preventive wisdom in the replies is genuinely good — pay by milestone, never let a contractor register your domain in their name, and keep your own copies of everything. We wrote about the warning signs in our Journal piece on spotting a developer who is about to ghost; the pattern is visible earlier than most owners think."
+        "body": "Reddit’s playbook: put everything in writing from now on, send one formal final notice, dispute the charge with your card company if the work was not delivered, consider small claims, and leave honest reviews. It is reasonable advice, and the preventive wisdom in the replies is genuinely good — pay by milestone, never let a contractor register your domain in their name, and keep your own copies of everything. We wrote about the warning signs in our Journal piece on spotting a developer who is about to ghost; the pattern is visible earlier than most owners think."
       },
       {
-        "heading": "Where Reddit's advice breaks down",
-        "body": "The threads jump straight to justice and skip triage. Blame does not get your website back. Before disputes and reviews, you need to know exactly what you own: is the domain registered in your name, your email address, your credit card? Who controls the hosting? Where does the site's email actually live? Chargebacks can even backfire — if the developer controls your hosting and you dispute the payment, the site can vanish mid-fight. Sequence matters: secure first, recover second, pursue the money last, if at all."
+        "heading": "Where Reddit’s advice breaks down",
+        "body": "The threads jump straight to justice and skip triage. Blame does not get your website back. Before disputes and reviews, you need to know exactly what you own: is the domain registered in your name, your email address, your credit card? Who controls the hosting? Where does the site’s email actually live? Chargebacks can even backfire — if the developer controls your hosting and you dispute the payment, the site can vanish mid-fight. Sequence matters: secure first, recover second, pursue the money last, if at all."
       },
       {
         "heading": "Our honest take",
@@ -642,21 +642,21 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "best-pos-system-small-business-reddit",
     "question": "Best POS for a Small Business: What Reddit Recommends",
-    "short": "Short answer: Reddit's shorthand is a fine starting point. Square for simplicity, Toast for restaurants, and read the processing terms before signing anything. What the threads miss: the right POS depends on what it must connect to, not the logo on the terminal.",
+    "short": "Short answer: Reddit’s shorthand is a fine starting point. Square for simplicity, Toast for restaurants, and read the processing terms before signing anything. What the threads miss: the right POS depends on what it must connect to, not the logo on the terminal.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
       {
         "heading": "What people actually ask on Reddit",
-        "body": "POS threads are full of owners at decision points: opening a first location, outgrowing a cash box, or furious at their current provider. Which system is best for a small cafe, a boutique, a barbershop? Are the fees negotiable? Why does everyone hate their POS company's support line? Should I buy the hardware or lease it? And a steady stream of warnings about processing salespeople who cold-call promising lower rates and leave owners tangled in equipment leases and termination fees they never read."
+        "body": "POS threads are full of owners at decision points: opening a first location, outgrowing a cash box, or furious at their current provider. Which system is best for a small cafe, a boutique, a barbershop? Are the fees negotiable? Why does everyone hate their POS company’s support line? Should I buy the hardware or lease it? And a steady stream of warnings about processing salespeople who cold-call promising lower rates and leave owners tangled in equipment leases and termination fees they never read."
       },
       {
         "heading": "The consensus",
-        "body": "The crowd's shorthand is fairly stable. Square wins on simplicity: quick setup, transparent flat fees, decent free tier, hardware you own. Toast wins for full restaurants: kitchen screens, table management, online ordering built for food. Clover gets mixed reviews that usually trace back to whichever reseller sold it. Shopify POS makes sense when the online store is the anchor. The loudest agreement is negative: avoid long processing contracts and leased hardware from cold-callers, and read the early-termination terms before signing anything at all."
+        "body": "The crowd’s shorthand is fairly stable. Square wins on simplicity: quick setup, transparent flat fees, decent free tier, hardware you own. Toast wins for full restaurants: kitchen screens, table management, online ordering built for food. Clover gets mixed reviews that usually trace back to whichever reseller sold it. Shopify POS makes sense when the online store is the anchor. The loudest agreement is negative: avoid long processing contracts and leased hardware from cold-callers, and read the early-termination terms before signing anything at all."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
-        "body": "The threads pick a winner in a vacuum. A New York business picks a POS inside a web of other decisions: does it sync with your bookkeeping, your inventory, your website's online ordering, your booking system? High-volume, thin-margin city businesses feel fee structures differently — the right processing model for a slow boutique is wrong for a deli ringing up hundreds of small transactions a day. And nobody upstate is asking the NYC question: what happens when the terminal dies during Saturday rush and support is a phone queue?"
+        "heading": "Where Reddit’s advice breaks down for NYC",
+        "body": "The threads pick a winner in a vacuum. A New York business picks a POS inside a web of other decisions: does it sync with your bookkeeping, your inventory, your website’s online ordering, your booking system? High-volume, thin-margin city businesses feel fee structures differently — the right processing model for a slow boutique is wrong for a deli ringing up hundreds of small transactions a day. And nobody upstate is asking the NYC question: what happens when the terminal dies during Saturday rush and support is a phone queue?"
       },
       {
         "heading": "Our honest take",
@@ -685,25 +685,25 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "square-vs-toast-reddit",
     "question": "Square vs Toast — the Reddit Threads, Summarized",
-    "short": "Short answer: Reddit's split decision is consistent — Square for counters, cafes, and simple service; Toast for full-service restaurants that live and die by kitchen flow. Both verdicts hold up. The contract terms and your service style decide it, not the brand.",
+    "short": "Short answer: Reddit’s split decision is consistent — Square for counters, cafes, and simple service; Toast for full-service restaurants that live and die by kitchen flow. Both verdicts hold up. The contract terms and your service style decide it, not the brand.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
       {
         "heading": "What people actually ask on Reddit",
-        "body": "This matchup is a permanent fixture in restaurant and small-business threads. Is Toast worth it for a small spot, or is it built for bigger operations? Is Square too flimsy once you add a kitchen and servers? Owners trade stories in both directions — Toast's hardware and contracts feeling heavy for a counter-service cafe, Square straining when table service, coursing, and kitchen timing enter the picture. And underneath it all, the recurring practical questions: what do the fees really add up to, and what am I signing up for long-term?"
+        "body": "This matchup is a permanent fixture in restaurant and small-business threads. Is Toast worth it for a small spot, or is it built for bigger operations? Is Square too flimsy once you add a kitchen and servers? Owners trade stories in both directions — Toast’s hardware and contracts feeling heavy for a counter-service cafe, Square straining when table service, coursing, and kitchen timing enter the picture. And underneath it all, the recurring practical questions: what do the fees really add up to, and what am I signing up for long-term?"
       },
       {
         "heading": "The consensus",
-        "body": "The crowd verdict has barely moved in years: counter service, cafes, retail hybrids, and food trucks lean Square — simple, transparent, hardware you own outright. Full-service restaurants lean Toast — kitchen display, table and course management, online ordering that understands food. The consistent complaints are Toast's contract weight and add-on creep, and Square's ceiling in complex service. Support frustration shows up on both sides, which is worth internalizing: no POS choice buys you out of ever sitting in a phone queue."
+        "body": "The crowd verdict has barely moved in years: counter service, cafes, retail hybrids, and food trucks lean Square — simple, transparent, hardware you own outright. Full-service restaurants lean Toast — kitchen display, table and course management, online ordering that understands food. The consistent complaints are Toast’s contract weight and add-on creep, and Square’s ceiling in complex service. Support frustration shows up on both sides, which is worth internalizing: no POS choice buys you out of ever sitting in a phone queue."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
+        "heading": "Where Reddit’s advice breaks down for NYC",
         "body": "Threads rarely account for New York realities. Manhattan margins make the fee structure math sharper — a busy spot ringing up small tickets all day feels percentage differences that a suburban restaurant shrugs off. Old buildings complicate everything: basement prep areas with dead wifi zones, multi-floor service, landlord wiring. And downtime costs scale with rent — a system outage during Friday dinner in the West Village is a different event than the same outage elsewhere. We keep a full comparison for Manhattan restaurants in the Journal, with the NYC-specific trade-offs spelled out."
       },
       {
         "heading": "Our honest take",
-        "body": "Cards on the table: we set up and integrate both systems for restaurants, we sell neither, and we take no commission from either — but POS integration is work we get paid for, so factor that in. Our field view matches Reddit's split more than it contradicts it. Where we push back: owners fixate on picking the winner and underweight the setup — menu structure, printer routing, offline behavior, and how sales flow into bookkeeping decide daily sanity more than the logo does. A well-configured second choice beats a sloppily configured first choice every week."
+        "body": "Cards on the table: we set up and integrate both systems for restaurants, we sell neither, and we take no commission from either — but POS integration is work we get paid for, so factor that in. Our field view matches Reddit’s split more than it contradicts it. Where we push back: owners fixate on picking the winner and underweight the setup — menu structure, printer routing, offline behavior, and how sales flow into bookkeeping decide daily sanity more than the logo does. A well-configured second choice beats a sloppily configured first choice every week."
       },
       {
         "heading": "What to do next",
@@ -713,7 +713,7 @@ export const answerGuides: AnswerGuide[] = [
     "faq": [
       {
         "question": "Is Toast overkill for a small cafe?",
-        "answer": "Often, yes. Counter-service spots rarely use the kitchen and table features that justify Toast's weight. Square-style simplicity usually fits better."
+        "answer": "Often, yes. Counter-service spots rarely use the kitchen and table features that justify Toast’s weight. Square-style simplicity usually fits better."
       },
       {
         "question": "Can Square handle a full-service restaurant?",
@@ -728,7 +728,7 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "glossgenius-vs-square-appointments-reddit",
     "question": "GlossGenius vs Square Appointments: the Reddit Roundup",
-    "short": "Short answer: Reddit's pattern is clear — solo stylists and chair renters lean GlossGenius for the polish and flat pricing; salons with staff and retail lean Square Appointments for the free tier and ecosystem. Both readings hold up in practice.",
+    "short": "Short answer: Reddit’s pattern is clear — solo stylists and chair renters lean GlossGenius for the polish and flat pricing; salons with staff and retail lean Square Appointments for the free tier and ecosystem. Both readings hold up in practice.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -741,8 +741,8 @@ export const answerGuides: AnswerGuide[] = [
         "body": "The crowd sorts itself neatly. Independent stylists and chair renters tend to praise GlossGenius — the booking pages look polished, the flat subscription is predictable, and the whole experience flatters a personal brand. Salons with employees, retail products, and higher volume lean Square Appointments — the free solo tier, cheap card hardware, and the fact that payments, payroll, and inventory can live in one ecosystem. The shared warnings: no-show policies matter more than app choice, and switching platforms mid-career is miserable enough that the first choice deserves real thought."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
-        "body": "New York salon economics stress the generic advice. Chair renters here often run at volumes where a flat fee versus percentage-based processing changes the monthly math meaningfully — worth actually calculating, not vibing. Walk-in traffic still matters in city neighborhoods, so how the booking tool plays with your Google Business Profile can matter as much as the app's own booking page. And NYC no-show rates are their own legend — deposit settings are not an optional feature here, they are the feature. Our full comparison for NYC salons lives in the Journal with the details."
+        "heading": "Where Reddit’s advice breaks down for NYC",
+        "body": "New York salon economics stress the generic advice. Chair renters here often run at volumes where a flat fee versus percentage-based processing changes the monthly math meaningfully — worth actually calculating, not vibing. Walk-in traffic still matters in city neighborhoods, so how the booking tool plays with your Google Business Profile can matter as much as the app’s own booking page. And NYC no-show rates are their own legend — deposit settings are not an optional feature here, they are the feature. Our full comparison for NYC salons lives in the Journal with the details."
       },
       {
         "heading": "Our honest take",
@@ -770,8 +770,8 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     "slug": "shopify-vs-squarespace-reddit",
-    "question": "Shopify vs Squarespace — Reddit's Answers for NYC Retail",
-    "short": "Short answer: Reddit's rule of thumb is right. Shopify when selling is the business, Squarespace when the site is mostly presence with some selling. For NYC retail the deciding question is inventory: if the shop floor and the website must share stock, Shopify pulls ahead.",
+    "question": "Shopify vs Squarespace — Reddit’s Answers for NYC Retail",
+    "short": "Short answer: Reddit’s rule of thumb is right. Shopify when selling is the business, Squarespace when the site is mostly presence with some selling. For NYC retail the deciding question is inventory: if the shop floor and the website must share stock, Shopify pulls ahead.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -781,15 +781,15 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The consensus",
-        "body": "The crowd's split is stable and sensible. Shopify is the serious commerce engine: real inventory management, every payment and shipping integration, a POS that syncs with the online store — and costs that grow as apps stack up. Squarespace is the design-forward generalist: beautiful templates, simple setup, commerce that is perfectly fine for a modest catalog — and limits you will feel if selling becomes the main event. The most repeated wisdom: pick by where your revenue actually comes from, not by where you hope it might someday."
+        "body": "The crowd’s split is stable and sensible. Shopify is the serious commerce engine: real inventory management, every payment and shipping integration, a POS that syncs with the online store — and costs that grow as apps stack up. Squarespace is the design-forward generalist: beautiful templates, simple setup, commerce that is perfectly fine for a modest catalog — and limits you will feel if selling becomes the main event. The most repeated wisdom: pick by where your revenue actually comes from, not by where you hope it might someday."
       },
       {
-        "heading": "Where Reddit's advice breaks down for NYC",
+        "heading": "Where Reddit’s advice breaks down for NYC",
         "body": "Most threads assume online-only sellers. NYC retail is different: the shop floor is the anchor, and the website orbits it. That flips the decision toward one question the threads barely touch — inventory sync. If a sweater sells on the floor, the website must know before a tourist orders the last one. Local pickup, neighborhood delivery, and showing stock to people searching nearby are NYC-relevant features, not nice-to-haves. Foot traffic plus Google visibility drives city retail in ways template galleries never mention. Our full NYC retail comparison in the Journal walks through this in detail."
       },
       {
         "heading": "Our honest take",
-        "body": "Bias named: we build and fix retail sites on both platforms for a living. The honest sorting we use: if your shop's register and shelves must share truth with the website, Shopify with its POS is usually the cleaner path, and the app-fee creep is the toll you pay. If online selling is secondary, Squarespace keeps life simpler and cheaper. Think a presence, a catalog, occasional orders. The most common mistake we clean up is not the wrong platform; it is two disconnected systems and an owner reconciling them by hand at midnight."
+        "body": "Bias named: we build and fix retail sites on both platforms for a living. The honest sorting we use: if your shop’s register and shelves must share truth with the website, Shopify with its POS is usually the cleaner path, and the app-fee creep is the toll you pay. If online selling is secondary, Squarespace keeps life simpler and cheaper. Think a presence, a catalog, occasional orders. The most common mistake we clean up is not the wrong platform; it is two disconnected systems and an owner reconciling them by hand at midnight."
       },
       {
         "heading": "What to do next",
@@ -799,7 +799,7 @@ export const answerGuides: AnswerGuide[] = [
     "faq": [
       {
         "question": "Is Shopify too much for a small NYC boutique?",
-        "answer": "Not if the floor and website share inventory — that sync is Shopify's strength. If online is a side channel, Squarespace's simplicity may serve you better."
+        "answer": "Not if the floor and website share inventory — that sync is Shopify’s strength. If online is a side channel, Squarespace’s simplicity may serve you better."
       },
       {
         "question": "Why do Shopify costs keep growing?",
@@ -827,7 +827,7 @@ export const answerGuides: AnswerGuide[] = [
         "body": "Reddit genuinely splits here. One camp: a complete Google profile, active Instagram, and full books — skip the website, spend the money elsewhere. The other camp answers with rented-land stories: accounts suspended with no appeal, algorithms burying pages that used to reach everyone, platforms changing rules overnight. Own your presence, they argue, because everything else is borrowed. Both camps agree on one floor: at minimum, keep your Google Business Profile complete and alive, because that is where local customers actually look first."
       },
       {
-        "heading": "Where Reddit's advice breaks down in 2026",
+        "heading": "Where Reddit’s advice breaks down in 2026",
         "body": "The threads are still arguing about 2019. The ground shifted: when a customer asks Google or an AI assistant who repairs espresso machines in Astoria or which salon nearby takes walk-ins, the answer is assembled from websites — their pages, their stated services, their neighborhoods. A business with no site gives these systems nothing to read, so the answer becomes a competitor. In NYC this bites harder: new residents, tourists, and anyone outside your word-of-mouth circle discover businesses through exactly these channels. Instagram alone is invisible to most of that machinery."
       },
       {
@@ -857,7 +857,7 @@ export const answerGuides: AnswerGuide[] = [
   {
     "slug": "airtable-vs-notion-reddit-small-business",
     "question": "Airtable vs Notion for Small Business: Reddit Roundup",
-    "short": "Short answer: Reddit's rule is correct. Notion for documents and wikis, Airtable for structured records. Most fights start when someone forces one tool to do the other's job. For a small business the harder question is simpler: which one will your least techy person actually open?",
+    "short": "Short answer: Reddit’s rule is correct. Notion for documents and wikis, Airtable for structured records. Most fights start when someone forces one tool to do the other’s job. For a small business the harder question is simpler: which one will your least techy person actually open?",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
@@ -870,8 +870,8 @@ export const answerGuides: AnswerGuide[] = [
         "body": "Reddit has settled this more cleanly than most matchups. Notion wins for documents, wikis, notes, and processes — anything you would explain or write down. Airtable wins for structured records — clients, orders, inventory, anything with fields you filter and count. The two loudest warnings repeat in every thread: forcing Notion to be a database ends in messy tables that hide errors, and any workspace without one person who owns its tidiness decays into a junk drawer within months. Both warnings are earned."
       },
       {
-        "heading": "Where Reddit's advice breaks down for small business",
-        "body": "Most advice comes from tech workers organizing their own information — people who enjoy tools. A shop, a salon, a contractor's office is a different world: the system must survive the least technical employee on their busiest day. A gorgeous linked workspace that only the owner understands is a liability with a subscription fee. There is also an NYC-flavored reality the threads skip: owner time. A setup demanding weekly gardening will not get it from someone working the floor sixty hours. We compare Airtable, Notion, and Monday for small teams in a full Journal guide."
+        "heading": "Where Reddit’s advice breaks down for small business",
+        "body": "Most advice comes from tech workers organizing their own information — people who enjoy tools. A shop, a salon, a contractor’s office is a different world: the system must survive the least technical employee on their busiest day. A gorgeous linked workspace that only the owner understands is a liability with a subscription fee. There is also an NYC-flavored reality the threads skip: owner time. A setup demanding weekly gardening will not get it from someone working the floor sixty hours. We compare Airtable, Notion, and Monday for small teams in a full Journal guide."
       },
       {
         "heading": "Our honest take",
@@ -889,7 +889,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "question": "Is Airtable worth paying for over a spreadsheet?",
-        "answer": "When multiple people update the same records and you need views, filters, and forms — yes. For one person's simple list, a spreadsheet is honestly fine."
+        "answer": "When multiple people update the same records and you need views, filters, and forms — yes. For one person’s simple list, a spreadsheet is honestly fine."
       },
       {
         "question": "Why do our workspaces always turn into junk drawers?",
@@ -906,15 +906,15 @@ export const answerGuides: AnswerGuide[] = [
     "sections": [
       {
         "heading": "What people actually ask on Reddit",
-        "body": "In the NYC subreddits, tech-help requests arrive raw: who do you use for your shop's website? My POS guy retired, who is good in Brooklyn? Any recommendations for someone who can fix our wifi and not disappear? The asks reveal the real search behavior — owners do not want a directory of providers, they want one name attached to a story from someone with a business like theirs. The replies are a lottery: sometimes a genuinely good referral, sometimes a self-promoting agency, often silence."
+        "body": "In the NYC subreddits, tech-help requests arrive raw: who do you use for your shop’s website? My POS guy retired, who is good in Brooklyn? Any recommendations for someone who can fix our wifi and not disappear? The asks reveal the real search behavior — owners do not want a directory of providers, they want one name attached to a story from someone with a business like theirs. The replies are a lottery: sometimes a genuinely good referral, sometimes a self-promoting agency, often silence."
       },
       {
         "heading": "Where the help actually comes from",
-        "body": "Piece the threads together and a map emerges. Personal referrals from neighboring businesses top the list — the deli owner asks the florist who fixed her card reader. Neighborhood WhatsApp and Facebook groups carry constant vendor chatter. The city itself runs real programs: NYC Small Business Services offers free courses and advising that many owners never discover. Business improvement districts sometimes broker help. And a large share of owners simply call whoever built the last thing: the cousin who knows computers, the friend's web guy. The results are as mixed as you would expect."
+        "body": "Piece the threads together and a map emerges. Personal referrals from neighboring businesses top the list — the deli owner asks the florist who fixed her card reader. Neighborhood WhatsApp and Facebook groups carry constant vendor chatter. The city itself runs real programs: NYC Small Business Services offers free courses and advising that many owners never discover. Business improvement districts sometimes broker help. And a large share of owners simply call whoever built the last thing: the cousin who knows computers, the friend’s web guy. The results are as mixed as you would expect."
       },
       {
         "heading": "Where the usual channels break down",
-        "body": "Each channel has a failure mode the threads gloss over. Referrals inherit the referrer's standards — the florist's guy is only as good as what a florist knows to check, and a technician great at wifi may be wrong for your website. City programs are genuinely useful for education and planning but move at government speed; they cannot help when your site is down on a Friday. Group-chat vendors are unvetted by definition. And the cousin who knows computers becomes a single point of failure whose documentation lives nowhere."
+        "body": "Each channel has a failure mode the threads gloss over. Referrals inherit the referrer’s standards — the florist’s guy is only as good as what a florist knows to check, and a technician great at wifi may be wrong for your website. City programs are genuinely useful for education and planning but move at government speed; they cannot help when your site is down on a Friday. Group-chat vendors are unvetted by definition. And the cousin who knows computers becomes a single point of failure whose documentation lives nowhere."
       },
       {
         "heading": "Our honest take",
@@ -927,7 +927,7 @@ export const answerGuides: AnswerGuide[] = [
     ],
     "faq": [
       {
-        "question": "Are the city's free small-business resources worth using?",
+        "question": "Are the city’s free small-business resources worth using?",
         "answer": "Yes — NYC Small Business Services runs free courses and advising that are genuinely useful for planning. They are not built for urgent technical fixes."
       },
       {
@@ -979,7 +979,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "question": "Can I just create a new profile instead of appealing?",
-        "answer": "No. Duplicate profiles violate Google's rules and can get both listings removed, turning a recoverable problem into a much longer one."
+        "answer": "No. Duplicate profiles violate Google’s rules and can get both listings removed, turning a recoverable problem into a much longer one."
       }
     ]
   },
@@ -1000,7 +1000,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "What to do right now",
-        "body": "Search your email, including spam, for your domain registrar and hosting company names — expiry and payment-failure notices are usually sitting right there. Log into the registrar first: if the domain lapsed, renew it immediately; recently expired domains usually restore within hours. Next, check the hosting account for billing holds and the host's own status page for outages on their end. If the site broke right after an update or edit, use the host's backup or restore point rather than trying to fix forward. And do not start a panicked rebuild — you will lose the version you had."
+        "body": "Search your email, including spam, for your domain registrar and hosting company names — expiry and payment-failure notices are usually sitting right there. Log into the registrar first: if the domain lapsed, renew it immediately; recently expired domains usually restore within hours. Next, check the hosting account for billing holds and the host’s own status page for outages on their end. If the site broke right after an update or edit, use the host’s backup or restore point rather than trying to fix forward. And do not start a panicked rebuild — you will lose the version you had."
       },
       {
         "heading": "Stop the bleeding while it is down",
@@ -1008,7 +1008,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "When to call for help",
-        "body": "Call in help if the domain or hosting account is locked to a person you cannot reach, like a former developer or an old employee's email. Or call if you have restored and renewed and the site is still dark. That recovery work is exactly what we do: we return calls within two hours between 9am and 9pm ET, and when hardware or wiring is the issue we are on-site within twenty-four hours. Said honestly, because it is true: a solid share of these calls end with us pointing at a renew button and wishing the owner well, free, no pitch. You might not need us — but do not lose a week finding out."
+        "body": "Call in help if the domain or hosting account is locked to a person you cannot reach, like a former developer or an old employee’s email. Or call if you have restored and renewed and the site is still dark. That recovery work is exactly what we do: we return calls within two hours between 9am and 9pm ET, and when hardware or wiring is the issue we are on-site within twenty-four hours. Said honestly, because it is true: a solid share of these calls end with us pointing at a renew button and wishing the owner well, free, no pitch. You might not need us — but do not lose a week finding out."
       }
     ],
     "faq": [
@@ -1035,11 +1035,11 @@ export const answerGuides: AnswerGuide[] = [
     "sections": [
       {
         "heading": "What to check first",
-        "body": "Triage fast, in this order. Is it one terminal or all of them? One device means hardware — grab the backup or restart it. All devices: can your phone load a website on the restaurant wifi? If not, your internet is down and the POS is an innocent victim. If the wifi works, check your POS provider's status page from your phone — cloud systems have outages, and during a big one the status page and their social accounts light up. Sixty seconds of this beats twenty minutes of rebooting things at random while tickets pile up."
+        "body": "Triage fast, in this order. Is it one terminal or all of them? One device means hardware — grab the backup or restart it. All devices: can your phone load a website on the restaurant wifi? If not, your internet is down and the POS is an innocent victim. If the wifi works, check your POS provider’s status page from your phone — cloud systems have outages, and during a big one the status page and their social accounts light up. Sixty seconds of this beats twenty minutes of rebooting things at random while tickets pile up."
       },
       {
         "heading": "The usual culprits",
-        "body": "The repeat offenders in city restaurants: the internet connection itself (a failed router, an ISP outage on the block, or a cable someone kicked loose behind the bar); the POS provider's cloud having a bad day, which takes every restaurant on that platform down at once; a software update that ran overnight and left a terminal confused; hardware death, where receipt printers and card readers lead the league; and power problems on overloaded circuits. Old NYC buildings add their own flavor: basement prep areas with weak wifi and wiring nobody has mapped since the previous tenant."
+        "body": "The repeat offenders in city restaurants: the internet connection itself (a failed router, an ISP outage on the block, or a cable someone kicked loose behind the bar); the POS provider’s cloud having a bad day, which takes every restaurant on that platform down at once; a software update that ran overnight and left a terminal confused; hardware death, where receipt printers and card readers lead the league; and power problems on overloaded circuits. Old NYC buildings add their own flavor: basement prep areas with weak wifi and wiring nobody has mapped since the previous tenant."
       },
       {
         "heading": "What to do right now, mid-service",
@@ -1051,13 +1051,13 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "When to call for help",
-        "body": "Call for help when outages keep repeating and nobody can say why, when the wifi in your building has permanent dead zones, or when the honest answer is that nobody set the system up deliberately in the first place. This is core work for us with NYC restaurants: we return calls within two hours between 9am and 9pm ET, and we are on-site within twenty-four hours when hands are needed. The honest caveat, free of charge: if last night was your provider's cloud outage, no local fix would have saved you, and switching platforms in anger will not either. The consult is free, no pitch — you might not need us, just a backup plan."
+        "body": "Call for help when outages keep repeating and nobody can say why, when the wifi in your building has permanent dead zones, or when the honest answer is that nobody set the system up deliberately in the first place. This is core work for us with NYC restaurants: we return calls within two hours between 9am and 9pm ET, and we are on-site within twenty-four hours when hands are needed. The honest caveat, free of charge: if last night was your provider’s cloud outage, no local fix would have saved you, and switching platforms in anger will not either. The consult is free, no pitch — you might not need us, just a backup plan."
       }
     ],
     "faq": [
       {
         "question": "Can I take card payments when the internet is down?",
-        "answer": "Usually yes, through your POS's offline mode — payments queue and sync later, with some risk on declines. Enable and test it before the night you need it."
+        "answer": "Usually yes, through your POS’s offline mode — payments queue and sync later, with some risk on declines. Enable and test it before the night you need it."
       },
       {
         "question": "Should I switch POS providers after an outage?",
@@ -1071,7 +1071,7 @@ export const answerGuides: AnswerGuide[] = [
   },
   {
     "slug": "business-email-going-to-spam",
-    "question": "Your Business Email Is Going to Spam — Here's Why",
+    "question": "Your Business Email Is Going to Spam — Here’s Why",
     "short": "Short answer: your domain is probably missing its ID papers — three DNS records called SPF, DKIM, and DMARC that prove your email is really from you. Since inbox providers tightened rules in 2024, mail without them lands in spam even when it is perfectly legitimate.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
@@ -1082,11 +1082,11 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "The usual culprits",
-        "body": "The big one: missing or broken authentication records. SPF, DKIM, and DMARC are three small DNS entries that act as your domain's ID papers — they tell Gmail and the rest that a message claiming to be from you actually is. Without them, honest mail looks forged. Other regulars: sending bulk mail like newsletters straight from a normal inbox instead of a proper sending service; a compromised account quietly blasting junk and torching your reputation; spammy habits like all-image emails, misleading subject lines, or big attachment blasts; and a mismatch where your website moved but your email records did not follow."
+        "body": "The big one: missing or broken authentication records. SPF, DKIM, and DMARC are three small DNS entries that act as your domain’s ID papers — they tell Gmail and the rest that a message claiming to be from you actually is. Without them, honest mail looks forged. Other regulars: sending bulk mail like newsletters straight from a normal inbox instead of a proper sending service; a compromised account quietly blasting junk and torching your reputation; spammy habits like all-image emails, misleading subject lines, or big attachment blasts; and a mismatch where your website moved but your email records did not follow."
       },
       {
         "heading": "What to do right now",
-        "body": "First, run your domain through one of the free email-authentication checkers online — they grade a test message and show which of the three records exist. Takes five minutes and turns guessing into a diagnosis. If records are missing, whoever manages your domain or email needs to add them. Your provider's support desk can usually do it. It is settings work, not a rebuild. Pause any newsletters and automated blasts until the records pass, because every send while broken digs the reputation hole deeper. And check your sent folder for mail you did not write — if you find any, change the password now."
+        "body": "First, run your domain through one of the free email-authentication checkers online — they grade a test message and show which of the three records exist. Takes five minutes and turns guessing into a diagnosis. If records are missing, whoever manages your domain or email needs to add them. Your provider’s support desk can usually do it. It is settings work, not a rebuild. Pause any newsletters and automated blasts until the records pass, because every send while broken digs the reputation hole deeper. And check your sent folder for mail you did not write — if you find any, change the password now."
       },
       {
         "heading": "Why this got suddenly stricter",
@@ -1094,7 +1094,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "When to call for help",
-        "body": "Call for help if the checker results read like alphabet soup, if your domain and email are split across providers nobody remembers choosing, or if a compromised account is in the mix — those need cleaning up quickly and properly. We set these records straight for NYC businesses routinely, and we return calls within two hours between 9am and 9pm ET. The honest version first, though: your email provider's own support can often fix this for nothing, and if that is your situation we will say so. The consult is free, there is no pitch, and you might not need us — you might need three DNS records and a password change."
+        "body": "Call for help if the checker results read like alphabet soup, if your domain and email are split across providers nobody remembers choosing, or if a compromised account is in the mix — those need cleaning up quickly and properly. We set these records straight for NYC businesses routinely, and we return calls within two hours between 9am and 9pm ET. The honest version first, though: your email provider’s own support can often fix this for nothing, and if that is your situation we will say so. The consult is free, there is no pitch, and you might not need us — you might need three DNS records and a password change."
       }
     ],
     "faq": [
@@ -1108,20 +1108,20 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "question": "Can I send my newsletter from my regular inbox?",
-        "answer": "You should not. Bulk mail from a normal inbox hurts your domain's reputation. Use a proper email service and keep your day-to-day address for conversations."
+        "answer": "You should not. Bulk mail from a normal inbox hurts your domain’s reputation. Use a proper email service and keep your day-to-day address for conversations."
       }
     ]
   },
   {
     "slug": "google-reviews-not-showing-up",
     "question": "Google Reviews Not Showing Up? The Honest Reasons",
-    "short": "Short answer: Google's filter removes or hides reviews it finds suspicious. Bursts from one location, brand-new accounts, anything that smells incentivized. And it catches honest ones in the net. Most missing reviews were filtered, not lost, and prevention beats appeal.",
+    "short": "Short answer: Google’s filter removes or hides reviews it finds suspicious. Bursts from one location, brand-new accounts, anything that smells incentivized. And it catches honest ones in the net. Most missing reviews were filtered, not lost, and prevention beats appeal.",
     "published": "2026-07-12",
     "updated": "2026-07-12",
     "sections": [
       {
         "heading": "What to check first",
-        "body": "Pin down what missing means. Did the customer definitely post it — can they still see it in their own Google account? A review that exists there but not publicly has been filtered. Is your total count lower than yesterday, meaning something was removed, or did a new review simply never appear? Check your profile's health too: a suspended or flagged profile hides reviews wholesale, which is a different problem from a single filtered one. And ask what the last week looked like: a review station at the register, a staff push, an event. Timing is usually the clue."
+        "body": "Pin down what missing means. Did the customer definitely post it — can they still see it in their own Google account? A review that exists there but not publicly has been filtered. Is your total count lower than yesterday, meaning something was removed, or did a new review simply never appear? Check your profile’s health too: a suspended or flagged profile hides reviews wholesale, which is a different problem from a single filtered one. And ask what the last week looked like: a review station at the register, a staff push, an event. Timing is usually the clue."
       },
       {
         "heading": "The usual culprits",
@@ -1129,7 +1129,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "What to do right now",
-        "body": "If a review push is running, pause it — every filtered burst makes the profile look more suspicious. For a specific legitimate review that vanished, the customer posting again from their normal connection, a few days later, in their own words, often sticks where the first attempt did not. You can raise genuinely missing reviews with Google's business support, but expectations matter: filtered reviews are rarely reinstated, and support will not explain the filter. Meanwhile, reply to the reviews you do have — it signals a real, attended business, which is quiet protection."
+        "body": "If a review push is running, pause it — every filtered burst makes the profile look more suspicious. For a specific legitimate review that vanished, the customer posting again from their normal connection, a few days later, in their own words, often sticks where the first attempt did not. You can raise genuinely missing reviews with Google’s business support, but expectations matter: filtered reviews are rarely reinstated, and support will not explain the filter. Meanwhile, reply to the reviews you do have — it signals a real, attended business, which is quiet protection."
       },
       {
         "heading": "What not to do",
@@ -1143,11 +1143,11 @@ export const answerGuides: AnswerGuide[] = [
     "faq": [
       {
         "question": "Why did a real five-star review disappear?",
-        "answer": "Most likely Google's filter — new reviewer account, same-network posting, or a burst pattern. The reviewer reposting later from their own connection often works."
+        "answer": "Most likely Google’s filter — new reviewer account, same-network posting, or a burst pattern. The reviewer reposting later from their own connection often works."
       },
       {
         "question": "Can filtered reviews be restored?",
-        "answer": "Rarely. Support can look into clearly missing legitimate reviews, but the filter's decisions mostly stand. Prevention is the real fix: steady, unprompted-looking asks."
+        "answer": "Rarely. Support can look into clearly missing legitimate reviews, but the filter’s decisions mostly stand. Prevention is the real fix: steady, unprompted-looking asks."
       },
       {
         "question": "Are QR codes asking for reviews against the rules?",
@@ -1160,10 +1160,10 @@ export const answerGuides: AnswerGuide[] = [
 /** The bridge out of a research door — every answer walks the reader to the
  *  service that actually handles it (Door Doctrine: no dead ends). */
 export const answerServiceBridge: Record<string, { to: string; name: string; line: string }> = (() => {
-  const websites = { to: "/services/custom-local-websites/", name: "Custom Local Websites", line: "Want it built right instead? A site that makes the phone ring, live in 14 days — or you don't pay." };
+  const websites = { to: "/services/custom-local-websites/", name: "Custom Local Websites", line: "Want it built right instead? A site that makes the phone ring, live in 14 days — or you don’t pay." };
   const support = { to: "/services/it-support/", name: "IT Support", line: "Want a person on this today? Real local help, 9am\u20139pm — callbacks within 2 hours." };
-  const consulting = { to: "/services/tech-consulting/", name: "Tech Consulting", line: "Want a straight answer for your exact setup? The read is free. If you don't need us, we say so." };
-  const systems = { to: "/services/business-systems/", name: "Software You Own", line: "Done renting? We build the tool once — and it's yours for good." };
+  const consulting = { to: "/services/tech-consulting/", name: "Tech Consulting", line: "Want a straight answer for your exact setup? The read is free. If you don’t need us, we say so." };
+  const systems = { to: "/services/business-systems/", name: "Software You Own", line: "Done renting? We build the tool once — and it’s yours for good." };
   return {
     "website-form-not-working-small-business": support,
     "reduce-monthly-software-costs-small-business": systems,

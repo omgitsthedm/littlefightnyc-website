@@ -6,10 +6,10 @@ import { rr, glow, DISP, MONO, ORANGE, GREEN, useInstrumentCanvas } from "./inst
  *
  * A site assembles in a browser frame while a day counter climbs 1 → 14 — hero,
  * content rows and footer snap into place behind an orange build-sweep line —
- * and on day 14 it goes LIVE — "in 14 days, or you don't pay." One causal image:
+ * and on day 14 it goes LIVE — "in 14 days, or you don’t pay." One causal image:
  * a real custom build, coming together on a clock you can hold us to.
  *
- * Every fact drawn (ships by day 14, miss-the-date-you-don't-pay) is already in
+ * Every fact drawn (ships by day 14, miss-the-date-you-don’t-pay) is already in
  * the custom-local-websites copy — no invented numbers.
  *
  * Rendered on a <canvas> (2D). Responsive to its container shape. Pauses when
@@ -229,7 +229,7 @@ function draw(
     cx.fillText("Live in 14 days.", dayX, ry);
     cx.fillStyle = "rgba(200,205,215,.8)";
     cx.font = "500 " + Math.max(10, (H * 0.036) | 0) + "px " + DISP;
-    cx.fillText("Or you don't pay.", dayX, ry + H * 0.055);
+    cx.fillText("Or you don’t pay.", dayX, ry + H * 0.055);
   } else {
     cx.fillStyle = "rgba(200,205,215,.85)";
     cx.font = "500 " + Math.max(10, (H * 0.036) | 0) + "px " + DISP;
@@ -281,7 +281,7 @@ export default function SiteInFourteen() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="A custom website comes together as the day counter moves from 1 to 14. The navigation, main message, content, and footer lock into place. On day 14, the site goes live at yourshop.com. Live in 14 days, or you don't pay."
+      aria-label="A custom website comes together as the day counter moves from 1 to 14. The navigation, main message, content, and footer lock into place. On day 14, the site goes live at yourshop.com. Live in 14 days, or you don’t pay."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

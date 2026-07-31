@@ -89,7 +89,7 @@ export const services: Service[] = [
     whatItDoes: [
       "Most owners do not start with a clean problem. They start with a strange bill. A form that went quiet. A Google listing that looks wrong.",
       "The consult is the first read. We walk through your tools, bills, website, Google profile, and how leads reach you. Then we name what earns its place, what wastes money, and what can wait.",
-      "It works the same for any trade. A bar's POS. A law firm's intake email. A clothing brand's online store. A salon's booking page. The tools change, the read is the same.",
+      "It works the same for any trade. A bar’s POS. A law firm’s intake email. A clothing brand’s online store. A salon’s booking page. The tools change, the read is the same.",
       "You leave with a written fix list. It is ranked by what hurts customers and what costs money. You can hand it to your own vendor, another developer, or back to us.",
       "The consult is a real read of your tools and bills. We are checking whether there is work worth doing, or whether you are already fine as you are.",
     ],
@@ -107,7 +107,7 @@ export const services: Service[] = [
         body: "Wrong hours. Old photos. An address that does not match. Each one looks small. Together they make people trust you less.",
       },
       {
-        title: "Work that lives in one person's head",
+        title: "Work that lives in one person’s head",
         body: "Leads come in by phone, form, email, and walk-ins. Then they get tracked nowhere. Sometimes the fix is just writing the steps down so anyone can run them.",
       },
       {
@@ -169,7 +169,7 @@ export const services: Service[] = [
       "When a card reader, inbox, printer, or login breaks, you do not need a ticket number. You need a person who fixes the urgent thing first.",
       "We answer the phone. We come on-site when the fix needs hands. And we keep notes, so the next call does not start from zero.",
       "We work on the boring middle: email routing, domain renewals, DNS records, POS connections, booking links, Wi-Fi, payments, and locked accounts.",
-      "The trade does not matter. A bar's card reader on a Friday night. A law firm's intake email. A clinic's booking link. A shop's printer. Broken is broken, and we fix it.",
+      "The trade does not matter. A bar’s card reader on a Friday night. A law firm’s intake email. A clinic’s booking link. A shop’s printer. Broken is broken, and we fix it.",
       "The goal is not to make you depend on us. Every fix gets written down in plain words, so your business is safer next time something changes.",
     ],
     commonIssues: [
@@ -212,11 +212,11 @@ export const services: Service[] = [
         reality: "Retail support can fix one device. A business setup has POS, domains, payments, booking, staff accounts, Wi-Fi, and Google all touching each other.",
       },
       {
-        myth: "I'll just Google it.",
+        myth: "I’ll just Google it.",
         reality: "You can Google a lot of it. The risk is changing the wrong record, locking an account, or making a small problem big. Some things are worth the call.",
       },
       {
-        myth: "If we have a managed-services retainer, we don't need anyone else.",
+        myth: "If we have a managed-services retainer, we don’t need anyone else.",
         reality: "Those are different jobs. A retainer handles updates and monitoring. Local support handles the moments that need a person in your business.",
       },
     ],
@@ -298,7 +298,7 @@ export const services: Service[] = [
         reality: "No. For a simple business with a simple offer, they can be right. The problem starts when you need stronger local search, faster pages, or tools the template fights.",
       },
       {
-        myth: "Google doesn't actually penalize template websites.",
+        myth: "Google doesn’t actually penalize template websites.",
         reality: "Think comparison, not penalty. Google has to pick which business looks more real, useful, and trusted. A generic template makes that harder.",
       },
       {
@@ -310,7 +310,7 @@ export const services: Service[] = [
         reality: "More weak pages can hurt. Useful pages win because they answer real questions and help a customer act.",
       },
       {
-        myth: "Once the site launches, we're done.",
+        myth: "Once the site launches, we’re done.",
         reality: "A site nobody touches goes stale. Hours change. Staff change. Tools change. Google changes. Care keeps the path working.",
       },
       {
@@ -357,7 +357,7 @@ export const services: Service[] = [
     shortAnswer:
       "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
     whatItDoes: [
-      "Business systems are the work behind the storefront. The lead list. The job board. The quote path. The owner's view of the week.",
+      "Business systems are the work behind the storefront. The lead list. The job board. The quote path. The owner’s view of the week.",
       "Most small businesses run that layer on spreadsheets, inboxes, sticky notes, and memory. The work gets done, but the owner becomes the memory for the whole business.",
       "We start by reading what you have. What earns its place? What costs too much? What should connect? What deserves a custom build?",
       "Custom tools are for work no generic app handles well. Intake for a law firm. Inventory for a clothing brand. Event deposits for a bar. Quoting for a contractor. When the tool fits the work, the day gets calmer.",
@@ -381,7 +381,7 @@ export const services: Service[] = [
         body: "A big platform for a tiny job becomes the bill nobody questions. The right move may be downgrade, connect, replace, or cancel.",
       },
       {
-        title: "Work locked in one person's head",
+        title: "Work locked in one person’s head",
         body: "When that person is out, the business slows down. Writing the workflow down does not replace them. It makes the business less fragile.",
       },
       {
@@ -403,8 +403,8 @@ export const services: Service[] = [
         reality: "Sometimes. Often the math surprises people. A subscription plus lost staff time can cost more than one focused build. The answer depends on the work, the cost, and how long you will use it.",
       },
       {
-        myth: "Custom means we're locked into one developer forever.",
-        reality: "Not if it is built right. We use standard, widely-used technology like PostgreSQL, Next.js, and Supabase. The code, data, and docs are yours. Any good developer can pick it up. We have handed projects to clients' own teams without drama.",
+        myth: "Custom means we’re locked into one developer forever.",
+        reality: "Not if it is built right. We use standard, widely-used technology like PostgreSQL, Next.js, and Supabase. The code, data, and docs are yours. Any good developer can pick it up. We have handed projects to clients’ own teams without drama.",
       },
       {
         myth: "If we just had better software, the workflow would fix itself.",
@@ -499,11 +499,11 @@ export const studioProjects: StudioProject[] = [
     ],
     // Internal ops telemetry (weekly funnel counts, reply latency) removed
     // from the public site 2026-07-12 - editorial directive: "nothing internal should
-    // show." The story stays; the log numbers don't.
+    // show." The story stays; the log numbers don’t.
   },
   {
     slug: "cockpit",
-    name: "Estimator's Cockpit",
+    name: "Estimator’s Cockpit",
     kind: "Field-precision web app",
     status: "Active",
     oneline: "Private estimating software for a custom cabinetry team. Discovery, sorting, and reporting in one working system.",
@@ -513,7 +513,7 @@ export const studioProjects: StudioProject[] = [
     image: "/assets/hero-laptop.webp",
     body: [
       "The Cockpit is the largest non-public build Little Fight has shipped. It turns the messy first pass of a custom cabinetry estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out.",
-      "The build is Next.js, Supabase, Anthropic for classification, and Netlify Functions for the heavy processing. The screens show dense information without hiding anything. The data tells the truth. The estimator's judgment makes the call.",
+      "The build is Next.js, Supabase, Anthropic for classification, and Netlify Functions for the heavy processing. The screens show dense information without hiding anything. The data tells the truth. The estimator’s judgment makes the call.",
       "Real estimates run through it. The math is honest. The team uses it on every project.",
     ],
   },
@@ -525,14 +525,14 @@ export const studioProjects: StudioProject[] = [
     oneline:
       "A full product Little Fight shipped to the public. The operating system for independent live-event venues. Close the night in 90 seconds and know every number down to the receipt.",
     description:
-      "VenueCircuit is the most ambitious thing in the Studio. Not a website. Not an internal tool. A complete software product, live to the public. It is a financial operating system for independent music venues and event spaces. The GM closes the night in about 90 seconds. The venue's money stays separate from the promoter's. The quarter is already reconciled. Live at venuecircuit.app.",
+      "VenueCircuit is the most ambitious thing in the Studio. Not a website. Not an internal tool. A complete software product, live to the public. It is a financial operating system for independent music venues and event spaces. The GM closes the night in about 90 seconds. The venue’s money stays separate from the promoter’s. The quarter is already reconciled. Live at venuecircuit.app.",
     stack: ["Next.js", "Supabase", "TypeScript", "Netlify"],
     image: "/assets/case-venuecircuit.webp",
     external: "https://venuecircuit.app",
     body: [
       "VenueCircuit answers a question venue owners live with every night. Where did the money actually go? Bar, door, staff, promoter splits, and payouts all land in one place. The night closes in about 90 seconds instead of a spreadsheet marathon the next morning.",
-      "The core rule: the venue's money and the promoter's money never blur together. Every number drills down to the receipt behind it. A GM can answer a question at midnight. The owner can trust the quarter without a forensic audit.",
-      "It is live at venuecircuit.app in open beta, with a free 45-day pilot. It is the same range Little Fight brings to a client's systems, turned all the way up.",
+      "The core rule: the venue’s money and the promoter’s money never blur together. Every number drills down to the receipt behind it. A GM can answer a question at midnight. The owner can trust the quarter without a forensic audit.",
+      "It is live at venuecircuit.app in open beta, with a free 45-day pilot. It is the same range Little Fight brings to a client’s systems, turned all the way up.",
     ],
   },
 ];

@@ -47,7 +47,7 @@ import "@/styles/editorial/journal.css";
 import "@/styles/editorial/answers.css";
 
 /**
- * The Library — ONE front door for everything we've written (Fortress plan,
+ * The Library — ONE front door for everything we’ve written (Fortress plan,
  * 2026-07-19). Replaces the separate /journal/ and /answers/ hubs (both 301
  * here); every detail URL is untouched. Order follows the Door Doctrine:
  * straight answers first (people arrive in pain), the Journal below (the
