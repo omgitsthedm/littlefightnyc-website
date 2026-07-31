@@ -1295,3 +1295,75 @@ test(
     await context.close();
   },
 );
+
+test(
+  "Library search ignores punctuation the reader would not type @chromium-desktop",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    await openRoute(page, ROUTES.find((route) => route.key === "library")!);
+
+    const search = page.getByRole("searchbox", { name: "Describe the problem" });
+    const status = page.locator(".lf-library-find__status");
+
+    // Nobody types the hyphen in "Wi-Fi". Before folding, this returned nothing
+    // while the Wi-Fi post sat in the library — a search that answers "no" to a
+    // question the site can answer is worse than no search.
+    await search.fill("wifi");
+    await expect(status).not.toContainText(/^0 results/);
+
+    // The spelling on the page still has to work.
+    await search.fill("wi-fi");
+    await expect(status).not.toContainText(/^0 results/);
+
+    // Folding must not turn into matching everything: a phrase that appears
+    // nowhere still returns nothing, so the filter is doing real work.
+    await search.fill("zzzznotathing");
+    await expect(status).toContainText(/^0 results/);
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);
+
+test(
+  "Library announces a settled result count once, not per keystroke @chromium-desktop",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    await openRoute(page, ROUTES.find((route) => route.key === "library")!);
+
+    // Count what a screen reader would actually be handed: every distinct text
+    // a polite live region holds while the user types. The visible counter is
+    // deliberately NOT a live region, so it must not appear here.
+    await page.evaluate(() => {
+      const seen: string[] = [];
+      (window as unknown as { __spoken: string[] }).__spoken = seen;
+      const regions = document.querySelectorAll('[aria-live="polite"]');
+      regions.forEach((region) => {
+        new MutationObserver(() => {
+          const text = (region.textContent ?? "").trim();
+          if (text && text !== seen[seen.length - 1]) seen.push(text);
+        }).observe(region, { childList: true, subtree: true, characterData: true });
+      });
+    });
+
+    const search = page.getByRole("searchbox", { name: "Describe the problem" });
+    await search.pressSequentially("booking system", { delay: 40 });
+    await expect(page.locator(".lf-library-find__status")).toContainText(
+      /booking system/,
+    );
+    await page.waitForTimeout(1200);
+
+    const spoken = await page.evaluate(
+      () => (window as unknown as { __spoken: string[] }).__spoken,
+    );
+
+    // Fourteen characters used to produce seventeen announcements racing each
+    // other. One is the whole point; two would mean the debounce is leaking.
+    expect(spoken.length).toBeLessThanOrEqual(2);
+    expect(spoken.length).toBeGreaterThan(0);
+    expect(spoken[spoken.length - 1]).toMatch(/booking system/);
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);

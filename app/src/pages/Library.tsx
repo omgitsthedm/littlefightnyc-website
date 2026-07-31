@@ -111,7 +111,16 @@ export default function Library() {
   const [openClusters, setOpenClusters] = useState(
     () => new Set([...ANSWER_CLUSTERS.map((cluster) => cluster.key), "more"]),
   );
-  const normalizedQuery = query.trim().toLocaleLowerCase();
+  // Fold away the punctuation people do not type. "wifi" returned nothing while
+  // the Wi-Fi post existed, because the hyphen made "wi-fi" and "wifi" different
+  // strings — the same trap catches "ecommerce" against "e-commerce" and
+  // "point of sale" against "point-of-sale". Spaces are kept, so a multi-word
+  // query still has to appear as a phrase; this only removes the characters a
+  // reader would not think to type.
+  const foldForSearch = (value: string) =>
+    value.toLocaleLowerCase().replace(/[^\p{L}\p{N} ]+/gu, "");
+
+  const normalizedQuery = foldForSearch(query.trim());
 
   // Typing "booking system" fired 17 polite announcements across two live
   // regions reporting different counts — "63 results for b" racing "19 field
@@ -135,10 +144,9 @@ export default function Library() {
   const visible = (filter === "all" ? sorted : sorted.filter((p) => p.category === filter))
     .filter((post) => {
       if (!normalizedQuery) return true;
-      return [post.title, post.description, CATEGORY_LABEL[post.category]]
-        .join(" ")
-        .toLocaleLowerCase()
-        .includes(normalizedQuery);
+      return foldForSearch(
+        [post.title, post.description, CATEGORY_LABEL[post.category]].join(" "),
+      ).includes(normalizedQuery);
     });
   const featured = visible[0];
   const rows = visible.slice(1);
@@ -171,10 +179,9 @@ export default function Library() {
         .filter((guide) => guide !== undefined)
         .filter((guide) => {
           if (!normalizedQuery) return true;
-          return [guide.question, guide.short]
-            .join(" ")
-            .toLocaleLowerCase()
-            .includes(normalizedQuery);
+          return foldForSearch([guide.question, guide.short].join(" ")).includes(
+            normalizedQuery,
+          );
         }),
     }))
     .filter((cluster) => cluster.guides.length > 0);
