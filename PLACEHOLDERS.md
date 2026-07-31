@@ -1,8 +1,6 @@
 # Resolved inputs — Little Fight NYC
 
-> Last verified: July 20, 2026. This file is no longer an open-placeholder
-> queue; current product and brand truth lives in `PROJECT_STATUS.md`,
-> `AGENTS.md`, `CLAUDE.md`, and `app/src/data/site.ts`.
+> Last verified: July 20, 2026. This file is no longer an open-placeholder queue. Current routing, brand, and product truth lives in `SOURCE_OF_TRUTH.md`, `VOICE.md`, and `app/src/data/site.ts`.
 
 ## Current confirmed facts
 

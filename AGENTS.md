@@ -1,111 +1,123 @@
-# Project AGENTS
+# Little Fight NYC agent contract
 
-## Source Of Truth
+## Canonical project
 
-Last verified: 2026-07-25.
+- Canonical physical root: `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`
+- GitHub: `https://github.com/omgitsthedm/littlefightnyc-website`
+- Default and production branch: `main`
+- Netlify site: `littlefightnyc`, ID `0907d8fe-7018-48db-a6be-1f906e4b2619`
+- Production: `https://littlefightnyc.com`
+- Netlify domain: `https://littlefightnyc.netlify.app`
+- Current alias: `https://hey.littlefightnyc.com`
+- Verified application baseline: deploy `6a6c204fd4cc730008c89833` from commit `7dc35782044237b2b794d53a64d9a66671adfa3c`
 
-Repo (off iCloud): `~/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`
+`SOURCE_OF_TRUTH.md` holds the concise deployment map and recovery pointers. Recheck live Netlify and GitHub state before a release because point-in-time IDs can change.
 
-Production work happens in the React/Vite app under `app/`. Netlify uses root `netlify.toml`, runs `cd app && npm ci && npm run build`, and publishes `app/dist`.
+Do not route website work to an older Little Fight checkout or to an independent Lab, brand-kit, template, demo, or experiment repository. Those are separate properties or history unless the fleet manifest explicitly maps them here.
 
-Verified Quality Spine application release:
-- Git release commit: `d02b93549ad79cc2a904f3220d2a06b1643f114a`
-  (`d02b935`)
-- Netlify deploy: `6a642637809f6e0008ac8831`, state `ready`
-- Production release marker: `/release.json`
-- Previous rollback point: `df7c90ded191d909648ed86401fc5816809648ec`
+## Start here
 
-`d02b935` was explicitly authorized, pushed to `main`, auto-deployed, and
-revision-matched against production on 2026-07-25. Because later documentation
-commits can advance `main` without changing the application behavior described
-here, always compare local `HEAD`, GitHub `main`, Netlify, and live
-`/release.json` before quoting the current production SHA.
+Run these checks before editing:
 
-Netlify project:
-- Site name: `littlefightnyc`
-- Site ID: `0907d8fe-7018-48db-a6be-1f906e4b2619`
+```bash
+pwd -P
+git rev-parse --show-toplevel
+git status --short --branch
+git remote -v
+git worktree list
+```
 
-**Deploy model (confirmed 2026-07 for THIS repo):** GitHub `main` **is** canonical and **auto-deploys** to Netlify (~40s: push → auto-build → publish). Do NOT `netlify deploy --prod` manually (caused a 2026-06-30 incident). The general "LiFi sites are manual deploys" rule does **not** apply to littlefightnyc.
+Preserve unrelated local work. Do not reset, clean, stash, commit, push, or deploy changes outside the requested scope.
 
-See `SOURCE_OF_TRUTH.md` before major edits.
+Read only the files the task needs:
 
-## Tech Stack & Architecture (current — 2026-07-24)
+- Deployment or routing: `SOURCE_OF_TRUTH.md`, `netlify.toml`
+- Product and visual work: `app/DESIGN.md`, then `app/src/styles/editorial/tokens.css`
+- Voice or claims: `VOICE.md` and the relevant on-demand business document named in `SOURCE_OF_TRUTH.md`
+- Quality behavior: `.lifi/quality.yml`, the applicable script in `app/package.json`, and the failing test
 
-- **App:** React 19 + TypeScript + Vite 7 in `app/`. Routing = React Router 7 (`react-router-dom`, `BrowserRouter` + `<Routes>`). Icons = `lucide-react`.
-- **Routing / layout:** `src/App.tsx` defines all routes. Most pages inherit `EditorialShell` (QuietNav + QuietFooter + StickyHelpBar + RouteMeta + **CommandPalette**). ⚠️ The home page `/` is a **standalone layout** (its own `.lf-editorial` wrapper, own nav/footer) — it does NOT use EditorialShell, so any shell-only global (e.g. CommandPalette) must **also** be rendered in `Home.tsx`.
-- **Rendering:** client-rendered SPA. `src/main.tsx` uses `createRoot` (not hydrate). The build writes a static `index.html` snapshot for each generated route, then the client replaces that snapshot. Current metadata inventory: **203 routes, 130 indexable, 73 noindex** (verified 2026-07-29 against the build output and the live sitemap). The home page mounts its complete section sequence directly. First-response and hydrated H1 text must remain equal; the Playwright suite checks every indexed route.
-- **Data (source of truth):** `src/data/site.ts` is the public facade over split service, case, answer, area, glossary, and studio modules; journal and industry data remain separate. `src/data/seo-pages.json` feeds prerender/search metadata and must stay synchronized through the metadata generation/parity tooling. Do not hand-edit generated `route-meta.json`.
-- **Design system:** Axiom Momentum tokens in `src/styles/editorial/tokens.css` (bg `#050507`, orange `#F97316`, blue `#3B82F6` accent, `--lf-heading` Oswald + `--lf-body` Barlow). Shared responsive contracts live in `src/styles/editorial/primitives.css`. Section content is static-first; motion.css owns route/tactile state motion.
-- **CSS gotchas:** (1) the shared reset is intentionally low-specificity via `:where()`; component classes should own their fill/border/padding without escalation. (2) global anchor color is also low-specificity, but CTA foregrounds should still be explicit for contrast. (3) use `rgba()` not `color-mix()` inside gradients.
-- **Runtime/build:** Node 24 is pinned by root `.nvmrc` and package engine declarations. `npm run build` regenerates data/navigation, type-checks, builds, prerenders, writes release metadata, and audits metadata parity. ⚠️ **Prod build strips `console.log`** — debug built/live code with `window.__flags`, not console.
-- **Conversion + infra:** `/tech-audit/` submits via Netlify Forms (registration in `app/public/__forms.html` — new form fields must be added there too). Twilio and the AI phone agent are retired and **not a service**. The public number is an ordinary `tel:`/`sms:` path; after hours, callers leave a normal message. Security headers (CSP/HSTS/X-Frame DENY/nosniff/Referrer-Policy/Permissions-Policy) live in root `netlify.toml`. **Redirects live ONLY in `app/public/_redirects`**. Analytics is denied by default and consent-gated: GA4, Clarity, and TikTok load only after a visitor allows analytics, then boot after the existing delay.
-- **Website Audit:** `/examples/audit/` is a live service-enabled surface, not a static demo. Eight Netlify Functions plus shared helpers accept a URL/email, run background work, persist job/report/view/engagement/rate-limit state in Netlify Blobs, deliver reports, and expire them through scheduled cleanup. Treat provider calls, environment values, stored state, delivery, privacy, and incident handling as production boundaries; never copy secrets or submitted data into source or evidence files.
-- **Quality Spine (released):** `.lifi/quality.yml`, debt/dead-code ledgers, and `quality:fast`, `quality:full`, `quality:release`, `quality:live`, and `quality:maintenance` now exist. The Playwright suite covers Chromium desktop, Chromium mobile/touch, Firefox desktop, and WebKit mobile, plus axe, form validation, Library interaction, mobile scroll lifecycle, and indexed-route H1 parity. Release `d02b935` passed `quality:release` locally under Node 24.18.0 with **32/32 browser checks**, reached a ready Node 24 Netlify deploy, passed revision-matched `quality:live`, passed a **200/200** route sweep and **78/78** share-image check, and passed an independent 390×844 mobile scroll/crash smoke. These checks do not prove form inbox or provider delivery.
-- **Verified production quality history:** the 2026-07-07 Lighthouse/squirrelscan numbers remain point-in-time evidence for an earlier release; the 2026-07-25 release evidence above governs the Quality Spine application baseline.
+Do not load historical Git commits, recovery branches, evidence folders, or every Markdown file at startup.
 
-## Design Context
+## Source boundaries
 
-### Users
-Little Fight NYC serves small business owners and operators, especially in New York City. They are often juggling customers, staff, vendors, and broken systems at the same time. They come to the site to understand quickly whether Little Fight can solve messy real-world problems across websites, Wi-Fi, payments, devices, search visibility, and daily operations.
+The deployed React/Vite application lives in `app/`. Live Netlify functions live in `netlify/functions/`. Deployment configuration lives in `netlify.toml`.
 
-There are two main user states:
-- urgent owners who need help fast and want to feel reassured that a kind, competent human can step in
-- evaluating owners who are deciding whether Little Fight is premium enough to trust with their website, systems, and ongoing support
+Key source paths:
 
-The blog also serves curious operators, founders, and neighborhood business owners who want practical insight without marketing fluff. Their job is to make better decisions fast and feel more confident about the technology that affects revenue, reputation, and daily stress.
+- `app/src/**`
+- `app/public/**`
+- `app/index.html`
+- `app/scripts/**`
+- `app/tests/**`
+- `app/playwright.config.ts`
+- `netlify/functions/**`
+- `netlify.toml`
+- `.lifi/**`
 
-### Brand Personality
-Playful, tactile, premium.
+`app/dist/` is generated and ignored. Never hand-edit or commit it. Never expose, inspect, or commit secrets, local environment files, credentials, private form data, or Netlify tokens.
 
-The voice should feel warm, street-smart, insightful, and human. It should feel like a sharp local partner who understands New York small business reality, not a distant agency or sterile software company. The emotional goals are trust, relief, curiosity, momentum, and calm competence.
+The Website Audit functions can send email, write blobs, or call providers. Keep tests read-only unless the task explicitly authorizes an external side effect. Do not submit production forms during routine verification.
 
-### Aesthetic Direction
-The visual direction should feel like playful tactile NYC with premium restraint. The homepage should sell capability and energy with darker, more immersive surfaces. The editorial and service routes can shift lighter and brighter when readability and scanning matter more than drama.
+The retired AI phone agent is not a current service. Public phone actions are ordinary `tel:` and `sms:` links. Do not restore or advertise AI call answering without a new explicit decision.
 
-The blog should feel like a hybrid of a field guide and an editorial publication: insightful, practical, and memorable. It should not look like generic SaaS, Apple-clean minimalism, dark neon gamer UI, or a startup agency template.
+## Commands
 
-Brand anchors that should stay intact:
-- Bright orange as the lead brand signal (`#F97316`; hover/ember for states)
-- Blue (`#3B82F6`) as a real accent — background bursts/ambient are blue, orange stays the signal
-- **Oswald** for display (700), **Barlow** for body (400/500/600), and **JetBrains Mono** for labels/metadata. Authoritative tokens live in `app/src/styles/editorial/tokens.css`; the full system is documented in `app/DESIGN.md`.
-- Note: the hub of proof/answers is now named **"Examples"** at `/examples/` (was "Field Guide" — 301 preserved)
-- React 19 + Vite + TypeScript SPA, prerendered for SEO, Netlify delivery (see Tech Stack above)
-- WCAG-aware contrast, responsive intent, and reduced-motion respect
-- Performance and polish should coexist; motion is welcome when it helps clarity or delight
+Node 24 and npm 10 or newer are required. Install only when dependencies are missing or changed:
 
-### Brand message
+```bash
+nvm use
+npm ci
+npm --prefix app ci
+```
 
-- Core idea: **Small businesses have enough to fight. Their technology should not be one of them.**
-- Category: **Serious technology for small businesses.**
-- Promise: make the technology fit the business, not the business fit the technology.
-- Customer story: name the fight, see the work, cut the drag, build the right
-  thing, prove it works, and stay with it.
-- Messaging jobs: **Be found. Keep moving. Cut the drag. Own what fits.**
-- Competitive copy attacks bloat, lock-in, poor fit, and vendor runaround. It
-  never blames an owner for choosing a familiar platform, falsely claims that a
-  site builder cannot rank, or promises search rankings.
-- Exact cost, delivery-time, and outcome claims require current evidence.
+Run commands from the repository root:
 
-### Image and showcase rules
+```bash
+npm run dev
+npm run lint
+npm run build
+npm run typecheck:functions
+npm run quality:fast
+npm run quality:full
+npm run quality:release
+npm run quality:live
+```
 
-- Lead with recognizable business environments: counters, storefronts, booking
-  stations, shelves, devices, receipts, cables, and back offices.
-- People should be absent, distant, blurred, or incidental unless a real,
-  approved client image is the proof.
-- Generated environments are illustrative atmosphere, never client evidence.
-  Real screenshots, dates, and approved client records carry proof.
-- The public Lab is a showroom, not a repository. Never expose GitHub,
-  repository metadata, source code, code-copy/share controls, specs, schemas, or
-  package details. A visitor should reach the working experience in one click.
+Choose the narrowest proportional lane:
 
-### Design Principles
-1. Make every page prove competence quickly: what Little Fight does, who it helps, why it is trustworthy, and what to do next should be obvious fast.
-2. Keep the brand human and neighborhood-aware: tactile, lively, and slightly playful, but never sloppy, childish, or salesy.
-3. Use contrast in mode and pacing: immersive dark moments for proof and atmosphere, clearer lighter moments where reading and decision-making take over.
-4. Prefer concrete proof, examples, and operational clarity over strategy jargon, explanation blocks, or generic feature scaffolding.
-5. Motion should feel purposeful and premium: smooth, helpful, and optional, never noisy or gimmicky.
-6. Design responsively with intent: desktop expansive, tablet composed, mobile tactile, readable, and fast.
-7. Compose by information density: four related items usually form a 2x2 grid,
-   three form columns, and two form a row. Preserve readable measure for long
-   prose, but do not leave half a viewport empty without a deliberate visual or
-   narrative reason. Asymmetry is a tool, not an automatic default.
+- Documentation-only changes: check links, paths, byte limits, and the staged diff. Do not rebuild the application solely for Markdown changes.
+- Small source changes: targeted checks plus `npm run quality:fast`.
+- Broad behavior changes: `npm run quality:full`.
+- Authorized production candidates: `npm run quality:release` before push and `npm run quality:live` after the exact deploy is ready.
+
+The Netlify build command is `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build`; the publish directory is `app/dist`.
+
+## Design and content
+
+The current design system is Axiom Momentum. `app/DESIGN.md` is the only controlling design narrative, and `app/src/styles/editorial/tokens.css` is the implemented token source. Preserve the near-black editorial base, Oswald/Barlow/JetBrains Mono type system, orange lead accent, blue support accent, strong grid, restrained motion, and evidence/privacy guardrails unless the user explicitly authorizes a new direction.
+
+Do not duplicate design rules into this file or `CLAUDE.md`. Preserve approved brand, claim, legal, privacy, and client-proof boundaries in their existing on-demand documents.
+
+## Git and deployment safety
+
+Netlify is Git-connected to GitHub `main`. A normal source commit pushed to `main` can build and publish production.
+
+- Never run a manual `netlify deploy --prod` for this property.
+- Never link or unlink the Netlify site, change its site ID, domains, build settings, environment variables, or production branch without explicit authorization.
+- Never push an application or configuration change to `main` without explicit production authorization.
+- For an authorized documentation-only housekeeping push that must not deploy, put `[skip netlify]` in the most recent commit message and verify that the production deploy ID and live fingerprint remain unchanged.
+- Do not rewrite shared history or delete a branch until its PR, Netlify relationship, unique commits, and recovery status are verified.
+
+The retained recovery branch `archive/old-static-main-20260630` is not an active source. Do not merge or deploy it.
+
+## Completion
+
+Before handoff:
+
+1. Review `git diff --check`, the full scoped diff, and `git status --short --branch`.
+2. Run proportional validation and report any skipped external gate plainly.
+3. Confirm no secret, generated output, unrelated file, or production side effect entered the change.
+4. If anything was pushed, verify GitHub branch state and Netlify production parity.
+5. Keep the repository clean and leave no unexplained unpushed commit.
+
+Do not create append-only agent diaries or a new handoff for routine work. Update `SOURCE_OF_TRUTH.md` only when canonical routing or deployment facts change; Git history preserves completed work.

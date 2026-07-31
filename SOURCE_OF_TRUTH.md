@@ -1,125 +1,81 @@
-# Little Fight NYC — Source of Truth
+# Little Fight NYC source of truth
 
-Last verified: 2026-07-25 (canonical Git path, GitHub `main`, ready Netlify
-deploy, live release marker, and the apex/`www` application re-verified).
+Last verified: 2026-07-31
 
-This repository (`Little Fight NYC Business/Website/littlefightnyc-website/`) is THE source of truth for
-`https://littlefightnyc.com`. Branch **`main` is canonical** and the site **auto-deploys
-from `main`**.
+This file routes agents to the current website source. Recheck point-in-time deploy and commit IDs before a production release.
 
-## Production Linkage
+## Canonical map
 
-- Netlify site name: `littlefightnyc`
-- Netlify site ID: `0907d8fe-7018-48db-a6be-1f906e4b2619`
-- Netlify config: `netlify.toml`
-- Build command: `cd app && npm ci && npm run build`
-- Publish directory: `app/dist`
-- **Deploy mechanism: GitHub `main` → Netlify auto-build → auto-publish.**
-  (As of 2026-06-30 `main` equals the live source; pushing `main` deploys production.)
-- Quality Spine application release
-  `d02b93549ad79cc2a904f3220d2a06b1643f114a` (`d02b935`) was published by
-  ready Netlify deploy `6a642637809f6e0008ac8831` and verified on the apex
-  and `www` domains.
-- Live `/release.json` is authoritative for the current deployed Git revision.
-- `df7c90ded191d909648ed86401fc5816809648ec` (`df7c90d`) is the previous
-  rollback point.
+| Field | Verified value |
+| --- | --- |
+| Property | Little Fight NYC website and embedded supporting experiences |
+| Production URL | `https://littlefightnyc.com` |
+| Netlify URL | `https://littlefightnyc.netlify.app` |
+| Current domain alias | `https://hey.littlefightnyc.com` |
+| Netlify site | `littlefightnyc` |
+| Netlify site ID | `0907d8fe-7018-48db-a6be-1f906e4b2619` |
+| Production deploy | `6a6c204fd4cc730008c89833`, `ready` |
+| Deployed application commit | `7dc35782044237b2b794d53a64d9a66671adfa3c` |
+| GitHub | `https://github.com/omgitsthedm/littlefightnyc-website` |
+| Default and production branch | `main` |
+| Canonical local checkout | `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website` |
+| Netlify configuration | `netlify.toml` |
+| Build command | `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build` |
+| Publish directory | `app/dist` |
 
-## Current released application baseline
+The verified 2026-07-31 homepage baseline returned HTTP 200 with 29,212 bytes and SHA-256 `211a9895e49451a1b92e2de7a7f128b75a5a61cf600b0fb771ab4098731892ce`.
 
-Release `d02b935` was explicitly authorized, pushed to GitHub `main`,
-auto-deployed, and verified live on 2026-07-25. Inspect local `HEAD`,
-GitHub `main`, Netlify, and `/release.json` before describing the current
-revision because later documentation-only commits can advance the Git SHA.
+## Deployment relationship
 
-The released baseline includes:
+GitHub `main` is the canonical source and Netlify production branch. Source pushes to `main` can auto-build and auto-publish. Manual production deploys are not part of the supported workflow.
 
-- a Quality Spine in `.lifi/` and the five standard quality command lanes;
-- a Node 24 pin through `.nvmrc` and package engine declarations;
-- a four-project Playwright browser suite with axe checks, mobile scroll
-  stability, form-validation coverage, and indexed-route first-response versus
-  hydrated-H1 parity;
-- generated share-card identity and route-level social metadata work;
-- route metadata, prerender, and H1-parity corrections.
+Documentation-only housekeeping commits may intentionally advance GitHub `main` beyond the deployed application commit. The most recent commit in such a push must contain `[skip netlify]`, and the operator must verify that the production deploy ID and live fingerprint did not change. Do not mistake a skipped documentation commit for source drift.
 
-The integrated release passed `quality:release` from a clean commit under Node
-24.18.0, including **32/32 browser checks** across Chromium, Firefox, and
-WebKit plus revision-matched release-artifact validation. After deployment it
-passed `quality:live`, a **200/200** route/title/canonical/indexing sweep,
-**78/78** share-image checks, and an independent mobile scroll/crash smoke.
-No form was submitted, so inbox and provider delivery remain separate external
-gates. Every future release must repeat the exact-commit gate and
-revision-matched live verification after an authorized push.
+For an authorized application release:
 
-## Deploy workflow (the only one you need)
+1. Confirm the candidate commit, clean worktree, GitHub relationship, and Netlify site ID.
+2. Run `npm run quality:release` under Node 24.
+3. Push the exact authorized commit to `main`.
+4. Wait for that exact commit to reach a ready production deploy.
+5. Run `npm run quality:live` and verify representative routes and any authorized external delivery path.
 
-1. Edit the app under `app/` (see Current Source).
-2. Use Node 24 and run the quality lane appropriate to the change. A release
-   candidate requires `npm run quality:release`, including the browser suite.
-3. Record unresolved owner, external, form-delivery, analytics/search, rights,
-   and research gates rather than treating them as code passes.
-4. Commit the verified local candidate; local commits do not deploy.
-5. After explicit production authorization, push the exact commit to `main`.
-6. Netlify builds `app/dist` from `main` and publishes to littlefightnyc.com.
-7. Verify the ready deploy, live revision, priority routes, and applicable
-   external delivery paths before announcing release.
+Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, build settings, environment variables, or the production branch as part of routine work.
 
-Manual `netlify deploy --prod` is no longer required and should be avoided — it
-re-introduces the main-vs-live divergence that caused the 2026-06-30 incident.
+## Current source
 
-## Current Source
+- React/Vite application: `app/src/**`, `app/public/**`, `app/index.html`
+- Build and verification scripts: `app/scripts/**`, `app/tests/**`, `app/playwright.config.ts`
+- Live serverless surfaces: `netlify/functions/**`
+- Deployment configuration: `netlify.toml`
+- Quality contract: `.lifi/quality.yml`
+- Generated output: `app/dist/**`, ignored and reproducible
 
-Edit the React/Vite app in `app/`:
+The current visual system is Axiom Momentum. Read `app/DESIGN.md` for its contract and `app/src/styles/editorial/tokens.css` for implemented values. Do not use the removed historical design files as current direction.
 
-- `app/src/**`
-- `app/public/**`
-- `app/index.html`
-- `app/scripts/prerender-seo.mjs`
-- `app/package.json`
-- `app/playwright.config.ts` / `app/tests/**`
+The Website Audit has live function, storage, email, and optional provider surfaces. Routine tests must not create external side effects. Local environment files and secrets are never source.
 
-Root files that still matter:
+The former AI phone agent is retired. Public phone actions are ordinary `tel:` and `sms:` paths.
 
-- `netlify.toml`
-- `netlify/functions/**` and `netlify/functions/lib/**` — the live Website
-  Audit uses eight public/background/scheduled function surfaces, shared
-  helpers, Netlify Blobs, email delivery, and optional provider integrations
-- `.netlify/state.json`
-- `.nvmrc`
-- `.lifi/**`
-- `AGENTS.md` / `CLAUDE.md` / `HANDOFF.md` /
-  `SITE-REINVENTION-DOSSIER.md`
+## On-demand business and brand evidence
 
-Generated output:
+These files remain current but are not mandatory startup reading:
 
-- `app/dist/**` is build output (gitignored). Do not hand-edit.
+- `VOICE.md`: approved voice and claim boundaries
+- `canva_brand_kit_little_fight_nyc.md`: brand-kit evidence
+- `CLIENT-PROOF-COLLECTION.md`: private client-proof collection rules
+- `CONVERSION-MEASUREMENT.md`: measurement contract
+- `SEARCH-ACQUISITION-RUNBOOK.md`: search operating procedure
+- `OFF_DOMAIN_PLAYBOOK.md`: off-domain acquisition procedure
+- `PLACEHOLDERS.md`: unresolved owner-supplied values
 
-The former Twilio webhook and AI phone agent are retired and are **not a
-service**. The public number is an ordinary `tel:`/`sms:` path; after-hours
-callers leave a normal message. Do not restore or advertise AI phone-answering
-behavior without a new, explicit business and technical decision.
+Read only the document relevant to the task.
 
-## Secrets
+## Recovery
 
-- `app/.env` is gitignored. Never commit secrets. Public build configuration such as
-  analytics IDs belongs in Netlify environment variables.
+- Retained Git recovery branch: `archive/old-static-main-20260630` at `f918008be0bf63d94871f2736635afc912e497d8`
+- Superseded Lab branch bundle: `/Users/davidmarsh/Code/LiFi NYC/Archive/house-cleaning-20260731/bundles/littlefightnyc-website-lab-overhaul-20260725-d1d4d94.bundle`
+- Closed unmerged cleanup branch bundle: `/Users/davidmarsh/Code/LiFi NYC/Archive/house-cleaning-20260731/bundles/littlefightnyc-website-quality-thermo-nuclear-cleanup-a466a35.bundle`
+- Completed Markdown removed during house-cleaning remains recoverable from Git commit `7dc35782044237b2b794d53a64d9a66671adfa3c`.
+- Netlify deploy history remains the production rollback source.
 
-## History / archives (2026-06-30 consolidation)
-
-- The previous `main` (an unrelated OLD static site) is preserved on branch
-  `archive/old-static-main-20260630` — NOT deleted.
-- Stale local clones were moved to `Brand/_archive_littlefightnyc_20260630/`.
-- Full mirror of the live site at consolidation time:
-  `Brand/_littlefightnyc-LIVE-backup-20260630/`.
-- Netlify deploy history is intact (`netlify api restoreSiteDeploy` to roll back).
-- On 2026-07-20, the 107 inactive HTML files, root-level CSS/JS runtime, and
-  static-site generators were removed from `main`. They were never in the
-  `app/dist` publish path and remain recoverable on
-  `archive/old-static-main-20260630`.
-
-## Incident lesson (2026-06-30)
-
-The site had been published via MANUAL Netlify deploys while git `main` held a stale,
-unrelated static site that ALSO auto-deployed. A push to `main` auto-deployed the stale
-version over the manual production build, so the site briefly showed the old version.
-Fixed by making `main` the canonical source so git and live can never diverge again.
-Before touching production, always confirm `main` builds and matches live.
+Independent Little Fight Lab, brand, template, demo, and experiment repositories are separate fleet properties or cold storage. This website repository must not absorb or replace them without an explicit source-map change.
