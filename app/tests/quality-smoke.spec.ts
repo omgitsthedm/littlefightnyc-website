@@ -1412,3 +1412,37 @@ test(
     expect(runtime.consoleErrors).toEqual([]);
   },
 );
+
+test(
+  "Canvas instruments get the width their drawing needs on a small phone @chromium-mobile",
+  async ({ page, baseURL }) => {
+    const runtime = watchRuntime(page);
+    await page.setViewportSize({ width: 320, height: 900 });
+    await page.goto(`${baseURL}/services/it-support/`, { waitUntil: "networkidle" });
+
+    // The editorial column takes 88px at this width — 20px of section padding
+    // and 24px of tile padding a side. That left the canvas 230px while its
+    // drawing is laid out for ~300px, so labels collided: "CARD READER" ran off
+    // the right edge and "IT BREAKS" sat on top of "CALLBACK ≤ 2 HRS". Nothing
+    // threw; it just looked broken to anyone on a small phone.
+    //
+    // Asserting the width rather than the pixels, because the failure was one of
+    // space, and 300 is the width the drawing is known to render cleanly at.
+    const instrument = page.locator(".lf-instrument").first();
+    await instrument.scrollIntoViewIfNeeded();
+    const box = await instrument.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.width).toBeGreaterThanOrEqual(300);
+
+    // Full-bleed is one bad calc() away from a sideways-scrolling page, and this
+    // site has a standing no-horizontal-overflow rule.
+    const overflow = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }));
+    expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.clientWidth);
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);

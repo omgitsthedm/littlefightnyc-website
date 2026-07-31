@@ -36,6 +36,28 @@
   }
 }
 
+/* At a 320px viewport the editorial column leaves the instrument 230px: 20px of
+   section padding and 24px of tile padding on each side, which is right for a
+   line of text and starving for a diagram. The canvas is handed its real width,
+   so the drawing code — laid out for roughly 300px — collided with itself:
+   "CARD READER" ran off the right edge, "DOWN" landed on top of it, and
+   "IT BREAKS" overlapped "CALLBACK ≤ 2 HRS".
+
+   Scaling the drawing down would have fixed the overlap and broken something
+   more important: every label would fall under the 12px legibility floor this
+   site enforces everywhere else. So the instrument gets the width instead.
+
+   Full-bleed below 480px, which turns 230px into the full viewport — wider than
+   the 300px that already renders cleanly at 390px. min() keeps the element from
+   ever exceeding the viewport if a classic scrollbar is present, because 100vw
+   includes it and this site has a standing no-horizontal-overflow rule. */
+@media (max-width: 480px) {
+  .lf-instrument {
+    width: min(100vw, 100% + 88px);
+    margin-inline: calc(50% - min(50vw, 50% + 44px));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lf-instrument {
     opacity: 1;
