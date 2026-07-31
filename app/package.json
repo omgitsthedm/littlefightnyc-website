@@ -38,12 +38,13 @@
     "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:retired-integrations && npm run audit:legal-snapshot && npm run audit:meta-budget",
     "quality:fast": "npm run lint && npm run build && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:quality-manifest",
     "quality:full": "npm run quality && npm run audit:quality-manifest && npm run test:browser",
-    "quality:release": "npm run quality:full && npm run audit:release",
+    "quality:release": "npm run quality:full && npm run audit:release && npm run audit:external-links",
     "quality:live": "node scripts/verify-live.mjs",
-    "quality:maintenance": "npm run quality:full && npm audit --omit=dev --audit-level=high",
+    "quality:maintenance": "npm run quality:full && npm audit --omit=dev --audit-level=high && npm run audit:external-links",
     "preview": "vite preview",
     "audit:legal-snapshot": "node scripts/audit-legal-snapshot.mjs",
-    "audit:meta-budget": "node scripts/audit-meta-description-budget.mjs"
+    "audit:meta-budget": "node scripts/audit-meta-description-budget.mjs",
+    "audit:external-links": "node scripts/audit-external-links.mjs"
   },
   "dependencies": {
     "@fontsource-variable/oswald": "^5.2.8",
