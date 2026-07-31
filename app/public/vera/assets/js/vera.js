@@ -1712,7 +1712,24 @@
     if (!el.hasAttribute) return;
 
     // Thumb released — now it is safe to rebuild the toolkit around the value.
-    if (el.hasAttribute('data-toolrent') || el.hasAttribute('data-toolincome')) { renderRoute(); return; }
+    //
+    // Except there is no thumb to release on a keyboard. An arrow key fires
+    // 'input' AND 'change' on the same press, so this rebuild ran on every
+    // press, replaced the input being operated, and dropped focus to <body>.
+    // A keyboard user got exactly one step and then the arrows did nothing —
+    // the earlier fix here solved dragging with a mouse and left this behind.
+    //
+    // The rebuild is worth keeping: the whole toolkit reads off this value.
+    // So put focus back on the replacement, which is a different element with
+    // the same marker attribute. Restoring it unconditionally is safe — the
+    // only way to reach this line is by operating that slider.
+    if (el.hasAttribute('data-toolrent') || el.hasAttribute('data-toolincome')) {
+      var marker = el.hasAttribute('data-toolrent') ? 'data-toolrent' : 'data-toolincome';
+      renderRoute();
+      var again = $('[' + marker + ']');
+      if (again) again.focus();
+      return;
+    }
 
     if (!el.hasAttribute('data-check')) return;
     var uid = el.getAttribute('data-uid'), id = el.getAttribute('data-check');

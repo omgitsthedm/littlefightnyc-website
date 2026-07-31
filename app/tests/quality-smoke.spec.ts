@@ -1446,3 +1446,61 @@ test(
     expect(runtime.consoleErrors).toEqual([]);
   },
 );
+
+test(
+  "VERA toolkit sliders keep focus across repeated arrow keys @chromium-desktop",
+  async ({ page, baseURL }) => {
+    const runtime = watchRuntime(page);
+
+    // VERA's feed is proxied to another origin in production; the preview server
+    // has no _redirects, so the request falls through to the SPA shell and the
+    // app never leaves its loading state. Serve the shape it expects.
+    await page.route("**/vera/data/public.json", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          generated_at: new Date(0).toISOString(),
+          app: { name: "VERA", subtitle: "test", version: "0" },
+          summary: { hero_summary: "0 pursue" },
+          shortlist: [],
+          manual_review: [],
+          skip_insights: [],
+          recommendations: [],
+          daily_changes: [],
+        }),
+      }),
+    );
+
+    await page.goto(`${baseURL}/vera/#/toolkit`, { waitUntil: "networkidle" });
+    const slider = page.locator("[data-toolrent]");
+    await expect(slider).toBeVisible();
+    await slider.focus();
+
+    // A range input fires 'input' AND 'change' on a single arrow press — there
+    // is no thumb to release. The change handler rebuilds the toolkit, which
+    // replaced the very input being operated and dropped focus to <body>. One
+    // step worked and every press after it went nowhere, which is the whole
+    // slider for someone not using a mouse.
+    const values: string[] = [];
+    for (let i = 0; i < 4; i += 1) {
+      await page.keyboard.press("ArrowRight");
+      await page.waitForTimeout(220);
+      values.push(
+        await page.evaluate(() => {
+          const el = document.activeElement as HTMLInputElement | null;
+          return el?.hasAttribute?.("data-toolrent") ? el.value : "LOST FOCUS";
+        }),
+      );
+    }
+
+    expect(values).not.toContain("LOST FOCUS");
+    // Four presses must produce four distinct, increasing values — not one step
+    // then silence.
+    expect(new Set(values).size).toBe(4);
+    expect(Number(values[3])).toBeGreaterThan(Number(values[0]));
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);
