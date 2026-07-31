@@ -1367,3 +1367,48 @@ test(
     expect(runtime.consoleErrors).toEqual([]);
   },
 );
+
+test(
+  "Tech Audit rejects an unreachable phone or email @chromium-desktop",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    await openRoute(page, ROUTES.find((route) => route.key === "tech-audit")!);
+
+    const contact = page.locator("#fit-contact");
+    const error = page.locator("#fit-contact-error");
+
+    // "Phone or email" used to be validated as "not empty". This is the only
+    // field that says how to reply, so a typo here is a lead that is lost in a
+    // specific way: the visitor watches the form succeed, then waits for a call
+    // that cannot be placed.
+    const unreachable: [string, RegExp][] = [
+      ["hello@yourshop", /incomplete|typo/i],
+      ["555-0118", /area code/i],
+      ["david marsh", /phone or email/i],
+    ];
+
+    for (const [value, expected] of unreachable) {
+      await contact.fill(value);
+      await contact.blur();
+      await expect(error).toBeVisible();
+      await expect(error).toHaveText(expected);
+      await expect(contact).toHaveAttribute("aria-invalid", "true");
+    }
+
+    // The permissive half matters just as much: arguing with how someone writes
+    // their own phone number wins nothing.
+    for (const value of [
+      "hello@yourshop.com",
+      "(646) 555-0118",
+      "+1 646 555 0118",
+      "JEN@SHOP.COM",
+    ]) {
+      await contact.fill(value);
+      await contact.blur();
+      await expect(error).toHaveCount(0);
+    }
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);

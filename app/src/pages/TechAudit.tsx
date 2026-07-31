@@ -24,6 +24,38 @@ const OUTCOMES = [
   "An honest answer if the work can wait",
 ];
 
+/**
+ * "Phone or email" was validated as "not empty", which let "hello@yourshop"
+ * and "646-555" through. This is the only field that says how to reply, so a
+ * malformed one is a lead that is lost in a specific and bad way: the visitor
+ * watched the form succeed and is now waiting for a call that cannot be made.
+ * A typo caught while they are still looking at the field costs them two
+ * seconds; caught never, it costs them the job.
+ *
+ * Deliberately permissive about shape and strict only about reachability. An
+ * email needs a dot in the domain, because "@yourshop" is not deliverable.
+ * A number needs ten digits, because seven means no area code and David cannot
+ * dial it — while any punctuation, spaces, +1 or parentheses are fine, since
+ * arguing with how someone writes their own phone number wins nothing.
+ */
+const EMAILISH = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+function contactProblem(value: string): string | null {
+  const trimmed = value.trim();
+  if (trimmed === "") return "Add a phone or email so we can reply.";
+  if (trimmed.includes("@")) {
+    return EMAILISH.test(trimmed)
+      ? null
+      : "That email looks incomplete — check for a typo.";
+  }
+  const digits = trimmed.replace(/\D/g, "");
+  if (digits.length >= 10) return null;
+  // Telling someone their filled-in field is empty is its own small insult.
+  // Three different situations, three different things to say.
+  if (digits.length === 0) return "That does not look like a phone or email.";
+  return "That phone number looks short — include the area code.";
+}
+
 const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
   { name: "business", message: "Add your business name." },
@@ -264,9 +296,15 @@ export default function TechAudit() {
   function validateField(name: FieldName, value: string) {
     const rule = REQUIRED_FIELDS.find((f) => f.name === name);
     if (!rule) return;
+    const problem =
+      name === "contact"
+        ? contactProblem(value)
+        : value.trim() === ""
+          ? rule.message
+          : null;
     setErrors((prev) => {
       const next = { ...prev };
-      if (value.trim() === "") next[name] = rule.message;
+      if (problem) next[name] = problem;
       else delete next[name];
       return next;
     });
@@ -333,7 +371,11 @@ export default function TechAudit() {
         | HTMLInputElement
         | HTMLTextAreaElement
         | null;
-      if (!el || el.value.trim() === "") {
+      const value = el?.value ?? "";
+      if (field.name === "contact") {
+        const problem = contactProblem(value);
+        if (problem) nextErrors[field.name] = problem;
+      } else if (value.trim() === "") {
         nextErrors[field.name] = field.message;
       }
     }
