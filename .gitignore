@@ -12,9 +12,16 @@ output/
 # ...but EVERY PWA / apple-touch / startup / screenshot PNG in public/ MUST
 # deploy (Netlify builds from git, so blanket-ignoring these 404s the live
 # manifest icons, iOS startup images, and install-dialog screenshots).
-# Directory-level negation so new public deploy PNGs are never missed again.
-!app/public/*.png
-!app/public/examples/audit/og-image.png
+# The negation below used to be `!app/public/*.png`, which only covers the top
+# level — its own comment claimed directory-level coverage it did not have.
+# Verified with git check-ignore: app/public/test.png was negated, while
+# app/public/assets/test.png, app/public/assets/social/test.png and
+# app/public/examples/audit/test.png were all ignored by `*.png` above. The 15
+# nested PNGs tracked today survive only because they predate the rule; a new
+# one would have gone missing silently — present locally, 404 in production,
+# since Netlify builds from git. `**/` matches zero or more directories, so this
+# single line covers both the top level and any depth beneath it.
+!app/public/**/*.png
 !app/public/brand-kit/
 !app/public/brand-kit/**
 *.bak
