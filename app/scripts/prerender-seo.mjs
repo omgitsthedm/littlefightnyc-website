@@ -1482,6 +1482,41 @@ function founderBlock(page) {
   `;
 }
 
+// The privacy policy and terms only existed after hydration. /legal/ served 203
+// words of generic trust copy while the page a visitor actually read carried 439
+// — the seven sections stating what forms collect, which pixels load, and what
+// not to send were absent from the HTML entirely.
+//
+// That is the wrong page to require JavaScript for. A crawler that does not run
+// it indexes a privacy policy with no privacy in it, and a visitor whose bundle
+// fails gets a legal page that does not say what is collected, exactly when they
+// went looking for it.
+//
+// Mirrors src/pages/Legal.tsx section for section, the way zhSnapshot mirrors
+// Chinese.tsx. The "Review analytics choices" button is deliberately omitted: it
+// opens the consent dialog, which does not exist before hydration, and a control
+// that cannot act is worse than prose describing the same choice.
+function legalBlock(page) {
+  if (!["/legal/", "/privacy/", "/terms/"].includes(page.path)) return "";
+  return `
+    <h2 id="privacy">What forms collect</h2>
+    <p>Tech Audit and contact paths may collect your name, business name, contact information, follow-up preference, and a plain description of the issue. That is the minimum needed to reply usefully.</p>
+    <h2>Analytics and advertising pixels</h2>
+    <p>Little Fight uses analytics and advertising tools, including Google Analytics and the TikTok Pixel, to understand which pages are useful, which contact paths work, and whether marketing is sending the right people to the site.</p>
+    <p>These tools may record page views, approximate device/browser details, referral information, and events such as phone clicks, email clicks, Tech Audit or contact button clicks, and form submits. Little Fight uses this information for measurement, reporting, and improving marketing, not to sell personal information.</p>
+    <h2>Cookies, pixels, and opt-outs</h2>
+    <p>Analytics is off by default for a first-time visitor. Google Analytics, Microsoft Clarity, and the TikTok Pixel load only after you choose &ldquo;Allow analytics.&rdquo; If you choose &ldquo;Essential only,&rdquo; the site still works and those measurement scripts do not load. You can change the choice at any time from this page.</p>
+    <h2>What not to send</h2>
+    <p>Do not send passwords, recovery codes, API keys, credit card numbers, bank details, protected health information, or private customer data through any public form on this site.</p>
+    <h2 id="terms">Work and scope</h2>
+    <p>Project scope, pricing, access needs, and timelines are confirmed in writing before work begins. If anything changes mid-engagement, the change is written down and acknowledged before the work continues.</p>
+    <h2>Safe account access</h2>
+    <p>If access to a website, domain, payment tool, booking system, or business account is required, Little Fight sets up a safer handoff instead of asking for credentials over a public form, email, or text thread.</p>
+    <h2>Privacy questions</h2>
+    <p>For privacy questions or requests, email Little Fight at <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>.</p>
+  `;
+}
+
 // The four time promises are the business's strongest trust signals and were
 // entirely absent from crawler-visible HTML. Every snapshot now carries them.
 function promisesBlock() {
@@ -1765,6 +1800,7 @@ function snapshot(page) {
     ${paragraphs.map((paragraph, i) => `<p${i === 0 ? ' class="short-answer"' : ""}>${escapeHtml(paragraph)}</p>`).join("\n")}
     ${authored}
     ${founderBlock(page)}
+    ${legalBlock(page)}
     ${techAuditFormHtml(page)}
     ${wantsMethod ? methodBlock(page) : ""}
     ${promisesBlock()}
