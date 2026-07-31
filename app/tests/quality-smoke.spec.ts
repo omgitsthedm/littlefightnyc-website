@@ -1247,3 +1247,51 @@ test(
     }
   },
 );
+
+test(
+  "the areas map does not call a third party until asked @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    // /areas/* was the only page type on the site contacting anyone before
+    // consent. The map used an IntersectionObserver with a 300px margin, and on
+    // /areas/ it was already in range on arrival — so cartocdn.com was hit on
+    // load across all 91 area routes, with 472KB of JS on a mobile profile
+    // against a 150KB ceiling. Every other page type makes zero third-party
+    // requests. Scrolling past something is not a request to load it.
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const thirdParty = new Set<string>();
+    page.on("request", (request) => {
+      const host = new URL(request.url()).hostname;
+      if (host !== "localhost" && host !== "127.0.0.1") thirdParty.add(host);
+    });
+
+    await page.goto(`${baseURL}/areas/`, { waitUntil: "networkidle" });
+    // Scroll the whole page — the old trigger fired on proximity, so a test that
+    // never scrolls would pass against the broken code.
+    for (let screen = 0; screen < 5; screen += 1) {
+      await page.evaluate(() => window.scrollBy(0, 800));
+      await page.waitForTimeout(250);
+    }
+    await page.waitForTimeout(800);
+
+    expect(
+      [...thirdParty],
+      "a third party was contacted before anyone asked for the map",
+    ).toEqual([]);
+
+    // The content the map illustrates must not be behind the button.
+    expect(
+      await page.locator(".lf-minimap__chip").count(),
+      "the neighbourhood chips must be present without loading the map",
+    ).toBeGreaterThan(10);
+
+    // And asking for it must actually work.
+    const load = page.locator(".lf-minimap__load").first();
+    await load.scrollIntoViewIfNeeded();
+    await load.click();
+    await expect(page.locator(".leaflet-container")).toBeAttached({ timeout: 15_000 });
+    await expect(load).toHaveCount(0);
+
+    await context.close();
+  },
+);

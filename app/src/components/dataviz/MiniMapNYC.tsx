@@ -69,6 +69,9 @@ export default function MiniMapNYC({
   // grid stays visible — the container must NEVER read as a white box.
   const [failed, setFailed] = useState(false);
   const [tilesFailed, setTilesFailed] = useState(false);
+  // Nothing reaches Carto until someone asks for the map. Only the button in the
+  // render sets this; see the comment in the effect for what it replaced.
+  const [started, setStarted] = useState(false);
 
   const currentArea = current ? areaPages.find((a) => a.slug === current) : undefined;
   const nearbySlugs = new Set(currentArea?.nearby ?? []);
@@ -78,11 +81,10 @@ export default function MiniMapNYC({
 
   useEffect(() => {
     const el = mapRef.current;
-    if (!el) return;
+    if (!el || !started) return;
 
     let disposed = false;
     let map: import("leaflet").Map | undefined;
-    let observer: IntersectionObserver | undefined;
 
     // Fresh page (re-keyed by `current`) — clear any stale failure state.
     setFailed(false);
@@ -172,29 +174,24 @@ export default function MiniMapNYC({
       }
     };
 
-    // Lazy: only pull leaflet (+ tiles) when the map scrolls near.
-    if (typeof IntersectionObserver !== "undefined") {
-      observer = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((e) => e.isIntersecting)) {
-            observer?.disconnect();
-            void boot();
-          }
-        },
-        { rootMargin: "300px 0px" }
-      );
-      observer.observe(el);
-    } else {
-      void boot();
-    }
+    // Previously an IntersectionObserver with a 300px margin, which on /areas/
+    // meant the map was already in range on arrival and booted immediately.
+    // Measured: cartocdn.com contacted on load across all 91 /areas/ routes, and
+    // 472KB of JS on a mobile profile against a 150KB ceiling — while /,
+    // /services/, /examples/, /library/ and /about/ each make zero third-party
+    // requests. This was the only page type on the site disclosing visitors to
+    // anyone before they had opted into anything.
+    //
+    // Scrolling past something is not a request to load it. This effect only
+    // runs once `started` is set, and only the button below sets it.
+    void boot();
 
     return () => {
       disposed = true;
-      observer?.disconnect();
       map?.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- re-key by page
-  }, [current, compact]);
+  }, [current, compact, started]);
 
   const summary = currentArea
     ? `Map of New York City centered on ${currentArea.name} (ZIP ${currentArea.zipCodes.join(", ")}), marked in orange, with nearby neighborhoods ${(currentArea.nearby
@@ -221,9 +218,28 @@ export default function MiniMapNYC({
           <div className="lf-minimap__ghost" aria-hidden="true">
             <MapPin size={20} strokeWidth={1.8} />
             <span className="lf-minimap__ghost-title">Manhattan</span>
-            <span className="lf-minimap__ghost-note">Map tiles unavailable</span>
+            <span className="lf-minimap__ghost-note">
+              {started ? "Map tiles unavailable" : "Interactive map"}
+            </span>
           </div>
           <div ref={mapRef} className="lf-minimap__canvas" aria-hidden="true" />
+          {/* The map is the one thing on this site that talks to a third party.
+              It loads when asked, not because someone scrolled past it. The
+              chips beside it already carry every neighbourhood, ZIP and link, so
+              nothing here is behind the button except the basemap itself. */}
+          {!started && (
+            <button
+              type="button"
+              className="lf-minimap__load"
+              onClick={() => setStarted(true)}
+            >
+              <MapPin size={16} strokeWidth={2} aria-hidden="true" />
+              Show the interactive map
+              <span className="lf-minimap__load-note">
+                Loads map tiles from Carto
+              </span>
+            </button>
+          )}
         </div>
 
         <ul className="lf-minimap__chips">

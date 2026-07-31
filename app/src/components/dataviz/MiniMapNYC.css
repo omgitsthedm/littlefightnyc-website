@@ -260,3 +260,31 @@
     transition: none;
   }
 }
+
+/* Facade — shown until someone asks for the basemap. Sits over the branded
+   ghost so the panel never reads as empty or broken while it waits. */
+.lf-minimap__load {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 18px;
+  border: 0;
+  background: color-mix(in srgb, var(--lf-ink, #050507) 55%, transparent);
+  color: var(--lf-bone, #fff);
+  font: 600 15px/1.3 inherit;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+.lf-minimap__load:hover { background: color-mix(in srgb, var(--lf-ink, #050507) 40%, transparent); }
+.lf-minimap__load:focus-visible { outline: 2px solid var(--lf-fight, #f97316); outline-offset: -4px; }
+.lf-minimap__load-note {
+  font: 400 12px/1.3 inherit;
+  color: var(--lf-bone-soft, #a1a1aa);
+}
+@media (prefers-reduced-motion: reduce) { .lf-minimap__load { transition: none; } }
