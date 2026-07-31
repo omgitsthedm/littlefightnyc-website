@@ -1034,7 +1034,20 @@
   }
   function inspOpen(uid) {
     var l = byUid(uid);
-    if (!l) return;
+    /* A saved case outlives the listing it points at: apartments get rented,
+       and the feed drops them. The uid then resolves to nothing and this used
+       to return in silence, so a hunter who saved a place, came back, and
+       tapped it got no inspector and no explanation — the same nothing a
+       broken button gives.
+       The card still knows what it was, because the case stores its own title,
+       rent and neighbourhood. Say what happened, and use the saved title so it
+       is obviously THEIR apartment being talked about. */
+    if (!l) {
+      var c = caseOf(uid);
+      var what = c && c.title ? tidyTitle(c.title) : 'That listing';
+      toast(what + ' is no longer in the feed — it was rented or taken down. Your notes are kept.');
+      return;
+    }
     inspReturnFocus = document.activeElement;
     openUid = uid;
     inspTab = 'overview';
@@ -1403,8 +1416,13 @@
           '<p class="col__head">' + s.label + ' <b>' + items.length + '</b></p>' +
           '<p class="col__hint">' + s.hint + '</p>' +
           (items.length ? items.map(function (c) {
-            return '<div class="ccard"><button type="button" class="ccard__open" data-open="' + esc(c.uid) + '">' +
+            /* Reaching the toast requires tapping first. Saying it on the card
+               means a hunter scanning their board can see which places are gone
+               without opening each one. */
+            var gone = !byUid(c.uid);
+            return '<div class="ccard' + (gone ? ' ccard--gone' : '') + '"><button type="button" class="ccard__open" data-open="' + esc(c.uid) + '">' +
               '<b>' + esc(c.title || c.uid) + '</b>' +
+              (gone ? '<span class="ccard__gone">No longer listed</span>' : '') +
               '<span>' + (c.rent ? money(c.rent) : '—') + (c.hood ? ' · ' + esc(c.hood) : '') + '</span>' +
               (c.notes ? '<em>“' + esc(c.notes.slice(0, 70)) + (c.notes.length > 70 ? '…' : '') + '”</em>' : '') +
               '</button><div class="ccard__moves">' +

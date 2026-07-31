@@ -1533,3 +1533,24 @@ tr[data-open]:focus-visible {
   white-space: nowrap;
   border: 0;
 }
+
+/* A saved case whose listing has left the feed. Dimmed rather than hidden:
+   the notes and the rent the hunter recorded are still theirs, and a place
+   that got rented is information — it is what the market moving looks like. */
+.ccard--gone {
+  opacity: 0.62;
+}
+
+.ccard--gone .ccard__open b {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+
+.ccard__gone {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
