@@ -52,7 +52,7 @@ function supportsViewTransitions(): boolean {
  * update callback returns. We therefore wait for BOTH:
  *   1. the re-keyed page wrapper (`.lf-page-enter`) to be a NEW node
  *      (EditorialShell re-keys it per pathname), and
- *   2. the lazy-route Suspense fallback (`.route-loading`) to be gone,
+ *   2. the lazy-route Suspense fallback (`.lf-route-fallback`) to be gone,
  * capped so a slow chunk can never freeze the page inside a held snapshot.
  * (Verified 2026-07-12: without #1 the new snapshot captured the loader.)
  */
@@ -62,7 +62,13 @@ function settled(before: Element | null, timeoutMs = 450): Promise<void> {
     const check = () => {
       const current = document.querySelector(".lf-page-enter");
       const committed = current !== null && current !== before;
-      const loading = document.querySelector(".route-loading") !== null;
+      // This queried ".route-loading", which nothing renders — the fallback
+      // is ".lf-route-fallback". So `loading` was permanently false and
+      // condition 2 was never actually tested: the transition proceeded the
+      // moment the wrapper re-keyed, which is exactly the case the 2026-07-12
+      // note says captures the loader in the snapshot. Only the 450ms cap was
+      // doing any work. A dead selector fails silently and looks correct.
+      const loading = document.querySelector(".lf-route-fallback") !== null;
       if ((committed && !loading) || Date.now() - start >= timeoutMs) {
         resolve();
       } else {

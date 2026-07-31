@@ -306,7 +306,17 @@ function modifiedDateFor(page) {
   }
   if (isJournalArticle(page)) return publishedDateFor(page);
   if (/^\/(areas|glossary|industries)\/.+/.test(page.path)) return "2026-07-07";
-  return lastmod;
+  // Nineteen pages used to land here and print the build date as their
+  // "Updated" date, so every deploy re-stamped the privacy policy, the service
+  // pages and the About page as freshly revised. Deploying is not editing.
+  // Google reads dateModified, a visitor reads the byline, and both were being
+  // told a policy changed today because a stylesheet did.
+  //
+  // Return nothing instead. The byline and the sitemap already omit an empty
+  // date, so an unedited page simply makes no claim — which is the honest
+  // state, and is also what publishedDateFor already does for the date it
+  // cannot prove.
+  return "";
 }
 
 function webPageTypeFor(page) {
@@ -1437,11 +1447,17 @@ function articleMeta(page) {
     `;
   }
 
+  // Only claim an update when there is a real one to claim.
+  const updatedClause = modified
+    ? ` · Updated <time itemprop="dateModified" datetime="${modified}">${modified}</time>`
+    : "";
+
   if (!isArticlePage(page)) {
     return `
       <p class="lf-seo__byline">
-        Published <time datetime="${published}">${published}</time>
-        · Updated <time datetime="${modified}">${modified}</time>
+        Published <time datetime="${published}">${published}</time>${
+          modified ? ` · Updated <time datetime="${modified}">${modified}</time>` : ""
+        }
       </p>
     `;
   }
@@ -1449,8 +1465,7 @@ function articleMeta(page) {
   return `
     <p class="lf-seo__byline byline" itemprop="author" itemscope itemtype="https://schema.org/Organization">
       By <span class="author" itemprop="name">Little Fight NYC</span>
-      · Published <time itemprop="datePublished" datetime="${published}">${published}</time>
-      · Updated <time itemprop="dateModified" datetime="${modified}">${modified}</time>
+      · Published <time itemprop="datePublished" datetime="${published}">${published}</time>${updatedClause}
     </p>
   `;
 }

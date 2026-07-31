@@ -51,9 +51,11 @@ function RouteFallback() {
     // announce and a screen-reader user heard silence while a route loaded.
     // The aria-label made it look handled. Real text, visually hidden.
     <section className="lf-route-fallback" role="status">
-      <span aria-hidden="true" />
-      <span aria-hidden="true" />
-      <span aria-hidden="true" />
+      <span className="lf-route-fallback__mark" aria-hidden="true">
+        <span className="lf-route-fallback__dot" />
+        <span className="lf-route-fallback__dot" />
+        <span className="lf-route-fallback__dot" />
+      </span>
       <span className="lf-sr-only">Loading page</span>
     </section>
   );
