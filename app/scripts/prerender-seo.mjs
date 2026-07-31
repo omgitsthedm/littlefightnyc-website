@@ -93,20 +93,28 @@ const aiBots = [
   "Diffbot"
 ];
 
+// This list was hand-maintained and had fallen eight areas behind the site.
+// littlefightnyc.com publishes a full service page for The Bronx and for Staten
+// Island — headline, first move, local search notes — while the Organization
+// schema told Google the business serves neither, along with Williamsburg,
+// Bushwick, Park Slope, DUMBO, Astoria, Long Island City, Greenwich Village and
+// the Financial District. Publishing a page that says "websites and tech help
+// for Bronx businesses" and then declaring no Bronx coverage is the site
+// arguing with itself in the one place a search engine reads literally.
+//
+// Derived from areaPages now — the same data that generates those pages — so a
+// new area cannot be published without being served, and a retired one cannot
+// linger in the schema. The three boroughs and the city itself are named
+// explicitly because they are containers, not area pages.
+const AREA_CONTAINERS = ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"];
+
 const areaServed = [
   { "@type": "City", "name": "New York", "containedInPlace": { "@type": "State", "name": "New York" } },
   ...[
-    "Lower East Side",
-    "East Village",
-    "SoHo",
-    "Chelsea",
-    "Midtown",
-    "Upper East Side",
-    "Upper West Side",
-    "West Village",
-    "Manhattan",
-    "Brooklyn",
-    "Queens"
+    ...AREA_CONTAINERS,
+    ...siteContent.areaPages
+      .map((area) => area.name)
+      .filter((name) => !AREA_CONTAINERS.includes(name)),
   ].map((name) => ({ "@type": "Place", "name": `${name}, New York, NY` })),
   ...[
     "10001",
@@ -1882,10 +1890,21 @@ async function writeRoute(page) {
   await writeFile(path.join(routeDir, "index.html"), html);
 }
 
+// A sitemap is a list of pages asking to be indexed. /privacy/ and /terms/ were
+// on it while their own canonical pointed at /legal/ — the site nominating three
+// URLs and then telling the crawler two of them do not count. Google resolves
+// that by trusting the canonical and ignoring the sitemap entry, so the only
+// thing the contradiction produced was a weaker signal and two lines of noise
+// in Search Console. Alias paths still render and still redirect visitors; they
+// just stop asking to be indexed under their own name.
+function isCanonicalSelf(page) {
+  return canonicalPathFor(page) === page.path;
+}
+
 function sitemap() {
   // Real per-page lastmod (authored dates win); changefreq/priority dropped —
   // crawlers ignore them and uniform values only signaled the dates were fake.
-  const urls = pages.filter((page) => !page.noindex).map((page) => {
+  const urls = pages.filter((page) => !page.noindex && isCanonicalSelf(page)).map((page) => {
     const modified = modifiedDateFor(page);
     return [
       "  <url>",
@@ -1898,7 +1917,7 @@ function sitemap() {
 }
 
 function imageSitemap() {
-  const urls = pages.filter((page) => !page.noindex).map((page) => {
+  const urls = pages.filter((page) => !page.noindex && isCanonicalSelf(page)).map((page) => {
     return [
       "  <url>",
       `    <loc>${absoluteUrl(page.path)}</loc>`,

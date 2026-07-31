@@ -80,7 +80,7 @@
     {
       "path": "/nationwide/",
       "title": "Custom Small Business Websites, All 50 States | Little Fight NYC",
-      "description": "A New York web shop that builds for the whole country. Custom small business websites live in 14 days \u2014 or you don't pay. You own the code, the domain, everything.",
+      "description": "A New York web shop that builds for the whole country. Small business websites live in 14 days \u2014 or you don't pay. You own the code and the domain.",
       "h1": "Built in New York. Works anywhere.",
       "shortAnswer": "Short answer: you don't have to be in New York to get the New York treatment. We build custom websites for small businesses in all 50 states, live in 14 days, and you own every line of it. The consult is free and a real person answers.",
       "type": "WebPage",
@@ -242,7 +242,7 @@
     {
       "path": "/library/",
       "title": "The Library: Owner Answers & Field Notes | Little Fight NYC",
-      "description": "Everything Little Fight NYC knows, free: straight answers to real owner questions, plus how-tos, essays, and software comparisons from working with NYC small businesses.",
+      "description": "Everything Little Fight NYC knows, free: straight answers to real owner questions, plus how-tos, essays, and software comparisons for NYC small businesses.",
       "h1": "Start with what happened. Find the next move.",
       "shortAnswer": "Short answer: the Library is every answer and field note Little Fight NYC has published \u2014 owner questions answered plainly, plus how-tos, essays, and software comparisons. Free, no selling.",
       "type": "CollectionPage",
@@ -1048,7 +1048,7 @@
     {
       "path": "/areas/upper-east-side/",
       "title": "Upper East Side SEO Company & Web Design | Little Fight NYC",
-      "description": "Looking for an SEO company on the Upper East Side? We do local search, websites, and tech support for UES salons, practices, shops, and service teams \u2014 and we show up in person.",
+      "description": "Looking for an SEO company on the Upper East Side? Local search, websites, and tech support for UES salons, practices, and shops \u2014 and we show up in person.",
       "h1": "Local SEO, websites, and support for Upper East Side businesses.",
       "shortAnswer": "Short answer: Upper East Side businesses need high-trust websites, local SEO that keeps Google correct, and simple systems that make appointments and follow-up easy.",
       "type": "PlacePage",
@@ -1365,7 +1365,7 @@
     {
       "path": "/case-studies/army-navy-bags/",
       "title": "Lower East Side Retail Website Concept | Little Fight NYC",
-      "description": "How Little Fight NYC turned Army & Navy Bags into a Lower East Side field guide, with local schema, a neighborhood walk, and responsive proof across desktop, iPad, and phone.",
+      "description": "How Little Fight NYC turned Army & Navy Bags into a Lower East Side field guide, with local schema, a neighborhood walk, and proof on desktop, iPad, and phone.",
       "h1": "The Lower East Side as a field guide",
       "shortAnswer": "A private retail concept that turns a packed neighborhood shop into a real stop through place, character, structured facts, and one-tap directions.",
       "type": "Article",
@@ -1409,7 +1409,7 @@
     {
       "path": "/case-studies/hair-by-rachel-charles/",
       "title": "Hair By Rachel Charles Website Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC turned an Instagram-first stylist business into a bold 49-route custom-domain website with local discovery and a familiar Square booking path.",
+      "description": "How Little Fight NYC turned an Instagram-first stylist into a bold 49-route custom-domain site with local discovery and a familiar Square booking path.",
       "h1": "A bright editorial chair in Chelsea",
       "shortAnswer": "A distinctive public home where clients can discover Rachel's work, understand the studio, and reach the booking flow from any screen.",
       "type": "Article",
@@ -1458,7 +1458,7 @@
     {
       "path": "/case-studies/chromatic-painting-design/",
       "title": "Chromatic Painting & Design Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC built an 18-page Phoenix painting website around local color, clear service paths, art-directed social cards, and an intentional review gate.",
+      "description": "How Little Fight NYC built an 18-page Phoenix painting site around local color, clear service paths, art-directed social cards, and a review gate.",
       "h1": "Phoenix, repainted",
       "shortAnswer": "A distinctive client review build rooted in Phoenix, shown with real responsive proof and no temporary hosting link.",
       "type": "Article",
