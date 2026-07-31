@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowUpRight,
@@ -113,6 +113,14 @@ export default function Library() {
   );
   const normalizedQuery = query.trim().toLocaleLowerCase();
 
+  // Typing "booking system" fired 17 polite announcements across two live
+  // regions reporting different counts — "63 results for b" racing "19 field
+  // notes shown". Each one interrupts the last, so a screen-reader user hears a
+  // stutter of half-finished numbers instead of an answer. The visible count
+  // below still updates on every keystroke; only the spoken one waits for a
+  // pause, which is what a result count is for.
+  const [settledStatus, setSettledStatus] = useState("");
+
   const sorted = useMemo(
     () => [...posts].sort((a, b) => postTime(b.published) - postTime(a.published)),
     [posts],
@@ -175,6 +183,17 @@ export default function Library() {
     0,
   );
   const totalResults = answerResultCount + visible.length;
+
+  const liveStatus = normalizedQuery
+    ? `${totalResults} result${totalResults === 1 ? "" : "s"} for ${query.trim()}`
+    : `${answerGuides.length} straight answers and ${visible.length} field notes`;
+  useEffect(() => {
+    // 600ms: long enough that continuous typing never announces, short enough
+    // that a pause is answered before the user wonders whether anything
+    // happened.
+    const timer = window.setTimeout(() => setSettledStatus(liveStatus), 600);
+    return () => window.clearTimeout(timer);
+  }, [liveStatus]);
 
   return (
     <>
@@ -264,7 +283,11 @@ export default function Library() {
             </a>
           </div>
 
-          <p className="lf-library-find__status" aria-live="polite">
+          {/* Visible count, instant. No aria-live: the settled announcement at
+              the end of this component speaks for both, so this one updating
+              per keystroke costs a sighted user nothing and a screen-reader
+              user nothing. */}
+          <p className="lf-library-find__status">
             {normalizedQuery
               ? `${totalResults} result${totalResults === 1 ? "" : "s"} for “${query.trim()}”`
               : `${answerGuides.length} straight answers and ${posts.length} field notes`}
@@ -375,21 +398,12 @@ export default function Library() {
               </button>
             ))}
           </div>
-          <p
-            aria-live="polite"
-            style={{
-              position: "absolute",
-              width: 1,
-              height: 1,
-              padding: 0,
-              margin: -1,
-              overflow: "hidden",
-              clip: "rect(0 0 0 0)",
-              whiteSpace: "nowrap",
-              border: 0,
-            }}
-          >
-            {visible.length} field notes shown
+          {/* The only live region on this page. It was one of two, each
+              announcing a different number on every keystroke — this one said
+              "19 field notes shown" while the other said "63 results for b".
+              Now it carries the whole answer, once the typing stops. */}
+          <p aria-live="polite" className="lf-sr-only">
+            {settledStatus}
           </p>
         </div>
 

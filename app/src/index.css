@@ -142,6 +142,24 @@ canvas {
   outline-offset: 3px;
 }
 
+/* Visually hidden, still announced. Global because it is used by RouteFallback,
+   which renders before any route's own stylesheet has necessarily loaded — a
+   component-scoped variant like .lf-viz-sr would be unstyled at exactly the
+   moment this is needed, and the text would flash on screen.
+   Not display:none or visibility:hidden — both drop it from the accessibility
+   tree, which is the one thing it exists for. */
+.lf-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Keyboard skip link (live editorial shells restyle within .lf-editorial). */
 .lf-skip-link {
   position: fixed;

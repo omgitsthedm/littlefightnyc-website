@@ -46,10 +46,15 @@ const Zhongwen = lazyRoute(() => import("@/pages/Zhongwen"));
 
 function RouteFallback() {
   return (
-    <section className="lf-route-fallback" role="status" aria-label="Loading page">
+    // role="status" is a live region, and a live region announces its CONTENT,
+    // not its label — the three dots are aria-hidden, so there was nothing to
+    // announce and a screen-reader user heard silence while a route loaded.
+    // The aria-label made it look handled. Real text, visually hidden.
+    <section className="lf-route-fallback" role="status">
       <span aria-hidden="true" />
       <span aria-hidden="true" />
       <span aria-hidden="true" />
+      <span className="lf-sr-only">Loading page</span>
     </section>
   );
 }
