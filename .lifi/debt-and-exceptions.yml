@@ -161,7 +161,7 @@ items:
     risk: "moderate"
     finding: "Authenticated provider and account state could not be validated from repository evidence."
     evidence:
-      - "Open surfaces include Netlify site/forms/functions/environment, Google Business Profile, Search Console, DataForSEO, analytics providers, SMTP, optional Notion, and optional Telegram."
+      - "Open surfaces include Netlify site/forms/functions/environment, Google Business Profile, Search Console, DataForSEO, analytics providers, SMTP, optional Notion."
       - "No secrets or account payloads were accessed or copied into this baseline."
     impact: "Code can be correct while account linkage, permissions, quotas, domains, notifications, or measurement remain misconfigured."
     mitigation:

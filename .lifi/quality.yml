@@ -289,10 +289,6 @@ integrations:
     direction: "Audit background function -> Notion"
     data: "lead identity, domain, email, score band, report URL"
     required: false
-  - name: "Telegram"
-    direction: "Audit background function -> Little Fight alert channel"
-    data: "lead identity, domain, email, grade, report URL"
-    required: false
   - name: "GA4, Microsoft Clarity, and TikTok"
     direction: "consented browser -> analytics providers"
     data: "sanitized events, performance/error summaries, route and device buckets"
@@ -325,7 +321,7 @@ data_boundaries:
     rule: "No passwords, private customer data, or secrets."
   - id: "audit-intake"
     classification: "contact data plus a public website URL"
-    flow: "browser -> Netlify Functions/Blobs -> PageSpeed/Anthropic -> email and optional Notion/Telegram"
+    flow: "browser -> Netlify Functions/Blobs -> PageSpeed/Anthropic -> email and optional Notion"
     rule: "Private/internal network targets are rejected; one-time job authorization is consumed before expensive work."
   - id: "audit-observation"
     classification: "pseudonymous operational analytics"
@@ -398,7 +394,7 @@ workers:
 jobs:
   - name: "Website Audit background pipeline"
     trigger: "one-time-token call from run-audit"
-    work: "PageSpeed, site scrape, optional Anthropic, HTML generation, Blob writes, email, optional Notion and Telegram"
+    work: "PageSpeed, site scrape, optional Anthropic, HTML generation, Blob writes, email, optional Notion"
     retry_reconciliation: "partial best-effort provider handling exists; end-to-end delivery monitor remains open"
   - name: "expired Audit cleanup"
     trigger: "0 3 * * *"

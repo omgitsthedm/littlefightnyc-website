@@ -1,5 +1,5 @@
 // run-audit-background.mts — Background audit pipeline
-// Runs the full audit: PageSpeed → Haiku → Template → Blob → Email → Notion → Telegram
+// Runs the full audit: PageSpeed → Haiku → Template → Blob → Email → Notion
 // Background functions return 202 immediately; this code runs for up to 15 minutes.
 
 import type { Context } from "@netlify/functions";
@@ -737,45 +737,6 @@ async function addToNotionCRM(data: {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Telegram alert for the Little Fight NYC response channel
-// ═══════════════════════════════════════════════════════════════
-
-async function sendTelegramAlert(data: {
-  companyName: string;
-  domain: string;
-  email: string;
-  grade: string;
-  auditUrl: string;
-}) {
-  const token = getEnv("TELEGRAM_BOT_TOKEN");
-  const chatId = getEnv("TELEGRAM_CHAT_ID");
-  if (!token || !chatId) {
-    console.log("[audit] Telegram not configured — skipping alert");
-    return;
-  }
-
-  const text =
-    `🔔 <b>New Audit Submitted</b>\n\n` +
-    `<b>${data.companyName}</b>\n` +
-    `🌐 ${data.domain}\n` +
-    `📧 ${data.email}\n` +
-    `📊 Grade: <b>${data.grade}</b>\n\n` +
-    `<a href="${data.auditUrl}">View Report</a>`;
-
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text,
-      parse_mode: "HTML",
-      disable_web_page_preview: true,
-    }),
-    signal: AbortSignal.timeout(10_000),
-  });
-}
-
-// ═══════════════════════════════════════════════════════════════
 // Main pipeline
 // ═══════════════════════════════════════════════════════════════
 
@@ -978,20 +939,6 @@ export default async (req: Request, context: Context) => {
       console.log("[audit] 📋 Added to Notion CRM");
     } catch (err) {
       console.error("[audit] Notion failed:", err);
-    }
-
-    // Telegram alert (best-effort)
-    try {
-      await sendTelegramAlert({
-        companyName: haiku.companyName,
-        domain,
-        email,
-        grade,
-        auditUrl,
-      });
-      console.log("[audit] 📱 Telegram alert sent");
-    } catch (err) {
-      console.error("[audit] Telegram failed:", err);
     }
 
     // ── Done ─────────────────────────────────────────────────

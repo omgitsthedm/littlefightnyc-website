@@ -86,7 +86,7 @@ protected_surfaces:
       - "public and programmatic Audit intake"
       - "one-time background job authorization"
       - "Netlify Blobs stores and 30-day expiration"
-      - "PageSpeed, Anthropic fallback, Gmail SMTP, optional Notion and Telegram"
+      - "PageSpeed, Anthropic fallback, Gmail SMTP, optional Notion"
       - "report routes, OG cards, view and engagement recording"
     decision: "Treat endpoint handlers, background/scheduled exports, templates, and helpers as one protected service graph."
     owner: "David Marsh"

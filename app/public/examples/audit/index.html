@@ -130,7 +130,7 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
             <p class="field-error" id="emailError" role="alert" aria-live="polite"></p>
             <p class="field-note" id="emailPrivacy">
               Used to send your report and follow up. Running the audit means
-              Netlify, Anthropic, Notion, and Telegram each handle part of it —
+              Netlify, Anthropic, and Notion each handle part of it —
               <a href="/examples/audit/privacy/">who sees what</a>.
             </p>
           </div>
@@ -370,9 +370,14 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
     <p><a href="https://littlefightnyc.com">Designed, Hosted and Cared For by LittleFightNYC.com</a></p>
     <!-- This read "We never share your data. Your email is only used to send
          your audit report." Both halves were false: the submission is recorded
-         in Notion and announced over Telegram, and the email is used to follow
-         up, not only to deliver. The privacy page two links away said so
-         plainly, so the page contradicted itself. Say the true thing here. -->
+         in Notion, and the email is used to follow up, not only to deliver. The
+         privacy page two links away said so plainly, so the page contradicted
+         itself. Say the true thing here.
+
+         A third-party alert integration this used to name was removed
+         2026-07-30: it had never been configured in production, so it had
+         never run, and naming a processor that handles nothing is the same
+         disclosure error in the other direction. -->
     <p class="footer-legal">We never sell your data. Your email is used to send your report and follow up — <a href="/examples/audit/privacy/">here is exactly who sees it</a>.</p>
   </footer>
 
