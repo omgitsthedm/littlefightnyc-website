@@ -31,6 +31,23 @@ export default function Legal() {
               description of the issue. That is the minimum needed to reply
               usefully.
             </p>
+            <h2>Who receives a form submission</h2>
+            <p>
+              Forms on this site are handled by Netlify, which hosts the site
+              and stores each submission so Little Fight can read and reply to
+              it. Nothing you send through a form is sold, and it is not used
+              for advertising.
+            </p>
+            <p>
+              The{" "}
+              <a href="/examples/audit/">Website Audit Lab</a> is a separate
+              tool with its own data flow — it takes a website address and an
+              email address, and involves services this page does not cover.{" "}
+              <a href="/examples/audit/privacy/">
+                What the Audit Lab collects
+              </a>{" "}
+              is written out separately.
+            </p>
             <h2>Analytics and advertising pixels</h2>
             <p>
               Little Fight uses analytics and advertising tools, including

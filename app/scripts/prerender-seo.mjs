@@ -1509,6 +1509,9 @@ function legalBlock(page) {
   return `
     <h2 id="privacy">What forms collect</h2>
     <p>Tech Audit and contact paths may collect your name, business name, contact information, follow-up preference, and a plain description of the issue. That is the minimum needed to reply usefully.</p>
+    <h2>Who receives a form submission</h2>
+    <p>Forms on this site are handled by Netlify, which hosts the site and stores each submission so Little Fight can read and reply to it. Nothing you send through a form is sold, and it is not used for advertising.</p>
+    <p>The <a href="/examples/audit/">Website Audit Lab</a> is a separate tool with its own data flow — it takes a website address and an email address, and involves services this page does not cover. <a href="/examples/audit/privacy/">What the Audit Lab collects</a> is written out separately.</p>
     <h2>Analytics and advertising pixels</h2>
     <p>Little Fight uses analytics and advertising tools, including Google Analytics and the TikTok Pixel, to understand which pages are useful, which contact paths work, and whether marketing is sending the right people to the site.</p>
     <p>These tools may record page views, approximate device/browser details, referral information, and events such as phone clicks, email clicks, Tech Audit or contact button clicks, and form submits. Little Fight uses this information for measurement, reporting, and improving marketing, not to sell personal information.</p>
