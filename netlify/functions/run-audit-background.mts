@@ -1,15 +1,35 @@
 // run-audit-background.mts — Background audit pipeline
-// Runs the full audit: PageSpeed → Haiku → Template → Blob → Email → Notion
+// Runs the full audit: PageSpeed → Haiku → Template → Blob → Database → Email
 // Background functions return 202 immediately; this code runs for up to 15 minutes.
 
 import type { Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
+import { Buffer } from "node:buffer";
 import { createTransport } from "nodemailer";
+import {
+  safeDatabaseErrorLabel,
+  shouldPersistAuditLead,
+  upsertAuditLead,
+  updateAuditLeadEmailDelivery,
+  type AuditAnalysisSource,
+  type AuditEmailDeliveryStatus,
+  type AuditPageSpeedSource,
+} from "./lib/audit-leads.mts";
 import {
   generateAuditHTML,
   calculateGrade,
   type AuditData,
 } from "./lib/templates.mts";
+
+const GMAIL_FROM = "hello@littlefightnyc.com";
+const GOOGLE_FETCH_MAX_ATTEMPTS = 3;
+const GOOGLE_RETRY_BASE_DELAY_MS = 1_000;
+const GOOGLE_RETRY_MAX_DELAY_MS = 60_000;
+const GMAIL_RETRYABLE_FORBIDDEN_CODES = new Set([
+  "rateLimitExceeded",
+  "userRateLimitExceeded",
+]);
+const PRIVACY_NOTICE_VERSION = "2026-07-31";
 
 declare const Netlify: {
   env: { get(key: string): string | undefined };
@@ -306,7 +326,15 @@ async function callHaiku(
   siteTextSnippet: string,
 ): Promise<HaikuResult> {
   const apiKey = getEnv("ANTHROPIC_API_KEY");
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY not configured");
+  const baseUrl = getEnv("ANTHROPIC_BASE_URL");
+  if (!apiKey || !baseUrl) {
+    throw new Error("Netlify AI Gateway is not configured");
+  }
+
+  const gatewayUrl = new URL(baseUrl);
+  if (gatewayUrl.protocol !== "https:") {
+    throw new Error("Netlify AI Gateway URL must use HTTPS");
+  }
 
   const topFailing = failingAudits
     .slice(0, 12)
@@ -373,9 +401,9 @@ Rules:
 - benchmarkPercentile: estimate what percentile this site is in compared to similar businesses (0-100). Base on the overall score average — 70+ is better than ~65% of SMB sites.
 - roadmap: exactly 3 phases. Map the actual findings to a realistic fix timeline. Items should be specific and actionable.`;
 
-  console.log(`[audit] Haiku API key present: ${!!apiKey}`);
+  console.log("[audit] Calling Haiku through Netlify AI Gateway");
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch(`${baseUrl.replace(/\/+$/, "")}/v1/messages`, {
     method: "POST",
     headers: {
       "x-api-key": apiKey,
@@ -567,6 +595,175 @@ function fallbackFindings(
 // Email — soft-pitch delivery of the audit report
 // ═══════════════════════════════════════════════════════════════
 
+function normalizedGoogleErrorCode(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const code = value.trim();
+  return /^[A-Za-z][A-Za-z0-9_.-]{0,79}$/.test(code) ? code : undefined;
+}
+
+export function safeEmailDeliveryErrorLabel(error: unknown): string {
+  if (!(error instanceof Error)) return "email_delivery_error";
+
+  const httpFailure =
+    /^(?:Gmail OAuth token exchange|Gmail send) failed \(HTTP ([1-5]\d{2})(?:, code=([A-Za-z][A-Za-z0-9_.-]{0,79}))?\)$/.exec(
+      error.message,
+    );
+  if (httpFailure) {
+    const codeSuffix = httpFailure[2] ? `_${httpFailure[2]}` : "";
+    return `google_http_${httpFailure[1]}${codeSuffix}`;
+  }
+
+  const transportFailure =
+    /^(?:Gmail OAuth token exchange|Gmail send) failed \(transport code=([A-Za-z][A-Za-z0-9_.-]{0,79})\)$/.exec(
+      error.message,
+    );
+  if (transportFailure) return `google_transport_${transportFailure[1]}`;
+
+  return "email_delivery_error";
+}
+
+async function readGoogleErrorCode(
+  response: Response,
+): Promise<string | undefined> {
+  try {
+    const payload = (await response.json()) as unknown;
+    if (!payload || typeof payload !== "object") return undefined;
+
+    const providerError = (payload as { error?: unknown }).error;
+    const directCode = normalizedGoogleErrorCode(providerError);
+    if (directCode) return directCode;
+    if (!providerError || typeof providerError !== "object") return undefined;
+
+    const details = providerError as {
+      errors?: unknown;
+      status?: unknown;
+    };
+    if (Array.isArray(details.errors)) {
+      for (const entry of details.errors) {
+        if (!entry || typeof entry !== "object") continue;
+        const reason = normalizedGoogleErrorCode(
+          (entry as { reason?: unknown }).reason,
+        );
+        if (reason) return reason;
+      }
+    }
+
+    return normalizedGoogleErrorCode(details.status);
+  } catch {
+    return undefined;
+  }
+}
+
+function normalizedTransportErrorCode(error: unknown): string {
+  if (!error || typeof error !== "object") return "transport_error";
+
+  const cause = (error as { cause?: unknown }).cause;
+  if (cause && typeof cause === "object") {
+    const causeCode = normalizedGoogleErrorCode(
+      (cause as { code?: unknown }).code,
+    );
+    if (causeCode) return causeCode;
+  }
+
+  return (
+    normalizedGoogleErrorCode((error as { name?: unknown }).name) ||
+    "transport_error"
+  );
+}
+
+function retryAfterDelayMs(value: string | null): number | undefined {
+  if (!value) return undefined;
+
+  const seconds = Number(value);
+  if (Number.isFinite(seconds) && seconds >= 0) {
+    return Math.ceil(seconds * 1_000);
+  }
+
+  const retryAt = Date.parse(value);
+  if (Number.isNaN(retryAt)) return undefined;
+  return Math.max(0, retryAt - Date.now());
+}
+
+function googleRetryDelayMs(attempt: number, retryAfter: string | null): number {
+  const exponentialDelay = GOOGLE_RETRY_BASE_DELAY_MS * 2 ** attempt;
+  const jitter = Math.floor(Math.random() * GOOGLE_RETRY_BASE_DELAY_MS);
+  const requestedDelay = retryAfterDelayMs(retryAfter) || 0;
+  return Math.min(
+    GOOGLE_RETRY_MAX_DELAY_MS,
+    Math.max(exponentialDelay + jitter, requestedDelay),
+  );
+}
+
+function isRetryableGoogleHttpFailure(
+  status: number,
+  code: string | undefined,
+): boolean {
+  return (
+    status === 429 ||
+    status >= 500 ||
+    (status === 403 &&
+      code !== undefined &&
+      GMAIL_RETRYABLE_FORBIDDEN_CODES.has(code))
+  );
+}
+
+async function fetchGoogleWithRetry(
+  label: "Gmail OAuth token exchange" | "Gmail send",
+  request: () => Promise<Response>,
+  isRetryableHttp: (status: number, code: string | undefined) => boolean,
+): Promise<Response> {
+  let finalFailure:
+    | { kind: "http"; status: number; code?: string }
+    | { kind: "transport"; code: string }
+    | undefined;
+
+  for (let attempt = 0; attempt < GOOGLE_FETCH_MAX_ATTEMPTS; attempt += 1) {
+    let response: Response;
+    try {
+      response = await request();
+    } catch (error) {
+      finalFailure = {
+        kind: "transport",
+        code: normalizedTransportErrorCode(error),
+      };
+      if (attempt === GOOGLE_FETCH_MAX_ATTEMPTS - 1) break;
+      await new Promise((resolve) =>
+        setTimeout(resolve, googleRetryDelayMs(attempt, null)),
+      );
+      continue;
+    }
+
+    if (response.ok) return response;
+
+    const code = await readGoogleErrorCode(response);
+    finalFailure = { kind: "http", status: response.status, code };
+    if (
+      attempt === GOOGLE_FETCH_MAX_ATTEMPTS - 1 ||
+      !isRetryableHttp(response.status, code)
+    ) {
+      break;
+    }
+
+    await new Promise((resolve) =>
+      setTimeout(
+        resolve,
+        googleRetryDelayMs(attempt, response.headers.get("retry-after")),
+      ),
+    );
+  }
+
+  if (finalFailure?.kind === "http") {
+    const codeSuffix = finalFailure.code ? `, code=${finalFailure.code}` : "";
+    throw new Error(
+      `${label} failed (HTTP ${finalFailure.status}${codeSuffix})`,
+    );
+  }
+
+  throw new Error(
+    `${label} failed (transport code=${finalFailure?.code || "transport_error"})`,
+  );
+}
+
 async function sendAuditEmail(
   email: string,
   companyName: string,
@@ -574,20 +771,14 @@ async function sendAuditEmail(
   grade: string,
   overallScore: number,
   auditUrl: string,
-) {
-  const gmailUser = getEnv("GMAIL_USER");
-  const smtpPass = getEnv("SMTP_APP_PASSWORD");
-  if (!gmailUser || !smtpPass) {
-    console.log("[audit] SMTP not configured — skipping email");
-    return;
+): Promise<{ status: "sent" } | { status: "not_configured" }> {
+  const clientId = getEnv("GMAIL_OAUTH_CLIENT_ID");
+  const clientSecret = getEnv("GMAIL_OAUTH_CLIENT_SECRET");
+  const refreshToken = getEnv("GMAIL_OAUTH_REFRESH_TOKEN");
+  if (!clientId || !clientSecret || !refreshToken) {
+    console.log("[audit] Gmail OAuth not configured — skipping email");
+    return { status: "not_configured" };
   }
-
-  const transport = createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: { user: gmailUser, pass: smtpPass },
-  });
 
   // Sanitize against email header injection
   const safeEmail = email.replace(/[\r\n]/g, '').slice(0, 254);
@@ -646,12 +837,65 @@ async function sendAuditEmail(
 </body>
 </html>`;
 
-  await transport.sendMail({
-    from: `"Little Fight NYC" <${gmailUser}>`,
+  const mimeBuilder = createTransport({
+    streamTransport: true,
+    buffer: true,
+  });
+  const compiled = await mimeBuilder.sendMail({
+    from: { name: "Little Fight NYC", address: GMAIL_FROM },
+    replyTo: GMAIL_FROM,
     to: safeEmail,
     subject: safeSubject,
     html,
   });
+
+  const tokenResponse = await fetchGoogleWithRetry(
+    "Gmail OAuth token exchange",
+    () =>
+      fetch("https://oauth2.googleapis.com/token", {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          client_id: clientId,
+          client_secret: clientSecret,
+          refresh_token: refreshToken,
+          grant_type: "refresh_token",
+        }),
+        signal: AbortSignal.timeout(15_000),
+      }),
+    (status) => status === 429 || status >= 500,
+  );
+
+  const tokenBody = (await tokenResponse.json()) as {
+    access_token?: unknown;
+  };
+  if (typeof tokenBody.access_token !== "string" || !tokenBody.access_token) {
+    throw new Error("Gmail OAuth token exchange returned no access token");
+  }
+
+  const message = (compiled as { message?: unknown }).message;
+  if (!message) throw new Error("Gmail MIME builder returned no message");
+  const raw = Buffer.from(message as Uint8Array).toString("base64url");
+
+  await fetchGoogleWithRetry(
+    "Gmail send",
+    () =>
+      fetch(
+        `https://gmail.googleapis.com/gmail/v1/users/${encodeURIComponent(GMAIL_FROM)}/messages/send`,
+        {
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${tokenBody.access_token}`,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ raw }),
+          signal: AbortSignal.timeout(15_000),
+        },
+      ),
+    isRetryableGoogleHttpFailure,
+  );
+
+  return { status: "sent" };
 }
 
 function escHtml(s: string): string {
@@ -660,80 +904,6 @@ function escHtml(s: string): string {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
-}
-
-// ═══════════════════════════════════════════════════════════════
-// Notion CRM — add the lead (best-effort)
-// ═══════════════════════════════════════════════════════════════
-
-async function addToNotionCRM(data: {
-  companyName: string;
-  domain: string;
-  email: string;
-  niche: string;
-  city: string;
-  state: string;
-  grade: string;
-  auditUrl: string;
-}) {
-  const notionKey = getEnv("NOTION_API_KEY");
-  const dbId = getEnv("NOTION_CRM_DATABASE_ID");
-  if (!notionKey || !dbId) {
-    console.log("[audit] Notion not configured — skipping CRM entry");
-    return;
-  }
-
-  const res = await fetch("https://api.notion.com/v1/pages", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${notionKey}`,
-      "Notion-Version": "2022-06-28",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      parent: { database_id: dbId },
-      properties: {
-        Company: { title: [{ text: { content: data.companyName } }] },
-        Send_To: {
-          rich_text: [{ text: { content: data.email } }],
-        },
-        Website: { url: `https://${data.domain}` },
-        Niche: {
-          rich_text: [{ text: { content: data.niche } }],
-        },
-        City: {
-          rich_text: [{ text: { content: `${data.city}, ${data.state}` } }],
-        },
-        Score_Band: {
-          select: {
-            name: ["A+", "A", "A-", "B+"].includes(data.grade)
-              ? "🔥 8-10 Hot"
-              : ["B", "B-", "C+", "C"].includes(data.grade)
-                ? "🟡 6-7 Warm"
-                : "⚪ 0-5 Cold",
-          },
-        },
-        Lead_Source: { select: { name: "Self-Service Audit" } },
-        Pipeline_Stage: { select: { name: "READY" } },
-        One_Liner: {
-          rich_text: [
-            {
-              text: {
-                content: `Self-service audit — ${data.auditUrl}`,
-                link: { url: data.auditUrl },
-              },
-            },
-          ],
-        },
-      },
-    }),
-    signal: AbortSignal.timeout(10_000),
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    console.error(`[audit] Notion API ${res.status}: ${text.slice(0, 200)}`);
-  }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -795,10 +965,12 @@ export default async (req: Request, context: Context) => {
     console.log(`[audit] Calling PageSpeed for ${url}`);
 
     let psi: PageSpeedResult;
+    let pagespeedSource: AuditPageSpeedSource = "google_pagespeed";
     try {
       psi = await fetchPageSpeed(url);
     } catch (err) {
       console.error("[audit] PageSpeed failed, using fallback scores:", err);
+      pagespeedSource = "fallback";
       psi = {
         performanceScore: 52,
         seoScore: 58,
@@ -825,6 +997,7 @@ export default async (req: Request, context: Context) => {
     console.log("[audit] Calling Haiku for findings");
 
     let haiku: HaikuResult;
+    let analysisSource: AuditAnalysisSource = "netlify_ai_gateway";
     try {
       haiku = await callHaiku(
         domain,
@@ -835,6 +1008,7 @@ export default async (req: Request, context: Context) => {
       );
     } catch (err) {
       console.error("[audit] Haiku failed, using fallback findings:", err);
+      analysisSource = "fallback";
       haiku = fallbackFindings(domain, psi.pageTitle, psi);
     }
 
@@ -909,9 +1083,47 @@ export default async (req: Request, context: Context) => {
     // ── Step 6: Finishing touches ─────────────────────────────
     await setStatus(slug, "running", "finishing");
 
+    // Netlify Database is the durable, authenticated follow-up record. Keep
+    // this best-effort so a database outage cannot take away the visitor's
+    // generated browser report or its email delivery. Deploy previews and
+    // branch deploys use isolated database branches only; they never add a
+    // durable lead record.
+    const persistAuditLead = shouldPersistAuditLead(context.deploy.context);
+    let leadPersisted = false;
+    if (persistAuditLead) {
+      try {
+        await upsertAuditLead({
+          auditSlug: slug,
+          email,
+          domain,
+          companyName: haiku.companyName,
+          niche: haiku.niche,
+          city: haiku.city,
+          state: haiku.state,
+          overallScore,
+          grade,
+          reportUrl: auditUrl,
+          reportExpiresAt: expiresDate,
+          analysisSource,
+          pagespeedSource,
+          privacyNoticeVersion: PRIVACY_NOTICE_VERSION,
+        });
+        leadPersisted = true;
+        console.log("[audit] Lead stored in Netlify Database");
+      } catch (err) {
+        console.error(
+          `[audit] Netlify Database lead write failed (${safeDatabaseErrorLabel(err)})`,
+        );
+      }
+    } else {
+      console.log("[audit] Skipping durable lead storage outside production");
+    }
+
     // Email (best-effort)
+    let emailDeliveryStatus: Exclude<AuditEmailDeliveryStatus, "pending"> =
+      "failed";
     try {
-      await sendAuditEmail(
+      const delivery = await sendAuditEmail(
         email,
         haiku.companyName,
         domain,
@@ -919,26 +1131,24 @@ export default async (req: Request, context: Context) => {
         overallScore,
         auditUrl,
       );
-      console.log(`[audit] ✉ Email sent to ${email}`);
+      emailDeliveryStatus = delivery.status;
+      if (delivery.status === "sent") {
+        console.log("[audit] Email accepted by Gmail API");
+      }
     } catch (err) {
-      console.error("[audit] Email failed:", err);
+      console.error(
+        `[audit] Email failed (${safeEmailDeliveryErrorLabel(err)})`,
+      );
     }
 
-    // Notion CRM (best-effort)
-    try {
-      await addToNotionCRM({
-        companyName: haiku.companyName,
-        domain,
-        email,
-        niche: haiku.niche,
-        city: haiku.city,
-        state: haiku.state,
-        grade,
-        auditUrl,
-      });
-      console.log("[audit] 📋 Added to Notion CRM");
-    } catch (err) {
-      console.error("[audit] Notion failed:", err);
+    if (leadPersisted) {
+      try {
+        await updateAuditLeadEmailDelivery(slug, emailDeliveryStatus);
+      } catch (err) {
+        console.error(
+          `[audit] Email delivery status update failed (${safeDatabaseErrorLabel(err)})`,
+        );
+      }
     }
 
     // ── Done ─────────────────────────────────────────────────

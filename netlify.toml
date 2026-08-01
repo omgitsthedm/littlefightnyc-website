@@ -11,7 +11,7 @@ pinned_version = "6"
 
 [build]
 base = "."
-# The nine functions in netlify/functions are TypeScript that Netlify
+# The eight handlers in netlify/functions are TypeScript that Netlify
 # transpiles without typechecking, and the app build only covers app/src —
 # so nothing on the deploy path ever checked them. A type error in a
 # function shipped green. typecheck:functions runs from the repo root and

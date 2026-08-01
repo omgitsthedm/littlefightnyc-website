@@ -86,7 +86,7 @@ items:
     finding: "Current end-to-end evidence for Tech Audit form capture/inbox delivery and Website Audit report email delivery is missing."
     evidence:
       - "Provider registration markup and delivery code exist."
-      - "The repository does not prove current Netlify Forms capture, configured inbox receipt, Gmail SMTP delivery, spam placement, or failure alerting."
+      - "The repository does not prove current Netlify Forms capture, configured inbox receipt, Gmail API delivery, spam placement, or failure alerting."
     impact: "A visitor can receive an on-site confirmation while the lead or generated report fails to reach its intended recipient."
     mitigation:
       - "Run a production-safe test submission and Website Audit delivery with controlled test identities."
@@ -161,7 +161,7 @@ items:
     risk: "moderate"
     finding: "Authenticated provider and account state could not be validated from repository evidence."
     evidence:
-      - "Open surfaces include Netlify site/forms/functions/environment, Google Business Profile, Search Console, DataForSEO, analytics providers, SMTP, optional Notion."
+      - "Open surfaces include Netlify site/forms/functions/environment/database/AI Gateway, Google Business Profile, Search Console, Gmail API, DataForSEO, and analytics providers."
       - "No secrets or account payloads were accessed or copied into this baseline."
     impact: "Code can be correct while account linkage, permissions, quotas, domains, notifications, or measurement remain misconfigured."
     mitigation:

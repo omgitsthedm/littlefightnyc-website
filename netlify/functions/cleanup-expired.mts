@@ -5,12 +5,30 @@
 
 import type { Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
+import {
+  purgeExpiredAuditLeads,
+  safeDatabaseErrorLabel,
+} from "./lib/audit-leads.mts";
 
 // One window's grace past the 24h rate-limit window in run-audit.mts, so a
 // counter is never dropped while it is still governing a live limit.
 const RATE_LIMIT_RETENTION_MS = 48 * 60 * 60 * 1000;
 
 export default async () => {
+  const now = new Date();
+
+  // Scheduled functions have a short runtime ceiling, so run the bounded
+  // database deletion before the potentially long Blob listings. Keep it
+  // best-effort so a database outage cannot block the independent Blob work.
+  try {
+    const deletedLeads = await purgeExpiredAuditLeads(now);
+    console.log(`[cleanup] Audit leads: deleted ${deletedLeads} expired record(s)`);
+  } catch (err) {
+    console.error(
+      `[cleanup] Audit lead retention cleanup failed (${safeDatabaseErrorLabel(err)})`,
+    );
+  }
+
   const metaStore = getStore("audit-meta");
   const pageStore = getStore("audit-pages");
   const viewStore = getStore("audit-views");
@@ -22,7 +40,6 @@ export default async () => {
   // site advertises, and the URL returns 410 while the record lives on.
   const engagementStore = getStore("audit-engagement");
 
-  const now = new Date();
   let deleted = 0;
 
   // List all audit-meta entries
