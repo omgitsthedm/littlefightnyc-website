@@ -152,9 +152,9 @@ for = "/examples/audit/the-cosmetic-clinic/*"
   [headers.values]
   X-Robots-Tag = "noindex, nofollow"
 
-# The retired standalone Audit Lab is hosted under /examples/audit/. Its
-# preserved pages and generated reports use inline scripts plus Google Fonts,
-# so they need the standalone site's narrower policy instead of the main app's.
+# The in-site Audit showroom and sample reports under /examples/audit/ use
+# inline scripts plus Google Fonts, so they need a narrow policy instead of the
+# main application's policy.
 # /vera/ falls back to the pipeline origin directly when the _redirects proxy
 # hop fails — that is the one failure the redundancy exists for. connect-src did
 # not allow it, so the fallback was refused by CSP every time and the app had

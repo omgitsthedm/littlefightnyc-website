@@ -1,12 +1,12 @@
 schema_version: 1
 manifest_id: "littlefightnyc-website"
-updated_at: "2026-07-25"
+updated_at: "2026-08-01"
 
 quality_charter:
   source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
   version: null
   owner: null
-  status: "ABSENT_VERIFIED_2026-07-24"
+  status: "ABSENT_VERIFIED_2026-08-01"
   note: "The central charter does not exist at the required path. No version or policy owner is inferred."
 
 surface: service-enabled
@@ -20,7 +20,7 @@ risk_rationale: >-
 hybrid_surfaces:
   - path: "/examples/audit/"
     class: "service-enabled"
-    note: "Public audit intake with background processing, AI assistance, persistent report state, email delivery, and optional CRM/alert delivery."
+    note: "Public audit intake with background processing, AI assistance, Blob report state, Netlify Database follow-up, and Google Workspace email delivery."
   - path: "/examples/lab/"
     class: "marketing-showcase"
     note: "Static experimental showroom; source and repository controls are prohibited."
@@ -37,7 +37,7 @@ framework: "React 19 + TypeScript + Vite 7; prerendered route snapshots; Netlify
 adapter: "react-vite-netlify"
 package_manager: "npm"
 lockfile: "package-lock.json and app/package-lock.json"
-runtime: "Node 24 is pinned in the repository and Netlify configuration; release d02b935 passed the full local lane under Node 24.18.0 and reached a revision-matched Node 24 Netlify production deploy."
+runtime: "Node 24 is pinned in the repository and Netlify configuration; every production release must pass the revision-bound local and live gates."
 runtime_evidence:
   local_node: "24.18.0 (npx node@24)"
   local_npm: "10.9.8"
@@ -49,8 +49,6 @@ host_project_id: "0907d8fe-7018-48db-a6be-1f906e4b2619"
 production_target: "https://littlefightnyc.com"
 production_branch: "main"
 deploy_model: "GitHub main -> Netlify auto-build -> auto-publish"
-last_verified_live_revision: "d02b93549ad79cc2a904f3220d2a06b1643f114a"
-last_known_good_release: "d02b93549ad79cc2a904f3220d2a06b1643f114a"
 
 commands:
   install: "npm ci && npm --prefix app ci"
@@ -144,7 +142,7 @@ critical_journeys:
       - "One-time-token background job"
       - "Status polling"
       - "Generated report"
-      - "Email and optional CRM/alert delivery"
+      - "Google Workspace email delivery and Netlify Database follow-up"
     success: "A valid report is generated, stored, served, and delivered without leaking secrets or accepting private-network targets."
     external_gate: "EXT-001"
   - id: "language-path"
@@ -464,7 +462,7 @@ asset_budgets:
   route_catalog_count_min: 200
   generated_html_count_min: 220
 budget_baseline:
-  source: ".lifi/evidence/baselines/2026-07-24.md"
+  source: ".lifi/evidence/baselines/2026-08-01.md"
   enforcement: "Manifest and release-artifact checks are implemented; numeric asset, visual, and field-performance enforcement remains incomplete."
 
 monitors:
@@ -482,7 +480,7 @@ monitors:
     status: "implemented; alert ownership not documented"
   - name: "external route, asset, metadata, and revision synthetic"
     coverage: "production"
-    status: "implemented under quality:live; revision-matched production run passed for release d02b935"
+    status: "implemented under quality:live; resolve the exact revision from /release.json and Netlify at release time"
   - name: "social preview platform validation"
     coverage: "Meta, LinkedIn, and X"
     status: "missing external verification"
@@ -506,7 +504,7 @@ ledgers:
   debt_and_exceptions: ".lifi/debt-and-exceptions.yml"
 evidence:
   summary_dir: ".lifi/evidence"
-  baseline: ".lifi/evidence/baselines/2026-07-24.md"
+  baseline: ".lifi/evidence/baselines/2026-08-01.md"
   ci_artifact_policy: "UNDEFINED — add retained browser, accessibility, visual, performance, and live-smoke artifacts with the quality command implementation"
   retention_policy: "Version baseline summaries; never commit secrets, form submissions, client data, raw IPs, provider payloads, or production logs."
 independent_verifier: null

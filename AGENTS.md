@@ -9,11 +9,15 @@
 - Production: `https://littlefightnyc.com`
 - Netlify domain: `https://littlefightnyc.netlify.app`
 - Current alias: `https://hey.littlefightnyc.com`
-- Verified application baseline: deploy `6a6c204fd4cc730008c89833` from commit `7dc35782044237b2b794d53a64d9a66671adfa3c`
+- Deployment IDs are intentionally not pinned here. Resolve the current ready
+  production deploy and `/release.json` revision before every release action.
 
 `SOURCE_OF_TRUTH.md` holds the concise deployment map and recovery pointers. Recheck live Netlify and GitHub state before a release because point-in-time IDs can change.
 
 Do not route website work to an older Little Fight checkout or to an independent Lab, brand-kit, template, demo, or experiment repository. Those are separate properties or history unless the fleet manifest explicitly maps them here.
+
+Repository-local `.agents/`, `.claude/`, `.superpowers/`, old static-site
+trees, and standalone Audit checkouts are retired. Do not recreate or load them.
 
 ## Start here
 
@@ -106,9 +110,8 @@ Netlify is Git-connected to GitHub `main`. A normal source commit pushed to `mai
 - Never link or unlink the Netlify site, change its site ID, domains, build settings, environment variables, or production branch without explicit authorization.
 - Never push an application or configuration change to `main` without explicit production authorization.
 - For an authorized documentation-only housekeeping push that must not deploy, put `[skip netlify]` in the most recent commit message and verify that the production deploy ID and live fingerprint remain unchanged.
-- Do not rewrite shared history or delete a branch until its PR, Netlify relationship, unique commits, and recovery status are verified.
-
-The retained recovery branch `archive/old-static-main-20260630` is not an active source. Do not merge or deploy it.
+- Do not rewrite shared history. Legacy branches belong in cold storage, not in
+  the active GitHub branch list or a routed local checkout.
 
 ## Completion
 
