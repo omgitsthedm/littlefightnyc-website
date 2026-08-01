@@ -2,13 +2,9 @@
 /**
  * Retired integrations must stay retired.
  *
- * A third-party alert integration was removed from the audit pipeline on
- * 2026-07-30. It had never been configured in production, so it had never run
- * once — but it was still named on the visitor-facing privacy page as a
- * processor receiving the submitted website and email address. A privacy
- * disclosure naming a recipient that receives nothing is as wrong as one
- * omitting a recipient that does, and it is the kind of wrong that survives for
- * months because nothing fails while it is untrue.
+ * Retired providers, credentials, and agent automation must not return from an
+ * older branch or local handoff. The active Audit stack is Netlify Database,
+ * Netlify AI Gateway, Google PageSpeed, and Google Workspace Gmail OAuth.
  *
  * Deleting code does not stop it being pasted back from an older branch, a
  * snapshot, or an agent working from a stale audit finding. Reintroducing a
@@ -35,6 +31,81 @@ const RETIRED = [
     retired: "2026-07-30",
     why: "Removed from the audit pipeline and the privacy disclosure; never configured in production.",
   },
+  {
+    name: ["SMTP", "APP", "PASSWORD"].join("_"),
+    retired: "2026-07-31",
+    why: "Mailbox-password delivery was replaced by Gmail OAuth.",
+  },
+  {
+    name: ["NOTION", "API", "KEY"].join("_"),
+    retired: "2026-07-31",
+    why: "Audit follow-up moved to Netlify Database.",
+  },
+  {
+    name: ["NOTION", "CRM", "DATABASE", "ID"].join("_"),
+    retired: "2026-07-31",
+    why: "Audit follow-up moved to Netlify Database.",
+  },
+  {
+    name: ["GMAIL", "USER"].join("_"),
+    retired: "2026-07-31",
+    why: "The fixed Workspace sender now uses Gmail OAuth credentials.",
+  },
+  {
+    name: ["TWILIO", "ACCOUNT", "SID"].join("_"),
+    retired: "2026-06-30",
+    why: "The AI phone intake is not a current service.",
+  },
+  {
+    name: ["TWILIO", "AUTH", "TOKEN"].join("_"),
+    retired: "2026-06-30",
+    why: "The AI phone intake is not a current service.",
+  },
+  {
+    name: ["TWILIO", "PHONE", "NUMBER"].join("_"),
+    retired: "2026-06-30",
+    why: "The AI phone intake is not a current service.",
+  },
+  {
+    name: ["SUPABASE", "URL"].join("_"),
+    retired: "2026-08-01",
+    why: "The obsolete intake schema was removed; durable leads use Netlify Database.",
+  },
+  {
+    name: ["SUPABASE", "SERVICE", "ROLE", "KEY"].join("_"),
+    retired: "2026-08-01",
+    why: "The obsolete intake schema was removed; durable leads use Netlify Database.",
+  },
+  {
+    name: ["RESEND", "API", "KEY"].join("_"),
+    retired: "2026-08-01",
+    why: "Audit email is delivered by Google Workspace Gmail API.",
+  },
+  {
+    name: ["OPENAI", "API", "KEY"].join("_"),
+    retired: "2026-08-01",
+    why: "The Audit uses Netlify AI Gateway and has no direct OpenAI integration.",
+  },
+  {
+    name: ["api", "anthropic", "com"].join("."),
+    retired: "2026-07-31",
+    why: "Anthropic calls must go through Netlify AI Gateway.",
+  },
+  {
+    name: ["claude", "code", "action"].join("-"),
+    retired: "2026-08-01",
+    why: "Repository-triggered Claude automation and its billed GitHub secret were removed.",
+  },
+  {
+    name: ["audits", "littlefightnyc"].join("-"),
+    retired: "2026-08-01",
+    why: "The standalone Audit site is deleted; the current Audit lives in this app.",
+  },
+  {
+    name: ["audits", "littlefightnyc", "com"].join("."),
+    retired: "2026-08-01",
+    why: "The standalone Audit hostname has no DNS and must not return.",
+  },
 ];
 
 // Dated evidence baselines record what was true on their date. Rewriting
@@ -42,9 +113,10 @@ const RETIRED = [
 const EXEMPT = [
   /^\.lifi\/evidence\/baselines\//,
   /^app\/scripts\/audit-retired-integrations\.mjs$/,
+  /^app\/scripts\/audit-audit-integrations\.mjs$/,
 ];
 
-const TEXT = /\.(m?[jt]sx?|html|css|md|ya?ml|json|txt)$/i;
+const TEXT = /\.(?:[cm]?[jt]sx?|html|css|md|ya?ml|json|txt|toml|sql|sh)$/i;
 
 // git ls-files, not a directory walk: only tracked files are ours. An untracked
 // Chrome profile under tmp/ ships an English wordlist that contains the name,
@@ -67,7 +139,7 @@ for (const rel of tracked) {
 
   lines.forEach((line, i) => {
     for (const item of RETIRED) {
-      if (line.toLowerCase().includes(item.name)) {
+      if (line.toLowerCase().includes(item.name.toLowerCase())) {
         hits.push({ rel, line: i + 1, item, text: line.trim().slice(0, 110) });
       }
     }

@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last verified: 2026-07-31
+Last verified: 2026-08-01
 
 This file routes agents to the current website source. Recheck point-in-time deploy and commit IDs before a production release.
 
@@ -14,16 +14,14 @@ This file routes agents to the current website source. Recheck point-in-time dep
 | Current domain alias | `https://hey.littlefightnyc.com` |
 | Netlify site | `littlefightnyc` |
 | Netlify site ID | `0907d8fe-7018-48db-a6be-1f906e4b2619` |
-| Production deploy | `6a6c204fd4cc730008c89833`, `ready` |
-| Deployed application commit | `7dc35782044237b2b794d53a64d9a66671adfa3c` |
+| Production deploy | Resolve from Netlify before release; do not pin stale IDs here |
+| Deployed application commit | Resolve from `/release.json` and Netlify before release |
 | GitHub | `https://github.com/omgitsthedm/littlefightnyc-website` |
 | Default and production branch | `main` |
 | Canonical local checkout | `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website` |
 | Netlify configuration | `netlify.toml` |
 | Build command | `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build` |
 | Publish directory | `app/dist` |
-
-The verified 2026-07-31 homepage baseline returned HTTP 200 with 29,212 bytes and SHA-256 `211a9895e49451a1b92e2de7a7f128b75a5a61cf600b0fb771ab4098731892ce`.
 
 ## Deployment relationship
 
@@ -72,10 +70,9 @@ Read only the document relevant to the task.
 
 ## Recovery
 
-- Retained Git recovery branch: `archive/old-static-main-20260630` at `f918008be0bf63d94871f2736635afc912e497d8`
-- Superseded Lab branch bundle: `/Users/davidmarsh/Code/LiFi NYC/Archive/house-cleaning-20260731/bundles/littlefightnyc-website-lab-overhaul-20260725-d1d4d94.bundle`
-- Closed unmerged cleanup branch bundle: `/Users/davidmarsh/Code/LiFi NYC/Archive/house-cleaning-20260731/bundles/littlefightnyc-website-quality-thermo-nuclear-cleanup-a466a35.bundle`
-- Completed Markdown removed during house-cleaning remains recoverable from Git commit `7dc35782044237b2b794d53a64d9a66671adfa3c`.
-- Netlify deploy history remains the production rollback source.
+- The active GitHub repository carries only the production branch and current
+  source. Legacy branches and standalone Audit/Lab checkouts are not sources.
+- Normal source recovery uses verified current Git history. Production rollback
+  is a new Git release; historical Netlify deploys are not recovery sources.
 
 Independent Little Fight Lab, brand, template, demo, and experiment repositories are separate fleet properties or cold storage. This website repository must not absorb or replace them without an explicit source-map change.

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -30,6 +30,42 @@ const legacyRuntime = tracked.filter((file) =>
   ].includes(file),
 );
 
+// These paths were retired because they duplicated the canonical app, carried
+// stale provider instructions, or injected obsolete agent context. Check the
+// working tree as well as tracked files: several of them were ignored, which
+// let local agents keep rediscovering them even though Netlify could not deploy
+// them.
+const retiredPaths = [
+  ".agents",
+  ".claude",
+  ".superpowers",
+  "_audit",
+  "_qa",
+  "assets",
+  "backup",
+  "docs",
+  "fonts",
+  "images",
+  "skills-lock.json",
+  "squirrel.toml",
+  "tools/site-lab",
+  "work",
+  ".github/workflows/claude.yml",
+  ".github/workflows/claude-review.yml",
+  "app/public/examples/audit/archive.json",
+];
+const returnedRetiredPaths = retiredPaths.filter((file) =>
+  existsSync(join(repoRoot, file)),
+);
+const retiredRootArtifacts = readdirSync(repoRoot)
+  .filter((name) =>
+    /^dist-corrupt-/.test(name) ||
+    /^deploy-.*\.zip$/i.test(name) ||
+    /\.(?:bak|png)$/i.test(name) ||
+    name === "firebase-debug.log",
+  )
+  .map((name) => `root:${name}`);
+
 assert.deepEqual(
   legacyHtml,
   [],
@@ -44,6 +80,12 @@ assert.deepEqual(
   legacyRuntime,
   [],
   `retired static-site runtime returned at repo root:\n${legacyRuntime.join("\n")}`,
+);
+assert.deepEqual(
+  [...returnedRetiredPaths, ...retiredRootArtifacts],
+  [],
+  "retired local, agent, provider, or duplicate-site artifacts returned:\n" +
+    [...returnedRetiredPaths, ...retiredRootArtifacts].join("\n"),
 );
 
 
@@ -92,4 +134,6 @@ for (const stray of ["_qa/probe.png", "probe-at-root.png"]) {
   assert.equal(ignored, true, `${stray} is no longer ignored — the PNG negation is too broad.`);
 }
 
-console.log("repo boundary ratchet OK — app/ is the only tracked website tree.");
+console.log(
+  "repo boundary ratchet OK — app/ is the only website tree and retired local context is absent.",
+);
