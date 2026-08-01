@@ -139,6 +139,8 @@ export default function QuietFooter() {
             <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
             <OpenNowBadge />
             <span aria-hidden="true">·</span>
+            <span>Daily 9am–9pm ET</span>
+            <span aria-hidden="true">·</span>
             <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>
           </p>
           <p className="lf-quiet-foot__legal">

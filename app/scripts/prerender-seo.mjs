@@ -445,17 +445,14 @@ function foundationSchemas(page) {
     "url": siteUrl,
     "email": site.email,
     "telephone": site.phone,
-    "priceRange": "$$",
     "image": site.image,
     "slogan": "Better tech. Fewer bills. More customers.",
-    // Service-area business: no public storefront street address. locality +
-    // region + postalCode is valid, honest PostalAddress schema. If a real
-    // registered/mailing street address is provided, add streetAddress here.
+    // Service-area business: city-level identity only. Do not publish a
+    // storefront, street address, or postal code in schema.
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "New York",
       "addressRegion": "NY",
-      "postalCode": "10002",
       "addressCountry": "US"
     },
     "geo": {
