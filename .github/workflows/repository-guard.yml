@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: Install guard dependencies
+        run: npm ci --ignore-scripts
       - name: Check provider and repository boundaries
         run: |
           node app/scripts/audit-audit-integrations.mjs
