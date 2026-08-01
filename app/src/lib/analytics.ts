@@ -39,17 +39,29 @@ let pendingGaEvents: Array<{ eventName: string; parameters: Record<string, unkno
 let pendingTikTokEvents: Array<{ eventName: string; parameters?: Record<string, unknown> }> = [];
 
 function hasRealGaId() {
-  return /^G-[A-Z0-9]{6,}$/.test(GA_ID) && GA_ID !== "G-XXXXXXXXXX";
+  // The production property ID has a checked-in fallback so the live site can
+  // still measure after consent if a build variable is ever missing. Keep
+  // that convenience from polluting the same property from localhost,
+  // deploy previews, or branch deploys.
+  return (
+    isProdHost() &&
+    /^G-[A-Z0-9]{6,}$/.test(GA_ID) &&
+    GA_ID !== "G-XXXXXXXXXX"
+  );
 }
 
 function hasRealClarityId() {
-  return /^[a-z0-9]{6,}$/i.test(CLARITY_ID) && CLARITY_ID !== "CLARITY_ID";
+  return (
+    isProdHost() &&
+    /^[a-z0-9]{6,}$/i.test(CLARITY_ID) &&
+    CLARITY_ID !== "CLARITY_ID"
+  );
 }
 
 function isProdHost() {
-  // The TikTok pixel id is hardcoded (so prod works without env config), which
-  // means it would otherwise fire on localhost, deploy-previews, and branch
-  // deploys and pollute the dataset. Only boot it on the canonical domain.
+  // Production IDs can be hardcoded or present in a shared build environment.
+  // Never let localhost, deploy previews, or branch deploys pollute the live
+  // properties for any analytics vendor.
   if (typeof window === "undefined") return false;
   const host = window.location.hostname;
   return host === "littlefightnyc.com" || host === "www.littlefightnyc.com";
@@ -431,13 +443,19 @@ export function installAnalyticsHooks() {
     if (!(target instanceof HTMLAnchorElement)) return;
 
     const href = target.getAttribute("href") ?? "";
+    const contactParameters = {
+      placement: target.dataset.lfLabel?.trim() || "contact_link",
+      page_path: window.location.pathname,
+      link_url: href,
+      link_text: target.textContent?.trim(),
+    };
 
     if (href.startsWith("tel:")) {
-      track("phone_click", { link_url: href, link_text: target.textContent?.trim() });
+      track("phone_click", contactParameters);
     } else if (href.startsWith("mailto:")) {
-      track("email_click", { link_url: href, link_text: target.textContent?.trim() });
+      track("email_click", contactParameters);
     } else if (href.startsWith("sms:")) {
-      track("sms_click", { link_url: href, link_text: target.textContent?.trim() });
+      track("sms_click", contactParameters);
     } else if (target.hostname && target.hostname !== window.location.hostname) {
       track("external_link_click", { link_url: target.href, link_text: target.textContent?.trim() });
     } else if (href.includes("tech-audit") && !namedEvent) {

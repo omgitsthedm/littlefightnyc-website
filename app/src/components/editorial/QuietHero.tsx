@@ -103,7 +103,11 @@ export default function QuietHero() {
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
-          <a className="lf-hero__action lf-hero__action--support" href={PHONE_HREF}>
+          <a
+            className="lf-hero__action lf-hero__action--support"
+            href={PHONE_HREF}
+            data-lf-label="home_hero_phone"
+          >
             <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
             <span className="lf-hero__action-copy">
               <strong>Call about broken tech</strong>

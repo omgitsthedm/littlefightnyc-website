@@ -7,6 +7,7 @@ const repoRoot = path.resolve(appRoot, "..");
 const publicRoot = path.join(appRoot, "public");
 const auditRoot = path.join(publicRoot, "examples", "audit");
 const functionsRoot = path.join(repoRoot, "netlify", "functions");
+const netlifyConfig = fs.readFileSync(path.join(repoRoot, "netlify.toml"), "utf8");
 
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -42,7 +43,7 @@ const helperFiles = walk(path.join(functionsRoot, "lib")).filter((file) =>
 );
 const netlifySourceFiles = [...functionFiles, ...helperFiles];
 
-if (files.length !== 20) failures.push(`expected 20 archived files, found ${files.length}`);
+if (files.length !== 21) failures.push(`expected 21 archived files, found ${files.length}`);
 if (htmlFiles.length !== 10) failures.push(`expected 10 HTML pages, found ${htmlFiles.length}`);
 if (functionFiles.length !== 8) {
   failures.push(`expected 8 function handlers, found ${functionFiles.length}`);
@@ -110,6 +111,58 @@ for (const endpoint of ["status", "run-audit"]) {
     failures.push(`Audit form is missing scoped ${endpoint} endpoint`);
   }
 }
+if (!index.includes('/examples/audit/analytics.js')) {
+  failures.push("Audit form is missing the consent-aware analytics bridge");
+}
+for (const eventName of [
+  "audit_scan_started",
+  "audit_scan_accepted",
+  "audit_report_ready",
+  "audit_scan_failed",
+]) {
+  if (!index.includes(eventName)) {
+    failures.push(`Audit form is missing analytics event: ${eventName}`);
+  }
+}
+
+const auditHeaderStart = netlifyConfig.indexOf('for = "/examples/audit/*"');
+const auditHeaderEnd = netlifyConfig.indexOf("[[headers]]", auditHeaderStart + 1);
+const auditHeader = auditHeaderStart >= 0
+  ? netlifyConfig.slice(
+      auditHeaderStart,
+      auditHeaderEnd >= 0 ? auditHeaderEnd : netlifyConfig.length,
+    )
+  : "";
+const auditCsp = auditHeader.match(/Content-Security-Policy = "([^"]+)"/)?.[1] ?? "";
+const auditCspDirectives = new Map(
+  auditCsp.split(";").map((directive) => {
+    const [name = "", ...values] = directive.trim().split(/\s+/);
+    return [name, new Set(values)];
+  }),
+);
+const requiredAnalyticsOrigins = {
+  "script-src": ["https://www.googletagmanager.com"],
+  "connect-src": [
+    "https://www.googletagmanager.com",
+    "https://www.google.com",
+    "https://www.google-analytics.com",
+    "https://analytics.google.com",
+    "https://region1.google-analytics.com",
+  ],
+  "img-src": [
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+    "https://analytics.google.com",
+    "https://region1.google-analytics.com",
+  ],
+};
+for (const [directive, origins] of Object.entries(requiredAnalyticsOrigins)) {
+  for (const origin of origins) {
+    if (!auditCspDirectives.get(directive)?.has(origin)) {
+      failures.push(`Audit CSP ${directive} is missing ${origin}`);
+    }
+  }
+}
 
 const fieldGuide = fs.readFileSync(path.join(appRoot, "src", "pages", "FieldGuide.tsx"), "utf8");
 const footer = fs.readFileSync(
@@ -123,7 +176,6 @@ if (!footer.includes('to: "/examples/audit/", external: true')) {
   failures.push("main footer is not linked to the in-site Audit");
 }
 
-const netlifyConfig = fs.readFileSync(path.join(repoRoot, "netlify.toml"), "utf8");
 if (!netlifyConfig.includes('for = "/examples/audit/*"')) {
   failures.push("scoped Audit headers are missing from netlify.toml");
 }

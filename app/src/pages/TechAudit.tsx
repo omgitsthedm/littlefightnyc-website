@@ -247,6 +247,7 @@ export default function TechAudit() {
   const [payoff, setPayoff] = useState(false);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
+  const auditStartedRef = useRef(false);
   const attribution = readAttribution();
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
@@ -288,7 +289,18 @@ export default function TechAudit() {
   }, []);
 
   function setField(name: keyof ContactFields, value: string) {
+    if (value.trim()) trackAuditStarted(`field_${name}`);
     setFields((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function trackAuditStarted(entryPoint: string) {
+    if (auditStartedRef.current) return;
+    auditStartedRef.current = true;
+    trackEvent("tech_audit_started", {
+      entry_point: entryPoint,
+      intent: intentMode,
+      page_path: "/tech-audit/",
+    });
   }
 
   /* Inline validation (§6.2): check a required field when the user leaves it,
@@ -327,6 +339,7 @@ export default function TechAudit() {
   }
 
   function pickSymptom(label: string) {
+    trackAuditStarted("symptom");
     trackEvent("intake_step_1", {
       selection: label,
       intent: websiteIntent ? WEBSITE_INTENT : "general",
@@ -340,6 +353,7 @@ export default function TechAudit() {
   }
 
   function pickUrgency(label: string) {
+    trackAuditStarted("urgency");
     trackEvent("intake_step_2", {
       selection: label,
       intent: websiteIntent ? WEBSITE_INTENT : "general",
@@ -354,6 +368,7 @@ export default function TechAudit() {
   }
 
   function skipToForm(fromStep: 1 | 2) {
+    trackAuditStarted(`skip_step_${fromStep}`);
     trackEvent(`intake_step_${fromStep}`, {
       skipped: true,
       intent: websiteIntent ? WEBSITE_INTENT : "general",
@@ -390,6 +405,8 @@ export default function TechAudit() {
       first?.focus();
       return;
     }
+
+    trackAuditStarted("valid_submit");
 
     hapticSubmit();
 
@@ -743,6 +760,7 @@ export default function TechAudit() {
                       required
                       value={message}
                       onChange={(e) => {
+                        if (e.target.value.trim()) trackAuditStarted("field_message");
                         setMessage(e.target.value);
                         setMessageDirty(true);
                         clearErrorIfFilled("message", e.target.value);
@@ -789,7 +807,7 @@ export default function TechAudit() {
                   </p>
                   <p className="lf-audit__assurance">
                     Free consultation / No obligation / Response window: 9am-9pm Eastern /
-                    Urgent? Call <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
+                    Urgent? Call <a href={PHONE_HREF} data-lf-label="tech_audit_form_phone">{PHONE_DISPLAY}</a>
                   </p>
                   <p className="lf-audit__assurance lf-audit__assurance--data">
                     Your details stay with Little Fight NYC. We use them only to understand
@@ -813,7 +831,10 @@ export default function TechAudit() {
 
           <aside className="lf-audit__aside">
             <p className="lf-audit__aside-label">Direct line</p>
-            <PhoneAction className="lf-audit__aside-phone">
+            <PhoneAction
+              className="lf-audit__aside-phone"
+              analyticsLabel="tech_audit_aside_phone"
+            >
               {PHONE_DISPLAY}
             </PhoneAction>
             <p className="lf-audit__aside-note">

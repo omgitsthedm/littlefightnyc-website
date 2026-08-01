@@ -186,7 +186,7 @@ for = "/examples/audit/*"
   # blocked requests — invisible in review because a fallback still looks like
   # a page, on the one part of the site whose whole job is showing the work.
   # Every other font-src in this file already carries 'self' data:.
-  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self'; img-src 'self' data:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://www.google.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:"
   Referrer-Policy = "strict-origin-when-cross-origin"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "DENY"

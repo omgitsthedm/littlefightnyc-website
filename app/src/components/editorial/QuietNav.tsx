@@ -165,6 +165,7 @@ export default function QuietNav() {
           <PhoneAction
             className="lf-nav__phone"
             align="right"
+            analyticsLabel="nav_desktop_phone"
             ariaLabel={`Call or text ${PHONE_DISPLAY}`}
           >
             <Phone className="lf-nav__phone-icon" size={17} strokeWidth={1.9} aria-hidden="true" />
@@ -248,7 +249,11 @@ export default function QuietNav() {
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
                 </Link>
                 <div className="lf-nav__panel-reach">
-                  <a className="lf-nav__panel-reach-btn" href={PHONE_HREF}>
+                  <a
+                    className="lf-nav__panel-reach-btn"
+                    href={PHONE_HREF}
+                    data-lf-label="nav_mobile_phone"
+                  >
                     <Phone size={16} strokeWidth={1.9} aria-hidden="true" />
                     Call
                   </a>

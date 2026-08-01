@@ -130,6 +130,18 @@ export function prepareLegacyHtml(html, options = {}) {
     prepared = prepared.replace(pattern, replacement);
   }
 
+  // Legacy journal and industry bodies contain authored call links rather than
+  // React components. Give those links one stable placement per surface so the
+  // delegated contact tracker never collapses them into `contact_link`.
+  const phonePlacement = title ? "journal_body_phone" : "industry_body_phone";
+  prepared = prepared.replace(
+    /<a\b([^>]*\bhref=(["'])tel:[^"']*\2[^>]*)>/gi,
+    (match, attributes) =>
+      /\bdata-lf-label=/i.test(attributes)
+        ? match
+        : `<a${attributes} data-lf-label="${phonePlacement}">`,
+  );
+
   // Tables need an accessible name. Derive it from the first header row, or
   // fall back to the post title, so every comparison / symptom / checklist
   // table is announced by screen readers instead of "table, X rows by Y columns".

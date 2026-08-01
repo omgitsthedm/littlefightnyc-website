@@ -1125,6 +1125,282 @@ test(
 );
 
 test(
+  "contact and Tech Audit starts carry useful metadata without preview vendor traffic @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const thirdPartyHosts = new Set<string>();
+
+    page.on("request", (request) => {
+      const host = new URL(request.url()).hostname;
+      if (host !== "localhost" && host !== "127.0.0.1") {
+        thirdPartyHosts.add(host);
+      }
+    });
+    await page.addInitScript(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "granted");
+    });
+
+    await page.goto(`${baseURL}/about/`, { waitUntil: "networkidle" });
+    await page.evaluate(() => {
+      const link = document.querySelector<HTMLAnchorElement>('a[href^="tel:"]');
+      if (!link) throw new Error("phone link fixture is missing");
+      link.addEventListener("click", (event) => event.preventDefault(), { once: true });
+      link.click();
+    });
+
+    const phoneEvent = await page.evaluate(() =>
+      (window.dataLayer ?? []).find(
+        (entry) =>
+          typeof entry === "object" &&
+          entry !== null &&
+          (entry as { event?: string }).event === "phone_click",
+      ) as Record<string, unknown> | undefined,
+    );
+    expect(phoneEvent).toMatchObject({
+      event: "phone_click",
+      funnel_stage: "contact",
+      page_path: "/about/",
+      placement: "about_founder_phone",
+    });
+
+    await page.goto(`${baseURL}/tech-audit/`, { waitUntil: "networkidle" });
+    await page.locator("#fit-name").fill("Test");
+    await page.locator("#fit-name").fill("Test Person");
+
+    const starts = await page.evaluate(() =>
+      (window.dataLayer ?? []).filter(
+        (entry) =>
+          typeof entry === "object" &&
+          entry !== null &&
+          (entry as { event?: string }).event === "tech_audit_started",
+      ) as Array<Record<string, unknown>>,
+    );
+    expect(starts).toHaveLength(1);
+    expect(starts[0]).toMatchObject({
+      entry_point: "field_name",
+      funnel_stage: "consideration",
+      page_path: "/tech-audit/",
+    });
+    expect([...thirdPartyHosts], "a preview contacted an analytics vendor").toEqual([]);
+
+    await context.close();
+  },
+);
+
+test(
+  "Audit Lab tracks a consented funnel without leaking submitted values @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const thirdPartyHosts = new Set<string>();
+
+    page.on("request", (request) => {
+      const host = new URL(request.url()).hostname;
+      if (host !== "localhost" && host !== "127.0.0.1") {
+        thirdPartyHosts.add(host);
+      }
+    });
+    await page.addInitScript(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "granted");
+      const auditEvents: unknown[] = [];
+      (window as unknown as { __auditEvents: unknown[] }).__auditEvents = auditEvents;
+      window.addEventListener("lf:audit-analytics", (event) => {
+        auditEvents.push((event as CustomEvent).detail);
+      });
+    });
+    await page.route("**/examples/audit/api/run-audit", (route) =>
+      route.fulfill({
+        status: 201,
+        contentType: "application/json",
+        body: JSON.stringify({ id: "test-audit-id" }),
+      }),
+    );
+    let statusRequestCount = 0;
+    await page.route("**/examples/audit/api/status?id=*", async (route) => {
+      statusRequestCount += 1;
+      if (statusRequestCount === 1) {
+        // Let a second interval request finish first. The late response from
+        // this request must not settle the same audit a second time.
+        await new Promise((resolve) => setTimeout(resolve, 3_500));
+      }
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ status: "done", url: "#test-report" }),
+      });
+    });
+
+    await page.goto(`${baseURL}/examples/audit/`, { waitUntil: "networkidle" });
+    await page.locator("#siteUrl").fill("private-fixture.example");
+    await page.locator("#email").fill("private-fixture@example.com");
+    await page.locator("#submitBtn").click();
+
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() =>
+            (window as unknown as {
+              __auditEvents: Array<{ eventName?: string }>;
+            }).__auditEvents.map((entry) => entry.eventName),
+          ),
+        { timeout: 12_000 },
+      )
+      .toEqual([
+        "audit_scan_started",
+        "audit_scan_accepted",
+        "audit_report_ready",
+      ]);
+
+    const events = await page.evaluate(
+      () => (window as unknown as { __auditEvents: unknown[] }).__auditEvents,
+    );
+    expect(events[1]).toMatchObject({
+      eventName: "audit_scan_accepted",
+      parameters: {
+        funnel_stage: "submit",
+        page_path: "/examples/audit/",
+        response_status: 201,
+        source: "audit_lab",
+      },
+    });
+    const serialized = JSON.stringify(events);
+    expect(serialized).not.toContain("private-fixture.example");
+    expect(serialized).not.toContain("private-fixture@example.com");
+    expect(serialized).not.toContain("test-audit-id");
+    expect(statusRequestCount).toBeGreaterThanOrEqual(2);
+
+    await page.waitForTimeout(2_000);
+    const settledEventNames = await page.evaluate(() =>
+      (window as unknown as {
+        __auditEvents: Array<{ eventName?: string }>;
+      }).__auditEvents.map((entry) => entry.eventName),
+    );
+    expect(settledEventNames.filter((name) => name === "audit_report_ready")).toHaveLength(1);
+    expect([...thirdPartyHosts], "Audit Lab contacted a vendor from preview").toEqual([]);
+
+    await context.close();
+  },
+);
+
+test(
+  "Audit Lab withdraws consent across custom, storage, and page-show synchronization @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+
+    await page.route("https://www.googletagmanager.com/**", (route) => route.abort());
+    await page.addInitScript(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "granted");
+      const auditEvents: unknown[] = [];
+      (window as unknown as { __auditEvents: unknown[] }).__auditEvents = auditEvents;
+      window.addEventListener("lf:audit-analytics", (event) => {
+        auditEvents.push((event as CustomEvent).detail);
+      });
+    });
+
+    await page.goto(`${baseURL}/examples/audit/`, { waitUntil: "networkidle" });
+    await page.evaluate(() => {
+      const analytics = (
+        window as unknown as {
+          LittleFightAuditAnalytics: {
+            track: (eventName: string, parameters?: Record<string, unknown>) => void;
+          };
+        }
+      ).LittleFightAuditAnalytics;
+      analytics.track("audit_scan_started", { funnel_stage: "consideration" });
+    });
+
+    const plantGaFixtures = async () => {
+      await page.evaluate(() => {
+        document.cookie = `_ga_audit_fixture=testvalue; expires=${new Date(
+          Date.now() + 864e5,
+        ).toUTCString()}; path=/`;
+        const script = document.createElement("script");
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-0Q1TGWH0HL";
+        script.dataset.auditFixture = "true";
+        document.head.appendChild(script);
+      });
+    };
+    const expectGaFixturesRemoved = async () => {
+      await expect
+        .poll(async () => ({
+          cookies: (await context.cookies()).filter((cookie) =>
+            cookie.name.startsWith("_ga"),
+          ).length,
+          scripts: await page.locator('script[data-audit-fixture="true"]').count(),
+        }))
+        .toEqual({ cookies: 0, scripts: 0 });
+    };
+
+    await plantGaFixtures();
+    await page.evaluate(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "denied");
+      window.dispatchEvent(new CustomEvent("lf:analytics-consent", { detail: "denied" }));
+    });
+    await expectGaFixturesRemoved();
+
+    await page.evaluate(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "granted");
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key: "lf_analytics_consent_v1",
+          newValue: "granted",
+        }),
+      );
+    });
+    await plantGaFixtures();
+    await page.evaluate(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "denied");
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key: "lf_analytics_consent_v1",
+          newValue: "denied",
+        }),
+      );
+    });
+    await expectGaFixturesRemoved();
+
+    await page.evaluate(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "granted");
+      window.dispatchEvent(new CustomEvent("lf:analytics-consent", { detail: "granted" }));
+    });
+    await plantGaFixtures();
+    await page.evaluate(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "denied");
+      window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true }));
+    });
+    await expectGaFixturesRemoved();
+
+    const result = await page.evaluate(() => {
+      const analytics = (
+        window as unknown as {
+          LittleFightAuditAnalytics: {
+            track: (eventName: string, parameters?: Record<string, unknown>) => void;
+          };
+          __auditEvents: unknown[];
+        }
+      ).LittleFightAuditAnalytics;
+      analytics.track("audit_scan_started", { funnel_stage: "consideration" });
+
+      return {
+        capturedEvents: (window as unknown as { __auditEvents: unknown[] }).__auditEvents.length,
+        deniedUpdates: (window.dataLayer ?? []).filter((entry) => {
+          const command = Array.from(entry as ArrayLike<unknown>);
+          return command[0] === "consent" &&
+            command[1] === "update" &&
+            (command[2] as { analytics_storage?: string })?.analytics_storage === "denied";
+        }).length,
+      };
+    });
+    expect(result.capturedEvents).toBe(1);
+    expect(result.deniedUpdates).toBeGreaterThanOrEqual(3);
+
+    await context.close();
+  },
+);
+
+test(
   "a broken image stops pretending to load @chromium-desktop",
   async ({ page, baseURL }) => {
     // skelImg had onLoad and a ref but no onError, so an image that never

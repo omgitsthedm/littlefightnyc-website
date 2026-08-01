@@ -38,6 +38,7 @@ export default function StickyHelpBar() {
       <a
         className="lf-sticky-help__cell lf-sticky-help__cell--call"
         href={PHONE_HREF}
+        data-lf-label="sticky_help_phone"
       >
         <span className="lf-mono lf-sticky-help__label">Tech help</span>
         <span className="lf-sticky-help__detail">{PHONE_DISPLAY}</span>

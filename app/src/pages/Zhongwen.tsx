@@ -104,7 +104,7 @@ export default function Zhongwen() {
           <TugMark className="lf-es__mark" />
           Little Fight NYC
         </span>
-        <a className="lf-es__top-phone" href={PHONE_HREF}>
+        <a className="lf-es__top-phone" href={PHONE_HREF} data-lf-label="zh_header_phone">
           {PHONE_DISPLAY}
         </a>
       </header>
@@ -124,7 +124,7 @@ export default function Zhongwen() {
             </p>
 
             <div className="lf-es__actions">
-              <a className="lf-es__cta lf-es__cta--primary" href={PHONE_HREF}>
+              <a className="lf-es__cta lf-es__cta--primary" href={PHONE_HREF} data-lf-label="zh_hero_phone">
                 <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
                 打电话：{PHONE_DISPLAY}
               </a>
@@ -276,7 +276,7 @@ export default function Zhongwen() {
             </p>
           </div>
           <div className="lf-es__contact-actions">
-            <a className="lf-es__cta lf-es__cta--primary lf-es__cta--big" href={PHONE_HREF}>
+            <a className="lf-es__cta lf-es__cta--primary lf-es__cta--big" href={PHONE_HREF} data-lf-label="zh_contact_phone">
               <Phone size={22} strokeWidth={1.75} aria-hidden="true" />
               {PHONE_DISPLAY}
             </a>

@@ -13,6 +13,7 @@ type Props = {
   ariaLabel?: string;
   align?: "left" | "right" | "center";
   direction?: "down" | "up";
+  analyticsLabel?: string;
 };
 
 export default function PhoneAction({
@@ -21,6 +22,7 @@ export default function PhoneAction({
   ariaLabel,
   align = "left",
   direction = "down",
+  analyticsLabel = "phone_action",
 }: Props) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLSpanElement>(null);
@@ -28,7 +30,7 @@ export default function PhoneAction({
   const panelId = useId();
   const openText = () => {
     setOpen(false);
-    trackEvent("sms_click", { placement: "phone_action", link_url: SMS_URL });
+    trackEvent("sms_click", { placement: analyticsLabel, link_url: SMS_URL });
     window.location.href = SMS_URL;
   };
 
@@ -73,6 +75,7 @@ export default function PhoneAction({
           <a
             className="lf-phone-action__item"
             href={`tel:${TEL}`}
+            data-lf-label={analyticsLabel}
             onClick={() => setOpen(false)}
           >
             <span className="lf-phone-action__verb">Call</span>

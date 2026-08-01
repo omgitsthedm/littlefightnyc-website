@@ -1,6 +1,6 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-07-20
+Last updated: 2026-08-01
 
 ## Privacy boundary
 
@@ -9,6 +9,8 @@ Last updated: 2026-07-20
 - `Essential only` loads none of those vendors. The Tech Audit, phone, text, email, navigation, and service worker still work.
 - The footer and Privacy page reopen the same choice at any time.
 - RUM sends coarse route/browser/device/network buckets, Core Web Vitals, and sanitized error summaries. It does not send form values, URLs with query strings, stack traces, email addresses, phone numbers, or names.
+- Vendor scripts load only on `littlefightnyc.com` or `www.littlefightnyc.com`. Local, branch, and deploy-preview builds can exercise the event contract without sending to the production properties.
+- The standalone Audit Lab uses the same consent choice. Its funnel events never include the submitted website, email address, audit ID, report URL, or provider error text.
 
 ## Canonical funnel
 
@@ -38,7 +40,16 @@ Every tracked event carries `funnel_stage`. Break the funnel down by:
 - device category
 - default channel group / source / medium
 
-Use `lead_success` as the primary website conversion. Do not add `form_submit` and `tech_audit_submit` together; they describe the same browser submit. Phone, text, and email are separate contact conversions (`phone_click`, `sms_click`, `email_click`).
+Use `lead_success` as the primary website conversion. Do not add `form_submit` and `tech_audit_submit` together; they describe the same browser submit. Phone, text, and email are separate contact conversions (`phone_click`, `sms_click`, `email_click`). Those contact events include `placement` and `page_path`, so a click can be attributed to the page and component that earned it.
+
+The standalone Audit Lab has a separate diagnostic funnel:
+
+1. `page_view` — consented visit to `/examples/audit/`
+2. `audit_scan_started` — valid URL and email passed client validation
+3. `audit_scan_accepted` — the audit service returned a successful response and an audit ID
+4. `audit_report_ready` — status polling confirmed the report is ready
+
+Use `audit_scan_failed` with `failure_category` (`rejected`, `rate_limit`, `provider`, `network`, or `timeout`) to diagnose loss. It is not a conversion.
 
 ## Reliability view
 

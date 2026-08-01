@@ -16,6 +16,11 @@ Validate these on the exact production deploy before touching Google accounts.
 
 ## Search Console release pass
 
+Ownership is already verified through the `sc-domain:littlefightnyc.com` DNS
+property under the Little Fight Workspace account as of 2026-08-01. Do not add
+an HTML verification tag unless Google explicitly invalidates that domain
+verification.
+
 Google says a sitemap helps discovery but does not guarantee crawling or indexing. It also says URL Inspection is the path for requesting a recrawl of a small number of URLs. Repeated requests do not make crawling faster.
 
 Official references:

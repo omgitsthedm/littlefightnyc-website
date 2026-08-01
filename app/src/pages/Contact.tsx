@@ -90,7 +90,7 @@ export default function Contact() {
               <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
             </Link>
 
-            <a className="lf-contact-choice__route" href={PHONE_HREF}>
+            <a className="lf-contact-choice__route" href={PHONE_HREF} data-lf-label="contact_urgent_phone">
               <span className="lf-contact-choice__route-top">
                 <Phone size={22} strokeWidth={1.9} aria-hidden="true" />
                 Call

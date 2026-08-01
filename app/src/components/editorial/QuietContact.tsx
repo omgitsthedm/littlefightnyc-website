@@ -29,7 +29,11 @@ export default function QuietContact({
         </header>
 
         <div className="lf-contact-block__doors" aria-label="Choose how to start">
-          <a className="lf-contact-block__door lf-contact-block__door--urgent" href={PHONE_HREF}>
+          <a
+            className="lf-contact-block__door lf-contact-block__door--urgent"
+            href={PHONE_HREF}
+            data-lf-label="contact_block_phone"
+          >
             <span className="lf-contact-block__door-icon" aria-hidden="true">
               <Phone size={23} strokeWidth={1.8} />
             </span>

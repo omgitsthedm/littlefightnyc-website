@@ -109,7 +109,7 @@ export default function About() {
             </p>
             <div className="lf-about-founder__meta">
               <span>New York City</span>
-              <a href={PHONE_HREF}>
+              <a href={PHONE_HREF} data-lf-label="about_founder_phone">
                 <Phone size={18} strokeWidth={1.9} aria-hidden="true" />
                 {PHONE_DISPLAY}
               </a>

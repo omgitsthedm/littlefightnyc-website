@@ -136,7 +136,7 @@ export default function QuietFooter() {
 
         <div className="lf-quiet-foot__bottom">
           <p className="lf-quiet-foot__contact">
-            <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>
+            <a href={PHONE_HREF} data-lf-label="footer_phone">{PHONE_DISPLAY}</a>
             <OpenNowBadge />
             <span aria-hidden="true">·</span>
             <span>Daily 9am–9pm ET</span>
