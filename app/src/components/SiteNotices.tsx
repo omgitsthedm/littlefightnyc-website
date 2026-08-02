@@ -8,21 +8,29 @@ import {
 import "./SiteNotices.css";
 
 function ConsentNotice() {
-  // Privacy-first and interruption-free: analytics remains denied by default.
-  // This compact panel opens only when a visitor chooses "Analytics choices"
-  // in the footer; it never covers the site on first arrival.
+  // Privacy-first: analytics remains denied until the visitor makes a choice.
+  // Show the same compact preference panel on a first visit so the opt-in path
+  // is discoverable; returning visitors keep their saved choice without noise.
   const [visible, setVisible] = useState(false);
   const [choice, setChoice] = useState(getAnalyticsConsent);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let firstVisitTimer: number | undefined;
+    if (getAnalyticsConsent() === null) {
+      firstVisitTimer = window.setTimeout(() => setVisible(true), 900);
+    }
+
     const open = () => {
       setChoice(getAnalyticsConsent());
       setVisible(true);
       window.setTimeout(() => panelRef.current?.focus(), 0);
     };
     window.addEventListener(CONSENT_OPEN_EVENT, open);
-    return () => window.removeEventListener(CONSENT_OPEN_EVENT, open);
+    return () => {
+      if (firstVisitTimer !== undefined) window.clearTimeout(firstVisitTimer);
+      window.removeEventListener(CONSENT_OPEN_EVENT, open);
+    };
   }, []);
 
   if (!visible) return null;

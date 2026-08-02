@@ -7,6 +7,11 @@
 # catch-all LAST. netlify.toml carries no [[redirects]] anymore.
 # ============================================================
 
+# --- Legacy host retirement (2026-08-02): preserve old search results without
+# serving duplicate copies of the entire site under retired Audit/Lab hosts.
+https://audit.littlefightnyc.com/*  https://littlefightnyc.com/examples/lab/  301!
+https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  301!
+
 # --- Service-slug renames (May 2026 — four-category restructure)
 /services/websites/      /services/custom-local-websites/  301
 /services/websites       /services/custom-local-websites/  301
@@ -59,8 +64,10 @@
 /software-cost-calculator/*                    /answers/reduce-monthly-software-costs-small-business/  301
 
 # --- Information architecture consolidation (May 2026)
-/work/           /services/                 301
-/work            /services/                 301
+/areas/soho.html     /areas/soho/            301
+/areas/midtown.html  /areas/midtown/         301
+/work/               /services/              301
+/work                /services/              301
 /industries/     /examples/#industries      301
 /industries      /examples/#industries      301
 /industries.html /examples/#industries      301

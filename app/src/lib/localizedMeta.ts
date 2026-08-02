@@ -32,7 +32,7 @@ export function installLocalizedMeta(meta: LocalizedMeta) {
   });
 
   const sendPageView = () => trackPageView(canonicalUrl, meta.title);
-  if (window.requestIdleCallback) window.requestIdleCallback(sendPageView);
+  if (window.requestIdleCallback) window.requestIdleCallback(sendPageView, { timeout: 1000 });
   else window.setTimeout(sendPageView, 1);
 
   return () => {

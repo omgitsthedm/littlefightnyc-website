@@ -185,7 +185,7 @@ export default function RouteMeta() {
 
     const sendPageView = () => trackPageView(canonical, page.title);
     if (window.requestIdleCallback) {
-      window.requestIdleCallback(sendPageView);
+      window.requestIdleCallback(sendPageView, { timeout: 1000 });
     } else {
       window.setTimeout(sendPageView, 1);
     }

@@ -23,13 +23,15 @@ declare global {
   }
 }
 
-const GA_ID = import.meta.env.VITE_GA_ID?.trim() ?? "G-0Q1TGWH0HL";
+const configuredGaId = import.meta.env.VITE_GA_ID?.trim();
+const GA_ID = configuredGaId || "G-0Q1TGWH0HL";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`;
 const CLARITY_ID = import.meta.env.VITE_CLARITY_ID?.trim() ?? "";
 const CLARITY_SRC = `https://www.clarity.ms/tag/${encodeURIComponent(CLARITY_ID)}`;
-const TIKTOK_PIXEL_ID = import.meta.env.VITE_TIKTOK_PIXEL_ID?.trim() ?? "D94URCBC77UARCKAVGU0";
+const configuredTikTokPixelId = import.meta.env.VITE_TIKTOK_PIXEL_ID?.trim();
+const TIKTOK_PIXEL_ID = configuredTikTokPixelId || "D94URCBC77UARCKAVGU0";
 const TIKTOK_EVENTS_SRC = "https://analytics.tiktok.com/i18n/pixel/events.js";
-const VENDOR_BOOT_DELAY_MS = 6500;
+const VENDOR_BOOT_DELAY_MS = 1500;
 let gaBooted = false;
 let clarityBooted = false;
 let tikTokBooted = false;
