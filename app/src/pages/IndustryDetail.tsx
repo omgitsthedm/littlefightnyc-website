@@ -8,6 +8,7 @@ import { prepareIndustryHtml } from "@/lib/legacyHtml";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/journal.css";
 import "@/styles/editorial/industry.css";
+import "@/styles/editorial/longform-routes.css";
 
 type Industry = {
   slug: string;
@@ -418,7 +419,7 @@ export default function IndustryDetail() {
   };
 
   return (
-    <div className="lf-industry-page">
+    <div className="lf-industry-page lf-longform-route lf-longform-route--industry">
       <PageHero
         eyebrow={`For ${industryName}`}
         title={<>{heroTitle}</>}

@@ -1,18 +1,80 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ShieldCheck } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import {
   CONSENT_OPEN_EVENT,
+  CONSENT_VISIBILITY_EVENT,
+  getAdvertisingConsent,
   getAnalyticsConsent,
+  saveAdvertisingConsent,
   saveAnalyticsConsent,
 } from "@/lib/consent";
 import "./SiteNotices.css";
 
+type NoticeCopy = {
+  ariaLabel: string;
+  title: string;
+  body: string;
+  details: string;
+  current: (analyticsOn: boolean) => string;
+  allowAnalytics: string;
+  essentialOnly: string;
+};
+
+const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
+  en: {
+    ariaLabel: "Privacy preferences",
+    title: "Privacy choices",
+    body: "Optional analytics helps us improve the site. Advertising measurement is not active.",
+    details: "Details",
+    current: (analyticsOn) =>
+      `Current setting: analytics ${analyticsOn ? "on" : "off"}; advertising off`,
+    allowAnalytics: "Allow analytics",
+    essentialOnly: "Essential only",
+  },
+  es: {
+    ariaLabel: "Preferencias de privacidad",
+    title: "Opciones de privacidad",
+    body: "Las estadísticas opcionales nos ayudan a mejorar el sitio. La medición publicitaria no está activa.",
+    details: "Detalles (en inglés)",
+    current: (analyticsOn) =>
+      `Configuración actual: estadísticas ${analyticsOn ? "activadas" : "desactivadas"}; publicidad desactivada`,
+    allowAnalytics: "Permitir estadísticas",
+    essentialOnly: "Solo lo esencial",
+  },
+  zh: {
+    ariaLabel: "隐私设置",
+    title: "隐私选项",
+    body: "可选的网站分析帮助我们改进网站。广告衡量目前未启用。",
+    details: "详细说明（英文）",
+    current: (analyticsOn) =>
+      `当前设置：网站分析${analyticsOn ? "已开启" : "已关闭"}；广告已关闭`,
+    allowAnalytics: "允许网站分析",
+    essentialOnly: "仅必要功能",
+  },
+};
+
+function noticeLocale(pathname: string) {
+  if (pathname === "/es" || pathname.startsWith("/es/")) return "es";
+  if (pathname === "/zh" || pathname.startsWith("/zh/")) return "zh";
+  return "en";
+}
+
+function getConsentChoices() {
+  return {
+    analytics: getAnalyticsConsent(),
+    advertising: getAdvertisingConsent(),
+  };
+}
+
 function ConsentNotice() {
-  // Privacy-first: analytics remains denied until the visitor makes a choice.
-  // Show the same compact preference panel on a first visit so the opt-in path
+  const { pathname } = useLocation();
+  const copy = NOTICE_COPY[noticeLocale(pathname)];
+  // Privacy-first: analytics and advertising remain denied until the visitor
+  // makes a choice. Show the compact panel on a first visit so the opt-in path
   // is discoverable; returning visitors keep their saved choice without noise.
   const [visible, setVisible] = useState(false);
-  const [choice, setChoice] = useState(getAnalyticsConsent);
+  const [choices, setChoices] = useState(getConsentChoices);
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,7 +84,7 @@ function ConsentNotice() {
     }
 
     const open = () => {
-      setChoice(getAnalyticsConsent());
+      setChoices(getConsentChoices());
       setVisible(true);
       window.setTimeout(() => panelRef.current?.focus(), 0);
     };
@@ -33,19 +95,55 @@ function ConsentNotice() {
     };
   }, []);
 
+  useEffect(() => {
+    if (visible) {
+      document.documentElement.dataset.lfConsentNotice = "open";
+    } else {
+      delete document.documentElement.dataset.lfConsentNotice;
+    }
+    window.dispatchEvent(
+      new CustomEvent(CONSENT_VISIBILITY_EVENT, { detail: { visible } }),
+    );
+  }, [visible]);
+
+  useEffect(
+    () => () => {
+      delete document.documentElement.dataset.lfConsentNotice;
+      window.dispatchEvent(
+        new CustomEvent(CONSENT_VISIBILITY_EVENT, {
+          detail: { visible: false },
+        }),
+      );
+    },
+    [],
+  );
+
   if (!visible) return null;
 
-  const save = (next: "granted" | "denied") => {
-    saveAnalyticsConsent(next);
-    setChoice(next);
+  const finish = () => {
+    setChoices(getConsentChoices());
     setVisible(false);
+  };
+
+  const allowAnalyticsOnly = () => {
+    // Revoke advertising first so this action can never briefly start an ad
+    // pixel when a visitor changes a previous broader choice.
+    saveAdvertisingConsent("denied");
+    if (choices.analytics !== "granted") saveAnalyticsConsent("granted");
+    finish();
+  };
+
+  const allowEssentialOnly = () => {
+    saveAdvertisingConsent("denied");
+    if (choices.analytics !== "denied") saveAnalyticsConsent("denied");
+    finish();
   };
 
   return (
     <div
       className="lf-notice lf-consent"
       role="region"
-      aria-label="Analytics preferences"
+      aria-label={copy.ariaLabel}
       ref={panelRef}
       tabIndex={-1}
     >
@@ -53,23 +151,31 @@ function ConsentNotice() {
         <ShieldCheck size={20} strokeWidth={1.8} />
       </span>
       <div className="lf-notice__copy">
-        <h2>Analytics?</h2>
+        <h2>{copy.title}</h2>
         <p>
-          Optional measurement helps us improve the site. It stays off unless
-          you allow it. <a href="/privacy/">Details</a>
+          {copy.body} <a href="/privacy/">{copy.details}</a>
         </p>
-        {choice && (
+        {choices.analytics && (
           <p className="lf-consent__current">
-            <Check size={14} aria-hidden="true" /> Current setting: {choice === "granted" ? "analytics on" : "essential only"}
+            <Check size={14} aria-hidden="true" />
+            {copy.current(choices.analytics === "granted")}
           </p>
         )}
       </div>
       <div className="lf-notice__actions">
-        <button type="button" className="lf-notice__primary" onClick={() => save("granted")}>
-          Allow analytics
+        <button
+          type="button"
+          className="lf-notice__primary"
+          onClick={allowAnalyticsOnly}
+        >
+          {copy.allowAnalytics}
         </button>
-        <button type="button" className="lf-notice__secondary" onClick={() => save("denied")}>
-          Essential only
+        <button
+          type="button"
+          className="lf-notice__secondary"
+          onClick={allowEssentialOnly}
+        >
+          {copy.essentialOnly}
         </button>
       </div>
     </div>

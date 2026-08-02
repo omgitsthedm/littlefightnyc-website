@@ -4,7 +4,9 @@ import {
   Globe2,
   Headphones,
   Layers,
+  RefreshCw,
   Search,
+  Store,
   Waypoints,
   Workflow,
 } from "lucide-react";
@@ -112,6 +114,29 @@ export default function Services() {
           </ul>
         </div>
       </nav>
+
+      <section className="lf-svc-extensions" aria-label="Launch and care">
+        <div className="lf-svc-extensions__inner">
+          <Link to="/services/new-business-launch/">
+            <Store size={22} strokeWidth={1.7} aria-hidden="true" />
+            <span>
+              <small>Opening or relaunching</small>
+              <strong>Set up the whole front door as one launch.</strong>
+              <em>Website, Google, email, booking, follow-up, measurement, and ownership.</em>
+            </span>
+            <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
+          </Link>
+          <Link to="/services/ongoing-care/">
+            <RefreshCw size={22} strokeWidth={1.7} aria-hidden="true" />
+            <span>
+              <small>Already live</small>
+              <strong>Keep the customer path working after launch.</strong>
+              <em>Current facts, tested forms, reliable handoffs, and documented changes.</em>
+            </span>
+            <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
 
       <section className="lf-svc-assurance" aria-labelledby="lf-svc-assurance-title">
         <div className="lf-svc-assurance__inner">

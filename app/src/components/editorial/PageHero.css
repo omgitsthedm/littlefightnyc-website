@@ -1,355 +1,467 @@
-/* PageHero — reusable inner-page hero. Quiet, photography-optional. */
+/* PageHero — the shared inner-page opening frame.
+ * The composition treats real photography as proof, type as the lead signal,
+ * and motion as a short orientation cue rather than a loading gate.
+ */
 
 .lf-pagehero {
-  padding: clamp(3.5rem, 8vw, 6rem) var(--lf-margin-mobile) clamp(3rem, 6vw, 5rem);
-  /* Momentum ground: near-black base with a restrained BLUE ambient wash.
-     Orange is reserved for text/accents — the ambient bursts are blue so the
-     orange headline pops instead of muddying orange-on-orange. rgba (not
-     color-mix) so the gradient never degrades to `none` on some browsers; the
-     solid var(--lf-ink) base sits LAST as the guaranteed floor. */
-  /* The two blue washes drift subtly toward the pointer via the shared
-     ForceField vars (--ptr-x/y, published on :root). Opposite signs give a hint
-     of parallax depth. At rest --ptr-x/y = 0.5, so the offset is exactly 0 —
-     byte-identical to the tuned positions; under reduced motion the field never
-     ticks, so it stays put. One machine (Law 1), no per-hero JS. */
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding:
+    clamp(var(--lf-space-8), 8vw, var(--lf-space-10))
+    var(--lf-margin-mobile)
+    clamp(var(--lf-space-8), 7vw, var(--lf-space-9));
   background:
-    radial-gradient(120% 92% at calc(0% + (var(--ptr-x, 0.5) - 0.5) * 9%) calc(0% + (var(--ptr-y, 0.5) - 0.5) * 7%), rgba(59, 130, 246, 0.10), transparent 58%),
-    radial-gradient(96% 82% at calc(100% + (var(--ptr-x, 0.5) - 0.5) * -9%) calc(6% + (var(--ptr-y, 0.5) - 0.5) * 7%), rgba(59, 130, 246, 0.06), transparent 62%),
+    radial-gradient(
+      105% 90% at
+      calc(100% + (var(--ptr-x, 0.5) - 0.5) * -7%)
+      calc(0% + (var(--ptr-y, 0.5) - 0.5) * 6%),
+      rgba(59, 130, 246, 0.09),
+      transparent 62%
+    ),
+    radial-gradient(
+      85% 72% at
+      calc(0% + (var(--ptr-x, 0.5) - 0.5) * 7%)
+      calc(18% + (var(--ptr-y, 0.5) - 0.5) * -5%),
+      rgba(59, 130, 246, 0.045),
+      transparent 68%
+    ),
     var(--lf-ink);
   border-bottom: 1px solid var(--lf-hairline);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 48rem) {
   .lf-pagehero {
     padding-inline: var(--lf-margin-tablet);
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 80rem) {
   .lf-pagehero {
     padding-inline: var(--lf-margin-desktop);
   }
 }
 
 .lf-pagehero__inner {
-  max-width: var(--lf-max-w);
+  position: relative;
+  z-index: 1;
+  inline-size: min(100%, var(--lf-max-w));
   margin-inline: auto;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(var(--lf-space-7), 7vw, var(--lf-space-9));
 }
 
-/* Choreographed entrance: eyebrow → title → dek stagger when the section
-   reveals. Primary copy is readable from first paint; motion adds a short
-   translate only and never gates the page behind a fade. */
-.lf-pagehero__eyebrow,
-.lf-pagehero__title,
-.lf-pagehero__dek {
-  opacity: 1;
-  transform: translateY(0);
-  will-change: transform, opacity;
-}
-
-.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__eyebrow { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 0ms both; }
-.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__title   { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 90ms both; }
-.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__dek     { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 180ms both; }
-
-@keyframes lf-pagehero-enter {
-  from {
-    opacity: 1;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lf-pagehero__eyebrow,
-  .lf-pagehero__title,
-  .lf-pagehero__dek,
-  .lf-pagehero__image {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-}
-
-.lf-pagehero--with-image .lf-pagehero__inner {
-  align-items: center;
-}
-
-@media (min-width: 1024px) {
-  .lf-pagehero--with-image .lf-pagehero__inner {
-    grid-template-columns: minmax(32rem, 0.96fr) minmax(22rem, 0.88fr);
-    gap: clamp(2.5rem, 5vw, 6rem);
-  }
-}
-
-@media (min-width: 1440px) {
-  .lf-pagehero--with-image .lf-pagehero__inner {
-    grid-template-columns: minmax(36rem, 1.02fr) minmax(28rem, 0.82fr);
-  }
+.lf-pagehero__text,
+.lf-pagehero__image {
+  min-inline-size: 0;
 }
 
 .lf-pagehero__text {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 2vw, 1.75rem);
+  align-items: flex-start;
+  gap: clamp(1.125rem, 2vw, var(--lf-space-6));
 }
 
 .lf-pagehero--with-image .lf-pagehero__text {
-  max-width: min(100%, 48rem);
+  max-inline-size: 47rem;
 }
 
-/* No image: let the text breathe across a wider column so it doesn't sit
-   orphaned to the left of empty space */
 .lf-pagehero:not(.lf-pagehero--with-image) .lf-pagehero__text {
-  max-width: 64rem;
+  max-inline-size: 74rem;
 }
+
+@media (min-width: 64rem) {
+  .lf-pagehero--with-image .lf-pagehero__inner {
+    min-block-size: clamp(31rem, 52vh, 42rem);
+    grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.76fr);
+    align-items: center;
+    gap: clamp(var(--lf-space-8), 5vw, var(--lf-space-9));
+  }
+}
+
+@media (min-width: 90rem) {
+  .lf-pagehero--with-image .lf-pagehero__inner {
+    grid-template-columns: minmax(0, 1.12fr) minmax(27rem, 0.78fr);
+  }
+}
+
+/* Type hierarchy --------------------------------------------------------- */
 
 .lf-pagehero__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.7em;
+  gap: var(--lf-space-3);
+  max-inline-size: 100%;
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   font-weight: 500;
-  letter-spacing: 0.16em;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--lf-bone-dim);
-  margin: 0;
 }
 
-/* Content-type wayfinding chip — one icon that says what kind of page this is. */
 .lf-pagehero__eyebrow-icon {
+  flex: 0 0 auto;
+  inline-size: 40px;
+  block-size: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
   color: var(--lf-fight);
-  background: color-mix(in srgb, var(--lf-fight) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--lf-fight) 30%, transparent);
+  background: color-mix(in srgb, var(--lf-fight) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 28%, transparent);
+  border-radius: var(--lf-radius-sm);
+}
+
+@media (min-width: 48rem) {
+  .lf-pagehero__eyebrow-icon {
+    inline-size: 44px;
+    block-size: 44px;
+  }
 }
 
 .lf-pagehero__title {
-  font-family: var(--lf-display);
+  max-inline-size: 13.5ch;
+  font-family: var(--lf-heading);
+  font-size: clamp(3.35rem, 8.35vw, 8.5rem);
   font-weight: var(--lf-display-weight);
-  font-size: clamp(3rem, 7.2vw, 6.6rem);
-  line-height: 0.96;
-  letter-spacing: -0.038em;
+  font-variation-settings: "wght" 700;
+  line-height: 0.92;
+  letter-spacing: var(--lf-display-tracking);
   color: var(--lf-bone);
-  margin: 0;
-  max-width: 12.5ch;
 }
 
-@media (min-width: 768px) {
-  .lf-pagehero__title {
-    font-size: clamp(3.75rem, 8vw, 7.2rem);
+.lf-pagehero--with-image .lf-pagehero__title {
+  max-inline-size: 11.5ch;
+}
+
+@media (min-width: 64rem) {
+  .lf-pagehero--with-image .lf-pagehero__title {
+    font-size: clamp(4.15rem, 6.35vw, 7.65rem);
   }
 }
 
-@media (min-width: 1280px) {
-  .lf-pagehero__title {
-    font-size: clamp(4.8rem, 6.7vw, 7.8rem);
-  }
-}
-
-.lf-pagehero__title em,
-.lf-pagehero__title i,
-.lf-pagehero__title .lf-em {
+.lf-pagehero__title :is(em, i, .lf-em, .lf-accent) {
   color: var(--lf-fight);
   font-style: normal;
   font-weight: var(--lf-display-weight);
-}
-
-.lf-pagehero__title .lf-accent {
-  color: var(--lf-fight);
 }
 
 .lf-pagehero__dek {
+  max-inline-size: 47ch;
   font-family: var(--lf-body);
+  font-size: var(--lf-text-md);
   font-style: normal;
-  font-size: clamp(1.1rem, 1.2vw, 1.3rem);
-  line-height: 1.5;
-  color: var(--lf-bone-soft);
+  line-height: 1.48;
   letter-spacing: -0.005em;
-  max-width: 50ch;
-  margin: 0;
+  color: var(--lf-bone-soft);
 }
 
-@media (min-width: 1024px) {
-  .lf-pagehero__dek {
-    max-width: 42ch;
+@media (max-width: 23.75rem) {
+  .lf-pagehero__title {
+    font-size: clamp(3rem, 14vw, 3.35rem);
   }
 }
 
+/* Real-work image -------------------------------------------------------- */
+
 .lf-pagehero__image {
-  width: 100%;
-  aspect-ratio: 16 / 11;
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--lf-paper);
   border: 1px solid var(--lf-hairline);
+  border-radius: clamp(1.25rem, 2vw, var(--lf-radius-card));
   box-shadow:
-    0 1px 0 color-mix(in srgb, var(--lf-bone) 8%, transparent) inset,
-    0 24px 70px color-mix(in srgb, var(--lf-fight) 10%, transparent),
-    0 16px 48px rgba(0, 0, 0, 0.34);
-  transition: border-color var(--lf-time-snappy) var(--lf-ease-standard);
+    0 1px 0 rgba(255, 255, 255, 0.07) inset,
+    0 30px 90px rgba(0, 0, 0, 0.46),
+    0 12px 38px rgba(59, 130, 246, 0.08);
 }
 
-/* Restrained interactive warmth — the fight-orange lead on hover/focus.
-   Border-only change keeps it reduced-motion safe and AA-quiet. */
-.lf-pagehero__image:hover,
-.lf-pagehero__image:focus-within {
-  border-color: color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
+.lf-pagehero__image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: inherit;
 }
 
-@media (min-width: 1024px) {
-  .lf-pagehero__image {
-    align-self: center;
-    aspect-ratio: 4 / 3;
-  }
+.lf-pagehero__picture,
+.lf-pagehero__image img {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.lf-pagehero__picture {
+  display: block;
 }
 
 .lf-pagehero__image img {
-  width: 100%;
-  height: 100%;
+  display: block;
   object-fit: cover;
-  display: block;
-  filter: contrast(1.05) saturate(0.96) brightness(0.96);
-  will-change: transform;
+  transform: scale(1.015);
+  filter: contrast(1.055) saturate(0.94) brightness(0.94);
 }
 
-.lf-pagehero__image picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Scroll-driven zoom — TRANSFORM ONLY for smooth 60fps */
-@supports (animation-timeline: view()) {
-  .lf-pagehero__image img {
-    animation: lf-pagehero-scroll linear both;
-    animation-timeline: view();
-    animation-range: cover 0% cover 100%;
-  }
-  @keyframes lf-pagehero-scroll {
-    0% { transform: scale(1.0); }
-    100% { transform: scale(1.06); }
+@media (min-width: 64rem) {
+  .lf-pagehero__image {
+    align-self: center;
   }
 }
 
-/* ============================================================
-   Hero archetypes — variety by page type, one base component.
-   ============================================================ */
+/* Entrance choreography ------------------------------------------------- */
 
-/* --- Case archetype: the work IS the hero. Full-bleed screenshot
-   behind the title under a dark scrim; title stays readable (AA). --- */
+.lf-pagehero[data-revealed="true"]
+  :is(
+    .lf-pagehero__eyebrow,
+    .lf-pagehero__display,
+    .lf-pagehero__title,
+    .lf-pagehero__dek,
+    .lf-pagehero__chips
+  ) {
+  animation: lf-pagehero-copy-in var(--m-reveal-ms) var(--lf-ease-slam)
+    var(--lf-pagehero-delay, 0ms) both;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__eyebrow {
+  --lf-pagehero-delay: 0ms;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__display {
+  --lf-pagehero-delay: 25ms;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__title {
+  --lf-pagehero-delay: 45ms;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__dek {
+  --lf-pagehero-delay: 85ms;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__chips {
+  --lf-pagehero-delay: 120ms;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__image {
+  animation: lf-pagehero-media-in var(--m-reveal-ms) var(--lf-ease-slam)
+    80ms both;
+}
+
+.lf-pagehero[data-revealed="true"] .lf-pagehero__quick {
+  animation: lf-pagehero-surface-in var(--m-reveal-ms) var(--lf-ease-slam)
+    120ms both;
+}
+
+.lf-pagehero--case[data-revealed="true"] .lf-pagehero__backdrop {
+  animation: lf-pagehero-backdrop-in 1000ms var(--lf-ease-out) both;
+}
+
+@keyframes lf-pagehero-copy-in {
+  from {
+    opacity: 0.78;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lf-pagehero-media-in {
+  from {
+    opacity: 0.68;
+    transform: translate3d(0, 24px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lf-pagehero-surface-in {
+  from {
+    opacity: 0.76;
+    transform: translate3d(0, 20px, 0) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes lf-pagehero-backdrop-in {
+  from {
+    opacity: 0.72;
+    transform: scale(1.025);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 64rem) {
+  @keyframes lf-pagehero-media-in {
+    from {
+      opacity: 0.68;
+      transform: translate3d(30px, 0, 0) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+}
+
+/* The image moves as one deep plane while its frame stays still. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .lf-pagehero__image img {
+      animation: lf-pagehero-image-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+
+    .lf-pagehero--case .lf-pagehero__backdrop img {
+      animation: lf-pagehero-case-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+  }
+}
+
+@keyframes lf-pagehero-image-drift {
+  from {
+    transform: scale(1.015);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes lf-pagehero-case-drift {
+  from {
+    transform: scale(1.035);
+  }
+  to {
+    transform: scale(1.105);
+  }
+}
+
+/* Case-study archetype --------------------------------------------------- */
+
 .lf-pagehero--case {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  min-height: min(68vh, 40rem);
-  border-bottom: 1px solid var(--lf-hairline);
+  min-block-size: clamp(36rem, 72svh, 52rem);
+  display: grid;
+  align-items: end;
+  padding-block: 0;
 }
 
 .lf-pagehero__backdrop {
   position: absolute;
   inset: 0;
   z-index: -1;
+  overflow: hidden;
 }
 
 .lf-pagehero__backdrop img {
-  width: 100%;
-  height: 100%;
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
   object-fit: cover;
   object-position: var(--lf-backdrop-position, center center);
-  display: block;
-  filter: saturate(0.92) brightness(0.9);
-  will-change: transform;
+  transform: scale(1.035);
+  filter: saturate(0.9) contrast(1.04) brightness(0.86);
 }
 
-@media (max-width: 767px) {
-  .lf-pagehero__backdrop img {
-    object-position: var(--lf-backdrop-position-mobile, var(--lf-backdrop-position, center center));
-  }
-}
-
-/* Slow scroll drift on the backdrop — transform only, 60fps. */
-@supports (animation-timeline: view()) {
-  .lf-pagehero--case .lf-pagehero__backdrop img {
-    animation: lf-pagehero-backdrop linear both;
-    animation-timeline: view();
-    animation-range: cover 0% cover 100%;
-  }
-  @keyframes lf-pagehero-backdrop {
-    0% { transform: scale(1.04); }
-    100% { transform: scale(1.12); }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lf-pagehero--case .lf-pagehero__backdrop img {
-    animation: none;
-    transform: none;
-  }
-}
-
-/* Dark scrim: heavy at the text edge, lighter up top so the work shows. */
 .lf-pagehero__scrim {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
       to top,
-      rgba(5, 5, 7, 0.97) 0%,
-      rgba(5, 5, 7, 0.9) 42%,
-      rgba(5, 5, 7, 0.58) 70%,
+      rgba(5, 5, 7, 0.98) 0%,
+      rgba(5, 5, 7, 0.82) 48%,
       rgba(5, 5, 7, 0.32) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(5, 5, 7, 0.74) 0%,
+      rgba(5, 5, 7, 0.26) 68%,
+      rgba(5, 5, 7, 0.12) 100%
     );
 }
 
 .lf-pagehero--case .lf-pagehero__inner {
-  width: 100%;
-  padding-top: clamp(6rem, 18vh, 12rem);
+  inline-size: 100%;
+  min-block-size: inherit;
+  align-content: end;
+  padding-block:
+    clamp(11rem, 26vh, 18rem)
+    clamp(var(--lf-space-8), 8vw, var(--lf-space-10));
+}
+
+.lf-pagehero--case .lf-pagehero__text {
+  max-inline-size: 78rem;
 }
 
 .lf-pagehero--case .lf-pagehero__title {
-  font-size: clamp(3.2rem, 9vw, 8.6rem);
-  max-width: 14ch;
-  text-shadow: 0 2px 24px rgba(5, 5, 7, 0.6);
+  max-inline-size: 13ch;
+  font-size: clamp(3.5rem, 9vw, 9rem);
+  line-height: 0.9;
+  text-shadow: 0 3px 30px rgba(5, 5, 7, 0.72);
 }
 
 .lf-pagehero--case .lf-pagehero__dek {
   color: var(--lf-bone);
-  text-shadow: 0 1px 12px rgba(5, 5, 7, 0.7);
+  text-shadow: 0 2px 18px rgba(5, 5, 7, 0.82);
 }
 
-/* --- Answer archetype: pure type + an orange quick-answer card.
-   Answer pages should look like answers. --- */
+@media (max-width: 47.99rem) {
+  .lf-pagehero__backdrop img {
+    object-position: var(
+      --lf-backdrop-position-mobile,
+      var(--lf-backdrop-position, center center)
+    );
+  }
+
+  .lf-pagehero__scrim {
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 7, 0.99) 0%,
+      rgba(5, 5, 7, 0.86) 52%,
+      rgba(5, 5, 7, 0.38) 100%
+    );
+  }
+}
+
+/* Answer archetype ------------------------------------------------------- */
+
 .lf-pagehero--answer .lf-pagehero__title {
-  /* Questions run long — scale down so the whole question stays a headline. */
-  font-size: clamp(2.2rem, 5.4vw, 4.6rem);
-  line-height: 1.02;
-  max-width: 22ch;
+  max-inline-size: 22ch;
+  font-size: clamp(2.65rem, 5.5vw, 5rem);
+  line-height: 1;
 }
 
 .lf-pagehero__quick {
   position: relative;
-  max-width: 46rem;
-  margin-top: clamp(0.5rem, 1.5vw, 1rem);
-  padding: clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 2rem);
-  border-radius: var(--lf-radius-sm);
-  border: 1px solid color-mix(in srgb, var(--lf-fight) 38%, transparent);
-  border-left: 4px solid var(--lf-fight);
-  background:
-    linear-gradient(135deg, rgba(249, 115, 22, 0.10), rgba(249, 115, 22, 0.03) 60%),
-    var(--lf-paper);
+  inline-size: min(100%, 48rem);
+  margin-block-start: clamp(var(--lf-space-2), 1vw, var(--lf-space-4));
+  display: grid;
+  gap: var(--lf-space-3);
+  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  background: var(--lf-paper);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 34%, var(--lf-hairline));
+  border-inline-start: 4px solid var(--lf-fight);
+  border-radius: var(--lf-radius-card);
+  box-shadow: 0 24px 68px rgba(0, 0, 0, 0.3);
 }
 
 .lf-pagehero__quick-label {
@@ -357,100 +469,97 @@
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   font-weight: 500;
-  letter-spacing: 0.16em;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--lf-fight);
-  margin-bottom: 0.6em;
 }
 
 .lf-editorial .lf-pagehero__quick-body {
-  margin: 0;
   font-size: var(--lf-text-md);
   line-height: 1.5;
-  color: var(--lf-bone);
   letter-spacing: -0.005em;
+  color: var(--lf-bone);
 }
 
-/* Stagger the quick card in with the rest of the entrance. */
-.lf-pagehero__quick {
-  opacity: 1;
-  transform: translateY(0);
-}
-.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__quick {
-  animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 270ms both;
+@media (min-width: 40rem) {
+  .lf-pagehero__quick {
+    grid-template-columns: minmax(7.5rem, 0.34fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--lf-space-6);
+  }
 }
 
-/* --- Area archetype: neighborhood name at display scale + ZIP chips. --- */
-/* The text column is a fixed grid track (never content-sized), so inline-size
-   containment is safe here; it lets the display name measure its real column
-   via cqi instead of guessing from vw. */
+/* Neighborhood archetype ------------------------------------------------ */
+
 .lf-pagehero--area .lf-pagehero__text {
   container-type: inline-size;
 }
 
 .lf-editorial .lf-pagehero__display {
-  margin: 0;
-  font-family: var(--lf-serif);
-  font-weight: 700;
-  /* Second min() term: fit cap for long single-word names ("Williamsburg.").
-     ~0.49em avg glyph width at this weight/tracking → 204cqi/ch fills the
-     column with a small safety margin. Short names still hit the clamp. */
-  font-size: min(clamp(4rem, 12vw, 11rem), calc(204cqi / var(--lf-display-ch, 8)));
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  max-inline-size: 100%;
+  font-family: var(--lf-heading);
+  font-size: clamp(4rem, 12vw, 11rem);
+  font-size: min(
+    clamp(4rem, 12vw, 11rem),
+    calc(204cqi / var(--lf-display-ch, 8))
+  );
+  font-weight: var(--lf-display-weight);
+  font-variation-settings: "wght" 700;
+  line-height: 0.9;
+  letter-spacing: var(--lf-display-tracking);
   color: var(--lf-fight);
 }
 
 .lf-pagehero__display em {
-  font-style: italic;
+  font-style: normal;
 }
 
 .lf-pagehero--area .lf-pagehero__title {
-  /* The neighborhood name carries the display weight; the h1 reads as the
-     working line under it. Text unchanged — only the scale moves. */
-  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  max-width: 26ch;
-  color: var(--lf-bone);
+  max-inline-size: 27ch;
+  font-size: clamp(1.75rem, 2.7vw, 2.75rem);
+  line-height: 1.12;
+  letter-spacing: 0;
 }
 
 .lf-editorial .lf-pagehero__chips {
-  list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: clamp(0.25rem, 1vw, 0.75rem) 0 0;
-  padding: 0;
+  gap: var(--lf-space-2);
+  margin-block-start: clamp(var(--lf-space-1), 1vw, var(--lf-space-3));
 }
 
 .lf-pagehero__chip {
+  padding: 7px 13px;
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   font-weight: 500;
-  letter-spacing: 0.1em;
+  line-height: 1.35;
+  letter-spacing: 0.09em;
   color: var(--lf-bone-soft);
-  padding: 6px 12px;
-  border-radius: var(--lf-radius-pill);
+  background: color-mix(in srgb, var(--lf-paper) 78%, transparent);
   border: 1px solid var(--lf-hairline);
-  background: color-mix(in srgb, var(--lf-paper) 72%, transparent);
+  border-radius: var(--lf-radius-pill);
 }
 
-/* Entrance stagger for display name + chips */
-.lf-pagehero__display,
-.lf-pagehero__chips {
-  opacity: 1;
-  transform: translateY(0);
-}
-.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__display { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 60ms both; }
-.lf-pagehero__inner[data-revealed="true"] .lf-pagehero__chips   { animation: lf-pagehero-enter 700ms var(--lf-ease-out-quart) 260ms both; }
+/* Motion safety ---------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-pagehero__quick,
-  .lf-pagehero__display,
-  .lf-pagehero__chips {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
+  .lf-pagehero[data-revealed="true"]
+    :is(
+      .lf-pagehero__eyebrow,
+      .lf-pagehero__display,
+      .lf-pagehero__title,
+      .lf-pagehero__dek,
+      .lf-pagehero__quick,
+      .lf-pagehero__chips,
+      .lf-pagehero__image,
+      .lf-pagehero__backdrop
+    ),
+  .lf-pagehero__image img,
+  .lf-pagehero__backdrop img {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }

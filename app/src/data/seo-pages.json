@@ -18,9 +18,9 @@
     {
       "path": "/",
       "title": "Little Fight NYC | Websites, IT Support & Custom Software",
-      "description": "Little Fight NYC builds websites that bring in business, fixes urgent tech, gives free consulting, and creates custom software small businesses own.",
-      "h1": "Your business is custom. Your website should be too.",
-      "shortAnswer": "Short answer: Little Fight NYC builds websites for New York small businesses, fixes urgent tech, gives free consulting, and replaces bloated subscriptions with focused software clients own.",
+      "description": "Little Fight NYC builds websites that help the next customer choose, fixes urgent tech, gives free second opinions, and builds focused software you own.",
+      "h1": "Make it easier for the next customer to choose you.",
+      "shortAnswer": "Short answer: Little Fight NYC helps small businesses turn online attention into the right next step—booking, visiting, ordering, calling, or inquiring—then keeps the technology behind that path working.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg",
       "share": {
@@ -28,7 +28,7 @@
         "type": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "alt": "Little Fight NYC over New York storefronts at dawn: Your business is custom. Your website should be too."
+        "alt": "Little Fight NYC: Make it easier for the next customer to choose you."
       }
     },
     {
@@ -51,8 +51,8 @@
       "path": "/services/custom-local-websites/",
       "title": "Custom Local Websites NYC | Little Fight NYC",
       "description": "Custom-coded websites built for your NYC business and your block. No templates, no themes, no Squarespace skins. Ships in 14 days.",
-      "h1": "A website that makes the phone ring.",
-      "shortAnswer": "Short answer: Little Fight builds custom local websites for NYC small businesses. Each site is coded for the business, written for the neighborhood, and built to turn attention into calls, bookings, payments, and trust.",
+      "h1": "Make the next customer’s step obvious.",
+      "shortAnswer": "Short answer: Little Fight builds custom local websites for NYC small businesses. Each site is coded for the business, written for the neighborhood, and built around the right customer action: booking, visiting, ordering, calling, or inquiring.",
       "type": "Service",
       "serviceName": "Custom local websites for NYC small businesses",
       "image": "/assets/hero-laptop.webp",
@@ -61,7 +61,7 @@
         "type": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "alt": "Little Fight NYC custom website card with shipped salon work: A website that makes the phone ring."
+        "alt": "Little Fight NYC custom website card with shipped salon work: Make the next customer’s step obvious."
       },
       "faq": [
         {
@@ -195,6 +195,65 @@
         {
           "question": "What can a small business system include?",
           "answer": "Lead tracking, follow-up, dashboards, forms, booking or payment handoffs, staff alerts, and simple reports."
+        }
+      ]
+    },
+    {
+      "path": "/services/new-business-launch/",
+      "title": "New Business Website & Tech Launch NYC | Little Fight NYC",
+      "description": "Launch a new NYC business with the website, Google presence, branded email, booking or inquiry path, follow-up, measurement, and ownership connected.",
+      "h1": "Open with the front door already working.",
+      "shortAnswer": "Short answer: Little Fight connects the domain, website, Google presence, business email, customer action, follow-up, and consent-safe measurement as one documented launch.",
+      "type": "Service",
+      "serviceName": "New business website and technology launch",
+      "image": "/images/brand-scenes/storefronts-dawn.webp",
+      "faq": [
+        {
+          "question": "Does every launch use the same tools?",
+          "answer": "No. A restaurant, salon, shop, contractor, and professional firm need different customer actions. We keep the tool that fits each job and document who owns it."
+        },
+        {
+          "question": "Do I keep control of the accounts and website?",
+          "answer": "Yes. The domain, code, content, accounts, and business data stay with the business, with a written ownership and recovery record."
+        }
+      ]
+    },
+    {
+      "path": "/services/ongoing-care/",
+      "title": "Small Business Website Care NYC | Little Fight NYC",
+      "description": "Keep website facts, forms, booking paths, hosting, dependencies, and customer handoffs current without giving up the domain, code, content, or data.",
+      "h1": "Keep the front door honest after launch.",
+      "shortAnswer": "Short answer: Little Fight keeps the customer path, public facts, quiet website machinery, and change record current after launch while the business keeps every key.",
+      "type": "Service",
+      "serviceName": "Ongoing website and technology care",
+      "image": "/images/brand-scenes/shop-back-office.webp",
+      "faq": [
+        {
+          "question": "Do I need a long contract?",
+          "answer": "No. Care can be scoped around ongoing needs or requested once. The exact work and responsibility are written down before it starts."
+        },
+        {
+          "question": "Who owns the site if care stops?",
+          "answer": "You do. The domain, code, content, accounts, business data, and material change record remain yours."
+        }
+      ]
+    },
+    {
+      "path": "/website-check/",
+      "title": "Free Small Business Website Check | Little Fight NYC",
+      "description": "Run a free public-page website check for measurable performance, SEO, accessibility, and best-practices signals, then receive a private plain-English report.",
+      "h1": "See what gets in the way.",
+      "shortAnswer": "Short answer: enter a public website and receive a private report based on measured signals. No login, card, password, or access to the business is required.",
+      "type": "WebPage",
+      "image": "/assets/journal-what-a-free-tech-audit-actually-looks-like.webp",
+      "faq": [
+        {
+          "question": "What does the Website Check access?",
+          "answer": "Only the public website. It does not need a login, password, card, analytics account, or access to business systems."
+        },
+        {
+          "question": "Why does the Audit Lab ask for an email?",
+          "answer": "The report is private and delivered by email. The address is used to deliver the report and follow up as disclosed in the Audit Lab privacy notice."
         }
       ]
     },
@@ -878,6 +937,15 @@
           "answer": "Call or text (646) 360-0318. Email hello@littlefightnyc.com. Or start a Tech Audit when the problem has moving parts."
         }
       ]
+    },
+    {
+      "path": "/clients/",
+      "title": "Current Client Support | Little Fight NYC",
+      "description": "Current Little Fight clients can route support, project, and billing questions, call or text about urgent issues, book a check-in, or leave an honest review.",
+      "h1": "One clean door back in.",
+      "shortAnswer": "Short answer: current clients can use support@littlefightnyc.com, projects@littlefightnyc.com, or billing@littlefightnyc.com; all three reach the staffed Little Fight inbox with clear context.",
+      "type": "ContactPage",
+      "image": "/images/brand-scenes/restaurant-counter.webp"
     },
     {
       "path": "/legal/",

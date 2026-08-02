@@ -1,4 +1,126 @@
-import { getAnalyticsConsent, onAnalyticsConsentChange } from "./consent";
+import {
+  getAdvertisingConsent,
+  getAnalyticsConsent,
+  ADVERTISING_MEASUREMENT_AVAILABLE,
+  onAdvertisingConsentChange,
+  onAnalyticsConsentChange,
+} from "./consent";
+
+export type FirstPartyEventPlacement =
+  | "home_hero"
+  | "home_care"
+  | "nav_desktop"
+  | "mobile_menu"
+  | "website_check_page"
+  | "audit_lab"
+  | "audit_report"
+  | "client_desk"
+  | "service_page"
+  | "contact_block"
+  | "contact_page"
+  | "home_process"
+  | "sticky_help"
+  | "website_service_proof"
+  | "es_hero"
+  | "zh_hero"
+  | "unknown";
+
+export type FirstPartyEventSource =
+  | "direct"
+  | "home"
+  | "navigation"
+  | "website_check"
+  | "audit_lab"
+  | "audit_report"
+  | "clients"
+  | "service_page";
+
+type FirstPartyEventContext = {
+  placement: FirstPartyEventPlacement;
+  source?: FirstPartyEventSource;
+};
+
+export type ServiceInquiryType =
+  | "website"
+  | "it_support"
+  | "consulting"
+  | "business_systems"
+  | "other";
+
+export type FirstPartyEventContract = {
+  website_check_started: FirstPartyEventContext;
+  website_check_ready: FirstPartyEventContext;
+  report_opened: FirstPartyEventContext;
+  human_review_requested: FirstPartyEventContext;
+  booking_started: FirstPartyEventContext;
+  service_inquiry: FirstPartyEventContext & { service: ServiceInquiryType };
+};
+
+export type FirstPartyEventName = keyof FirstPartyEventContract;
+
+const FIRST_PARTY_EVENT_NAMES = new Set<FirstPartyEventName>([
+  "website_check_started",
+  "website_check_ready",
+  "report_opened",
+  "human_review_requested",
+  "booking_started",
+  "service_inquiry",
+]);
+
+const FIRST_PARTY_EVENT_PLACEMENTS = new Set<FirstPartyEventPlacement>([
+  "home_hero",
+  "home_care",
+  "nav_desktop",
+  "mobile_menu",
+  "website_check_page",
+  "audit_lab",
+  "audit_report",
+  "client_desk",
+  "service_page",
+  "contact_block",
+  "contact_page",
+  "home_process",
+  "sticky_help",
+  "website_service_proof",
+  "es_hero",
+  "zh_hero",
+  "unknown",
+]);
+
+const FIRST_PARTY_EVENT_SOURCES = new Set<FirstPartyEventSource>([
+  "direct",
+  "home",
+  "navigation",
+  "website_check",
+  "audit_lab",
+  "audit_report",
+  "clients",
+  "service_page",
+]);
+
+const SERVICE_INQUIRY_TYPES = new Set<ServiceInquiryType>([
+  "website",
+  "it_support",
+  "consulting",
+  "business_systems",
+  "other",
+]);
+
+function isFirstPartyEventName(value: string): value is FirstPartyEventName {
+  return FIRST_PARTY_EVENT_NAMES.has(value as FirstPartyEventName);
+}
+
+function safeEventPlacement(value: string | undefined): FirstPartyEventPlacement {
+  return FIRST_PARTY_EVENT_PLACEMENTS.has(value as FirstPartyEventPlacement)
+    ? (value as FirstPartyEventPlacement)
+    : "unknown";
+}
+
+function safeEventSource(value: string | undefined) {
+  return FIRST_PARTY_EVENT_SOURCES.has(value as FirstPartyEventSource)
+    ? (value as FirstPartyEventSource)
+    : undefined;
+}
 
 declare global {
   interface Window {
@@ -26,10 +148,14 @@ declare global {
 const configuredGaId = import.meta.env.VITE_GA_ID?.trim();
 const GA_ID = configuredGaId || "G-0Q1TGWH0HL";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`;
+// No controlled Clarity project was handed off. Keep the dormant integration
+// incapable of activating from a stale or inherited build variable until the
+// destination account and data boundary are verified.
+const CLARITY_MEASUREMENT_AVAILABLE = false;
 const CLARITY_ID = import.meta.env.VITE_CLARITY_ID?.trim() ?? "";
 const CLARITY_SRC = `https://www.clarity.ms/tag/${encodeURIComponent(CLARITY_ID)}`;
 const configuredTikTokPixelId = import.meta.env.VITE_TIKTOK_PIXEL_ID?.trim();
-const TIKTOK_PIXEL_ID = configuredTikTokPixelId || "D94URCBC77UARCKAVGU0";
+const TIKTOK_PIXEL_ID = configuredTikTokPixelId || "";
 const TIKTOK_EVENTS_SRC = "https://analytics.tiktok.com/i18n/pixel/events.js";
 const VENDOR_BOOT_DELAY_MS = 1500;
 let gaBooted = false;
@@ -54,6 +180,7 @@ function hasRealGaId() {
 
 function hasRealClarityId() {
   return (
+    CLARITY_MEASUREMENT_AVAILABLE &&
     isProdHost() &&
     /^[a-z0-9]{6,}$/i.test(CLARITY_ID) &&
     CLARITY_ID !== "CLARITY_ID"
@@ -71,6 +198,7 @@ function isProdHost() {
 
 function hasRealTikTokPixelId() {
   return (
+    ADVERTISING_MEASUREMENT_AVAILABLE &&
     isProdHost() &&
     /^[A-Z0-9]{12,}$/i.test(TIKTOK_PIXEL_ID) &&
     TIKTOK_PIXEL_ID !== "TIKTOK_PIXEL_ID"
@@ -91,10 +219,7 @@ function bootGoogleAnalytics() {
 
   ensureGtag();
   window.gtag?.("consent", "update", {
-    ad_storage: "granted",
     analytics_storage: "granted",
-    ad_user_data: "granted",
-    ad_personalization: "granted",
   });
   window.gtag?.("js", new Date());
   window.gtag?.("config", GA_ID, { send_page_view: false });
@@ -123,7 +248,7 @@ function bootClarity() {
       { q: [] as unknown[][] },
     );
   window.clarity("consentv2", {
-    ad_Storage: "granted",
+    ad_Storage: getAdvertisingConsent() === "granted" ? "granted" : "denied",
     analytics_Storage: "granted",
   });
 
@@ -204,7 +329,7 @@ function ensureTikTokQueue() {
 }
 
 function bootTikTokPixel() {
-  if (getAnalyticsConsent() !== "granted" || !hasRealTikTokPixelId() || tikTokBooted) return;
+  if (getAdvertisingConsent() !== "granted" || !hasRealTikTokPixelId() || tikTokBooted) return;
 
   ensureTikTokQueue();
   window.ttq?.grantConsent?.();
@@ -236,7 +361,7 @@ function flushPendingGaEvents() {
 }
 
 function sendTikTokEvent(eventName: string, parameters?: Record<string, unknown>) {
-  if (getAnalyticsConsent() !== "granted" || !hasRealTikTokPixelId()) return;
+  if (getAdvertisingConsent() !== "granted" || !hasRealTikTokPixelId()) return;
   if (!tikTokBooted) {
     pendingTikTokEvents.push({ eventName, parameters });
     scheduleVendorBoot();
@@ -255,19 +380,25 @@ function flushPendingTikTokEvents() {
 }
 
 function bootVendors() {
-  if (getAnalyticsConsent() !== "granted") return;
-  bootGoogleAnalytics();
-  bootClarity();
-  bootTikTokPixel();
-  flushPendingGaEvents();
-  flushPendingTikTokEvents();
+  if (getAnalyticsConsent() === "granted") {
+    bootGoogleAnalytics();
+    bootClarity();
+    flushPendingGaEvents();
+  }
+  if (getAdvertisingConsent() === "granted") {
+    bootTikTokPixel();
+    flushPendingTikTokEvents();
+  }
 }
 
 function scheduleVendorBoot() {
+  const hasMeasurementVendor =
+    getAnalyticsConsent() === "granted" && (hasRealGaId() || hasRealClarityId());
+  const hasAdvertisingVendor =
+    getAdvertisingConsent() === "granted" && hasRealTikTokPixelId();
   if (
-    getAnalyticsConsent() !== "granted" ||
     vendorBootTimer !== undefined ||
-    (!hasRealGaId() && !hasRealClarityId() && !hasRealTikTokPixelId())
+    (!hasMeasurementVendor && !hasAdvertisingVendor)
   ) return;
 
   vendorBootTimer = window.setTimeout(() => {
@@ -283,7 +414,7 @@ function scheduleVendorBoot() {
 
 function trackTikTokConversion(eventName: string, parameters: Record<string, unknown>) {
   const page = {
-    url: window.location.href,
+    url: new URL(window.location.pathname, window.location.origin).href,
     path: window.location.pathname,
     title: document.title,
   };
@@ -298,15 +429,25 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
     return;
   }
 
-  if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") {
+  if (
+    eventName === "phone_click" ||
+    eventName === "email_click" ||
+    eventName === "sms_click" ||
+    eventName === "human_review_requested" ||
+    eventName === "service_inquiry"
+  ) {
     sendTikTokEvent("Contact", { ...page, content_name: eventName, ...parameters });
   } else if (
     eventName === "tech_audit_intent" ||
     eventName === "website_plan_intent" ||
     eventName === "audit_scan_started" ||
-    eventName === "tech_audit_started"
+    eventName === "tech_audit_started" ||
+    eventName === "website_check_started" ||
+    eventName === "booking_started"
   ) {
     sendTikTokEvent("ClickButton", { ...page, content_name: eventName, ...parameters });
+  } else if (eventName === "website_check_ready" || eventName === "report_opened") {
+    sendTikTokEvent("ViewContent", { ...page, content_name: eventName, ...parameters });
   } else if (eventName === "tech_audit_submit" || eventName === "form_submit" || eventName === "lead_success") {
     sendTikTokEvent("SubmitForm", { ...page, content_name: eventName, ...parameters });
   }
@@ -315,12 +456,16 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
 function funnelStage(eventName: string) {
   if (eventName === "lead_success" || eventName === "generate_lead") return "lead";
   if (eventName === "tech_audit_submit" || eventName === "form_submit") return "submit";
+  if (eventName === "human_review_requested" || eventName === "service_inquiry") return "contact";
+  if (eventName === "booking_started") return "submit";
   if (eventName.startsWith("intake_step_")) return "intake";
   if (
     eventName === "tech_audit_intent" ||
     eventName === "website_plan_intent" ||
-    eventName === "tech_audit_started"
+    eventName === "tech_audit_started" ||
+    eventName === "website_check_started"
   ) return "consideration";
+  if (eventName === "website_check_ready" || eventName === "report_opened") return "engaged";
   if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") return "contact";
   if (eventName === "scroll_50") return "engaged";
   if (eventName === "page_view") return "awareness";
@@ -328,23 +473,25 @@ function funnelStage(eventName: string) {
 }
 
 function track(eventName: string, parameters: Record<string, unknown> = {}, deferVendorBoot = false) {
-  if (getAnalyticsConsent() !== "granted") return;
+  const analyticsAllowed = getAnalyticsConsent() === "granted";
+  const advertisingAllowed = getAdvertisingConsent() === "granted";
+  if (!analyticsAllowed && !advertisingAllowed) return;
   const normalized = {
     funnel_stage: funnelStage(eventName),
     ...parameters,
   };
 
-  if (deferVendorBoot && !gaBooted && !tikTokBooted) {
+  if (deferVendorBoot && analyticsAllowed && !gaBooted) {
     pendingGaEvents.push({ eventName, parameters: normalized });
     scheduleVendorBoot();
     return;
   }
 
   bootVendors();
-  sendGaEvent(eventName, normalized);
-  trackTikTokConversion(eventName, normalized);
+  if (analyticsAllowed) sendGaEvent(eventName, normalized);
+  if (advertisingAllowed) trackTikTokConversion(eventName, normalized);
 
-  if (typeof window.clarity === "function") {
+  if (analyticsAllowed && typeof window.clarity === "function") {
     window.clarity("event", eventName);
   }
 }
@@ -353,10 +500,38 @@ export function trackEvent(eventName: string, parameters: Record<string, unknown
   track(eventName, parameters);
 }
 
+/**
+ * Typed first-party conversion events. Only bounded taxonomy values are
+ * accepted; the current pathname is injected here so callers cannot attach a
+ * submitted URL, query string, report ID, email address, name, or free text.
+ */
+export function trackFirstPartyEvent<K extends FirstPartyEventName>(
+  eventName: K,
+  parameters: FirstPartyEventContract[K],
+) {
+  const placement = safeEventPlacement(parameters.placement);
+  const source = safeEventSource(parameters.source);
+  const safeParameters: Record<string, unknown> = {
+    placement,
+    page_path: window.location.pathname,
+  };
+  if (source) safeParameters.source = source;
+
+  if (eventName === "service_inquiry") {
+    const requestedService = (parameters as FirstPartyEventContract["service_inquiry"]).service;
+    safeParameters.service = SERVICE_INQUIRY_TYPES.has(requestedService)
+      ? requestedService
+      : "other";
+  }
+
+  track(eventName, safeParameters);
+}
+
 export function trackPageView(path: string, title: string) {
+  const pagePath = new URL(path, window.location.origin).pathname;
   track("page_view", {
-    page_location: path,
-    page_path: new URL(path, window.location.origin).pathname,
+    page_location: pagePath,
+    page_path: pagePath,
     page_title: title,
   }, true);
 }
@@ -383,10 +558,13 @@ export function trackPageView(path: string, title: string) {
  * TikTok's domain — no script on this origin can touch it. That one is between
  * the visitor's browser and TikTok.
  */
-const VENDOR_COOKIE_PREFIXES = [
+const ADVERTISING_COOKIE_PREFIXES = [
   "_ttp",
   "_tt_enable_cookie",
   "ttcsid",
+];
+
+const MEASUREMENT_COOKIE_PREFIXES = [
   "_ga",
   "_gid",
   "_gat",
@@ -395,7 +573,7 @@ const VENDOR_COOKIE_PREFIXES = [
   "CLID",
 ];
 
-function clearVendorCookies() {
+function clearVendorCookies(prefixes: readonly string[]) {
   if (typeof document === "undefined") return;
 
   const host = window.location.hostname;
@@ -409,7 +587,7 @@ function clearVendorCookies() {
     .filter((name): name is string => Boolean(name));
 
   for (const name of new Set(present)) {
-    if (!VENDOR_COOKIE_PREFIXES.some((prefix) => name === prefix || name.startsWith(prefix))) {
+    if (!prefixes.some((prefix) => name === prefix || name.startsWith(prefix))) {
       continue;
     }
     for (const domain of domains) {
@@ -423,7 +601,37 @@ function clearVendorCookies() {
   }
 }
 
+function trackFirstPartyElementEvent(target: HTMLElement) {
+  const namedEvent = target.dataset.lfEvent;
+  if (!namedEvent || !isFirstPartyEventName(namedEvent)) return false;
+
+  const context: FirstPartyEventContext = {
+    placement: safeEventPlacement(target.dataset.lfLabel),
+    source: safeEventSource(target.dataset.lfSource),
+  };
+  if (namedEvent === "service_inquiry") {
+    const requestedService = target.dataset.lfService as ServiceInquiryType;
+    trackFirstPartyEvent(namedEvent, {
+      ...context,
+      service: SERVICE_INQUIRY_TYPES.has(requestedService)
+        ? requestedService
+        : "other",
+    });
+  } else {
+    trackFirstPartyEvent(namedEvent, context);
+  }
+  return true;
+}
+
 export function installAnalyticsHooks() {
+  // A legacy analytics opt-in used to imply advertising consent. The new
+  // contract does not: absent advertising consent is denied, and any durable
+  // TikTok identifiers left by the old behavior are removed on the next load.
+  if (getAdvertisingConsent() !== "granted") {
+    window.ttq?.revokeConsent?.();
+    tikTokPageTracked = false;
+    clearVendorCookies(ADVERTISING_COOKIE_PREFIXES);
+  }
   scheduleVendorBoot();
   let scrollTracked = false;
 
@@ -435,11 +643,12 @@ export function installAnalyticsHooks() {
 
     const namedEvent = target.dataset.lfEvent;
     if (namedEvent) {
-      track(namedEvent, {
-        placement: target.dataset.lfLabel ?? "unknown",
-        link_text: target.textContent?.trim(),
-        page_path: window.location.pathname,
-      });
+      if (!trackFirstPartyElementEvent(target)) {
+        track(namedEvent, {
+          placement: target.dataset.lfLabel ?? "unknown",
+          page_path: window.location.pathname,
+        });
+      }
     }
 
     if (!(target instanceof HTMLAnchorElement)) return;
@@ -448,28 +657,41 @@ export function installAnalyticsHooks() {
     const contactParameters = {
       placement: target.dataset.lfLabel?.trim() || "contact_link",
       page_path: window.location.pathname,
-      link_url: href,
-      link_text: target.textContent?.trim(),
     };
 
     if (href.startsWith("tel:")) {
-      track("phone_click", contactParameters);
+      track("phone_click", { ...contactParameters, contact_channel: "phone" });
     } else if (href.startsWith("mailto:")) {
-      track("email_click", contactParameters);
+      track("email_click", { ...contactParameters, contact_channel: "email" });
     } else if (href.startsWith("sms:")) {
-      track("sms_click", contactParameters);
+      track("sms_click", { ...contactParameters, contact_channel: "sms" });
     } else if (target.hostname && target.hostname !== window.location.hostname) {
-      track("external_link_click", { link_url: target.href, link_text: target.textContent?.trim() });
+      const destination = new URL(target.href, window.location.origin);
+      track("external_link_click", {
+        link_domain: destination.hostname,
+        link_path: destination.pathname,
+        page_path: window.location.pathname,
+      });
     } else if (href.includes("tech-audit") && !namedEvent) {
       // Event name stays tech_audit_intent for analytics continuity — the
       // user-facing offer was renamed to "Tech Audit" on 2026-07-12.
-      track("tech_audit_intent", { link_url: href, link_text: target.textContent?.trim() });
+      track("tech_audit_intent", {
+        destination_path: new URL(href, window.location.origin).pathname,
+        page_path: window.location.pathname,
+      });
     }
   };
 
   const onSubmit = (event: SubmitEvent) => {
     const form = event.target instanceof HTMLFormElement ? event.target : null;
     if (!form) return;
+
+    // React prevents the browser GET after a valid website-check submit and
+    // performs the privacy-safe same-tab handoff instead. Track that bounded
+    // declarative event before the defaultPrevented guard. Native constraint
+    // validation never dispatches submit, so invalid button clicks do not
+    // become starts.
+    trackFirstPartyElementEvent(form);
 
     // preventDefault() stops the submission but not the bubbling, so a
     // validation-blocked attempt still reached this window-level listener.
@@ -516,10 +738,9 @@ export function installAnalyticsHooks() {
   const removeConsentListener = onAnalyticsConsentChange((consent) => {
     if (consent === "granted") {
       window.clarity?.("consentv2", {
-        ad_Storage: "granted",
+        ad_Storage: getAdvertisingConsent() === "granted" ? "granted" : "denied",
         analytics_Storage: "granted",
       });
-      window.ttq?.grantConsent?.();
       scheduleVendorBoot();
       trackPageView(
         `${window.location.pathname}${window.location.search}`,
@@ -529,23 +750,54 @@ export function installAnalyticsHooks() {
     }
 
     pendingGaEvents = [];
-    pendingTikTokEvents = [];
-    if (vendorBootTimer !== undefined) {
+    if (vendorBootTimer !== undefined && getAdvertisingConsent() !== "granted") {
       window.clearTimeout(vendorBootTimer);
       vendorBootTimer = undefined;
     }
     window.gtag?.("consent", "update", {
-      ad_storage: "denied",
       analytics_storage: "denied",
-      ad_user_data: "denied",
-      ad_personalization: "denied",
     });
     window.clarity?.("consentv2", {
-      ad_Storage: "denied",
+      ad_Storage: getAdvertisingConsent() === "granted" ? "granted" : "denied",
       analytics_Storage: "denied",
     });
+    clearVendorCookies(MEASUREMENT_COOKIE_PREFIXES);
+
+    if (getAdvertisingConsent() !== "granted") {
+      pendingTikTokEvents = [];
+      window.ttq?.revokeConsent?.();
+      tikTokPageTracked = false;
+      clearVendorCookies(ADVERTISING_COOKIE_PREFIXES);
+    }
+  });
+
+  const removeAdvertisingConsentListener = onAdvertisingConsentChange((consent) => {
+    if (consent === "granted") {
+      window.clarity?.("consentv2", {
+        ad_Storage: "granted",
+        analytics_Storage: getAnalyticsConsent() === "granted" ? "granted" : "denied",
+      });
+      window.ttq?.grantConsent?.();
+      if (tikTokBooted && !tikTokPageTracked) {
+        window.ttq?.page?.();
+        tikTokPageTracked = true;
+      }
+      scheduleVendorBoot();
+      return;
+    }
+
+    pendingTikTokEvents = [];
+    if (vendorBootTimer !== undefined && getAnalyticsConsent() !== "granted") {
+      window.clearTimeout(vendorBootTimer);
+      vendorBootTimer = undefined;
+    }
+    window.clarity?.("consentv2", {
+      ad_Storage: "denied",
+      analytics_Storage: getAnalyticsConsent() === "granted" ? "granted" : "denied",
+    });
     window.ttq?.revokeConsent?.();
-    clearVendorCookies();
+    tikTokPageTracked = false;
+    clearVendorCookies(ADVERTISING_COOKIE_PREFIXES);
   });
 
   return () => {
@@ -553,5 +805,6 @@ export function installAnalyticsHooks() {
     window.removeEventListener("submit", onSubmit);
     window.removeEventListener("scroll", onScroll);
     removeConsentListener();
+    removeAdvertisingConsentListener();
   };
 }

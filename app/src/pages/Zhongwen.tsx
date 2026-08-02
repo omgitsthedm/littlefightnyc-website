@@ -131,7 +131,7 @@ export default function Zhongwen() {
               <Link
                 className="lf-es__cta"
                 to="/tech-audit/?intent=website&source=zh"
-                data-lf-event="website_plan_intent"
+                data-lf-event="human_review_requested"
                 data-lf-label="zh_hero"
               >
                 给我一份清楚的方案

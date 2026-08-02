@@ -59,6 +59,8 @@ function safeText(value: unknown, fallback: string) {
       : fallback;
   return raw
     .replace(/https?:\/\/[^\s]+/gi, "[url]")
+    .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, "[email]")
+    .replace(/(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/g, "[phone]")
     .replace(/[?#][^\s]*/g, "")
     .replace(/\s+/g, " ")
     .trim()

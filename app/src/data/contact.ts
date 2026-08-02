@@ -28,3 +28,15 @@ export const PHONE_HREF = `tel:${PHONE_E164}`;
  * consolidation doesn't quietly drop a deliberate behavior.
  */
 export const SMS_HREF = `${String.fromCharCode(115, 109, 115, 58)}${PHONE_E164}`;
+
+/** Public Google Calendar appointment page configured for the business. */
+export const BOOKING_HREF =
+  "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3xaOTCBZD_hYbfstbYXJHhzYATKpTsnUAMNCwsSaAZlORb9H9UE1-v5SS1C5I_BlTBXHRsAOPb";
+
+/** Public review destination. Use only after genuine completed work. */
+export const GOOGLE_REVIEW_HREF = "https://g.page/r/CRb0vlSFW_48EBM/review";
+
+/** Workspace aliases that route into the staffed hello@ inbox. */
+export const SUPPORT_EMAIL = "support@littlefightnyc.com";
+export const PROJECTS_EMAIL = "projects@littlefightnyc.com";
+export const BILLING_EMAIL = "billing@littlefightnyc.com";

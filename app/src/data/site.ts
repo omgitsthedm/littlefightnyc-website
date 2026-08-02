@@ -242,9 +242,9 @@ export const services: Service[] = [
     slug: "custom-local-websites",
     eyebrow: "Custom Local Websites",
     verb: "Build",
-    title: "A website built to bring business",
-    headline: "A website that makes the phone ring.",
-    plain: "Custom websites for NYC businesses. Calls, booking, forms, maps, payments, and Google signals, all working together.",
+    title: "A website built to help customers choose",
+    headline: "Make the next customer’s step obvious.",
+    plain: "Custom websites for NYC businesses. Booking, visits, calls, orders, forms, maps, payments, and Google signals, all working together around the way your storefront earns business.",
     outcome: "Usually ships in 14 days. If we miss the date, you do not pay.",
     includes: [
       "Custom design and build, no templates",
@@ -257,7 +257,7 @@ export const services: Service[] = [
     accent: "orange",
     icon: Laptop,
     shortAnswer:
-      "Short answer: Little Fight builds custom local websites for NYC small businesses. The site explains your offer fast, takes calls and bookings, and gives Google clear local signals.",
+      "Short answer: Little Fight builds custom local websites for NYC small businesses. The site explains your offer fast, gives each customer the right way to act, and gives Google clear local signals.",
     whatItDoes: [
       "A custom local website is built around one business and its customers. It is not a theme with new colors. It does not sound like every other shop.",
       "The site works for people first, then for search. A visitor should know what you do, where you are, and what to do next. No hunting.",
@@ -268,8 +268,8 @@ export const services: Service[] = [
     ],
     commonIssues: [
       {
-        title: "A site that looks fine but does not bring calls",
-        body: "The design may be pretty while the visitor still cannot tell what to do. The fix might be the words, the layout, the forms, or the offer itself.",
+        title: "A site that looks fine but does not help people act",
+        body: "The design may be pretty while the visitor still cannot tell whether to book, visit, order, call, or inquire. The fix might be the words, the layout, the forms, or the offer itself.",
       },
       {
         title: "A mobile page that makes people hunt",
@@ -443,7 +443,7 @@ export const agencyProcess = [
   },
   {
     label: "Fix what costs you",
-    copy: "If something is costing calls, bookings, payments, or trust, it moves first.",
+    copy: "If something is costing bookings, visits, orders, inquiries, payments, or trust, it moves first.",
     icon: MousePointerClick,
   },
   {
@@ -461,7 +461,7 @@ export const agencyProcess = [
 export const auditRoutes = [
   {
     label: "I need a website that brings in business",
-    copy: "The current site is missing, dated, hard to find, or not turning attention into calls and bookings.",
+    copy: "The current site is missing, dated, hard to find, or not helping the right customer book, visit, order, call, or inquire.",
     icon: Globe2,
   },
   {

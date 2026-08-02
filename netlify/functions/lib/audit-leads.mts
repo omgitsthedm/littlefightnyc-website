@@ -1,7 +1,10 @@
 import { getDatabase } from "@netlify/database";
 
 export type AuditAnalysisSource = "netlify_ai_gateway" | "fallback";
-export type AuditPageSpeedSource = "google_pagespeed" | "fallback";
+export type AuditPageSpeedSource =
+  | "google_pagespeed"
+  | "unavailable"
+  | "fallback";
 export type AuditEmailDeliveryStatus =
   | "pending"
   | "sent"
@@ -16,8 +19,8 @@ export interface AuditLeadInput {
   niche: string;
   city: string;
   state: string;
-  overallScore: number;
-  grade: string;
+  overallScore: number | null;
+  grade: string | null;
   reportUrl: string;
   reportExpiresAt: Date;
   analysisSource: AuditAnalysisSource;
@@ -95,7 +98,10 @@ function boundedText(value: string, maxLength: number): string {
   return value.trim().slice(0, maxLength);
 }
 
-export function scoreBand(overallScore: number): "hot" | "warm" | "cold" {
+export function scoreBand(
+  overallScore: number | null,
+): "hot" | "warm" | "cold" | null {
+  if (overallScore === null) return null;
   if (overallScore >= 80) return "hot";
   if (overallScore >= 60) return "warm";
   return "cold";

@@ -48,12 +48,11 @@ export default function Legal() {
               </a>{" "}
               is written out separately.
             </p>
-            <h2>Analytics and advertising pixels</h2>
+            <h2>Analytics</h2>
             <p>
-              Little Fight uses analytics and advertising tools, including
-              Google Analytics and the TikTok Pixel, to understand which pages
-              are useful, which contact paths work, and whether marketing is
-              sending the right people to the site.
+              Little Fight uses Google Analytics, after consent, to understand
+              which pages are useful and which contact paths work. Microsoft
+              Clarity and the TikTok Pixel are not active on this site.
             </p>
             <p>
               These tools may record page views, approximate device/browser
@@ -66,10 +65,9 @@ export default function Legal() {
             <h2>Cookies, pixels, and opt-outs</h2>
             <p>
               Analytics is off by default for a first-time visitor. Google
-              Analytics, Microsoft Clarity, and the TikTok Pixel load only
-              after you choose “Allow analytics.” If you choose “Essential
-              only,” the site still works and those measurement scripts do not
-              load. You can change the choice at any time.
+              Analytics loads only after you choose “Allow analytics.” If you
+              choose “Essential only,” the site still works and the optional
+              script does not load. You can change the choice at any time.
             </p>
             <p>
               <button type="button" className="lf-privacy-choice" onClick={openConsentPreferences}>

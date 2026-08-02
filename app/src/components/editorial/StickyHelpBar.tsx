@@ -3,12 +3,24 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import "./StickyHelpBar.css";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
+import {
+  acquisitionCtaForIntent,
+  acquisitionIntentForPathname,
+} from "@/lib/acquisitionIntent";
+import { CONSENT_VISIBILITY_EVENT } from "@/lib/consent";
 
 export default function StickyHelpBar() {
   const { pathname } = useLocation();
   const trimmed = pathname.replace(/\/$/, "");
   const onHome = trimmed === "";
+  const routeIntent = acquisitionIntentForPathname(pathname);
+  const helpCta = acquisitionCtaForIntent(routeIntent, "sticky_help");
   const [heroVisible, setHeroVisible] = useState(onHome);
+  const [consentVisible, setConsentVisible] = useState(
+    () =>
+      typeof document !== "undefined" &&
+      document.documentElement.dataset.lfConsentNotice === "open",
+  );
 
   useEffect(() => {
     if (!onHome) return;
@@ -22,12 +34,33 @@ export default function StickyHelpBar() {
     return () => observer.disconnect();
   }, [onHome]);
 
-  if (trimmed === "/tech-audit" || trimmed === "/thanks" || (onHome && heroVisible)) {
+  useEffect(() => {
+    const syncConsentVisibility = (event: Event) => {
+      const detail = (event as CustomEvent<{ visible?: boolean }>).detail;
+      setConsentVisible(detail?.visible === true);
+    };
+    window.addEventListener(CONSENT_VISIBILITY_EVENT, syncConsentVisibility);
+    return () =>
+      window.removeEventListener(CONSENT_VISIBILITY_EVENT, syncConsentVisibility);
+  }, []);
+
+  if (
+    trimmed === "/tech-audit" ||
+    trimmed === "/website-check" ||
+    trimmed === "/thanks" ||
+    (onHome && heroVisible)
+  ) {
     return null;
   }
 
   return (
-    <div className="lf-sticky-help" aria-label="Get help quickly">
+    <div
+      className="lf-sticky-help"
+      aria-label="Get help quickly"
+      aria-hidden={consentVisible || undefined}
+      data-consent-visible={consentVisible || undefined}
+      inert={consentVisible || undefined}
+    >
       {/* A direct tel: link, not a disclosure. This cell used to open a
           Call/Text menu, which cost two taps to dial on every route that
           shows the bar, and never put the digits on screen. The header and
@@ -45,13 +78,13 @@ export default function StickyHelpBar() {
       </a>
       <Link
         className="lf-sticky-help__cell lf-sticky-help__cell--fit"
-        to="/tech-audit/?intent=website"
-        data-lf-event="website_plan_intent"
+        to={helpCta.href}
+        data-lf-event={helpCta.event}
         data-lf-label="sticky_help"
       >
-        <span className="lf-mono lf-sticky-help__label">Website</span>
+        <span className="lf-mono lf-sticky-help__label">{helpCta.kicker}</span>
         <span className="lf-sticky-help__detail">
-          Start free
+          {helpCta.compactLabel}
           <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
         </span>
       </Link>

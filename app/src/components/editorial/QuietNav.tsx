@@ -1,18 +1,22 @@
 import { useEffect, useId, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { ArrowUpRight, Menu, MessageSquare, Phone, X } from "lucide-react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Menu, MessageSquare, Phone, Search, X } from "lucide-react";
 import PhoneAction from "./PhoneAction";
 import TugMark from "./TugMark";
 import { useOpenNow } from "@/lib/openNow";
+import {
+  acquisitionCtaForIntent,
+  acquisitionIntentForPathname,
+} from "@/lib/acquisitionIntent";
 import "./QuietNav.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 const NAV_LINKS = [
-  { label: "What we fix", to: "/services/" },
-  { label: "Work", to: "/examples/" },
-  { label: "About", to: "/about/" },
+  { label: "Websites", to: "/services/custom-local-websites/" },
+  { label: "Fix something", to: "/services/it-support/" },
+  { label: "Software You Own", to: "/services/business-systems/" },
+  { label: "Results", to: "/examples/" },
   { label: "Answers", to: "/library/" },
-  { label: "Contact", to: "/contact/" },
 ] as const;
 
 /**
@@ -39,6 +43,10 @@ export function OpenNowBadge({ className }: { className?: string }) {
 }
 
 export default function QuietNav() {
+  const { pathname } = useLocation();
+  const routeIntent = acquisitionIntentForPathname(pathname);
+  const startCta = acquisitionCtaForIntent(routeIntent, "navigation");
+  const StartIcon = routeIntent === "website" ? Search : MessageSquare;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const scrollSentinelRef = useRef<HTMLSpanElement>(null);
@@ -66,7 +74,7 @@ export default function QuietNav() {
   // soon as a resize or device rotation crosses the toggle breakpoint so the
   // page never remains scroll-locked or inert without a visible close button.
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 64rem)");
+    const desktop = window.matchMedia("(min-width: 82rem)");
     const closeAtDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
@@ -174,13 +182,14 @@ export default function QuietNav() {
           </PhoneAction>
 
           <Link
-            to="/tech-audit/?intent=website"
+            to={startCta.href}
             className="lf-nav__start"
-            data-lf-event="website_plan_intent"
+            data-lf-event={startCta.event}
             data-lf-label="nav_desktop"
+            data-lf-source="navigation"
           >
-            Get my website plan
-            <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
+            {startCta.label}
+            <StartIcon size={16} strokeWidth={2} aria-hidden="true" />
           </Link>
 
           <button
@@ -239,14 +248,15 @@ export default function QuietNav() {
               </p>
               <div className="lf-nav__panel-actions">
                 <Link
-                  to="/tech-audit/?intent=website"
-                  data-lf-event="website_plan_intent"
+                  to={startCta.href}
+                  data-lf-event={startCta.event}
                   data-lf-label="mobile_menu"
+                  data-lf-source="navigation"
                   onClick={() => setOpen(false)}
                   className="lf-nav__panel-fit"
                 >
-                  Get my website plan
-                  <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
+                  {startCta.label}
+                  <StartIcon size={17} strokeWidth={2} aria-hidden="true" />
                 </Link>
                 <div className="lf-nav__panel-reach">
                   <a

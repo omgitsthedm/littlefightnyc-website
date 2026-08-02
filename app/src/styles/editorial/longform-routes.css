@@ -1,0 +1,850 @@
+/* Long-form route families — one field-report language.
+ *
+ * Journal, owner answers, neighborhood pages, neighborhood/service pages,
+ * and industry guides share a quieter editorial skeleton here: sharp rules,
+ * numbered reading landmarks, real imagery, and obvious exits. The existing
+ * authored copy and the Axiom Momentum token contract stay untouched.
+ */
+
+.lf-longform-route {
+  color: var(--lf-bone);
+  background: var(--lf-ink);
+}
+
+.lf-longform-route :where(h1, h2, h3) {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.lf-longform-route :where(p, li, dd, small) {
+  text-wrap: pretty;
+}
+
+/* Wide comparison tables are part of the reading, not tiny desktop-only
+ * artifacts. They keep their semantic table structure and scroll in place on
+ * narrow screens. */
+.lf-longform-route .lf-post__body table {
+  display: block;
+  width: 100%;
+  margin: var(--lf-space-6) 0;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border-collapse: collapse;
+  border-block: 1px solid var(--lf-hairline);
+  scrollbar-color: var(--lf-fight) var(--lf-paper-2);
+}
+
+.lf-longform-route .lf-post__body :where(th, td) {
+  min-width: 10rem;
+  padding: var(--lf-space-3) var(--lf-space-4);
+  border-bottom: 1px solid var(--lf-hairline);
+  text-align: left;
+  vertical-align: top;
+}
+
+.lf-longform-route .lf-post__body th {
+  color: var(--lf-bone);
+  background: var(--lf-paper-2);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.07em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.lf-longform-route .lf-post__body td {
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Journal: a numbered reading ledger instead of an undifferentiated column.
+   -------------------------------------------------------------------------- */
+
+.lf-longform-route--journal .lf-post__byline {
+  width: 100%;
+  justify-content: flex-start;
+  margin-bottom: clamp(var(--lf-space-7), 6vw, var(--lf-space-8));
+  border-top-color: color-mix(in srgb, var(--lf-fight) 54%, var(--lf-hairline));
+}
+
+.lf-longform-route--journal .lf-post__body {
+  counter-reset: lf-reading-section;
+  font-family: var(--lf-body);
+}
+
+.lf-longform-route--journal .lf-post__body h1,
+.lf-longform-route--journal .lf-post__body h2,
+.lf-longform-route--journal .lf-post__body h3,
+.lf-longform-route--journal .lf-post-related .lf-journal__title {
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+}
+
+.lf-longform-route--journal .lf-post__body h2 {
+  counter-increment: lf-reading-section;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  column-gap: var(--lf-space-3);
+  align-items: start;
+  margin-top: clamp(var(--lf-space-8), 8vw, var(--lf-space-9));
+  padding-top: var(--lf-space-5);
+  border-top: 1px solid var(--lf-hairline);
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.02;
+}
+
+.lf-longform-route--journal .lf-post__body h2::before {
+  content: counter(lf-reading-section, decimal-leading-zero);
+  padding-top: 0.35em;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.lf-longform-route--journal .lf-post__body h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+  line-height: 1.08;
+}
+
+.lf-longform-route--journal .lf-post__body blockquote {
+  margin-block: var(--lf-space-7);
+  padding: var(--lf-space-5) var(--lf-space-5) var(--lf-space-5)
+    clamp(var(--lf-space-5), 5vw, var(--lf-space-7));
+  color: var(--lf-bone);
+  background: var(--lf-paper-2);
+  border-left: 3px solid var(--lf-fight);
+  box-shadow: none;
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-lg);
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.lf-longform-route--journal .lf-post__body :where(ul, ol):not([data-lf-steps]) {
+  padding-left: 1.2em;
+}
+
+.lf-longform-route--journal .lf-post__body li::marker {
+  color: var(--lf-fight);
+}
+
+.lf-longform-route--journal .lf-post-related {
+  background: var(--lf-paper-2);
+}
+
+.lf-longform-route--journal .lf-post-related .lf-journal__link {
+  transition:
+    color var(--m-signal-ms) var(--m-signal-ease),
+    padding-inline var(--m-signal-ms) var(--m-signal-ease);
+}
+
+/* --------------------------------------------------------------------------
+   Owner answers: diagnosis reads as a sequence; the service bridge reads as
+   the deliberate handoff instead of another rounded card.
+   -------------------------------------------------------------------------- */
+
+.lf-longform-route--answer .lf-answer-page__inner {
+  max-width: min(var(--lf-max-w), 74rem);
+}
+
+.lf-longform-route--answer .lf-answer-page__byline {
+  width: 100%;
+  margin-bottom: var(--lf-space-6);
+  padding-bottom: var(--lf-space-4);
+  border-bottom: 1px solid var(--lf-hairline);
+  line-height: 1.65;
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__sections[data-layout="guide"] {
+  counter-reset: lf-answer-section;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__sections[data-layout="guide"]
+  .lf-answer-page__section {
+  counter-increment: lf-answer-section;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  column-gap: var(--lf-space-3);
+  margin: 0;
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-7)) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__sections[data-layout="guide"]
+  .lf-answer-page__section::before {
+  content: counter(lf-answer-section, decimal-leading-zero);
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  padding-top: 0.45em;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__sections[data-layout="guide"]
+  .lf-answer-page__section
+  h2,
+.lf-longform-route--answer
+  .lf-answer-page__sections[data-layout="guide"]
+  .lf-answer-page__section
+  p {
+  grid-column: 2;
+}
+
+.lf-longform-route--answer .lf-answer-page__section h2,
+.lf-longform-route--answer .lf-answer-page__faq-q,
+.lf-longform-route--answer .lf-answers-index__q,
+.lf-longform-route--answer .lf-triage__heading {
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+}
+
+.lf-longform-route--answer .lf-answer-page__section h2 {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.04;
+}
+
+/* Urgent guides keep their true order but lose the generic floating-card wall. */
+.lf-editorial .lf-longform-route--answer .lf-triage {
+  gap: 0;
+  margin-bottom: var(--lf-space-8);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-longform-route--answer .lf-triage__step {
+  padding: clamp(var(--lf-space-5), 3vw, var(--lf-space-6)) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.lf-editorial .lf-longform-route--answer .lf-triage__node {
+  background: transparent;
+  color: var(--lf-fight);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 58%, var(--lf-hairline));
+  transform: none;
+  transition: none;
+}
+
+.lf-editorial
+  .lf-longform-route--answer
+  .lf-triage__step:last-child
+  .lf-triage__node {
+  color: var(--lf-ink);
+  background: var(--lf-fight);
+  border-color: var(--lf-fight);
+}
+
+.lf-longform-route--answer .lf-answer-page__feature {
+  margin-top: var(--lf-space-6);
+  border-radius: var(--lf-radius-card);
+}
+
+.lf-editorial .lf-longform-route--answer .lf-answer-page__bridge {
+  display: grid;
+  gap: var(--lf-space-2);
+  margin-block: var(--lf-space-8) 0;
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-7));
+  background: var(--lf-paper-2);
+  border: 0;
+  border-block: 1px solid var(--lf-hairline);
+  border-left: 3px solid var(--lf-fight);
+  border-radius: 0;
+}
+
+.lf-editorial .lf-longform-route--answer .lf-answer-page__bridge[data-urgent] {
+  margin: 0 0 var(--lf-space-7);
+  background: color-mix(in srgb, var(--lf-fight) 7%, var(--lf-paper-2));
+}
+
+.lf-longform-route--answer .lf-answer-page__bridge-link {
+  position: relative;
+  min-height: var(--lf-control-min);
+  padding-right: 3.5rem;
+}
+
+.lf-longform-route--answer .lf-answer-page__bridge-link::after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--lf-control-min);
+  height: var(--lf-control-min);
+  display: grid;
+  place-items: center;
+  color: var(--lf-fight);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  content: "\2192";
+  transform: translateY(-50%);
+  transition:
+    color var(--m-signal-ms) var(--m-signal-ease),
+    border-color var(--m-signal-ms) var(--m-signal-ease),
+    transform var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-longform-route--answer .lf-answer-page__faq-list {
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--answer .lf-answer-page__faq-list > div {
+  padding: var(--lf-space-5) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__related-list
+  .lf-answers-index__item {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__related-list
+  .lf-answers-index__item:last-child {
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--answer
+  .lf-answer-page__related-list
+  .lf-answers-index__link,
+.lf-longform-route--answer
+  .lf-answer-page__related-list
+  .lf-answers-index__link:hover {
+  padding-inline: 0;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Neighborhood overview: start with one compact decision rail, then let the
+   real street frame and local evidence carry the story.
+   -------------------------------------------------------------------------- */
+
+.lf-longform-route--area .lf-area-start {
+  padding-block: clamp(var(--lf-space-7), 6vw, var(--lf-space-9));
+}
+
+.lf-longform-route--area .lf-area-start__routes {
+  counter-reset: lf-area-door;
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--area .lf-area-start__routes a {
+  counter-increment: lf-area-door;
+  position: relative;
+  padding: var(--lf-space-5) calc(var(--lf-control-min) + var(--lf-space-4))
+    var(--lf-space-5) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+  transform: none;
+}
+
+.lf-longform-route--area .lf-area-start__routes a::after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--lf-control-min);
+  height: var(--lf-control-min);
+  display: grid;
+  place-items: center;
+  color: var(--lf-fight);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+  content: "\2198";
+  transform: translateY(-50%);
+  transition:
+    border-color var(--m-signal-ms) var(--m-signal-ease),
+    transform var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-longform-route--area .lf-area-start__routes a > span::before {
+  content: counter(lf-area-door, decimal-leading-zero) " / ";
+  color: var(--lf-bone-dim);
+}
+
+.lf-longform-route--area .lf-area-start__routes a:hover,
+.lf-longform-route--area .lf-area-start__routes a:focus-visible {
+  background: transparent;
+  border-color: var(--lf-hairline);
+  transform: none;
+}
+
+.lf-longform-route--area .lf-content-tile--media {
+  border-color: color-mix(in srgb, var(--lf-bone) 16%, var(--lf-hairline));
+}
+
+.lf-longform-route--area .lf-content-list:not(.lf-content-list--links) {
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--area
+  .lf-content-list:not(.lf-content-list--links)
+  > li {
+  padding-inline: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--area .lf-content-list--links {
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--area .lf-content-list--links > li {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--area .lf-content-list--links a,
+.lf-longform-route--area .lf-content-list--links a:hover,
+.lf-longform-route--area .lf-content-list--links a:focus-visible {
+  padding-inline: 0;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Service in a neighborhood: three facts become one concise briefing rail.
+   -------------------------------------------------------------------------- */
+
+.lf-longform-route--service-area .lf-content-grid {
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--service-area .lf-service-area__beat {
+  position: relative;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(var(--lf-space-5), 4vw, var(--lf-space-7)) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--service-area .lf-service-area__beat--signal {
+  padding-inline: var(--lf-space-5);
+  background: var(--lf-paper-2);
+  box-shadow: inset 3px 0 0 var(--lf-fight);
+}
+
+.lf-longform-route--service-area .lf-service-area__beat .lf-content-tile__label {
+  margin-bottom: var(--lf-space-3);
+  color: var(--lf-fight);
+}
+
+.lf-longform-route--service-area .lf-service-area__beat .lf-body p {
+  color: var(--lf-bone);
+  font-size: var(--lf-text-md);
+  line-height: 1.55;
+}
+
+.lf-longform-route--service-area .lf-service-area__reality,
+.lf-longform-route--service-area .lf-service-area__checks {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(var(--lf-space-7), 7vw, var(--lf-space-9)) 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--service-area
+  :where(.lf-service-area__reality, .lf-service-area__checks)
+  header {
+  min-width: 0;
+}
+
+.lf-longform-route--service-area
+  :where(.lf-service-area__reality, .lf-service-area__checks)
+  .lf-content-tile__label {
+  margin-bottom: var(--lf-space-3);
+  color: var(--lf-fight);
+}
+
+.lf-longform-route--service-area
+  :where(.lf-service-area__reality, .lf-service-area__checks)
+  h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  line-height: 1;
+}
+
+.lf-longform-route--service-area .lf-service-area__reality > p {
+  max-width: var(--lf-measure-reading);
+  margin: var(--lf-space-5) 0 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-md);
+  line-height: 1.65;
+}
+
+.lf-longform-route--service-area .lf-service-area__checks ol {
+  counter-reset: lf-service-area-check;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin: var(--lf-space-6) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--lf-hairline);
+  list-style: none;
+}
+
+.lf-longform-route--service-area .lf-service-area__checks li {
+  counter-increment: lf-service-area-check;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  margin: 0;
+  padding: var(--lf-space-4) 0;
+  color: var(--lf-bone);
+  border-bottom: 1px solid var(--lf-hairline);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+}
+
+.lf-longform-route--service-area .lf-service-area__checks li::before {
+  content: counter(lf-service-area-check, decimal-leading-zero);
+  padding-top: 0.25em;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.lf-longform-route--service-area .lf-service-area__related {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: clamp(var(--lf-space-7), 7vw, var(--lf-space-9)) 0 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.lf-longform-route--service-area .lf-service-area__related-title {
+  max-width: 18ch;
+  margin: 0 0 var(--lf-space-5);
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: var(--lf-display-weight);
+  letter-spacing: var(--lf-display-tracking);
+  line-height: 1;
+}
+
+.lf-longform-route--service-area .lf-content-list--links {
+  gap: 0;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--service-area .lf-content-list--links > li {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
+.lf-longform-route--service-area .lf-content-list--links a,
+.lf-longform-route--service-area .lf-content-list--links a:hover,
+.lf-longform-route--service-area .lf-content-list--links a:focus-visible {
+  padding-inline: 0;
+  background: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Industry guides: the real working scene leads, then numbered authored
+   sections create a report cadence without wrapping the copy in more cards.
+   -------------------------------------------------------------------------- */
+
+.lf-longform-route--industry .lf-industry-recognition {
+  background: var(--lf-paper-2);
+}
+
+.lf-longform-route--industry .lf-industry-recognition__media::after {
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--lf-bone) 9%, transparent);
+}
+
+.lf-longform-route--industry .lf-post--industry .lf-post__inner {
+  counter-reset: lf-industry-section;
+}
+
+.lf-longform-route--industry .lf-post--industry .lf-post__body > section {
+  counter-increment: lf-industry-section;
+  position: relative;
+  padding-top: var(--lf-space-5);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-longform-route--industry
+  .lf-post--industry
+  .lf-post__body
+  > section::before {
+  position: absolute;
+  top: var(--lf-space-5);
+  right: 0;
+  color: var(--lf-bone-dim);
+  content: counter(lf-industry-section, decimal-leading-zero);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.lf-longform-route--industry
+  .lf-post--industry
+  .lf-post__body
+  > section
+  > :where(h2, h3) {
+  padding-right: var(--lf-space-7);
+}
+
+.lf-longform-route--industry .lf-industry-start__routes a > svg {
+  transition: transform var(--m-signal-ms) var(--m-signal-ease);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive composition and purposeful interaction.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 48rem) {
+  .lf-longform-route--answer
+    .lf-answer-page__sections[data-layout="guide"]
+    .lf-answer-page__section {
+    grid-template-columns: 3rem minmax(12rem, 0.72fr) minmax(0, 1.28fr);
+    column-gap: clamp(var(--lf-space-4), 3vw, var(--lf-space-7));
+    align-items: start;
+  }
+
+  .lf-longform-route--answer
+    .lf-answer-page__sections[data-layout="guide"]
+    .lf-answer-page__section::before {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .lf-longform-route--answer
+    .lf-answer-page__sections[data-layout="guide"]
+    .lf-answer-page__section
+    h2 {
+    grid-column: 2;
+    margin: 0;
+  }
+
+  .lf-longform-route--answer
+    .lf-answer-page__sections[data-layout="guide"]
+    .lf-answer-page__section
+    p {
+    grid-column: 3;
+    margin: 0;
+  }
+
+  .lf-longform-route--answer .lf-answer-page__faq-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-longform-route--answer .lf-answer-page__faq-list > div {
+    padding-inline: var(--lf-space-5);
+  }
+
+  .lf-longform-route--answer .lf-answer-page__faq-list > div:nth-child(odd) {
+    padding-left: 0;
+    border-right: 1px solid var(--lf-hairline);
+  }
+
+  .lf-longform-route--answer .lf-answer-page__faq-list > div:nth-child(even) {
+    padding-right: 0;
+  }
+
+  .lf-longform-route--answer
+    .lf-answer-page__faq-list[data-count="3"]
+    > div:last-child {
+    grid-column: 1 / -1;
+    padding-inline: 0;
+    border-right: 0;
+  }
+
+  .lf-longform-route--service-area .lf-service-area__beat {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--lf-space-5);
+    align-items: start;
+  }
+
+  .lf-longform-route--service-area
+    .lf-service-area__beat
+    .lf-content-tile__label {
+    grid-column: 1 / span 4;
+    margin: 0;
+    padding-top: 0.35em;
+  }
+
+  .lf-longform-route--service-area .lf-service-area__beat .lf-body {
+    grid-column: 5 / span 7;
+  }
+
+  .lf-longform-route--service-area .lf-service-area__reality,
+  .lf-longform-route--service-area .lf-service-area__checks {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--lf-space-7);
+    align-items: start;
+  }
+
+  .lf-longform-route--service-area
+    :where(.lf-service-area__reality, .lf-service-area__checks)
+    header {
+    grid-column: 1 / span 4;
+  }
+
+  .lf-longform-route--service-area .lf-service-area__reality > p,
+  .lf-longform-route--service-area .lf-service-area__checks ol {
+    grid-column: 5 / -1;
+    margin-top: 0;
+  }
+
+  .lf-longform-route--service-area .lf-service-area__checks ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lf-longform-route--service-area .lf-service-area__checks li:nth-child(odd) {
+    padding-right: var(--lf-space-5);
+    border-right: 1px solid var(--lf-hairline);
+  }
+
+  .lf-longform-route--service-area .lf-service-area__checks li:nth-child(even) {
+    padding-left: var(--lf-space-5);
+  }
+}
+
+@media (min-width: 64rem) {
+  .lf-longform-route--area .lf-area-start__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--lf-space-7);
+    align-items: start;
+  }
+
+  .lf-longform-route--area .lf-area-start__head {
+    grid-column: 1 / span 4;
+    margin: 0;
+  }
+
+  .lf-longform-route--area .lf-area-start__routes {
+    grid-column: 5 / -1;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lf-longform-route--area .lf-area-start__routes a:last-child {
+    grid-column: auto;
+  }
+
+  .lf-longform-route--industry
+    .lf-post--industry
+    .lf-post__body
+    > section:nth-of-type(even):not(:has(> article)) {
+    margin-left: clamp(var(--lf-space-5), 7vw, var(--lf-space-9));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lf-longform-route--journal .lf-post-related .lf-journal__link:hover {
+    padding-left: var(--lf-space-3);
+  }
+
+  .lf-longform-route--answer .lf-answer-page__bridge-link:hover::after {
+    color: var(--lf-bone);
+    border-color: var(--lf-fight);
+    transform: translate(3px, -50%);
+  }
+
+  .lf-longform-route--area .lf-area-start__routes a:hover::after {
+    border-color: var(--lf-fight);
+    transform: translate(2px, calc(-50% + 2px));
+  }
+
+  .lf-longform-route--industry .lf-industry-start__routes a:hover > svg {
+    transform: translateX(4px);
+  }
+}
+
+.lf-longform-route--answer .lf-answer-page__bridge-link:active::after,
+.lf-longform-route--area .lf-area-start__routes a:active::after {
+  transform: translateY(-50%) scale(0.97);
+}
+
+.lf-longform-route--industry .lf-industry-start__routes a:active > svg {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-longform-route--journal .lf-post-related .lf-journal__link,
+  .lf-longform-route--answer .lf-answer-page__bridge-link::after,
+  .lf-longform-route--area .lf-area-start__routes a,
+  .lf-longform-route--area .lf-area-start__routes a::after,
+  .lf-longform-route--industry .lf-industry-start__routes a > svg {
+    transition: none;
+  }
+
+  .lf-longform-route--answer .lf-answer-page__bridge-link:hover::after,
+  .lf-longform-route--answer .lf-answer-page__bridge-link:active::after,
+  .lf-longform-route--area .lf-area-start__routes a:hover::after,
+  .lf-longform-route--area .lf-area-start__routes a:active::after,
+  .lf-longform-route--industry .lf-industry-start__routes a:hover > svg,
+  .lf-longform-route--industry .lf-industry-start__routes a:active > svg {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .lf-longform-route--answer .lf-answer-page__bridge,
+  .lf-longform-route--service-area .lf-service-area__beat--signal {
+    border: 1px solid CanvasText;
+  }
+}

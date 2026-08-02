@@ -8,6 +8,7 @@ import MiniMapNYC from "@/components/dataviz/MiniMapNYC";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import { areaPages, services } from "@/data/site";
 import "@/styles/editorial/area-detail.css";
+import "@/styles/editorial/longform-routes.css";
 
 const AREA_ROUTE_SLUG: Record<string, string> = {
   "custom-local-websites": "websites",
@@ -136,7 +137,7 @@ export default function AreaDetail() {
     .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
   return (
-    <>
+    <div className="lf-longform-route lf-longform-route--area">
       <PageHero
         eyebrow={`Neighborhood · ${area.name}`}
         icon={MapPin}
@@ -309,6 +310,6 @@ export default function AreaDetail() {
         heading={`Near ${area.name}? We’re close.`}
         lede="We work in your neighborhood. Call or text 9am-9pm New York time and we will set the right next move."
       />
-    </>
+    </div>
   );
 }

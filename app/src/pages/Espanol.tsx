@@ -134,7 +134,7 @@ export default function Espanol() {
               <Link
                 className="lf-es__cta"
                 to="/tech-audit/?intent=website&source=es"
-                data-lf-event="website_plan_intent"
+                data-lf-event="human_review_requested"
                 data-lf-label="es_hero"
               >
                 Quiero un plan claro

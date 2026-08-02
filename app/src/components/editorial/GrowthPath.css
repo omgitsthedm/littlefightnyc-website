@@ -1,0 +1,181 @@
+.lf-growth {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(3rem, 7vw, 7rem);
+  width: 100%;
+  padding: clamp(4.5rem, 9vw, 9rem) var(--lf-margin-mobile);
+  border-top: 1px solid var(--lf-hairline);
+  background: var(--lf-paper-2);
+}
+
+.lf-growth__head,
+.lf-growth__rail {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+}
+
+.lf-editorial .lf-growth__eyebrow {
+  margin: 0 0 var(--lf-space-4);
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-growth__head h2 {
+  max-width: 15ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 700;
+  letter-spacing: 0 !important;
+  line-height: 0.95;
+}
+
+.lf-editorial .lf-growth__head > p:last-child {
+  max-width: 54ch;
+  margin: var(--lf-space-5) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-md);
+  line-height: 1.5;
+}
+
+.lf-growth__rail {
+  padding: 0;
+  border-top: 1px solid var(--lf-hairline);
+  list-style: none;
+}
+
+.lf-growth__rail > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-5);
+  padding: clamp(1.75rem, 4vw, 3rem) 0;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-growth__copy,
+.lf-growth__action,
+.lf-growth__index strong {
+  transition:
+    color var(--m-signal-ms) var(--m-signal-ease),
+    transform var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-growth__index {
+  display: flex;
+  gap: var(--lf-space-4);
+  align-items: baseline;
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lf-growth__index > span {
+  color: var(--lf-bone-dim);
+}
+
+.lf-editorial .lf-growth__copy h3 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1;
+}
+
+.lf-editorial .lf-growth__copy p {
+  max-width: 58ch;
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.52;
+}
+
+.lf-editorial .lf-growth__action {
+  display: inline-flex;
+  width: fit-content;
+  min-height: var(--lf-control-min);
+  align-items: center;
+  gap: var(--lf-space-2);
+  color: var(--lf-fight);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-editorial .lf-growth__action:hover,
+.lf-editorial .lf-growth__action:focus-visible {
+  color: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-growth__action:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .lf-growth__rail > li:hover .lf-growth__copy {
+    transform: translateX(var(--lf-space-2));
+  }
+
+  .lf-growth__rail > li:hover .lf-growth__index strong {
+    color: var(--lf-fight);
+  }
+
+  .lf-growth__rail > li:hover .lf-growth__action {
+    transform: translateX(var(--lf-space-1));
+  }
+}
+
+@media (min-width: 48rem) {
+  .lf-growth {
+    padding-inline: var(--lf-margin-tablet);
+  }
+
+  .lf-growth__rail > li {
+    grid-template-columns: 7.5rem minmax(0, 1fr) minmax(10rem, 0.42fr);
+    align-items: center;
+  }
+
+  .lf-growth__index {
+    flex-direction: column;
+    gap: var(--lf-space-2);
+  }
+
+  .lf-growth__action {
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+@media (min-width: 70rem) {
+  .lf-growth {
+    grid-template-columns: minmax(22rem, 0.72fr) minmax(0, 1.28fr);
+    padding-inline: max(var(--lf-margin-desktop), calc((100vw - var(--lf-max-w)) / 2 + var(--lf-margin-desktop)));
+  }
+
+  .lf-growth__head,
+  .lf-growth__rail {
+    width: 100%;
+  }
+
+  .lf-growth__head {
+    align-self: start;
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-growth__copy,
+  .lf-growth__action,
+  .lf-growth__index strong {
+    transition: none;
+  }
+}

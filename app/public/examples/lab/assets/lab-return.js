@@ -160,6 +160,12 @@
 
     var actions = document.createElement('div');
     actions.className = 'lab-concept-shell__actions';
+    var build = makeLink(
+      'lab-concept-shell__build',
+      'Build yours',
+      '/tech-audit/?source=lab_' + encodeURIComponent(current.item.slug),
+      'Talk to Little Fight NYC about building something like ' + current.item.title
+    );
     var replay = makeButton('lab-concept-shell__replay', 'Replay');
     var previous = makeLink(
       'lab-concept-shell__nav',
@@ -173,7 +179,7 @@
       route(nextItem),
       'Next build: ' + nextItem.title
     );
-    actions.append(replay, previous, next);
+    actions.append(build, replay, previous, next);
     shell.append(back, identity, actions);
 
     var hint = document.createElement('p');

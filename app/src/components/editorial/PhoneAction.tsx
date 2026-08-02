@@ -30,7 +30,7 @@ export default function PhoneAction({
   const panelId = useId();
   const openText = () => {
     setOpen(false);
-    trackEvent("sms_click", { placement: analyticsLabel, link_url: SMS_URL });
+    trackEvent("sms_click", { placement: analyticsLabel, contact_channel: "sms" });
     window.location.href = SMS_URL;
   };
 

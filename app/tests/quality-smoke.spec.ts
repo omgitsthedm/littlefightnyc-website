@@ -55,14 +55,50 @@ const ROUTES: readonly RouteContract[] = [
     label: "Home",
     path: "/",
     title: "Little Fight NYC | Websites, IT Support & Custom Software",
-    h1: /Your business is custom\.\s*Your website should be too\./i,
-    criticalLink: 'a[href="/tech-audit/?intent=website"]',
+    h1: /Make it easier\s*for the next\s*customer to\s*choose you\./i,
+    criticalLink: 'form[action="/examples/audit/"]',
     tags: [
       "@chromium-desktop",
       "@chromium-mobile",
       "@firefox-desktop",
       "@webkit-mobile",
     ],
+  },
+  {
+    key: "website-check",
+    label: "Website Check",
+    path: "/website-check/",
+    title: "Free Small Business Website Check | Little Fight NYC",
+    h1: /See what gets in the way\./i,
+    criticalLink: 'form[action="/examples/audit/"]',
+    tags: ["@chromium-desktop", "@chromium-mobile"],
+  },
+  {
+    key: "new-business-launch",
+    label: "New business launch",
+    path: "/services/new-business-launch/",
+    title: "New Business Website & Tech Launch NYC | Little Fight NYC",
+    h1: /Open with the front door already working\./i,
+    criticalLink: 'a[href="/tech-audit/?intent=website&source=contact_block"]',
+    tags: ["@chromium-desktop"],
+  },
+  {
+    key: "ongoing-care",
+    label: "Ongoing care",
+    path: "/services/ongoing-care/",
+    title: "Small Business Website Care NYC | Little Fight NYC",
+    h1: /Keep the front door honest after launch\./i,
+    criticalLink: 'a[href="/clients/"]',
+    tags: ["@chromium-desktop"],
+  },
+  {
+    key: "clients",
+    label: "Current client support",
+    path: "/clients/",
+    title: "Current Client Support | Little Fight NYC",
+    h1: /One clean door back in\./i,
+    criticalLink: 'a[href^="mailto:support@littlefightnyc.com"]',
+    tags: ["@chromium-desktop", "@chromium-mobile"],
   },
   {
     key: "services",
@@ -345,7 +381,7 @@ test(
     expect(
       indexedRoutes,
       "The indexed route baseline changed; review the route policy and update the expected count intentionally.",
-    ).toHaveLength(130);
+    ).toHaveLength(134);
 
     type H1Mismatch = {
       path: string;
@@ -484,12 +520,12 @@ test(
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Your business is custom\.\s*Your website should be too\./i,
+        name: /Make it easier\s*for the next\s*customer to\s*choose you\./i,
       }),
     ).toBeVisible();
     await expect(
-      page.locator(".lf-hero").getByRole("link", {
-        name: /Get my website plan/i,
+      page.locator(".lf-hero").getByRole("button", {
+        name: /Check my website/i,
       }),
     ).toBeVisible();
 
@@ -648,6 +684,81 @@ test(
       submittedFlag,
       "A validation-blocked submit was recorded as a conversion",
     ).toBeNull();
+
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "Tech Audit carries safe Audit report context into submission and confirmation @chromium-desktop",
+  async ({ page, baseURL }) => {
+    const runtime = watchRuntime(page);
+    const reportId = "example-com-1a2b3c4d";
+    const auditUrl = new URL("/tech-audit/", baseURL!);
+    auditUrl.searchParams.set("intent", "website");
+    auditUrl.searchParams.set("source", "audit-lab");
+    auditUrl.searchParams.set("url", "https://example.com");
+    auditUrl.searchParams.set("report", reportId);
+
+    await page.goto(auditUrl.toString(), { waitUntil: "networkidle" });
+    const form = page.locator('form[name="tech-audit-scratch"]');
+    await expect(form).toBeVisible();
+    await expect(form.locator('input[name="report_id"]')).toHaveValue(reportId);
+
+    const action = await form.getAttribute("action");
+    const confirmationUrl = new URL(action!, baseURL!);
+    expect(confirmationUrl.pathname).toBe("/thanks/");
+    expect(confirmationUrl.searchParams.get("report")).toBe(reportId);
+
+    const submittedReport = await form.evaluate((element) => (
+      new FormData(element as HTMLFormElement).get("report_id")
+    ));
+    expect(submittedReport).toBe(reportId);
+
+    await form.locator('input[name="name"]').fill("Test Owner");
+    await form.locator('input[name="business"]').fill("Example Business");
+    await form.locator('input[name="contact"]').fill("owner@example.com");
+    await form.evaluate((element) => {
+      element.addEventListener("submit", (event) => event.preventDefault(), { once: true });
+      (element as HTMLFormElement).requestSubmit();
+    });
+    await expect.poll(() => page.evaluate(() => (
+      window.sessionStorage.getItem("lf_tech_audit_report_id")
+    ))).toBe(reportId);
+
+    // Simulate Netlify accepting the native POST while deliberately omitting
+    // the query on this navigation. The session fallback must still retain the
+    // safe report context on the confirmation route.
+    await page.evaluate(() => {
+      window.sessionStorage.setItem("lf_tech_audit_submitted", "true");
+    });
+    await page.goto(new URL("/thanks/", baseURL!).toString(), { waitUntil: "networkidle" });
+    await expect(page.getByText("Your brief and website report are safely in the queue.")).toBeVisible();
+    await expect.poll(() => page.evaluate(() => (
+      window.sessionStorage.getItem("lf_tech_audit_report_id")
+    ))).toBeNull();
+
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "Tech Audit rejects malformed Audit report context @chromium-desktop",
+  async ({ page, baseURL }) => {
+    const runtime = watchRuntime(page);
+    const auditUrl = new URL("/tech-audit/", baseURL!);
+    auditUrl.searchParams.set("intent", "website");
+    auditUrl.searchParams.set("report", "../../private<script>");
+
+    await page.goto(auditUrl.toString(), { waitUntil: "networkidle" });
+    const form = page.locator('form[name="tech-audit-scratch"]');
+    await expect(form).toBeVisible();
+    await expect(form.locator('input[name="report_id"]')).toHaveValue("");
+
+    const action = await form.getAttribute("action");
+    const confirmationUrl = new URL(action!, baseURL!);
+    expect(confirmationUrl.pathname).toBe("/thanks/");
+    expect(confirmationUrl.search).toBe("");
 
     expectRuntimeClean(runtime);
   },
@@ -1026,7 +1137,7 @@ test(
       // The first hop off Home is the one that broke; the second is the control.
       for (const [href, label] of [
         ["/about/", "first hop off Home"],
-        ["/services/", "second hop"],
+        ["/services/custom-local-websites/", "second hop"],
       ] as const) {
         await page.locator(`a[href="${href}"]`).first().click();
         await page.waitForURL(`**${href}`);
@@ -1119,6 +1230,114 @@ test(
         { message: "vendor identifiers survived consent withdrawal" },
       )
       .toEqual([]);
+
+    await context.close();
+  },
+);
+
+test(
+  "analytics consent stays measurement-only while advertising is disabled @chromium-desktop @chromium-mobile",
+  async ({ browser, baseURL }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const thirdPartyHosts = new Set<string>();
+
+    page.on("request", (request) => {
+      const host = new URL(request.url()).hostname;
+      if (host !== "localhost" && host !== "127.0.0.1") thirdPartyHosts.add(host);
+    });
+
+    await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+    const consentPanel = page.locator(".lf-consent");
+    await expect(consentPanel).toBeVisible();
+    const panelGeometry = await consentPanel.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        left: rect.left,
+        right: rect.right,
+        viewportWidth: window.innerWidth,
+        scrollWidth: element.scrollWidth,
+        clientWidth: element.clientWidth,
+      };
+    });
+    expect(panelGeometry.left).toBeGreaterThanOrEqual(0);
+    expect(panelGeometry.right).toBeLessThanOrEqual(panelGeometry.viewportWidth);
+    expect(panelGeometry.scrollWidth).toBeLessThanOrEqual(panelGeometry.clientWidth);
+    await page.getByRole("button", { name: "Allow analytics", exact: true }).click();
+
+    const measurementOnly = await page.evaluate(() => {
+      const consentUpdates = (window.dataLayer ?? [])
+        .map((entry) => Array.from(entry as ArrayLike<unknown>))
+        .filter((entry) => entry[0] === "consent" && entry[1] === "update")
+        .map((entry) => entry[2] as Record<string, string>);
+      return {
+        analytics: localStorage.getItem("lf_analytics_consent_v1"),
+        advertising: localStorage.getItem("lf_advertising_consent_v1"),
+        consentUpdates,
+        hasTikTokQueue: Boolean(window.ttq),
+        hasTikTokScript: Boolean(
+          document.querySelector('script[src*="analytics.tiktok.com"]'),
+        ),
+      };
+    });
+
+    expect(measurementOnly.analytics).toBe("granted");
+    expect(measurementOnly.advertising).toBe("denied");
+    expect(measurementOnly.consentUpdates).toContainEqual({
+      analytics_storage: "granted",
+    });
+    expect(
+      measurementOnly.consentUpdates.some((update) =>
+        update.ad_storage === "granted" ||
+        update.ad_user_data === "granted" ||
+        update.ad_personalization === "granted",
+      ),
+    ).toBe(false);
+    expect(measurementOnly.hasTikTokQueue).toBe(false);
+    expect(measurementOnly.hasTikTokScript).toBe(false);
+
+    await page.locator("#home-website-url").fill("private-fixture.example");
+    await page.locator("#home-report-email").fill("private-fixture@example.com");
+    await page.locator(".lf-hero__form").evaluate((form) => {
+      form.addEventListener("submit", (event) => event.preventDefault(), { once: true });
+    });
+    await page.getByRole("button", { name: "Check my website", exact: true }).click();
+
+    const websiteCheckEvent = await page.evaluate(() =>
+      (window.dataLayer ?? []).findLast(
+        (entry) =>
+          typeof entry === "object" &&
+          entry !== null &&
+          (entry as { event?: string }).event === "website_check_started",
+      ) as Record<string, unknown> | undefined,
+    );
+    expect(websiteCheckEvent).toEqual({
+      event: "website_check_started",
+      funnel_stage: "consideration",
+      page_path: "/",
+      placement: "home_hero",
+      source: "home",
+    });
+    expect(JSON.stringify(websiteCheckEvent)).not.toContain("private-fixture");
+
+    await page.evaluate(() => window.dispatchEvent(new Event("lf:open-consent")));
+    await expect(
+      page.getByRole("button", { name: "Analytics + advertising", exact: true }),
+    ).toHaveCount(0);
+    const advertisingState = await page.evaluate(() => ({
+      analytics: localStorage.getItem("lf_analytics_consent_v1"),
+      advertising: localStorage.getItem("lf_advertising_consent_v1"),
+      hasTikTokQueue: Boolean(window.ttq),
+      hasTikTokScript: Boolean(
+        document.querySelector('script[src*="analytics.tiktok.com"]'),
+      ),
+    }));
+
+    expect(advertisingState.analytics).toBe("granted");
+    expect(advertisingState.advertising).toBe("denied");
+    expect(advertisingState.hasTikTokQueue).toBe(false);
+    expect(advertisingState.hasTikTokScript).toBe(false);
+    expect([...thirdPartyHosts], "a preview contacted an analytics vendor").toEqual([]);
 
     await context.close();
   },
@@ -1248,14 +1467,22 @@ test(
       )
       .toEqual([
         "audit_scan_started",
+        "website_check_started",
         "audit_scan_accepted",
+        "generate_lead",
         "audit_report_ready",
+        "website_check_ready",
       ]);
 
     const events = await page.evaluate(
       () => (window as unknown as { __auditEvents: unknown[] }).__auditEvents,
     );
-    expect(events[1]).toMatchObject({
+    expect(
+      events.find(
+        (event) =>
+          (event as { eventName?: string }).eventName === "audit_scan_accepted",
+      ),
+    ).toMatchObject({
       eventName: "audit_scan_accepted",
       parameters: {
         funnel_stage: "submit",

@@ -293,8 +293,8 @@ integrations:
     data: "requester email, company/domain, grade, report URL"
     required: true
     external_proof: "EXT-001"
-  - name: "GA4, Microsoft Clarity, and TikTok"
-    direction: "consented browser -> analytics providers"
+  - name: "Google Analytics 4"
+    direction: "consented browser -> Google Analytics"
     data: "sanitized events, performance/error summaries, route and device buckets"
     required: false
     consent: "denied by default"
@@ -333,7 +333,7 @@ data_boundaries:
     rule: "Raw IP is not stored by application code; stored view history is capped."
   - id: "consented-analytics"
     classification: "sanitized behavioral and reliability telemetry"
-    flow: "browser -> GA4/Clarity/TikTok only after explicit opt-in"
+    flow: "browser -> Google Analytics 4 only after explicit opt-in"
     rule: "Form values, names, emails, phone numbers, full query URLs, and stack traces are excluded."
   - id: "service-worker-cache"
     classification: "public first-party GET responses"

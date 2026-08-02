@@ -118,6 +118,20 @@
   cursor: pointer;
 }
 
+.lab-concept-shell__build {
+  padding: 0 16px;
+  border: 1px solid rgba(96, 165, 250, 0.55) !important;
+  color: #bfdbfe !important;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.lab-concept-shell__build:hover,
+.lab-concept-shell__build:focus-visible {
+  border-color: rgba(249, 115, 22, 0.72) !important;
+  color: var(--lab-shell-ink) !important;
+  background: rgba(249, 115, 22, 0.12) !important;
+}
+
 .lab-concept-shell__nav {
   width: 44px;
   padding: 0;
@@ -182,6 +196,12 @@ html.lab-concept-embed .lab-concept-hint {
 
   .lab-concept-shell__replay {
     display: none !important;
+  }
+
+  .lab-concept-shell__build {
+    min-height: 40px !important;
+    padding-inline: 12px;
+    font-size: 13px !important;
   }
 
   .lab-concept-shell__actions {

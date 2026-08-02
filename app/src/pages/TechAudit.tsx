@@ -104,11 +104,42 @@ function composeMessage(symptom: string | null, urgency: string | null): string 
 /* Cleared by /thanks/ on confirmed success (Thanks.tsx uses the literal key
  * to avoid importing this chunk) — keep the two in sync. */
 const DRAFT_KEY = "lf_tech_audit_draft";
+/* Read by /thanks/ after the native Netlify form POST. Keep the literal key in
+ * Thanks.tsx in sync so report context survives even if an intermediary drops
+ * the action query string. */
+const REPORT_CONTEXT_KEY = "lf_tech_audit_report_id";
 const WEBSITE_INTENT = "website";
 const WEBSITE_ROUTE = auditRoutes[0];
+type LeadIntent = "website" | "support" | "consulting" | "systems" | "general";
+const LEAD_INTENTS = new Set<LeadIntent>([
+  "website",
+  "support",
+  "consulting",
+  "systems",
+  "general",
+]);
+
+function leadIntentFromQuery(params: URLSearchParams): LeadIntent {
+  const value = params.get("intent");
+  return value && LEAD_INTENTS.has(value as LeadIntent)
+    ? (value as LeadIntent)
+    : "general";
+}
 
 function queryValue(params: URLSearchParams, key: string, maxLength: number): string {
   return (params.get(key) ?? "").trim().slice(0, maxLength);
+}
+
+/**
+ * Audit report URLs carry a generated slug such as
+ * `example-com-1a2b3c4d`. Treat it as an opaque identifier: accept only the
+ * same lowercase ASCII alphabet used by the Audit pipeline, cap its size, and
+ * reject malformed input instead of trying to repair it into another report.
+ */
+function auditReportId(params: URLSearchParams): string {
+  const value = (params.get("report") ?? "").trim();
+  if (value.length === 0 || value.length > 300) return "";
+  return /^[a-z0-9](?:[a-z0-9-]{0,298}[a-z0-9])?$/.test(value) ? value : "";
 }
 
 /**
@@ -211,15 +242,22 @@ function writeDraft(draft: Draft): void {
 export default function TechAudit() {
   const [searchParams] = useSearchParams();
   const websiteUrl = sharedWebsiteUrl(searchParams);
+  const reportId = auditReportId(searchParams);
+  const confirmationPath = reportId
+    ? `/thanks/?report=${encodeURIComponent(reportId)}`
+    : "/thanks/";
   // A shared URL (from the PWA share target) is, by definition, a website the
-  // owner wants us to look at — so it drops the form into website mode too.
-  const websiteIntent =
-    searchParams.get("intent") === WEBSITE_INTENT || Boolean(websiteUrl);
+  // owner wants us to look at. An Audit report is also inherently website
+  // context, so either one drops the form into website mode.
+  const requestedIntent = leadIntentFromQuery(searchParams);
+  const leadIntent: LeadIntent = websiteUrl || reportId ? WEBSITE_INTENT : requestedIntent;
+  const websiteIntent = leadIntent === WEBSITE_INTENT;
   // Attribute a lead that arrived via the PWA share target (no explicit source,
   // but the share sheet passed text/title) so shares are measurable.
   const explicitSource = queryValue(searchParams, "source", 80);
   const leadOrigin =
     explicitSource ||
+    (reportId ? "audit-lab" : "") ||
     (websiteUrl && (searchParams.has("text") || searchParams.has("title"))
       ? "pwa_share"
       : "littlefightnyc.com");
@@ -298,7 +336,7 @@ export default function TechAudit() {
     auditStartedRef.current = true;
     trackEvent("tech_audit_started", {
       entry_point: entryPoint,
-      intent: intentMode,
+      intent: leadIntent,
       page_path: "/tech-audit/",
     });
   }
@@ -342,7 +380,7 @@ export default function TechAudit() {
     trackAuditStarted("symptom");
     trackEvent("intake_step_1", {
       selection: label,
-      intent: websiteIntent ? WEBSITE_INTENT : "general",
+      intent: leadIntent,
     });
     setSymptom(label);
     if (!messageDirty) {
@@ -356,7 +394,7 @@ export default function TechAudit() {
     trackAuditStarted("urgency");
     trackEvent("intake_step_2", {
       selection: label,
-      intent: websiteIntent ? WEBSITE_INTENT : "general",
+      intent: leadIntent,
     });
     setUrgency(label);
     if (!messageDirty) {
@@ -371,7 +409,7 @@ export default function TechAudit() {
     trackAuditStarted(`skip_step_${fromStep}`);
     trackEvent(`intake_step_${fromStep}`, {
       skipped: true,
-      intent: websiteIntent ? WEBSITE_INTENT : "general",
+      intent: leadIntent,
     });
     hapticStep();
     setStep(3);
@@ -418,8 +456,13 @@ export default function TechAudit() {
     try {
       window.sessionStorage.setItem(
         "lf_lead_intent",
-        websiteIntent ? WEBSITE_INTENT : "general",
+        leadIntent,
       );
+      if (reportId) {
+        window.sessionStorage.setItem(REPORT_CONTEXT_KEY, reportId);
+      } else {
+        window.sessionStorage.removeItem(REPORT_CONTEXT_KEY);
+      }
     } catch {
       /* Storage can be unavailable; submission still proceeds. */
     }
@@ -636,7 +679,7 @@ export default function TechAudit() {
                   className="lf-audit__form"
                   name="tech-audit-scratch"
                   method="POST"
-                  action="/thanks/"
+                  action={confirmationPath}
                   data-netlify="true"
                   netlify-honeypot="bot-field"
                   onSubmit={handleSubmit}
@@ -645,8 +688,12 @@ export default function TechAudit() {
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
-                  <input type="hidden" name="intent" value={websiteIntent ? WEBSITE_INTENT : "general"} />
+                  <input type="hidden" name="intent" value={leadIntent} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />
+                  {/* Always render the field so Netlify's build-time form
+                      detector registers it; malformed or absent context posts
+                      an empty value, never unchecked query input. */}
+                  <input type="hidden" name="report_id" value={reportId} />
                   {websiteUrl && <input type="hidden" name="website_url" value={websiteUrl} />}
                   {symptom && <input type="hidden" name="symptom" value={symptom} />}
                   {urgency && <input type="hidden" name="urgency" value={urgency} />}

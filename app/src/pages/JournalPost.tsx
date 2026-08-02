@@ -12,6 +12,7 @@ import { POST_IMAGE, CATEGORY_LABEL, CATEGORY_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
 import { authoredDate } from "@/lib/authoredDate";
 import "@/styles/editorial/journal.css";
+import "@/styles/editorial/longform-routes.css";
 
 // Meta only (no html) — the ~250KB of post bodies is split OUT of this chunk.
 type PostMeta = {
@@ -44,6 +45,99 @@ function loadBody(slug: string): Promise<string> {
 /** Long-post threshold for the sticky mini-TOC (real word count). */
 const TOC_MIN_WORDS = 1200;
 
+const RELATED_STOP_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "business",
+  "for",
+  "from",
+  "guide",
+  "how",
+  "in",
+  "is",
+  "it",
+  "nyc",
+  "of",
+  "on",
+  "or",
+  "small",
+  "the",
+  "to",
+  "what",
+  "when",
+  "why",
+  "with",
+  "your",
+]);
+
+function relatedTerms(post: PostMeta): Set<string> {
+  const words = `${post.title} ${post.description}`.toLowerCase().match(/[a-z0-9]+/g) ?? [];
+  return new Set(words.filter((word) => word.length > 2 && !RELATED_STOP_WORDS.has(word)));
+}
+
+function postTimestamp(post: PostMeta): number {
+  const date = authoredDate(post.updated) ?? authoredDate(post.published);
+  return date ? Date.parse(date.iso) : 0;
+}
+
+/**
+ * Related reading comes only from authored metadata: category, words already
+ * present in the title/dek, and the verified publish/update dates. Keep two
+ * close reads, then one different-category door when available so the module
+ * is useful without pretending a hand-curated relationship that does not exist.
+ */
+function selectRelatedPosts(posts: PostMeta[], current: PostMeta): PostMeta[] {
+  const currentTerms = relatedTerms(current);
+  const ranked = posts
+    .filter((candidate) => candidate.slug !== current.slug)
+    .map((candidate, index) => {
+      const overlap = [...relatedTerms(candidate)].filter((term) => currentTerms.has(term)).length;
+      return {
+        candidate,
+        index,
+        overlap,
+        sameCategory: candidate.category === current.category,
+        timestamp: postTimestamp(candidate),
+      };
+    })
+    .sort(
+      (a, b) =>
+        Number(b.sameCategory) - Number(a.sameCategory) ||
+        b.overlap - a.overlap ||
+        b.timestamp - a.timestamp ||
+        a.index - b.index,
+    );
+
+  const selected = ranked.slice(0, 2);
+  const selectedSlugs = new Set(selected.map(({ candidate }) => candidate.slug));
+  const complement = ranked
+    .filter(
+      ({ candidate }) =>
+        !selectedSlugs.has(candidate.slug) && candidate.category !== current.category,
+    )
+    .sort(
+      (a, b) =>
+        b.overlap - a.overlap || b.timestamp - a.timestamp || a.index - b.index,
+    )[0];
+
+  if (complement) {
+    selected.push(complement);
+    selectedSlugs.add(complement.candidate.slug);
+  }
+
+  for (const item of ranked) {
+    if (selected.length >= 3) break;
+    if (!selectedSlugs.has(item.candidate.slug)) selected.push(item);
+  }
+
+  return selected.map(({ candidate }) => candidate);
+}
+
 /**
  * Prepare the legacy body for render:
  * - howto posts: tag the FIRST <ol> so CSS can style it as the stepper rail
@@ -54,6 +148,11 @@ const TOC_MIN_WORDS = 1200;
 function preparePostBody(post: PostMeta, rawHtml: string): { html: string; toc: TocItem[] } {
   let html = prepareLegacyHtml(rawHtml, { title: post.title });
   const toc: TocItem[] = [];
+
+  // On compact screens comparison tables become horizontally scrollable.
+  // Keep that overflow region keyboard-reachable without changing the table's
+  // native semantics or any authored cells.
+  html = html.replace(/<table(?![^>]*\btabindex=)([^>]*)>/gi, '<table tabindex="0"$1>');
 
   if (post.category === "howto") {
     html = html.replace(/<ol(?=[\s>])/i, '<ol data-lf-steps=""');
@@ -117,14 +216,14 @@ export default function JournalPost() {
 
   // Only trust `prepared` when it belongs to the post currently on screen.
   const ready = prepared && prepared.slug === post.slug ? prepared : null;
-  const related = posts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const related = selectRelatedPosts(posts, post);
   const published = authoredDate(post.published);
   const updated = authoredDate(post.updated);
   const toc = ready?.toc ?? [];
   const hasToc = toc.length >= 2;
 
   return (
-    <>
+    <div className="lf-longform-route lf-longform-route--journal">
       <PageHero
         eyebrow={CATEGORY_LABEL[post.category]}
         icon={BookOpen}
@@ -246,6 +345,6 @@ export default function JournalPost() {
       )}
 
       <QuietContact />
-    </>
+    </div>
   );
 }

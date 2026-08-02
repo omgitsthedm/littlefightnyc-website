@@ -1,24 +1,66 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Globe2, Mail, MessageSquare, Phone } from "lucide-react";
-import { trackEvent } from "@/lib/analyticsClient";
+import { ArrowUpRight, CalendarDays, Globe2, Mail, MessageSquare, Phone } from "lucide-react";
 import "./QuietContact.css";
-import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import {
+  techAuditHref,
+  type AcquisitionIntent,
+} from "@/lib/acquisitionIntent";
 
-
-function openTextMessage() {
-  trackEvent("sms_click", { placement: "contact_block", link_url: SMS_HREF });
-  window.location.href = SMS_HREF;
-}
+const PLAN_COPY: Record<AcquisitionIntent, {
+  label: string;
+  title: string;
+  detail: string;
+}> = {
+  website: {
+    label: "I want a stronger website",
+    title: "Get a free website plan",
+    detail: "A human review before any paid work.",
+  },
+  support: {
+    label: "I need a practical fix",
+    title: "Get a clear tech plan",
+    detail: "A human review before any paid work.",
+  },
+  consulting: {
+    label: "I want a clearer next move",
+    title: "Get a free second opinion",
+    detail: "A human review before any paid work.",
+  },
+  systems: {
+    label: "The tools do not fit",
+    title: "Plan a system you own",
+    detail: "A human review before any paid work.",
+  },
+  clients: {
+    label: "I am already a client",
+    title: "Open the client desk",
+    detail: "Requests, access, and care in one place.",
+  },
+  general: {
+    label: "I want a clearer next move",
+    title: "Get a free second opinion",
+    detail: "A human review before any paid work.",
+  },
+};
 
 type Props = {
   heading?: string;
   lede?: string;
+  intent?: AcquisitionIntent;
 };
 
 export default function QuietContact({
   heading = "Show us what you have.",
   lede = "You do not need a brief or the right tech words. Tell us what the business needs to do, or what stopped working.",
+  intent = "general",
 }: Props) {
+  const plan = PLAN_COPY[intent];
+  const planHref = intent === "clients"
+    ? "/clients/"
+    : techAuditHref(intent, "contact_block");
+  const PlanIcon = intent === "website" ? Globe2 : MessageSquare;
+
   return (
     <section id="contact" className="lf-contact-block" aria-label="Contact Little Fight NYC">
       <div className="lf-contact-block__inner">
@@ -47,30 +89,40 @@ export default function QuietContact({
 
           <Link
             className="lf-contact-block__door lf-contact-block__door--plan"
-            to="/tech-audit/?intent=website&source=contact_block"
-            data-lf-event="website_plan_intent"
+            to={planHref}
+            data-lf-event={intent === "clients" ? undefined : "human_review_requested"}
             data-lf-label="contact_block"
           >
             <span className="lf-contact-block__door-icon" aria-hidden="true">
-              <Globe2 size={23} strokeWidth={1.8} />
+              <PlanIcon size={23} strokeWidth={1.8} />
             </span>
             <span className="lf-contact-block__door-copy">
-              <span className="lf-contact-block__door-label">I want a better setup</span>
-              <strong>Get my website plan</strong>
-              <span>The first look and recommendation are free.</span>
+              <span className="lf-contact-block__door-label">{plan.label}</span>
+              <strong>{plan.title}</strong>
+              <span>{plan.detail}</span>
             </span>
             <ArrowUpRight size={20} strokeWidth={2} aria-hidden="true" />
           </Link>
         </div>
 
         <div className="lf-contact-block__other" aria-label="More contact options">
-          <button type="button" onClick={openTextMessage}>
+          <a href={SMS_HREF} data-lf-label="contact_block_sms">
             <MessageSquare size={18} strokeWidth={1.8} aria-hidden="true" />
             Text {PHONE_DISPLAY}
-          </button>
+          </a>
           <a href="mailto:hello@littlefightnyc.com">
             <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
             hello@littlefightnyc.com
+          </a>
+          <a
+            href={BOOKING_HREF}
+            target="_blank"
+            rel="noreferrer"
+            data-lf-event="booking_started"
+            data-lf-label="contact_block"
+          >
+            <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
+            Book a free 30-minute second opinion
           </a>
         </div>
 
@@ -93,8 +145,9 @@ export default function QuietContact({
         </div>
 
         <p className="lf-contact-block__fine">
-          Consulting is free. Website work carries our 14-day promise. Your
-          domain, code, and business data stay yours.
+          {intent === "website"
+            ? "The first conversation is free. Website work carries our 14-day promise. Your domain, code, and business data stay yours."
+            : "The first conversation is free. You approve any paid work before it begins. Your accounts, code, and business data stay yours."}
         </p>
       </div>
     </section>

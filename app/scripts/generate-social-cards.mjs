@@ -12,8 +12,8 @@ const cards = [
   {
     file: "og-home.jpg",
     category: "WEBSITES / TECH SUPPORT / SOFTWARE",
-    title: "Your business is custom. Your website should be too.",
-    note: "Serious technology for small businesses.",
+    title: "Make it easier for the next customer to choose you.",
+    note: "Bookings. Visits. Orders. Consultations. Inquiries.",
     image: "images/brand-scenes/storefronts-dawn-1200.webp",
     position: "58% center",
     size: 78,
@@ -30,8 +30,8 @@ const cards = [
   {
     file: "og-websites.jpg",
     category: "CUSTOM LOCAL WEBSITES",
-    title: "A website that makes the phone ring.",
-    note: "Fast, findable, built around the real business.",
+    title: "Make the next customer’s step obvious.",
+    note: "Booking, directions, ordering, intake, or the right inquiry.",
     image: "assets/case-hair-by-rachel-charles-900.webp",
     position: "72% center",
     size: 88,

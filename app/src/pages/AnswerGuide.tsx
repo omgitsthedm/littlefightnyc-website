@@ -14,6 +14,7 @@ import {
   isTriageGuide,
 } from "@/data/answersArt";
 import "@/styles/editorial/answers.css";
+import "@/styles/editorial/longform-routes.css";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "long",
@@ -81,7 +82,7 @@ export default function AnswerGuide() {
   const verdict = ANSWER_VERDICTS[guide.slug];
 
   return (
-    <>
+    <div className="lf-longform-route lf-longform-route--answer">
       <PageHero
         eyebrow="Owner Answer"
         icon={HelpCircle}
@@ -116,7 +117,11 @@ export default function AnswerGuide() {
 
           {EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} urgent />}
 
-          <div className="lf-answer-page__sections" data-count={guide.sections.length}>
+          <div
+            className="lf-answer-page__sections"
+            data-count={guide.sections.length}
+            data-layout={triage ? "triage" : "guide"}
+          >
             {triage ? (
               <AnswerStepper sections={guide.sections} />
             ) : (
@@ -179,6 +184,6 @@ export default function AnswerGuide() {
       </section>
 
       <QuietContact />
-    </>
+    </div>
   );
 }

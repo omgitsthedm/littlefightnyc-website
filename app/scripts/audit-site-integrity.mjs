@@ -389,15 +389,14 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
 }
 
 const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
-const homeHero = "/images/brand-scenes/storefronts-dawn";
-if (
-  !homeDocument.includes(`rel="preload" href="${homeHero}-1200.webp"`) ||
-  !homeDocument.includes(`${homeHero}.webp 1672w`)
-) {
-  failures.push("home image preload does not match the current QuietHero scene");
+// The acquisition hero is intentionally type + form led. Its first real image
+// sits in the proof rail below the fold, so an eager route image competes with
+// the heading fonts and form CSS without improving LCP.
+if (/rel="preload"[^>]+as="image"[^>]+data-route-preload/i.test(homeDocument)) {
+  failures.push("home preloads an image even though the current hero is type and form led");
 }
-if (/data-route-preload[^>]+hero-soho-crosswalk/i.test(homeDocument)) {
-  failures.push("home still preloads the retired SoHo hero image");
+if (/data-route-preload[^>]+(?:hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
+  failures.push("home still preloads a retired image-led hero");
 }
 
 if (failures.length > 0) {

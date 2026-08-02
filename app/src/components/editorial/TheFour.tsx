@@ -4,9 +4,9 @@ import "./TheFour.css";
 
 const PATHS = [
   {
-    name: "A website that earns trust",
-    situation: "People hear your name, search for you, and need a reason to call.",
-    outcome: "A fast custom site that sounds like the business, works on every phone, and is easy to find.",
+    name: "A website that helps them choose",
+    situation: "People hear your name, search for you, and need to know whether to book, visit, order, call, or inquire.",
+    outcome: "A fast custom site that sounds like the business, earns trust on a phone, and makes the right next step obvious.",
     to: "/services/custom-local-websites/",
     cta: "See how websites work",
     image: "storefronts-dawn",

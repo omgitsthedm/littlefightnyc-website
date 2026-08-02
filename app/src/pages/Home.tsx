@@ -5,10 +5,11 @@ import { useEffect, useRef } from "react";
 import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
-import OwnerStories from "@/components/editorial/OwnerStories";
+import GrowthPath from "@/components/editorial/GrowthPath";
 import RecentClients from "@/components/editorial/RecentClients";
 import TheFight from "@/components/editorial/TheFight";
 import TheFour from "@/components/editorial/TheFour";
+import ClientContinuity from "@/components/editorial/ClientContinuity";
 import QuietContact from "@/components/editorial/QuietContact";
 import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
@@ -30,10 +31,11 @@ export default function Home() {
       <QuietNav />
       <main id="main-content">
         <QuietHero />
-        <OwnerStories />
-        <RecentClients />
+        <GrowthPath />
         <TheFour />
+        <RecentClients />
         <TheFight />
+        <ClientContinuity />
         <QuietContact />
       </main>
       <StickyHelpBar />

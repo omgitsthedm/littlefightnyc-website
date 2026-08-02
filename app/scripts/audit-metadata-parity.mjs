@@ -140,11 +140,11 @@ for (const page of routeMeta.pages) {
       failures.push(`${page.path}: missing prerendered primary navigation CTA`);
     } else {
       const attrs = tagAttributes(`<a ${navCta[1]} ${navCta[2]}>`);
-      expectEqual(`${page.path} nav CTA label`, cleanText(navCta[3]), "Plan my website");
+      expectEqual(`${page.path} nav CTA label`, cleanText(navCta[3]), "Check my website");
       expectEqual(
         `${page.path} nav CTA destination`,
         attrs.href,
-        "/tech-audit/?intent=website",
+        "/website-check/",
       );
     }
   }

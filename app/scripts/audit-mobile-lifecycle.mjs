@@ -5,6 +5,12 @@ const registerSource = await readFile(new URL("../public/register-sw.js", import
 const workerSource = await readFile(new URL("../public/sw.js", import.meta.url), "utf8");
 const boundarySource = await readFile(new URL("../src/components/ErrorBoundary.tsx", import.meta.url), "utf8");
 const noticeSource = await readFile(new URL("../src/components/SiteNotices.tsx", import.meta.url), "utf8");
+const consentSource = await readFile(new URL("../src/lib/consent.ts", import.meta.url), "utf8");
+const analyticsSource = await readFile(new URL("../src/lib/analytics.ts", import.meta.url), "utf8");
+const auditAnalyticsSource = await readFile(
+  new URL("../public/examples/audit/analytics.js", import.meta.url),
+  "utf8",
+);
 const forceFieldSource = await readFile(new URL("../src/kernel/ForceField.tsx", import.meta.url), "utf8");
 const parallaxSource = await readFile(new URL("../src/lib/heroParallax.ts", import.meta.url), "utf8");
 const platformSource = await readFile(new URL("../src/styles/editorial/platform.css", import.meta.url), "utf8");
@@ -41,12 +47,47 @@ assert.match(registerSource, /\.register\("\/sw\.js"\)/, "service worker must re
 assert.match(
   noticeSource,
   /const \[visible, setVisible\] = useState\(false\)/,
-  "analytics preferences must stay closed until the visitor opens them from the footer",
+  "privacy preferences must start closed before the intentional first-visit delay",
 );
-assert.doesNotMatch(
+assert.match(
   noticeSource,
   /getAnalyticsConsent\(\) === null/,
-  "a first visit must not trigger an analytics overlay",
+  "a first visit must expose the optional consent choices after the delay",
+);
+assert.match(
+  noticeSource,
+  /saveAdvertisingConsent\("denied"\);\s*if \(choices\.analytics !== "granted"\) saveAnalyticsConsent\("granted"\);/,
+  "Allow analytics must explicitly keep advertising denied",
+);
+assert.match(
+  consentSource,
+  /ADVERTISING_MEASUREMENT_AVAILABLE = false/,
+  "advertising measurement must stay disabled until the destination account is verified",
+);
+assert.match(
+  analyticsSource,
+  /CLARITY_MEASUREMENT_AVAILABLE = false/,
+  "Clarity must stay disabled until the destination account and data boundary are verified",
+);
+assert.doesNotMatch(
+  analyticsSource,
+  /configuredTikTokPixelId \|\| "[A-Z0-9]{12,}"/,
+  "TikTok must not have an unverified hardcoded pixel fallback",
+);
+assert.doesNotMatch(
+  consentSource,
+  /ad_storage: value,\s*analytics_storage: value/,
+  "analytics consent must never grant Google advertising storage",
+);
+assert.match(
+  analyticsSource,
+  /function bootTikTokPixel\(\)[\s\S]*?getAdvertisingConsent\(\) !== "granted"/,
+  "TikTok must require advertising consent rather than analytics consent",
+);
+assert.match(
+  auditAnalyticsSource,
+  /ad_storage: "denied",\s*analytics_storage: value,\s*ad_user_data: "denied",\s*ad_personalization: "denied"/,
+  "the standalone Audit measurement client must keep ad consent denied",
 );
 
 assert.match(

@@ -8,13 +8,21 @@
     page_view: true,
     audit_scan_started: true,
     audit_scan_accepted: true,
+    generate_lead: true,
     audit_report_ready: true,
-    audit_scan_failed: true
+    audit_scan_failed: true,
+    website_check_started: true,
+    website_check_ready: true,
+    report_opened: true,
+    human_review_requested: true,
+    booking_started: true,
+    service_inquiry: true
   };
   var SAFE_PARAMETER_KEYS = {
     failure_category: true,
     funnel_stage: true,
     page_path: true,
+    placement: true,
     response_status: true,
     source: true
   };
@@ -45,10 +53,10 @@
   function updateGoogleConsent(value) {
     ensureGtag();
     global.gtag("consent", "update", {
-      ad_storage: value,
+      ad_storage: "denied",
       analytics_storage: value,
-      ad_user_data: value,
-      ad_personalization: value
+      ad_user_data: "denied",
+      ad_personalization: "denied"
     });
   }
 
@@ -110,6 +118,8 @@
     });
     safe.page_path = global.location.pathname;
     safe.source = "audit_lab";
+    safe.placement = safe.placement ||
+      (global.location.pathname.indexOf("/report/") !== -1 ? "audit_report" : "audit_lab");
     return safe;
   }
 

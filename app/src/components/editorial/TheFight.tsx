@@ -60,7 +60,7 @@ export default function TheFight() {
           <Link
             to="/tech-audit/"
             className="lf-fight__cta"
-            data-lf-event="tech_audit_intent"
+            data-lf-event="human_review_requested"
             data-lf-label="home_process"
           >
             Get a free second opinion

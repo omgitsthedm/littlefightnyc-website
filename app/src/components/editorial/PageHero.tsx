@@ -60,7 +60,7 @@ export default function PageHero({
   displayName,
   chips,
 }: Props) {
-  const ref = useScrollReveal<HTMLDivElement>({ revealOnMount: true });
+  const ref = useScrollReveal<HTMLElement>({ revealOnMount: true });
 
   // Full-bleed backdrop: responsive variants ship at 480/640/900 — include the
   // original full-size asset so big screens still get a sharp image.
@@ -83,7 +83,7 @@ export default function PageHero({
     .join(" ");
 
   return (
-    <section className={`lf-pagehero ${variantClass}`}>
+    <section ref={ref} className={`lf-pagehero ${variantClass}`}>
       {backdrop && (
         <div
           className="lf-pagehero__backdrop"
@@ -106,7 +106,7 @@ export default function PageHero({
         </div>
       )}
 
-      <div ref={ref} className="lf-pagehero__inner">
+      <div className="lf-pagehero__inner">
         <div className="lf-pagehero__text">
           {(eyebrow || Icon) && (
             <p className="lf-pagehero__eyebrow">
@@ -157,7 +157,7 @@ export default function PageHero({
 
         {image && (
           <div className="lf-pagehero__image">
-            <picture>
+            <picture className="lf-pagehero__picture">
               {image.mobileWidths && (
                 <source
                   media="(max-width: 767px)"

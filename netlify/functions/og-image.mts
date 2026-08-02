@@ -1,5 +1,6 @@
 // og-image.mts — Dynamic SVG OG image for audit report social sharing
-// Returns a branded 1200×630 SVG with company name, score, and grade.
+// Returns a branded 1200×630 SVG with company name and measured score/grade,
+// or an honest N/A state when Lighthouse was unavailable.
 // Used by og:image meta tags on audit report pages.
 //
 // Endpoint: /examples/audit/api/og?slug=company-domain-abc123
@@ -10,8 +11,9 @@ import { getStore } from "@netlify/blobs";
 interface AuditMeta {
   domain: string;
   companyName: string;
-  grade: string;
-  overallScore: number;
+  grade: string | null;
+  overallScore: number | null;
+  measurementStatus?: "complete" | "partial" | "unavailable";
   createdAt: string;
   expiresAt: string;
 }
@@ -25,14 +27,15 @@ function escSvg(s: string): string {
     .replace(/'/g, "&apos;");
 }
 
-function gradeColor(grade: string): string {
+function gradeColor(grade: string | null): string {
+  if (!grade) return "#A1A1AA";
   if (grade.startsWith("A")) return "#22c55e";
   if (grade.startsWith("B")) return "#eab308";
   if (grade.startsWith("C")) return "#f97316";
   return "#ef4444";
 }
 
-function generateOGSvg(meta: AuditMeta): string {
+export function generateOGSvg(meta: AuditMeta): string {
   const gc = gradeColor(meta.grade);
   const company = escSvg(
     meta.companyName.length > 32
@@ -40,6 +43,31 @@ function generateOGSvg(meta: AuditMeta): string {
       : meta.companyName,
   );
   const domain = escSvg(meta.domain);
+  const hasScore =
+    typeof meta.overallScore === "number" &&
+    Number.isFinite(meta.overallScore) &&
+    meta.overallScore >= 0 &&
+    meta.overallScore <= 100;
+  const scoreArc = hasScore
+    ? `<circle cx="900" cy="280" r="120" fill="none" stroke="${gc}" stroke-width="8"
+    stroke-dasharray="${Math.round(((meta.overallScore as number) / 100) * 754)} 754"
+    stroke-linecap="round" transform="rotate(-90 900 280)"/>`
+    : "";
+  const scoreValue = hasScore ? String(meta.overallScore) : "N/A";
+  const scoreSuffix = hasScore
+    ? "/100"
+    : meta.measurementStatus === "partial"
+      ? "PARTIAL DATA"
+      : "NOT MEASURED";
+  const gradeBadge = hasScore
+    ? meta.grade
+      ? `<rect x="855" y="420" width="90" height="40" rx="8" fill="${gc}" opacity="0.15"/>
+  <text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
+    font-size="22" font-weight="700" fill="${gc}">Grade ${escSvg(meta.grade)}</text>`
+      : `<text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
+    font-size="18" font-weight="700" fill="#A1A1AA">Grade unavailable</text>`
+    : `<text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
+    font-size="18" font-weight="700" fill="#A1A1AA">${meta.measurementStatus === "partial" ? "No overall score" : "No score substituted"}</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
@@ -61,18 +89,14 @@ function generateOGSvg(meta: AuditMeta): string {
 
   <!-- Score circle -->
   <circle cx="900" cy="280" r="120" fill="none" stroke="#27272A" stroke-width="8"/>
-  <circle cx="900" cy="280" r="120" fill="none" stroke="${gc}" stroke-width="8"
-    stroke-dasharray="${Math.round((meta.overallScore / 100) * 754)} 754"
-    stroke-linecap="round" transform="rotate(-90 900 280)"/>
+  ${scoreArc}
   <text x="900" y="265" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="72" font-weight="200" fill="${gc}">${meta.overallScore}</text>
+    font-size="72" font-weight="200" fill="${gc}">${scoreValue}</text>
   <text x="900" y="305" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="18" font-weight="500" fill="#A1A1AA" letter-spacing="0.1em">/100</text>
+    font-size="18" font-weight="500" fill="#A1A1AA" letter-spacing="0.1em">${scoreSuffix}</text>
 
   <!-- Grade badge -->
-  <rect x="855" y="420" width="90" height="40" rx="8" fill="${gc}" opacity="0.15"/>
-  <text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="22" font-weight="700" fill="${gc}">Grade ${escSvg(meta.grade)}</text>
+  ${gradeBadge}
 
   <!-- Company name -->
   <text x="80" y="240" font-family="Inter,system-ui,-apple-system,sans-serif" font-size="48" font-weight="700"
@@ -91,7 +115,7 @@ function generateOGSvg(meta: AuditMeta): string {
 
   <!-- Subtitle -->
   <text x="80" y="380" font-family="system-ui,-apple-system,sans-serif" font-size="18"
-    fill="#A1A1AA">Performance · Mobile · SEO · Security</text>
+    fill="#A1A1AA">Performance · SEO · Accessibility · Best Practices</text>
 
   <!-- LiFi branding -->
   <text x="80" y="560" font-family="system-ui,-apple-system,sans-serif" font-size="14"

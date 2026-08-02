@@ -8,6 +8,7 @@ import QuietContact from "@/components/editorial/QuietContact";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
+import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
 import "@/styles/editorial/service-detail.css";
 
 const FIGURE_CAPTION: Record<string, string> = {
@@ -87,7 +88,7 @@ function WebsiteAcquisitionBlock() {
               <Link
                 className="lf-sd-web__primary"
                 to="/tech-audit/?intent=website&source=website_service_proof"
-                data-lf-event="website_plan_intent"
+                data-lf-event="human_review_requested"
                 data-lf-label="website_service_proof"
               >
                 Get my website plan
@@ -302,6 +303,7 @@ export default function ServiceDetail() {
       <QuietContact
         heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what’s broken."}
         lede={CLOSING_LINE[service.slug]?.lede}
+        intent={acquisitionIntentForServiceSlug(service.slug)}
       />
     </>
   );

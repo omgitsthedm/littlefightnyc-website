@@ -24,6 +24,7 @@ const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
 const Areas = lazyRoute(() => import("@/pages/Areas"));
 const CaseStudyDetail = lazyRoute(() => import("@/pages/CaseStudyDetail"));
+const Clients = lazyRoute(() => import("@/pages/Clients"));
 const Contact = lazyRoute(() => import("@/pages/Contact"));
 const EditorialShell = lazyRoute(() => import("@/components/editorial/EditorialShell"));
 const Espanol = lazyRoute(() => import("@/pages/Espanol"));
@@ -35,13 +36,16 @@ const JournalPost = lazyRoute(() => import("@/pages/JournalPost"));
 const Legal = lazyRoute(() => import("@/pages/Legal"));
 const Library = lazyRoute(() => import("@/pages/Library"));
 const Nationwide = lazyRoute(() => import("@/pages/Nationwide"));
+const NewBusinessLaunch = lazyRoute(() => import("@/pages/NewBusinessLaunch"));
 const NotFound = lazyRoute(() => import("@/pages/NotFound"));
+const OngoingCare = lazyRoute(() => import("@/pages/OngoingCare"));
 const ServiceAreaDetail = lazyRoute(() => import("@/pages/ServiceAreaDetail"));
 const ServiceDetail = lazyRoute(() => import("@/pages/ServiceDetail"));
 const Services = lazyRoute(() => import("@/pages/Services"));
 const StudioDetail = lazyRoute(() => import("@/pages/StudioDetail"));
 const TechAudit = lazyRoute(() => import("@/pages/TechAudit"));
 const Thanks = lazyRoute(() => import("@/pages/Thanks"));
+const WebsiteCheck = lazyRoute(() => import("@/pages/WebsiteCheck"));
 const Zhongwen = lazyRoute(() => import("@/pages/Zhongwen"));
 
 function RouteFallback() {
@@ -100,6 +104,8 @@ export default function App() {
           }
         >
           <Route path="services" element={route(Services)} />
+          <Route path="services/new-business-launch" element={route(NewBusinessLaunch)} />
+          <Route path="services/ongoing-care" element={route(OngoingCare)} />
           <Route path="services/:slug" element={route(ServiceDetail)} />
           <Route path="work" element={<Navigate to="/services/" replace />} />
           <Route path="websites" element={<Navigate to="/services/custom-local-websites/" replace />} />
@@ -118,6 +124,7 @@ export default function App() {
               </Suspense>
             }
           />
+          <Route path="website-check" element={route(WebsiteCheck)} />
           {/* Fit Check renamed to Tech Audit (2026-07-12) — SPA-side backup
               for the _redirects 301 so in-app history links never dead-end. */}
           <Route path="fit-check" element={<Navigate to="/tech-audit/" replace />} />
@@ -138,6 +145,7 @@ export default function App() {
           <Route path="studio" element={<Navigate to="/services/#studio" replace />} />
           <Route path="studio/:slug" element={route(StudioDetail)} />
           <Route path="about" element={route(About)} />
+          <Route path="clients" element={route(Clients)} />
           <Route path="contact" element={route(Contact)} />
           <Route path="areas" element={route(Areas)} />
           <Route path="areas/:areaSlug/:serviceSlug" element={route(ServiceAreaDetail)} />

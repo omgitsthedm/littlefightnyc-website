@@ -7,6 +7,17 @@ import { trackEvent } from "@/lib/analyticsClient";
 import "@/styles/editorial/thanks.css";
 import { PHONE_DISPLAY } from "@/data/contact";
 
+/* Mirrors REPORT_CONTEXT_KEY and the report-slug contract in TechAudit.tsx.
+ * Keep this local so the lightweight confirmation route does not import the
+ * full Tech Audit page chunk. */
+const REPORT_CONTEXT_KEY = "lf_tech_audit_report_id";
+
+function safeReportId(value: string | null): string {
+  const trimmed = (value ?? "").trim();
+  if (trimmed.length === 0 || trimmed.length > 300) return "";
+  return /^[a-z0-9](?:[a-z0-9-]{0,298}[a-z0-9])?$/.test(trimmed) ? trimmed : "";
+}
+
 export default function Thanks() {
   const [leadIntent] = useState(() => {
     try {
@@ -15,7 +26,16 @@ export default function Thanks() {
       return "general";
     }
   });
-  const websiteIntent = leadIntent === "website";
+  const [reportId] = useState(() => {
+    const queryReport = safeReportId(new URLSearchParams(window.location.search).get("report"));
+    if (queryReport) return queryReport;
+    try {
+      return safeReportId(window.sessionStorage.getItem(REPORT_CONTEXT_KEY));
+    } catch {
+      return "";
+    }
+  });
+  const websiteIntent = leadIntent === "website" || Boolean(reportId);
 
   useEffect(() => {
     let cameFromTechAudit = false;
@@ -29,6 +49,7 @@ export default function Thanks() {
         // Literal key mirrors DRAFT_KEY in TechAudit.tsx — keep in sync.)
         window.sessionStorage.removeItem("lf_tech_audit_draft");
         window.sessionStorage.removeItem("lf_lead_intent");
+        window.sessionStorage.removeItem(REPORT_CONTEXT_KEY);
       }
     } catch {
       cameFromTechAudit = false;
@@ -80,7 +101,11 @@ export default function Thanks() {
             <li className="is-complete">
               <span aria-hidden="true"><CheckCircle2 size={19} strokeWidth={2} /></span>
               <strong>Received</strong>
-              <small>Your brief is safely in the queue.</small>
+              <small>
+                {reportId
+                  ? "Your brief and website report are safely in the queue."
+                  : "Your brief is safely in the queue."}
+              </small>
             </li>
             <li>
               <span aria-hidden="true">02</span>

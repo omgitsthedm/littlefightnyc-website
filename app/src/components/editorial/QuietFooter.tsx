@@ -25,8 +25,8 @@ function useIsMobile(): boolean {
   );
 }
 
-/* Curated, not exhaustive (cleaned up 2026-07-13): the hubs carry
- * the long lists — the footer names the four services and points at hubs.
+/* Curated, not exhaustive: the hubs carry the long lists — the footer names
+ * the acquisition and continuity paths owners most often need.
  * No per-case-study, per-term, or full-neighborhood enumerations here. */
 const footerGroups: Array<{
   title: string;
@@ -39,12 +39,15 @@ const footerGroups: Array<{
       { label: "Broken tech", to: "/services/it-support/" },
       { label: "Free second opinion", to: "/services/tech-consulting/" },
       { label: "Software You Own", to: "/services/business-systems/" },
+      { label: "New business launch", to: "/services/new-business-launch/" },
+      { label: "Ongoing care", to: "/services/ongoing-care/" },
     ],
   },
   {
     title: "Work",
     links: [
       { label: "See every project", to: "/examples/" },
+      { label: "Check my website", to: "/website-check/" },
       { label: "Try the Lab", to: "/examples/lab/", external: true },
       { label: "See a site audit", to: "/examples/audit/", external: true },
     ],
@@ -55,6 +58,7 @@ const footerGroups: Array<{
       { label: "Plain-English answers", to: "/library/" },
       { label: "NYC Neighborhoods", to: "/areas/" },
       { label: "Websites Nationwide", to: "/nationwide/" },
+      { label: "Current client desk", to: "/clients/" },
     ],
   },
 ];
@@ -72,7 +76,7 @@ export default function QuietFooter() {
             <p>New York City · Since 2021 · Still picking up the phone</p>
           </div>
           <nav className="lf-quiet-foot__company" aria-label="Company and legal">
-            <Link to="/tech-audit/">Get a free second opinion</Link>
+            <Link to="/website-check/">Check my website</Link>
             <Link to="/about/">About</Link>
             <Link to="/contact/">Contact</Link>
             {/* /privacy/ and /terms/ render this same page and canonicalise to

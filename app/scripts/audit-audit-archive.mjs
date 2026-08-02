@@ -8,6 +8,11 @@ const publicRoot = path.join(appRoot, "public");
 const auditRoot = path.join(publicRoot, "examples", "audit");
 const functionsRoot = path.join(repoRoot, "netlify", "functions");
 const netlifyConfig = fs.readFileSync(path.join(repoRoot, "netlify.toml"), "utf8");
+const appRoutes = new Set(
+  JSON.parse(
+    fs.readFileSync(path.join(appRoot, "src", "data", "seo-pages.json"), "utf8"),
+  ).pages.map((page) => page.path),
+);
 
 function walk(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -18,7 +23,12 @@ function walk(directory) {
 
 function existsAsRoute(target) {
   if (fs.existsSync(target) && fs.statSync(target).isFile()) return true;
-  return fs.existsSync(path.join(target, "index.html"));
+  if (fs.existsSync(path.join(target, "index.html"))) return true;
+
+  const publicRelative = path.relative(publicRoot, target);
+  if (publicRelative.startsWith("..") || path.isAbsolute(publicRelative)) return false;
+  const route = `/${publicRelative.split(path.sep).join("/")}`.replace(/\/?$/, "/");
+  return appRoutes.has(route);
 }
 
 function localTarget(reference, sourceFile) {
@@ -114,9 +124,16 @@ for (const endpoint of ["status", "run-audit"]) {
 if (!index.includes('/examples/audit/analytics.js')) {
   failures.push("Audit form is missing the consent-aware analytics bridge");
 }
+if (/href=["']\/examples\/audit\/(?:ivy-infusions|marcus-medical|premier-plastic-surgery|skinsmart-dermatology|the-cosmetic-clinic)\//i.test(index)) {
+  failures.push("Audit form still links to a retired named-business audit mockup");
+}
+if (!index.includes("No score substituted")) {
+  failures.push("Audit form is missing the unavailable-measurement truth state");
+}
 for (const eventName of [
   "audit_scan_started",
   "audit_scan_accepted",
+  "generate_lead",
   "audit_report_ready",
   "audit_scan_failed",
 ]) {

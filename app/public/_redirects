@@ -87,8 +87,11 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /lab             /examples/lab/             301
 
 # --- Legacy article URLs — each legacy slug now lives at /journal/{slug}/
+/blog/cybersecurity-for-small-business       /journal/cybersecurity-for-small-business/  301
 /blog/cybersecurity-for-small-business.html  /journal/cybersecurity-for-small-business/  301
+/blog/nyc-small-business-digital             /journal/nyc-small-business-digital/        301
 /blog/nyc-small-business-digital.html        /journal/nyc-small-business-digital/        301
+/blog/protecting-kids-from-ai                /journal/protecting-kids-from-ai/           301
 /blog/protecting-kids-from-ai.html           /journal/protecting-kids-from-ai/           301
 /blog/*                                      /journal/                                   301
 
@@ -148,6 +151,16 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /examples/lab/concepts/tech-support/* /examples/lab/ 301
 /examples/lab/concepts/hero/* /examples/lab/ 301
 /examples/lab/concepts/chef-drew/* /examples/lab/ 301
+
+# --- Retired named-business audit mockups (2026-08-02). These preserved design
+# studies contain old synthetic commercial estimates and category labels that
+# do not meet the current evidence contract. Keep the archive files in source,
+# but never serve them as current Little Fight analysis.
+/examples/audit/ivy-infusions/*             /website-check/ 301!
+/examples/audit/marcus-medical/*            /website-check/ 301!
+/examples/audit/premier-plastic-surgery/*   /website-check/ 301!
+/examples/audit/skinsmart-dermatology/*     /website-check/ 301!
+/examples/audit/the-cosmetic-clinic/*       /website-check/ 301!
 
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404

@@ -107,6 +107,7 @@ export default function StudioDetail() {
       <QuietContact
         heading="Does your software make the work harder?"
         lede="Show us the spreadsheet, subscription, or repeated task. We will tell you whether a focused tool is worth building."
+        intent="systems"
       />
     </>
   );

@@ -194,7 +194,7 @@ export const ANSWER_VERDICTS: Record<string, AnswerVerdict> = {
       {
         name: "Hire a designer",
         goodIf: [
-          "The site must produce revenue from calls, bookings, or orders",
+          "The site must produce revenue from bookings, visits, calls, orders, or inquiries",
           "You need custom features, local search work, or booking and ordering integrations",
           "A half-built draft has been quietly stealing your Sundays",
         ],
@@ -414,7 +414,7 @@ export const ANSWER_VERDICTS: Record<string, AnswerVerdict> = {
       {
         name: "Small studio",
         goodIf: [
-          "You need a site that gets your phone ringing",
+          "You need a site that moves the right customer to the right next step",
           "You want one accountable person, a shorter timeline, and promises in writing",
         ],
         skipIf: [

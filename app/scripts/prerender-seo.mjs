@@ -719,8 +719,7 @@ function foundationSchemas(page) {
 }
 
 function routeImagePreload(page) {
-  const homeHero = "/images/brand-scenes/storefronts-dawn.webp";
-  const asset = page.path === "/" ? homeHero : page.image;
+  const asset = page.image;
 
   // The same static file serves both /tech-audit/ modes. The general intake
   // renders After Hours Agenda while ?intent=website renders Hair By Rachel
@@ -734,16 +733,10 @@ function routeImagePreload(page) {
   if (!asset?.endsWith(".webp")) return "";
 
   if (page.path === "/") {
-    // Mirror QuietHero and the prerender snapshot exactly so first paint,
-    // hydration, and the LCP preload all resolve to one storefront scene.
-    const base = "/images/brand-scenes/storefronts-dawn";
-    const srcset = [
-      `${base}-480.webp 480w`,
-      `${base}-900.webp 900w`,
-      `${base}-1200.webp 1200w`,
-      `${base}.webp 1672w`,
-    ].join(", ");
-    return `<link rel="preload" href="${base}-1200.webp" imagesrcset="${srcset}" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+    // The selected home direction is type + form led. The first real image is
+    // the proof rail below the acquisition surface, so preloading it would
+    // compete with the heading fonts and form CSS without improving LCP.
+    return "";
   }
 
   // The website service now leads with real shipped work instead of the
@@ -957,6 +950,8 @@ const primaryLinks = [
   { href: "/services/it-support/", label: "IT Support" },
   { href: "/services/custom-local-websites/", label: "Custom Local Websites" },
   { href: "/services/business-systems/", label: "Business Systems" },
+  { href: "/services/new-business-launch/", label: "New Business Launch" },
+  { href: "/services/ongoing-care/", label: "Ongoing Care" },
   { href: "/services/#studio", label: "Studio" },
   { href: "/examples/", label: "Examples" },
   { href: "/areas/", label: "All 18 Neighborhoods" },
@@ -966,6 +961,7 @@ const primaryLinks = [
   { href: "/zh/", label: "中文" },
   { href: "/library/", label: "The Library" },
   { href: "/tech-audit/", label: "Free Tech Audit" },
+  { href: "/clients/", label: "Current Client Desk" },
   { href: "/contact/", label: "Contact" },
   // One entry, pointing at the canonical. /privacy/ and /terms/ render this
   // same page and canonicalise to /legal/, so two entries meant every page
@@ -1524,11 +1520,11 @@ function legalBlock(page) {
     <h2>Who receives a form submission</h2>
     <p>Forms on this site are handled by Netlify, which hosts the site and stores each submission so Little Fight can read and reply to it. Nothing you send through a form is sold, and it is not used for advertising.</p>
     <p>The <a href="/examples/audit/">Website Audit Lab</a> is a separate tool with its own data flow — it takes a website address and an email address, and involves services this page does not cover. <a href="/examples/audit/privacy/">What the Audit Lab collects</a> is written out separately.</p>
-    <h2>Analytics and advertising pixels</h2>
-    <p>Little Fight uses analytics and advertising tools, including Google Analytics and the TikTok Pixel, to understand which pages are useful, which contact paths work, and whether marketing is sending the right people to the site.</p>
+    <h2>Analytics</h2>
+    <p>Little Fight uses Google Analytics, after consent, to understand which pages are useful and which contact paths work. Microsoft Clarity and the TikTok Pixel are not active on this site.</p>
     <p>These tools may record page views, approximate device/browser details, referral information, and events such as phone clicks, email clicks, Tech Audit or contact button clicks, and form submits. Little Fight uses this information for measurement, reporting, and improving marketing, not to sell personal information.</p>
     <h2>Cookies, pixels, and opt-outs</h2>
-    <p>Analytics is off by default for a first-time visitor. Google Analytics, Microsoft Clarity, and the TikTok Pixel load only after you choose &ldquo;Allow analytics.&rdquo; If you choose &ldquo;Essential only,&rdquo; the site still works and those measurement scripts do not load. You can change the choice at any time from this page.</p>
+    <p>Analytics is off by default for a first-time visitor. Google Analytics loads only after you choose &ldquo;Allow analytics.&rdquo; If you choose &ldquo;Essential only,&rdquo; the site still works and the optional script does not load. You can change the choice at any time from this page.</p>
     <h2>What not to send</h2>
     <p>Do not send passwords, recovery codes, API keys, credit card numbers, bank details, protected health information, or private customer data through any public form on this site.</p>
     <h2 id="terms">Work and scope</h2>
@@ -1743,22 +1739,22 @@ function snapshot(page) {
     .lf-seo .lf-seo__phone { min-height: 44px; display: inline-flex; align-items: center; font-size: 16px; font-weight: 600; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-cta { min-height: 44px; display: inline-flex; align-items: center; background: #F97316; color: #050507; font-weight: 700; font-size: 16px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
     @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
-    .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; display: flex; align-items: flex-end; isolation: isolate; }
-    .lf-seo .lf-seo__home-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) saturate(0.95) brightness(0.62); z-index: 0; }
-    .lf-seo .lf-seo__home-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.16) 0%, transparent 55%), linear-gradient(180deg, rgba(5, 5, 7, 0.05) 0%, rgba(5, 5, 7, 0.45) 60%, rgba(5, 5, 7, 0.88) 100%); }
-    .lf-seo .lf-seo__home-hero-copy { position: relative; z-index: 2; padding: 96px 20px 120px; }
+    .lf-seo .lf-seo__home-hero { min-height: min(100svh, 760px); margin: -32px -20px 32px; border-bottom: 1px solid #27272A; background: #050507; }
+    .lf-seo .lf-seo__home-hero-copy { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; align-items: center; width: min(100%, 1440px); min-height: inherit; margin: 0 auto; padding: 72px 20px; box-sizing: border-box; }
+    .lf-seo .lf-seo__home-kicker { font-family: ${mono}; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: #60A5FA; margin: 0 0 22px; }
     .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98; letter-spacing: 0; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
     .lf-seo h1 em { color: #F97316; font-style: italic; font-weight: 700; }
-    .lf-seo .lf-seo__home-hero h1 { max-width: none; }
+    .lf-seo .lf-seo__home-hero h1 { max-width: 9ch; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.87; text-transform: uppercase; margin: 0 0 28px; }
     .lf-seo .lf-seo__home-hero h1 em { font-style: normal; display: block; }
-    .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 30px; }
-    .lf-seo .lf-seo__home-cta { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 30px; }
-    .lf-seo .lf-seo__pill { display: flex; flex-direction: column; gap: 3px; padding: 17px 26px; border-radius: 18px; background: rgba(20, 22, 28, 0.72); border: 1px solid #27272A; color: #FFFFFF; font-weight: 700; font-size: 18px; min-width: 240px; text-decoration: none; }
-    .lf-seo .lf-seo__pill span { font-weight: 400; font-size: 16px; color: #A1A1AA; }
-    .lf-seo .lf-seo__pill--primary { background: #F97316; border-color: #F97316; color: #050507; }
-    .lf-seo .lf-seo__pill--primary span { color: rgba(5, 5, 7, 0.72); }
-    .lf-seo .lf-seo__home-trust { display: flex; flex-wrap: wrap; gap: 10px 22px; list-style: none; padding: 0; margin: 0; }
-    .lf-seo .lf-seo__home-trust li { font-family: ${mono}; font-size: 16px; letter-spacing: 0.02em; color: #A1A1AA; }
+    .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 16px; }
+    .lf-seo .lf-seo__home-outcomes { color: #F97316; font-weight: 700; margin: 0; }
+    .lf-seo .lf-seo__home-check { display: grid; gap: 12px; padding: clamp(24px, 4vw, 42px); border: 1px solid #27272A; border-radius: 32px; background: #12141A; }
+    .lf-seo .lf-seo__home-check h2 { max-width: none; margin: 0 0 8px; font-size: clamp(2rem, 4vw, 3.2rem); }
+    .lf-seo .lf-seo__home-check p { margin: 0 0 10px; }
+    .lf-seo .lf-seo__home-check label { margin-top: 8px; color: #A1A1AA; font-family: ${mono}; font-size: 16px; text-transform: uppercase; }
+    .lf-seo .lf-seo__home-check input { min-height: 54px; padding: 0 16px; border: 1px solid #27272A; border-radius: 12px; color: #FFFFFF; background: #050507; font: inherit; font-size: 16px; }
+    .lf-seo .lf-seo__home-check button { min-height: 56px; margin-top: 8px; border: 0; border-radius: 12px; color: #050507; background: #F97316; font-family: ${display}; font-size: 18px; font-weight: 700; text-transform: uppercase; }
+    @media (min-width: 1024px) { .lf-seo .lf-seo__home-hero-copy { grid-template-columns: minmax(0, 1.08fr) minmax(28rem, 0.92fr); padding: 88px 64px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(5.8rem, 7.2vw, 8.3rem); } }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
@@ -1773,32 +1769,27 @@ function snapshot(page) {
 
   const homeBody = `
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC">
-      <picture>
-        <img
-          src="/images/brand-scenes/storefronts-dawn.webp"
-          srcset="/images/brand-scenes/storefronts-dawn-480.webp 480w, /images/brand-scenes/storefronts-dawn-900.webp 900w, /images/brand-scenes/storefronts-dawn-1200.webp 1200w, /images/brand-scenes/storefronts-dawn.webp 1672w"
-          sizes="100vw"
-          alt=""
-          width="1672"
-          height="941"
-          fetchpriority="high"
-        />
-      </picture>
       <div class="lf-seo__home-hero-copy">
-        <h1>Your business is custom. <em>Your website should be too.</em></h1>
-        <p class="lf-seo__home-sub">Fast, findable websites. Urgent tech help. Software you own when monthly tools cost more than they solve.</p>
-        <div class="lf-seo__home-cta">
-          <a class="lf-seo__pill lf-seo__pill--primary" href="/tech-audit/?intent=website">Plan my website<span>Free first read. Clear next step.</span></a>
-          <a class="lf-seo__pill" href="tel:${site.phone}">Fix broken tech<span>Call ${site.phoneDisplay}</span></a>
+        <div class="lf-seo__home-promise">
+          <p class="lf-seo__home-kicker">Street-level technology</p>
+          <h1>Make it easier for the next customer to <em>choose you.</em></h1>
+          <p class="lf-seo__home-sub">A website that earns trust. Technology that keeps the day moving.</p>
+          <p class="lf-seo__home-outcomes">Bookings. Visits. Orders. Consultations. Inquiries.</p>
         </div>
-        <ul class="lf-seo__home-trust">
-          <li>NYC. We show up.</li>
-          <li>We call back in 2 hours</li>
-          <li>You own what we build</li>
-        </ul>
+        <form class="lf-seo__home-check" action="/examples/audit/" method="get">
+          <input type="hidden" name="source" value="home_nojs">
+          <p class="lf-seo__home-kicker">Free website check</p>
+          <h2>See what gets in the way.</h2>
+          <p>Measure the public page and get the available findings in plain English.</p>
+          <label for="seo-home-url">Website URL</label>
+          <input id="seo-home-url" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com" required>
+          <label for="seo-home-email">Email for report (optional here)</label>
+          <input id="seo-home-email" type="email" autocomplete="email" placeholder="you@company.com">
+          <button type="submit">Check my website</button>
+        </form>
       </div>
     </section>
-    <p>Websites, IT support, Google visibility, and business systems — sized for what a corner shop can afford. Founded 2021. Manhattan, New York. Little Fight helps owner-operated teams keep what works, connect what matters, replace what drags, and build only what actually fits.</p>
+    <p>Websites, IT support, Google visibility, and business systems—built around the way each storefront earns the next customer. Founded 2021. Manhattan, New York. Little Fight helps owner-operated teams keep what works, connect what matters, replace what drags, and build only what actually fits.</p>
     <p>If something is hurting customers right now, call first. If the setup is messy, expensive, slow, or unclear, book the free Tech Audit so the first move is based on your real website, tools, search presence, and workflow.</p>
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
@@ -1863,16 +1854,16 @@ function snapshot(page) {
       <header class="lf-seo__nav">
         <a class="lf-seo__brand" href="/">Little Fight NYC</a>
         <nav class="lf-seo__nav-links" aria-label="Primary">
-          <a href="/services/">Services</a>
-          <a href="/examples/">Examples</a>
-          <a href="/about/">About</a>
-          <a href="/library/">Library</a>
-          <a href="/contact/">Contact</a>
+          <a href="/services/custom-local-websites/">Websites</a>
+          <a href="/services/it-support/">Fix something</a>
+          <a href="/services/business-systems/">Software You Own</a>
+          <a href="/examples/">Results</a>
+          <a href="/library/">Answers</a>
         </nav>
         <span class="lf-seo__nav-right">
           <span class="lf-seo__replies">Replies at 9am ET</span>
           <a class="lf-seo__phone" href="tel:${site.phone}">${site.phoneDisplay}</a>
-          <a class="lf-seo__nav-cta" href="/tech-audit/?intent=website">Plan my website</a>
+          <a class="lf-seo__nav-cta" href="/website-check/">Check my website</a>
         </span>
       </header>
       <main id="main-content">

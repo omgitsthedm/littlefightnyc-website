@@ -15,6 +15,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   safeDatabaseErrorLabel,
+  scoreBand,
   shouldPersistAuditLead,
 } from "../../netlify/functions/lib/audit-leads.mts";
 import {
@@ -32,6 +33,8 @@ const leadsPath = "netlify/functions/lib/audit-leads.mts";
 const cleanupPath = "netlify/functions/cleanup-expired.mts";
 const migrationPath =
   "netlify/database/migrations/20260731183000_create_audit_leads.sql";
+const nullableScoresMigrationPath =
+  "netlify/database/migrations/20260802120000_allow_unmeasured_audit_scores.sql";
 const privacyPath = "app/public/examples/audit/privacy/index.html";
 
 const background = read(backgroundPath);
@@ -75,6 +78,10 @@ assert.equal(
   ),
   "configuration_error",
 );
+assert.equal(scoreBand(null), null);
+assert.equal(scoreBand(40), "cold");
+assert.equal(scoreBand(70), "warm");
+assert.equal(scoreBand(90), "hot");
 assert.equal(
   safeDatabaseErrorLabel(
     Object.assign(new Error("timed out"), { code: "ETIMEDOUT" }),
@@ -374,6 +381,25 @@ if (
 ) {
   failures.push(
     `${migrationPath}: retention_until must be after submitted_at and no later than 12 months`,
+  );
+}
+
+const nullableScoresMigration = read(nullableScoresMigrationPath);
+for (const column of ["overall_score", "grade", "score_band"]) {
+  if (
+    !new RegExp(
+      `ALTER\\s+COLUMN\\s+${column}\\s+DROP\\s+NOT\\s+NULL`,
+      "i",
+    ).test(nullableScoresMigration)
+  ) {
+    failures.push(
+      `${nullableScoresMigrationPath}: ${column} must allow null when Lighthouse is unavailable`,
+    );
+  }
+}
+if (!/pagespeed_source\s+IN\s*\([^)]*['"]unavailable['"]/i.test(nullableScoresMigration)) {
+  failures.push(
+    `${nullableScoresMigrationPath}: pagespeed_source does not accept the unavailable state`,
   );
 }
 

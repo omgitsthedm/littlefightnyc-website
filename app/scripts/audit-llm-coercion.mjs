@@ -1,6 +1,6 @@
 /**
- * audit-llm-coercion — every field of the model's JSON must be coerced before
- * it reaches report HTML.
+ * audit-llm-coercion — every model field and every measured score must remain
+ * truthful before it reaches report HTML.
  *
  * The audit pipeline asks a language model for JSON and renders it into a
  * document served from the apex origin and emailed to prospects. Anyone can
@@ -15,14 +15,26 @@
  * annotation is unenforced at runtime because String.prototype.toLocaleString
  * returns the string verbatim. Stored XSS.
  *
- * So this gate does not check for that one field. It checks the invariant:
- * every property declared on HaikuResult is explicitly named in the return, and
- * the currency sink still guards its own input.
+ * This gate checks both invariants: model fields fail closed, and unavailable
+ * Lighthouse measurements render as N/A without a fabricated score, grade,
+ * benchmark, or commercial-impact claim.
  */
 
+import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  coerceHaikuResult,
+  deriveOverallScore,
+  measuredMetric,
+  unavailablePageSpeedResult,
+} from "../../netlify/functions/run-audit-background.mts";
+import {
+  calculateGrade,
+  generateAuditHTML,
+} from "../../netlify/functions/lib/templates.mts";
+import { generateOGSvg } from "../../netlify/functions/og-image.mts";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = path.resolve(appRoot, "..");
@@ -69,14 +81,203 @@ if (!iface) {
   }
 }
 
-// ── 2. The currency sink guards its own input ─────────────────────────────────
-const currency = templates.match(/function formatCurrency\([\s\S]*?\n\}/)?.[0];
-if (!currency) {
-  failures.push("templates.mts: cannot find formatCurrency");
-} else if (!/Number\(/.test(currency) || !/isFinite/.test(currency)) {
+// ── 2. Missing provider data stays unavailable end to end ────────────────────
+const observedAt = "2026-08-02T12:00:00.000Z";
+assert.deepEqual(measuredMetric(0, observedAt), {
+  value: 0,
+  source: "google_pagespeed_lighthouse",
+  observedAt,
+  availability: "measured",
+});
+assert.equal(measuredMetric(1, observedAt).value, 100);
+assert.equal(measuredMetric(2, observedAt).value, null);
+assert.equal(measuredMetric(Number.NaN, observedAt).value, null);
+
+const unavailable = unavailablePageSpeedResult("example.com", observedAt);
+for (const metric of Object.values(unavailable.metrics)) {
+  assert.equal(metric.value, null);
+  assert.equal(metric.availability, "unavailable");
+  assert.equal(metric.source, "google_pagespeed_lighthouse");
+  assert.equal(metric.observedAt, observedAt);
+}
+assert.equal(deriveOverallScore(unavailable.metrics), null);
+
+const partialMetrics = structuredClone(unavailable.metrics);
+partialMetrics.performance = {
+  value: 0,
+  availability: "measured",
+  source: "google_pagespeed_lighthouse",
+  observedAt,
+};
+partialMetrics.seo = {
+  value: 80,
+  availability: "measured",
+  source: "google_pagespeed_lighthouse",
+  observedAt,
+};
+assert.equal(deriveOverallScore(partialMetrics), null);
+
+const completeMetrics = structuredClone(partialMetrics);
+completeMetrics.accessibility = {
+  value: 40,
+  availability: "measured",
+  source: "google_pagespeed_lighthouse",
+  observedAt,
+};
+completeMetrics.bestPractices = {
+  value: 40,
+  availability: "measured",
+  source: "google_pagespeed_lighthouse",
+  observedAt,
+};
+assert.equal(deriveOverallScore(completeMetrics), 40);
+assert.equal(calculateGrade(deriveOverallScore(completeMetrics)), "D");
+
+const coerced = coerceHaikuResult({
+  companyName: "Example",
+  niche: "Bakery",
+  city: "New York",
+  state: "NY",
+  ctaText: "Review the evidence",
+  executiveSummary: "This will increase revenue by 30%.",
+  benchmarkPercentile: 92,
+  revenueImpact: { low: 8_000, high: 32_000 },
+  findings: [
+    {
+      severity: "warning",
+      title: "Measured performance signal",
+      description: "Lighthouse returned a measured Performance score of 63/100.",
+    },
+    {
+      severity: "critical",
+      title: "Unsupported promise",
+      description: "This costs $10,000 in revenue and puts the site behind competitors.",
+    },
+  ],
+  roadmap: [
+    { phase: "First", title: "Repair", items: ["Address the measured audit"] },
+  ],
+});
+assert.equal(coerced.executiveSummary, "");
+assert.equal(coerced.findings.length, 1);
+assert.equal("revenueImpact" in coerced, false);
+assert.equal("benchmarkPercentile" in coerced, false);
+
+const unavailableReport = generateAuditHTML({
+  companyName: "Example Bakery",
+  domain: "example.com",
+  city: "",
+  state: "",
+  niche: "Bakery",
+  email: "owner@example.com",
+  slug: "example-bakery-abc123",
+  overallScore: null,
+  grade: null,
+  metrics: unavailable.metrics,
+  brandColors: {
+    primary: "#F97316",
+    accent: "#f7c948",
+    background: "#0f0f0f",
+  },
+  findings: [
+    {
+      severity: "info",
+      title: "Lighthouse measurement unavailable",
+      description: "No score was substituted.",
+    },
+  ],
+  ctaText: "Review the evidence",
+  auditDate: "August 2, 2026",
+});
+assert.match(unavailableReport, />N\/A</);
+assert.match(unavailableReport, /Not measured/);
+assert.match(unavailableReport, /Performance/);
+assert.match(unavailableReport, /SEO/);
+assert.match(unavailableReport, /Accessibility/);
+assert.match(unavailableReport, /Best Practices/);
+assert.doesNotMatch(
+  unavailableReport,
+  /estimated annual|revenue impact|benchmark|ahead of|mobile score|security score/i,
+);
+
+const completeReport = generateAuditHTML({
+  companyName: "Measured Bakery",
+  domain: "measured.example",
+  city: "",
+  state: "",
+  niche: "Bakery",
+  email: "owner@example.com",
+  slug: "measured-bakery-abc123",
+  overallScore: 40,
+  grade: "D",
+  metrics: completeMetrics,
+  brandColors: {
+    primary: "#F97316",
+    accent: "#f7c948",
+    background: "#0f0f0f",
+  },
+  findings: [
+    {
+      severity: "warning",
+      title: "Measured performance signal",
+      description: "Lighthouse returned a measured category score.",
+    },
+  ],
+  ctaText: "Review the evidence",
+  auditDate: "August 2, 2026",
+});
+assert.match(completeReport, />40</);
+assert.match(completeReport, /Grade D/);
+assert.match(completeReport, /4 of 4 Lighthouse categories were measured/);
+assert.doesNotMatch(completeReport, /estimated annual|revenue impact|benchmark/i);
+
+const unavailableOg = generateOGSvg({
+  companyName: "Example Bakery",
+  domain: "example.com",
+  grade: null,
+  overallScore: null,
+  createdAt: observedAt,
+  expiresAt: "2026-09-01T12:00:00.000Z",
+});
+assert.match(unavailableOg, />N\/A</);
+assert.match(unavailableOg, /NOT MEASURED/);
+assert.match(unavailableOg, /Accessibility · Best Practices/);
+assert.doesNotMatch(unavailableOg, /NaN|Grade null|Mobile · SEO · Security/);
+
+const partialOg = generateOGSvg({
+  companyName: "Partial Bakery",
+  domain: "partial.example",
+  grade: null,
+  overallScore: null,
+  measurementStatus: "partial",
+  createdAt: observedAt,
+  expiresAt: "2026-09-01T12:00:00.000Z",
+});
+assert.match(partialOg, /PARTIAL DATA/);
+assert.match(partialOg, /No overall score/);
+assert.doesNotMatch(partialOg, /No score substituted/);
+
+const measuredOg = generateOGSvg({
+  companyName: "Measured Bakery",
+  domain: "measured.example",
+  grade: "D",
+  overallScore: 40,
+  createdAt: observedAt,
+  expiresAt: "2026-09-01T12:00:00.000Z",
+});
+assert.match(measuredOg, />40</);
+assert.match(measuredOg, /Grade D/);
+assert.match(measuredOg, /stroke-dasharray="302 754"/);
+assert.doesNotMatch(measuredOg, />N\/A</);
+
+if (/otherwise New York|otherwise NY/.test(background)) {
   failures.push(
-    "templates.mts: formatCurrency no longer coerces its argument. Its `n: number` " +
-      "annotation is not enforced at runtime — a string would render verbatim into report HTML",
+    "run-audit-background.mts: the model prompt still assigns an unverified New York location",
+  );
+}
+if (/using fallback scores|performanceScore:\s*52|benchmarkPercentile/.test(background)) {
+  failures.push(
+    "run-audit-background.mts: fabricated fallback-score or benchmark logic remains active",
   );
 }
 
@@ -141,5 +342,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "Function-safety audit passed: HaikuResult fully coerced, currency sink guarded, model prose escaped, every blob store is purged, and no function answers every origin.",
+  "Function-safety audit passed: unavailable Lighthouse data remains N/A, Haiku output fails closed, report claims stay evidence-bound, every blob store is purged, and no function answers every origin.",
 );

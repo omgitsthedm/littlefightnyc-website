@@ -76,7 +76,8 @@ export default function Contact() {
             <Link
               className="lf-contact-choice__route lf-contact-choice__route--primary"
               to="/tech-audit/?intent=website&source=contact"
-              data-lf-event="website_plan_intent"
+              data-lf-event="human_review_requested"
+              data-lf-label="contact_page"
             >
               <span className="lf-contact-choice__route-top">
                 <ClipboardCheck size={22} strokeWidth={1.9} aria-hidden="true" />

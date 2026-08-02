@@ -316,7 +316,7 @@ export const answerGuides: AnswerGuide[] = [
       },
       {
         "heading": "Our honest take",
-        "body": "Bias named up front: we are a small studio that builds websites and systems for NYC small businesses, so we are on one side of this debate. Even so, we will say the unfashionable thing — some businesses genuinely need a big agency. If you need a national ad campaign, a rebrand across forty locations, or a complex product build, hire the firm with the bench for it. But if you need a site that gets your phone ringing, right-sized help wins: shorter timeline, one accountable person, promises in writing — our builds run fourteen days for most sites."
+        "body": "Bias named up front: we are a small studio that builds websites and systems for NYC small businesses, so we are on one side of this debate. Even so, we will say the unfashionable thing — some businesses genuinely need a big agency. If you need a national ad campaign, a rebrand across forty locations, or a complex product build, hire the firm with the bench for it. But if you need a site that helps the right customer book, visit, order, call, or inquire, right-sized help wins: shorter timeline, one accountable person, promises in writing — our builds run fourteen days for most sites."
       },
       {
         "heading": "What to do next",
@@ -1160,7 +1160,7 @@ export const answerGuides: AnswerGuide[] = [
 /** The bridge out of a research door — every answer walks the reader to the
  *  service that actually handles it (Door Doctrine: no dead ends). */
 export const answerServiceBridge: Record<string, { to: string; name: string; line: string }> = (() => {
-  const websites = { to: "/services/custom-local-websites/", name: "Custom Local Websites", line: "Want it built right instead? A site that makes the phone ring, live in 14 days — or you don’t pay." };
+  const websites = { to: "/services/custom-local-websites/", name: "Custom Local Websites", line: "Want it built right instead? A site that makes the right next step obvious, live in 14 days — or you don’t pay." };
   const support = { to: "/services/it-support/", name: "IT Support", line: "Want a person on this today? Real local help, 9am\u20139pm — callbacks within 2 hours." };
   const consulting = { to: "/services/tech-consulting/", name: "Tech Consulting", line: "Want a straight answer for your exact setup? The read is free. If you don’t need us, we say so." };
   const systems = { to: "/services/business-systems/", name: "Software You Own", line: "Done renting? We build the tool once — and it’s yours for good." };
