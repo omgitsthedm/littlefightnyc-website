@@ -232,53 +232,70 @@
      litigation, DOB risk. Honest about unknowns: no data ≠ an A.
      ================================================================ */
 
+  /* Every signal names its public source — the grade publishes judgments
+     about identifiable owners, so each failure carries its citation and
+     the reader can walk to the record themselves. */
+  function stewardCite(l, which) {
+    var bin = l.bin ? String(l.bin) : null;
+    if (which === 'dob') return { src: 'DOB', url: bin ? 'https://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=' + bin : 'https://a810-bisweb.nyc.gov/' };
+    if (which === '311') return { src: '311', url: 'https://portal.311.nyc.gov/' };
+    return { src: 'HPD', url: 'https://hpdonline.nyc.gov/' };
+  }
+
   function stewardOf(l) {
     var known = 0;
     var score = 100;
     var failures = [];
     var strengths = [];
 
+    function fail(text, which) { var c = stewardCite(l, which); failures.push({ t: text, src: c.src, url: c.url }); }
+    function good(text, which) { var c = stewardCite(l, which); strengths.push({ t: text, src: c.src, url: c.url }); }
+
     var hpd = l.hpd_risk_score;
     if (hpd != null) {
       known++;
       score -= Math.min(45, (+hpd) * 0.45);
-      if (+hpd >= 65) failures.push('a heavy open-violation file');
-      else if (+hpd < 25) strengths.push('a clean violation record');
+      if (+hpd >= 65) fail('a heavy open-violation file', 'hpd');
+      else if (+hpd < 25) good('a clean violation record', 'hpd');
     }
     var sv = +l.serious_open_violations || 0;
     if (l.serious_open_violations != null) {
       known++;
-      if (sv > 0) { score -= Math.min(20, sv * 7); failures.push(sv + ' serious violation' + (sv > 1 ? 's' : '') + ' open right now'); }
+      if (sv > 0) { score -= Math.min(20, sv * 7); fail(sv + ' serious violation' + (sv > 1 ? 's' : '') + ' open right now', 'hpd'); }
     }
     var heat = +l.heat_hot_water_complaints_3y || 0;
     if (l.heat_hot_water_complaints_3y != null) {
       known++;
-      if (heat >= 3) { score -= Math.min(18, heat * 3); failures.push(heat + ' heat or hot-water complaints in 3 years'); }
-      else if (heat === 0) strengths.push('no heat complaints in 3 years');
+      if (heat >= 3) { score -= Math.min(18, heat * 3); fail(heat + ' heat or hot-water complaints in 3 years', '311'); }
+      else if (heat === 0) good('no heat complaints in 3 years', '311');
     }
     var bb = +l.bedbug_reports_3y || 0;
     if (l.bedbug_reports_3y != null) {
       known++;
-      if (bb > 0) { score -= Math.min(14, bb * 7); failures.push(bb + ' bedbug filing' + (bb > 1 ? 's' : '')); }
+      if (bb > 0) { score -= Math.min(14, bb * 7); fail(bb + ' bedbug filing' + (bb > 1 ? 's' : ''), 'hpd'); }
     }
     var lit = +l.litigation_count_3y || 0;
     if (l.litigation_count_3y != null) {
       known++;
-      if (lit > 0) { score -= Math.min(16, lit * 8); failures.push('taken to housing court ' + lit + '×'); }
+      if (lit > 0) { score -= Math.min(16, lit * 8); fail('taken to housing court ' + lit + '×', 'hpd'); }
     }
     var dob = l.dob_risk_score;
     if (dob != null) {
       known++;
       score -= Math.min(12, (+dob) * 0.12);
-      if (+dob >= 65) failures.push('an ugly DOB complaint file');
+      if (+dob >= 65) fail('an ugly DOB complaint file', 'dob');
     }
 
-    if (!known) return { grade: '?', word: 'unproven', score: null, failures: [], strengths: [], known: 0 };
+    if (!known) return { grade: '?', word: 'unproven', score: null, failures: [], strengths: [], known: 0, sources: [] };
     score = Math.max(0, Math.round(score));
     var grade = score >= 85 ? 'A' : score >= 70 ? 'B' : score >= 55 ? 'C' : score >= 40 ? 'D' : 'E';
     var word = grade === 'A' ? 'a keeper' : grade === 'B' ? 'looked after' : grade === 'C' ? 'middling care' : grade === 'D' ? 'neglect showing' : 'they let it rot';
-    return { grade: grade, word: word, score: score, failures: failures.slice(0, 3), strengths: strengths.slice(0, 2), known: known };
+    var srcs = [];
+    failures.concat(strengths).forEach(function (x) { if (srcs.indexOf(x.src) === -1) srcs.push(x.src); });
+    return { grade: grade, word: word, score: score, failures: failures.slice(0, 3), strengths: strengths.slice(0, 2), known: known, sources: srcs };
   }
+
+  function stewardText(list) { return list.map(function (x) { return x.t; }).join('; '); }
 
   /* Spatial facts — never invent; parse only what the record states. */
   function spatialLine(l) {
@@ -633,7 +650,7 @@
     ownerRead: ownerRead, authenticity: authenticity, isScam: isScam, needsVerify: needsVerify,
     srcCls: srcCls, isFresh: isFresh, stabilized: stabilized, riskCls: riskCls, unitOf: unitOf,
     FIT: FIT, isFullFit: isFullFit, whyPassed: whyPassed, charName: charName, streetOf: streetOf, titleCase: titleCase,
-    stewardOf: stewardOf, spatialLine: spatialLine,
+    stewardOf: stewardOf, stewardText: stewardText, spatialLine: spatialLine,
     LAW: LAW, moveInMath: moveInMath, CHECKS: CHECKS, checkGroups: checkGroups, TELLS: TELLS,
     protections: protections, VERIFY_TOOLS: VERIFY_TOOLS, MARKET: MARKET,
     portrait: portrait, hashOf: hashOf, skyOf: skyOf,

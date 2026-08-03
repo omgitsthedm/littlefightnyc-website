@@ -1029,3 +1029,8 @@ body { font-size: 18px; }
 }
 
 [hidden] { display: none !important; }
+
+.citelink { color: var(--brass); font-size: 11px; text-decoration: none; }
+.citelink:hover { text-decoration: underline; }
+
+[hidden] { display: none !important; }

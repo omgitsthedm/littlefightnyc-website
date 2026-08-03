@@ -119,6 +119,24 @@
         check('rot grades E with named failures', stBad.grade === 'E' && stBad.failures.length >= 3, stBad.grade + ': ' + stBad.failures.join('|'));
         var stUnk = C.stewardOf({});
         check('no data is honestly unproven, not an A', stUnk.grade === '?' && stUnk.score === null, stUnk.grade);
+        /* phase 4: every named failure carries its citation */
+        var stCite = C.stewardOf({ hpd_risk_score: 90, heat_hot_water_complaints_3y: 5, dob_risk_score: 80, bin: '1001234' });
+        var cited = stCite.failures.every(function (f) { return f.t && f.src && f.url && f.url.indexOf('https://') === 0; });
+        check('every steward failure is cited to its record', cited && stCite.sources.length >= 2, JSON.stringify(stCite.sources));
+        var dobF = stCite.failures.filter(function (f) { return f.src === 'DOB'; })[0];
+        check('DOB citations deep-link the BIN', !!dobF && dobF.url.indexOf('bin=1001234') > -1, dobF && dobF.url);
+        /* phase 4: voucher chip renders only on explicit signal */
+        var vFix = POOL.filter(C.isFullFit)[0];
+        if (vFix) {
+          vFix.voucher_signal = true;
+          location.hash = '#/today'; app.route();
+          check('voucher chip appears on stated signal', document.body.textContent.indexOf('vouchers welcomed (stated)') > -1, '');
+          delete vFix.voucher_signal;
+          app.route();
+          check('voucher chip absent without the signal', document.body.textContent.indexOf('vouchers welcomed') === -1, '');
+        } else {
+          check('voucher chip appears on stated signal', true, 'skipped — no fits in feed');
+        }
         check('anchor picker present on the drop', $$('.anchorbar select').length === 2, $$('.anchorbar select').length + ' selects');
         var selA = $('[data-anchor-sel="0"]');
         if (selA && $$('.dropcard').length) {

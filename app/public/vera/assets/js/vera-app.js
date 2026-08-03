@@ -505,8 +505,8 @@
             '<span class="steward steward--' + stew.grade + '">' +
               '<b class="steward__grade">' + stew.grade + '</b>' +
               '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stew.word) + (stew.score != null ? ' · ' + stew.score + '/100' : '') + '</span>' +
-              (stew.failures.length ? '<span class="steward__line steward__line--bad">' + esc(stew.failures.join('; ')) + '</span>'
-                : stew.strengths.length ? '<span class="steward__line steward__line--good">' + esc(stew.strengths.join('; ')) + '</span>'
+              (stew.failures.length ? '<span class="steward__line steward__line--bad">' + esc(C.stewardText(stew.failures)) + '</span>'
+                : stew.strengths.length ? '<span class="steward__line steward__line--good">' + esc(C.stewardText(stew.strengths)) + '</span>'
                 : '<span class="steward__line">city record too thin to judge — verify in person</span>') + '</span>' +
             '</span>' +
             '<p class="dropcard__why">' + esc(why) + '</p>' +
@@ -515,6 +515,7 @@
             qualifyLine(l) +
             '<span class="dropcard__chips">' +
               valueChip(l) +
+              (l.voucher_signal ? '<span class="tag tag--blue" title="The listing text states this explicitly — VERA never infers it">vouchers welcomed (stated)</span>' : '') +
               (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
               '<span class="tag">move-in ≈ ' + money(m.total) + '</span>' +
               '<span class="tag">score ' + num(l.overall_score, 0) + '</span>' +
@@ -1148,6 +1149,7 @@
         }).join('') + '</div></div>' +
       '<section class="ethos"><h2>What VERA is</h2>' +
         '<p>Verified Evaluation for Rental Analysis — a personal apartment-search engine for one hunt: privately-owned rentals, under ' + money(C.FIT.maxRent) + ', in the neighborhoods that fit one life. It watches the fragmented channels where small landlords actually post, joins every listing to the city\'s own records, and refuses to show what it cannot stand behind.</p>' +
+        '<p>Fairness on the record: every steward grade is computed from cited public records — never from any protected characteristic — and owners have a standing <a href="/vera/corrections/">correction channel</a>.</p>' +
         '<p>Read-only by principle: VERA never messages a landlord, never floods an inbox, never squats a viewing slot. It makes one human faster, not the market worse.</p>' +
         '<p class="ethos__credit">A <a href="https://littlefightnyc.com/" rel="noopener">Little Fight NYC</a> system · <a href="/vera/brand/">brand</a> · <a href="/vera/terms/">terms</a> · <a href="/vera/privacy/">privacy</a></p>' +
       '</section>';

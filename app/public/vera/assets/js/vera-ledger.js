@@ -260,10 +260,11 @@
     } else if (inspTab === 'records') {
       var stw = C.stewardOf(l);
       html += '<div class="steward steward--big steward--' + stw.grade + '"><b class="steward__grade">' + stw.grade + '</b>' +
-        '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stw.word) + (stw.score != null ? ' · ' + stw.score + '/100 from ' + stw.known + ' city signals' : '') + '</span>' +
-        (stw.failures.length ? '<span class="steward__line steward__line--bad">' + esc(stw.failures.join('; ')) + '</span>' : '') +
-        (stw.strengths.length ? '<span class="steward__line steward__line--good">' + esc(stw.strengths.join('; ')) + '</span>' : '') +
+        '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stw.word) + (stw.score != null ? ' · ' + stw.score + '/100 from ' + stw.known + ' city records (' + (stw.sources || []).join(' · ') + ')' : '') + '</span>' +
+        (stw.failures.length ? '<span class="steward__line steward__line--bad">' + stw.failures.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
+        (stw.strengths.length ? '<span class="steward__line steward__line--good">' + stw.strengths.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
         '</span></div>';
+      html += '<p class="insp-fine">Landlord? Think a record here is wrong? <a href="/vera/corrections/">How corrections work ↗</a></p>';
       html += '<dl class="kv">' +
         kvRow('BBL', esc(l.bbl)) + kvRow('BIN', esc(l.bin)) +
         kvRow('HPD risk', '<span class="risk ' + C.riskCls(l.hpd_risk_score) + '">' + num(l.hpd_risk_score) + '</span>') +
@@ -369,7 +370,7 @@
       '<h1>' + esc(app.addressOf(l) || C.charName(l)) + '</h1>' +
       '<p class="fk-sub">' + esc(money(l.rent)) + ' · ' + esc(l.neighborhood || '') + ' · steward grade ' + esc(stw.grade) + ' (' + esc(stw.word) + ')' + '</p>' +
       '<p class="fk-link">littlefightnyc.com/vera/#/listing/' + esc(l.listing_uid) + '</p>' +
-      (stw.failures.length ? '<p class="fk-warn">On the record: ' + esc(stw.failures.join('; ')) + '</p>' : '') +
+      (stw.failures.length ? '<p class="fk-warn">On the record: ' + esc(C.stewardText(stw.failures)) + '</p>' : '') +
       '<table>' +
         kv('Cash to keys', money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + $' + m.appFee + ' application)') +
         kv('Illegal to ask', 'deposit over one month · application over $20 · broker fee when the landlord hired them · any money before lease signing') +
