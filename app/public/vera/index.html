@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>VERA — NYC rental intelligence</title>
-  <meta name="description" content="Apartment hunting without brokers, without corporate landlords, without the scams. Live NYC listings checked against city records, scored, and mapped.">
+  <title>VERA — the daily drop for NYC owner-direct rentals</title>
+  <meta name="description" content="A curated daily drop of privately-owned NYC rentals — every listing checked against city records, priced to the letter of NY law, scam-screened, and honestly told.">
   <meta name="theme-color" content="#0c0e0d">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <!-- Hand-authored page, so none of this comes from the prerenderer the React
@@ -12,8 +12,8 @@
        canonical, /vera/ and /vera/index.html compete; without an image, every
        share of this link rendered as a bare text stub. -->
   <link rel="canonical" href="https://littlefightnyc.com/vera/">
-  <meta property="og:title" content="VERA — NYC rental intelligence">
-  <meta property="og:description" content="No brokers. No corporations. No scams. Every listing checked against NYC public records before it reaches you.">
+  <meta property="og:title" content="VERA — the daily drop for NYC owner-direct rentals">
+  <meta property="og:description" content="StreetEasy shows you everything and verifies nothing. VERA watches everywhere, verifies everything, and shows you only what survives.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://littlefightnyc.com/vera/">
   <meta property="og:site_name" content="Little Fight NYC">
@@ -24,148 +24,118 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Little Fight NYC VERA card over the 72nd Street subway kiosk: Every listing checked against city records.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="VERA — NYC rental intelligence">
-  <meta name="twitter:description" content="No brokers. No corporations. No scams. Every listing checked against NYC public records before it reaches you.">
+  <meta name="twitter:title" content="VERA — the daily drop for NYC owner-direct rentals">
+  <meta name="twitter:description" content="No brokers. No corporations. No scams. A curated drop of verified owner-direct listings, every day.">
   <meta name="twitter:image" content="https://littlefightnyc.com/assets/social/og-vera.jpg">
   <meta name="twitter:image:alt" content="Little Fight NYC VERA card over the 72nd Street subway kiosk: Every listing checked against city records.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230c0e0d'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23868c85'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2016%20L16%207%20A9%209%200%200%201%2023.8%2011.5%20Z'%20fill='%234cc38a'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='1.8'%20fill='%23e9ece8'/%3E%3C/svg%3E">
   <link rel="preload" href="./assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./assets/css/vera.css?v=10">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=11">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
 
   <div class="shell" data-shell>
-    <aside class="rail" data-rail>
-      <a class="brand" href="#/command" aria-label="VERA — command">
-        <svg class="insignia" width="30" height="30" viewBox="0 0 24 24" aria-hidden="true">
+    <header class="masthead">
+      <a class="brand" href="#/today" aria-label="VERA — today's drop">
+        <svg class="insignia" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true">
           <circle class="ring" cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
           <path class="sweep" d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z"/>
           <circle class="core" cx="12" cy="12" r="1.7"/>
         </svg>
-        <span class="brand__name">VERA</span>
+        <span class="brand__word"><span class="brand__name">VERA</span>
+        <span class="brand__tag">Verified evaluation for rental analysis</span></span>
       </a>
-      <p class="brand__tag">Verified Evaluation<br>for Rental Analysis</p>
-
-      <nav class="rail__nav" aria-label="Sections" data-nav>
-        <a href="#/command" data-route="command"><i class="nv nv--command"></i><span>Command</span></a>
-        <a href="#/map" data-route="map"><i class="nv nv--map"></i><span>Map</span></a>
-        <a href="#/discover" data-route="discover"><i class="nv nv--discover"></i><span>Discover</span></a>
-        <a href="#/cases" data-route="cases"><i class="nv nv--cases"></i><span>My hunt</span><b class="nv__badge" data-case-badge hidden>0</b></a>
-        <a href="#/toolkit" data-route="toolkit"><i class="nv nv--toolkit"></i><span>Toolkit</span></a>
-        <a href="#/pipeline" data-route="pipeline"><i class="nv nv--pipeline"></i><span>Pipeline</span></a>
-        <a href="#/about" data-route="about"><i class="nv nv--about"></i><span>About</span></a>
+      <div class="masthead__status">
+        <span class="pulse" data-pulse aria-hidden="true"></span>
+        <span class="mono" data-snapshot-line>Sweeping…</span>
+      </div>
+      <nav class="mastnav" aria-label="Sections">
+        <a href="#/today" data-nav="today">Today</a>
+        <a href="#/market" data-nav="market">Market</a>
+        <a href="#/browse" data-nav="browse">Browse</a>
+        <a href="#/atlas" data-nav="atlas">Atlas</a>
+        <a href="#/hunt" data-nav="hunt">My hunt<b class="nv__badge" data-case-badge hidden>0</b></a>
+        <a href="#/manual" data-nav="manual">Field manual</a>
+        <a href="#/system" data-nav="system">System</a>
       </nav>
+    </header>
 
-      <div class="rail__foot">
-        <p class="rail__status" data-rail-status>—</p>
-        <p class="rail__credit">A <a href="/">Little Fight NYC</a> system<br>
-          <a href="./brand/">Brand</a> · <a href="./terms/">Terms</a> · <a href="./privacy/">Privacy</a></p>
+    <div class="filters" data-filters hidden>
+      <div class="filters__group" role="group" aria-label="Price bracket">
+        <span class="filters__label">Bracket</span>
+        <button type="button" data-bracket="b1">≤ $2,000</button>
+        <button type="button" data-bracket="b2">$2,001–2,500</button>
+        <button type="button" data-bracket="b3">$2,501–3,000</button>
+        <button type="button" data-bracket="all" class="is-on">Any</button>
       </div>
-    </aside>
-
-    <div class="deck">
-      <header class="topbar" data-topbar>
-        <a class="topbar__brand" href="#/command" aria-label="VERA — command">
-          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.6"/>
-            <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
-          </svg>
-          <span>VERA</span>
-        </a>
-        <div class="topbar__snapshot">
-          <span class="pulse" data-pulse aria-hidden="true"></span>
-          <span data-snapshot-line>Loading snapshot…</span>
-        </div>
-        <div class="topbar__views" data-views role="group" aria-label="Saved views">
-          <button type="button" data-view="fresh">Fresh tonight</button>
-          <button type="button" data-view="owner">Owner-direct</button>
-          <button type="button" data-view="clean">Clean buildings</button>
-          <button type="button" data-view="verify">Needs verification</button>
-          <button type="button" data-view="scam">Scam wall</button>
-          <button type="button" data-view="all" class="is-on">Everything</button>
-        </div>
-      </header>
-
-      <div class="filters" data-filters>
-        <div class="filters__group" role="group" aria-label="Price bracket">
-          <span class="filters__label">Bracket</span>
-          <button type="button" data-bracket="b1">≤ $2,000</button>
-          <button type="button" data-bracket="b2">$2,001–2,500</button>
-          <button type="button" data-bracket="b3">$2,501–3,000</button>
-          <button type="button" data-bracket="all" class="is-on">Any</button>
-        </div>
-        <div class="filters__group" role="group" aria-label="Unit type">
-          <span class="filters__label">Unit</span>
-          <button type="button" data-unit="studio">Studio</button>
-          <button type="button" data-unit="1br">1BR</button>
-          <button type="button" data-unit="all" class="is-on">Both</button>
-        </div>
-        <div class="filters__group" role="group" aria-label="Subway walk">
-          <span class="filters__label">Subway</span>
-          <button type="button" data-transit="5">≤ 5 min</button>
-          <button type="button" data-transit="10">≤ 10 min</button>
-          <button type="button" data-transit="15">≤ 15 min</button>
-          <button type="button" data-transit="0" class="is-on">Any</button>
-        </div>
-        <div class="filters__group filters__group--owner" role="group" aria-label="Ownership lens">
-          <span class="filters__label">Owner</span>
-          <button type="button" data-lens="noBrokers">No brokers</button>
-          <button type="button" data-lens="noMgmt">No corporations</button>
-          <button type="button" data-lens="privateFirst">Private first</button>
-        </div>
-        <div class="filters__group filters__group--hoods" data-hood-group role="group" aria-label="Focus areas">
-          <span class="filters__label">Focus</span>
-          <div class="filters__hoods" data-areas></div>
-        </div>
-        <button type="button" class="filters__clear" data-clear hidden>Clear ×</button>
+      <div class="filters__group" role="group" aria-label="Unit type">
+        <span class="filters__label">Unit</span>
+        <button type="button" data-unit="studio">Studio</button>
+        <button type="button" data-unit="1br">1BR</button>
+        <button type="button" data-unit="all" class="is-on">Both</button>
       </div>
-
-      <main id="main" class="main" data-main tabindex="-1">
-        <section class="page page--command" data-page="command" hidden></section>
-        <section class="page page--map" data-page="map" hidden></section>
-        <section class="page page--discover" data-page="discover" hidden></section>
-        <section class="page page--cases" data-page="cases" hidden></section>
-        <section class="page page--toolkit" data-page="toolkit" hidden></section>
-        <section class="page page--pipeline" data-page="pipeline" hidden></section>
-        <section class="page page--about" data-page="about" hidden></section>
-        <div class="loading" data-loading>
-          <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" class="loading__mark">
-            <circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"/>
-            <path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a"/>
-          </svg>
-          <p>VERA is sweeping the city…</p>
-        </div>
-      </main>
-
-      <footer class="deckfoot">
-        <p>A <a href="/">Little Fight NYC</a> system</p>
-        <p><a href="./brand/">Brand</a> · <a href="./terms/">Terms</a> · <a href="./privacy/">Privacy</a></p>
-      </footer>
+      <div class="filters__group" role="group" aria-label="Subway walk">
+        <span class="filters__label">Subway</span>
+        <button type="button" data-transit="5">≤ 5 min</button>
+        <button type="button" data-transit="10">≤ 10 min</button>
+        <button type="button" data-transit="15">≤ 15 min</button>
+        <button type="button" data-transit="0" class="is-on">Any</button>
+      </div>
+      <div class="filters__group filters__group--owner" role="group" aria-label="Ownership lens">
+        <span class="filters__label">Owner</span>
+        <button type="button" data-lens="noBrokers">No brokers</button>
+        <button type="button" data-lens="noMgmt">No corporations</button>
+        <button type="button" data-lens="privateFirst">Private first</button>
+      </div>
+      <div class="filters__group filters__group--hoods" data-hood-group role="group" aria-label="Focus areas">
+        <span class="filters__label">Focus</span>
+        <div class="filters__hoods" data-areas></div>
+      </div>
+      <button type="button" class="filters__clear" data-clear hidden>Clear ×</button>
     </div>
 
+    <main id="main" class="main" data-main tabindex="-1">
+      <section class="page" data-page="today"></section>
+      <div class="loading" data-loading>
+        <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" class="loading__mark">
+          <circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"/>
+          <path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a"/>
+        </svg>
+        <p>VERA is sweeping the city…</p>
+      </div>
+    </main>
+
+    <footer class="deckfoot">
+      <p>A <a href="/">Little Fight NYC</a> system — read-only by principle: it never contacts landlords, never floods inboxes.</p>
+      <p><a href="./brand/">Brand</a> · <a href="./terms/">Terms</a> · <a href="./privacy/">Privacy</a></p>
+    </footer>
+
     <!-- role/aria-modal so assistive tech announces this as a dialog and stops
-         reading the page behind it. vera.js moves focus in on open, traps Tab
-         while it is up, and returns focus to the row that opened it. -->
+         reading the page behind it. vera-ledger.js moves focus in on open,
+         traps Tab while it is up, and returns focus to what opened it. -->
     <aside class="inspector" data-inspector role="dialog" aria-modal="true"
-           aria-label="Listing inspector" tabindex="-1" hidden>
+           aria-label="The ledger — listing verification" tabindex="-1" hidden>
       <div class="inspector__head">
         <div>
           <p class="inspector__kicker" data-insp-kicker></p>
           <h2 class="inspector__title" data-insp-title></h2>
           <p class="inspector__sub" data-insp-sub></p>
         </div>
-        <button type="button" class="inspector__close" data-insp-close aria-label="Close inspector">×</button>
+        <button type="button" class="inspector__close" data-insp-close aria-label="Close the ledger">×</button>
       </div>
       <div class="inspector__actions" data-insp-actions></div>
       <div class="inspector__tabs" data-insp-tabs role="tablist">
-        <button type="button" data-tab="overview" class="is-on" role="tab">Overview</button>
-        <button type="button" data-tab="money" role="tab">Money</button>
-        <button type="button" data-tab="records" role="tab">Records</button>
-        <button type="button" data-tab="owner" role="tab">Owner</button>
-        <button type="button" data-tab="score" role="tab">Score</button>
-        <button type="button" data-tab="visit" role="tab">Visit</button>
+        <button type="button" data-tab="overview" class="is-on" role="tab" aria-selected="true">Overview</button>
+        <button type="button" data-tab="money" role="tab" aria-selected="false">Money</button>
+        <button type="button" data-tab="records" role="tab" aria-selected="false">Records</button>
+        <button type="button" data-tab="owner" role="tab" aria-selected="false">Owner</button>
+        <button type="button" data-tab="score" role="tab" aria-selected="false">Score</button>
+        <button type="button" data-tab="visit" role="tab" aria-selected="false">Visit</button>
+        <button type="button" data-tab="verify" role="tab" aria-selected="false">Verify</button>
       </div>
       <div class="inspector__body" data-insp-body></div>
     </aside>
@@ -173,7 +143,10 @@
     <div class="toast" data-toast hidden role="status"></div>
   </div>
 
-  <noscript><p class="fallback">VERA’s console needs JavaScript — it renders a live data feed.</p></noscript>
-  <script src="./assets/js/vera.js?v=10" defer></script>
+  <noscript><p class="fallback">VERA renders a live data feed and needs JavaScript.</p></noscript>
+  <script src="./assets/js/vera-core.js?v=11" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=11" defer></script>
+  <script src="./assets/js/vera-app.js?v=11" defer></script>
+  <script src="./assets/js/vera-tests.js?v=11" defer></script>
 </body>
 </html>
