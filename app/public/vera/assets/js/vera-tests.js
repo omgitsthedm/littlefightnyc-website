@@ -145,6 +145,15 @@
           check('commute read prints on cards after picking an anchor', $$('.dropcard__commute').length > 0, $$('.dropcard__commute').length + ' cards');
           var honest = $$('.commute').every(function (el) { return el.textContent.indexOf('≈') > -1; });
           check('every commute figure is marked approximate', honest, '');
+          /* 1.4b: with timetable tables in the feed, the ride is QUOTED */
+          var D2 = app.D();
+          var hadTT = D2.transit_tables;
+          D2.transit_tables = { 'L': [['Canarsie-Rockaway Pkwy', 0], ['Bedford Av', 2100], ['Union Sq-14 St', 2640]] };
+          var cr = app.commuteRead({ transit: { station: 'Bedford Av', walk_mins: 8, lines: ['L'] }, latitude: 40.7172, longitude: -73.9567 }, 'Union Sq');
+          check('scheduled ride minutes quoted from the timetable', !!cr && cr.label.indexOf('≈9 min scheduled') > -1, cr && cr.label);
+          D2.transit_tables = hadTT;
+          var crNo = app.commuteRead({ transit: { station: 'Bedford Av', walk_mins: 8, lines: ['L'] }, latitude: 40.7172, longitude: -73.9567 }, 'Union Sq');
+          check('without tables the honest direct-line fallback holds', !!crNo && crNo.label.indexOf('direct') > -1 && crNo.label.indexOf('scheduled') === -1, crNo && crNo.label);
           var selB = $('[data-anchor-sel="0"]');
           selB.value = '';
           selB.dispatchEvent(new Event('change', { bubbles: true }));

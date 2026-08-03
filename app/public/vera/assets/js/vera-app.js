@@ -361,6 +361,24 @@
     return null;
   }
 
+  function stationMatch(seqName, name) {
+    var a = seqName.toLowerCase(), b = name.toLowerCase();
+    return a === b || a.indexOf(b) > -1 || b.indexOf(a) > -1;
+  }
+
+  function scheduledRide(line, fromName, toName) {
+    var tables = D && D.transit_tables;
+    var seq = tables && tables[line];
+    if (!seq) return null;
+    var a = null, b = null;
+    for (var i = 0; i < seq.length; i++) {
+      if (a == null && stationMatch(seq[i][0], fromName)) a = seq[i][1];
+      if (b == null && stationMatch(seq[i][0], toName)) b = seq[i][1];
+    }
+    if (a == null || b == null || a === b) return null;
+    return Math.max(1, Math.round(Math.abs(a - b) / 60));
+  }
+
   function commuteRead(l, anchorName) {
     var t = C.nearestStation(l);
     var a = stationByName(anchorName);
@@ -372,7 +390,13 @@
     var dx = (+l.longitude - a[3]) * 111.32 * Math.cos(a[2] * Math.PI / 180);
     var km = Math.sqrt(dx * dx + dy * dy);
     if (km < 0.9) return { label: 'to ' + anchorName + ': ≈' + Math.max(2, Math.round(km * 12.5)) + ' min on foot', good: true };
-    if (shared.length) return { label: 'to ' + anchorName + ': ≈' + t.mins + ' min walk, then ' + shared[0] + ' direct', good: true, line: shared[0] };
+    if (shared.length) {
+      /* the timetable itself, when the feed carries it: scheduled minutes
+         between the two stops on the shared line — quoted, never invented */
+      var ride = scheduledRide(shared[0], t.name, anchorName);
+      if (ride != null) return { label: 'to ' + anchorName + ': ≈' + t.mins + ' min walk + ' + shared[0] + ' ≈' + ride + ' min scheduled', good: true, line: shared[0] };
+      return { label: 'to ' + anchorName + ': ≈' + t.mins + ' min walk, then ' + shared[0] + ' direct', good: true, line: shared[0] };
+    }
     return { label: 'to ' + anchorName + ': ≈' + km.toFixed(1) + ' km · likely a transfer', good: false };
   }
 
@@ -1472,6 +1496,7 @@
     cases: function () { return cases; }, STAGES: STAGES, toast: toast, photoLayer: photoLayer,
     filtered: filtered, renderRoute: renderRoute, tidyTitle: tidyTitle, route: route,
     addressOf: addressOf, gallery: gallery, valueRead: valueRead, profile: function () { return profile; },
+    commuteRead: commuteRead,
   };
 
   window.__vera = {
