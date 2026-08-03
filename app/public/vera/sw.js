@@ -5,7 +5,7 @@
    badge the staleness instead of pretending the sweep just ran. */
 'use strict';
 
-var SHELL = 'vera-shell-v1';
+var SHELL = 'vera-shell-v2';
 var FEED = 'vera-feed-v1';
 var FEED_PATH = '/vera/data/public.json';
 
@@ -56,9 +56,22 @@ self.addEventListener('fetch', function (e) {
     return;
   }
 
-  /* versioned shell assets + the page itself */
+  /* The DOCUMENT goes network-first so a fresh deploy is never shadowed by
+     yesterday's shell; versioned assets stay cache-first (the ?v= busts). */
+  var isDoc = e.request.mode === 'navigate' || url.pathname === '/vera/' || url.pathname.endsWith('/index.html');
   e.respondWith(
     caches.open(SHELL).then(function (c) {
+      if (isDoc) {
+        return fetch(e.request).then(function (resp) {
+          if (resp.ok) c.put(e.request, resp.clone());
+          return resp;
+        }).catch(function () {
+          return c.match(e.request).then(function (hit) {
+            if (!hit) throw new Error('offline, no cached shell');
+            return hit;
+          });
+        });
+      }
       return c.match(e.request).then(function (hit) {
         var refetch = fetch(e.request).then(function (resp) {
           if (resp.ok) c.put(e.request, resp.clone());
