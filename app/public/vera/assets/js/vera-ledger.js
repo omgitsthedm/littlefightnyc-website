@@ -316,6 +316,8 @@
       }
       var lines = l.score_explanation_lines || [];
       if (lines.length) html += '<div class="insp-sec"><h3>VERA\'s reasoning</h3><ul>' + lines.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+      var fnotes = l.listing_confidence_notes || [];
+      if (fnotes.length) html += '<div class="insp-sec"><h3>Forensic deductions</h3><ul class="bad">' + fnotes.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
       html += '<dl class="kv">' +
         kvRow('Overall', l.overall_score != null ? num(l.overall_score, 1) : null) +
         kvRow('Recommendation', esc(l.recommendation)) +
