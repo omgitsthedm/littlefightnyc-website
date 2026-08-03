@@ -48,6 +48,16 @@ for = "/speculation-rules.json"
 # Dakota is a private operator surface inside this one Netlify project. The
 # static shell contains no queue data, but it must never be cached, indexed,
 # framed, or allowed to inherit the marketing site's analytics connections.
+# VERA carries a real vector map (vendored MapLibre GL + keyless
+# OpenFreeMap tiles). MapLibre renders in a blob: worker; tiles, glyphs,
+# and sprites fetch from tiles.openfreemap.org. Everything else matches
+# the site default.
+[[headers]]
+for = "/vera/*"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://tiles.openfreemap.org https://vera-pipeline.netlify.app; worker-src 'self' blob:; child-src blob:; frame-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+
 [[headers]]
 for = "/dakota.html"
 

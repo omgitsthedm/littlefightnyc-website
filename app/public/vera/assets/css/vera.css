@@ -1038,3 +1038,17 @@ body { font-size: 18px; }
 .ccard__movein { font-family: var(--mono); font-size: 10px; color: var(--brass); line-height: 1.5; display: block; }
 
 [hidden] { display: none !important; }
+
+
+/* --- the real map --- */
+.maplay--vector { grid-template-columns: 0.78fr 0.22fr; }
+.veramap { height: 660px; border-radius: var(--r-sm); overflow: hidden; background: #0c1512; }
+.veramap canvas { border-radius: var(--r-sm); }
+.maplibregl-ctrl-attrib { background: rgba(11,13,12,.7) !important; color: var(--mute) !important; font-size: 10px !important; }
+.maplibregl-ctrl-attrib a { color: var(--mute) !important; }
+.maplibregl-ctrl-group { background: var(--panel) !important; border: 1px solid var(--line2) !important; box-shadow: none !important; }
+.maplibregl-ctrl-group button { background: transparent !important; }
+.maplibregl-ctrl-group button span { filter: invert(0.85); }
+@media (max-width: 1120px) { .maplay--vector { grid-template-columns: 1fr; } .veramap { height: 480px; } }
+
+[hidden] { display: none !important; }
