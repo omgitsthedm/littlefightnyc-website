@@ -384,7 +384,65 @@
         }).join('') + '</select>';
     }
     return '<div class="anchorbar"><span class="anchorbar__label">Commute anchors</span>' + sel(0) + sel(1) +
-      '<span class="anchorbar__hint">' + (anchors.length ? 'printed on every card, marked ≈ — VERA never invents routing minutes' : 'work, a person, a gym — VERA prints the honest read on every card') + '</span></div>';
+      '<span class="anchorbar__label">Income</span>' +
+      '<input type="number" inputmode="numeric" min="0" step="5000" placeholder="annual, stays in this browser" value="' + (+profile.income || '') + '" data-profile-income aria-label="Annual income — stored locally only">' +
+      '<span class="anchorbar__hint">' + (anchors.length || profile.income ? 'printed on every card, marked ≈ — VERA never invents routing minutes; your income never leaves this browser' : 'work, a person, your income — VERA personalizes every card, all of it local-only') + '</span></div>';
+  }
+
+  /* ---------- value math: is THIS cheap for THIS block ----------
+     Exact-hood match against the official StreetEasy series (≥12 months
+     of data required), else the net's own per-hood median (≥5 priced
+     peers, provenance stated), else nothing. Never interpolate across
+     neighborhoods. */
+
+  function valueRead(l) {
+    var rent = +l.rent;
+    var hood = l.neighborhood;
+    if (!rent || !hood) return null;
+    var mc = D && D.market_context;
+    if (mc && mc.series && mc.series[hood]) {
+      var s = mc.series[hood];
+      var vals = (s.median_asking_rent || []).filter(function (v) { return v != null; });
+      if (vals.length >= 12 && s.median_asking_rent_latest) {
+        var med = s.median_asking_rent_latest;
+        var d = Math.round((med - rent) / med * 100);
+        if (d === 0) return null;
+        return { pct: Math.abs(d), under: d > 0, label: Math.abs(d) + '% ' + (d > 0 ? 'under' : 'over') + ' the ' + hood + ' median', src: 'StreetEasy series' };
+      }
+    }
+    var peers = POOL.filter(function (x) { return x.neighborhood === hood && +x.rent > 0; }).map(function (x) { return +x.rent; });
+    if (peers.length >= 5) {
+      var m2 = median(peers);
+      var d2 = Math.round((m2 - rent) / m2 * 100);
+      if (d2 === 0) return null;
+      return { pct: Math.abs(d2), under: d2 > 0, label: Math.abs(d2) + '% ' + (d2 > 0 ? 'under' : 'over') + ' others in the net (' + hood + ')', src: 'net-internal' };
+    }
+    return null;
+  }
+
+  function valueChip(l) {
+    var v = valueRead(l);
+    if (!v) return '';
+    return '<span class="tag ' + (v.under ? 'tag--green' : 'tag--amber') + '" title="' + esc(v.src) + '">' + esc(v.label) + '</span>';
+  }
+
+  /* ---------- personal qualification: the 40× bar, yours ---------- */
+
+  var profile = {};
+  try { profile = JSON.parse(localStorage.getItem('vera-profile') || '{}') || {}; } catch (e) { profile = {}; }
+
+  function saveProfile() {
+    try { localStorage.setItem('vera-profile', JSON.stringify(profile)); } catch (e) {}
+  }
+
+  function qualifyLine(l) {
+    var inc = +profile.income || 0;
+    var rent = +l.rent || 0;
+    if (!inc || !rent) return '';
+    var need = rent * C.LAW.incomeRuleX;
+    return inc >= need
+      ? '<p class="qualify qualify--good">Clears your 40× bar at ' + money(inc) + '</p>'
+      : '<p class="qualify qualify--warn">Needs a guarantor at your income — the bar here is ' + money(need) + '</p>';
   }
 
   function ownerLine(l) {
@@ -438,7 +496,9 @@
             '<p class="dropcard__why">' + esc(why) + '</p>' +
             (spatial ? '<p class="dropcard__spatial">' + esc(spatial) + ' · no floor plan published</p>' : '') +
             (flaw ? '<p class="dropcard__flaw">Eyes open: ' + esc(flaw) + '</p>' : '') +
+            qualifyLine(l) +
             '<span class="dropcard__chips">' +
+              valueChip(l) +
               (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
               '<span class="tag">move-in ≈ ' + money(m.total) + '</span>' +
               '<span class="tag">score ' + num(l.overall_score, 0) + '</span>' +
@@ -696,6 +756,7 @@
   var COLS = [
     { key: 'overall_score', label: 'Score', render: function (l) { return '<span class="t-score">' + (l.overall_score != null ? num(l.overall_score, 1) : '—') + '</span>'; } },
     { key: 'rent', label: 'Rent', render: function (l) { return money(l.rent); } },
+    { key: 'value_delta', label: 'Value', render: function (l) { return l.value_delta == null ? '<span class="t-dim">—</span>' : l.value_delta > 0 ? '<span class="t-under">' + l.value_delta + '% under</span>' : '<span class="t-over">' + (-l.value_delta) + '% over</span>'; } },
     { key: 'title', label: 'Listing', render: function (l) { return '<span class="t-title">' + esc(l.title || l.address_normalized || '—') + '</span>'; } },
     { key: 'neighborhood', label: 'Hood', render: function (l) { return '<span class="t-dim">' + esc(l.neighborhood || '—') + '</span>'; } },
     { key: 'transit_mins', label: 'Subway', render: function (l) { var t = C.nearestStation(l); return t ? '<span class="t-mono">≈' + t.mins + 'm</span> ' + C.lineBullets(t.lines) : '<span class="t-dim">—</span>'; } },
@@ -906,6 +967,7 @@
               (gone ? '<span class="ccard__gone">No longer listed</span>' : '') +
               '<span>' + (c.rent ? money(c.rent) : '—') + (c.hood ? ' · ' + esc(c.hood) : '') + '</span>' +
               (c.notes ? '<em>“' + esc(c.notes.slice(0, 70)) + (c.notes.length > 70 ? '…' : '') + '”</em>' : '') +
+              (c.outcome ? '<span class="ccard__outcome ccard__outcome--' + esc(c.outcome) + '">' + (c.outcome === 'yes' ? 'as advertised' : c.outcome === 'roughly' ? 'roughly as advertised' : 'not as advertised') + '</span>' : '') +
               '</button><div class="ccard__moves">' +
               STAGES.filter(function (x) { return x.id !== c.stage; }).slice(0, 3).map(function (x) {
                 return '<button type="button" data-stage="' + x.id + '" data-uid="' + esc(c.uid) + '" title="Move to ' + x.label + '">' + x.label + '</button>';
@@ -924,7 +986,7 @@
      ================================================================ */
 
   var toolRent = 2400;
-  var toolIncome = 0;
+  var toolIncome = +((typeof profile !== 'undefined' && profile.income) || 0);
 
   function renderManual(page) {
     var r = toolRent;
@@ -1003,7 +1065,8 @@
       toolIncome = +incEl.value;
       $('[data-tool-inc-label]').textContent = toolIncome ? money(toolIncome) : 'drag me';
     });
-    incEl.addEventListener('change', function () { renderRoute(); });
+    /* the manual's slider and the card qualification share one profile */
+    incEl.addEventListener('change', function () { profile.income = toolIncome; saveProfile(); renderRoute(); });
   }
 
   /* ================================================================
@@ -1091,13 +1154,18 @@
   /* ---------- one delegated click handler ---------- */
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab]') : null;
     if (!t) return;
 
     if (t.hasAttribute('data-open')) { if (window.__VERAL) window.__VERAL.open(t.getAttribute('data-open')); return; }
     if (t.hasAttribute('data-insp-close') || t.hasAttribute('data-scrim')) { if (window.__VERAL) window.__VERAL.close(); return; }
     if (t.hasAttribute('data-tab')) { if (window.__VERAL) window.__VERAL.setTab(t.getAttribute('data-tab')); return; }
     if (t.hasAttribute('data-stage')) { setStage(t.getAttribute('data-uid'), t.getAttribute('data-stage')); if (window.__VERAL && window.__VERAL.openUid()) window.__VERAL.rerender(); else renderRoute(); return; }
+    if (t.hasAttribute('data-outcome')) {
+      var oc = caseOf(t.getAttribute('data-uid'));
+      if (oc) { oc.outcome = t.getAttribute('data-outcome'); saveCases(); toast('Noted — outcomes sharpen the next drop.'); if (window.__VERAL && window.__VERAL.openUid()) window.__VERAL.rerender(); else renderRoute(); }
+      return;
+    }
     if (t.hasAttribute('data-drop')) { dropCase(t.getAttribute('data-drop')); renderRoute(); return; }
     if (t.hasAttribute('data-tell')) {
       var body = t.querySelector('.tell__body');
@@ -1166,6 +1234,12 @@
       renderRoute();
       return;
     }
+    if (t.hasAttribute && t.hasAttribute('data-profile-income')) {
+      profile.income = +t.value || 0;
+      saveProfile();
+      renderRoute();
+      return;
+    }
     if (t.hasAttribute && t.hasAttribute('data-check')) {
       var uid = t.getAttribute('data-uid');
       var c = caseOf(uid);
@@ -1217,6 +1291,11 @@
       var t = C.nearestStation(l);
       l.transit_mins = t ? t.mins : 9999;
     });
+    /* value deltas precomputed so the browse column can sort on them */
+    POOL.forEach(function (l) {
+      var v = valueRead(l);
+      l.value_delta = v ? (v.under ? v.pct : -v.pct) : null;
+    });
     var hc = {};
     POOL.forEach(function (l) { var h = l.neighborhood || 'Unknown'; hc[h] = (hc[h] || 0) + 1; });
     HOODS = Object.keys(hc).map(function (h) { return { name: h, count: hc[h] }; }).sort(function (a, b) { return b.count - a.count; });
@@ -1260,7 +1339,7 @@
     byUid: byUid, caseOf: caseOf, setStage: setStage, dropCase: dropCase, saveCases: saveCases,
     cases: function () { return cases; }, STAGES: STAGES, toast: toast, photoLayer: photoLayer,
     filtered: filtered, renderRoute: renderRoute, tidyTitle: tidyTitle, route: route,
-    addressOf: addressOf, gallery: gallery,
+    addressOf: addressOf, gallery: gallery, valueRead: valueRead, profile: function () { return profile; },
   };
 
   window.__vera = {

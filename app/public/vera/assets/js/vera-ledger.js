@@ -129,7 +129,9 @@
       if (pros.length) html += '<div class="insp-sec"><h3>Working for it</h3><ul class="good">' + pros.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
       if (cons.length) html += '<div class="insp-sec"><h3>Working against it</h3><ul class="bad">' + cons.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
       var tt = C.nearestStation(l);
+      var vr = app.valueRead ? app.valueRead(l) : null;
       html += '<dl class="kv">' +
+        kvRow('Value', vr ? '<span class="' + (vr.under ? 't-under' : 't-over') + '">' + esc(vr.label) + '</span> <span class="t-dim">(' + esc(vr.src) + ')</span>' : null) +
         kvRow('Subway', tt ? '≈' + tt.mins + ' min walk · ' + C.lineBullets(tt.lines) + ' ' + esc(tt.name) : null) +
         kvRow('First seen', timeago(l.first_seen_at)) + kvRow('Last seen', timeago(l.last_seen_at)) +
         kvRow('Move-in cash', l.estimated_move_in_cash != null ? money(l.estimated_move_in_cash) : null) +
@@ -197,6 +199,14 @@
           '<button type="button" class="bigbtn" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button></div>';
       } else {
         var done = Object.keys(cs.checks || {}).filter(function (k) { return cs.checks[k]; }).length;
+        /* the learning loop: after seeing it (or passing), one question */
+        if (cs.stage === 'toured' || cs.stage === 'dead' || cs.stage === 'applied') {
+          html += '<div class="insp-sec"><h3>Was it as advertised?</h3><div class="outcomes">' +
+            ['yes', 'roughly', 'no'].map(function (o) {
+              return '<button type="button" data-outcome="' + o + '" data-uid="' + esc(l.listing_uid) + '" class="' + (cs.outcome === o ? 'is-on' : '') + '">' + o + '</button>';
+            }).join('') + '</div>' +
+            (cs.outcome ? '<p class="insp-fine">Recorded. Outcomes stay in this browser and sharpen your own read of the sources.</p>' : '') + '</div>';
+        }
         html += '<div class="insp-sec"><h3>Your notes</h3>' +
           '<textarea class="notes" data-note="' + esc(l.listing_uid) + '" placeholder="Smelled fine. Radiator has a valve. Neighbor says the super is quick.">' + esc(cs.notes || '') + '</textarea></div>' +
           '<div class="insp-sec"><h3>Checklist <span class="cprog">' + done + ' / ' + C.CHECKS.length + '</span></h3>' +

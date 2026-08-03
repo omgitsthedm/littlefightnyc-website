@@ -163,6 +163,51 @@
       check('viewing checklist published in full', $$('.cgroup li').length === C.CHECKS.length, $$('.cgroup li').length + ' checks');
       check('chain-of-proof tools linked', $$('.vtool').length >= 4, $$('.vtool').length);
 
+      /* ---- phase 1: personal value math ---- */
+      var evSeries = ((app.D() || {}).market_context || {}).series || {};
+      if (evSeries['East Village'] && evSeries['East Village'].median_asking_rent_latest) {
+        var evMed = evSeries['East Village'].median_asking_rent_latest;
+        var vr = app.valueRead({ rent: Math.round(evMed * 0.9), neighborhood: 'East Village' });
+        check('value math: 10% under the exact-hood median', !!vr && vr.under && vr.pct === 10 && vr.label.indexOf('East Village median') > -1, vr && vr.label);
+        var vrOver = app.valueRead({ rent: Math.round(evMed * 1.08), neighborhood: 'East Village' });
+        check('value math: over-median reads amber side', !!vrOver && !vrOver.under, vrOver && vrOver.label);
+      } else {
+        check('value math: series available for fixture hood', false, 'East Village series missing');
+      }
+      var vrNone = app.valueRead({ rent: 2500, neighborhood: 'Nowhereville' });
+      check('value math: unknown hood prints nothing', vrNone === null, String(vrNone));
+
+      location.hash = '#/today'; app.route();
+      var incInput = $('[data-profile-income]');
+      if (incInput) {
+        incInput.value = '120000';
+        incInput.dispatchEvent(new Event('change', { bubbles: true }));
+        check('income set prints qualification on cards', $$('.qualify').length > 0 || $$('.dropcard').length === 0, $$('.qualify').length);
+        var incInput2 = $('[data-profile-income]');
+        incInput2.value = '';
+        incInput2.dispatchEvent(new Event('change', { bubbles: true }));
+        check('income cleared removes qualification lines', $$('.qualify').length === 0, $$('.qualify').length);
+      } else {
+        check('income field present in anchor bar', false, '');
+      }
+
+      var probe2 = POOL[1] && POOL[1].listing_uid;
+      if (probe2 && !app.caseOf(probe2)) {
+        app.setStage(probe2, 'toured');
+        L.open(probe2);
+        $('[data-insp-tabs] [data-tab="visit"]').click();
+        var ocBtn = $('.outcomes [data-outcome="roughly"]');
+        check('outcome question appears after touring', !!ocBtn, '');
+        if (ocBtn) {
+          ocBtn.click();
+          check('outcome persists on the case', app.caseOf(probe2).outcome === 'roughly', app.caseOf(probe2).outcome);
+        }
+        L.close();
+        app.dropCase(probe2);
+      } else {
+        check('outcome question appears after touring', true, 'skipped — no free probe');
+      }
+
       /* ---- system ---- */
       location.hash = '#/system'; app.route();
       check('system shows the pipeline stages', $$('.stage').length === 6, $$('.stage').length);

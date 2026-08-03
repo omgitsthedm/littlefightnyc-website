@@ -952,3 +952,20 @@ body { font-size: 18px; }
 .pricepath { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: var(--r-sm); background: rgba(233,226,210,.02); margin-bottom: 8px; }
 
 [hidden] { display: none !important; }
+
+/* --- phase 1: personal value math --- */
+.qualify { font-family: var(--mono); font-size: 13px; margin: 0 0 10px; padding: 6px 11px; border-radius: 7px; display: inline-block; }
+.qualify--good { color: var(--green); background: rgba(76,195,138,.08); }
+.qualify--warn { color: var(--amber); background: rgba(227,181,103,.08); }
+.t-under { color: var(--green); font-family: var(--mono); font-size: 12.5px; }
+.t-over { color: var(--amber); font-family: var(--mono); font-size: 12.5px; }
+.anchorbar input[type="number"] { background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font-family: var(--mono); font-size: 14px; padding: 8px 10px; width: 150px; min-height: 38px; }
+.outcomes { display: flex; gap: 6px; }
+.outcomes button { background: none; border: 1px solid var(--line); border-radius: 999px; color: var(--dim); font-size: 13.5px; padding: 7px 16px; }
+.outcomes button.is-on { color: var(--green); border-color: rgba(76,195,138,.5); background: var(--green-soft); }
+.ccard__outcome { font-family: var(--mono); font-size: 9.5px; letter-spacing: .07em; text-transform: uppercase; }
+.ccard__outcome--yes { color: var(--green); }
+.ccard__outcome--roughly { color: var(--amber); }
+.ccard__outcome--no { color: var(--red); }
+
+[hidden] { display: none !important; }
