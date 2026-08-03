@@ -310,30 +310,69 @@
     return '<div class="prov">' + bits.join('<span class="prov__dot">·</span>') + '</div>';
   }
 
-  function dropCard(l, i) {
+  function addressOf(l) {
+    var a = String(l.address_normalized || '').trim();
+    if (!a) return null;
+    a = a.replace(/\b(apt|unit)\b/gi, '#').replace(/#\s+/g, '#');
+    return C.titleCase(a).replace(/\bE\b/g, 'E').replace(/\bW\b/g, 'W').replace(/#([a-z0-9]+)/gi, function (m, u) { return '#' + u.toUpperCase(); });
+  }
+
+  function gallery(l) {
+    var urls = (l.image_urls || []).filter(function (u) { return typeof u === 'string' && u.slice(0, 8) === 'https://'; }).slice(0, 6);
+    if (!urls.length) return C.portrait(l, 640, 340);
+    var where = l.address_normalized || 'this listing';
+    return C.portrait(l, 640, 340) +
+      '<span class="gal" data-gal>' + urls.map(function (u, i) {
+        return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
+      }).join('') + '</span>' +
+      (urls.length > 1 ? '<span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
+  }
+
+  function ownerLine(l) {
     var o = C.ownerRead(l);
+    var name = l.owner_name ? C.titleCase(String(l.owner_name).toLowerCase()) : null;
+    var ind = +l.likely_independent_landlord_score || 0;
+    var read = name ? name : (l.owner_type === 'llc' ? 'An LLC — human owner unproven' : 'Not named on the post');
+    return '<span class="dropcard__owner"><span class="dropcard__ownerlabel">Landlord</span>' +
+      '<b>' + esc(read) + '</b>' +
+      '<span class="tag ' + o.cls + '">' + o.label + '</span>' +
+      '<span class="ometer" title="Private-owner signal, 0–100"><i style="width:' + Math.max(4, Math.min(100, ind)) + '%"></i></span>' +
+      '<span class="ometer__n">' + Math.round(ind) + '</span></span>';
+  }
+
+  function dropCard(l, i) {
     var st = C.stabilized(l);
     var t = C.nearestStation(l);
     var m = C.moveInMath(l);
     var why = l.why_this_listing || (l.trust_strengths || [])[0] || 'Clears every gate VERA can check from public data.';
     var flaw = (l.trust_caveats || [])[0] || (l.what_to_verify_before_applying || [])[0];
+    var addr = addressOf(l);
+    var unit = C.unitOf(l) === 'studio' ? 'Studio' : C.unitOf(l) === '1br' ? 'One bedroom' : esc(l.unit_type || 'Apartment');
+    var place = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.placeRead(l) : null;
+    var hoodLine = esc(l.neighborhood || (place && place.name) || '—');
+    if (place && !place.agrees) hoodLine += ' <span class="dropcard__pinwarn">· pin sits in ' + esc(place.name) + '</span>';
+    var mini = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.minimap(l, 300, 300) : '';
     return '<article class="dropcard" style="--i:' + i + '">' +
-      '<button type="button" class="dropcard__hit" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(C.charName(l)) + '">' +
-        '<span class="dropcard__media">' + C.portrait(l, 640, 300) + photoLayer(l) +
-          '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span></span>' +
+      '<button type="button" class="dropcard__hit" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">' +
+        '<span class="dropcard__media">' + gallery(l) +
+          '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span>' +
+          '<span class="dropcard__no">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span></span>' +
         '<span class="dropcard__body">' +
-          '<span class="dropcard__no">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span>' +
-          '<h3 class="dropcard__name">' + esc(C.charName(l)) + '</h3>' +
-          '<p class="dropcard__where">' + esc(l.neighborhood || '—') + ' · ' + (C.unitOf(l) === 'studio' ? 'studio' : C.unitOf(l) === '1br' ? 'one bedroom' : esc(l.unit_type || '')) +
-            (t ? ' · ≈' + t.mins + ' min ' + C.lineBullets(t.lines) : '') + '</p>' +
-          '<p class="dropcard__why">' + esc(why) + '</p>' +
-          (flaw ? '<p class="dropcard__flaw">Eyes open: ' + esc(flaw) + '</p>' : '') +
-          '<span class="dropcard__chips">' +
-            '<span class="tag ' + o.cls + '">' + o.label + '</span>' +
-            (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
-            '<span class="tag">keys ≈ ' + money(m.total) + '</span>' +
+          '<span class="dropcard__main">' +
+            '<span class="dropcard__hood">' + hoodLine + ' · ' + unit + (t ? ' · <span class="nowrap">≈' + t.mins + ' min walk ' + C.lineBullets(t.lines) + ' ' + esc(t.name) + '</span>' : '') + '</span>' +
+            '<h3 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h3>' +
+            (addr ? '<p class="dropcard__flavor">' + esc(C.charName(l)) + '</p>' : '') +
+            ownerLine(l) +
+            '<p class="dropcard__why">' + esc(why) + '</p>' +
+            (flaw ? '<p class="dropcard__flaw">Eyes open: ' + esc(flaw) + '</p>' : '') +
+            '<span class="dropcard__chips">' +
+              (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
+              '<span class="tag">move-in ≈ ' + money(m.total) + '</span>' +
+              '<span class="tag">score ' + num(l.overall_score, 0) + '</span>' +
+            '</span>' +
+            provenance(l) +
           '</span>' +
-          provenance(l) +
+          (mini ? '<span class="dropcard__map">' + mini + '</span>' : '') +
         '</span>' +
       '</button></article>';
   }
@@ -612,10 +651,19 @@
     var outside = geo.length - placed.length;
     var lost = f.length - geo.length;
 
-    var landPath = '<polygon class="mp-land" points="' + M.poly(M.HUDSON.concat(M.EASTRIVER.slice().reverse())) + '"/>';
-    var bkPath = '<polygon class="mp-land" points="' + M.poly(M.EASTRIVER.concat([[M.B.n, M.B.e], [M.B.s, M.B.e]])) + '"/>';
-    var njPath = '<polygon class="mp-land mp-land--far" points="' + M.poly(M.HUDSON.concat([[M.B.n, M.B.w], [M.B.s, M.B.w]])) + '"/>';
-    var parkPath = '<polygon class="mp-park" points="' + M.poly(M.CENTRAL_PARK) + '"/>';
+    /* Real neighborhood polygons (NYC DCP NTA2020) when loaded; the abstract
+       two-rivers silhouette stays as the no-geo fallback. */
+    var geoLand = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.atlasLand(M.px, M.py, M.B) : null;
+    var landPath, bkPath = '', njPath = '', parkPath = '', ntaLabels = '';
+    if (geoLand) {
+      landPath = geoLand.polys;
+      ntaLabels = geoLand.labels;
+    } else {
+      landPath = '<polygon class="mp-land" points="' + M.poly(M.HUDSON.concat(M.EASTRIVER.slice().reverse())) + '"/>';
+      bkPath = '<polygon class="mp-land" points="' + M.poly(M.EASTRIVER.concat([[M.B.n, M.B.e], [M.B.s, M.B.e]])) + '"/>';
+      njPath = '<polygon class="mp-land mp-land--far" points="' + M.poly(M.HUDSON.concat([[M.B.n, M.B.w], [M.B.s, M.B.w]])) + '"/>';
+      parkPath = '<polygon class="mp-park" points="' + M.poly(M.CENTRAL_PARK) + '"/>';
+    }
 
     var stationDots = C.STATIONS.map(function (s) {
       var first = String(s[1]).split(/\s+/)[0];
@@ -661,7 +709,7 @@
             '<rect class="mp-water" x="0" y="0" width="' + M.VW + '" height="' + M.VH + '"/>' +
             njPath + bkPath + landPath + parkPath +
             '<g class="mp-stns">' + stationDots + '</g>' +
-            '<g class="mp-hoods">' + hoodLabels + '</g>' +
+            '<g class="mp-hoods">' + (geoLand ? ntaLabels : hoodLabels) + '</g>' +
             '<g class="mp-tethers">' + tethers + '</g>' +
             '<g class="mp-pins">' + pins + '</g>' +
           '</svg>' +
@@ -1009,7 +1057,16 @@
     }
   });
 
-  window.addEventListener('hashchange', route);
+  /* Route changes ride the View Transitions API where it exists — the
+     buttery cross-fade costs nothing and respects reduced motion. */
+  function routeSmooth() {
+    if (!RM && document.startViewTransition) document.startViewTransition(function () { route(); });
+    else route();
+  }
+  window.addEventListener('hashchange', routeSmooth);
+
+  /* Minimaps and place-truth arrive when the neighborhood polygons land. */
+  document.addEventListener('vera:geo', function () { if (D) renderRoute(); });
 
   /* ---------- boot ---------- */
 
@@ -1075,6 +1132,7 @@
     byUid: byUid, caseOf: caseOf, setStage: setStage, dropCase: dropCase, saveCases: saveCases,
     cases: function () { return cases; }, STAGES: STAGES, toast: toast, photoLayer: photoLayer,
     filtered: filtered, renderRoute: renderRoute, tidyTitle: tidyTitle, route: route,
+    addressOf: addressOf, gallery: gallery,
   };
 
   window.__vera = {

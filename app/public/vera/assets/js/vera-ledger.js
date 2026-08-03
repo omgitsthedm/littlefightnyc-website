@@ -88,8 +88,8 @@
     var app = A();
     var o = C.ownerRead(l);
     $('[data-insp-kicker]').textContent = (l.recommendation || 'unrated').toUpperCase() + ' · score ' + (l.overall_score != null ? num(l.overall_score, 1) : '—');
-    $('[data-insp-title]').textContent = C.charName(l);
-    $('[data-insp-sub]').textContent = [l.title || l.address_normalized, money(l.rent), l.neighborhood].filter(Boolean).join(' · ');
+    $('[data-insp-title]').textContent = app.addressOf(l) || C.charName(l);
+    $('[data-insp-sub]').textContent = [money(l.rent), l.neighborhood, C.charName(l)].filter(Boolean).join(' · ');
     $$('[data-insp-tabs] button').forEach(function (b) {
       var on = b.getAttribute('data-tab') === inspTab;
       b.classList.toggle('is-on', on);
@@ -109,11 +109,20 @@
 
     if (inspTab === 'overview') {
       var shot = app.photoLayer(l);
-      html += '<div class="insp-port"><span class="insp-port__frame">' + C.portrait(l, 440, 190) + shot + '</span>' +
+      html += '<div class="insp-port"><span class="insp-port__frame insp-port__frame--gal">' + app.gallery(l) + '</span>' +
         '<span class="insp-port__cap">' + (shot
-          ? 'Listing photo, straight from the source post. Photos get staged, reused, and stolen — treat it as a claim to check in person, not proof.'
+          ? 'Listing photos, straight from the source post. Photos get staged, reused, and stolen — treat them as claims to check in person, not proof.'
           : 'No photo on this post, so VERA drew the building from the record — floors, era, and lit windows follow this building\'s own data.') +
         '</span></div>';
+      if (window.__VERAG && window.__VERAG.ready()) {
+        var mini = window.__VERAG.minimap(l, 440, 260);
+        if (mini) {
+          var pr = window.__VERAG.placeRead(l);
+          html += '<div class="insp-sec"><h3>Exactly here</h3><div class="insp-map">' + mini + '</div>' +
+            (pr && !pr.agrees ? '<p class="insp-fine">The post says ' + esc(l.neighborhood || '?') + '; the coordinates sit in <b>' + esc(pr.name) + '</b>. Small gaps are normal at borders — big ones are a tell.</p>' : '') +
+            '</div>';
+        }
+      }
       html += l.why_this_listing ? '<div class="insp-sec"><h3>Why this listing</h3><p>' + esc(l.why_this_listing) + '</p></div>' : '';
       html += l.next_move ? '<div class="insp-sec"><h3>Next move</h3><p>' + esc(l.next_move) + '</p></div>' : '';
       var pros = l.trust_strengths || [], cons = l.trust_caveats || [];

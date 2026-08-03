@@ -82,7 +82,7 @@
       if (first) {
         first.click();
         check('ledger opens', !$('[data-inspector]').hidden, '');
-        check('ledger headline is the character name', ($('[data-insp-title]').textContent || '').indexOf('The ') === 0 || ($('[data-insp-title]').textContent || '').indexOf('A ') === 0, $('[data-insp-title]').textContent);
+        check('ledger headline is the address (name as fallback)', ($('[data-insp-title]').textContent || '').length > 5, $('[data-insp-title]').textContent);
         $('[data-insp-tabs] [data-tab="records"]').click();
         check('records tab renders public data', $('[data-insp-body]').textContent.length > 20, '');
         $('[data-insp-tabs] [data-tab="owner"]').click();
@@ -94,7 +94,23 @@
 
       /* ---- atlas ---- */
       location.hash = '#/atlas'; app.route();
-      check('atlas draws land, stations, and pins', $$('.mp-land').length >= 2 && $$('.mp-stn').length > 40 && !!$('.mp'), $$('.mp-stn').length + ' stations');
+      var geoReady = window.__VERAG && window.__VERAG.ready();
+      check('atlas draws land, stations, and pins',
+        (geoReady ? $$('.mp-nta').length > 30 : $$('.mp-land').length >= 2) && $$('.mp-stn').length > 40 && !!$('.mp'),
+        (geoReady ? $$('.mp-nta').length + ' real polygons' : 'fallback land') + ', ' + $$('.mp-stn').length + ' stations');
+
+      /* ---- the real city (round 7) ---- */
+      if (geoReady) {
+        var hood = window.__VERAG.hoodAt(40.7265, -73.9815);
+        check('point-in-polygon finds the East Village', !!hood && /East Village/i.test(hood.n), hood && hood.n);
+        location.hash = '#/today'; app.route();
+        check('drop cards carry a neighborhood minimap', $$('.dropcard__map .gm').length > 0 || $$('.dropcard').length === 0, $$('.dropcard__map .gm').length + ' maps');
+        check('drop headline is the address, big', ($$('.dropcard__name')[0] || { textContent: '' }).textContent.length > 8, ($$('.dropcard__name')[0] || {}).textContent);
+        check('landlord identity on the card', $$('.dropcard__owner').length === $$('.dropcard').length, $$('.dropcard__owner').length);
+        check('photo gallery renders', $$('.gal').length > 0 || $$('.dropcard').length === 0, $$('.gal').length + ' galleries');
+      } else {
+        check('geo polygons loaded', false, 'hoods.json did not load');
+      }
 
       /* ---- money engine obeys NY law ---- */
       var mm = C.moveInMath({ rent: 2400 });

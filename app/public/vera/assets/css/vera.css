@@ -769,3 +769,124 @@ ul.bad li::marker { color: var(--red); }
   .is-entered .chart path[stroke] { animation: none; stroke-dasharray: none; }
   .dropcard__hit, .brtile, .kpi--click, .bubcard, .inspector, .toast { transition: none; }
 }
+
+/* ============================================================
+   ROUND 7 — the big-print edition. David: "Why am I squinting?"
+   Price, Neighborhood, Photos, Location, Private Owner — huge,
+   photo-forward, on the real city. Cascade overrides below.
+   ============================================================ */
+
+body { font-size: 18px; }
+.pagehead__lede { font-size: 18px; }
+.drophead__lede { font-size: clamp(18px, 2.2vw, 22px); }
+.drophead__trust { font-size: 15px; }
+.panel__title { font-size: 16px; }
+.panel__hint { font-size: 12px; }
+.kpi__label { font-size: 11px; }
+.kpi__note { font-size: 13px; }
+.tag { font-size: 12px; padding: 4px 9px; }
+.dt { font-size: 14.5px; }
+.dt thead th { font-size: 11px; }
+.filters button, .pills button { font-size: 14px; min-height: 38px; }
+.filters__label { font-size: 11px; }
+.mastnav a { font-size: 13.5px; }
+.feed__what { font-size: 14px; }
+.bar__name { font-size: 14px; }
+.bar { grid-template-columns: 150px minmax(0, 1fr) auto; }
+.insp-sec p { font-size: 15px; }
+.insp-sec ul { font-size: 15px; }
+.kv { font-size: 14.5px; }
+.inspector__title { font-size: 28px; }
+.inspector__sub { font-size: 14px; }
+.inspector { width: min(640px, 100vw); }
+
+/* --- the drop: one huge editorial card per row --- */
+.dropgrid { grid-template-columns: 1fr; gap: 26px; }
+.dropcard__media { aspect-ratio: 21 / 9; }
+.dropcard__rent {
+  font-size: clamp(30px, 3.4vw, 44px); padding: 8px 18px; left: 16px; bottom: 14px;
+  border-radius: 12px;
+}
+.dropcard__rent small { font-size: 15px; }
+.dropcard__no { position: absolute; top: 16px; right: 16px; left: auto; color: var(--ink); background: rgba(10,12,11,.72); border: 1px solid var(--line); padding: 4px 10px; border-radius: 8px; font-size: 13px; backdrop-filter: blur(6px); z-index: 2; }
+.dropcard__body { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; padding: 22px 24px 24px; }
+.dropcard__main { display: block; min-width: 0; position: static; }
+.dropcard__hood { display: block; font-family: var(--mono); font-size: 14px; color: var(--brass); letter-spacing: 0.04em; margin-bottom: 8px; }
+.dropcard__hood .bul { width: 17px; height: 17px; font-size: 10px; }
+.dropcard__pinwarn { color: var(--amber); }
+.dropcard__name { font-size: clamp(27px, 3.4vw, 40px); margin: 0 0 6px; line-height: 1.05; }
+.dropcard__flavor { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--mute); font-size: 16px; margin: 0 0 14px; }
+.dropcard__why { font-size: 17px; margin: 12px 0 8px; color: var(--dim); }
+.dropcard__flaw { font-size: 15.5px; }
+.dropcard__map { display: block; align-self: start; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--line); }
+.prov { font-size: 12.5px; }
+
+.dropcard__owner {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  border: 1px solid var(--line); border-radius: var(--r-sm); padding: 10px 13px;
+  margin: 4px 0 4px; background: rgba(233, 226, 210, 0.025);
+}
+.dropcard__ownerlabel { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--mute); }
+.dropcard__owner b { font-size: 15.5px; font-weight: 600; }
+.ometer { flex: 1 1 70px; max-width: 130px; height: 7px; background: rgba(233,226,210,.07); border-radius: 4px; overflow: hidden; }
+.ometer i { display: block; height: 100%; background: linear-gradient(90deg, var(--green), rgba(76,195,138,.45)); }
+.ometer__n { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+
+/* --- photo gallery: swipeable, snap, photos win over the portrait --- */
+.gal {
+  position: absolute; inset: 0; display: flex; overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.gal::-webkit-scrollbar { display: none; }
+.gal__shot { flex: none; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+.gal__n {
+  position: absolute; right: 12px; bottom: 12px; z-index: 2;
+  font-family: var(--mono); font-size: 12px; color: var(--ink);
+  background: rgba(10, 12, 11, 0.72); border: 1px solid var(--line);
+  padding: 5px 10px; border-radius: 7px; backdrop-filter: blur(6px);
+}
+
+/* --- neighborhood minimap --- */
+.gm { display: block; width: 100%; height: auto; }
+.gm-water { fill: #0c1211; }
+.gm-hood { fill: #141c17; stroke: rgba(233, 226, 210, 0.13); stroke-width: 1; }
+.gm-hood--home { fill: #1b2a20; stroke: rgba(76, 195, 138, 0.5); stroke-width: 1.6; }
+.gm-tether { stroke: rgba(76, 195, 138, 0.35); stroke-width: 1.6; stroke-dasharray: 4 4; }
+.gm-stn { stroke: #0b0d0c; stroke-width: 1.6; }
+.gm-stnname { font-family: var(--mono); font-size: 11px; fill: var(--dim); text-anchor: middle; }
+.gm-label { font-family: var(--mono); font-size: 13px; letter-spacing: 0.18em; fill: var(--brass); }
+.gm-halo { fill: rgba(76, 195, 138, 0.14); }
+.gm-dot { fill: var(--green); stroke: #0b0d0c; stroke-width: 2.4; }
+@keyframes gmpulse { 0% { r: 12; opacity: .5; } 100% { r: 22; opacity: 0; } }
+.gm-halo { animation: gmpulse 2.2s ease-out infinite; }
+.insp-map { border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 8px; }
+
+/* --- atlas on real polygons --- */
+.mp-nta { fill: #151d18; stroke: rgba(233, 226, 210, 0.14); stroke-width: 1.1; transition: fill 0.2s; }
+.mp-nta:hover { fill: #1b2620; }
+.mp-ntaname { font-family: var(--mono); font-size: 13px; letter-spacing: 0.14em; fill: rgba(233, 226, 210, 0.34); text-anchor: middle; pointer-events: none; }
+
+/* --- motion: springier arrivals, photo life on hover --- */
+.is-entered .dropcard { animation: rise7 0.65s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise7 { from { opacity: 0; transform: translateY(26px) scale(0.985); } }
+.dropcard__hit:hover .gal__shot, .dropcard__hit:hover .port { transform: scale(1.025); }
+.gal__shot, .dropcard__media .port { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+.dropcard__hit:hover { transform: translateY(-4px); }
+
+@media (max-width: 900px) {
+  .dropcard__body { grid-template-columns: 1fr; gap: 14px; }
+  .dropcard__map { max-width: 420px; }
+  .dropcard__media { aspect-ratio: 16 / 10; }
+  .dropcard__name { font-size: clamp(26px, 7.2vw, 34px); }
+  .inspector__title { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-halo { animation: none; }
+  .is-entered .dropcard { animation: none; }
+  .gal__shot, .dropcard__media .port, .mp-nta { transition: none; }
+  .gal { scroll-behavior: auto; }
+}
+
+/* keep the hidden guarantee last */
+[hidden] { display: none !important; }
