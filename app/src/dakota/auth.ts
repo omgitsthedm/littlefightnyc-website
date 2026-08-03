@@ -1,4 +1,5 @@
 import {
+  AuthError,
   getUser,
   handleAuthCallback,
   logout,
@@ -26,8 +27,15 @@ export async function getCurrentUser(): Promise<User | null> {
   return getUser();
 }
 
-export function beginGoogleLogin(): never {
-  return oauthLogin("google");
+export function beginGoogleLogin(): void {
+  try {
+    oauthLogin("google");
+  } catch (error) {
+    // @netlify/identity deliberately throws after assigning window.location.
+    // The redirect is already underway; do not surface it as an app failure.
+    if (error instanceof AuthError && error.message === "Redirecting to OAuth provider") return;
+    throw error;
+  }
 }
 
 export async function endSession(): Promise<void> {
