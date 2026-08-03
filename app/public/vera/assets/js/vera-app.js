@@ -296,10 +296,20 @@
     var el = $('[data-countdown]');
     if (!el) return;
     if (RM) { el.textContent = 'next sweep 06:00 UTC'; return; }
+    var lastStr = '';
     function tick() {
       var el2 = $('[data-countdown]');
       if (!el2) { clearInterval(countdownT); return; }
-      el2.textContent = fmtCountdown(nextSweepUTC() - new Date());
+      var ms = nextSweepUTC() - new Date();
+      var str = fmtCountdown(ms);
+      if (str !== lastStr) {
+        el2.innerHTML = str.split('').map(function (ch, i) {
+          var was = lastStr[i];
+          return '<span class="flipd' + (was !== undefined && was !== ch ? ' tick' : '') + '">' + ch + '</span>';
+        }).join('');
+        lastStr = str;
+      }
+      document.documentElement.classList.toggle('is-sweep-near', ms < 30 * 60000);
     }
     tick();
     countdownT = setInterval(tick, 1000);
@@ -340,7 +350,9 @@
       '<span class="gal" data-gal>' + urls.map(function (u, i) {
         return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
       }).join('') + '</span>' +
-      (urls.length > 1 ? '<span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
+      (urls.length > 1 ? '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
+        return '<span class="gal__dot' + (i === 0 ? ' is-on' : '') + '"></span>';
+      }).join('') + '</span><span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
   }
 
   /* ---------- commute anchors: the #1 community ask, honestly ----------
@@ -888,6 +900,43 @@
      ================================================================ */
 
   function renderAtlas(page) {
+    var f0 = filtered();
+    var geo0 = f0.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    if (window.__VERAM && window.__VERAM.available()) {
+      var sorted0 = geo0.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
+      page.innerHTML =
+        '<header class="pagehead"><p class="kicker">Atlas</p>' +
+        '<h1 class="pagehead__title">The city, to the pixel</h1>' +
+        '<p class="pagehead__lede">Every street and building footprint — OpenFreeMap vector tiles in VERA\'s own palette. ' + geo0.length + ' listings pinned; click any dot to open its ledger.</p></header>' +
+        '<div class="maplay maplay--vector">' +
+          '<div class="panel mapwrap"><div class="veramap" data-veramap role="application" aria-label="Interactive map of listings"></div>' +
+            '<div class="mp-key">' +
+              '<span class="mp-key__i"><i class="mp-swatch mp-swatch--good"></i>Clears the bar</span>' +
+              '<span class="mp-key__i"><i class="mp-swatch mp-swatch--warn"></i>Needs verification</span>' +
+              '<span class="mp-key__i"><i class="mp-swatch mp-swatch--bad"></i>Scam wall</span>' +
+              '<span class="mp-key__i">tiles © OpenFreeMap · OpenMapTiles · OpenStreetMap contributors</span>' +
+            '</div></div>' +
+          '<div class="panel"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
+            (sorted0.length ? '<div class="walklist">' + sorted0.map(function (l) {
+              var t = C.nearestStation(l);
+              return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
+                '<span class="walkrow__min">' + (t ? '≈' + t.mins : '—') + '<small>min</small></span>' +
+                '<span class="walkrow__body"><b>' + esc(l.title || l.address_normalized || 'Listing') + '</b>' +
+                '<span>' + (t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
+                '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
+            }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet.</p>') +
+          '</div></div>';
+      page.classList.add('is-entered');
+      var mounted = window.__VERAM.mount(page.querySelector('[data-veramap]'), geo0, function (uid) {
+        if (window.__VERAL) window.__VERAL.open(uid);
+      });
+      if (mounted) return;
+      /* WebGL or tiles refused — fall through to the drawn city */
+    }
+    renderAtlasFallback(page);
+  }
+
+  function renderAtlasFallback(page) {
     var M = C.MAP;
     var f = filtered();
     var geo = f.filter(function (l) { return l.latitude != null && l.longitude != null; });
@@ -1227,11 +1276,27 @@
     }
   }
 
+  var revealObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('rv-in'); revealObs.unobserve(en.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px' }) : null;
+
+  function applyReveals(page) {
+    if (RM || !revealObs) return;
+    $$('.panel, .bubcard, .manual-sec, .arcday, .wire__card, .cgroup', page).forEach(function (el, i) {
+      if (el.classList.contains('rv') || el.classList.contains('rv-in')) return;
+      el.classList.add('rv');
+      revealObs.observe(el);
+    });
+  }
+
   function renderRoute() {
     if (!D) return;
     var page = $('#main [data-page]');
     if (!page) return;
     clearInterval(countdownT);
+    if (window.__VERAM && state.route !== 'atlas') window.__VERAM.destroy();
     page.setAttribute('data-page', state.route);
     page.className = 'page';
     if (state.route === 'today') renderToday(page);
@@ -1242,6 +1307,7 @@
     else if (state.route === 'manual') renderManual(page);
     else if (state.route === 'archive') renderArchive(page);
     else renderSystem(page);
+    applyReveals(page);
   }
 
   /* ================================================================
@@ -1410,6 +1476,15 @@
     if (!RM && document.startViewTransition) document.startViewTransition(function () { route(); });
     else route();
   }
+  document.addEventListener('scroll', function (e) {
+    var gal = e.target;
+    if (!gal.classList || !gal.classList.contains('gal')) return;
+    var dots = gal.parentNode.querySelectorAll('.gal__dot');
+    if (!dots.length) return;
+    var idx = Math.round(gal.scrollLeft / gal.clientWidth);
+    dots.forEach(function (d, i) { d.classList.toggle('is-on', i === idx); });
+  }, true);
+
   window.addEventListener('hashchange', routeSmooth);
 
   /* Minimaps and place-truth arrive when the neighborhood polygons land. */

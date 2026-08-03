@@ -99,9 +99,10 @@
       /* ---- atlas ---- */
       location.hash = '#/atlas'; app.route();
       var geoReady = window.__VERAG && window.__VERAG.ready();
-      check('atlas draws land, stations, and pins',
-        (geoReady ? $$('.mp-nta').length > 30 : $$('.mp-land').length >= 2) && $$('.mp-stn').length > 40 && !!$('.mp'),
-        (geoReady ? $$('.mp-nta').length + ' real polygons' : 'fallback land') + ', ' + $$('.mp-stn').length + ' stations');
+      var vectorUp = !!document.querySelector('[data-veramap]');
+      check('atlas mounts the real map (or the drawn fallback)',
+        vectorUp || ((geoReady ? $$('.mp-nta').length > 30 : $$('.mp-land').length >= 2) && $$('.mp-stn').length > 40 && !!$('.mp')),
+        vectorUp ? 'vector map container mounted' : 'SVG fallback path');
 
       /* ---- the real city (round 7) ---- */
       if (geoReady) {
