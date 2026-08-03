@@ -7,6 +7,7 @@ import {
 } from "@/data/project-momentum";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
+import CinematicMedia from "./CinematicMedia";
 import { useScrollReveal } from "./useScrollReveal";
 import "./ProjectMomentum.css";
 
@@ -51,22 +52,29 @@ export default function ProjectMomentum({
           {projects.map((project) => (
             <article className="lf-momentum__project" key={project.slug}>
               <div className="lf-momentum__scene">
-                <img
-                  {...skelImg}
-                  src={project.image}
-                  {...responsiveImageProps(
-                    project.image,
-                    projects.length === 1
-                      ? "(min-width: 960px) 36vw, 100vw"
-                      : "(min-width: 900px) 44vw, 100vw",
-                    [480, 640, 900],
-                  )}
-                  alt={project.imageAlt}
-                  width={1600}
-                  height={1200}
-                  loading="lazy"
-                  decoding="async"
-                />
+                {project.video ? (
+                  <CinematicMedia
+                    media={project.video}
+                    alt={project.imageAlt}
+                  />
+                ) : (
+                  <img
+                    {...skelImg}
+                    src={project.image}
+                    {...responsiveImageProps(
+                      project.image,
+                      projects.length === 1
+                        ? "(min-width: 960px) 36vw, 100vw"
+                        : "(min-width: 900px) 44vw, 100vw",
+                      [480, 640, 900],
+                    )}
+                    alt={project.imageAlt}
+                    width={1600}
+                    height={1200}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
               </div>
 
               <div className="lf-momentum__body">

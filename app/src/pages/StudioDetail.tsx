@@ -30,6 +30,8 @@ export default function StudioDetail() {
           // Decorative: the adjacent H1 already announces the project name,
           // so an alt repeating it would be redundant for screen readers.
           src: project.image,
+          video: project.video,
+          fit: project.video ? "contain" : "cover",
           alt: "",
           width: 1800,
           height: 1200,

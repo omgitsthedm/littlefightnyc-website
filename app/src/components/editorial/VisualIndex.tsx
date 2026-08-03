@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { ArrowUpRight, type LucideIcon } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
+import type { CinematicMediaAsset } from "@/data/cinematic-media";
+import CinematicMedia from "./CinematicMedia";
 import "./VisualIndex.css";
 
 type VisualIndexItem = {
@@ -9,6 +11,7 @@ type VisualIndexItem = {
   eyebrow: string;
   icon: LucideIcon;
   image: string;
+  video?: CinematicMediaAsset;
   title: string;
   to: string;
   /** Optional mono chip next to the eyebrow (e.g. "~4 min read"). */
@@ -61,25 +64,27 @@ export default function VisualIndex({
         <div className="lf-visual-index__grid" data-count={items.length}>
           {items.map((item) => {
             const Icon = item.icon;
-
-            return (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="lf-visual-index__item"
-              >
-                <span className="lf-visual-index__media" aria-hidden="true">
-                  <img {...skelImg}
-                    src={item.image}
-                    alt=""
-                    {...responsiveImageProps(
-                      item.image,
-                      "(min-width: 1180px) 34vw, (min-width: 720px) 48vw, 100vw",
-                    )}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="lf-visual-index__icon">
+            const content = (
+              <>
+                <span
+                  className="lf-visual-index__media"
+                  aria-hidden={item.video ? undefined : true}
+                >
+                  {item.video ? (
+                    <CinematicMedia media={item.video} />
+                  ) : (
+                    <img {...skelImg}
+                      src={item.image}
+                      alt=""
+                      {...responsiveImageProps(
+                        item.image,
+                        "(min-width: 1180px) 34vw, (min-width: 720px) 48vw, 100vw",
+                      )}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  <span className="lf-visual-index__icon" aria-hidden="true">
                     <Icon size={22} strokeWidth={1.8} />
                   </span>
                 </span>
@@ -100,6 +105,32 @@ export default function VisualIndex({
                     <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
                   </span>
                 </span>
+              </>
+            );
+
+            if (item.video) {
+              return (
+                <article
+                  key={item.to}
+                  className="lf-visual-index__item lf-visual-index__card"
+                >
+                  {content}
+                  <Link
+                    to={item.to}
+                    className="lf-visual-index__card-link"
+                    aria-label={`${ctaLabel(item.to)}: ${item.title}`}
+                  />
+                </article>
+              );
+            }
+
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="lf-visual-index__item"
+              >
+                {content}
               </Link>
             );
           })}

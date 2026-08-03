@@ -35,7 +35,7 @@
   background: var(--lf-paper-2);
 }
 
-.lf-project-review__media img {
+.lf-project-review__media > :is(img, .lf-cinematic-media) {
   display: block;
   width: 100%;
   height: 100%;
@@ -44,7 +44,9 @@
   transition: transform var(--m-settle-ms) var(--m-settle-ease);
 }
 
-.lf-project-review:hover .lf-project-review__media img {
+.lf-project-review:hover
+  .lf-project-review__media
+  > :is(img, .lf-cinematic-media) {
   transform: scale(1.02);
 }
 
@@ -307,12 +309,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lf-project-review,
-  .lf-project-review__media img {
+  .lf-project-review__media > :is(img, .lf-cinematic-media) {
     transition: none;
   }
 
   .lf-project-review:hover,
-  .lf-project-review:hover .lf-project-review__media img {
+  .lf-project-review:hover
+    .lf-project-review__media
+    > :is(img, .lf-cinematic-media) {
     transform: none;
   }
 }

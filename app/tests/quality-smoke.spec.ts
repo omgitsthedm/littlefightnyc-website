@@ -13,6 +13,42 @@ const PREVIEW_ORIGINS = new Set([
   "http://localhost:4173",
 ]);
 
+const PHC_CASE_PATH = "/case-studies/public-house-creative/";
+const PHC_FILM_SELECTOR = ".lf-cinematic-media";
+const PHC_FILM_ROUTES = [
+  { path: "/", placements: 1 },
+  { path: "/examples/", placements: 2 },
+  { path: PHC_CASE_PATH, placements: 2 },
+  { path: "/services/", placements: 1 },
+  { path: "/services/business-systems/", placements: 1 },
+  { path: "/studio/cockpit/", placements: 1 },
+  { path: "/es/", placements: 1 },
+  { path: "/zh/", placements: 1 },
+  ...[
+    "lower-east-side",
+    "east-village",
+    "soho",
+    "chelsea",
+    "midtown",
+    "upper-east-side",
+    "upper-west-side",
+    "west-village",
+    "williamsburg",
+    "bushwick",
+    "park-slope",
+    "dumbo",
+    "astoria",
+    "long-island-city",
+    "greenwich-village",
+    "financial-district",
+    "the-bronx",
+    "staten-island",
+  ].map((area) => ({
+    path: `/areas/${area}/business-systems/`,
+    placements: 1,
+  })),
+] as const;
+
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] as const;
 
 type RouteMetaPage = {
@@ -373,6 +409,127 @@ for (const route of ROUTES) {
 }
 
 test(
+  "PHC process film selects the responsive cache-stable source @all-projects",
+  async ({ page }, testInfo) => {
+    const runtime = watchRuntime(page);
+    const response = await page.goto(PHC_CASE_PATH, {
+      waitUntil: "domcontentloaded",
+    });
+    expect(response?.ok(), "The PHC case study did not load").toBe(true);
+    await waitForStableDocument(page);
+
+    const film = page.locator(`.lf-pagehero__backdrop ${PHC_FILM_SELECTOR}`).first();
+    await expect(film).toBeVisible();
+
+    const poster = film.locator("img");
+    await expect(poster).toHaveAttribute(
+      "src",
+      "/media/cabinetry-process-poster-c6d59dbc.webp",
+    );
+
+    const video = film.locator("video");
+    const expectedSource = testInfo.project.name.includes("mobile")
+      ? "/media/cabinetry-process-film-540-1a0bac73.mp4"
+      : "/media/cabinetry-process-film-720-3d0d35f6.mp4";
+    await expect
+      .poll(
+        () => video.evaluate((element) => (element as HTMLVideoElement).currentSrc),
+        { message: `The film never selected ${expectedSource}` },
+      )
+      .toContain(expectedSource);
+
+    await expect
+      .poll(
+        () => video.evaluate((element) => {
+          const media = element as HTMLVideoElement;
+          return media.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA && !media.paused;
+        }),
+        { message: "The muted inline film did not reach playing state" },
+      )
+      .toBe(true);
+
+    expect(
+      await video.evaluate((element) => {
+        const media = element as HTMLVideoElement;
+        return {
+          autoplay: media.autoplay,
+          controls: media.controls,
+          loop: media.loop,
+          muted: media.muted,
+          playsInline: media.hasAttribute("playsinline"),
+        };
+      }),
+    ).toEqual({
+      autoplay: true,
+      controls: false,
+      loop: true,
+      muted: true,
+      playsInline: true,
+    });
+
+    const control = film.locator(".lf-cinematic-media__control");
+    await expect(control).toBeVisible();
+    await expect(control).toHaveAccessibleName("Pause process film");
+    await control.click();
+    await expect(control).toHaveAccessibleName("Play process film");
+    expect(await video.evaluate((element) => (element as HTMLVideoElement).paused)).toBe(true);
+    await control.click();
+    await expect(control).toHaveAccessibleName("Pause process film");
+    await expect
+      .poll(() => video.evaluate((element) => (element as HTMLVideoElement).paused))
+      .toBe(false);
+
+    await expect(
+      page.locator(
+        'img[src*="case-public-house"], img[src*="og-case-public-house"], img[src*="phc"]',
+      ),
+      "A legacy PHC logo image is still rendered on the case study",
+    ).toHaveCount(0);
+    await expectNoHorizontalOverflow(page);
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "every PHC work surface renders the film and no legacy logo @chromium-desktop",
+  async ({ page }) => {
+    test.setTimeout(90_000);
+    const runtime = watchRuntime(page);
+    let placementCount = 0;
+
+    for (const route of PHC_FILM_ROUTES) {
+      const response = await page.goto(route.path, { waitUntil: "domcontentloaded" });
+      expect.soft(response?.ok(), `${route.path} did not load`).toBe(true);
+
+      const films = page.locator(PHC_FILM_SELECTOR);
+      await expect(films.first(), `${route.path} did not render the PHC film`).toBeAttached();
+      await expect(
+        films,
+        `${route.path} changed its expected number of PHC film placements`,
+      ).toHaveCount(route.placements);
+      await expect(
+        films.locator('source[data-src$="cabinetry-process-film-540-1a0bac73.mp4"]'),
+      ).toHaveCount(route.placements);
+      await expect(
+        films.locator('source[data-src$="cabinetry-process-film-720-3d0d35f6.mp4"]'),
+      ).toHaveCount(route.placements);
+      await expect(
+        page.locator(
+          'img[src*="case-public-house"], img[src*="og-case-public-house"], img[src*="phc"]',
+        ),
+        `${route.path} still renders a legacy PHC logo image`,
+      ).toHaveCount(0);
+
+      placementCount += await films.count();
+    }
+
+    expect(PHC_FILM_ROUTES).toHaveLength(26);
+    expect(placementCount).toBe(28);
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
   "first-response and hydrated H1 stay equal on every indexed route @chromium-desktop",
   async ({ page, request }, testInfo) => {
     test.setTimeout(180_000);
@@ -508,6 +665,12 @@ test(
   "reduced motion preserves meaning and removes long-running motion @all-projects",
   async ({ page }) => {
     const runtime = watchRuntime(page);
+    const videoRequests: string[] = [];
+    page.on("request", (request) => {
+      if (/cabinetry-process-film-\d+-[a-f0-9]{8}\.mp4(?:\?|$)/.test(request.url())) {
+        videoRequests.push(request.url());
+      }
+    });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await openRoute(page, ROUTES[0]);
 
@@ -559,6 +722,33 @@ test(
     expect(
       unsafeAnimations,
       `Long-running animations remained active under reduced motion: ${unsafeAnimations.join(", ")}`,
+    ).toEqual([]);
+
+    const film = page.locator(PHC_FILM_SELECTOR).first();
+    await expect(film).toBeAttached();
+    await expect(film).toHaveAttribute("data-motion", "still");
+    await expect(film.locator(".lf-cinematic-media__control")).toBeHidden();
+    expect(
+      await film.evaluate((element) => {
+        const video = element.querySelector("video") as HTMLVideoElement | null;
+        const sources = Array.from(element.querySelectorAll("source"));
+        const poster = element.querySelector("img");
+        return {
+          currentSrc: video?.currentSrc ?? "",
+          posterSrc: poster?.getAttribute("src") ?? "",
+          sourceAttributes: sources.map((source) => source.getAttribute("src")),
+          videoDisplay: video ? getComputedStyle(video).display : "missing",
+        };
+      }),
+    ).toEqual({
+      currentSrc: "",
+      posterSrc: "/media/cabinetry-process-poster-c6d59dbc.webp",
+      sourceAttributes: [null, null],
+      videoDisplay: "none",
+    });
+    expect(
+      videoRequests,
+      "Reduced-motion visitors should keep the poster without downloading the film",
     ).toEqual([]);
 
     await expectNoHorizontalOverflow(page);

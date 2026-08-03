@@ -93,6 +93,8 @@ export default function ServiceAreaDetail() {
         dek={`${service.eyebrow} for ${area.name} businesses. We keep what works and fix what gets in the way.`}
         image={{
           src: service.image,
+          video: service.video,
+          fit: service.video ? "contain" : "cover",
           alt: `${service.eyebrow} help in ${area.name}`,
           width: 1200,
           height: 900,

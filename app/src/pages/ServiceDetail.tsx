@@ -202,6 +202,7 @@ export default function ServiceDetail() {
           </div>
           <EditorialFigure
             src={service.image}
+            video={service.video}
             alt=""
             caption={FIGURE_CAPTION[service.slug] ?? ""}
             width={1600}

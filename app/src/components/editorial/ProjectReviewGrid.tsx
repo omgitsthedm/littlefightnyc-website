@@ -9,6 +9,7 @@ import type { CaseStudy } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { ProofStatus } from "./ProofPassport";
+import CinematicMedia from "./CinematicMedia";
 import "./ProjectReviewGrid.css";
 
 export default function ProjectReviewGrid({
@@ -23,30 +24,37 @@ export default function ProjectReviewGrid({
       {studies.map((study) => (
         <article className="lf-project-review" key={study.slug}>
           <div className="lf-project-review__media">
-            <img
-              {...skelImg}
-              src={study.image}
-              {...responsiveImageProps(
-                study.image,
-                variant === "home"
-                  ? "(min-width: 720px) 46vw, 100vw"
-                  : "(min-width: 900px) 46vw, 100vw",
-                [480, 640, 900],
-              )}
-              alt={`${study.client}: ${study.showcase.label}`}
-              width={1600}
-              height={1200}
-              loading="lazy"
-              decoding="async"
-              style={
-                variant === "all"
-                  ? {
-                      objectPosition:
-                        study.showcase.heroPosition ?? "center center",
-                    }
-                  : undefined
-              }
-            />
+            {study.video ? (
+              <CinematicMedia
+                media={study.video}
+                alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
+              />
+            ) : (
+              <img
+                {...skelImg}
+                src={study.image}
+                {...responsiveImageProps(
+                  study.image,
+                  variant === "home"
+                    ? "(min-width: 720px) 46vw, 100vw"
+                    : "(min-width: 900px) 46vw, 100vw",
+                  [480, 640, 900],
+                )}
+                alt={`${study.client}: ${study.showcase.label}`}
+                width={1600}
+                height={1200}
+                loading="lazy"
+                decoding="async"
+                style={
+                  variant === "all"
+                    ? {
+                        objectPosition:
+                          study.showcase.heroPosition ?? "center center",
+                      }
+                    : undefined
+                }
+              />
+            )}
           </div>
 
           <div className="lf-project-review__body">

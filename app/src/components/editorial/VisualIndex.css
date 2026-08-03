@@ -139,6 +139,27 @@
   outline-offset: 3px;
 }
 
+.lf-visual-index__card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.lf-visual-index__card-link:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: -4px;
+}
+
+.lf-visual-index__card .lf-visual-index__media > .lf-cinematic-media {
+  position: relative;
+  z-index: 3;
+}
+
+.lf-visual-index__card .lf-visual-index__icon {
+  z-index: 4;
+}
+
 .lf-visual-index__item::before {
   content: counter(lf-visual-index, decimal-leading-zero);
   position: absolute;
@@ -181,7 +202,7 @@
   pointer-events: none;
 }
 
-.lf-visual-index__media img {
+.lf-visual-index__media > :is(img, .lf-cinematic-media) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -259,7 +280,9 @@
 }
 
 @media (hover: hover) {
-  .lf-visual-index__item:hover .lf-visual-index__media img {
+  .lf-visual-index__item:hover
+    .lf-visual-index__media
+    > :is(img, .lf-cinematic-media) {
     filter: contrast(1.08) saturate(1) brightness(0.96);
     transform: scale(1.055);
   }
@@ -267,13 +290,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lf-visual-index__item,
-  .lf-visual-index__media img {
+  .lf-visual-index__media > :is(img, .lf-cinematic-media) {
     transition: none;
   }
 
   .lf-visual-index__item:hover,
   .lf-visual-index__item:focus-visible,
-  .lf-visual-index__item:hover .lf-visual-index__media img {
+  .lf-visual-index__item:hover
+    .lf-visual-index__media
+    > :is(img, .lf-cinematic-media) {
     transform: none;
   }
 }
@@ -293,15 +318,19 @@
 }
 
 /* Micro-interaction: index card art leans in on hover. */
-.lf-visual-index__media img {
+.lf-visual-index__media > :is(img, .lf-cinematic-media) {
   transition: scale 600ms var(--lf-ease-out-quart, ease);
 }
-a:hover > .lf-visual-index__media img,
-.lf-visual-index__card:hover .lf-visual-index__media img {
+a:hover > .lf-visual-index__media > :is(img, .lf-cinematic-media),
+.lf-visual-index__card:hover
+  .lf-visual-index__media
+  > :is(img, .lf-cinematic-media) {
   scale: 1.045;
 }
 @media (prefers-reduced-motion: reduce) {
-  .lf-visual-index__media img { transition: none; }
-  a:hover > .lf-visual-index__media img,
-  .lf-visual-index__card:hover .lf-visual-index__media img { scale: none; }
+  .lf-visual-index__media > :is(img, .lf-cinematic-media) { transition: none; }
+  a:hover > .lf-visual-index__media > :is(img, .lf-cinematic-media),
+  .lf-visual-index__card:hover
+    .lf-visual-index__media
+    > :is(img, .lf-cinematic-media) { scale: none; }
 }

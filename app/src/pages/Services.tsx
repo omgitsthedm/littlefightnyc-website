@@ -57,6 +57,7 @@ export default function Services() {
     eyebrow: `${project.kind} / ${project.status}`,
     icon: Boxes,
     image: project.image,
+    video: project.video,
     title: project.name,
     to: `/studio/${project.slug}/`,
   }));

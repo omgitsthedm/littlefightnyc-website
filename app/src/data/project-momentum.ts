@@ -1,7 +1,13 @@
+import {
+  CABINETRY_PROCESS_FILM,
+  type CinematicMediaAsset,
+} from "./cinematic-media";
+
 export type ProjectMomentum = {
   slug: "venuecircuit" | "public-house-creative";
   name: string;
   image: string;
+  video?: CinematicMediaAsset;
   imageAlt: string;
   kind: string;
   status: string;
@@ -65,8 +71,9 @@ export const projectMomentum: ProjectMomentum[] = [
   {
     slug: "public-house-creative",
     name: "Public House Creative",
-    image: "/assets/case-public-house-cockpit.webp",
-    imageAlt: "Public House Creative's private estimating cockpit with bid data and checks",
+    image: CABINETRY_PROCESS_FILM.poster,
+    video: CABINETRY_PROCESS_FILM,
+    imageAlt: "Cabinetry plans becoming a finished kitchen in the estimating process film",
     kind: "Private estimating software",
     status: "In production",
     summary: "A real estimating workflow became one owned system, then kept growing.",

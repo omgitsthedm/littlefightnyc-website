@@ -2,6 +2,8 @@ import type { LucideIcon } from "lucide-react";
 import { useScrollReveal } from "./useScrollReveal";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
+import type { CinematicMediaAsset } from "@/data/cinematic-media";
+import CinematicMedia from "./CinematicMedia";
 import "./PageHero.css";
 
 type Props = {
@@ -16,6 +18,8 @@ type Props = {
     height?: number;
     /** Cap mobile density for unusually heavy images while preserving desktop detail. */
     mobileWidths?: number[];
+    video?: CinematicMediaAsset;
+    fit?: "cover" | "contain";
   };
   /**
    * Case-study archetype: the project proof image runs full-bleed BEHIND the
@@ -26,6 +30,8 @@ type Props = {
     alt: string;
     position?: string;
     mobilePosition?: string;
+    video?: CinematicMediaAsset;
+    fit?: "cover" | "contain";
   };
   /**
    * Answer archetype: an orange "quick answer" card sits right in the hero.
@@ -64,7 +70,7 @@ export default function PageHero({
 
   // Full-bleed backdrop: responsive variants ship at 480/640/900 — include the
   // original full-size asset so big screens still get a sharp image.
-  const backdropImg = backdrop
+  const backdropImg = backdrop && !backdrop.video
     ? (() => {
         const p = responsiveImageProps(backdrop.src, "100vw", [640, 900]);
         return "srcSet" in p && p.srcSet
@@ -87,7 +93,7 @@ export default function PageHero({
       {backdrop && (
         <div
           className="lf-pagehero__backdrop"
-          aria-hidden="true"
+          aria-hidden={backdrop.video ? undefined : true}
           style={
             {
               "--lf-backdrop-position": backdrop.position,
@@ -95,13 +101,21 @@ export default function PageHero({
             } as React.CSSProperties
           }
         >
-          <img
-            src={backdrop.src}
-            alt=""
-            {...backdropImg}
-            fetchPriority="high"
-            decoding="async"
-          />
+          {backdrop.video ? (
+            <CinematicMedia
+              media={backdrop.video}
+              fit={backdrop.fit ?? "cover"}
+              priority
+            />
+          ) : (
+            <img
+              src={backdrop.src}
+              alt=""
+              {...backdropImg}
+              fetchPriority="high"
+              decoding="async"
+            />
+          )}
           <span className="lf-pagehero__scrim" />
         </div>
       )}
@@ -157,28 +171,37 @@ export default function PageHero({
 
         {image && (
           <div className="lf-pagehero__image">
-            <picture className="lf-pagehero__picture">
-              {image.mobileWidths && (
-                <source
-                  media="(max-width: 767px)"
-                  {...responsiveImageProps(image.src, "100vw", image.mobileWidths)}
-                />
-              )}
-              <img
-                {...skelImg}
-                src={image.src}
+            {image.video ? (
+              <CinematicMedia
+                media={image.video}
                 alt={image.alt}
-                width={image.width}
-                height={image.height}
-                {...responsiveImageProps(
-                  image.src,
-                  "(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw",
-                  [480, 640, 900],
-                )}
-                fetchPriority="high"
-                decoding="async"
+                fit={image.fit ?? "cover"}
+                priority
               />
-            </picture>
+            ) : (
+              <picture className="lf-pagehero__picture">
+                {image.mobileWidths && (
+                  <source
+                    media="(max-width: 767px)"
+                    {...responsiveImageProps(image.src, "100vw", image.mobileWidths)}
+                  />
+                )}
+                <img
+                  {...skelImg}
+                  src={image.src}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
+                  {...responsiveImageProps(
+                    image.src,
+                    "(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw",
+                    [480, 640, 900],
+                  )}
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
+            )}
           </div>
         )}
       </div>

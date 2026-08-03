@@ -193,7 +193,8 @@
 }
 
 .lf-pagehero__picture,
-.lf-pagehero__image img {
+.lf-pagehero__picture > img,
+.lf-pagehero__image > .lf-cinematic-media {
   inline-size: 100%;
   block-size: 100%;
 }
@@ -202,11 +203,15 @@
   display: block;
 }
 
-.lf-pagehero__image img {
+.lf-pagehero__picture > img {
   display: block;
   object-fit: cover;
   transform: scale(1.015);
   filter: contrast(1.055) saturate(0.94) brightness(0.94);
+}
+
+.lf-pagehero__image > .lf-cinematic-media {
+  display: block;
 }
 
 @media (min-width: 64rem) {
@@ -323,13 +328,13 @@
 /* The image moves as one deep plane while its frame stays still. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .lf-pagehero__image img {
+    .lf-pagehero__picture > img {
       animation: lf-pagehero-image-drift linear both;
       animation-timeline: view();
       animation-range: entry 0% exit 100%;
     }
 
-    .lf-pagehero--case .lf-pagehero__backdrop img {
+    .lf-pagehero--case .lf-pagehero__backdrop > img {
       animation: lf-pagehero-case-drift linear both;
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
@@ -367,23 +372,40 @@
 .lf-pagehero__backdrop {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
 }
 
-.lf-pagehero__backdrop img {
+.lf-pagehero__backdrop > :is(img, .lf-cinematic-media) {
   inline-size: 100%;
   block-size: 100%;
   display: block;
+}
+
+.lf-pagehero__backdrop > img {
   object-fit: cover;
   object-position: var(--lf-backdrop-position, center center);
   transform: scale(1.035);
   filter: saturate(0.9) contrast(1.04) brightness(0.86);
 }
 
+.lf-pagehero__backdrop
+  > .lf-cinematic-media
+  :is(.lf-cinematic-media__poster, .lf-cinematic-media__video) {
+  object-position: var(--lf-backdrop-position, center center);
+  filter: saturate(0.9) contrast(1.04) brightness(0.86);
+}
+
+.lf-pagehero__backdrop .lf-cinematic-media__control {
+  top: clamp(5.5rem, 13vh, 7.5rem);
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: auto;
+}
+
 .lf-pagehero__scrim {
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background:
     linear-gradient(
       to top,
@@ -403,6 +425,7 @@
   inline-size: 100%;
   min-block-size: inherit;
   align-content: end;
+  pointer-events: none;
   padding-block:
     clamp(11rem, 26vh, 18rem)
     clamp(var(--lf-space-8), 8vw, var(--lf-space-10));
@@ -425,7 +448,16 @@
 }
 
 @media (max-width: 47.99rem) {
-  .lf-pagehero__backdrop img {
+  .lf-pagehero__backdrop > img {
+    object-position: var(
+      --lf-backdrop-position-mobile,
+      var(--lf-backdrop-position, center center)
+    );
+  }
+
+  .lf-pagehero__backdrop
+    > .lf-cinematic-media
+    :is(.lf-cinematic-media__poster, .lf-cinematic-media__video) {
     object-position: var(
       --lf-backdrop-position-mobile,
       var(--lf-backdrop-position, center center)
@@ -556,8 +588,9 @@
       .lf-pagehero__image,
       .lf-pagehero__backdrop
     ),
-  .lf-pagehero__image img,
-  .lf-pagehero__backdrop img {
+  .lf-pagehero__picture > img,
+  .lf-pagehero__image > .lf-cinematic-media,
+  .lf-pagehero__backdrop > :is(img, .lf-cinematic-media) {
     opacity: 1;
     transform: none;
     animation: none;

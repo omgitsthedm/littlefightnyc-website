@@ -20,6 +20,12 @@
   filter: contrast(1.06) saturate(0.88) brightness(0.95);
 }
 
+.lf-fig__frame > .lf-cinematic-media {
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  filter: contrast(1.06) saturate(0.88) brightness(0.95);
+}
+
 .lf-fig__caption {
   display: flex;
   align-items: baseline;
@@ -54,7 +60,7 @@
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .lf-fig__frame img {
+    .lf-fig__frame > :is(img, .lf-cinematic-media) {
       animation: lf-fig-settle linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 45%;

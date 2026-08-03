@@ -6,6 +6,8 @@ import { openConsentPreferences } from "@/lib/consent";
 import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
+import CinematicMedia from "@/components/editorial/CinematicMedia";
 
 /**
  * /es/ is the complete pitch in Spanish. One fully Spanish page with its own
@@ -73,7 +75,8 @@ const PROOF = [
     status: "Proyecto privado",
     line: "El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días.",
     fact: "3 herramientas, 1 fuente de verdad",
-    image: "/assets/case-public-house-cockpit.webp",
+    image: CABINETRY_PROCESS_FILM.poster,
+    video: CABINETRY_PROCESS_FILM,
     alt: "Panel privado para preparar presupuestos de carpintería",
   },
   {
@@ -238,14 +241,18 @@ export default function Espanol() {
           <ul>
             {PROOF.map((item) => (
               <li key={item.client}>
-                <img
-                  src={item.image}
-                  alt={item.alt}
-                  width="900"
-                  height="675"
-                  loading="lazy"
-                  decoding="async"
-                />
+                {item.video ? (
+                  <CinematicMedia media={item.video} alt={item.alt} />
+                ) : (
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    width="900"
+                    height="675"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
                 <div>
                   <small>{item.status}</small>
                   <strong>{item.client}</strong>

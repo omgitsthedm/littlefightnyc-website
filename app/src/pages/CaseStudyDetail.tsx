@@ -81,6 +81,8 @@ export default function CaseStudyDetail() {
         dek={study.title}
         backdrop={{
           src: study.image,
+          video: study.video,
+          fit: study.video ? "contain" : "cover",
           alt: "",
           position: study.showcase.heroPosition,
           mobilePosition: study.showcase.heroPositionMobile,

@@ -1,6 +1,11 @@
 /* Split out of site.ts so content routes load ONLY their own data slice
  * (this array was part of the ~200KB shared site chunk). Pure data, no icons. */
 
+import {
+  CABINETRY_PROCESS_FILM,
+  type CinematicMediaAsset,
+} from "./cinematic-media";
+
 export type CaseProofStatus =
   | "public-live"
   | "owned-live"
@@ -21,6 +26,7 @@ export type CaseStudy = {
   url: string;
   slug: string;
   image: string;
+  video?: CinematicMediaAsset;
   services: string[];
   published?: string;
   updated?: string;
@@ -415,6 +421,8 @@ export const caseStudies: CaseStudy[] = [
       context: "Custom cabinetry team",
       availability: "private",
       proof: { status: "private-client" },
+      heroPosition: "right center",
+      heroPositionMobile: "center center",
       stages: [
         { label: "Collect", detail: "Site photos, blueprints, notes, and scope emails enter one structured project record." },
         { label: "Resolve", detail: "Rooms and price drivers get classified while the estimator keeps control of the final judgment." },
@@ -422,7 +430,8 @@ export const caseStudies: CaseStudy[] = [
         { label: "Export", detail: "A clean report leaves the system ready for the real bid, with no spreadsheet reconstruction." },
       ],
     },
-    image: "/assets/case-public-house-cockpit.webp",
+    image: CABINETRY_PROCESS_FILM.poster,
+    video: CABINETRY_PROCESS_FILM,
     services: ["business-systems"],
     published: "2026-05-13",
     updated: "2026-07-12",

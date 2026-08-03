@@ -1,5 +1,7 @@
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
+import type { CinematicMediaAsset } from "@/data/cinematic-media";
+import CinematicMedia from "./CinematicMedia";
 import "./EditorialFigure.css";
 
 type Props = {
@@ -11,6 +13,7 @@ type Props = {
   width?: number;
   height?: number;
   priority?: boolean;
+  video?: CinematicMediaAsset;
 };
 
 export default function EditorialFigure({
@@ -22,25 +25,34 @@ export default function EditorialFigure({
   width,
   height,
   priority = false,
+  video,
 }: Props) {
   return (
     <figure className={`lf-fig ${className}`}>
       <div className="lf-fig__frame">
-        <img
-          {...skelImg}
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          {...responsiveImageProps(
-            src,
-            "(min-width: 1024px) 620px, (min-width: 640px) 60vw, 100vw",
-            [480, 640, 900],
-          )}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-          {...(priority ? { fetchPriority: "high" } : {})}
-        />
+        {video ? (
+          <CinematicMedia
+            media={video}
+            alt={alt}
+            priority={priority}
+          />
+        ) : (
+          <img
+            {...skelImg}
+            src={src}
+            alt={alt}
+            width={width}
+            height={height}
+            {...responsiveImageProps(
+              src,
+              "(min-width: 1024px) 620px, (min-width: 640px) 60vw, 100vw",
+              [480, 640, 900],
+            )}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
+            {...(priority ? { fetchPriority: "high" } : {})}
+          />
+        )}
       </div>
       <figcaption className="lf-fig__caption">
         {number && (

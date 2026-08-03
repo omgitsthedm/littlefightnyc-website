@@ -13,6 +13,10 @@ import {
   Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import {
+  CABINETRY_PROCESS_FILM,
+  type CinematicMediaAsset,
+} from "./cinematic-media";
 
 /* Re-export the split-out content arrays so every existing `@/data/site`
  * import keeps working; Vite tree-shakes each consumer to just its slice. */
@@ -39,6 +43,7 @@ export type Service = {
   outcome: string;
   includes: string[];
   image: string;
+  video?: CinematicMediaAsset;
   accent: string;
   icon: LucideIcon;
   shortAnswer: string;
@@ -57,6 +62,7 @@ export type StudioProject = {
   description: string;
   stack: string[];
   image: string;
+  video?: CinematicMediaAsset;
   external?: string;
   body?: string[];
   metricsEyebrow?: string;
@@ -351,7 +357,8 @@ export const services: Service[] = [
       "Standard technology another developer can maintain",
       "Full ownership of the code, data, and docs",
     ],
-    image: "/assets/case-public-house-cockpit.webp",
+    image: CABINETRY_PROCESS_FILM.poster,
+    video: CABINETRY_PROCESS_FILM,
     accent: "green",
     icon: ClipboardCheck,
     shortAnswer:
@@ -510,7 +517,8 @@ export const studioProjects: StudioProject[] = [
     description:
       "The Cockpit turns the messy first pass of a cabinetry estimate into a structured record. Documents in. Rooms sorted. Price drivers checked. Report out. Private to the team. The biggest non-public build Little Fight has shipped.",
     stack: ["Next.js", "Supabase", "Anthropic", "Netlify Functions"],
-    image: "/assets/hero-laptop.webp",
+    image: CABINETRY_PROCESS_FILM.poster,
+    video: CABINETRY_PROCESS_FILM,
     body: [
       "The Cockpit is the largest non-public build Little Fight has shipped. It turns the messy first pass of a custom cabinetry estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out.",
       "The build is Next.js, Supabase, Anthropic for classification, and Netlify Functions for the heavy processing. The screens show dense information without hiding anything. The data tells the truth. The estimator’s judgment makes the call.",

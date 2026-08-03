@@ -90,7 +90,7 @@
   background: var(--lf-paper-2);
 }
 
-.lf-momentum__scene img {
+.lf-momentum__scene > :is(img, .lf-cinematic-media) {
   display: block;
   width: 100%;
   height: 100%;
@@ -100,7 +100,9 @@
   transition: transform var(--m-settle-ms) var(--m-settle-ease);
 }
 
-.lf-momentum__project:hover .lf-momentum__scene img {
+.lf-momentum__project:hover
+  .lf-momentum__scene
+  > :is(img, .lf-cinematic-media) {
   transform: scale(1);
 }
 
@@ -283,7 +285,6 @@
   font-size: clamp(2.25rem, 4vw, 4rem);
 }
 
-.lf-momentum[data-variant="embedded"] .lf-momentum__scene,
 .lf-momentum[data-variant="embedded"] .lf-momentum__summary,
 .lf-momentum[data-variant="embedded"] .lf-momentum__track p {
   display: none;
@@ -364,7 +365,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lf-momentum__project,
-  .lf-momentum__scene img,
+  .lf-momentum__scene > :is(img, .lf-cinematic-media),
   .lf-momentum__track::after,
   .lf-momentum__track li::before {
     opacity: 1;

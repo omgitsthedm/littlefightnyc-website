@@ -51,6 +51,15 @@ for = "/assets/*"
   [headers.values]
   Cache-Control = "public, max-age=31536000, immutable"
 
+# Cinematic media filenames carry an eight-character content fingerprint.
+# Cache the MP4 ladder and its poster/share stills permanently so the first
+# visit pays for a file once and every repeated placement reuses it locally.
+[[headers]]
+for = "/media/*"
+
+  [headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
+
 # /images/ had no rule at all, so it fell through to the SPA default and every
 # file came back "max-age=0, must-revalidate" — including
 # /images/brand-scenes/storefronts-dawn-1200.webp, which the home page

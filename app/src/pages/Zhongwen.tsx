@@ -6,6 +6,8 @@ import { openConsentPreferences } from "@/lib/consent";
 import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
+import CinematicMedia from "@/components/editorial/CinematicMedia";
 
 /**
  * /zh/ is the complete pitch in Simplified Chinese, on the proven /es/ model:
@@ -73,7 +75,8 @@ const PROOF = [
     status: "私人客户项目",
     line: "把真实报价流程集中到团队每天使用的一套系统里。",
     fact: "3个工具，1个可靠数据源",
-    image: "/assets/case-public-house-cockpit.webp",
+    image: CABINETRY_PROCESS_FILM.poster,
+    video: CABINETRY_PROCESS_FILM,
     alt: "用于准备木工报价的私人工作面板",
   },
   {
@@ -233,14 +236,18 @@ export default function Zhongwen() {
           <ul>
             {PROOF.map((item) => (
               <li key={item.client}>
-                <img
-                  src={item.image}
-                  alt={item.alt}
-                  width="900"
-                  height="675"
-                  loading="lazy"
-                  decoding="async"
-                />
+                {item.video ? (
+                  <CinematicMedia media={item.video} alt={item.alt} />
+                ) : (
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    width="900"
+                    height="675"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
                 <div>
                   <small>{item.status}</small>
                   <strong>{item.client}</strong>

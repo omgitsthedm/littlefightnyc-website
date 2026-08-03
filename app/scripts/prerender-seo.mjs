@@ -721,6 +721,25 @@ function foundationSchemas(page) {
 function routeImagePreload(page) {
   const asset = page.image;
 
+  const areaServiceMatch = page.path.match(/^\/areas\/[^/]+\/([^/]+)\/$/);
+  const areaServiceVideo = areaServiceMatch
+    ? siteContent.services.find((service) => service.slug === areaServiceMatch[1])?.video
+    : undefined;
+  const priorityVideo =
+    page.caseStudy?.video
+    ?? page.service?.video
+    ?? page.studioProject?.video
+    ?? areaServiceVideo;
+
+  // Cinematic PageHero routes paint a tiny poster immediately, then activate
+  // the responsive MP4 after hydration. Preload that exact poster rather than
+  // inventing the -640/-900 responsive-image filenames used by static case
+  // captures. This preserves an instant first frame without competing with it
+  // by preloading a multi-megabyte video.
+  if (priorityVideo?.poster?.endsWith(".webp")) {
+    return `<link rel="preload" href="${escapeAttr(priorityVideo.poster)}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  }
+
   // The same static file serves both /tech-audit/ modes. The general intake
   // renders After Hours Agenda while ?intent=website renders Hair By Rachel
   // Charles. A static image hint is therefore wrong for one of the two modes

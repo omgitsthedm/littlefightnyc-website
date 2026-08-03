@@ -1,0 +1,115 @@
+.lf-cinematic-media {
+  position: relative;
+  isolation: isolate;
+  inline-size: 100%;
+  block-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: hidden;
+  background: var(--lf-ink, #050507);
+}
+
+.lf-cinematic-media__poster,
+.lf-cinematic-media__video {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+  object-position: center center;
+}
+
+.lf-cinematic-media[data-fit="cover"]
+  :is(.lf-cinematic-media__poster, .lf-cinematic-media__video) {
+  object-fit: cover;
+}
+
+.lf-cinematic-media[data-fit="contain"]
+  :is(.lf-cinematic-media__poster, .lf-cinematic-media__video) {
+  object-fit: contain;
+}
+
+.lf-cinematic-media__poster {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity var(--m-settle-ms, 320ms) var(--m-settle-ease, ease-out);
+}
+
+.lf-cinematic-media__video {
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--m-settle-ms, 320ms) var(--m-settle-ease, ease-out);
+}
+
+.lf-cinematic-media__control {
+  position: absolute;
+  right: clamp(0.65rem, 2vw, 1rem);
+  bottom: clamp(0.65rem, 2vw, 1rem);
+  z-index: 3;
+  display: none;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  background: rgba(5, 5, 7, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  opacity: 0.82;
+  transition:
+    opacity var(--m-snap-ms, 160ms) var(--m-snap-ease, ease-out),
+    background-color var(--m-snap-ms, 160ms) var(--m-snap-ease, ease-out),
+    transform var(--m-snap-ms, 160ms) var(--m-snap-ease, ease-out);
+}
+
+.lf-cinematic-media[data-motion="video"] .lf-cinematic-media__control {
+  display: grid;
+}
+
+.lf-cinematic-media__control:hover,
+.lf-cinematic-media__control:focus-visible {
+  opacity: 1;
+  background: rgba(5, 5, 7, 0.94);
+  transform: scale(1.04);
+}
+
+.lf-cinematic-media__control:focus-visible {
+  outline: 2px solid var(--lf-fight, #f97316);
+  outline-offset: 3px;
+}
+
+.lf-cinematic-media[data-playing="true"] .lf-cinematic-media__play,
+.lf-cinematic-media:not([data-playing="true"]) .lf-cinematic-media__pause {
+  display: none;
+}
+
+.lf-cinematic-media[data-playing="true"] .lf-cinematic-media__poster {
+  opacity: 0;
+}
+
+.lf-cinematic-media[data-playing="true"] .lf-cinematic-media__video {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-cinematic-media__poster,
+  .lf-cinematic-media__video,
+  .lf-cinematic-media__control {
+    transition: none;
+  }
+
+  .lf-cinematic-media__poster {
+    opacity: 1;
+  }
+
+  .lf-cinematic-media__video {
+    display: none;
+  }
+
+  .lf-cinematic-media__control {
+    display: none;
+  }
+}
