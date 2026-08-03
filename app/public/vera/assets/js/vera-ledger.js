@@ -136,6 +136,29 @@
         kvRow('Fee status', esc(l.fee_status)) + kvRow('Sq ft', l.square_feet ? num(l.square_feet) : null) +
         kvRow('Source', esc(l.source_name)) + '</dl>';
       if (l.source_url) html += '<a class="insp-link" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Open the original listing ↗</a>';
+
+      /* Price memory — VERA's own days-on-market and price path. StreetEasy
+         retired its counter; this one cannot be reset by a relist. */
+      var ph = l.price_history;
+      if (ph && ph.length) {
+        var vals = ph.map(function (p) { return +p[1]; });
+        var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals);
+        var span = (mx - mn) || 1;
+        var w = 380, hgt = 56;
+        var pts = vals.map(function (v, i) {
+          var x = vals.length === 1 ? w / 2 : (i / (vals.length - 1)) * (w - 12) + 6;
+          var y = mx === mn ? hgt / 2 : hgt - 8 - ((v - mn) / span) * (hgt - 18);
+          return x.toFixed(1) + ' ' + y.toFixed(1);
+        });
+        var move = vals[vals.length - 1] - vals[0];
+        html += '<div class="insp-sec"><h3>Price memory' + (l.days_seen != null ? ' · seen ' + l.days_seen + ' day' + (l.days_seen === 1 ? '' : 's') : '') + '</h3>' +
+          '<svg class="pricepath" viewBox="0 0 ' + w + ' ' + hgt + '" role="img" aria-label="Asking-price history">' +
+          '<polyline fill="none" stroke="' + (move > 0 ? '#cf7352' : '#4cc38a') + '" stroke-width="2" stroke-linecap="round" points="' + pts.join(',') + '"/>' +
+          '</svg>' +
+          '<p class="insp-fine">' + (ph.length === 1
+            ? 'Asking ' + money(vals[0]) + ' since ' + esc(ph[0][0]) + ' — no moves while VERA has watched.'
+            : 'From ' + money(vals[0]) + ' (' + esc(ph[0][0]) + ') to ' + money(vals[vals.length - 1]) + ' — ' + (move > 0 ? 'up ' : 'down ') + money(Math.abs(move)) + ' across ' + ph.length + ' recorded asks.') + '</p></div>';
+      }
     } else if (inspTab === 'money') {
       var m = C.moveInMath(l);
       if (!m.rent) {

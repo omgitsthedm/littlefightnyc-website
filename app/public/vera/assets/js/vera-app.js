@@ -652,6 +652,7 @@
         kpi('Private landlords', cval(privates.length), 'no broker, no corp', 'kpi--good', 'owner') +
         kpi('Scam wall', cval(scams.length), 'kept out of the drop', scams.length ? 'kpi--bad' : '', 'scam') +
       '</div>' +
+      mcHTML +
       '<div class="brackets">' + brTiles + '</div>' +
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Sweep pulse — records discovered per run</h2><p class="panel__hint">' + trends.length + ' runs</p></div>' +

@@ -947,3 +947,8 @@ body { font-size: 18px; }
 .commute--good { color: var(--green); border-color: rgba(76,195,138,.35); }
 
 [hidden] { display: none !important; }
+
+/* --- price memory --- */
+.pricepath { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: var(--r-sm); background: rgba(233,226,210,.02); margin-bottom: 8px; }
+
+[hidden] { display: none !important; }
