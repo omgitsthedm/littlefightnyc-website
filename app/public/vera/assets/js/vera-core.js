@@ -107,6 +107,11 @@
   var transitCache = {};
 
   function nearestStation(l) {
+    /* the engine's GTFS-derived read wins when published — 496 stations
+       and true line sets beat this file's 95-station fallback table */
+    if (l && l.transit && l.transit.station) {
+      return { name: l.transit.station, lines: (l.transit.lines || []).join(' '), meters: null, mins: +l.transit.walk_mins || 1, published: true };
+    }
     if (!l || l.latitude == null || l.longitude == null) return null;
     var key = l.listing_uid || (l.latitude + ',' + l.longitude);
     if (transitCache[key] !== undefined) return transitCache[key];

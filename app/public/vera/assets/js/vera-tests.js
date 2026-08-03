@@ -61,6 +61,10 @@
       var withCoords = POOL.filter(function (l) { return l.latitude != null; });
       var computed = withCoords.filter(function (l) { return C.nearestStation(l); });
       check('subway proximity computed', withCoords.length === 0 || computed.length > 0, computed.length + '/' + withCoords.length + ' within reach');
+      var pubT = C.nearestStation({ transit: { station: 'Astor Pl', walk_mins: 7, lines: ['4', '6'] } });
+      check('published GTFS transit wins over the fallback table', !!pubT && pubT.published === true && pubT.name === 'Astor Pl' && pubT.mins === 7, JSON.stringify(pubT));
+      var pubT2 = C.nearestStation({ latitude: 40.7265, longitude: -73.9815 });
+      check('fallback table still serves unpublished listings', !!pubT2 && !pubT2.published, pubT2 && pubT2.name);
 
       /* ---- browse ---- */
       location.hash = '#/browse'; app.route();
