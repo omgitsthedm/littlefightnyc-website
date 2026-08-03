@@ -119,6 +119,7 @@
     { id: 'touring', label: 'Tour booked', hint: 'going to see it' },
     { id: 'toured', label: 'Seen it', hint: 'walked the unit' },
     { id: 'applied', label: 'Applied', hint: 'paperwork in' },
+    { id: 'signed', label: 'Signed', hint: 'lease in hand' },
     { id: 'dead', label: 'Passed', hint: 'not the one' },
   ];
 
@@ -141,6 +142,10 @@
         title: l ? (l.title || l.address_normalized) : uid, rent: l ? l.rent : null, hood: l ? l.neighborhood : null };
     } else {
       cases[uid].stage = stage;
+    }
+    /* the second half of tenant law starts at the signature */
+    if (stage === 'signed' && !cases[uid].signedAt) {
+      cases[uid].signedAt = new Date().toISOString().slice(0, 10);
     }
     saveCases();
     toast(stage === 'dead' ? 'Passed — VERA will stop suggesting it.' : 'Moved to ' + (STAGES.filter(function (s) { return s.id === stage; })[0] || {}).label);
@@ -1008,6 +1013,14 @@
               '<span>' + (c.rent ? money(c.rent) : '—') + (c.hood ? ' · ' + esc(c.hood) : '') + '</span>' +
               (c.notes ? '<em>“' + esc(c.notes.slice(0, 70)) + (c.notes.length > 70 ? '…' : '') + '”</em>' : '') +
               (c.outcome ? '<span class="ccard__outcome ccard__outcome--' + esc(c.outcome) + '">' + (c.outcome === 'yes' ? 'as advertised' : c.outcome === 'roughly' ? 'roughly as advertised' : 'not as advertised') + '</span>' : '') +
+              (c.stage === 'signed' && c.signedAt ? (function () {
+                var days = Math.floor((Date.now() - new Date(c.signedAt + 'T12:00:00Z')) / 864e5);
+                var toRenewal = 300 - days;
+                return '<span class="ccard__movein">signed ' + esc(c.signedAt) +
+                  (days < 7 ? ' · day one: request the rent history (state mails it to the apartment)' : '') +
+                  (toRenewal > 0 ? ' · renewal watch in ' + toRenewal + 'd' : ' · RENEWAL WINDOW — start the conversation') +
+                  ' · at move-out: deposit back in ' + C.LAW.depositReturnDays + ' days, itemized, by law</span>';
+              })() : '') +
               '</button><div class="ccard__moves">' +
               STAGES.filter(function (x) { return x.id !== c.stage; }).slice(0, 3).map(function (x) {
                 return '<button type="button" data-stage="' + x.id + '" data-uid="' + esc(c.uid) + '" title="Move to ' + x.label + '">' + x.label + '</button>';

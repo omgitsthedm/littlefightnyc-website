@@ -1034,3 +1034,7 @@ body { font-size: 18px; }
 .citelink:hover { text-decoration: underline; }
 
 [hidden] { display: none !important; }
+
+.ccard__movein { font-family: var(--mono); font-size: 10px; color: var(--brass); line-height: 1.5; display: block; }
+
+[hidden] { display: none !important; }

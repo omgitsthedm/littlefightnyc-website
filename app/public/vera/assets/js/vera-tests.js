@@ -293,6 +293,21 @@
         L.close();
       }
 
+      /* ---- phase 5: the move-in ledger ---- */
+      var probeS = POOL[4] && POOL[4].listing_uid;
+      if (probeS && !app.caseOf(probeS)) {
+        app.setStage(probeS, 'signed');
+        check('signing stamps the date', !!app.caseOf(probeS).signedAt, app.caseOf(probeS).signedAt);
+        location.hash = '#/hunt'; app.route();
+        var mv = ($('.ccard__movein') || { textContent: '' }).textContent;
+        check('move-in ledger renders law countdowns', mv.indexOf('renewal watch') > -1 && mv.indexOf('deposit back in 14 days') > -1, mv.slice(0, 80));
+        check('hunt board grew a Signed column', $$('.board .col').length === app.STAGES.length, $$('.board .col').length + ' cols for ' + app.STAGES.length + ' stages');
+        app.dropCase(probeS);
+      } else {
+        check('signing stamps the date', true, 'skipped — no free probe');
+      }
+      check('the hunt now runs first-look to signed lease', app.STAGES.length === 7 && app.STAGES.filter(function (s) { return s.id === 'signed'; }).length === 1, app.STAGES.map(function (s) { return s.id; }).join(','));
+
       /* ---- hygiene ---- */
       check('no private feed touched', ['./data/public.json', 'https://vera-pipeline.netlify.app/data/public.json'].every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), '');
       check('brand present', ($('.brand__name') || { textContent: '' }).textContent === 'VERA', '');
