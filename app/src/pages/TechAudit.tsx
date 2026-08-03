@@ -287,14 +287,14 @@ export default function TechAudit() {
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [dakotaCaptureId, setDakotaCaptureId] = useState("");
+  const [dakotaSubmittedAt, setDakotaSubmittedAt] = useState("");
   // Payoff beat — plays once when step 3 is REACHED with both choices made
   // (not when a saved draft restores straight into step 3).
   const [payoff, setPayoff] = useState(false);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
   const auditStartedRef = useRef(false);
-  const dakotaCaptureIdRef = useRef<HTMLInputElement>(null);
-  const dakotaSubmittedAtRef = useRef<HTMLInputElement>(null);
   const attribution = readAttribution();
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
@@ -455,12 +455,16 @@ export default function TechAudit() {
 
     trackAuditStarted("valid_submit");
 
-    if (dakotaCaptureIdRef.current && !dakotaCaptureIdRef.current.value) {
-      dakotaCaptureIdRef.current.value = createDakotaCaptureId();
-    }
-    if (dakotaSubmittedAtRef.current) {
-      dakotaSubmittedAtRef.current.value = new Date().toISOString();
-    }
+    const captureId = dakotaCaptureId || createDakotaCaptureId();
+    const submittedAt = new Date().toISOString();
+    setDakotaCaptureId(captureId);
+    setDakotaSubmittedAt(submittedAt);
+    // Keep the native form payload correct before React flushes this discrete
+    // event, then retain the same values through the submitting re-render.
+    const captureInput = form.elements.namedItem("dakota_capture_id") as HTMLInputElement | null;
+    const submittedAtInput = form.elements.namedItem("dakota_submitted_at") as HTMLInputElement | null;
+    if (captureInput) captureInput.value = captureId;
+    if (submittedAtInput) submittedAtInput.value = submittedAt;
 
     hapticSubmit();
 
@@ -705,16 +709,16 @@ export default function TechAudit() {
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
                   <input
-                    ref={dakotaCaptureIdRef}
                     type="hidden"
                     name="dakota_capture_id"
-                    defaultValue=""
+                    value={dakotaCaptureId}
+                    readOnly
                   />
                   <input
-                    ref={dakotaSubmittedAtRef}
                     type="hidden"
                     name="dakota_submitted_at"
-                    defaultValue=""
+                    value={dakotaSubmittedAt}
+                    readOnly
                   />
                   <input type="hidden" name="intent" value={leadIntent} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />

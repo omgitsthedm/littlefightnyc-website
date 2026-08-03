@@ -914,6 +914,8 @@ test(
       element.addEventListener("submit", (event) => event.preventDefault(), { once: true });
       (element as HTMLFormElement).requestSubmit();
     });
+    await expect(form.locator('input[name="dakota_capture_id"]')).toHaveValue(/^[0-9a-f-]{32,36}$/u);
+    await expect(form.locator('input[name="dakota_submitted_at"]')).not.toHaveValue("");
     const dakotaCapture = await form.evaluate((element) => {
       const data = new FormData(element as HTMLFormElement);
       return {
