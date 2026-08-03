@@ -969,3 +969,7 @@ body { font-size: 18px; }
 .ccard__outcome--no { color: var(--red); }
 
 [hidden] { display: none !important; }
+
+.prov__i--warn { color: var(--clay); }
+
+[hidden] { display: none !important; }

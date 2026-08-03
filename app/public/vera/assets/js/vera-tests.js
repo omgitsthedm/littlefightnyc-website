@@ -208,6 +208,19 @@
         check('outcome question appears after touring', true, 'skipped — no free probe');
       }
 
+      /* ---- phase 1.2/1.3: computed tells surface when the feed carries them ---- */
+      var probe3 = POOL[2];
+      if (probe3) {
+        probe3.relist_suspect = true; probe3.true_days_on_market = 44; probe3.contact_reuse_count = 6;
+        L.open(probe3.listing_uid);
+        $('[data-insp-tabs] [data-tab="verify"]').click();
+        var tellsTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
+        check('relist tell renders in verify tab', tellsTxt.indexOf('counter was reset') > -1 && tellsTxt.indexOf('44 days') > -1, '');
+        check('contact-reuse tell renders', tellsTxt.indexOf('6 listings') > -1, '');
+        L.close();
+        delete probe3.relist_suspect; delete probe3.true_days_on_market; delete probe3.contact_reuse_count;
+      }
+
       /* ---- system ---- */
       location.hash = '#/system'; app.route();
       check('system shows the pipeline stages', $$('.stage').length === 6, $$('.stage').length);

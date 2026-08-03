@@ -307,6 +307,8 @@
     if (a != null) bits.push('<span class="prov__i" title="Authenticity confidence, 0–100">real ' + num(a) + '</span>');
     bits.push('<span class="prov__i" title="HPD building-risk score — lower is cleaner">HPD ' + num(l.hpd_risk_score) + '</span>');
     if (l.duplicate_count) bits.push('<span class="prov__i">' + l.duplicate_count + '× reposted</span>');
+    if (l.relist_suspect) bits.push('<span class="prov__i prov__i--warn" title="A fresh posting at an address that already advertised — the days-on-market counter was reset">relisted · truly ' + (l.true_days_on_market != null ? l.true_days_on_market + 'd on market' : 'older than it looks') + '</span>');
+    if (l.contact_reuse_count) bits.push('<span class="prov__i prov__i--warn">contact on ' + l.contact_reuse_count + ' listings</span>');
     return '<div class="prov">' + bits.join('<span class="prov__dot">·</span>') + '</div>';
   }
 

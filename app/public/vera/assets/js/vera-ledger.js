@@ -283,6 +283,15 @@
         kvRow('Authenticity', C.authenticity(l) != null ? num(C.authenticity(l)) + ' / 100 (' + esc(l.listing_confidence_band || '—') + ')' : null) +
         kvRow('State bucket', esc(String(l.state_bucket || '').replace(/_/g, ' '))) + '</dl>';
     } else if (inspTab === 'verify') {
+      /* machine-run tells from the engine's forensics pass */
+      var tells = [];
+      if (l.relist_suspect) tells.push('Relisted after disappearing — the days-on-market counter was reset' + (l.true_days_on_market != null ? '; this address has really been advertising for ' + l.true_days_on_market + ' days' : '') + ' (Scam School: "Days on market reset to three").');
+      if (l.contact_reuse_count) tells.push('The contact behind this post appears on ' + l.contact_reuse_count + ' listings in the net (Scam School: "One phone number, thirty listings").');
+      if (l.desc_clone_of) tells.push('The description is a near-verbatim template of another listing at a different address — classic template scam fingerprint.');
+      if (l.photo_clone_suspect) tells.push('The lead photo also appears on a listing at a different address — treat every photo here as unproven.');
+      if (tells.length) {
+        html += '<div class="insp-sec"><h3>Computed tells</h3><ul class="bad">' + tells.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+      }
       var items = l.what_to_verify_before_applying || [];
       html += items.length
         ? '<div class="insp-sec"><h3>Before applying, verify</h3><ul>' + items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>'
