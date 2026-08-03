@@ -17,10 +17,27 @@ import {
   DAKOTA_OPERATOR_STATE_MAX_BYTES,
   type DakotaOperatorRecordInput,
   type DakotaOperatorStateEnvelope,
+  type DakotaTask,
 } from "./operator-state-schema";
 
 const URL = "https://www.dakota.littlefightnyc.com/api/dakota/operator-state";
 const NOW = new Date("2026-08-03T12:00:00.000Z");
+
+function openTask(overrides: Partial<DakotaTask> = {}): DakotaTask {
+  return {
+    taskId: "550e8400-e29b-41d4-a716-446655440100",
+    type: "research",
+    status: "open",
+    title: "Advance the opportunity to its next evidence-backed step.",
+    dueAt: "2026-08-04T12:00:00.000Z",
+    contactId: null,
+    channel: "internal",
+    createdAt: "2026-08-01T12:00:00.000Z",
+    resolvedAt: null,
+    resolutionNote: "",
+    ...overrides,
+  };
+}
 
 function operatorUser(): User {
   return {
@@ -61,6 +78,8 @@ function input(overrides: Partial<DakotaOperatorRecordInput> = {}): DakotaOperat
     }],
     activities: [],
     commercialClose: createEmptyDakotaCommercialClose(),
+    selectedContactId: null,
+    tasks: [],
     ...overrides,
   };
 }
@@ -68,8 +87,13 @@ function input(overrides: Partial<DakotaOperatorRecordInput> = {}): DakotaOperat
 function payload(
   candidateKey = "nys_dos:nys-dos:12345",
   record = input(),
+  expectedUpdatedAt: string | null = null,
 ): Record<string, unknown> {
-  return { candidate_key: candidateKey, record };
+  return {
+    candidate_key: candidateKey,
+    expected_updated_at: expectedUpdatedAt,
+    record,
+  };
 }
 
 type WriteCall = {
@@ -189,7 +213,7 @@ describe("Dakota operator-state handler", () => {
     const response = await handleDakotaOperatorStateRequest(getRequest(), dependencies(store));
     expect(response.status).toBe(200);
     expect(await json(response)).toEqual({
-      schema_version: "dakota.operator-state.v2",
+      schema_version: "dakota.operator-state.v3",
       updated_at: null,
       records: {},
     });
@@ -294,7 +318,7 @@ describe("Dakota operator-state handler", () => {
     const body = await json(response);
     expect(body).toEqual(
       expect.objectContaining({
-        schema_version: "dakota.operator-state.v2",
+        schema_version: "dakota.operator-state.v3",
         updated_at: NOW.toISOString(),
         candidate_key: "nys_dos:nys-dos:12345",
       }),
@@ -316,7 +340,7 @@ describe("Dakota operator-state handler", () => {
       expect.objectContaining({
         onlyIfNew: true,
         metadata: {
-          schemaVersion: "dakota.operator-state.v2",
+          schemaVersion: "dakota.operator-state.v3",
           recordCount: 1,
           updatedAt: NOW.toISOString(),
         },
@@ -324,9 +348,112 @@ describe("Dakota operator-state handler", () => {
     );
   });
 
+  it("requires null for creates and the exact record timestamp for updates", async () => {
+    const createStore = new FakeStore();
+    const invalidCreate = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(undefined, input(), NOW.toISOString()))),
+      dependencies(createStore),
+    );
+    expect(invalidCreate.status).toBe(409);
+    expect(await json(invalidCreate)).toEqual({
+      error: "This opportunity changed in another tab. Refresh Dakota and try again.",
+    });
+    expect(createStore.writeCalls).toHaveLength(0);
+
+    const previousUpdatedAt = NOW.toISOString();
+    const updateStore = new FakeStore();
+    updateStore.data = createDakotaOperatorStateEnvelope({
+      "nys_dos:nys-dos:12345": createDakotaOperatorRecord(input(), previousUpdatedAt),
+    }, previousUpdatedAt);
+    updateStore.etag = "etag-versioned";
+
+    for (const expectedUpdatedAt of [null, "2026-08-03T11:59:59.999Z"]) {
+      const stale = await handleDakotaOperatorStateRequest(
+        putRequest(JSON.stringify(payload(
+          undefined,
+          input({ notes: "Stale edit." }),
+          expectedUpdatedAt,
+        ))),
+        dependencies(updateStore),
+      );
+      expect(stale.status).toBe(409);
+      expect(await json(stale)).toEqual({
+        error: "This opportunity changed in another tab. Refresh Dakota and try again.",
+      });
+    }
+    expect(updateStore.writeCalls).toHaveLength(0);
+
+    const exact = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(
+        undefined,
+        input({ notes: "Version-matched edit." }),
+        previousUpdatedAt,
+      ))),
+      dependencies(updateStore),
+    );
+    expect(exact.status).toBe(200);
+    expect((await json(exact)).record).toEqual(
+      expect.objectContaining({ updated_at: "2026-08-03T12:00:00.001Z" }),
+    );
+    expect(updateStore.writeCalls).toHaveLength(1);
+  });
+
+  it("detects a same-record race after an aggregate ETag conflict", async () => {
+    const store = new FakeStore();
+    const viewedAt = "2026-08-03T11:00:00.000Z";
+    const concurrentAt = "2026-08-03T11:30:00.000Z";
+    store.data = createDakotaOperatorStateEnvelope({
+      "nys_dos:nys-dos:12345": createDakotaOperatorRecord(input(), viewedAt),
+    }, viewedAt);
+    store.etag = "etag-viewed";
+    store.conflicts = 1;
+    store.onConflict = () => {
+      store.data = createDakotaOperatorStateEnvelope({
+        "nys_dos:nys-dos:12345": createDakotaOperatorRecord(
+          input({ notes: "Concurrent tab edit." }),
+          concurrentAt,
+        ),
+      }, concurrentAt);
+      store.etag = "etag-concurrent-record";
+      store.onConflict = null;
+    };
+
+    const response = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(
+        undefined,
+        input({ notes: "Stale tab edit." }),
+        viewedAt,
+      ))),
+      dependencies(store),
+    );
+    expect(response.status).toBe(409);
+    expect(await json(response)).toEqual({
+      error: "This opportunity changed in another tab. Refresh Dakota and try again.",
+    });
+    expect(store.writeCalls).toHaveLength(1);
+    expect(
+      (store.data as DakotaOperatorStateEnvelope)
+        .records["nys_dos:nys-dos:12345"]?.notes,
+    ).toBe("Concurrent tab edit.");
+  });
+
+  it("rejects live-work writes that do not carry exactly one open task", async () => {
+    const store = new FakeStore();
+    const response = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(undefined, input({ status: "research_ready" })))),
+      dependencies(store),
+    );
+
+    expect(response.status).toBe(422);
+    expect(await json(response)).toEqual({
+      error: "This stage requires exactly one open task.",
+    });
+    expect(store.writeCalls).toHaveLength(0);
+  });
+
   it("records immutable server timestamps for revenue milestones", async () => {
     const store = new FakeStore();
-    let currentTime = new Date("2026-08-01T12:00:00.000Z");
+    let currentTime = new Date("2026-07-31T12:00:00.000Z");
     const milestoneDependencies: DakotaOperatorStateDependencies = {
       ...dependencies(store),
       now: () => currentTime,
@@ -335,42 +462,112 @@ describe("Dakota operator-state handler", () => {
       verifiedPain: "The mobile customer path was verified manually.",
       offerFit: "A specific conversion repair fits the observed evidence.",
     };
+    const contactId = "550e8400-e29b-41d4-a716-446655440001";
+    const contacts = [{
+      ...input().contacts[0],
+      consentClassification: "existing_relationship" as const,
+    }];
     const activities: DakotaOperatorRecordInput["activities"] = [];
+    let tasks: DakotaTask[] = [openTask({
+      type: "research",
+      channel: "internal",
+      contactId: null,
+      title: "Verify the opportunity before pursuit.",
+      createdAt: currentTime.toISOString(),
+    })];
     let commercialClose = createEmptyDakotaCommercialClose();
+    let expectedUpdatedAt: string | null = null;
     const addActivity = (
       activityId: string,
       channel: DakotaOperatorRecordInput["activities"][number]["channel"],
       type: DakotaOperatorRecordInput["activities"][number]["type"],
       outcome: DakotaOperatorRecordInput["activities"][number]["outcome"],
-    ) => activities.push({
-      activityId,
-      channel,
-      type,
-      outcome,
-      note: "Operator-recorded evidence.",
-      occurredAt: currentTime.toISOString(),
-      followUpAt: null,
-    });
+    ) => {
+      const activeTask = tasks.find((candidate) => candidate.status === "open");
+      if (!activeTask) throw new Error("milestone fixture has no open task");
+      activities.push({
+        activityId,
+        taskId: activeTask.taskId,
+        contactId,
+        channel,
+        type,
+        outcome,
+        note: "Operator-recorded evidence.",
+        occurredAt: currentTime.toISOString(),
+        followUpAt: null,
+      });
+    };
+    const advanceTask = (
+      taskId: string,
+      type: DakotaTask["type"],
+      channel: DakotaTask["channel"],
+      title: string,
+    ) => {
+      const activeTask = tasks.find((candidate) => candidate.status === "open");
+      if (!activeTask) throw new Error("milestone fixture has no task to complete");
+      tasks = tasks.map((candidate) => candidate.taskId === activeTask.taskId
+        ? {
+            ...candidate,
+            status: "completed" as const,
+            resolvedAt: currentTime.toISOString(),
+            resolutionNote: "The evidenced task was completed.",
+          }
+        : candidate);
+      tasks.push(openTask({
+        taskId,
+        type,
+        channel,
+        contactId: channel === "internal" ? null : contactId,
+        title,
+        dueAt: null,
+        createdAt: currentTime.toISOString(),
+      }));
+    };
     const saveStatus = async (status: DakotaOperatorRecordInput["status"], notes = "") => {
       const request = putRequest(JSON.stringify(payload(undefined, input({
         ...evidence,
         status,
         notes,
+        contacts,
         activities: [...activities],
         commercialClose,
-      }))));
-      return handleDakotaOperatorStateRequest(request, milestoneDependencies);
+        selectedContactId: contactId,
+        tasks: tasks.map((candidate) => ({ ...candidate })),
+      }), expectedUpdatedAt)));
+      const response = await handleDakotaOperatorStateRequest(request, milestoneDependencies);
+      if (response.status === 200) expectedUpdatedAt = currentTime.toISOString();
+      return response;
     };
 
+    expect((await saveStatus("research_ready")).status).toBe(200);
+    currentTime = new Date("2026-08-01T12:00:00.000Z");
+    advanceTask(
+      "550e8400-e29b-41d4-a716-446655440106",
+      "outreach",
+      "email",
+      "Send the approved first outreach.",
+    );
     expect((await saveStatus("pursuit_ready")).status).toBe(200);
     const approvedAt = currentTime.toISOString();
     currentTime = new Date("2026-08-02T09:00:00.000Z");
     addActivity("550e8400-e29b-41d4-a716-446655440010", "email", "outreach", "sent");
     addActivity("550e8400-e29b-41d4-a716-446655440011", "email", "reply", "replied");
+    advanceTask(
+      "550e8400-e29b-41d4-a716-446655440101",
+      "meeting",
+      "meeting",
+      "Hold the qualified discovery meeting.",
+    );
     expect((await saveStatus("replied")).status).toBe(200);
     const repliedAt = currentTime.toISOString();
     currentTime = new Date("2026-08-02T11:00:00.000Z");
     addActivity("550e8400-e29b-41d4-a716-446655440012", "meeting", "meeting", "completed");
+    advanceTask(
+      "550e8400-e29b-41d4-a716-446655440102",
+      "proposal",
+      "proposal",
+      "Send the scoped proposal.",
+    );
     expect((await saveStatus("meeting")).status).toBe(200);
     const meetingAt = currentTime.toISOString();
     currentTime = new Date("2026-08-02T15:00:00.000Z");
@@ -385,21 +582,45 @@ describe("Dakota operator-state handler", () => {
     const proposalAt = currentTime.toISOString();
     currentTime = new Date("2026-08-03T08:00:00.000Z");
     addActivity("550e8400-e29b-41d4-a716-446655440014", "contract", "contract_signed", "won");
+    advanceTask(
+      "550e8400-e29b-41d4-a716-446655440103",
+      "invoice",
+      "invoice",
+      "Send the signed engagement invoice.",
+    );
     commercialClose = { ...commercialClose, signedDate: "2026-08-03" };
     expect((await saveStatus("won")).status).toBe(200);
     const wonAt = currentTime.toISOString();
     currentTime = new Date("2026-08-03T10:00:00.000Z");
     addActivity("550e8400-e29b-41d4-a716-446655440016", "invoice", "invoice_sent", "sent");
-    addActivity("550e8400-e29b-41d4-a716-446655440015", "payment", "payment_received", "paid");
     commercialClose = {
       ...commercialClose,
       invoiceRef: "Invoice 1001",
       amountDue: 12_500,
+      balance: 12_500,
+    };
+    advanceTask(
+      "550e8400-e29b-41d4-a716-446655440104",
+      "payment",
+      "payment",
+      "Confirm cleared payment.",
+    );
+    expect((await saveStatus("won")).status).toBe(200);
+    currentTime = new Date("2026-08-03T10:30:00.000Z");
+    addActivity("550e8400-e29b-41d4-a716-446655440015", "payment", "payment_received", "paid");
+    commercialClose = {
+      ...commercialClose,
       amountPaid: 12_500,
       paidDate: "2026-08-03",
       balance: 0,
-      onboardingNextAction: "Schedule kickoff.",
+      onboardingNextAction: "Schedule the paid kickoff.",
     };
+    advanceTask(
+      "550e8400-e29b-41d4-a716-446655440105",
+      "onboarding",
+      "internal",
+      "Schedule the paid kickoff.",
+    );
     expect((await saveStatus("paid")).status).toBe(200);
     const paidAt = currentTime.toISOString();
     currentTime = new Date("2026-08-03T12:00:00.000Z");
@@ -433,6 +654,8 @@ describe("Dakota operator-state handler", () => {
               contacts: _contacts,
               activities: _activities,
               commercialClose: _commercialClose,
+              selectedContactId: _selectedContactId,
+              tasks: _tasks,
               ...legacy
             } = input({
             status: "proposal",
@@ -490,7 +713,10 @@ describe("Dakota operator-state handler", () => {
     store.etag = "etag-existing";
 
     const response = await handleDakotaOperatorStateRequest(
-      putRequest(JSON.stringify(payload(undefined, input({ status: "research_ready" })))),
+      putRequest(JSON.stringify(payload(undefined, input({
+        status: "research_ready",
+        tasks: [openTask()],
+      }), "2026-08-02T12:00:00.000Z"))),
       dependencies(store),
     );
     expect(response.status).toBe(200);
@@ -678,13 +904,17 @@ describe("Dakota operator-state handler", () => {
     store.etag = "etag-history";
 
     const removeActivity = await handleDakotaOperatorStateRequest(
-      putRequest(JSON.stringify(payload(undefined, input({ activities: [] })))),
+      putRequest(JSON.stringify(payload(undefined, input({ activities: [] }), NOW.toISOString()))),
       dependencies(store),
     );
     expect(removeActivity.status).toBe(422);
 
     const removeContact = await handleDakotaOperatorStateRequest(
-      putRequest(JSON.stringify(payload(undefined, input({ contacts: [], activities: [activity] })))),
+      putRequest(JSON.stringify(payload(
+        undefined,
+        input({ contacts: [], activities: [activity] }),
+        NOW.toISOString(),
+      ))),
       dependencies(store),
     );
     expect(removeContact.status).toBe(422);
@@ -697,7 +927,7 @@ describe("Dakota operator-state handler", () => {
           amountPaid: 500,
           paidDate: "2026-08-03",
         },
-      })))),
+      }), NOW.toISOString()))),
       dependencies(store),
     );
     expect(unsupportedCash.status).toBe(422);

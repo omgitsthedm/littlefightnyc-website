@@ -1414,10 +1414,10 @@ function techAuditFormHtml(page) {
       <p><label>Phone or email <input name="contact" autocomplete="email" required /></label></p>
       <p><label>Best way to reach you
         <select name="follow_up">
+          <option value="fastest">Whatever’s fastest</option>
           <option value="text">Text me</option>
           <option value="phone">Call me</option>
           <option value="email">Email me</option>
-          <option value="fastest">Whatever’s fastest</option>
         </select>
       </label></p>
       <p><label>What feels broken, expensive, slow, or disconnected? <textarea name="message" rows="5" required></textarea></label></p>

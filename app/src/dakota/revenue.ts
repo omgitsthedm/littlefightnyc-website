@@ -15,7 +15,9 @@ export const API_OPERATOR_STATE = "/api/dakota/operator-state";
 export const EMPTY_OPERATOR_RECORD: OperatorRecordInput = {
   identity: { businessName: "", source: "", sourceId: "" },
   contacts: [],
+  selectedContactId: null,
   activities: [],
+  tasks: [],
   commercialClose: {
     proposalRef: "",
     proposalAmount: null,
@@ -358,10 +360,12 @@ export function countsTowardWeeklyNorthStar(record: OperatorRecord, now = new Da
 
 export function currency(value: number | null): string {
   if (value === null) return "Not recorded";
+  const hasCents = Math.abs(value - Math.trunc(value)) > Number.EPSILON;
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    maximumFractionDigits: 0,
+    minimumFractionDigits: hasCents ? 2 : 0,
+    maximumFractionDigits: 2,
   }).format(value);
 }
 
@@ -395,6 +399,7 @@ export function isVerifiedContactRoute(contact: DakotaVerifiedContact): boolean 
 export function isPursuitContact(contact: DakotaVerifiedContact): boolean {
   return (
     isVerifiedContactRoute(contact) &&
+    ["email", "phone", "sms"].includes(contact.channel) &&
     ["explicit_inquiry", "existing_relationship", "public_business"].includes(contact.consentClassification)
   );
 }
@@ -402,7 +407,7 @@ export function isPursuitContact(contact: DakotaVerifiedContact): boolean {
 export function isVoiceTextContact(contact: DakotaVerifiedContact): boolean {
   return (
     isVerifiedContactRoute(contact) &&
-    (contact.channel === "phone" || contact.channel === "sms") &&
+    contact.channel === "sms" &&
     (contact.consentClassification === "explicit_inquiry" || contact.consentClassification === "existing_relationship")
   );
 }
@@ -417,6 +422,19 @@ export function hasOperatorActivity(
 
 export function derivedBalance(close: DakotaCommercialClose): number {
   return Math.max(0, (close.amountDue ?? 0) - (close.amountPaid ?? 0));
+}
+
+export function isFullyPaidRecord(record: OperatorRecordInput): boolean {
+  const close = record.commercialClose;
+  return (
+    record.status === "paid" &&
+    close.amountDue !== null &&
+    close.amountPaid !== null &&
+    close.amountPaid >= close.amountDue &&
+    derivedBalance(close) === 0 &&
+    Boolean(close.paidDate) &&
+    hasOperatorActivity(record, "payment_received", ["paid"])
+  );
 }
 
 export function evidencedInvoiceAmount(record: OperatorRecordInput): number {
@@ -441,7 +459,9 @@ export function operatorRecordFor(
     return {
       identity: { ...saved.identity },
       contacts: saved.contacts.map((contact) => ({ ...contact })),
+      selectedContactId: saved.selectedContactId,
       activities: saved.activities.map((activity) => ({ ...activity })),
+      tasks: saved.tasks.map((task) => ({ ...task })),
       commercialClose: { ...saved.commercialClose },
       status: saved.status,
       notes: saved.notes,

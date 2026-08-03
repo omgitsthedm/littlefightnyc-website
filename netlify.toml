@@ -205,10 +205,10 @@ for = "/examples/audit/the-cosmetic-clinic/*"
 # exactly one path to its data while appearing to have two. Verified in the
 # browser: the fallback fetch threw "Refused to connect", the proxy returned 200.
 #
-# This repeats the site policy verbatim with one origin appended, because
-# Netlify replaces headers per path rather than merging them. Keep it in step
-# with the "/*" block above; audit-vera-csp asserts they only differ by that
-# origin.
+# Netlify replaces headers per path rather than merging them. This repeats the
+# site policy and adds only VERA's runtime capabilities: the pipeline fallback,
+# OpenFreeMap tiles, blob-backed images/workers, and its service worker. Keep it
+# in step with the "/*" block above; audit-vera-csp asserts those exact deltas.
 [[headers]]
 for = "/vera/*"
 

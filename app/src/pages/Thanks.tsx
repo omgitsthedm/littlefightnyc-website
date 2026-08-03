@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { CalendarDays, CheckCircle2, ExternalLink } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import TugAvatar from "@/components/editorial/TugAvatar";
 import { trackEvent } from "@/lib/analyticsClient";
 import "@/styles/editorial/thanks.css";
-import { PHONE_DISPLAY } from "@/data/contact";
+import { BOOKING_HREF, PHONE_DISPLAY } from "@/data/contact";
 
 /* Mirrors REPORT_CONTEXT_KEY and the report-slug contract in TechAudit.tsx.
  * Keep this local so the lightweight confirmation route does not import the
@@ -121,11 +121,39 @@ export default function Thanks() {
         </div>
       </section>
 
+      {websiteIntent && (
+        <section className="lf-thanks__booking" aria-labelledby="thanks-booking-title">
+          <div className="lf-thanks__booking-inner">
+            <div>
+              <p className="lf-thanks__eyebrow">A time you choose</p>
+              <h2 id="thanks-booking-title">Free 30-minute second opinion.</h2>
+              <p>
+                Your brief is already here. Choose a Monday–Friday time between
+                9am and 5pm Eastern. We’ll meet on Google Meet, look at the
+                website with you, and name the clearest next move. No prep or
+                commitment.
+              </p>
+            </div>
+            <a
+              href={BOOKING_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-lf-event="booking_started"
+              data-lf-label="website_thanks"
+            >
+              <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
+              Choose a time
+              <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+      )}
+
       {/* The tug, underway — the "help is on the way" beat. You just asked a
           stranger for help; this is the answer to that. */}
       <TugAvatar />
 
-      <QuietContact />
+      <QuietContact showBooking={!websiteIntent} />
     </div>
   );
 }

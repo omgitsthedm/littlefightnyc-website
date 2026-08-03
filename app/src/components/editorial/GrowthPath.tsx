@@ -74,7 +74,7 @@ export default function GrowthPath() {
                 href={stage.href}
                 className="lf-growth__action"
                 target={stage.href.startsWith("http") ? "_blank" : undefined}
-                rel={stage.href.startsWith("http") ? "noreferrer" : undefined}
+                rel={stage.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 data-lf-event={stage.href === BOOKING_HREF ? "booking_started" : undefined}
                 data-lf-label={stage.href === BOOKING_HREF ? "home_process" : undefined}
               >

@@ -108,7 +108,7 @@ export default function QuietHero() {
               className="lf-hero__human-book"
               href={BOOKING_HREF}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               data-lf-event="booking_started"
               data-lf-label="home_hero"
             >

@@ -1,6 +1,6 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-08-01
+Last updated: 2026-08-03
 
 ## Privacy boundary
 
@@ -40,7 +40,7 @@ Every tracked event carries `funnel_stage`. Break the funnel down by:
 - device category
 - default channel group / source / medium
 
-Use `lead_success` as the primary website conversion. Do not add `form_submit` and `tech_audit_submit` together; they describe the same browser submit. Phone, text, and email are separate contact conversions (`phone_click`, `sms_click`, `email_click`). Those contact events include `placement` and `page_path`, so a click can be attributed to the page and component that earned it.
+Use `lead_success` as the primary website conversion. Do not add `form_submit` and `tech_audit_submit` together; they describe the same browser submit. Phone, text, and email are separate contact conversions (`phone_click`, `sms_click`, `email_click`). Those contact events include `placement` and `page_path`, so a click can be attributed to the page and component that earned it. `booking_started` measures scheduling intent only. It does not prove that a meeting was booked or held.
 
 The standalone Audit Lab has a separate diagnostic funnel:
 
@@ -53,23 +53,21 @@ Use `audit_scan_failed` with `failure_category` (`rejected`, `rate_limit`, `prov
 
 ## Private Dakota commercial truth
 
-Dakota keeps the sales record separate from browser analytics. Verified Tech
-Audit form submissions and public Website Audit requests may enter Dakota as
-consented inbound records. Names, contact details, drafts, activity notes,
-proposal references, invoice references, and money values remain in the private
-operator store and must never be copied into GA4 events.
+Dakota keeps the v3 sales record separate from browser analytics. Verified Tech Audit form submissions and public Website Audit requests may enter Dakota as consented inbound records. Names, verified contacts, `selectedContactId`, drafts, tasks, activity notes, proposal references, invoice references, and money values remain in the private `dakota.operator-state.v3` store and must never enter GA4 events.
 
-The commercial path is: research ready, pursuit ready, pursuing, replied,
-meeting, proposal, won, then paid. A copied draft or opened communication app
-does not count as outreach. A proposal amount is not revenue, a signature is not
-payment, and an invoice is not cleared cash. `amountPaid` and the paid milestone
-are recorded only after the operator verifies cleared funds.
+The durable task ledger is the canonical source for next action and due time. Creating, opening, copying, completing, or skipping a task is operational work, not a conversion. The commercial path remains research ready, pursuit ready, pursuing, replied, meeting, proposal, won, then paid. A `paid` record remains operational until its onboarding next action is handled.
 
-Report raw weekly counts beside rates: reviewed, approved, contacted, replied,
-meetings held, proposals sent, signed clients, amount due, amount paid, and
-remaining balance. Break results down by inbound versus public research, source,
-business category, and offer. Never infer intent, a sale, or revenue from a
-queue score, page view, link click, draft copy, or opened Google Voice window.
+Every newly recorded non-note activity must reference the durable task and exact selected contact route that produced it. Legacy unlinked history remains visible but cannot prove a newly advanced stage. Proposal, signature, invoice, and payment changes each require newly appended matching evidence; cash cannot be reduced or silently rewritten in place.
+
+Gmail, Google Voice, Calendar, and booking-link actions are manual handoffs. Opening a compose window, opening Voice or Calendar, copying a draft, copying a value brief, or copying or opening the booking link does not count as outreach, a booked meeting, or a conversion.
+
+Each handoff stays tied to the exact persisted selected contact route. Voice never automates a call or message, and Calendar never creates an event or invitation. SMS is eligible only through a schema-valid SMS route classified `explicit_inquiry` or `existing_relationship`. A public business email remains research evidence, while a qualified public phone may support only a deliberate manual phone task and never text consent.
+
+Stored drafts remain URL-free. Dakota adds the verified booking link only to an approved outbound email body for Gmail or manual copy.
+
+A proposal amount is not revenue, a signature is not payment, and an invoice is not cleared cash. Record `amountPaid` and the paid milestone only after the operator verifies cleared funds. Paid status also requires invoice evidence, a zero balance, an onboarding next action, and an open operational task.
+
+Report raw weekly counts beside rates: reviewed, approved, contacted, replied, meetings held, proposals sent, signed clients, amount due, amount paid, and remaining balance. Break results down by inbound versus public research, source, business category, and offer. Never infer intent, contact, a meeting, a sale, or revenue from a queue score, page view, link click, task change, draft copy, or opened handoff.
 
 ## Reliability view
 

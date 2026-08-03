@@ -11,10 +11,17 @@ import { trackEvent } from "@/lib/analyticsClient";
 import { readAttribution } from "@/lib/attribution";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
+import {
+  normalizeTechAuditFollowUpPreference,
+  techAuditContactProblem,
+  techAuditContactRoute,
+  techAuditFollowUpProblem,
+  type TechAuditFollowUpPreference,
+} from "@/lib/techAuditContact";
 import "@/styles/editorial/tech-audit.css";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
-type FieldName = "name" | "business" | "contact" | "message";
+type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
 type Step = 1 | 2 | 3;
 
 const OUTCOMES = [
@@ -24,39 +31,7 @@ const OUTCOMES = [
   "An honest answer if the work can wait",
 ];
 
-/**
- * "Phone or email" was validated as "not empty", which let "hello@yourshop"
- * and "646-555" through. This is the only field that says how to reply, so a
- * malformed one is a lead that is lost in a specific and bad way: the visitor
- * watched the form succeed and is now waiting for a call that cannot be made.
- * A typo caught while they are still looking at the field costs them two
- * seconds; caught never, it costs them the job.
- *
- * Deliberately permissive about shape and strict only about reachability. An
- * email needs a dot in the domain, because "@yourshop" is not deliverable.
- * A number needs ten digits, because seven means no area code and David cannot
- * dial it — while any punctuation, spaces, +1 or parentheses are fine, since
- * arguing with how someone writes their own phone number wins nothing.
- */
-const EMAILISH = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
-
-function contactProblem(value: string): string | null {
-  const trimmed = value.trim();
-  if (trimmed === "") return "Add a phone or email so we can reply.";
-  if (trimmed.includes("@")) {
-    return EMAILISH.test(trimmed)
-      ? null
-      : "That email looks incomplete — check for a typo.";
-  }
-  const digits = trimmed.replace(/\D/g, "");
-  if (digits.length >= 10) return null;
-  // Telling someone their filled-in field is empty is its own small insult.
-  // Three different situations, three different things to say.
-  if (digits.length === 0) return "That does not look like a phone or email.";
-  return "That phone number looks short — include the area code.";
-}
-
-const REQUIRED_FIELDS: { name: FieldName; message: string }[] = [
+const REQUIRED_FIELDS: { name: Exclude<FieldName, "follow_up">; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
   { name: "business", message: "Add your business name." },
   { name: "contact", message: "Add a phone or email so we can reply." },
@@ -185,14 +160,14 @@ type ContactFields = {
   name: string;
   business: string;
   contact: string;
-  follow_up: string;
+  follow_up: TechAuditFollowUpPreference;
 };
 
 const EMPTY_FIELDS: ContactFields = {
   name: "",
   business: "",
   contact: "",
-  follow_up: "text",
+  follow_up: "fastest",
 };
 
 type Draft = {
@@ -224,6 +199,7 @@ function readDraft(): Draft | null {
         : step === 3 && symptom === WEBSITE_ROUTE.label && urgency === null
           ? "website"
           : "general";
+    const savedFields = d.fields ?? EMPTY_FIELDS;
     return {
       intent,
       step,
@@ -231,7 +207,12 @@ function readDraft(): Draft | null {
       urgency,
       message: typeof d.message === "string" ? d.message : "",
       messageDirty: d.messageDirty === true,
-      fields: { ...EMPTY_FIELDS, ...(d.fields ?? {}) },
+      fields: {
+        name: typeof savedFields.name === "string" ? savedFields.name : "",
+        business: typeof savedFields.business === "string" ? savedFields.business : "",
+        contact: typeof savedFields.contact === "string" ? savedFields.contact : "",
+        follow_up: normalizeTechAuditFollowUpPreference(savedFields.follow_up),
+      },
     };
   } catch {
     return null;
@@ -296,6 +277,7 @@ export default function TechAudit() {
   const mountedRef = useRef(false);
   const auditStartedRef = useRef(false);
   const attribution = readAttribution();
+  const contactRoute = techAuditContactRoute(fields.contact);
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
   // buzz when validation blocks it.
@@ -335,7 +317,7 @@ export default function TechAudit() {
     return () => window.removeEventListener("pageshow", onPageShow);
   }, []);
 
-  function setField(name: keyof ContactFields, value: string) {
+  function setField<Name extends keyof ContactFields>(name: Name, value: ContactFields[Name]) {
     if (value.trim()) trackAuditStarted(`field_${name}`);
     setFields((prev) => ({ ...prev, [name]: value }));
   }
@@ -353,18 +335,41 @@ export default function TechAudit() {
   /* Inline validation (§6.2): check a required field when the user leaves it,
    * and clear its error the moment they fix it — never wait for submit. */
   function validateField(name: FieldName, value: string) {
+    if (name === "contact") {
+      const contactIssue = techAuditContactProblem(value);
+      const followUpIssue = contactIssue
+        ? null
+        : techAuditFollowUpProblem(value, fields.follow_up);
+      setErrors((prev) => {
+        const next = { ...prev };
+        if (contactIssue) next.contact = contactIssue;
+        else delete next.contact;
+        if (followUpIssue) next.follow_up = followUpIssue;
+        else delete next.follow_up;
+        return next;
+      });
+      return;
+    }
     const rule = REQUIRED_FIELDS.find((f) => f.name === name);
     if (!rule) return;
-    const problem =
-      name === "contact"
-        ? contactProblem(value)
-        : value.trim() === ""
-          ? rule.message
-          : null;
+    const problem = value.trim() === "" ? rule.message : null;
     setErrors((prev) => {
       const next = { ...prev };
       if (problem) next[name] = problem;
       else delete next[name];
+      return next;
+    });
+  }
+
+  function setFollowUpPreference(value: string) {
+    const preference = normalizeTechAuditFollowUpPreference(value);
+    setField("follow_up", preference);
+    const problem = techAuditFollowUpProblem(fields.contact, preference);
+    setErrors((prev) => {
+      if (!problem && !prev.follow_up) return prev;
+      const next = { ...prev };
+      if (problem) next.follow_up = problem;
+      else delete next.follow_up;
       return next;
     });
   }
@@ -428,17 +433,26 @@ export default function TechAudit() {
     const form = event.currentTarget;
     const nextErrors: Partial<Record<FieldName, string>> = {};
 
-    for (const field of REQUIRED_FIELDS) {
-      const el = form.elements.namedItem(field.name) as
+    for (const name of ["name", "business", "contact", "follow_up", "message"] as const) {
+      const el = form.elements.namedItem(name) as
         | HTMLInputElement
+        | HTMLSelectElement
         | HTMLTextAreaElement
         | null;
       const value = el?.value ?? "";
-      if (field.name === "contact") {
-        const problem = contactProblem(value);
-        if (problem) nextErrors[field.name] = problem;
-      } else if (value.trim() === "") {
-        nextErrors[field.name] = field.message;
+      if (name === "contact") {
+        const problem = techAuditContactProblem(value);
+        if (problem) nextErrors.contact = problem;
+      } else if (name === "follow_up") {
+        const preference = normalizeTechAuditFollowUpPreference(value);
+        const contact = (form.elements.namedItem("contact") as HTMLInputElement | null)?.value ?? "";
+        const problem = value !== preference
+          ? "Choose how you want us to reply."
+          : techAuditFollowUpProblem(contact, preference);
+        if (problem) nextErrors.follow_up = problem;
+      } else {
+        const field = REQUIRED_FIELDS.find((candidate) => candidate.name === name);
+        if (value.trim() === "" && field) nextErrors[name] = field.message;
       }
     }
 
@@ -784,13 +798,37 @@ export default function TechAudit() {
                   </div>
 
                   <div className={`lf-audit__field${fieldClass("contact", fields.contact)}`}>
-                    <label htmlFor="fit-contact">Phone or email</label>
+                    <label htmlFor="fit-contact">
+                      {fields.follow_up === "email"
+                        ? "Email"
+                        : fields.follow_up === "text" || fields.follow_up === "phone"
+                          ? "Phone"
+                          : "Phone or email"}
+                    </label>
                     <input
                       id="fit-contact"
                       name="contact"
-                      autoComplete="email"
+                      autoComplete={
+                        fields.follow_up === "text" || fields.follow_up === "phone"
+                          ? "tel"
+                          : "email"
+                      }
+                      inputMode={
+                        fields.follow_up === "text" || fields.follow_up === "phone"
+                          ? "tel"
+                          : "email"
+                      }
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      maxLength={254}
                       required
-                      placeholder="(646) 555-0118 or hello@yourshop.com"
+                      placeholder={
+                        fields.follow_up === "email"
+                          ? "hello@yourshop.com"
+                          : fields.follow_up === "text" || fields.follow_up === "phone"
+                            ? "(646) 555-0118"
+                            : "(646) 555-0118 or hello@yourshop.com"
+                      }
                       value={fields.contact}
                       onChange={(e) => {
                         setField("contact", e.target.value);
@@ -807,19 +845,34 @@ export default function TechAudit() {
                     )}
                   </div>
 
-                  <div className="lf-audit__field">
+                  <div className={`lf-audit__field${errors.follow_up ? " is-error" : ""}`}>
                     <label htmlFor="fit-follow-up">Best way to reach you</label>
                     <select
                       id="fit-follow-up"
                       name="follow_up"
                       value={fields.follow_up}
-                      onChange={(e) => setField("follow_up", e.target.value)}
+                      onChange={(e) => setFollowUpPreference(e.target.value)}
+                      aria-invalid={errors.follow_up ? true : undefined}
+                      aria-describedby={
+                        errors.follow_up
+                          ? "fit-follow-up-note fit-follow-up-error"
+                          : "fit-follow-up-note"
+                      }
                     >
-                      <option value="text">Text me</option>
-                      <option value="phone">Call me</option>
-                      <option value="email">Email me</option>
                       <option value="fastest">Whatever’s fastest</option>
+                      <option value="text" disabled={contactRoute === "email"}>Text me</option>
+                      <option value="phone" disabled={contactRoute === "email"}>Call me</option>
+                      <option value="email" disabled={contactRoute === "phone"}>Email me</option>
                     </select>
+                    <p className="lf-audit__note" id="fit-follow-up-note">
+                      We use only the route you choose. Text and phone need a phone number;
+                      email needs an email address.
+                    </p>
+                    {errors.follow_up && (
+                      <p className="lf-audit__error" role="alert" id="fit-follow-up-error">
+                        {errors.follow_up}
+                      </p>
+                    )}
                   </div>
 
                   <div

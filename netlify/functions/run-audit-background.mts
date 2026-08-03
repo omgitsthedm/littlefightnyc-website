@@ -6,6 +6,7 @@ import type { Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { Buffer } from "node:buffer";
 import { createTransport } from "nodemailer";
+import { BOOKING_HREF } from "../../app/src/data/contact.ts";
 import {
   captureWebsiteAuditInbound,
   DAKOTA_OPERATOR_BLOB_STORE,
@@ -996,7 +997,7 @@ async function sendAuditEmail(
 
     <!-- Soft close -->
     <p style="color:#A1A1AA;font-size:14px;line-height:1.7;margin:0 0 28px">
-      Questions about your results? Reply to this email — happy to walk you through everything, no strings attached.
+      Prefer a set time? <a href="${escHtml(BOOKING_HREF)}" target="_blank" rel="noopener noreferrer" style="color:#70A5FF;text-decoration:underline;text-underline-offset:3px;font-weight:700">Book a free 30-minute second opinion</a>. Choose a Monday–Friday appointment between 9am and 5pm Eastern. We’ll meet on Google Meet, review the report with you, and name the clearest next move. No prep or commitment. You can also reply to this email.
     </p>
 
     <!-- Footer -->

@@ -5,12 +5,14 @@ import {
   candidateFromOperatorRecord,
   candidateKey,
   countsTowardWeeklyNorthStar,
+  currency,
   derivedBalance,
   EMPTY_OPERATOR_RECORD,
   evidencedInvoiceAmount,
   getSourceHealth,
   identityScore,
   isConsentedInboundRecord,
+  isFullyPaidRecord,
   isPursuitContact,
   isVoiceTextContact,
   operatorRecordFor,
@@ -156,12 +158,14 @@ describe("Dakota conversion gates", () => {
 
   it("keeps public business phones out of the Google Voice text handoff", () => {
     expect(isPursuitContact(contact)).toBe(true);
+    expect(isPursuitContact({ ...contact, channel: "website_form", value: "https://example.com/contact" })).toBe(false);
     expect(isVoiceTextContact(contact)).toBe(false);
-    expect(isVoiceTextContact({ ...contact, consentClassification: "explicit_inquiry" })).toBe(true);
+    expect(isVoiceTextContact({ ...contact, consentClassification: "explicit_inquiry" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, channel: "sms", consentClassification: "explicit_inquiry" })).toBe(true);
     expect(isPursuitContact({ ...contact, consentClassification: "unknown" })).toBe(false);
-    expect(isVoiceTextContact({ ...contact, value: "not-a-phone", consentClassification: "explicit_inquiry" })).toBe(false);
-    expect(isVoiceTextContact({ ...contact, sourceUrl: "http://localhost/contact", consentClassification: "explicit_inquiry" })).toBe(false);
-    expect(isVoiceTextContact({ ...contact, verifiedAt: "2026-02-30", consentClassification: "explicit_inquiry" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, channel: "sms", value: "not-a-phone", consentClassification: "explicit_inquiry" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, channel: "sms", sourceUrl: "http://localhost/contact", consentClassification: "explicit_inquiry" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, channel: "sms", verifiedAt: "2026-02-30", consentClassification: "explicit_inquiry" })).toBe(false);
   });
 
   it("recognizes only explicitly consented inbound records", () => {
@@ -181,11 +185,45 @@ describe("Dakota conversion gates", () => {
     expect(evidencedInvoiceAmount(base)).toBe(0);
     expect(evidencedInvoiceAmount({
       ...base,
-      activities: [{ activityId: "activity-1", channel: "invoice", type: "invoice_sent", outcome: "sent", note: "Invoice sent manually.", occurredAt: "2026-08-03T12:00:00.000Z", followUpAt: null }],
+      activities: [{ activityId: "activity-1", taskId: null, contactId: null, channel: "invoice", type: "invoice_sent", outcome: "sent", note: "Invoice sent manually.", occurredAt: "2026-08-03T12:00:00.000Z", followUpAt: null }],
     })).toBe(2000);
     expect(evidencedInvoiceAmount({
       ...base,
-      activities: [{ activityId: "activity-2", channel: "invoice", type: "invoice_sent", outcome: "completed", note: "Invoice delivery completed.", occurredAt: "2026-08-03T12:05:00.000Z", followUpAt: null }],
+      activities: [{ activityId: "activity-2", taskId: null, contactId: null, channel: "invoice", type: "invoice_sent", outcome: "completed", note: "Invoice delivery completed.", occurredAt: "2026-08-03T12:05:00.000Z", followUpAt: null }],
     })).toBe(2000);
+  });
+
+  it("keeps cents exact and counts only fully evidenced zero-balance records as fully paid", () => {
+    expect(currency(1250.75)).toBe("$1,250.75");
+    expect(currency(1250)).toBe("$1,250");
+    const paymentActivity = {
+      activityId: "activity-paid",
+      taskId: null,
+      contactId: null,
+      channel: "invoice" as const,
+      type: "payment_received" as const,
+      outcome: "paid" as const,
+      note: "Payment cleared.",
+      occurredAt: "2026-08-03T12:00:00.000Z",
+      followUpAt: null,
+    };
+    const partial = {
+      ...EMPTY_OPERATOR_RECORD,
+      status: "won" as const,
+      activities: [paymentActivity],
+      commercialClose: {
+        ...EMPTY_OPERATOR_RECORD.commercialClose,
+        amountDue: 2000,
+        amountPaid: 500,
+        paidDate: "2026-08-03",
+        balance: 1500,
+      },
+    };
+    expect(isFullyPaidRecord(partial)).toBe(false);
+    expect(isFullyPaidRecord({
+      ...partial,
+      status: "paid",
+      commercialClose: { ...partial.commercialClose, amountPaid: 2000, balance: 0 },
+    })).toBe(true);
   });
 });

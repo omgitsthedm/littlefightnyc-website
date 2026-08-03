@@ -63,7 +63,9 @@ export interface OperatorIdentity {
 export interface OperatorRecordInput {
   identity: OperatorIdentity;
   contacts: DakotaVerifiedContact[];
+  selectedContactId: string | null;
   activities: DakotaActivity[];
+  tasks: DakotaTask[];
   commercialClose: DakotaCommercialClose;
   status: OperatorStatus;
   notes: string;
@@ -160,12 +162,56 @@ export type DakotaActivityOutcome = (typeof ACTIVITY_OUTCOMES)[number];
 
 export interface DakotaActivity {
   activityId: string;
+  taskId: string | null;
+  contactId: string | null;
   channel: DakotaActivityChannel;
   type: DakotaActivityType;
   outcome: DakotaActivityOutcome;
   note: string;
   occurredAt: string;
   followUpAt: string | null;
+}
+
+export const TASK_TYPES = [
+  "research",
+  "qualify",
+  "value_brief",
+  "outreach",
+  "follow_up",
+  "meeting",
+  "proposal",
+  "invoice",
+  "payment",
+  "onboarding",
+] as const;
+export type DakotaTaskType = (typeof TASK_TYPES)[number];
+
+export const TASK_STATUSES = ["open", "completed", "skipped"] as const;
+export type DakotaTaskStatus = (typeof TASK_STATUSES)[number];
+
+export const TASK_CHANNELS = [
+  "internal",
+  "email",
+  "phone",
+  "sms",
+  "meeting",
+  "proposal",
+  "invoice",
+  "payment",
+] as const;
+export type DakotaTaskChannel = (typeof TASK_CHANNELS)[number];
+
+export interface DakotaTask {
+  taskId: string;
+  type: DakotaTaskType;
+  status: DakotaTaskStatus;
+  title: string;
+  dueAt: string | null;
+  contactId: string | null;
+  channel: DakotaTaskChannel;
+  createdAt: string;
+  resolvedAt: string | null;
+  resolutionNote: string;
 }
 
 export interface DakotaCommercialClose {
@@ -188,13 +234,13 @@ export interface OperatorRecord extends OperatorRecordInput {
 }
 
 export interface OperatorStateEnvelope {
-  schema_version: "dakota.operator-state.v2";
+  schema_version: "dakota.operator-state.v3";
   updated_at: string | null;
   records: Record<string, OperatorRecord>;
 }
 
 export interface OperatorStateSaveResponse {
-  schema_version: "dakota.operator-state.v2";
+  schema_version: "dakota.operator-state.v3";
   updated_at: string;
   candidate_key: string;
   record: OperatorRecord;

@@ -113,6 +113,12 @@ function emptyRecords(): Record<string, DakotaOperatorRecord> {
   return Object.create(null) as Record<string, DakotaOperatorRecord>;
 }
 
+function nextRecordUpdatedAt(now: Date, previous: DakotaOperatorRecord | undefined): string {
+  const nowTime = now.getTime();
+  if (!previous) return new Date(nowTime).toISOString();
+  return new Date(Math.max(nowTime, Date.parse(previous.updated_at) + 1)).toISOString();
+}
+
 async function readOperatorState(store: DakotaOperatorStateStore): Promise<Response> {
   const current = await loadState(store);
   if (!current.envelope) {
@@ -143,6 +149,15 @@ async function upsertOperatorState(
     const current = await loadState(store);
     const existingRecords = current.envelope?.records ?? emptyRecords();
     const isNewRecord = !Object.hasOwn(existingRecords, payload.value.candidate_key);
+    const existingRecord = existingRecords[payload.value.candidate_key];
+    const versionMatches = isNewRecord
+      ? payload.value.expected_updated_at === null
+      : payload.value.expected_updated_at === existingRecord?.updated_at;
+    if (!versionMatches) {
+      return privateJson({
+        error: "This opportunity changed in another tab. Refresh Dakota and try again.",
+      }, 409);
+    }
     if (isNewRecord && Object.keys(existingRecords).length >= DAKOTA_OPERATOR_RECORD_LIMIT) {
       return privateJson({ error: "Operator-state record capacity has been reached." }, 409);
     }
@@ -150,16 +165,16 @@ async function upsertOperatorState(
     const nowDate = now();
     const transition = validateDakotaOperatorTransition(
       payload.value.record,
-      existingRecords[payload.value.candidate_key],
+      existingRecord,
       nowDate,
     );
     if (!transition.valid) return privateJson({ error: transition.error }, 422);
 
-    const updatedAt = nowDate.toISOString();
+    const updatedAt = nextRecordUpdatedAt(nowDate, existingRecord);
     const record = createDakotaOperatorRecord(
       transition.value,
       updatedAt,
-      existingRecords[payload.value.candidate_key],
+      existingRecord,
     );
     const records = { ...existingRecords, [payload.value.candidate_key]: record };
     const envelope = createDakotaOperatorStateEnvelope(records, updatedAt);

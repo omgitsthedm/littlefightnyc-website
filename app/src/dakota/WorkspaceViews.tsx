@@ -27,14 +27,16 @@ import {
   currency,
   derivedBalance,
   evidencedInvoiceAmount,
-  isConsentedInboundRecord,
+  isFullyPaidRecord,
   operatorRecordFor,
   STATUS_LABELS,
 } from "./revenue";
+import { collectReadyActions, TASK_TYPE_LABELS } from "./workflow";
 import {
   candidateLabel,
   compactSource,
   formatDate,
+  formatTimestamp,
   normalizedList,
   placeLine,
 } from "./presentation";
@@ -47,7 +49,7 @@ import type {
   QueueState,
 } from "./types";
 
-const CLOSED_STATUSES = new Set<OperatorStatus>(["paid", "lost", "not_fit", "do_not_contact"]);
+const CLOSED_STATUSES = new Set<OperatorStatus>(["lost", "not_fit", "do_not_contact"]);
 const PIPELINE_STATUSES = new Set<OperatorStatus>([
   "research_ready",
   "pursuit_ready",
@@ -69,11 +71,35 @@ function todayKey(now = new Date()): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 }
 
+function dueMillis(value: string): number {
+  const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/u.exec(value);
+  if (dateOnly) return new Date(Number(dateOnly[1]), Number(dateOnly[2]) - 1, Number(dateOnly[3])).getTime();
+  return Date.parse(value);
+}
+
+function localDateKey(value: string): string {
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? value.slice(0, 10) : todayKey(parsed);
+}
+
 function operatorName(record: OperatorRecordInput): string {
   return record.identity.dba || record.identity.businessName;
 }
 
+function openTask(record: OperatorRecordInput) {
+  return record.tasks.find((task) => task.status === "open") ?? null;
+}
+
+function nextTaskSummary(record: OperatorRecordInput): string {
+  const task = openTask(record);
+  if (task) return task.title;
+  return record.tasks.length ? "No open task" : record.nextAction;
+}
+
 function earliestFollowUp(record: OperatorRecord): string {
+  const task = openTask(record);
+  if (task) return task.dueAt ?? (record.status === "snoozed" ? record.dueDate : "");
+  if (record.tasks.length) return "";
   const latestActivity = record.activities.at(-1);
   const dates = [
     record.dueDate,
@@ -82,12 +108,16 @@ function earliestFollowUp(record: OperatorRecord): string {
   return dates[0] ?? "";
 }
 
-function dueLabel(date: string): string {
-  if (!date) return "No follow-up date";
-  const today = todayKey();
-  if (date < today) return `Overdue · ${formatDate(date)}`;
-  if (date === today) return "Due today";
-  return formatDate(date);
+function dueLabel(value: string, now = new Date()): string {
+  if (!value) return "No due time";
+  const due = dueMillis(value);
+  if (!Number.isFinite(due)) return value;
+  const display = value.includes("T") ? formatTimestamp(value) : formatDate(value);
+  const dueDateKey = localDateKey(value);
+  const today = todayKey(now);
+  if (due <= now.getTime()) return `${dueDateKey < today ? "Overdue" : "Due now"} · ${display}`;
+  if (dueDateKey === today) return `Due today · ${display}`;
+  return display;
 }
 
 function pipelineStage(record: OperatorRecord): string {
@@ -215,36 +245,20 @@ function ActionCard({
 }
 
 export function DoNextView({
-  queueRecords,
   operatorRecords,
+  now,
   onOpen,
 }: {
   queueRecords: Candidate[];
   operatorRecords: Record<string, OperatorRecord>;
+  now: Date;
   onOpen: (key: string) => void;
 }) {
-  const entries = Object.entries(operatorRecords);
-  const inbound = entries
-    .filter(([, record]) => isConsentedInboundRecord(record) && ["early_signal", "research_ready", "pursuit_ready"].includes(record.status))
-    .sort(([, left], [, right]) => right.updated_at.localeCompare(left.updated_at))[0] ?? null;
-  const qualifiedPublic = queueRecords
-    .map((candidate) => ({ candidate, record: operatorRecordFor(operatorRecords, candidate) }))
-    .filter(({ candidate, record }) => !candidate.source.toLowerCase().startsWith("inbound:") && record.status === "pursuit_ready" && assessCandidate(candidate, record).qualified)
-    .sort((left, right) => {
-      const pursuitDifference = assessCandidate(right.candidate, right.record).pursuit.value - assessCandidate(left.candidate, left.record).pursuit.value;
-      return pursuitDifference || right.candidate.score - left.candidate.score || left.candidate.rank - right.candidate.rank;
-    })[0] ?? null;
-  const usedKeys = new Set([
-    inbound?.[0] ?? "",
-    qualifiedPublic ? candidateKey(qualifiedPublic.candidate) : "",
-  ]);
-  const followup = entries
-    .filter(([key, record]) => {
-      const due = earliestFollowUp(record);
-      return !usedKeys.has(key) && !CLOSED_STATUSES.has(record.status) && Boolean(due) && due <= todayKey();
-    })
-    .sort(([, left], [, right]) => earliestFollowUp(left).localeCompare(earliestFollowUp(right)))[0] ?? null;
-  const actionCount = Number(Boolean(inbound)) + Number(Boolean(qualifiedPublic)) + Number(Boolean(followup));
+  const [visibleCount, setVisibleCount] = useState(12);
+  const actions = collectReadyActions(operatorRecords, now);
+  const actionCount = actions.length;
+  const visibleActions = actions.slice(0, visibleCount);
+  const remainingCount = Math.max(0, actionCount - visibleActions.length);
 
   return (
     <section className="do-next-section" aria-labelledby="do-next-title">
@@ -254,18 +268,26 @@ export function DoNextView({
       </div>
       {actionCount ? (
         <div className="next-action-grid">
-          {inbound ? <ActionCard lane="Consented inbound" number="01" title={operatorName(inbound[1])} context={`${STATUS_LABELS[inbound[1].status]} · ${inbound[1].nextAction || "Review the inquiry and set the first human response."}`} action="Handle inquiry" tone="inbound" onOpen={() => onOpen(inbound[0])} /> : null}
-          {qualifiedPublic ? <ActionCard lane="Qualified public research" number="02" title={candidateLabel(qualifiedPublic.candidate)} context={`${qualifiedPublic.record.offerFit} · Explicitly approved for human pursuit.`} action="Review pursuit" tone="public" onOpen={() => onOpen(candidateKey(qualifiedPublic.candidate))} /> : null}
-          {followup ? <ActionCard lane="Due follow-up" number="03" title={operatorName(followup[1])} context={`${dueLabel(earliestFollowUp(followup[1]))} · ${followup[1].nextAction || "Review the latest activity and choose the next human step."}`} action="Complete follow-up" tone="followup" onOpen={() => onOpen(followup[0])} /> : null}
+          {visibleActions.map((ready, index) => <ActionCard
+            key={`${ready.key}:${ready.task?.taskId ?? "repair"}`}
+            lane={ready.lane === "repair" ? "Needs next task" : ready.lane === "inbound" ? "Consented inbound" : ready.lane === "due" ? "Due now" : "Active revenue work"}
+            number={String(index + 1).padStart(2, "0")}
+            title={operatorName(ready.record)}
+            context={ready.lane === "repair" ? ready.task ? `Stage/task mismatch · ${TASK_TYPE_LABELS[ready.task.type]} · resolve it and set the correct next move.` : "This legacy or incomplete record needs one durable next task before work can continue." : ready.task ? `${TASK_TYPE_LABELS[ready.task.type]} · ${ready.task.title}${ready.task.dueAt ? ` · ${dueLabel(ready.task.dueAt)}` : ready.record.status === "snoozed" && ready.record.dueDate ? ` · ${dueLabel(ready.record.dueDate)}` : " · Ready now"}` : "Repair the missing task."}
+            action={ready.lane === "repair" ? "Repair workflow" : "Open exact task"}
+            tone={ready.lane === "inbound" ? "inbound" : ready.lane === "due" || ready.lane === "repair" ? "followup" : "public"}
+            onOpen={() => onOpen(ready.key)}
+          />)}
         </div>
       ) : (
         <div className="next-empty">
           <Check size={28} />
           <p className="eyebrow">No action is ready</p>
           <h3>Nothing deserves outreach right now</h3>
-          <p>That is a valid outcome. Dakota will surface a consented inquiry, a human-qualified public candidate, or an overdue follow-up when one exists.</p>
+          <p>That is a valid outcome. Dakota will surface every consented inquiry, approved pursuit, due follow-up, close, payment, or onboarding task when it exists.</p>
         </div>
       )}
+      {remainingCount ? <button type="button" className="load-more-actions" onClick={() => setVisibleCount((count) => count + 12)}>Show {Math.min(12, remainingCount)} more <span>{remainingCount} remaining</span></button> : null}
       <div className="conversion-contract"><ShieldCheck size={20} /><p><strong>Human gate stays intact.</strong> Copying a draft or opening another app never records contact, advances a stage, or creates revenue. Every result requires explicit evidence.</p></div>
     </section>
   );
@@ -305,7 +327,7 @@ export function ResearchView({
       </div>
       <div className="review-order-note"><CircleAlert size={18} /><p><strong>Queue order is not buyer intent.</strong> Verify identity, contact route, revenue pain, and one offer before approving pursuit.</p></div>
       {queueRecords.length ? <div className="candidate-list">{queueRecords.slice(0, 10).map((candidate) => <CandidateCard key={candidateKey(candidate)} candidate={candidate} record={operatorRecordFor(operatorRecords, candidate)} tiedSignal={(scoreCounts.get(candidate.score) ?? 0) > 1} onOpen={() => onOpen(candidateKey(candidate))} />)}</div> : <QueueStateView state={queueState} retry={retry} />}
-      {savedResearch.length ? <section className="saved-research" aria-labelledby="saved-research-title"><div className="subsection-heading"><div><p className="eyebrow">Private saved research</p><h3 id="saved-research-title">Manual and inbound records outside the public queue</h3></div><span>{savedResearch.length} saved</span></div><div className="pipeline-list">{savedResearch.map(([key, record]) => <button key={key} type="button" className="pipeline-row saved-research-row" onClick={() => onOpen(key)}><span className={`stage-pill stage-pill--${record.status}`}>{STATUS_LABELS[record.status]}</span><span><strong>{operatorName(record)}</strong><small>{record.identity.category || "Unclassified"} · {compactSource(record.identity.source)}</small></span><span><small>Next action</small>{record.nextAction || "Verify the private record and choose its next state."}</span><span><small>Follow-up</small>{earliestFollowUp(record) ? dueLabel(earliestFollowUp(record)) : "Not scheduled"}</span><ArrowUpRight size={18} /></button>)}</div></section> : null}
+      {savedResearch.length ? <section className="saved-research" aria-labelledby="saved-research-title"><div className="subsection-heading"><div><p className="eyebrow">Private saved research</p><h3 id="saved-research-title">Manual and inbound records outside the public queue</h3></div><span>{savedResearch.length} saved</span></div><div className="pipeline-list">{savedResearch.map(([key, record]) => <button key={key} type="button" className="pipeline-row saved-research-row" onClick={() => onOpen(key)}><span className={`stage-pill stage-pill--${record.status}`}>{STATUS_LABELS[record.status]}</span><span><strong>{operatorName(record)}</strong><small>{record.identity.category || "Unclassified"} · {compactSource(record.identity.source)}</small></span><span><small>Next task</small>{nextTaskSummary(record) || "Verify the private record and choose its next state."}</span><span><small>Due</small>{earliestFollowUp(record) ? dueLabel(earliestFollowUp(record)) : openTask(record) ? "Ready now" : "Not scheduled"}</span><ArrowUpRight size={18} /></button>)}</div></section> : null}
     </section>
   );
 }
@@ -314,10 +336,12 @@ const PIPELINE_FILTERS = ["all", "Research", "Approved", "Contacted", "Replied",
 
 export function PipelineView({
   state,
+  now,
   onCapture,
   onOpen,
 }: {
   state: OperatorState;
+  now: Date;
   onCapture: () => void;
   onOpen: (key: string) => void;
 }) {
@@ -333,12 +357,12 @@ export function PipelineView({
     .sort(([, left], [, right]) => right.updated_at.localeCompare(left.updated_at));
   const filtered = entries.filter(([, record]) => {
     const matchesFilter = filter === "all" || pipelineStage(record) === filter;
-    const haystack = [operatorName(record), record.identity.category, record.identity.source, record.offerFit, record.nextAction].join(" ").toLowerCase();
+    const haystack = [operatorName(record), record.identity.category, record.identity.source, record.offerFit, nextTaskSummary(record)].join(" ").toLowerCase();
     return matchesFilter && (!deferredQuery || haystack.includes(deferredQuery));
   });
   const due = entries
-    .filter(([, record]) => !CLOSED_STATUSES.has(record.status) && Boolean(earliestFollowUp(record)) && earliestFollowUp(record) <= todayKey())
-    .sort(([, left], [, right]) => earliestFollowUp(left).localeCompare(earliestFollowUp(right)));
+    .filter(([, record]) => !CLOSED_STATUSES.has(record.status) && Boolean(earliestFollowUp(record)) && dueMillis(earliestFollowUp(record)) <= now.getTime())
+    .sort(([, left], [, right]) => dueMillis(earliestFollowUp(left)) - dueMillis(earliestFollowUp(right)));
   const stageCounts = PIPELINE_FILTERS.slice(1).map((stage) => [stage, entries.filter(([, record]) => pipelineStage(record) === stage).length] as const);
 
   return (
@@ -356,11 +380,11 @@ export function PipelineView({
       </div>
       <section className="due-strip" aria-labelledby="due-title">
         <div><p className="eyebrow" id="due-title">Due and overdue</p><strong>{String(due.length).padStart(2, "0")}</strong></div>
-        {due.length ? <div className="due-list">{due.map(([key, record]) => <button key={key} type="button" onClick={() => onOpen(key)}><span className="stage-pill">{dueLabel(earliestFollowUp(record))}</span><strong>{operatorName(record)}</strong><p>{record.nextAction || "Review the latest activity and record the next human step."}</p><ArrowUpRight size={18} /></button>)}</div> : <p>No follow-up is due. Future reminders remain in their records.</p>}
+        {due.length ? <div className="due-list">{due.map(([key, record]) => <button key={key} type="button" onClick={() => onOpen(key)}><span className="stage-pill">{dueLabel(earliestFollowUp(record))}</span><strong>{operatorName(record)}</strong><p>{nextTaskSummary(record) || "Review the latest activity and record the next human step."}</p><ArrowUpRight size={18} /></button>)}</div> : <p>No follow-up is due. Future reminders remain in their records.</p>}
       </section>
       {filtered.length ? (
         <div className="pipeline-list" aria-live="polite">
-          {filtered.map(([key, record]) => <button key={key} type="button" className="pipeline-row" onClick={() => onOpen(key)}><span className="stage-pill">{pipelineStage(record)}</span><span><strong>{operatorName(record)}</strong><small>{record.identity.category || "Unclassified"} · {compactSource(record.identity.source)}</small></span><span><small>Next action</small>{record.nextAction || "Not recorded"}</span><span><small>Follow-up</small>{earliestFollowUp(record) ? dueLabel(earliestFollowUp(record)) : "Not scheduled"}</span><span><small>Value</small>{currency(record.estimatedValue)}</span><ArrowUpRight size={18} /></button>)}
+          {filtered.map(([key, record]) => <button key={key} type="button" className="pipeline-row" onClick={() => onOpen(key)}><span className="stage-pill">{pipelineStage(record)}</span><span><strong>{operatorName(record)}</strong><small>{record.identity.category || "Unclassified"} · {compactSource(record.identity.source)}</small></span><span><small>Next task</small>{nextTaskSummary(record) || "Not recorded"}</span><span><small>Due</small>{earliestFollowUp(record) ? dueLabel(earliestFollowUp(record)) : openTask(record) ? "Ready now" : "Not scheduled"}</span><span><small>Value</small>{currency(record.estimatedValue)}</span><ArrowUpRight size={18} /></button>)}
         </div>
       ) : <div className="filtered-empty"><Search size={24} /><p>No pipeline record matches this search and stage.</p></div>}
     </section>
@@ -384,7 +408,7 @@ function conversionRows(entries: OperatorEntry[], group: (record: OperatorRecord
     row.records += 1;
     if (record.commercialClose.proposalSentDate) row.proposals += 1;
     if (record.commercialClose.signedDate) row.signed += 1;
-    if (record.commercialClose.paidDate || record.status === "paid") row.paid += 1;
+    if (isFullyPaidRecord(record)) row.paid += 1;
     row.paidAmount += paidAmount(record);
     rows.set(label, row);
   }
@@ -396,12 +420,14 @@ export function MoneyView({ state, onOpen }: { state: OperatorState; onOpen: (ke
   if (state.status === "error") return <div className="queue-error" role="alert"><CircleAlert size={22} /><div><strong>Money view unavailable</strong><p>{state.message}</p></div></div>;
 
   const entries = Object.entries(state.envelope.records).sort(([, left], [, right]) => right.updated_at.localeCompare(left.updated_at));
-  const estimated = entries.reduce((sum, [, record]) => sum + (record.estimatedValue ?? 0), 0);
-  const proposed = entries.reduce((sum, [, record]) => sum + (record.commercialClose.proposalAmount ?? 0), 0);
-  const signed = entries.reduce((sum, [, record]) => sum + (record.commercialClose.signedDate ? record.commercialClose.proposalAmount ?? 0 : 0), 0);
-  const invoiced = entries.reduce((sum, [, record]) => sum + evidencedInvoiceAmount(record), 0);
+  const activeEntries = entries.filter(([, record]) => !CLOSED_STATUSES.has(record.status) && record.status !== "paid");
+  const collectibleEntries = entries.filter(([, record]) => !CLOSED_STATUSES.has(record.status));
+  const estimated = activeEntries.reduce((sum, [, record]) => sum + (record.estimatedValue ?? 0), 0);
+  const proposed = activeEntries.reduce((sum, [, record]) => sum + (record.commercialClose.proposalAmount ?? 0), 0);
+  const signed = activeEntries.reduce((sum, [, record]) => sum + (record.commercialClose.signedDate ? record.commercialClose.proposalAmount ?? 0 : 0), 0);
+  const invoiced = activeEntries.reduce((sum, [, record]) => sum + evidencedInvoiceAmount(record), 0);
   const paid = entries.reduce((sum, [, record]) => sum + paidAmount(record), 0);
-  const outstanding = entries.reduce((sum, [, record]) => sum + balance(record), 0);
+  const outstanding = collectibleEntries.reduce((sum, [, record]) => sum + balance(record), 0);
   const sourceRows = conversionRows(entries, (record) => compactSource(record.identity.source));
   const categoryRows = conversionRows(entries, (record) => record.identity.category?.trim() || "Unclassified");
   const offerRows = conversionRows(entries, compactOffer);
@@ -409,16 +435,16 @@ export function MoneyView({ state, onOpen }: { state: OperatorState; onOpen: (ke
   return (
     <section className="workspace-view money-section" aria-labelledby="money-title">
       <div className="view-heading">
-        <div><p className="eyebrow"><span /> Money</p><h2 id="money-title">Cash truth, not pipeline theater</h2><p>Estimated, proposed, signed, invoiced, paid, and outstanding stay visibly separate.</p></div>
+        <div><p className="eyebrow"><span /> Money</p><h2 id="money-title">Cash truth, not pipeline theater</h2><p>Active potential, collectible balances, and lifetime cleared cash stay visibly separate.</p></div>
         <div className="deterministic-label"><ShieldCheck size={16} /> Paid means cleared cash</div>
       </div>
       <div className="money-metrics" aria-label="Commercial value summary">
-        <Stat label="Estimated" value={currency(estimated)} detail="Potential, not committed" icon={Target} />
-        <Stat label="Proposed" value={currency(proposed)} detail="Explicit proposals" icon={TrendingUp} />
-        <Stat label="Signed" value={currency(signed)} detail="Contract evidence" icon={Check} />
-        <Stat label="Invoiced" value={currency(invoiced)} detail="Amount due" icon={BadgeDollarSign} />
-        <Stat label="Paid" value={currency(paid)} detail="Cleared cash only" icon={BarChart3} />
-        <Stat label="Balance" value={currency(outstanding)} detail="Due minus paid" icon={Clock3} />
+        <Stat label="Estimated" value={currency(estimated)} detail="Active potential only" icon={Target} />
+        <Stat label="Proposed" value={currency(proposed)} detail="Open proposal value" icon={TrendingUp} />
+        <Stat label="Signed" value={currency(signed)} detail="Signed, not fully paid" icon={Check} />
+        <Stat label="Invoiced" value={currency(invoiced)} detail="Current evidenced invoices" icon={BadgeDollarSign} />
+        <Stat label="Paid" value={currency(paid)} detail="Lifetime cleared cash" icon={BarChart3} />
+        <Stat label="Balance" value={currency(outstanding)} detail="Active collectible balance" icon={Clock3} />
       </div>
       {entries.length ? (
         <div className="money-ledger">
@@ -437,15 +463,15 @@ export function MoneyView({ state, onOpen }: { state: OperatorState; onOpen: (ke
 function ConversionTable({ title, rows }: { title: string; rows: ConversionRow[] }) {
   return (
     <section className="conversion-table" aria-labelledby={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>
-      <div><p className="eyebrow" id={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>{title}</p><span>Paid / records</span></div>
-      {rows.length ? <ul>{rows.map((row) => <li key={row.label}><span><strong>{row.label}</strong><small>{row.proposals} proposed · {row.signed} signed · {row.paid} paid</small></span><span><strong>{row.records ? Math.round((row.paid / row.records) * 100) : 0}%</strong><small>{currency(row.paidAmount)}</small></span></li>)}</ul> : <p>No conversion evidence recorded.</p>}
+      <div><p className="eyebrow" id={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>{title}</p><span>Fully paid / records</span></div>
+      {rows.length ? <ul>{rows.map((row) => <li key={row.label}><span><strong>{row.label}</strong><small>{row.proposals} proposed · {row.signed} signed · {row.paid} fully paid</small></span><span><strong>{row.records ? Math.round((row.paid / row.records) * 100) : 0}%</strong><small>{currency(row.paidAmount)} collected</small></span></li>)}</ul> : <p>No conversion evidence recorded.</p>}
     </section>
   );
 }
 
-export function DashboardStats({ queueCount, approvedCount, operatorRecords }: { queueCount: number; approvedCount: number; operatorRecords: Record<string, OperatorRecord> }) {
+export function DashboardStats({ queueCount, approvedCount, operatorRecords, now }: { queueCount: number; approvedCount: number; operatorRecords: Record<string, OperatorRecord>; now: Date }) {
   const records = Object.values(operatorRecords);
-  const due = records.filter((record) => !CLOSED_STATUSES.has(record.status) && Boolean(earliestFollowUp(record)) && earliestFollowUp(record) <= todayKey()).length;
+  const due = records.filter((record) => !CLOSED_STATUSES.has(record.status) && Boolean(earliestFollowUp(record)) && dueMillis(earliestFollowUp(record)) <= now.getTime()).length;
   const paid = records.reduce((sum, record) => sum + paidAmount(record), 0);
   return (
     <section className="stats-row" aria-label="Dakota summary">

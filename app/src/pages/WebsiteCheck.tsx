@@ -1,5 +1,6 @@
-import { Search } from "lucide-react";
+import { CalendarDays, ExternalLink, Search } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
+import { BOOKING_HREF } from "@/data/contact";
 import { handoffToAuditLab } from "@/lib/auditPrefill";
 import "@/styles/editorial/revenue-pages.css";
 
@@ -59,6 +60,32 @@ export default function WebsiteCheck() {
           </button>
           <p>A useful first look. No account, card, password, or automatic sales call.</p>
         </form>
+
+        <section
+          className="lf-revenue-page__handoff lf-website-check__booking"
+          aria-labelledby="lf-website-check-booking-title"
+        >
+          <div>
+            <p>Prefer a human first?</p>
+            <h2 id="lf-website-check-booking-title">Free 30-minute second opinion.</h2>
+            <p>
+              Choose a Monday–Friday time between 9am and 5pm Eastern. We’ll meet
+              on Google Meet, look at your public website together, and name the
+              clearest next move. No login, prep, or commitment.
+            </p>
+          </div>
+          <a
+            href={BOOKING_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-lf-event="booking_started"
+            data-lf-label="website_check"
+          >
+            <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
+            Choose a time
+            <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
+          </a>
+        </section>
       </section>
     </>
   );

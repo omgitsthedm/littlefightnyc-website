@@ -40,7 +40,7 @@ export default function ClientContinuity() {
         </p>
         <div className="lf-continuity__lead-actions">
           <Link to="/services/ongoing-care/">See ongoing care</Link>
-          <a href={BOOKING_HREF} target="_blank" rel="noreferrer" data-lf-event="booking_started" data-lf-label="home_care">
+          <a href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" data-lf-event="booking_started" data-lf-label="home_care">
             Book a check-in
             <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
           </a>

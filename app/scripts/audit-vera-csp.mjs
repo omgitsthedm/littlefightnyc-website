@@ -9,13 +9,13 @@
  * to have two. Nothing failed, because nothing exercises the fallback until the
  * proxy is already broken, which is exactly when nobody is reading logs.
  *
- * Netlify replaces headers per path rather than merging them, so the /vera/*
- * block is a full copy of the "/*" policy. Copies rot: a directive tightened
- * sitewide would silently not apply to /vera/, which is the part of the site
- * that renders third-party listing photos and talks to an external origin.
+ * VERA also renders MapLibre tiles and uses blob-backed images/workers for its
+ * map and offline runtime. Netlify replaces headers per path rather than
+ * merging them, so the /vera/* block is a full copy of the "/*" policy. Copies
+ * rot: a directive tightened sitewide could silently not apply to /vera/.
  *
- * So this asserts the two policies differ by exactly the pipeline origin, in
- * exactly connect-src, and nothing else.
+ * So this asserts the two policies differ by exactly those named runtime
+ * capabilities, in exactly their named directives, and nothing else.
  *
  * Scope, stated plainly: this proves the CSP permits the fallback. It does NOT
  * prove the fallback works. As of 2026-07-30 it still does not — the pipeline
@@ -31,6 +31,13 @@ import { fileURLToPath } from "node:url";
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = path.resolve(appRoot, "..");
 const PIPELINE_ORIGIN = "https://vera-pipeline.netlify.app";
+const TILE_ORIGIN = "https://tiles.openfreemap.org";
+const VERA_ONLY_ADDITIONS = {
+  "img-src": ["blob:"],
+  "connect-src": [PIPELINE_ORIGIN, TILE_ORIGIN],
+  "worker-src": ["'self'", "blob:"],
+  "child-src": ["blob:"],
+};
 const failures = [];
 
 const toml = await readFile(path.join(repoRoot, "netlify.toml"), "utf8");
@@ -73,46 +80,51 @@ if (sitePolicy && veraPolicy) {
   const site = directives(sitePolicy);
   const vera = directives(veraPolicy);
 
-  const names = new Set([...Object.keys(site), ...Object.keys(vera)]);
+  const names = new Set([
+    ...Object.keys(site),
+    ...Object.keys(vera),
+    ...Object.keys(VERA_ONLY_ADDITIONS),
+  ]);
   for (const name of names) {
     const siteValues = new Set(site[name] ?? []);
     const veraValues = new Set(vera[name] ?? []);
     const added = [...veraValues].filter((v) => !siteValues.has(v));
     const dropped = [...siteValues].filter((v) => !veraValues.has(v));
+    const expectedAdded = new Set(VERA_ONLY_ADDITIONS[name] ?? []);
+    const unexpected = added.filter((value) => !expectedAdded.has(value));
+    const missing = [...expectedAdded].filter((value) => !added.includes(value));
 
-    if (name === "connect-src") {
-      if (!veraValues.has(PIPELINE_ORIGIN)) {
-        failures.push(
-          `netlify.toml: /vera/* connect-src is missing ${PIPELINE_ORIGIN}, so the feed ` +
-            "fallback cannot fire",
-        );
-      }
-      const unexpected = added.filter((v) => v !== PIPELINE_ORIGIN);
-      if (unexpected.length > 0) {
-        failures.push(
-          `netlify.toml: /vera/* connect-src adds ${unexpected.join(", ")} beyond the ` +
-            "pipeline origin — widen the site policy instead, or say why here",
-        );
-      }
-    } else if (added.length > 0 || dropped.length > 0) {
+    if (unexpected.length > 0 || missing.length > 0 || dropped.length > 0) {
       failures.push(
         `netlify.toml: /vera/* ${name} has drifted from the site policy` +
-          (added.length ? ` (adds ${added.join(", ")})` : "") +
+          (unexpected.length ? ` (unexpectedly adds ${unexpected.join(", ")})` : "") +
+          (missing.length ? ` (must add ${missing.join(", ")})` : "") +
           (dropped.length ? ` (drops ${dropped.join(", ")})` : ""),
       );
     }
   }
 }
 
-// The fallback must still be the thing the policy is allowing.
-const veraJs = await readFile(
-  path.join(appRoot, "public", "vera", "assets", "js", "vera.js"),
+// The feed and map origins must still be the things the policy is allowing.
+const veraAppJs = await readFile(
+  path.join(appRoot, "public", "vera", "assets", "js", "vera-app.js"),
   "utf8",
 );
-if (!veraJs.includes(PIPELINE_ORIGIN)) {
+if (!veraAppJs.includes(PIPELINE_ORIGIN)) {
   failures.push(
-    `vera.js no longer references ${PIPELINE_ORIGIN} — if the fallback is gone, drop the ` +
+    `vera-app.js no longer references ${PIPELINE_ORIGIN} — if the fallback is gone, drop the ` +
       "/vera/* CSP exception with it rather than leaving the origin allowed for nothing",
+  );
+}
+
+const veraMapJs = await readFile(
+  path.join(appRoot, "public", "vera", "assets", "js", "vera-map.js"),
+  "utf8",
+);
+if (!veraMapJs.includes(TILE_ORIGIN)) {
+  failures.push(
+    `vera-map.js no longer references ${TILE_ORIGIN} — if the map source changed, update ` +
+      "the exact /vera/* connect-src exception with it",
   );
 }
 
@@ -123,5 +135,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "VERA CSP audit passed: /vera/* matches the site policy except for the pipeline origin in connect-src.",
+  "VERA CSP audit passed: /vera/* has only the exact feed, map, blob, and worker capabilities its runtime uses.",
 );

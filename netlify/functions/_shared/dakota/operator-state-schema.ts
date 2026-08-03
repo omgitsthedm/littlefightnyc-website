@@ -1,5 +1,6 @@
 export const DAKOTA_OPERATOR_STATE_SCHEMA_V1 = "dakota.operator-state.v1" as const;
-export const DAKOTA_OPERATOR_STATE_SCHEMA = "dakota.operator-state.v2" as const;
+export const DAKOTA_OPERATOR_STATE_SCHEMA_V2 = "dakota.operator-state.v2" as const;
+export const DAKOTA_OPERATOR_STATE_SCHEMA = "dakota.operator-state.v3" as const;
 
 export const DAKOTA_OPERATOR_STATUSES = [
   "early_signal",
@@ -26,7 +27,7 @@ export const DAKOTA_OPERATOR_RECORD_LIMIT = 500;
 export const DAKOTA_OPERATOR_REQUEST_MAX_BYTES = 256 * 1024;
 export const DAKOTA_OPERATOR_STATE_MAX_BYTES = 2 * 1024 * 1024;
 
-export const DAKOTA_OPERATOR_INPUT_FIELDS = [
+const DAKOTA_OPERATOR_V1_INPUT_FIELDS = [
   "identity",
   "status",
   "notes",
@@ -39,12 +40,20 @@ export const DAKOTA_OPERATOR_INPUT_FIELDS = [
   "winLossReason",
   "proof",
   "draft",
+] as const;
+
+const DAKOTA_OPERATOR_V2_INPUT_FIELDS = [
+  ...DAKOTA_OPERATOR_V1_INPUT_FIELDS,
   "contacts",
   "activities",
   "commercialClose",
 ] as const;
 
-const DAKOTA_OPERATOR_V1_INPUT_FIELDS = DAKOTA_OPERATOR_INPUT_FIELDS.slice(0, -3);
+export const DAKOTA_OPERATOR_INPUT_FIELDS = [
+  ...DAKOTA_OPERATOR_V2_INPUT_FIELDS,
+  "selectedContactId",
+  "tasks",
+] as const;
 
 const DAKOTA_OPERATOR_V1_STORED_FIELDS = [
   ...DAKOTA_OPERATOR_V1_INPUT_FIELDS,
@@ -53,6 +62,12 @@ const DAKOTA_OPERATOR_V1_STORED_FIELDS = [
 
 const DAKOTA_OPERATOR_V1_MILESTONE_STORED_FIELDS = [
   ...DAKOTA_OPERATOR_V1_INPUT_FIELDS,
+  "milestones",
+  "updated_at",
+] as const;
+
+const DAKOTA_OPERATOR_V2_STORED_FIELDS = [
+  ...DAKOTA_OPERATOR_V2_INPUT_FIELDS,
   "milestones",
   "updated_at",
 ] as const;
@@ -122,6 +137,8 @@ export type DakotaActivityOutcome = (typeof DAKOTA_ACTIVITY_OUTCOMES)[number];
 
 export interface DakotaActivity {
   activityId: string;
+  taskId: string | null;
+  contactId: string | null;
   channel: DakotaActivityChannel;
   type: DakotaActivityType;
   outcome: DakotaActivityOutcome;
@@ -129,6 +146,114 @@ export interface DakotaActivity {
   occurredAt: string;
   followUpAt: string | null;
 }
+
+export const DAKOTA_ACTIVITY_COMPATIBILITY: Record<
+  DakotaActivityType,
+  Partial<Record<DakotaActivityChannel, readonly DakotaActivityOutcome[]>>
+> = {
+  note: { internal: ["recorded"] },
+  outreach: {
+    email: ["sent", "delivered", "no_response"],
+    phone: ["sent", "connected", "voicemail", "no_response"],
+    sms: ["sent", "delivered", "no_response"],
+    website_form: ["sent", "delivered", "no_response"],
+    linkedin: ["sent", "delivered", "no_response"],
+  },
+  reply: {
+    email: ["replied", "completed", "declined"],
+    phone: ["replied", "connected", "completed", "declined"],
+    sms: ["replied", "completed", "declined"],
+    website_form: ["replied", "completed", "declined"],
+    linkedin: ["replied", "completed", "declined"],
+  },
+  call: { phone: ["connected", "voicemail", "completed", "declined", "no_response"] },
+  meeting: { meeting: ["scheduled", "completed", "declined", "no_response"] },
+  proposal_sent: { proposal: ["sent", "delivered", "completed", "declined", "no_response"] },
+  contract_signed: { contract: ["completed", "won"] },
+  invoice_sent: { invoice: ["sent", "delivered", "completed", "no_response"] },
+  payment_received: { payment: ["paid"] },
+  follow_up: {
+    internal: ["recorded", "scheduled", "completed"],
+    email: ["sent", "delivered", "completed", "no_response"],
+    phone: ["connected", "voicemail", "completed", "no_response"],
+    sms: ["sent", "delivered", "completed", "no_response"],
+  },
+};
+
+export const DAKOTA_TASK_TYPES = [
+  "research",
+  "qualify",
+  "value_brief",
+  "outreach",
+  "follow_up",
+  "meeting",
+  "proposal",
+  "invoice",
+  "payment",
+  "onboarding",
+] as const;
+export type DakotaTaskType = (typeof DAKOTA_TASK_TYPES)[number];
+
+export const DAKOTA_TASK_STATUSES = ["open", "completed", "skipped"] as const;
+export type DakotaTaskStatus = (typeof DAKOTA_TASK_STATUSES)[number];
+
+export const DAKOTA_TASK_CHANNELS = [
+  "internal",
+  "email",
+  "phone",
+  "sms",
+  "meeting",
+  "proposal",
+  "invoice",
+  "payment",
+] as const;
+export type DakotaTaskChannel = (typeof DAKOTA_TASK_CHANNELS)[number];
+
+export interface DakotaTask {
+  taskId: string;
+  type: DakotaTaskType;
+  status: DakotaTaskStatus;
+  title: string;
+  dueAt: string | null;
+  contactId: string | null;
+  channel: DakotaTaskChannel;
+  createdAt: string;
+  resolvedAt: string | null;
+  resolutionNote: string;
+}
+
+export const DAKOTA_TASK_CHANNEL_COMPATIBILITY: Record<
+  DakotaTaskType,
+  readonly DakotaTaskChannel[]
+> = {
+  research: ["internal"],
+  qualify: ["internal"],
+  value_brief: ["internal"],
+  outreach: ["email", "phone", "sms"],
+  follow_up: ["internal", "email", "phone", "sms"],
+  meeting: ["meeting"],
+  proposal: ["proposal"],
+  invoice: ["invoice"],
+  payment: ["payment"],
+  onboarding: ["internal"],
+};
+
+const DAKOTA_ACTIVITY_TASK_TYPE_COMPATIBILITY: Record<
+  Exclude<DakotaActivityType, "note">,
+  readonly DakotaTaskType[]
+> = {
+  outreach: ["outreach"],
+  reply: ["outreach", "follow_up"],
+  call: ["outreach", "follow_up"],
+  meeting: ["meeting"],
+  proposal_sent: ["proposal"],
+  contract_signed: ["proposal"],
+  invoice_sent: ["invoice"],
+  payment_received: ["payment"],
+  follow_up: ["follow_up"],
+};
+
+const DAKOTA_ACTIVITY_TASK_TIMESTAMP_SKEW_MS = 5 * 60_000;
 
 export interface DakotaCommercialClose {
   proposalRef: string;
@@ -163,6 +288,9 @@ const CONSENT_CLASSIFICATION_SET = new Set<string>(DAKOTA_CONSENT_CLASSIFICATION
 const ACTIVITY_CHANNEL_SET = new Set<string>(DAKOTA_ACTIVITY_CHANNELS);
 const ACTIVITY_TYPE_SET = new Set<string>(DAKOTA_ACTIVITY_TYPES);
 const ACTIVITY_OUTCOME_SET = new Set<string>(DAKOTA_ACTIVITY_OUTCOMES);
+const TASK_TYPE_SET = new Set<string>(DAKOTA_TASK_TYPES);
+const TASK_STATUS_SET = new Set<string>(DAKOTA_TASK_STATUSES);
+const TASK_CHANNEL_SET = new Set<string>(DAKOTA_TASK_CHANNELS);
 const HUMAN_APPROVED_STATUS_SET = new Set<string>([
   "pursuit_ready",
   "pursuing",
@@ -174,6 +302,17 @@ const HUMAN_APPROVED_STATUS_SET = new Set<string>([
 ]);
 const CONTACTED_STATUS_SET = new Set<string>([
   "pursuing", "replied", "meeting", "proposal", "won", "paid",
+]);
+const OPEN_TASK_REQUIRED_STATUS_SET = new Set<DakotaOperatorStatus>([
+  "research_ready",
+  "pursuit_ready",
+  "pursuing",
+  "replied",
+  "meeting",
+  "proposal",
+  "won",
+  "paid",
+  "snoozed",
 ]);
 const STATUS_MILESTONE_FIELD: Partial<Record<DakotaOperatorStatus, DakotaOperatorMilestoneField>> = {
   replied: "repliedAt",
@@ -193,6 +332,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/u;
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/u;
 export const DAKOTA_CONTACT_LIMIT = 8;
 export const DAKOTA_ACTIVITY_LIMIT = 100;
+export const DAKOTA_TASK_LIMIT = 100;
 
 const DAKOTA_IDENTITY_FIELDS = [
   "businessName",
@@ -246,6 +386,8 @@ export interface DakotaOperatorRecordInput {
   contacts: DakotaVerifiedContact[];
   activities: DakotaActivity[];
   commercialClose: DakotaCommercialClose;
+  selectedContactId: string | null;
+  tasks: DakotaTask[];
 }
 
 export type DakotaOperatorMilestones = Record<DakotaOperatorMilestoneField, string | null>;
@@ -263,6 +405,7 @@ export interface DakotaOperatorStateEnvelope {
 
 export interface DakotaOperatorPutPayload {
   candidate_key: string;
+  expected_updated_at: string | null;
   record: DakotaOperatorRecordInput;
 }
 
@@ -533,14 +676,31 @@ function validateContacts(value: unknown): ValidationResult<DakotaVerifiedContac
 }
 
 function validateActivity(value: unknown): ValidationResult<DakotaActivity> {
-  const fields = [
+  const legacyFields = [
     "activityId", "channel", "type", "outcome", "note", "occurredAt", "followUpAt",
   ] as const;
-  if (!isRecord(value) || !hasExactKeys(value, fields)) {
+  const fields = [
+    "activityId", "taskId", "contactId", "channel", "type", "outcome", "note",
+    "occurredAt", "followUpAt",
+  ] as const;
+  if (!isRecord(value)) {
+    return { valid: false, error: "Activity has an invalid shape." };
+  }
+  const hasProvenance = hasExactKeys(value, fields);
+  const isLegacyShape = hasExactKeys(value, legacyFields);
+  if (!hasProvenance && !isLegacyShape) {
     return { valid: false, error: "Activity has an invalid shape." };
   }
   if (typeof value.activityId !== "string" || !UUID.test(value.activityId)) {
     return { valid: false, error: "Activity activityId must be a lowercase UUID." };
+  }
+  const taskId = hasProvenance ? value.taskId : null;
+  const contactId = hasProvenance ? value.contactId : null;
+  if (taskId !== null && (typeof taskId !== "string" || !UUID.test(taskId))) {
+    return { valid: false, error: "Activity taskId must be null or a lowercase UUID." };
+  }
+  if (contactId !== null && (typeof contactId !== "string" || !UUID.test(contactId))) {
+    return { valid: false, error: "Activity contactId must be null or a lowercase UUID." };
   }
   if (typeof value.channel !== "string" || !ACTIVITY_CHANNEL_SET.has(value.channel)) {
     return { valid: false, error: "Activity channel is unsupported." };
@@ -563,7 +723,20 @@ function validateActivity(value: unknown): ValidationResult<DakotaActivity> {
   if (value.followUpAt !== null && !isIsoTimestamp(value.followUpAt)) {
     return { valid: false, error: "Activity followUpAt must be null or an ISO timestamp." };
   }
-  return { valid: true, value: value as unknown as DakotaActivity };
+  return {
+    valid: true,
+    value: {
+      activityId: value.activityId,
+      taskId: taskId as string | null,
+      contactId: contactId as string | null,
+      channel: value.channel as DakotaActivityChannel,
+      type: value.type as DakotaActivityType,
+      outcome: value.outcome as DakotaActivityOutcome,
+      note: value.note as string,
+      occurredAt: value.occurredAt as string,
+      followUpAt: value.followUpAt as string | null,
+    },
+  };
 }
 
 function validateActivities(value: unknown): ValidationResult<DakotaActivity[]> {
@@ -582,6 +755,240 @@ function validateActivities(value: unknown): ValidationResult<DakotaActivity[]> 
     activities.push(activity.value);
   }
   return { valid: true, value: activities };
+}
+
+function isCompatibleActivity(activity: DakotaActivity): boolean {
+  const outcomes = DAKOTA_ACTIVITY_COMPATIBILITY[activity.type][activity.channel];
+  return outcomes?.includes(activity.outcome) ?? false;
+}
+
+function isUsableContact(contact: DakotaVerifiedContact): boolean {
+  return (
+    ["email", "phone", "sms"].includes(contact.channel) &&
+    (
+      contact.consentClassification === "explicit_inquiry" ||
+      contact.consentClassification === "existing_relationship" ||
+      contact.consentClassification === "public_business"
+    )
+  );
+}
+
+function contactsAreEqual(
+  left: DakotaVerifiedContact,
+  right: DakotaVerifiedContact,
+): boolean {
+  return (
+    left.contactId === right.contactId &&
+    left.name === right.name &&
+    left.role === right.role &&
+    left.channel === right.channel &&
+    left.value === right.value &&
+    left.sourceUrl === right.sourceUrl &&
+    left.verifiedAt === right.verifiedAt &&
+    left.consentClassification === right.consentClassification
+  );
+}
+
+function validateTask(value: unknown): ValidationResult<DakotaTask> {
+  const fields = [
+    "taskId", "type", "status", "title", "dueAt", "contactId", "channel", "createdAt",
+    "resolvedAt", "resolutionNote",
+  ] as const;
+  if (!isRecord(value) || !hasExactKeys(value, fields)) {
+    return { valid: false, error: "Task has an invalid shape." };
+  }
+  if (typeof value.taskId !== "string" || !UUID.test(value.taskId)) {
+    return { valid: false, error: "Task taskId must be a lowercase UUID." };
+  }
+  if (typeof value.type !== "string" || !TASK_TYPE_SET.has(value.type)) {
+    return { valid: false, error: "Task type is unsupported." };
+  }
+  if (typeof value.status !== "string" || !TASK_STATUS_SET.has(value.status)) {
+    return { valid: false, error: "Task status is unsupported." };
+  }
+  if (typeof value.channel !== "string" || !TASK_CHANNEL_SET.has(value.channel)) {
+    return { valid: false, error: "Task channel is unsupported." };
+  }
+  if (
+    !DAKOTA_TASK_CHANNEL_COMPATIBILITY[value.type as DakotaTaskType]
+      .includes(value.channel as DakotaTaskChannel)
+  ) {
+    return { valid: false, error: "Task type and channel are incompatible." };
+  }
+  if (
+    !isPlainText(value.title, 240) || value.title !== value.title.trim() ||
+    value.title.length === 0
+  ) {
+    return { valid: false, error: "Task title must be non-empty bounded plain text." };
+  }
+  if (!isPlainText(value.resolutionNote, 1_000) || value.resolutionNote !== value.resolutionNote.trim()) {
+    return { valid: false, error: "Task resolutionNote must be bounded plain text." };
+  }
+  if (!isIsoTimestamp(value.createdAt)) {
+    return { valid: false, error: "Task createdAt must be an ISO timestamp." };
+  }
+  if (value.dueAt !== null && !isIsoTimestamp(value.dueAt)) {
+    return { valid: false, error: "Task dueAt must be null or an ISO timestamp." };
+  }
+  if (value.contactId !== null && (typeof value.contactId !== "string" || !UUID.test(value.contactId))) {
+    return { valid: false, error: "Task contactId must be null or a lowercase UUID." };
+  }
+  if (value.status === "open") {
+    if (value.resolvedAt !== null || value.resolutionNote !== "") {
+      return { valid: false, error: "Open tasks cannot include resolution evidence." };
+    }
+  } else {
+    if (!isIsoTimestamp(value.resolvedAt)) {
+      return { valid: false, error: "Resolved tasks require an ISO resolvedAt timestamp." };
+    }
+    if (value.resolutionNote.length === 0) {
+      return { valid: false, error: "Resolved tasks require a factual resolutionNote." };
+    }
+    if (Date.parse(value.resolvedAt) < Date.parse(value.createdAt as string)) {
+      return { valid: false, error: "Task resolvedAt cannot precede createdAt." };
+    }
+  }
+  return { valid: true, value: value as unknown as DakotaTask };
+}
+
+function validateTasks(
+  value: unknown,
+  contacts: DakotaVerifiedContact[],
+): ValidationResult<DakotaTask[]> {
+  if (!Array.isArray(value) || value.length > DAKOTA_TASK_LIMIT) {
+    return { valid: false, error: "Tasks must be a bounded array." };
+  }
+  const contactById = new Map(contacts.map((contact) => [contact.contactId, contact]));
+  const tasks: DakotaTask[] = [];
+  const ids = new Set<string>();
+  let openCount = 0;
+  for (const candidate of value) {
+    const task = validateTask(candidate);
+    if (!task.valid) return task;
+    if (ids.has(task.value.taskId)) {
+      return { valid: false, error: "Task IDs must be unique." };
+    }
+    ids.add(task.value.taskId);
+    if (task.value.status === "open") openCount += 1;
+
+    const contact = task.value.contactId === null
+      ? null
+      : contactById.get(task.value.contactId) ?? null;
+    if (task.value.contactId !== null && (!contact || !isUsableContact(contact))) {
+      return { valid: false, error: "Task contactId must reference a usable verified contact." };
+    }
+    if (task.value.channel === "internal" && task.value.contactId !== null) {
+      return { valid: false, error: "Internal tasks cannot reference a contact." };
+    }
+    if (["email", "phone", "sms"].includes(task.value.channel)) {
+      if (!contact) {
+        return { valid: false, error: "Direct-channel tasks require a usable verified contact." };
+      }
+      const compatible =
+        (task.value.channel === "email" && contact.channel === "email") ||
+        (task.value.channel === "phone" && contact.channel === "phone") ||
+        (task.value.channel === "sms" && contact.channel === "sms");
+      if (!compatible) {
+        return { valid: false, error: "Task channel does not match its verified contact route." };
+      }
+      if (
+        task.value.channel === "email" &&
+        contact.consentClassification !== "explicit_inquiry" &&
+        contact.consentClassification !== "existing_relationship"
+      ) {
+        return {
+          valid: false,
+          error: "Email tasks require explicit-inquiry or existing-relationship consent.",
+        };
+      }
+      if (
+        task.value.channel === "sms" &&
+        contact.consentClassification !== "explicit_inquiry" &&
+        contact.consentClassification !== "existing_relationship"
+      ) {
+        return {
+          valid: false,
+          error: "SMS tasks require explicit-inquiry or existing-relationship consent.",
+        };
+      }
+    }
+    tasks.push(task.value);
+  }
+  if (openCount > 1) {
+    return { valid: false, error: "Operator records can have at most one open task." };
+  }
+  return { valid: true, value: tasks };
+}
+
+function activityHasDurableProvenance(
+  activity: DakotaActivity,
+  tasks: DakotaTask[],
+  contacts: DakotaVerifiedContact[],
+): boolean {
+  if (activity.type === "note") {
+    return activity.contactId === null && (
+      activity.taskId === null || tasks.some((task) => task.taskId === activity.taskId)
+    );
+  }
+  if (activity.taskId === null) return false;
+  const task = tasks.find((candidate) => candidate.taskId === activity.taskId);
+  if (!task || task.status === "skipped") return false;
+  if (!DAKOTA_ACTIVITY_TASK_TYPE_COMPATIBILITY[activity.type].includes(task.type)) return false;
+  const occurredAt = Date.parse(activity.occurredAt);
+  const createdAt = Date.parse(task.createdAt);
+  if (occurredAt + DAKOTA_ACTIVITY_TASK_TIMESTAMP_SKEW_MS < createdAt) return false;
+  if (
+    task.resolvedAt !== null &&
+    occurredAt - DAKOTA_ACTIVITY_TASK_TIMESTAMP_SKEW_MS > Date.parse(task.resolvedAt)
+  ) {
+    return false;
+  }
+  const expectedTaskChannel = activity.type === "contract_signed" ? "proposal" : activity.channel;
+  if (task.channel !== expectedTaskChannel) return false;
+  if (activity.channel === "internal") return activity.contactId === null;
+  if (activity.contactId === null) return false;
+  const contact = contacts.find((candidate) => candidate.contactId === activity.contactId);
+  if (!contact || !isUsableContact(contact)) return false;
+  if (
+    (activity.channel === "email" || activity.channel === "phone" || activity.channel === "sms") &&
+    contact.channel !== activity.channel
+  ) {
+    return false;
+  }
+  if (
+    (activity.channel === "email" || activity.channel === "sms") &&
+    contact.consentClassification !== "explicit_inquiry" &&
+    contact.consentClassification !== "existing_relationship"
+  ) {
+    return false;
+  }
+  if (activity.channel === "website_form" || activity.channel === "linkedin") return false;
+  return task.contactId === activity.contactId;
+}
+
+function validateActivityReferences(
+  activities: DakotaActivity[],
+  tasks: DakotaTask[],
+  contacts: DakotaVerifiedContact[],
+): string | null {
+  for (const activity of activities) {
+    if (activity.type === "note") {
+      if (activity.contactId !== null) return "Internal notes cannot reference an external contact.";
+      if (activity.taskId !== null && !tasks.some((task) => task.taskId === activity.taskId)) {
+        return "Activity taskId must reference a durable task.";
+      }
+      continue;
+    }
+
+    // Historical v1/v2/v3 activities are normalized to a null/null provenance
+    // pair. Their evidence remains immutable, but transition validation never
+    // lets that unlinked history unlock a newly reached stage.
+    if (activity.taskId === null && activity.contactId === null) continue;
+    if (!activityHasDurableProvenance(activity, tasks, contacts)) {
+      return "Activity provenance must reference one durable task and its exact usable contact route.";
+    }
+  }
+  return null;
 }
 
 function validateCommercialClose(value: unknown): ValidationResult<DakotaCommercialClose> {
@@ -642,7 +1049,7 @@ function candidateKeyMatchesIdentity(
 function validateRecordFields(
   value: Record<string, unknown>,
   expectedFields: readonly string[],
-  version: "v1" | "v2",
+  version: "v1" | "v2" | "v3",
   legacyUpdatedAt?: string,
 ): ValidationResult<DakotaOperatorRecordInput> {
   if (!hasExactKeys(value, expectedFields)) {
@@ -674,8 +1081,10 @@ function validateRecordFields(
 
   let contacts: DakotaVerifiedContact[] = [];
   let activities: DakotaActivity[] = [];
+  let selectedContactId: string | null = null;
+  let tasks: DakotaTask[] = [];
   let commercialClose = createEmptyDakotaCommercialClose(value.actualRevenue as number | null);
-  if (version === "v2") {
+  if (version === "v2" || version === "v3") {
     const contactsResult = validateContacts(value.contacts);
     if (!contactsResult.valid) return contactsResult;
     contacts = contactsResult.value;
@@ -685,6 +1094,39 @@ function validateRecordFields(
     const closeResult = validateCommercialClose(value.commercialClose);
     if (!closeResult.valid) return closeResult;
     commercialClose = closeResult.value;
+
+    if (version === "v3") {
+      if (
+        value.selectedContactId !== null &&
+        (typeof value.selectedContactId !== "string" || !UUID.test(value.selectedContactId))
+      ) {
+        return { valid: false, error: "selectedContactId must be null or a lowercase UUID." };
+      }
+      selectedContactId = value.selectedContactId as string | null;
+      if (selectedContactId !== null) {
+        const selectedContact = contacts.find((contact) => contact.contactId === selectedContactId);
+        if (!selectedContact || !isUsableContact(selectedContact)) {
+          return { valid: false, error: "selectedContactId must reference a usable verified contact." };
+        }
+      }
+      const tasksResult = validateTasks(value.tasks, contacts);
+      if (!tasksResult.valid) return tasksResult;
+      tasks = tasksResult.value;
+      const activityReferenceError = validateActivityReferences(activities, tasks, contacts);
+      if (activityReferenceError) return { valid: false, error: activityReferenceError };
+      const directOpenTask = tasks.find((task) =>
+        task.status === "open" && ["email", "phone", "sms"].includes(task.channel)
+      );
+      if (
+        directOpenTask &&
+        (selectedContactId === null || directOpenTask.contactId !== selectedContactId)
+      ) {
+        return {
+          valid: false,
+          error: "The open direct-channel task must use selectedContactId.",
+        };
+      }
+    }
   } else if (value.actualRevenue !== null) {
     const paid = value.actualRevenue as number;
     commercialClose = {
@@ -698,12 +1140,12 @@ function validateRecordFields(
 
   const closePaid = commercialClose.amountPaid;
   if (
-    version === "v2" && value.actualRevenue !== null && closePaid !== null &&
+    version !== "v1" && value.actualRevenue !== null && closePaid !== null &&
     value.actualRevenue !== closePaid
   ) {
     return { valid: false, error: "actualRevenue must match commercialClose.amountPaid." };
   }
-  if (version === "v2" && closePaid === null && value.actualRevenue !== null) {
+  if (version !== "v1" && closePaid === null && value.actualRevenue !== null) {
     const amountPaid = value.actualRevenue as number;
     commercialClose = {
       ...commercialClose,
@@ -734,6 +1176,8 @@ function validateRecordFields(
       contacts,
       activities,
       commercialClose,
+      selectedContactId,
+      tasks,
     },
   };
 }
@@ -745,7 +1189,10 @@ export function validateDakotaOperatorRecordInput(
     return { valid: false, error: "Operator record must be an object." };
   }
   if (hasExactKeys(value, DAKOTA_OPERATOR_INPUT_FIELDS)) {
-    return validateRecordFields(value, DAKOTA_OPERATOR_INPUT_FIELDS, "v2");
+    return validateRecordFields(value, DAKOTA_OPERATOR_INPUT_FIELDS, "v3");
+  }
+  if (hasExactKeys(value, DAKOTA_OPERATOR_V2_INPUT_FIELDS)) {
+    return validateRecordFields(value, DAKOTA_OPERATOR_V2_INPUT_FIELDS, "v2");
   }
   if (hasExactKeys(value, DAKOTA_OPERATOR_V1_INPUT_FIELDS)) {
     return validateRecordFields(value, DAKOTA_OPERATOR_V1_INPUT_FIELDS, "v1");
@@ -756,18 +1203,34 @@ export function validateDakotaOperatorRecordInput(
 export function validateDakotaOperatorPutPayload(
   value: unknown,
 ): ValidationResult<DakotaOperatorPutPayload> {
-  if (!isRecord(value) || !hasExactKeys(value, ["candidate_key", "record"])) {
+  if (
+    !isRecord(value) ||
+    !hasExactKeys(value, ["candidate_key", "expected_updated_at", "record"])
+  ) {
     return { valid: false, error: "Operator-state request has an invalid shape." };
   }
   if (!isDakotaCandidateKey(value.candidate_key)) {
     return { valid: false, error: "candidate_key is invalid." };
+  }
+  if (value.expected_updated_at !== null && !isIsoTimestamp(value.expected_updated_at)) {
+    return {
+      valid: false,
+      error: "expected_updated_at must be null or an ISO timestamp.",
+    };
   }
   const record = validateDakotaOperatorRecordInput(value.record);
   if (!record.valid) return record;
   if (!candidateKeyMatchesIdentity(value.candidate_key, record.value.identity)) {
     return { valid: false, error: "candidate_key does not match the identity source." };
   }
-  return { valid: true, value: { candidate_key: value.candidate_key, record: record.value } };
+  return {
+    valid: true,
+    value: {
+      candidate_key: value.candidate_key,
+      expected_updated_at: value.expected_updated_at as string | null,
+      record: record.value,
+    },
+  };
 }
 
 function validateLegacyMilestones(
@@ -794,7 +1257,7 @@ function validateLegacyMilestones(
 
 function validateStoredRecord(
   value: unknown,
-  version: "v1" | "v2",
+  version: "v1" | "v2" | "v3",
 ): ValidationResult<DakotaOperatorRecord> {
   if (!isRecord(value)) {
     return { valid: false, error: "Stored operator record must be an object." };
@@ -821,7 +1284,10 @@ function validateStoredRecord(
       fields.value.actualRevenue,
     );
   } else {
-    fields = validateRecordFields(value, DAKOTA_OPERATOR_STORED_FIELDS, "v2");
+    const expectedFields = version === "v2"
+      ? DAKOTA_OPERATOR_V2_STORED_FIELDS
+      : DAKOTA_OPERATOR_STORED_FIELDS;
+    fields = validateRecordFields(value, expectedFields, version);
     if (!fields.valid) return fields;
     milestones = validateMilestones(value.milestones);
   }
@@ -840,10 +1306,12 @@ export function validateDakotaOperatorStateEnvelope(
     return { valid: false, error: "Operator-state envelope has an invalid shape." };
   }
   const version = value.schema_version === DAKOTA_OPERATOR_STATE_SCHEMA
-    ? "v2"
-    : value.schema_version === DAKOTA_OPERATOR_STATE_SCHEMA_V1
-      ? "v1"
-      : null;
+    ? "v3"
+    : value.schema_version === DAKOTA_OPERATOR_STATE_SCHEMA_V2
+      ? "v2"
+      : value.schema_version === DAKOTA_OPERATOR_STATE_SCHEMA_V1
+        ? "v1"
+        : null;
   if (!version) {
     return { valid: false, error: "Operator-state schema version is unsupported." };
   }
@@ -885,12 +1353,86 @@ export function validateDakotaOperatorStateEnvelope(
   return { valid: true, value: normalizedEnvelope };
 }
 
-function hasActivity(
-  activities: DakotaActivity[],
+function hasLinkedActivity(
+  record: Pick<DakotaOperatorRecordInput, "activities" | "tasks" | "contacts">,
   type: DakotaActivityType,
   outcomes: readonly DakotaActivityOutcome[],
+  activities: DakotaActivity[] = record.activities,
 ): boolean {
-  return activities.some((activity) => activity.type === type && outcomes.includes(activity.outcome));
+  return activities.some((activity) =>
+    activity.type === type &&
+    outcomes.includes(activity.outcome) &&
+    activityHasDurableProvenance(activity, record.tasks, record.contacts)
+  );
+}
+
+function hasLinkedContactActivity(
+  record: Pick<DakotaOperatorRecordInput, "activities" | "tasks" | "contacts">,
+): boolean {
+  return (
+    hasLinkedActivity(record, "outreach", ["sent", "delivered", "connected", "voicemail", "no_response"]) ||
+    hasLinkedActivity(record, "call", ["connected", "voicemail", "completed", "no_response"])
+  );
+}
+
+function milestoneOrLinkedActivity(
+  previous: DakotaOperatorRecord | undefined,
+  milestone: DakotaOperatorMilestoneField,
+  grandfatheredStatuses: readonly DakotaOperatorStatus[],
+  linked: boolean,
+): boolean {
+  return Boolean(
+    linked ||
+    (previous && (
+      previous.milestones[milestone] !== null ||
+      grandfatheredStatuses.includes(previous.status)
+    ))
+  );
+}
+
+function changedCommercialFields(
+  next: DakotaCommercialClose,
+  previous: DakotaCommercialClose | undefined,
+  fields: readonly (keyof DakotaCommercialClose)[],
+): boolean {
+  return fields.some((field) => next[field] !== previous?.[field]);
+}
+
+function clearedCommercialTruth(
+  next: DakotaCommercialClose,
+  previous: DakotaCommercialClose,
+): boolean {
+  return Boolean(
+    (previous.proposalRef && !next.proposalRef) ||
+    (previous.proposalAmount !== null && next.proposalAmount === null) ||
+    (previous.proposalSentDate && !next.proposalSentDate) ||
+    (previous.signedDate && !next.signedDate) ||
+    (previous.invoiceRef && !next.invoiceRef) ||
+    (previous.amountDue !== null && next.amountDue === null) ||
+    (previous.paidDate && !next.paidDate)
+  );
+}
+
+function isCommercialDateBeyondUtcTomorrow(value: string, now: Date): boolean {
+  if (!value) return false;
+  const latestAllowed = new Date(now.getTime() + 24 * 60 * 60_000).toISOString().slice(0, 10);
+  return value > latestAllowed;
+}
+
+function hasAlignedPaidOnboardingTask(
+  record: Pick<DakotaOperatorRecordInput, "tasks" | "commercialClose">,
+): boolean {
+  const openTasks = record.tasks.filter((task) => task.status === "open");
+  const task = openTasks[0];
+  const instruction = record.commercialClose.onboardingNextAction.trim();
+  return Boolean(
+    openTasks.length === 1 &&
+    task?.type === "onboarding" &&
+    task.channel === "internal" &&
+    task.contactId === null &&
+    instruction &&
+    task.title === instruction
+  );
 }
 
 export function validateDakotaOperatorTransition(
@@ -899,9 +1441,18 @@ export function validateDakotaOperatorTransition(
   now: Date,
 ): ValidationResult<DakotaOperatorRecordInput> {
   if (previous) {
-    const nextContactIds = new Set(next.contacts.map((contact) => contact.contactId));
-    if (previous.contacts.some((contact) => !nextContactIds.has(contact.contactId))) {
-      return { valid: false, error: "Verified contacts are durable and cannot be removed." };
+    const nextContactsById = new Map(next.contacts.map((contact) => [contact.contactId, contact]));
+    for (const prior of previous.contacts) {
+      const candidate = nextContactsById.get(prior.contactId);
+      if (!candidate) {
+        return { valid: false, error: "Verified contacts are durable and cannot be removed." };
+      }
+      if (!contactsAreEqual(prior, candidate)) {
+        return {
+          valid: false,
+          error: "Persisted verified contacts are immutable; append a new contact route instead.",
+        };
+      }
     }
     if (next.activities.length < previous.activities.length) {
       return { valid: false, error: "Activities are append-only and cannot be removed." };
@@ -913,40 +1464,280 @@ export function validateDakotaOperatorTransition(
         !prior || !candidate ||
         prior.activityId !== candidate.activityId || prior.channel !== candidate.channel ||
         prior.type !== candidate.type || prior.outcome !== candidate.outcome ||
+        prior.taskId !== candidate.taskId || prior.contactId !== candidate.contactId ||
         prior.note !== candidate.note || prior.occurredAt !== candidate.occurredAt ||
         prior.followUpAt !== candidate.followUpAt
       ) {
         return { valid: false, error: "Existing activities are immutable." };
       }
     }
+    if (next.tasks.length < previous.tasks.length) {
+      return { valid: false, error: "Tasks are durable and cannot be removed." };
+    }
+    for (let index = 0; index < previous.tasks.length; index += 1) {
+      const prior = previous.tasks[index];
+      const candidate = next.tasks[index];
+      if (
+        !prior || !candidate || prior.taskId !== candidate.taskId ||
+        prior.type !== candidate.type || prior.title !== candidate.title ||
+        prior.dueAt !== candidate.dueAt || prior.contactId !== candidate.contactId ||
+        prior.channel !== candidate.channel || prior.createdAt !== candidate.createdAt
+      ) {
+        return { valid: false, error: "Existing task identity, order, and instructions are immutable." };
+      }
+      if (prior.status !== "open") {
+        if (
+          prior.status !== candidate.status || prior.resolvedAt !== candidate.resolvedAt ||
+          prior.resolutionNote !== candidate.resolutionNote
+        ) {
+          return { valid: false, error: "Resolved tasks are immutable." };
+        }
+      } else if (candidate.status === "open") {
+        if (
+          candidate.resolvedAt !== prior.resolvedAt ||
+          candidate.resolutionNote !== prior.resolutionNote
+        ) {
+          return { valid: false, error: "Open tasks cannot gain resolution evidence." };
+        }
+      } else if (
+        candidate.status !== "completed" && candidate.status !== "skipped"
+      ) {
+        return { valid: false, error: "Open tasks may only be completed or skipped." };
+      }
+    }
   }
   const appended = next.activities.slice(previous?.activities.length ?? 0);
+  const appendedTasks = next.tasks.slice(previous?.tasks.length ?? 0);
+  const eligibleActivityTaskIds = new Set([
+    ...(previous?.tasks.filter((task) => task.status === "open").map((task) => task.taskId) ?? []),
+    ...appendedTasks.map((task) => task.taskId),
+  ]);
   const latestAllowed = now.getTime() + 5 * 60_000;
+  // V2 allowed the enum cross-product. Preserve its immutable history, but
+  // require every newly appended activity to satisfy the V3 compatibility matrix.
+  if (appended.some((activity) => !isCompatibleActivity(activity))) {
+    return { valid: false, error: "Activity type, channel, and outcome are incompatible." };
+  }
+  for (const activity of appended) {
+    if (!activity.note.trim()) {
+      return { valid: false, error: "New activity evidence requires a factual note." };
+    }
+    if (activity.type === "note") {
+      if (!activityHasDurableProvenance(activity, next.tasks, next.contacts)) {
+        return { valid: false, error: "New note provenance is invalid." };
+      }
+      continue;
+    }
+    if (!activityHasDurableProvenance(activity, next.tasks, next.contacts)) {
+      return {
+        valid: false,
+        error: "New non-note activity evidence must reference one durable task and exact usable contact route.",
+      };
+    }
+    if (activity.taskId === null || !eligibleActivityTaskIds.has(activity.taskId)) {
+      return {
+        valid: false,
+        error: "New activity evidence must reference the task open for this work.",
+      };
+    }
+    if (activity.channel !== "internal" && activity.contactId !== next.selectedContactId) {
+      return {
+        valid: false,
+        error: "New external activity evidence must use selectedContactId exactly.",
+      };
+    }
+  }
   if (appended.some((activity) => Date.parse(activity.occurredAt) > latestAllowed)) {
     return { valid: false, error: "New activities cannot be dated in the future." };
+  }
+  if (
+    appendedTasks.some((task) =>
+      Date.parse(task.createdAt) > latestAllowed ||
+      (task.resolvedAt !== null && Date.parse(task.resolvedAt) > latestAllowed)
+    )
+  ) {
+    return { valid: false, error: "New task timestamps cannot be dated in the future." };
+  }
+  if (appendedTasks.some((task) => task.status !== "open")) {
+    return { valid: false, error: "New tasks must enter the ledger as open." };
+  }
+  if (appendedTasks.some((task) =>
+    task.channel !== "internal" && (
+      !previous ||
+      task.contactId === null ||
+      task.contactId !== previous.selectedContactId ||
+      !previous.contacts.some((contact) => contact.contactId === task.contactId)
+    )
+  )) {
+    return {
+      valid: false,
+      error: "New non-internal tasks require the exact selected contact route to be persisted first.",
+    };
+  }
+  const newlyResolvedTasks = previous
+    ? next.tasks.slice(0, previous.tasks.length).filter((task, index) =>
+      previous.tasks[index]?.status === "open" && task.status !== "open"
+    )
+    : [];
+  if (newlyResolvedTasks.some((task) => task.resolvedAt === null || Date.parse(task.resolvedAt) > latestAllowed)) {
+    return { valid: false, error: "Task resolution timestamps cannot be dated in the future." };
+  }
+
+  const openTaskCount = next.tasks.filter((task) => task.status === "open").length;
+  if (OPEN_TASK_REQUIRED_STATUS_SET.has(next.status)) {
+    if (openTaskCount !== 1) {
+      return { valid: false, error: "This stage requires exactly one open task." };
+    }
+  } else if (openTaskCount !== 0) {
+    return { valid: false, error: "This stage cannot retain an open task." };
+  }
+  const nextOpenTask = next.tasks.find((task) => task.status === "open");
+  if (nextOpenTask && nextOpenTask.channel !== "internal") {
+    const selectedTaskContact = nextOpenTask.contactId === null
+      ? null
+      : next.contacts.find((contact) => contact.contactId === nextOpenTask.contactId) ?? null;
+    const routedTaskIsAligned = Boolean(
+      selectedTaskContact &&
+      isUsableContact(selectedTaskContact) &&
+      nextOpenTask.contactId === next.selectedContactId
+    );
+    const previousOpenTask = previous?.tasks.find((task) => task.status === "open");
+    const previousRouteWasInvalid = Boolean(
+      previousOpenTask &&
+      previousOpenTask.channel !== "internal" &&
+      (
+        previousOpenTask.contactId === null ||
+        previousOpenTask.contactId !== previous?.selectedContactId
+      )
+    );
+    const unchangedLegacyRoutedTask = Boolean(
+      previousRouteWasInvalid && previousOpenTask?.taskId === nextOpenTask.taskId
+    );
+    if (!routedTaskIsAligned && !unchangedLegacyRoutedTask) {
+      return {
+        valid: false,
+        error: "Every open non-internal task must use selectedContactId exactly.",
+      };
+    }
   }
 
   if (next.status === "snoozed") {
     if (!next.dueDate) {
       return { valid: false, error: "Snoozed records require a wake date." };
     }
+    const openTask = next.tasks.find((task) => task.status === "open");
+    if (!openTask?.dueAt || openTask.dueAt.slice(0, 10) !== next.dueDate) {
+      return {
+        valid: false,
+        error: "A snoozed record's open task dueAt must match its wake date.",
+      };
+    }
   }
   if (next.status === "lost" && !next.winLossReason.trim()) {
     return { valid: false, error: "Lost records require a reason." };
   }
 
-  const contacted =
-    hasActivity(next.activities, "outreach", ["sent", "delivered", "connected", "voicemail", "no_response"]) ||
-    hasActivity(next.activities, "call", ["connected", "voicemail", "completed", "no_response"]);
-  if (next.status === "lost" && !previous?.milestones.humanApprovedAt && !contacted) {
+  const linkedContacted = hasLinkedContactActivity(next);
+  const contacted = milestoneOrLinkedActivity(
+    previous,
+    "firstContactedAt",
+    ["pursuing", "replied", "meeting", "proposal", "won", "paid"],
+    linkedContacted,
+  );
+  if (
+    next.status === "lost" &&
+    previous?.status !== "lost" &&
+    !previous?.milestones.lostAt &&
+    !previous?.milestones.humanApprovedAt &&
+    !contacted
+  ) {
     return { valid: false, error: "Lost is reserved for pursued opportunities; use not_fit for research closure." };
   }
 
-  const proposalSent = hasActivity(next.activities, "proposal_sent", ["sent", "delivered", "completed"]);
-  const signed = hasActivity(next.activities, "contract_signed", ["completed", "won"]);
-  const invoiceSent = hasActivity(next.activities, "invoice_sent", ["sent", "delivered", "completed"]);
-  const paid = hasActivity(next.activities, "payment_received", ["paid"]);
   const close = next.commercialClose;
+  const previousClose = previous?.commercialClose ?? createEmptyDakotaCommercialClose();
+  for (const field of ["proposalSentDate", "signedDate", "paidDate"] as const) {
+    if (
+      close[field] !== previousClose[field] &&
+      isCommercialDateBeyondUtcTomorrow(close[field], now)
+    ) {
+      return {
+        valid: false,
+        error: "Commercial dates cannot be later than the next UTC calendar day.",
+      };
+    }
+  }
+  const proposalChanged = changedCommercialFields(
+    close,
+    previousClose,
+    ["proposalRef", "proposalAmount", "proposalSentDate"],
+  );
+  const signedDateChanged = close.signedDate !== previousClose.signedDate;
+  const invoiceChanged = changedCommercialFields(close, previousClose, ["invoiceRef", "amountDue"]);
+  const previousPaidAmount = previousClose.amountPaid ?? 0;
+  const nextPaidAmount = close.amountPaid ?? 0;
+  const paymentChanged = nextPaidAmount !== previousPaidAmount || close.paidDate !== previousClose.paidDate;
+  if (nextPaidAmount < previousPaidAmount) {
+    return { valid: false, error: "Cleared cash cannot decrease; record a separate correction outside Dakota." };
+  }
+  if (clearedCommercialTruth(close, previousClose)) {
+    return {
+      valid: false,
+      error: "Established commercial truth cannot be cleared; append corrective evidence instead.",
+    };
+  }
+
+  const linkedProposal = hasLinkedActivity(next, "proposal_sent", ["sent", "delivered", "completed"]);
+  const linkedSigned = hasLinkedActivity(next, "contract_signed", ["completed", "won"]);
+  const linkedInvoice = hasLinkedActivity(next, "invoice_sent", ["sent", "delivered", "completed"]);
+  const linkedPaid = hasLinkedActivity(next, "payment_received", ["paid"]);
+  const appendedProposal = hasLinkedActivity(next, "proposal_sent", ["sent", "delivered", "completed"], appended);
+  const appendedSigned = hasLinkedActivity(next, "contract_signed", ["completed", "won"], appended);
+  const appendedInvoice = hasLinkedActivity(next, "invoice_sent", ["sent", "delivered", "completed"], appended);
+  const appendedPaid = hasLinkedActivity(next, "payment_received", ["paid"], appended);
+
+  if (proposalChanged && !appendedProposal) {
+    return { valid: false, error: "Changed proposal terms require newly appended linked proposal-sent evidence." };
+  }
+  if (signedDateChanged && !appendedSigned) {
+    return { valid: false, error: "Changed signed date requires newly appended linked contract-signed evidence." };
+  }
+  if (invoiceChanged && !appendedInvoice) {
+    return { valid: false, error: "Changed invoice terms require newly appended linked invoice-sent evidence." };
+  }
+  if (paymentChanged && !appendedPaid) {
+    return { valid: false, error: "Changed cleared cash requires newly appended linked payment-received evidence." };
+  }
+
+  const proposalStageEvidence = milestoneOrLinkedActivity(
+    previous,
+    "proposalAt",
+    ["proposal", "won", "paid"],
+    linkedProposal,
+  );
+  const proposalSent = proposalStageEvidence || (!proposalChanged && Boolean(
+    previousClose.proposalRef &&
+    previousClose.proposalAmount !== null &&
+    previousClose.proposalSentDate
+  ));
+  const signedStageEvidence = milestoneOrLinkedActivity(
+    previous,
+    "wonAt",
+    ["won", "paid"],
+    linkedSigned,
+  );
+  const signed = signedStageEvidence || (!signedDateChanged && Boolean(previousClose.signedDate));
+  const invoiceStageEvidence = linkedInvoice || previous?.status === "paid" || previous?.milestones.paidAt !== null;
+  const invoiceSent = invoiceStageEvidence || (!invoiceChanged && Boolean(
+    previousClose.invoiceRef && previousClose.amountDue !== null
+  ));
+  const paidStageEvidence = milestoneOrLinkedActivity(
+    previous,
+    "paidAt",
+    ["paid"],
+    linkedPaid,
+  );
+  const paid = paidStageEvidence || (!paymentChanged && previousPaidAmount > 0 && Boolean(previousClose.paidDate));
   const hasAnyProposalTruth = Boolean(close.proposalRef || close.proposalAmount !== null || close.proposalSentDate);
   if (
     hasAnyProposalTruth &&
@@ -967,19 +1758,15 @@ export function validateDakotaOperatorTransition(
   }
 
   if (previous?.status === "do_not_contact" && next.status !== "do_not_contact") {
-    const previouslyAllowed = new Map(
-      previous.contacts.map((contact) => [contact.contactId, contact.consentClassification]),
+    const previousContactIds = new Set(previous.contacts.map((contact) => contact.contactId));
+    const appendedUsableContact = next.contacts.some((contact) =>
+      !previousContactIds.has(contact.contactId) && isUsableContact(contact)
     );
-    const intentionallyReclassified = next.contacts.some((contact) => {
-      const allowed =
-        contact.consentClassification === "explicit_inquiry" ||
-        contact.consentClassification === "existing_relationship" ||
-        contact.consentClassification === "public_business";
-      const prior = previouslyAllowed.get(contact.contactId);
-      return allowed && (prior === undefined || prior !== contact.consentClassification);
-    });
-    if (!intentionallyReclassified) {
-      return { valid: false, error: "Leaving do-not-contact requires an intentional contact reclassification." };
+    if (!appendedUsableContact) {
+      return {
+        valid: false,
+        error: "Leaving do-not-contact requires a newly appended usable contact route.",
+      };
     }
   }
 
@@ -991,16 +1778,27 @@ export function validateDakotaOperatorTransition(
   if (!next.verifiedPain.trim() || !next.offerFit.trim()) {
     return { valid: false, error: "Active pursuit requires verified pain and offer fit." };
   }
-  const usableContact = next.contacts.some((contact) =>
-    contact.consentClassification === "explicit_inquiry" ||
-    contact.consentClassification === "existing_relationship" ||
-    contact.consentClassification === "public_business"
-  );
-  if (!usableContact) {
-    return { valid: false, error: "Active pursuit requires a verified usable contact route." };
+  const selectedContact = next.selectedContactId === null
+    ? null
+    : next.contacts.find((contact) => contact.contactId === next.selectedContactId) ?? null;
+  if (!selectedContact || !isUsableContact(selectedContact)) {
+    return {
+      valid: false,
+      error: "Active pursuit requires a selected verified usable contact route.",
+    };
   }
-  const replied = hasActivity(next.activities, "reply", ["replied", "connected", "completed"]);
-  const met = hasActivity(next.activities, "meeting", ["scheduled", "completed"]);
+  const replied = milestoneOrLinkedActivity(
+    previous,
+    "repliedAt",
+    ["replied", "meeting", "proposal", "won", "paid"],
+    hasLinkedActivity(next, "reply", ["replied", "connected", "completed"]),
+  );
+  const met = milestoneOrLinkedActivity(
+    previous,
+    "meetingAt",
+    ["meeting", "proposal", "won", "paid"],
+    hasLinkedActivity(next, "meeting", ["scheduled", "completed"]),
+  );
 
   if (["pursuing", "replied", "meeting", "proposal", "won", "paid"].includes(next.status) && !contacted) {
     return { valid: false, error: "Pursuing requires a recorded contact activity." };
@@ -1012,16 +1810,29 @@ export function validateDakotaOperatorTransition(
     return { valid: false, error: "This stage requires meeting evidence." };
   }
   if (["proposal", "won", "paid"].includes(next.status)) {
-    if (!proposalSent || !close.proposalRef || close.proposalAmount === null || !close.proposalSentDate) {
+    if (!proposalStageEvidence || !close.proposalRef || close.proposalAmount === null || !close.proposalSentDate) {
       return { valid: false, error: "Proposal stage requires sent proposal evidence and commercial terms." };
     }
   }
-  if (["won", "paid"].includes(next.status) && (!signed || !close.signedDate)) {
+  if (["won", "paid"].includes(next.status) && (!signedStageEvidence || !close.signedDate)) {
     return { valid: false, error: "Won stage requires signed-contract evidence." };
   }
   if (next.status === "paid") {
+    const previousOpenTask = previous?.tasks.find((task) => task.status === "open");
+    const unchangedLegacyPaidTask = Boolean(
+      previous?.status === "paid" &&
+      !hasAlignedPaidOnboardingTask(previous) &&
+      previousOpenTask?.taskId === nextOpenTask?.taskId &&
+      close.onboardingNextAction === previousClose.onboardingNextAction
+    );
+    if (!hasAlignedPaidOnboardingTask(next) && !unchangedLegacyPaidTask) {
+      return {
+        valid: false,
+        error: "Paid requires one open internal onboarding task whose title exactly matches the onboarding next action.",
+      };
+    }
     if (
-      !paid || !close.invoiceRef || close.amountDue === null || close.amountPaid === null ||
+      !paidStageEvidence || !invoiceStageEvidence || !close.invoiceRef || close.amountDue === null || close.amountPaid === null ||
       close.amountPaid < close.amountDue || close.balance !== 0 || !close.paidDate ||
       !close.onboardingNextAction.trim()
     ) {
@@ -1039,9 +1850,7 @@ export function createDakotaOperatorRecord(
   const milestones = previous
     ? { ...previous.milestones }
     : emptyMilestones();
-  const hasRecordedContact =
-    hasActivity(input.activities, "outreach", ["sent", "delivered", "connected", "voicemail", "no_response"]) ||
-    hasActivity(input.activities, "call", ["connected", "voicemail", "completed", "no_response"]);
+  const hasRecordedContact = hasLinkedContactActivity(input);
   if (HUMAN_APPROVED_STATUS_SET.has(input.status) && milestones.humanApprovedAt === null) {
     milestones.humanApprovedAt = updatedAt;
   }

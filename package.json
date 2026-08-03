@@ -11,6 +11,7 @@
     "lint": "npm --prefix app run lint",
     "preview": "npm --prefix app run preview",
     "audit:audit": "npm --prefix app run audit:audit",
+    "audit:booking": "npm --prefix app run audit:booking",
     "audit:mobile-lifecycle": "npm --prefix app run audit:mobile-lifecycle",
     "audit:repo-boundary": "npm --prefix app run audit:repo-boundary",
     "audit:signal": "npm --prefix app run audit:signal",

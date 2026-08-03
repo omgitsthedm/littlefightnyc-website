@@ -1,6 +1,8 @@
 // templates.mts — Audit page HTML generator
 // Produces the self-contained Living Instrument audit report.
 
+import { BOOKING_HREF } from "../../../app/src/data/contact.ts";
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -337,7 +339,11 @@ function generateLivingInstrument(data: AuditData): string {
       <p class="instrument-section__kicker">Next move</p>
       <h2 id="instrument-cta-title">Turn the report into a repair.</h2>
       <p>Bring the evidence to a free Tech Audit. We will sort out what to keep, connect, replace, or build first.</p>
-      <a class="instrument-cta__button" href="${esc(techAuditHref(data))}">${esc(data.ctaText || "Review this report with Little Fight NYC")}</a>
+      <div class="instrument-cta__actions">
+        <a class="instrument-cta__button" href="${esc(techAuditHref(data))}">${esc(data.ctaText || "Review this report with Little Fight NYC")}</a>
+        <a class="instrument-cta__booking-link" href="${esc(BOOKING_HREF)}" target="_blank" rel="noopener noreferrer" data-audit-event="booking_started">Book a free 30-minute second opinion</a>
+      </div>
+      <p class="instrument-cta__booking-note">Prefer a set time? Choose a Monday–Friday appointment between 9am and 5pm Eastern. We’ll meet on Google Meet, review the report with you, and name the clearest next move. No prep or commitment.</p>
     </section>
   </main>
 
@@ -352,9 +358,9 @@ function generateLivingInstrument(data: AuditData): string {
     var analytics=window.LittleFightAuditAnalytics;
     if(!analytics)return;
     analytics.track('report_opened',{funnel_stage:'engaged',placement:'audit_report'});
-    document.querySelectorAll('.instrument-cta__button,.lf-report-link--primary').forEach(function(link){
+    document.querySelectorAll('.instrument-cta__button,.instrument-cta__booking-link,.lf-report-link--primary').forEach(function(link){
       link.addEventListener('click',function(){
-        analytics.track('human_review_requested',{funnel_stage:'contact',placement:'audit_report'});
+        analytics.track(link.getAttribute('data-audit-event')||'human_review_requested',{funnel_stage:'contact',placement:'audit_report'});
       });
     });
   });

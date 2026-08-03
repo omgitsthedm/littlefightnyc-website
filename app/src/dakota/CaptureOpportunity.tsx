@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { CircleAlert, LoaderCircle, Plus, ShieldCheck, X } from "lucide-react";
+import { manualCaptureTasks } from "./captureWorkflow";
 import { validateOperatorIdentity } from "./operatorValidation";
 import { EMPTY_OPERATOR_RECORD, STATUS_LABELS } from "./revenue";
 import type { OperatorIdentity, OperatorRecordInput, OperatorStatus } from "./types";
@@ -11,7 +12,7 @@ export function CaptureOpportunity({
 }: {
   notebookAvailable: boolean;
   onClose: () => void;
-  onSave: (key: string, record: OperatorRecordInput) => Promise<void>;
+  onSave: (key: string, record: OperatorRecordInput, expectedUpdatedAt: string | null) => Promise<string>;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
@@ -79,11 +80,12 @@ export function CaptureOpportunity({
       ...EMPTY_OPERATOR_RECORD,
       status,
       identity,
+      tasks: manualCaptureTasks(status, crypto.randomUUID().toLowerCase(), new Date().toISOString()),
     };
 
     setSaving(true);
     try {
-      await onSave(key, record);
+      await onSave(key, record, null);
       submittedRef.current = true;
       onClose();
     } catch (saveError) {

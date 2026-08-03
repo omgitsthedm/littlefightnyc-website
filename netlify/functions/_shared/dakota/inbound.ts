@@ -3,6 +3,12 @@ import { createHash } from "node:crypto";
 import type { Store } from "@netlify/blobs";
 
 import {
+  normalizeTechAuditFollowUpPreference,
+  techAuditContactRoute,
+  techAuditPreferredRoute,
+  type TechAuditFollowUpPreference,
+} from "../../../../app/src/lib/techAuditContact.ts";
+import {
   createDakotaOperatorRecord,
   createDakotaOperatorStateEnvelope,
   DAKOTA_OPERATOR_RECORD_LIMIT,
@@ -14,6 +20,7 @@ import {
   validateDakotaOperatorRecordInput,
   validateDakotaOperatorPutPayload,
   validateDakotaOperatorStateEnvelope,
+  validateDakotaOperatorTransition,
 } from "./operator-state-schema.ts";
 import {
   DAKOTA_OPERATOR_BLOB_KEY,
@@ -29,13 +36,12 @@ const WEBSITE_AUDIT_FORM_URL = "https://littlefightnyc.com/examples/audit/";
 const MAX_WRITE_ATTEMPTS = 5;
 const ISO_TIMESTAMP = /(?:Z|[+-]\d{2}:\d{2})$/u;
 const SAFE_SOURCE_ID = /^[a-z0-9][a-z0-9._-]{7,127}$/u;
-const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,255}$/u;
-const PHONE = /^\+?[0-9().\s-]{7,32}$/u;
 const CONTROL_CHARACTERS = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/gu;
 const HTML_ENTITIES = /&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));/giu;
 const URL_TOKEN = /(?:\b(?:https?|ftp|file|data|javascript|mailto):\S*|\bwww\.\S+|\S+:\/\/\S*)/giu;
 
-type FollowUpPreference = "text" | "phone" | "email" | "fastest";
+type ParsedContact = { channel: "email" | "phone"; value: string };
+type PreferredContact = { channel: "email" | "phone" | "sms"; value: string };
 
 export interface DakotaInboundCandidate {
   candidateKey: string;
@@ -108,8 +114,12 @@ function validTimestamp(value: string): string | null {
 function normalizedTimestamp(value: string, now: Date): string {
   const parsed = validTimestamp(value);
   if (!parsed) return now.toISOString();
-  const distance = Math.abs(Date.parse(parsed) - now.getTime());
-  return distance <= 7 * 24 * 60 * 60 * 1_000 ? parsed : now.toISOString();
+  const parsedTime = Date.parse(parsed);
+  const futureSkew = parsedTime - now.getTime();
+  const age = now.getTime() - parsedTime;
+  return futureSkew <= 5 * 60_000 && age <= 7 * 24 * 60 * 60 * 1_000
+    ? parsed
+    : now.toISOString();
 }
 
 function normalizedSourceId(value: string): string | null {
@@ -183,21 +193,23 @@ function validPublicHttpsUrl(value: string): string | null {
   }
 }
 
-function parseContact(value: string): { channel: "email" | "phone"; value: string } | null {
+function parseContact(value: string): ParsedContact | null {
   const contact = value.trim();
-  if (EMAIL.test(contact)) return { channel: "email", value: contact.toLowerCase() };
-  if (PHONE.test(contact)) return { channel: "phone", value: contact };
-  return null;
+  const channel = techAuditContactRoute(contact);
+  return channel
+    ? { channel, value: channel === "email" ? contact.toLowerCase() : contact }
+    : null;
 }
 
-function followUpPreference(value: string): FollowUpPreference {
-  if (value === "text" || value === "phone" || value === "email" || value === "fastest") {
-    return value;
-  }
-  return "fastest";
+function applyFollowUpPreference(
+  contact: ParsedContact,
+  preference: TechAuditFollowUpPreference,
+): PreferredContact | null {
+  const channel = techAuditPreferredRoute(contact.channel, preference);
+  return channel ? { ...contact, channel } : null;
 }
 
-function followUpLabel(value: FollowUpPreference): string {
+function followUpLabel(value: TechAuditFollowUpPreference): string {
   switch (value) {
     case "text": return "text message";
     case "phone": return "phone call";
@@ -240,11 +252,12 @@ export function createTechAuditInboundCandidate(
 
   const name = boundedPlainText(rawField(data, "name", 512), 160);
   const businessName = boundedPlainText(rawField(data, "business", 512), 240);
-  const contact = parseContact(rawField(data, "contact", 512));
+  const parsedContact = parseContact(rawField(data, "contact", 512));
   const message = boundedPlainText(rawField(data, "message", 8_192), 1_900);
+  const preference = normalizeTechAuditFollowUpPreference(rawField(data, "follow_up", 32));
+  const contact = parsedContact ? applyFollowUpPreference(parsedContact, preference) : null;
   if (!name || !businessName || !contact || !message) return null;
 
-  const preference = followUpPreference(rawField(data, "follow_up", 32));
   const intent = boundedPlainText(rawField(data, "intent", 64).toLowerCase(), 32);
   const symptom = boundedPlainText(rawField(data, "symptom", 512), 160);
   const urgency = boundedPlainText(rawField(data, "urgency", 256), 120);
@@ -257,6 +270,7 @@ export function createTechAuditInboundCandidate(
     name,
     businessName,
     contact.value,
+    preference,
     message,
     validTimestamp(rawSubmittedAt) ?? "timestamp-not-supplied",
   ]);
@@ -325,6 +339,8 @@ export function createTechAuditInboundCandidate(
     }],
     activities: [{
       activityId,
+      taskId: null,
+      contactId: null,
       channel: "internal",
       type: "note",
       outcome: "recorded",
@@ -333,6 +349,19 @@ export function createTechAuditInboundCandidate(
       followUpAt: null,
     }],
     commercialClose: emptyCommercialClose(),
+    selectedContactId: contactId,
+    tasks: [{
+      taskId: deterministicUuid(`${candidateKey}:task:research`),
+      type: "research",
+      status: "open",
+      title: boundedPlainText("Review Tech Audit inquiry from " + businessName, 240),
+      dueAt: submittedAt,
+      contactId: null,
+      channel: "internal",
+      createdAt: submittedAt,
+      resolvedAt: null,
+      resolutionNote: "",
+    }],
   };
 
   return createValidatedCandidate(DAKOTA_TECH_AUDIT_SOURCE, sourceId, record);
@@ -397,6 +426,7 @@ export function createWebsiteAuditInboundCandidate(
   ]);
   const candidateKey = `${DAKOTA_WEBSITE_AUDIT_SOURCE}:${sourceId}`;
   const name = company || "Website Audit requester";
+  const contactId = deterministicUuid(`${candidateKey}:contact:email:${contact.value}`);
 
   const record: DakotaOperatorRecordInput = {
     identity: {
@@ -426,7 +456,7 @@ export function createWebsiteAuditInboundCandidate(
     ].filter(Boolean).join(" "), 4_000),
     draft: "",
     contacts: [{
-      contactId: deterministicUuid(`${candidateKey}:contact:email:${contact.value}`),
+      contactId,
       name,
       role: "Audit requester",
       channel: "email",
@@ -437,6 +467,8 @@ export function createWebsiteAuditInboundCandidate(
     }],
     activities: [{
       activityId: deterministicUuid(`${candidateKey}:received`),
+      taskId: null,
+      contactId: null,
       channel: "internal",
       type: "note",
       outcome: "recorded",
@@ -445,6 +477,19 @@ export function createWebsiteAuditInboundCandidate(
       followUpAt: null,
     }],
     commercialClose: emptyCommercialClose(),
+    selectedContactId: contactId,
+    tasks: [{
+      taskId: deterministicUuid(`${candidateKey}:task:research`),
+      type: "research",
+      status: "open",
+      title: boundedPlainText("Review Website Audit request for " + domain, 240),
+      dueAt: submittedAt,
+      contactId: null,
+      channel: "internal",
+      createdAt: submittedAt,
+      resolvedAt: null,
+      resolutionNote: "",
+    }],
   };
 
   return createValidatedCandidate(DAKOTA_WEBSITE_AUDIT_SOURCE, sourceId, record);
@@ -469,6 +514,7 @@ export async function persistDakotaInboundCandidate(
 ): Promise<DakotaInboundPersistResult> {
   const candidateValidation = validateDakotaOperatorPutPayload({
     candidate_key: candidate.candidateKey,
+    expected_updated_at: null,
     record: candidate.record,
   });
   if (!candidateValidation.valid) {
@@ -480,6 +526,14 @@ export async function persistDakotaInboundCandidate(
   };
   const store = dependencies.getStore();
   const updatedAt = (dependencies.now ?? (() => new Date()))().toISOString();
+  const transition = validateDakotaOperatorTransition(
+    safeCandidate.record,
+    undefined,
+    new Date(updatedAt),
+  );
+  if (!transition.valid) {
+    throw new InvalidInboundStateError("Generated Dakota inbound transition is invalid.");
+  }
 
   for (let attempt = 0; attempt < MAX_WRITE_ATTEMPTS; attempt += 1) {
     const current = await loadState(store);
@@ -491,7 +545,7 @@ export async function persistDakotaInboundCandidate(
       return { outcome: "capacity", candidateKey: safeCandidate.candidateKey };
     }
 
-    const record = createDakotaOperatorRecord(safeCandidate.record, updatedAt);
+    const record = createDakotaOperatorRecord(transition.value, updatedAt);
     const records = { ...existingRecords, [safeCandidate.candidateKey]: record };
     const envelope = createDakotaOperatorStateEnvelope(records, updatedAt);
     if (new TextEncoder().encode(JSON.stringify(envelope)).byteLength > DAKOTA_OPERATOR_STATE_MAX_BYTES) {

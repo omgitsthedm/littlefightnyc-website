@@ -48,12 +48,14 @@ type Props = {
   heading?: string;
   lede?: string;
   intent?: AcquisitionIntent;
+  showBooking?: boolean;
 };
 
 export default function QuietContact({
   heading = "Show us what you have.",
   lede = "You do not need a brief or the right tech words. Tell us what the business needs to do, or what stopped working.",
   intent = "general",
+  showBooking = true,
 }: Props) {
   const plan = PLAN_COPY[intent];
   const planHref = intent === "clients"
@@ -114,16 +116,18 @@ export default function QuietContact({
             <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
             hello@littlefightnyc.com
           </a>
-          <a
-            href={BOOKING_HREF}
-            target="_blank"
-            rel="noreferrer"
-            data-lf-event="booking_started"
-            data-lf-label="contact_block"
-          >
-            <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
-            Book a free 30-minute second opinion
-          </a>
+          {showBooking && (
+            <a
+              href={BOOKING_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-lf-event="booking_started"
+              data-lf-label="contact_block"
+            >
+              <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
+              Book a free 30-minute second opinion
+            </a>
+          )}
         </div>
 
         <div className="lf-contact-block__next" aria-label="What happens next">

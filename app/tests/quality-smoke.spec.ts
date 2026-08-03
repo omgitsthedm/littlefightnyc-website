@@ -7,6 +7,7 @@ import {
   type Page,
   type TestInfo,
 } from "@playwright/test";
+import { BOOKING_HREF } from "../src/data/contact";
 
 const PREVIEW_ORIGINS = new Set([
   "http://127.0.0.1:4173",
@@ -827,6 +828,27 @@ test(
 );
 
 test(
+  "Website Check keeps the scan primary and offers a safe optional booking link @chromium-desktop @chromium-mobile",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+
+    await openRoute(page, ROUTES.find((route) => route.key === "website-check")!);
+    await expect(page.getByRole("button", { name: "Open the Website Check" })).toBeVisible();
+
+    const booking = page.locator(".lf-website-check__booking").getByRole("link", {
+      name: "Choose a time",
+    });
+    await expect(booking).toHaveAttribute("href", BOOKING_HREF);
+    await expect(booking).toHaveAttribute("target", "_blank");
+    await expect(booking).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(page.locator(`a[href="${BOOKING_HREF}"]`)).toHaveCount(1);
+    await expect(page.getByText("No login, prep, or commitment.")).toBeVisible();
+
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
   "Tech Audit blocks an empty required form without submitting @chromium-desktop",
   async ({ page }) => {
     const runtime = watchRuntime(page);
@@ -937,9 +959,18 @@ test(
     });
     await page.goto(new URL("/thanks/", baseURL!).toString(), { waitUntil: "networkidle" });
     await expect(page.getByText("Your brief and website report are safely in the queue.")).toBeVisible();
+    const booking = page.locator(".lf-thanks__booking").getByRole("link", {
+      name: "Choose a time",
+    });
+    await expect(booking).toHaveAttribute("href", BOOKING_HREF);
+    await expect(booking).toHaveAttribute("target", "_blank");
+    await expect(booking).toHaveAttribute("rel", "noopener noreferrer");
+    await expect(page.locator(`a[href="${BOOKING_HREF}"]`)).toHaveCount(1);
     await expect.poll(() => page.evaluate(() => (
       window.sessionStorage.getItem("lf_tech_audit_report_id")
     ))).toBeNull();
+    await page.reload({ waitUntil: "networkidle" });
+    await expect(page.locator(".lf-thanks__booking")).toHaveCount(0);
 
     expectRuntimeClean(runtime);
   },

@@ -96,16 +96,17 @@ the security boundary:
   the public Website Audit pipeline uses the same bounded private writer after
   a real production request is accepted
 
-Netlify Blobs are site-scoped. Queue store `dakota-private` uses key
-`current/v1` and replay prefix `replay/v1/`; operator store
-`dakota-operator-state` uses compatibility key `state/v1` with the normalized
-`dakota.operator-state.v2` envelope. The v2 record carries verified contacts,
-append-only manual activity, stage evidence, proposal/signature/invoice state,
-and cleared-payment truth while accepting and normalizing stored v1 records.
-Identity users, roles, sessions,
-Blob data, the publisher secret, and custom-domain attachment must be verified
-against site ID `0907d8fe-7018-48db-a6be-1f906e4b2619`; they do not migrate
-because source files moved.
+Netlify Blobs are site-scoped. Queue store `dakota-private` uses key `current/v1` and replay prefix `replay/v1/`. Operator store `dakota-operator-state` uses compatibility key `state/v1` with the normalized `dakota.operator-state.v3` envelope. Stored v1 and v2 records normalize into v3.
+
+Each v3 record carries durable verified contacts, `selectedContactId`, append-only manual activity, a durable task ledger, stage evidence, commercial state, cleared-payment truth, and an onboarding next action. Saved verified contacts cannot be changed or removed; append a newly verified route when contact information changes. `selectedContactId` must reference a usable verified email, phone, or SMS route, and any open direct-channel task must use that exact route. Website-form and LinkedIn URLs remain research evidence and cannot become the selected outreach route.
+
+The task ledger is the canonical source for each record’s next action and due time. Existing task identity, order, and instructions are immutable. Resolving a task preserves it in the ledger. Dakota permits at most one open task, requires exactly one for live operational stages, and permits none for early or terminal stages. A `paid` record remains operational: it requires cleared-cash evidence, a zero balance, an onboarding next action, and one open task.
+
+Every newly recorded non-note activity carries the durable `taskId` and exact selected `contactId` that produced it. Direct email, phone, and SMS evidence must match that route’s channel. Legacy unlinked activity remains visible and immutable but cannot unlock a newly advanced stage. Changing proposal, signature, invoice, or payment truth requires a newly appended linked activity of the matching type; cleared cash cannot be reduced in place.
+
+Every operator-state write uses optimistic concurrency. A new record sends `expected_updated_at: null`; an existing record sends its exact stored `updated_at`. A mismatch returns HTTP `409`. Refresh Dakota before retrying, and never overwrite a newer record blindly.
+
+Identity users, roles, sessions, Blob data, the publisher secret, and custom-domain attachment must be verified against site ID `0907d8fe-7018-48db-a6be-1f906e4b2619`; they do not migrate because source files moved.
 
 The research engine is deliberately not part of the deployed website. Its
 private repository is
@@ -116,10 +117,13 @@ bounded read-only public-source research and publishes only a validated,
 signed queue of at most ten records. Dakota has no automatic outreach path and
 must not send email, SMS, calls, forms, or CRM writes.
 
-The operator surface is a decision and commercial-record system, not an
-outreach robot. Copying a draft or opening Google Voice has no server side
-effect. Contact, reply, meeting, proposal, signature, and payment events enter
-the record only after the operator explicitly confirms the real-world action.
+The operator surface is a decision and commercial-record system, not an outreach robot. It never sends email or SMS, places calls, schedules meetings, or submits forms automatically. Gmail, Google Voice, and Calendar are manual handoffs only.
+
+Gmail opens a compose window only for an exact persisted email route classified `explicit_inquiry` or `existing_relationship`. Google Voice Messages opens only for an exact SMS route with the same consent classifications; Google Voice Calls may open only for an exact phone task. Neither path automates a call or message. Calendar uses the verified booking page in the context of the same selected route; it never creates an event or invitation.
+
+SMS requires an `explicit_inquiry` or `existing_relationship` SMS route accepted by the task schema. A `public_business` email never unlocks Gmail, and a public phone number never becomes text consent; it may support only a deliberate manual phone task after human qualification.
+
+Stored drafts are bounded, URL-free plain text. Dakota appends the verified booking link only when it builds an approved outbound email body for Gmail or manual copy; it never stores that URL in the draft. Copying text, opening Gmail, Voice, or Calendar, and copying or opening the booking link have no server-side effect and are not conversions. Contact, reply, meeting, proposal, signature, payment, and onboarding evidence enter the record only after the operator confirms the real-world action.
 
 ## On-demand business and brand evidence
 

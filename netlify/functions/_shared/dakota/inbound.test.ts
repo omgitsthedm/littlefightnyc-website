@@ -111,6 +111,8 @@ describe("Dakota consented inbound mapping", () => {
     ]);
     expect(candidate?.record.activities).toEqual([
       expect.objectContaining({
+        taskId: null,
+        contactId: null,
         channel: "internal",
         type: "note",
         outcome: "recorded",
@@ -118,8 +120,81 @@ describe("Dakota consented inbound mapping", () => {
       }),
     ]);
     expect(candidate?.record.activities[0]?.note).toContain("No outreach was sent");
+    expect(candidate?.record.selectedContactId).toBe(candidate?.record.contacts[0]?.contactId);
+    expect(candidate?.record.tasks).toEqual([
+      expect.objectContaining({
+        type: "research",
+        status: "open",
+        channel: "internal",
+        contactId: null,
+        createdAt: NOW.toISOString(),
+        dueAt: NOW.toISOString(),
+      }),
+    ]);
     expect(candidate?.record.verifiedPain).toContain("Self-reported");
     expect(candidate?.record.proof).toContain("Requested follow-up: email");
+  });
+
+  it("persists the requested Tech Audit follow-up route structurally", () => {
+    const text = createTechAuditInboundCandidate(techAuditData({
+      contact: "+1 (212) 555-0199",
+      follow_up: "text",
+    }), NOW);
+    const call = createTechAuditInboundCandidate(techAuditData({
+      contact: "+1 (212) 555-0199",
+      follow_up: "phone",
+    }), NOW);
+    const fastestEmail = createTechAuditInboundCandidate(techAuditData({
+      contact: "avery@example.com",
+      follow_up: "fastest",
+    }), NOW);
+    const fastestPhone = createTechAuditInboundCandidate(techAuditData({
+      contact: "+1 (212) 555-0199",
+      follow_up: "fastest",
+    }), NOW);
+
+    expect(text?.record.contacts[0]).toEqual(
+      expect.objectContaining({
+        channel: "sms",
+        value: "+1 (212) 555-0199",
+        consentClassification: "explicit_inquiry",
+      }),
+    );
+    expect(call?.record.contacts[0]).toEqual(
+      expect.objectContaining({
+        channel: "phone",
+        value: "+1 (212) 555-0199",
+        consentClassification: "explicit_inquiry",
+      }),
+    );
+    expect(text?.record.contacts[0]?.contactId).not.toBe(call?.record.contacts[0]?.contactId);
+    expect(fastestEmail?.record.contacts[0]).toEqual(
+      expect.objectContaining({ channel: "email", value: "avery@example.com" }),
+    );
+    expect(fastestPhone?.record.contacts[0]).toEqual(
+      expect.objectContaining({ channel: "phone", value: "+1 (212) 555-0199" }),
+    );
+
+    for (const mismatch of [
+      { contact: "avery@example.com", follow_up: "text" },
+      { contact: "avery@example.com", follow_up: "phone" },
+      { contact: "+1 (212) 555-0199", follow_up: "email" },
+    ]) {
+      expect(
+        createTechAuditInboundCandidate(techAuditData(mismatch), NOW),
+      ).toBeNull();
+    }
+  });
+
+  it("rejects every contact shape the public Tech Audit contract marks unreachable", () => {
+    for (const contact of [
+      "hello@yourshop",
+      "555-0199",
+      "2125550199 surprise",
+      "david marsh",
+    ]) {
+      expect(createTechAuditInboundCandidate(techAuditData({ contact }), NOW)).toBeNull();
+    }
   });
 
   it("bounds prose, strips URL-like content, and uses a stable hash when capture metadata is absent", () => {
@@ -134,9 +209,20 @@ describe("Dakota consented inbound mapping", () => {
 
     expect(first?.candidateKey).toMatch(/^inbound:tech-audit:fallback-[0-9a-f]{32}$/u);
     expect(retry?.candidateKey).toBe(first?.candidateKey);
+    expect(retry?.record.tasks[0]?.taskId).toBe(first?.record.tasks[0]?.taskId);
     expect(first?.record.identity.businessName.length).toBeLessThanOrEqual(240);
     expect(first?.record.verifiedPain.length).toBeLessThanOrEqual(2_000);
     expect(first?.record.verifiedPain).not.toContain("https://secret.example/private");
+  });
+
+  it("clamps future client timestamps so server transition gates remain authoritative", () => {
+    const candidate = createTechAuditInboundCandidate(techAuditData({
+      dakota_submitted_at: "2026-08-04T12:00:00.000Z",
+    }), NOW);
+
+    expect(candidate?.record.activities[0]?.occurredAt).toBe(NOW.toISOString());
+    expect(candidate?.record.tasks[0]?.createdAt).toBe(NOW.toISOString());
+    expect(candidate?.record.tasks[0]?.dueAt).toBe(NOW.toISOString());
   });
 
   it.each([
@@ -188,10 +274,34 @@ describe("Dakota consented inbound mapping", () => {
     });
     expect(candidate?.record.activities[0]?.note).toContain("report delivery");
     expect(candidate?.record.activities[0]?.note).toContain("No outreach was sent");
+    expect(candidate?.record.activities[0]).toEqual(expect.objectContaining({
+      taskId: null,
+      contactId: null,
+    }));
+    expect(candidate?.record.selectedContactId).toBe(candidate?.record.contacts[0]?.contactId);
+    expect(candidate?.record.tasks).toEqual([
+      expect.objectContaining({
+        type: "research",
+        status: "open",
+        channel: "internal",
+      }),
+    ]);
   });
 });
 
 describe("Dakota consented inbound persistence", () => {
+  it("runs generated candidates through the same live-work transition gate", async () => {
+    const store = new MemoryStore();
+    const candidate = createTechAuditInboundCandidate(techAuditData(), NOW);
+    if (!candidate) throw new Error("fixture did not map");
+
+    await expect(persistDakotaInboundCandidate({
+      ...candidate,
+      record: { ...candidate.record, tasks: [] },
+    }, dependencies(store))).rejects.toThrow("Generated Dakota inbound transition is invalid");
+    expect(store.writes).toHaveLength(0);
+  });
+
   it("deduplicates retries by candidate key without replacing the original", async () => {
     const store = new MemoryStore();
     const candidate = createTechAuditInboundCandidate(techAuditData(), NOW);
@@ -210,6 +320,9 @@ describe("Dakota consented inbound persistence", () => {
     expect(store.data?.records[candidate.candidateKey]?.activities).not.toEqual(
       expect.arrayContaining([expect.objectContaining({ type: "outreach" })]),
     );
+    expect(store.data?.records[candidate.candidateKey]?.tasks).toEqual([
+      expect.objectContaining({ type: "research", status: "open" }),
+    ]);
   });
 
   it("retries an ETag conflict and preserves the concurrent operator write", async () => {

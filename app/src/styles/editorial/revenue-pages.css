@@ -347,6 +347,23 @@
   line-height: 1.5;
 }
 
+.lf-website-check__booking {
+  border-color: color-mix(in srgb, var(--lf-blue) 42%, var(--lf-hairline));
+  background:
+    radial-gradient(circle at 88% 18%, color-mix(in srgb, var(--lf-blue) 20%, transparent), transparent 38%),
+    var(--lf-paper-2);
+}
+
+.lf-editorial .lf-website-check__booking > a {
+  gap: var(--lf-space-2);
+  background: var(--lf-blue-soft);
+}
+
+.lf-editorial .lf-website-check__booking > a:hover,
+.lf-editorial .lf-website-check__booking > a:focus-visible {
+  background: color-mix(in srgb, var(--lf-blue-soft) 88%, white);
+}
+
 .lf-editorial .lf-revenue-page__handoff > a:hover,
 .lf-editorial .lf-revenue-page__handoff > a:focus-visible,
 .lf-editorial .lf-client-now a:hover,
@@ -450,6 +467,7 @@
   .lf-revenue-page__handoff,
   .lf-client-now,
   .lf-editorial .lf-revenue-page__handoff > a,
+  .lf-editorial .lf-website-check__booking > a,
   .lf-editorial .lf-client-desk a,
   .lf-editorial .lf-client-followup a,
   .lf-editorial .lf-client-now a,

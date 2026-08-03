@@ -98,7 +98,7 @@ export default function Clients() {
             <p>Review the setup together</p>
             <h2>Book a 30-minute check-in.</h2>
             <p>The calendar shows the real weekday availability in Eastern Time.</p>
-            <a href={BOOKING_HREF} target="_blank" rel="noreferrer" data-lf-event="booking_started" data-lf-label="client_desk">
+            <a href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" data-lf-event="booking_started" data-lf-label="client_desk">
               Open the booking page
               <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
             </a>

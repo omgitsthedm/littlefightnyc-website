@@ -22,6 +22,7 @@
     "lint": "eslint .",
     "audit:audit": "node scripts/audit-audit-archive.mjs",
     "audit:audit-integrations": "node scripts/audit-audit-integrations.mjs",
+    "audit:booking": "node scripts/audit-booking-bridge.mjs",
     "audit:lab": "node scripts/audit-lab-archive.mjs",
     "audit:mobile-lifecycle": "node scripts/audit-mobile-lifecycle.mjs",
     "audit:repo-boundary": "node scripts/audit-repo-boundary.mjs",
@@ -38,8 +39,8 @@
     "audit:release": "node scripts/audit-release-readiness.mjs",
     "test:browser": "playwright test",
     "test:browser:chromium": "playwright test --project=chromium-desktop --project=chromium-mobile",
-    "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:audit-integrations && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:retired-integrations && npm run audit:legal-snapshot && npm run audit:meta-budget && npm run audit:claim-scope && npm run audit:typography && npm run audit:agency-voice",
-    "quality:fast": "npm run lint && npm run build && npm run audit:audit-integrations && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:quality-manifest",
+    "quality": "npm run lint && npm run build && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:audit-integrations && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:retired-integrations && npm run audit:legal-snapshot && npm run audit:meta-budget && npm run audit:claim-scope && npm run audit:typography && npm run audit:agency-voice",
+    "quality:fast": "npm run lint && npm run build && npm run audit:audit-integrations && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:repo-boundary && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:quality-manifest",
     "quality:full": "npm run quality && npm run audit:quality-manifest && npm run test:browser",
     "quality:release": "npm run quality:full && npm run audit:release && npm run audit:external-links",
     "quality:live": "node scripts/verify-live.mjs",
@@ -63,7 +64,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-i18next": "^17.0.10",
-    "react-router-dom": "^7.15.0"
+    "react-router-dom": "7.18.2"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",
