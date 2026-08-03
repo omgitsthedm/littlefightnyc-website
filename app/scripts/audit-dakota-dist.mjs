@@ -4,6 +4,8 @@ import { fileURLToPath } from "node:url";
 
 const distRoot = new URL("../dist/", import.meta.url);
 const dakotaEntry = new URL("dakota.html", distRoot);
+const marketingEntry = new URL("index.html", distRoot);
+const identityCallbackBridge = new URL("identity-callback-bridge.js", distRoot);
 const redirectsSource = new URL("../public/_redirects", import.meta.url);
 const distPath = fileURLToPath(distRoot);
 const forbiddenFiles = new Set([
@@ -51,6 +53,17 @@ try {
   }
   if (!/<script[^>]+type="module"[^>]+src="\/assets\/[^"]+\.js"/.test(html)) {
     findings.push("Dakota entry is not bound to a hashed module asset");
+  }
+  const marketingHtml = await readFile(marketingEntry, "utf8");
+  if (!marketingHtml.includes('<script src="/identity-callback-bridge.js"></script>')) {
+    findings.push("marketing entry is missing the Identity-to-Dakota callback bridge");
+  }
+  const bridge = await readFile(identityCallbackBridge, "utf8");
+  for (const marker of ["/app/", "access_token", "confirmation_token", "invite_token", "recovery_token"]) {
+    if (!bridge.includes(marker)) findings.push(`Identity callback bridge is missing ${JSON.stringify(marker)}`);
+  }
+  if (!bridge.includes('window.location.pathname !== "/"')) {
+    findings.push("Identity callback bridge is not limited to the project root");
   }
   const redirects = await readFile(redirectsSource, "utf8");
   if (!/^\/app\s+\/dakota\.html\s+200!/mu.test(redirects)) {
