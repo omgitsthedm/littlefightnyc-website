@@ -510,17 +510,39 @@
     return h >>> 0;
   }
 
-  function portrait(l, w, h) {
+  /* The sky follows the sweep: a feed built at 02:00 renders the city at
+     night; a noon rebuild would render it in daylight. hour is optional —
+     omitted, the classic dusk holds, and determinism per (uid, hour) is a
+     tested guarantee (archive snapshots depend on it). */
+  var SKIES = {
+    night: { top: '#0b1016', bot: '#141826', litBoost: 0.14 },
+    dawn: { top: '#1a2030', bot: '#3a2c33', litBoost: -0.08 },
+    day: { top: '#26303e', bot: '#313b4c', litBoost: -0.38 },
+    dusk: { top: '#141b22', bot: '#1d2129', litBoost: 0 },
+  };
+
+  function skyOf(hour) {
+    if (hour == null || isNaN(+hour)) return 'dusk';
+    var hr = ((+hour % 24) + 24) % 24;
+    if (hr >= 22 || hr < 5) return 'night';
+    if (hr < 8) return 'dawn';
+    if (hr < 17) return 'day';
+    return 'dusk';
+  }
+
+  function portrait(l, w, h, hour) {
     var seed = hashOf(l.listing_uid || l.title || 'x');
     var s = seed;
     function rnd() { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }
 
+    var sky = SKIES[skyOf(hour)];
     var pal = BRICK[seed % BRICK.length];
     var floors = 4 + Math.floor(rnd() * 4);
     var bays = 3 + Math.floor(rnd() * 2);
     var preWar = rnd() > 0.42;
     var risk = +l.hpd_risk_score || 0;
-    var lit = isScam(l) ? 0.12 : needsVerify(l) ? 0.4 : 0.62;
+    var lit = (isScam(l) ? 0.12 : needsVerify(l) ? 0.4 : 0.62) + sky.litBoost;
+    if (lit < 0.04) lit = 0.04;
 
     var bw = w * 0.74, bx = (w - bw) / 2;
     var by = h * 0.12, bh = h - by - h * 0.1;
@@ -528,7 +550,7 @@
     var g = '';
 
     g += '<defs><linearGradient id="sky' + seed + '" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#141b22"/><stop offset="1" stop-color="#1d2129"/></linearGradient></defs>';
+      '<stop offset="0" stop-color="' + sky.top + '"/><stop offset="1" stop-color="' + sky.bot + '"/></linearGradient></defs>';
     g += '<rect width="' + w + '" height="' + h + '" fill="url(#sky' + seed + ')"/>';
 
     /* a neighbour on each side, cropped — the block, not a lonely box */
@@ -545,7 +567,8 @@
         var wx = bx + bw * ((c + 1) / (bays + 1)) - mw / 2;
         var wy = by + fh * r + fh * 0.28;
         var on = rnd() < lit && r > 0;
-        g += '<rect x="' + wx.toFixed(1) + '" y="' + wy.toFixed(1) + '" width="' + mw.toFixed(1) + '" height="' + mh.toFixed(1) + '" rx="1.5" fill="' + (on ? '#ffcf7a' : '#20242b') + '"' + (on ? ' opacity="' + (0.55 + rnd() * 0.45).toFixed(2) + '"' : '') + '/>';
+        var flick = on && rnd() > 0.86;
+        g += '<rect' + (flick ? ' class="pwin"' : '') + ' x="' + wx.toFixed(1) + '" y="' + wy.toFixed(1) + '" width="' + mw.toFixed(1) + '" height="' + mh.toFixed(1) + '" rx="1.5" fill="' + (on ? '#ffcf7a' : '#20242b') + '"' + (on ? ' opacity="' + (0.55 + rnd() * 0.45).toFixed(2) + '"' : '') + '/>';
         if (on && rnd() > 0.72) {
           g += '<rect x="' + (wx + mw * 0.18).toFixed(1) + '" y="' + (wy + mh * 0.3).toFixed(1) + '" width="' + (mw * 0.3).toFixed(1) + '" height="' + (mh * 0.7).toFixed(1) + '" fill="#8a5a2a" opacity="0.55"/>';
         }
@@ -613,7 +636,7 @@
     stewardOf: stewardOf, spatialLine: spatialLine,
     LAW: LAW, moveInMath: moveInMath, CHECKS: CHECKS, checkGroups: checkGroups, TELLS: TELLS,
     protections: protections, VERIFY_TOOLS: VERIFY_TOOLS, MARKET: MARKET,
-    portrait: portrait, hashOf: hashOf,
+    portrait: portrait, hashOf: hashOf, skyOf: skyOf,
     MAP: { B: B, VW: VW, VH: VH, px: px, py: py, pt: pt, poly: poly, HUDSON: HUDSON, EASTRIVER: EASTRIVER, CENTRAL_PARK: CENTRAL_PARK, HOOD_PINS: HOOD_PINS },
   };
 })();

@@ -232,7 +232,8 @@
 
   function renderChrome() {
     var sh = (D && D.source_health) || {};
-    $('[data-snapshot-line]').textContent = 'Sweep ' + timeago(D && D.generated_at) + ' · ' + POOL.length + ' in the net';
+    $('[data-snapshot-line]').textContent = 'Sweep ' + timeago(D && D.generated_at) + ' · ' + POOL.length + ' in the net' +
+      (servedFromCache ? ' · OFFLINE — showing the sweep cached ' + timeago(servedFromCache) : '');
     var pulse = $('[data-pulse]');
     if (pulse) {
       pulse.className = 'pulse';
@@ -319,11 +320,18 @@
     return C.titleCase(a).replace(/\bE\b/g, 'E').replace(/\bW\b/g, 'W').replace(/#([a-z0-9]+)/gi, function (m, u) { return '#' + u.toUpperCase(); });
   }
 
+  /* the hour the sweep ran, in NY local terms — the portraits' sun */
+  function sweepHour() {
+    if (!D || !D.generated_at) return null;
+    var d = new Date(D.generated_at);
+    return isNaN(d.getTime()) ? null : (d.getUTCHours() + 20) % 24;
+  }
+
   function gallery(l) {
     var urls = (l.image_urls || []).filter(function (u) { return typeof u === 'string' && u.slice(0, 8) === 'https://'; }).slice(0, 6);
-    if (!urls.length) return C.portrait(l, 640, 340);
+    if (!urls.length) return C.portrait(l, 640, 340, sweepHour());
     var where = l.address_normalized || 'this listing';
-    return C.portrait(l, 640, 340) +
+    return C.portrait(l, 640, 340, sweepHour()) +
       '<span class="gal" data-gal>' + urls.map(function (u, i) {
         return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
       }).join('') + '</span>' +
@@ -476,7 +484,13 @@
     var ageMs = l.first_seen_at ? (Date.now() - new Date(l.first_seen_at).getTime()) : null;
     var freshBadge = ageMs != null && ageMs < 24 * 3.6e6
       ? '<span class="dropcard__fresh">' + (ageMs < 3.6e6 ? 'just posted' : Math.round(ageMs / 3.6e6) + 'h fresh') + '</span>' : '';
-    return '<article class="dropcard" style="--i:' + i + '">' +
+    var bearing = '';
+    if (l.latitude != null && l.longitude != null) {
+      var Mb = C.MAP.B;
+      var ang = Math.atan2(+l.longitude - (Mb.w + Mb.e) / 2, +l.latitude - (Mb.s + Mb.n) / 2) * 180 / Math.PI;
+      bearing = ' data-bearing="' + Math.round((ang + 360) % 360) + '"';
+    }
+    return '<article class="dropcard"' + bearing + ' style="--i:' + i + '">' +
       '<button type="button" class="dropcard__hit" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">' +
         '<span class="dropcard__media">' + gallery(l) +
           '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span>' + freshBadge +
@@ -572,7 +586,7 @@
         '<div class="bubblegrid">' + bubble.map(function (l) {
           var o = C.ownerRead(l);
           return '<button type="button" class="bubcard" data-open="' + esc(l.listing_uid) + '">' +
-            '<span class="bubcard__port">' + C.portrait(l, 300, 132) + photoLayer(l) + '</span>' +
+            '<span class="bubcard__port">' + C.portrait(l, 300, 132, sweepHour()) + photoLayer(l) + '</span>' +
             '<span class="bubcard__body"><b>' + esc(C.charName(l)) + '</b>' +
             '<span>' + money(l.rent) + ' · ' + esc(l.neighborhood || '—') + '</span>' +
             '<span class="bubcard__why">' + esc(C.whyPassed(l)) + '</span>' +
@@ -586,6 +600,7 @@
 
     page.classList.add('is-entered');
     startCountdown();
+    if (window.__VERAS) window.__VERAS.maybePlay(page);
   }
 
   /* ================================================================
@@ -888,7 +903,7 @@
           '<p class="panel__hint">' + placed.length + ' plotted' +
             (outside ? ' · ' + outside + ' outside the zone' : '') +
             (lost ? ' · ' + lost + ' without coordinates' : '') + '</p></div>' +
-          '<svg class="mp" viewBox="0 0 ' + M.VW + ' ' + M.VH + '" role="img" aria-label="Map of listings and subway stations">' +
+          '<svg class="mp" data-sky="' + C.skyOf(sweepHour()) + '" viewBox="0 0 ' + M.VW + ' ' + M.VH + '" role="img" aria-label="Map of listings and subway stations">' +
             '<rect class="mp-water" x="0" y="0" width="' + M.VW + '" height="' + M.VH + '"/>' +
             njPath + bkPath + landPath + parkPath +
             '<g class="mp-stns">' + stationDots + '</g>' +
@@ -1119,9 +1134,20 @@
 
   /* ---------- router ---------- */
 
+  var pendingListing = null;
+
   function route() {
     var h = (location.hash || '').replace(/^#\/?/, '') || 'today';
     h = h.split('?')[0];
+    /* deep link: #/listing/<uid> renders Today underneath and opens the
+       ledger over it; leaving the hash (incl. the back button) closes it */
+    if (h.indexOf('listing/') === 0) {
+      pendingListing = h.slice(8);
+      h = 'today';
+    } else {
+      pendingListing = null;
+      if (window.__VERAL && window.__VERAL.openUid()) window.__VERAL.close();
+    }
     if (LEGACY[h]) h = LEGACY[h];
     if (ROUTES.indexOf(h) === -1) h = 'today';
     state.route = h;
@@ -1135,6 +1161,9 @@
     var main = $('#main');
     if (main) main.scrollTop = 0;
     window.scrollTo(0, 0);
+    if (pendingListing && window.__VERAL && window.__VERAL.openUid() !== pendingListing) {
+      window.__VERAL.open(pendingListing);
+    }
   }
 
   function renderRoute() {
@@ -1312,6 +1341,13 @@
     if (TESTMODE && window.__VERAT) window.__VERAT.run();
   }
 
+  /* the installable ritual: shell + last sweep cached, staleness never hidden */
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(function () {});
+  }
+
+  var servedFromCache = null;
+
   function boot(i) {
     i = i || 0;
     if (i >= FEEDS.length) {
@@ -1320,7 +1356,11 @@
       return;
     }
     fetch(FEEDS[i], { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        servedFromCache = r.headers.get('X-Vera-Cache');
+        return r.json();
+      })
       .then(function (data) {
         // A render error is not a feed error: catching them together used to
         // refetch the fallback origin and re-run the same broken render.

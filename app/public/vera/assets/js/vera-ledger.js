@@ -33,6 +33,8 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function open(uid) {
     var app = A();
     var l = app.byUid(uid);
@@ -42,15 +44,45 @@
       var c = app.caseOf(uid);
       var what = c && c.title ? app.tidyTitle(c.title) : 'That listing';
       app.toast(what + ' is no longer in the feed — it was rented or taken down. Your notes are kept.');
+      /* a dead deep link should not strand the hash */
+      if ((location.hash || '').indexOf('#/listing/') === 0) location.hash = '#/today';
       return;
     }
     inspReturnFocus = document.activeElement;
     openUid = uid;
     inspTab = 'overview';
-    $('[data-inspector]').hidden = false;
-    $('[data-scrim]').hidden = false;
-    requestAnimationFrame(function () { $('[data-inspector]').classList.add('is-open'); });
-    render(l);
+    /* the URL knows which ledger is open — back closes it (2.3) */
+    if ((location.hash || '') !== '#/listing/' + uid) {
+      try { history.pushState(null, '', '#/listing/' + uid); } catch (e) {}
+    }
+
+    /* shared-element flight: the card's media flies into the ledger (2.2) */
+    var srcMedia = document.querySelector('[data-open="' + uid + '"] .dropcard__media');
+    function mount() {
+      $('[data-inspector]').hidden = false;
+      $('[data-scrim]').hidden = false;
+      requestAnimationFrame(function () { $('[data-inspector]').classList.add('is-open'); });
+      render(l);
+      var dst = $('.insp-port__frame');
+      if (dst) dst.style.viewTransitionName = 'vera-hero';
+    }
+    if (!RM && document.startViewTransition && srcMedia) {
+      srcMedia.style.viewTransitionName = 'vera-hero';
+      var vt = document.startViewTransition(function () {
+        srcMedia.style.viewTransitionName = '';
+        mount();
+      });
+      vt.finished.then(function () {
+        var dst = $('.insp-port__frame');
+        if (dst) dst.style.viewTransitionName = '';
+      }).catch(function () {});
+      return finishOpen(uid);
+    }
+    mount();
+    return finishOpen(uid);
+  }
+
+  function finishOpen(uid) {
     $$('#main tr.is-open, #main .card.is-open').forEach(function (el) { el.classList.remove('is-open'); });
     $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     var row = $('[data-open="' + uid + '"]');
@@ -60,7 +92,12 @@
   }
 
   function close() {
+    var wasUid = openUid;
     openUid = null;
+    /* if the URL still names this ledger, step the hash back out */
+    if (wasUid && (location.hash || '') === '#/listing/' + wasUid) {
+      try { history.replaceState(null, '', '#/today'); } catch (e) {}
+    }
     var back = inspReturnFocus;
     inspReturnFocus = null;
     if (back && !document.contains(back)) back = null;

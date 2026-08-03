@@ -230,6 +230,27 @@
       check('system shows the pipeline stages', $$('.stage').length === 6, $$('.stage').length);
       check('system states the ethics', ($('.ethos') || { textContent: '' }).textContent.indexOf('never contacts a landlord') > -1 || ($('.ethos') || { textContent: '' }).textContent.indexOf('never messages a landlord') > -1, '');
 
+      /* ---- phase 2: deep links, portraits, hero, PWA ---- */
+      try { sessionStorage.setItem('vera-sweep-seen', '1'); } catch (e2) {}
+      var dlUid = POOL[0] && POOL[0].listing_uid;
+      if (dlUid) {
+        location.hash = '#/listing/' + dlUid; app.route();
+        check('deep link opens its ledger over Today', L.openUid() === dlUid && !$('[data-inspector]').hidden, L.openUid());
+        L.close();
+        check('closing a deep-linked ledger steps the hash back', (location.hash || '') === '#/today', location.hash);
+        location.hash = '#/listing/uid-that-never-existed'; app.route();
+        check('dead deep link toasts and resets', L.openUid() === null && (location.hash || '') === '#/today', location.hash);
+      }
+      var pA = C.portrait({ listing_uid: 'det-test' }, 300, 132, 3);
+      var pB = C.portrait({ listing_uid: 'det-test' }, 300, 132, 3);
+      var pC = C.portrait({ listing_uid: 'det-test' }, 300, 132, 12);
+      check('portraits deterministic per (uid, hour)', pA === pB, '');
+      check('the sky follows the hour', pA !== pC && pC.indexOf('#26303e') > -1, '');
+      check('sky buckets read right', C.skyOf(3) === 'night' && C.skyOf(6) === 'dawn' && C.skyOf(12) === 'day' && C.skyOf(19) === 'dusk', [C.skyOf(3), C.skyOf(6), C.skyOf(12), C.skyOf(19)].join(','));
+      location.hash = '#/today'; app.route();
+      check('sweep hero suppressed after first play (session flag)', !$('.sweephero') && window.__VERAS && window.__VERAS.played(), '');
+      check('installable: manifest linked', !!document.querySelector('link[rel="manifest"]'), '');
+
       /* ---- hygiene ---- */
       check('no private feed touched', ['./data/public.json', 'https://vera-pipeline.netlify.app/data/public.json'].every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), '');
       check('brand present', ($('.brand__name') || { textContent: '' }).textContent === 'VERA', '');

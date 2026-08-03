@@ -973,3 +973,29 @@ body { font-size: 18px; }
 .prov__i--warn { color: var(--clay); }
 
 [hidden] { display: none !important; }
+
+/* --- phase 2: the sweep hero, transitions, living windows, sky --- */
+.sweephero { position: relative; height: 300px; overflow: hidden; border-radius: var(--r); border: 1px solid var(--line); margin-top: 20px; transition: height .6s cubic-bezier(.22,1,.36,1), opacity .6s, margin .6s; }
+.sweephero svg { width: 100%; height: 100%; display: block; }
+.sweephero.is-done { height: 0; opacity: 0; margin-top: 0; border-width: 0; }
+.sweephero__beam path { fill: rgba(76, 195, 138, 0.16); }
+.sweephero__beam { animation: heroSweep 2.2s cubic-bezier(.45,.05,.55,.95) 1 both; }
+@keyframes heroSweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.sweephero__cap { position: absolute; left: 16px; bottom: 10px; margin: 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+
+::view-transition-old(vera-hero), ::view-transition-new(vera-hero) { animation-duration: .32s; }
+
+.pwin { animation: pwin 5.5s ease-in-out infinite; }
+@keyframes pwin { 0%, 92%, 100% { opacity: inherit; } 95% { opacity: .18; } }
+
+.mp[data-sky="night"] .mp-nta { fill: #10160f; }
+.mp[data-sky="night"] { background: #090e0d; }
+.mp[data-sky="day"] .mp-nta { fill: #1b241e; }
+.mp[data-sky="dawn"] .mp-nta { fill: #171d15; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sweephero, .sweephero__beam { animation: none; display: none; }
+  .pwin { animation: none; }
+}
+
+[hidden] { display: none !important; }
