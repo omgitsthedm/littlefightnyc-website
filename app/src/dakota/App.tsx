@@ -430,7 +430,10 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
         setQueueState({ status: "empty" });
         return;
       }
-      if (response.status === 401 || response.status === 403) throw new Error("Your secure session is no longer authorized. Sign in again.");
+      if (response.status === 401 || response.status === 403) {
+        await onLogout();
+        return;
+      }
       if (!response.ok) throw new Error(await responseError(response, "Dakota could not load the private queue."));
       const queue = (await response.json()) as QueueEnvelope;
       if (queue.schema_version !== "dakota.queue.v1" || !Array.isArray(queue.records)) throw new Error("The private queue response did not match Dakota’s expected schema.");
@@ -439,13 +442,16 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
     } catch (error) {
       setQueueState({ status: "error", message: error instanceof Error ? error.message : "Dakota could not load the private queue." });
     }
-  }, []);
+  }, [onLogout]);
 
   const loadOperatorState = useCallback(async (showLoading = true) => {
     if (showLoading) setOperatorState({ status: "loading" });
     try {
       const response = await fetch(API_OPERATOR_STATE, { credentials: "same-origin", headers: { Accept: "application/json" }, cache: "no-store" });
-      if (response.status === 401 || response.status === 403) throw new Error("Your secure session is not authorized to read operator outcomes.");
+      if (response.status === 401 || response.status === 403) {
+        await onLogout();
+        return;
+      }
       if (!response.ok) throw new Error(await responseError(response, "Dakota could not load the private operator notebook."));
       const envelope = (await response.json()) as OperatorStateEnvelope;
       if (envelope.schema_version !== "dakota.operator-state.v1" || !envelope.records || typeof envelope.records !== "object" || Array.isArray(envelope.records)) throw new Error("The operator-state response did not match Dakota’s expected schema.");
@@ -453,7 +459,7 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
     } catch (error) {
       setOperatorState({ status: "error", message: error instanceof Error ? error.message : "Dakota could not load the private operator notebook." });
     }
-  }, []);
+  }, [onLogout]);
 
   useEffect(() => {
     queueMicrotask(() => {
@@ -475,7 +481,10 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
       body: JSON.stringify({ candidate_key: key, record }),
       cache: "no-store",
     });
-    if (response.status === 401 || response.status === 403) throw new Error("Your secure session is not authorized to save operator state.");
+    if (response.status === 401 || response.status === 403) {
+      await onLogout();
+      throw new Error("Your secure session expired. Sign in again before saving operator state.");
+    }
     if (!response.ok) throw new Error(await responseError(response, "Dakota could not save the private operator record."));
     const result = (await response.json()) as OperatorStateSaveResponse;
     if (result.schema_version !== "dakota.operator-state.v1" || result.candidate_key !== key || !result.record?.updated_at) throw new Error("Dakota saved an unexpected operator-state response.");
@@ -490,7 +499,7 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
         },
       };
     });
-  }, []);
+  }, [onLogout]);
 
   const queue = queueState.status === "ready" ? queueState.queue : null;
   const operatorRecords: Record<string, OperatorRecord> = operatorState.status === "ready" ? operatorState.envelope.records : {};
@@ -662,11 +671,16 @@ export default function App() {
     return onAuthChange(() => void resolveSession());
   }, [resolveSession]);
 
-  const logout = async () => {
-    await endSession();
-    window.history.replaceState({}, "", "/app/");
-    setSession({ status: "anonymous" });
-  };
+  const logout = useCallback(async () => {
+    try {
+      await endSession();
+    } catch {
+      // Clearing the UI gate is still required for expired or retired sessions.
+    } finally {
+      window.history.replaceState({}, "", "/app/");
+      setSession({ status: "anonymous" });
+    }
+  }, []);
 
   if (session.status !== "authorized") return <AccessScreen state={session} />;
   return <Dashboard email={session.email} onLogout={logout} />;

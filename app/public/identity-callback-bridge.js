@@ -12,7 +12,19 @@
 
   if (!identityTokenKeys.some((key) => callback.has(key))) return;
 
-  const destination = new URL("/app/", window.location.origin);
+  const returnCookie = "dakota_auth_return=www.dakota.littlefightnyc.com";
+  const returnToDakotaHost = document.cookie
+    .split(";")
+    .some((value) => value.trim() === returnCookie);
+
+  if (returnToDakotaHost) {
+    document.cookie = "dakota_auth_return=; Domain=.littlefightnyc.com; Path=/; Max-Age=0; SameSite=Lax; Secure";
+  }
+
+  const destination = new URL(
+    "/app/",
+    returnToDakotaHost ? "https://www.dakota.littlefightnyc.com" : window.location.origin,
+  );
   destination.hash = window.location.hash;
   window.location.replace(destination);
 })();

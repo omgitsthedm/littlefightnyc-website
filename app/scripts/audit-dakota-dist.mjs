@@ -59,7 +59,7 @@ try {
     findings.push("marketing entry is missing the Identity-to-Dakota callback bridge");
   }
   const bridge = await readFile(identityCallbackBridge, "utf8");
-  for (const marker of ["/app/", "access_token", "confirmation_token", "invite_token", "recovery_token"]) {
+  for (const marker of ["/app/", "access_token", "confirmation_token", "invite_token", "recovery_token", "dakota_auth_return", "www.dakota.littlefightnyc.com"]) {
     if (!bridge.includes(marker)) findings.push(`Identity callback bridge is missing ${JSON.stringify(marker)}`);
   }
   if (!bridge.includes('window.location.pathname !== "/"')) {

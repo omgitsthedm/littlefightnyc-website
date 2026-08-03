@@ -10,6 +10,8 @@ import {
 
 export const OPERATOR_EMAIL = "hello@littlefightnyc.com";
 export const OPERATOR_ROLE = "dakota_operator";
+const DAKOTA_CUSTOM_HOST = "www.dakota.littlefightnyc.com";
+const AUTH_RETURN_COOKIE = "dakota_auth_return";
 
 export function isDakotaOperator(user: User | null): user is User & { email: string } {
   return Boolean(
@@ -28,6 +30,10 @@ export async function getCurrentUser(): Promise<User | null> {
 }
 
 export function beginGoogleLogin(): void {
+  if (window.location.hostname === DAKOTA_CUSTOM_HOST) {
+    document.cookie = `${AUTH_RETURN_COOKIE}=${DAKOTA_CUSTOM_HOST}; Domain=.littlefightnyc.com; Path=/; Max-Age=300; SameSite=Lax; Secure`;
+  }
+
   try {
     oauthLogin("google");
   } catch (error) {
