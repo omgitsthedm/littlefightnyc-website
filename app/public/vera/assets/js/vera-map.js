@@ -88,50 +88,42 @@
 
       var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      map.on('load', function () {
-        tint(map);
-        map.addSource('vera-listings', { type: 'geojson', data: listingsGeoJSON(listings) });
-        map.addLayer({
-          id: 'vera-halo',
-          type: 'circle',
-          source: 'vera-listings',
-          paint: {
-            'circle-radius': 14,
-            'circle-color': ['match', ['get', 'state'], 'good', '#4cc38a', 'warn', '#e3b567', '#e06a70'],
-            'circle-opacity': 0.12,
-          },
+      var markers = [];
+      function placeMarkers(ls) {
+        markers.forEach(function (m) { m.remove(); });
+        markers = [];
+        var fs = listingsGeoJSON(ls).features;
+        fs.forEach(function (f, i) {
+          var el = document.createElement('div');
+          el.className = 'vpin vpin--' + f.properties.state;
+          el.style.setProperty('--pd', Math.min(i * 45, 1800) + 'ms');
+          el.title = f.properties.title + ' · ' + f.properties.rent;
+          el.textContent = f.properties.rent;
+          var pulse = document.createElement('span');
+          pulse.className = 'vpin__pulse';
+          el.appendChild(pulse);
+          el.addEventListener('click', function (ev) { ev.stopPropagation(); if (onOpen) onOpen(f.properties.uid); });
+          markers.push(new maplibregl.Marker({ element: el }).setLngLat(f.geometry.coordinates).addTo(map));
         });
-        map.addLayer({
-          id: 'vera-dots',
-          type: 'circle',
-          source: 'vera-listings',
-          paint: {
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 14, 9, 16, 12],
-            'circle-color': '#0e1411',
-            'circle-stroke-width': 2.4,
-            'circle-stroke-color': ['match', ['get', 'state'], 'good', '#4cc38a', 'warn', '#e3b567', '#e06a70'],
-          },
-        });
-        map.addLayer({
-          id: 'vera-rents',
-          type: 'symbol',
-          source: 'vera-listings',
-          minzoom: 12,
-          layout: {
-            'text-field': ['get', 'rent'],
-            'text-size': 11,
-            'text-offset': [0, -1.5],
-            'text-font': ['Noto Sans Regular'],
-          },
-          paint: { 'text-color': '#ece4d3', 'text-halo-color': '#0b0d0c', 'text-halo-width': 1.4 },
-        });
+      }
+      map.__placeMarkers = placeMarkers;
 
-        map.on('click', 'vera-dots', function (e) {
-          var f = e.features && e.features[0];
-          if (f && f.properties && f.properties.uid && onOpen) onOpen(f.properties.uid);
-        });
-        map.on('mouseenter', 'vera-dots', function () { map.getCanvas().style.cursor = 'pointer'; });
-        map.on('mouseleave', 'vera-dots', function () { map.getCanvas().style.cursor = ''; });
+      var placed = false;
+      function firstPlace() {
+        if (placed) return;
+        placed = true;
+        tint(map);
+        placeMarkers(listings);
+      }
+      /* 'load' can be missed on rapid re-mounts and 'idle' has proven shy
+         in embedded panes — take every road in, idempotently */
+      map.once('idle', firstPlace);
+      map.once('render', function () { setTimeout(firstPlace, 400); });
+      setTimeout(firstPlace, 2200);
+      if (map.loaded && map.loaded()) firstPlace();
+      map.on('load', function () {
+        firstPlace();
+        map.addSource('vera-listings', { type: 'geojson', data: listingsGeoJSON(listings) });
 
         /* frame the hunt zone on the actual pins */
         var pts = listingsGeoJSON(listings).features;
@@ -150,6 +142,7 @@
   }
 
   function update(listings) {
+    if (mapInstance && mapInstance.__placeMarkers) mapInstance.__placeMarkers(listings);
     if (mapInstance && mapInstance.getSource && mapInstance.getSource('vera-listings')) {
       mapInstance.getSource('vera-listings').setData(listingsGeoJSON(listings));
     }

@@ -296,10 +296,20 @@
     var el = $('[data-countdown]');
     if (!el) return;
     if (RM) { el.textContent = 'next sweep 06:00 UTC'; return; }
+    var lastStr = '';
     function tick() {
       var el2 = $('[data-countdown]');
       if (!el2) { clearInterval(countdownT); return; }
-      el2.textContent = fmtCountdown(nextSweepUTC() - new Date());
+      var ms = nextSweepUTC() - new Date();
+      var str = fmtCountdown(ms);
+      if (str !== lastStr) {
+        el2.innerHTML = str.split('').map(function (ch, i) {
+          var was = lastStr[i];
+          return '<span class="flipd' + (was !== undefined && was !== ch ? ' tick' : '') + '">' + ch + '</span>';
+        }).join('');
+        lastStr = str;
+      }
+      document.documentElement.classList.toggle('is-sweep-near', ms < 30 * 60000);
     }
     tick();
     countdownT = setInterval(tick, 1000);
@@ -340,7 +350,9 @@
       '<span class="gal" data-gal>' + urls.map(function (u, i) {
         return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
       }).join('') + '</span>' +
-      (urls.length > 1 ? '<span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
+      (urls.length > 1 ? '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
+        return '<span class="gal__dot' + (i === 0 ? ' is-on' : '') + '"></span>';
+      }).join('') + '</span><span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
   }
 
   /* ---------- commute anchors: the #1 community ask, honestly ----------
@@ -1264,6 +1276,21 @@
     }
   }
 
+  var revealObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('rv-in'); revealObs.unobserve(en.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px' }) : null;
+
+  function applyReveals(page) {
+    if (RM || !revealObs) return;
+    $$('.panel, .bubcard, .manual-sec, .arcday, .wire__card, .cgroup', page).forEach(function (el, i) {
+      if (el.classList.contains('rv') || el.classList.contains('rv-in')) return;
+      el.classList.add('rv');
+      revealObs.observe(el);
+    });
+  }
+
   function renderRoute() {
     if (!D) return;
     var page = $('#main [data-page]');
@@ -1280,6 +1307,7 @@
     else if (state.route === 'manual') renderManual(page);
     else if (state.route === 'archive') renderArchive(page);
     else renderSystem(page);
+    applyReveals(page);
   }
 
   /* ================================================================
@@ -1448,6 +1476,15 @@
     if (!RM && document.startViewTransition) document.startViewTransition(function () { route(); });
     else route();
   }
+  document.addEventListener('scroll', function (e) {
+    var gal = e.target;
+    if (!gal.classList || !gal.classList.contains('gal')) return;
+    var dots = gal.parentNode.querySelectorAll('.gal__dot');
+    if (!dots.length) return;
+    var idx = Math.round(gal.scrollLeft / gal.clientWidth);
+    dots.forEach(function (d, i) { d.classList.toggle('is-on', i === idx); });
+  }, true);
+
   window.addEventListener('hashchange', routeSmooth);
 
   /* Minimaps and place-truth arrive when the neighborhood polygons land. */
