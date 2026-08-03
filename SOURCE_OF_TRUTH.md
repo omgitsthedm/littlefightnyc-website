@@ -3,9 +3,10 @@
 Last source verification: 2026-08-03
 
 This file routes agents to the current website source. The Dakota consolidation
-is present in the working source but is not a live-parity claim; recheck the
-point-in-time deploy, commit, Identity configuration, Blob state, and custom
-domain attachment before a production release.
+was verified live on 2026-08-03: the marketing site and private Dakota desk use
+one GitHub repository, one build, and one Netlify production property. Recheck
+the point-in-time deploy, commit, Identity configuration, Blob state, and custom
+domain attachment before a future production release.
 
 ## Canonical map
 
@@ -31,9 +32,10 @@ domain attachment before a production release.
 
 There is one canonical website repository, build, and Netlify production
 property. The Dakota hosts and `littlefightnyc.com` must resolve to the same
-site ID above. An older standalone Dakota checkout or Netlify site may be kept
-temporarily for controlled rollback during the authorized cutover, but it is
-not a source of truth and must not receive new product work.
+site ID above. The former standalone Dakota Netlify property was deleted after
+the verified cutover. Its preserved local checkout is historical material only:
+it is not a source, build, deployment target, or rollback path and must not
+receive new product work.
 
 ## Deployment relationship
 
@@ -125,10 +127,10 @@ Read only the document relevant to the task.
 
 - The active GitHub repository carries only the production branch and current
   source. Legacy branches and standalone Audit/Lab checkouts are not sources.
-- The former standalone Dakota dashboard repository and Netlify project are
-  transitional rollback material only, not recovery or development sources.
+- The former standalone Dakota dashboard checkout is historical material only,
+  not a recovery or development source. Its Netlify project has been deleted.
   Recover the web surface through this repository and the site ID above; keep
-  the separate local engine boundary intact.
+  the separate private engine boundary intact.
 - Normal source recovery uses verified current Git history. Production rollback
   is a new Git release; historical Netlify deploys are not recovery sources.
 
