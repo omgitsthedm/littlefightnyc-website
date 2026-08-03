@@ -251,6 +251,30 @@
       check('sweep hero suppressed after first play (session flag)', !$('.sweephero') && window.__VERAS && window.__VERAS.played(), '');
       check('installable: manifest linked', !!document.querySelector('link[rel="manifest"]'), '');
 
+      /* ---- phase 3: receipts, memorial, field kit ---- */
+      location.hash = '#/archive'; app.route();
+      check('receipts route renders its header', ($('.pagehead__title') || { textContent: '' }).textContent.indexOf('on the record') > -1, '');
+
+      var dcs = (app.D() || {}).daily_changes || {};
+      var hadGone = dcs.gone_listings;
+      var hadDate = dcs.date;
+      dcs.gone_listings = [{ change_detail: { title: 'THE TEST STUDIO', first_seen_at: new Date(Date.now() - 30 * 3.6e6).toISOString(), rent: 2400, neighborhood: 'East Village' } }];
+      dcs.date = new Date().toISOString().slice(0, 10);
+      location.hash = '#/today'; app.route();
+      check('memorial line reports the one that got away', ($('.memorial') || { textContent: '' }).textContent.indexOf('went in') > -1, ($('.memorial') || {}).textContent.slice(0, 60));
+      dcs.gone_listings = hadGone; dcs.date = hadDate;
+
+      var fkUid = POOL[0] && POOL[0].listing_uid;
+      if (fkUid) {
+        var host = L.buildFieldKit(app.byUid(fkUid));
+        var fkTxt = host.textContent;
+        check('field kit carries grade, money, checklist, and chain', fkTxt.indexOf('steward grade') > -1 && fkTxt.indexOf('Cash to keys') > -1 && fkTxt.indexOf('☐') > -1 && fkTxt.indexOf('acris') > -1, '');
+        check('field kit hidden on screen', getComputedStyle(host).display === 'none', getComputedStyle(host).display);
+        L.open(fkUid);
+        check('field kit action present in the ledger', !!$('[data-fieldkit]'), '');
+        L.close();
+      }
+
       /* ---- hygiene ---- */
       check('no private feed touched', ['./data/public.json', 'https://vera-pipeline.netlify.app/data/public.json'].every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), '');
       check('brand present', ($('.brand__name') || { textContent: '' }).textContent === 'VERA', '');

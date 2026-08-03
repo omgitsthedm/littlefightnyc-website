@@ -150,6 +150,7 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 # Only the sanitized public lens is proxied. hunt.json / dashboard.json
 # are private and no longer exist on the feed site at all.
 /vera/data/public.json https://vera-pipeline.netlify.app/data/public.json 200
+/vera/data/archive.json https://vera-pipeline.netlify.app/data/archive.json 200
 /vera/artifacts/* https://vera-pipeline.netlify.app/artifacts/:splat  200
 
 # --- Retired Lab builds (2026-07-29). Tech Support Site, Hero Prototype, and

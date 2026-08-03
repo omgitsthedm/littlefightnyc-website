@@ -19,7 +19,7 @@
   var HOODS = [];
   var usedFallbackPool = false;
 
-  var ROUTES = ['today', 'market', 'browse', 'atlas', 'hunt', 'manual', 'system'];
+  var ROUTES = ['today', 'market', 'browse', 'atlas', 'hunt', 'manual', 'archive', 'system'];
   var LEGACY = { command: 'market', discover: 'browse', map: 'atlas', cases: 'hunt', toolkit: 'manual', pipeline: 'system', about: 'system' };
   var DATA_ROUTES = { market: 1, browse: 1, atlas: 1 };
 
@@ -580,6 +580,7 @@
             '<p>VERA does not pad the feed. When the market under ' + money(C.FIT.maxRent) + ' has nothing that clears verification, you see this page instead of eight compromises.</p>' +
             '<p><a class="ghostbtn" href="#/market">See what the market is doing instead ↗</a></p>' +
           '</div>') +
+      memorialLine() +
       (bubble.length ?
         '<section class="bubble"><h2 class="bubble__title">On the bubble</h2>' +
         '<p class="bubble__hint">Strong records that failed exactly one gate — usually verification. Worth a look with your eyes open, not your deposit.</p>' +
@@ -601,6 +602,27 @@
     page.classList.add('is-entered');
     startCountdown();
     if (window.__VERAS) window.__VERAS.maybePlay(page);
+  }
+
+  /* The one that got away — real urgency from a real outcome, reported
+     in the past tense. Never a countdown, never "only one left." */
+  function memorialLine() {
+    var changes = (D && D.daily_changes) || {};
+    var goneDate = changes.date ? new Date(changes.date + 'T12:00:00Z') : null;
+    var best = null;
+    (changes.gone_listings || []).forEach(function (c) {
+      var d = c.change_detail || c;
+      if (!d.first_seen_at || !goneDate) return;
+      var hours = Math.round((goneDate - new Date(d.first_seen_at)) / 3.6e6);
+      if (hours > 0 && hours <= 96 && (!best || hours < best.hours)) {
+        best = { hours: hours, title: d.title || c.title, rent: d.last_rent != null ? d.last_rent : d.rent, hood: d.neighborhood || c.neighborhood };
+      }
+    });
+    if (!best) return '';
+    return '<p class="memorial">' + esc(tidyTitle(String(best.title || 'A listing'))) +
+      (best.hood ? ' in ' + esc(best.hood) : '') + ' went in ' +
+      (best.hours < 48 ? best.hours + ' hours' : Math.round(best.hours / 24) + ' days') +
+      (best.rent ? ' at ' + money(best.rent) : '') + '. The good ones move.</p>';
   }
 
   /* ================================================================
@@ -1179,7 +1201,60 @@
     else if (state.route === 'atlas') renderAtlas(page);
     else if (state.route === 'hunt') renderHunt(page);
     else if (state.route === 'manual') renderManual(page);
+    else if (state.route === 'archive') renderArchive(page);
     else renderSystem(page);
+  }
+
+  /* ================================================================
+     THE RECEIPTS — every drop, archived, with what happened next.
+     The only marketing a verification product needs.
+     ================================================================ */
+
+  var archiveCache = null;
+
+  function renderArchive(page) {
+    function paint(arch) {
+      var head =
+        '<header class="pagehead"><p class="kicker">Receipts</p>' +
+        '<h1 class="pagehead__title">Every drop, on the record</h1>';
+      if (!arch || !arch.length) {
+        page.innerHTML = head +
+          '<p class="pagehead__lede">The archive begins with the next publish cycle. Nothing is backfilled and nothing will ever be edited — one entry per day, what we showed and what happened to it.</p></header>';
+        page.classList.add('is-entered');
+        return;
+      }
+      var shown = 0, gone = 0;
+      arch.forEach(function (e) {
+        (e.listings || []).forEach(function (r) {
+          shown++;
+          if (!byUid(r.listing_uid)) gone++;
+        });
+      });
+      var lede = 'Since ' + esc(arch[arch.length - 1].date) + ': <b>' + arch.length + '</b> drop' + (arch.length === 1 ? '' : 's') + ', <b>' + shown + '</b> listings shown, <b>' + gone + '</b> no longer listed. Nothing here is edited after the fact.';
+      page.innerHTML = head + '<p class="pagehead__lede">' + lede + '</p></header>' +
+        arch.map(function (e) {
+          return '<section class="arcday"><h2 class="arcday__date">' + esc(e.date) + '</h2><div class="arcrows">' +
+            ((e.listings || []).length ? e.listings.map(function (r) {
+              var live = byUid(r.listing_uid);
+              var badge, cls;
+              if (!live) { badge = 'no longer listed'; cls = 'is-gone'; }
+              else if (+live.rent && +r.rent && +live.rent < +r.rent) { badge = 'price dropped to ' + money(live.rent); cls = 'is-drop'; }
+              else { badge = 'still listed'; cls = 'is-live'; }
+              return '<div class="arcrow' + (live ? '" data-open="' + esc(r.listing_uid) + '"' : ' arcrow--dead"') + '>' +
+                '<b>' + esc(C.titleCase(String(r.address_normalized || r.title || 'listing').toLowerCase())) + '</b>' +
+                '<span>' + money(r.rent) + ' · ' + esc(r.neighborhood || '—') + '</span>' +
+                '<span class="arcrow__badge ' + cls + '">' + badge + '</span></div>';
+            }).join('') : '<p class="lane__empty">Nothing cleared the bar that day — and the page said so.</p>') +
+          '</div></section>';
+        }).join('');
+      page.classList.add('is-entered');
+    }
+    if (archiveCache) { paint(archiveCache); return; }
+    page.innerHTML = '<header class="pagehead"><p class="kicker">Receipts</p><h1 class="pagehead__title">Every drop, on the record</h1></header>';
+    fetch('./data/archive.json', { cache: 'no-cache' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function (a) { archiveCache = Array.isArray(a) ? a : []; if (state.route === 'archive') paint(archiveCache); })
+      .catch(function () { if (state.route === 'archive') paint([]); });
   }
 
   /* ---------- one delegated click handler ---------- */

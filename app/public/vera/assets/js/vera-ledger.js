@@ -140,6 +140,7 @@
         }).join('') + '</div>'
       : '<button type="button" class="bigbtn bigbtn--save" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button>' +
         (l.source_url ? '<a class="ghostbtn" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Original ↗</a>' : '');
+    $('[data-insp-actions]').innerHTML += '<button type="button" class="ghostbtn" data-fieldkit="' + esc(l.listing_uid) + '">Field kit ⎙</button>';
 
     var body = $('[data-insp-body]');
     var html = '';
@@ -345,8 +346,61 @@
     body.scrollTop = 0;
   }
 
+  /* ================================================================
+     THE FIELD KIT — one printed page to carry into the viewing.
+     ================================================================ */
+
+  var FIVE_QUESTIONS = [
+    'Who exactly is on the deed — and are you them, their agent, or their manager?',
+    'What is the total move-in amount, itemized, in writing?',
+    'When was the last heat or hot-water outage, and how fast was it fixed?',
+    'Is this unit rent-stabilized — and will the lease carry the state rider?',
+    'Who do I call at 2am when something breaks, and how fast do they answer?',
+  ];
+
+  function buildFieldKit(l) {
+    var app = A();
+    var stw = C.stewardOf(l);
+    var m = C.moveInMath(l);
+    var host = document.getElementById('fieldkit') || document.createElement('div');
+    host.id = 'fieldkit';
+    var kv = function (k, v) { return v == null || v === '' ? '' : '<tr><th>' + k + '</th><td>' + v + '</td></tr>'; };
+    host.innerHTML =
+      '<h1>' + esc(app.addressOf(l) || C.charName(l)) + '</h1>' +
+      '<p class="fk-sub">' + esc(money(l.rent)) + ' · ' + esc(l.neighborhood || '') + ' · steward grade ' + esc(stw.grade) + ' (' + esc(stw.word) + ')' + '</p>' +
+      '<p class="fk-link">littlefightnyc.com/vera/#/listing/' + esc(l.listing_uid) + '</p>' +
+      (stw.failures.length ? '<p class="fk-warn">On the record: ' + esc(stw.failures.join('; ')) + '</p>' : '') +
+      '<table>' +
+        kv('Cash to keys', money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + $' + m.appFee + ' application)') +
+        kv('Illegal to ask', 'deposit over one month · application over $20 · broker fee when the landlord hired them · any money before lease signing') +
+        kv('HPD / DOB risk', C.num(l.hpd_risk_score) + ' / ' + C.num(l.dob_risk_score)) +
+        kv('Heat complaints 3y', l.heat_hot_water_complaints_3y) +
+        kv('Bedbugs 3y', l.bedbug_reports_3y) +
+        kv('Litigation 3y', l.litigation_count_3y) +
+        kv('Stabilization', l.official_rent_stabilized_list_hit ? 'on the official list' : (l.rent_stabilized_signal || 'unknown')) +
+      '</table>' +
+      '<h2>Five questions to ask out loud</h2><ol>' +
+        FIVE_QUESTIONS.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ol>' +
+      '<h2>The viewing checklist</h2><ul class="fk-checks">' +
+        C.CHECKS.map(function (c) { return '<li>☐ ' + esc(c.label) + '</li>'; }).join('') + '</ul>' +
+      '<h2>Verify the counterparty</h2><p class="fk-chain">Deed: a836-acris.nyc.gov · Registration: hpdonline.nyc.gov · Portfolio: whoownswhat.justfix.org · Licence: dos.ny.gov</p>' +
+      '<p class="fk-foot">VERA field kit · every number above is computed from a cited public record or marked ≈ · printed ' + esc(new Date().toISOString().slice(0, 10)) + '</p>';
+    if (!host.parentNode) document.body.appendChild(host);
+    return host;
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-fieldkit]') : null;
+    if (!t) return;
+    var l = A().byUid(t.getAttribute('data-fieldkit'));
+    if (!l) return;
+    buildFieldKit(l);
+    window.print();
+  });
+
   window.__VERAL = {
     open: open, close: close, setTab: setTab, rerender: rerender,
     openUid: function () { return openUid; },
+    buildFieldKit: buildFieldKit,
   };
 })();
