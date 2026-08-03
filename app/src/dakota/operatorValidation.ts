@@ -1,6 +1,6 @@
 import type { OperatorIdentity } from "./types";
 
-const HTML_LIKE_CONTENT = /(?:[<>]|<!--|-->|&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));)/iu;
+const HTML_LIKE_CONTENT = /(?:[<>]|<!--|--!?>|&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));)/iu;
 const URL_LIKE_CONTENT = /(?:\b(?:https?|ftp|file|data|javascript|mailto):|:\/\/|\bwww\.)/iu;
 
 export function containsUnsupportedControlCharacter(value: string): boolean {

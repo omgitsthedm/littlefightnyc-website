@@ -301,6 +301,7 @@ describe("Dakota operator-state schema", () => {
     for (const notes of [
       "Review https://example.com",
       "<strong>unsafe</strong>",
+      "unsafe --!> comment close",
       "unsafe\u0000text",
       "x".repeat(4_001),
     ]) {

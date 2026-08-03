@@ -21,6 +21,7 @@ describe("operator validation", () => {
     expect(validateOperatorIdentity({ businessName: "Acme", category: "Restaurant", source: "manual", sourceId: "abc" })).toBeNull();
     expect(validateOperatorIdentity({ businessName: " Acme", source: "manual", sourceId: "abc" })).toMatch(/spaces/);
     expect(validateOperatorIdentity({ businessName: "Acme <b>", source: "manual", sourceId: "abc" })).toMatch(/plain text/);
+    expect(validateOperatorIdentity({ businessName: "Acme --!> comment", source: "manual", sourceId: "abc" })).toMatch(/plain text/);
     expect(validateOperatorIdentity({ businessName: "https://example.com", source: "manual", sourceId: "abc" })).toMatch(/dedicated URL/);
   });
 

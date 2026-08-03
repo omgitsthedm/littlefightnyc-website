@@ -184,7 +184,7 @@ const STATUS_MILESTONE_FIELD: Partial<Record<DakotaOperatorStatus, DakotaOperato
   paid: "paidAt",
 };
 const FORBIDDEN_CONTROL_CHARACTERS = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u;
-const HTML_LIKE_CONTENT = /(?:[<>]|<!--|-->|&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));)/iu;
+const HTML_LIKE_CONTENT = /(?:[<>]|<!--|--!?>|&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));)/iu;
 const URL_LIKE_CONTENT = /(?:\b(?:https?|ftp|file|data|javascript|mailto):|:\/\/|\bwww\.)/iu;
 const FEED_CANDIDATE_KEY = /^[a-z0-9][a-z0-9._-]{0,79}:[a-z0-9][a-z0-9._:-]{0,158}$/u;
 const MANUAL_CANDIDATE_KEY = /^manual:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/u;

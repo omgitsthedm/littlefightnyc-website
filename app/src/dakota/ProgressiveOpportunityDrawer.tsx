@@ -73,7 +73,7 @@ import {
 
 const MAX_MONEY = 100_000_000;
 const ACTIVE_PURSUIT_STATUSES = new Set<OperatorStatus>(["pursuit_ready", "pursuing", "replied", "meeting", "proposal", "won", "paid"]);
-const HTML_LIKE_CONTENT = /(?:[<>]|<!--|-->|&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));)/iu;
+const HTML_LIKE_CONTENT = /(?:[<>]|<!--|--!?>|&(?:lt|gt|amp|quot|apos|#(?:x[0-9a-f]+|[0-9]+));)/iu;
 
 const TEXT_LIMITS = {
   notes: 4000,
