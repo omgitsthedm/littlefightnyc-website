@@ -187,6 +187,12 @@
           }).join('') + '</div>';
       }
     } else if (inspTab === 'records') {
+      var stw = C.stewardOf(l);
+      html += '<div class="steward steward--big steward--' + stw.grade + '"><b class="steward__grade">' + stw.grade + '</b>' +
+        '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stw.word) + (stw.score != null ? ' · ' + stw.score + '/100 from ' + stw.known + ' city signals' : '') + '</span>' +
+        (stw.failures.length ? '<span class="steward__line steward__line--bad">' + esc(stw.failures.join('; ')) + '</span>' : '') +
+        (stw.strengths.length ? '<span class="steward__line steward__line--good">' + esc(stw.strengths.join('; ')) + '</span>' : '') +
+        '</span></div>';
       html += '<dl class="kv">' +
         kvRow('BBL', esc(l.bbl)) + kvRow('BIN', esc(l.bin)) +
         kvRow('HPD risk', '<span class="risk ' + C.riskCls(l.hpd_risk_score) + '">' + num(l.hpd_risk_score) + '</span>') +

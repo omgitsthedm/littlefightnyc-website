@@ -352,10 +352,15 @@
     var hoodLine = esc(l.neighborhood || (place && place.name) || '—');
     if (place && !place.agrees) hoodLine += ' <span class="dropcard__pinwarn">· pin sits in ' + esc(place.name) + '</span>';
     var mini = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.minimap(l, 300, 300) : '';
+    var stew = C.stewardOf(l);
+    var spatial = C.spatialLine(l);
+    var ageMs = l.first_seen_at ? (Date.now() - new Date(l.first_seen_at).getTime()) : null;
+    var freshBadge = ageMs != null && ageMs < 24 * 3.6e6
+      ? '<span class="dropcard__fresh">' + (ageMs < 3.6e6 ? 'just posted' : Math.round(ageMs / 3.6e6) + 'h fresh') + '</span>' : '';
     return '<article class="dropcard" style="--i:' + i + '">' +
       '<button type="button" class="dropcard__hit" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">' +
         '<span class="dropcard__media">' + gallery(l) +
-          '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span>' +
+          '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span>' + freshBadge +
           '<span class="dropcard__no">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span></span>' +
         '<span class="dropcard__body">' +
           '<span class="dropcard__main">' +
@@ -363,7 +368,15 @@
             '<h3 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h3>' +
             (addr ? '<p class="dropcard__flavor">' + esc(C.charName(l)) + '</p>' : '') +
             ownerLine(l) +
+            '<span class="steward steward--' + stew.grade + '">' +
+              '<b class="steward__grade">' + stew.grade + '</b>' +
+              '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stew.word) + (stew.score != null ? ' · ' + stew.score + '/100' : '') + '</span>' +
+              (stew.failures.length ? '<span class="steward__line steward__line--bad">' + esc(stew.failures.join('; ')) + '</span>'
+                : stew.strengths.length ? '<span class="steward__line steward__line--good">' + esc(stew.strengths.join('; ')) + '</span>'
+                : '<span class="steward__line">city record too thin to judge — verify in person</span>') + '</span>' +
+            '</span>' +
             '<p class="dropcard__why">' + esc(why) + '</p>' +
+            (spatial ? '<p class="dropcard__spatial">' + esc(spatial) + ' · no floor plan published</p>' : '') +
             (flaw ? '<p class="dropcard__flaw">Eyes open: ' + esc(flaw) + '</p>' : '') +
             '<span class="dropcard__chips">' +
               (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
@@ -378,7 +391,13 @@
   }
 
   function renderToday(page) {
-    var fits = POOL.filter(C.isFullFit).sort(function (a, b) { return (+b.overall_score || 0) - (+a.overall_score || 0); });
+    /* Winners first: fit score plus the steward grade, so a well-kept
+       building outranks a slightly-better-priced one an owner lets rot. */
+    function dropRank(l) {
+      var st = C.stewardOf(l);
+      return (+l.overall_score || 0) + (st.score != null ? st.score * 0.4 : 20);
+    }
+    var fits = POOL.filter(C.isFullFit).sort(function (a, b) { return dropRank(b) - dropRank(a); });
     var drop = fits.slice(0, 8);
     var inDrop = {};
     drop.forEach(function (l) { inDrop[l.listing_uid] = 1; });
@@ -520,6 +539,45 @@
         '<span class="brtile__meta">' + (med ? 'median ' + money(med) : 'no priced listings') + (priv ? ' · ' + priv + ' private' : '') + '</span>' +
       '</button>';
     }).join('');
+
+    /* The city vs the net — real StreetEasy aggregate series, published by
+       the engine. Absent until the first post-upgrade publish; degrade to
+       the static published-medians line in the lede. */
+    var mc = D.market_context || null;
+    var mcHTML = '';
+    if (mc && mc.series) {
+      var mcMonths = mc.months || [];
+      function seriesOf(name) { var s = mc.series[name]; return s && s.median_asking_rent ? s.median_asking_rent.filter(function (v) { return v != null; }) : []; }
+      function latestOf(name) { var s = mc.series[name]; return s ? s.median_asking_rent_latest : null; }
+      var lanes = [['NYC', '#c8a468'], ['Manhattan', '#7ba7d9'], ['Brooklyn', '#4cc38a']];
+      var lines = lanes.map(function (ln) {
+        var s = seriesOf(ln[0]);
+        return s.length ? '<div class="mctx__lane"><span class="mctx__who"><i style="background:' + ln[1] + '"></i>' + ln[0] + ' <b>' + money(latestOf(ln[0])) + '</b></span>' + sparkline(s, 260, 64, ln[1]) + '</div>' : '';
+      }).join('');
+      var hoodRows2 = Object.keys(mc.series).filter(function (k) {
+        return mc.series[k].area_type === 'neighborhood';
+      }).map(function (k) {
+        var s = mc.series[k];
+        var arr = (s.median_asking_rent || []).filter(function (v) { return v != null; });
+        var yr = arr.length > 12 ? arr[arr.length - 13] : null;
+        var now = s.median_asking_rent_latest;
+        var d = yr && now ? Math.round((now - yr) / yr * 1000) / 10 : null;
+        return { name: k, now: now, delta: d, inv: s.rental_inventory_latest };
+      }).filter(function (r) { return r.now; }).sort(function (a, b) { return a.now - b.now; });
+      var oursMed = median(POOL.map(function (l) { return +l.rent; }).filter(Boolean));
+      mcHTML =
+        '<div class="panel mctx"><div class="panel__head"><h2 class="panel__title">The city vs the net — median ask, 36 months</h2>' +
+        '<p class="panel__hint">' + esc((mcMonths[mcMonths.length - 1] || '')) + ' · StreetEasy official data</p></div>' +
+        '<div class="mctx__lanes">' + lines +
+          (oursMed ? '<div class="mctx__lane mctx__lane--ours"><span class="mctx__who"><i style="background:var(--ink)"></i>VERA\'s net <b>' + money(oursMed) + '</b></span><p class="mctx__note">what we hunt beneath the lines above</p></div>' : '') +
+        '</div>' +
+        (hoodRows2.length ? '<div class="mctx__hoods">' + hoodRows2.slice(0, 12).map(function (r) {
+          var cls = r.delta == null ? '' : r.delta > 0 ? 'is-up' : 'is-down';
+          return '<span class="mctx__hood"><b>' + esc(r.name) + '</b> ' + money(r.now) +
+            (r.delta != null ? ' <em class="' + cls + '">' + (r.delta > 0 ? '+' : '') + r.delta + '%/yr</em>' : '') + '</span>';
+        }).join('') + '</div>' : '') +
+        '</div>';
+    }
 
     page.innerHTML =
       '<header class="pagehead"><p class="kicker">The wide net</p>' +

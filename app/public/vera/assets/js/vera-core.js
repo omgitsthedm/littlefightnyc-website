@@ -219,6 +219,74 @@
     return 'edge case';
   }
 
+  /* ================================================================
+     THE STEWARD GRADE — the question that matters most for a decade
+     in one apartment: does this owner FIX things? Composed from the
+     city's own record of what got fixed and what got ignored: housing
+     violations, heat and hot-water complaints, bedbugs, buildings
+     litigation, DOB risk. Honest about unknowns: no data ≠ an A.
+     ================================================================ */
+
+  function stewardOf(l) {
+    var known = 0;
+    var score = 100;
+    var failures = [];
+    var strengths = [];
+
+    var hpd = l.hpd_risk_score;
+    if (hpd != null) {
+      known++;
+      score -= Math.min(45, (+hpd) * 0.45);
+      if (+hpd >= 65) failures.push('a heavy open-violation file');
+      else if (+hpd < 25) strengths.push('a clean violation record');
+    }
+    var sv = +l.serious_open_violations || 0;
+    if (l.serious_open_violations != null) {
+      known++;
+      if (sv > 0) { score -= Math.min(20, sv * 7); failures.push(sv + ' serious violation' + (sv > 1 ? 's' : '') + ' open right now'); }
+    }
+    var heat = +l.heat_hot_water_complaints_3y || 0;
+    if (l.heat_hot_water_complaints_3y != null) {
+      known++;
+      if (heat >= 3) { score -= Math.min(18, heat * 3); failures.push(heat + ' heat or hot-water complaints in 3 years'); }
+      else if (heat === 0) strengths.push('no heat complaints in 3 years');
+    }
+    var bb = +l.bedbug_reports_3y || 0;
+    if (l.bedbug_reports_3y != null) {
+      known++;
+      if (bb > 0) { score -= Math.min(14, bb * 7); failures.push(bb + ' bedbug filing' + (bb > 1 ? 's' : '')); }
+    }
+    var lit = +l.litigation_count_3y || 0;
+    if (l.litigation_count_3y != null) {
+      known++;
+      if (lit > 0) { score -= Math.min(16, lit * 8); failures.push('taken to housing court ' + lit + '×'); }
+    }
+    var dob = l.dob_risk_score;
+    if (dob != null) {
+      known++;
+      score -= Math.min(12, (+dob) * 0.12);
+      if (+dob >= 65) failures.push('an ugly DOB complaint file');
+    }
+
+    if (!known) return { grade: '?', word: 'unproven', score: null, failures: [], strengths: [], known: 0 };
+    score = Math.max(0, Math.round(score));
+    var grade = score >= 85 ? 'A' : score >= 70 ? 'B' : score >= 55 ? 'C' : score >= 40 ? 'D' : 'E';
+    var word = grade === 'A' ? 'a keeper' : grade === 'B' ? 'looked after' : grade === 'C' ? 'middling care' : grade === 'D' ? 'neglect showing' : 'they let it rot';
+    return { grade: grade, word: word, score: score, failures: failures.slice(0, 3), strengths: strengths.slice(0, 2), known: known };
+  }
+
+  /* Spatial facts — never invent; parse only what the record states. */
+  function spatialLine(l) {
+    var bits = [];
+    if (l.square_feet) bits.push(Math.round(+l.square_feet) + ' sq ft');
+    var unit = String(l.address_normalized || '').match(/(?:apt|unit|#)\s*([0-9]{1,2})[a-z]?\b/i);
+    if (unit) {
+      var fl = +unit[1];
+      if (fl >= 1 && fl <= 30) bits.push('floor ' + fl + (fl >= 4 ? ' — ask about the elevator' : ''));
+    }
+    return bits.join(' · ');
+  }
+
   /* ---------- the character name (editorial headline) ---------- */
 
   var ORDINALS = { '1': 'First', '2': 'Second', '3': 'Third', '4': 'Fourth', '5': 'Fifth', '6': 'Sixth', '7': 'Seventh', '8': 'Eighth', '9': 'Ninth', '10': 'Tenth', '11': 'Eleventh', '12': 'Twelfth', '13': 'Thirteenth', '14': 'Fourteenth' };
@@ -537,6 +605,7 @@
     ownerRead: ownerRead, authenticity: authenticity, isScam: isScam, needsVerify: needsVerify,
     srcCls: srcCls, isFresh: isFresh, stabilized: stabilized, riskCls: riskCls, unitOf: unitOf,
     FIT: FIT, isFullFit: isFullFit, whyPassed: whyPassed, charName: charName, streetOf: streetOf, titleCase: titleCase,
+    stewardOf: stewardOf, spatialLine: spatialLine,
     LAW: LAW, moveInMath: moveInMath, CHECKS: CHECKS, checkGroups: checkGroups, TELLS: TELLS,
     protections: protections, VERIFY_TOOLS: VERIFY_TOOLS, MARKET: MARKET,
     portrait: portrait, hashOf: hashOf,

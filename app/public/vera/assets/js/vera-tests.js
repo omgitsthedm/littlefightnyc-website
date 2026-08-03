@@ -108,6 +108,13 @@
         check('drop headline is the address, big', ($$('.dropcard__name')[0] || { textContent: '' }).textContent.length > 8, ($$('.dropcard__name')[0] || {}).textContent);
         check('landlord identity on the card', $$('.dropcard__owner').length === $$('.dropcard').length, $$('.dropcard__owner').length);
         check('photo gallery renders', $$('.gal').length > 0 || $$('.dropcard').length === 0, $$('.gal').length + ' galleries');
+        check('steward grade on every card', $$('.steward').length >= $$('.dropcard').length, $$('.steward').length + ' grades');
+        var stTest = C.stewardOf({ hpd_risk_score: 10, serious_open_violations: 0, heat_hot_water_complaints_3y: 0, bedbug_reports_3y: 0, litigation_count_3y: 0, dob_risk_score: 0 });
+        check('clean record grades A', stTest.grade === 'A', stTest.grade + ' ' + stTest.score);
+        var stBad = C.stewardOf({ hpd_risk_score: 90, serious_open_violations: 3, heat_hot_water_complaints_3y: 6, bedbug_reports_3y: 2, litigation_count_3y: 2, dob_risk_score: 70 });
+        check('rot grades E with named failures', stBad.grade === 'E' && stBad.failures.length >= 3, stBad.grade + ': ' + stBad.failures.join('|'));
+        var stUnk = C.stewardOf({});
+        check('no data is honestly unproven, not an A', stUnk.grade === '?' && stUnk.score === null, stUnk.grade);
       } else {
         check('geo polygons loaded', false, 'hoods.json did not load');
       }
