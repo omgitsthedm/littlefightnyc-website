@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "../styles/editorial/fonts.css";
-import App from "./App";
+import "../styles/editorial/tokens.css";
+import App from "./AppWorkspace";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

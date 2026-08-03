@@ -90,6 +90,10 @@ Dakota's non-negotiable contract is:
   trigger email, SMS, calls, form submission, CRM writes, or automatic outreach.
 - Queue publishing uses the signed `/api/dakota/publish` function and the
   protected `DAKOTA_PUBLISH_TOKEN`; never add a static candidate-data endpoint.
+- Verified Netlify Tech Audit submissions and public Website Audit requests may
+  enter the private operator store through the server-side `dakota-inbound`
+  event bridge. Treat those as consented inbound evidence, never as permission
+  for automatic outreach or automatic qualification.
 
 The separate private engine remains at
 `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Internal/dakota-2`.

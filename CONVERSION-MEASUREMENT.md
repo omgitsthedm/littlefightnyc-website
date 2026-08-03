@@ -51,6 +51,26 @@ The standalone Audit Lab has a separate diagnostic funnel:
 
 Use `audit_scan_failed` with `failure_category` (`rejected`, `rate_limit`, `provider`, `network`, or `timeout`) to diagnose loss. It is not a conversion.
 
+## Private Dakota commercial truth
+
+Dakota keeps the sales record separate from browser analytics. Verified Tech
+Audit form submissions and public Website Audit requests may enter Dakota as
+consented inbound records. Names, contact details, drafts, activity notes,
+proposal references, invoice references, and money values remain in the private
+operator store and must never be copied into GA4 events.
+
+The commercial path is: research ready, pursuit ready, pursuing, replied,
+meeting, proposal, won, then paid. A copied draft or opened communication app
+does not count as outreach. A proposal amount is not revenue, a signature is not
+payment, and an invoice is not cleared cash. `amountPaid` and the paid milestone
+are recorded only after the operator verifies cleared funds.
+
+Report raw weekly counts beside rates: reviewed, approved, contacted, replied,
+meetings held, proposals sent, signed clients, amount due, amount paid, and
+remaining balance. Break results down by inbound versus public research, source,
+business category, and offer. Never infer intent, a sale, or revenue from a
+queue score, page view, link click, draft copy, or opened Google Voice window.
+
 ## Reliability view
 
 Create a second GA4 Exploration filtered to:

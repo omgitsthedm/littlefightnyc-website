@@ -11,6 +11,7 @@ import {
 import {
   createDakotaOperatorRecord,
   createDakotaOperatorStateEnvelope,
+  createEmptyDakotaCommercialClose,
   DAKOTA_OPERATOR_RECORD_LIMIT,
   DAKOTA_OPERATOR_REQUEST_MAX_BYTES,
   DAKOTA_OPERATOR_STATE_MAX_BYTES,
@@ -48,6 +49,18 @@ function input(overrides: Partial<DakotaOperatorRecordInput> = {}): DakotaOperat
     winLossReason: "",
     proof: "",
     draft: "",
+    contacts: [{
+      contactId: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Alex Owner",
+      role: "Owner",
+      channel: "email",
+      value: "alex@example.com",
+      sourceUrl: "https://example.com/contact",
+      verifiedAt: "2026-08-03",
+      consentClassification: "public_business",
+    }],
+    activities: [],
+    commercialClose: createEmptyDakotaCommercialClose(),
     ...overrides,
   };
 }
@@ -176,7 +189,7 @@ describe("Dakota operator-state handler", () => {
     const response = await handleDakotaOperatorStateRequest(getRequest(), dependencies(store));
     expect(response.status).toBe(200);
     expect(await json(response)).toEqual({
-      schema_version: "dakota.operator-state.v1",
+      schema_version: "dakota.operator-state.v2",
       updated_at: null,
       records: {},
     });
@@ -281,7 +294,7 @@ describe("Dakota operator-state handler", () => {
     const body = await json(response);
     expect(body).toEqual(
       expect.objectContaining({
-        schema_version: "dakota.operator-state.v1",
+        schema_version: "dakota.operator-state.v2",
         updated_at: NOW.toISOString(),
         candidate_key: "nys_dos:nys-dos:12345",
       }),
@@ -289,10 +302,13 @@ describe("Dakota operator-state handler", () => {
     expect((body.record as Record<string, unknown>).updated_at).toBe(NOW.toISOString());
     expect((body.record as Record<string, unknown>).milestones).toEqual({
       humanApprovedAt: null,
+      firstContactedAt: null,
       repliedAt: null,
       meetingAt: null,
       proposalAt: null,
       wonAt: null,
+      lostAt: null,
+      paidAt: null,
     });
     expect(store.writeCalls).toHaveLength(1);
     expect(store.writeCalls[0]?.key).toBe(DAKOTA_OPERATOR_BLOB_KEY);
@@ -300,7 +316,7 @@ describe("Dakota operator-state handler", () => {
       expect.objectContaining({
         onlyIfNew: true,
         metadata: {
-          schemaVersion: "dakota.operator-state.v1",
+          schemaVersion: "dakota.operator-state.v2",
           recordCount: 1,
           updatedAt: NOW.toISOString(),
         },
@@ -319,35 +335,86 @@ describe("Dakota operator-state handler", () => {
       verifiedPain: "The mobile customer path was verified manually.",
       offerFit: "A specific conversion repair fits the observed evidence.",
     };
+    const activities: DakotaOperatorRecordInput["activities"] = [];
+    let commercialClose = createEmptyDakotaCommercialClose();
+    const addActivity = (
+      activityId: string,
+      channel: DakotaOperatorRecordInput["activities"][number]["channel"],
+      type: DakotaOperatorRecordInput["activities"][number]["type"],
+      outcome: DakotaOperatorRecordInput["activities"][number]["outcome"],
+    ) => activities.push({
+      activityId,
+      channel,
+      type,
+      outcome,
+      note: "Operator-recorded evidence.",
+      occurredAt: currentTime.toISOString(),
+      followUpAt: null,
+    });
     const saveStatus = async (status: DakotaOperatorRecordInput["status"], notes = "") => {
-      const request = putRequest(JSON.stringify(payload(undefined, input({ ...evidence, status, notes }))));
+      const request = putRequest(JSON.stringify(payload(undefined, input({
+        ...evidence,
+        status,
+        notes,
+        activities: [...activities],
+        commercialClose,
+      }))));
       return handleDakotaOperatorStateRequest(request, milestoneDependencies);
     };
 
     expect((await saveStatus("pursuit_ready")).status).toBe(200);
     const approvedAt = currentTime.toISOString();
     currentTime = new Date("2026-08-02T09:00:00.000Z");
+    addActivity("550e8400-e29b-41d4-a716-446655440010", "email", "outreach", "sent");
+    addActivity("550e8400-e29b-41d4-a716-446655440011", "email", "reply", "replied");
     expect((await saveStatus("replied")).status).toBe(200);
     const repliedAt = currentTime.toISOString();
     currentTime = new Date("2026-08-02T11:00:00.000Z");
+    addActivity("550e8400-e29b-41d4-a716-446655440012", "meeting", "meeting", "completed");
     expect((await saveStatus("meeting")).status).toBe(200);
     const meetingAt = currentTime.toISOString();
     currentTime = new Date("2026-08-02T15:00:00.000Z");
+    addActivity("550e8400-e29b-41d4-a716-446655440013", "proposal", "proposal_sent", "sent");
+    commercialClose = {
+      ...commercialClose,
+      proposalRef: "Proposal 1001",
+      proposalAmount: 12_500,
+      proposalSentDate: "2026-08-02",
+    };
     expect((await saveStatus("proposal")).status).toBe(200);
     const proposalAt = currentTime.toISOString();
     currentTime = new Date("2026-08-03T08:00:00.000Z");
+    addActivity("550e8400-e29b-41d4-a716-446655440014", "contract", "contract_signed", "won");
+    commercialClose = { ...commercialClose, signedDate: "2026-08-03" };
     expect((await saveStatus("won")).status).toBe(200);
     const wonAt = currentTime.toISOString();
+    currentTime = new Date("2026-08-03T10:00:00.000Z");
+    addActivity("550e8400-e29b-41d4-a716-446655440016", "invoice", "invoice_sent", "sent");
+    addActivity("550e8400-e29b-41d4-a716-446655440015", "payment", "payment_received", "paid");
+    commercialClose = {
+      ...commercialClose,
+      invoiceRef: "Invoice 1001",
+      amountDue: 12_500,
+      amountPaid: 12_500,
+      paidDate: "2026-08-03",
+      balance: 0,
+      onboardingNextAction: "Schedule kickoff.",
+    };
+    expect((await saveStatus("paid")).status).toBe(200);
+    const paidAt = currentTime.toISOString();
     currentTime = new Date("2026-08-03T12:00:00.000Z");
     expect((await saveStatus("research_ready", "A later note must not rewrite milestones.")).status).toBe(200);
 
     const saved = (store.data as DakotaOperatorStateEnvelope).records["nys_dos:nys-dos:12345"];
     expect(saved?.milestones).toEqual({
       humanApprovedAt: approvedAt,
+      firstContactedAt: repliedAt,
       repliedAt,
       meetingAt,
       proposalAt,
       wonAt,
+      lostAt: null,
+      paidAt,
     });
     expect(saved?.status).toBe("research_ready");
     expect(saved?.updated_at).toBe(currentTime.toISOString());
@@ -361,11 +428,19 @@ describe("Dakota operator-state handler", () => {
       updated_at: legacyUpdatedAt,
       records: {
         "nys_dos:nys-dos:12345": {
-          ...input({
+          ...(() => {
+            const {
+              contacts: _contacts,
+              activities: _activities,
+              commercialClose: _commercialClose,
+              ...legacy
+            } = input({
             status: "proposal",
             verifiedPain: "Verified legacy evidence.",
             offerFit: "Verified legacy offer fit.",
-          }),
+            });
+            return legacy;
+          })(),
           updated_at: legacyUpdatedAt,
         },
       },
@@ -378,10 +453,13 @@ describe("Dakota operator-state handler", () => {
     const records = body.records as Record<string, Record<string, unknown>>;
     expect(records["nys_dos:nys-dos:12345"]?.milestones).toEqual({
       humanApprovedAt: legacyUpdatedAt,
+      firstContactedAt: legacyUpdatedAt,
       repliedAt: null,
       meetingAt: null,
       proposalAt: legacyUpdatedAt,
       wonAt: null,
+      lostAt: null,
+      paidAt: null,
     });
     expect(store.writeCalls).toHaveLength(0);
   });
@@ -577,6 +655,52 @@ describe("Dakota operator-state handler", () => {
     expect(await json(response)).toEqual({
       error: "Operator-state storage limit has been reached.",
     });
+    expect(store.writeCalls).toHaveLength(0);
+  });
+
+  it("enforces durable history and cleared-cash evidence through the HTTP handler", async () => {
+    const store = new FakeStore();
+    const activity = {
+      activityId: "550e8400-e29b-41d4-a716-446655440020",
+      channel: "internal" as const,
+      type: "note" as const,
+      outcome: "recorded" as const,
+      note: "Immutable operator note.",
+      occurredAt: NOW.toISOString(),
+      followUpAt: null,
+    };
+    store.data = createDakotaOperatorStateEnvelope({
+      "nys_dos:nys-dos:12345": createDakotaOperatorRecord(
+        input({ activities: [activity] }),
+        NOW.toISOString(),
+      ),
+    }, NOW.toISOString());
+    store.etag = "etag-history";
+
+    const removeActivity = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(undefined, input({ activities: [] })))),
+      dependencies(store),
+    );
+    expect(removeActivity.status).toBe(422);
+
+    const removeContact = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(undefined, input({ contacts: [], activities: [activity] })))),
+      dependencies(store),
+    );
+    expect(removeContact.status).toBe(422);
+
+    const unsupportedCash = await handleDakotaOperatorStateRequest(
+      putRequest(JSON.stringify(payload(undefined, input({
+        activities: [activity],
+        commercialClose: {
+          ...createEmptyDakotaCommercialClose(),
+          amountPaid: 500,
+          paidDate: "2026-08-03",
+        },
+      })))),
+      dependencies(store),
+    );
+    expect(unsupportedCash.status).toBe(422);
     expect(store.writeCalls).toHaveLength(0);
   });
 

@@ -5,9 +5,14 @@ import {
   candidateFromOperatorRecord,
   candidateKey,
   countsTowardWeeklyNorthStar,
+  derivedBalance,
   EMPTY_OPERATOR_RECORD,
+  evidencedInvoiceAmount,
   getSourceHealth,
   identityScore,
+  isConsentedInboundRecord,
+  isPursuitContact,
+  isVoiceTextContact,
   operatorRecordFor,
   storefrontMoneyPath,
 } from "./revenue";
@@ -106,10 +111,13 @@ describe("Dakota revenue scoring", () => {
     const now = new Date("2026-08-03T12:00:00Z");
     const milestones = {
       humanApprovedAt: "2026-08-02T12:00:00Z",
+      firstContactedAt: null,
       repliedAt: null,
       meetingAt: null,
       proposalAt: null,
       wonAt: null,
+      lostAt: null,
+      paidAt: null,
     };
     expect(countsTowardWeeklyNorthStar({ ...base, milestones }, now)).toBe(true);
     expect(
@@ -131,5 +139,53 @@ describe("source health and storefront language", () => {
   it("uses storefront-specific customer paths", () => {
     expect(storefrontMoneyPath("Hair salon")).toBe("Bookings · repeat visits");
     expect(storefrontMoneyPath("Restaurant")).toBe("Visits · reservations · orders");
+  });
+});
+
+describe("Dakota conversion gates", () => {
+  const contact = {
+    contactId: "550e8400-e29b-41d4-a716-446655440001",
+    name: "Owner",
+    role: "Owner",
+    channel: "phone" as const,
+    value: "+12125550100",
+    sourceUrl: "https://example.com/contact",
+    verifiedAt: "2026-08-03",
+    consentClassification: "public_business" as const,
+  };
+
+  it("keeps public business phones out of the Google Voice text handoff", () => {
+    expect(isPursuitContact(contact)).toBe(true);
+    expect(isVoiceTextContact(contact)).toBe(false);
+    expect(isVoiceTextContact({ ...contact, consentClassification: "explicit_inquiry" })).toBe(true);
+    expect(isPursuitContact({ ...contact, consentClassification: "unknown" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, value: "not-a-phone", consentClassification: "explicit_inquiry" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, sourceUrl: "http://localhost/contact", consentClassification: "explicit_inquiry" })).toBe(false);
+    expect(isVoiceTextContact({ ...contact, verifiedAt: "2026-02-30", consentClassification: "explicit_inquiry" })).toBe(false);
+  });
+
+  it("recognizes only explicitly consented inbound records", () => {
+    const base = {
+      ...EMPTY_OPERATOR_RECORD,
+      identity: { businessName: "Inbound Bakery", source: "inbound:tech-audit", sourceId: "abc" },
+      contacts: [{ ...contact, consentClassification: "explicit_inquiry" as const }],
+    };
+    expect(isConsentedInboundRecord(base)).toBe(true);
+    expect(isConsentedInboundRecord({ ...base, contacts: [contact] })).toBe(false);
+  });
+
+  it("derives balance and counts invoices only after explicit sent evidence", () => {
+    const commercialClose = { ...EMPTY_OPERATOR_RECORD.commercialClose, invoiceRef: "INV-1", amountDue: 2000, amountPaid: 500 };
+    const base = { ...EMPTY_OPERATOR_RECORD, commercialClose };
+    expect(derivedBalance(commercialClose)).toBe(1500);
+    expect(evidencedInvoiceAmount(base)).toBe(0);
+    expect(evidencedInvoiceAmount({
+      ...base,
+      activities: [{ activityId: "activity-1", channel: "invoice", type: "invoice_sent", outcome: "sent", note: "Invoice sent manually.", occurredAt: "2026-08-03T12:00:00.000Z", followUpAt: null }],
+    })).toBe(2000);
+    expect(evidencedInvoiceAmount({
+      ...base,
+      activities: [{ activityId: "activity-2", channel: "invoice", type: "invoice_sent", outcome: "completed", note: "Invoice delivery completed.", occurredAt: "2026-08-03T12:05:00.000Z", followUpAt: null }],
+    })).toBe(2000);
   });
 });

@@ -7,6 +7,11 @@ import { getStore } from "@netlify/blobs";
 import { Buffer } from "node:buffer";
 import { createTransport } from "nodemailer";
 import {
+  captureWebsiteAuditInbound,
+  DAKOTA_OPERATOR_BLOB_STORE,
+  isSuccessfulInboundResult,
+} from "./_shared/dakota/inbound.ts";
+import {
   safeDatabaseErrorLabel,
   shouldPersistAuditLead,
   upsertAuditLead,
@@ -1085,7 +1090,14 @@ export default async (req: Request, context: Context) => {
     return;
   }
 
-  let body: { url: string; email: string; slug: string; domain: string };
+  let body: {
+    url: string;
+    email: string;
+    slug: string;
+    domain: string;
+    requestSource?: "website_audit" | "programmatic";
+    submittedAt?: string;
+  };
 
   try {
     body = await req.json();
@@ -1095,12 +1107,20 @@ export default async (req: Request, context: Context) => {
   }
 
   const { url, email, slug, domain } = body;
+  const requestSource = body.requestSource ?? "programmatic";
+  const submittedAt =
+    typeof body.submittedAt === "string" &&
+    body.submittedAt.length <= 64 &&
+    Number.isFinite(Date.parse(body.submittedAt))
+      ? body.submittedAt
+      : new Date().toISOString();
   if (
     typeof url !== "string" ||
     typeof email !== "string" ||
     typeof domain !== "string" ||
     typeof slug !== "string" ||
-    !/^[a-z0-9-]+$/.test(slug)
+    !/^[a-z0-9-]+$/.test(slug) ||
+    (requestSource !== "website_audit" && requestSource !== "programmatic")
   ) {
     console.warn("[audit] Rejected malformed background invocation");
     return;
@@ -1127,6 +1147,34 @@ export default async (req: Request, context: Context) => {
   // Consume before starting expensive work so the token cannot be replayed.
   await jobStore.delete(slug);
   console.log(`[audit] ▶ Pipeline start: ${domain} → ${slug}`);
+
+  const persistAuditLead = shouldPersistAuditLead(context.deploy.context);
+  if (persistAuditLead && requestSource === "website_audit") {
+    try {
+      const inboundResult = await captureWebsiteAuditInbound({
+        email,
+        domain,
+        reportId: slug,
+        submittedAt,
+        source: "littlefightnyc.com/examples/audit",
+      }, {
+        getStore: () => getStore({
+          name: DAKOTA_OPERATOR_BLOB_STORE,
+          consistency: "strong",
+        }),
+      });
+      if (!inboundResult || !isSuccessfulInboundResult(inboundResult)) {
+        console.error("[audit] Dakota consented-inbound write was not accepted");
+      } else {
+        console.log("[audit] Consented Website Audit request added to Dakota");
+      }
+    } catch {
+      // Capture the legitimate request before external audit providers run so
+      // a report-generation failure cannot erase a high-intent inquiry. The
+      // private sales record remains best-effort and never blocks the report.
+      console.error("[audit] Dakota consented-inbound write failed");
+    }
+  }
 
   try {
     // ── Step 1: PageSpeed Insights ────────────────────────────
@@ -1259,7 +1307,6 @@ export default async (req: Request, context: Context) => {
     // generated browser report or its email delivery. Deploy previews and
     // branch deploys use isolated database branches only; they never add a
     // durable lead record.
-    const persistAuditLead = shouldPersistAuditLead(context.deploy.context);
     let leadPersisted = false;
     if (persistAuditLead) {
       try {

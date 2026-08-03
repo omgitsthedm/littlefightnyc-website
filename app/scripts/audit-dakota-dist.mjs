@@ -47,7 +47,7 @@ async function walk(directory) {
 try {
   if (!(await stat(distRoot)).isDirectory()) throw new Error("dist is not a directory");
   const html = await readFile(dakotaEntry, "utf8");
-  if (!html.includes("Dakota — Private Research Desk")) findings.push("Dakota entry title is missing");
+  if (!html.includes("Dakota — Private Revenue Desk")) findings.push("Dakota entry title is missing");
   if (!/name="robots" content="noindex, nofollow, noarchive, nosnippet"/.test(html)) {
     findings.push("Dakota entry is missing the strict robots directive");
   }

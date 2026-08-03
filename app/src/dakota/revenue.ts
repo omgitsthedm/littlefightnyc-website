@@ -1,14 +1,33 @@
 import type {
   Candidate,
+  DakotaActivityOutcome,
+  DakotaActivityType,
+  DakotaCommercialClose,
+  DakotaVerifiedContact,
   OperatorRecord,
   OperatorRecordInput,
   OperatorStatus,
 } from "./types";
+import { isRealDateOnly, isSafePublicHttps } from "./operatorValidation";
 
 export const API_OPERATOR_STATE = "/api/dakota/operator-state";
 
 export const EMPTY_OPERATOR_RECORD: OperatorRecordInput = {
   identity: { businessName: "", source: "", sourceId: "" },
+  contacts: [],
+  activities: [],
+  commercialClose: {
+    proposalRef: "",
+    proposalAmount: null,
+    proposalSentDate: "",
+    signedDate: "",
+    invoiceRef: "",
+    amountDue: null,
+    amountPaid: null,
+    paidDate: "",
+    balance: null,
+    onboardingNextAction: "",
+  },
   status: "early_signal",
   notes: "",
   verifiedPain: "",
@@ -31,6 +50,7 @@ export const STATUS_LABELS: Record<OperatorStatus, string> = {
   meeting: "Meeting",
   proposal: "Proposal",
   won: "Won",
+  paid: "Paid",
   lost: "Lost",
   snoozed: "Snoozed",
   not_fit: "Not a fit",
@@ -44,11 +64,12 @@ export const HUMAN_APPROVED_STATUSES = new Set<OperatorStatus>([
   "meeting",
   "proposal",
   "won",
-  "lost",
+  "paid",
 ]);
 
 const CLOSED_STATUSES = new Set<OperatorStatus>([
   "won",
+  "paid",
   "lost",
   "not_fit",
   "do_not_contact",
@@ -153,6 +174,7 @@ function pursuitEvidenceScore(candidate: Candidate, record: OperatorRecordInput)
     meeting: 26,
     proposal: 30,
     won: 35,
+    paid: 40,
     snoozed: 2,
   };
   score += statusWeight[record.status] ?? 0;
@@ -343,6 +365,73 @@ export function currency(value: number | null): string {
   }).format(value);
 }
 
+export function isVerifiedContactRoute(contact: DakotaVerifiedContact): boolean {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/u.test(contact.contactId)) return false;
+  if (contact.name !== contact.name.trim() || contact.role !== contact.role.trim()) return false;
+  if (!contact.name.trim() && !contact.role.trim()) return false;
+  if (!contact.sourceUrl || !isSafePublicHttps(contact.sourceUrl)) return false;
+  if (!contact.verifiedAt || !isRealDateOnly(contact.verifiedAt)) return false;
+  if (contact.value !== contact.value.trim()) return false;
+
+  if (contact.channel === "email") {
+    return contact.value.length <= 254 && /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/u.test(contact.value);
+  }
+  if (contact.channel === "phone" || contact.channel === "sms") {
+    const digits = contact.value.replace(/\D/gu, "");
+    return (
+      contact.value.length <= 40 &&
+      /^\+?[0-9().\-\s]{7,32}(?:(?:x|ext\.?)\s*\d{1,8})?$/iu.test(contact.value) &&
+      digits.length >= 7 && digits.length <= 20
+    );
+  }
+  if (!contact.value || !isSafePublicHttps(contact.value)) return false;
+  if (contact.channel === "linkedin") {
+    const hostname = new URL(contact.value).hostname.toLowerCase();
+    return hostname === "linkedin.com" || hostname.endsWith(".linkedin.com");
+  }
+  return true;
+}
+
+export function isPursuitContact(contact: DakotaVerifiedContact): boolean {
+  return (
+    isVerifiedContactRoute(contact) &&
+    ["explicit_inquiry", "existing_relationship", "public_business"].includes(contact.consentClassification)
+  );
+}
+
+export function isVoiceTextContact(contact: DakotaVerifiedContact): boolean {
+  return (
+    isVerifiedContactRoute(contact) &&
+    (contact.channel === "phone" || contact.channel === "sms") &&
+    (contact.consentClassification === "explicit_inquiry" || contact.consentClassification === "existing_relationship")
+  );
+}
+
+export function hasOperatorActivity(
+  record: Pick<OperatorRecordInput, "activities">,
+  type: DakotaActivityType,
+  outcomes?: DakotaActivityOutcome[],
+): boolean {
+  return record.activities.some((activity) => activity.type === type && (!outcomes || outcomes.includes(activity.outcome)));
+}
+
+export function derivedBalance(close: DakotaCommercialClose): number {
+  return Math.max(0, (close.amountDue ?? 0) - (close.amountPaid ?? 0));
+}
+
+export function evidencedInvoiceAmount(record: OperatorRecordInput): number {
+  return record.commercialClose.invoiceRef && hasOperatorActivity(record, "invoice_sent", ["sent", "delivered", "completed"])
+    ? record.commercialClose.amountDue ?? 0
+    : 0;
+}
+
+export function isConsentedInboundRecord(record: OperatorRecordInput): boolean {
+  return (
+    record.identity.source.toLowerCase().startsWith("inbound:") &&
+    record.contacts.some((contact) => contact.consentClassification === "explicit_inquiry")
+  );
+}
+
 export function operatorRecordFor(
   records: Record<string, OperatorRecord>,
   candidate: Candidate,
@@ -351,6 +440,9 @@ export function operatorRecordFor(
   if (saved) {
     return {
       identity: { ...saved.identity },
+      contacts: saved.contacts.map((contact) => ({ ...contact })),
+      activities: saved.activities.map((activity) => ({ ...activity })),
+      commercialClose: { ...saved.commercialClose },
       status: saved.status,
       notes: saved.notes,
       verifiedPain: saved.verifiedPain,
@@ -358,7 +450,7 @@ export function operatorRecordFor(
       nextAction: saved.nextAction,
       dueDate: saved.dueDate,
       estimatedValue: saved.estimatedValue,
-      actualRevenue: saved.actualRevenue,
+      actualRevenue: saved.commercialClose.amountPaid,
       winLossReason: saved.winLossReason,
       proof: saved.proof,
       draft: saved.draft,

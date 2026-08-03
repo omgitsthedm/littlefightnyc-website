@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   createDakotaOperatorRecord,
   createDakotaOperatorStateEnvelope,
+  createEmptyDakotaCommercialClose,
   DAKOTA_OPERATOR_RECORD_LIMIT,
   DAKOTA_OPERATOR_STATE_MAX_BYTES,
   DAKOTA_OPERATOR_STATUSES,
@@ -10,6 +11,7 @@ import {
   validateDakotaOperatorPutPayload,
   validateDakotaOperatorRecordInput,
   validateDakotaOperatorStateEnvelope,
+  validateDakotaOperatorTransition,
 } from "./operator-state-schema";
 
 const UPDATED_AT = "2026-08-03T12:00:00.000Z";
@@ -43,12 +45,36 @@ function record(overrides: Record<string, unknown> = {}): Record<string, unknown
     winLossReason: "",
     proof: "Public filing and business site reviewed manually.",
     draft: "Hi [Business Name], I noticed a possible booking-path issue.",
+    contacts: [{
+      contactId: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Alex Owner",
+      role: "Owner",
+      channel: "email",
+      value: "alex@example.com",
+      sourceUrl: "https://example.com/contact",
+      verifiedAt: "2026-08-03",
+      consentClassification: "public_business",
+    }],
+    activities: [],
+    commercialClose: createEmptyDakotaCommercialClose(),
     ...overrides,
   };
 }
 
 function storedRecord(overrides: Record<string, unknown> = {}): Record<string, unknown> {
-  return { ...record(), updated_at: UPDATED_AT, ...overrides };
+  const {
+    contacts: _contacts,
+    activities: _activities,
+    commercialClose: _commercialClose,
+    ...legacy
+  } = record(overrides);
+  return { ...legacy, updated_at: UPDATED_AT };
+}
+
+function validatedInput(overrides: Record<string, unknown> = {}) {
+  const validation = validateDakotaOperatorRecordInput(record(overrides));
+  if (!validation.valid) throw new Error(validation.error);
+  return validation.value;
 }
 
 describe("Dakota operator-state schema", () => {
@@ -60,7 +86,7 @@ describe("Dakota operator-state schema", () => {
     }
   });
 
-  it("requires the frontend pursuit evidence gate on the server", () => {
+  it("requires pursuit evidence in the server transition gate", () => {
     for (const status of [
       "pursuit_ready",
       "pursuing",
@@ -71,15 +97,19 @@ describe("Dakota operator-state schema", () => {
       "lost",
     ]) {
       expect(
-        validateDakotaOperatorRecordInput(
-          record({ status, verifiedPain: "", offerFit: "" }),
+        validateDakotaOperatorTransition(
+          record({ status, verifiedPain: "", offerFit: "" }) as unknown as Parameters<typeof validateDakotaOperatorTransition>[0],
+          undefined,
+          new Date(UPDATED_AT),
         ).valid,
         status,
       ).toBe(false);
     }
     expect(
-      validateDakotaOperatorRecordInput(
-        record({ status: "research_ready", verifiedPain: "", offerFit: "" }),
+      validateDakotaOperatorTransition(
+        record({ status: "research_ready", verifiedPain: "", offerFit: "" }) as unknown as Parameters<typeof validateDakotaOperatorTransition>[0],
+        undefined,
+        new Date(UPDATED_AT),
       ).valid,
     ).toBe(true);
   });
@@ -110,10 +140,13 @@ describe("Dakota operator-state schema", () => {
     );
     expect(approved.milestones).toEqual({
       humanApprovedAt: approvedAt,
+      firstContactedAt: null,
       repliedAt: null,
       meetingAt: null,
       proposalAt: null,
       wonAt: null,
+      lostAt: null,
+      paidAt: null,
     });
 
     const replied = createDakotaOperatorRecord(
@@ -268,6 +301,7 @@ describe("Dakota operator-state schema", () => {
     for (const notes of [
       "Review https://example.com",
       "<strong>unsafe</strong>",
+      "unsafe --!> comment close",
       "unsafe\u0000text",
       "x".repeat(4_001),
     ]) {
@@ -311,10 +345,13 @@ describe("Dakota operator-state schema", () => {
     if (legacy.valid) {
       expect(legacy.value.records["nys_dos:nys-dos:12345"]?.milestones).toEqual({
         humanApprovedAt: UPDATED_AT,
+        firstContactedAt: UPDATED_AT,
         repliedAt: null,
         meetingAt: null,
         proposalAt: UPDATED_AT,
         wonAt: null,
+        lostAt: null,
+        paidAt: null,
       });
     }
     expect(
@@ -386,5 +423,138 @@ describe("Dakota operator-state schema", () => {
       valid: false,
       error: "Operator-state envelope is oversized.",
     });
+  });
+
+  it("normalizes historical realized revenue into one cleared-cash truth", () => {
+    const migrated = validateDakotaOperatorStateEnvelope({
+      schema_version: "dakota.operator-state.v1",
+      updated_at: UPDATED_AT,
+      records: {
+        "nys_dos:nys-dos:12345": storedRecord({ status: "won", actualRevenue: 2_500 }),
+      },
+    });
+    expect(migrated.valid).toBe(true);
+    if (!migrated.valid) return;
+    const migratedRecord = migrated.value.records["nys_dos:nys-dos:12345"];
+    expect(migrated.value.schema_version).toBe("dakota.operator-state.v2");
+    expect(migratedRecord?.commercialClose).toEqual(
+      expect.objectContaining({ amountDue: 2_500, amountPaid: 2_500, balance: 0, paidDate: "2026-08-03" }),
+    );
+    expect(migratedRecord?.actualRevenue).toBe(2_500);
+    expect(migratedRecord?.milestones.paidAt).toBe(UPDATED_AT);
+  });
+
+  it("enforces durable contacts and immutable append-only activities", () => {
+    const firstActivity = {
+      activityId: "550e8400-e29b-41d4-a716-446655440010",
+      channel: "internal",
+      type: "note",
+      outcome: "recorded",
+      note: "Initial operator note.",
+      occurredAt: UPDATED_AT,
+      followUpAt: null,
+    };
+    const previous = createDakotaOperatorRecord(
+      validatedInput({ activities: [firstActivity] }),
+      UPDATED_AT,
+    );
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ contacts: [], activities: [firstActivity] }),
+        previous,
+        new Date(UPDATED_AT),
+      ),
+    ).toEqual(expect.objectContaining({ valid: false }));
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ activities: [{ ...firstActivity, note: "Rewritten note." }] }),
+        previous,
+        new Date(UPDATED_AT),
+      ),
+    ).toEqual(expect.objectContaining({ valid: false }));
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ activities: [firstActivity, {
+          ...firstActivity,
+          activityId: "550e8400-e29b-41d4-a716-446655440011",
+          note: "Appended note.",
+        }] }),
+        previous,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(true);
+  });
+
+  it("keeps unknown and do-not-contact routes research-only and protects DNC transitions", () => {
+    const unknownContact = {
+      ...(record().contacts as Record<string, unknown>[])[0],
+      consentClassification: "unknown",
+    };
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ status: "pursuit_ready", contacts: [unknownContact] }),
+        undefined,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(false);
+
+    const dnc = createDakotaOperatorRecord(
+      validatedInput({ status: "do_not_contact" }),
+      UPDATED_AT,
+    );
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ status: "pursuit_ready" }),
+        dnc,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(false);
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ status: "research_ready" }),
+        dnc,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(false);
+    const reclassified = validatedInput({
+      status: "pursuit_ready",
+      contacts: [{
+        ...(record().contacts as Record<string, unknown>[])[0],
+        consentClassification: "explicit_inquiry",
+      }],
+    });
+    expect(validateDakotaOperatorTransition(reclassified, dnc, new Date(UPDATED_AT)).valid).toBe(true);
+    expect(
+      validateDakotaOperatorTransition(
+        { ...reclassified, status: "research_ready" },
+        dnc,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(true);
+  });
+
+  it("requires evidence wherever commercial truth is recorded and reserves lost for pursuit", () => {
+    const cashWithoutEvidence = validatedInput({
+      commercialClose: {
+        ...createEmptyDakotaCommercialClose(),
+        amountPaid: 500,
+        paidDate: "2026-08-03",
+      },
+    });
+    expect(validateDakotaOperatorTransition(cashWithoutEvidence, undefined, new Date(UPDATED_AT)).valid).toBe(false);
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ status: "lost", winLossReason: "Budget changed." }),
+        undefined,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(false);
+    expect(
+      validateDakotaOperatorTransition(
+        validatedInput({ status: "snoozed", dueDate: "" }),
+        undefined,
+        new Date(UPDATED_AT),
+      ).valid,
+    ).toBe(false);
   });
 });

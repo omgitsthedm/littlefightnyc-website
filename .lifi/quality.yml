@@ -16,13 +16,14 @@ risk_rationale: >-
   Audit Lab also accepts a public URL and email, starts background work, stores
   report/status/engagement data in Netlify Blobs, and can send results to
   external providers. Dakota adds one exact-account authenticated operator
-  surface with a private public-source queue and bounded operator state. There
-  are no payments or multi-tenant roles; Dakota's server boundary requires both
+  surface with a private public-source queue, verified consented-inbound bridge,
+  and bounded commercial operator state. Dakota records payment evidence but
+  does not process payments, and there are no multi-tenant roles; its server boundary requires both
   hello@littlefightnyc.com and dakota_operator on every private read or write.
 hybrid_surfaces:
   - path: "/app/"
     class: "authenticated-private"
-    note: "Dakota single-operator research desk; noindex/no-store shell, exact Netlify Identity email and role, private Blob queue and operator state, and no automatic outreach."
+    note: "Dakota single-operator revenue desk; noindex/no-store shell, exact Netlify Identity email and role, private Blob queue and operator state, verified consented inbound, and no automatic outreach."
   - path: "/examples/audit/"
     class: "service-enabled"
     note: "Public audit intake with background processing, AI assistance, Blob report state, Netlify Database follow-up, and Google Workspace email delivery."
@@ -159,6 +160,7 @@ critical_journeys:
       - "Google sign-in through canonical-site Netlify Identity"
       - "Exact hello@littlefightnyc.com plus dakota_operator authorization"
       - "Private queue read"
+      - "Verified consented-inbound review"
       - "Bounded operator-state review or save"
       - "Sign out"
     success: "Only the exact authorized operator can read or change private Dakota state; the static shell exposes no queue, and no action sends outreach or mutates an upstream source."
@@ -285,13 +287,13 @@ integrations:
     data: "source, build output, deploy metadata"
     required: true
   - name: "Netlify Forms"
-    direction: "browser -> Netlify Forms -> configured inbox"
-    data: "name, business, phone/email, message, intent, attribution"
+    direction: "browser -> Netlify Forms -> configured inbox and verified dakota-inbound event"
+    data: "name, business, phone/email, message, intent, attribution; bounded consented-inbound copy in the private operator store"
     required: true
     external_proof: "EXT-001"
   - name: "Netlify Functions"
     direction: "browser/internal function calls -> Netlify runtime"
-    data: "Audit URL, email, job token, report state; signed Dakota queue payloads and authenticated Dakota operator state"
+    data: "Audit URL, email, job token, report state; signed Dakota queue payloads, verified inbound events, and authenticated Dakota operator state"
     required: true
   - name: "Netlify Blobs"
     direction: "functions <-> Netlify Blobs"
@@ -360,11 +362,11 @@ data_boundaries:
     flow: "repository -> Netlify CDN -> anonymous browser/crawlers"
   - id: "lead-intake"
     classification: "contact and business inquiry data"
-    flow: "browser -> Netlify Forms -> configured Little Fight inbox"
-    rule: "No passwords, private customer data, or secrets."
+    flow: "browser -> Netlify Forms -> configured Little Fight inbox; verified submission event -> private Dakota operator store"
+    rule: "No passwords, private customer data, or secrets. Inbound capture records consent and never triggers outreach."
   - id: "audit-intake"
     classification: "contact data plus a public website URL"
-    flow: "browser -> Netlify Functions/Blobs/Database -> Google PageSpeed and Netlify AI Gateway/Anthropic -> Google Workspace email"
+    flow: "browser -> Netlify Functions/Blobs/Database and private Dakota operator store -> Google PageSpeed and Netlify AI Gateway/Anthropic -> Google Workspace email"
     rule: "Private/internal network targets are rejected; one-time job authorization is consumed before expensive work; reports expire after 30 days and limited lead records after 12 months."
   - id: "audit-observation"
     classification: "pseudonymous operational analytics"
@@ -379,9 +381,9 @@ data_boundaries:
     flow: "local Dakota engine -> signed publish function -> private Netlify Blob -> authorized Dakota operator"
     rule: "At most ten validated records; exact email and server-controlled role are enforced for reads; never ship the queue in static assets, source control, or the browser bundle."
   - id: "dakota-operator-state"
-    classification: "private human-entered prospect research, drafts, and outcomes"
-    flow: "authorized Dakota browser -> same-origin function -> private Netlify Blob"
-    rule: "Bounded schema and capacity; no automatic outreach, CRM mutation, form submission, or other upstream action."
+    classification: "private prospect research, verified inbound, contacts, append-only activity, drafts, commercial evidence, and cleared-payment outcomes"
+    flow: "authorized Dakota browser plus verified first-party inbound events -> private Netlify Blob"
+    rule: "Bounded v2 schema and capacity with v1 normalization; no automatic outreach, CRM mutation, form submission, or other upstream action."
   - id: "service-worker-cache"
     classification: "public first-party GET responses"
     flow: "CDN -> browser Cache Storage"
@@ -400,7 +402,7 @@ dynamic_entry_points:
   - "app/public/examples/lab/concepts.json manifest"
   - "app/public/_redirects compatibility and proxy routes"
   - "app/public/__forms.html Netlify Forms registration"
-  - "Netlify Identity lifecycle and Dakota publish, queue, and operator-state functions"
+  - "Netlify Identity lifecycle and Dakota publish, queue, inbound-event, and operator-state functions"
   - "netlify/functions/*.mts public, internal, background, and scheduled functions"
 
 generated_entry_points:
@@ -432,6 +434,9 @@ functions:
   - name: "dakota-operator-state"
     path: "/api/dakota/operator-state"
     kind: "authenticated private operator-state read/write"
+  - name: "dakota-inbound"
+    path: "verified Netlify formSubmitted platform event"
+    kind: "bounded consented-inbound write"
   - name: "run-audit"
     path: "/examples/audit/api/run-audit"
     kind: "request"
@@ -484,8 +489,8 @@ webhooks:
     direction: "provider-managed Netlify Identity -> identity-signup, identity-login, and identity-validate functions"
     status: "source enforces normalized hello@littlefightnyc.com plus server-controlled dakota_operator role; live site-scoped Identity verification remains external"
   - name: "Netlify Forms capture and notification"
-    direction: "provider-managed"
-    status: "configured in markup; live capture and inbox delivery require external proof"
+    direction: "provider-managed -> configured inbox and dakota-inbound event"
+    status: "configured in markup; verified submissions feed Dakota without sending outreach; live capture and inbox delivery require external proof"
   - name: "Audit background invocation"
     direction: "internal function-to-function HTTP"
     status: "one-time-token protected"

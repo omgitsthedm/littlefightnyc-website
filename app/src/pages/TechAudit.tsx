@@ -130,6 +130,13 @@ function queryValue(params: URLSearchParams, key: string, maxLength: number): st
   return (params.get(key) ?? "").trim().slice(0, maxLength);
 }
 
+function createDakotaCaptureId(): string {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
 /**
  * Audit report URLs carry a generated slug such as
  * `example-com-1a2b3c4d`. Treat it as an opaque identifier: accept only the
@@ -280,6 +287,8 @@ export default function TechAudit() {
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [dakotaCaptureId, setDakotaCaptureId] = useState("");
+  const [dakotaSubmittedAt, setDakotaSubmittedAt] = useState("");
   // Payoff beat — plays once when step 3 is REACHED with both choices made
   // (not when a saved draft restores straight into step 3).
   const [payoff, setPayoff] = useState(false);
@@ -445,6 +454,17 @@ export default function TechAudit() {
     }
 
     trackAuditStarted("valid_submit");
+
+    const captureId = dakotaCaptureId || createDakotaCaptureId();
+    const submittedAt = new Date().toISOString();
+    setDakotaCaptureId(captureId);
+    setDakotaSubmittedAt(submittedAt);
+    // Keep the native form payload correct before React flushes this discrete
+    // event, then retain the same values through the submitting re-render.
+    const captureInput = form.elements.namedItem("dakota_capture_id") as HTMLInputElement | null;
+    const submittedAtInput = form.elements.namedItem("dakota_submitted_at") as HTMLInputElement | null;
+    if (captureInput) captureInput.value = captureId;
+    if (submittedAtInput) submittedAtInput.value = submittedAt;
 
     hapticSubmit();
 
@@ -688,6 +708,18 @@ export default function TechAudit() {
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
+                  <input
+                    type="hidden"
+                    name="dakota_capture_id"
+                    value={dakotaCaptureId}
+                    readOnly
+                  />
+                  <input
+                    type="hidden"
+                    name="dakota_submitted_at"
+                    value={dakotaSubmittedAt}
+                    readOnly
+                  />
                   <input type="hidden" name="intent" value={leadIntent} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />
                   {/* Always render the field so Netlify's build-time form
