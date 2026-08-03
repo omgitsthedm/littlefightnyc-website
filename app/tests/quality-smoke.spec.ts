@@ -894,6 +894,8 @@ test(
     const form = page.locator('form[name="tech-audit-scratch"]');
     await expect(form).toBeVisible();
     await expect(form.locator('input[name="report_id"]')).toHaveValue(reportId);
+    await expect(form.locator('input[name="dakota_capture_id"]')).toHaveValue("");
+    await expect(form.locator('input[name="dakota_submitted_at"]')).toHaveValue("");
 
     const action = await form.getAttribute("action");
     const confirmationUrl = new URL(action!, baseURL!);
@@ -912,6 +914,15 @@ test(
       element.addEventListener("submit", (event) => event.preventDefault(), { once: true });
       (element as HTMLFormElement).requestSubmit();
     });
+    const dakotaCapture = await form.evaluate((element) => {
+      const data = new FormData(element as HTMLFormElement);
+      return {
+        id: String(data.get("dakota_capture_id") ?? ""),
+        submittedAt: String(data.get("dakota_submitted_at") ?? ""),
+      };
+    });
+    expect(dakotaCapture.id).toMatch(/^[0-9a-f-]{32,36}$/u);
+    expect(Number.isFinite(Date.parse(dakotaCapture.submittedAt))).toBe(true);
     await expect.poll(() => page.evaluate(() => (
       window.sessionStorage.getItem("lf_tech_audit_report_id")
     ))).toBe(reportId);

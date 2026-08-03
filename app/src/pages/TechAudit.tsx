@@ -130,6 +130,13 @@ function queryValue(params: URLSearchParams, key: string, maxLength: number): st
   return (params.get(key) ?? "").trim().slice(0, maxLength);
 }
 
+function createDakotaCaptureId(): string {
+  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
 /**
  * Audit report URLs carry a generated slug such as
  * `example-com-1a2b3c4d`. Treat it as an opaque identifier: accept only the
@@ -286,6 +293,8 @@ export default function TechAudit() {
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
   const auditStartedRef = useRef(false);
+  const dakotaCaptureIdRef = useRef<HTMLInputElement>(null);
+  const dakotaSubmittedAtRef = useRef<HTMLInputElement>(null);
   const attribution = readAttribution();
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
@@ -445,6 +454,13 @@ export default function TechAudit() {
     }
 
     trackAuditStarted("valid_submit");
+
+    if (dakotaCaptureIdRef.current && !dakotaCaptureIdRef.current.value) {
+      dakotaCaptureIdRef.current.value = createDakotaCaptureId();
+    }
+    if (dakotaSubmittedAtRef.current) {
+      dakotaSubmittedAtRef.current.value = new Date().toISOString();
+    }
 
     hapticSubmit();
 
@@ -688,6 +704,18 @@ export default function TechAudit() {
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
+                  <input
+                    ref={dakotaCaptureIdRef}
+                    type="hidden"
+                    name="dakota_capture_id"
+                    defaultValue=""
+                  />
+                  <input
+                    ref={dakotaSubmittedAtRef}
+                    type="hidden"
+                    name="dakota_submitted_at"
+                    defaultValue=""
+                  />
                   <input type="hidden" name="intent" value={leadIntent} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />
                   {/* Always render the field so Netlify's build-time form

@@ -240,6 +240,7 @@ export default async (req: Request, context: Context) => {
 
   // ── Generate unique slug (crypto-safe random) ─────────────
   const suffix = crypto.randomUUID().slice(0, 8);
+  const submittedAt = new Date().toISOString();
   const slug =
     domain
       .replace(/[^a-z0-9]+/g, "-")
@@ -277,7 +278,14 @@ export default async (req: Request, context: Context) => {
         "Content-Type": "application/json",
         "X-Audit-Job-Token": jobToken,
       },
-      body: JSON.stringify({ url: fullUrl, email, slug, domain }),
+      body: JSON.stringify({
+        url: fullUrl,
+        email,
+        slug,
+        domain,
+        requestSource: isAuthenticated ? "programmatic" : "website_audit",
+        submittedAt,
+      }),
     });
 
     if (!bgRes.ok && bgRes.status !== 202) {

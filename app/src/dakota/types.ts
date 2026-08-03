@@ -39,6 +39,7 @@ export const OPERATOR_STATUSES = [
   "meeting",
   "proposal",
   "won",
+  "paid",
   "lost",
   "snoozed",
   "not_fit",
@@ -61,6 +62,9 @@ export interface OperatorIdentity {
 
 export interface OperatorRecordInput {
   identity: OperatorIdentity;
+  contacts: DakotaVerifiedContact[];
+  activities: DakotaActivity[];
+  commercialClose: DakotaCommercialClose;
   status: OperatorStatus;
   notes: string;
   verifiedPain: string;
@@ -76,10 +80,105 @@ export interface OperatorRecordInput {
 
 export interface OperatorMilestones {
   humanApprovedAt: string | null;
+  firstContactedAt: string | null;
   repliedAt: string | null;
   meetingAt: string | null;
   proposalAt: string | null;
   wonAt: string | null;
+  lostAt: string | null;
+  paidAt: string | null;
+}
+
+export const CONTACT_CHANNELS = ["email", "phone", "sms", "website_form", "linkedin"] as const;
+export type DakotaContactChannel = (typeof CONTACT_CHANNELS)[number];
+
+export const CONSENT_CLASSIFICATIONS = [
+  "unknown",
+  "explicit_inquiry",
+  "existing_relationship",
+  "public_business",
+  "do_not_contact",
+] as const;
+export type DakotaConsentClassification = (typeof CONSENT_CLASSIFICATIONS)[number];
+
+export interface DakotaVerifiedContact {
+  contactId: string;
+  name: string;
+  role: string;
+  channel: DakotaContactChannel;
+  value: string;
+  sourceUrl: string;
+  verifiedAt: string;
+  consentClassification: DakotaConsentClassification;
+}
+
+export const ACTIVITY_CHANNELS = [
+  "internal",
+  "email",
+  "phone",
+  "sms",
+  "website_form",
+  "linkedin",
+  "meeting",
+  "proposal",
+  "contract",
+  "invoice",
+  "payment",
+] as const;
+export type DakotaActivityChannel = (typeof ACTIVITY_CHANNELS)[number];
+
+export const ACTIVITY_TYPES = [
+  "note",
+  "outreach",
+  "reply",
+  "call",
+  "meeting",
+  "proposal_sent",
+  "contract_signed",
+  "invoice_sent",
+  "payment_received",
+  "follow_up",
+] as const;
+export type DakotaActivityType = (typeof ACTIVITY_TYPES)[number];
+
+export const ACTIVITY_OUTCOMES = [
+  "recorded",
+  "sent",
+  "delivered",
+  "replied",
+  "connected",
+  "voicemail",
+  "scheduled",
+  "completed",
+  "declined",
+  "won",
+  "lost",
+  "paid",
+  "no_response",
+] as const;
+export type DakotaActivityOutcome = (typeof ACTIVITY_OUTCOMES)[number];
+
+export interface DakotaActivity {
+  activityId: string;
+  channel: DakotaActivityChannel;
+  type: DakotaActivityType;
+  outcome: DakotaActivityOutcome;
+  note: string;
+  occurredAt: string;
+  followUpAt: string | null;
+}
+
+export interface DakotaCommercialClose {
+  proposalRef: string;
+  proposalAmount: number | null;
+  proposalSentDate: string;
+  signedDate: string;
+  invoiceRef: string;
+  amountDue: number | null;
+  amountPaid: number | null;
+  paidDate: string;
+  balance: number | null;
+  onboardingNextAction: string;
 }
 
 export interface OperatorRecord extends OperatorRecordInput {
@@ -89,13 +188,13 @@ export interface OperatorRecord extends OperatorRecordInput {
 }
 
 export interface OperatorStateEnvelope {
-  schema_version: "dakota.operator-state.v1";
+  schema_version: "dakota.operator-state.v2";
   updated_at: string | null;
   records: Record<string, OperatorRecord>;
 }
 
 export interface OperatorStateSaveResponse {
-  schema_version: "dakota.operator-state.v1";
+  schema_version: "dakota.operator-state.v2";
   updated_at: string;
   candidate_key: string;
   record: OperatorRecord;

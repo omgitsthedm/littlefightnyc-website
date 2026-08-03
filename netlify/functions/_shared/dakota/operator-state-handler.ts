@@ -3,6 +3,10 @@ import type { Store } from "@netlify/blobs";
 import type { DakotaAuthorization } from "./auth";
 import { methodNotAllowed, privateJson } from "./http";
 import {
+  DAKOTA_OPERATOR_BLOB_KEY,
+  DAKOTA_OPERATOR_BLOB_STORE,
+} from "./operator-state-constants";
+import {
   createDakotaOperatorRecord,
   createDakotaOperatorStateEnvelope,
   DAKOTA_OPERATOR_RECORD_LIMIT,
@@ -13,10 +17,10 @@ import {
   type DakotaOperatorStateEnvelope,
   validateDakotaOperatorPutPayload,
   validateDakotaOperatorStateEnvelope,
+  validateDakotaOperatorTransition,
 } from "./operator-state-schema";
 
-export const DAKOTA_OPERATOR_BLOB_STORE = "dakota-operator-state";
-export const DAKOTA_OPERATOR_BLOB_KEY = "state/v1";
+export { DAKOTA_OPERATOR_BLOB_KEY, DAKOTA_OPERATOR_BLOB_STORE };
 
 export type DakotaOperatorStateStore = Pick<Store, "getWithMetadata" | "setJSON">;
 
@@ -143,9 +147,17 @@ async function upsertOperatorState(
       return privateJson({ error: "Operator-state record capacity has been reached." }, 409);
     }
 
-    const updatedAt = now().toISOString();
-    const record = createDakotaOperatorRecord(
+    const nowDate = now();
+    const transition = validateDakotaOperatorTransition(
       payload.value.record,
+      existingRecords[payload.value.candidate_key],
+      nowDate,
+    );
+    if (!transition.valid) return privateJson({ error: transition.error }, 422);
+
+    const updatedAt = nowDate.toISOString();
+    const record = createDakotaOperatorRecord(
+      transition.value,
       updatedAt,
       existingRecords[payload.value.candidate_key],
     );

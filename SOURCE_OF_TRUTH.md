@@ -92,10 +92,17 @@ the security boundary:
 - `dakota-queue` at `/api/dakota/queue`: exact-email-and-role private queue read
 - `dakota-operator-state` at `/api/dakota/operator-state`: exact-email-and-role
   bounded private state read/write with same-origin write enforcement
+- `dakota-inbound`: verified Netlify form-event capture for Tech Audit requests;
+  the public Website Audit pipeline uses the same bounded private writer after
+  a real production request is accepted
 
 Netlify Blobs are site-scoped. Queue store `dakota-private` uses key
 `current/v1` and replay prefix `replay/v1/`; operator store
-`dakota-operator-state` uses key `state/v1`. Identity users, roles, sessions,
+`dakota-operator-state` uses compatibility key `state/v1` with the normalized
+`dakota.operator-state.v2` envelope. The v2 record carries verified contacts,
+append-only manual activity, stage evidence, proposal/signature/invoice state,
+and cleared-payment truth while accepting and normalizing stored v1 records.
+Identity users, roles, sessions,
 Blob data, the publisher secret, and custom-domain attachment must be verified
 against site ID `0907d8fe-7018-48db-a6be-1f906e4b2619`; they do not migrate
 because source files moved.
@@ -108,6 +115,11 @@ and runtime SQLite, queues, snapshots, and logs stay outside Git under
 bounded read-only public-source research and publishes only a validated,
 signed queue of at most ten records. Dakota has no automatic outreach path and
 must not send email, SMS, calls, forms, or CRM writes.
+
+The operator surface is a decision and commercial-record system, not an
+outreach robot. Copying a draft or opening Google Voice has no server side
+effect. Contact, reply, meeting, proposal, signature, and payment events enter
+the record only after the operator explicitly confirms the real-world action.
 
 ## On-demand business and brand evidence
 
