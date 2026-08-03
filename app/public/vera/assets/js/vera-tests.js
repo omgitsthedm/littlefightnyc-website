@@ -115,6 +115,19 @@
         check('rot grades E with named failures', stBad.grade === 'E' && stBad.failures.length >= 3, stBad.grade + ': ' + stBad.failures.join('|'));
         var stUnk = C.stewardOf({});
         check('no data is honestly unproven, not an A', stUnk.grade === '?' && stUnk.score === null, stUnk.grade);
+        check('anchor picker present on the drop', $$('.anchorbar select').length === 2, $$('.anchorbar select').length + ' selects');
+        var selA = $('[data-anchor-sel="0"]');
+        if (selA && $$('.dropcard').length) {
+          selA.value = 'Union Sq';
+          selA.dispatchEvent(new Event('change', { bubbles: true }));
+          check('commute read prints on cards after picking an anchor', $$('.dropcard__commute').length > 0, $$('.dropcard__commute').length + ' cards');
+          var honest = $$('.commute').every(function (el) { return el.textContent.indexOf('≈') > -1; });
+          check('every commute figure is marked approximate', honest, '');
+          var selB = $('[data-anchor-sel="0"]');
+          selB.value = '';
+          selB.dispatchEvent(new Event('change', { bubbles: true }));
+          check('clearing the anchor clears the reads', $$('.dropcard__commute').length === 0, '');
+        }
       } else {
         check('geo polygons loaded', false, 'hoods.json did not load');
       }

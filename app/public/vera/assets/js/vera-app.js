@@ -328,6 +328,65 @@
       (urls.length > 1 ? '<span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
   }
 
+  /* ---------- commute anchors: the #1 community ask, honestly ----------
+     The user picks up to two stations that anchor their life (work, a
+     person). VERA prints per listing: the walk to its own station, whether
+     that station shares a line with the anchor, and the straight-line
+     distance — all marked ≈. No fake routing minutes, ever. */
+
+  var anchors = [];
+  try { anchors = JSON.parse(localStorage.getItem('vera-anchors') || '[]') || []; } catch (e) { anchors = []; }
+
+  function saveAnchors() {
+    try { localStorage.setItem('vera-anchors', JSON.stringify(anchors)); } catch (e) {}
+  }
+
+  function stationByName(name) {
+    for (var i = 0; i < C.STATIONS.length; i++) if (C.STATIONS[i][0] === name) return C.STATIONS[i];
+    return null;
+  }
+
+  function commuteRead(l, anchorName) {
+    var t = C.nearestStation(l);
+    var a = stationByName(anchorName);
+    if (!t || !a || l.latitude == null) return null;
+    var mine = String(t.lines).split(/\s+/);
+    var theirs = String(a[1]).split(/\s+/);
+    var shared = mine.filter(function (x) { return theirs.indexOf(x) > -1; });
+    var dy = (+l.latitude - a[2]) * 111.32;
+    var dx = (+l.longitude - a[3]) * 111.32 * Math.cos(a[2] * Math.PI / 180);
+    var km = Math.sqrt(dx * dx + dy * dy);
+    if (km < 0.9) return { label: 'to ' + anchorName + ': ≈' + Math.max(2, Math.round(km * 12.5)) + ' min on foot', good: true };
+    if (shared.length) return { label: 'to ' + anchorName + ': ≈' + t.mins + ' min walk, then ' + shared[0] + ' direct', good: true, line: shared[0] };
+    return { label: 'to ' + anchorName + ': ≈' + km.toFixed(1) + ' km · likely a transfer', good: false };
+  }
+
+  function commuteLines(l) {
+    if (!anchors.length) return '';
+    var reads = anchors.map(function (a) { return commuteRead(l, a); }).filter(Boolean);
+    if (!reads.length) return '';
+    return '<span class="dropcard__commute">' + reads.map(function (r) {
+      return '<span class="commute ' + (r.good ? 'commute--good' : '') + '">' + (r.line ? C.lineBullets(r.line) + ' ' : '') + esc(r.label) + '</span>';
+    }).join('') + '</span>';
+  }
+
+  function anchorPanel() {
+    var opts = C.STATIONS.map(function (s) { return s[0] + ' (' + s[1] + ')'; });
+    var uniq = [];
+    var seenN = {};
+    C.STATIONS.forEach(function (s) { var k = s[0] + '|' + s[1]; if (!seenN[k]) { seenN[k] = 1; uniq.push(s); } });
+    function sel(idx) {
+      return '<select data-anchor-sel="' + idx + '" aria-label="Anchor station ' + (idx + 1) + '">' +
+        '<option value="">' + (idx ? 'second anchor (optional)' : 'pick a station you live around') + '</option>' +
+        uniq.map(function (s) {
+          var on = anchors[idx] === s[0] ? ' selected' : '';
+          return '<option value="' + esc(s[0]) + '"' + on + '>' + esc(s[0]) + ' · ' + esc(s[1]) + '</option>';
+        }).join('') + '</select>';
+    }
+    return '<div class="anchorbar"><span class="anchorbar__label">Commute anchors</span>' + sel(0) + sel(1) +
+      '<span class="anchorbar__hint">' + (anchors.length ? 'printed on every card, marked ≈ — VERA never invents routing minutes' : 'work, a person, a gym — VERA prints the honest read on every card') + '</span></div>';
+  }
+
   function ownerLine(l) {
     var o = C.ownerRead(l);
     var name = l.owner_name ? C.titleCase(String(l.owner_name).toLowerCase()) : null;
@@ -365,6 +424,7 @@
         '<span class="dropcard__body">' +
           '<span class="dropcard__main">' +
             '<span class="dropcard__hood">' + hoodLine + ' · ' + unit + (t ? ' · <span class="nowrap">≈' + t.mins + ' min walk ' + C.lineBullets(t.lines) + ' ' + esc(t.name) + '</span>' : '') + '</span>' +
+            commuteLines(l) +
             '<h3 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h3>' +
             (addr ? '<p class="dropcard__flavor">' + esc(C.charName(l)) + '</p>' : '') +
             ownerLine(l) +
@@ -435,6 +495,7 @@
         '</p>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
         '<p class="drophead__next">next sweep <span class="mono" data-countdown>—</span></p>' +
+        anchorPanel() +
       '</header>' +
       (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
         : '<div class="dropempty">' +
@@ -1093,9 +1154,17 @@
     }
   });
 
-  /* checklist + notes (inside the ledger) */
+  /* checklist + notes (inside the ledger) + anchor picks */
   document.addEventListener('change', function (e) {
     var t = e.target;
+    if (t.hasAttribute && t.hasAttribute('data-anchor-sel')) {
+      var idx = +t.getAttribute('data-anchor-sel');
+      if (t.value) anchors[idx] = t.value; else anchors.splice(idx, 1);
+      anchors = anchors.filter(Boolean).slice(0, 2);
+      saveAnchors();
+      renderRoute();
+      return;
+    }
     if (t.hasAttribute && t.hasAttribute('data-check')) {
       var uid = t.getAttribute('data-uid');
       var c = caseOf(uid);
