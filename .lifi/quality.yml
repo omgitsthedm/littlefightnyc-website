@@ -1,6 +1,6 @@
 schema_version: 1
 manifest_id: "littlefightnyc-website"
-updated_at: "2026-08-01"
+updated_at: "2026-08-03"
 
 quality_charter:
   source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
@@ -15,9 +15,14 @@ risk_rationale: >-
   The public site collects contact details through Netlify Forms. The Website
   Audit Lab also accepts a public URL and email, starts background work, stores
   report/status/engagement data in Netlify Blobs, and can send results to
-  external providers. There are no user accounts, payments, or multi-tenant
-  authenticated application roles.
+  external providers. Dakota adds one exact-account authenticated operator
+  surface with a private public-source queue and bounded operator state. There
+  are no payments or multi-tenant roles; Dakota's server boundary requires both
+  hello@littlefightnyc.com and dakota_operator on every private read or write.
 hybrid_surfaces:
+  - path: "/app/"
+    class: "authenticated-private"
+    note: "Dakota single-operator research desk; noindex/no-store shell, exact Netlify Identity email and role, private Blob queue and operator state, and no automatic outreach."
   - path: "/examples/audit/"
     class: "service-enabled"
     note: "Public audit intake with background processing, AI assistance, Blob report state, Netlify Database follow-up, and Google Workspace email delivery."
@@ -33,7 +38,7 @@ backup_owner: null
 canonical_repo: "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website"
 remote: "https://github.com/omgitsthedm/littlefightnyc-website.git"
 branch: "main"
-framework: "React 19 + TypeScript + Vite 7; prerendered route snapshots; Netlify Functions"
+framework: "React 19 + TypeScript + Vite 7; public prerendered route snapshots plus a private Dakota HTML entry; Netlify Functions"
 adapter: "react-vite-netlify"
 package_manager: "npm"
 lockfile: "package-lock.json and app/package-lock.json"
@@ -57,7 +62,7 @@ commands:
   preview: "npm --prefix app run preview"
   typecheck: "npm --prefix app exec -- tsc -b"
   lint: "npm --prefix app run lint"
-  unit: ""
+  unit: "npm run test:dakota"
   integration: ""
   contract: ""
   e2e: "npm --prefix app run test:browser"
@@ -75,6 +80,7 @@ command_availability:
     - "npm --prefix app run preview"
     - "npm --prefix app exec -- tsc -b"
     - "npm --prefix app run lint"
+    - "npm run test:dakota"
     - "npm --prefix app run quality"
     - "npm run quality:fast"
     - "npm run quality:full"
@@ -84,9 +90,10 @@ command_availability:
     - "npm --prefix app run test:browser"
   planned_not_implemented: []
   missing_capabilities:
-    - "unit/component test command"
+    - "general public-site component unit-test command beyond the implemented Dakota suite"
     - "provider contract test command"
     - "visual-regression command"
+    - "automated authenticated Dakota browser journey; real Identity remains a controlled external gate"
     - "retained CI artifact and field-performance evidence policy"
 
 critical_journeys:
@@ -145,6 +152,16 @@ critical_journeys:
       - "Google Workspace email delivery and Netlify Database follow-up"
     success: "A valid report is generated, stored, served, and delivered without leaking secrets or accepting private-network targets."
     external_gate: "EXT-001"
+  - id: "dakota-operator"
+    audience: "Authorized Little Fight Dakota operator"
+    path:
+      - "https://www.dakota.littlefightnyc.com/app/"
+      - "Google sign-in through canonical-site Netlify Identity"
+      - "Exact hello@littlefightnyc.com plus dakota_operator authorization"
+      - "Private queue read"
+      - "Bounded operator-state review or save"
+      - "Sign out"
+    success: "Only the exact authorized operator can read or change private Dakota state; the static shell exposes no queue, and no action sends outreach or mutates an upstream source."
   - id: "language-path"
     audience: "Spanish- or Chinese-reading owner"
     path:
@@ -211,6 +228,10 @@ route_classes:
     source: "app/src/App.tsx and authored SEO data"
     cataloged_count: 12
     index_policy: "route-specific"
+  - id: "dakota-private-app"
+    source: "app/dakota.html and app/src/dakota/"
+    inventory: "Dedicated Vite HTML entry and authenticated single-operator React desk"
+    index_policy: "noindex, nofollow, noarchive, no-store; excluded from public route metadata and sitemaps"
   - id: "lab-static-showroom"
     source: "app/public/examples/lab/"
     inventory: "4 suites and 11 manifest concepts"
@@ -233,6 +254,8 @@ roles:
   - "prospective owner or operator"
   - "Little Fight lead recipient"
   - "Little Fight site/content operator"
+  - "Dakota operator: exact hello@littlefightnyc.com identity with dakota_operator role"
+  - "signed local Dakota queue publisher"
   - "programmatic Audit client using AUDIT_API_KEY"
   - "Netlify scheduled/background runtime"
 
@@ -249,6 +272,12 @@ lifecycle_states:
     states: ["installing", "waiting until tabs close", "active", "offline network-first fallback"]
   - surface: "proof"
     states: ["public-live", "owned-live", "private-client", "private-concept", "approval pending"]
+  - surface: "Dakota Identity session"
+    states: ["loading", "anonymous", "Google callback", "denied", "authorized", "signed out"]
+  - surface: "Dakota queue"
+    states: ["unpublished", "signed publish accepted", "ready", "empty", "stale", "schema rejected", "temporarily unavailable"]
+  - surface: "Dakota operator state"
+    states: ["empty", "ready", "saving", "saved", "conflict", "capacity reached", "temporarily unavailable"]
 
 integrations:
   - name: "Netlify Hosting and Git deploy"
@@ -262,12 +291,22 @@ integrations:
     external_proof: "EXT-001"
   - name: "Netlify Functions"
     direction: "browser/internal function calls -> Netlify runtime"
-    data: "Audit URL, email, job token, report state"
+    data: "Audit URL, email, job token, report state; signed Dakota queue payloads and authenticated Dakota operator state"
     required: true
   - name: "Netlify Blobs"
     direction: "functions <-> Netlify Blobs"
-    data: "audit status, jobs, rate limits, pages, metadata, views, engagement"
+    data: "audit status, jobs, rate limits, pages, metadata, views, engagement; private Dakota current queue, replay records, and operator state"
     required: true
+  - name: "Netlify Identity"
+    direction: "Dakota browser and Identity lifecycle functions <-> site-scoped Netlify Identity"
+    data: "Google-authenticated session, normalized email, and server-controlled dakota_operator role"
+    required: true
+    scope: "Netlify site 0907d8fe-7018-48db-a6be-1f906e4b2619; only hello@littlefightnyc.com with dakota_operator may use Dakota"
+  - name: "Local Dakota 2 engine and signed publisher"
+    direction: "private local engine -> signed canonical /api/dakota/publish function"
+    data: "validated public-source prospect research queue capped at ten records"
+    required: true
+    boundary: "No outreach; the engine, scheduler, credentials, and private runtime files remain outside the website repository and browser bundle."
   - name: "Netlify Database"
     direction: "Audit background and cleanup functions <-> managed Postgres"
     data: "limited Audit lead record, score, report expiry, delivery status, pipeline stage, retention deadline"
@@ -335,10 +374,18 @@ data_boundaries:
     classification: "sanitized behavioral and reliability telemetry"
     flow: "browser -> Google Analytics 4 only after explicit opt-in"
     rule: "Form values, names, emails, phone numbers, full query URLs, and stack traces are excluded."
+  - id: "dakota-queue"
+    classification: "private public-source prospect research"
+    flow: "local Dakota engine -> signed publish function -> private Netlify Blob -> authorized Dakota operator"
+    rule: "At most ten validated records; exact email and server-controlled role are enforced for reads; never ship the queue in static assets, source control, or the browser bundle."
+  - id: "dakota-operator-state"
+    classification: "private human-entered prospect research, drafts, and outcomes"
+    flow: "authorized Dakota browser -> same-origin function -> private Netlify Blob"
+    rule: "Bounded schema and capacity; no automatic outreach, CRM mutation, form submission, or other upstream action."
   - id: "service-worker-cache"
     classification: "public first-party GET responses"
     flow: "CDN -> browser Cache Storage"
-    rule: "No POST, function, or cross-origin request caching; updates do not force takeover or reload."
+    rule: "No POST, function, or cross-origin request caching; Dakota /app routes, dakota.html, Identity endpoints, and Dakota APIs bypass the service worker; updates do not force takeover or reload."
   - id: "secrets"
     classification: "credentials"
     flow: "Netlify environment -> server functions only"
@@ -346,12 +393,14 @@ data_boundaries:
 
 dynamic_entry_points:
   - "app/src/App.tsx React route graph"
+  - "app/dakota.html and app/src/dakota/** private authenticated second Vite entry"
   - "app/src/data/route-meta.json generated 200-route catalog"
   - "app/src/data/nav-index.json generated navigation catalog"
   - "app/src/data/journal-index.json generated journal catalog"
   - "app/public/examples/lab/concepts.json manifest"
   - "app/public/_redirects compatibility and proxy routes"
   - "app/public/__forms.html Netlify Forms registration"
+  - "Netlify Identity lifecycle and Dakota publish, queue, and operator-state functions"
   - "netlify/functions/*.mts public, internal, background, and scheduled functions"
 
 generated_entry_points:
@@ -359,11 +408,30 @@ generated_entry_points:
   - "app/src/data/nav-index.json"
   - "app/src/data/journal-index.json"
   - "app/dist/**"
+  - "app/dist/dakota.html private Dakota entry"
   - "prerendered route index.html files"
   - "sitemap.xml, image-sitemap.xml, sitemap-index.xml, robots.txt, and llms.txt"
   - "dynamic Website Audit report HTML and OG SVG responses"
 
 functions:
+  - name: "identity-signup"
+    path: "/.netlify/functions/identity-signup"
+    kind: "Netlify Identity lifecycle"
+  - name: "identity-login"
+    path: "/.netlify/functions/identity-login"
+    kind: "Netlify Identity lifecycle"
+  - name: "identity-validate"
+    path: "/.netlify/functions/identity-validate"
+    kind: "Netlify Identity lifecycle"
+  - name: "dakota-publish"
+    path: "/api/dakota/publish"
+    kind: "signed private queue write"
+  - name: "dakota-queue"
+    path: "/api/dakota/queue"
+    kind: "authenticated private queue read"
+  - name: "dakota-operator-state"
+    path: "/api/dakota/operator-state"
+    kind: "authenticated private operator-state read/write"
   - name: "run-audit"
     path: "/examples/audit/api/run-audit"
     kind: "request"
@@ -393,9 +461,13 @@ workers:
   - name: "public service worker"
     source: "app/public/sw.js"
     registration: "app/public/register-sw.js"
-    behavior: "network-first navigation; stale-while-revalidate static assets; passive activation after controlled tabs close"
+    behavior: "network-first public navigation; stale-while-revalidate public static assets; Dakota /app routes, dakota.html, APIs, and Identity endpoints bypass interception; passive activation after controlled tabs close"
 
 jobs:
+  - name: "Dakota daily research and signed publish"
+    trigger: "external local scheduler outside this website and Netlify deploy"
+    work: "bounded public-source prospect research, validation, and signed publication of at most ten records to the canonical Dakota endpoint"
+    boundary: "No automatic outreach or upstream mutation; local runtime state and credentials remain outside the website repository."
   - name: "Website Audit background pipeline"
     trigger: "one-time-token call from run-audit"
     work: "PageSpeed, site scrape, optional Anthropic through Netlify AI Gateway, HTML generation, Blob writes, Netlify Database lead upsert, Gmail API delivery"
@@ -408,6 +480,9 @@ jobs:
     work: "not implemented"
 
 webhooks:
+  - name: "Dakota Netlify Identity lifecycle callbacks"
+    direction: "provider-managed Netlify Identity -> identity-signup, identity-login, and identity-validate functions"
+    status: "source enforces normalized hello@littlefightnyc.com plus server-controlled dakota_operator role; live site-scoped Identity verification remains external"
   - name: "Netlify Forms capture and notification"
     direction: "provider-managed"
     status: "configured in markup; live capture and inbox delivery require external proof"
@@ -466,6 +541,9 @@ budget_baseline:
   enforcement: "Manifest and release-artifact checks are implemented; numeric asset, visual, and field-performance enforcement remains incomplete."
 
 monitors:
+  - name: "Dakota authenticated queue freshness"
+    coverage: "exact-account sign-in, private queue read, and operator-state read/write on the canonical Dakota host"
+    status: "application surfaces implemented; live Identity, Blob, publisher, domain, and deploy verification remain external"
   - name: "consent-gated RUM"
     coverage: "Core Web Vitals and sanitized client errors"
     status: "implemented; provider/account review external"

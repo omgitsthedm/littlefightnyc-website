@@ -117,7 +117,7 @@ export default async (req: Request, context: Context) => {
   }
 
   const store = getStore("audit-pages");
-  const html = await store.get(slug);
+  const html = await store.get(slug, { type: "text" });
 
   if (!html) {
     return new Response(null, {

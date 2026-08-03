@@ -1,17 +1,23 @@
 # Little Fight NYC source of truth
 
-Last verified: 2026-08-01
+Last source verification: 2026-08-03
 
-This file routes agents to the current website source. Recheck point-in-time deploy and commit IDs before a production release.
+This file routes agents to the current website source. The Dakota consolidation
+is present in the working source but is not a live-parity claim; recheck the
+point-in-time deploy, commit, Identity configuration, Blob state, and custom
+domain attachment before a production release.
 
 ## Canonical map
 
 | Field | Verified value |
 | --- | --- |
-| Property | Little Fight NYC website and embedded supporting experiences |
+| Property | Little Fight NYC website, private Dakota desk, and embedded supporting experiences |
 | Production URL | `https://littlefightnyc.com` |
 | Netlify URL | `https://littlefightnyc.netlify.app` |
 | Current domain alias | `https://hey.littlefightnyc.com` |
+| Dakota primary host | `https://www.dakota.littlefightnyc.com` |
+| Dakota redirect host | `https://dakota.littlefightnyc.com` |
+| Dakota operator route | `/app/` |
 | Netlify site | `littlefightnyc` |
 | Netlify site ID | `0907d8fe-7018-48db-a6be-1f906e4b2619` |
 | Production deploy | Resolve from Netlify before release; do not pin stale IDs here |
@@ -23,6 +29,12 @@ This file routes agents to the current website source. Recheck point-in-time dep
 | Build command | `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build` |
 | Publish directory | `app/dist` |
 
+There is one canonical website repository, build, and Netlify production
+property. The Dakota hosts and `littlefightnyc.com` must resolve to the same
+site ID above. An older standalone Dakota checkout or Netlify site may be kept
+temporarily for controlled rollback during the authorized cutover, but it is
+not a source of truth and must not receive new product work.
+
 ## Deployment relationship
 
 GitHub `main` is the canonical source and Netlify production branch. Source pushes to `main` can auto-build and auto-publish. Manual production deploys are not part of the supported workflow.
@@ -32,16 +44,20 @@ Documentation-only housekeeping commits may intentionally advance GitHub `main` 
 For an authorized application release:
 
 1. Confirm the candidate commit, clean worktree, GitHub relationship, and Netlify site ID.
-2. Run `npm run quality:release` under Node 24.
+2. Run `npm run quality:release` under Node 24. This includes the Dakota unit
+   and server-contract suite through `npm run test:dakota`.
 3. Push the exact authorized commit to `main`.
 4. Wait for that exact commit to reach a ready production deploy.
-5. Run `npm run quality:live` and verify representative routes and any authorized external delivery path.
+5. Run `npm run quality:live` and verify representative public routes plus the
+   authorized Dakota host, Identity, queue, and operator-state paths without
+   exposing or submitting prospect data.
 
 Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, build settings, environment variables, or the production branch as part of routine work.
 
 ## Current source
 
-- React/Vite application: `app/src/**`, `app/public/**`, `app/index.html`
+- React/Vite application: `app/src/**`, `app/public/**`, `app/index.html`, `app/dakota.html`
+- Dakota private browser entry: `app/src/dakota/**`
 - Build and verification scripts: `app/scripts/**`, `app/tests/**`, `app/playwright.config.ts`
 - Live serverless surfaces: `netlify/functions/**`
 - Deployment configuration: `netlify.toml`
@@ -53,6 +69,43 @@ The current visual system is Axiom Momentum. Read `app/DESIGN.md` for its contra
 The Website Audit has live function, storage, email, and optional provider surfaces. Routine tests must not create external side effects. Local environment files and secrets are never source.
 
 The former AI phone agent is retired. Public phone actions are ordinary `tel:` and `sms:` paths.
+
+## Dakota architecture and private boundary
+
+Dakota is a private second HTML entry in the canonical Vite build, served at
+`/app/` and the two Dakota hosts above. It intentionally does not join the
+public marketing React Router shell, analytics boot, consent interface,
+prerender catalog, sitemap, or service-worker cache. Its static assets contain
+no candidate or operator data and its document is `noindex` and `no-store`.
+
+Access uses Netlify Identity on the canonical site. The only accepted identity
+is normalized email `hello@littlefightnyc.com` with the server-controlled role
+`dakota_operator`. The browser gate is presentation; these server functions are
+the security boundary:
+
+- `identity-signup`, `identity-login`, and `identity-validate`: exact-account
+  Identity lifecycle enforcement and role assignment
+- `dakota-publish` at `/api/dakota/publish`: HMAC-signed, replay-protected queue
+  ingestion using protected environment variable `DAKOTA_PUBLISH_TOKEN`
+- `dakota-queue` at `/api/dakota/queue`: exact-email-and-role private queue read
+- `dakota-operator-state` at `/api/dakota/operator-state`: exact-email-and-role
+  bounded private state read/write with same-origin write enforcement
+
+Netlify Blobs are site-scoped. Queue store `dakota-private` uses key
+`current/v1` and replay prefix `replay/v1/`; operator store
+`dakota-operator-state` uses key `state/v1`. Identity users, roles, sessions,
+Blob data, the publisher secret, and custom-domain attachment must be verified
+against site ID `0907d8fe-7018-48db-a6be-1f906e4b2619`; they do not migrate
+because source files moved.
+
+The research engine is deliberately not part of the deployed website. Its
+private repository is
+`/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Internal/dakota-2`,
+and runtime SQLite, queues, snapshots, and logs stay outside Git under
+`~/Library/Application Support/LiFi NYC/Dakota 2.0`. The engine performs
+bounded read-only public-source research and publishes only a validated,
+signed queue of at most ten records. Dakota has no automatic outreach path and
+must not send email, SMS, calls, forms, or CRM writes.
 
 ## On-demand business and brand evidence
 
@@ -72,6 +125,10 @@ Read only the document relevant to the task.
 
 - The active GitHub repository carries only the production branch and current
   source. Legacy branches and standalone Audit/Lab checkouts are not sources.
+- The former standalone Dakota dashboard repository and Netlify project are
+  transitional rollback material only, not recovery or development sources.
+  Recover the web surface through this repository and the site ID above; keep
+  the separate local engine boundary intact.
 - Normal source recovery uses verified current Git history. Production rollback
   is a new Git release; historical Netlify deploys are not recovery sources.
 

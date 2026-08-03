@@ -9,6 +9,9 @@
 - Production: `https://littlefightnyc.com`
 - Netlify domain: `https://littlefightnyc.netlify.app`
 - Current alias: `https://hey.littlefightnyc.com`
+- Private Dakota host: `https://www.dakota.littlefightnyc.com`
+- Dakota redirect host: `https://dakota.littlefightnyc.com`
+- Dakota operator route: `/app/`
 - Deployment IDs are intentionally not pinned here. Resolve the current ready
   production deploy and `/release.json` revision before every release action.
 
@@ -64,6 +67,37 @@ The Website Audit functions can send email, write blobs, or call providers. Keep
 
 The retired AI phone agent is not a current service. Public phone actions are ordinary `tel:` and `sms:` links. Do not restore or advertise AI call answering without a new explicit decision.
 
+## Dakota private operator surface
+
+Dakota is part of this canonical React/Vite build and the same Netlify site ID
+`0907d8fe-7018-48db-a6be-1f906e4b2619`. Its dedicated HTML entry is
+`app/dakota.html`, its browser source is `app/src/dakota/**`, and its private
+APIs and Identity hooks live under `netlify/functions/**`. Do not restore an
+independent Dakota website repository, build, or Netlify production property.
+
+Dakota's non-negotiable contract is:
+
+- The only authorized operator is normalized email `hello@littlefightnyc.com`
+  with the server-controlled Identity role `dakota_operator`.
+- Browser checks are presentation only. Queue reads, operator-state reads and
+  writes, and every other private request must enforce both exact email and role
+  server-side.
+- The public-source queue is capped at ten records. No queue, SQLite database,
+  raw upstream payload, prospect snapshot, credential, or operator notebook may
+  enter Git or the browser bundle.
+- Dakota may store bounded private human research, draft, next-action, and
+  outcome state in Netlify Blobs. It must not mutate the public-source queue or
+  trigger email, SMS, calls, form submission, CRM writes, or automatic outreach.
+- Queue publishing uses the signed `/api/dakota/publish` function and the
+  protected `DAKOTA_PUBLISH_TOKEN`; never add a static candidate-data endpoint.
+
+The separate private engine remains at
+`/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Internal/dakota-2`.
+It performs bounded read-only public-source research and keeps SQLite, queues,
+snapshots, and logs under `~/Library/Application Support/LiFi NYC/Dakota 2.0`.
+The engine is not deployed with this website; only its validated, signed,
+maximum-ten-record queue crosses into the site's private Blob store.
+
 ## Commands
 
 Node 24 and npm 10 or newer are required. Install only when dependencies are missing or changed:
@@ -81,6 +115,7 @@ npm run dev
 npm run lint
 npm run build
 npm run typecheck:functions
+npm run test:dakota
 npm run quality:fast
 npm run quality:full
 npm run quality:release
@@ -94,7 +129,7 @@ Choose the narrowest proportional lane:
 - Broad behavior changes: `npm run quality:full`.
 - Authorized production candidates: `npm run quality:release` before push and `npm run quality:live` after the exact deploy is ready.
 
-The Netlify build command is `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build`; the publish directory is `app/dist`.
+The Netlify build command is `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build`; the publish directory is `app/dist`. The root quality lanes run `npm run test:dakota` in addition to function typechecking and the established application gates.
 
 ## Design and content
 
@@ -108,6 +143,9 @@ Netlify is Git-connected to GitHub `main`. A normal source commit pushed to `mai
 
 - Never run a manual `netlify deploy --prod` for this property.
 - Never link or unlink the Netlify site, change its site ID, domains, build settings, environment variables, or production branch without explicit authorization.
+- Dakota Identity users, roles, Blobs, secrets, and custom domains are
+  site-scoped. Never move or recreate them on another Netlify property; verify
+  the exact canonical site ID before any authorized configuration action.
 - Never push an application or configuration change to `main` without explicit production authorization.
 - For an authorized documentation-only housekeeping push that must not deploy, put `[skip netlify]` in the most recent commit message and verify that the production deploy ID and live fingerprint remain unchanged.
 - Do not rewrite shared history. Legacy branches belong in cold storage, not in

@@ -1977,11 +1977,12 @@ function sitemapIndex() {
 }
 
 function robots() {
-  const botBlocks = aiBots.map((bot) => `User-agent: ${bot}\nAllow: /\nDisallow:\n`).join("\n");
+  const privatePaths = "Disallow: /app/\nDisallow: /dakota.html\nDisallow: /api/dakota/";
+  const botBlocks = aiBots.map((bot) => `User-agent: ${bot}\nAllow: /\n${privatePaths}\n`).join("\n");
 
   // Explicit catch-all — without a "User-agent: *" group some parsers treat a
   // rules file with no matching group inconsistently.
-  const catchAll = "User-agent: *\nAllow: /\n";
+  const catchAll = `User-agent: *\nAllow: /\n${privatePaths}\n`;
 
   return `${botBlocks}\n${catchAll}\nSitemap: ${siteUrl}/sitemap-index.xml\nSitemap: ${siteUrl}/sitemap.xml\nSitemap: ${siteUrl}/image-sitemap.xml\nSitemap: ${siteUrl}/examples/audit/sitemap.xml\n`;
 }

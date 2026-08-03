@@ -11,7 +11,7 @@ pinned_version = "6"
 
 [build]
 base = "."
-# The eight handlers in netlify/functions are TypeScript that Netlify
+# The handlers in netlify/functions are TypeScript that Netlify
 # transpiles without typechecking, and the app build only covers app/src —
 # so nothing on the deploy path ever checked them. A type error in a
 # function shipped green. typecheck:functions runs from the repo root and
@@ -44,6 +44,41 @@ for = "/speculation-rules.json"
   [headers.values]
   Content-Type = "application/speculationrules+json"
   Cache-Control = "public, max-age=300"
+
+# Dakota is a private operator surface inside this one Netlify project. The
+# static shell contains no queue data, but it must never be cached, indexed,
+# framed, or allowed to inherit the marketing site's analytics connections.
+[[headers]]
+for = "/dakota.html"
+
+  [headers.values]
+  Cache-Control = "private, no-store, max-age=0"
+  Content-Security-Policy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; worker-src 'none'"
+  Cross-Origin-Embedder-Policy = "require-corp"
+  Cross-Origin-Opener-Policy = "same-origin"
+  Cross-Origin-Resource-Policy = "same-origin"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Referrer-Policy = "no-referrer"
+  Vary = "Cookie, Authorization"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
+
+[[headers]]
+for = "/app/*"
+
+  [headers.values]
+  Cache-Control = "private, no-store, max-age=0"
+  Content-Security-Policy = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; worker-src 'none'"
+  Cross-Origin-Embedder-Policy = "require-corp"
+  Cross-Origin-Opener-Policy = "same-origin"
+  Cross-Origin-Resource-Policy = "same-origin"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+  Referrer-Policy = "no-referrer"
+  Vary = "Cookie, Authorization"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
 
 [[headers]]
 for = "/assets/*"

@@ -16,21 +16,24 @@
     "audit:signal": "npm --prefix app run audit:signal",
     "audit:quality-manifest": "npm --prefix app run audit:quality-manifest",
     "audit:release": "npm --prefix app run audit:release",
+    "test:dakota": "vitest run app/src/dakota netlify/functions/_shared/dakota",
     "test:browser": "npm --prefix app run test:browser",
-    "quality:fast": "npm run typecheck:functions && npm --prefix app run quality:fast",
-    "quality:full": "npm run typecheck:functions && npm --prefix app run quality:full",
-    "quality:release": "npm run typecheck:functions && npm --prefix app run quality:release",
+    "quality:fast": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:fast",
+    "quality:full": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:full",
+    "quality:release": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:release",
     "quality:live": "npm --prefix app run quality:live",
-    "quality:maintenance": "npm run typecheck:functions && npm --prefix app run quality:maintenance",
+    "quality:maintenance": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:maintenance",
     "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json"
   },
   "dependencies": {
-    "@netlify/blobs": "^8.2.0",
+    "@netlify/blobs": "10.7.11",
     "@netlify/database": "^1.1.0",
     "@netlify/functions": "^5.3.0",
+    "@netlify/identity": "1.2.0",
     "nodemailer": "^9.0.3"
   },
   "devDependencies": {
-    "@types/nodemailer": "^8.0.1"
+    "@types/nodemailer": "^8.0.1",
+    "vitest": "4.1.10"
   }
 }

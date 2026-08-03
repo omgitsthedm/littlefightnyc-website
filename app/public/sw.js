@@ -35,7 +35,18 @@ self.addEventListener("fetch", (event) => {
   }
 
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin || url.pathname.startsWith("/.netlify/functions/")) {
+  const privateDakotaRequest =
+    url.pathname === "/dakota.html" ||
+    url.pathname === "/app" ||
+    url.pathname.startsWith("/app/") ||
+    url.pathname.startsWith("/api/dakota/") ||
+    url.pathname.startsWith("/.netlify/identity");
+
+  if (
+    url.origin !== self.location.origin ||
+    url.pathname.startsWith("/.netlify/functions/") ||
+    privateDakotaRequest
+  ) {
     return;
   }
 

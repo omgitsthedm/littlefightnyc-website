@@ -48,6 +48,16 @@ const functionFiles = fs
   .readdirSync(functionsRoot, { withFileTypes: true })
   .filter((entry) => entry.isFile() && entry.name.endsWith(".mts"))
   .map((entry) => path.join(functionsRoot, entry.name));
+const expectedAuditHandlerNames = [
+  "check-status.mts",
+  "cleanup-expired.mts",
+  "og-image.mts",
+  "record-engagement.mts",
+  "report-views.mts",
+  "run-audit-background.mts",
+  "run-audit.mts",
+  "serve-audit.mts",
+];
 const helperFiles = walk(path.join(functionsRoot, "lib")).filter((file) =>
   file.endsWith(".mts"),
 );
@@ -55,8 +65,11 @@ const netlifySourceFiles = [...functionFiles, ...helperFiles];
 
 if (files.length !== 21) failures.push(`expected 21 archived files, found ${files.length}`);
 if (htmlFiles.length !== 10) failures.push(`expected 10 HTML pages, found ${htmlFiles.length}`);
-if (functionFiles.length !== 8) {
-  failures.push(`expected 8 function handlers, found ${functionFiles.length}`);
+const functionNames = new Set(functionFiles.map((file) => path.basename(file)));
+for (const handlerName of expectedAuditHandlerNames) {
+  if (!functionNames.has(handlerName)) {
+    failures.push(`missing Audit function handler: ${handlerName}`);
+  }
 }
 if (helperFiles.length !== 2) {
   failures.push(`expected 2 function helpers, found ${helperFiles.length}`);
@@ -203,5 +216,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `Audit archive audit OK — ${htmlFiles.length} HTML pages, ${files.length} static files, ${functionFiles.length} function handlers, ${helperFiles.length} helpers.`,
+  `Audit archive audit OK — ${htmlFiles.length} HTML pages, ${files.length} static files, ${expectedAuditHandlerNames.length} Audit function handlers (${functionFiles.length} total), ${helperFiles.length} helpers.`,
 );
