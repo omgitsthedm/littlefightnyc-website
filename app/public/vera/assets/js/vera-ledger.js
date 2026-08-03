@@ -330,6 +330,7 @@
       if (l.contact_reuse_count) tells.push('The contact behind this post appears on ' + l.contact_reuse_count + ' listings in the net (Scam School: "One phone number, thirty listings").');
       if (l.desc_clone_of) tells.push('The description is a near-verbatim template of another listing at a different address — classic template scam fingerprint.');
       if (l.photo_clone_suspect) tells.push('The lead photo also appears on a listing at a different address — treat every photo here as unproven.');
+      if (l.ai_photo_suspect) tells.push('The lead photo reads as AI-generated (' + (l.ai_photo_probability ? Math.round(l.ai_photo_probability * 100) + '% classifier confidence' : 'high classifier confidence') + ') — probabilistic, not proof; disclosure of AI-altered photos is a pending NYC rule VERA applies early.');
       if (tells.length) {
         html += '<div class="insp-sec"><h3>Computed tells</h3><ul class="bad">' + tells.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
       }

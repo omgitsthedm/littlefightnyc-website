@@ -248,6 +248,11 @@
         var tellsTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
         check('relist tell renders in verify tab', tellsTxt.indexOf('counter was reset') > -1 && tellsTxt.indexOf('44 days') > -1, '');
         check('contact-reuse tell renders', tellsTxt.indexOf('6 listings') > -1, '');
+        probe3.ai_photo_suspect = true; probe3.ai_photo_probability = 0.91;
+        L.setTab('verify');
+        var aiTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
+        check('AI-photo tell is probabilistic on its face', aiTxt.indexOf('91% classifier confidence') > -1 && aiTxt.indexOf('not proof') > -1, '');
+        delete probe3.ai_photo_suspect; delete probe3.ai_photo_probability;
         L.close();
         delete probe3.relist_suspect; delete probe3.true_days_on_market; delete probe3.contact_reuse_count;
       }
