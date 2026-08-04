@@ -1362,6 +1362,40 @@
     return ' <b class="warn">· ' + days + ' day' + (days === 1 ? '' : 's') + ' old — the last sweep did not land</b>';
   }
 
+  /* The limitation VERA has to say out loud.
+
+     Verification needs a street-number address, and the sources where
+     small landlords actually post mostly do not carry one — 177 of 223
+     craigslist records on 2026-08-04 had no house number, and checking
+     the post body recovered three. So the slice VERA can check against
+     city records skews hard toward buildings that are indexed BY
+     address, which means bigger owners: on that day 32 of 33 verified
+     listings belonged to landlords holding ten or more buildings.
+
+     A product that grades landlords owes the reader the shape of its own
+     blind spot. Computed from the live feed, so it cannot drift into a
+     comforting fiction. */
+  function verificationReach() {
+    var pool = POOL.length;
+    if (!pool) return '';
+    var matched = POOL.filter(function (l) { return /^matched/.test(String(l.verification_status || '')); });
+    var withPf = matched.filter(function (l) { return (l.landlord_portfolio || {}).bldgs; });
+    var big = withPf.filter(function (l) { return +l.landlord_portfolio.bldgs >= 10; }).length;
+    var pct = Math.round(100 * matched.length / pool);
+    return '<p>Of the <b>' + pool + '</b> listings in tonight\'s net, VERA could match <b>' +
+      matched.length + '</b> — about <b>' + pct + '%</b> — to a building in the city\'s records. ' +
+      'The rest are not hidden from you; they are in Browse. They simply carry no house number, ' +
+      'and a landlord\'s record cannot be looked up without one.</p>' +
+      (withPf.length
+        ? '<p>That has a bias worth knowing before you read any grade here. Buildings are indexed ' +
+          'by address, so the listings VERA <i>can</i> verify lean toward owners who post one — ' +
+          'tonight <b>' + big + ' of ' + withPf.length + '</b> verified listings belonged to a landlord ' +
+          'holding ten or more buildings. The small owner renting out two floors of their own house ' +
+          'is the hardest to verify and the whole reason this exists. VERA is honest about not ' +
+          'having found many of them yet.</p>'
+        : '');
+  }
+
   function renderSystem(page) {
     var order = ['discover', 'normalize', 'dedupe', 'enrich', 'score', 'publish'];
     var stages = D.stages || {};
@@ -1407,6 +1441,7 @@
         '<p>Verified Evaluation for Rental Analysis — a personal apartment-search engine for one hunt: privately-owned rentals, under ' + money(C.FIT.maxRent) + ', in the neighborhoods that fit one life. It watches the fragmented channels where small landlords actually post, joins every listing to the city\'s own records, and refuses to show what it cannot stand behind.</p>' +
         '<p>Fairness on the record: every steward grade is computed from cited public records — never from any protected characteristic — and owners have a standing <a href="/vera/corrections/">correction channel</a>.</p>' +
         '<p>Read-only by principle: VERA never messages a landlord, never floods an inbox, never squats a viewing slot. It makes one human faster, not the market worse.</p>' +
+        '<h3 class="ethos__h">What VERA cannot see</h3>' + verificationReach() +
         '<h3 class="ethos__h">What VERA is built on</h3>' +
         '<p>Nothing here is VERA\'s own opinion of a building. It is public data, read carefully:</p>' +
         '<ul class="credits">' +
