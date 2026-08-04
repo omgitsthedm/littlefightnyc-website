@@ -499,6 +499,31 @@
       check('a healthy records layer shows no warning', !$('.recwarn'), '');
       Dh.records_health = hadRH;
 
+      /* ---- the 87% VERA cannot verify still get a way to check ----
+         An unverified listing used to get four generic lines and a link
+         back to the source, while a verified one got a full building
+         record. The tools are the same either way. */
+      var _unver = POOL.filter(function (l) { return !/^matched/.test(String(l.verification_status || '')); })[0];
+      var _ver = POOL.filter(function (l) { return /^matched/.test(String(l.verification_status || '')); })[0];
+      if (_unver) {
+        L.open(_unver.listing_uid);
+        $('[data-insp-tabs] [data-tab="verify"]').click();
+        var _vt = $('[data-insp-body]');
+        check('an unverified listing is handed the public-record tools',
+          $$('.vtool', _vt).length >= 5, $$('.vtool', _vt).length + ' tools');
+        check('and is told plainly why VERA could not do it',
+          /could not check this one/i.test(_vt.textContent), '');
+        L.close();
+      }
+      if (_ver) {
+        L.open(_ver.listing_uid);
+        $('[data-insp-tabs] [data-tab="verify"]').click();
+        check('a verified listing is not handed the self-check block',
+          !/could not check this one/i.test($('[data-insp-body]').textContent),
+          'it already has the record');
+        L.close();
+      }
+
       /* ---- the drop's "see the rest" jump ----
          This link only renders on a night when more than eight listings
          clear every gate, which is rare — so it would rot unnoticed. The

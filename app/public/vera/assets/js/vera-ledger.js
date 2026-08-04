@@ -410,6 +410,26 @@
         kvRow('Address confidence', l.address_confidence != null ? num(l.address_confidence) : null) +
         kvRow('Duplicates seen', l.duplicate_count != null ? String(l.duplicate_count) : null) + '</dl>';
       if (l.source_url) html += '<a class="insp-link" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Cross-check the source listing ↗</a>';
+
+      /* Hand the check over when VERA could not make it.
+         Verification needs a house number, and 87% of the net does not
+         publish one — those listings were getting four lines of generic
+         advice and a link back to the post, while a verified listing got
+         a full building record. The renter WILL have the address at the
+         viewing, which is the moment these tools are worth most, so the
+         same ones VERA uses are offered outright rather than kept for the
+         listings that happened to be checkable. */
+      if (!/^matched/.test(String(l.verification_status || ''))) {
+        html += '<div class="insp-sec"><h3>VERA could not check this one — here is how you do it</h3>' +
+          '<p class="insp-fine">No house number in the post, so there is no building to look up yet. ' +
+          'Ask for the exact address before you apply, then run it through the same public records ' +
+          'VERA uses. It takes about a minute and it is the difference between a stranger\'s word and ' +
+          'the city\'s.</p>' +
+          '<div class="vtools">' + C.VERIFY_TOOLS.map(function (v) {
+            return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer">' +
+              '<b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
+          }).join('') + '</div></div>';
+      }
     }
 
     body.innerHTML = html || '<p class="lane__empty">Nothing recorded on this tab.</p>';
