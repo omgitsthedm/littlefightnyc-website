@@ -493,7 +493,13 @@
       Dh.records_health = hadRH;
 
       /* ---- hygiene ---- */
-      check('no private feed touched', ['./data/public.json', 'https://vera-pipeline.netlify.app/data/public.json'].every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), '');
+      // Reads the LIVE feed list, not a copy of it. The copy this replaced
+      // asserted a hardcoded pair, so it would have gone on passing no
+      // matter what origin was actually added.
+      var feeds = (app.FEEDS || []).map(function (f) { return typeof f === 'string' ? f : f.url; });
+      check('every feed origin is declared', feeds.length >= 2, feeds.length + ' origins');
+      check('no private feed touched', feeds.length > 0 && feeds.every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), feeds.join(' '));
+      check('every feed reads public.json only', feeds.every(function (u) { return /public\.json$/.test(u); }), '');
       check('brand present', ($('.brand__name') || { textContent: '' }).textContent === 'VERA', '');
       check('legacy routes redirect', (function () { location.hash = '#/command'; app.route(); return state.route === 'market'; })(), state.route);
 

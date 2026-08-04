@@ -10,7 +10,17 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = C.esc, money = C.money, num = C.num, median = C.median, timeago = C.timeago;
 
-  var FEEDS = ['./data/public.json', 'https://vera-pipeline.netlify.app/data/public.json'];
+  /* Three independent origins for the same sanitized feed. The third is
+     published straight from the nightly cloud sweep and needs no token, so
+     it keeps refreshing when the operator's machine is off — which is when
+     the other two go stale. We do not take the first that answers; we take
+     the FRESHEST that answers. See boot(). */
+  var FEEDS = [
+    { url: './data/public.json', label: 'site' },
+    { url: 'https://vera-pipeline.netlify.app/data/public.json', label: 'pipeline' },
+    { url: 'https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/public.json', label: 'cloud' },
+  ];
+  var FEED_RACE_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
   var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1259,6 +1269,26 @@
      SYSTEM — the machine, its sources, and its ethics.
      ================================================================ */
 
+  /* Which of the three origins actually served this page, in plain words.
+     A visitor deciding whether to trust a listing should be able to see
+     where the data came from and how old it is, without reading network
+     traces. Same reason the sweep line never hides an offline cache. */
+  var ORIGIN_NOTE = {
+    site: 'this site’s own copy, written at deploy',
+    pipeline: 'the pipeline mirror',
+    cloud: 'the nightly cloud sweep — published without any operator machine',
+  };
+
+  function feedAge() {
+    var t = Date.parse((D && D.generated_at) || '');
+    if (!t) return '';
+    var hours = (Date.now() - t) / 36e5;
+    // The sweep is nightly, so a day and a half without one is a real fact
+    // about the data, not a detail to bury.
+    if (hours < 36) return '';
+    return ' <b class="warn">· ' + Math.floor(hours / 24) + ' days old — the last sweep did not land</b>';
+  }
+
   function renderSystem(page) {
     var order = ['discover', 'normalize', 'dedupe', 'enrich', 'score', 'publish'];
     var stages = D.stages || {};
@@ -1282,8 +1312,9 @@
           (rel.length ? sparkline(rel, 560, 170, '#c8a468') : '<p class="lane__empty">History arrives with the next publishes.</p>') + '</div>' +
         '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2><p class="panel__hint">' + esc(run.run_id || '') + '</p></div>' +
           '<dl class="kv">' +
-            '<dt>Generated</dt><dd>' + esc(D.generated_at || '—') + '</dd>' +
+            '<dt>Generated</dt><dd>' + esc(D.generated_at || '—') + feedAge() + '</dd>' +
             '<dt>Cadence</dt><dd>' + esc(run.cadence || 'nightly') + '</dd>' +
+            '<dt>Served by</dt><dd>' + esc(ORIGIN_NOTE[feedOrigin] || 'unknown origin') + '</dd>' +
             '<dt>Pool</dt><dd>' + POOL.length + ' listings</dd>' +
             '<dt>Lens</dt><dd>public — contacts, notes, and drafts stripped at source</dd>' +
           '</dl></div>' +
@@ -1629,33 +1660,64 @@
   }
 
   var servedFromCache = null;
+  var feedOrigin = null;
 
-  function boot(i) {
-    i = i || 0;
-    if (i >= FEEDS.length) {
-      var out = $('[data-loading]');
-      if (out) out.innerHTML = '<p>Could not reach the VERA feed. It publishes nightly — try again shortly.</p>';
-      return;
-    }
-    fetch(FEEDS[i], { cache: 'no-cache' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        servedFromCache = r.headers.get('X-Vera-Cache');
-        return r.json();
-      })
-      .then(function (data) {
+  /* Ask every origin at once and keep the newest answer.
+
+     Taking the first origin that responded was wrong in the case that
+     matters most: the same-origin copy always wins the race, so a site
+     deployed three days ago permanently masked a cloud feed published two
+     hours ago. Freshness is the whole point of having more than one origin.
+
+     Bounded by FEED_RACE_MS so one hanging origin cannot hold up first
+     paint — whatever has arrived by then is used. */
+  function boot() {
+    var results = [];
+    var pending = FEEDS.length;
+    var done = false;
+
+    function finish() {
+      if (done) return;
+      done = true;
+      if (!results.length) {
+        var out = $('[data-loading]');
+        if (out) out.innerHTML = '<p>Could not reach the VERA feed. It publishes nightly — try again shortly.</p>';
+        return;
+      }
+      results.sort(function (a, b) { return b.at - a.at; });
+      var best = results[0];
+      feedOrigin = best.label;
+      servedFromCache = best.cache;
+      try {
+        adopt(best.data);
+      } catch (err) {
         // A render error is not a feed error: catching them together used to
         // refetch the fallback origin and re-run the same broken render.
-        try {
-          adopt(data);
-        } catch (err) {
-          if (window.console && console.error) console.error('VERA could not render the feed', err);
-          var box = $('[data-loading]');
-          if (box) box.innerHTML = '<p>VERA reached the feed but could not draw it. Reload to try again.</p>';
-        }
-      }, function () {
-        boot(i + 1);
-      });
+        if (window.console && console.error) console.error('VERA could not render the feed', err);
+        var box = $('[data-loading]');
+        if (box) box.innerHTML = '<p>VERA reached the feed but could not draw it. Reload to try again.</p>';
+      }
+    }
+
+    function settled() { if (--pending <= 0) finish(); }
+
+    FEEDS.forEach(function (feed) {
+      var cache = null;
+      fetch(feed.url, { cache: 'no-cache' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          cache = r.headers.get('X-Vera-Cache');
+          return r.json();
+        })
+        .then(function (data) {
+          // An unparseable date sorts last rather than winning by accident.
+          var at = Date.parse((data && data.generated_at) || '') || 0;
+          results.push({ data: data, at: at, label: feed.label, cache: cache });
+          settled();
+        }, settled);
+    });
+
+    setTimeout(finish, FEED_RACE_MS);
   }
 
   window.__VERA_APP = {
@@ -1665,6 +1727,7 @@
     filtered: filtered, renderRoute: renderRoute, tidyTitle: tidyTitle, route: route,
     addressOf: addressOf, gallery: gallery, valueRead: valueRead, profile: function () { return profile; },
     commuteRead: commuteRead,
+    FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
   };
 
   window.__vera = {
