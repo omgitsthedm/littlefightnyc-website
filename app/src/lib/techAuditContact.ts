@@ -10,9 +10,42 @@ export type TechAuditFollowUpPreference =
 export type TechAuditContactRoute = "email" | "phone";
 export type TechAuditPreferredRoute = TechAuditContactRoute | "sms";
 
+export const TECH_AUDIT_LEAD_INTENTS = [
+  "website",
+  "support",
+  "consulting",
+  "systems",
+  "general",
+] as const;
+
+export type TechAuditLeadIntent = (typeof TECH_AUDIT_LEAD_INTENTS)[number];
+
+export const TECH_AUDIT_SESSION_KEYS = {
+  draft: "lf_tech_audit_draft",
+  intent: "lf_lead_intent",
+  replyRoute: "lf_tech_audit_reply_route",
+  report: "lf_tech_audit_report_id",
+  submitted: "lf_tech_audit_submitted",
+} as const;
+
+export type TechAuditConfirmationState = {
+  submitted: boolean;
+  intent: TechAuditLeadIntent | null;
+  replyRoute: TechAuditPreferredRoute | null;
+  reportId: string;
+};
+
+export type TechAuditReplyLanguage = {
+  action: "emails you" | "texts you" | "calls you" | "replies";
+  expectation: "an email" | "a text" | "a call" | "a reply";
+};
+
 const FOLLOW_UP_PREFERENCE_SET = new Set<string>(TECH_AUDIT_FOLLOW_UP_PREFERENCES);
+const LEAD_INTENT_SET = new Set<string>(TECH_AUDIT_LEAD_INTENTS);
+const PREFERRED_ROUTE_SET = new Set<string>(["email", "phone", "sms"]);
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/u;
 const PHONE = /^\+?[0-9().\-\s]{7,32}(?:(?:x|ext\.?)\s*\d{1,8})?$/iu;
+const CONFIRMATION_MARKER = "tech-audit";
 
 /**
  * One shared contact contract powers both the public form and Dakota's inbound
@@ -53,6 +86,24 @@ export function normalizeTechAuditFollowUpPreference(
     : "fastest";
 }
 
+export function parseTechAuditLeadIntent(value: unknown): TechAuditLeadIntent | null {
+  return typeof value === "string" && LEAD_INTENT_SET.has(value)
+    ? value as TechAuditLeadIntent
+    : null;
+}
+
+export function parseTechAuditPreferredRoute(value: unknown): TechAuditPreferredRoute | null {
+  return typeof value === "string" && PREFERRED_ROUTE_SET.has(value)
+    ? value as TechAuditPreferredRoute
+    : null;
+}
+
+export function safeTechAuditReportId(value: unknown): string {
+  const trimmed = typeof value === "string" ? value.trim() : "";
+  if (trimmed.length === 0 || trimmed.length > 300) return "";
+  return /^[a-z0-9](?:[a-z0-9-]{0,298}[a-z0-9])?$/.test(trimmed) ? trimmed : "";
+}
+
 /**
  * Resolve only exact routes. In particular, a phone number chosen for texting
  * is stored as SMS, while an email paired with a text request is not rewritten
@@ -65,6 +116,48 @@ export function techAuditPreferredRoute(
   if (preference === "fastest") return contactRoute;
   if (preference === "text") return contactRoute === "phone" ? "sms" : null;
   return preference === contactRoute ? contactRoute : null;
+}
+
+/**
+ * Carry only non-sensitive, allowlisted state through Netlify's native POST
+ * redirect. Contact details and form answers never enter the URL.
+ */
+export function techAuditConfirmationPath({
+  intent,
+  replyRoute,
+  reportId = "",
+}: {
+  intent: TechAuditLeadIntent;
+  replyRoute: TechAuditPreferredRoute | null;
+  reportId?: string;
+}): string {
+  const params = new URLSearchParams({
+    submitted: CONFIRMATION_MARKER,
+    intent,
+  });
+  if (replyRoute) params.set("reply", replyRoute);
+  const safeReportId = safeTechAuditReportId(reportId);
+  if (safeReportId) params.set("report", safeReportId);
+  return `/thanks/?${params.toString()}`;
+}
+
+export function readTechAuditConfirmation(search: string): TechAuditConfirmationState {
+  const params = new URLSearchParams(search);
+  return {
+    submitted: params.get("submitted") === CONFIRMATION_MARKER,
+    intent: parseTechAuditLeadIntent(params.get("intent")),
+    replyRoute: parseTechAuditPreferredRoute(params.get("reply")),
+    reportId: safeTechAuditReportId(params.get("report")),
+  };
+}
+
+export function techAuditReplyLanguage(
+  replyRoute: TechAuditPreferredRoute | null,
+): TechAuditReplyLanguage {
+  if (replyRoute === "email") return { action: "emails you", expectation: "an email" };
+  if (replyRoute === "sms") return { action: "texts you", expectation: "a text" };
+  if (replyRoute === "phone") return { action: "calls you", expectation: "a call" };
+  return { action: "replies", expectation: "a reply" };
 }
 
 export function techAuditFollowUpProblem(

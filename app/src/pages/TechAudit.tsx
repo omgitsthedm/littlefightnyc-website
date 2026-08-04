@@ -13,10 +13,16 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import {
   normalizeTechAuditFollowUpPreference,
+  parseTechAuditLeadIntent,
+  safeTechAuditReportId,
+  TECH_AUDIT_SESSION_KEYS,
+  techAuditConfirmationPath,
   techAuditContactProblem,
   techAuditContactRoute,
   techAuditFollowUpProblem,
+  techAuditPreferredRoute,
   type TechAuditFollowUpPreference,
+  type TechAuditLeadIntent,
 } from "@/lib/techAuditContact";
 import "@/styles/editorial/tech-audit.css";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
@@ -76,29 +82,13 @@ function composeMessage(symptom: string | null, urgency: string | null): string 
  * All storage access is guarded — private modes that throw just degrade to
  * the old behavior. */
 
-/* Cleared by /thanks/ on confirmed success (Thanks.tsx uses the literal key
- * to avoid importing this chunk) — keep the two in sync. */
-const DRAFT_KEY = "lf_tech_audit_draft";
-/* Read by /thanks/ after the native Netlify form POST. Keep the literal key in
- * Thanks.tsx in sync so report context survives even if an intermediary drops
- * the action query string. */
-const REPORT_CONTEXT_KEY = "lf_tech_audit_report_id";
+const DRAFT_KEY = TECH_AUDIT_SESSION_KEYS.draft;
+const REPORT_CONTEXT_KEY = TECH_AUDIT_SESSION_KEYS.report;
 const WEBSITE_INTENT = "website";
 const WEBSITE_ROUTE = auditRoutes[0];
-type LeadIntent = "website" | "support" | "consulting" | "systems" | "general";
-const LEAD_INTENTS = new Set<LeadIntent>([
-  "website",
-  "support",
-  "consulting",
-  "systems",
-  "general",
-]);
 
-function leadIntentFromQuery(params: URLSearchParams): LeadIntent {
-  const value = params.get("intent");
-  return value && LEAD_INTENTS.has(value as LeadIntent)
-    ? (value as LeadIntent)
-    : "general";
+function leadIntentFromQuery(params: URLSearchParams): TechAuditLeadIntent {
+  return parseTechAuditLeadIntent(params.get("intent")) ?? "general";
 }
 
 function queryValue(params: URLSearchParams, key: string, maxLength: number): string {
@@ -119,9 +109,7 @@ function createDakotaCaptureId(): string {
  * reject malformed input instead of trying to repair it into another report.
  */
 function auditReportId(params: URLSearchParams): string {
-  const value = (params.get("report") ?? "").trim();
-  if (value.length === 0 || value.length > 300) return "";
-  return /^[a-z0-9](?:[a-z0-9-]{0,298}[a-z0-9])?$/.test(value) ? value : "";
+  return safeTechAuditReportId(params.get("report"));
 }
 
 /**
@@ -231,14 +219,13 @@ export default function TechAudit() {
   const [searchParams] = useSearchParams();
   const websiteUrl = sharedWebsiteUrl(searchParams);
   const reportId = auditReportId(searchParams);
-  const confirmationPath = reportId
-    ? `/thanks/?report=${encodeURIComponent(reportId)}`
-    : "/thanks/";
   // A shared URL (from the PWA share target) is, by definition, a website the
   // owner wants us to look at. An Audit report is also inherently website
   // context, so either one drops the form into website mode.
   const requestedIntent = leadIntentFromQuery(searchParams);
-  const leadIntent: LeadIntent = websiteUrl || reportId ? WEBSITE_INTENT : requestedIntent;
+  const leadIntent: TechAuditLeadIntent = websiteUrl || reportId
+    ? WEBSITE_INTENT
+    : requestedIntent;
   const websiteIntent = leadIntent === WEBSITE_INTENT;
   // Attribute a lead that arrived via the PWA share target (no explicit source,
   // but the share sheet passed text/title) so shares are measurable.
@@ -278,6 +265,14 @@ export default function TechAudit() {
   const auditStartedRef = useRef(false);
   const attribution = readAttribution();
   const contactRoute = techAuditContactRoute(fields.contact);
+  const preferredRoute = contactRoute
+    ? techAuditPreferredRoute(contactRoute, fields.follow_up)
+    : null;
+  const confirmationPath = techAuditConfirmationPath({
+    intent: leadIntent,
+    replyRoute: preferredRoute,
+    reportId,
+  });
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
   // buzz when validation blocks it.
@@ -471,6 +466,16 @@ export default function TechAudit() {
 
     const captureId = dakotaCaptureId || createDakotaCaptureId();
     const submittedAt = new Date().toISOString();
+    const submittedContact = (
+      form.elements.namedItem("contact") as HTMLInputElement | null
+    )?.value ?? "";
+    const submittedPreference = normalizeTechAuditFollowUpPreference(
+      (form.elements.namedItem("follow_up") as HTMLSelectElement | null)?.value,
+    );
+    const submittedContactRoute = techAuditContactRoute(submittedContact);
+    const submittedReplyRoute = submittedContactRoute
+      ? techAuditPreferredRoute(submittedContactRoute, submittedPreference)
+      : null;
     setDakotaCaptureId(captureId);
     setDakotaSubmittedAt(submittedAt);
     // Keep the native form payload correct before React flushes this discrete
@@ -479,6 +484,13 @@ export default function TechAudit() {
     const submittedAtInput = form.elements.namedItem("dakota_submitted_at") as HTMLInputElement | null;
     if (captureInput) captureInput.value = captureId;
     if (submittedAtInput) submittedAtInput.value = submittedAt;
+    // Re-resolve from the submitted DOM values so the native redirect always
+    // carries the exact, consented response route even before React re-renders.
+    form.setAttribute("action", techAuditConfirmationPath({
+      intent: leadIntent,
+      replyRoute: submittedReplyRoute,
+      reportId,
+    }));
 
     hapticSubmit();
 
@@ -489,9 +501,17 @@ export default function TechAudit() {
     setErrors({});
     try {
       window.sessionStorage.setItem(
-        "lf_lead_intent",
+        TECH_AUDIT_SESSION_KEYS.intent,
         leadIntent,
       );
+      if (submittedReplyRoute) {
+        window.sessionStorage.setItem(
+          TECH_AUDIT_SESSION_KEYS.replyRoute,
+          submittedReplyRoute,
+        );
+      } else {
+        window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.replyRoute);
+      }
       if (reportId) {
         window.sessionStorage.setItem(REPORT_CONTEXT_KEY, reportId);
       } else {

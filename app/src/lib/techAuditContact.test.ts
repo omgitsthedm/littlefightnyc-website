@@ -2,10 +2,16 @@ import { describe, expect, it } from "vitest";
 
 import {
   normalizeTechAuditFollowUpPreference,
+  parseTechAuditLeadIntent,
+  parseTechAuditPreferredRoute,
+  readTechAuditConfirmation,
+  safeTechAuditReportId,
+  techAuditConfirmationPath,
   techAuditContactProblem,
   techAuditContactRoute,
   techAuditFollowUpProblem,
   techAuditPreferredRoute,
+  techAuditReplyLanguage,
   type TechAuditContactRoute,
   type TechAuditFollowUpPreference,
   type TechAuditPreferredRoute,
@@ -65,4 +71,52 @@ describe("Tech Audit contact contract", () => {
     expect(normalizeTechAuditFollowUpPreference("unsupported")).toBe("fastest");
     expect(normalizeTechAuditFollowUpPreference("text")).toBe("text");
   });
+
+  it("round-trips only allowlisted confirmation state through the redirect URL", () => {
+    const path = techAuditConfirmationPath({
+      intent: "website",
+      replyRoute: "sms",
+      reportId: "example-com-1a2b3c4d",
+    });
+
+    expect(path).toBe(
+      "/thanks/?submitted=tech-audit&intent=website&reply=sms&report=example-com-1a2b3c4d",
+    );
+    expect(readTechAuditConfirmation(path.split("?")[1] ?? "")).toEqual({
+      submitted: true,
+      intent: "website",
+      replyRoute: "sms",
+      reportId: "example-com-1a2b3c4d",
+    });
+  });
+
+  it("rejects forged confirmation categories and malformed report IDs", () => {
+    expect(
+      readTechAuditConfirmation(
+        "?submitted=other&intent=owner%40example.com&reply=carrier-pigeon&report=..%2Fprivate",
+      ),
+    ).toEqual({
+      submitted: false,
+      intent: null,
+      replyRoute: null,
+      reportId: "",
+    });
+    expect(parseTechAuditLeadIntent("consulting")).toBe("consulting");
+    expect(parseTechAuditLeadIntent("sales")).toBeNull();
+    expect(parseTechAuditPreferredRoute("sms")).toBe("sms");
+    expect(parseTechAuditPreferredRoute("text")).toBeNull();
+    expect(safeTechAuditReportId(" example-com-1234 ")).toBe("example-com-1234");
+  });
+
+  it.each([
+    ["email", "emails you", "an email"],
+    ["sms", "texts you", "a text"],
+    ["phone", "calls you", "a call"],
+    [null, "replies", "a reply"],
+  ] satisfies [TechAuditPreferredRoute | null, string, string][]) (
+    "describes the %s confirmation route accurately",
+    (route, action, expectation) => {
+      expect(techAuditReplyLanguage(route)).toEqual({ action, expectation });
+    },
+  );
 });
