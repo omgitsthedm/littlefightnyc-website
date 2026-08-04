@@ -499,6 +499,22 @@
       check('a healthy records layer shows no warning', !$('.recwarn'), '');
       Dh.records_health = hadRH;
 
+      /* ---- no horizontal overflow, at whatever width this is running ----
+         A 375px regression shipped once before, so this is checked rather
+         than assumed. It runs at the current viewport, so opening ?test=1
+         on a phone or a narrow window is a real check; on a desktop it is
+         a cheap no-op. Measured on the document, not on element rects —
+         an SVG path inside a clipped minimap legitimately reports bounds
+         past the viewport and is not overflow. */
+      var _de = document.documentElement;
+      ['today', 'market', 'browse', 'atlas', 'hunt', 'manual', 'archive', 'system'].forEach(function (r) {
+        location.hash = '#/' + r; app.route();
+        check('no sideways scroll on ' + r + ' at ' + _de.clientWidth + 'px',
+          _de.scrollWidth <= _de.clientWidth + 1,
+          _de.scrollWidth + ' vs ' + _de.clientWidth);
+      });
+      location.hash = '#/today'; app.route();
+
       /* ---- hygiene ---- */
       // Reads the LIVE feed list, not a copy of it. The copy this replaced
       // asserted a hardcoded pair, so it would have gone on passing no
