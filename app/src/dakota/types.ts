@@ -183,6 +183,12 @@ export const TASK_TYPES = [
   "invoice",
   "payment",
   "onboarding",
+  "client_success",
+  "proof_request",
+  "review_request",
+  "referral_request",
+  "renewal",
+  "expansion",
 ] as const;
 export type DakotaTaskType = (typeof TASK_TYPES)[number];
 

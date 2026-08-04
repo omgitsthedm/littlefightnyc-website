@@ -4,10 +4,12 @@ import { createHash } from "node:crypto";
 import type { Store } from "@netlify/blobs";
 
 import type { DakotaIngressAlert } from "./ingress-receipts.ts";
+import { resolveWorkspaceContext } from "./workspace-config";
 
-const OPERATOR_EMAIL = "hello@littlefightnyc.com";
+const WORKSPACE_CONFIG = resolveWorkspaceContext().config;
+const ALERT_CONFIG = WORKSPACE_CONFIG.operatorAlerts;
 const GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token";
-const GMAIL_SEND_ENDPOINT = `https://gmail.googleapis.com/gmail/v1/users/${encodeURIComponent(OPERATOR_EMAIL)}/messages/send`;
+const GMAIL_SEND_ENDPOINT = `https://gmail.googleapis.com/gmail/v1/users/${encodeURIComponent(ALERT_CONFIG.sender.email)}/messages/send`;
 
 export const DAKOTA_OPERATOR_ALERT_STORE = "dakota-operator-alerts" as const;
 export const DAKOTA_OPERATOR_ALERT_SCHEMA = "dakota.operator-alert.v1" as const;
@@ -22,7 +24,7 @@ const RETRYABLE_STATUS = new Set([408, 425, 429, 500, 502, 503, 504]);
 const RETRY_DELAYS_MS = [250, 1_000, 3_000] as const;
 const ALERT_RETRY_DELAYS_MS = [5 * 60_000, 15 * 60_000, 60 * 60_000, 6 * 60 * 60_000, 24 * 60 * 60_000] as const;
 export const DAKOTA_OPERATOR_ALERT_RETRY_LIMIT = 10;
-const DAKOTA_APP_URL = "https://www.dakota.littlefightnyc.com/app/?view=do-next";
+const DAKOTA_APP_URL = WORKSPACE_CONFIG.app.operatorUrl;
 
 export type DakotaOperatorAlertDelivery =
   | { status: "sent"; providerRef: string | null }
@@ -127,8 +129,8 @@ function base64Url(value: string): string {
 
 function mimeMessage(subject: string, body: string): string {
   return [
-    `From: Little Fight NYC <${OPERATOR_EMAIL}>`,
-    `To: ${OPERATOR_EMAIL}`,
+    `From: ${ALERT_CONFIG.sender.name} <${ALERT_CONFIG.sender.email}>`,
+    `To: ${ALERT_CONFIG.recipientEmail}`,
     `Subject: ${boundedHeader(subject, 160)}`,
     "MIME-Version: 1.0",
     'Content-Type: text/plain; charset="UTF-8"',

@@ -191,6 +191,12 @@ export const DAKOTA_TASK_TYPES = [
   "invoice",
   "payment",
   "onboarding",
+  "client_success",
+  "proof_request",
+  "review_request",
+  "referral_request",
+  "renewal",
+  "expansion",
 ] as const;
 export type DakotaTaskType = (typeof DAKOTA_TASK_TYPES)[number];
 
@@ -236,6 +242,12 @@ export const DAKOTA_TASK_CHANNEL_COMPATIBILITY: Record<
   invoice: ["invoice"],
   payment: ["payment"],
   onboarding: ["internal"],
+  client_success: ["internal", "email", "phone"],
+  proof_request: ["internal", "email", "phone", "sms"],
+  review_request: ["internal", "email", "phone", "sms"],
+  referral_request: ["internal", "email", "phone", "sms"],
+  renewal: ["internal", "email", "phone"],
+  expansion: ["internal", "email", "phone"],
 };
 
 const DAKOTA_ACTIVITY_TASK_TYPE_COMPATIBILITY: Record<
@@ -250,7 +262,15 @@ const DAKOTA_ACTIVITY_TASK_TYPE_COMPATIBILITY: Record<
   contract_signed: ["proposal"],
   invoice_sent: ["invoice"],
   payment_received: ["payment"],
-  follow_up: ["follow_up"],
+  follow_up: [
+    "follow_up",
+    "client_success",
+    "proof_request",
+    "review_request",
+    "referral_request",
+    "renewal",
+    "expansion",
+  ],
 };
 
 const DAKOTA_ACTIVITY_TASK_TIMESTAMP_SKEW_MS = 5 * 60_000;
@@ -1435,6 +1455,29 @@ function hasAlignedPaidOnboardingTask(
   );
 }
 
+const PAID_CLIENT_GROWTH_TASK_TYPE_SET = new Set<DakotaTaskType>([
+  "client_success",
+  "proof_request",
+  "review_request",
+  "referral_request",
+  "renewal",
+  "expansion",
+]);
+
+function hasCompletedPaidOnboarding(
+  record: Pick<DakotaOperatorRecordInput, "tasks">,
+): boolean {
+  return record.tasks.some((task) => task.type === "onboarding" && task.status === "completed");
+}
+
+function hasAlignedPaidLifecycleTask(
+  record: Pick<DakotaOperatorRecordInput, "tasks" | "commercialClose">,
+): boolean {
+  if (!hasCompletedPaidOnboarding(record)) return hasAlignedPaidOnboardingTask(record);
+  const openTasks = record.tasks.filter((task) => task.status === "open");
+  return openTasks.length === 1 && PAID_CLIENT_GROWTH_TASK_TYPE_SET.has(openTasks[0]!.type);
+}
+
 export function validateDakotaOperatorTransition(
   next: DakotaOperatorRecordInput,
   previous: DakotaOperatorRecord | undefined,
@@ -1821,14 +1864,14 @@ export function validateDakotaOperatorTransition(
     const previousOpenTask = previous?.tasks.find((task) => task.status === "open");
     const unchangedLegacyPaidTask = Boolean(
       previous?.status === "paid" &&
-      !hasAlignedPaidOnboardingTask(previous) &&
+      !hasAlignedPaidLifecycleTask(previous) &&
       previousOpenTask?.taskId === nextOpenTask?.taskId &&
       close.onboardingNextAction === previousClose.onboardingNextAction
     );
-    if (!hasAlignedPaidOnboardingTask(next) && !unchangedLegacyPaidTask) {
+    if (!hasAlignedPaidLifecycleTask(next) && !unchangedLegacyPaidTask) {
       return {
         valid: false,
-        error: "Paid requires one open internal onboarding task whose title exactly matches the onboarding next action.",
+        error: "Paid requires the aligned onboarding task until kickoff is complete, then one open client-growth task.",
       };
     }
     if (

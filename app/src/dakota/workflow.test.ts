@@ -8,10 +8,13 @@ import {
   NEW_TASK_FIRST_SAVE_ERROR,
   PAID_ONBOARDING_TASK_ERROR,
   buildGmailComposeHref,
+  buildProposalBrief,
   buildValueBrief,
   canUseGoogleVoice,
   collectReadyActions,
+  hasAlignedPaidLifecycleTask,
   hasAlignedPaidOnboardingTask,
+  hasCompletedPaidOnboarding,
   isCommercialDateBeyondUtcTomorrow,
   isPersistedOpenTask,
   selectedContact,
@@ -153,7 +156,7 @@ describe("Dakota durable task lifecycle", () => {
     expect(FUTURE_COMMERCIAL_DATE_ERROR).toContain("next UTC calendar day");
   });
 
-  it("treats paid as an internal onboarding loop and surfaces legacy payment tasks for repair", () => {
+  it("moves paid work from onboarding into a durable client-growth loop", () => {
     const commercialClose = {
       ...EMPTY_OPERATOR_RECORD.commercialClose,
       onboardingNextAction: "Schedule the paid kickoff.",
@@ -178,13 +181,44 @@ describe("Dakota durable task lifecycle", () => {
         title: "Confirm cleared payment.",
       })],
     });
+    const completedOnboarding = task({
+      type: "onboarding",
+      channel: "internal",
+      contactId: null,
+      title: commercialClose.onboardingNextAction,
+      status: "completed",
+      resolvedAt: "2026-08-03T13:00:00.000Z",
+      resolutionNote: "Kickoff completed with the client.",
+    });
+    const growingPaid = record({
+      status: "paid",
+      commercialClose,
+      tasks: [
+        completedOnboarding,
+        task({
+          taskId: "550e8400-e29b-41d4-a716-446655440011",
+          type: "review_request",
+          channel: "email",
+          contactId: email.contactId,
+          title: "Ask for an honest review after the result is verified",
+        }),
+      ],
+    });
 
     expect(hasAlignedPaidOnboardingTask(healthyPaid)).toBe(true);
+    expect(hasCompletedPaidOnboarding(growingPaid)).toBe(true);
+    expect(hasAlignedPaidLifecycleTask(healthyPaid)).toBe(true);
+    expect(hasAlignedPaidLifecycleTask(growingPaid)).toBe(true);
     expect(hasAlignedPaidOnboardingTask(legacyPaid)).toBe(false);
     expect(PAID_ONBOARDING_TASK_ERROR).toContain("onboarding task");
     expect(collectReadyActions({ legacy_paid: legacyPaid }, new Date("2026-08-03T14:00:00.000Z"))[0]).toMatchObject({
       key: "legacy_paid",
       lane: "repair",
+    });
+    expect(collectReadyActions({ growing_paid: growingPaid }, new Date("2026-08-03T14:00:00.000Z"))[0]).toMatchObject({
+      key: "growing_paid",
+      lane: "pursuit",
+      task: { type: "review_request" },
     });
   });
 });
@@ -213,6 +247,39 @@ describe("Dakota revenue work", () => {
       draft: valueBrief?.plainText ?? "",
       tasks: [task({ type: "value_brief" })],
     }).valid).toBe(true);
+  });
+
+  it("compiles a deterministic working scope from the approved offer without claiming a send", () => {
+    const savedRecord = record({
+      verifiedPain: "The mobile booking path fails after service selection.",
+      offerFit: "Repair and verify the booking path on real devices.",
+      proof: "Approved service-business conversion work.",
+      commercialClose: { ...EMPTY_OPERATOR_RECORD.commercialClose, proposalAmount: 2_500 },
+    });
+    const brief = buildProposalBrief(candidate, savedRecord, {
+      offerId: "website-conversion-sprint",
+      bridgeOfferCode: "custom_scoped",
+      bridgePriceBand: "private_custom",
+      catalogVersion: "2026-08-03",
+      name: "Website Conversion Sprint",
+      shortName: "Conversion Sprint",
+      audience: "storefront",
+      pricingModel: "custom",
+      minAmount: null,
+      maxAmount: null,
+      cadence: "one_time",
+      scopeSummary: "Repair one high-friction customer path and verify the release.",
+      proofPrompts: ["Use approved conversion proof."],
+      stagePlaybook: ["Confirm the path", "Ship the repair", "Verify the outcome"],
+      active: true,
+    });
+    expect(brief).toMatchObject({
+      offerName: "Website Conversion Sprint",
+      investment: "$2,500.00",
+    });
+    expect(brief?.plainText).toContain("WORKING SCOPE — REVIEW BEFORE SENDING");
+    expect(brief?.plainText).toContain("Confirm deliverables, exclusions, timing, ownership, payment schedule, and approval terms");
+    expect(brief?.plainText).not.toContain("sent to client");
   });
 
   it("returns every ready inbound, approved pursuit, and due task without hiding extras", () => {

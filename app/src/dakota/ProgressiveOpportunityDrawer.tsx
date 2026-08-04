@@ -90,10 +90,12 @@ import {
   PAID_ONBOARDING_TASK_ERROR,
   TASK_TYPE_LABELS,
   buildGmailComposeHref,
+  buildProposalBrief,
   buildValueBrief,
   canUseGmailCompose,
   canUseGoogleVoice,
-  hasAlignedPaidOnboardingTask,
+  hasAlignedPaidLifecycleTask,
+  hasCompletedPaidOnboarding,
   isCommercialDateBeyondUtcTomorrow,
   isPersistedOpenTask,
   selectedPersistedContact,
@@ -199,6 +201,12 @@ const TASK_CHANNEL_RULES: Record<DakotaTaskType, readonly DakotaTaskChannel[]> =
   invoice: ["invoice"],
   payment: ["payment"],
   onboarding: ["internal"],
+  client_success: ["internal", "email", "phone"],
+  proof_request: ["internal", "email", "phone", "sms"],
+  review_request: ["internal", "email", "phone", "sms"],
+  referral_request: ["internal", "email", "phone", "sms"],
+  renewal: ["internal", "email", "phone"],
+  expansion: ["internal", "email", "phone"],
 };
 
 const ACTIVITY_TASK_TYPES: Partial<Record<DakotaActivityType, readonly DakotaTaskType[]>> = {
@@ -210,8 +218,25 @@ const ACTIVITY_TASK_TYPES: Partial<Record<DakotaActivityType, readonly DakotaTas
   contract_signed: ["proposal"],
   invoice_sent: ["invoice"],
   payment_received: ["payment"],
-  follow_up: ["follow_up"],
+  follow_up: ["follow_up", "client_success", "proof_request", "review_request", "referral_request", "renewal", "expansion"],
 };
+
+interface ClientGrowthTemplate {
+  type: Extract<DakotaTaskType, "client_success" | "proof_request" | "review_request" | "referral_request" | "renewal" | "expansion">;
+  label: string;
+  title: string;
+  daysFromNow: number;
+  preferredChannel: Extract<DakotaTaskChannel, "internal" | "email">;
+}
+
+const CLIENT_GROWTH_TEMPLATES: readonly ClientGrowthTemplate[] = [
+  { type: "client_success", label: "14-day outcome", title: "Check the first client outcome and record what changed", daysFromNow: 14, preferredChannel: "email" },
+  { type: "proof_request", label: "Proof permission", title: "Ask permission to turn the verified result into approved proof", daysFromNow: 30, preferredChannel: "email" },
+  { type: "review_request", label: "Review ask", title: "Ask for an honest Little Fight NYC review after the result is verified", daysFromNow: 30, preferredChannel: "email" },
+  { type: "referral_request", label: "Referral ask", title: "Ask whether one similar business would benefit from the same fix", daysFromNow: 45, preferredChannel: "email" },
+  { type: "renewal", label: "Quarterly check-in", title: "Review results, upcoming needs, and the next ninety-day priority", daysFromNow: 90, preferredChannel: "email" },
+  { type: "expansion", label: "Expansion review", title: "Identify one evidence-backed expansion that can create more customer value", daysFromNow: 90, preferredChannel: "internal" },
+] as const;
 
 const STAGE_EXPLANATIONS: Record<OperatorStatus, string> = {
   early_signal: "A public event worth a look. No buyer intent or outreach permission is implied.",
@@ -268,7 +293,7 @@ function linkedActivityChannels(type: DakotaActivityType, task: DakotaTask | nul
   return ACTIVITY_RULES[type][channel] ? [channel] : [];
 }
 
-function nextTaskType(status: OperatorStatus): DakotaTaskType {
+function nextTaskType(status: OperatorStatus, tasks: readonly DakotaTask[] = []): DakotaTaskType {
   if (status === "early_signal" || status === "research_ready" || status === "snoozed") return "research";
   if (status === "pursuit_ready") return "value_brief";
   if (status === "pursuing") return "follow_up";
@@ -276,7 +301,7 @@ function nextTaskType(status: OperatorStatus): DakotaTaskType {
   if (status === "meeting") return "proposal";
   if (status === "proposal") return "follow_up";
   if (status === "won") return "invoice";
-  if (status === "paid") return "onboarding";
+  if (status === "paid") return hasCompletedPaidOnboarding({ tasks }) ? "client_success" : "onboarding";
   return "qualify";
 }
 
@@ -284,8 +309,8 @@ function taskChannels(type: DakotaTaskType): readonly DakotaTaskChannel[] {
   return TASK_CHANNEL_RULES[type];
 }
 
-function makeTaskDraft(status: OperatorStatus, contactId: string | null): TaskDraft {
-  const type = nextTaskType(status);
+function makeTaskDraft(status: OperatorStatus, contactId: string | null, tasks: readonly DakotaTask[] = []): TaskDraft {
+  const type = nextTaskType(status, tasks);
   const channel = taskChannels(type)[0] ?? "internal";
   return {
     type,
@@ -535,11 +560,11 @@ function validateRecord(
   if (record.status === "lost" && !milestones?.humanApprovedAt && !contacted) return "Lost is reserved for pursued opportunities; close unpursued research as not a fit.";
   if (record.status === "snoozed" && !record.dueDate) return "Snoozed requires an explicit due date.";
   if (record.status === "snoozed" && (!openTasks[0]?.dueAt || openTasks[0].dueAt.slice(0, 10) !== record.dueDate)) return "Snoozed requires one timed open task whose date matches the wake date.";
-  if (record.status === "paid" && !hasAlignedPaidOnboardingTask(record)) {
+  if (record.status === "paid" && !hasAlignedPaidLifecycleTask(record)) {
     const previousOpenTask = originalRecord.tasks.find((task) => task.status === "open");
     const unchangedLegacyPaidTask = (
       originalRecord.status === "paid" &&
-      !hasAlignedPaidOnboardingTask(originalRecord) &&
+      !hasAlignedPaidLifecycleTask(originalRecord) &&
       previousOpenTask?.taskId === openTasks[0]?.taskId &&
       close.onboardingNextAction === priorClose.onboardingNextAction
     );
@@ -637,12 +662,12 @@ export function ProgressiveOpportunityDrawer({
   const [form, setForm] = useState<OperatorRecordInput>(initialRecord);
   const [approvalConfirmed, setApprovalConfirmed] = useState(HUMAN_APPROVED_STATUSES.has(record.status));
   const [activityDraft, setActivityDraft] = useState<ActivityDraft>(makeActivityDraft);
-  const [taskDraft, setTaskDraft] = useState<TaskDraft>(() => makeTaskDraft(record.status, record.selectedContactId));
+  const [taskDraft, setTaskDraft] = useState<TaskDraft>(() => makeTaskDraft(record.status, record.selectedContactId, record.tasks));
   const [taskResolution, setTaskResolution] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
-  const [copyState, setCopyState] = useState<"idle" | "draft" | "brief" | "booking" | "phone" | "error">("idle");
+  const [copyState, setCopyState] = useState<"idle" | "draft" | "brief" | "proposal" | "booking" | "phone" | "error">("idle");
   const dirty = useMemo(() => JSON.stringify(form) !== baseline, [baseline, form]);
   const externalConflict = (recordUpdatedAt ?? null) !== baselineUpdatedAt;
   const baselineRecord = useMemo<OperatorRecordInput>(() => {
@@ -698,7 +723,7 @@ export function ProgressiveOpportunityDrawer({
     setSaved(false);
     if (HUMAN_APPROVED_STATUSES.has(status) && !HUMAN_APPROVED_STATUSES.has(record.status)) setApprovalConfirmed(false);
     setTaskDraft((current) => {
-      const type = nextTaskType(status);
+      const type = nextTaskType(status, form.tasks);
       const channel = taskChannels(type)[0] ?? "internal";
       return { ...current, type, channel, contactId: channel === "internal" ? "" : current.contactId };
     });
@@ -768,7 +793,27 @@ export function ProgressiveOpportunityDrawer({
         ? { ...current.commercialClose, onboardingNextAction: task.title }
         : current.commercialClose,
     }));
-    setTaskDraft(makeTaskDraft(form.status, form.selectedContactId));
+    setTaskDraft(makeTaskDraft(form.status, form.selectedContactId, [...form.tasks, task]));
+  };
+
+  const applyClientGrowthTemplate = (template: ClientGrowthTemplate) => {
+    const persistedRoute = selectedPersistedContact(form, persistedContacts, persistedSelectedContactId);
+    const canUsePreferredRoute = Boolean(
+      template.preferredChannel !== "internal" &&
+      persistedRoute &&
+      taskContactMatchesChannel(persistedRoute, template.preferredChannel),
+    );
+    const due = new Date();
+    due.setDate(due.getDate() + template.daysFromNow);
+    due.setHours(10, 0, 0, 0);
+    setError("");
+    setTaskDraft({
+      type: template.type,
+      title: template.title,
+      dueAt: localDateTimeValue(due),
+      contactId: canUsePreferredRoute ? persistedRoute!.contactId : "",
+      channel: canUsePreferredRoute ? template.preferredChannel : "internal",
+    });
   };
 
   const resolveTask = (status: Exclude<DakotaTaskStatus, "open">) => {
@@ -824,6 +869,10 @@ export function ProgressiveOpportunityDrawer({
   const phoneContact = directTask?.channel === "phone" && usableContact?.channel === "phone" ? usableContact : null;
   const meetingContact = activeTask?.channel === "meeting" && selectedRoute && (!activeTask.contactId || activeTask.contactId === selectedRoute.contactId) ? selectedRoute : null;
   const valueBrief = buildValueBrief(classifiedCandidate, form);
+  const selectedPrivateOffer = revenueBridgeRecord?.selected_offer
+    ? privateOffers.find((offer) => offer.bridgeOfferCode === revenueBridgeRecord.selected_offer?.offer_code) ?? null
+    : null;
+  const proposalBrief = buildProposalBrief(classifiedCandidate, form, selectedPrivateOffer);
   const gmailBody = valueBrief && form.draft === valueBrief.plainText ? valueBrief.outboundText : form.draft;
   const canShareValueBrief = Boolean(valueBrief && usableContact && approved && directTask?.channel === "email");
   const gmailHref = usableContact && directTask?.channel === "email" && approved && form.draft.trim()
@@ -872,6 +921,13 @@ export function ProgressiveOpportunityDrawer({
     if (!canShareValueBrief || !valueBrief) return;
     setCopyState("idle");
     try { await navigator.clipboard.writeText(valueBrief.outboundText); setCopyState("brief"); }
+    catch { setCopyState("error"); }
+  };
+
+  const copyProposalBrief = async () => {
+    if (!proposalBrief) return;
+    setCopyState("idle");
+    try { await navigator.clipboard.writeText(proposalBrief.plainText); setCopyState("proposal"); }
     catch { setCopyState("error"); }
   };
 
@@ -1005,6 +1061,19 @@ export function ProgressiveOpportunityDrawer({
             ) : (
               <div className="task-composer">
                 <div className="task-composer__intro"><CalendarClock size={20} /><div><strong>Set the next task before this record leaves your hands.</strong><span>Use a real deadline only when timing matters. “Ready now” stays at the top of the queue.</span></div></div>
+                {form.status === "paid" && hasCompletedPaidOnboarding(form) ? (
+                  <div className="client-growth-playbook">
+                    <div><p className="eyebrow">Client growth loop</p><strong>Turn the finished project into proof, referrals, retention, and expansion.</strong><span>These buttons schedule one human-owned task. Dakota never sends the request.</span></div>
+                    <div className="offer-suggestions" aria-label="Approved client growth task templates">
+                      {CLIENT_GROWTH_TEMPLATES.map((template) => (
+                        <button key={template.type} type="button" onClick={() => applyClientGrowthTemplate(template)}>
+                          <strong>{template.label}</strong>
+                          <span>{template.daysFromNow} days · {TASK_TYPE_LABELS[template.type]}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
                 <div className="form-grid progressive-fields">
                   <label><FieldLabel>Task type</FieldLabel><select name="task_type" value={taskDraft.type} onChange={(event) => { const type = event.target.value as DakotaTaskType; const channel = taskChannels(type)[0] ?? "internal"; setTaskDraft((current) => ({ ...current, type, channel, contactId: channel !== "internal" && selectedRoute && taskContactMatchesChannel(selectedRoute, channel) ? selectedRoute.contactId : "" })); }}>{TASK_TYPES.map((type) => <option key={type} value={type}>{TASK_TYPE_LABELS[type]}</option>)}</select></label>
                   <label><FieldLabel>Work channel</FieldLabel><select name="task_channel" value={taskDraft.channel} onChange={(event) => { const channel = event.target.value as DakotaTaskChannel; setTaskDraft((current) => ({ ...current, channel, contactId: channel !== "internal" && selectedRoute && taskContactMatchesChannel(selectedRoute, channel) ? selectedRoute.contactId : "" })); }}>{taskChannels(taskDraft.type).map((channel) => <option key={channel} value={channel}>{TASK_CHANNEL_LABELS[channel]}</option>)}</select></label>
@@ -1112,6 +1181,18 @@ export function ProgressiveOpportunityDrawer({
 
           <ProgressiveSection number="05" eyebrow="Discovery and proposal" title="Turn a real need into a priced decision" complete={Boolean(form.commercialClose.proposalRef && form.commercialClose.proposalSentDate && form.commercialClose.proposalAmount !== null)} defaultOpen={["meeting", "proposal", "won", "paid"].includes(form.status)}>
             <div className="stage-explanation"><FileCheck2 size={20} /><span><strong>Proposal evidence</strong>Record the real document reference, sent date, and amount. Preparing a document is not sending it.</span></div>
+            {proposalBrief ? (
+              <article className="value-brief proposal-brief">
+                <header><div><p className="eyebrow">Proposal-ready scope brief</p><h4>{proposalBrief.title}</h4></div><button type="button" className="secondary-button" onClick={() => void copyProposalBrief()}>{copyState === "proposal" ? <Check size={17} /> : <Copy size={17} />}{copyState === "proposal" ? "Scope copied" : "Copy working scope"}</button></header>
+                <div>
+                  <section><span>Approved offer</span><p>{proposalBrief.offerName}</p></section>
+                  <section><span>Working investment</span><p>{proposalBrief.investment}</p></section>
+                  <section><span>Scope</span><p>{proposalBrief.scope}</p></section>
+                  <section><span>Milestones</span><p>{proposalBrief.milestones.length ? proposalBrief.milestones.join(" · ") : "Confirm the smallest useful scope and success check."}</p></section>
+                </div>
+                <footer><ShieldCheck size={16} /> Deterministic from the saved offer and evidence. Review deliverables, exclusions, timing, ownership, payment schedule, and terms before sending.</footer>
+              </article>
+            ) : <div className="task-source-note"><FileCheck2 size={18} /><span><strong>Select an approved offer first.</strong>Dakota will compile the saved evidence and offer into a working scope without inventing terms or claiming it was sent.</span></div>}
             <div className="form-grid progressive-fields">
               <label><FieldLabel>Proposal reference</FieldLabel><input name="proposal_ref" maxLength={240} value={form.commercialClose.proposalRef} onChange={(event) => setCommercial("proposalRef", event.target.value)} placeholder="Proposal number or private title…" /></label>
               <label><FieldLabel>Proposal amount</FieldLabel><input name="proposal_amount" type="number" min="0" max={MAX_MONEY} step="0.01" inputMode="decimal" value={form.commercialClose.proposalAmount ?? ""} onChange={(event) => setCommercial("proposalAmount", parseMoney(event.target.value))} /></label>

@@ -105,10 +105,16 @@ describe("Dakota operator-only ingress alerts", () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
     expect(store.entries).toHaveLength(1);
     const gmailCall = calls.find(({ url }) => url.includes("gmail.googleapis.com"));
+    expect(gmailCall?.url).toBe(
+      "https://gmail.googleapis.com/gmail/v1/users/hello%40littlefightnyc.com/messages/send",
+    );
     const requestBody = JSON.parse(String(gmailCall?.init?.body)) as { raw: string };
     const message = decodeRawMessage(requestBody.raw);
     expect(message).toContain("From: Little Fight NYC <hello@littlefightnyc.com>");
     expect(message).toContain("To: hello@littlefightnyc.com");
+    expect(message).toContain(
+      "Review: https://www.dakota.littlefightnyc.com/app/?view=do-next",
+    );
     expect(message).not.toContain("avery@example.com");
     expect(message).toContain("No prospect outreach was sent.");
   });

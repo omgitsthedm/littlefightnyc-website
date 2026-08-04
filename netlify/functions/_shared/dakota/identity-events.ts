@@ -1,7 +1,7 @@
 import type { HandlerResponse } from "@netlify/functions";
 
-import { DAKOTA_OPERATOR_EMAIL, DAKOTA_OPERATOR_ROLE } from "./constants";
 import { normalizeEmail } from "./auth";
+import { resolveWorkspaceContext } from "./workspace-config";
 
 interface IdentityEventUser {
   email?: unknown;
@@ -46,7 +46,8 @@ export function enforceDakotaIdentityEvent(
     return response(400, { error: "Invalid Identity event." });
   }
 
-  if (normalizeEmail(user.email) !== DAKOTA_OPERATOR_EMAIL) {
+  const operator = resolveWorkspaceContext().config.operator;
+  if (normalizeEmail(user.email) !== operator.email) {
     return response(403, { error: "Account is not authorized for Dakota." });
   }
 
@@ -56,7 +57,7 @@ export function enforceDakotaIdentityEvent(
   return response(200, {
     app_metadata: {
       ...existingMetadata,
-      roles: [DAKOTA_OPERATOR_ROLE],
+      roles: [...operator.roles],
     },
   });
 }

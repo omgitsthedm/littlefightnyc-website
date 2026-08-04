@@ -1,5 +1,9 @@
-export const DAKOTA_OPERATOR_EMAIL = "hello@littlefightnyc.com";
-export const DAKOTA_OPERATOR_ROLE = "dakota_operator";
+import { resolveWorkspaceContext } from "./workspace-config";
+
+const WORKSPACE_CONFIG = resolveWorkspaceContext().config;
+
+export const DAKOTA_OPERATOR_EMAIL = WORKSPACE_CONFIG.operator.email;
+export const DAKOTA_OPERATOR_ROLE = WORKSPACE_CONFIG.operator.roles[0];
 
 export const DAKOTA_QUEUE_SCHEMA = "dakota.queue.v1" as const;
 export const DAKOTA_BLOB_STORE = "dakota-private";

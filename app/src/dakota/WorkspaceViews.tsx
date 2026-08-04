@@ -36,7 +36,12 @@ import {
   STATUS_LABELS,
 } from "./revenue";
 import { collectReadyActions, TASK_TYPE_LABELS } from "./workflow";
-import { buildDakotaRevenueMetrics, type DakotaProvenanceRow } from "./revenueBridgeMetrics";
+import {
+  buildDakotaRevenueMetrics,
+  type DakotaAcquisitionRow,
+  type DakotaConversionRate,
+  type DakotaProvenanceRow,
+} from "./revenueBridgeMetrics";
 import {
   candidateLabel,
   compactSource,
@@ -180,6 +185,21 @@ function Stat({ label, value, detail, icon: Icon }: { label: string; value: stri
   );
 }
 
+function percentage(rate: DakotaConversionRate): string {
+  return rate.percentage === null ? "—" : `${rate.percentage}%`;
+}
+
+function compactMinutes(value: number | null): string {
+  if (value === null || !Number.isFinite(value) || value < 0) return "—";
+  if (value < 60) return `${Math.round(value)}m`;
+  if (value < 1_440) {
+    const hours = value / 60;
+    return `${hours < 10 ? hours.toFixed(1).replace(/\.0$/u, "") : Math.round(hours)}h`;
+  }
+  const days = value / 1_440;
+  return `${days < 10 ? days.toFixed(1).replace(/\.0$/u, "") : Math.round(days)}d`;
+}
+
 function CandidateCard({
   candidate,
   record,
@@ -288,6 +308,7 @@ export function DoNextView({
 }) {
   const [visibleCount, setVisibleCount] = useState(12);
   const actions = collectReadyActions(operatorRecords, now);
+  const revenueMetrics = buildDakotaRevenueMetrics(queueRecords, operatorRecords, revenueBridge, now);
   const unreviewedRecords = queueRecords.filter((candidate) => {
     const disposition = revenueBridge?.records[candidateKey(candidate)]?.research_review.disposition;
     return !disposition || disposition === "unreviewed";
@@ -311,6 +332,29 @@ export function DoNextView({
       <div className="view-heading">
         <div><p className="eyebrow"><span /> Do Next</p><h2 id="do-next-title">Only the actions that can move revenue</h2><p>Consent first, qualification second, follow-up on time. Research stays off this screen until it clears the gate.</p></div>
         <div className="action-count"><strong>{String(actionCount).padStart(2, "0")}</strong><span>ready now</span></div>
+      </div>
+      <div className="do-next-intelligence" aria-label="Revenue operating pressure">
+        <article>
+          <span>2h response window</span>
+          <strong>{compactMinutes(revenueMetrics.response.averageFirstResponseMinutes)}</strong>
+          <small>{revenueMetrics.response.responded
+            ? `${revenueMetrics.response.withinTarget}/${revenueMetrics.response.responded} inside target · 9am–9pm ET daily`
+            : "No completed inbound response is measurable yet."}</small>
+        </article>
+        <article>
+          <span>Pending inbound</span>
+          <strong>{String(revenueMetrics.response.pending).padStart(2, "0")}</strong>
+          <small>{revenueMetrics.response.pending
+            ? `Oldest active-window age ${compactMinutes(revenueMetrics.response.oldestPendingResponseMinutes)}`
+            : "No unanswered inbound record has a valid receipt timestamp."}{revenueMetrics.response.missingReceivedTimestamp ? ` · ${revenueMetrics.response.missingReceivedTimestamp} missing receipt time` : ""}</small>
+        </article>
+        <article>
+          <span>Overdue actions</span>
+          <strong>{String(revenueMetrics.actions.overdue).padStart(2, "0")}</strong>
+          <small>{revenueMetrics.actions.open
+            ? `${revenueMetrics.actions.open} open · oldest ${compactMinutes(revenueMetrics.actions.oldestActionableAgeMinutes)}`
+            : "No open task is creating follow-up pressure."}</small>
+        </article>
       </div>
       {actionCount ? (
         <div className="next-action-grid">
@@ -487,6 +531,7 @@ function conversionRows(entries: OperatorEntry[], group: (record: OperatorRecord
 export function MoneyView({
   state,
   queueRecords,
+  now,
   revenueBridgeState,
   offerCatalogState,
   archiveState,
@@ -497,6 +542,7 @@ export function MoneyView({
 }: {
   state: OperatorState;
   queueRecords: Candidate[];
+  now: Date;
   revenueBridgeState: RevenueBridgeState;
   offerCatalogState: OfferCatalogState;
   archiveState: ArchiveState;
@@ -511,17 +557,15 @@ export function MoneyView({
   if (state.status === "error") return <div className="queue-error" role="alert"><CircleAlert size={22} /><div><strong>Money view unavailable</strong><p>{state.message}</p></div></div>;
 
   const entries = Object.entries(state.envelope.records).sort(([, left], [, right]) => right.updated_at.localeCompare(left.updated_at));
-  const activeEntries = entries.filter(([, record]) => !CLOSED_STATUSES.has(record.status) && record.status !== "paid");
-  const collectibleEntries = entries.filter(([, record]) => !CLOSED_STATUSES.has(record.status));
-  const estimated = activeEntries.reduce((sum, [, record]) => sum + (record.estimatedValue ?? 0), 0);
-  const proposed = activeEntries.reduce((sum, [, record]) => sum + (record.commercialClose.proposalAmount ?? 0), 0);
-  const signed = activeEntries.reduce((sum, [, record]) => sum + (record.commercialClose.signedDate ? record.commercialClose.proposalAmount ?? 0 : 0), 0);
-  const invoiced = activeEntries.reduce((sum, [, record]) => sum + evidencedInvoiceAmount(record), 0);
-  const paid = entries.reduce((sum, [, record]) => sum + paidAmount(record), 0);
-  const outstanding = collectibleEntries.reduce((sum, [, record]) => sum + balance(record), 0);
-  const categoryRows = conversionRows(entries, (record) => record.identity.category?.trim() || "Unclassified");
   const bridge = revenueBridgeState.status === "ready" ? revenueBridgeState.envelope : null;
-  const metrics = buildDakotaRevenueMetrics(queueRecords, state.envelope.records, bridge);
+  const metrics = buildDakotaRevenueMetrics(queueRecords, state.envelope.records, bridge, now);
+  const activeEntries = entries.filter(([, record]) => !CLOSED_STATUSES.has(record.status) && record.status !== "paid");
+  const estimated = activeEntries.reduce((sum, [, record]) => sum + (record.estimatedValue ?? 0), 0);
+  const proposed = metrics.commercial.proposalValue;
+  const invoiced = activeEntries.reduce((sum, [, record]) => sum + evidencedInvoiceAmount(record), 0);
+  const paid = metrics.commercial.clearedRevenue;
+  const outstanding = metrics.commercial.outstandingBalance;
+  const categoryRows = conversionRows(entries, (record) => record.identity.category?.trim() || "Unclassified");
   const offers = offerCatalogState.status === "ready" ? offerCatalogState.envelope.offers : [];
   const offerLabels = new Map(offers.map((offer) => [offer.bridgeOfferCode, offer.shortName]));
   const archive = archiveState.status === "ready" ? archiveState.preview : null;
@@ -542,28 +586,56 @@ export function MoneyView({
       </div>
       <div className="money-metrics" aria-label="Commercial value summary">
         <Stat label="Estimated" value={currency(estimated)} detail="Active potential only" icon={Target} />
-        <Stat label="Proposed" value={currency(proposed)} detail="Open proposal value" icon={TrendingUp} />
-        <Stat label="Signed" value={currency(signed)} detail="Signed, not fully paid" icon={Check} />
+        <Stat label="Proposal value" value={currency(proposed)} detail="Evidence-backed sent proposals" icon={TrendingUp} />
         <Stat label="Invoiced" value={currency(invoiced)} detail="Current evidenced invoices" icon={BadgeDollarSign} />
-        <Stat label="Paid" value={currency(paid)} detail="Lifetime cleared cash" icon={BarChart3} />
-        <Stat label="Balance" value={currency(outstanding)} detail="Active collectible balance" icon={Clock3} />
+        <Stat label="Cleared revenue" value={currency(paid)} detail="Payment-received evidence" icon={BarChart3} />
+        <Stat label="Outstanding" value={currency(outstanding)} detail="Evidenced invoice balance" icon={Clock3} />
+        <Stat label="Average paid deal" value={metrics.commercial.averagePaidDeal === null ? "—" : currency(metrics.commercial.averagePaidDeal)} detail={metrics.commercial.fullyPaidDeals ? `${metrics.commercial.fullyPaidDeals} fully paid deal${metrics.commercial.fullyPaidDeals === 1 ? "" : "s"}` : "No fully paid deal yet"} icon={Check} />
       </div>
       <section className="revenue-flow" aria-labelledby="revenue-flow-title">
         <div className="subsection-heading"><div><p className="eyebrow">Evidence-backed funnel</p><h3 id="revenue-flow-title">Where signals become clients—and where they stop</h3></div><span>{metrics.funnel.pendingExternalReview} outside event{metrics.funnel.pendingExternalReview === 1 ? "" : "s"} needs review</span></div>
         <div className="revenue-flow__stages">
           {[
-            ["Signals", metrics.funnel.signals],
-            ["Reviewed", metrics.funnel.reviewed],
-            ["Pursue", metrics.funnel.pursue],
-            ["Contacted", metrics.funnel.contacted],
-            ["Replied", metrics.funnel.replied],
-            ["Meetings", metrics.funnel.meetings],
-            ["Proposals", metrics.funnel.proposals],
-            ["Signed", metrics.funnel.signed],
-            ["Paid", metrics.funnel.paid],
-          ].map(([label, value]) => <div key={label}><span>{label}</span><strong>{String(value).padStart(2, "0")}</strong></div>)}
+            { label: "Signals", value: metrics.funnel.signals, detail: "All tracked" },
+            { label: "Reviewed", value: metrics.funnel.reviewed, detail: "Human decision" },
+            { label: "Pursue", value: metrics.funnel.pursue, detail: "Research approved" },
+            { label: "Contacted", value: metrics.funnel.contacted, detail: `${percentage(metrics.conversion.contact)} of signals` },
+            { label: "Replied", value: metrics.funnel.replied, detail: `${percentage(metrics.conversion.reply)} of contacted` },
+            { label: "Meetings", value: metrics.funnel.meetings, detail: `${percentage(metrics.conversion.meeting)} of replies` },
+            { label: "Proposals", value: metrics.funnel.proposals, detail: `${percentage(metrics.conversion.proposal)} of meetings` },
+            { label: "Signed", value: metrics.funnel.signed, detail: `${percentage(metrics.conversion.signed)} of proposals` },
+            { label: "Paid", value: metrics.funnel.paid, detail: `${percentage(metrics.conversion.paid)} of signed` },
+          ].map(({ label, value, detail }) => <div key={label}><span>{label}</span><strong>{String(value).padStart(2, "0")}</strong><small>{detail}</small></div>)}
         </div>
         <div className="revenue-flow__evidence"><span><strong>{metrics.funnel.suggestedEvidence}</strong> suggested evidence</span><span><strong>{metrics.funnel.confirmedEvidence}</strong> confirmed evidence</span><span><strong>{metrics.funnel.auditsReady}</strong> audits ready</span><span><strong>{metrics.funnel.offersSelected}</strong> offers selected</span><span><strong>{metrics.funnel.openAlerts}</strong> open alerts</span><span><strong>{metrics.funnel.criticalAlerts}</strong> critical</span></div>
+      </section>
+      <section className="revenue-intelligence" aria-labelledby="revenue-intelligence-title">
+        <div className="subsection-heading"><div><p className="eyebrow">Revenue intelligence</p><h3 id="revenue-intelligence-title">Speed, pressure, and cash evidence</h3></div><BarChart3 size={22} /></div>
+        <div className="revenue-intelligence__grid">
+          <article>
+            <span>First human response</span>
+            <strong>{compactMinutes(metrics.response.averageFirstResponseMinutes)}</strong>
+            <p>{metrics.response.responded
+              ? `${metrics.response.withinTarget}/${metrics.response.responded} responses landed inside the 2-hour window.`
+              : "No completed inbound response has enough timestamp evidence yet."}</p>
+            <dl><div><dt>Target rate</dt><dd>{percentage(metrics.response.withinTargetRate)}</dd></div><div><dt>Pending</dt><dd>{metrics.response.pending}</dd></div><div><dt>Oldest pending</dt><dd>{compactMinutes(metrics.response.oldestPendingResponseMinutes)}</dd></div></dl>
+            <small>Clock runs every day, 9am–9pm Eastern. {metrics.response.missingReceivedTimestamp ? `${metrics.response.missingReceivedTimestamp} inbound record${metrics.response.missingReceivedTimestamp === 1 ? " is" : "s are"} missing a valid receipt timestamp.` : "Every inbound record has a valid receipt timestamp."}</small>
+          </article>
+          <article>
+            <span>Action pressure</span>
+            <strong>{String(metrics.actions.overdue).padStart(2, "0")}</strong>
+            <p>{metrics.actions.overdue ? "Overdue work is waiting before new prospecting." : "No timestamped open task is overdue."}</p>
+            <dl><div><dt>Open tasks</dt><dd>{metrics.actions.open}</dd></div><div><dt>Oldest age</dt><dd>{compactMinutes(metrics.actions.oldestActionableAgeMinutes)}</dd></div></dl>
+            <small>Invalid or missing dates never become fake overdue work.</small>
+          </article>
+          <article>
+            <span>Commercial evidence</span>
+            <strong>{metrics.commercial.averagePaidDeal === null ? "—" : currency(metrics.commercial.averagePaidDeal)}</strong>
+            <p>{metrics.commercial.fullyPaidDeals ? `Average across ${metrics.commercial.fullyPaidDeals} fully paid deal${metrics.commercial.fullyPaidDeals === 1 ? "" : "s"}.` : "Average stays empty until cleared cash closes a deal."}</p>
+            <dl><div><dt>Proposed</dt><dd>{currency(metrics.commercial.proposalValue)}</dd></div><div><dt>Cleared</dt><dd>{currency(metrics.commercial.clearedRevenue)}</dd></div><div><dt>Outstanding</dt><dd>{currency(metrics.commercial.outstandingBalance)}</dd></div></dl>
+            <small>Only operator-recorded proposal, invoice, and payment evidence counts.</small>
+          </article>
+        </div>
       </section>
       {entries.length ? (
         <div className="money-ledger">
@@ -572,6 +644,7 @@ export function MoneyView({
       ) : <div className="next-empty"><BadgeDollarSign size={28} /><h3>No commercial evidence yet</h3><p>Dakota will not turn research records into projected revenue.</p></div>}
       <div className="conversion-grid">
         <ProvenanceTable title="Source provenance" rows={metrics.sourceRows} label={(value) => compactSource(value)} />
+        <AcquisitionTable rows={metrics.acquisitionRows} />
         <ConversionTable title="Business category conversion" rows={categoryRows} />
         <ProvenanceTable title="Approved offer conversion" rows={metrics.offerRows} label={(value) => offerLabels.get(value) ?? value.replaceAll("_", " ")} />
       </div>
@@ -599,8 +672,22 @@ export function MoneyView({
 function ProvenanceTable({ title, rows, label }: { title: string; rows: DakotaProvenanceRow[]; label: (value: string) => string }) {
   return (
     <section className="conversion-table provenance-table" aria-labelledby={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>
-      <div><p className="eyebrow" id={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>{title}</p><span>Paid / reviewed records</span></div>
-      {rows.length ? <ul>{rows.map((row) => <li key={row.label}><span><strong>{label(row.label)}</strong><small>{row.reviewed} reviewed · {row.pursue} pursue · {row.proposals} proposed · {row.signed} signed</small></span><span><strong>{row.reviewed ? Math.round((row.paid / row.reviewed) * 100) : 0}%</strong><small>{currency(row.paidAmount)} collected</small></span></li>)}</ul> : <p>No reviewed provenance is recorded.</p>}
+      <div><p className="eyebrow" id={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>{title}</p><span>Contact → reply → meeting → paid</span></div>
+      {rows.length ? <ul>{rows.map((row) => <li key={row.label}><span><strong>{label(row.label)}</strong><small>{row.records} tracked · {row.contacted} contacted · {row.replied} replied · {row.meetings} meetings · {row.proposals} proposed · {row.signed} signed</small><small>{percentage(row.conversion.contact)} contact · {percentage(row.conversion.reply)} reply · {percentage(row.conversion.meeting)} meeting · {percentage(row.conversion.proposal)} proposal · {percentage(row.conversion.signed)} signed · {percentage(row.conversion.paid)} paid</small></span><span><strong>{row.records ? Math.round((row.paid / row.records) * 100) : 0}% paid</strong><small>{currency(row.paidAmount)} collected</small></span></li>)}</ul> : <p>No provenance is recorded.</p>}
+    </section>
+  );
+}
+
+function AcquisitionTable({ rows }: { rows: DakotaAcquisitionRow[] }) {
+  return (
+    <section className="conversion-table provenance-table" aria-labelledby="acquisition-provenance-title">
+      <div><p className="eyebrow" id="acquisition-provenance-title">Acquisition provenance</p><span>Exact inbound labels only</span></div>
+      {rows.length ? <ul>{rows.map((row) => {
+        const utm = row.utmSource
+          ? [row.utmSource, row.utmMedium, row.utmCampaign].filter(Boolean).join(" / ")
+          : "";
+        return <li key={row.label}><span><strong>{compactSource(row.identitySource)}</strong><small>{utm ? `UTM ${utm}` : row.leadOrigin ? `Lead origin: ${row.leadOrigin}` : "No campaign labels retained"}{utm && row.leadOrigin ? ` · Origin ${row.leadOrigin}` : ""}</small><small>{row.records} tracked · {row.contacted} contacted · {row.replied} replied · {row.meetings} meetings · {row.proposals} proposed</small></span><span><strong>{row.records ? Math.round((row.paid / row.records) * 100) : 0}% paid</strong><small>{percentage(row.conversion.reply)} reply · {percentage(row.conversion.meeting)} meeting</small><small>{currency(row.paidAmount)} collected</small></span></li>;
+      })}</ul> : <p>No acquisition provenance is recorded.</p>}
     </section>
   );
 }

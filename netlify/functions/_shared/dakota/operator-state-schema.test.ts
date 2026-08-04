@@ -1400,14 +1400,48 @@ describe("Dakota operator-state schema", () => {
     });
     expect(validateDakotaOperatorTransition(paymentStillOpen, previous, new Date(UPDATED_AT))).toEqual({
       valid: false,
-      error: "Paid requires one open internal onboarding task whose title exactly matches the onboarding next action.",
+      error: "Paid requires the aligned onboarding task until kickoff is complete, then one open client-growth task.",
     });
     expect(validateDakotaOperatorTransition(validatedInput({
       ...paid,
       commercialClose: { ...paidClose, onboardingNextAction: "Send a different instruction." },
     }), previous, new Date(UPDATED_AT))).toEqual({
       valid: false,
-      error: "Paid requires one open internal onboarding task whose title exactly matches the onboarding next action.",
+      error: "Paid requires the aligned onboarding task until kickoff is complete, then one open client-growth task.",
+    });
+
+    const storedPaid = createDakotaOperatorRecord(paid, UPDATED_AT);
+    const completedOnboardingTask = {
+      ...onboardingTask,
+      status: "completed" as const,
+      resolvedAt: UPDATED_AT,
+      resolutionNote: "Kickoff completed and the first outcome checkpoint was agreed.",
+    };
+    const reviewTask = task({
+      taskId: "550e8400-e29b-41d4-a716-446655440203",
+      type: "review_request",
+      channel: "email",
+      contactId: CONTACT_ID,
+      title: "Ask for an honest review after the result is verified.",
+    });
+    const clientGrowth = validatedInput({
+      ...paid,
+      tasks: [invoiceTask, completedPaymentTask, completedOnboardingTask, reviewTask],
+    });
+    expect(validateDakotaOperatorTransition(clientGrowth, storedPaid, new Date(UPDATED_AT)).valid).toBe(true);
+
+    const skippedOnboarding = validatedInput({
+      ...paid,
+      tasks: [
+        invoiceTask,
+        completedPaymentTask,
+        { ...completedOnboardingTask, status: "skipped" as const, resolutionNote: "Kickoff was not completed." },
+        reviewTask,
+      ],
+    });
+    expect(validateDakotaOperatorTransition(skippedOnboarding, storedPaid, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "Paid requires the aligned onboarding task until kickoff is complete, then one open client-growth task.",
     });
 
     const legacyPaid = createDakotaOperatorRecord(paymentStillOpen, UPDATED_AT);

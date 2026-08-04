@@ -8,6 +8,7 @@ import {
 } from "./revenue";
 import type {
   Candidate,
+  DakotaPrivateOffer,
   DakotaTask,
   DakotaTaskChannel,
   DakotaTaskType,
@@ -23,7 +24,18 @@ export const GOOGLE_VOICE_MESSAGES_HREF = "https://voice.google.com/u/0/messages
 export const GOOGLE_VOICE_CALLS_HREF = "https://voice.google.com/u/0/calls";
 export const NEW_TASK_FIRST_SAVE_ERROR = "Save this new task open before completing or skipping it.";
 export const FUTURE_COMMERCIAL_DATE_ERROR = "Commercial dates cannot be later than the next UTC calendar day.";
-export const PAID_ONBOARDING_TASK_ERROR = "Paid requires one open internal onboarding task whose title exactly matches the onboarding next action.";
+export const PAID_ONBOARDING_TASK_ERROR = "Paid requires the aligned onboarding task until kickoff is complete, then one open client-growth task.";
+
+export const CLIENT_GROWTH_TASK_TYPES = [
+  "client_success",
+  "proof_request",
+  "review_request",
+  "referral_request",
+  "renewal",
+  "expansion",
+] as const satisfies readonly DakotaTaskType[];
+
+const CLIENT_GROWTH_TASK_TYPE_SET = new Set<DakotaTaskType>(CLIENT_GROWTH_TASK_TYPES);
 
 const CLOSED_STATUSES = new Set(["lost", "not_fit", "do_not_contact"]);
 const OPERATIONAL_STATUSES = new Set([
@@ -56,6 +68,7 @@ const DO_NEXT_TASK_TYPES = new Set<DakotaTaskType>([
   "invoice",
   "payment",
   "onboarding",
+  ...CLIENT_GROWTH_TASK_TYPES,
 ]);
 
 export const TASK_TYPE_LABELS: Record<DakotaTaskType, string> = {
@@ -69,6 +82,12 @@ export const TASK_TYPE_LABELS: Record<DakotaTaskType, string> = {
   invoice: "Invoice",
   payment: "Payment",
   onboarding: "Onboarding",
+  client_success: "Client success",
+  proof_request: "Proof permission",
+  review_request: "Review request",
+  referral_request: "Referral request",
+  renewal: "Renewal",
+  expansion: "Expansion",
 };
 
 export function isPersistedOpenTask(
@@ -105,7 +124,7 @@ export function isCommercialDateBeyondUtcTomorrow(value: string, now = new Date(
 }
 
 export function hasAlignedPaidOnboardingTask(
-  record: Pick<OperatorRecordInput, "tasks" | "commercialClose">,
+  record: { tasks: readonly DakotaTask[]; commercialClose: OperatorRecordInput["commercialClose"] },
 ): boolean {
   const openTasks = record.tasks.filter((task) => task.status === "open");
   const task = openTasks[0];
@@ -118,6 +137,20 @@ export function hasAlignedPaidOnboardingTask(
     instruction &&
     task.title === instruction
   );
+}
+
+export function hasCompletedPaidOnboarding(
+  record: { tasks: readonly DakotaTask[] },
+): boolean {
+  return record.tasks.some((task) => task.type === "onboarding" && task.status === "completed");
+}
+
+export function hasAlignedPaidLifecycleTask(
+  record: { tasks: readonly DakotaTask[]; commercialClose: OperatorRecordInput["commercialClose"] },
+): boolean {
+  if (!hasCompletedPaidOnboarding(record)) return hasAlignedPaidOnboardingTask(record);
+  const openTasks = record.tasks.filter((task) => task.status === "open");
+  return openTasks.length === 1 && CLIENT_GROWTH_TASK_TYPE_SET.has(openTasks[0]!.type);
 }
 
 export function selectedContact(record: Pick<OperatorRecordInput, "contacts" | "selectedContactId">): DakotaVerifiedContact | null {
@@ -172,6 +205,89 @@ export interface DakotaValueBrief {
   callToAction: string;
   plainText: string;
   outboundText: string;
+}
+
+export interface DakotaProposalBrief {
+  title: string;
+  offerName: string;
+  investment: string;
+  scope: string;
+  milestones: string[];
+  plainText: string;
+}
+
+function proposalInvestment(record: OperatorRecordInput, offer: DakotaPrivateOffer): string {
+  const amount = record.commercialClose.proposalAmount;
+  if (amount !== null) {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 2,
+    }).format(amount);
+  }
+  if (offer.minAmount !== null && offer.maxAmount !== null) {
+    const currency = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    });
+    const range = `${currency.format(offer.minAmount)}–${currency.format(offer.maxAmount)}`;
+    return offer.cadence === "monthly" ? `${range} per month` : range;
+  }
+  if (offer.minAmount !== null) {
+    const amountLabel = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(offer.minAmount);
+    return offer.cadence === "monthly" ? `${amountLabel} per month` : amountLabel;
+  }
+  return "Price after scope review";
+}
+
+export function buildProposalBrief(
+  candidate: Candidate,
+  record: OperatorRecordInput,
+  offer: DakotaPrivateOffer | null,
+): DakotaProposalBrief | null {
+  if (!offer || !offer.active || !record.verifiedPain.trim() || !record.offerFit.trim()) return null;
+  const businessName = record.identity.dba?.trim()
+    || record.identity.businessName.trim()
+    || candidate.dba.trim()
+    || candidate.business_name.trim();
+  const investment = proposalInvestment(record, offer);
+  const milestones = offer.stagePlaybook.filter((item) => item.trim()).slice(0, 8);
+  const proof = record.proof.trim() || "Approved Little Fight NYC proof will be selected before this is sent.";
+  const title = `${businessName} — ${offer.name}`;
+  const numberedMilestones = milestones.length
+    ? milestones.map((item, index) => `${index + 1}. ${item}`)
+    : ["1. Confirm the smallest useful scope and success check before work begins."];
+  const plainText = [
+    "WORKING SCOPE — REVIEW BEFORE SENDING",
+    title,
+    "",
+    "Client need",
+    record.verifiedPain.trim(),
+    "",
+    "Recommended engagement",
+    `${offer.name}: ${offer.scopeSummary}`,
+    "",
+    "Why this fits",
+    record.offerFit.trim(),
+    "",
+    "Working milestones",
+    ...numberedMilestones,
+    "",
+    "Relevant proof",
+    proof,
+    "",
+    "Working investment",
+    investment,
+    "",
+    "Before sending",
+    "Confirm deliverables, exclusions, timing, ownership, payment schedule, and approval terms with the client. This brief is not a signed agreement or invoice.",
+  ].join("\n");
+  return { title, offerName: offer.name, investment, scope: offer.scopeSummary, milestones, plainText };
 }
 
 export function buildValueBrief(candidate: Candidate, record: OperatorRecordInput): DakotaValueBrief | null {
@@ -281,7 +397,7 @@ export function collectReadyActions(
     const staleOperationalTask = (
       operational && !DO_NEXT_TASK_TYPES.has(task.type)
     ) || (
-      record.status === "paid" && !hasAlignedPaidOnboardingTask(record)
+      record.status === "paid" && !hasAlignedPaidLifecycleTask(record)
     ) || routedTaskNeedsRepair;
     const pursuit = operational && DO_NEXT_TASK_TYPES.has(task.type);
     const taskDue = dueMillis(record, task);

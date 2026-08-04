@@ -11,6 +11,7 @@ import {
   validateDakotaOperatorStateEnvelope,
 } from "./operator-state-schema";
 import { DAKOTA_OPERATOR_BLOB_KEY } from "./operator-state-constants";
+import { resolveWorkspaceContext } from "./workspace-config";
 
 export const DAKOTA_ARCHIVE_SCHEMA = "dakota.archive-record.v1" as const;
 export const DAKOTA_ARCHIVE_STORE = "dakota-operator-archive" as const;
@@ -22,6 +23,7 @@ const MAX_ARCHIVE_ATTEMPTS = 4;
 const MAX_RECONCILIATION_BATCH = 25;
 const ARCHIVE_IN_FLIGHT_GRACE_MS = 2 * 60 * 1000;
 const TERMINAL_STATUSES = new Set(["lost", "not_fit", "do_not_contact"]);
+const ARCHIVED_BY = resolveWorkspaceContext().config.operator.email;
 
 export type DakotaArchiveTransactionStatus = "copied" | "removed_from_active" | "restored";
 
@@ -33,7 +35,7 @@ export interface DakotaArchiveRecord {
   checksum: string;
   reason: "terminal_record";
   archived_at: string;
-  archived_by: "hello@littlefightnyc.com";
+  archived_by: string;
   transaction_status: DakotaArchiveTransactionStatus;
   active_removed_at: string | null;
   restored_at: string | null;
@@ -165,7 +167,7 @@ function isArchiveRecord(value: unknown): value is DakotaArchiveRecord {
     !/^[0-9a-f]{64}$/u.test(record.checksum) ||
     record.reason !== "terminal_record" ||
     !isIsoTimestamp(record.archived_at) ||
-    record.archived_by !== "hello@littlefightnyc.com" ||
+    record.archived_by !== ARCHIVED_BY ||
     !["copied", "removed_from_active", "restored"].includes(String(record.transaction_status)) ||
     (record.active_removed_at !== null && !isIsoTimestamp(record.active_removed_at)) ||
     (record.restored_at !== null && !isIsoTimestamp(record.restored_at))
@@ -227,7 +229,7 @@ function archiveRecord(candidateKey: string, record: DakotaOperatorRecord, now: 
     checksum: recordChecksum(record),
     reason: "terminal_record",
     archived_at: archivedAt,
-    archived_by: "hello@littlefightnyc.com",
+    archived_by: ARCHIVED_BY,
     transaction_status: "copied",
     active_removed_at: null,
     restored_at: null,

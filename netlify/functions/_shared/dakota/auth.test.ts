@@ -29,6 +29,14 @@ describe("Dakota authorization", () => {
       allowed: false,
       status: 403,
     });
+    expect(authorizeDakotaUser(user({ roles: ["other_role"] }))).toEqual({
+      allowed: false,
+      status: 403,
+    });
+    expect(authorizeDakotaUser(user({
+      email: " Hello@LittleFightNYC.com ",
+      roles: ["other_role", "dakota_operator"],
+    })).allowed).toBe(true);
     expect(authorizeDakotaUser(user()).allowed).toBe(true);
   });
 });

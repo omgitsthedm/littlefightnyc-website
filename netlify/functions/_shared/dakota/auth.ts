@@ -1,6 +1,6 @@
 import { getUser, type User } from "@netlify/identity";
 
-import { DAKOTA_OPERATOR_EMAIL, DAKOTA_OPERATOR_ROLE } from "./constants";
+import { resolveWorkspaceContext } from "./workspace-config";
 
 export type DakotaAuthorization =
   | { allowed: true; user: User }
@@ -15,8 +15,9 @@ export function authorizeDakotaUser(user: User | null): DakotaAuthorization {
     return { allowed: false, status: 401 };
   }
 
-  const hasExactEmail = normalizeEmail(user.email) === DAKOTA_OPERATOR_EMAIL;
-  const hasOperatorRole = user.roles?.includes(DAKOTA_OPERATOR_ROLE) === true;
+  const policy = resolveWorkspaceContext().config.operator;
+  const hasExactEmail = normalizeEmail(user.email) === policy.email;
+  const hasOperatorRole = policy.roles.every((role) => user.roles?.includes(role) === true);
 
   if (!hasExactEmail || !hasOperatorRole) {
     return { allowed: false, status: 403 };
