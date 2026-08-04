@@ -1279,6 +1279,14 @@
     cloud: 'the nightly cloud sweep — published without any operator machine',
   };
 
+  /* Derived from FEEDS rather than listed separately, so a fourth origin
+     can never be added to the feed and forgotten for the receipts. */
+  function archiveOrigins() {
+    return FEEDS.map(function (f) {
+      return { url: f.url.replace(/public\.json(\?.*)?$/, 'archive.json'), label: f.label };
+    });
+  }
+
   function feedAge() {
     var t = Date.parse((D && D.generated_at) || '');
     if (!t) return '';
@@ -1480,10 +1488,44 @@
     }
     if (archiveCache) { paint(archiveCache); return; }
     page.innerHTML = '<header class="pagehead"><p class="kicker">Receipts</p><h1 class="pagehead__title">Every drop, on the record</h1></header>';
-    fetch('./data/archive.json', { cache: 'no-cache' })
-      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function (a) { archiveCache = Array.isArray(a) ? a : []; if (state.route === 'archive') paint(archiveCache); })
-      .catch(function () { if (state.route === 'archive') paint([]); });
+
+    /* The archive used to be a single hardcoded same-origin fetch whose
+       failure handler painted an EMPTY archive — so a network error was
+       indistinguishable from "nothing has ever cleared the bar". On the one
+       page whose entire point is receipts, that is the worst possible thing
+       to get wrong. It now reads the same three origins as the feed, keeps
+       the most complete answer, and says plainly when it could not reach
+       any of them. */
+    var archives = archiveOrigins();
+    var got = [], left = archives.length, settled = false;
+
+    function decide() {
+      if (settled) return;
+      settled = true;
+      if (state.route !== 'archive') return;
+      if (!got.length) {
+        page.innerHTML = '<header class="pagehead"><p class="kicker">Receipts</p>' +
+          '<h1 class="pagehead__title">Every drop, on the record</h1>' +
+          '<p class="pagehead__lede">The receipts could not be reached just now — this is a connection problem, not an empty archive. Reload in a moment.</p></header>';
+        page.classList.add('is-entered');
+        return;
+      }
+      // Most days wins: origins publish independently, so the fullest one is
+      // the most complete record, not merely the newest.
+      got.sort(function (a, b) { return b.length - a.length; });
+      archiveCache = got[0];
+      paint(archiveCache);
+    }
+
+    archives.forEach(function (a) {
+      fetch(a.url, { cache: 'no-cache' })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function (d) {
+          if (Array.isArray(d)) got.push(d);
+          if (--left <= 0) decide();
+        }, function () { if (--left <= 0) decide(); });
+    });
+    setTimeout(decide, FEED_RACE_MS);
   }
 
   /* ---------- one delegated click handler ---------- */
@@ -1728,6 +1770,7 @@
     addressOf: addressOf, gallery: gallery, valueRead: valueRead, profile: function () { return profile; },
     commuteRead: commuteRead,
     FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
+    archiveOrigins: archiveOrigins,
   };
 
   window.__vera = {

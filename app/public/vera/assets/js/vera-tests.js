@@ -500,6 +500,12 @@
       check('every feed origin is declared', feeds.length >= 2, feeds.length + ' origins');
       check('no private feed touched', feeds.length > 0 && feeds.every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), feeds.join(' '));
       check('every feed reads public.json only', feeds.every(function (u) { return /public\.json$/.test(u); }), '');
+      // The receipts used to be one hardcoded same-origin fetch whose failure
+      // handler painted an EMPTY archive — a network error read as "nothing
+      // ever cleared the bar" on the page that exists to prove otherwise.
+      var arcs = (app.archiveOrigins ? app.archiveOrigins() : []).map(function (a) { return a.url; });
+      check('receipts read every origin the feed does', arcs.length === feeds.length, arcs.length + ' vs ' + feeds.length);
+      check('and each one points at archive.json', arcs.length > 0 && arcs.every(function (u) { return /archive\.json$/.test(u); }), arcs.join(' '));
       check('brand present', ($('.brand__name') || { textContent: '' }).textContent === 'VERA', '');
       check('legacy routes redirect', (function () { location.hash = '#/command'; app.route(); return state.route === 'market'; })(), state.route);
 
