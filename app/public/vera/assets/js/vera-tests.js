@@ -118,6 +118,9 @@
         check('an empty drop still says so plainly',
           $$('.dropcard').length > 0 || !!$('.dropempty'),
           $$('.dropcard').length + ' cards');
+        check('an empty drop shows where the net actually narrowed',
+          $$('.dropcard').length > 0 || ($$('.funnel__row').length === 5 && $('.funnel__n').textContent === String(POOL.length)),
+          $$('.funnel__row').length + ' funnel rows');
         check('landlord identity on the card', $$('.dropcard__owner').length === $$('.dropcard').length, $$('.dropcard__owner').length);
         check('photo gallery renders', $$('.gal').length > 0 || $$('.dropcard').length === 0, $$('.gal').length + ' galleries');
         check('steward grade on every card', $$('.steward').length >= $$('.dropcard').length, $$('.steward').length + ' grades');

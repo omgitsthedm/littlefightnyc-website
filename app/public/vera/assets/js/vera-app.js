@@ -621,9 +621,10 @@
       (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
         : '<div class="dropempty">' +
             '<svg width="86" height="86" viewBox="0 0 24 24" aria-hidden="true" class="dropempty__mark"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".35"/><path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a" opacity=".75"/></svg>' +
-            '<h2>An honest empty state</h2>' +
-            '<p>VERA does not pad the feed. When the market under ' + money(C.FIT.maxRent) + ' has nothing that clears verification, you see this page instead of eight compromises.</p>' +
-            '<p><a class="ghostbtn" href="#/market">See what the market is doing instead ↗</a></p>' +
+            '<h2>Nothing cleared the bar today</h2>' +
+            '<p>VERA does not pad the feed. Rather than eight compromises, here is exactly where tonight’s sweep narrowed — every number below is a count, not an estimate.</p>' +
+            funnel() +
+            '<p class="dropempty__close">The bar does not move on a slow day. <a href="#/market">See what the market is doing ↗</a></p>' +
           '</div>') +
       recordsWarning() +
       memorialLine() +
@@ -661,6 +662,37 @@
       'checked against HPD, DOB, or 311 this run. Nothing is being recommended, and the steward grades below are ' +
       'unverified \u2014 not because the buildings are clean, but because VERA could not read the record. ' +
       'The next sweep retries automatically.</div>';
+  }
+
+  /* The funnel: on a day with no drop, the useful thing is not an
+     apology — it is showing exactly where the net narrowed, so the
+     reader can judge whether the bar or the market is the problem. */
+  function funnel() {
+    var pool = POOL.length;
+    if (!pool) return '';
+    var priced = POOL.filter(function (l) { return +l.rent > 0 && +l.rent <= C.FIT.maxRent; }).length;
+    var verified = POOL.filter(function (l) { return l.bbl || (l.verification_status === 'matched_public_records'); }).length;
+    var reviewed = POOL.filter(function (l) { return String(l.recommendation || '').toLowerCase() === 'manual review'; }).length;
+    var rows = [
+      { n: pool, label: 'listings swept from every source VERA watches' },
+      { n: priced, label: 'at or under ' + money(C.FIT.maxRent) },
+      { n: verified, label: 'matched to a building in the city’s records' },
+      { n: reviewed, label: 'strong enough to need a human read' },
+      { n: 0, label: 'cleared every gate', last: true },
+    ];
+    var max = pool || 1;
+    return '<ol class="funnel">' + rows.map(function (r) {
+      var pct = Math.max(2, Math.round((r.n / max) * 100));
+      return '<li class="funnel__row' + (r.last ? ' is-last' : '') + '">' +
+        '<span class="funnel__n">' + r.n + '</span>' +
+        '<span class="funnel__bar"><i style="width:' + pct + '%"></i></span>' +
+        '<span class="funnel__l">' + r.label + '</span></li>';
+    }).join('') + '</ol>' +
+    (verified === 0 && pool > 0
+      ? '<p class="funnel__note">Nothing reached the records check tonight, which is a VERA problem rather than a market one — the city’s data service or the address match failed. It retries on the next sweep.</p>'
+      : reviewed > 0
+        ? '<p class="funnel__note">' + reviewed + ' listing' + (reviewed === 1 ? '' : 's') + ' stopped one step short. They are below, on the bubble — worth your eyes, not your deposit.</p>'
+        : '');
   }
 
   /* The one that got away — real urgency from a real outcome, reported
