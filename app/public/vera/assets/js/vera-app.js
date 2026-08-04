@@ -202,6 +202,11 @@
 
   var VIEWS = {
     all: function () { return true; },
+    // The drop shows the eight strongest. Before the sourcing fixes of
+    // 2026-08-04 that cap never bit, because two or three cleared on a good
+    // day. Twenty-one cleared the first night it did, and thirteen of them
+    // had nowhere to be seen — so "cleared" is a view of its own now.
+    cleared: C.isFullFit,
     fresh: C.isFresh,
     owner: function (l) { return C.ownerRead(l).label === 'Private'; },
     clean: function (l) { return (+l.hpd_risk_score || 0) < 40 && !(+l.serious_open_violations); },
@@ -615,11 +620,20 @@
     drop.forEach(function (l) { inDrop[l.listing_uid] = 1; });
 
     /* the bubble: strongest of what did NOT clear, clearly labelled */
-    var bubble = POOL.filter(function (l) {
+    var nearMiss = POOL.filter(function (l) {
       if (inDrop[l.listing_uid] || C.isScam(l)) return false;
       var rec = String(l.recommendation || '').toLowerCase();
       return rec === 'pursue cautiously' || rec === 'manual review';
-    }).sort(function (a, b) { return (+b.overall_score || 0) - (+a.overall_score || 0); }).slice(0, 4);
+    }).sort(function (a, b) { return (+b.overall_score || 0) - (+a.overall_score || 0); });
+    var bubble = nearMiss.slice(0, 4);
+    // How many missed by less than a point. On 2026-08-04 thirteen listings
+    // scored 59.6-59.9 against a 60.0 bar — low HPD risk, confidence 78,
+    // under the ceiling — and the page showed four of them with no hint the
+    // other nine existed. The bar is David's to move, not the page's; what
+    // the page owes is an honest count of who is standing at it.
+    var whisker = nearMiss.filter(function (l) {
+      return (+l.overall_score || 0) >= C.FIT.minScore - 1;
+    }).length;
 
     /* the honesty ledger: why the rest didn't make it */
     var reasons = {};
@@ -633,7 +647,14 @@
 
     var dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
     var sm = (D && D.summary) || {};
-    var passedCount = POOL.length - drop.length;
+    // Count what CLEARED, not what fitted on the page. The lede read
+    // "8 clear every gate" out of 270 on the night 21 did, and "we passed on
+    // 262" when the true figure was 249 — both understating VERA's own
+    // result and, worse, stating a number that was not true. The cap is
+    // editorial; the count is a fact, and they are not the same thing.
+    var clearedCount = fits.length;
+    var beyondDrop = Math.max(0, clearedCount - drop.length);
+    var passedCount = POOL.length - clearedCount;
 
     page.innerHTML =
       (usedFallbackPool ? '<p class="notice">Feed is serving the pre-overhaul contract — the drop is limited to curated lanes until tonight\'s publish.</p>' : '') +
@@ -642,7 +663,8 @@
         '<h1 class="drophead__title">' + esc(dateStr) + '</h1>' +
         '<p class="drophead__lede">' +
           (drop.length
-            ? 'Out of <b>' + POOL.length + '</b> listings across the net, <b>' + drop.length + '</b> clear' + (drop.length === 1 ? 's' : '') + ' every gate — price, papers, building record, and an owner worth talking to.'
+            ? 'Out of <b>' + POOL.length + '</b> listings across the net, <b>' + clearedCount + '</b> clear' + (clearedCount === 1 ? 's' : '') + ' every gate — price, papers, building record, and an owner worth talking to.' +
+              (beyondDrop ? ' The <b>' + drop.length + '</b> strongest are below; <a href="#/browse" data-view-jump="cleared">the other ' + beyondDrop + ' are here ↗</a>' : '')
             : 'Nothing met the bar today — out of ' + POOL.length + ' swept, none cleared every gate. That is not a bug. The net stays out and tomorrow sweeps again.') +
         '</p>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
@@ -661,7 +683,11 @@
       memorialLine() +
       (bubble.length ?
         '<section class="bubble"><h2 class="bubble__title">On the bubble</h2>' +
-        '<p class="bubble__hint">Strong records that failed exactly one gate — usually verification. Worth a look with your eyes open, not your deposit.</p>' +
+        '<p class="bubble__hint">Strong records that failed exactly one gate — usually verification. Worth a look with your eyes open, not your deposit.' +
+          (whisker > bubble.length
+            ? ' <b>' + whisker + '</b> of tonight’s came within a point of clearing; the ' + bubble.length + ' strongest are here.'
+            : '') +
+        '</p>' +
         '<div class="bubblegrid">' + bubble.map(function (l) {
           var o = C.ownerRead(l);
           return '<button type="button" class="bubcard" data-open="' + esc(l.listing_uid) + '">' +
@@ -932,7 +958,7 @@
   ];
 
   var VIEW_PILLS = [
-    ['all', 'Everything'], ['fresh', 'Fresh'], ['owner', 'Owner-direct'],
+    ['all', 'Everything'], ['cleared', 'Cleared every gate'], ['fresh', 'Fresh'], ['owner', 'Owner-direct'],
     ['clean', 'Clean buildings'], ['verify', 'Needs verification'], ['scam', 'Scam wall'],
   ];
 
@@ -1569,9 +1595,16 @@
   /* ---------- one delegated click handler ---------- */
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab]') : null;
     if (!t) return;
 
+    if (t.hasAttribute('data-view-jump')) {
+      // The link already carries href="#/browse"; this just makes it land on
+      // the right pill instead of dumping the reader into all 270.
+      state.view = t.getAttribute('data-view-jump');
+      persist();
+      return;
+    }
     if (t.hasAttribute('data-open')) { if (window.__VERAL) window.__VERAL.open(t.getAttribute('data-open')); return; }
     if (t.hasAttribute('data-insp-close') || t.hasAttribute('data-scrim')) { if (window.__VERAL) window.__VERAL.close(); return; }
     if (t.hasAttribute('data-tab')) { if (window.__VERAL) window.__VERAL.setTab(t.getAttribute('data-tab')); return; }
