@@ -469,6 +469,14 @@
         return (Math.max(lf, lb) + 0.05) / (Math.min(lf, lb) + 0.05);
       })();
       check('the dimmest text token clears WCAG AA', muteRatio >= 4.5, muteRatio.toFixed(2) + ':1');
+      var ann = $('[data-route-announce]');
+      check('route changes are announced politely', !!ann && ann.getAttribute('aria-live') === 'polite', ann ? 'live region present' : 'MISSING');
+      location.hash = '#/market'; app.route();
+      check('the announcement names the view and its size',
+        !!ann && ann.textContent.indexOf('Market') > -1 && /\d+ listings/.test(ann.textContent), ann && ann.textContent);
+      location.hash = '#/today'; app.route();
+      check('the announcement follows you between views',
+        !!ann && ann.textContent.indexOf('Today') > -1, ann && ann.textContent);
 
       /* ---- records-layer honesty ---- */
       var Dh = app.D();

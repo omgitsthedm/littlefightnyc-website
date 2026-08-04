@@ -34,7 +34,7 @@
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./assets/vendor/maplibre/maplibre-gl.css">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=45">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=46">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -101,6 +101,11 @@
       <button type="button" class="filters__clear" data-clear hidden>Clear ×</button>
     </div>
 
+    <!-- Route changes in a single-page app are silent to screen readers
+         unless announced. This says what view you landed on and what is
+         in it, politely, without stealing focus. -->
+    <p class="sr-only" role="status" aria-live="polite" data-route-announce></p>
+
     <main id="main" class="main" data-main tabindex="-1">
       <section class="page" data-page="today"></section>
       <div class="loading" data-loading>
@@ -147,13 +152,13 @@
   </div>
 
   <noscript><p class="fallback">VERA renders a live data feed and needs JavaScript.</p></noscript>
-  <script src="./assets/js/vera-core.js?v=45" defer></script>
-  <script src="./assets/js/vera-geo.js?v=45" defer></script>
+  <script src="./assets/js/vera-core.js?v=46" defer></script>
+  <script src="./assets/js/vera-geo.js?v=46" defer></script>
   <script src="./assets/vendor/maplibre/maplibre-gl.js" defer></script>
-  <script src="./assets/js/vera-map.js?v=45" defer></script>
-  <script src="./assets/js/vera-sweep.js?v=45" defer></script>
-  <script src="./assets/js/vera-ledger.js?v=45" defer></script>
-  <script src="./assets/js/vera-app.js?v=45" defer></script>
-  <script src="./assets/js/vera-tests.js?v=45" defer></script>
+  <script src="./assets/js/vera-map.js?v=46" defer></script>
+  <script src="./assets/js/vera-sweep.js?v=46" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=46" defer></script>
+  <script src="./assets/js/vera-app.js?v=46" defer></script>
+  <script src="./assets/js/vera-tests.js?v=46" defer></script>
 </body>
 </html>

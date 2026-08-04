@@ -1344,6 +1344,29 @@
     if (pendingListing && window.__VERAL && window.__VERAL.openUid() !== pendingListing) {
       window.__VERAL.open(pendingListing);
     }
+    announceRoute();
+  }
+
+  /* Tell a screen reader where it just landed, and what is there. Polite,
+     so it waits for a pause rather than interrupting. */
+  var ROUTE_NAMES = {
+    today: 'Today, the daily drop', market: 'Market, the whole net',
+    browse: 'Browse, every listing', atlas: 'Atlas, the map',
+    hunt: 'My hunt', manual: 'Field manual', archive: 'Receipts', system: 'System',
+  };
+
+  function announceRoute() {
+    var el = $('[data-route-announce]');
+    if (!el) return;
+    var name = ROUTE_NAMES[state.route] || state.route;
+    var count = '';
+    if (state.route === 'today') {
+      var n = $$('.dropcard').length;
+      count = n ? ', ' + n + ' listing' + (n === 1 ? '' : 's') + ' in the drop' : ', nothing cleared the bar today';
+    } else if (state.route === 'browse' || state.route === 'atlas' || state.route === 'market') {
+      count = ', ' + filtered().length + ' listings under the current filters';
+    }
+    el.textContent = name + count + '.';
   }
 
   var revealObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
