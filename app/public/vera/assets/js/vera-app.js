@@ -622,6 +622,7 @@
             '<p>VERA does not pad the feed. When the market under ' + money(C.FIT.maxRent) + ' has nothing that clears verification, you see this page instead of eight compromises.</p>' +
             '<p><a class="ghostbtn" href="#/market">See what the market is doing instead ↗</a></p>' +
           '</div>') +
+      recordsWarning() +
       memorialLine() +
       (bubble.length ?
         '<section class="bubble"><h2 class="bubble__title">On the bubble</h2>' +
@@ -644,6 +645,19 @@
     page.classList.add('is-entered');
     startCountdown();
     if (window.__VERAS) window.__VERAS.maybePlay(page);
+  }
+
+  /* When the city's endpoints fail, every lookup errors, nothing earns a
+     BBL, and the scorer correctly recommends nothing — which looks exactly
+     like an ordinary quiet day. It isn't. Say which one happened. */
+  function recordsWarning() {
+    var rh = D && D.records_health;
+    if (!rh || !rh.degraded) return '';
+    return '<div class="recwarn"><b>The city\u2019s records service was unavailable during this sweep.</b> ' +
+      rh.errors + ' building lookup' + (rh.errors === 1 ? '' : 's') + ' failed and none succeeded, so no listing could be ' +
+      'checked against HPD, DOB, or 311 this run. Nothing is being recommended, and the steward grades below are ' +
+      'unverified \u2014 not because the buildings are clean, but because VERA could not read the record. ' +
+      'The next sweep retries automatically.</div>';
   }
 
   /* The one that got away — real urgency from a real outcome, reported

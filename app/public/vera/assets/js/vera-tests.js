@@ -330,6 +330,20 @@
       }
       check('the hunt now runs first-look to signed lease', app.STAGES.length === 7 && app.STAGES.filter(function (s) { return s.id === 'signed'; }).length === 1, app.STAGES.map(function (s) { return s.id; }).join(','));
 
+      /* ---- records-layer honesty ---- */
+      var Dh = app.D();
+      var hadRH = Dh.records_health;
+      Dh.records_health = { matched: 0, errors: 18, skipped: 150, total: 168, degraded: true };
+      location.hash = '#/today'; app.route();
+      var rw = $('.recwarn');
+      check('a failed records layer says so, loudly',
+        !!rw && rw.textContent.indexOf('could not read the record') > -1 && rw.textContent.indexOf('18 building lookups failed') > -1,
+        rw ? 'banner shown' : 'MISSING');
+      Dh.records_health = { matched: 17, errors: 0, skipped: 149, total: 166, degraded: false };
+      app.route();
+      check('a healthy records layer shows no warning', !$('.recwarn'), '');
+      Dh.records_health = hadRH;
+
       /* ---- hygiene ---- */
       check('no private feed touched', ['./data/public.json', 'https://vera-pipeline.netlify.app/data/public.json'].every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), '');
       check('brand present', ($('.brand__name') || { textContent: '' }).textContent === 'VERA', '');
