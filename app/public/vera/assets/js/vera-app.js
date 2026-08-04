@@ -1382,7 +1382,13 @@
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Source reliability</h2><p class="panel__hint">avg per run</p></div>' +
           (rel.length ? sparkline(rel, 560, 170, '#c8a468') : '<p class="lane__empty">History arrives with the next publishes.</p>') + '</div>' +
-        '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2><p class="panel__hint">' + esc(run.run_id || '') + '</p></div>' +
+        '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2><p class="panel__hint">' +
+          (run.log_url && /^https:\/\/github\.com\//.test(run.log_url)
+            // Only a github.com URL, and only from the feed we chose. Every
+            // page on this site claims its numbers are checkable; this is the
+            // one place a reader can go and check the run itself.
+            ? '<a href="' + esc(run.log_url) + '" rel="noopener">' + esc(run.run_id || 'this run') + ' ↗</a>'
+            : esc(run.run_id || '')) + '</p></div>' +
           '<dl class="kv">' +
             '<dt>Generated</dt><dd>' + esc(D.generated_at || '—') + feedAge() + '</dd>' +
             '<dt>Cadence</dt><dd>' + esc(run.cadence || 'nightly') + '</dd>' +
