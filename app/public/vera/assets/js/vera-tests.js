@@ -309,10 +309,20 @@
 
       var fkUid = POOL[0] && POOL[0].listing_uid;
       if (fkUid) {
-        var host = L.buildFieldKit(app.byUid(fkUid));
+        var fkL = app.byUid(fkUid);
+        var fkHadIll = fkL.illegal_demands;
+        fkL.illegal_demands = [{ id: 'key_money', says: 'asks for key money',
+          law: 'Key money is illegal in New York', quote: 'super tip of $300' }];
+        var host = L.buildFieldKit(fkL);
         var fkTxt = host.textContent;
         check('field kit carries grade, money, checklist, and chain', fkTxt.indexOf('steward grade') > -1 && fkTxt.indexOf('Cash to keys') > -1 && fkTxt.indexOf('☐') > -1 && fkTxt.indexOf('acris') > -1, '');
         check('field kit hidden on screen', getComputedStyle(host).display === 'none', getComputedStyle(host).display);
+        check('field kit carries the unlawful demand into the room',
+          host.textContent.indexOf('asks for key money') > -1 &&
+          host.textContent.indexOf('super tip of $300') > -1 &&
+          host.textContent.indexOf('Key money is illegal') > -1 &&
+          host.textContent.indexOf('do not have to pay it') > -1, '');
+        fkL.illegal_demands = fkHadIll;
         L.open(fkUid);
         check('field kit action present in the ledger', !!$('[data-fieldkit]'), '');
         L.close();

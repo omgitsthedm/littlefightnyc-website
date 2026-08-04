@@ -427,6 +427,19 @@
       '<p class="fk-sub">' + esc(money(l.rent)) + ' · ' + esc(l.neighborhood || '') + ' · steward grade ' + esc(stw.grade) + ' (' + esc(stw.word) + ')' + '</p>' +
       '<p class="fk-link">littlefightnyc.com/vera/#/listing/' + esc(l.listing_uid) + '</p>' +
       (stw.failures.length ? '<p class="fk-warn">On the record: ' + esc(C.stewardText(stw.failures)) + '</p>' : '') +
+      /* If the post itself demanded something unlawful, it belongs on the
+         sheet you carry in — quoted, with the statute, so you can hold it
+         up in the room rather than try to remember it. */
+      ((l.illegal_demands || []).length
+        ? '<div class="fk-illegal"><h2>This listing asked for something the law forbids</h2><ul>' +
+          l.illegal_demands.map(function (d) {
+            return '<li><b>' + esc(d.says) + '</b> — “' + esc(d.quote || '') + '”<br><i>' + esc(d.law) + '</i></li>';
+          }).join('') + '</ul>' +
+          '<p>You do not have to pay it. Ask them to put the demand in writing.</p></div>'
+        : '') +
+      ((l.scam_cues_found || []).length
+        ? '<p class="fk-cues"><b>Caution:</b> ' + esc(l.scam_cues_found.map(function (c) { return c.says; }).join('; ')) + '</p>'
+        : '') +
       '<table>' +
         kv('Cash to keys', money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + $' + m.appFee + ' application)') +
         kv('Illegal to ask', 'deposit over one month · application over $20 · broker fee when the landlord hired them · any money before lease signing') +
