@@ -208,7 +208,7 @@
     // had nowhere to be seen — so "cleared" is a view of its own now.
     cleared: C.isFullFit,
     fresh: C.isFresh,
-    owner: function (l) { return C.ownerRead(l).label === 'Private'; },
+    owner: C.isSmallOwner,
     clean: function (l) { return (+l.hpd_risk_score || 0) < 40 && !(+l.serious_open_violations); },
     verify: C.needsVerify,
     scam: C.isScam,
@@ -237,7 +237,7 @@
     var k = state.sort.key, dir = state.sort.dir;
     out.sort(function (a, b) {
       if (state.lens.privateFirst) {
-        var pa = C.ownerRead(a).label === 'Private' ? 1 : 0, pb = C.ownerRead(b).label === 'Private' ? 1 : 0;
+        var pa = C.isSmallOwner(a) ? 1 : 0, pb = C.isSmallOwner(b) ? 1 : 0;
         if (pa !== pb) return pb - pa;
       }
       var va = a[k], vb = b[k];
@@ -780,7 +780,7 @@
   function renderMarket(page) {
     var f = filtered();
     var rents = f.map(function (l) { return +l.rent; }).filter(function (n) { return n > 0; });
-    var privates = f.filter(function (l) { return C.ownerRead(l).label === 'Private'; });
+    var privates = f.filter(C.isSmallOwner);
     var scams = f.filter(C.isScam);
     var fresh = f.filter(C.isFresh);
     var sm = (D.summary || {});
@@ -839,7 +839,7 @@
         return true;
       });
       var med = median(inBr.map(function (l) { return +l.rent; }).filter(Boolean));
-      var priv = inBr.filter(function (l) { return C.ownerRead(l).label === 'Private'; }).length;
+      var priv = inBr.filter(C.isSmallOwner).length;
       var on = state.bracket === br.id;
       return '<button type="button" class="brtile ' + (on ? 'is-on' : '') + '" data-brtile="' + br.id + '">' +
         '<span class="brtile__label">' + br.label + '</span>' +

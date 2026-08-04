@@ -138,11 +138,41 @@
 
   /* ---------- listing lenses ---------- */
 
+  /* How big is the landlord, really.
+
+     This used to read `owner_type === 'llc'` as Corporate. In New York
+     almost every building is held in an LLC — a family with one walk-up
+     holds it as "203 Chrystie St Realty Corp" — so nearly every verified
+     listing was labelled Corporate. That broke the count of private
+     landlords and made the "no corporations" lens hide exactly the small
+     owners this exists to find.
+
+     JustFix's portfolio says what the wrapper cannot: 203 Chrystie is 16
+     buildings, 324 E 83 St is 138. Building count is the read; the LLC is
+     just paperwork. Without a portfolio the honest answer is that we do not
+     know, not that they are a corporation. */
   function ownerRead(l) {
-    if (l.by_owner_signal || l.likely_landlord_type === 'independent' || (l.likely_independent_landlord_score || 0) >= 70) return { label: 'Private', cls: 'tag--green' };
     if (l.broker_name || l.fee_status === 'broker_fee' || l.likely_landlord_type === 'broker') return { label: 'Broker', cls: 'tag--red' };
-    if (l.management_company_signal || l.likely_landlord_type === 'management_company' || l.owner_type === 'llc') return { label: 'Corporate', cls: 'tag--amber' };
+
+    var bldgs = +((l.landlord_portfolio || {}).bldgs) || 0;
+    if (bldgs > 0) {
+      if (bldgs <= 2) return { label: 'Private', cls: 'tag--green' };
+      if (bldgs <= 9) return { label: 'Small landlord', cls: 'tag--green' };
+      return { label: 'Corporate', cls: 'tag--amber' };
+    }
+
+    if (l.by_owner_signal || l.likely_landlord_type === 'independent' || (l.likely_independent_landlord_score || 0) >= 70) return { label: 'Private', cls: 'tag--green' };
+    if (l.management_company_signal || l.likely_landlord_type === 'management_company') return { label: 'Corporate', cls: 'tag--amber' };
     return { label: 'Unclear', cls: '' };
+  }
+
+  /* "Not a corporation" for counting and filtering. A landlord with four
+     buildings is not what anyone means by corporate, and every caller that
+     tested label === 'Private' would have dropped them the moment the
+     portfolio read arrived. */
+  function isSmallOwner(l) {
+    var label = ownerRead(l).label;
+    return label === 'Private' || label === 'Small landlord';
   }
 
   /* Numeric confidence only. listing_authenticity_confidence is a WORD
@@ -657,7 +687,7 @@
     esc: esc, money: money, num: num, median: median, timeago: timeago,
     BRACKETS: BRACKETS, bracketOf: bracketOf, AREAS: AREAS, areaOf: areaOf,
     LINE_COLORS: LINE_COLORS, STATIONS: STATIONS, nearestStation: nearestStation, lineBullets: lineBullets,
-    ownerRead: ownerRead, authenticity: authenticity, isScam: isScam, needsVerify: needsVerify,
+    ownerRead: ownerRead, isSmallOwner: isSmallOwner, authenticity: authenticity, isScam: isScam, needsVerify: needsVerify,
     srcCls: srcCls, isFresh: isFresh, stabilized: stabilized, riskCls: riskCls, unitOf: unitOf,
     FIT: FIT, isFullFit: isFullFit, whyPassed: whyPassed, charName: charName, streetOf: streetOf, titleCase: titleCase,
     stewardOf: stewardOf, stewardText: stewardText, spatialLine: spatialLine,
