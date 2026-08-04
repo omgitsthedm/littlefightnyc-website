@@ -293,6 +293,20 @@
           'Every figure is a public record, not an opinion — and a large portfolio is not itself a fault.</p></div>';
       }
 
+      /* Counts without a denominator mislead. Seven violations across 799
+         apartments is a very different building from three across 89, and
+         the raw numbers above cannot show that. This changes no score — it
+         gives the reader the denominator the numbers deserve. */
+      var units = +l.unit_count || 0;
+      if (units > 0) {
+        var sOpen = +l.serious_open_violations || 0;
+        var heat3 = +l.heat_hot_water_complaints_3y || 0;
+        var per = function (n) { return n === 0 ? 'none' : (n / units).toFixed(2).replace(/0+$/, '').replace(/\.$/, '') + ' per apartment'; };
+        html += '<p class="perunit"><b>' + units.toLocaleString() + ' apartments</b> in this building — ' +
+          'serious open violations ' + esc(per(sOpen)) + ', heat and hot-water complaints ' + esc(per(heat3)) + ' over three years. ' +
+          '<span class="t-dim">A large building carries more of everything; the rate is the fairer read.</span></p>';
+      }
+
       html += '<p class="insp-fine">Landlord? Think a record here is wrong? <a href="/vera/corrections/">How corrections work ↗</a></p>';
       html += '<dl class="kv">' +
         kvRow('BBL', esc(l.bbl)) + kvRow('BIN', esc(l.bin)) +

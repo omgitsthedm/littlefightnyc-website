@@ -162,9 +162,14 @@
           D2.transit_tables = { 'L': [['Canarsie-Rockaway Pkwy', 0], ['Bedford Av', 2100], ['Union Sq-14 St', 2640]] };
           var cr = app.commuteRead({ transit: { station: 'Bedford Av', walk_mins: 8, lines: ['L'] }, latitude: 40.7172, longitude: -73.9567 }, 'Union Sq');
           check('scheduled ride minutes quoted from the timetable', !!cr && cr.label.indexOf('≈9 min scheduled') > -1, cr && cr.label);
-          D2.transit_tables = hadTT;
+          /* Test the no-timetable path with the timetables actually GONE.
+             This previously restored the real tables first and then asserted
+             the fallback, so it only passed while the live feed happened to
+             lack a matching route — luck, not coverage. */
+          D2.transit_tables = null;
           var crNo = app.commuteRead({ transit: { station: 'Bedford Av', walk_mins: 8, lines: ['L'] }, latitude: 40.7172, longitude: -73.9567 }, 'Union Sq');
           check('without tables the honest direct-line fallback holds', !!crNo && crNo.label.indexOf('direct') > -1 && crNo.label.indexOf('scheduled') === -1, crNo && crNo.label);
+          D2.transit_tables = hadTT;
           var selB = $('[data-anchor-sel="0"]');
           selB.value = '';
           selB.dispatchEvent(new Event('change', { bubbles: true }));
@@ -424,6 +429,24 @@
         credTxt.indexOf('umm-maybe/AI-image-detector') > -1 &&
         credTxt.indexOf('CC BY 4.0') > -1 &&
         credTxt.indexOf('Who Owns What') > -1, $$('.credits li').length + ' credits');
+
+      /* ---- counts get a denominator ---- */
+      var puProbe = POOL[0];
+      var hadU = puProbe.unit_count, hadS = puProbe.serious_open_violations, hadH = puProbe.heat_hot_water_complaints_3y;
+      puProbe.unit_count = 799; puProbe.serious_open_violations = 7; puProbe.heat_hot_water_complaints_3y = 14;
+      L.open(puProbe.listing_uid);
+      $('[data-insp-tabs] [data-tab="records"]').click();
+      var puTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
+      check('violation counts are shown per apartment, not raw',
+        puTxt.indexOf('799 apartments') > -1 && puTxt.indexOf('per apartment') > -1 &&
+        puTxt.indexOf('the rate is the fairer read') > -1, '');
+      L.close();
+      puProbe.unit_count = 0;
+      L.open(puProbe.listing_uid);
+      $('[data-insp-tabs] [data-tab="records"]').click();
+      check('no unit count means no invented rate', !$('.perunit'), '');
+      L.close();
+      puProbe.unit_count = hadU; puProbe.serious_open_violations = hadS; puProbe.heat_hot_water_complaints_3y = hadH;
 
       /* ---- records-layer honesty ---- */
       var Dh = app.D();

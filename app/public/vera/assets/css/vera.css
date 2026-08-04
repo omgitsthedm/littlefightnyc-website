@@ -1200,3 +1200,8 @@ body { animation: aurora 46s ease-in-out infinite; }
 .credits a { color: var(--brass); }
 
 [hidden] { display: none !important; }
+
+.perunit { font-size: 14px; line-height: 1.62; color: var(--dim); border-left: 2px solid var(--line2); padding-left: 13px; margin: 14px 0; max-width: 66ch; }
+.perunit b { color: var(--ink); font-weight: 500; }
+
+[hidden] { display: none !important; }
