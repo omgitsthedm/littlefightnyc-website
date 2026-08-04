@@ -7,7 +7,12 @@
 
 var SHELL = 'vera-shell-v2';
 var FEED = 'vera-feed-v1';
-var FEED_PATH = '/vera/data/public.json';
+/* The receipts were left out of this list, so an offline visitor got the
+   drop but not the record of every previous drop — on a page whose whole
+   claim is that nothing is edited after the fact. Both are cached the same
+   way now: network-first, with the stored copy stamped so the app can badge
+   its age rather than imply the sweep just ran. */
+var DATA_PATHS = ['/vera/data/public.json', '/vera/data/archive.json'];
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();
@@ -28,7 +33,8 @@ self.addEventListener('fetch', function (e) {
   if (url.origin !== location.origin || url.pathname.indexOf('/vera/') !== 0) return;
   if (e.request.method !== 'GET') return;
 
-  if (url.pathname === FEED_PATH) {
+  if (DATA_PATHS.indexOf(url.pathname) !== -1) {
+    var dataPath = url.pathname;
     e.respondWith(
       fetch(e.request).then(function (resp) {
         if (resp.ok) {
@@ -37,13 +43,13 @@ self.addEventListener('fetch', function (e) {
             var headers = new Headers(copy.headers);
             headers.set('X-Vera-Cached-At', new Date().toISOString());
             copy.blob().then(function (body) {
-              c.put(FEED_PATH, new Response(body, { status: 200, headers: headers }));
+              c.put(dataPath, new Response(body, { status: 200, headers: headers }));
             });
           });
         }
         return resp;
       }).catch(function () {
-        return caches.open(FEED).then(function (c) { return c.match(FEED_PATH); }).then(function (hit) {
+        return caches.open(FEED).then(function (c) { return c.match(dataPath); }).then(function (hit) {
           if (!hit) throw new Error('offline, no cached sweep');
           var headers = new Headers(hit.headers);
           headers.set('X-Vera-Cache', headers.get('X-Vera-Cached-At') || 'unknown');
