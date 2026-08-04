@@ -92,7 +92,13 @@ export default function QuietContact({
           <Link
             className="lf-contact-block__door lf-contact-block__door--plan"
             to={planHref}
-            data-lf-event={intent === "clients" ? undefined : "human_review_requested"}
+            data-lf-event={
+              intent === "clients"
+                ? undefined
+                : intent === "website"
+                  ? "website_plan_intent"
+                  : "human_review_requested"
+            }
             data-lf-label="contact_block"
           >
             <span className="lf-contact-block__door-icon" aria-hidden="true">

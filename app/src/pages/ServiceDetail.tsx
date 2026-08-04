@@ -88,7 +88,7 @@ function WebsiteAcquisitionBlock() {
               <Link
                 className="lf-sd-web__primary"
                 to="/tech-audit/?intent=website&source=website_service_proof"
-                data-lf-event="human_review_requested"
+                data-lf-event="website_plan_intent"
                 data-lf-label="website_service_proof"
               >
                 Get my website plan

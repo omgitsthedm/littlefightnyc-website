@@ -33,6 +33,17 @@ async function requireFile(absolutePath, label, minimumBytes = 1) {
   }
 }
 
+async function forbidFile(absolutePath, label) {
+  try {
+    await stat(absolutePath);
+    fail(`${label}: stale file must not ship`);
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      fail(`${label}: ${error.message}`);
+    }
+  }
+}
+
 const tokenPath = path.join(brandRoot, "assets", "color", "tokens.json");
 let tokens;
 try {
@@ -184,6 +195,7 @@ const claimFiles = [
   "src/pages/Espanol.tsx",
   "src/pages/Zhongwen.tsx",
   "src/data/site-cases.ts",
+  "scripts/prerender-seo.mjs",
 ];
 for (const relativePath of claimFiles) {
   const source = await read(relativePath);
@@ -412,6 +424,46 @@ for (const scene of [
   }
 }
 
+for (const suffix of ["", "-480", "-640", "-900"]) {
+  await requireFile(
+    path.join(appRoot, "public", "assets", `dakota-operator-access${suffix}.webp`),
+    `public/assets/dakota-operator-access${suffix}.webp`,
+    5_000,
+  );
+}
+
+const veraPreviewName = "examples-vera-field-manual-5b845af5.webp";
+const veraShareName = "og-vera-34d78811.jpg";
+for (const [relativePath, expectedName] of [
+  ["src/pages/FieldGuide.tsx", veraPreviewName],
+  ["scripts/generate-social-cards.mjs", veraShareName],
+  ["scripts/prerender-seo.mjs", veraShareName],
+  ["public/vera/index.html", veraShareName],
+]) {
+  const source = await read(relativePath);
+  if (!source.includes(expectedName)) {
+    fail(`${relativePath}: must reference fingerprinted VERA asset ${expectedName}`);
+  }
+}
+await requireFile(
+  path.join(appRoot, "public", "assets", veraPreviewName),
+  `public/assets/${veraPreviewName}`,
+  10_000,
+);
+await requireFile(
+  path.join(appRoot, "public", "assets", "social", veraShareName),
+  `public/assets/social/${veraShareName}`,
+  50_000,
+);
+await forbidFile(
+  path.join(appRoot, "public", "assets", "examples-vera-preview.webp"),
+  "public/assets/examples-vera-preview.webp",
+);
+await forbidFile(
+  path.join(appRoot, "public", "assets", "social", "og-vera.jpg"),
+  "public/assets/social/og-vera.jpg",
+);
+
 if (failures.length) {
   console.error(`Brand system audit failed with ${failures.length} issue(s):`);
   for (const failure of failures) console.error(`- ${failure}`);
@@ -419,5 +471,5 @@ if (failures.length) {
 }
 
 console.log(
-  "Brand system audit passed: canonical tokens, type, contact, downloads, schema, and 20 responsive scene assets.",
+  "Brand system audit passed: canonical tokens, type, contact, downloads, schema, and responsive brand/product assets.",
 );

@@ -21,8 +21,10 @@ export function ProofStatus({ study, className = "" }: ProofStatusProps) {
 
 export default function ProofPassport({ study }: { study: CaseStudy }) {
   const buildFacts = study.metrics?.filter((metric) => metric.evidence === "build") ?? [];
-  const deliveredResults =
-    study.metrics?.filter((metric) => metric.evidence === "outcome") ?? [];
+  const releaseFacts =
+    study.metrics?.filter((metric) => metric.evidence === "release") ?? [];
+  const businessOutcomes =
+    study.metrics?.filter((metric) => metric.evidence === "business-outcome") ?? [];
   const captureDate = study.showcase.proof.captureDate;
 
   return (
@@ -70,10 +72,10 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
           </dl>
         </section>
 
-        <section aria-label="Delivered results">
-          <h3>Delivered results</h3>
+        <section aria-label="Verified release facts">
+          <h3>Verified release facts</h3>
           <dl>
-            {deliveredResults.map((metric) => (
+            {releaseFacts.map((metric) => (
               <div key={metric.label}>
                 <dt>{metric.value}</dt>
                 <dd>{metric.label}</dd>
@@ -81,6 +83,20 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
             ))}
           </dl>
         </section>
+
+        {businessOutcomes.length > 0 && (
+          <section aria-label="Client-approved business outcomes">
+            <h3>Client-approved business outcomes</h3>
+            <dl>
+              {businessOutcomes.map((metric) => (
+                <div key={metric.label}>
+                  <dt>{metric.value}</dt>
+                  <dd>{metric.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
       </div>
     </section>
   );

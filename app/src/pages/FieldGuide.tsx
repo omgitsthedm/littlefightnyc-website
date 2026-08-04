@@ -222,8 +222,8 @@ export default function FieldGuide() {
             <a className="lf-ex-tool lf-ex-tool--vera" href="/vera/" data-no-vt>
               <span className="lf-ex-tool__media">
                 <img
-                  src="/assets/examples-vera-preview.webp"
-                  alt="The VERA mission-control dashboard showing today's apartment shortlist"
+                  src="/assets/examples-vera-field-manual-5b845af5.webp"
+                  alt="The VERA Field Manual showing move-in cost and applicant-income calculators"
                   width="1200"
                   height="675"
                   loading="lazy"
@@ -231,11 +231,11 @@ export default function FieldGuide() {
                 />
               </span>
               <span className="lf-ex-tool__copy">
-                <span className="lf-ex-tool__type">Live personal software</span>
+                <span className="lf-ex-tool__type">Little Fight Lab · live public system</span>
                 <strong>VERA</strong>
-                <span>A robot that hunts NYC apartments every night, checks city records, finds the real landlord, and skips the scams.</span>
+                <span>VERA joins resolvable NYC rental addresses to public building records, labels what it cannot confirm, and keeps hunt state in the visitor&apos;s browser. Verify before paying.</span>
                 <span className="lf-ex-tool__open">
-                  Ride along with VERA
+                  Explore VERA
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
                 </span>
               </span>

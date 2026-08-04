@@ -113,10 +113,10 @@ const cards = [
     // card from the prerenderer. The 72nd Street IRT kiosk is deliberate: VERA
     // scores subway proximity, and the block behind it is the residential
     // Upper West Side the tool is actually searching.
-    file: "og-vera.jpg",
+    file: "og-vera-34d78811.jpg",
     category: "VERA / NYC RENTAL INTELLIGENCE",
-    title: "Every listing checked against city records.",
-    note: "No brokers. No corporate landlords. No scams.",
+    title: "Public records when the address resolves.",
+    note: "Uncertainty stays visible. Verify before paying.",
     image: "assets/hero-uws-72nd.webp",
     position: "38% center",
     size: 82,

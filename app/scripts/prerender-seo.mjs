@@ -191,7 +191,7 @@ const standaloneDiscoveryPages = [
     path: "/vera/",
     title: "VERA — NYC rental intelligence, on the record",
     h1: "VERA — NYC rental intelligence, on the record",
-    image: "/assets/social/og-vera.jpg",
+    image: "/assets/social/og-vera-34d78811.jpg",
     shortAnswer:
       "VERA is a free Little Fight Lab rental-intelligence workspace for NYC renters. It joins resolvable listing addresses to public records, labels uncertainty, and keeps hunt state in the browser.",
     updated: "2026-08-04",
@@ -1646,7 +1646,9 @@ function zhSnapshot() {
       <p class="es-sub">生意怎么做，您最清楚。我们先听您怎么工作，留下好用的，修掉添乱的。您不需要先变成技术专家。</p>
       <p class="es-eyebrow">真实项目</p>
       <h2>这些已经在为客户做事。</h2>
-      <ul class="es-list"><li>公开网站 Hair By Rachel Charles 从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。 Lighthouse 四项满分，两周上线</li><li>私人客户项目 私人报价系统 把真实报价流程集中到团队每天使用的一套系统里。 3个工具，1个可靠数据源</li><li>公开网站 CC Films 为独立电影打造更清楚、更可信的官方网站。 搜索结构、安全标头和发布流程全面加固</li></ul>
+      <!-- Lighthouse 13.4.1, mobile, measured 2026-07-30.
+           Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md -->
+      <ul class="es-list"><li>公开网站 Hair By Rachel Charles 从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。移动端性能 96；无障碍、最佳实践、SEO 均为 100；两周上线</li><li>私人客户项目 私人报价系统 把真实报价流程集中到团队每天使用的一套系统里。 3个工具，1个可靠数据源</li><li>公开网站 CC Films 为独立电影打造更清楚、更可信的官方网站。 搜索结构、安全标头和发布流程全面加固</li></ul>
       <p class="es-actions"><a class="es-cta" href="/examples/">查看所有真实案例</a></p>
       <p class="es-eyebrow">没有意外</p>
       <h2>从第一通电话，到上线以后。</h2>
@@ -1717,7 +1719,9 @@ function esSnapshot() {
       <p class="es-sub">Usted ya sabe llevar su negocio. Nosotros escuchamos cómo trabaja, conservamos lo que sirve y arreglamos lo que estorba. No tiene que volverse experto en tecnología.</p>
       <p class="es-eyebrow">PROYECTOS REALES</p>
       <h2>Esto ya está funcionando para clientes.</h2>
-      <ul class="es-list"><li>Sitio público Hair By Rachel Charles De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar. 100 en Lighthouse · lista en 2 semanas</li><li>Proyecto privado Sistema privado de presupuestos El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días. 3 herramientas, 1 fuente de verdad</li><li>Sitio público CC Films Una sede oficial más clara para una película independiente. Estructura, buscadores y publicación reforzados</li></ul>
+      <!-- Lighthouse 13.4.1, mobile, measured 2026-07-30.
+           Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md -->
+      <ul class="es-list"><li>Sitio público Hair By Rachel Charles De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar. 96 en rendimiento móvil; 100 en accesibilidad, buenas prácticas y SEO · lista en 2 semanas</li><li>Proyecto privado Sistema privado de presupuestos El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días. 3 herramientas, 1 fuente de verdad</li><li>Sitio público CC Films Una sede oficial más clara para una película independiente. Estructura, buscadores y publicación reforzados</li></ul>
       <p class="es-actions"><a class="es-cta" href="/examples/">Ver todos los proyectos</a></p>
       <p class="es-eyebrow">SIN SORPRESAS</p>
       <h2>Desde la primera llamada hasta después del lanzamiento.</h2>

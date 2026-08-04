@@ -36,15 +36,15 @@ export default function ProjectMomentum({
       <div ref={ref} className="lf-momentum__inner" data-reveal>
         <header className="lf-momentum__head">
           <div>
-            <p className="lf-momentum__label">Work in motion</p>
+            <p className="lf-momentum__label">Build history</p>
             <h2 id={`lf-momentum-title-${slug ?? "all"}`}>
-              {slug ? "From idea to working proof." : "Small firm. Serious pace."}
+              {slug ? "How the build moved." : "Proof from the build log."}
             </h2>
           </div>
           <p>
             {slug
-              ? "A short, visual record of how the build moved."
-              : "For new work, an approved public timeline can begin after the deposit. Clients can see the build move."}
+              ? "A dated visual record of selected milestones—not a live project status."
+              : "Approved histories show how selected work moved from first pass to working proof."}
           </p>
         </header>
 
@@ -115,7 +115,7 @@ export default function ProjectMomentum({
         </div>
         <p className="lf-momentum__source">
           Elapsed times supplied by Little Fight. Reconstructed history,
-          verified {projects[0].lastVerifiedDate}. No forecast is shown.
+          verified {projects[0].lastVerifiedDate}. Not a live status or forecast.
         </p>
       </div>
     </section>

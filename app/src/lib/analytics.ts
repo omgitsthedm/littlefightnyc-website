@@ -21,6 +21,9 @@ export type FirstPartyEventPlacement =
   | "home_process"
   | "sticky_help"
   | "website_service_proof"
+  | "case_proof"
+  | "owner_stories"
+  | "website_thanks"
   | "es_hero"
   | "zh_hero"
   | "unknown";
@@ -51,6 +54,7 @@ export type FirstPartyEventContract = {
   website_check_started: FirstPartyEventContext;
   website_check_ready: FirstPartyEventContext;
   report_opened: FirstPartyEventContext;
+  website_plan_intent: FirstPartyEventContext;
   human_review_requested: FirstPartyEventContext;
   booking_started: FirstPartyEventContext;
   service_inquiry: FirstPartyEventContext & { service: ServiceInquiryType };
@@ -62,6 +66,7 @@ const FIRST_PARTY_EVENT_NAMES = new Set<FirstPartyEventName>([
   "website_check_started",
   "website_check_ready",
   "report_opened",
+  "website_plan_intent",
   "human_review_requested",
   "booking_started",
   "service_inquiry",
@@ -82,6 +87,9 @@ const FIRST_PARTY_EVENT_PLACEMENTS = new Set<FirstPartyEventPlacement>([
   "home_process",
   "sticky_help",
   "website_service_proof",
+  "case_proof",
+  "owner_stories",
+  "website_thanks",
   "es_hero",
   "zh_hero",
   "unknown",

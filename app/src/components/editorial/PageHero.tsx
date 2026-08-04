@@ -192,6 +192,10 @@ export default function PageHero({
                   alt={image.alt}
                   width={image.width}
                   height={image.height}
+                  style={{
+                    objectFit: image.fit ?? "cover",
+                    objectPosition: image.fit === "contain" ? "center center" : undefined,
+                  }}
                   {...responsiveImageProps(
                     image.src,
                     "(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw",

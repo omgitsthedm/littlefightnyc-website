@@ -8,7 +8,7 @@ import "@/styles/editorial/studio.css";
 // This page reuses the .lf-case-detail__byline + .lf-case-detail-related
 // blocks, whose styles live in case-studies.css. Vite code-splits CSS per
 // lazy route chunk, so WITHOUT this import those blocks render completely
-// unstyled here ("01AI client finderDakotaOur own AI…" as one mashed line).
+// unstyled here ("01Sales operating systemDakota…" as one mashed line).
 import "@/styles/editorial/case-studies.css";
 
 export default function StudioDetail() {
@@ -31,10 +31,10 @@ export default function StudioDetail() {
           // so an alt repeating it would be redundant for screen readers.
           src: project.image,
           video: project.video,
-          fit: project.video ? "contain" : "cover",
+          fit: project.video ? "contain" : project.imageFit,
           alt: "",
-          width: 1800,
-          height: 1200,
+          width: project.imageWidth ?? 1800,
+          height: project.imageHeight ?? 1200,
         }}
       />
 

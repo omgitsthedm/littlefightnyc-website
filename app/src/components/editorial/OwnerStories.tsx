@@ -147,6 +147,7 @@ export default function OwnerStories() {
             className="lf-owner-stories__plan-link"
             to="/tech-audit/?intent=website&source=owner_stories"
             data-lf-event="website_plan_intent"
+            data-lf-label="owner_stories"
           >
             Get my website plan
             <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />

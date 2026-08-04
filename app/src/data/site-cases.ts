@@ -15,6 +15,26 @@ export type CaseProofStatus =
 
 export type CaseCaptureDevice = "desktop" | "tablet" | "mobile";
 
+type CaseMetric =
+  | {
+      value: string;
+      label: string;
+      evidence: "build" | "release";
+      evidenceId?: never;
+      verifiedAt?: never;
+      approval?: never;
+      approvedAt?: never;
+    }
+  | {
+      value: string;
+      label: string;
+      evidence: "business-outcome";
+      evidenceId: string;
+      verifiedAt: string;
+      approval: "client-approved";
+      approvedAt: string;
+    };
+
 export type CaseStudy = {
   type: string;
   title: string;
@@ -31,11 +51,7 @@ export type CaseStudy = {
   published?: string;
   updated?: string;
   body?: string[];
-  metrics?: Array<{
-    value: string;
-    label: string;
-    evidence: "build" | "outcome";
-  }>;
+  metrics?: CaseMetric[];
   showcase: {
     label: string;
     kind: string;
@@ -74,7 +90,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "3 screens",
         label: "Desktop, iPad, and phone proof",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -156,7 +172,7 @@ export const caseStudies: CaseStudy[] = [
         // easy half and say little about how the site actually feels.
         value: "99",
         label: "Lighthouse performance on mobile",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -198,7 +214,7 @@ export const caseStudies: CaseStudy[] = [
     url: "https://www.getdeckspace.com",
     slug: "deckspace",
     metrics: [
-      { value: "Live", label: "getdeckspace.com", evidence: "outcome" },
+      { value: "Live", label: "getdeckspace.com", evidence: "release" },
       {
         value: "3 jobs",
         label: "Onboard guide, social network, memory layer",
@@ -207,7 +223,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "Kept",
         label: "The nostalgic heart of cruising",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -244,24 +260,26 @@ export const caseStudies: CaseStudy[] = [
     slug: "hair-by-rachel-charles",
     metrics: [
       {
-        value: "49 routes",
-        label: "Services and local intent mapped clearly",
-        evidence: "build",
+        // Measured 2026-07-30, Lighthouse 13.4.1.
+        // Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
+        value: "96",
+        label: "Lighthouse mobile performance · 30 Jul 2026",
+        evidence: "release",
       },
       {
-        value: "5 share cards",
-        label: "Art-directed social entry points",
+        value: "3 scores of 100",
+        label: "Lighthouse accessibility, best practices, and SEO",
+        evidence: "release",
+      },
+      {
+        value: "49 routes",
+        label: "Services and local intent mapped clearly",
         evidence: "build",
       },
       {
         value: "Square",
         label: "The booking habit clients already knew",
         evidence: "build",
-      },
-      {
-        value: "Own domain",
-        label: "Live at hairbyrachelcharles.com",
-        evidence: "outcome",
       },
     ],
     showcase: {
@@ -287,12 +305,12 @@ export const caseStudies: CaseStudy[] = [
     image: "/assets/case-hair-by-rachel-charles.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
-    updated: "2026-07-27",
+    updated: "2026-08-04",
     title: "An Instagram business became a searchable editorial booking system.",
     problem: "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
     kept: "Rachel’s point of view, the work itself, and the Square Appointments setup her clients already knew.",
     changed: "Built a bold mobile-first site with 49 indexable routes, precise service and neighborhood context, five art-directed social cards, and a direct path into Square. Set up the Google Business Profile from scratch.",
-    result: "A distinctive public home at hairbyrachelcharles.com. New clients can discover the studio, understand Rachel’s work, and reach the familiar booking flow from desktop, iPad, or phone.",
+    result: "A distinctive public home at hairbyrachelcharles.com. New clients can discover the studio, understand Rachel’s work, and reach the familiar booking flow from desktop, iPad, or phone. Measured 30 July 2026, it scored 96 for Lighthouse mobile performance and 100 in accessibility, best practices, and SEO.",
     body: [
       "When we first sat down with Rachel, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed. The site started as a question. What if every new client could find her, see the work, and book without a single message?",
       "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. Electric yellow, confident type, close-cropped work, and Rachel’s own voice give the experience a point of view before the booking button appears. We also set up her Google Business Profile from scratch and wired the site to support it.",
@@ -310,7 +328,7 @@ export const caseStudies: CaseStudy[] = [
         label: "Built for the brand, not a template",
         evidence: "build",
       },
-      { value: "1 day", label: "To ship a new product drop", evidence: "outcome" },
+      { value: "1 day", label: "To ship a new product drop", evidence: "release" },
       {
         value: "Square + Printful",
         label: "Payments + fulfillment wired",
@@ -363,7 +381,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "Real-time",
         label: "Intake routing, no copying",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -402,7 +420,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "3 tools to 1",
         label: "Estimates in one source of truth",
-        evidence: "outcome",
+        evidence: "release",
       },
       {
         value: "Every number",
@@ -412,7 +430,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "In production",
         label: "Runs on the team’s real bids",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -465,7 +483,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "Own domain",
         label: "Live at grandfundingllc.com",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -507,8 +525,8 @@ export const caseStudies: CaseStudy[] = [
     url: "https://venuecircuit.app",
     slug: "venuecircuit",
     metrics: [
-      { value: "Live", label: "venuecircuit.app, open beta", evidence: "outcome" },
-      { value: "~90 seconds", label: "To close a night", evidence: "outcome" },
+      { value: "Live", label: "venuecircuit.app, open beta", evidence: "release" },
+      { value: "~90 seconds", label: "To close a night", evidence: "release" },
       {
         value: "Every number",
         label: "Drills to the receipt behind it",
@@ -564,7 +582,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "Every price",
         label: "Carried into the new experience",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -615,7 +633,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "97",
         label: "Fresh Lighthouse performance audit",
-        evidence: "outcome",
+        evidence: "release",
       },
       {
         value: "3 screens",
@@ -692,7 +710,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "Review gated",
         label: "Deliberately noindex before approval",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {
@@ -769,7 +787,7 @@ export const caseStudies: CaseStudy[] = [
       {
         value: "Own domain",
         label: "Live at logan.loans",
-        evidence: "outcome",
+        evidence: "release",
       },
     ],
     showcase: {

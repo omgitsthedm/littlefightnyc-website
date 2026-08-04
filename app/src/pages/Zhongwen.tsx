@@ -66,7 +66,7 @@ const PROOF = [
     // 原文称「四项满分」。2026-07-30 实测：无障碍 100、最佳实践 100、SEO 100，
     // 性能 96（移动端）。
     // .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
-    fact: "无障碍、最佳实践、SEO 均满分，两周上线",
+    fact: "移动端性能 96；无障碍、最佳实践、SEO 均为 100；两周上线",
     image: "/assets/case-hair-by-rachel-charles-900.webp",
     alt: "Hair By Rachel Charles 的在线预约网站",
   },
@@ -134,7 +134,7 @@ export default function Zhongwen() {
               <Link
                 className="lf-es__cta"
                 to="/tech-audit/?intent=website&source=zh"
-                data-lf-event="human_review_requested"
+                data-lf-event="website_plan_intent"
                 data-lf-label="zh_hero"
               >
                 给我一份清楚的方案

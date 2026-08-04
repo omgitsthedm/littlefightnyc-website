@@ -66,7 +66,7 @@ const PROOF = [
     // Medido 2026-07-30: accesibilidad 100, buenas prácticas 100, SEO 100,
     // rendimiento 96 en móvil.
     // .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
-    fact: "Accesibilidad, buenas prácticas y SEO en 100 · lista en 2 semanas",
+    fact: "96 en rendimiento móvil; 100 en accesibilidad, buenas prácticas y SEO · lista en 2 semanas",
     image: "/assets/case-hair-by-rachel-charles-900.webp",
     alt: "La página de reservas de Hair By Rachel Charles",
   },
@@ -137,7 +137,7 @@ export default function Espanol() {
               <Link
                 className="lf-es__cta"
                 to="/tech-audit/?intent=website&source=es"
-                data-lf-event="human_review_requested"
+                data-lf-event="website_plan_intent"
                 data-lf-label="es_hero"
               >
                 Quiero un plan claro

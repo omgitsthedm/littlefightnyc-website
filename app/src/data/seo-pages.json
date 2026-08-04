@@ -1568,19 +1568,19 @@
     },
     {
       "path": "/studio/dakota/",
-      "title": "Dakota \u2014 From the Studio | Little Fight NYC",
-      "description": "Dakota is Little Fight NYC’s own AI client finder. It finds the right businesses and hands real conversations to the team.",
+      "title": "Dakota Sales Operating System | Little Fight NYC",
+      "description": "Dakota turns verified public research and consented inquiries into an operator-controlled sales queue. It prepares the work but never contacts prospects automatically.",
       "h1": "Dakota",
-      "shortAnswer": "Short answer: Dakota is our own AI client finder. It finds the right businesses to talk to and hands real conversations to the team.",
+      "shortAnswer": "Short answer: Dakota is Little Fight NYC’s evidence-backed sales operating system. It prepares verified next actions for a human operator and never sends outreach automatically.",
       "type": "Article",
-      "image": "/assets/coworking-laptops.webp"
+      "image": "/assets/dakota-operator-access.webp"
     },
     {
       "path": "/studio/cockpit/",
       "title": "Estimator’s Cockpit \u2014 From the Studio | Little Fight NYC",
-      "description": "A long-running build for a paint-and-finish company. Discovery, sorting, checking, and reporting in one premium UI.",
+      "description": "Private estimating software for a custom cabinetry team. Documents, rooms, price drivers, source checks, and reporting in one working system.",
       "h1": "Estimator’s Cockpit",
-      "shortAnswer": "A long-running build for a paint-and-finish company. Discovery, sorting, and reporting in one premium UI.",
+      "shortAnswer": "Short answer: Estimator’s Cockpit turns the first pass of a custom cabinetry estimate into one structured, source-traceable team record.",
       "type": "Article",
       "image": "/media/cabinetry-process-share-0a7876df.webp"
     },

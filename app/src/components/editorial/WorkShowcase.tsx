@@ -1,4 +1,4 @@
-import { caseStudies } from "@/data/site";
+import { caseStudies } from "@/data/site-cases";
 import ProjectMomentum from "./ProjectMomentum";
 import ProjectReviewGrid from "./ProjectReviewGrid";
 import "./WorkShowcase.css";

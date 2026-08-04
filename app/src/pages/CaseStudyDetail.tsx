@@ -18,7 +18,56 @@ import {
   hasCaseCapture,
 } from "@/components/editorial/caseProof";
 import { caseStudies, services } from "@/data/site";
+import {
+  acquisitionIntentForServiceSlug,
+  techAuditHref,
+  type AcquisitionIntent,
+} from "@/lib/acquisitionIntent";
 import "@/styles/editorial/case-studies.css";
+
+const CASE_PLAN_COPY: Record<AcquisitionIntent, {
+  eyebrow: string;
+  heading: string;
+  detail: string;
+  action: string;
+}> = {
+  website: {
+    eyebrow: "See your business in this?",
+    heading: "Make your next customer’s step this clear.",
+    detail: "Show us the site, booking path, or missing front door. We will tell you what to keep and what should change first.",
+    action: "Plan a website like this",
+  },
+  systems: {
+    eyebrow: "See your workflow in this?",
+    heading: "Put the real work in one system you own.",
+    detail: "Show us the spreadsheet, subscription, or hand-done process. We will map the smallest useful system before any paid build.",
+    action: "Plan a system you own",
+  },
+  support: {
+    eyebrow: "Something breaking today?",
+    heading: "Fix the break before it costs another customer.",
+    detail: "Tell us what stopped working and what the business needs next. A person will name the clearest first move.",
+    action: "Get practical tech help",
+  },
+  consulting: {
+    eyebrow: "Not sure what the problem is?",
+    heading: "Get the honest next move before buying more tech.",
+    detail: "We will read the setup, separate the useful parts from the drag, and say when the right answer is to leave it alone.",
+    action: "Get a free second opinion",
+  },
+  clients: {
+    eyebrow: "Already working with us?",
+    heading: "Keep the next move with the project.",
+    detail: "Use the client desk for project questions, content, access, care, and billing.",
+    action: "Open the client desk",
+  },
+  general: {
+    eyebrow: "See your business in this?",
+    heading: "Start with one clear next move.",
+    detail: "Tell us what feels slow, unclear, expensive, or broken. A person will read it and tell you what matters first.",
+    action: "Get a free second opinion",
+  },
+};
 
 function serviceLabel(slug: string): string | undefined {
   return services.find((service) => service.slug === slug)?.eyebrow;
@@ -64,6 +113,10 @@ export default function CaseStudyDetail() {
   const serviceLinks = study.services
     .map((service) => ({ slug: service, label: serviceLabel(service) }))
     .filter((service): service is { slug: string; label: string } => Boolean(service.label));
+  const caseIntent = study.services
+    .map(acquisitionIntentForServiceSlug)
+    .find((intent) => intent !== "general") ?? "general";
+  const casePlan = CASE_PLAN_COPY[caseIntent];
 
   const beats = [
     { label: "Before", body: study.problem },
@@ -160,6 +213,32 @@ export default function CaseStudyDetail() {
           </div>
         </section>
 
+        <section className="lf-case-next__plan" aria-labelledby="lf-case-plan-title">
+          <div className="lf-case-next__plan-inner">
+            <div>
+              <p>{casePlan.eyebrow}</p>
+              <h2 id="lf-case-plan-title">{casePlan.heading}</h2>
+              <span>{casePlan.detail}</span>
+            </div>
+            <Link
+              to={caseIntent === "clients"
+                ? "/clients/"
+                : techAuditHref(caseIntent, `case_${study.slug}`)}
+              data-lf-event={
+                caseIntent === "clients"
+                  ? undefined
+                  : caseIntent === "website"
+                    ? "website_plan_intent"
+                    : "human_review_requested"
+              }
+              data-lf-label="case_proof"
+            >
+              {casePlan.action}
+              <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
+
         <section className="lf-case-next__live" aria-labelledby="lf-case-live-title">
           <div className="lf-case-next__live-inner">
             <header>
@@ -252,6 +331,7 @@ export default function CaseStudyDetail() {
       <QuietContact
         heading="Want a build like this?"
         lede="Tell us what your business needs. We will explain the best next step in plain English. Consulting is free."
+        intent={caseIntent}
       />
     </>
   );

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { caseStudies } from "@/data/site";
+import { caseStudies } from "@/data/site-cases";
 import ProjectReviewGrid from "./ProjectReviewGrid";
 import ProjectMomentum from "./ProjectMomentum";
 import "./RecentClients.css";

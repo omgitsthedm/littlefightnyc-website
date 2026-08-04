@@ -79,7 +79,7 @@ export default function WebsiteCheck() {
             target="_blank"
             rel="noopener noreferrer"
             data-lf-event="booking_started"
-            data-lf-label="website_check"
+            data-lf-label="website_check_page"
           >
             <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
             Choose a time
