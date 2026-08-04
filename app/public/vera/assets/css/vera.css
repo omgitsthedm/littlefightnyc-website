@@ -1031,6 +1031,9 @@ body { font-size: 18px; }
   #fieldkit table { border-collapse: collapse; width: 100%; font-size: 10pt; }
   #fieldkit th, #fieldkit td { border-bottom: 0.5pt solid #999; text-align: left; padding: 3pt 6pt 3pt 0; vertical-align: top; }
   #fieldkit .fk-checks { columns: 2; font-size: 9pt; list-style: none; padding: 0; }
+  /* Write-in lines for the address an unverified listing does not carry.
+     Wider leading than the body copy because it is written on by hand. */
+  #fieldkit .fk-write { font-size: 10pt; line-height: 2.1; margin-top: 4pt; }
   #fieldkit ol { font-size: 10.5pt; }
   .grain { display: none !important; }
 }

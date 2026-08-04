@@ -492,7 +492,19 @@
         FIVE_QUESTIONS.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ol>' +
       '<h2>The viewing checklist</h2><ul class="fk-checks">' +
         C.CHECKS.map(function (c) { return '<li>☐ ' + esc(c.label) + '</li>'; }).join('') + '</ul>' +
-      '<h2>Verify the counterparty</h2><p class="fk-chain">Deed: a836-acris.nyc.gov · Registration: hpdonline.nyc.gov · Portfolio: whoownswhat.justfix.org · Licence: dos.ny.gov</p>' +
+      '<h2>Verify the counterparty</h2><p class="fk-chain">Deed: a836-acris.nyc.gov · Registration: hpdonline.nyc.gov · Portfolio: whoownswhat.justfix.org · Licence: dos.ny.gov · Heat outages: portal.311.nyc.gov · Legal unit: a810-bisweb.nyc.gov</p>' +
+      /* The page is carried to the viewing, which is where an unverified
+         listing finally gets an address. Telling someone to look up six
+         records and giving them nowhere to write the one thing they need
+         to look them up with is most of the way to being no help at all. */
+      (/^matched/.test(String(l.verification_status || ''))
+        ? ''
+        : '<h2>Write the address down here</h2>' +
+          '<p class="fk-chain">VERA could not identify this building — the post carries no house number. ' +
+          'Get the exact address at the door and run it through the six above before you hand over anything.</p>' +
+          '<p class="fk-write">Address: ________________________________________________<br><br>' +
+          'Who showed it, and in what capacity: ______________________________<br><br>' +
+          'Name on the deed (ACRIS): _________________________________________</p>') +
       '<p class="fk-foot">VERA field kit · every number above is computed from a cited public record or marked ≈ · printed ' + esc(new Date().toISOString().slice(0, 10)) + '</p>';
     if (!host.parentNode) document.body.appendChild(host);
     return host;
