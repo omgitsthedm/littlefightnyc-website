@@ -408,6 +408,14 @@
       L.close();
       lawProbe.illegal_demands = hadIll; lawProbe.scam_cues_found = hadCue;
 
+      /* ---- the manual teaches everything the engine detects ---- */
+      location.hash = '#/manual'; app.route();
+      var manTxt = document.body.textContent;
+      check('the manual teaches all five unlawful demands',
+        $$('.unlawful li').length === 5 &&
+        /[“"]good-faith[”"] deposit/.test(manTxt) &&
+        manTxt.indexOf('Key money') > -1, $$('.unlawful li').length + ' listed');
+
       /* ---- records-layer honesty ---- */
       var Dh = app.D();
       var hadRH = Dh.records_health;

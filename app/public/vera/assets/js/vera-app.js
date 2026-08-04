@@ -1189,6 +1189,17 @@
             '<div class="ledger__row ledger__row--total"><span>Total to keys</span><b data-tr-total>' + money(total) + '</b></div>' +
           '</div>' +
           '<p class="insp-fine">Since the FARE Act (' + C.LAW.fareActFrom + ', upheld on appeal July 2026) whoever hires the broker pays the broker. Watch the workaround: a first month priced above every later month is a fee wearing a disguise.</p>' +
+          /* VERA scans every listing for these five demands; the manual has
+             to teach all five or the app knows something it never told you. */
+          '<h3 class="unlawful__h">Five demands that are simply unlawful</h3>' +
+          '<ul class="unlawful">' +
+            '<li><b>More than one month\'s security.</b> "First, last and one month" is three months of your money and two months more than the law allows. <i>HSTPA, 2019.</i></li>' +
+            '<li><b>An application fee over $' + C.LAW.appFeeMax + '.</b> And you can refuse even that by handing over your own credit report from the last 30 days. <i>HSTPA, 2019.</i></li>' +
+            '<li><b>A holding or "good-faith" deposit.</b> Money to take the apartment off the market before a lease exists is not lawful — and is the single most common way deposits vanish. <i>Not permitted in New York.</i></li>' +
+            '<li><b>Key money, or a tip for the super.</b> A payment to get the keys or move up the list is illegal however it is phrased. <i>Illegal in New York.</i></li>' +
+            '<li><b>A broker fee when the landlord hired the broker.</b> If they found the agent, they pay the agent. <i>FARE Act, ' + C.LAW.fareActFrom + '.</i></li>' +
+          '</ul>' +
+          '<p class="insp-fine">VERA reads every listing against these five and says so on the listing itself when one appears. Plenty of small owners ask out of habit rather than malice — you still do not have to pay it, and asking them to put the demand in writing usually ends it.</p>' +
         '</div>' +
         '<div class="panel tool"><div class="panel__head"><h2 class="panel__title">Will the paperwork clear you</h2><p class="panel__hint">the 40× convention</p></div>' +
           '<label class="slider"><span>Your annual income <b data-tool-inc-label>' + (toolIncome ? money(toolIncome) : 'drag me') + '</b></span>' +
