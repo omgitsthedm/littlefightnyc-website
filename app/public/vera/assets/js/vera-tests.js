@@ -448,6 +448,28 @@
       L.close();
       puProbe.unit_count = hadU; puProbe.serious_open_violations = hadS; puProbe.heat_hot_water_complaints_3y = hadH;
 
+      /* ---- accessibility floor ---- */
+      location.hash = '#/today'; app.route();
+      /* Count only what assistive tech is actually exposed to: a subtree
+         behind [hidden] or aria-hidden is out of the accessibility tree,
+         so the print-only field kit's own <h1> is correctly invisible here. */
+      function exposed(el) { return !el.closest('[hidden], [aria-hidden="true"]'); }
+      var lv = $$('h1,h2,h3,h4').filter(exposed).map(function (h) { return +h.tagName[1]; });
+      var skips = [];
+      for (var hi = 1; hi < lv.length; hi++) if (lv[hi] - lv[hi - 1] > 1) skips.push(lv[hi - 1] + '->' + lv[hi]);
+      check('heading levels never skip a rung', skips.length === 0, skips.join(', ') || 'clean');
+      check('exactly one h1 exposed to assistive tech', $$('h1').filter(exposed).length === 1, $$('h1').filter(exposed).length);
+      var noAlt = $$('img').filter(exposed).filter(function (i) { return !i.hasAttribute('alt'); });
+      check('every image carries alt text', noAlt.length === 0, noAlt.length + ' missing');
+      var muteRatio = (function () {
+        var v = getComputedStyle(document.documentElement).getPropertyValue('--mute').trim().replace('#', '');
+        var rgb = [0, 2, 4].map(function (i) { return parseInt(v.substr(i, 2), 16); });
+        function L(c) { var a = c.map(function (x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }); return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]; }
+        var lf = L(rgb), lb = L([11, 13, 12]);
+        return (Math.max(lf, lb) + 0.05) / (Math.min(lf, lb) + 0.05);
+      })();
+      check('the dimmest text token clears WCAG AA', muteRatio >= 4.5, muteRatio.toFixed(2) + ':1');
+
       /* ---- records-layer honesty ---- */
       var Dh = app.D();
       var hadRH = Dh.records_health;

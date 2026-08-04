@@ -57,7 +57,7 @@
   --line2: rgba(233, 226, 210, 0.16);
   --ink: #ece4d3;
   --dim: #b3aa96;
-  --mute: #7d776a;
+  --mute: #817b6e;   /* 4.63:1 on the page ground — WCAG AA. #7d776a measured 4.38 and failed. */
   --green: #4cc38a;
   --green-soft: rgba(76, 195, 138, 0.14);
   --amber: #e3b567;
@@ -1015,7 +1015,7 @@ body { font-size: 18px; }
 #fieldkit { display: none; }
 @media print {
   body > *:not(#fieldkit) { display: none !important; }
-  #fieldkit { display: block !important; color: #000; background: #fff; font-family: Georgia, serif; padding: 24px; }
+  #fieldkit, #fieldkit[hidden] { display: block !important; color: #000; background: #fff; font-family: Georgia, serif; padding: 24px; }
   #fieldkit h1 { font-size: 22pt; margin: 0 0 4px; }
   #fieldkit h2 { font-size: 13pt; margin: 14pt 0 4pt; }
   #fieldkit .fk-sub { font-size: 12pt; margin: 0; }

@@ -543,7 +543,7 @@
           '<span class="dropcard__main">' +
             '<span class="dropcard__hood">' + hoodLine + ' · ' + unit + (t ? ' · <span class="nowrap">≈' + t.mins + ' min walk ' + C.lineBullets(t.lines) + ' ' + esc(t.name) + '</span>' : '') + '</span>' +
             commuteLines(l) +
-            '<h3 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h3>' +
+            '<h2 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h2>' +
             (addr ? '<p class="dropcard__flavor">' + esc(C.charName(l)) + '</p>' : '') +
             ownerLine(l) +
             '<span class="steward steward--' + stew.grade + '">' +

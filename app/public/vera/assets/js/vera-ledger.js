@@ -435,6 +435,12 @@
     var m = C.moveInMath(l);
     var host = document.getElementById('fieldkit') || document.createElement('div');
     host.id = 'fieldkit';
+    /* The printed sheet is its own document and rightly carries an <h1>, but
+       this node lives in the DOM permanently. Left visible to assistive tech
+       it becomes a second h1 competing with the page's own. `hidden` removes
+       it from the accessibility tree; the print stylesheet overrides it. */
+    host.hidden = true;
+    host.setAttribute('aria-hidden', 'true');
     var kv = function (k, v) { return v == null || v === '' ? '' : '<tr><th>' + k + '</th><td>' + v + '</td></tr>'; };
     host.innerHTML =
       '<h1>' + esc(app.addressOf(l) || C.charName(l)) + '</h1>' +
