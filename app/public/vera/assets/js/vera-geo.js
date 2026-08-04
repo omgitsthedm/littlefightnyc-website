@@ -8,7 +8,8 @@
   var C = window.__VERAC;
   var GEO = { loaded: false, hoods: [], byName: {} };
 
-  fetch('./assets/geo/hoods.json', { cache: 'force-cache' })
+  fetch('./assets/geo/hoods-full.json', { cache: 'force-cache' })
+    .catch(function () { return fetch('./assets/geo/hoods.json', { cache: 'force-cache' }); })
     .then(function (r) { return r.json(); })
     .then(function (d) {
       GEO.hoods = d.hoods || [];
