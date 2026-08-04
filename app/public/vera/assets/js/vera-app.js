@@ -1358,7 +1358,8 @@
     // The sweep is nightly, so a day and a half without one is a real fact
     // about the data, not a detail to bury.
     if (hours < 36) return '';
-    return ' <b class="warn">· ' + Math.floor(hours / 24) + ' days old — the last sweep did not land</b>';
+    var days = Math.floor(hours / 24);
+    return ' <b class="warn">· ' + days + ' day' + (days === 1 ? '' : 's') + ' old — the last sweep did not land</b>';
   }
 
   function renderSystem(page) {
