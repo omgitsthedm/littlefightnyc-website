@@ -32,9 +32,13 @@ const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const repoRoot = path.resolve(appRoot, "..");
 const PIPELINE_ORIGIN = "https://vera-pipeline.netlify.app";
 const TILE_ORIGIN = "https://tiles.openfreemap.org";
+// The token-free cloud feed. Added to the app on 2026-08-04 without being
+// added here or to the policy, which is exactly the failure this audit exists
+// to catch — production said "Could not reach the VERA feed" while curl saw 200.
+const CLOUD_FEED_ORIGIN = "https://raw.githubusercontent.com";
 const VERA_ONLY_ADDITIONS = {
   "img-src": ["blob:"],
-  "connect-src": [PIPELINE_ORIGIN, TILE_ORIGIN],
+  "connect-src": [PIPELINE_ORIGIN, CLOUD_FEED_ORIGIN, TILE_ORIGIN],
   "worker-src": ["'self'", "blob:"],
   "child-src": ["blob:"],
 };
