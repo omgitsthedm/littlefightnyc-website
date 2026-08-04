@@ -1144,3 +1144,11 @@ body { animation: aurora 46s ease-in-out infinite; }
 .recwarn b { color: var(--red); font-weight: 500; display: block; margin-bottom: 5px; }
 
 [hidden] { display: none !important; }
+
+.pf-head { font-size: 16px; line-height: 1.5; margin: 0 0 10px; padding-left: 13px; border-left: 3px solid var(--line2); color: var(--dim); }
+.pf-head b { color: var(--ink); font-weight: 500; }
+.pf-head--bad { border-left-color: var(--red); }
+.pf-head--warn { border-left-color: var(--amber); }
+.pf-head--good { border-left-color: var(--green); }
+
+[hidden] { display: none !important; }

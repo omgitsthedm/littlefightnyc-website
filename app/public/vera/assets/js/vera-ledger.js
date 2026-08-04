@@ -269,6 +269,30 @@
         (stw.failures.length ? '<span class="steward__line steward__line--bad">' + stw.failures.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
         (stw.strengths.length ? '<span class="steward__line steward__line--good">' + stw.strengths.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
         '</span></div>';
+      /* The portfolio: what this owner does to their OTHER tenants. A
+         building's own file says how this address is kept; this says who
+         keeps it, and how they behave everywhere else they hold. */
+      var pf = l.landlord_portfolio;
+      if (pf && pf.bldgs) {
+        var evict = +pf.totalevictions || 0;
+        var vpu = +pf.openviolationsperresunit || 0;
+        var rsLost = +pf.totalrsdiff || 0;
+        var tone = (evict >= 5 || vpu >= 2) ? 'bad' : (evict > 0 || vpu >= 0.5) ? 'warn' : 'good';
+        html += '<div class="insp-sec"><h3>The owner\'s wider record</h3>' +
+          '<p class="pf-head pf-head--' + tone + '">' + esc(pf.topcorp || 'This portfolio') +
+          ' holds <b>' + pf.bldgs + '</b> building' + (pf.bldgs === 1 ? '' : 's') +
+          (pf.units ? ' · ' + pf.units + ' units' : '') + '</p>' +
+          '<dl class="kv">' +
+            kvRow('Evictions filed', evict ? evict + ' across the portfolio' + (pf.avgevictions ? ' (avg ' + pf.avgevictions + ' per building)' : '') : 'none on record') +
+            kvRow('Open violations', vpu ? vpu + ' per apartment' + (pf.totalopenviolations ? ' · ' + pf.totalopenviolations + ' total' : '') : 'none open') +
+            kvRow('Rent-stabilized units', rsLost < 0 ? '<span class="t-over">' + Math.abs(rsLost) + ' lost from this portfolio</span>' : (rsLost > 0 ? '+' + rsLost : null)) +
+            kvRow('Officers on file', (pf.topowners || []).length ? esc((pf.topowners || []).slice(0, 4).join(' · ')) : null) +
+          '</dl>' +
+          '<p class="insp-fine">Portfolio linked through HPD registration contacts and shared business addresses by ' +
+          '<a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix\'s Who Owns What</a>. ' +
+          'Every figure is a public record, not an opinion — and a large portfolio is not itself a fault.</p></div>';
+      }
+
       html += '<p class="insp-fine">Landlord? Think a record here is wrong? <a href="/vera/corrections/">How corrections work ↗</a></p>';
       html += '<dl class="kv">' +
         kvRow('BBL', esc(l.bbl)) + kvRow('BIN', esc(l.bin)) +

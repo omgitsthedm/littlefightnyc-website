@@ -341,6 +341,40 @@
       check('a corrected neighborhood says so, naming the source value', disclosed && srcNamed, disclosed ? 'disclosed' : 'NOT disclosed');
       nrProbe.neighborhood_resolved_from_coords = hadNR; nrProbe.neighborhood_source = hadNS;
 
+      /* ---- confidence must never read as good-enough when unknown ---- */
+      check('a word grade maps to a number, not NaN',
+        C.authenticity({ listing_authenticity_confidence: 'high' }) === 80 &&
+        C.authenticity({ listing_authenticity_confidence: 'low' }) === 30, '');
+      check('no confidence at all reads as unknown',
+        C.authenticity({}) === null && C.authenticity({ listing_confidence_score: null }) === null, '');
+      check('unknown confidence cannot clear the full-fit gate',
+        C.isFullFit({ recommendation: 'pursue', overall_score: 99, rent: 2000, hpd_risk_score: 0, dob_risk_score: 0 }) === false,
+        'a listing with no confidence must not appear in the drop');
+      check('numeric confidence still wins over the word',
+        C.authenticity({ listing_confidence_score: 71, listing_authenticity_confidence: 'low' }) === 71, '');
+
+      /* ---- the owner's wider record ---- */
+      var pfProbe = POOL[1];
+      var hadPF = pfProbe.landlord_portfolio;
+      pfProbe.landlord_portfolio = { bldgs: 10, units: 197, topcorp: 'HAVILAND 18 LLC',
+        totalevictions: 47, avgevictions: 4.7, openviolationsperresunit: 3.6,
+        totalopenviolations: 712, totalrsdiff: -170, topowners: ['ISSAKA MAIGUZO', 'FRANKLIN RODRIGUEZ'] };
+      L.open(pfProbe.listing_uid);
+      $('[data-insp-tabs] [data-tab="records"]').click();
+      var pfTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
+      check('portfolio names the owner and their wider record',
+        pfTxt.indexOf('HAVILAND 18 LLC') > -1 && pfTxt.indexOf('10 buildings') > -1 &&
+        pfTxt.indexOf('47 across the portfolio') > -1 && pfTxt.indexOf('170 lost') > -1,
+        'portfolio block');
+      check('a heavy portfolio reads as heavy', !!$('.pf-head--bad'), '');
+      L.close();
+      pfProbe.landlord_portfolio = { bldgs: 2, units: 8, topcorp: 'SMALL OWNER LLC', totalevictions: 0, openviolationsperresunit: 0 };
+      L.open(pfProbe.listing_uid);
+      $('[data-insp-tabs] [data-tab="records"]').click();
+      check('a clean small portfolio reads as clean', !!$('.pf-head--good'), '');
+      L.close();
+      pfProbe.landlord_portfolio = hadPF;
+
       /* ---- records-layer honesty ---- */
       var Dh = app.D();
       var hadRH = Dh.records_health;

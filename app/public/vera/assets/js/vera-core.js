@@ -145,10 +145,20 @@
     return { label: 'Unclear', cls: '' };
   }
 
+  /* Numeric confidence only. listing_authenticity_confidence is a WORD
+     ("high"/"medium"/"low"), so the old fallback returned NaN — and since
+     NaN < 60 is false, a listing with no confidence score at all sailed
+     through the full-fit gate that the emailer correctly rejected. Unknown
+     confidence must read as unknown, never as good enough. */
+  var CONF_WORDS = { high: 80, medium: 60, low: 30, none: 0 };
+
   function authenticity(l) {
     var v = l.listing_confidence_score;
-    if (v == null) v = l.listing_authenticity_confidence;
-    return v == null ? null : +v;
+    if (v != null && isFinite(+v)) return +v;
+    var w = l.listing_authenticity_confidence;
+    if (typeof w === 'number' && isFinite(w)) return w;
+    if (typeof w === 'string' && CONF_WORDS[w.toLowerCase()] != null) return CONF_WORDS[w.toLowerCase()];
+    return null;
   }
 
   function isScam(l) {
