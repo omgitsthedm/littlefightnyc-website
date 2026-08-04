@@ -110,7 +110,14 @@
         check('point-in-polygon finds the East Village', !!hood && /East Village/i.test(hood.n), hood && hood.n);
         location.hash = '#/today'; app.route();
         check('drop cards carry a neighborhood minimap', $$('.dropcard__map .gm').length > 0 || $$('.dropcard').length === 0, $$('.dropcard__map .gm').length + ' maps');
-        check('drop headline is the address, big', ($$('.dropcard__name')[0] || { textContent: '' }).textContent.length > 8, ($$('.dropcard__name')[0] || {}).textContent);
+        /* an empty drop is an honest state, not a failure — the suite must
+           not cry wolf on the nights when nothing clears every gate */
+        check('drop headline is the address, big',
+          $$('.dropcard').length === 0 || ($$('.dropcard__name')[0] || { textContent: '' }).textContent.length > 8,
+          $$('.dropcard').length === 0 ? 'empty drop — honest state' : ($$('.dropcard__name')[0] || {}).textContent);
+        check('an empty drop still says so plainly',
+          $$('.dropcard').length > 0 || !!$('.dropempty'),
+          $$('.dropcard').length + ' cards');
         check('landlord identity on the card', $$('.dropcard__owner').length === $$('.dropcard').length, $$('.dropcard__owner').length);
         check('photo gallery renders', $$('.gal').length > 0 || $$('.dropcard').length === 0, $$('.gal').length + ' galleries');
         check('steward grade on every card', $$('.steward').length >= $$('.dropcard').length, $$('.steward').length + ' grades');
