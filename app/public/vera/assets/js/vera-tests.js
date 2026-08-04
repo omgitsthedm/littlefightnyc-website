@@ -330,6 +330,17 @@
       }
       check('the hunt now runs first-look to signed lease', app.STAGES.length === 7 && app.STAGES.filter(function (s) { return s.id === 'signed'; }).length === 1, app.STAGES.map(function (s) { return s.id; }).join(','));
 
+      /* ---- neighborhood resolution is disclosed, not silent ---- */
+      var nrProbe = POOL[0];
+      var hadNR = nrProbe.neighborhood_resolved_from_coords, hadNS = nrProbe.neighborhood_source;
+      nrProbe.neighborhood_resolved_from_coords = true; nrProbe.neighborhood_source = 'Brooklyn';
+      L.open(nrProbe.listing_uid);
+      var disclosed = document.body.textContent.indexOf('placed by coordinates') > -1;
+      var srcNamed = document.body.textContent.indexOf('posted as Brooklyn') > -1;
+      L.close();
+      check('a corrected neighborhood says so, naming the source value', disclosed && srcNamed, disclosed ? 'disclosed' : 'NOT disclosed');
+      nrProbe.neighborhood_resolved_from_coords = hadNR; nrProbe.neighborhood_source = hadNS;
+
       /* ---- records-layer honesty ---- */
       var Dh = app.D();
       var hadRH = Dh.records_health;

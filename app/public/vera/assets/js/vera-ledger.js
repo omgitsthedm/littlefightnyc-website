@@ -170,6 +170,11 @@
       var vr = app.valueRead ? app.valueRead(l) : null;
       html += '<dl class="kv">' +
         kvRow('Value', vr ? '<span class="' + (vr.under ? 't-under' : 't-over') + '">' + esc(vr.label) + '</span> <span class="t-dim">(' + esc(vr.src) + ')</span>' : null) +
+        kvRow('Neighborhood', l.neighborhood
+          ? esc(l.neighborhood) + (l.neighborhood_resolved_from_coords && l.neighborhood_source
+              ? ' <span class="t-dim">— posted as ' + esc(l.neighborhood_source) + ', placed by coordinates against the city’s boundaries</span>'
+              : '')
+          : null) +
         kvRow('Subway', tt ? '≈' + tt.mins + ' min walk · ' + C.lineBullets(tt.lines) + ' ' + esc(tt.name) : null) +
         kvRow('First seen', timeago(l.first_seen_at)) + kvRow('Last seen', timeago(l.last_seen_at)) +
         kvRow('Move-in cash', l.estimated_move_in_cash != null ? money(l.estimated_move_in_cash) : null) +
