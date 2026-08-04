@@ -375,6 +375,26 @@
       L.close();
       pfProbe.landlord_portfolio = hadPF;
 
+      /* ---- the law, read against the listing ---- */
+      var lawProbe = POOL[2];
+      var hadIll = lawProbe.illegal_demands, hadCue = lawProbe.scam_cues_found;
+      lawProbe.illegal_demands = [{ id: 'deposit_over_one_month', says: 'asks for more than one month\u2019s security',
+        law: 'HSTPA 2019 caps security at one month\u2019s rent', quote: 'first, last and one month security' }];
+      lawProbe.scam_cues_found = [{ id: 'wire_payment', says: 'asks to be paid by wire', quote: 'wire transfer' }];
+      L.open(lawProbe.listing_uid);
+      $('[data-insp-tabs] [data-tab="verify"]').click();
+      var lawTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
+      check('an unlawful demand leads, quoting the listing and naming the statute',
+        lawTxt.indexOf('asks for something the law forbids') > -1 &&
+        lawTxt.indexOf('HSTPA') > -1 && lawTxt.indexOf('first, last and one month security') > -1, '');
+      check('scam cues stay separate from unlawful demands',
+        lawTxt.indexOf('Language that runs with fraud') > -1 &&
+        lawTxt.indexOf('not proof of it') > -1, '');
+      check('an unlawful demand does not accuse the landlord',
+        lawTxt.indexOf('not proof of a bad landlord') > -1, '');
+      L.close();
+      lawProbe.illegal_demands = hadIll; lawProbe.scam_cues_found = hadCue;
+
       /* ---- records-layer honesty ---- */
       var Dh = app.D();
       var hadRH = Dh.records_health;

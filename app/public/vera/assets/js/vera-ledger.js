@@ -353,6 +353,29 @@
         kvRow('Authenticity', C.authenticity(l) != null ? num(C.authenticity(l)) + ' / 100 (' + esc(l.listing_confidence_band || '—') + ')' : null) +
         kvRow('State bucket', esc(String(l.state_bucket || '').replace(/_/g, ' '))) + '</dl>';
     } else if (inspTab === 'verify') {
+      /* What the post asks for that New York law forbids. This is not a
+         guess about intent — it is the listing's own words against the
+         statute, so it leads, and it quotes itself. */
+      var illegal = l.illegal_demands || [];
+      if (illegal.length) {
+        html += '<div class="insp-sec"><h3>This listing asks for something the law forbids</h3><ul class="illegal">' +
+          illegal.map(function (d) {
+            return '<li><b>' + esc(d.says) + '</b>' +
+              (d.quote ? '<span class="illegal__q">“' + esc(d.quote) + '”</span>' : '') +
+              '<span class="illegal__law">' + esc(d.law) + '</span></li>';
+          }).join('') + '</ul>' +
+          '<p class="insp-fine">An unlawful demand is not proof of a bad landlord — plenty of small owners are simply working from an old lease template. But you do not have to pay it, and a landlord who insists after being shown the statute has told you who they are.</p></div>';
+      }
+
+      var cuesFound = l.scam_cues_found || [];
+      if (cuesFound.length) {
+        html += '<div class="insp-sec"><h3>Language that runs with fraud</h3><ul class="bad">' +
+          cuesFound.map(function (c) {
+            return '<li>' + esc(c.says) + (c.quote ? ' <span class="illegal__q">“' + esc(c.quote) + '”</span>' : '') + '</li>';
+          }).join('') + '</ul>' +
+          '<p class="insp-fine">These correlate with rental fraud; they are not proof of it. Read them as reasons to insist on seeing the apartment and signing before any money moves.</p></div>';
+      }
+
       /* machine-run tells from the engine's forensics pass */
       var tells = [];
       if (l.relist_suspect) tells.push('Relisted after disappearing — the days-on-market counter was reset' + (l.true_days_on_market != null ? '; this address has really been advertising for ' + l.true_days_on_market + ' days' : '') + ' (Scam School: "Days on market reset to three").');
