@@ -269,30 +269,6 @@
         (stw.failures.length ? '<span class="steward__line steward__line--bad">' + stw.failures.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
         (stw.strengths.length ? '<span class="steward__line steward__line--good">' + stw.strengths.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
         '</span></div>';
-      /* The portfolio: what this owner does to their OTHER tenants. A
-         building's own file says how this address is kept; this says who
-         keeps it, and how they behave everywhere else they hold. */
-      var pf = l.landlord_portfolio;
-      if (pf && pf.bldgs) {
-        var evict = +pf.totalevictions || 0;
-        var vpu = +pf.openviolationsperresunit || 0;
-        var rsLost = +pf.totalrsdiff || 0;
-        var tone = (evict >= 5 || vpu >= 2) ? 'bad' : (evict > 0 || vpu >= 0.5) ? 'warn' : 'good';
-        html += '<div class="insp-sec"><h3>The owner\'s wider record</h3>' +
-          '<p class="pf-head pf-head--' + tone + '">' + esc(pf.topcorp || 'This portfolio') +
-          ' holds <b>' + pf.bldgs + '</b> building' + (pf.bldgs === 1 ? '' : 's') +
-          (pf.units ? ' · ' + pf.units + ' units' : '') + '</p>' +
-          '<dl class="kv">' +
-            kvRow('Evictions filed', evict ? evict + ' across the portfolio' + (pf.avgevictions ? ' (avg ' + pf.avgevictions + ' per building)' : '') : 'none on record') +
-            kvRow('Open violations', vpu ? vpu + ' per apartment' + (pf.totalopenviolations ? ' · ' + pf.totalopenviolations + ' total' : '') : 'none open') +
-            kvRow('Rent-stabilized units', rsLost < 0 ? '<span class="t-over">' + Math.abs(rsLost) + ' lost from this portfolio</span>' : (rsLost > 0 ? '+' + rsLost : null)) +
-            kvRow('Officers on file', (pf.topowners || []).length ? esc((pf.topowners || []).slice(0, 4).join(' · ')) : null) +
-          '</dl>' +
-          '<p class="insp-fine">Portfolio linked through HPD registration contacts and shared business addresses by ' +
-          '<a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix\'s Who Owns What</a>. ' +
-          'Every figure is a public record, not an opinion — and a large portfolio is not itself a fault.</p></div>';
-      }
-
       /* Counts without a denominator mislead. Seven violations across 799
          apartments is a very different building from three across 89, and
          the raw numbers above cannot show that. This changes no score — it
@@ -348,6 +324,29 @@
         '<div class="vtools">' + C.VERIFY_TOOLS.slice(0, 4).map(function (v) {
           return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
         }).join('') + '</div></div>';
+      /* The portfolio: what this owner does to their OTHER tenants. A
+         building's own file says how this address is kept; this says who
+         keeps it, and how they behave everywhere else they hold. */
+      var pf = l.landlord_portfolio;
+      if (pf && pf.bldgs) {
+        var evict = +pf.totalevictions || 0;
+        var vpu = +pf.openviolationsperresunit || 0;
+        var rsLost = +pf.totalrsdiff || 0;
+        var tone = (evict >= 5 || vpu >= 2) ? 'bad' : (evict > 0 || vpu >= 0.5) ? 'warn' : 'good';
+        html += '<div class="insp-sec"><h3>The owner\'s wider record</h3>' +
+          '<p class="pf-head pf-head--' + tone + '">' + esc(pf.topcorp || 'This portfolio') +
+          ' holds <b>' + pf.bldgs + '</b> building' + (pf.bldgs === 1 ? '' : 's') +
+          (pf.units ? ' · ' + pf.units + ' units' : '') + '</p>' +
+          '<dl class="kv">' +
+            kvRow('Evictions filed', evict ? evict + ' across the portfolio' + (pf.avgevictions ? ' (avg ' + pf.avgevictions + ' per building)' : '') : 'none on record') +
+            kvRow('Open violations', vpu ? vpu + ' per apartment' + (pf.totalopenviolations ? ' · ' + pf.totalopenviolations + ' total' : '') : 'none open') +
+            kvRow('Rent-stabilized units', rsLost < 0 ? '<span class="t-over">' + Math.abs(rsLost) + ' lost from this portfolio</span>' : (rsLost > 0 ? '+' + rsLost : null)) +
+            kvRow('Officers on file', (pf.topowners || []).length ? esc((pf.topowners || []).slice(0, 4).join(' · ')) : null) +
+          '</dl>' +
+          '<p class="insp-fine">Portfolio linked through HPD registration contacts and shared business addresses by ' +
+          '<a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix\'s Who Owns What</a>. ' +
+          'Every figure is a public record, not an opinion — and a large portfolio is not itself a fault.</p></div>';
+      }
     } else if (inspTab === 'score') {
       var comp = l.component_scores || {};
       var keys = Object.keys(comp);

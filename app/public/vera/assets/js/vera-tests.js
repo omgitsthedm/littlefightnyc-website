@@ -378,17 +378,24 @@
         totalevictions: 47, avgevictions: 4.7, openviolationsperresunit: 3.6,
         totalopenviolations: 712, totalrsdiff: -170, topowners: ['ISSAKA MAIGUZO', 'FRANKLIN RODRIGUEZ'] };
       L.open(pfProbe.listing_uid);
-      $('[data-insp-tabs] [data-tab="records"]').click();
+      // The owner tab, not records: this is what the landlord does across
+      // their whole portfolio, not what is on file for this building.
+      $('[data-insp-tabs] [data-tab="owner"]').click();
       var pfTxt = ($('[data-insp-body]') || { textContent: '' }).textContent;
       check('portfolio names the owner and their wider record',
         pfTxt.indexOf('HAVILAND 18 LLC') > -1 && pfTxt.indexOf('10 buildings') > -1 &&
         pfTxt.indexOf('47 across the portfolio') > -1 && pfTxt.indexOf('170 lost') > -1,
         'portfolio block');
       check('a heavy portfolio reads as heavy', !!$('.pf-head--bad'), '');
+      $('[data-insp-tabs] [data-tab="records"]').click();
+      check('and it lives on the owner tab, not the building records tab',
+        (($('[data-insp-body]') || { textContent: '' }).textContent).indexOf('wider record') === -1,
+        'a renter looking up their landlord should not have to find it under Records');
+      $('[data-insp-tabs] [data-tab="owner"]').click();
       L.close();
       pfProbe.landlord_portfolio = { bldgs: 2, units: 8, topcorp: 'SMALL OWNER LLC', totalevictions: 0, openviolationsperresunit: 0 };
       L.open(pfProbe.listing_uid);
-      $('[data-insp-tabs] [data-tab="records"]').click();
+      $('[data-insp-tabs] [data-tab="owner"]').click();
       check('a clean small portfolio reads as clean', !!$('.pf-head--good'), '');
       L.close();
       pfProbe.landlord_portfolio = hadPF;
