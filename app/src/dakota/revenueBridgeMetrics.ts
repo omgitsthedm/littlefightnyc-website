@@ -1,6 +1,12 @@
 import { evidencedInvoiceAmount, isFullyPaidRecord } from "./revenue";
+import {
+  DAKOTA_PURSUIT_TEMPLATES,
+  isValidPursuitAttribution,
+} from "./pursuitKit";
 import type {
   Candidate,
+  DakotaPursuitSegment,
+  DakotaPursuitTemplateId,
   DakotaRevenueBridgeEnvelope,
   OperatorRecord,
 } from "./types";
@@ -101,6 +107,19 @@ export interface DakotaActionPressure {
   oldestActionableAgeMinutes: number | null;
 }
 
+export const DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS = 5;
+
+export interface DakotaTemplatePerformanceRow {
+  templateId: DakotaPursuitTemplateId;
+  templateVersion: string;
+  segment: DakotaPursuitSegment;
+  sends: number;
+  replies: number;
+  replyRate: DakotaConversionRate;
+  comparisonReady: boolean;
+  weakest: boolean;
+}
+
 export interface DakotaProvenanceRow {
   label: string;
   records: number;
@@ -130,9 +149,119 @@ export interface DakotaRevenueMetrics {
   commercial: DakotaCommercialTruth;
   response: DakotaResponseVelocity;
   actions: DakotaActionPressure;
+  templatePerformance: DakotaTemplatePerformanceRow[];
   sourceRows: DakotaProvenanceRow[];
   acquisitionRows: DakotaAcquisitionRow[];
   offerRows: DakotaProvenanceRow[];
+}
+
+interface DakotaPacketOutcome {
+  templateId: DakotaPursuitTemplateId;
+  templateVersion: string;
+  segment: DakotaPursuitSegment;
+  contactId: string;
+  sentAt: number | null;
+  repliedAt: number | null;
+}
+
+function outboundAttributionEvent(type: string, channel: string, outcome: string, taskType: string | null): boolean {
+  if (taskType !== "outreach" && taskType !== "follow_up") return false;
+  if (type === "outreach") return ["sent", "delivered", "connected", "voicemail", "no_response"].includes(outcome);
+  if (type === "call") return ["connected", "voicemail", "completed", "no_response"].includes(outcome);
+  return type === "follow_up" && taskType === "follow_up" && channel !== "internal" && ["sent", "delivered", "connected", "voicemail", "completed", "no_response"].includes(outcome);
+}
+
+export function buildDakotaTemplatePerformance(
+  operatorRecords: Record<string, OperatorRecord>,
+): DakotaTemplatePerformanceRow[] {
+  const packets = new Map<string, DakotaPacketOutcome>();
+  for (const [recordKey, record] of Object.entries(operatorRecords)) {
+    for (const activity of record.activities) {
+      const attribution = activity.pursuitAttribution;
+      const occurredAt = validTimestamp(activity.occurredAt);
+      const taskType = activity.taskId
+        ? record.tasks.find((task) => task.taskId === activity.taskId)?.type ?? null
+        : null;
+      if (
+        !isValidPursuitAttribution(attribution) ||
+        occurredAt === null ||
+        !activity.contactId ||
+        !outboundAttributionEvent(activity.type, activity.channel, activity.outcome, taskType)
+      ) continue;
+      const packetKey = `${recordKey}:${attribution.packetId}`;
+      const packet = packets.get(packetKey) ?? {
+        templateId: attribution.templateId,
+        templateVersion: attribution.templateVersion,
+        segment: attribution.segment,
+        contactId: activity.contactId,
+        sentAt: null,
+        repliedAt: null,
+      };
+      if (packet.contactId === activity.contactId) {
+        packet.sentAt = packet.sentAt === null ? occurredAt : Math.min(packet.sentAt, occurredAt);
+      }
+      packets.set(packetKey, packet);
+    }
+  }
+  for (const [recordKey, record] of Object.entries(operatorRecords)) {
+    for (const activity of record.activities) {
+      const attribution = activity.pursuitAttribution;
+      const occurredAt = validTimestamp(activity.occurredAt);
+      if (
+        activity.type !== "reply" ||
+        !["replied", "connected", "completed"].includes(activity.outcome) ||
+        !isValidPursuitAttribution(attribution) ||
+        occurredAt === null ||
+        !activity.contactId
+      ) continue;
+      const packet = packets.get(`${recordKey}:${attribution.packetId}`);
+      if (!packet || packet.contactId !== activity.contactId || packet.sentAt === null || occurredAt < packet.sentAt) continue;
+      packet.repliedAt = packet.repliedAt === null ? occurredAt : Math.min(packet.repliedAt, occurredAt);
+    }
+  }
+
+  const rows = new Map<string, DakotaTemplatePerformanceRow>();
+  for (const template of DAKOTA_PURSUIT_TEMPLATES) {
+    rows.set(`${template.id}:${template.version}`, {
+      templateId: template.id,
+      templateVersion: template.version,
+      segment: template.segment,
+      sends: 0,
+      replies: 0,
+      replyRate: rate(0, 0),
+      comparisonReady: false,
+      weakest: false,
+    });
+  }
+  for (const packet of packets.values()) {
+    if (packet.sentAt === null) continue;
+    const key = `${packet.templateId}:${packet.templateVersion}`;
+    const row = rows.get(key) ?? {
+      templateId: packet.templateId,
+      templateVersion: packet.templateVersion,
+      segment: packet.segment,
+      sends: 0,
+      replies: 0,
+      replyRate: rate(0, 0),
+      comparisonReady: false,
+      weakest: false,
+    };
+    row.sends += 1;
+    if (packet.repliedAt !== null && packet.repliedAt >= packet.sentAt) row.replies += 1;
+    rows.set(key, row);
+  }
+  const result = [...rows.values()].map((row) => ({
+    ...row,
+    replyRate: rate(row.replies, row.sends),
+    comparisonReady: row.sends >= DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS,
+  }));
+  const eligible = result.filter((row) => row.comparisonReady && row.replyRate.percentage !== null);
+  if (eligible.length >= 2) {
+    const minimum = Math.min(...eligible.map((row) => row.replyRate.percentage ?? Number.POSITIVE_INFINITY));
+    const weakest = eligible.filter((row) => row.replyRate.percentage === minimum);
+    if (weakest.length === 1) weakest[0]!.weakest = true;
+  }
+  return result.sort((left, right) => right.sends - left.sends || left.templateId.localeCompare(right.templateId));
 }
 
 function hasActivity(record: OperatorRecord | undefined, type: string): boolean {
@@ -613,6 +742,7 @@ export function buildDakotaRevenueMetrics(
     commercial: buildCommercialTruth(operatorRecords),
     response: buildResponseVelocity(operatorRecords, nowMillis),
     actions: buildActionPressure(operatorRecords, nowMillis),
+    templatePerformance: buildDakotaTemplatePerformance(operatorRecords),
     sourceRows: sortRows(sourceRows),
     acquisitionRows: sortRows(acquisitionRows),
     offerRows: sortRows(offerRows),

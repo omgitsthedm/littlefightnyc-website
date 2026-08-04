@@ -1,7 +1,7 @@
 {
   "name": "VERA — the daily drop",
   "short_name": "VERA",
-  "description": "A curated daily drop of verified owner-direct NYC rentals.",
+  "description": "A free NYC rental lens with public-record checks, risk signals, and clearly labeled uncertainty.",
   "start_url": "/vera/#/today",
   "scope": "/vera/",
   "display": "standalone",

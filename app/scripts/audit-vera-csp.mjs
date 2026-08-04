@@ -9,9 +9,11 @@
  * to have two. Nothing failed, because nothing exercises the fallback until the
  * proxy is already broken, which is exactly when nobody is reading logs.
  *
- * VERA also renders MapLibre tiles and uses blob-backed images/workers for its
- * map and offline runtime. Netlify replaces headers per path rather than
- * merging them, so the /vera/* block is a full copy of the "/*" policy. Copies
+ * VERA also renders MapLibre tiles, optionally queries the official NYC
+ * Planning GeoSearch origin after a visitor submits an exact address, and uses
+ * blob-backed images/workers for its map and offline runtime. Netlify replaces
+ * headers per path rather than merging them, so the /vera/* block is a full
+ * copy of the "/*" policy. Copies
  * rot: a directive tightened sitewide could silently not apply to /vera/.
  *
  * So this asserts the two policies differ by exactly those named runtime
@@ -36,9 +38,10 @@ const TILE_ORIGIN = "https://tiles.openfreemap.org";
 // added here or to the policy, which is exactly the failure this audit exists
 // to catch — production said "Could not reach the VERA feed" while curl saw 200.
 const CLOUD_FEED_ORIGIN = "https://raw.githubusercontent.com";
+const GEOSEARCH_ORIGIN = "https://geosearch.planninglabs.nyc";
 const VERA_ONLY_ADDITIONS = {
   "img-src": ["blob:"],
-  "connect-src": [PIPELINE_ORIGIN, CLOUD_FEED_ORIGIN, TILE_ORIGIN],
+  "connect-src": [PIPELINE_ORIGIN, CLOUD_FEED_ORIGIN, TILE_ORIGIN, GEOSEARCH_ORIGIN],
   "worker-src": ["'self'", "blob:"],
   "child-src": ["blob:"],
 };
@@ -109,7 +112,7 @@ if (sitePolicy && veraPolicy) {
   }
 }
 
-// The feed and map origins must still be the things the policy is allowing.
+// The feed, map, and address origins must still be the things the policy is allowing.
 const veraAppJs = await readFile(
   path.join(appRoot, "public", "vera", "assets", "js", "vera-app.js"),
   "utf8",
@@ -118,6 +121,12 @@ if (!veraAppJs.includes(PIPELINE_ORIGIN)) {
   failures.push(
     `vera-app.js no longer references ${PIPELINE_ORIGIN} — if the fallback is gone, drop the ` +
       "/vera/* CSP exception with it rather than leaving the origin allowed for nothing",
+  );
+}
+if (!veraAppJs.includes(GEOSEARCH_ORIGIN)) {
+  failures.push(
+    `vera-app.js no longer references ${GEOSEARCH_ORIGIN} — if exact-address lookup changed, ` +
+      "update the exact /vera/* connect-src exception with it",
   );
 }
 
@@ -139,5 +148,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "VERA CSP audit passed: /vera/* has only the exact feed, map, blob, and worker capabilities its runtime uses.",
+  "VERA CSP audit passed: /vera/* has only the exact feed, map, address, blob, and worker capabilities its runtime uses.",
 );

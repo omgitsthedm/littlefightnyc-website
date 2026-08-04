@@ -1,6 +1,6 @@
 // VERA prerender — the public goods, crawlable.
 // Scam School, the viewing checklist, and the money law are useful to every
-// renter who will never be VERA's operator; the receipts are its track
+// renter whether or not they use the live workspace; the receipts are its track
 // record. Both currently render behind JS hash routes. This emits static
 // HTML into dist at /vera/manual/ and /vera/archive/ after the vite build.
 // Runs in the site build chain; never fails the build.
@@ -25,6 +25,7 @@ function page(title, lede, body) {
 <title>${esc(title)} — VERA</title>
 <meta name="description" content="${esc(lede)}">
 <meta name="theme-color" content="#0c0e0d">
+<meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://littlefightnyc.com/vera/${title === 'Field manual' ? 'manual' : 'archive'}/">
 <link rel="stylesheet" href="../assets/css/doc.css?v=1">
 </head>
@@ -50,7 +51,6 @@ async function main() {
   // vera-core is a browser IIFE; give it the window it expects
   globalThis.window = { matchMedia: () => ({ matches: true }) };
   const coreSrc = readFileSync(join(APP, 'public', 'vera', 'assets', 'js', 'vera-core.js'), 'utf8');
-  // eslint-disable-next-line no-eval
   (0, eval)(coreSrc);
   const C = globalThis.window.__VERAC;
 
@@ -94,7 +94,7 @@ async function main() {
   writeFileSync(join(DIST_VERA, 'archive', 'index.html'), page(
     'Receipts',
     'Every VERA drop, on the record: what was shown and what happened to it. Nothing backfilled, nothing edited.',
-    archBody + '<p>Live outcomes — still listed, price dropped, gone — render in <a href="../#/archive">the app\'s Receipts view</a>.</p>'
+    archBody + '<p>Live outcomes — still listed, price dropped, gone — render in <a href="../#/archive">the app’s Receipts view</a>.</p>'
   ));
 
   console.log('[vera-prerender] wrote /vera/manual/ and /vera/archive/');

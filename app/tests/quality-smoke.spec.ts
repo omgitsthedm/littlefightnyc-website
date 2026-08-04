@@ -52,6 +52,67 @@ const PHC_FILM_ROUTES = [
 
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] as const;
 
+const VERA_FEED_FIXTURE = readFileSync(
+  new URL("./fixtures/vera-feed.json", import.meta.url),
+  "utf8",
+);
+
+async function mockVeraData(page: Page, fixtureBody = VERA_FEED_FIXTURE) {
+  // VERA races three independently published copies of the same public feed.
+  // Stub window.fetch before VERA boots so a newly claiming service worker
+  // cannot bypass Playwright routing and turn the preview's SPA fallback into
+  // a JSON failure. Matching the filename covers all three feed origins.
+  await page.addInitScript((fixture) => {
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+      const raw =
+        typeof input === "string"
+          ? input
+          : input instanceof URL
+            ? input.href
+            : input.url;
+      const path = new URL(raw, window.location.href).pathname;
+      if (path.endsWith("/public.json")) {
+        return new Response(fixture, {
+          status: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        });
+      }
+      if (path.endsWith("/archive.json")) {
+        return new Response("[]", {
+          status: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        });
+      }
+      return nativeFetch(input, init);
+    };
+  }, fixtureBody);
+}
+
+async function waitForVeraPool(page: Page) {
+  await expect
+    .poll(
+      () =>
+        page.evaluate(
+          () =>
+            (
+              window as unknown as {
+                __vera?: { pool: () => Array<unknown> };
+              }
+            ).__vera?.pool().length ?? 0,
+        ),
+      { timeout: 15_000, message: "VERA did not adopt the mocked public feed" },
+    )
+    .toBeGreaterThan(0);
+  await expect(page.locator("[data-snapshot-line]")).not.toHaveText("Sweeping…");
+}
+
 type RouteMetaPage = {
   path: string;
   title: string;
@@ -1161,22 +1222,14 @@ test(
     // /vera/ is a vanilla-JS app outside the React build, so it gets no
     // type checking and no lint. Everything interactive was wired to a single
     // delegated click listener, and the only keydown handler in the file
-    // handled Escape. Measured on production: 226 Discover rows, 0 focusable;
+    // handled Escape. Measured on production: 226 Browse rows, 0 focusable;
     // focus() left activeElement on BODY; Enter did nothing; click worked.
     // A keyboard or switch user could not open one listing — WCAG 2.1.1,
     // Level A, on the product this site showcases.
-    //
-    // The feed is proxied via _redirects, which vite preview does not apply,
-    // so serve a trimmed copy of the real payload.
-    const feed = readFileSync(
-      new URL("./fixtures/vera-feed.json", import.meta.url),
-      "utf8",
-    );
-    await page.route("**/vera/data/public.json", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
-    );
+    await mockVeraData(page);
 
-    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
+    await waitForVeraPool(page);
     const rows = page.locator("tr[data-open]");
     await rows.first().waitFor();
 
@@ -1186,6 +1239,26 @@ test(
       await page.locator("tr[data-open][tabindex]").count(),
       "every listing row must be reachable by keyboard",
     ).toBe(total);
+
+    // A sortable column is a real button now, not a click handler on a <th>.
+    // Enter must sort and expose that direction through the table semantics.
+    const rentSort = page.locator('thead button[data-sort="rent"]');
+    await rentSort.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator('th:has(button[data-sort="rent"])')).toHaveAttribute(
+      "aria-sort",
+      "descending",
+    );
+    expect(
+      await page.evaluate(
+        () =>
+          (
+            window as unknown as {
+              __vera: { state: { sort: { key: string; dir: number } } };
+            }
+          ).__vera.state.sort,
+      ),
+    ).toEqual({ key: "rent", dir: -1 });
 
     // Enter opens the inspector, and exactly one row reports itself expanded.
     await rows.first().focus();
@@ -1216,52 +1289,28 @@ test(
 );
 
 test(
-  "VERA hides the views you are not looking at @chromium-desktop",
+  "VERA renders only the view you are looking at @chromium-desktop",
   async ({ page, baseURL }) => {
-    // `hidden` lives in the UA stylesheet, so the author rule
-    // `.page { display: grid }` beat it and every inactive view stayed in
-    // layout. Empty ones measured zero and hid the problem; once a view had
-    // rendered, its box stayed. After visiting Discover, its table sat below
-    // the fold on Command, in the accessibility tree, and in innerText —
-    // 40,574 characters on a view with 3,490 characters of content.
-    const feed = readFileSync(
-      new URL("./fixtures/vera-feed.json", import.meta.url),
-      "utf8",
-    );
-    await page.route("**/vera/data/public.json", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
-    );
+    // The current router replaces one dynamic page instead of retaining a
+    // stack of hidden panes. Browse must disappear completely after a route
+    // change, including its table text and accessibility tree.
+    await mockVeraData(page);
 
-    // Render Discover first so it has real content, then leave it.
-    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
+    await waitForVeraPool(page);
     await page.locator("tr[data-open]").first().waitFor();
     await page.evaluate(() => {
-      window.location.hash = "#/command";
+      window.location.hash = "#/market";
     });
-    await page.locator(".page--command:not([hidden])").waitFor();
+    await expect(page.locator('.page[data-page="market"]')).toBeVisible();
+    await expect(page.locator("#main .page")).toHaveCount(1);
+    await expect(page.locator("#main .dt")).toHaveCount(0);
 
-    const leaked = await page.evaluate(() =>
-      [...document.querySelectorAll("#main .page[hidden]")]
-        .filter((section) => section.getBoundingClientRect().height > 0)
-        .map((section) => section.className),
-    );
-    expect(leaked, "a hidden view is still taking up layout").toEqual([]);
-
-    expect(
-      await page.evaluate(() =>
-        [...document.querySelectorAll("#main .page[hidden]")].every(
-          (section) => getComputedStyle(section).display === "none",
-        ),
-      ),
-      "every hidden view must compute to display:none",
-    ).toBe(true);
-
-    // The table from Discover must not be readable while on Command.
     expect(
       await page.evaluate(
         () => document.querySelector("#main")?.innerText.includes("Score") ?? false,
       ),
-      "Discover's table is still in the visible text of Command",
+      "Browse's table is still in the visible text of Market",
     ).toBe(false);
   },
 );
@@ -1274,14 +1323,9 @@ test(
     // on the row behind it and Tab walked the table under the scrim: the detail
     // a keyboard user had just opened was the one thing they could not reach.
     // Making the rows keyboard-operable is what made this reachable at all.
-    const feed = readFileSync(
-      new URL("./fixtures/vera-feed.json", import.meta.url),
-      "utf8",
-    );
-    await page.route("**/vera/data/public.json", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
-    );
-    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    await mockVeraData(page);
+    await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
+    await waitForVeraPool(page);
     const rows = page.locator("tr[data-open]");
     await rows.first().waitFor();
 
@@ -1911,24 +1955,19 @@ test(
 test(
   "VERA tells assistive tech which filters and tabs are active @chromium-desktop",
   async ({ page, baseURL }) => {
-    // Every toggle signalled its state with an `is-on` class and nothing else.
-    // Measured live: 36 filter toggles, 5 visually active, 0 with aria-pressed;
-    // 6 role="tab" buttons with 0 aria-selected. A screen reader could read the
-    // labels and never learn which lens, bracket or borough was applied — the
-    // whole filtering model was invisible.
-    const feed = readFileSync(
-      new URL("./fixtures/vera-feed.json", import.meta.url),
-      "utf8",
-    );
-    await page.route("**/vera/data/public.json", (route) =>
-      route.fulfill({ status: 200, contentType: "application/json", body: feed }),
-    );
-    await page.goto(`${baseURL}/vera/#/discover`, { waitUntil: "networkidle" });
+    test.slow();
+    await page.addInitScript(() => {
+      localStorage.removeItem("vera-cases");
+      localStorage.removeItem("vera-workspace");
+    });
+    await mockVeraData(page);
+    await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
+    await waitForVeraPool(page);
     await page.locator("tr[data-open]").first().waitFor();
 
     const TOGGLES =
       "[data-bracket],[data-unit],[data-transit],[data-lens],[data-view]," +
-      "[data-area],[data-brtile],[data-hoodbar],[data-density],[data-stage],[data-hood]";
+      "[data-area],[data-brtile],[data-hoodbar],[data-density]";
 
     // aria-pressed must exist on every toggle and agree with the visual state.
     const pressed = await page.evaluate((selector) => {
@@ -1949,22 +1988,62 @@ test(
     expect(pressed.missing, "toggles without aria-pressed").toBe(0);
     expect(pressed.disagreeing, "aria-pressed disagrees with the visual state").toBe(0);
 
-    // Every view needs exactly one h1 — six rendered none and About rendered two.
-    for (const view of ["command", "map", "discover", "cases", "toolkit", "pipeline", "about"]) {
-      await page.evaluate((hash) => {
-        window.location.hash = `#/${hash}`;
+    // State must move with the actual button, and the Needs verification lens
+    // must not pull matched_public_records back into the review queue.
+    await page.locator('button[data-view="verify"]').click();
+    await expect(page.locator('button[data-view="verify"]')).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect(page.locator('button[data-view="all"]')).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+    const verificationStatuses = await page.evaluate(
+      () =>
+        (
+          window as unknown as {
+            __vera: { filtered: () => Array<{ verification_status?: string }> };
+          }
+        ).__vera
+          .filtered()
+          .map((listing) => listing.verification_status ?? ""),
+    );
+    expect(verificationStatuses.length, "fixture has no unresolved listings").toBeGreaterThan(0);
+    expect(
+      verificationStatuses.every((status) => !/^(matched|verified)/i.test(status)),
+      "a matched record leaked into Needs verification",
+    ).toBe(true);
+
+    // Every current route owns one dynamic page and exactly one h1. Clearing
+    // cases above makes this exercise Hunt's honest empty state too.
+    for (const view of [
+      "today",
+      "market",
+      "browse",
+      "atlas",
+      "hunt",
+      "manual",
+      "archive",
+      "system",
+    ]) {
+      await page.evaluate((route) => {
+        window.location.hash = `#/${route}`;
       }, view);
-      await page.locator(`.page--${view === "cases" ? "cases" : view}:not([hidden])`).waitFor();
+      await expect(page.locator(`.page[data-page="${view}"]`)).toBeVisible();
+      await expect(page.locator("#main .page")).toHaveCount(1);
       expect(
-        await page.locator(`.page:not([hidden]) h1`).count(),
+        await page.locator("#main .page h1").count(),
         `${view} must have exactly one h1`,
       ).toBe(1);
     }
 
     // aria-selected must follow the open tab, not freeze on the first one.
     await page.evaluate(() => {
-      window.location.hash = "#/discover";
+      window.location.hash = "#/browse";
     });
+    await page.locator('button[data-view="all"]').click();
+    await page.locator("tr[data-open]").first().waitFor();
     await page.locator("tr[data-open]").first().click();
     await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
     for (const tab of ["money", "records", "owner"]) {
@@ -2189,58 +2268,270 @@ test(
 );
 
 test(
-  "VERA toolkit sliders keep focus across repeated arrow keys @chromium-desktop",
+  "VERA manual sliders keep focus across repeated arrow keys @chromium-desktop",
   async ({ page, baseURL }) => {
     const runtime = watchRuntime(page);
+    await mockVeraData(page);
+    await page.goto(`${baseURL}/vera/#/manual`, { waitUntil: "domcontentloaded" });
+    await waitForVeraPool(page);
 
-    // VERA's feed is proxied to another origin in production; the preview server
-    // has no _redirects, so the request falls through to the SPA shell and the
-    // app never leaves its loading state. Serve the shape it expects.
-    await page.route("**/vera/data/public.json", (route) =>
-      route.fulfill({
+    for (const selector of ["[data-tool-rent]", "[data-tool-income]"]) {
+      const slider = page.locator(selector);
+      await expect(slider).toBeVisible();
+      await slider.focus();
+
+      // Rebuilding Manual during `input` replaces the range under the user's
+      // finger or keyboard. Four presses must stay on the same live control and
+      // produce four increasing values, not one step followed by silence.
+      const values: string[] = [];
+      for (let i = 0; i < 4; i += 1) {
+        await page.keyboard.press("ArrowRight");
+        values.push(
+          await page.evaluate((attribute) => {
+            const el = document.activeElement as HTMLInputElement | null;
+            return el?.matches(attribute) ? el.value : "LOST FOCUS";
+          }, selector),
+        );
+      }
+
+      expect(values).not.toContain("LOST FOCUS");
+      expect(new Set(values).size).toBe(4);
+      expect(Number(values[3])).toBeGreaterThan(Number(values[0]));
+    }
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);
+
+test(
+  "VERA confirms a user-supplied address locally without changing its score @chromium-desktop",
+  async ({ page, baseURL }) => {
+    const runtime = watchRuntime(page);
+    const outboundWrites: string[] = [];
+    let geoSearchUrl = "";
+    let geoSearchCalls = 0;
+    const addressFixture = JSON.parse(VERA_FEED_FIXTURE) as {
+      pool: Array<Record<string, unknown>>;
+    };
+    const numericListing = addressFixture.pool.find(
+      (listing) =>
+        !/^(matched|verified)/i.test(String(listing.verification_status ?? "")),
+    );
+    if (!numericListing) throw new Error("VERA fixture has no unresolved listing");
+    numericListing.address_raw = "2461";
+    numericListing.address_normalized = "2461";
+    numericListing.verification_status = "partial_address_only";
+    numericListing.listing_confidence_score = 66;
+    numericListing.listing_confidence_band = "medium";
+    const addressListingUid = String(numericListing.listing_uid);
+
+    await page.addInitScript(() => {
+      localStorage.removeItem("vera-address-resolutions-v1");
+      localStorage.removeItem("vera-workspace");
+    });
+    await mockVeraData(page, JSON.stringify(addressFixture));
+    await page.route("**/v2/search**", (route) => {
+      geoSearchCalls += 1;
+      geoSearchUrl = route.request().url();
+      return route.fulfill({
         status: 200,
         contentType: "application/json",
         body: JSON.stringify({
-          generated_at: new Date(0).toISOString(),
-          app: { name: "VERA", subtitle: "test", version: "0" },
-          summary: { hero_summary: "0 pursue" },
-          shortlist: [],
-          manual_review: [],
-          skip_insights: [],
-          recommendations: [],
-          daily_changes: [],
+          features: [
+            {
+              properties: {
+                label: "120 Broadway, Manhattan, NY",
+                confidence: 0.97,
+                match_type: "exact",
+                addendum: {
+                  pad: { bbl: "1000477501", bin: "1001026" },
+                },
+              },
+            },
+            {
+              properties: {
+                label: "120 Broadway, Manhattan, NY",
+                confidence: 0.63,
+                match_type: "fallback",
+                addendum: {
+                  pad: { bbl: "1000477501", bin: "1001026" },
+                },
+              },
+            },
+            {
+              properties: {
+                label: "120 Broadway, Manhattan, NY",
+                confidence: 0.99,
+                match_type: "exact",
+                addendum: { pad: {} },
+              },
+            },
+          ],
         }),
-      }),
+      });
+    });
+    page.on("request", (request) => {
+      if (request.method() !== "GET") {
+        outboundWrites.push(`${request.method()} ${request.url()}`);
+      }
+    });
+
+    await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
+    await waitForVeraPool(page);
+    const target = await page.evaluate((uid) => {
+      const app = (
+        window as unknown as {
+          __VERA_APP: {
+            POOL: () => Array<Record<string, unknown>>;
+            addressOf: (listing: Record<string, unknown>) => string | null;
+          };
+        }
+      ).__VERA_APP;
+      const listing = app
+        .POOL()
+        .find((item) => String(item.listing_uid ?? "") === uid);
+      if (!listing) return null;
+      return {
+        uid: String(listing.listing_uid),
+        score: Number(listing.overall_score),
+        serialized: JSON.stringify(listing),
+        displayedAddress: app.addressOf(listing),
+      };
+    }, addressListingUid);
+    expect(target, "numeric-address fixture listing is missing").not.toBeNull();
+    expect(target!.displayedAddress, "2461 must not masquerade as an address").toBeNull();
+
+    await page.evaluate((uid) => {
+      (
+        window as unknown as { __vera: { open: (listingUid: string) => void } }
+      ).__vera.open(uid);
+    }, target!.uid);
+    await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
+    await page.locator('[data-insp-tabs] button[data-tab="verify"]').click();
+
+    const form = page.locator("form[data-address-check]");
+    await expect(form).toBeVisible();
+    await form.locator('input[name="vera-address"]').fill("17th Street");
+    await form.getByRole("button", { name: "Check with NYC Planning" }).click();
+    await expect(form.locator("[data-address-result]")).toContainText(
+      "Enter a house number and street",
     );
+    expect(geoSearchCalls, "a street name without a house number reached GeoSearch").toBe(0);
 
-    await page.goto(`${baseURL}/vera/#/toolkit`, { waitUntil: "networkidle" });
-    const slider = page.locator("[data-toolrent]");
-    await expect(slider).toBeVisible();
-    await slider.focus();
+    await form.locator('input[name="vera-address"]').fill("Avenue B 12");
+    await form.getByRole("button", { name: "Check with NYC Planning" }).click();
+    expect(geoSearchCalls, "a trailing number masqueraded as a house number").toBe(0);
 
-    // A range input fires 'input' AND 'change' on a single arrow press — there
-    // is no thumb to release. The change handler rebuilds the toolkit, which
-    // replaced the very input being operated and dropped focus to <body>. One
-    // step worked and every press after it went nowhere, which is the whole
-    // slider for someone not using a mouse.
-    const values: string[] = [];
-    for (let i = 0; i < 4; i += 1) {
-      await page.keyboard.press("ArrowRight");
-      await page.waitForTimeout(220);
-      values.push(
-        await page.evaluate(() => {
-          const el = document.activeElement as HTMLInputElement | null;
-          return el?.hasAttribute?.("data-toolrent") ? el.value : "LOST FOCUS";
-        }),
-      );
-    }
+    await form.locator('input[name="vera-address"]').fill("120 Broadway, Manhattan");
+    await form.getByRole("button", { name: "Check with NYC Planning" }).click();
 
-    expect(values).not.toContain("LOST FOCUS");
-    // Four presses must produce four distinct, increasing values — not one step
-    // then silence.
-    expect(new Set(values).size).toBe(4);
-    expect(Number(values[3])).toBeGreaterThan(Number(values[0]));
+    const choices = form.locator("button[data-address-candidate]");
+    await expect(choices).toHaveCount(1);
+    await expect(choices.first()).toContainText("120 Broadway, Manhattan, NY");
+    expect(geoSearchCalls).toBe(1);
+    expect(new URL(geoSearchUrl).searchParams.get("text")).toBe(
+      "120 Broadway, Manhattan, New York NY",
+    );
+    expect(
+      await page.evaluate((uid) => {
+        const saved = JSON.parse(
+          localStorage.getItem("vera-address-resolutions-v1") || "{}",
+        ) as Record<string, unknown>;
+        return saved[uid] ?? null;
+      }, target!.uid),
+      "nothing is saved before the user confirms a candidate",
+    ).toBeNull();
 
+    await choices.first().click();
+    const proof = page.locator(".address-proof");
+    await expect(proof).toContainText("Resolved from the address you supplied");
+    await expect(proof).toContainText("1000477501");
+    await expect(proof).toContainText("does not change VERA’s score");
+
+    const stored = await page.evaluate((uid) => {
+      const all = JSON.parse(
+        localStorage.getItem("vera-address-resolutions-v1") || "{}",
+      ) as Record<string, Record<string, unknown>>;
+      return all[uid] ?? null;
+    }, target!.uid);
+    expect(stored).toMatchObject({
+      label: "120 Broadway, Manhattan, NY",
+      confidence: 0.97,
+      matchType: "exact",
+      bbl: "1000477501",
+      bin: "1001026",
+      provenance: "user_supplied",
+    });
+    expect(String(stored?.confirmedAt)).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+
+    const listingAfter = await page.evaluate((uid) => {
+      const listing = (
+        window as unknown as {
+          __VERA_APP: { byUid: (listingUid: string) => Record<string, unknown> };
+        }
+      ).__VERA_APP.byUid(uid);
+      return {
+        score: Number(listing.overall_score),
+        serialized: JSON.stringify(listing),
+      };
+    }, target!.uid);
+    expect(listingAfter.score).toBe(target!.score);
+    expect(listingAfter.serialized, "the shared listing object was mutated").toBe(
+      target!.serialized,
+    );
+    expect(outboundWrites, "address confirmation made a server-side write").toEqual([]);
+
+    await proof.getByRole("button", { name: "Forget this address" }).click();
+    await expect(page.locator("form[data-address-check]")).toBeVisible();
+    expect(
+      await page.evaluate((uid) => {
+        const all = JSON.parse(
+          localStorage.getItem("vera-address-resolutions-v1") || "{}",
+        ) as Record<string, unknown>;
+        return all[uid] ?? null;
+      }, target!.uid),
+      "the operator can remove the locally saved address without clearing the whole site",
+    ).toBeNull();
+
+    expect(runtime.pageErrors).toEqual([]);
+    expect(runtime.consoleErrors).toEqual([]);
+  },
+);
+
+test(
+  "VERA acceptance mode cannot overwrite a visitor's saved hunt @chromium-desktop",
+  async ({ page, baseURL }) => {
+    const runtime = watchRuntime(page);
+    const sentinels = {
+      "vera-workspace": JSON.stringify({ view: "owner", marker: "keep-workspace" }),
+      "vera-cases": JSON.stringify({ saved: { stage: "toured", marker: "keep-hunt" } }),
+      "vera-anchors": JSON.stringify(["Union Sq", "Bedford Av"]),
+      "vera-profile": JSON.stringify({ income: 98765, marker: "keep-profile" }),
+      "vera-address-resolutions-v1": JSON.stringify({ saved: { label: "keep-address" } }),
+    };
+    await page.addInitScript((seed) => {
+      Object.entries(seed).forEach(([key, value]) => localStorage.setItem(key, value));
+      sessionStorage.setItem("vera-sweep-seen", "keep-session");
+    }, sentinels);
+    await mockVeraData(page);
+    await page.goto(`${baseURL}/vera/?test=1#/today`, {
+      waitUntil: "domcontentloaded",
+    });
+    await page.waitForFunction(() => {
+      const result = (window as unknown as { __testResults?: { pass: boolean } })
+        .__testResults;
+      return result?.pass === true;
+    });
+
+    expect(
+      await page.evaluate((keys) =>
+        Object.fromEntries(keys.map((key) => [key, localStorage.getItem(key)])),
+      Object.keys(sentinels)),
+    ).toEqual(sentinels);
+    expect(await page.evaluate(() => sessionStorage.getItem("vera-sweep-seen"))).toBe(
+      "keep-session",
+    );
     expect(runtime.pageErrors).toEqual([]);
     expect(runtime.consoleErrors).toEqual([]);
   },

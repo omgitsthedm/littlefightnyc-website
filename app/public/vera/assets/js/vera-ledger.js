@@ -25,6 +25,17 @@
 
   /* keep Tab inside the dialog while it is open */
   document.addEventListener('keydown', function (e) {
+    if (openUid && e.target && e.target.getAttribute && e.target.getAttribute('role') === 'tab' && ['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(e.key) > -1) {
+      var tabs = $$('[data-insp-tabs] [role="tab"]');
+      var index = tabs.indexOf(e.target);
+      if (e.key === 'Home') index = 0;
+      else if (e.key === 'End') index = tabs.length - 1;
+      else index = (index + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      e.preventDefault();
+      setTab(tabs[index].getAttribute('data-tab'));
+      tabs[index].focus();
+      return;
+    }
     if (e.key !== 'Tab' || !openUid) return;
     var els = inspFocusables();
     if (!els.length) return;
@@ -34,6 +45,7 @@
   });
 
   var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var TESTMODE = /(^|[?&])test=1/.test(location.search);
 
   function open(uid) {
     var app = A();
@@ -66,12 +78,17 @@
       var dst = $('.insp-port__frame');
       if (dst) dst.style.viewTransitionName = 'vera-hero';
     }
-    if (!RM && document.startViewTransition && srcMedia) {
+    if (!TESTMODE && !RM && document.startViewTransition && srcMedia) {
       srcMedia.style.viewTransitionName = 'vera-hero';
       var vt = document.startViewTransition(function () {
         srcMedia.style.viewTransitionName = '';
         mount();
       });
+      /* Skipped shared-element transitions are expected when the operator
+         moves quickly. Observe every promise so the browser does not surface
+         an unhandled AbortError while `finished` still owns cleanup. */
+      if (vt.ready) vt.ready.catch(function () {});
+      if (vt.updateCallbackDone) vt.updateCallbackDone.catch(function () {});
       vt.finished.then(function () {
         var dst = $('.insp-port__frame');
         if (dst) dst.style.viewTransitionName = '';
@@ -112,6 +129,8 @@
     inspTab = t;
     var l = A().byUid(openUid);
     if (l) render(l);
+    var active = $('[data-insp-tabs] [data-tab="' + t + '"]');
+    if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: RM ? 'auto' : 'smooth' });
   }
 
   function rerender() {
@@ -131,6 +150,7 @@
       var on = b.getAttribute('data-tab') === inspTab;
       b.classList.toggle('is-on', on);
       b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.setAttribute('tabindex', on ? '0' : '-1');
     });
 
     var c = app.caseOf(l.listing_uid);
@@ -156,7 +176,9 @@
         var mini = window.__VERAG.minimap(l, 440, 260);
         if (mini) {
           var pr = window.__VERAG.placeRead(l);
-          html += '<div class="insp-sec"><h3>Exactly here</h3><div class="insp-map">' + mini + '</div>' +
+          var exact = !!app.addressOf(l);
+          html += '<div class="insp-sec"><h3>' + (exact ? 'Exactly here' : 'Approximate area') + '</h3><div class="insp-map">' + mini + '</div>' +
+            (!exact ? '<p class="insp-fine">This post does not carry a complete street address. Its map pin can place the neighborhood, but VERA will not use that pin to name or grade a building.</p>' : '') +
             (pr && !pr.agrees ? '<p class="insp-fine">The post says ' + esc(l.neighborhood || '?') + '; the coordinates sit in <b>' + esc(pr.name) + '</b>. Small gaps are normal at borders — big ones are a tell.</p>' : '') +
             '</div>';
         }
@@ -419,12 +441,16 @@
          viewing, which is the moment these tools are worth most, so the
          same ones VERA uses are offered outright rather than kept for the
          listings that happened to be checkable. */
-      if (!/^matched/.test(String(l.verification_status || ''))) {
-        html += '<div class="insp-sec"><h3>VERA could not check this one — here is how you do it</h3>' +
-          '<p class="insp-fine">No house number in the post, so there is no building to look up yet. ' +
-          'Ask for the exact address before you apply, then run it through the same public records ' +
-          'VERA uses. It takes about a minute and it is the difference between a stranger\'s word and ' +
-          'the city\'s.</p>' +
+      if (C.needsVerify(l)) {
+        var postedAddress = C.exactAddressText(l);
+        html += '<div class="insp-sec"><h3>VERA could not identify this building yet</h3>' +
+          '<p class="insp-fine">' + (postedAddress
+            ? 'The post carries an address, but VERA did not get a strong enough public-record match to attach a building automatically. Confirm the address before you apply. '
+            : 'The post does not carry a usable house number, so there is no building to look up yet. Ask for the exact address before you apply. ') +
+          'VERA can resolve the address against NYC Planning, ' +
+          'then hand you the building identifiers without changing the published listing or its score.</p>' +
+          app.addressCheckMarkup(l) +
+          '<h4 class="vtools__head">Or open the public records yourself</h4>' +
           '<div class="vtools">' + C.VERIFY_TOOLS.map(function (v) {
             return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer">' +
               '<b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
@@ -433,6 +459,7 @@
     }
 
     body.innerHTML = html || '<p class="lane__empty">Nothing recorded on this tab.</p>';
+    body.setAttribute('aria-labelledby', 'vera-tab-' + inspTab);
     body.scrollTop = 0;
   }
 
@@ -497,11 +524,12 @@
          listing finally gets an address. Telling someone to look up six
          records and giving them nowhere to write the one thing they need
          to look them up with is most of the way to being no help at all. */
-      (/^matched/.test(String(l.verification_status || ''))
+      (C.hasMatchedRecord(l)
         ? ''
         : '<h2>Write the address down here</h2>' +
-          '<p class="fk-chain">VERA could not identify this building — the post carries no house number. ' +
-          'Get the exact address at the door and run it through the six above before you hand over anything.</p>' +
+          '<p class="fk-chain">VERA could not identify this building' +
+          (C.exactAddressText(l) ? ' strongly enough from the public-record match. ' : ' because the post carries no usable house number. ') +
+          'Confirm the exact address and run it through the six above before you hand over anything.</p>' +
           '<p class="fk-write">Address: ________________________________________________<br><br>' +
           'Who showed it, and in what capacity: ______________________________<br><br>' +
           'Name on the deed (ACRIS): _________________________________________</p>') +

@@ -38,10 +38,13 @@ import {
 import { collectReadyActions, TASK_TYPE_LABELS } from "./workflow";
 import {
   buildDakotaRevenueMetrics,
+  DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS,
   type DakotaAcquisitionRow,
   type DakotaConversionRate,
   type DakotaProvenanceRow,
 } from "./revenueBridgeMetrics";
+import { pursuitTemplateById } from "./pursuitKit";
+import { GrowthOpsPanel } from "./GrowthOpsPanel";
 import {
   candidateLabel,
   compactSource,
@@ -356,6 +359,7 @@ export function DoNextView({
             : "No open task is creating follow-up pressure."}</small>
         </article>
       </div>
+      <GrowthOpsPanel now={now} />
       {actionCount ? (
         <div className="next-action-grid">
           {bridgeReviews.map((review, index) => <ActionCard key={`bridge:${review.key}`} lane="Needs review" number={String(index + 1).padStart(2, "0")} title={review.name} context={`${review.pendingEvents} external event${review.pendingEvents === 1 ? "" : "s"} · ${review.openAlerts} open alert${review.openAlerts === 1 ? "" : "s"}. Confirm or reject; never auto-advance.`} action="Review evidence" tone="inbound" onOpen={() => onOpen(review.key)} />)}
@@ -636,6 +640,21 @@ export function MoneyView({
             <small>Only operator-recorded proposal, invoice, and payment evidence counts.</small>
           </article>
         </div>
+      </section>
+      <section className="template-performance" aria-labelledby="template-performance-title">
+        <div className="subsection-heading"><div><p className="eyebrow">Attributable reciprocity</p><h3 id="template-performance-title">Which useful-first packet earns replies</h3></div><ShieldCheck size={22} /></div>
+        <div className="template-performance__grid">
+          {metrics.templatePerformance.map((row) => {
+            const template = pursuitTemplateById(row.templateId);
+            return <article key={`${row.templateId}:${row.templateVersion}`} className={row.weakest ? "template-performance__row template-performance__row--weakest" : "template-performance__row"}>
+              <header><span>{row.segment.replaceAll("_", " ")}</span>{row.weakest ? <strong>Weakest after minimum sample</strong> : row.comparisonReady ? <strong>Comparison ready</strong> : <strong>Learning</strong>}</header>
+              <h4>{template.label}</h4>
+              <dl><div><dt>Sends</dt><dd>{row.sends}</dd></div><div><dt>Replies</dt><dd>{row.replies}</dd></div><div><dt>Reply rate</dt><dd>{percentage(row.replyRate)}</dd></div></dl>
+              <footer>Template v{row.templateVersion} · {row.comparisonReady ? `at least ${DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS} attributable sends` : `${Math.max(0, DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS - row.sends)} more send${DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS - row.sends === 1 ? "" : "s"} before comparison`}</footer>
+            </article>;
+          })}
+        </div>
+        <p className="template-performance__contract"><ShieldCheck size={16} /> One packet counts once after explicit operator-recorded outbound evidence. A reply counts only when it carries the same immutable packet attribution and follows the send. Dakota names a weakest template only when at least two templates meet the minimum sample and one has a uniquely lower reply rate.</p>
       </section>
       {entries.length ? (
         <div className="money-ledger">

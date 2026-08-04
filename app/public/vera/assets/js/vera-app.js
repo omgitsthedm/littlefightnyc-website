@@ -12,8 +12,8 @@
 
   /* Three independent origins for the same sanitized feed. The third is
      published straight from the nightly cloud sweep and needs no token, so
-     it keeps refreshing when the operator's machine is off — which is when
-     the other two go stale. We do not take the first that answers; we take
+     it keeps refreshing even when the two mirrors go stale. We do not take
+     the first that answers; we take
      the FRESHEST that answers. See boot(). */
   var FEEDS = [
     { url: './data/public.json', label: 'site' },
@@ -23,6 +23,18 @@
   var FEED_RACE_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
   var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* The public acceptance harness deliberately exercises every workspace
+     control. In test mode it must start empty and stay memory-only so a
+     curious visitor cannot lose a real Hunt, address, anchor, or profile. */
+  function localRead(key) {
+    if (TESTMODE) return null;
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function localWrite(key, value) {
+    if (TESTMODE) return;
+    try { localStorage.setItem(key, value); } catch (e) {}
+  }
 
   var D = null;
   var POOL = [];
@@ -40,12 +52,12 @@
   };
 
   try {
-    var saved = JSON.parse(localStorage.getItem('vera-workspace') || 'null');
+    var saved = JSON.parse(localRead('vera-workspace') || 'null');
     if (saved) { ['bracket', 'unit', 'hoods', 'areas', 'transit', 'lens', 'view', 'density'].forEach(function (k) { if (saved[k] !== undefined) state[k] = saved[k]; }); }
   } catch (e) {}
 
   function persist() {
-    try { localStorage.setItem('vera-workspace', JSON.stringify({ bracket: state.bracket, unit: state.unit, hoods: state.hoods, areas: state.areas, transit: state.transit, lens: state.lens, view: state.view, density: state.density })); } catch (e) {}
+    localWrite('vera-workspace', JSON.stringify({ bracket: state.bracket, unit: state.unit, hoods: state.hoods, areas: state.areas, transit: state.transit, lens: state.lens, view: state.view, density: state.density }));
   }
 
   function tidyTitle(t) {
@@ -126,7 +138,7 @@
     if (!src) return '';
     var n = +l.image_count || (l.image_urls || []).length;
     var where = l.title || l.address_normalized || 'this listing';
-    return '<img class="shot" src="' + esc(src) + '" loading="lazy" decoding="async" ' +
+    return '<img class="shot" src="' + esc(src) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" ' +
       'alt="Listing photo for ' + esc(where) + '">' +
       (n > 1 ? '<span class="shot__n">' + n + ' photos</span>' : '');
   }
@@ -155,10 +167,10 @@
   ];
 
   var cases = {};
-  try { cases = JSON.parse(localStorage.getItem('vera-cases') || '{}') || {}; } catch (e) { cases = {}; }
+  try { cases = JSON.parse(localRead('vera-cases') || '{}') || {}; } catch (e) { cases = {}; }
 
   function saveCases() {
-    try { localStorage.setItem('vera-cases', JSON.stringify(cases)); } catch (e) {}
+    localWrite('vera-cases', JSON.stringify(cases));
     var n = Object.keys(cases).filter(function (k) { return cases[k].stage !== 'dead'; }).length;
     var badge = $('[data-case-badge]');
     if (badge) { badge.hidden = !n; badge.textContent = n; }
@@ -183,6 +195,66 @@
   }
 
   function dropCase(uid) { delete cases[uid]; saveCases(); toast('Removed from your hunt.'); }
+
+  /* ---------- exact-address handoff (localStorage only) ---------- */
+
+  var addressResolutions = {};
+  var pendingAddressCandidates = {};
+  var replacingAddress = {};
+  try { addressResolutions = JSON.parse(localRead('vera-address-resolutions-v1') || '{}') || {}; } catch (e) { addressResolutions = {}; }
+
+  function saveAddressResolutions() {
+    localWrite('vera-address-resolutions-v1', JSON.stringify(addressResolutions));
+  }
+
+  function addressResolutionOf(uid) { return addressResolutions[uid] || null; }
+
+  function zolaUrl(bbl) {
+    var digits = String(bbl || '').replace(/\D/g, '');
+    if (digits.length !== 10) return null;
+    return 'https://zola.planning.nyc.gov/l/lot/' + (+digits.slice(0, 1)) + '/' + (+digits.slice(1, 6)) + '/' + (+digits.slice(6));
+  }
+
+  function addressResolutionMarkup(l) {
+    var uid = l && l.listing_uid;
+    var saved = addressResolutionOf(uid);
+    if (!saved) return '';
+    var links = [];
+    var lotUrl = zolaUrl(saved.bbl);
+    if (lotUrl) links.push('<a href="' + lotUrl + '" target="_blank" rel="noopener noreferrer">Open the official ZoLa lot ↗</a>');
+    if (saved.bin) links.push('<a href="https://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=' + esc(saved.bin) + '" target="_blank" rel="noopener noreferrer">Open the DOB building record ↗</a>');
+    return '<div class="address-proof" data-address-proof tabindex="-1">' +
+      '<p class="address-proof__eyebrow">Resolved from the address you supplied</p>' +
+      '<h4>' + esc(saved.label) + '</h4>' +
+      '<dl class="kv">' +
+        (saved.bbl ? '<dt>BBL</dt><dd>' + esc(saved.bbl) + '</dd>' : '') +
+        (saved.bin ? '<dt>BIN</dt><dd>' + esc(saved.bin) + '</dd>' : '') +
+        '<dt>Match</dt><dd>' + Math.round((+saved.confidence || 0) * 100) + '% · NYC Planning GeoSearch</dd>' +
+      '</dl>' +
+      (links.length ? '<div class="address-proof__links">' + links.join('') + '</div>' : '') +
+      '<p class="insp-fine">This confirmation stays in this browser. It does not change VERA’s score, ranking, owner grade, or shared feed.</p>' +
+      '<div class="address-proof__actions">' +
+        '<button type="button" class="ghostbtn" data-address-replace="' + esc(uid) + '">Check a different address</button>' +
+        '<button type="button" class="ghostbtn" data-address-forget="' + esc(uid) + '">Forget this address</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function addressCheckMarkup(l) {
+    var uid = l && l.listing_uid;
+    var saved = addressResolutionOf(uid);
+    if (saved && !replacingAddress[uid]) return addressResolutionMarkup(l);
+    return (saved ? addressResolutionMarkup(l) : '') +
+      '<form class="address-check" data-address-check data-uid="' + esc(uid) + '" novalidate>' +
+        '<label for="vera-address-' + esc(uid) + '"><b>Enter the exact address you were given</b><span>House number and street are required. Unit is optional.</span></label>' +
+        '<div class="address-check__row">' +
+          '<input id="vera-address-' + esc(uid) + '" name="vera-address" type="search" autocomplete="street-address" maxlength="160" placeholder="e.g. 120 Broadway, Manhattan…" required>' +
+          '<button type="submit" class="bigbtn">Check with NYC Planning</button>' +
+        '</div>' +
+        '<p class="insp-fine">Submitting sends this address directly to NYC Planning’s free GeoSearch service. VERA does not upload it to Little Fight NYC or change the published listing.</p>' +
+        '<div class="address-check__result" data-address-result role="status" aria-live="polite"></div>' +
+      '</form>';
+  }
 
   var toastT = 0;
   function toast(msg) {
@@ -283,10 +355,17 @@
     }
   }
 
+  function syncPressed(root) {
+    $$('[data-bracket],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-brtile],[data-hoodbar],[data-density]', root || document)
+      .forEach(function (button) {
+        button.setAttribute('aria-pressed', button.classList.contains('is-on') ? 'true' : 'false');
+      });
+  }
+
   function renderFilters() {
     var deck = $('[data-filters]');
     deck.hidden = !DATA_ROUTES[state.route];
-    if (deck.hidden) return;
+    if (deck.hidden) { syncPressed(deck); return; }
     $$('[data-bracket]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-bracket') === state.bracket); });
     $$('[data-unit]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-unit') === state.unit); });
     $$('[data-transit]').forEach(function (b) { b.classList.toggle('is-on', +b.getAttribute('data-transit') === state.transit); });
@@ -299,6 +378,7 @@
     }).join('');
     var dirty = state.bracket !== 'all' || state.unit !== 'all' || state.hoods.length || state.areas.length || state.transit || state.lens.noBrokers || state.lens.noMgmt || state.lens.privateFirst || state.view !== 'all' || state.q;
     $('[data-clear]').hidden = !dirty;
+    syncPressed(deck);
   }
 
   function refresh() {
@@ -316,7 +396,7 @@
 
   function nextSweepUTC() {
     var now = new Date();
-    var next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 6, 0, 0));
+    var next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5, 30, 0));
     if (next <= now) next = new Date(next.getTime() + 24 * 3.6e6);
     return next;
   }
@@ -331,7 +411,7 @@
     clearInterval(countdownT);
     var el = $('[data-countdown]');
     if (!el) return;
-    if (RM) { el.textContent = 'next sweep 06:00 UTC'; return; }
+    if (RM) { el.textContent = 'scheduled 05:30 UTC'; return; }
     var lastStr = '';
     function tick() {
       var el2 = $('[data-countdown]');
@@ -368,7 +448,7 @@
   }
 
   function addressOf(l) {
-    var a = String(l.address_normalized || '').trim();
+    var a = C.exactAddressText(l);
     if (!a) return null;
     a = a.replace(/\b(apt|unit)\b/gi, '#').replace(/#\s+/g, '#');
     return C.titleCase(a).replace(/\bE\b/g, 'E').replace(/\bW\b/g, 'W').replace(/#([a-z0-9]+)/gi, function (m, u) { return '#' + u.toUpperCase(); });
@@ -387,7 +467,7 @@
     var where = l.address_normalized || 'this listing';
     return C.portrait(l, 640, 340, sweepHour()) +
       '<span class="gal" data-gal>' + urls.map(function (u, i) {
-        return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
+        return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" referrerpolicy="no-referrer" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
       }).join('') + '</span>' +
       (urls.length > 1 ? '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
         return '<span class="gal__dot' + (i === 0 ? ' is-on' : '') + '"></span>';
@@ -401,10 +481,10 @@
      distance — all marked ≈. No fake routing minutes, ever. */
 
   var anchors = [];
-  try { anchors = JSON.parse(localStorage.getItem('vera-anchors') || '[]') || []; } catch (e) { anchors = []; }
+  try { anchors = JSON.parse(localRead('vera-anchors') || '[]') || []; } catch (e) { anchors = []; }
 
   function saveAnchors() {
-    try { localStorage.setItem('vera-anchors', JSON.stringify(anchors)); } catch (e) {}
+    localWrite('vera-anchors', JSON.stringify(anchors));
   }
 
   function stationByName(name) {
@@ -519,10 +599,10 @@
   /* ---------- personal qualification: the 40× bar, yours ---------- */
 
   var profile = {};
-  try { profile = JSON.parse(localStorage.getItem('vera-profile') || '{}') || {}; } catch (e) { profile = {}; }
+  try { profile = JSON.parse(localRead('vera-profile') || '{}') || {}; } catch (e) { profile = {}; }
 
   function saveProfile() {
-    try { localStorage.setItem('vera-profile', JSON.stringify(profile)); } catch (e) {}
+    localWrite('vera-profile', JSON.stringify(profile));
   }
 
   function qualifyLine(l) {
@@ -629,7 +709,7 @@
     // How many missed by less than a point. On 2026-08-04 thirteen listings
     // scored 59.6-59.9 against a 60.0 bar — low HPD risk, confidence 78,
     // under the ceiling — and the page showed four of them with no hint the
-    // other nine existed. The bar is David's to move, not the page's; what
+    // other nine existed. The published gate is not the page's to move; what
     // the page owes is an honest count of who is standing at it.
     var whisker = nearMiss.filter(function (l) {
       return (+l.overall_score || 0) >= C.FIT.minScore - 1;
@@ -668,7 +748,7 @@
             : 'Nothing met the bar today — out of ' + POOL.length + ' swept, none cleared every gate. That is not a bug. The net stays out and tomorrow sweeps again.') +
         '</p>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
-        '<p class="drophead__next">next sweep <span class="mono" data-countdown>—</span></p>' +
+        '<p class="drophead__next">next scheduled sweep <span class="mono" data-countdown>—</span></p>' +
         anchorPanel() +
       '</header>' +
       (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
@@ -698,9 +778,9 @@
             '<span class="tag ' + o.cls + '">' + o.label + '</span></span></button>';
         }).join('') + '</div></section>' : '') +
       '<section class="wire"><div class="wire__card">' +
-        '<h2>The wire</h2>' +
-        '<p>When a listing clears every gate, VERA emails its operator within the hour — before the browse, before the scroll. The same bar as this page, delivered.</p>' +
-        '<p class="wire__fine">One email per listing, ever. No digests of padding, no re-alerts, no urgency theater.</p>' +
+        '<h2>The next drop</h2>' +
+        '<p>VERA refreshes this page after every completed sweep. A listing appears here only after it clears the same published gates you can inspect in its ledger.</p>' +
+        '<p class="wire__fine">No automated landlord contact, no manufactured urgency, and no alert claim the system cannot prove.</p>' +
       '</div></section>';
 
     page.classList.add('is-entered');
@@ -728,7 +808,7 @@
     var pool = POOL.length;
     if (!pool) return '';
     var priced = POOL.filter(function (l) { return +l.rent > 0 && +l.rent <= C.FIT.maxRent; }).length;
-    var verified = POOL.filter(function (l) { return l.bbl || (l.verification_status === 'matched_public_records'); }).length;
+    var verified = POOL.filter(function (l) { return l.bbl || C.hasMatchedRecord(l); }).length;
     var reviewed = POOL.filter(function (l) { return String(l.recommendation || '').toLowerCase() === 'manual review'; }).length;
     var rows = [
       { n: pool, label: 'listings swept from every source VERA watches' },
@@ -981,7 +1061,10 @@
       '<div class="tablewrap"><table class="dt ' + (state.density === 'compact' ? 'is-compact' : '') + '"><thead><tr>' +
         COLS.map(function (c) {
           var on = state.sort.key === c.key;
-          return '<th data-sort="' + c.key + '" class="' + (on ? 'is-sort' : '') + '">' + c.label + (on ? ' <span class="dir">' + (state.sort.dir < 0 ? '▼' : '▲') + '</span>' : '') + '</th>';
+          return '<th class="' + (on ? 'is-sort' : '') + '"' + (on ? ' aria-sort="' + (state.sort.dir < 0 ? 'descending' : 'ascending') + '"' : '') + '>' +
+            '<button type="button" data-sort="' + c.key + '">' + c.label +
+              (on ? ' <span class="dir" aria-hidden="true">' + (state.sort.dir < 0 ? '▼' : '▲') + '</span>' : '') +
+            '</button></th>';
         }).join('') +
       '</tr></thead><tbody>' +
         (f.length ? f.map(function (l) {
@@ -1140,7 +1223,7 @@
   }
 
   /* ================================================================
-     MY HUNT — the pipeline for one human.
+     MY HUNT — a renter-controlled local pipeline.
      ================================================================ */
 
   function renderHunt(page) {
@@ -1163,7 +1246,7 @@
         '<svg width="70" height="70" viewBox="0 0 24 24" aria-hidden="true" class="empty-hero__mark">' +
         '<circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".4"/>' +
         '<path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a" opacity=".8"/></svg>' +
-        '<h2>Your hunt starts empty. That is fine.</h2>' +
+        '<h1>Your hunt starts empty. That is fine.</h1>' +
         '<p>Open any listing and hit <b>Save to hunt</b>. VERA will track it from first look to signed lease — reached out, tour booked, seen it, applied — and keep your notes and viewing checklists with it.</p>' +
         '<p class="empty-hero__fine">Everything here lives in this browser only. No account, no server, nothing uploaded.</p>' +
         '<a class="bigbtn" href="#/today">See today\'s drop ↗</a></div>';
@@ -1220,14 +1303,27 @@
   var toolRent = 2400;
   var toolIncome = +((typeof profile !== 'undefined' && profile.income) || 0);
 
+  function manualVerdict(rent, income) {
+    var need = rent * C.LAW.incomeRuleX;
+    var guarNeed = rent * C.LAW.guarantorRuleX;
+    if (!income) return '<p class="insp-fine">Set your income and VERA does the landlord math landlords do.</p>';
+    if (income >= need) return '<p class="verdict verdict--good">Clears the 40× bar for ' + money(rent) + ' — you can walk in without a guarantor.</p>';
+    return '<p class="verdict verdict--warn">Short of the 40× bar (' + money(need) + ' needed). A guarantor showing ' + money(guarNeed) + ', or an institutional guarantor for roughly ' + money(Math.round(rent * C.LAW.guarantorTypicalPct)) + ' once, closes the gap.</p>';
+  }
+
+  function updateManualTools(page) {
+    $('[data-tool-rent-label]', page).textContent = money(toolRent);
+    $('[data-tr-first]', page).textContent = money(toolRent);
+    $('[data-tr-dep]', page).textContent = money(toolRent * C.LAW.depositMaxMonths);
+    $('[data-tr-total]', page).textContent = money(toolRent + toolRent * C.LAW.depositMaxMonths + C.LAW.appFeeMax);
+    $('[data-tool-inc-label]', page).textContent = toolIncome ? money(toolIncome) : 'drag me';
+    $('[data-tool-verdict]', page).innerHTML = manualVerdict(toolRent, toolIncome);
+  }
+
   function renderManual(page) {
     var r = toolRent;
     var deposit = r * C.LAW.depositMaxMonths;
     var total = r + deposit + C.LAW.appFeeMax;
-    var need = r * C.LAW.incomeRuleX;
-    var guarNeed = r * C.LAW.guarantorRuleX;
-    var qualifies = toolIncome >= need;
-    var guarantorPath = toolIncome > 0 && !qualifies;
 
     page.innerHTML =
       '<header class="pagehead"><p class="kicker">Field manual</p>' +
@@ -1261,11 +1357,7 @@
         '<div class="panel tool"><div class="panel__head"><h2 class="panel__title">Will the paperwork clear you</h2><p class="panel__hint">the 40× convention</p></div>' +
           '<label class="slider"><span>Your annual income <b data-tool-inc-label>' + (toolIncome ? money(toolIncome) : 'drag me') + '</b></span>' +
           '<input type="range" min="0" max="200000" step="5000" value="' + toolIncome + '" data-tool-income></label>' +
-          '<div data-tool-verdict>' +
-            (toolIncome === 0 ? '<p class="insp-fine">Set your income and VERA does the landlord math landlords do.</p>'
-              : qualifies ? '<p class="verdict verdict--good">Clears the 40× bar for ' + money(r) + ' — you can walk in without a guarantor.</p>'
-              : '<p class="verdict verdict--warn">Short of the 40× bar (' + money(need) + ' needed). A guarantor showing ' + money(guarNeed) + ', or an institutional guarantor for roughly ' + money(Math.round(r * C.LAW.guarantorTypicalPct)) + ' once, closes the gap.</p>') +
-          '</div>' +
+          '<div data-tool-verdict>' + manualVerdict(r, toolIncome) + '</div>' +
           '<p class="insp-fine">Income multiples are convention, not law — private landlords bend them, corporate portfolios never do. Which is one more reason VERA hunts private.</p>' +
         '</div>' +
       '</div>' +
@@ -1297,19 +1389,15 @@
     var rentEl = $('[data-tool-rent]', page);
     rentEl.addEventListener('input', function () {
       toolRent = +rentEl.value;
-      $('[data-tool-rent-label]').textContent = money(toolRent);
-      $('[data-tr-first]').textContent = money(toolRent);
-      $('[data-tr-dep]').textContent = money(toolRent * C.LAW.depositMaxMonths);
-      $('[data-tr-total]').textContent = money(toolRent + toolRent * C.LAW.depositMaxMonths + C.LAW.appFeeMax);
+      updateManualTools(page);
     });
-    rentEl.addEventListener('change', function () { renderRoute(); });
     var incEl = $('[data-tool-income]', page);
     incEl.addEventListener('input', function () {
       toolIncome = +incEl.value;
-      $('[data-tool-inc-label]').textContent = toolIncome ? money(toolIncome) : 'drag me';
+      updateManualTools(page);
     });
     /* the manual's slider and the card qualification share one profile */
-    incEl.addEventListener('change', function () { profile.income = toolIncome; saveProfile(); renderRoute(); });
+    incEl.addEventListener('change', function () { profile.income = toolIncome; saveProfile(); });
   }
 
   /* ================================================================
@@ -1323,7 +1411,7 @@
   var ORIGIN_NOTE = {
     site: 'this site’s own copy, written at deploy',
     pipeline: 'the pipeline mirror',
-    cloud: 'the nightly cloud sweep — published without any operator machine',
+    cloud: 'the nightly cloud sweep — published independently of either mirror',
   };
 
   /* "New tonight" is a comparison, and a comparison needs something to
@@ -1378,14 +1466,15 @@
   function verificationReach() {
     var pool = POOL.length;
     if (!pool) return '';
-    var matched = POOL.filter(function (l) { return /^matched/.test(String(l.verification_status || '')); });
+    var matched = POOL.filter(C.hasMatchedRecord);
     var withPf = matched.filter(function (l) { return (l.landlord_portfolio || {}).bldgs; });
     var big = withPf.filter(function (l) { return +l.landlord_portfolio.bldgs >= 10; }).length;
     var pct = Math.round(100 * matched.length / pool);
     return '<p>Of the <b>' + pool + '</b> listings in tonight\'s net, VERA could match <b>' +
       matched.length + '</b> — about <b>' + pct + '%</b> — to a building in the city\'s records. ' +
-      'The rest are not hidden from you; they are in Browse. They simply carry no house number, ' +
-      'and a landlord\'s record cannot be looked up without one.</p>' +
+      'The rest are not hidden from you; they are in Browse. Most do not carry a usable house number, ' +
+      'and others did not resolve strongly enough to a public record. Without a strong BBL match, ' +
+      'VERA will not attach a building or landlord record.</p>' +
       (withPf.length
         ? '<p>That has a bias worth knowing before you read any grade here. Buildings are indexed ' +
           'by address, so the listings VERA <i>can</i> verify lean toward owners who post one — ' +
@@ -1401,7 +1490,7 @@
     var stages = D.stages || {};
     var trends = (D.run_trends || []).slice(-14);
     var rel = trends.map(function (t) { return +t.avg_reliability || 0; });
-    var srcs = D.sources || [];
+    var srcs = (D.sources || []).filter(function (s) { return s.source_name !== 'email_alerts'; });
     var run = D.run || {};
 
     page.innerHTML =
@@ -1417,13 +1506,7 @@
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Source reliability</h2><p class="panel__hint">avg per run</p></div>' +
           (rel.length ? sparkline(rel, 560, 170, '#c8a468') : '<p class="lane__empty">History arrives with the next publishes.</p>') + '</div>' +
-        '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2><p class="panel__hint">' +
-          (run.log_url && /^https:\/\/github\.com\//.test(run.log_url)
-            // Only a github.com URL, and only from the feed we chose. Every
-            // page on this site claims its numbers are checkable; this is the
-            // one place a reader can go and check the run itself.
-            ? '<a href="' + esc(run.log_url) + '" rel="noopener">' + esc(run.run_id || 'this run') + ' ↗</a>'
-            : esc(run.run_id || '')) + '</p></div>' +
+        '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2><p class="panel__hint">' + esc(run.run_id || 'latest sweep') + '</p></div>' +
           '<dl class="kv">' +
             '<dt>Generated</dt><dd>' + esc(D.generated_at || '—') + feedAge() + '</dd>' +
             '<dt>Cadence</dt><dd>' + esc(run.cadence || 'nightly') + '</dd>' +
@@ -1438,20 +1521,21 @@
             '<span>' + esc(String(s.status || '—')) + (s.record_count != null ? ' · ' + s.record_count : '') + '</span></div>';
         }).join('') + '</div></div>' +
       '<section class="ethos"><h2>What VERA is</h2>' +
-        '<p>Verified Evaluation for Rental Analysis — a personal apartment-search engine for one hunt: privately-owned rentals, under ' + money(C.FIT.maxRent) + ', in the neighborhoods that fit one life. It watches the fragmented channels where small landlords actually post, joins every listing to the city\'s own records, and refuses to show what it cannot stand behind.</p>' +
+        '<p>Verified Evaluation for Rental Analysis is a Little Fight Lab system for NYC renters. It watches fragmented rental channels, joins the addresses it can resolve to public records, and labels every gap it cannot close.</p>' +
         '<p>Fairness on the record: every steward grade is computed from cited public records — never from any protected characteristic — and owners have a standing <a href="/vera/corrections/">correction channel</a>.</p>' +
-        '<p>Read-only by principle: VERA never messages a landlord, never floods an inbox, never squats a viewing slot. It makes one human faster, not the market worse.</p>' +
+        '<p>Read-only by principle: VERA never messages a landlord, never floods an inbox, never squats a viewing slot. It makes each renter better informed without making the market worse.</p>' +
         '<h3 class="ethos__h">What VERA cannot see</h3>' + verificationReach() +
         '<h3 class="ethos__h">What VERA is built on</h3>' +
-        '<p>Nothing here is VERA\'s own opinion of a building. It is public data, read carefully:</p>' +
+        '<p>VERA separates public evidence from its own analysis. These are the foundations:</p>' +
         '<ul class="credits">' +
           '<li><b>NYC Open Data</b> — HPD violations, complaints and registrations; DOB records; 311; PLUTO; ACRIS.</li>' +
           '<li><b>NYC Dept. of City Planning</b> — NTA2020 neighborhood boundaries and the <a href="https://geosearch.planninglabs.nyc/" target="_blank" rel="noopener noreferrer">GeoSearch</a> geocoder.</li>' +
           '<li><b>MTA</b> — GTFS static schedules, which is why the commute minutes here are quoted rather than invented.</li>' +
           '<li><b><a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix — Who Owns What</a></b> — links buildings into landlord portfolios through HPD registration contacts.</li>' +
-          '<li><b>AI-photo detection</b> — <a href="https://huggingface.co/umm-maybe/AI-image-detector" target="_blank" rel="noopener noreferrer">umm-maybe/AI-image-detector</a>, licensed CC BY 4.0.</li>' +
-          '<li><b><a href="https://maplibre.org/" target="_blank" rel="noopener noreferrer">MapLibre GL</a></b> over <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> tiles, from OpenStreetMap data.</li>' +
+          '<li><b>AI-photo detection</b> — <a href="https://huggingface.co/umm-maybe/AI-image-detector" target="_blank" rel="noopener noreferrer">umm-maybe/AI-image-detector</a>, licensed CC BY 4.0; a probabilistic warning layer, never proof.</li>' +
+          '<li><b>Open map data</b> — neighborhood context and map tiles derived from public OpenStreetMap data.</li>' +
         '</ul>' +
+        '<aside class="lab-callout"><p class="kicker">Little Fight Lab</p><h3>Focused software, built around the decision.</h3><p>VERA is proof that a small, owner-controlled system can replace tabs, spreadsheets, and guesswork without another subscription.</p><a class="bigbtn" href="/services/business-systems/">See what Little Fight builds ↗</a></aside>' +
         '<p class="ethos__credit">A <a href="https://littlefightnyc.com/" rel="noopener">Little Fight NYC</a> system · <a href="/vera/brand/">brand</a> · <a href="/vera/terms/">terms</a> · <a href="/vera/privacy/">privacy</a></p>' +
       '</section>';
     page.classList.add('is-entered');
@@ -1480,6 +1564,10 @@
       var on = a.getAttribute('data-nav') === h;
       a.classList.toggle('is-on', on);
       if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    var activeNav = $('[data-nav="' + h + '"]');
+    if (activeNav && activeNav.scrollIntoView) requestAnimationFrame(function () {
+      activeNav.scrollIntoView({ block: 'nearest', inline: 'center', behavior: RM ? 'auto' : 'smooth' });
     });
     renderFilters();
     renderRoute();
@@ -1545,6 +1633,7 @@
     else if (state.route === 'manual') renderManual(page);
     else if (state.route === 'archive') renderArchive(page);
     else renderSystem(page);
+    syncPressed(page);
     applyReveals(page);
   }
 
@@ -1634,12 +1723,115 @@
     setTimeout(decide, FEED_RACE_MS);
   }
 
+  function runAddressCheck(form) {
+    var uid = form.getAttribute('data-uid');
+    var input = $('input[name="vera-address"]', form);
+    var button = $('button[type="submit"]', form);
+    var result = $('[data-address-result]', form);
+    var address = String((input && input.value) || '').replace(/\s+/g, ' ').trim();
+    var streetQuery = address.split(',')[0].trim();
+    if (!C.exactAddressText({ address_normalized: streetQuery })) {
+      result.className = 'address-check__result is-error';
+      result.textContent = 'Enter a house number and street, such as 120 Broadway.';
+      if (input) input.focus();
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Checking…';
+    result.className = 'address-check__result';
+    result.textContent = 'Checking NYC Planning’s address directory…';
+    var url = 'https://geosearch.planninglabs.nyc/v2/search?text=' + encodeURIComponent(address + ', New York NY') + '&size=3';
+    fetch(url, { cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.json();
+      })
+      .then(function (payload) {
+        if (!document.contains(form)) return;
+        var candidates = ((payload && payload.features) || []).map(C.addressCandidate).filter(Boolean).slice(0, 3);
+        pendingAddressCandidates[uid] = candidates;
+        if (!candidates.length) {
+          result.className = 'address-check__result is-error';
+          result.textContent = 'NYC Planning did not return a strong building match with a BBL or BIN. Check the number, street, and borough, then try again.';
+          return;
+        }
+        result.className = 'address-check__result is-ready';
+        result.innerHTML = '<p><b>Confirm the building you meant.</b> Nothing is saved until you choose one.</p><div class="address-candidates">' +
+          candidates.map(function (candidate, index) {
+            return '<button type="button" data-address-candidate="' + index + '" data-uid="' + esc(uid) + '">' +
+              '<b>' + esc(candidate.label) + '</b><span>' + Math.round(candidate.confidence * 100) + '% match' +
+              (candidate.bbl ? ' · BBL ' + esc(candidate.bbl) : '') + (candidate.bin ? ' · BIN ' + esc(candidate.bin) : '') + '</span></button>';
+          }).join('') + '</div>';
+      })
+      .catch(function () {
+        if (!document.contains(form)) return;
+        result.className = 'address-check__result is-error';
+        result.textContent = 'NYC Planning could not be reached. No address was saved. Try again in a moment.';
+      })
+      .then(function () {
+        if (!document.contains(form)) return;
+        button.disabled = false;
+        button.textContent = 'Check with NYC Planning';
+      });
+  }
+
+  document.addEventListener('submit', function (e) {
+    var form = e.target && e.target.closest ? e.target.closest('[data-address-check]') : null;
+    if (!form) return;
+    e.preventDefault();
+    runAddressCheck(form);
+  });
+
   /* ---------- one delegated click handler ---------- */
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget]') : null;
     if (!t) return;
 
+    if (t.hasAttribute('data-address-candidate')) {
+      var addressUid = t.getAttribute('data-uid');
+      var addressIndex = +t.getAttribute('data-address-candidate');
+      var candidate = (pendingAddressCandidates[addressUid] || [])[addressIndex];
+      if (!candidate) return;
+      addressResolutions[addressUid] = {
+        label: candidate.label, confidence: candidate.confidence, matchType: candidate.matchType,
+        bbl: candidate.bbl, bin: candidate.bin, provenance: 'user_supplied', confirmedAt: new Date().toISOString(),
+      };
+      saveAddressResolutions();
+      replacingAddress[addressUid] = false;
+      delete pendingAddressCandidates[addressUid];
+      toast('Address confirmed locally — the shared listing and score did not change.');
+      if (window.__VERAL) window.__VERAL.rerender();
+      requestAnimationFrame(function () {
+        var proof = $('[data-address-proof]');
+        if (proof) proof.focus();
+      });
+      return;
+    }
+    if (t.hasAttribute('data-address-replace')) {
+      replacingAddress[t.getAttribute('data-address-replace')] = true;
+      if (window.__VERAL) window.__VERAL.rerender();
+      requestAnimationFrame(function () {
+        var addressInput = $('[data-address-check] input[name="vera-address"]');
+        if (addressInput) addressInput.focus();
+      });
+      return;
+    }
+    if (t.hasAttribute('data-address-forget')) {
+      var forgetUid = t.getAttribute('data-address-forget');
+      delete addressResolutions[forgetUid];
+      delete pendingAddressCandidates[forgetUid];
+      delete replacingAddress[forgetUid];
+      saveAddressResolutions();
+      toast('Address removed from this browser.');
+      if (window.__VERAL) window.__VERAL.rerender();
+      requestAnimationFrame(function () {
+        var emptyAddressInput = $('[data-address-check] input[name="vera-address"]');
+        if (emptyAddressInput) emptyAddressInput.focus();
+      });
+      return;
+    }
     if (t.hasAttribute('data-view-jump')) {
       // The link already carries href="#/browse"; this just makes it land on
       // the right pill instead of dumping the reader into all 270.
@@ -1751,9 +1943,30 @@
 
   /* Route changes ride the View Transitions API where it exists — the
      buttery cross-fade costs nothing and respects reduced motion. */
+  function observeRouteTransition(transition) {
+    function report(err) {
+      if (err && err.name !== 'AbortError' && window.console && console.error) {
+        console.error('VERA route transition failed', err);
+      }
+    }
+    /* A rapid route change intentionally skips the previous transition. Each
+       ViewTransition promise can reject independently, so observing only
+       `finished` still leaves a noisy, unhandled `ready` rejection. */
+    if (transition && transition.ready) transition.ready.catch(report);
+    if (transition && transition.updateCallbackDone) transition.updateCallbackDone.catch(function () {});
+    if (transition && transition.finished) transition.finished.catch(report);
+  }
+
   function routeSmooth() {
-    if (!RM && document.startViewTransition) document.startViewTransition(function () { route(); });
-    else route();
+    if (!TESTMODE && !RM && document.startViewTransition) {
+      try {
+        var transition = document.startViewTransition(function () { route(); });
+        observeRouteTransition(transition);
+      } catch (err) {
+        route();
+        if (err && err.name !== 'AbortError' && window.console && console.error) console.error('VERA route transition failed', err);
+      }
+    } else route();
   }
   document.addEventListener('scroll', function (e) {
     var gal = e.target;
@@ -1882,6 +2095,7 @@
     filtered: filtered, renderRoute: renderRoute, tidyTitle: tidyTitle, route: route,
     addressOf: addressOf, gallery: gallery, valueRead: valueRead, profile: function () { return profile; },
     commuteRead: commuteRead,
+    addressResolutionOf: addressResolutionOf, addressCheckMarkup: addressCheckMarkup, syncPressed: syncPressed,
     FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
     archiveOrigins: archiveOrigins,
   };

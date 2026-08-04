@@ -8,10 +8,39 @@ import type {
   DakotaActivity,
   DakotaActivityOutcome,
   DakotaActivityType,
+  DakotaPursuitSegment,
+  DakotaPursuitTemplateId,
   DakotaRevenueBridgeEnvelope,
   DakotaTask,
   OperatorRecord,
 } from "./types";
+
+function attributedRecord(
+  templateId: DakotaPursuitTemplateId,
+  segment: DakotaPursuitSegment,
+  index: number,
+  hasReply: boolean,
+): OperatorRecord {
+  const packetId = `550e8400-e29b-41d4-a716-${String(index).padStart(12, "0")}`;
+  const taskId = `pursuit-task-${index}`;
+  const contactId = `pursuit-contact-${index}`;
+  const pursuitAttribution = {
+    templateId,
+    templateVersion: "1.0.0" as const,
+    packetId,
+    packetVersion: "1.0.0" as const,
+    segment,
+    approvedAt: "2026-08-03T11:55:00.000Z",
+  };
+  return operator({
+    identity: { businessName: `Attributed ${index}`, source: "manual", sourceId: String(index) },
+    tasks: [task(taskId, { type: "outreach", status: "completed", channel: "email", contactId })],
+    activities: [
+      { ...activity(`send-${index}`, "outreach", "2026-08-03T12:00:00.000Z", "sent"), taskId, contactId, pursuitAttribution },
+      ...(hasReply ? [{ ...activity(`reply-${index}`, "reply", "2026-08-03T13:00:00.000Z", "replied"), taskId, contactId, pursuitAttribution }] : []),
+    ],
+  });
+}
 
 const updatedAt = "2026-08-03T12:00:00.000Z";
 
@@ -315,5 +344,62 @@ describe("Dakota Revenue Bridge metrics", () => {
     expect(metrics.commercial).toEqual({ proposalValue: 0, clearedRevenue: 0, outstandingBalance: 0, fullyPaidDeals: 0, averagePaidDeal: null });
     expect(metrics.funnel.pendingExternalReview).toBe(1);
     expect(metrics.funnel.suggestedEvidence).toBe(1);
+  });
+
+  it("reports attributable sends and replies per template without naming a weakest template below the minimum sample", () => {
+    const metrics = buildDakotaRevenueMetrics([], {
+      "manual:1": attributedRecord("restaurant_booking_fix_sop", "restaurant", 1, false),
+      "manual:2": attributedRecord("salon_google_profile_sop", "salon", 2, true),
+    }, null);
+
+    expect(metrics.templatePerformance).toEqual(expect.arrayContaining([
+      expect.objectContaining({ templateId: "restaurant_booking_fix_sop", sends: 1, replies: 0, comparisonReady: false, weakest: false }),
+      expect.objectContaining({ templateId: "salon_google_profile_sop", sends: 1, replies: 1, comparisonReady: false, weakest: false }),
+      expect.objectContaining({ templateId: "new_business_launch_checklist", sends: 0, replies: 0, comparisonReady: false, weakest: false }),
+    ]));
+  });
+
+  it("flags one uniquely weakest template only after two templates have five attributable sends", () => {
+    const records: Record<string, OperatorRecord> = {};
+    for (let index = 1; index <= 5; index += 1) {
+      records[`manual:restaurant-${index}`] = attributedRecord("restaurant_booking_fix_sop", "restaurant", index, index === 1);
+      records[`manual:salon-${index}`] = attributedRecord("salon_google_profile_sop", "salon", index + 100, index <= 3);
+    }
+    const metrics = buildDakotaRevenueMetrics([], records, null);
+    const restaurant = metrics.templatePerformance.find((row) => row.templateId === "restaurant_booking_fix_sop");
+    const salon = metrics.templatePerformance.find((row) => row.templateId === "salon_google_profile_sop");
+    expect(restaurant).toMatchObject({ sends: 5, replies: 1, comparisonReady: true, weakest: true, replyRate: { percentage: 20 } });
+    expect(salon).toMatchObject({ sends: 5, replies: 3, comparisonReady: true, weakest: false, replyRate: { percentage: 60 } });
+  });
+
+  it("ignores replies that predate their attributed packet send and unattributed activity", () => {
+    const record = attributedRecord("restaurant_booking_fix_sop", "restaurant", 900, false);
+    const attribution = record.activities[0]?.pursuitAttribution;
+    record.activities = [
+      { ...activity("reply-before", "reply", "2026-08-03T11:00:00.000Z", "replied"), pursuitAttribution: attribution },
+      ...record.activities,
+      activity("unattributed-reply", "reply", "2026-08-03T13:00:00.000Z", "replied"),
+    ];
+    const row = buildDakotaRevenueMetrics([], { "manual:900": record }, null).templatePerformance.find((item) => item.templateId === "restaurant_booking_fix_sop");
+    expect(row).toMatchObject({ sends: 1, replies: 0, weakest: false });
+  });
+
+  it("does not count lifecycle follow-ups or a different contact's reply as acquisition performance", () => {
+    const lifecycle = attributedRecord("restaurant_booking_fix_sop", "restaurant", 901, false);
+    lifecycle.tasks[0] = { ...lifecycle.tasks[0]!, type: "review_request" };
+    lifecycle.activities[0] = { ...lifecycle.activities[0]!, type: "follow_up" };
+
+    const mismatchedReply = attributedRecord("salon_google_profile_sop", "salon", 902, true);
+    mismatchedReply.activities[1] = {
+      ...mismatchedReply.activities[1]!,
+      contactId: "another-contact-route",
+    };
+
+    const rows = buildDakotaRevenueMetrics([], {
+      "manual:901": lifecycle,
+      "manual:902": mismatchedReply,
+    }, null).templatePerformance;
+    expect(rows.find((row) => row.templateId === "restaurant_booking_fix_sop")).toMatchObject({ sends: 0, replies: 0 });
+    expect(rows.find((row) => row.templateId === "salon_google_profile_sop")).toMatchObject({ sends: 1, replies: 0 });
   });
 });

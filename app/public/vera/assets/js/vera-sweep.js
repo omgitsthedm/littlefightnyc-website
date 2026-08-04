@@ -6,11 +6,14 @@
   'use strict';
 
   var C = window.__VERAC;
+  var TESTMODE = /(^|[?&])test=1/.test(location.search);
 
   function played() {
+    if (TESTMODE) return true;
     try { return sessionStorage.getItem('vera-sweep-seen') === '1'; } catch (e) { return true; }
   }
   function mark() {
+    if (TESTMODE) return;
     try { sessionStorage.setItem('vera-sweep-seen', '1'); } catch (e) {}
   }
 

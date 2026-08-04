@@ -160,6 +160,22 @@ export const ACTIVITY_OUTCOMES = [
 ] as const;
 export type DakotaActivityOutcome = (typeof ACTIVITY_OUTCOMES)[number];
 
+export type DakotaPursuitTemplateId =
+  | "restaurant_booking_fix_sop"
+  | "salon_google_profile_sop"
+  | "new_business_launch_checklist";
+
+export type DakotaPursuitSegment = "restaurant" | "salon" | "new_business";
+
+export interface DakotaPursuitAttribution {
+  templateId: DakotaPursuitTemplateId;
+  templateVersion: "1.0.0";
+  packetId: string;
+  packetVersion: "1.0.0";
+  segment: DakotaPursuitSegment;
+  approvedAt: string;
+}
+
 export interface DakotaActivity {
   activityId: string;
   taskId: string | null;
@@ -170,6 +186,7 @@ export interface DakotaActivity {
   note: string;
   occurredAt: string;
   followUpAt: string | null;
+  pursuitAttribution?: DakotaPursuitAttribution | null;
 }
 
 export const TASK_TYPES = [

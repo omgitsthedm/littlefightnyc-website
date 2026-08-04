@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Privacy — VERA</title>
-<meta name="description" content="VERA’s privacy policy: no accounts, no cookies, no analytics, no uploads. Your hunt stays in your browser.">
+<meta name="description" content="VERA has no accounts, ads, or analytics. Hunt state stays in your browser; optional address checks go directly to NYC Planning.">
 <meta name="theme-color" content="#0c0e0d">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://littlefightnyc.com/vera/privacy/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230c0e0d'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23868c85'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2016%20L16%207%20A9%209%200%200%201%2023.8%2011.5%20Z'%20fill='%234cc38a'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='1.8'%20fill='%23e9ece8'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../assets/css/doc.css?v=1">
 </head>
@@ -28,40 +30,48 @@
 
 <main class="doc">
   <p class="doc__kicker">Privacy</p>
-  <h1>Your hunt never leaves your browser.</h1>
-  <p class="doc__lede">Most rental sites are lead-generation businesses wearing a search box — the product is you, sold to a broker. VERA has no accounts, no cookies, no analytics, and nowhere to send anything even if it wanted to.</p>
-  <p class="doc__meta">Effective 29 July 2026 · VERA is operated by Little Fight NYC</p>
+  <h1>Your hunt stays yours.</h1>
+  <p class="doc__lede">VERA has no accounts, advertising, analytics, or lead resale. Your saved hunt stays in this browser. If you choose to check an exact address, that address goes directly from your browser to NYC Planning’s GeoSearch service — not to Little Fight NYC.</p>
+  <p class="doc__meta">Effective 4 August 2026 · VERA is operated by Little Fight NYC</p>
 
   <div class="callout">
-    <p><strong>The short version.</strong> We do not ask who you are. We do not set a cookie. We do not run analytics or advertising scripts. Saved listings, notes, and viewing checklists are written to your own browser’s local storage and are never transmitted anywhere. Clear your browser data and they are gone — including from us, because we never had them.</p>
+    <p><strong>The short version.</strong> We do not ask who you are, set a VERA cookie, or run analytics or advertising scripts. Saved listings, notes, viewing checklists, preferences, commute anchors, income, and confirmed address matches live in your browser’s local storage. The optional address checker sends only the address you type directly to NYC Planning so you can confirm the building.</p>
   </div>
 
   <h2>What we collect</h2>
-  <p><strong>Nothing personal.</strong> There is no sign-up, no email field, no profile, no password. The console is a static page that reads a public data file.</p>
+  <p><strong>No first-party profile.</strong> There is no sign-up, email field, account, or password. Little Fight NYC does not receive your saved hunt, notes, income, commute anchors, or address-check query.</p>
   <p>Our web host (Netlify) produces standard server logs — IP address, timestamp, requested file, user agent — as an automatic function of serving any website. We do not link those to a person, do not use them to build a profile, and do not sell or share them. They exist for security and uptime.</p>
 
   <h2>What stays on your device</h2>
-  <p>When you save a listing to <strong>My hunt</strong>, VERA writes to <code>localStorage</code> under two keys:</p>
+  <p>VERA writes the following workspace state to <code>localStorage</code>:</p>
   <ul>
     <li><code>vera-cases</code> — the listings you saved, the stage you put each one in, your notes, and your viewing-checklist ticks.</li>
     <li><code>vera-workspace</code> — your filter preferences, so the console opens where you left it.</li>
+    <li><code>vera-anchors</code> — up to two subway stations you chose as commute anchors.</li>
+    <li><code>vera-profile</code> — the annual income you entered for the local 40× qualification check.</li>
+    <li><code>vera-address-resolutions-v1</code> — a building match you explicitly confirmed, including its label, confidence, BBL or BIN, and confirmation time.</li>
   </ul>
-  <p>That data never crosses the network. It is not synced, not backed up, and not readable by us. It is also therefore fragile: it is tied to one browser on one device, and clearing site data erases it permanently.</p>
+  <p>That saved workspace data is not synced, backed up, or read back by Little Fight NYC. It is tied to one browser on one device, and clearing site data erases it permanently.</p>
+
+  <h2>The optional address check</h2>
+  <p>Some public listings omit or blur the exact building. If you submit an address in VERA’s confirmation form, your browser requests up to three possible matches from the official <a href="https://geosearch.planninglabs.nyc/" rel="noopener noreferrer">NYC Planning GeoSearch</a> service. The request omits browser credentials and the referring page. NYC Planning still receives the address and normal connection data, such as your IP address and user agent, under its own privacy practices.</p>
+  <p>Nothing is saved until you choose a candidate. The selected label, match confidence, BBL or BIN, and timestamp then stay in this browser. The confirmation does not alter VERA’s shared feed, score, ranking, or owner grade.</p>
 
   <h2>What we publish</h2>
-  <p>The console reads a single sanitised file, <code>public.json</code>. Before anything is published, a step in our pipeline removes the operator’s personal layer — contact names, phone numbers, email addresses, private working notes, and any internal watch-list state — and neutralises subjective language about named owners. Building records, violation counts, litigation counts, and rent-stabilisation status remain, because those are public records.</p>
+  <p>The console reads one sanitised public feed, usually named <code>public.json</code>, from redundant read-only mirrors. Before anything is published, the pipeline removes the private research layer — contact names, phone numbers, email addresses, working notes, and internal watch-list state — and neutralises subjective language about named owners. Building records, violation counts, litigation counts, and rent-stabilisation status remain because they come from public records.</p>
 
   <h2>Where the data comes from</h2>
-  <p>VERA indexes rental listings that are already publicly posted, and enriches them with New York City and State public records — including Housing Preservation and Development violation history, Department of Buildings records, housing-court signals, and rent-stabilisation registries. It links to the original listing rather than reproducing it.</p>
+  <p>VERA indexes rental listings that are already publicly posted, and enriches them with New York City and State public records — including Housing Preservation and Development violation history, Department of Buildings records, housing-court signals, and rent-stabilisation registries. It displays selected published listing facts and photos for analysis and links every record back to its original source.</p>
 
   <h2>Third parties</h2>
-  <p>There are none embedded in the page. No advertising network, no tag manager, no session recorder, no social widget, no font CDN — the typefaces are served from our own origin. When you click through to an original listing, you leave VERA and enter that site’s privacy regime, which is very likely nothing like this one.</p>
+  <p>VERA makes only the network requests needed to operate: Netlify serves the site and may log requests; the public feed can load from VERA’s Netlify pipeline or a read-only GitHub mirror; OpenFreeMap supplies map tiles; and listing-photo hosts receive image requests when published photos appear. Those photo requests suppress the VERA page referrer, but the image host still receives normal connection data such as your IP address and user agent. NYC Planning receives an address only when you submit the optional address check. Clicking an original listing takes you to that publisher’s site and privacy practices.</p>
+  <p>There is no advertising network, tag manager, analytics script, session recorder, social widget, or font CDN in VERA. Its typefaces are served from Little Fight NYC.</p>
 
   <h2>Your rights</h2>
-  <p>Because we hold no personal data about you, there is no account to export, correct, or delete. You are in full control of the only data that exists: clear it in your browser at any time. If you have a question about this policy, contact Little Fight NYC through the <a href="/">main site</a>.</p>
+  <p>There is no VERA account to export, correct, or delete. You control the hunt data stored in your browser and can clear it at any time. A confirmed building match also includes a <strong>Forget this address</strong> control so you can remove it without clearing the rest of your hunt. If you have a question about this policy, contact Little Fight NYC through the <a href="/">main site</a>.</p>
 
   <h2>Changes</h2>
-  <p>If this policy changes materially, the effective date above changes with it. Given the architecture — no accounts, no collection — any future change that started collecting personal data would require rebuilding the product, and we would say so plainly rather than editing a paragraph.</p>
+  <p>If this policy changes materially, the effective date above changes with it. Any future change that introduced accounts, first-party personal-data collection, or behavioral tracking would require a visible product and policy change; we would say so plainly.</p>
 </main>
 
 <footer class="docfoot">

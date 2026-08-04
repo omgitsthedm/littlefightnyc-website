@@ -21,6 +21,14 @@ import {
 const UPDATED_AT = "2026-08-03T12:00:00.000Z";
 const CONTACT_ID = "550e8400-e29b-41d4-a716-446655440001";
 const TASK_ID = "550e8400-e29b-41d4-a716-446655440100";
+const PURSUIT_ATTRIBUTION = {
+  templateId: "restaurant_booking_fix_sop" as const,
+  templateVersion: "1.0.0" as const,
+  packetId: "550e8400-e29b-41d4-a716-446655440200",
+  packetVersion: "1.0.0" as const,
+  segment: "restaurant" as const,
+  approvedAt: UPDATED_AT,
+};
 
 function task(overrides: Partial<DakotaTask> = {}): DakotaTask {
   return {
@@ -39,7 +47,7 @@ function task(overrides: Partial<DakotaTask> = {}): DakotaTask {
 }
 
 function activity(overrides: Partial<DakotaActivity> = {}): DakotaActivity {
-  return {
+  const next: DakotaActivity = {
     activityId: "550e8400-e29b-41d4-a716-446655440010",
     taskId: null,
     contactId: null,
@@ -51,6 +59,11 @@ function activity(overrides: Partial<DakotaActivity> = {}): DakotaActivity {
     followUpAt: null,
     ...overrides,
   };
+  if (
+    !Object.hasOwn(overrides, "pursuitAttribution") &&
+    (next.type === "outreach" || next.type === "call" || (next.type === "follow_up" && next.channel !== "internal"))
+  ) next.pursuitAttribution = PURSUIT_ATTRIBUTION;
+  return next;
 }
 
 function consentedEmailContact(overrides: Record<string, unknown> = {}): Record<string, unknown> {
@@ -840,14 +853,278 @@ describe("Dakota operator-state schema", () => {
     });
 
     expect(validateDakotaOperatorRecordInput(record({
+      status: "research_ready",
       contacts: [{ ...contact, consentClassification: "public_business" }],
       selectedContactId: CONTACT_ID,
       tasks: [outreachTask],
       activities: [linkedOutreach],
+    })).valid).toBe(true);
+  });
+
+  it("requires versioned pursuit attribution for new outbound evidence and keeps it immutable", () => {
+    const contact = consentedEmailContact();
+    const outreachTask = task({ type: "outreach", channel: "email", contactId: CONTACT_ID });
+    const previous = createDakotaOperatorRecord(validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+    }), UPDATED_AT);
+    const attributed = activity({
+      taskId: TASK_ID,
+      contactId: CONTACT_ID,
+      channel: "email",
+      type: "outreach",
+      outcome: "sent",
+    });
+    const next = validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [attributed],
+    });
+    expect(validateDakotaOperatorTransition(next, previous, new Date(UPDATED_AT)).valid).toBe(true);
+
+    const missing = validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [{ ...attributed, pursuitAttribution: null }],
+    });
+    expect(validateDakotaOperatorTransition(missing, previous, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "New outbound activity requires immutable Dakota template and packet attribution.",
+    });
+
+    const replyWithoutAttribution = activity({
+      activityId: "550e8400-e29b-41d4-a716-446655440011",
+      taskId: TASK_ID,
+      contactId: CONTACT_ID,
+      channel: "email",
+      type: "reply",
+      outcome: "replied",
+      pursuitAttribution: null,
+    });
+    const missingReplyLink = validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [attributed, replyWithoutAttribution],
+    });
+    expect(validateDakotaOperatorTransition(missingReplyLink, previous, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "A reply to an attributed pursuit must retain the exact packet attribution.",
+    });
+    expect(validateDakotaOperatorTransition(validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [attributed, { ...replyWithoutAttribution, pursuitAttribution: PURSUIT_ATTRIBUTION }],
+    }), previous, new Date(UPDATED_AT)).valid).toBe(true);
+
+    expect(validateDakotaOperatorTransition(validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [{
+        ...replyWithoutAttribution,
+        pursuitAttribution: { ...PURSUIT_ATTRIBUTION, packetId: "550e8400-e29b-41d4-a716-446655440201" },
+      }],
+    }), previous, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "Reply attribution must match an earlier recorded outbound packet.",
+    });
+
+    expect(validateDakotaOperatorRecordInput(record({
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [{ ...attributed, pursuitAttribution: { ...PURSUIT_ATTRIBUTION, segment: "salon" } }],
     }))).toEqual({
       valid: false,
-      error: "Email tasks require explicit-inquiry or existing-relationship consent.",
+      error: "Pursuit attribution segment must match its template.",
     });
+
+    const conflictingPacket = validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [
+        attributed,
+        activity({
+          activityId: "550e8400-e29b-41d4-a716-446655440011",
+          taskId: TASK_ID,
+          contactId: CONTACT_ID,
+          channel: "email",
+          type: "reply",
+          outcome: "replied",
+          pursuitAttribution: {
+            ...PURSUIT_ATTRIBUTION,
+            templateId: "salon_google_profile_sop",
+            segment: "salon",
+          },
+        }),
+      ],
+    });
+    expect(validateDakotaOperatorTransition(conflictingPacket, previous, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "One packet ID cannot carry conflicting template, version, segment, or approval attribution.",
+    });
+
+    const stored = createDakotaOperatorRecord(next, UPDATED_AT);
+    const changed = validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [outreachTask],
+      activities: [{ ...attributed, pursuitAttribution: { ...PURSUIT_ATTRIBUTION, packetId: "550e8400-e29b-41d4-a716-446655440201" } }],
+    });
+    expect(validateDakotaOperatorTransition(changed, stored, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "Existing activities are immutable.",
+    });
+  });
+
+  it("keeps paid-client lifecycle follow-ups outside acquisition packet attribution", () => {
+    const contact = consentedEmailContact();
+    const reviewTask = task({
+      type: "review_request",
+      channel: "email",
+      contactId: CONTACT_ID,
+      title: "Send the approved review request manually.",
+    });
+    const previous = createDakotaOperatorRecord(validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [reviewTask],
+    }), UPDATED_AT);
+    const lifecycleFollowUp = activity({
+      taskId: TASK_ID,
+      contactId: CONTACT_ID,
+      channel: "email",
+      type: "follow_up",
+      outcome: "sent",
+      pursuitAttribution: null,
+    });
+    expect(validateDakotaOperatorTransition(validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [reviewTask],
+      activities: [lifecycleFollowUp],
+    }), previous, new Date(UPDATED_AT)).valid).toBe(true);
+    expect(validateDakotaOperatorTransition(validatedInput({
+      status: "research_ready",
+      contacts: [contact],
+      selectedContactId: CONTACT_ID,
+      tasks: [reviewTask],
+      activities: [{ ...lifecycleFollowUp, pursuitAttribution: PURSUIT_ATTRIBUTION }],
+    }), previous, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "Pursuit attribution is reserved for acquisition outreach evidence.",
+    });
+  });
+
+  it("keeps review and referral tasks on exact relationship email routes only", () => {
+    const relationshipEmail = consentedEmailContact();
+    expect(validateDakotaOperatorRecordInput(record({
+      contacts: [relationshipEmail],
+      selectedContactId: CONTACT_ID,
+      tasks: [task({ type: "review_request", channel: "internal", contactId: null })],
+    })).valid).toBe(false);
+    expect(validateDakotaOperatorRecordInput(record({
+      contacts: [{
+        ...relationshipEmail,
+        channel: "sms",
+        value: "+12125550100",
+      }],
+      selectedContactId: CONTACT_ID,
+      tasks: [task({ type: "referral_request", channel: "sms", contactId: CONTACT_ID })],
+    })).valid).toBe(false);
+    expect(validateDakotaOperatorRecordInput(record({
+      contacts: [{ ...relationshipEmail, consentClassification: "public_business" }],
+      selectedContactId: CONTACT_ID,
+      tasks: [task({ type: "review_request", channel: "email", contactId: CONTACT_ID })],
+    }))).toEqual({
+      valid: false,
+      error: "Review and referral email tasks require explicit-inquiry or existing-relationship consent.",
+    });
+  });
+
+  it("never links a reply to a packet sent through another contact route", () => {
+    const secondContactId = "550e8400-e29b-41d4-a716-446655440002";
+    const secondTaskId = "550e8400-e29b-41d4-a716-446655440101";
+    const firstContact = consentedEmailContact();
+    const secondContact = consentedEmailContact({
+      contactId: secondContactId,
+      name: "Jordan Owner",
+      value: "jordan@example.com",
+    });
+    const completedFirstTask = task({
+      type: "outreach",
+      status: "completed",
+      channel: "email",
+      contactId: CONTACT_ID,
+      createdAt: "2026-08-03T10:00:00.000Z",
+      resolvedAt: "2026-08-03T10:30:00.000Z",
+      resolutionNote: "Manual outreach completed.",
+    });
+    const openSecondTask = task({
+      taskId: secondTaskId,
+      type: "outreach",
+      channel: "email",
+      contactId: secondContactId,
+      createdAt: "2026-08-03T11:00:00.000Z",
+    });
+    const firstOutbound = activity({
+      taskId: TASK_ID,
+      contactId: CONTACT_ID,
+      channel: "email",
+      type: "outreach",
+      outcome: "sent",
+      occurredAt: "2026-08-03T10:15:00.000Z",
+    });
+    const previous = createDakotaOperatorRecord(validatedInput({
+      status: "research_ready",
+      contacts: [firstContact, secondContact],
+      selectedContactId: secondContactId,
+      tasks: [completedFirstTask, openSecondTask],
+      activities: [firstOutbound],
+    }), UPDATED_AT);
+    const secondReply = activity({
+      activityId: "550e8400-e29b-41d4-a716-446655440012",
+      taskId: secondTaskId,
+      contactId: secondContactId,
+      channel: "email",
+      type: "reply",
+      outcome: "replied",
+      occurredAt: UPDATED_AT,
+      pursuitAttribution: PURSUIT_ATTRIBUTION,
+    });
+    expect(validateDakotaOperatorTransition(validatedInput({
+      status: "research_ready",
+      contacts: [firstContact, secondContact],
+      selectedContactId: secondContactId,
+      tasks: [completedFirstTask, openSecondTask],
+      activities: [firstOutbound, secondReply],
+    }), previous, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "Reply attribution must match an earlier recorded outbound packet.",
+    });
+    expect(validateDakotaOperatorTransition(validatedInput({
+      status: "research_ready",
+      contacts: [firstContact, secondContact],
+      selectedContactId: secondContactId,
+      tasks: [completedFirstTask, openSecondTask],
+      activities: [firstOutbound, { ...secondReply, pursuitAttribution: null }],
+    }), previous, new Date(UPDATED_AT)).valid).toBe(true);
   });
 
   it("links new evidence only to the current task and within that task's lifetime", () => {
@@ -959,7 +1236,7 @@ describe("Dakota operator-state schema", () => {
         type: "reply",
         outcome: "replied",
       }),
-    ].map(({ taskId: _taskId, contactId: _contactId, ...legacy }) => legacy);
+    ].map(({ taskId: _taskId, contactId: _contactId, pursuitAttribution: _pursuitAttribution, ...legacy }) => legacy);
     const researchReady = createDakotaOperatorRecord(validatedInput({
       status: "research_ready",
       contacts: [contact],
@@ -1419,16 +1696,77 @@ describe("Dakota operator-state schema", () => {
     };
     const reviewTask = task({
       taskId: "550e8400-e29b-41d4-a716-446655440203",
-      type: "review_request",
+      type: "client_success",
       channel: "email",
       contactId: CONTACT_ID,
-      title: "Ask for an honest review after the result is verified.",
+      title: "Verify the first client outcome before asking for a review.",
     });
     const clientGrowth = validatedInput({
       ...paid,
       tasks: [invoiceTask, completedPaymentTask, completedOnboardingTask, reviewTask],
     });
     expect(validateDakotaOperatorTransition(clientGrowth, storedPaid, new Date(UPDATED_AT)).valid).toBe(true);
+
+    const storedClientGrowth = createDakotaOperatorRecord(clientGrowth, UPDATED_AT, storedPaid);
+    const completedClientSuccessTask = {
+      ...reviewTask,
+      status: "completed" as const,
+      resolvedAt: UPDATED_AT,
+      resolutionNote: "Positive outcome verified: The client confirmed the repaired booking path works.",
+    };
+    const queuedReviewTask = task({
+      taskId: "550e8400-e29b-41d4-a716-446655440204",
+      type: "review_request",
+      channel: "email",
+      contactId: CONTACT_ID,
+      title: "Send the approved Little Fight NYC review request after the verified result",
+      createdAt: UPDATED_AT,
+      dueAt: new Date(Date.parse(UPDATED_AT) + 24 * 60 * 60_000).toISOString(),
+    });
+    const reviewQueued = validatedInput({
+      ...paid,
+      tasks: [invoiceTask, completedPaymentTask, completedOnboardingTask, completedClientSuccessTask, queuedReviewTask],
+    });
+    expect(validateDakotaOperatorTransition(reviewQueued, storedClientGrowth, new Date(UPDATED_AT)).valid).toBe(true);
+
+    const storedReviewQueued = createDakotaOperatorRecord(reviewQueued, UPDATED_AT, storedClientGrowth);
+    const reviewSend = activity({
+      activityId: "550e8400-e29b-41d4-a716-446655440022",
+      taskId: queuedReviewTask.taskId,
+      contactId: CONTACT_ID,
+      channel: "email",
+      type: "follow_up",
+      outcome: "sent",
+      pursuitAttribution: null,
+    });
+    const completedReviewTask = {
+      ...queuedReviewTask,
+      status: "completed" as const,
+      resolvedAt: UPDATED_AT,
+      resolutionNote: "Review request sent manually by email.",
+    };
+    const referralTask = task({
+      taskId: "550e8400-e29b-41d4-a716-446655440205",
+      type: "referral_request",
+      channel: "email",
+      contactId: CONTACT_ID,
+      title: "Send the one-time referral ask after the verified positive outcome",
+      createdAt: UPDATED_AT,
+      dueAt: new Date(Date.parse(UPDATED_AT) + 7 * 24 * 60 * 60_000).toISOString(),
+    });
+    const referralQueued = validatedInput({
+      ...paid,
+      activities: [invoiceEvidence, paymentEvidence, reviewSend],
+      tasks: [invoiceTask, completedPaymentTask, completedOnboardingTask, completedClientSuccessTask, completedReviewTask, referralTask],
+    });
+    expect(validateDakotaOperatorTransition(referralQueued, storedReviewQueued, new Date(UPDATED_AT)).valid).toBe(true);
+    expect(validateDakotaOperatorTransition(validatedInput({
+      ...referralQueued,
+      activities: [invoiceEvidence, paymentEvidence],
+    }), storedReviewQueued, new Date(UPDATED_AT))).toEqual({
+      valid: false,
+      error: "Completed review and referral tasks require exact manual-send activity evidence.",
+    });
 
     const skippedOnboarding = validatedInput({
       ...paid,
@@ -1490,16 +1828,14 @@ describe("Dakota operator-state schema", () => {
       })],
     })).valid).toBe(true);
     expect(validateDakotaOperatorRecordInput(record({
+      status: "research_ready",
       selectedContactId: CONTACT_ID,
       tasks: [task({
         type: "outreach",
         channel: "email",
         contactId: CONTACT_ID,
       })],
-    }))).toEqual({
-      valid: false,
-      error: "Email tasks require explicit-inquiry or existing-relationship consent.",
-    });
+    })).valid).toBe(true);
     expect(validateDakotaOperatorRecordInput(record({
       contacts: [{
         ...(record().contacts as Record<string, unknown>[])[0],

@@ -40,12 +40,52 @@
       });
       check('full-fit gate holds its own bar', gateOk, fits.length + ' checked');
 
+      /* ---- verification and exact-address truth ---- */
+      check('matched public records never enter needs-verification',
+        C.needsVerify({ verification_status: 'matched_public_records', listing_confidence_score: 78 }) === false &&
+        C.needsVerify({ verification_status: 'verified_public_records', listing_confidence_score: 78 }) === false &&
+        C.needsVerify({ verification_status: 'not_qualified_for_enrichment', listing_confidence_score: 66 }) === true,
+        'matched + verified stay out; unresolved stays in');
+      check('numeric address fragments are not presented as exact addresses',
+        C.exactAddressText({ address_normalized: '2461', address_raw: '2461' }) === null &&
+        app.addressOf({ address_normalized: '2461', address_raw: '2461' }) === null &&
+        C.exactAddressText({ address_normalized: '17th Street' }) === null &&
+        C.exactAddressText({ address_normalized: '2461 W' }) === null,
+        '2461 · 17th Street · 2461 W');
+      check('a numbered street remains an exact address',
+        C.exactAddressText({ address_normalized: '120 broadway apt 4' }) === '120 broadway apt 4' &&
+        C.exactAddressText({ address_normalized: '12-34 31st ave' }) === '12-34 31st ave' &&
+        app.addressOf({ address_normalized: '120 broadway apt 4' }) === '120 Broadway #4',
+        app.addressOf({ address_normalized: '120 broadway apt 4' }));
+
+      var geoCandidate = C.addressCandidate({ properties: {
+        label: '120 Broadway, Manhattan, NY', confidence: 0.97, match_type: 'exact',
+        addendum: { pad: { bbl: '1-00047-7501', bin: '1,001,026' } },
+      } });
+      check('GeoSearch accepts a strong labelled PAD building candidate',
+        !!geoCandidate && geoCandidate.bbl === '1000477501' && geoCandidate.bin === '1001026' && geoCandidate.confidence === 0.97,
+        JSON.stringify(geoCandidate));
+      check('GeoSearch rejects weak, anonymous, and unidentifiable candidates',
+        C.addressCandidate({ properties: { label: '120 Broadway', confidence: 0.79, addendum: { pad: { bbl: '1000477501' } } } }) === null &&
+        C.addressCandidate({ properties: { label: '120 Broadway', confidence: 1.01, addendum: { pad: { bbl: '1000477501' } } } }) === null &&
+        C.addressCandidate({ properties: { label: '', confidence: 0.99, addendum: { pad: { bbl: '1000477501' } } } }) === null &&
+        C.addressCandidate({ properties: { label: '120 Broadway', confidence: 0.99, addendum: { pad: {} } } }) === null,
+        'all rejected');
+
       /* ---- market ---- */
       location.hash = '#/market'; app.route();
       check('market shows the whole net', $$('.kpi').length >= 6, $$('.kpi').length + ' KPIs');
       check('market cites the published medians', ($('.pagehead__lede') || { textContent: '' }).textContent.indexOf('Manhattan') > -1, '');
       check('bracket tiles render', $$('.brtile').length === C.BRACKETS.length, $$('.brtile').length);
       check('filters visible on market', $('[data-filters]').hidden === false, '');
+
+      var toggleSelector = '[data-bracket],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-brtile],[data-hoodbar],[data-density]';
+      var actualToggles = $$(toggleSelector);
+      check('actual filter controls expose their pressed state',
+        actualToggles.length > 0 && actualToggles.every(function (button) {
+          return button.getAttribute('aria-pressed') === (button.classList.contains('is-on') ? 'true' : 'false');
+        }),
+        actualToggles.length + ' controls');
 
       var before = app.filtered().length;
       state.bracket = 'b1';
@@ -70,11 +110,16 @@
       location.hash = '#/browse'; app.route();
       check('browse table renders', $$('.dt tbody tr').length > 0, $$('.dt tbody tr').length + ' rows');
       check('view pills live on browse', $$('.pills [data-view]').length >= 5, '');
-      var th = $('.dt thead th[data-sort="rent"]');
-      th.click(); th.click();
+      var sortButton = $('.dt thead button[data-sort="rent"]');
+      check('sortable columns use keyboard-native buttons', !!sortButton && sortButton.tagName === 'BUTTON', sortButton && sortButton.tagName);
+      sortButton.click();
+      sortButton = $('.dt thead button[data-sort="rent"]');
       var rents = app.filtered().map(function (l) { return +l.rent || 0; });
       var sortedOk = rents.every(function (v, i) { return i === 0 || rents[i - 1] >= v || state.sort.key !== 'rent'; });
       check('column sort works', state.sort.key === 'rent' && sortedOk, state.sort.key + ' dir=' + state.sort.dir);
+      check('sorted column exposes its direction on the table header',
+        $('.dt thead button[data-sort="rent"]').closest('th').getAttribute('aria-sort') === 'descending',
+        $('.dt thead button[data-sort="rent"]').closest('th').getAttribute('aria-sort'));
 
       state.view = 'scam';
       var scv = app.filtered().every(C.isScam);
@@ -187,6 +232,21 @@
       check('40x income rule surfaced', mm.annualIncomeNeeded === 96000, '$' + mm.annualIncomeNeeded);
 
       /* ---- the hunt ---- */
+      var liveCases = app.cases();
+      var caseBackup = JSON.parse(JSON.stringify(liveCases));
+      Object.keys(liveCases).forEach(function (uid) { delete liveCases[uid]; });
+      app.saveCases();
+      location.hash = '#/hunt'; app.route();
+      var emptyHuntH1 = $$('h1').filter(function (heading) {
+        return !heading.closest('[hidden], [aria-hidden="true"]');
+      });
+      check('an empty Hunt still exposes one h1',
+        emptyHuntH1.length === 1 && emptyHuntH1[0].textContent.indexOf('starts empty') > -1,
+        emptyHuntH1.map(function (heading) { return heading.textContent; }).join(' | '));
+      Object.keys(liveCases).forEach(function (uid) { delete liveCases[uid]; });
+      Object.keys(caseBackup).forEach(function (uid) { liveCases[uid] = caseBackup[uid]; });
+      app.saveCases();
+
       var probe = POOL[0] && POOL[0].listing_uid;
       var hadCase = !!app.caseOf(probe);
       if (probe && !hadCase) {
@@ -210,17 +270,30 @@
       check('viewing checklist published in full', $$('.cgroup li').length === C.CHECKS.length, $$('.cgroup li').length + ' checks');
       check('chain-of-proof tools linked', $$('.vtool').length >= 4, $$('.vtool').length);
 
+      var rentSlider = $('[data-tool-rent]');
+      var rentSliderStart = rentSlider.value;
+      rentSlider.focus();
+      rentSlider.value = String(+rentSliderStart + (+rentSlider.step || 50));
+      rentSlider.dispatchEvent(new Event('input', { bubbles: true }));
+      check('manual slider updates without replacing the focused control',
+        $('[data-tool-rent]') === rentSlider && document.activeElement === rentSlider,
+        document.activeElement && document.activeElement.tagName);
+      rentSlider.value = rentSliderStart;
+      rentSlider.dispatchEvent(new Event('input', { bubbles: true }));
+
       /* ---- phase 1: personal value math ---- */
-      var evSeries = ((app.D() || {}).market_context || {}).series || {};
-      if (evSeries['East Village'] && evSeries['East Village'].median_asking_rent_latest) {
-        var evMed = evSeries['East Village'].median_asking_rent_latest;
-        var vr = app.valueRead({ rent: Math.round(evMed * 0.9), neighborhood: 'East Village' });
-        check('value math: 10% under the exact-hood median', !!vr && vr.under && vr.pct === 10 && vr.label.indexOf('East Village median') > -1, vr && vr.label);
-        var vrOver = app.valueRead({ rent: Math.round(evMed * 1.08), neighborhood: 'East Village' });
-        check('value math: over-median reads amber side', !!vrOver && !vrOver.under, vrOver && vrOver.label);
-      } else {
-        check('value math: series available for fixture hood', false, 'East Village series missing');
-      }
+      var valueData = app.D();
+      var hadMarketContext = valueData.market_context;
+      valueData.market_context = { series: { 'East Village': {
+        median_asking_rent: [2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500],
+        median_asking_rent_latest: 2500,
+      } } };
+      var evMed = 2500;
+      var vr = app.valueRead({ rent: Math.round(evMed * 0.9), neighborhood: 'East Village' });
+      check('value math: 10% under the exact-hood median', !!vr && vr.under && vr.pct === 10 && vr.label.indexOf('East Village median') > -1, vr && vr.label);
+      var vrOver = app.valueRead({ rent: Math.round(evMed * 1.08), neighborhood: 'East Village' });
+      check('value math: over-median reads amber side', !!vrOver && !vrOver.under, vrOver && vrOver.label);
+      valueData.market_context = hadMarketContext;
       var vrNone = app.valueRead({ rent: 2500, neighborhood: 'Nowhereville' });
       check('value math: unknown hood prints nothing', vrNone === null, String(vrNone));
 
@@ -279,7 +352,6 @@
       check('system states the ethics', ($('.ethos') || { textContent: '' }).textContent.indexOf('never contacts a landlord') > -1 || ($('.ethos') || { textContent: '' }).textContent.indexOf('never messages a landlord') > -1, '');
 
       /* ---- phase 2: deep links, portraits, hero, PWA ---- */
-      try { sessionStorage.setItem('vera-sweep-seen', '1'); } catch (e2) {}
       var dlUid = POOL[0] && POOL[0].listing_uid;
       if (dlUid) {
         location.hash = '#/listing/' + dlUid; app.route();
@@ -433,8 +505,11 @@
       var credTxt = document.body.textContent;
       check('the app credits every source it leans on',
         $$('.credits li').length >= 6 &&
+        credTxt.indexOf('NYC Dept. of City Planning') > -1 &&
+        credTxt.indexOf('MTA') > -1 &&
         credTxt.indexOf('umm-maybe/AI-image-detector') > -1 &&
         credTxt.indexOf('CC BY 4.0') > -1 &&
+        credTxt.indexOf('Open map data') > -1 &&
         credTxt.indexOf('Who Owns What') > -1, $$('.credits li').length + ' credits');
 
       /* ---- counts get a denominator ---- */
@@ -503,8 +578,8 @@
          An unverified listing used to get four generic lines and a link
          back to the source, while a verified one got a full building
          record. The tools are the same either way. */
-      var _unver = POOL.filter(function (l) { return !/^matched/.test(String(l.verification_status || '')); })[0];
-      var _ver = POOL.filter(function (l) { return /^matched/.test(String(l.verification_status || '')); })[0];
+      var _unver = POOL.filter(C.needsVerify)[0];
+      var _ver = POOL.filter(C.hasMatchedRecord)[0];
       if (_unver) {
         L.open(_unver.listing_uid);
         $('[data-insp-tabs] [data-tab="verify"]').click();
@@ -512,14 +587,15 @@
         check('an unverified listing is handed the public-record tools',
           $$('.vtool', _vt).length >= 5, $$('.vtool', _vt).length + ' tools');
         check('and is told plainly why VERA could not do it',
-          /could not check this one/i.test(_vt.textContent), '');
+          /could not identify this building yet/i.test(_vt.textContent), '');
         L.close();
       }
       if (_ver) {
         L.open(_ver.listing_uid);
         $('[data-insp-tabs] [data-tab="verify"]').click();
         check('a verified listing is not handed the self-check block',
-          !/could not check this one/i.test($('[data-insp-body]').textContent),
+          !$('.address-check', $('[data-insp-body]')) &&
+          !/could not identify this building yet/i.test($('[data-insp-body]').textContent),
           'it already has the record');
         L.close();
       }

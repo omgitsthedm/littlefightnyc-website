@@ -196,8 +196,53 @@
     return (l.listing_confidence_band === 'low') || (a != null && a < 45);
   }
 
+  function hasMatchedRecord(l) {
+    return /^(matched|verified)/.test(String((l && l.verification_status) || '').toLowerCase());
+  }
+
   function needsVerify(l) {
-    return !isScam(l) && String(l.verification_status || '').indexOf('verified') !== 0;
+    return !isScam(l) && !hasMatchedRecord(l);
+  }
+
+  /* An address is exact only when it carries a house number AND a street.
+     Craigslist sometimes publishes a numeric fragment such as "2461" beside
+     an intentionally offset map pin. Rendering that fragment as a building
+     address turns an honest unknown into a false exact location. */
+  function exactAddressText(l) {
+    var candidates = [l && l.address_normalized, l && l.address_raw];
+    for (var i = 0; i < candidates.length; i++) {
+      var value = String(candidates[i] || '').replace(/\s+/g, ' ').trim();
+      if (!value) continue;
+      var street = value.replace(/\s+(?:#|apt\.?|unit|floor|fl|ste\.?)\s*\S+.*$/i, '').trim();
+      var parts = street.split(' ');
+      var houseNumber = /^\d+(?:-\d+)?[a-z]?$/i.test(parts[0] || '');
+      var streetName = parts.slice(1).join(' ');
+      var directionOnly = /^(?:n|s|e|w|north|south|east|west)$/i.test(streetName);
+      if (parts.length >= 2 && houseNumber && /[a-z]/i.test(streetName) && !directionOnly) return value;
+    }
+    return null;
+  }
+
+  /* GeoSearch candidates are useful provenance, not automatic verification.
+     Only a strong, labelled result carrying a real PAD BBL or BIN is eligible
+     to be shown for human confirmation. */
+  function addressCandidate(feature) {
+    var props = feature && feature.properties;
+    var pad = props && props.addendum && props.addendum.pad;
+    var confidence = props && +props.confidence;
+    var label = String((props && props.label) || '').trim();
+    var bbl = String((pad && pad.bbl) || '').replace(/\D/g, '');
+    var bin = String((pad && pad.bin) || '').replace(/\D/g, '');
+    if (bbl.length !== 10) bbl = '';
+    if (bin.length !== 7) bin = '';
+    if (!label || !isFinite(confidence) || confidence < 0.8 || confidence > 1 || (!bbl && !bin)) return null;
+    return {
+      label: label,
+      confidence: confidence,
+      matchType: String(props.match_type || ''),
+      bbl: bbl || null,
+      bin: bin || null,
+    };
   }
 
   // The engine publishes "ok"; only "healthy" was accepted once, so a fully
@@ -458,7 +503,7 @@
      ================================================================ */
 
   var TELLS = [
-    { t: 'The price is good but not absurd', d: 'The professional version never uses a $1,400 West Village one-bedroom. It shaves 15% off market — cheap enough to move fast, plausible enough to survive a gut check. Compare against the building\'s own last-rented price, not your hopes.', k: 'price' },
+    { t: 'The price is good but not absurd', d: 'The professional version never uses a $1,400 West Village one-bedroom. It shaves 15% off market — cheap enough to move fast, plausible enough to survive a gut check. Compare against the building’s own last-rented price, not your hopes.', k: 'price' },
     { t: 'Nobody has proven they own it', d: 'The most expensive scams in this city all collapse to one unanswered question: is this person the owner, the managing agent, or a stranger with a set of keys? A real tour and a real-looking lease prove neither. Look the owner up before you look at the apartment.', k: 'who' },
     { t: 'One phone number, thirty listings', d: 'Search the phone number and the email. Scaled operations reuse contact details across dozens of listings under different names in different neighborhoods. One search ends it.', k: 'who' },
     { t: 'A lease that looks completely legitimate', d: 'A DocuSign lease requires no verification of the sender. Renters have signed real-looking leases, wired real money, and arrived to find twenty other people with the same lease for the same unit.', k: 'paper' },
@@ -687,7 +732,8 @@
     esc: esc, money: money, num: num, median: median, timeago: timeago,
     BRACKETS: BRACKETS, bracketOf: bracketOf, AREAS: AREAS, areaOf: areaOf,
     LINE_COLORS: LINE_COLORS, STATIONS: STATIONS, nearestStation: nearestStation, lineBullets: lineBullets,
-    ownerRead: ownerRead, isSmallOwner: isSmallOwner, authenticity: authenticity, isScam: isScam, needsVerify: needsVerify,
+    ownerRead: ownerRead, isSmallOwner: isSmallOwner, authenticity: authenticity, isScam: isScam,
+    hasMatchedRecord: hasMatchedRecord, needsVerify: needsVerify, exactAddressText: exactAddressText, addressCandidate: addressCandidate,
     srcCls: srcCls, isFresh: isFresh, stabilized: stabilized, riskCls: riskCls, unitOf: unitOf,
     FIT: FIT, isFullFit: isFullFit, whyPassed: whyPassed, charName: charName, streetOf: streetOf, titleCase: titleCase,
     stewardOf: stewardOf, stewardText: stewardText, spatialLine: spatialLine,

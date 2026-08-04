@@ -13,9 +13,6 @@ import {
   FileSearch,
   ListTodo,
   LoaderCircle,
-  Mail,
-  MessageSquareText,
-  Phone,
   Plus,
   ReceiptText,
   Save,
@@ -27,6 +24,8 @@ import {
 } from "lucide-react";
 import { ScoreTriptych } from "./ScoreTriptych";
 import { RevenueBridgePanel } from "./RevenueBridgePanel";
+import { PursuitKitPanel } from "./PursuitKitPanel";
+import { ClientLifecycleHandoffPanel } from "./ClientLifecycleHandoffPanel";
 import {
   assessCandidate,
   candidateKey,
@@ -59,6 +58,7 @@ import {
   type DakotaActivityChannel,
   type DakotaActivityOutcome,
   type DakotaActivityType,
+  type DakotaPursuitAttribution,
   type DakotaCommercialClose,
   type DakotaConsentClassification,
   type DakotaContactChannel,
@@ -76,6 +76,21 @@ import {
   type QueueEnvelope,
 } from "./types";
 import {
+  activityNeedsPursuitAttribution,
+  isValidPursuitAttribution,
+  latestPursuitAttribution,
+  samePursuitAttribution,
+  type DakotaApprovedPursuitArtifact,
+  type DakotaPursuitEvidenceItem,
+} from "./pursuitKit";
+import {
+  DAKOTA_REFERRAL_DELAY_MS,
+  DAKOTA_REVIEW_DELAY_MS,
+  buildReferralRequestTask,
+  buildReviewRequestTask,
+  isRelationshipEmail,
+} from "./reviewReferral";
+import {
   containsUnsupportedControlCharacter,
   isRealDateOnly,
   isSafePublicHttps,
@@ -84,16 +99,10 @@ import {
 import {
   BOOKING_HREF,
   FUTURE_COMMERCIAL_DATE_ERROR,
-  GOOGLE_VOICE_CALLS_HREF,
-  GOOGLE_VOICE_MESSAGES_HREF,
   NEW_TASK_FIRST_SAVE_ERROR,
   PAID_ONBOARDING_TASK_ERROR,
   TASK_TYPE_LABELS,
-  buildGmailComposeHref,
   buildProposalBrief,
-  buildValueBrief,
-  canUseGmailCompose,
-  canUseGoogleVoice,
   hasAlignedPaidLifecycleTask,
   hasCompletedPaidOnboarding,
   isCommercialDateBeyondUtcTomorrow,
@@ -203,8 +212,8 @@ const TASK_CHANNEL_RULES: Record<DakotaTaskType, readonly DakotaTaskChannel[]> =
   onboarding: ["internal"],
   client_success: ["internal", "email", "phone"],
   proof_request: ["internal", "email", "phone", "sms"],
-  review_request: ["internal", "email", "phone", "sms"],
-  referral_request: ["internal", "email", "phone", "sms"],
+  review_request: ["email"],
+  referral_request: ["email"],
   renewal: ["internal", "email", "phone"],
   expansion: ["internal", "email", "phone"],
 };
@@ -232,8 +241,6 @@ interface ClientGrowthTemplate {
 const CLIENT_GROWTH_TEMPLATES: readonly ClientGrowthTemplate[] = [
   { type: "client_success", label: "14-day outcome", title: "Check the first client outcome and record what changed", daysFromNow: 14, preferredChannel: "email" },
   { type: "proof_request", label: "Proof permission", title: "Ask permission to turn the verified result into approved proof", daysFromNow: 30, preferredChannel: "email" },
-  { type: "review_request", label: "Review ask", title: "Ask for an honest Little Fight NYC review after the result is verified", daysFromNow: 30, preferredChannel: "email" },
-  { type: "referral_request", label: "Referral ask", title: "Ask whether one similar business would benefit from the same fix", daysFromNow: 45, preferredChannel: "email" },
   { type: "renewal", label: "Quarterly check-in", title: "Review results, upcoming needs, and the next ninety-day priority", daysFromNow: 90, preferredChannel: "email" },
   { type: "expansion", label: "Expansion review", title: "Identify one evidence-backed expansion that can create more customer value", daysFromNow: 90, preferredChannel: "internal" },
 ] as const;
@@ -423,6 +430,12 @@ function validateRecord(
   record.tasks.slice(originalRecord.tasks.length).forEach((task) => evidenceTaskIds.add(task.taskId));
   const currentPrefix = record.activities.slice(0, originalActivityIds.length).map((activity) => activity.activityId);
   if (currentPrefix.some((id, index) => id !== originalActivityIds[index])) return "Activity history is append-only. Earlier evidence cannot be removed or reordered.";
+  for (let index = 0; index < originalRecord.activities.length; index += 1) {
+    if (!samePursuitAttribution(
+      originalRecord.activities[index]?.pursuitAttribution,
+      record.activities[index]?.pursuitAttribution,
+    )) return "Existing pursuit attribution is immutable.";
+  }
   const activityIds = new Set<string>();
   const originalActivityIdSet = new Set(originalActivityIds);
   for (const activity of record.activities) {
@@ -431,9 +444,15 @@ function validateRecord(
     activityIds.add(activity.activityId);
     if (activity.followUpAt && Number.isNaN(Date.parse(activity.followUpAt))) return "Activity follow-up time must be valid.";
     if (activity.note.length > 2000 || hasUnsafeText(activity.note)) return "Activity notes must be 2,000 plain-text characters or fewer.";
+    if (activity.pursuitAttribution && !isValidPursuitAttribution(activity.pursuitAttribution)) return "Pursuit attribution must use one approved Dakota template and packet version.";
     if (!originalActivityIdSet.has(activity.activityId) && Date.parse(activity.occurredAt) > Date.now() + 5 * 60_000) return "New activity evidence cannot be dated in the future.";
     if (!ACTIVITY_RULES[activity.type][activity.channel]?.includes(activity.outcome)) return "Activity type, channel, and outcome must describe one possible real-world event.";
     if (!originalActivityIdSet.has(activity.activityId)) {
+      const activityTask = activity.taskId ? record.tasks.find((task) => task.taskId === activity.taskId) ?? null : null;
+      const needsPursuitAttribution = activityNeedsPursuitAttribution(activity, activityTask?.type);
+      if (needsPursuitAttribution && !isValidPursuitAttribution(activity.pursuitAttribution)) return "New acquisition outreach evidence requires one approved Dakota pursuit packet.";
+      if (!needsPursuitAttribution && activity.type !== "reply" && activity.pursuitAttribution) return "Pursuit attribution is reserved for acquisition outreach evidence.";
+      if (activity.pursuitAttribution && Date.parse(activity.pursuitAttribution.approvedAt) > Date.parse(activity.occurredAt) + 5 * 60_000) return "Pursuit packet approval cannot occur after the recorded action.";
       if (activity.type === "note") {
         if (activity.channel !== "internal" || activity.taskId !== null || activity.contactId !== null) return "New notes must remain internal and unlinked to an external contact.";
       } else {
@@ -475,8 +494,10 @@ function validateRecord(
     if (task.dueAt && Number.isNaN(Date.parse(task.dueAt))) return "Task due time must be valid.";
     const taskContact = task.contactId ? record.contacts.find((contact) => contact.contactId === task.contactId) ?? null : null;
     if (!taskChannels(task.type).includes(task.channel)) return "Task type and channel must describe one possible next action.";
+    if ((task.type === "review_request" || task.type === "referral_request") && task.channel !== "email") return "Review and referral requests are human-operated email tasks only.";
     if (task.channel === "internal" && task.contactId) return "Internal tasks cannot reference an external contact route.";
     if (task.channel !== "internal" && (!taskContact || !taskContactMatchesChannel(taskContact, task.channel))) return "Every non-internal task requires one matching usable verified contact route.";
+    if ((task.type === "review_request" || task.type === "referral_request") && task.channel === "email" && !isRelationshipEmail(taskContact)) return "Review and referral email tasks require explicit-inquiry or existing-relationship consent.";
     if (task.channel !== "internal" && task.contactId !== record.selectedContactId) return "Every non-internal task must use the opportunity’s exact selected contact route.";
     if (!originalTask && task.channel !== "internal" && task.contactId !== persistedSelectedRoute?.contactId) return "Save the exact selected contact route before creating a non-internal task.";
     if (task.status === "open" && (task.resolvedAt || task.resolutionNote)) return "An open task cannot contain resolution evidence.";
@@ -487,6 +508,28 @@ function validateRecord(
     if (originalTask?.status === "open" && task.status === "open" && JSON.stringify(originalTask) !== JSON.stringify(task)) return "An open saved task cannot be edited. Resolve it and create the next one.";
   }
   const openTasks = record.tasks.filter((task) => task.status === "open");
+  for (const type of ["review_request", "referral_request"] as const) {
+    if (record.tasks.filter((task) => task.type === type).length > 1) return `A client record can have only one ${type.replace("_", " ")} task.`;
+  }
+  for (const task of record.tasks.slice(originalRecord.tasks.length)) {
+    if (task.type === "review_request") {
+      const positiveOutcomeTask = [...record.tasks].reverse().find((candidate) => candidate.type === "client_success" && candidate.status === "completed" && candidate.resolvedAt && candidate.resolutionNote.startsWith("Positive outcome verified:"));
+      if (!positiveOutcomeTask?.resolvedAt || task.createdAt !== positiveOutcomeTask.resolvedAt || !task.dueAt || Date.parse(task.dueAt) !== Date.parse(positiveOutcomeTask.resolvedAt) + DAKOTA_REVIEW_DELAY_MS) return "A review request must follow explicit positive client-outcome evidence by exactly 24 hours.";
+    }
+    if (task.type === "referral_request") {
+      const resolvedReviewTask = [...record.tasks].reverse().find((candidate) => candidate.type === "review_request" && candidate.status !== "open" && candidate.resolvedAt);
+      if (!resolvedReviewTask || task.contactId !== resolvedReviewTask.contactId || !task.dueAt || Date.parse(task.dueAt) !== Date.parse(resolvedReviewTask.createdAt) + DAKOTA_REFERRAL_DELAY_MS) return "A referral request must retain the review route and remain anchored seven days after the verified positive outcome.";
+    }
+  }
+  for (const task of record.tasks.slice(0, originalRecord.tasks.length)) {
+    const originalTask = originalTasks.get(task.taskId);
+    if (
+      originalTask?.status === "open" &&
+      task.status === "completed" &&
+      (task.type === "review_request" || task.type === "referral_request") &&
+      !record.activities.some((activity) => activity.taskId === task.taskId && activity.contactId === task.contactId && activity.channel === "email" && activity.type === "follow_up" && ["sent", "delivered", "completed"].includes(activity.outcome))
+    ) return "Completed review and referral tasks require exact manual-send activity evidence.";
+  }
   if (openTasks.length > 1) return "Each opportunity can have only one open next task.";
   if (OPEN_TASK_REQUIRED_STATUSES.has(record.status) && openTasks.length !== 1) return "This stage requires exactly one open next task.";
   if (NO_OPEN_TASK_STATUSES.has(record.status) && openTasks.length) return "This stage cannot keep an open task. Complete or skip it with a factual note.";
@@ -667,7 +710,9 @@ export function ProgressiveOpportunityDrawer({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
-  const [copyState, setCopyState] = useState<"idle" | "draft" | "brief" | "proposal" | "booking" | "phone" | "error">("idle");
+  const [copyState, setCopyState] = useState<"idle" | "proposal" | "booking" | "error">("idle");
+  const [approvedPursuitArtifact, setApprovedPursuitArtifact] = useState<DakotaApprovedPursuitArtifact | null>(null);
+  const [positiveOutcomeConfirmed, setPositiveOutcomeConfirmed] = useState(false);
   const dirty = useMemo(() => JSON.stringify(form) !== baseline, [baseline, form]);
   const externalConflict = (recordUpdatedAt ?? null) !== baselineUpdatedAt;
   const baselineRecord = useMemo<OperatorRecordInput>(() => {
@@ -707,6 +752,8 @@ export function ProgressiveOpportunityDrawer({
     setBaselineUpdatedAt(recordUpdatedAt ?? null);
     setBaselineMilestones(milestones);
     initialActivityIds.current = initialRecord.activities.map((activity) => activity.activityId);
+    setApprovedPursuitArtifact(null);
+    setPositiveOutcomeConfirmed(false);
     setError("");
     setSaved(false);
   };
@@ -816,19 +863,51 @@ export function ProgressiveOpportunityDrawer({
     });
   };
 
-  const resolveTask = (status: Exclude<DakotaTaskStatus, "open">) => {
+  const resolveTask = (status: Exclude<DakotaTaskStatus, "open">, confirmPositiveOutcome = false) => {
     setError("");
     const openTask = form.tasks.find((task) => task.status === "open");
     if (!openTask) return setError("There is no open task to resolve.");
     if (!isPersistedOpenTask(openTask.taskId, baselineRecord.tasks)) return setError(NEW_TASK_FIRST_SAVE_ERROR);
     if (!taskResolution.trim()) return setError("Add a factual resolution note before closing the task.");
     const resolvedAt = new Date().toISOString();
+    const resolutionNote = status === "completed" && openTask.type === "client_success" && confirmPositiveOutcome
+      ? `Positive outcome verified: ${taskResolution.trim()}`
+      : taskResolution.trim();
+    const resolvedTask: DakotaTask = { ...openTask, status, resolvedAt, resolutionNote };
+    const resolvedTasks = form.tasks.map((task) => task.taskId === openTask.taskId ? resolvedTask : task);
+    let chainedTask: DakotaTask | null = null;
+    if (status === "completed" && openTask.type === "client_success" && confirmPositiveOutcome) {
+      if (!positiveOutcomeConfirmed) return setError("Confirm that a positive client outcome was actually verified before queuing a review request.");
+      const persistedRoute = selectedPersistedContact(form, persistedContacts, persistedSelectedContactId);
+      if (!isRelationshipEmail(persistedRoute)) return setError("Save and select an explicit-inquiry or existing-relationship email route before queuing the review request.");
+      chainedTask = buildReviewRequestTask({
+        taskId: crypto.randomUUID().toLowerCase(),
+        positiveOutcomeAt: resolvedAt,
+        contact: persistedRoute,
+        tasks: resolvedTasks,
+      });
+      if (!chainedTask) return setError("This record already has a review request task. Resolve the current task, then choose the next truthful client action.");
+    }
+    if ((status === "completed" || status === "skipped") && openTask.type === "review_request") {
+      chainedTask = buildReferralRequestTask({
+        taskId: crypto.randomUUID().toLowerCase(),
+        createdAt: resolvedAt,
+        reviewTask: resolvedTask,
+        tasks: resolvedTasks,
+      });
+      if (!chainedTask) return setError("This record already has a referral request task or the review task lacks its exact email route.");
+    }
     setSaved(false);
     setForm((current) => ({
       ...current,
-      tasks: current.tasks.map((task) => task.taskId === openTask.taskId ? { ...task, status, resolvedAt, resolutionNote: taskResolution.trim() } : task),
+      tasks: chainedTask ? [...resolvedTasks, chainedTask] : resolvedTasks,
+      ...(chainedTask ? {
+        nextAction: chainedTask.title,
+        dueDate: chainedTask.dueAt?.slice(0, 10) ?? "",
+      } : {}),
     }));
     setTaskResolution("");
+    setPositiveOutcomeConfirmed(false);
   };
 
   const classifiedCandidate = useMemo<Candidate>(() => ({
@@ -859,25 +938,42 @@ export function ProgressiveOpportunityDrawer({
   const activeTaskContact = activeTask?.contactId ? form.contacts.find((contact) => contact.contactId === activeTask.contactId) ?? null : null;
   const selectedRoute = selectedPersistedContact(form, persistedContacts, persistedSelectedContactId);
   const routedTask = activeTask?.channel !== "internal" ? activeTask : null;
-  const directTask = activeTask && ["email", "phone", "sms"].includes(activeTask.channel) ? activeTask : null;
-  const exactTaskRoute = directTask?.contactId && directTask.contactId === selectedRoute?.contactId ? selectedRoute : null;
-  const usableContact = exactTaskRoute && (
-    directTask?.channel === "email" ? canUseGmailCompose(exactTaskRoute) :
-    directTask?.channel === "sms" ? canUseGoogleVoice(exactTaskRoute) : true
-  ) ? exactTaskRoute : null;
-  const voiceContact = directTask?.channel === "sms" && canUseGoogleVoice(usableContact) ? usableContact : null;
-  const phoneContact = directTask?.channel === "phone" && usableContact?.channel === "phone" ? usableContact : null;
   const meetingContact = activeTask?.channel === "meeting" && selectedRoute && (!activeTask.contactId || activeTask.contactId === selectedRoute.contactId) ? selectedRoute : null;
-  const valueBrief = buildValueBrief(classifiedCandidate, form);
   const selectedPrivateOffer = revenueBridgeRecord?.selected_offer
     ? privateOffers.find((offer) => offer.bridgeOfferCode === revenueBridgeRecord.selected_offer?.offer_code) ?? null
     : null;
   const proposalBrief = buildProposalBrief(classifiedCandidate, form, selectedPrivateOffer);
-  const gmailBody = valueBrief && form.draft === valueBrief.plainText ? valueBrief.outboundText : form.draft;
-  const canShareValueBrief = Boolean(valueBrief && usableContact && approved && directTask?.channel === "email");
-  const gmailHref = usableContact && directTask?.channel === "email" && approved && form.draft.trim()
-    ? buildGmailComposeHref(usableContact, valueBrief?.title ?? `${candidateLabel(classifiedCandidate)}: one focused next move`, gmailBody)
-    : null;
+  const lifecycleTask = activeTask && [
+    "client_success",
+    "proof_request",
+    "review_request",
+    "referral_request",
+    "renewal",
+    "expansion",
+  ].includes(activeTask.type) ? activeTask : null;
+  const showPursuitKit = Boolean(
+    !["won", "paid"].includes(form.status) &&
+    (!activeTask || ["value_brief", "outreach", "follow_up"].includes(activeTask.type)),
+  );
+  const clientJobLabel = proposalBrief?.offerName || form.offerFit || "the work";
+  const availableClientGrowthTemplates = CLIENT_GROWTH_TEMPLATES;
+  const pursuitEvidence = useMemo<DakotaPursuitEvidenceItem[]>(() => {
+    const items: DakotaPursuitEvidenceItem[] = [];
+    if (baselineRecord.verifiedPain.trim()) {
+      items.push({ label: "Saved operator verification", detail: baselineRecord.verifiedPain.trim() });
+    }
+    for (const evidenceItem of revenueBridgeRecord?.evidence ?? []) {
+      if (evidenceItem.review_state !== "confirmed") continue;
+      items.push({ label: `Confirmed ${evidenceItem.provider.replaceAll("_", " ")} evidence`, detail: evidenceItem.summary });
+    }
+    const audit = revenueBridgeRecord?.website_audit;
+    if (audit?.status === "generated") {
+      const finding = audit.findings.find((item) => item.severity === "high") ?? audit.findings[0];
+      if (finding) items.push({ label: "Website Audit measurement", detail: finding.summary });
+      else if (audit.summary.trim()) items.push({ label: "Website Audit measurement", detail: audit.summary.trim() });
+    }
+    return items.slice(0, 3);
+  }, [baselineRecord.verifiedPain, revenueBridgeRecord]);
   const balance = derivedBalance(form.commercialClose);
   const researchQuery = [candidateLabel(classifiedCandidate), placeLine(classifiedCandidate)].filter(Boolean).join(" ");
   const researchLocation = placeLine(classifiedCandidate) || "New York, NY";
@@ -897,33 +993,6 @@ export function ProgressiveOpportunityDrawer({
     ["Paid", milestones?.paidAt],
   ].filter((entry): entry is [string, string] => Boolean(entry[1]));
 
-  const prepareDraft = () => {
-    if (!form.verifiedPain.trim() || !form.offerFit.trim()) return;
-    const contactName = usableContact?.name.trim() || "there";
-    setString("draft", `Hi ${contactName} — I took a look at ${candidateLabel(candidate)} and noticed ${form.verifiedPain.trim()}\n\nLittle Fight NYC may be able to help with one focused move: ${form.offerFit.trim()}\n\nWould it be useful if I sent a brief outline?\n\n— David, Little Fight NYC`);
-  };
-
-  const copyDraft = async () => {
-    if (!approved || !usableContact || !form.draft.trim()) return;
-    setCopyState("idle");
-    const outboundDraft = directTask?.channel === "email" ? gmailBody : form.draft;
-    try { await navigator.clipboard.writeText(outboundDraft); setCopyState("draft"); }
-    catch { setCopyState("error"); }
-  };
-
-  const prepareValueBrief = () => {
-    if (!valueBrief) return;
-    setSaved(false);
-    setForm((current) => ({ ...current, draft: valueBrief.plainText }));
-  };
-
-  const copyValueBrief = async () => {
-    if (!canShareValueBrief || !valueBrief) return;
-    setCopyState("idle");
-    try { await navigator.clipboard.writeText(valueBrief.outboundText); setCopyState("brief"); }
-    catch { setCopyState("error"); }
-  };
-
   const copyProposalBrief = async () => {
     if (!proposalBrief) return;
     setCopyState("idle");
@@ -935,13 +1004,6 @@ export function ProgressiveOpportunityDrawer({
     if (!approved || !meetingContact) return;
     setCopyState("idle");
     try { await navigator.clipboard.writeText(BOOKING_HREF); setCopyState("booking"); }
-    catch { setCopyState("error"); }
-  };
-
-  const copyPhoneNumber = async () => {
-    if (!approved || !phoneContact) return;
-    setCopyState("idle");
-    try { await navigator.clipboard.writeText(phoneContact.value); setCopyState("phone"); }
     catch { setCopyState("error"); }
   };
 
@@ -960,6 +1022,17 @@ export function ProgressiveOpportunityDrawer({
     if (Number.isNaN(occurredDate.getTime())) return setError("Activity time must be valid.");
     if (!isInternalNote && activeTask && occurredDate.getTime() < Date.parse(activeTask.createdAt) - 5 * 60_000) return setError("Activity evidence cannot predate its linked task.");
     const occurredAt = occurredDate.toISOString();
+    let pursuitAttribution: DakotaPursuitAttribution | null = null;
+    const activityShape = { type: effectiveActivityType, channel: effectiveActivityChannel };
+    if (activityNeedsPursuitAttribution(activityShape, activeTask?.type)) {
+      const canReusePriorPacket = activeTask?.type === "follow_up";
+      pursuitAttribution = approvedPursuitArtifact?.attribution
+        ?? (canReusePriorPacket ? latestPursuitAttribution(form.activities, activityContact?.contactId, occurredAt) : null);
+      if (!isValidPursuitAttribution(pursuitAttribution)) return setError("Review and approve one exact Dakota pursuit packet before recording this outbound action.");
+      if (Date.parse(pursuitAttribution.approvedAt) > occurredDate.getTime() + 5 * 60_000) return setError("The recorded action cannot predate this packet approval. Check the activity time.");
+    } else if (effectiveActivityType === "reply") {
+      pursuitAttribution = latestPursuitAttribution(form.activities, activityContact?.contactId, occurredAt);
+    }
     const activity: DakotaActivity = {
       activityId: crypto.randomUUID().toLowerCase(),
       taskId: isInternalNote ? null : activeTask?.taskId ?? null,
@@ -970,6 +1043,7 @@ export function ProgressiveOpportunityDrawer({
       note: activityDraft.note.trim(),
       occurredAt,
       followUpAt: null,
+      pursuitAttribution,
     };
     setSaved(false);
     setForm((current) => ({ ...current, activities: [...current.activities, activity] }));
@@ -1052,7 +1126,13 @@ export function ProgressiveOpportunityDrawer({
                 </div>
                 <div className="task-resolution">
                   <label><FieldLabel hint="Required to close the loop">What actually happened?</FieldLabel><textarea name="task_resolution" rows={3} maxLength={1000} value={taskResolution} onChange={(event) => setTaskResolution(event.target.value)} placeholder="Record the factual result, then set the next task…" disabled={!activeTaskIsPersisted} aria-describedby={!activeTaskIsPersisted ? "task-first-save-note" : undefined} /></label>
-                  <div><button type="button" className="primary-button" onClick={() => resolveTask("completed")} disabled={!activeTaskIsPersisted}><CircleCheckBig size={17} /> Complete task</button><button type="button" className="secondary-button" onClick={() => resolveTask("skipped")} disabled={!activeTaskIsPersisted}>Skip with reason</button></div>
+                  {activeTask.type === "client_success" ? <label className="positive-outcome-gate"><input type="checkbox" checked={positiveOutcomeConfirmed} disabled={!activeTaskIsPersisted} onChange={(event) => setPositiveOutcomeConfirmed(event.target.checked)} /><span><strong>A positive client outcome was actually verified.</strong>This can queue one review request for exactly 24 hours later. It never sends the request.</span></label> : null}
+                  <div>
+                    <button type="button" className="primary-button" onClick={() => resolveTask("completed")} disabled={!activeTaskIsPersisted}><CircleCheckBig size={17} /> {activeTask.type === "review_request" ? "Complete + queue referral" : "Complete task"}</button>
+                    {activeTask.type === "client_success" ? <button type="button" className="secondary-button" onClick={() => resolveTask("completed", true)} disabled={!activeTaskIsPersisted || !positiveOutcomeConfirmed}><CircleCheckBig size={17} /> Complete + queue review</button> : null}
+                    <button type="button" className="secondary-button" onClick={() => resolveTask("skipped")} disabled={!activeTaskIsPersisted}>Skip with reason</button>
+                  </div>
+                  {activeTask.type === "review_request" ? <p><ShieldCheck size={15} /> “Complete” requires the real manual send to be recorded below, then queues the one-time referral ask for seven days after the verified outcome.</p> : null}
                   {!activeTaskIsPersisted ? <p id="task-first-save-note"><ShieldCheck size={15} /> Save this new task open once before completing or skipping it.</p> : OPEN_TASK_REQUIRED_STATUSES.has(form.status) ? <p><ShieldCheck size={15} /> After resolving, set the next task before saving this stage.</p> : null}
                 </div>
               </div>
@@ -1063,9 +1143,9 @@ export function ProgressiveOpportunityDrawer({
                 <div className="task-composer__intro"><CalendarClock size={20} /><div><strong>Set the next task before this record leaves your hands.</strong><span>Use a real deadline only when timing matters. “Ready now” stays at the top of the queue.</span></div></div>
                 {form.status === "paid" && hasCompletedPaidOnboarding(form) ? (
                   <div className="client-growth-playbook">
-                    <div><p className="eyebrow">Client growth loop</p><strong>Turn the finished project into proof, referrals, retention, and expansion.</strong><span>These buttons schedule one human-owned task. Dakota never sends the request.</span></div>
+                    <div><p className="eyebrow">Client growth loop</p><strong>Turn the finished project into proof, referrals, retention, and expansion.</strong><span>These buttons schedule one human-owned task. A confirmed positive outcome queues one review ask at +24 hours; resolving it queues one referral ask at +7 days. Dakota never sends either request.</span></div>
                     <div className="offer-suggestions" aria-label="Approved client growth task templates">
-                      {CLIENT_GROWTH_TEMPLATES.map((template) => (
+                      {availableClientGrowthTemplates.map((template) => (
                         <button key={template.type} type="button" onClick={() => applyClientGrowthTemplate(template)}>
                           <strong>{template.label}</strong>
                           <span>{template.daysFromNow} days · {TASK_TYPE_LABELS[template.type]}</span>
@@ -1075,7 +1155,7 @@ export function ProgressiveOpportunityDrawer({
                   </div>
                 ) : null}
                 <div className="form-grid progressive-fields">
-                  <label><FieldLabel>Task type</FieldLabel><select name="task_type" value={taskDraft.type} onChange={(event) => { const type = event.target.value as DakotaTaskType; const channel = taskChannels(type)[0] ?? "internal"; setTaskDraft((current) => ({ ...current, type, channel, contactId: channel !== "internal" && selectedRoute && taskContactMatchesChannel(selectedRoute, channel) ? selectedRoute.contactId : "" })); }}>{TASK_TYPES.map((type) => <option key={type} value={type}>{TASK_TYPE_LABELS[type]}</option>)}</select></label>
+                  <label><FieldLabel>Task type</FieldLabel><select name="task_type" value={taskDraft.type} onChange={(event) => { const type = event.target.value as DakotaTaskType; const channel = taskChannels(type)[0] ?? "internal"; setTaskDraft((current) => ({ ...current, type, channel, contactId: channel !== "internal" && selectedRoute && taskContactMatchesChannel(selectedRoute, channel) ? selectedRoute.contactId : "" })); }}>{TASK_TYPES.filter((type) => type !== "review_request" && type !== "referral_request").map((type) => <option key={type} value={type}>{TASK_TYPE_LABELS[type]}</option>)}</select></label>
                   <label><FieldLabel>Work channel</FieldLabel><select name="task_channel" value={taskDraft.channel} onChange={(event) => { const channel = event.target.value as DakotaTaskChannel; setTaskDraft((current) => ({ ...current, channel, contactId: channel !== "internal" && selectedRoute && taskContactMatchesChannel(selectedRoute, channel) ? selectedRoute.contactId : "" })); }}>{taskChannels(taskDraft.type).map((channel) => <option key={channel} value={channel}>{TASK_CHANNEL_LABELS[channel]}</option>)}</select></label>
                   <label className="form-span"><FieldLabel hint="One concrete verb and outcome">Exact next task</FieldLabel><input name="task_title" maxLength={240} value={taskDraft.title} onChange={(event) => setTaskDraft((current) => ({ ...current, title: event.target.value }))} placeholder="Review the requested website plan and prepare one useful reply…" /></label>
                   <label><FieldLabel>Exact contact</FieldLabel><select name="task_contact" value={taskDraft.contactId} required={taskDraft.channel !== "internal"} disabled={taskDraft.channel === "internal" || !selectedRoute || !taskContactMatchesChannel(selectedRoute, taskDraft.channel)} onChange={(event) => setTaskDraft((current) => ({ ...current, contactId: event.target.value }))}><option value="" disabled={taskDraft.channel !== "internal"}>{taskDraft.channel === "internal" ? "Internal—no contact" : selectedRoute ? "Choose the saved selected route" : "Save one selected route first"}</option>{selectedRoute && taskContactMatchesChannel(selectedRoute, taskDraft.channel) ? <option value={selectedRoute.contactId}>{selectedRoute.name || selectedRoute.role || "Unnamed contact"} · {selectedRoute.channel}</option> : null}</select></label>
@@ -1137,27 +1217,24 @@ export function ProgressiveOpportunityDrawer({
 
           <ProgressiveSection number="04" eyebrow="Manual outreach and activity" title="Prepare, then record what actually happened" complete={Boolean(form.activities.length)} defaultOpen={requiresApproval}>
             <div className="manual-outreach">
-              <div className="subsection-heading"><div><p className="eyebrow">Manual message</p><h4>One recipient. Useful first. Human sent.</h4></div><div className="subsection-actions"><button type="button" className="text-button" onClick={prepareDraft} disabled={!form.verifiedPain.trim() || !form.offerFit.trim()}>Prepare short note</button><button type="button" className="text-button" onClick={prepareValueBrief} disabled={!valueBrief}>Use value brief</button></div></div>
-              {valueBrief ? <article className="value-brief"><header><div><p className="eyebrow">Prospect-ready value brief</p><h4>{valueBrief.title}</h4></div><button type="button" className="secondary-button" onClick={() => void copyValueBrief()} disabled={!canShareValueBrief}>{copyState === "brief" ? <Check size={17} /> : <Copy size={17} />}{copyState === "brief" ? "Brief copied" : "Copy email brief"}</button></header><div><section><span>Observed</span><p>{valueBrief.observedFact}</p></section><section><span>Why it may matter</span><p>{valueBrief.customerImpact}</p></section><section><span>Smallest useful move</span><p>{valueBrief.firstMove}</p></section><section><span>What Little Fight owns</span><p>{valueBrief.ownership}</p></section></div><footer><ShieldCheck size={16} /> The saved draft stays URL-free. The verified booking link is added only to an approved email handoff.</footer></article> : null}
-              <label><FieldLabel>Private outreach draft</FieldLabel><textarea name="draft" maxLength={6000} rows={9} value={form.draft} onChange={(event) => setString("draft", event.target.value)} placeholder="Prepare a concise, evidence-specific message. Nothing sends from Dakota…" /></label>
-              {usableContact && approved ? (
-                <div className="voice-handoff">
-                  <div>{usableContact.channel === "email" ? <Mail size={20} /> : usableContact.channel === "sms" ? <MessageSquareText size={20} /> : <Phone size={20} />}<span><strong>{usableContact.value}</strong>{usableContact.name || usableContact.role || "Verified contact"} · {CONSENT_LABELS[usableContact.consentClassification]} · exact selected route</span></div>
-                  <div className="handoff-actions">
-                    <button type="button" className="primary-button" onClick={() => void copyDraft()} disabled={!form.draft.trim()}>{copyState === "draft" ? <Check size={17} /> : <Copy size={17} />}{copyState === "draft" ? "Draft copied" : "Copy draft"}</button>
-                    {gmailHref ? <a className="secondary-button" href={gmailHref} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Open Gmail draft <ExternalLink size={16} /></a> : null}
-                    {voiceContact ? <a className="secondary-button" href={GOOGLE_VOICE_MESSAGES_HREF} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Open Google Voice <ExternalLink size={16} /></a> : null}
-                    {phoneContact ? <button type="button" className="secondary-button" onClick={() => void copyPhoneNumber()}>{copyState === "phone" ? <Check size={16} /> : <Copy size={16} />}{copyState === "phone" ? "Number copied" : "Copy number"}</button> : null}
-                    {phoneContact ? <a className="secondary-button" href={GOOGLE_VOICE_CALLS_HREF} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Open Voice calls <ExternalLink size={16} /></a> : null}
-                    <a className="secondary-button" href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Open booking page <ExternalLink size={16} /></a>
-                  </div>
-                  <p><ShieldCheck size={16} /> Gmail and Voice open for review only. Verify the sender is hello@littlefightnyc.com and the recipient matches this exact route; then press Send yourself and record what happened.</p>
-                  <span className="sr-only" role="status" aria-live="polite">{copyState === "draft" ? "Draft copied. No outreach was recorded." : copyState === "brief" ? "Value brief copied. No outreach was recorded." : copyState === "phone" ? "Phone number copied. No call was recorded." : ""}</span>
-                </div>
-              ) : meetingContact && approved ? null : <div className="voice-locked"><ShieldCheck size={20} /><span><strong>Manual handoff is locked.</strong>Approve pursuit, select one allowed route, save it, and set an email, phone, SMS, or meeting task first.</span></div>}
+              {showPursuitKit ? <PursuitKitPanel
+                businessName={candidateLabel(classifiedCandidate)}
+                category={classifiedCandidate.category}
+                contact={selectedRoute}
+                evidence={pursuitEvidence}
+                offerFit={baselineRecord.offerFit}
+                pursuitApproved={approved}
+                onArtifactChange={setApprovedPursuitArtifact}
+              /> : null}
+              {lifecycleTask ? <ClientLifecycleHandoffPanel
+                task={lifecycleTask}
+                contact={activeTaskContact}
+                draft={form.draft}
+                jobLabel={clientJobLabel}
+                onDraftChange={(value) => setString("draft", value)}
+              /> : null}
               {meetingContact && approved ? <div className="calendar-handoff"><CalendarClock size={20} /><div><strong>Turn the reply into a real meeting.</strong><span>{meetingContact.name || meetingContact.role || "Selected contact"} · exact saved route · Google Meet included</span></div><div><button type="button" className="primary-button" onClick={() => void copyBookingLink()}>{copyState === "booking" ? <Check size={17} /> : <Copy size={17} />}{copyState === "booking" ? "Booking link copied" : "Copy booking link"}</button><a className="secondary-button" href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Open booking page <ExternalLink size={16} /></a></div><p><ShieldCheck size={16} /> Opens the verified Little Fight appointment schedule. Copying or opening it does not record a meeting.</p></div> : null}
-              {directTask?.channel === "sms" && approved && !voiceContact ? <div className="voice-locked"><ShieldCheck size={20} /><span><strong>Google Voice text remains locked.</strong>It requires a verified SMS route classified explicit inquiry or existing relationship. A phone or public business number is not text consent.</span></div> : null}
-              {copyState === "error" ? <p className="copy-error" role="status">Clipboard access failed. The draft remains in Dakota.</p> : null}
+              {copyState === "error" ? <p className="copy-error" role="status">Clipboard access failed. Nothing was recorded.</p> : null}
             </div>
             <div className="activity-composer">
               <div className="subsection-heading"><div><p className="eyebrow">Explicit evidence entry</p><h4>Record the real-world action</h4></div><Activity size={20} /></div>
@@ -1169,13 +1246,13 @@ export function ProgressiveOpportunityDrawer({
                 <label><FieldLabel>Occurred at</FieldLabel><input name="activity_occurred_at" type="datetime-local" value={activityDraft.occurredAt} onChange={(event) => setActivityDraft((current) => ({ ...current, occurredAt: event.target.value }))} /></label>
                 <label className="form-span"><FieldLabel hint="Factual evidence">Activity note</FieldLabel><textarea name="activity_note" rows={3} maxLength={2000} value={activityDraft.note} onChange={(event) => setActivityDraft((current) => ({ ...current, note: event.target.value }))} placeholder="What actually happened, including channel and result…" /></label>
               </div>
-              {activeTask ? <p className="activity-link-contract"><ShieldCheck size={15} /> Evidence will link to task “{activeTask.title}”{selectedRoute ? ` and ${selectedRoute.value}` : ""}.</p> : <p className="activity-link-contract"><ShieldCheck size={15} /> Only internal notes are available until one durable task is open.</p>}
+              {activeTask ? <p className="activity-link-contract"><ShieldCheck size={15} /> Evidence will link to task “{activeTask.title}”{selectedRoute ? ` and ${selectedRoute.value}` : ""}.{activityNeedsPursuitAttribution({ type: effectiveActivityType, channel: effectiveActivityChannel }, activeTask.type) ? approvedPursuitArtifact ? ` Template ${approvedPursuitArtifact.attribution.templateId} and packet ${approvedPursuitArtifact.attribution.packetId} will be locked to the event.` : " Approve the exact packet above before recording this acquisition outreach." : ""}</p> : <p className="activity-link-contract"><ShieldCheck size={15} /> Only internal notes are available until one durable task is open.</p>}
               <button type="button" className="text-button record-activity-button" onClick={appendActivity} disabled={form.activities.length >= 100}><Plus size={17} /> {form.activities.length >= 100 ? "Activity limit reached" : effectiveActivityType === "outreach" && effectiveActivityOutcome === "sent" ? "Record sent activity" : "Append activity evidence"}</button>
             </div>
             <div className="activity-timeline"><div className="subsection-heading"><div><p className="eyebrow">Append-only timeline</p><h4>{form.activities.length ? `${form.activities.length} explicit events` : "No activity recorded"}</h4></div></div>{form.activities.length ? <ol>{[...form.activities].reverse().map((activity) => {
               const linkedTask = activity.taskId ? form.tasks.find((task) => task.taskId === activity.taskId) ?? null : null;
               const linkedContact = activity.contactId ? form.contacts.find((contact) => contact.contactId === activity.contactId) ?? null : null;
-              return <li key={activity.activityId}><span className="activity-marker" /><div><p><strong>{ACTIVITY_TYPE_LABELS[activity.type]}</strong><span>{activity.channel.replace(/_/gu, " ")} · {activity.outcome.replace(/_/gu, " ")}</span></p><time dateTime={activity.occurredAt}>{formatTimestamp(activity.occurredAt)}</time><blockquote>{activity.note}</blockquote>{linkedTask ? <small>Task: {linkedTask.title}{linkedContact ? ` · Route: ${linkedContact.value}` : ""}</small> : activity.type === "note" ? <small>Internal note · no external route</small> : <small>Legacy evidence · no durable task link</small>}{activity.followUpAt ? <small>Follow up {formatTimestamp(activity.followUpAt)}</small> : null}</div></li>;
+              return <li key={activity.activityId}><span className="activity-marker" /><div><p><strong>{ACTIVITY_TYPE_LABELS[activity.type]}</strong><span>{activity.channel.replace(/_/gu, " ")} · {activity.outcome.replace(/_/gu, " ")}</span></p><time dateTime={activity.occurredAt}>{formatTimestamp(activity.occurredAt)}</time><blockquote>{activity.note}</blockquote>{linkedTask ? <small>Task: {linkedTask.title}{linkedContact ? ` · Route: ${linkedContact.value}` : ""}</small> : activity.type === "note" ? <small>Internal note · no external route</small> : <small>Legacy evidence · no durable task link</small>}{activity.pursuitAttribution ? <small>Attributed: {activity.pursuitAttribution.templateId} v{activity.pursuitAttribution.templateVersion} · packet {activity.pursuitAttribution.packetId} v{activity.pursuitAttribution.packetVersion} · {activity.pursuitAttribution.segment.replaceAll("_", " ")}</small> : null}{activity.followUpAt ? <small>Follow up {formatTimestamp(activity.followUpAt)}</small> : null}</div></li>;
             })}</ol> : <div className="inline-empty"><Activity size={22} /><p>Timeline starts only when David records something that actually happened.</p></div>}</div>
           </ProgressiveSection>
 

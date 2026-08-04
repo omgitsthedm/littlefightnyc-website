@@ -135,6 +135,24 @@ export const DAKOTA_ACTIVITY_OUTCOMES = [
 ] as const;
 export type DakotaActivityOutcome = (typeof DAKOTA_ACTIVITY_OUTCOMES)[number];
 
+export const DAKOTA_PURSUIT_TEMPLATE_IDS = [
+  "restaurant_booking_fix_sop",
+  "salon_google_profile_sop",
+  "new_business_launch_checklist",
+] as const;
+export type DakotaPursuitTemplateId = (typeof DAKOTA_PURSUIT_TEMPLATE_IDS)[number];
+export const DAKOTA_PURSUIT_SEGMENTS = ["restaurant", "salon", "new_business"] as const;
+export type DakotaPursuitSegment = (typeof DAKOTA_PURSUIT_SEGMENTS)[number];
+
+export interface DakotaPursuitAttribution {
+  templateId: DakotaPursuitTemplateId;
+  templateVersion: "1.0.0";
+  packetId: string;
+  packetVersion: "1.0.0";
+  segment: DakotaPursuitSegment;
+  approvedAt: string;
+}
+
 export interface DakotaActivity {
   activityId: string;
   taskId: string | null;
@@ -145,6 +163,7 @@ export interface DakotaActivity {
   note: string;
   occurredAt: string;
   followUpAt: string | null;
+  pursuitAttribution?: DakotaPursuitAttribution | null;
 }
 
 export const DAKOTA_ACTIVITY_COMPATIBILITY: Record<
@@ -244,8 +263,8 @@ export const DAKOTA_TASK_CHANNEL_COMPATIBILITY: Record<
   onboarding: ["internal"],
   client_success: ["internal", "email", "phone"],
   proof_request: ["internal", "email", "phone", "sms"],
-  review_request: ["internal", "email", "phone", "sms"],
-  referral_request: ["internal", "email", "phone", "sms"],
+  review_request: ["email"],
+  referral_request: ["email"],
   renewal: ["internal", "email", "phone"],
   expansion: ["internal", "email", "phone"],
 };
@@ -311,6 +330,11 @@ const ACTIVITY_OUTCOME_SET = new Set<string>(DAKOTA_ACTIVITY_OUTCOMES);
 const TASK_TYPE_SET = new Set<string>(DAKOTA_TASK_TYPES);
 const TASK_STATUS_SET = new Set<string>(DAKOTA_TASK_STATUSES);
 const TASK_CHANNEL_SET = new Set<string>(DAKOTA_TASK_CHANNELS);
+const PURSUIT_TEMPLATE_SEGMENT: Record<DakotaPursuitTemplateId, DakotaPursuitSegment> = {
+  restaurant_booking_fix_sop: "restaurant",
+  salon_google_profile_sop: "salon",
+  new_business_launch_checklist: "new_business",
+};
 const HUMAN_APPROVED_STATUS_SET = new Set<string>([
   "pursuit_ready",
   "pursuing",
@@ -695,6 +719,36 @@ function validateContacts(value: unknown): ValidationResult<DakotaVerifiedContac
   return { valid: true, value: contacts };
 }
 
+function validatePursuitAttribution(value: unknown): ValidationResult<DakotaPursuitAttribution | null> {
+  if (value === null) return { valid: true, value: null };
+  const fields = [
+    "templateId", "templateVersion", "packetId", "packetVersion", "segment", "approvedAt",
+  ] as const;
+  if (!isRecord(value) || !hasExactKeys(value, fields)) {
+    return { valid: false, error: "Pursuit attribution has an invalid shape." };
+  }
+  if (
+    typeof value.templateId !== "string" ||
+    !DAKOTA_PURSUIT_TEMPLATE_IDS.includes(value.templateId as DakotaPursuitTemplateId)
+  ) {
+    return { valid: false, error: "Pursuit attribution templateId is unsupported." };
+  }
+  const templateId = value.templateId as DakotaPursuitTemplateId;
+  if (value.templateVersion !== "1.0.0" || value.packetVersion !== "1.0.0") {
+    return { valid: false, error: "Pursuit attribution version is unsupported." };
+  }
+  if (typeof value.packetId !== "string" || !UUID.test(value.packetId)) {
+    return { valid: false, error: "Pursuit attribution packetId must be a lowercase UUID." };
+  }
+  if (value.segment !== PURSUIT_TEMPLATE_SEGMENT[templateId]) {
+    return { valid: false, error: "Pursuit attribution segment must match its template." };
+  }
+  if (!isIsoTimestamp(value.approvedAt)) {
+    return { valid: false, error: "Pursuit attribution approvedAt must be an ISO timestamp." };
+  }
+  return { valid: true, value: value as unknown as DakotaPursuitAttribution };
+}
+
 function validateActivity(value: unknown): ValidationResult<DakotaActivity> {
   const legacyFields = [
     "activityId", "channel", "type", "outcome", "note", "occurredAt", "followUpAt",
@@ -703,19 +757,21 @@ function validateActivity(value: unknown): ValidationResult<DakotaActivity> {
     "activityId", "taskId", "contactId", "channel", "type", "outcome", "note",
     "occurredAt", "followUpAt",
   ] as const;
+  const attributedFields = [...fields, "pursuitAttribution"] as const;
   if (!isRecord(value)) {
     return { valid: false, error: "Activity has an invalid shape." };
   }
   const hasProvenance = hasExactKeys(value, fields);
+  const hasAttribution = hasExactKeys(value, attributedFields);
   const isLegacyShape = hasExactKeys(value, legacyFields);
-  if (!hasProvenance && !isLegacyShape) {
+  if (!hasProvenance && !hasAttribution && !isLegacyShape) {
     return { valid: false, error: "Activity has an invalid shape." };
   }
   if (typeof value.activityId !== "string" || !UUID.test(value.activityId)) {
     return { valid: false, error: "Activity activityId must be a lowercase UUID." };
   }
-  const taskId = hasProvenance ? value.taskId : null;
-  const contactId = hasProvenance ? value.contactId : null;
+  const taskId = hasProvenance || hasAttribution ? value.taskId : null;
+  const contactId = hasProvenance || hasAttribution ? value.contactId : null;
   if (taskId !== null && (typeof taskId !== "string" || !UUID.test(taskId))) {
     return { valid: false, error: "Activity taskId must be null or a lowercase UUID." };
   }
@@ -743,6 +799,10 @@ function validateActivity(value: unknown): ValidationResult<DakotaActivity> {
   if (value.followUpAt !== null && !isIsoTimestamp(value.followUpAt)) {
     return { valid: false, error: "Activity followUpAt must be null or an ISO timestamp." };
   }
+  const pursuitAttribution = hasAttribution
+    ? validatePursuitAttribution(value.pursuitAttribution)
+    : { valid: true, value: undefined } as const;
+  if (!pursuitAttribution.valid) return pursuitAttribution;
   return {
     valid: true,
     value: {
@@ -755,6 +815,7 @@ function validateActivity(value: unknown): ValidationResult<DakotaActivity> {
       note: value.note as string,
       occurredAt: value.occurredAt as string,
       followUpAt: value.followUpAt as string | null,
+      ...(hasAttribution ? { pursuitAttribution: pursuitAttribution.value } : {}),
     },
   };
 }
@@ -780,6 +841,29 @@ function validateActivities(value: unknown): ValidationResult<DakotaActivity[]> 
 function isCompatibleActivity(activity: DakotaActivity): boolean {
   const outcomes = DAKOTA_ACTIVITY_COMPATIBILITY[activity.type][activity.channel];
   return outcomes?.includes(activity.outcome) ?? false;
+}
+
+function activityNeedsPursuitAttribution(activity: DakotaActivity, tasks: readonly DakotaTask[]): boolean {
+  if (activity.channel === "internal" || activity.taskId === null) return false;
+  const taskType = tasks.find((task) => task.taskId === activity.taskId)?.type;
+  if (activity.type === "outreach") return taskType === "outreach";
+  if (activity.type === "call") return taskType === "outreach" || taskType === "follow_up";
+  return activity.type === "follow_up" && taskType === "follow_up";
+}
+
+function pursuitAttributionIsEqual(
+  left: DakotaPursuitAttribution | null | undefined,
+  right: DakotaPursuitAttribution | null | undefined,
+): boolean {
+  if (!left || !right) return !left && !right;
+  return (
+    left.templateId === right.templateId &&
+    left.templateVersion === right.templateVersion &&
+    left.packetId === right.packetId &&
+    left.packetVersion === right.packetVersion &&
+    left.segment === right.segment &&
+    left.approvedAt === right.approvedAt
+  );
 }
 
 function isUsableContact(contact: DakotaVerifiedContact): boolean {
@@ -900,6 +984,12 @@ function validateTasks(
     if (task.value.channel === "internal" && task.value.contactId !== null) {
       return { valid: false, error: "Internal tasks cannot reference a contact." };
     }
+    if (
+      (task.value.type === "review_request" || task.value.type === "referral_request") &&
+      task.value.channel !== "email"
+    ) {
+      return { valid: false, error: "Review and referral requests are human-operated email tasks only." };
+    }
     if (["email", "phone", "sms"].includes(task.value.channel)) {
       if (!contact) {
         return { valid: false, error: "Direct-channel tasks require a usable verified contact." };
@@ -914,11 +1004,22 @@ function validateTasks(
       if (
         task.value.channel === "email" &&
         contact.consentClassification !== "explicit_inquiry" &&
+        contact.consentClassification !== "existing_relationship" &&
+        contact.consentClassification !== "public_business"
+      ) {
+        return {
+          valid: false,
+          error: "Email tasks require explicit-inquiry, existing-relationship, or verified public-business contact.",
+        };
+      }
+      if (
+        (task.value.type === "review_request" || task.value.type === "referral_request") &&
+        contact.consentClassification !== "explicit_inquiry" &&
         contact.consentClassification !== "existing_relationship"
       ) {
         return {
           valid: false,
-          error: "Email tasks require explicit-inquiry or existing-relationship consent.",
+          error: "Review and referral email tasks require explicit-inquiry or existing-relationship consent.",
         };
       }
       if (
@@ -976,7 +1077,15 @@ function activityHasDurableProvenance(
     return false;
   }
   if (
-    (activity.channel === "email" || activity.channel === "sms") &&
+    activity.channel === "email" &&
+    contact.consentClassification !== "explicit_inquiry" &&
+    contact.consentClassification !== "existing_relationship" &&
+    contact.consentClassification !== "public_business"
+  ) {
+    return false;
+  }
+  if (
+    activity.channel === "sms" &&
     contact.consentClassification !== "explicit_inquiry" &&
     contact.consentClassification !== "existing_relationship"
   ) {
@@ -1509,7 +1618,8 @@ export function validateDakotaOperatorTransition(
         prior.type !== candidate.type || prior.outcome !== candidate.outcome ||
         prior.taskId !== candidate.taskId || prior.contactId !== candidate.contactId ||
         prior.note !== candidate.note || prior.occurredAt !== candidate.occurredAt ||
-        prior.followUpAt !== candidate.followUpAt
+        prior.followUpAt !== candidate.followUpAt ||
+        !pursuitAttributionIsEqual(prior.pursuitAttribution, candidate.pursuitAttribution)
       ) {
         return { valid: false, error: "Existing activities are immutable." };
       }
@@ -1589,6 +1699,68 @@ export function validateDakotaOperatorTransition(
         error: "New external activity evidence must use selectedContactId exactly.",
       };
     }
+    const needsPursuitAttribution = activityNeedsPursuitAttribution(activity, next.tasks);
+    if (needsPursuitAttribution && !activity.pursuitAttribution) {
+      return {
+        valid: false,
+        error: "New outbound activity requires immutable Dakota template and packet attribution.",
+      };
+    }
+    if (!needsPursuitAttribution && activity.type !== "reply" && activity.pursuitAttribution) {
+      return {
+        valid: false,
+        error: "Pursuit attribution is reserved for acquisition outreach evidence.",
+      };
+    }
+    if (
+      activity.pursuitAttribution &&
+      Date.parse(activity.pursuitAttribution.approvedAt) > Date.parse(activity.occurredAt) + 5 * 60_000
+    ) {
+      return {
+        valid: false,
+        error: "Pursuit artifact approval cannot occur after the recorded activity.",
+      };
+    }
+    if (
+      activity.pursuitAttribution &&
+      next.activities.some((candidate) =>
+        candidate.activityId !== activity.activityId &&
+        candidate.pursuitAttribution?.packetId === activity.pursuitAttribution?.packetId &&
+        !pursuitAttributionIsEqual(candidate.pursuitAttribution, activity.pursuitAttribution)
+      )
+    ) {
+      return {
+        valid: false,
+        error: "One packet ID cannot carry conflicting template, version, segment, or approval attribution.",
+      };
+    }
+    if (activity.type === "reply") {
+      const earlierAttributedOutbounds = next.activities.filter((candidate) =>
+        candidate.activityId !== activity.activityId &&
+        candidate.contactId !== null &&
+        candidate.contactId === activity.contactId &&
+        activityNeedsPursuitAttribution(candidate, next.tasks) &&
+        Boolean(candidate.pursuitAttribution) &&
+        Date.parse(candidate.occurredAt) <= Date.parse(activity.occurredAt)
+      );
+      if (earlierAttributedOutbounds.length > 0 && !activity.pursuitAttribution) {
+        return {
+          valid: false,
+          error: "A reply to an attributed pursuit must retain the exact packet attribution.",
+        };
+      }
+      if (
+        activity.pursuitAttribution &&
+        !earlierAttributedOutbounds.some((candidate) =>
+          pursuitAttributionIsEqual(candidate.pursuitAttribution, activity.pursuitAttribution)
+        )
+      ) {
+        return {
+          valid: false,
+          error: "Reply attribution must match an earlier recorded outbound packet.",
+        };
+      }
+    }
   }
   if (appended.some((activity) => Date.parse(activity.occurredAt) > latestAllowed)) {
     return { valid: false, error: "New activities cannot be dated in the future." };
@@ -1624,6 +1796,71 @@ export function validateDakotaOperatorTransition(
     : [];
   if (newlyResolvedTasks.some((task) => task.resolvedAt === null || Date.parse(task.resolvedAt) > latestAllowed)) {
     return { valid: false, error: "Task resolution timestamps cannot be dated in the future." };
+  }
+
+  const lifecycleDelays = {
+    review_request: 24 * 60 * 60_000,
+    referral_request: 7 * 24 * 60 * 60_000,
+  } as const;
+  for (const type of ["review_request", "referral_request"] as const) {
+    if (appendedTasks.some((task) => task.type === type) && next.tasks.filter((task) => task.type === type).length > 1) {
+      return { valid: false, error: `A client record can have only one ${type.replace("_", " ")} task.` };
+    }
+  }
+  for (const task of appendedTasks) {
+    if (task.type === "review_request") {
+      if (next.status !== "paid") {
+        return { valid: false, error: "Review requests are available only inside the paid client lifecycle." };
+      }
+      const positiveOutcomeTask = [...next.tasks].reverse().find((candidate) =>
+        candidate.type === "client_success" &&
+        candidate.status === "completed" &&
+        candidate.resolvedAt !== null &&
+        candidate.resolutionNote.startsWith("Positive outcome verified:")
+      );
+      if (
+        !positiveOutcomeTask?.resolvedAt ||
+        task.createdAt !== positiveOutcomeTask.resolvedAt ||
+        task.dueAt === null ||
+        Date.parse(task.dueAt) !== Date.parse(positiveOutcomeTask.resolvedAt) + lifecycleDelays.review_request
+      ) {
+        return { valid: false, error: "A review request must follow explicit positive client-outcome evidence by exactly 24 hours." };
+      }
+    }
+    if (task.type === "referral_request") {
+      if (next.status !== "paid") {
+        return { valid: false, error: "Referral requests are available only inside the paid client lifecycle." };
+      }
+      const resolvedReviewTask = [...next.tasks].reverse().find((candidate) =>
+        candidate.type === "review_request" && candidate.status !== "open" && candidate.resolvedAt !== null
+      );
+      if (
+        !resolvedReviewTask ||
+        task.contactId !== resolvedReviewTask.contactId ||
+        task.dueAt === null ||
+        Date.parse(task.dueAt) !== Date.parse(resolvedReviewTask.createdAt) + lifecycleDelays.referral_request
+      ) {
+        return { valid: false, error: "A referral request must retain the review route and remain anchored seven days after the verified positive outcome." };
+      }
+    }
+  }
+  for (const task of newlyResolvedTasks) {
+    if (
+      task.status === "completed" &&
+      (task.type === "review_request" || task.type === "referral_request") &&
+      !next.activities.some((activity) =>
+        activity.taskId === task.taskId &&
+        activity.contactId === task.contactId &&
+        activity.channel === "email" &&
+        activity.type === "follow_up" &&
+        ["sent", "delivered", "completed"].includes(activity.outcome) &&
+        Date.parse(activity.occurredAt) >= Date.parse(task.createdAt) - DAKOTA_ACTIVITY_TASK_TIMESTAMP_SKEW_MS &&
+        task.resolvedAt !== null &&
+        Date.parse(activity.occurredAt) <= Date.parse(task.resolvedAt) + DAKOTA_ACTIVITY_TASK_TIMESTAMP_SKEW_MS
+      )
+    ) {
+      return { valid: false, error: "Completed review and referral tasks require exact manual-send activity evidence." };
+    }
   }
 
   const openTaskCount = next.tasks.filter((task) => task.status === "open").length;

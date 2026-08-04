@@ -495,6 +495,16 @@ describe("Dakota operator-state handler", () => {
         note: "Operator-recorded evidence.",
         occurredAt: currentTime.toISOString(),
         followUpAt: null,
+        ...(["outreach", "call", "follow_up", "reply"].includes(type) ? {
+          pursuitAttribution: {
+            templateId: "restaurant_booking_fix_sop" as const,
+            templateVersion: "1.0.0" as const,
+            packetId: "550e8400-e29b-41d4-a716-446655440200",
+            packetVersion: "1.0.0" as const,
+            segment: "restaurant" as const,
+            approvedAt: "2026-08-01T12:00:00.000Z",
+          },
+        } : {}),
       });
     };
     const advanceTask = (

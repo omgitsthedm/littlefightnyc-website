@@ -3,17 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>VERA — the daily drop for NYC owner-direct rentals</title>
-  <meta name="description" content="A curated daily drop of privately-owned NYC rentals — every listing checked against city records, priced to the letter of NY law, scam-screened, and honestly told.">
+  <title>VERA — NYC rental intelligence, on the record</title>
+  <meta name="description" content="A free NYC rental lens that joins listings to public records, flags risk, shows uncertainty, and keeps every source record open for inspection.">
   <meta name="theme-color" content="#0c0e0d">
+  <meta name="color-scheme" content="dark">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <!-- Hand-authored page, so none of this comes from the prerenderer the React
        routes use — it has to be stated here or it does not exist. Without a
        canonical, /vera/ and /vera/index.html compete; without an image, every
        share of this link rendered as a bare text stub. -->
   <link rel="canonical" href="https://littlefightnyc.com/vera/">
-  <meta property="og:title" content="VERA — the daily drop for NYC owner-direct rentals">
-  <meta property="og:description" content="StreetEasy shows you everything and verifies nothing. VERA watches everywhere, verifies everything, and shows you only what survives.">
+  <meta property="og:title" content="VERA — NYC rental intelligence, on the record">
+  <meta property="og:description" content="VERA gathers fragmented NYC rentals, joins the addresses it can resolve to public records, and labels every gap it cannot close.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://littlefightnyc.com/vera/">
   <meta property="og:site_name" content="Little Fight NYC">
@@ -22,19 +23,19 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Little Fight NYC VERA card over the 72nd Street subway kiosk: Every listing checked against city records.">
+  <meta property="og:image:alt" content="VERA rental-intelligence card over the 72nd Street subway kiosk, highlighting public-record checks and uncertainty.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="VERA — the daily drop for NYC owner-direct rentals">
-  <meta name="twitter:description" content="No brokers. No corporations. No scams. A curated drop of verified owner-direct listings, every day.">
+  <meta name="twitter:title" content="VERA — NYC rental intelligence, on the record">
+  <meta name="twitter:description" content="NYC rentals, public-record checks, scam signals, and honest uncertainty — free, read-only, no account.">
   <meta name="twitter:image" content="https://littlefightnyc.com/assets/social/og-vera.jpg">
-  <meta name="twitter:image:alt" content="Little Fight NYC VERA card over the 72nd Street subway kiosk: Every listing checked against city records.">
+  <meta name="twitter:image:alt" content="VERA rental-intelligence card over the 72nd Street subway kiosk, highlighting public-record checks and uncertainty.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230c0e0d'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23868c85'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2016%20L16%207%20A9%209%200%200%201%2023.8%2011.5%20Z'%20fill='%234cc38a'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='1.8'%20fill='%23e9ece8'/%3E%3C/svg%3E">
   <link rel="preload" href="./assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./assets/vendor/maplibre/maplibre-gl.css">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=46">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=47">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -88,11 +89,11 @@
         <button type="button" data-transit="15">≤ 15 min</button>
         <button type="button" data-transit="0" class="is-on">Any</button>
       </div>
-      <div class="filters__group filters__group--owner" role="group" aria-label="Ownership lens">
+      <div class="filters__group filters__group--owner" role="group" aria-label="Ownership filters">
         <span class="filters__label">Owner</span>
-        <button type="button" data-lens="noBrokers">No brokers</button>
-        <button type="button" data-lens="noMgmt">No corporations</button>
-        <button type="button" data-lens="privateFirst">Private first</button>
+        <button type="button" data-lens="noBrokers">Hide broker posts</button>
+        <button type="button" data-lens="noMgmt">Hide management firms</button>
+        <button type="button" data-lens="privateFirst">Private-owner first</button>
       </div>
       <div class="filters__group filters__group--hoods" data-hood-group role="group" aria-label="Focus areas">
         <span class="filters__label">Focus</span>
@@ -137,28 +138,28 @@
       </div>
       <div class="inspector__actions" data-insp-actions></div>
       <div class="inspector__tabs" data-insp-tabs role="tablist">
-        <button type="button" data-tab="overview" class="is-on" role="tab" aria-selected="true">Overview</button>
-        <button type="button" data-tab="money" role="tab" aria-selected="false">Money</button>
-        <button type="button" data-tab="records" role="tab" aria-selected="false">Records</button>
-        <button type="button" data-tab="owner" role="tab" aria-selected="false">Owner</button>
-        <button type="button" data-tab="score" role="tab" aria-selected="false">Score</button>
-        <button type="button" data-tab="visit" role="tab" aria-selected="false">Visit</button>
-        <button type="button" data-tab="verify" role="tab" aria-selected="false">Verify</button>
+        <button id="vera-tab-overview" type="button" data-tab="overview" class="is-on" role="tab" aria-controls="vera-tabpanel" aria-selected="true">Overview</button>
+        <button id="vera-tab-money" type="button" data-tab="money" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Money</button>
+        <button id="vera-tab-records" type="button" data-tab="records" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Records</button>
+        <button id="vera-tab-owner" type="button" data-tab="owner" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Owner</button>
+        <button id="vera-tab-score" type="button" data-tab="score" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Score</button>
+        <button id="vera-tab-visit" type="button" data-tab="visit" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Visit</button>
+        <button id="vera-tab-verify" type="button" data-tab="verify" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Verify</button>
       </div>
-      <div class="inspector__body" data-insp-body></div>
+      <div id="vera-tabpanel" class="inspector__body" data-insp-body role="tabpanel" aria-labelledby="vera-tab-overview"></div>
     </aside>
     <div class="scrim" data-scrim hidden></div>
     <div class="toast" data-toast hidden role="status"></div>
   </div>
 
   <noscript><p class="fallback">VERA renders a live data feed and needs JavaScript.</p></noscript>
-  <script src="./assets/js/vera-core.js?v=46" defer></script>
-  <script src="./assets/js/vera-geo.js?v=46" defer></script>
+  <script src="./assets/js/vera-core.js?v=47" defer></script>
+  <script src="./assets/js/vera-geo.js?v=47" defer></script>
   <script src="./assets/vendor/maplibre/maplibre-gl.js" defer></script>
-  <script src="./assets/js/vera-map.js?v=46" defer></script>
-  <script src="./assets/js/vera-sweep.js?v=46" defer></script>
-  <script src="./assets/js/vera-ledger.js?v=46" defer></script>
-  <script src="./assets/js/vera-app.js?v=46" defer></script>
-  <script src="./assets/js/vera-tests.js?v=46" defer></script>
+  <script src="./assets/js/vera-map.js?v=47" defer></script>
+  <script src="./assets/js/vera-sweep.js?v=47" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=47" defer></script>
+  <script src="./assets/js/vera-app.js?v=47" defer></script>
+  <script src="./assets/js/vera-tests.js?v=47" defer></script>
 </body>
 </html>
