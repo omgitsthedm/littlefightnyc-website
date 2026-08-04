@@ -15,9 +15,11 @@ function hashVisitor(ip: string, ua: string): string {
 interface ViewEntry {
   ts: string;
   visitor: string;
+  signal: "unverified_url_fetch";
 }
 
 interface ViewData {
+  classification: "unverified_url_fetch";
   views: ViewEntry[];
   total: number;
   unique_today: number;
@@ -126,7 +128,10 @@ export default async (req: Request, context: Context) => {
     });
   }
 
-  // ── Track the view ────────────────────────────────────────
+  // ── Track the URL fetch ───────────────────────────────────
+  // A GET proves only that the capability URL was fetched. Link scanners,
+  // crawlers, operator previews, and refreshes all reach this path, so this
+  // observation must never be promoted to prospect engagement on its own.
   // Runs before response — adds ~20ms but guarantees the write completes.
   // Netlify kills the execution context on Response, so fire-and-forget won't work.
   const viewStore = getStore({ name: "audit-views", consistency: "eventual" });
@@ -136,16 +141,26 @@ export default async (req: Request, context: Context) => {
 
   try {
     const existing = (await viewStore.get(slug, { type: "json" })) as ViewData | null;
-    const data: ViewData = existing || {
-      views: [],
-      total: 0,
-      unique_today: 0,
-      first_view: null,
-      last_view: null,
-    };
+    const data: ViewData = existing
+      ? {
+        ...existing,
+        classification: "unverified_url_fetch",
+        views: existing.views.map((view) => ({
+          ...view,
+          signal: "unverified_url_fetch",
+        })),
+      }
+      : {
+        classification: "unverified_url_fetch",
+        views: [],
+        total: 0,
+        unique_today: 0,
+        first_view: null,
+        last_view: null,
+      };
 
     const now = new Date().toISOString();
-    data.views.push({ ts: now, visitor });
+    data.views.push({ ts: now, visitor, signal: "unverified_url_fetch" });
     // Cap stored views at 500 to prevent unbounded growth
     if (data.views.length > 500) {
       data.views = data.views.slice(-500);
@@ -164,6 +179,7 @@ export default async (req: Request, context: Context) => {
     data.unique_today = todayVisitors.size;
 
     await viewStore.setJSON(slug, data);
+
   } catch (err) {
     console.error("[views] tracking error:", err);
   }

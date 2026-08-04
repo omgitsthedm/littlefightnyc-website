@@ -3,6 +3,13 @@
 
 import type { Context, Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
+import { DAKOTA_REVENUE_BRIDGE_STORE } from "./_shared/dakota/revenue-bridge-store.ts";
+import { isConfidentWebsiteAuditEngagement } from "./_shared/dakota/website-audit-bridge.ts";
+import {
+  attemptDakotaWebsiteAuditOutboxEntry,
+  DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
+  enqueueDakotaWebsiteAuditOutboxPatch,
+} from "./_shared/dakota/website-audit-outbox.ts";
 
 interface EngagementEntry {
   ts: string;
@@ -19,6 +26,71 @@ interface EngagementData {
   avgScrollDepth: number;   // running average
   avgTimeOnPage: number;    // running average
   totalEngagements: number;
+}
+
+interface AuditViewData {
+  total?: number;
+  first_view?: string | null;
+  last_view?: string | null;
+}
+
+function isTimestamp(value: unknown): value is string {
+  return typeof value === "string" && Number.isFinite(Date.parse(value));
+}
+
+function websiteAuditOutboxDependencies() {
+  return {
+    getOutboxStore: () => getStore({
+      name: DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
+      consistency: "strong" as const,
+    }),
+    getRevenueBridgeStore: () => getStore({
+      name: DAKOTA_REVENUE_BRIDGE_STORE,
+      consistency: "strong" as const,
+    }),
+  };
+}
+
+async function persistAndQueueEngagementRevenueBridgeWrite(
+  context: Context,
+  input: {
+    slug: string;
+    domain: string;
+    observedAt: string;
+    firstViewAt: string;
+    lastViewAt: string;
+    totalViews: number;
+    maxScrollDepth: number;
+    maxTimeOnPageSeconds: number;
+  },
+): Promise<void> {
+  if (context.deploy.context !== "production") return;
+  try {
+    const queued = await enqueueDakotaWebsiteAuditOutboxPatch({
+      patch_type: "engagement",
+      report_id: input.slug,
+      domain: input.domain,
+      observed_at: input.observedAt,
+      first_view_at: input.firstViewAt,
+      last_view_at: input.lastViewAt,
+      total_views: input.totalViews,
+      max_scroll_depth: Math.round(input.maxScrollDepth),
+      max_time_on_page_seconds: Math.round(input.maxTimeOnPageSeconds),
+    }, websiteAuditOutboxDependencies());
+    if (queued.outcome !== "enqueued") return;
+    context.waitUntil(
+      attemptDakotaWebsiteAuditOutboxEntry(
+        queued.entry.entry_id,
+        websiteAuditOutboxDependencies(),
+        true,
+      )
+        .catch(() => {
+          console.error("[engagement] Dakota engagement outbox delivery failed");
+        }),
+    );
+  } catch {
+    console.error("[engagement] Dakota engagement outbox persistence failed");
+  }
 }
 
 // Privacy-safe hash (same as serve-audit.mts)
@@ -68,6 +140,19 @@ export default async (req: Request, context: Context) => {
     });
   }
 
+  // Engagement is evidence, not an authenticated conversion fact. Accept it
+  // only from the production report pages so a foreign browser cannot inflate
+  // depth or duration with a cross-origin beacon. Non-browser clients can
+  // still forge Origin, so Dakota continues to label this as observed
+  // engagement rather than verified human intent.
+  const origin = req.headers.get("origin");
+  if (!origin || !ALLOWED_ORIGINS.has(origin)) {
+    return new Response(JSON.stringify({ error: "Origin not allowed" }), {
+      status: 403,
+      headers: corsHeaders(req),
+    });
+  }
+
   try {
     const body = await req.json();
     const { slug, scrollDepth, timeOnPage, sectionsViewed } = body;
@@ -84,7 +169,10 @@ export default async (req: Request, context: Context) => {
     // blob, so the store could be filled with keys that correspond to nothing.
     // A report has to exist before its reading can be recorded.
     const metaStore = getStore("audit-meta");
-    if (!(await metaStore.get(slug, { type: "json" }))) {
+    const meta = (await metaStore.get(slug, { type: "json" })) as {
+      domain?: string;
+    } | null;
+    if (!meta) {
       return new Response(JSON.stringify({ error: "Unknown report" }), {
         status: 404,
         headers: corsHeaders(req),
@@ -151,6 +239,48 @@ export default async (req: Request, context: Context) => {
     );
 
     await store.setJSON(slug, data);
+
+    // URL fetches are unverified operational observations. Only a same-origin
+    // beacon that sustains both time and scroll thresholds may cross into
+    // Dakota as observed engagement; it still does not verify identity or intent.
+    const confidenceThresholdMet = isConfidentWebsiteAuditEngagement({
+      maxScrollDepth: entry.scrollDepth,
+      maxTimeOnPageSeconds: entry.timeOnPage,
+    });
+    if (
+      context.deploy.context === "production" &&
+      typeof meta.domain === "string" &&
+      confidenceThresholdMet
+    ) {
+      try {
+        const viewStore = getStore({ name: "audit-views", consistency: "eventual" });
+        const views = (await viewStore.get(slug, { type: "json" })) as AuditViewData | null;
+        if (
+          views &&
+          Number.isInteger(views.total) &&
+          (views.total ?? 0) > 0 &&
+          isTimestamp(views.first_view) &&
+          isTimestamp(views.last_view)
+        ) {
+          const observedAt = new Date(Math.max(
+            Date.parse(entry.ts),
+            Date.parse(views.last_view),
+          )).toISOString();
+          await persistAndQueueEngagementRevenueBridgeWrite(context, {
+            slug,
+            domain: meta.domain,
+            observedAt,
+            firstViewAt: views.first_view,
+            lastViewAt: views.last_view,
+            totalViews: views.total as number,
+            maxScrollDepth: data.maxScrollDepth,
+            maxTimeOnPageSeconds: data.maxTimeOnPage,
+          });
+        }
+      } catch {
+        console.error("[engagement] Audit view reconciliation read failed");
+      }
+    }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,

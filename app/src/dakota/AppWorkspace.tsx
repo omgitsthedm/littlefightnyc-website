@@ -47,6 +47,17 @@ import {
 } from "./revenue";
 import { formatTimestamp } from "./presentation";
 import {
+  ingressReceiptNeedsAttention,
+  nextUnreviewedResearchKey,
+  unreviewedResearchKeys,
+} from "./revenueBridgeWorkflow";
+import {
+  assertResearchDispositionCompatible,
+  commitResearchReview,
+  planResearchPursuitActivation,
+  type ResearchPursuitPlan,
+} from "./researchActivation";
+import {
   DashboardStats,
   DoNextView,
   MoneyView,
@@ -59,14 +70,34 @@ import type {
   OperatorState,
   OperatorStateEnvelope,
   OperatorStateSaveResponse,
+  ArchiveState,
+  DakotaArchivePreview,
+  DakotaIngressRedriveResponse,
+  DakotaOfferCatalogEnvelope,
+  DakotaOperationsEnvelope,
+  DakotaResearchDisposition,
+  DakotaRevenueBridgeEnvelope,
+  DakotaRevenueBridgeMutation,
+  DakotaRevenueBridgeSaveResponse,
+  OfferCatalogState,
+  OperationsState,
   QueueEnvelope,
   QueueState,
+  RevenueBridgeState,
   SessionState,
 } from "./types";
 
 const API_QUEUE = "/api/dakota/queue";
+const API_REVENUE_BRIDGE = "/api/dakota/revenue-bridge";
+const API_OFFERS = "/api/dakota/offers";
+const API_ARCHIVE = "/api/dakota/archive";
+const API_OPERATIONS = "/api/dakota/operations";
+const API_WEBSITE_AUDIT_OUTBOX = "/api/dakota/website-audit-outbox";
+const API_ENRICH = "/api/dakota/enrich";
 const CLOCK_TICK_MS = 30_000;
 const BACKGROUND_REFRESH_MS = 120_000;
+
+type RefreshScope = "queue" | "operator" | "bridge" | "offers" | "archive" | "operations";
 
 const VIEW_HEADING_IDS: Record<DashboardView, string> = {
   "do-next": "do-next-title",
@@ -89,6 +120,10 @@ async function responseError(response: Response, fallback: string): Promise<stri
   } catch {
     return fallback;
   }
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function GoogleMark() {
@@ -156,9 +191,63 @@ const VIEW_COPY: Record<DashboardView, { eyebrow: string; title: string; emphasi
   money: { eyebrow: "Commercial truth", title: "Revenue recorded.", emphasis: "Cash that cleared.", body: "Estimated, proposed, signed, invoiced, paid, and outstanding stay separate." },
 };
 
+function OperationsBanner({ state, knownKeys, redrivingReceiptId, websiteAuditActionId, actionError, onOpen, onRedrive, onWebsiteAuditAction }: { state: OperationsState; knownKeys: ReadonlySet<string>; redrivingReceiptId: string; websiteAuditActionId: string; actionError: string; onOpen: (key: string) => void; onRedrive: (receiptId: string) => Promise<void>; onWebsiteAuditAction: (entryId: string, action: "redrive" | "acknowledge") => Promise<void> }) {
+  if (state.status !== "ready") return null;
+  const ingress = state.envelope.ingress;
+  const operatorAlerts = state.envelope.operator_alerts;
+  const websiteAuditOutbox = state.envelope.website_audit_outbox;
+  const blockedReceipts = ingress.receipts.filter(ingressReceiptNeedsAttention);
+  const blockedAuditEntries = websiteAuditOutbox.entries.filter((entry) =>
+    entry.status === "failed" || entry.next_retry_at !== null
+  );
+  const capacity = websiteAuditOutbox.capacity;
+  const capacityConcern = capacity.active_available <= 50 ||
+    capacity.dead_letter_available <= 25 ||
+    capacity.overdue_dead_letters > 0 ||
+    capacity.state_bytes >= capacity.state_byte_limit * 0.8;
+  if (
+    !ingress.pending &&
+    !ingress.failed &&
+    !ingress.invalid &&
+    !operatorAlerts.pending &&
+    !operatorAlerts.failed &&
+    !operatorAlerts.not_configured &&
+    !operatorAlerts.invalid &&
+    !websiteAuditOutbox.pending &&
+    !websiteAuditOutbox.failed &&
+    !websiteAuditOutbox.invalid &&
+    !capacityConcern
+  ) return null;
+  return (
+    <section className="operations-alert" aria-labelledby="operations-alert-title">
+      <div><CircleAlert size={21} /><span><strong id="operations-alert-title">Revenue plumbing needs recovery</strong>Receipts: {ingress.failed} failed · {ingress.invalid} invalid · {ingress.pending} retrying{ingress.oldest_pending_at ? ` · oldest ${formatTimestamp(ingress.oldest_pending_at)}` : ""}<br />Operator wake-ups: {operatorAlerts.pending} retrying · {operatorAlerts.failed} failed · {operatorAlerts.not_configured} not configured · {operatorAlerts.invalid} invalid<br />Website Audit return path: {websiteAuditOutbox.pending} retrying · {websiteAuditOutbox.failed} dead letters · {websiteAuditOutbox.invalid} invalid{websiteAuditOutbox.oldest_pending_at ? ` · oldest ${formatTimestamp(websiteAuditOutbox.oldest_pending_at)}` : ""}<br />Audit capacity: {capacity.active_used}/{capacity.active_limit} active · {capacity.dead_letter_used}/{capacity.dead_letter_limit} retained failures · {Math.round(capacity.state_bytes / 1024)} KB/{Math.round(capacity.state_byte_limit / 1024)} KB{capacity.overdue_dead_letters ? ` · ${capacity.overdue_dead_letters} past the ${capacity.failed_retention_days}-day review deadline` : ""}</span></div>
+      {blockedReceipts.length ? <div className="operations-receipts">{blockedReceipts.slice(0, 5).map((receipt) => {
+        const canOpen = isValidCandidateKey(receipt.candidate_key) && knownKeys.has(receipt.candidate_key);
+        const terminal = receipt.next_retry_at === null && !["stored", "duplicate"].includes(receipt.status);
+        const redriving = redrivingReceiptId === receipt.receipt_id;
+        return <button key={receipt.receipt_id} type="button" disabled={terminal ? redriving : !canOpen} onClick={() => terminal ? void onRedrive(receipt.receipt_id) : onOpen(receipt.candidate_key)}><span>{receipt.source.replaceAll("_", " ")} · {receipt.status}</span><strong>{redriving ? "Retrying retained receipt…" : receipt.last_error_code || "Awaiting retry"}</strong><small>{terminal ? "Retry the safely retained request now" : canOpen ? `${receipt.attempts} attempt${receipt.attempts === 1 ? "" : "s"} · ${formatTimestamp(receipt.updated_at)}` : "Receipt is not in the active notebook yet"}</small>{terminal ? <RefreshCw className={redriving ? "spin" : ""} size={16} /> : canOpen ? <ArrowUpRight size={16} /> : null}</button>;
+      })}</div> : null}
+      {blockedAuditEntries.length ? <div className="operations-receipts">{blockedAuditEntries.slice(0, 5).map((entry) => {
+        const canOpen = isValidCandidateKey(entry.candidate_key) && knownKeys.has(entry.candidate_key);
+        const busy = websiteAuditActionId.endsWith(`:${entry.entry_id}`);
+        return <article className="operations-recovery-card" key={entry.entry_id}><button className="operations-recovery-card__open" type="button" disabled={!canOpen} onClick={() => onOpen(entry.candidate_key)}><span>Website Audit · {entry.patch_type.replaceAll("_", " ")}</span><strong>{busy ? "Applying operator action…" : entry.last_error_code || "Awaiting retry"}</strong><small>{entry.status === "failed" ? `Review deadline ${entry.retention_until ? formatTimestamp(entry.retention_until) : "not set"}` : canOpen ? `${entry.attempts} attempt${entry.attempts === 1 ? "" : "s"} · ${formatTimestamp(entry.updated_at)}` : "Audit record is not in the active notebook yet"}</small>{canOpen ? <ArrowUpRight size={16} /> : null}</button>{entry.status === "failed" ? <div className="operations-recovery-card__actions"><button type="button" disabled={busy || !entry.can_redrive} onClick={() => void onWebsiteAuditAction(entry.entry_id, "redrive")}><RefreshCw className={websiteAuditActionId === `redrive:${entry.entry_id}` ? "spin" : ""} size={15} /> Retry now</button><button type="button" disabled={busy || !entry.can_acknowledge} onClick={() => void onWebsiteAuditAction(entry.entry_id, "acknowledge")}><Check size={15} /> Acknowledge &amp; remove copy</button></div> : null}</article>;
+      })}</div> : null}
+      {actionError ? <p className="operations-action-error" role="alert"><CircleAlert size={15} />{actionError}</p> : null}
+      <p><ShieldCheck size={15} /> Receipt, operator-alert, and Website Audit recovery are durable and retried automatically. No prospect message is sent.</p>
+    </section>
+  );
+}
+
 export function Dashboard({ email, onLogout }: { email: string; onLogout: () => Promise<void> }) {
   const [queueState, setQueueState] = useState<QueueState>({ status: "loading" });
   const [operatorState, setOperatorState] = useState<OperatorState>({ status: "loading" });
+  const [revenueBridgeState, setRevenueBridgeState] = useState<RevenueBridgeState>({ status: "loading" });
+  const [offerCatalogState, setOfferCatalogState] = useState<OfferCatalogState>({ status: "loading" });
+  const [archiveState, setArchiveState] = useState<ArchiveState>({ status: "loading" });
+  const [operationsState, setOperationsState] = useState<OperationsState>({ status: "loading" });
+  const [redrivingReceiptId, setRedrivingReceiptId] = useState("");
+  const [websiteAuditActionId, setWebsiteAuditActionId] = useState("");
+  const [operationsActionError, setOperationsActionError] = useState("");
   const [view, setView] = useState<DashboardView>(() => resolveDashboardLocation(new URL(window.location.href)).view);
   const [selectedKey, setSelectedKey] = useState(() => {
     const key = dashboardRecordKey(new URL(window.location.href));
@@ -174,9 +263,13 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
   const refreshPromise = useRef<Promise<void> | null>(null);
   const hasQueueSnapshot = useRef(false);
   const hasOperatorSnapshot = useRef(false);
-  const refreshErrors = useRef<{ queue?: string; operator?: string }>({});
+  const hasRevenueBridgeSnapshot = useRef(false);
+  const hasOfferCatalogSnapshot = useRef(false);
+  const hasArchiveSnapshot = useRef(false);
+  const hasOperationsSnapshot = useRef(false);
+  const refreshErrors = useRef<Partial<Record<RefreshScope, string>>>({});
 
-  const updateRefreshError = useCallback((scope: "queue" | "operator", message?: string) => {
+  const updateRefreshError = useCallback((scope: RefreshScope, message?: string) => {
     if (message) refreshErrors.current[scope] = message;
     else delete refreshErrors.current[scope];
     const errors = Object.values(refreshErrors.current);
@@ -227,9 +320,168 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
     }
   }, [onLogout, updateRefreshError]);
 
+  const loadRevenueBridge = useCallback(async (showLoading = true) => {
+    if (showLoading) setRevenueBridgeState({ status: "loading" });
+    try {
+      const response = await fetch(API_REVENUE_BRIDGE, { credentials: "same-origin", headers: { Accept: "application/json" }, cache: "no-store" });
+      if (response.status === 401 || response.status === 403) return void await onLogout();
+      if (!response.ok) throw new Error(await responseError(response, "Dakota could not load the Revenue Bridge."));
+      const envelope = (await response.json()) as DakotaRevenueBridgeEnvelope;
+      if (envelope.schema_version !== "dakota.revenue-bridge.v1" || !isObject(envelope.records) || !isObject(envelope.providers)) throw new Error("The Revenue Bridge response did not match Dakota’s expected schema.");
+      hasRevenueBridgeSnapshot.current = true;
+      updateRefreshError("bridge");
+      setRevenueBridgeState({ status: "ready", envelope });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Dakota could not load the Revenue Bridge.";
+      if (!showLoading && hasRevenueBridgeSnapshot.current) updateRefreshError("bridge", `Revenue Bridge refresh failed: ${message}`);
+      else setRevenueBridgeState({ status: "error", message });
+    }
+  }, [onLogout, updateRefreshError]);
+
+  const loadOfferCatalog = useCallback(async (showLoading = true) => {
+    if (showLoading) setOfferCatalogState({ status: "loading" });
+    try {
+      const response = await fetch(API_OFFERS, { credentials: "same-origin", headers: { Accept: "application/json" }, cache: "no-store" });
+      if (response.status === 401 || response.status === 403) return void await onLogout();
+      if (!response.ok) throw new Error(await responseError(response, "Dakota could not load the private offer catalog."));
+      const envelope = (await response.json()) as DakotaOfferCatalogEnvelope;
+      if (envelope.schema_version !== "dakota.offer-catalog.v1" || !Array.isArray(envelope.offers)) throw new Error("The private offer catalog did not match Dakota’s expected schema.");
+      hasOfferCatalogSnapshot.current = true;
+      updateRefreshError("offers");
+      setOfferCatalogState({ status: "ready", envelope });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Dakota could not load the private offer catalog.";
+      if (!showLoading && hasOfferCatalogSnapshot.current) updateRefreshError("offers", `Offer catalog refresh failed: ${message}`);
+      else setOfferCatalogState({ status: "error", message });
+    }
+  }, [onLogout, updateRefreshError]);
+
+  const loadArchivePreview = useCallback(async (showLoading = true) => {
+    if (showLoading) setArchiveState({ status: "loading" });
+    try {
+      const response = await fetch(API_ARCHIVE, { credentials: "same-origin", headers: { Accept: "application/json" }, cache: "no-store" });
+      if (response.status === 401 || response.status === 403) return void await onLogout();
+      if (!response.ok) throw new Error(await responseError(response, "Dakota could not load archive readiness."));
+      const preview = (await response.json()) as DakotaArchivePreview;
+      if (preview.schema_version !== "dakota.archive-preview.v1" || !Array.isArray(preview.eligible) || !Array.isArray(preview.recoverable)) throw new Error("The archive preview did not match Dakota’s expected schema.");
+      hasArchiveSnapshot.current = true;
+      updateRefreshError("archive");
+      setArchiveState({ status: "ready", preview });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Dakota could not load archive readiness.";
+      if (!showLoading && hasArchiveSnapshot.current) updateRefreshError("archive", `Archive refresh failed: ${message}`);
+      else setArchiveState({ status: "error", message });
+    }
+  }, [onLogout, updateRefreshError]);
+
+  const loadOperations = useCallback(async (showLoading = true) => {
+    if (showLoading) setOperationsState({ status: "loading" });
+    try {
+      const response = await fetch(API_OPERATIONS, { credentials: "same-origin", headers: { Accept: "application/json" }, cache: "no-store" });
+      if (response.status === 401 || response.status === 403) return void await onLogout();
+      if (!response.ok) throw new Error(await responseError(response, "Dakota could not load inbound operations."));
+      const envelope = (await response.json()) as DakotaOperationsEnvelope;
+      if (envelope.schema_version !== "dakota.operations.v1" || !isObject(envelope.ingress) || !Array.isArray(envelope.ingress.receipts) || !isObject(envelope.operator_alerts) || !Array.isArray(envelope.operator_alerts.alerts) || !isObject(envelope.website_audit_outbox) || !Array.isArray(envelope.website_audit_outbox.entries)) throw new Error("The operations response did not match Dakota’s expected schema.");
+      hasOperationsSnapshot.current = true;
+      updateRefreshError("operations");
+      setOperationsState({ status: "ready", envelope });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Dakota could not load inbound operations.";
+      if (!showLoading && hasOperationsSnapshot.current) updateRefreshError("operations", `Operations refresh failed: ${message}`);
+      else setOperationsState({ status: "error", message });
+    }
+  }, [onLogout, updateRefreshError]);
+
+  const redriveIngressReceipt = useCallback(async (receiptId: string) => {
+    if (redrivingReceiptId) return;
+    setRedrivingReceiptId(receiptId);
+    setOperationsActionError("");
+    try {
+      const response = await fetch(API_OPERATIONS, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "redrive_ingress_receipt", receipt_id: receiptId }),
+        cache: "no-store",
+      });
+      if (response.status === 401 || response.status === 403) {
+        await onLogout();
+        throw new Error("Your secure session expired. Sign in again before retrying this receipt.");
+      }
+      if (!response.ok) throw new Error(await responseError(response, "Dakota could not retry that retained receipt."));
+      const result = (await response.json()) as DakotaIngressRedriveResponse;
+      if (result.schema_version !== "dakota.ingress-redrive.v1" || result.receipt_id !== receiptId) {
+        throw new Error("Dakota returned an unexpected receipt-retry response.");
+      }
+      await Promise.allSettled([loadOperations(false), loadOperatorState(false)]);
+    } catch (error) {
+      setOperationsActionError(error instanceof Error ? error.message : "Dakota could not retry that retained receipt.");
+    } finally {
+      setRedrivingReceiptId("");
+    }
+  }, [loadOperations, loadOperatorState, onLogout, redrivingReceiptId]);
+
+  const operateWebsiteAuditOutbox = useCallback(async (
+    entryId: string,
+    action: "redrive" | "acknowledge",
+  ) => {
+    if (websiteAuditActionId) return;
+    if (
+      action === "acknowledge" &&
+      !window.confirm("Acknowledge this failed Website Audit fact and remove its retained recovery copy? This cannot be undone from Dakota.")
+    ) return;
+    setWebsiteAuditActionId(`${action}:${entryId}`);
+    setOperationsActionError("");
+    try {
+      const response = await fetch(API_WEBSITE_AUDIT_OUTBOX, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ action, entry_id: entryId }),
+        cache: "no-store",
+      });
+      if (response.status === 401 || response.status === 403) {
+        await onLogout();
+        throw new Error("Your secure session expired. Sign in again before recovering Website Audit facts.");
+      }
+      if (!response.ok) {
+        throw new Error(await responseError(
+          response,
+          action === "redrive"
+            ? "Dakota could not retry that Website Audit fact."
+            : "Dakota could not acknowledge that Website Audit failure.",
+        ));
+      }
+      const body = (await response.json()) as {
+        schema_version?: string;
+        result?: { entry_id?: string; outcome?: string };
+      };
+      if (
+        body.schema_version !== "dakota.website-audit-outbox-operation.v1" ||
+        body.result?.entry_id !== entryId
+      ) {
+        throw new Error("Dakota returned an unexpected Website Audit recovery response.");
+      }
+      await Promise.allSettled([loadOperations(false), loadRevenueBridge(false)]);
+    } catch (error) {
+      setOperationsActionError(error instanceof Error
+        ? error.message
+        : "Dakota could not complete that Website Audit recovery action.");
+    } finally {
+      setWebsiteAuditActionId("");
+    }
+  }, [loadOperations, loadRevenueBridge, onLogout, websiteAuditActionId]);
+
   useEffect(() => {
-    queueMicrotask(() => void Promise.allSettled([loadQueue(false), loadOperatorState(false)]));
-  }, [loadOperatorState, loadQueue]);
+    queueMicrotask(() => void Promise.allSettled([
+      loadQueue(false),
+      loadOperatorState(false),
+      loadRevenueBridge(false),
+      loadOfferCatalog(false),
+      loadArchivePreview(false),
+      loadOperations(false),
+    ]));
+  }, [loadArchivePreview, loadOfferCatalog, loadOperations, loadOperatorState, loadQueue, loadRevenueBridge]);
 
   useEffect(() => {
     const currentLocation = resolveDashboardLocation(new URL(window.location.href));
@@ -279,7 +531,14 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
   const refreshAll = useCallback(async (showSpinner = true) => {
     if (refreshPromise.current) return refreshPromise.current;
     if (showSpinner) setRefreshing(true);
-    const refresh = Promise.allSettled([loadQueue(false), loadOperatorState(false)]).then(() => undefined);
+    const refresh = Promise.allSettled([
+      loadQueue(false),
+      loadOperatorState(false),
+      loadRevenueBridge(false),
+      loadOfferCatalog(false),
+      loadArchivePreview(false),
+      loadOperations(false),
+    ]).then(() => undefined);
     refreshPromise.current = refresh;
     try {
       await refresh;
@@ -288,7 +547,7 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
       refreshPromise.current = null;
       if (showSpinner) setRefreshing(false);
     }
-  }, [loadOperatorState, loadQueue]);
+  }, [loadArchivePreview, loadOfferCatalog, loadOperations, loadOperatorState, loadQueue, loadRevenueBridge]);
 
   useEffect(() => {
     const tick = () => setClock(Date.now());
@@ -329,9 +588,53 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
     return result.record.updated_at;
   }, [onLogout]);
 
+  const mutateRevenueBridge = useCallback(async (key: string, mutation: DakotaRevenueBridgeMutation) => {
+    if (revenueBridgeState.status !== "ready") throw new Error("Revenue Bridge is unavailable. Refresh Dakota before saving this review.");
+    const expectedUpdatedAt = revenueBridgeState.envelope.records[key]?.updated_at ?? null;
+    const response = await fetch(API_REVENUE_BRIDGE, {
+      method: "PUT",
+      credentials: "same-origin",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ candidate_key: key, expected_updated_at: expectedUpdatedAt, mutation }),
+      cache: "no-store",
+    });
+    if (response.status === 401 || response.status === 403) {
+      await onLogout();
+      throw new Error("Your secure session expired. Sign in again before saving Revenue Bridge state.");
+    }
+    if (!response.ok) throw new Error(await responseError(response, "Dakota could not save the Revenue Bridge review."));
+    const result = (await response.json()) as DakotaRevenueBridgeSaveResponse;
+    if (result.schema_version !== "dakota.revenue-bridge.v1" || result.candidate_key !== key || !result.record?.updated_at) throw new Error("Dakota saved an unexpected Revenue Bridge response.");
+    setRevenueBridgeState((current) => {
+      const envelope = current.status === "ready" ? current.envelope : revenueBridgeState.envelope;
+      return { status: "ready", envelope: { ...envelope, updated_at: result.updated_at, records: { ...envelope.records, [key]: result.record } } };
+    });
+  }, [onLogout, revenueBridgeState]);
+
+  const enrichCandidate = useCallback(async (key: string) => {
+    const response = await fetch(API_ENRICH, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ candidate_key: key }),
+      cache: "no-store",
+    });
+    if (response.status === 401 || response.status === 403) {
+      await onLogout();
+      throw new Error("Your secure session expired. Sign in again before refreshing provider evidence.");
+    }
+    if (!response.ok) throw new Error(await responseError(response, "Dakota could not refresh Google Places and Yelp evidence."));
+    const result = (await response.json()) as { schema_version?: string; candidate_key?: string };
+    if (result.schema_version !== "dakota.enrichment.v1" || result.candidate_key !== key) throw new Error("Dakota received an unexpected enrichment response.");
+    await loadRevenueBridge(false);
+  }, [loadRevenueBridge, onLogout]);
+
   const queue = queueState.status === "ready" ? queueState.queue : null;
-  const operatorRecords: Record<string, OperatorRecord> = operatorState.status === "ready" ? operatorState.envelope.records : {};
+  const operatorRecords = useMemo<Record<string, OperatorRecord>>(() => operatorState.status === "ready" ? operatorState.envelope.records : {}, [operatorState]);
+  const revenueBridge = revenueBridgeState.status === "ready" ? revenueBridgeState.envelope : null;
+  const privateOffers = offerCatalogState.status === "ready" ? offerCatalogState.envelope.offers : [];
   const currentRecords = useMemo(() => queue?.records ?? [], [queue]);
+  const knownRecordKeys = useMemo(() => new Set([...currentRecords.map(candidateKey), ...Object.keys(operatorRecords)]), [currentRecords, operatorRecords]);
   const selectedRecord = operatorRecords[selectedKey];
   const selectedQueueCandidate = useMemo(() => currentRecords.find((candidate) => candidateKey(candidate) === selectedKey) ?? null, [currentRecords, selectedKey]);
   const selectedSavedCandidate = useMemo(() => selectedRecord ? candidateFromOperatorRecord(selectedKey, selectedRecord) : null, [selectedKey, selectedRecord]);
@@ -340,6 +643,9 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
   const selectedSavedOnly = !selectedQueueCandidate && Boolean(selectedSavedCandidate);
   const selectedSavedQueue = useMemo<QueueEnvelope | null>(() => selectedSavedCandidate && selectedRecord ? { schema_version: "dakota.queue.v1", generated_at: selectedRecord.updated_at, published_at: selectedRecord.updated_at, records: [selectedSavedCandidate] } : null, [selectedRecord, selectedSavedCandidate]);
   const selectedQueue = selectedQueueCandidate && queue ? queue : selectedSavedQueue ?? selectedFallback?.queue ?? null;
+  const selectedRevenueBridgeRecord = revenueBridge?.records[selectedKey];
+  const unreviewedQueueKeys = useMemo(() => unreviewedResearchKeys(currentRecords, revenueBridge?.records), [currentRecords, revenueBridge]);
+  const hasNextUnreviewed = unreviewedQueueKeys.some((key) => key !== selectedKey);
   const sourceHealth = queue ? getSourceHealth(queue.generated_at) : null;
   const weeklyApprovedCount = Object.values(operatorRecords).filter((record) => countsTowardWeeklyNorthStar(record)).length;
   const notebookAvailable = operatorState.status === "ready";
@@ -363,6 +669,71 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
     setSelectedKey(key);
   };
 
+  const reviewResearch = async (
+    disposition: Exclude<DakotaResearchDisposition, "unreviewed">,
+    reason: string,
+    openNext: boolean,
+  ) => {
+    if (!selectedKey) throw new Error("Open a valid Dakota record before saving research review.");
+    const reviewedKey = selectedKey;
+    assertResearchDispositionCompatible(disposition, operatorRecords[reviewedKey]);
+    let plan: ResearchPursuitPlan | null = null;
+    if (disposition === "pursue") {
+      if (!selectedCandidate || candidateKey(selectedCandidate) !== reviewedKey) throw new Error("The current research signal is unavailable. Refresh Dakota before marking it pursue.");
+      plan = planResearchPursuitActivation(
+        selectedCandidate,
+        operatorRecords[reviewedKey],
+        new Date(),
+        crypto.randomUUID().toLowerCase(),
+      );
+    }
+    await commitResearchReview(
+      disposition,
+      plan,
+      async (record, expectedUpdatedAt) => { await saveOperatorRecord(reviewedKey, record, expectedUpdatedAt); },
+      async () => { await mutateRevenueBridge(reviewedKey, { type: "review_research", disposition, reason }); },
+    );
+    if (!openNext) return;
+    const nextKey = nextUnreviewedResearchKey(currentRecords, revenueBridge?.records, reviewedKey);
+    if (nextKey) openRecord(nextKey);
+  };
+
+  const archiveRecord = async (key: string) => {
+    const record = operatorRecords[key];
+    if (!record) throw new Error("The active record was not found. Refresh Dakota before archiving.");
+    if (!window.confirm(`Archive ${record.identity.dba || record.identity.businessName}? This removes it from the active notebook but keeps a recoverable verified copy.`)) return;
+    const response = await fetch(API_ARCHIVE, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "archive", candidate_key: key, expected_updated_at: record.updated_at }),
+      cache: "no-store",
+    });
+    if (response.status === 401 || response.status === 403) {
+      await onLogout();
+      throw new Error("Your secure session expired. Sign in again before archiving.");
+    }
+    if (!response.ok) throw new Error(await responseError(response, "Dakota could not archive this record."));
+    if (selectedKey === key) closeRecord();
+    await Promise.allSettled([loadOperatorState(false), loadArchivePreview(false), loadRevenueBridge(false)]);
+  };
+
+  const restoreRecord = async (archiveId: string) => {
+    const response = await fetch(API_ARCHIVE, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "restore", archive_id: archiveId }),
+      cache: "no-store",
+    });
+    if (response.status === 401 || response.status === 403) {
+      await onLogout();
+      throw new Error("Your secure session expired. Sign in again before restoring this record.");
+    }
+    if (!response.ok) throw new Error(await responseError(response, "Dakota could not restore this archived record."));
+    await Promise.allSettled([loadOperatorState(false), loadArchivePreview(false), loadRevenueBridge(false)]);
+  };
+
   const closeRecord = () => {
     window.history.replaceState(window.history.state, "", dashboardHrefForRecord(new URL(window.location.href), null));
     selectedKeyRef.current = "";
@@ -384,16 +755,17 @@ export function Dashboard({ email, onLogout }: { email: string; onLogout: () => 
           <div className="queue-meta"><p><Clock3 size={16} /> Evidence refreshed</p><strong>{queue ? formatTimestamp(queue.generated_at) : "Waiting for public queue"}</strong>{queue?.published_at ? <span>Private snapshot {formatTimestamp(queue.published_at)}</span> : null}<button type="button" onClick={() => void refreshAll()} disabled={refreshing}><RefreshCw className={refreshing ? "spin" : ""} size={17} /> Refresh</button></div>
         </section>
         {queue && sourceHealth ? <section className={`source-health source-health--${sourceHealth.level}`} aria-label="Source health"><div><span className="status-light" /><p><strong>{sourceHealth.title}</strong><span>{sourceHealth.message}</span></p></div><p>{sourceCoverage(queue.records)} · {sourceHealth.ageHours === null ? "Age unknown" : `${Math.round(sourceHealth.ageHours)}h old`}</p></section> : null}
+        <OperationsBanner state={operationsState} knownKeys={knownRecordKeys} redrivingReceiptId={redrivingReceiptId} websiteAuditActionId={websiteAuditActionId} actionError={operationsActionError} onOpen={openRecord} onRedrive={redriveIngressReceipt} onWebsiteAuditAction={operateWebsiteAuditOutbox} />
         {operatorState.status === "error" ? <div className="notebook-warning" role="status"><CircleAlert size={18} /><span><strong>Operator notebook unavailable.</strong> Research remains visible, but conversion controls are read-only.</span></div> : null}
         {refreshWarning ? <div className="notebook-warning" role="status"><CircleAlert size={18} /><span><strong>Latest refresh did not complete.</strong> Your last verified snapshot and any open edits remain in place. {refreshWarning}</span></div> : null}
         <DashboardStats queueCount={currentRecords.length} approvedCount={weeklyApprovedCount} operatorRecords={operatorRecords} now={now} />
-        {view === "do-next" ? <DoNextView queueRecords={currentRecords} operatorRecords={operatorRecords} now={now} onOpen={openRecord} /> : null}
-        {view === "research" ? <ResearchView queueState={queueState} queueRecords={currentRecords} operatorRecords={operatorRecords} retry={() => void loadQueue()} onOpen={openRecord} /> : null}
+        {view === "do-next" ? <DoNextView queueRecords={currentRecords} operatorRecords={operatorRecords} revenueBridge={revenueBridge} now={now} onOpen={openRecord} /> : null}
+        {view === "research" ? <ResearchView queueState={queueState} queueRecords={currentRecords} operatorRecords={operatorRecords} revenueBridge={revenueBridge} retry={() => void loadQueue()} onOpen={openRecord} /> : null}
         {view === "pipeline" ? <PipelineView state={operatorState} now={now} onCapture={() => setCaptureOpen(true)} onOpen={openRecord} /> : null}
-        {view === "money" ? <MoneyView state={operatorState} onOpen={openRecord} /> : null}
+        {view === "money" ? <MoneyView state={operatorState} queueRecords={currentRecords} revenueBridgeState={revenueBridgeState} offerCatalogState={offerCatalogState} archiveState={archiveState} operationsState={operationsState} onOpen={openRecord} onArchive={archiveRecord} onRestore={restoreRecord} /> : null}
         <section className="operating-contract"><div><ShieldCheck size={22} /><span><strong>Dakota operating contract</strong>Public evidence. Private judgment. Manual outreach. Explicit outcomes.</span></div><p>Queue capped at 10 · Exact operator access · No automatic calls, texts, email, forms, or CRM writes</p></section>
       </main>
-      {selectedCandidate && selectedQueue ? <OpportunityDrawer key={selectedKey} candidate={selectedCandidate} queue={selectedQueue} record={operatorRecordFor(operatorRecords, selectedCandidate)} recordUpdatedAt={operatorRecords[selectedKey]?.updated_at} milestones={operatorRecords[selectedKey]?.milestones} savedOnly={selectedSavedOnly} notebookAvailable={notebookAvailable} onClose={closeRecord} onSave={saveOperatorRecord} /> : null}
+      {selectedCandidate && selectedQueue ? <OpportunityDrawer key={selectedKey} candidate={selectedCandidate} queue={selectedQueue} record={operatorRecordFor(operatorRecords, selectedCandidate)} recordUpdatedAt={operatorRecords[selectedKey]?.updated_at} milestones={operatorRecords[selectedKey]?.milestones} savedOnly={selectedSavedOnly} notebookAvailable={notebookAvailable} revenueBridgeRecord={selectedRevenueBridgeRecord} revenueBridgeLoading={revenueBridgeState.status === "loading"} revenueBridgeError={revenueBridgeState.status === "error" ? revenueBridgeState.message : undefined} privateOffers={privateOffers} privateOffersError={offerCatalogState.status === "error" ? offerCatalogState.message : undefined} hasNextUnreviewed={hasNextUnreviewed} onClose={closeRecord} onSave={saveOperatorRecord} onRevenueBridgeMutate={(mutation) => mutateRevenueBridge(selectedKey, mutation)} onReviewResearch={reviewResearch} onEnrich={() => enrichCandidate(selectedKey)} /> : null}
       {captureOpen ? <CaptureOpportunity notebookAvailable={notebookAvailable} onClose={() => setCaptureOpen(false)} onSave={saveOperatorRecord} /> : null}
     </div>
   );

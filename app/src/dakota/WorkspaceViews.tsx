@@ -1,6 +1,7 @@
 import { useDeferredValue, useMemo, useState } from "react";
 import {
   ArrowUpRight,
+  Archive,
   BadgeDollarSign,
   BarChart3,
   Building2,
@@ -12,8 +13,11 @@ import {
   FileSearch,
   Filter,
   Globe2,
+  LoaderCircle,
   MapPin,
   Plus,
+  PlugZap,
+  RotateCcw,
   Search,
   ShieldCheck,
   Sparkles,
@@ -32,6 +36,7 @@ import {
   STATUS_LABELS,
 } from "./revenue";
 import { collectReadyActions, TASK_TYPE_LABELS } from "./workflow";
+import { buildDakotaRevenueMetrics, type DakotaProvenanceRow } from "./revenueBridgeMetrics";
 import {
   candidateLabel,
   compactSource,
@@ -42,11 +47,18 @@ import {
 } from "./presentation";
 import type {
   Candidate,
+  ArchiveState,
+  DakotaRevenueBridgeEnvelope,
+  DakotaRevenueBridgeRecord,
+  DakotaRevenueProvider,
+  OfferCatalogState,
   OperatorRecord,
   OperatorRecordInput,
   OperatorState,
   OperatorStatus,
   QueueState,
+  RevenueBridgeState,
+  OperationsState,
 } from "./types";
 
 const CLOSED_STATUSES = new Set<OperatorStatus>(["lost", "not_fit", "do_not_contact"]);
@@ -66,6 +78,17 @@ const PIPELINE_STATUSES = new Set<OperatorStatus>([
 ]);
 
 type OperatorEntry = [string, OperatorRecord];
+
+const RESEARCH_DISPOSITION_LABELS: Record<string, string> = {
+  unreviewed: "Unreviewed",
+  pursue: "Pursue",
+  hold: "Hold",
+  needs_evidence: "Needs evidence",
+  blocked: "Blocked",
+  duplicate: "Duplicate",
+  not_fit: "Not a fit",
+  do_not_contact: "Do not contact",
+};
 
 function todayKey(now = new Date()): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
@@ -160,11 +183,13 @@ function Stat({ label, value, detail, icon: Icon }: { label: string; value: stri
 function CandidateCard({
   candidate,
   record,
+  bridgeRecord,
   tiedSignal,
   onOpen,
 }: {
   candidate: Candidate;
   record: OperatorRecordInput;
+  bridgeRecord?: DakotaRevenueBridgeRecord;
   tiedSignal: boolean;
   onOpen: () => void;
 }) {
@@ -172,6 +197,9 @@ function CandidateCard({
   const reasons = normalizedList(candidate.score_reasons).slice(0, 3);
   const gaps = normalizedList(candidate.missing_pieces).slice(0, 3);
   const location = placeLine(candidate);
+  const disposition = bridgeRecord?.research_review.disposition ?? "unreviewed";
+  const pendingReviews = (bridgeRecord?.evidence.filter((item) => item.review_state === "suggested").length ?? 0)
+    + (bridgeRecord?.external_events.filter((event) => event.review_state === "needs_review").length ?? 0);
 
   return (
     <article className="candidate-card">
@@ -183,7 +211,7 @@ function CandidateCard({
             <h3>{candidateLabel(candidate)}</h3>
             {candidate.dba && candidate.dba !== candidate.business_name ? <p className="legal-name">{candidate.business_name}</p> : null}
           </div>
-          <span className={`stage-pill stage-pill--${record.status}`}>{STATUS_LABELS[record.status]}</span>
+          <div className="candidate-status-stack"><span className={`research-disposition research-disposition--${disposition}`}>{RESEARCH_DISPOSITION_LABELS[disposition]}</span><span className={`stage-pill stage-pill--${record.status}`}>{STATUS_LABELS[record.status]}</span></div>
         </div>
         <p className="diagnosis">{candidate.diagnosis || "No diagnosis was provided. Verify the source record and storefront evidence."}</p>
         <div className="candidate-facts">
@@ -203,7 +231,8 @@ function CandidateCard({
           <Globe2 size={16} />
           <span><small>Website evidence</small><strong>{candidate.verified_url ? "Verified" : "Not verified"}</strong></span>
         </div>
-        <button className="review-button" type="button" onClick={onOpen}>Make decision <ArrowUpRight size={16} /></button>
+        {pendingReviews ? <span className="candidate-review-count"><CircleAlert size={15} /> {pendingReviews} provider item{pendingReviews === 1 ? "" : "s"} to review</span> : null}
+        <button className="review-button" type="button" onClick={onOpen}>{disposition === "unreviewed" ? "Review signal" : "Update review"} <ArrowUpRight size={16} /></button>
         {candidate.verified_url ? <a href={candidate.verified_url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Review public site <ExternalLink size={16} /></a> : null}
       </div>
     </article>
@@ -245,20 +274,37 @@ function ActionCard({
 }
 
 export function DoNextView({
+  queueRecords,
   operatorRecords,
+  revenueBridge,
   now,
   onOpen,
 }: {
   queueRecords: Candidate[];
   operatorRecords: Record<string, OperatorRecord>;
+  revenueBridge: DakotaRevenueBridgeEnvelope | null;
   now: Date;
   onOpen: (key: string) => void;
 }) {
   const [visibleCount, setVisibleCount] = useState(12);
   const actions = collectReadyActions(operatorRecords, now);
-  const actionCount = actions.length;
+  const unreviewedRecords = queueRecords.filter((candidate) => {
+    const disposition = revenueBridge?.records[candidateKey(candidate)]?.research_review.disposition;
+    return !disposition || disposition === "unreviewed";
+  });
+  const bridgeReviews = Object.entries(revenueBridge?.records ?? {}).flatMap(([key, record]) => {
+    if (!operatorRecords[key] && !queueRecords.some((candidate) => candidateKey(candidate) === key)) return [];
+    const pendingEvents = record.external_events.filter((event) => event.review_state === "needs_review").length;
+    const openAlerts = record.alerts.filter((alert) => alert.status !== "resolved").length;
+    if (!pendingEvents && !openAlerts) return [];
+    const name = operatorRecords[key]
+      ? operatorName(operatorRecords[key])
+      : candidateLabel(queueRecords.find((candidate) => candidateKey(candidate) === key) as Candidate);
+    return [{ key, name, pendingEvents, openAlerts }];
+  });
+  const actionCount = actions.length + bridgeReviews.length;
   const visibleActions = actions.slice(0, visibleCount);
-  const remainingCount = Math.max(0, actionCount - visibleActions.length);
+  const remainingCount = Math.max(0, actions.length - visibleActions.length);
 
   return (
     <section className="do-next-section" aria-labelledby="do-next-title">
@@ -268,6 +314,7 @@ export function DoNextView({
       </div>
       {actionCount ? (
         <div className="next-action-grid">
+          {bridgeReviews.map((review, index) => <ActionCard key={`bridge:${review.key}`} lane="Needs review" number={String(index + 1).padStart(2, "0")} title={review.name} context={`${review.pendingEvents} external event${review.pendingEvents === 1 ? "" : "s"} · ${review.openAlerts} open alert${review.openAlerts === 1 ? "" : "s"}. Confirm or reject; never auto-advance.`} action="Review evidence" tone="inbound" onOpen={() => onOpen(review.key)} />)}
           {visibleActions.map((ready, index) => <ActionCard
             key={`${ready.key}:${ready.task?.taskId ?? "repair"}`}
             lane={ready.lane === "repair" ? "Needs next task" : ready.lane === "inbound" ? "Consented inbound" : ready.lane === "due" ? "Due now" : "Active revenue work"}
@@ -280,13 +327,9 @@ export function DoNextView({
           />)}
         </div>
       ) : (
-        <div className="next-empty">
-          <Check size={28} />
-          <p className="eyebrow">No action is ready</p>
-          <h3>Nothing deserves outreach right now</h3>
-          <p>That is a valid outcome. Dakota will surface every consented inquiry, approved pursuit, due follow-up, close, payment, or onboarding task when it exists.</p>
-        </div>
+        unreviewedRecords.length ? <div className="next-empty next-empty--activate"><FileSearch size={28} /><p className="eyebrow">Research is waiting</p><h3>Review {unreviewedRecords.length} signal{unreviewedRecords.length === 1 ? "" : "s"}</h3><p>Nothing is ready for outreach because the current public evidence has not been dispositioned. Start with the first signal, save a reason, then open the next.</p><button type="button" className="primary-button" onClick={() => onOpen(candidateKey(unreviewedRecords[0]))}>Review {unreviewedRecords.length} signals <ArrowUpRight size={16} /></button></div> : <div className="next-empty"><Check size={28} /><p className="eyebrow">No action is ready</p><h3>Nothing deserves outreach right now</h3><p>That is a valid outcome. Dakota will surface every consented inquiry, approved pursuit, due follow-up, close, payment, or onboarding task when it exists.</p></div>
       )}
+      {actionCount && unreviewedRecords.length ? <div className="research-backlog-cta"><div><FileSearch size={20} /><span><strong>{unreviewedRecords.length} research signal{unreviewedRecords.length === 1 ? "" : "s"} still waiting</strong>Keep the acquisition queue moving without hiding today’s revenue work.</span></div><button type="button" className="secondary-button" onClick={() => onOpen(candidateKey(unreviewedRecords[0]))}>Review backlog <ArrowUpRight size={16} /></button></div> : null}
       {remainingCount ? <button type="button" className="load-more-actions" onClick={() => setVisibleCount((count) => count + 12)}>Show {Math.min(12, remainingCount)} more <span>{remainingCount} remaining</span></button> : null}
       <div className="conversion-contract"><ShieldCheck size={20} /><p><strong>Human gate stays intact.</strong> Copying a draft or opening another app never records contact, advances a stage, or creates revenue. Every result requires explicit evidence.</p></div>
     </section>
@@ -297,12 +340,14 @@ export function ResearchView({
   queueState,
   queueRecords,
   operatorRecords,
+  revenueBridge,
   retry,
   onOpen,
 }: {
   queueState: QueueState;
   queueRecords: Candidate[];
   operatorRecords: Record<string, OperatorRecord>;
+  revenueBridge: DakotaRevenueBridgeEnvelope | null;
   retry: () => void;
   onOpen: (key: string) => void;
 }) {
@@ -318,6 +363,11 @@ export function ResearchView({
     queueRecords.forEach((candidate) => counts.set(candidate.score, (counts.get(candidate.score) ?? 0) + 1));
     return counts;
   }, [queueRecords]);
+  const reviewedCount = queueRecords.filter((candidate) => {
+    const disposition = revenueBridge?.records[candidateKey(candidate)]?.research_review.disposition;
+    return Boolean(disposition && disposition !== "unreviewed");
+  }).length;
+  const unreviewedCount = Math.max(0, queueRecords.length - reviewedCount);
 
   return (
     <section className="queue-section workspace-view" aria-labelledby="research-title">
@@ -326,7 +376,8 @@ export function ResearchView({
         <div className="deterministic-label"><ShieldCheck size={16} /> Human qualification required</div>
       </div>
       <div className="review-order-note"><CircleAlert size={18} /><p><strong>Queue order is not buyer intent.</strong> Verify identity, contact route, revenue pain, and one offer before approving pursuit.</p></div>
-      {queueRecords.length ? <div className="candidate-list">{queueRecords.slice(0, 10).map((candidate) => <CandidateCard key={candidateKey(candidate)} candidate={candidate} record={operatorRecordFor(operatorRecords, candidate)} tiedSignal={(scoreCounts.get(candidate.score) ?? 0) > 1} onOpen={() => onOpen(candidateKey(candidate))} />)}</div> : <QueueStateView state={queueState} retry={retry} />}
+      {queueRecords.length ? <div className="research-progress" aria-label={`${reviewedCount} of ${queueRecords.length} research signals reviewed`}><div><span>Review progress</span><strong>{reviewedCount} / {queueRecords.length}</strong></div><div className="research-progress__track"><span style={{ width: `${Math.round((reviewedCount / queueRecords.length) * 100)}%` }} /></div><p>{unreviewedCount ? `${unreviewedCount} signal${unreviewedCount === 1 ? "" : "s"} still needs a durable disposition.` : "Every current signal has a recorded decision."}</p></div> : null}
+      {queueRecords.length ? <div className="candidate-list">{queueRecords.slice(0, 10).map((candidate) => <CandidateCard key={candidateKey(candidate)} candidate={candidate} record={operatorRecordFor(operatorRecords, candidate)} bridgeRecord={revenueBridge?.records[candidateKey(candidate)]} tiedSignal={(scoreCounts.get(candidate.score) ?? 0) > 1} onOpen={() => onOpen(candidateKey(candidate))} />)}</div> : <QueueStateView state={queueState} retry={retry} />}
       {savedResearch.length ? <section className="saved-research" aria-labelledby="saved-research-title"><div className="subsection-heading"><div><p className="eyebrow">Private saved research</p><h3 id="saved-research-title">Manual and inbound records outside the public queue</h3></div><span>{savedResearch.length} saved</span></div><div className="pipeline-list">{savedResearch.map(([key, record]) => <button key={key} type="button" className="pipeline-row saved-research-row" onClick={() => onOpen(key)}><span className={`stage-pill stage-pill--${record.status}`}>{STATUS_LABELS[record.status]}</span><span><strong>{operatorName(record)}</strong><small>{record.identity.category || "Unclassified"} · {compactSource(record.identity.source)}</small></span><span><small>Next task</small>{nextTaskSummary(record) || "Verify the private record and choose its next state."}</span><span><small>Due</small>{earliestFollowUp(record) ? dueLabel(earliestFollowUp(record)) : openTask(record) ? "Ready now" : "Not scheduled"}</span><ArrowUpRight size={18} /></button>)}</div></section> : null}
     </section>
   );
@@ -400,6 +451,24 @@ interface ConversionRow {
   paidAmount: number;
 }
 
+const REVENUE_PROVIDER_LABELS: ReadonlyArray<{ provider: DakotaRevenueProvider; label: string; role: string }> = [
+  { provider: "dakota_engine", label: "Dakota engine", role: "Scheduled reconciliation" },
+  { provider: "manual_research", label: "Research desk", role: "Human review controls" },
+  { provider: "netlify_forms", label: "Website intake", role: "Capture + recovery" },
+  { provider: "website_audit", label: "Website Audit", role: "Report + engagement" },
+  { provider: "gmail", label: "Gmail", role: "Read-only reply evidence" },
+  { provider: "google_calendar", label: "Google Calendar", role: "Read-only booking evidence" },
+  { provider: "google_voice", label: "Google Voice", role: "Human-operated only" },
+  { provider: "google_business_profile", label: "Google Business Profile", role: "Not connected" },
+  { provider: "google_places", label: "Google Places", role: "Public profile suggestions" },
+  { provider: "yelp", label: "Yelp", role: "Public profile suggestions" },
+  { provider: "proposal", label: "Proposal creation", role: "Not connected" },
+  { provider: "e_sign", label: "E-signature", role: "Not connected" },
+  { provider: "invoicing", label: "Invoicing", role: "Not connected" },
+  { provider: "payments", label: "Payments", role: "Not connected" },
+  { provider: "crm", label: "External CRM", role: "Intentionally disabled" },
+];
+
 function conversionRows(entries: OperatorEntry[], group: (record: OperatorRecord) => string): ConversionRow[] {
   const rows = new Map<string, ConversionRow>();
   for (const [, record] of entries) {
@@ -415,7 +484,29 @@ function conversionRows(entries: OperatorEntry[], group: (record: OperatorRecord
   return [...rows.values()].sort((left, right) => right.paidAmount - left.paidAmount || right.signed - left.signed || left.label.localeCompare(right.label));
 }
 
-export function MoneyView({ state, onOpen }: { state: OperatorState; onOpen: (key: string) => void }) {
+export function MoneyView({
+  state,
+  queueRecords,
+  revenueBridgeState,
+  offerCatalogState,
+  archiveState,
+  operationsState,
+  onOpen,
+  onArchive,
+  onRestore,
+}: {
+  state: OperatorState;
+  queueRecords: Candidate[];
+  revenueBridgeState: RevenueBridgeState;
+  offerCatalogState: OfferCatalogState;
+  archiveState: ArchiveState;
+  operationsState: OperationsState;
+  onOpen: (key: string) => void;
+  onArchive: (key: string) => Promise<void>;
+  onRestore: (archiveId: string) => Promise<void>;
+}) {
+  const [archiveBusy, setArchiveBusy] = useState("");
+  const [archiveError, setArchiveError] = useState("");
   if (state.status === "loading" || state.status === "idle") return <div className="queue-loading" role="status"><Clock3 size={22} /><span>Loading money truth…</span></div>;
   if (state.status === "error") return <div className="queue-error" role="alert"><CircleAlert size={22} /><div><strong>Money view unavailable</strong><p>{state.message}</p></div></div>;
 
@@ -428,9 +519,20 @@ export function MoneyView({ state, onOpen }: { state: OperatorState; onOpen: (ke
   const invoiced = activeEntries.reduce((sum, [, record]) => sum + evidencedInvoiceAmount(record), 0);
   const paid = entries.reduce((sum, [, record]) => sum + paidAmount(record), 0);
   const outstanding = collectibleEntries.reduce((sum, [, record]) => sum + balance(record), 0);
-  const sourceRows = conversionRows(entries, (record) => compactSource(record.identity.source));
   const categoryRows = conversionRows(entries, (record) => record.identity.category?.trim() || "Unclassified");
-  const offerRows = conversionRows(entries, compactOffer);
+  const bridge = revenueBridgeState.status === "ready" ? revenueBridgeState.envelope : null;
+  const metrics = buildDakotaRevenueMetrics(queueRecords, state.envelope.records, bridge);
+  const offers = offerCatalogState.status === "ready" ? offerCatalogState.envelope.offers : [];
+  const offerLabels = new Map(offers.map((offer) => [offer.bridgeOfferCode, offer.shortName]));
+  const archive = archiveState.status === "ready" ? archiveState.preview : null;
+
+  const runArchiveAction = async (id: string, action: () => Promise<void>) => {
+    setArchiveBusy(id);
+    setArchiveError("");
+    try { await action(); }
+    catch (error) { setArchiveError(error instanceof Error ? error.message : "Dakota could not complete the archive action."); }
+    finally { setArchiveBusy(""); }
+  };
 
   return (
     <section className="workspace-view money-section" aria-labelledby="money-title">
@@ -446,16 +548,59 @@ export function MoneyView({ state, onOpen }: { state: OperatorState; onOpen: (ke
         <Stat label="Paid" value={currency(paid)} detail="Lifetime cleared cash" icon={BarChart3} />
         <Stat label="Balance" value={currency(outstanding)} detail="Active collectible balance" icon={Clock3} />
       </div>
+      <section className="revenue-flow" aria-labelledby="revenue-flow-title">
+        <div className="subsection-heading"><div><p className="eyebrow">Evidence-backed funnel</p><h3 id="revenue-flow-title">Where signals become clients—and where they stop</h3></div><span>{metrics.funnel.pendingExternalReview} outside event{metrics.funnel.pendingExternalReview === 1 ? "" : "s"} needs review</span></div>
+        <div className="revenue-flow__stages">
+          {[
+            ["Signals", metrics.funnel.signals],
+            ["Reviewed", metrics.funnel.reviewed],
+            ["Pursue", metrics.funnel.pursue],
+            ["Contacted", metrics.funnel.contacted],
+            ["Replied", metrics.funnel.replied],
+            ["Meetings", metrics.funnel.meetings],
+            ["Proposals", metrics.funnel.proposals],
+            ["Signed", metrics.funnel.signed],
+            ["Paid", metrics.funnel.paid],
+          ].map(([label, value]) => <div key={label}><span>{label}</span><strong>{String(value).padStart(2, "0")}</strong></div>)}
+        </div>
+        <div className="revenue-flow__evidence"><span><strong>{metrics.funnel.suggestedEvidence}</strong> suggested evidence</span><span><strong>{metrics.funnel.confirmedEvidence}</strong> confirmed evidence</span><span><strong>{metrics.funnel.auditsReady}</strong> audits ready</span><span><strong>{metrics.funnel.offersSelected}</strong> offers selected</span><span><strong>{metrics.funnel.openAlerts}</strong> open alerts</span><span><strong>{metrics.funnel.criticalAlerts}</strong> critical</span></div>
+      </section>
       {entries.length ? (
         <div className="money-ledger">
           {entries.map(([key, record]) => <button key={key} type="button" onClick={() => onOpen(key)}><span><strong>{operatorName(record)}</strong><small>{compactOffer(record)} · {compactSource(record.identity.source)}</small></span><span><small>Estimated</small>{currency(record.estimatedValue)}</span><span><small>Proposal</small>{currency(record.commercialClose.proposalAmount)}</span><span><small>Amount due</small>{currency(record.commercialClose.amountDue)}</span><span><small>Paid</small>{currency(record.commercialClose.amountPaid)}</span><span><small>Balance</small>{currency(balance(record))}</span><ArrowUpRight size={18} /></button>)}
         </div>
       ) : <div className="next-empty"><BadgeDollarSign size={28} /><h3>No commercial evidence yet</h3><p>Dakota will not turn research records into projected revenue.</p></div>}
       <div className="conversion-grid">
-        <ConversionTable title="Source conversion" rows={sourceRows} />
+        <ProvenanceTable title="Source provenance" rows={metrics.sourceRows} label={(value) => compactSource(value)} />
         <ConversionTable title="Business category conversion" rows={categoryRows} />
-        <ConversionTable title="Offer conversion" rows={offerRows} />
+        <ProvenanceTable title="Approved offer conversion" rows={metrics.offerRows} label={(value) => offerLabels.get(value) ?? value.replaceAll("_", " ")} />
       </div>
+      <section className="integration-health" aria-labelledby="integration-health-title">
+        <div className="subsection-heading"><div><p className="eyebrow">Revenue plumbing</p><h3 id="integration-health-title">Connected, blocked, or intentionally manual</h3></div><PlugZap size={22} /></div>
+        <div className="integration-health__grid">{REVENUE_PROVIDER_LABELS.map(({ provider, label, role }) => {
+          const stateForProvider = bridge?.providers[provider];
+          const fallbackHealth = ["google_voice", "crm"].includes(provider) ? "disabled" : ["google_business_profile", "proposal", "e_sign", "invoicing", "payments"].includes(provider) ? "blocked" : "unknown";
+          const health = stateForProvider?.health ?? fallbackHealth;
+          const detail = stateForProvider?.detail || role;
+          return <article key={provider}><span className={`integration-dot integration-dot--${health}`} /><div><strong>{label}</strong><p>{detail}</p><small>{stateForProvider?.checked_at ? `Checked ${formatTimestamp(stateForProvider.checked_at)}` : health === "blocked" ? "Provider decision required" : "No verified sync check yet"}</small></div><span className={`integration-state integration-state--${health}`}>{health}</span></article>;
+        })}</div>
+        {operationsState.status === "ready" ? <p className="integration-ingress"><ShieldCheck size={16} /> Inbound receipts: {operationsState.envelope.ingress.stored} stored · {operationsState.envelope.ingress.pending} pending · {operationsState.envelope.ingress.failed} failed. Operator wake-ups: {operationsState.envelope.operator_alerts.pending} pending · {operationsState.envelope.operator_alerts.failed} failed · {operationsState.envelope.operator_alerts.not_configured} not configured. Audit return path: {operationsState.envelope.website_audit_outbox.pending} pending · {operationsState.envelope.website_audit_outbox.failed} failed · checked {formatTimestamp(operationsState.envelope.checked_at)}</p> : operationsState.status === "error" ? <p className="bridge-inline-error"><CircleAlert size={16} />{operationsState.message}</p> : null}
+      </section>
+      <section className="archive-readiness" aria-labelledby="archive-readiness-title">
+        <div className="subsection-heading"><div><p className="eyebrow">Recoverable retention</p><h3 id="archive-readiness-title">Keep the active notebook bounded</h3></div><Archive size={22} /></div>
+        {archive ? <><dl><div><dt>Active</dt><dd>{archive.activeCount} / {archive.capacity}</dd></div><div><dt>Eligible</dt><dd>{archive.eligible.length}</dd></div><div><dt>Recoverable</dt><dd>{archive.recoverable.length}</dd></div><div><dt>Archive total</dt><dd>{archive.archiveCount}</dd></div></dl>{archive.eligible.length ? <div className="archive-list"><h4>Ready to archive</h4>{archive.eligible.map((item) => <article key={item.candidateKey}><span><strong>{item.businessName}</strong><small>{item.status.replaceAll("_", " ")} · updated {formatTimestamp(item.updatedAt)}</small></span><button type="button" className="secondary-button" disabled={Boolean(archiveBusy)} onClick={() => void runArchiveAction(`archive:${item.candidateKey}`, () => onArchive(item.candidateKey))}>{archiveBusy === `archive:${item.candidateKey}` ? <LoaderCircle className="spin" size={16} /> : <Archive size={16} />} Archive safely</button></article>)}</div> : null}{archive.recoverable.length ? <div className="archive-list"><h4>Recoverable copies</h4>{archive.recoverable.map((item) => <article key={item.archiveId}><span><strong>{item.businessName}</strong><small>{item.transactionStatus.replaceAll("_", " ")} · archived {formatTimestamp(item.archivedAt)}</small></span><button type="button" className="secondary-button" disabled={Boolean(archiveBusy)} onClick={() => void runArchiveAction(`restore:${item.archiveId}`, () => onRestore(item.archiveId))}>{archiveBusy === `restore:${item.archiveId}` ? <LoaderCircle className="spin" size={16} /> : <RotateCcw size={16} />} Restore</button></article>)}</div> : null}</> : archiveState.status === "error" ? <p className="bridge-inline-error"><CircleAlert size={16} />{archiveState.message}</p> : <div className="queue-loading"><Clock3 size={18} /><span>Checking archive readiness…</span></div>}
+        {archiveError ? <p className="bridge-inline-error" role="alert"><CircleAlert size={16} />{archiveError}</p> : null}
+        <p className="bridge-fine-print"><ShieldCheck size={15} /> Only terminal records with no open task can move. Dakota verifies the copied record before removing the active version.</p>
+      </section>
+    </section>
+  );
+}
+
+function ProvenanceTable({ title, rows, label }: { title: string; rows: DakotaProvenanceRow[]; label: (value: string) => string }) {
+  return (
+    <section className="conversion-table provenance-table" aria-labelledby={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>
+      <div><p className="eyebrow" id={`${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>{title}</p><span>Paid / reviewed records</span></div>
+      {rows.length ? <ul>{rows.map((row) => <li key={row.label}><span><strong>{label(row.label)}</strong><small>{row.reviewed} reviewed · {row.pursue} pursue · {row.proposals} proposed · {row.signed} signed</small></span><span><strong>{row.reviewed ? Math.round((row.paid / row.reviewed) * 100) : 0}%</strong><small>{currency(row.paidAmount)} collected</small></span></li>)}</ul> : <p>No reviewed provenance is recorded.</p>}
     </section>
   );
 }

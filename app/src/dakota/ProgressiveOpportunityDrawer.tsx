@@ -26,6 +26,7 @@ import {
   X,
 } from "lucide-react";
 import { ScoreTriptych } from "./ScoreTriptych";
+import { RevenueBridgePanel } from "./RevenueBridgePanel";
 import {
   assessCandidate,
   candidateKey,
@@ -61,6 +62,10 @@ import {
   type DakotaCommercialClose,
   type DakotaConsentClassification,
   type DakotaContactChannel,
+  type DakotaPrivateOffer,
+  type DakotaResearchDisposition,
+  type DakotaRevenueBridgeMutation,
+  type DakotaRevenueBridgeRecord,
   type DakotaTask,
   type DakotaTaskChannel,
   type DakotaTaskStatus,
@@ -584,8 +589,17 @@ export function ProgressiveOpportunityDrawer({
   milestones,
   savedOnly = false,
   notebookAvailable,
+  revenueBridgeRecord,
+  revenueBridgeLoading,
+  revenueBridgeError,
+  privateOffers,
+  privateOffersError,
+  hasNextUnreviewed,
   onClose,
   onSave,
+  onRevenueBridgeMutate,
+  onReviewResearch,
+  onEnrich,
 }: {
   candidate: Candidate;
   queue: QueueEnvelope;
@@ -594,8 +608,17 @@ export function ProgressiveOpportunityDrawer({
   milestones?: OperatorMilestones;
   savedOnly?: boolean;
   notebookAvailable: boolean;
+  revenueBridgeRecord?: DakotaRevenueBridgeRecord;
+  revenueBridgeLoading: boolean;
+  revenueBridgeError?: string;
+  privateOffers: DakotaPrivateOffer[];
+  privateOffersError?: string;
+  hasNextUnreviewed: boolean;
   onClose: () => void;
   onSave: (key: string, record: OperatorRecordInput, expectedUpdatedAt: string | null) => Promise<string>;
+  onRevenueBridgeMutate: (mutation: DakotaRevenueBridgeMutation) => Promise<void>;
+  onReviewResearch: (disposition: Exclude<DakotaResearchDisposition, "unreviewed">, reason: string, openNext: boolean) => Promise<void>;
+  onEnrich: () => Promise<void>;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
@@ -940,6 +963,18 @@ export function ProgressiveOpportunityDrawer({
         </div>
         <div className="drawer-safety"><ShieldCheck size={19} /><p><strong>Dakota prepares and records; David decides and sends.</strong> Copying text or opening Google Voice never records outreach, changes stage, or creates revenue.</p></div>
         <section className="drawer-score" aria-label="Signal, identity, and pursuit scores"><ScoreTriptych assessment={assessment} /></section>
+
+        <RevenueBridgePanel
+          record={revenueBridgeRecord}
+          loading={revenueBridgeLoading}
+          unavailableMessage={revenueBridgeError}
+          offers={privateOffers}
+          offerError={privateOffersError}
+          hasNextUnreviewed={hasNextUnreviewed}
+          onMutate={onRevenueBridgeMutate}
+          onReviewResearch={onReviewResearch}
+          onEnrich={onEnrich}
+        />
 
         <form className="operator-form progressive-form" name="dakota-opportunity-v3" autoComplete="off" onSubmit={save} noValidate>
           <section className="revenue-workbench" aria-labelledby="revenue-workbench-title">

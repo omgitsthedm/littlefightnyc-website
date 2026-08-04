@@ -992,7 +992,11 @@ test(
     const action = await form.getAttribute("action");
     const confirmationUrl = new URL(action!, baseURL!);
     expect(confirmationUrl.pathname).toBe("/thanks/");
-    expect(confirmationUrl.search).toBe("");
+    expect(confirmationUrl.searchParams.get("submitted")).toBe("tech-audit");
+    expect(confirmationUrl.searchParams.get("intent")).toBe("website");
+    expect(confirmationUrl.searchParams.get("report")).toBeNull();
+    expect(confirmationUrl.search).not.toContain("private");
+    expect(confirmationUrl.search).not.toContain("script");
 
     expectRuntimeClean(runtime);
   },

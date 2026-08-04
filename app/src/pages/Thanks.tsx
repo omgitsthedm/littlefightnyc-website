@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CalendarDays, CheckCircle2, ExternalLink } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
@@ -6,56 +6,95 @@ import TugAvatar from "@/components/editorial/TugAvatar";
 import { trackEvent } from "@/lib/analyticsClient";
 import "@/styles/editorial/thanks.css";
 import { BOOKING_HREF, PHONE_DISPLAY } from "@/data/contact";
-
-/* Mirrors REPORT_CONTEXT_KEY and the report-slug contract in TechAudit.tsx.
- * Keep this local so the lightweight confirmation route does not import the
- * full Tech Audit page chunk. */
-const REPORT_CONTEXT_KEY = "lf_tech_audit_report_id";
-
-function safeReportId(value: string | null): string {
-  const trimmed = (value ?? "").trim();
-  if (trimmed.length === 0 || trimmed.length > 300) return "";
-  return /^[a-z0-9](?:[a-z0-9-]{0,298}[a-z0-9])?$/.test(trimmed) ? trimmed : "";
-}
+import {
+  parseTechAuditLeadIntent,
+  parseTechAuditPreferredRoute,
+  readTechAuditConfirmation,
+  safeTechAuditReportId,
+  TECH_AUDIT_SESSION_KEYS,
+  techAuditReplyLanguage,
+} from "@/lib/techAuditContact";
 
 export default function Thanks() {
-  const [leadIntent] = useState(() => {
+  const [confirmation] = useState(() => {
+    const query = readTechAuditConfirmation(window.location.search);
+    let storedIntent = null;
+    let storedReplyRoute = null;
+    let storedReportId = "";
     try {
-      return window.sessionStorage.getItem("lf_lead_intent") ?? "general";
+      storedIntent = parseTechAuditLeadIntent(
+        window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.intent),
+      );
+      storedReplyRoute = parseTechAuditPreferredRoute(
+        window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.replyRoute),
+      );
+      storedReportId = safeTechAuditReportId(
+        window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.report),
+      );
     } catch {
-      return "general";
+      // The redirect query carries the same non-sensitive state when storage
+      // is unavailable (private mode, hardened browser, or a fresh tab).
     }
+
+    const reportId = query.reportId || storedReportId;
+    return {
+      leadIntent: query.intent ?? storedIntent ?? (reportId ? "website" : "general"),
+      replyRoute: query.replyRoute ?? storedReplyRoute,
+      reportId,
+    };
   });
-  const [reportId] = useState(() => {
-    const queryReport = safeReportId(new URLSearchParams(window.location.search).get("report"));
-    if (queryReport) return queryReport;
-    try {
-      return safeReportId(window.sessionStorage.getItem(REPORT_CONTEXT_KEY));
-    } catch {
-      return "";
-    }
-  });
+  const { leadIntent, replyRoute, reportId } = confirmation;
+  const replyLanguage = techAuditReplyLanguage(replyRoute);
   const websiteIntent = leadIntent === "website" || Boolean(reportId);
+  const trackedRef = useRef(false);
 
   useEffect(() => {
-    let cameFromTechAudit = false;
+    if (trackedRef.current) return;
+
+    const query = readTechAuditConfirmation(window.location.search);
+    let storedSubmission = false;
 
     try {
-      cameFromTechAudit = window.sessionStorage.getItem("lf_tech_audit_submitted") === "true";
-      if (cameFromTechAudit) {
-        window.sessionStorage.removeItem("lf_tech_audit_submitted");
-        // Confirmed success — retire the Tech Audit draft. (TechAudit keeps it
-        // through submit so a failed POST + Back never loses the answers.
-        // Literal key mirrors DRAFT_KEY in TechAudit.tsx — keep in sync.)
-        window.sessionStorage.removeItem("lf_tech_audit_draft");
-        window.sessionStorage.removeItem("lf_lead_intent");
-        window.sessionStorage.removeItem(REPORT_CONTEXT_KEY);
-      }
+      storedSubmission = window.sessionStorage.getItem(
+        TECH_AUDIT_SESSION_KEYS.submitted,
+      ) === "true";
     } catch {
-      cameFromTechAudit = false;
+      // The one-time redirect marker remains sufficient for success tracking.
     }
 
+    const cameFromTechAudit = query.submitted || storedSubmission;
     if (!cameFromTechAudit) return;
+    trackedRef.current = true;
+
+    // Remove the one-time marker before tracking so a reload or React's strict
+    // effect replay cannot count this submission twice. Keep intent, reply,
+    // and report in the URL so the confirmation remains accurate on reload.
+    if (query.submitted) {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        params.delete("submitted");
+        const search = params.toString();
+        window.history.replaceState(
+          window.history.state,
+          "",
+          `${window.location.pathname}${search ? `?${search}` : ""}${window.location.hash}`,
+        );
+      } catch {
+        // URL cleanup is progressive; the in-memory guard still prevents a
+        // duplicate within this page lifecycle.
+      }
+    }
+
+    try {
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.submitted);
+      // Confirmed success — retire the draft only after the native POST lands.
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.draft);
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.intent);
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.replyRoute);
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.report);
+    } catch {
+      // Storage can be unavailable; confirmation and tracking still succeed.
+    }
 
     trackEvent("generate_lead", {
       method: "tech_audit_form",
@@ -89,8 +128,8 @@ export default function Thanks() {
           </>
         )}
         dek={websiteIntent
-          ? "You did the hard part — you said what you want. A real person reads this today and calls you back with a clear next step, normally within two hours, 9am to 9pm Eastern. The consult is free, and nothing moves until the plan makes sense to you."
-          : `You did the hard part — you said something. A real person reads this today, not a queue. Expect a callback within two hours, 9am to 9pm Eastern. If it’s urgent right now, call ${PHONE_DISPLAY} and we’ll triage the fire first.`}
+          ? `You did the hard part — you said what you want. A real person reads this today and ${replyLanguage.action} with a clear next step, normally within two hours, 9am to 9pm Eastern. The consult is free, and nothing moves until the plan makes sense to you.`
+          : `You did the hard part — you said something. A real person reads this today, not a queue. Expect ${replyLanguage.expectation} within two hours, 9am to 9pm Eastern. If it’s urgent right now, call ${PHONE_DISPLAY} and we’ll triage the fire first.`}
       />
 
       <section className="lf-thanks__handoff" aria-labelledby="thanks-next-title">
@@ -115,7 +154,7 @@ export default function Thanks() {
             <li>
               <span aria-hidden="true">03</span>
               <strong>Clear next step</strong>
-              <small>Expect a call or message inside the stated window.</small>
+              <small>Expect {replyLanguage.expectation} inside the stated window.</small>
             </li>
           </ol>
         </div>

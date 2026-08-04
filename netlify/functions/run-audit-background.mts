@@ -8,11 +8,6 @@ import { Buffer } from "node:buffer";
 import { createTransport } from "nodemailer";
 import { BOOKING_HREF } from "../../app/src/data/contact.ts";
 import {
-  captureWebsiteAuditInbound,
-  DAKOTA_OPERATOR_BLOB_STORE,
-  isSuccessfulInboundResult,
-} from "./_shared/dakota/inbound.ts";
-import {
   safeDatabaseErrorLabel,
   shouldPersistAuditLead,
   upsertAuditLead,
@@ -27,6 +22,17 @@ import {
   type AuditData,
   type AuditMetric,
 } from "./lib/templates.mts";
+import type { DakotaWebsiteAuditReconciliationPatch } from "./_shared/dakota/revenue-bridge-schema.ts";
+import { DAKOTA_REVENUE_BRIDGE_STORE } from "./_shared/dakota/revenue-bridge-store.ts";
+import {
+  mapWebsiteAuditFindings,
+  normalizedWebsiteAuditGrade,
+} from "./_shared/dakota/website-audit-bridge.ts";
+import {
+  attemptDakotaWebsiteAuditOutboxEntry,
+  DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
+  enqueueDakotaWebsiteAuditOutboxPatch,
+} from "./_shared/dakota/website-audit-outbox.ts";
 
 const GMAIL_FROM = "hello@littlefightnyc.com";
 const GOOGLE_FETCH_MAX_ATTEMPTS = 3;
@@ -86,6 +92,51 @@ async function setStatus(
 ) {
   const store = getStore({ name: "audit-status", consistency: "strong" });
   await store.setJSON(slug, { status, step, url, message });
+}
+
+async function persistAndDeliverRevenueBridgePatch(
+  enabled: boolean,
+  label: string,
+  patch: DakotaWebsiteAuditReconciliationPatch,
+): Promise<void> {
+  if (!enabled) return;
+  try {
+    const queued = await enqueueDakotaWebsiteAuditOutboxPatch(
+      patch,
+      websiteAuditOutboxDependencies(),
+    );
+    if (queued.outcome !== "enqueued") return;
+    await attemptDakotaWebsiteAuditOutboxEntry(
+      queued.entry.entry_id,
+      websiteAuditOutboxDependencies(),
+      true,
+    );
+  } catch {
+    // The report source stores remain authoritative. If enqueue succeeded, the
+    // scheduled reconciler retries; delivery is never attempted before enqueue.
+    console.error(`[audit] Dakota ${label} outbox/reconciliation failed`);
+  }
+}
+
+function websiteAuditOutboxDependencies() {
+  return {
+    getOutboxStore: () => getStore({
+      name: DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
+      consistency: "strong" as const,
+    }),
+    getRevenueBridgeStore: () => getStore({
+      name: DAKOTA_REVENUE_BRIDGE_STORE,
+      consistency: "strong" as const,
+    }),
+  };
+}
+
+function revenueBridgeSummary(value: string): string {
+  return value
+    .replace(/[\u0000-\u001f\u007f<>]/gu, " ")
+    .replace(/\s+/gu, " ")
+    .trim()
+    .slice(0, 2_000) || "Website Audit completed with evidence ready for operator review.";
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1150,32 +1201,8 @@ export default async (req: Request, context: Context) => {
   console.log(`[audit] ▶ Pipeline start: ${domain} → ${slug}`);
 
   const persistAuditLead = shouldPersistAuditLead(context.deploy.context);
-  if (persistAuditLead && requestSource === "website_audit") {
-    try {
-      const inboundResult = await captureWebsiteAuditInbound({
-        email,
-        domain,
-        reportId: slug,
-        submittedAt,
-        source: "littlefightnyc.com/examples/audit",
-      }, {
-        getStore: () => getStore({
-          name: DAKOTA_OPERATOR_BLOB_STORE,
-          consistency: "strong",
-        }),
-      });
-      if (!inboundResult || !isSuccessfulInboundResult(inboundResult)) {
-        console.error("[audit] Dakota consented-inbound write was not accepted");
-      } else {
-        console.log("[audit] Consented Website Audit request added to Dakota");
-      }
-    } catch {
-      // Capture the legitimate request before external audit providers run so
-      // a report-generation failure cannot erase a high-intent inquiry. The
-      // private sales record remains best-effort and never blocks the report.
-      console.error("[audit] Dakota consented-inbound write failed");
-    }
-  }
+  const reconcileRevenueBridge =
+    persistAuditLead && requestSource === "website_audit";
 
   try {
     // ── Step 1: PageSpeed Insights ────────────────────────────
@@ -1280,6 +1307,13 @@ export default async (req: Request, context: Context) => {
     const measuredCategoryCount = metricEntries(psi).filter(
       ({ metric }) => metric.availability === "measured" && metric.value !== null,
     ).length;
+    const generatedAt = new Date().toISOString();
+    const measurementState =
+      measuredCategoryCount === 0
+        ? "unavailable"
+        : measuredCategoryCount === 4
+          ? "complete"
+          : "partial";
     await metaStore.setJSON(slug, {
       domain,
       email,
@@ -1287,18 +1321,51 @@ export default async (req: Request, context: Context) => {
       grade,
       overallScore,
       metrics: psi.metrics,
-      measurementStatus:
-        measuredCategoryCount === 0
-          ? "unavailable"
-          : measuredCategoryCount === 4
-            ? "complete"
-            : "partial",
-      createdAt: new Date().toISOString(),
+      measurementStatus: measurementState,
+      createdAt: generatedAt,
       expiresAt: expiresDate.toISOString(),
     });
 
     const siteOrigin = new URL(req.url).origin;
     const auditUrl = `${siteOrigin}/examples/audit/report/${slug}`;
+
+    // Report HTML and metadata are durable before Dakota learns that the
+    // report exists. Scores stay null unless Lighthouse actually measured the
+    // category, and partial runs never acquire an invented overall grade.
+    await persistAndDeliverRevenueBridgePatch(
+      reconcileRevenueBridge,
+      "generated-state",
+      {
+        patch_type: "generated",
+        report_id: slug,
+        domain,
+        generated_at: generatedAt,
+        report_url: auditUrl,
+        measurement_state: measurementState,
+        scores: {
+          performance: psi.metrics.performance.availability === "measured"
+            ? psi.metrics.performance.value
+            : null,
+          seo: psi.metrics.seo.availability === "measured"
+            ? psi.metrics.seo.value
+            : null,
+          accessibility: psi.metrics.accessibility.availability === "measured"
+            ? psi.metrics.accessibility.value
+            : null,
+          best_practices: psi.metrics.bestPractices.availability === "measured"
+            ? psi.metrics.bestPractices.value
+            : null,
+        },
+        overall_score: measurementState === "complete" ? overallScore : null,
+        grade: measurementState === "complete"
+          ? normalizedWebsiteAuditGrade(grade)
+          : null,
+        summary: revenueBridgeSummary(
+          haiku.executiveSummary || fallbackExecutiveSummary(psi),
+        ),
+        findings: mapWebsiteAuditFindings(haiku.findings),
+      },
+    );
 
     // ── Step 6: Finishing touches ─────────────────────────────
     await setStatus(slug, "running", "finishing");
@@ -1341,6 +1408,7 @@ export default async (req: Request, context: Context) => {
     // Email (best-effort)
     let emailDeliveryStatus: Exclude<AuditEmailDeliveryStatus, "pending"> =
       "failed";
+    let emailDeliveryFailureLabel: string | undefined;
     try {
       const delivery = await sendAuditEmail(
         email,
@@ -1356,10 +1424,29 @@ export default async (req: Request, context: Context) => {
         console.log("[audit] Email accepted by Gmail API");
       }
     } catch (err) {
+      emailDeliveryFailureLabel = safeEmailDeliveryErrorLabel(err);
       console.error(
-        `[audit] Email failed (${safeEmailDeliveryErrorLabel(err)})`,
+        `[audit] Email failed (${emailDeliveryFailureLabel})`,
       );
     }
+
+    const deliveryUpdatedAt = new Date().toISOString();
+    await persistAndDeliverRevenueBridgePatch(
+      reconcileRevenueBridge,
+      "delivery-state",
+      {
+        patch_type: "delivery",
+        report_id: slug,
+        domain,
+        status: emailDeliveryStatus,
+        updated_at: deliveryUpdatedAt,
+        sent_at: emailDeliveryStatus === "sent" ? deliveryUpdatedAt : null,
+        failed_at: emailDeliveryStatus === "failed" ? deliveryUpdatedAt : null,
+        failure_reason: emailDeliveryStatus === "failed"
+          ? emailDeliveryFailureLabel || "email_delivery_error"
+          : "",
+      },
+    );
 
     if (leadPersisted) {
       try {
@@ -1381,6 +1468,17 @@ export default async (req: Request, context: Context) => {
     console.log(`[audit] ✅ Pipeline complete: ${auditUrl}`);
   } catch (err) {
     console.error("[audit] ❌ Pipeline error:", err);
+    await persistAndDeliverRevenueBridgePatch(
+      reconcileRevenueBridge,
+      "failed-state",
+      {
+        patch_type: "failed",
+        report_id: slug,
+        domain,
+        failed_at: new Date().toISOString(),
+        failure_reason: "audit_pipeline_failed",
+      },
+    );
     await setStatus(
       slug,
       "error",

@@ -6,6 +6,22 @@ import type { Context, Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { createHash, createHmac } from "node:crypto";
 
+import {
+  captureWebsiteAuditInboundReliably,
+  DAKOTA_INGRESS_RECEIPT_STORE,
+} from "./_shared/dakota/ingress-receipts.ts";
+import {
+  DAKOTA_OPERATOR_ALERT_STORE,
+  sendDakotaIngressOperatorAlert,
+} from "./_shared/dakota/operator-alert.ts";
+import { DAKOTA_OPERATOR_BLOB_STORE } from "./_shared/dakota/operator-state-constants.ts";
+import { DAKOTA_REVENUE_BRIDGE_STORE } from "./_shared/dakota/revenue-bridge-store.ts";
+import {
+  attemptDakotaWebsiteAuditOutboxEntry,
+  DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
+  enqueueDakotaWebsiteAuditOutboxPatch,
+} from "./_shared/dakota/website-audit-outbox.ts";
+
 // ── Rate limit config ─────────────────────────────────────────
 const RATE_LIMIT_WINDOW_HOURS = 24;
 const RATE_LIMIT_MAX_PUBLIC = 3; // public form: 3 audits per IP per 24h
@@ -41,6 +57,50 @@ function createJobToken(): string {
   const bytes = new Uint8Array(32);
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function websiteAuditOutboxDependencies() {
+  return {
+    getOutboxStore: () => getStore({
+      name: DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
+      consistency: "strong" as const,
+    }),
+    getRevenueBridgeStore: () => getStore({
+      name: DAKOTA_REVENUE_BRIDGE_STORE,
+      consistency: "strong" as const,
+    }),
+  };
+}
+
+async function persistAndQueueRequestedRevenueBridgeWrite(
+  context: Context,
+  input: { slug: string; domain: string; requestedAt: string },
+): Promise<void> {
+  try {
+    const queued = await enqueueDakotaWebsiteAuditOutboxPatch({
+      patch_type: "requested",
+      report_id: input.slug,
+      domain: input.domain,
+      requested_at: input.requestedAt,
+    }, websiteAuditOutboxDependencies());
+    if (queued.outcome !== "enqueued") return;
+    context.waitUntil(
+      attemptDakotaWebsiteAuditOutboxEntry(
+        queued.entry.entry_id,
+        websiteAuditOutboxDependencies(),
+        true,
+      )
+        .catch(() => {
+          // The PII-free outbox entry is already durable and the scheduled
+          // reconciler will retry it. Delivery never gates the visitor's audit.
+          console.error("[audit] Dakota requested-state delivery failed");
+        }),
+    );
+  } catch {
+    // The source ingress receipt remains durable. Never attempt a bridge write
+    // unless its corresponding PII-free outbox entry exists first.
+    console.error("[audit] Dakota requested-state outbox persistence failed");
+  }
 }
 
 async function sha256Hex(value: string): Promise<string> {
@@ -247,6 +307,77 @@ export default async (req: Request, context: Context) => {
       .replace(/^-|-$/g, "") +
     "-" +
     suffix;
+
+  // The public request becomes durable before the audit background job starts.
+  // Programmatic API calls and non-production deploys keep their existing
+  // isolation and do not create private sales records.
+  if (!isAuthenticated && context.deploy.context === "production") {
+    let inboundResult;
+    try {
+      inboundResult = await captureWebsiteAuditInboundReliably({
+        email,
+        domain,
+        reportId: slug,
+        submittedAt,
+        source: "littlefightnyc.com/examples/audit",
+      }, {
+        getOperatorStore: () => getStore({
+          name: DAKOTA_OPERATOR_BLOB_STORE,
+          consistency: "strong",
+        }),
+        getReceiptStore: () => getStore({
+          name: DAKOTA_INGRESS_RECEIPT_STORE,
+          consistency: "strong",
+        }),
+      });
+    } catch {
+      console.error("[audit] Dakota ingress receipt persistence failed");
+      return new Response(JSON.stringify({
+        error: "The audit could not be safely queued. Please try again.",
+      }), {
+        status: 503,
+        headers: corsHeaders(),
+      });
+    }
+
+    if (!inboundResult) {
+      console.error("[audit] Valid Website Audit input did not produce an ingress receipt");
+      return new Response(JSON.stringify({
+        error: "The audit could not be safely queued. Please try again.",
+      }), {
+        status: 503,
+        headers: corsHeaders(),
+      });
+    }
+
+    // Attach the audit lifecycle to the same durable Dakota candidate. This is
+    // deliberately queued only after receipt persistence succeeds, and it is
+    // never allowed to interfere with the accepted report request.
+    await persistAndQueueRequestedRevenueBridgeWrite(context, {
+      slug,
+      domain,
+      requestedAt: submittedAt,
+    });
+
+    if (inboundResult.alertKind) {
+      context.waitUntil(
+        sendDakotaIngressOperatorAlert({
+          kind: inboundResult.alertKind,
+          receiptId: inboundResult.receiptId,
+          source: inboundResult.source,
+        }, {
+          getStore: () => getStore({
+            name: DAKOTA_OPERATOR_ALERT_STORE,
+            consistency: "strong",
+          }),
+        }).catch(() => {
+          // Operator notification is best-effort after the receipt exists. It
+          // may never interfere with the visitor's requested report.
+          console.error("[audit] Dakota operator alert delivery failed");
+        }),
+      );
+    }
+  }
 
   // ── Write initial status to blobs ───────────────────────────
   const statusStore = getStore({ name: "audit-status", consistency: "strong" });
