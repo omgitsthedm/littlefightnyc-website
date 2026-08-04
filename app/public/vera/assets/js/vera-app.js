@@ -63,11 +63,32 @@
 
   /* ---------- count-up: numbers that arrive, not appear ---------- */
 
+  function settleCounters(root) {
+    $$('[data-count-to]', root).forEach(function (el) { el.textContent = el.getAttribute('data-count-final'); });
+  }
+
   function countUps(root) {
-    if (RM) {
-      $$('[data-count-to]', root).forEach(function (el) { el.textContent = el.getAttribute('data-count-final'); });
+    if (RM) { settleCounters(root); return; }
+
+    /* requestAnimationFrame does not fire in a hidden or background tab, so
+       a page rendered there left every counter sitting at its placeholder
+       0 — "In the net 0/231", "Median ask $0" — until something forced a
+       re-render. Open VERA in a background tab and switch to it and that is
+       what you got.
+
+       Hidden pages get the final value immediately, and the animation is
+       re-armed for the first time the page is actually looked at. A number
+       that arrives without ceremony beats a wrong one that animates. */
+    if (document.hidden) {
+      settleCounters(root);
+      var replay = function () {
+        document.removeEventListener('visibilitychange', replay);
+        if (!document.hidden) countUps(root);
+      };
+      document.addEventListener('visibilitychange', replay);
       return;
     }
+
     $$('[data-count-to]', root).forEach(function (el) {
       var target = +el.getAttribute('data-count-to') || 0;
       var final = el.getAttribute('data-count-final');
@@ -846,7 +867,7 @@
       '<p class="pagehead__lede">Everything VERA is watching under ' + money(C.FIT.maxRent) + ' — not just what cleared. The published market medians sit at ' + money(mk.manhattanMedian) + ' Manhattan / ' + money(mk.brooklynMedian) + ' Brooklyn (' + esc(mk.asOf) + '); this net hunts the floor beneath them.</p></header>' +
       '<div class="kpis">' +
         kpi('In the net', cval(f.length) + '<small>/' + POOL.length + '</small>', 'under current lens', '', 'browse') +
-        kpi('New tonight', cval(sm.new_today != null ? sm.new_today : fresh.length), (dc.gone || 0) + ' gone', 'kpi--good', 'fresh') +
+        newTonightKPI(sm, dc, fresh) +
         kpi('Median ask', rents.length ? cmoney(ourMedian) : '—', 'vs ' + money(mk.cityMedianAsk) + ' citywide', '') +
         kpi('Price drops', cval(sm.price_drops || dc.price_drop || 0), (sm.price_hikes || dc.price_hike || 0) + ' hikes', (sm.price_drops || dc.price_drop) ? 'kpi--good' : '') +
         kpi('Private landlords', cval(privates.length), 'no broker, no corp', 'kpi--good', 'owner') +
@@ -1278,6 +1299,23 @@
     pipeline: 'the pipeline mirror',
     cloud: 'the nightly cloud sweep — published without any operator machine',
   };
+
+  /* "New tonight" is a comparison, and a comparison needs something to
+     compare against. The engine keeps that history outside its checkout, so
+     a run on a fresh machine — every cloud run before the memory was wired
+     up — sees every listing for the first time and reports the entire pool
+     as new. The Market page duly announced "231 new tonight" out of 231.
+
+     No rental market turns over completely in a day. When the count is the
+     whole pool it is not a market event, it is a missing memory, and saying
+     so is the only honest read. */
+  function newTonightKPI(sm, dc, fresh) {
+    var n = sm.new_today != null ? sm.new_today : fresh.length;
+    if (POOL.length && n >= POOL.length) {
+      return kpi('New tonight', '—', 'first sweep with no prior night to compare', 'kpi--warn');
+    }
+    return kpi('New tonight', cval(n), (dc.gone || 0) + ' gone', 'kpi--good', 'fresh');
+  }
 
   /* Derived from FEEDS rather than listed separately, so a fourth origin
      can never be added to the feed and forgotten for the receipts. */
