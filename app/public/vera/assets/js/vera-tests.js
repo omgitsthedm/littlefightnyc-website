@@ -499,6 +499,22 @@
       check('a healthy records layer shows no warning', !$('.recwarn'), '');
       Dh.records_health = hadRH;
 
+      /* ---- the drop's "see the rest" jump ----
+         This link only renders on a night when more than eight listings
+         clear every gate, which is rare — so it would rot unnoticed. The
+         handler is exercised directly instead of waiting for such a night. */
+      location.hash = '#/today'; app.route();
+      var _viewWas = state.view;
+      var _probe = document.createElement('a');
+      _probe.href = '#/browse';
+      _probe.setAttribute('data-view-jump', 'cleared');
+      (($('.drophead') || document.body)).appendChild(_probe);
+      _probe.click();
+      check('the drop\'s "see the rest" link lands on the cleared set',
+        state.view === 'cleared', state.view);
+      _probe.remove();
+      state.view = _viewWas;
+
       /* ---- no horizontal overflow, at whatever width this is running ----
          A 375px regression shipped once before, so this is checked rather
          than assumed. It runs at the current viewport, so opening ?test=1
@@ -507,12 +523,20 @@
          an SVG path inside a clipped minimap legitimately reports bounds
          past the viewport and is not overflow. */
       var _de = document.documentElement;
-      ['today', 'market', 'browse', 'atlas', 'hunt', 'manual', 'archive', 'system'].forEach(function (r) {
-        location.hash = '#/' + r; app.route();
-        check('no sideways scroll on ' + r + ' at ' + _de.clientWidth + 'px',
-          _de.scrollWidth <= _de.clientWidth + 1,
-          _de.scrollWidth + ' vs ' + _de.clientWidth);
-      });
+      // A hidden or detached pane reports clientWidth 0, which would fail
+      // every route on a measurement that never happened. A check that
+      // cannot measure has to say so rather than cry wolf.
+      if (_de.clientWidth < 200) {
+        check('viewport too small to measure overflow — skipped, not failed',
+          true, _de.clientWidth + 'px (pane hidden or detached)');
+      } else {
+        ['today', 'market', 'browse', 'atlas', 'hunt', 'manual', 'archive', 'system'].forEach(function (r) {
+          location.hash = '#/' + r; app.route();
+          check('no sideways scroll on ' + r + ' at ' + _de.clientWidth + 'px',
+            _de.scrollWidth <= _de.clientWidth + 1,
+            _de.scrollWidth + ' vs ' + _de.clientWidth);
+        });
+      }
       location.hash = '#/today'; app.route();
 
       /* ---- hygiene ---- */
