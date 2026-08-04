@@ -416,6 +416,15 @@
         /[“"]good-faith[”"] deposit/.test(manTxt) &&
         manTxt.indexOf('Key money') > -1, $$('.unlawful li').length + ' listed');
 
+      /* ---- attribution the licences actually require ---- */
+      location.hash = '#/system'; app.route();
+      var credTxt = document.body.textContent;
+      check('the app credits every source it leans on',
+        $$('.credits li').length >= 6 &&
+        credTxt.indexOf('umm-maybe/AI-image-detector') > -1 &&
+        credTxt.indexOf('CC BY 4.0') > -1 &&
+        credTxt.indexOf('Who Owns What') > -1, $$('.credits li').length + ' credits');
+
       /* ---- records-layer honesty ---- */
       var Dh = app.D();
       var hadRH = Dh.records_health;

@@ -1297,6 +1297,16 @@
         '<p>Verified Evaluation for Rental Analysis — a personal apartment-search engine for one hunt: privately-owned rentals, under ' + money(C.FIT.maxRent) + ', in the neighborhoods that fit one life. It watches the fragmented channels where small landlords actually post, joins every listing to the city\'s own records, and refuses to show what it cannot stand behind.</p>' +
         '<p>Fairness on the record: every steward grade is computed from cited public records — never from any protected characteristic — and owners have a standing <a href="/vera/corrections/">correction channel</a>.</p>' +
         '<p>Read-only by principle: VERA never messages a landlord, never floods an inbox, never squats a viewing slot. It makes one human faster, not the market worse.</p>' +
+        '<h3 class="ethos__h">What VERA is built on</h3>' +
+        '<p>Nothing here is VERA\'s own opinion of a building. It is public data, read carefully:</p>' +
+        '<ul class="credits">' +
+          '<li><b>NYC Open Data</b> — HPD violations, complaints and registrations; DOB records; 311; PLUTO; ACRIS.</li>' +
+          '<li><b>NYC Dept. of City Planning</b> — NTA2020 neighborhood boundaries and the <a href="https://geosearch.planninglabs.nyc/" target="_blank" rel="noopener noreferrer">GeoSearch</a> geocoder.</li>' +
+          '<li><b>MTA</b> — GTFS static schedules, which is why the commute minutes here are quoted rather than invented.</li>' +
+          '<li><b><a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix — Who Owns What</a></b> — links buildings into landlord portfolios through HPD registration contacts.</li>' +
+          '<li><b>AI-photo detection</b> — <a href="https://huggingface.co/umm-maybe/AI-image-detector" target="_blank" rel="noopener noreferrer">umm-maybe/AI-image-detector</a>, licensed CC BY 4.0.</li>' +
+          '<li><b><a href="https://maplibre.org/" target="_blank" rel="noopener noreferrer">MapLibre GL</a></b> over <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> tiles, from OpenStreetMap data.</li>' +
+        '</ul>' +
         '<p class="ethos__credit">A <a href="https://littlefightnyc.com/" rel="noopener">Little Fight NYC</a> system · <a href="/vera/brand/">brand</a> · <a href="/vera/terms/">terms</a> · <a href="/vera/privacy/">privacy</a></p>' +
       '</section>';
     page.classList.add('is-entered');
