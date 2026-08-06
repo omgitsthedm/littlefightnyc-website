@@ -34,7 +34,7 @@
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=48">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=49">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -55,16 +55,29 @@
         <span class="pulse" data-pulse aria-hidden="true"></span>
         <span class="mono" data-snapshot-line>Sweeping…</span>
       </div>
-      <nav class="mastnav" aria-label="Sections">
-        <a href="#/today" data-nav="today">Today</a>
-        <a href="#/market" data-nav="market">Market</a>
-        <a href="#/browse" data-nav="browse">Browse</a>
-        <a href="#/atlas" data-nav="atlas">Atlas</a>
-        <a href="#/hunt" data-nav="hunt">My hunt<b class="nv__badge" data-case-badge hidden>0</b></a>
-        <a href="#/manual" data-nav="manual">Field manual</a>
-        <a href="#/archive" data-nav="archive">Receipts</a>
-        <a href="#/system" data-nav="system">System</a>
-      </nav>
+      <div class="mastnav__zone">
+        <nav class="mastnav" aria-label="Sections">
+          <a href="#/today" data-nav="today">Today</a>
+          <a href="#/market" data-nav="market" class="mastnav__2nd">Market</a>
+          <a href="#/browse" data-nav="browse">Browse</a>
+          <a href="#/atlas" data-nav="atlas" class="mastnav__2nd">Atlas</a>
+          <a href="#/hunt" data-nav="hunt">My hunt<b class="nv__badge" data-case-badge hidden>0</b></a>
+          <a href="#/manual" data-nav="manual" class="mastnav__2nd">Field manual</a>
+          <a href="#/archive" data-nav="archive" class="mastnav__2nd">Receipts</a>
+          <a href="#/system" data-nav="system" class="mastnav__2nd">System</a>
+          <button type="button" class="mastnav__more" data-nav-more aria-expanded="false" aria-haspopup="true">More</button>
+        </nav>
+        <!-- Phone-only overflow: the five secondary sections live here under
+             More. Links carry data-nav, so the router's active-state sync
+             reaches them unchanged. -->
+        <div class="mastnav__sheet" data-nav-sheet hidden>
+          <a href="#/market" data-nav="market">Market</a>
+          <a href="#/atlas" data-nav="atlas">Atlas</a>
+          <a href="#/manual" data-nav="manual">Field manual</a>
+          <a href="#/archive" data-nav="archive">Receipts</a>
+          <a href="#/system" data-nav="system">System</a>
+        </div>
+      </div>
     </header>
 
     <div class="filters" data-filters hidden>
@@ -136,14 +149,26 @@
         <button type="button" class="inspector__close" data-insp-close aria-label="Close the ledger">×</button>
       </div>
       <div class="inspector__actions" data-insp-actions></div>
-      <div class="inspector__tabs" data-insp-tabs role="tablist">
-        <button id="vera-tab-overview" type="button" data-tab="overview" class="is-on" role="tab" aria-controls="vera-tabpanel" aria-selected="true">Overview</button>
-        <button id="vera-tab-money" type="button" data-tab="money" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Money</button>
-        <button id="vera-tab-records" type="button" data-tab="records" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Records</button>
-        <button id="vera-tab-owner" type="button" data-tab="owner" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Owner</button>
-        <button id="vera-tab-score" type="button" data-tab="score" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Score</button>
-        <button id="vera-tab-visit" type="button" data-tab="visit" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Visit</button>
-        <button id="vera-tab-verify" type="button" data-tab="verify" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Verify</button>
+      <div class="inspector__tabzone">
+        <div class="inspector__tabs" data-insp-tabs role="tablist">
+          <button id="vera-tab-overview" type="button" data-tab="overview" class="is-on" role="tab" aria-controls="vera-tabpanel" aria-selected="true">Overview</button>
+          <button id="vera-tab-money" type="button" data-tab="money" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Money</button>
+          <button id="vera-tab-records" type="button" data-tab="records" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Records</button>
+          <button id="vera-tab-owner" type="button" data-tab="owner" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Owner</button>
+          <button id="vera-tab-score" type="button" data-tab="score" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Score</button>
+          <button id="vera-tab-visit" type="button" data-tab="visit" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Visit</button>
+          <button id="vera-tab-verify" type="button" data-tab="verify" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Verify</button>
+          <button type="button" class="inspector__tabmore" data-tab-more aria-expanded="false" aria-haspopup="true">More</button>
+        </div>
+        <!-- Phone-only overflow: Money / Owner / Score / Visit under More.
+             data-tab clicks route through the app's delegated handler, so
+             these need no wiring of their own. -->
+        <div class="inspector__tabsheet" data-tab-sheet hidden>
+          <button type="button" data-tab="money">Money</button>
+          <button type="button" data-tab="owner">Owner</button>
+          <button type="button" data-tab="score">Score</button>
+          <button type="button" data-tab="visit">Visit</button>
+        </div>
       </div>
       <div id="vera-tabpanel" class="inspector__body" data-insp-body role="tabpanel" aria-labelledby="vera-tab-overview"></div>
     </aside>
@@ -159,7 +184,7 @@
        Both are injected by vera-app.js. -->
   <script src="./assets/js/vera-map.js?v=47" defer></script>
   <script src="./assets/js/vera-sweep.js?v=47" defer></script>
-  <script src="./assets/js/vera-ledger.js?v=48" defer></script>
-  <script src="./assets/js/vera-app.js?v=48" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=49" defer></script>
+  <script src="./assets/js/vera-app.js?v=49" defer></script>
 </body>
 </html>

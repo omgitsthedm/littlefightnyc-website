@@ -127,6 +127,8 @@
 
   function setTab(t) {
     inspTab = t;
+    var sheet = $('[data-tab-sheet]');
+    if (sheet) sheet.hidden = true;
     var l = A().byUid(openUid);
     if (l) render(l);
     var active = $('[data-insp-tabs] [data-tab="' + t + '"]');
@@ -147,11 +149,18 @@
     $('[data-insp-title]').textContent = app.addressOf(l) || C.charName(l);
     $('[data-insp-sub]').textContent = [money(l.rent), l.neighborhood, C.charName(l)].filter(Boolean).join(' · ');
     $$('[data-insp-tabs] button').forEach(function (b) {
+      if (!b.hasAttribute('data-tab')) return; /* the More button is chrome, not a tab */
       var on = b.getAttribute('data-tab') === inspTab;
       b.classList.toggle('is-on', on);
       b.setAttribute('aria-selected', on ? 'true' : 'false');
       b.setAttribute('tabindex', on ? '0' : '-1');
     });
+    /* phone overflow mirrors the active tab and lights its More button (C3) */
+    $$('[data-tab-sheet] [data-tab]').forEach(function (b) {
+      b.classList.toggle('is-on', b.getAttribute('data-tab') === inspTab);
+    });
+    var tabMore = $('[data-tab-more]');
+    if (tabMore) tabMore.classList.toggle('is-on', ['money', 'owner', 'score', 'visit'].indexOf(inspTab) > -1);
 
     var c = app.caseOf(l.listing_uid);
     $('[data-insp-actions]').innerHTML = c

@@ -173,6 +173,32 @@
         check('fraud evidence is flagged hard, every time', false, 'no rows to host the fixture');
       }
 
+      /* ---- phone overflow sheets (C2/C3) ---- */
+      check('nav declares five secondary sections', $$('.mastnav__2nd').length === 5, $$('.mastnav__2nd').length);
+      $('[data-nav-more]').click();
+      var navSheetOpen = !$('[data-nav-sheet]').hidden;
+      $('[data-nav-sheet] [data-nav="system"]').click();
+      app.route();
+      check('nav More sheet opens, routes, and closes itself',
+        navSheetOpen && state.route === 'system' && $('[data-nav-sheet]').hidden, state.route);
+      check('More wears the active state on a secondary route', $('[data-nav-more]').classList.contains('is-on'), '');
+      location.hash = '#/browse'; app.route();
+      var rowC = $$('.dt tbody tr[data-open]')[0];
+      if (rowC) {
+        rowC.click();
+        $('[data-tab-more]').click();
+        var tabSheetOpen = !$('[data-tab-sheet]').hidden;
+        $$('[data-tab-sheet] [data-tab="money"]')[0].click();
+        check('ledger More sheet opens, switches tabs, and closes itself',
+          tabSheetOpen && $('[data-tab-sheet]').hidden && $('[data-insp-body]').textContent.length > 20, '');
+        check('ledger More lights while a secondary tab is active', $('[data-tab-more]').classList.contains('is-on'), '');
+        L.setTab('overview');
+        L.close();
+      } else {
+        check('ledger More sheet opens, switches tabs, and closes itself', false, 'no rows');
+      }
+      location.hash = '#/today'; app.route();
+
       /* ---- atlas ---- */
       location.hash = '#/atlas'; app.route();
       var geoReady = window.__VERAG && window.__VERAG.ready();

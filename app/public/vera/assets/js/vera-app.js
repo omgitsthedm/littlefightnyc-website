@@ -22,6 +22,8 @@
   ];
   var FEED_RACE_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
+  /* phone overflow (C2): these five collapse behind More under 700px */
+  var NAV_SECONDARY = ['market', 'atlas', 'manual', 'archive', 'system'];
   var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* The public acceptance harness deliberately exercises every workspace
@@ -1616,6 +1618,12 @@
       a.classList.toggle('is-on', on);
       if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
+    /* the More button wears the underline when a secondary section is
+       active, and routing always closes the overflow sheet (C2) */
+    var moreBtn = $('[data-nav-more]');
+    if (moreBtn) moreBtn.classList.toggle('is-on', NAV_SECONDARY.indexOf(h) > -1);
+    var navSheet = $('[data-nav-sheet]');
+    if (navSheet) navSheet.hidden = true;
     var activeNav = $('[data-nav="' + h + '"]');
     if (activeNav && activeNav.scrollIntoView) requestAnimationFrame(function () {
       activeNav.scrollIntoView({ block: 'nearest', inline: 'center', behavior: RM ? 'auto' : 'smooth' });
@@ -1836,9 +1844,34 @@
 
   /* ---------- one delegated click handler ---------- */
 
+  /* Overflow sheets close on outside click or Escape (C2/C3). */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget]') : null;
+    if (e.target.closest && e.target.closest('[data-nav-sheet],[data-tab-sheet],[data-nav-more],[data-tab-more]')) return;
+    $$('[data-nav-sheet],[data-tab-sheet]').forEach(function (s) { s.hidden = true; });
+    $$('[data-nav-more],[data-tab-more]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    $$('[data-nav-sheet],[data-tab-sheet]').forEach(function (s) { s.hidden = true; });
+  });
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more]') : null;
     if (!t) return;
+
+    /* overflow sheets (C2/C3): phone collapses secondary sections behind
+       More — the button toggles its sheet and closes the other one */
+    if (t.hasAttribute('data-nav-more') || t.hasAttribute('data-tab-more')) {
+      var sel = t.hasAttribute('data-nav-more') ? '[data-nav-sheet]' : '[data-tab-sheet]';
+      var oth = $(t.hasAttribute('data-nav-more') ? '[data-tab-sheet]' : '[data-nav-sheet]');
+      if (oth) oth.hidden = true;
+      var sheet = $(sel);
+      if (sheet) {
+        sheet.hidden = !sheet.hidden;
+        t.setAttribute('aria-expanded', sheet.hidden ? 'false' : 'true');
+      }
+      return;
+    }
 
     if (t.hasAttribute('data-address-candidate')) {
       var addressUid = t.getAttribute('data-uid');
@@ -2074,7 +2107,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=48').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=49').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };

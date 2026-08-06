@@ -163,10 +163,11 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 .pulse.is-bad { background: var(--red); }
 @keyframes pulse { 70% { box-shadow: 0 0 0 9px rgba(76, 195, 138, 0); } }
 
+.mastnav__zone { position: relative; order: 3; width: 100%; margin-top: 4px; }
 .mastnav {
-  display: flex; gap: 2px; order: 3; width: 100%;
+  display: flex; gap: 2px;
   overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-  margin-top: 4px; overscroll-behavior-inline: contain; scroll-padding-inline: 14px;
+  overscroll-behavior-inline: contain; scroll-padding-inline: 14px;
 }
 .mastnav::-webkit-scrollbar { display: none; }
 .mastnav a {
@@ -180,6 +181,43 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 .mastnav a.is-on::after {
   content: ""; position: absolute; left: 12px; right: 12px; bottom: 0;
   height: 2px; background: var(--brass); border-radius: 2px;
+}
+/* Phone-only overflow (C2): secondary sections collapse behind More.
+   Default state: the full bar shows, More stays out of the way. */
+.mastnav__more {
+  display: none; background: none; border: 0; cursor: pointer;
+  font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--dim);
+  padding: 9px 14px 12px; border-radius: 9px 9px 0 0; position: relative;
+  white-space: nowrap; align-items: center; gap: 7px;
+}
+.mastnav__more::after { content: "▾"; font-size: 10px; }
+.mastnav__more.is-on { color: var(--ink); }
+.mastnav__more.is-on::before {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 0;
+  height: 2px; background: var(--brass); border-radius: 2px;
+}
+.mastnav__sheet, .inspector__tabsheet {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 80;
+  display: flex; flex-direction: column; min-width: 188px;
+  background: var(--panel2); border: 1px solid var(--line2);
+  border-radius: var(--r-sm); padding: 6px; box-shadow: var(--shadow);
+}
+.mastnav__sheet a, .inspector__tabsheet button {
+  font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.07em;
+  text-transform: uppercase; text-decoration: none; text-align: left;
+  color: var(--dim); background: none; border: 0; cursor: pointer;
+  padding: 11px 14px; border-radius: 7px; white-space: nowrap;
+}
+.mastnav__sheet a:hover, .inspector__tabsheet button:hover { color: var(--ink); background: rgba(233, 226, 210, 0.05); }
+.mastnav__sheet a.is-on, .inspector__tabsheet button.is-on { color: var(--brass); }
+@media (max-width: 700px) {
+  .mastnav a.mastnav__2nd { display: none; }
+  .mastnav__more { display: inline-flex; }
+  .inspector__tabs [data-tab="money"], .inspector__tabs [data-tab="owner"],
+  .inspector__tabs [data-tab="score"], .inspector__tabs [data-tab="visit"] { display: none; }
+  /* outranks the base .inspector__tabmore { display: none } declared later */
+  .inspector__tabs .inspector__tabmore { display: inline-block; }
 }
 .nv__badge {
   font-family: var(--mono); font-size: 10px; background: var(--green);
@@ -660,8 +698,18 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 .stagepick { display: flex; gap: 4px; flex-wrap: wrap; }
 .stagepick button { background: none; border: 1px solid var(--line); border-radius: 999px; color: var(--mute); font-size: 11.5px; padding: 6px 11px; }
 .stagepick button.is-on { color: var(--green); border-color: rgba(76, 195, 138, 0.5); background: var(--green-soft); }
+.inspector__tabzone { position: relative; }
 .inspector__tabs { display: flex; gap: 2px; padding: 10px 24px 0; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; overscroll-behavior-inline: contain; scroll-padding-inline: 24px; }
 .inspector__tabs::-webkit-scrollbar { display: none; }
+/* Phone-only overflow (C3): Money/Owner/Score/Visit collapse behind More. */
+.inspector__tabmore {
+  display: none; background: none; border: 0; color: var(--mute); cursor: pointer;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase;
+  padding: 8px 10px 10px; position: relative; white-space: nowrap;
+}
+.inspector__tabmore::after { content: "▾"; font-size: 9px; margin-left: 5px; }
+.inspector__tabmore.is-on { color: var(--ink); }
+.inspector__tabmore.is-on::before { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; background: var(--brass); border-radius: 2px; }
 .inspector__tabs button {
   background: none; border: 0; color: var(--mute); font-family: var(--mono); font-size: 11.5px;
   letter-spacing: 0.05em; text-transform: uppercase; padding: 8px 11px 11px; min-height: 44px; position: relative; white-space: nowrap;
