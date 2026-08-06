@@ -207,6 +207,10 @@
       check('the page wears the sweep’s time of day',
         ['night', 'dawn', 'day', 'dusk'].indexOf(document.documentElement.getAttribute('data-sky')) > -1,
         document.documentElement.getAttribute('data-sky'));
+      /* D4: the diff line is memory-only personal state — the suite runs
+         with localRead neutralized, so it must stay off here */
+      check('the since-your-last-visit line writes nothing in test mode',
+        app.sinceLastVisit() === null && !$('.drophead__since'), 'memory-only guard holds');
 
       /* ---- atlas ---- */
       location.hash = '#/atlas'; app.route();

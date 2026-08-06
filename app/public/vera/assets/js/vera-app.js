@@ -755,6 +755,7 @@
         '</p>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
         '<p class="drophead__next">next scheduled sweep <span class="mono" data-countdown>—</span></p>' +
+        (sinceLastVisit ? '<p class="drophead__since">' + sinceLastVisit + ' new in the net since your last visit</p>' : '') +
         anchorPanel() +
       '</header>' +
       (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
@@ -2097,6 +2098,18 @@
     HOODS = Object.keys(hc).map(function (h) { return { name: h, count: hc[h] }; }).sort(function (a, b) { return b.count - a.count; });
     state.hoods = state.hoods.filter(function (h) { return hc[h]; });
 
+    /* D4 — the quiet provenance diff: what entered the net since the last
+       sweep THIS browser saw. It reports the past; it never pressures the
+       present. In test mode localRead is null, so the line stays off and
+       no state is ever written. */
+    var prevSweep = localRead('vera-last-sweep');
+    sinceLastVisit = null;
+    if (prevSweep && D.generated_at && prevSweep !== D.generated_at) {
+      var prevAt = Date.parse(prevSweep) || 0;
+      sinceLastVisit = POOL.filter(function (l) { return (Date.parse(l.first_seen_at) || 0) > prevAt; }).length;
+    }
+    if (D.generated_at) localWrite('vera-last-sweep', D.generated_at);
+
     var loader = $('[data-loading]');
     if (loader) loader.remove();
     /* the whole page keeps the sweep's time of day (D2) — portraits
@@ -2110,7 +2123,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=50').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=51').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
@@ -2125,6 +2138,7 @@
 
   var servedFromCache = null;
   var feedOrigin = null;
+  var sinceLastVisit = null; /* D4 — listings new since this browser's last sweep */
 
   /* Ask every origin at once and keep the newest answer.
 
@@ -2201,6 +2215,7 @@
     addressResolutionOf: addressResolutionOf, addressCheckMarkup: addressCheckMarkup, syncPressed: syncPressed,
     FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
     archiveOrigins: archiveOrigins,
+    sinceLastVisit: function () { return sinceLastVisit; },
   };
 
   window.__vera = {
