@@ -199,6 +199,15 @@
       }
       location.hash = '#/today'; app.route();
 
+      /* ---- the sweep veil (D1) and living-city tint (D2) ---- */
+      var bts = (window.__VERAS && window.__VERAS._beats) ? window.__VERAS._beats() : [];
+      check('sweep narration replays a past run, never a live one',
+        bts.length >= 2 && /replaying/.test(bts[0]) && !/\blive\b/i.test(bts.join(' ')), bts[0] || 'no beats');
+      check('sweep narration cites the run’s own numbers', /<b>\d+<\/b>/.test(bts.join(' ')), bts.length + ' beats');
+      check('the page wears the sweep’s time of day',
+        ['night', 'dawn', 'day', 'dusk'].indexOf(document.documentElement.getAttribute('data-sky')) > -1,
+        document.documentElement.getAttribute('data-sky'));
+
       /* ---- atlas ---- */
       location.hash = '#/atlas'; app.route();
       var geoReady = window.__VERAG && window.__VERAG.ready();

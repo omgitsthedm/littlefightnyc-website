@@ -2099,6 +2099,9 @@
 
     var loader = $('[data-loading]');
     if (loader) loader.remove();
+    /* the whole page keeps the sweep's time of day (D2) — portraits
+       already did; now the ground beneath them agrees */
+    document.documentElement.setAttribute('data-sky', C.skyOf(sweepHour()));
     renderChrome();
     renderFilters();
     saveCases();
@@ -2107,7 +2110,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=49').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=50').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
