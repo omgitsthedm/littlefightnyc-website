@@ -149,6 +149,30 @@
         check('ledger opens', false, 'no rows');
       }
 
+      /* ---- two-tier forensics (David's ruling 2026-08-05) ---- */
+      var rowB = $$('.dt tbody tr[data-open]')[0];
+      if (rowB) {
+        rowB.click();
+        L.setTab('verify');
+        L._render({ listing_uid: 'fx-hard', title: 'Fixture', rent: 2400, contact_reuse_count: 7, photo_clone_suspect: true });
+        var hardSec = $('[data-tells="hard"]');
+        check('fraud evidence is flagged hard, every time',
+          !!hardSec && /suspected fraud/.test(hardSec.textContent) && /7 listings/.test(hardSec.textContent) && /unproven/.test(hardSec.textContent),
+          hardSec ? hardSec.textContent.slice(0, 80) : 'no hard section');
+        check('a hard-flagged listing does not also cry laziness', !$('[data-tells="soft"]'), '');
+        L._render({ listing_uid: 'fx-soft', title: 'Fixture', rent: 2400, desc_clone_of: 'fx-other', relist_suspect: true, true_days_on_market: 44 });
+        var softSec = $('[data-tells="soft"]');
+        check('laziness-shaped signals get a sticker, not a flag',
+          !!softSec && /laziness/.test(softSec.textContent) && /44 days/.test(softSec.textContent) && !$('[data-tells="hard"]'),
+          softSec ? softSec.textContent.slice(0, 80) : 'no soft section');
+        check('the sticker swears off score punishment', !!softSec && /never move the score/.test(softSec.textContent), '');
+        L._render({ listing_uid: 'fx-clean', title: 'Fixture', rent: 2400 });
+        check('a clean listing shows neither tier', !$('[data-tells="hard"]') && !$('[data-tells="soft"]'), '');
+        L.close();
+      } else {
+        check('fraud evidence is flagged hard, every time', false, 'no rows to host the fixture');
+      }
+
       /* ---- atlas ---- */
       location.hash = '#/atlas'; app.route();
       var geoReady = window.__VERAG && window.__VERAG.ready();

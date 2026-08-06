@@ -681,6 +681,10 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 .insp-sec li { margin-bottom: 6px; }
 ul.good li::marker { color: var(--green); }
 ul.bad li::marker { color: var(--red); }
+/* Two-tier forensics (David's ruling 2026-08-05): fraud evidence gets the
+   red section head; laziness-shaped signals get a quiet sticker. */
+.insp-sec--flag h3 { color: var(--red); }
+ul.soft li::marker { color: var(--mute); }
 .insp-save { color: var(--green) !important; }
 .insp-fine { font-size: 12px !important; color: var(--mute) !important; }
 .insp-link { display: inline-block; font-size: 13.5px; color: var(--brass); margin-top: 4px; }
@@ -985,6 +989,7 @@ body { font-size: 18px; }
 [hidden] { display: none !important; }
 
 .prov__i--warn { color: var(--clay); }
+.prov__i--soft { color: var(--mute); }
 
 [hidden] { display: none !important; }
 

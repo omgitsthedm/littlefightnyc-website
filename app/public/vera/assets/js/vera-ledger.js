@@ -411,16 +411,31 @@
           '<p class="insp-fine">These correlate with rental fraud; they are not proof of it. Read them as reasons to insist on seeing the apartment and signing before any money moves.</p></div>';
       }
 
-      /* machine-run tells from the engine's forensics pass */
-      var tells = [];
-      if (l.relist_suspect) tells.push('Relisted after disappearing — the days-on-market counter was reset' + (l.true_days_on_market != null ? '; this address has really been advertising for ' + l.true_days_on_market + ' days' : '') + ' (Scam School: "Days on market reset to three").');
-      if (l.contact_reuse_count) tells.push('The contact behind this post appears on ' + l.contact_reuse_count + ' listings in the net (Scam School: "One phone number, thirty listings").');
-      if (l.desc_clone_of) tells.push('The description is a near-verbatim template of another listing at a different address — classic template scam fingerprint.');
-      if (l.photo_clone_suspect) tells.push('The lead photo also appears on a listing at a different address — treat every photo here as unproven.');
-      if (l.photo_declares_ai) tells.push('The photo file declares itself AI-generated' + (typeof l.photo_declares_ai === 'string' ? ' (' + l.photo_declares_ai + ')' : '') + ' — this is the image’s own embedded credential, not a guess. Ask for a photo taken on a phone, and see the unit before any money moves.');
-      if (l.ai_photo_suspect) tells.push('The lead photo reads as AI-generated (' + (l.ai_photo_probability ? Math.round(l.ai_photo_probability * 100) + '% classifier confidence' : 'high classifier confidence') + ') — probabilistic, not proof; disclosure of AI-altered photos is a pending NYC rule VERA applies early.');
-      if (tells.length) {
-        html += '<div class="insp-sec"><h3>Computed tells</h3><ul class="bad">' + tells.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+      /* Machine-run tells from the engine's forensics pass, in the two
+         tiers David ruled on (2026-08-05): hard fraud evidence is flagged
+         loudly, every time; signals a small landlord could produce by
+         sheer laziness get a quiet sticker and never move the score. */
+      var hardTells = [];
+      if (l.contact_reuse_count) hardTells.push('The contact behind this post appears on ' + l.contact_reuse_count + ' listings in the net (Scam School: "One phone number, thirty listings").');
+      if (l.photo_clone_suspect) hardTells.push('The lead photo also appears on a listing at a different address — treat every photo here as unproven.');
+      if (l.photo_declares_ai) hardTells.push('The photo file declares itself AI-generated' + (typeof l.photo_declares_ai === 'string' ? ' (' + l.photo_declares_ai + ')' : '') + ' — this is the image’s own embedded credential, not a guess. Ask for a photo taken on a phone, and see the unit before any money moves.');
+      if (hardTells.length) {
+        html += '<div class="insp-sec insp-sec--flag" data-tells="hard"><h3>Flagged as suspected fraud — the evidence</h3><ul class="bad">' +
+          hardTells.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+      }
+      /* probabilistic — neither hard evidence nor laziness, keeps its hedge */
+      if (l.ai_photo_suspect) {
+        html += '<div class="insp-sec"><h3>A signal, not a verdict</h3><ul class="bad"><li>' +
+          esc('The lead photo reads as AI-generated (' + (l.ai_photo_probability ? Math.round(l.ai_photo_probability * 100) + '% classifier confidence' : 'high classifier confidence') + ') — probabilistic, not proof; disclosure of AI-altered photos is a pending NYC rule VERA applies early.') +
+          '</li></ul></div>';
+      }
+      var softTells = [];
+      if (l.relist_suspect) softTells.push('Relisted after disappearing — the days-on-market counter was reset' + (l.true_days_on_market != null ? '; this address has really been advertising for ' + l.true_days_on_market + ' days' : '') + ' (Scam School: "Days on market reset to three").');
+      if (l.desc_clone_of) softTells.push('The description is a near-verbatim template of another listing at a different address.');
+      if (softTells.length) {
+        html += '<div class="insp-sec" data-tells="soft"><h3>Could be laziness, could be worse</h3><ul class="soft">' +
+          softTells.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+          '<p class="insp-fine">Small landlords reuse copy and repost quiet listings all the time — these alone prove nothing and never move the score. They matter only when they stack with the flags above.</p></div>';
       }
       var items = l.what_to_verify_before_applying || [];
       html += items.length
@@ -551,5 +566,6 @@
     open: open, close: close, setTab: setTab, rerender: rerender,
     openUid: function () { return openUid; },
     buildFieldKit: buildFieldKit,
+    _render: render, /* acceptance-suite hook: render a fixture listing */
   };
 })();
