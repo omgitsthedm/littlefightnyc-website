@@ -1088,9 +1088,56 @@
      ATLAS — rivers, park, stations, tethers. No tiles, no libraries.
      ================================================================ */
 
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function () { res(); };
+      s.onerror = function () { rej(new Error('failed to load ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  /* The map engine is a megabyte of WebGL the Today page never uses. It
+     loads the first time Atlas opens, exactly once; if the load itself
+     fails, the drawn-city fallback takes over and stays honest about it. */
+  var mapAssetState = 'idle'; /* idle → loading → ready | failed */
+  var mapAssetPromise = null;
+  function loadMapAssets() {
+    if (window.maplibregl) { mapAssetState = 'ready'; return Promise.resolve(); }
+    if (mapAssetState === 'failed') return Promise.reject(new Error('map assets failed'));
+    if (mapAssetState === 'loading') return mapAssetPromise;
+    mapAssetState = 'loading';
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = './assets/vendor/maplibre/maplibre-gl.css';
+    document.head.appendChild(css);
+    mapAssetPromise = loadScript('./assets/vendor/maplibre/maplibre-gl.js').then(function () {
+      mapAssetState = 'ready';
+    }, function (e) {
+      mapAssetState = 'failed';
+      throw e;
+    });
+    return mapAssetPromise;
+  }
+
   function renderAtlas(page) {
     var f0 = filtered();
     var geo0 = f0.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    if (!window.maplibregl && mapAssetState !== 'failed') {
+      page.innerHTML =
+        '<header class="pagehead"><p class="kicker">Atlas</p>' +
+        '<h1 class="pagehead__title">The city, to the pixel</h1>' +
+        '<p class="pagehead__lede">Every street and building footprint — OpenFreeMap vector tiles in VERA\'s own palette. ' + geo0.length + ' listings pinned; click any dot to open its ledger.</p></header>' +
+        '<div class="panel mapwrap"><p class="lane__empty" data-map-loading>Drawing the city — the map engine loads the first time Atlas opens…</p></div>';
+      page.classList.add('is-entered');
+      loadMapAssets().then(function () {
+        if (state.route === 'atlas') renderRoute();
+      }, function () {
+        if (state.route === 'atlas') renderRoute();
+      });
+      return;
+    }
     if (window.__VERAM && window.__VERAM.available()) {
       var sorted0 = geo0.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
       page.innerHTML =
@@ -2019,7 +2066,16 @@
     renderFilters();
     saveCases();
     route();
-    if (TESTMODE && window.__VERAT) window.__VERAT.run();
+    /* The acceptance suite (44K) is a developer tool, not a visitor asset:
+       it is no longer shipped in index.html and arrives only under ?test=1. */
+    if (TESTMODE) {
+      if (window.__VERAT) window.__VERAT.run();
+      else loadScript('./assets/js/vera-tests.js?v=48').then(function () {
+        if (window.__VERAT) window.__VERAT.run();
+      }, function () {
+        window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
+      });
+    }
   }
 
   /* the installable ritual: shell + last sweep cached, staleness never hidden */
@@ -2043,10 +2099,15 @@
     var results = [];
     var pending = FEEDS.length;
     var done = false;
+    var racers = [];
 
     function finish() {
       if (done) return;
       done = true;
+      /* Once the newest answer is decided, every response still in flight is
+         a 2MB download nobody will read. Cut the stragglers; the winner has
+         already resolved, so aborting its controller is a no-op. */
+      racers.forEach(function (c) { try { c.abort(); } catch (e) {} });
       if (!results.length) {
         var out = $('[data-loading]');
         if (out) out.innerHTML = '<p>Could not reach the VERA feed. It publishes nightly — try again shortly.</p>';
@@ -2071,7 +2132,9 @@
 
     FEEDS.forEach(function (feed) {
       var cache = null;
-      fetch(feed.url, { cache: 'no-cache' })
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      if (ctrl) racers.push(ctrl);
+      fetch(feed.url, { cache: 'no-cache', signal: ctrl ? ctrl.signal : undefined })
         .then(function (r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           cache = r.headers.get('X-Vera-Cache');

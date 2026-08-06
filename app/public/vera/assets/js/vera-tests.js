@@ -19,6 +19,14 @@
       check('feed loaded', !!app.D(), app.D() && app.D().generated_at);
       check('pool populated', POOL.length > 0, POOL.length);
 
+      /* ---- load path discipline ---- */
+      /* The map engine (~1MB) must not be in the initial document; it is
+         injected by vera-app.js the first time Atlas opens (below). */
+      check('map engine is not shipped to every visitor', !document.querySelector('script[src*="maplibre-gl"]'), '');
+      /* This file itself must not be a static script tag in index.html —
+         the fact that it is running proves the on-demand loader worked. */
+      check('test suite arrived on demand, not in the page', !document.querySelector('script[src*="vera-tests"][defer]'), '');
+
       /* ---- today: the drop ---- */
       location.hash = '#/today'; app.route();
       check('drop page renders a hero', !!$('.drophead'), '');
@@ -145,9 +153,10 @@
       location.hash = '#/atlas'; app.route();
       var geoReady = window.__VERAG && window.__VERAG.ready();
       var vectorUp = !!document.querySelector('[data-veramap]');
-      check('atlas mounts the real map (or the drawn fallback)',
-        vectorUp || ((geoReady ? $$('.mp-nta').length > 30 : $$('.mp-land').length >= 2) && $$('.mp-stn').length > 40 && !!$('.mp')),
-        vectorUp ? 'vector map container mounted' : 'SVG fallback path');
+      var mapLoading = !!document.querySelector('[data-map-loading]');
+      check('atlas mounts the real map, the drawn fallback, or the first-load state',
+        vectorUp || mapLoading || ((geoReady ? $$('.mp-nta').length > 30 : $$('.mp-land').length >= 2) && $$('.mp-stn').length > 40 && !!$('.mp')),
+        vectorUp ? 'vector map container mounted' : (mapLoading ? 'map engine loading on demand' : 'SVG fallback path'));
 
       /* ---- the real city (round 7) ---- */
       if (geoReady) {
