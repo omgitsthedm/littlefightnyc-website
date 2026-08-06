@@ -21,6 +21,20 @@ export interface Candidate {
   diagnosis: string;
   score_version: string;
   score_reasons: string;
+  /**
+   * Two-score assessment from engine scoring v3. Optional: the queue_v1 CSV is
+   * a pinned contract and does not carry these, so a queue published by an
+   * older engine simply omits them and the desk falls back to `score`.
+   */
+  opportunity_score?: number;
+  confidence_score?: number;
+  category_tier?: "A" | "B" | "C" | "eligible" | "unknown";
+  queue_band?:
+    | "priority_review"
+    | "standard_review"
+    | "research_identity_review"
+    | "low_priority_archive"
+    | "insufficient_evidence";
 }
 
 export interface QueueEnvelope {

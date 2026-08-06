@@ -141,4 +141,52 @@ describe("validateQueuePayload", () => {
       ).toEqual(expect.objectContaining({ valid: false }));
     }
   });
+
+  it("accepts the optional two-score assessment fields", () => {
+    const result = validateQueuePayload(
+      queue([
+        {
+          ...candidate({ rank: 1 }),
+          opportunity_score: 75,
+          confidence_score: 95,
+          category_tier: "A",
+          queue_band: "priority_review",
+        },
+      ]),
+    );
+    expect(result.valid).toBe(true);
+  });
+
+  it("still accepts a queue published without them", () => {
+    expect(validateQueuePayload(queue([candidate({ rank: 1 })])).valid).toBe(true);
+  });
+
+  it("rejects out-of-range or unknown assessment values", () => {
+    const bad = [
+      { opportunity_score: 101 },
+      { confidence_score: -1 },
+      { opportunity_score: 12.5 },
+      { category_tier: "Z" },
+      { queue_band: "send_it" },
+    ];
+    for (const patch of bad) {
+      expect(
+        validateQueuePayload(queue([{ ...candidate({ rank: 1 }), ...patch }])),
+      ).toEqual(expect.objectContaining({ valid: false }));
+    }
+  });
+
+  it("rejects any other extra field", () => {
+    expect(
+      validateQueuePayload(queue([{ ...candidate({ rank: 1 }), injected: "x" }])),
+    ).toEqual(expect.objectContaining({ valid: false }));
+  });
+
+  it("still requires every v1 field to be present", () => {
+    const record = candidate({ rank: 1 }) as Record<string, unknown>;
+    delete record.diagnosis;
+    expect(validateQueuePayload(queue([record]))).toEqual(
+      expect.objectContaining({ valid: false }),
+    );
+  });
 });

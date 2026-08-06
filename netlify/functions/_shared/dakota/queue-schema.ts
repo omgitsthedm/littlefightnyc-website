@@ -28,6 +28,32 @@ export const DAKOTA_CANDIDATE_FIELDS = [
   "score_reasons",
 ] as const;
 
+/**
+ * Two-score assessment fields, added with scoring v3.
+ *
+ * Optional on purpose. The engine's queue_v1 CSV is a pinned contract and is
+ * unchanged; these ride along from the signals file. A queue published without
+ * them stays valid, so an older engine keeps working.
+ */
+export const DAKOTA_ASSESSMENT_FIELDS = [
+  "opportunity_score",
+  "confidence_score",
+  "category_tier",
+  "queue_band",
+] as const;
+
+type AssessmentField = (typeof DAKOTA_ASSESSMENT_FIELDS)[number];
+
+export const DAKOTA_QUEUE_BANDS = [
+  "priority_review",
+  "standard_review",
+  "research_identity_review",
+  "low_priority_archive",
+  "insufficient_evidence",
+] as const;
+
+export const DAKOTA_CATEGORY_TIERS = ["A", "B", "C", "eligible", "unknown"] as const;
+
 type CandidateField = (typeof DAKOTA_CANDIDATE_FIELDS)[number];
 type DakotaCandidateStringField = Exclude<
   CandidateField,
@@ -38,7 +64,12 @@ export type DakotaCandidate = Record<DakotaCandidateStringField, string> & {
   rank: number;
   score: number;
   psi_mobile_performance: number | null;
-};
+} & Partial<{
+  opportunity_score: number;
+  confidence_score: number;
+  category_tier: (typeof DAKOTA_CATEGORY_TIERS)[number];
+  queue_band: (typeof DAKOTA_QUEUE_BANDS)[number];
+}>;
 
 export interface DakotaQueuePayload {
   schema_version: typeof DAKOTA_QUEUE_SCHEMA;
@@ -128,6 +159,21 @@ function isValidCandidateField(field: CandidateField, value: unknown): boolean {
   return !REQUIRED_STRING_FIELDS.has(field) || value.trim().length > 0;
 }
 
+function isValidAssessmentField(field: AssessmentField, value: unknown): boolean {
+  if (field === "opportunity_score" || field === "confidence_score") {
+    return (
+      typeof value === "number" &&
+      Number.isSafeInteger(value) &&
+      value >= 0 &&
+      value <= 100
+    );
+  }
+  if (field === "category_tier") {
+    return (DAKOTA_CATEGORY_TIERS as readonly string[]).includes(value as string);
+  }
+  return (DAKOTA_QUEUE_BANDS as readonly string[]).includes(value as string);
+}
+
 function isValidGeneratedAt(value: unknown): value is string {
   if (typeof value !== "string" || value.length === 0 || value.length > 64) {
     return false;
@@ -175,11 +221,34 @@ export function validateQueuePayload(value: unknown): QueueValidation {
   }
 
   for (const [index, record] of value.records.entries()) {
-    if (!isRecord(record) || !hasExactKeys(record, DAKOTA_CANDIDATE_FIELDS)) {
-      return {
-        valid: false,
-        error: `records[${index}] has an invalid shape.`,
-      };
+    if (!isRecord(record)) {
+      return { valid: false, error: `records[${index}] has an invalid shape.` };
+    }
+
+    // Every v1 field is required; assessment fields are the only permitted extras.
+    const extras = Object.keys(record).filter(
+      (key) => !(DAKOTA_CANDIDATE_FIELDS as readonly string[]).includes(key),
+    );
+    const allRequiredPresent = DAKOTA_CANDIDATE_FIELDS.every((field) =>
+      Object.hasOwn(record, field),
+    );
+    const extrasAllowed = extras.every((key) =>
+      (DAKOTA_ASSESSMENT_FIELDS as readonly string[]).includes(key),
+    );
+    if (!allRequiredPresent || !extrasAllowed) {
+      return { valid: false, error: `records[${index}] has an invalid shape.` };
+    }
+
+    for (const field of DAKOTA_ASSESSMENT_FIELDS) {
+      if (
+        Object.hasOwn(record, field) &&
+        !isValidAssessmentField(field, record[field])
+      ) {
+        return {
+          valid: false,
+          error: `records[${index}].${field} has an invalid value.`,
+        };
+      }
     }
 
     for (const field of DAKOTA_CANDIDATE_FIELDS) {

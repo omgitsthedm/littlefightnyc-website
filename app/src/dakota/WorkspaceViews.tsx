@@ -25,6 +25,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { ScoreTriptych } from "./ScoreTriptych";
+import { EngineAssessment } from "./EngineAssessment";
 import {
   assessCandidate,
   candidateKey,
@@ -243,6 +244,7 @@ function CandidateCard({
           {candidate.filed_at ? <span><CalendarDays size={16} />Filed {formatDate(candidate.filed_at)}</span> : null}
         </div>
         <ScoreTriptych assessment={assessment} compact />
+        <EngineAssessment candidate={candidate} />
         {tiedSignal && !assessment.qualified ? <p className="tie-note"><CircleAlert size={16} /> Tied signal. Queue order is not qualification.</p> : null}
         <div className="signal-grid">
           <div><p><Sparkles size={16} /> Why it surfaced</p>{reasons.length ? <ul>{reasons.map((reason) => <li key={reason}>{reason}</li>)}</ul> : <span>No reasons supplied</span>}</div>

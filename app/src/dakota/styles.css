@@ -5187,3 +5187,71 @@ textarea:focus-visible {
   .pursuit-packet-print pre { margin: 0; white-space: pre-wrap; font: inherit; }
   .pursuit-packet-print footer { display: flex; justify-content: space-between; margin-top: 9pt; padding-top: 8pt; gap: 12pt; border-top: 2pt solid #111; overflow-wrap: anywhere; }
 }
+
+/* ---- Engine assessment (scoring v3 two-score model) ------------------------
+   Visually distinct from .score-triptych: that is the desk's derived view of a
+   candidate, this is the engine's own verdict. Renders only when the queue
+   carries scoring v3 fields. */
+
+.engine-assessment {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--muted-dim);
+  border-radius: 8px;
+  margin-top: 14px;
+  padding: 14px 16px;
+}
+
+.engine-assessment__scores {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.engine-score p {
+  color: var(--muted-dim);
+  font-family: var(--mono);
+  font-size: var(--lf-text-2xs, 1rem);
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.engine-score strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.9rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+.engine-score span {
+  color: var(--muted-dim);
+  display: block;
+  font-size: var(--lf-text-2xs, 0.95rem);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.engine-assessment__band {
+  border-top: 1px solid var(--line);
+  margin: 12px 0 0;
+  padding-top: 10px;
+}
+
+.engine-assessment__tier {
+  color: var(--muted-dim);
+  font-size: var(--lf-text-2xs, 0.95rem);
+  margin: 6px 0 0;
+}
+
+/* The band is the operator's routing instruction, so it carries the accent. */
+.engine-assessment--priority_review { border-left-color: var(--lf-orange, #f26522); }
+.engine-assessment--standard_review { border-left-color: var(--ink, currentColor); }
+.engine-assessment--research_identity_review,
+.engine-assessment--insufficient_evidence { border-left-color: var(--warn, #b8860b); }
+.engine-assessment--low_priority_archive { border-left-color: var(--line); }
+
+@media (max-width: 640px) {
+  .engine-assessment__scores { grid-template-columns: 1fr; gap: 12px; }
+}
