@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" class="lab-concept-page">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050507">
+  <title>The Pool Room | The Lab · Little Fight NYC</title>
+  <meta name="description" content="A Lower East Side pool room that never existed — built to the millimeter, aged for decades, lit for film. Fifteen frames from one working scene.">
+  <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg">
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
+  <style>
+    :root {
+      --ink: #e8e4dc;
+      --dim: #99948a;
+      --paper: #050507;
+      --felt: #7c9885;
+      --brass: #b08d57;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Barlow", "Helvetica Neue", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .intro, .outro {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(84px, 14vh, 150px) 24px clamp(40px, 7vh, 84px);
+    }
+    .intro__eyebrow, .outro__eyebrow {
+      font-family: "Oswald", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin: 0 0 18px;
+    }
+    .intro__title {
+      font-family: "Oswald", sans-serif;
+      font-weight: 600;
+      font-size: clamp(44px, 9vw, 92px);
+      line-height: 0.98;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      margin: 0 0 22px;
+    }
+    .intro__title span { color: var(--felt); }
+    .intro__lede {
+      font-size: clamp(17px, 2.2vw, 21px);
+      line-height: 1.55;
+      margin: 0 0 14px;
+      color: var(--ink);
+    }
+    .intro__what {
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--dim);
+      margin: 0 0 26px;
+    }
+    .intro__uses {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      margin: 0 0 30px;
+    }
+    .intro__uses li {
+      font-family: "Oswald", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border: 1px solid #26262b;
+      border-radius: 999px;
+      padding: 7px 14px;
+    }
+    .intro__cue {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin: 0;
+    }
+    .intro__cue span { color: var(--felt); }
+    .strip {
+      margin: 0 auto;
+      max-width: 1600px;
+      padding: 0;
+      counter-reset: frame;
+    }
+    .strip figure {
+      margin: 0 0 4px;
+      position: relative;
+      counter-increment: frame;
+    }
+    .strip img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #0a0a0d;
+    }
+    .strip figure::after {
+      content: "FRAME " counter(frame, decimal-leading-zero) " · 15";
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      font-family: "Oswald", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: rgba(232, 228, 220, 0.5);
+      background: rgba(5, 5, 7, 0.55);
+      padding: 4px 9px;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    .outro { text-align: left; }
+    .outro__title {
+      font-family: "Oswald", sans-serif;
+      font-weight: 600;
+      font-size: clamp(30px, 5vw, 48px);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin: 0 0 18px;
+    }
+    .outro__body {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--dim);
+      margin: 0 0 10px;
+    }
+    .outro__body b { color: var(--ink); font-weight: 600; }
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    @media (max-width: 640px) {
+      .strip figure::after { font-size: 9px; right: 8px; bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="intro">
+    <p class="intro__eyebrow">The Lab · Build 09 · Cinema build</p>
+    <h1 class="intro__title">The Pool<br><span>Room.</span></h1>
+    <p class="intro__lede">A Lower East Side bar that never existed. Every brick, bottle, and bevel built from zero — the table to published tournament spec, the room aged by decades that never happened.</p>
+    <p class="intro__what">This is set design as a service: when a brand needs a place — for a film, a launch, a product world — we build the place. One scene, every camera angle, no location fees, no permits, no weather. These fifteen frames all come from the same working room.</p>
+    <ul class="intro__uses" aria-label="Where this ships">
+      <li>Launch films</li><li>Product cinema</li><li>Set design</li><li>Brand worlds</li>
+    </ul>
+    <p class="intro__cue" aria-hidden="true">Scroll — enter the room <span>↓</span></p>
+  </header>
+
+  <section class="strip" aria-label="Fifteen frames from the pool room">
+    <figure><img src="img/01-street-neon.webp" width="1600" height="900" alt="Neon glowing in a rain-wet storefront window on a city night" fetchpriority="high" decoding="async"></figure>
+    <figure><img src="img/02-threshold.webp" width="1600" height="900" alt="Low view through the doorway into a hazy pool room" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/03-front-room.webp" width="1600" height="900" alt="Wide view of the front room with the bar and pool table" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/04-bar-reveal.webp" width="1600" height="900" alt="The full back bar — bottle rows, aged mirrors, and a bronze cash register" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/05-clean-bar.webp" width="1600" height="900" alt="Bar top with beer taps, coasters, and the service rail" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/06-patron-barware.webp" width="1600" height="900" alt="A sweating pint and a cocktail with lime resting on the bar" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/07-booths.webp" width="1600" height="900" alt="Green vinyl booth bays along the wall" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/08-booth-patina.webp" width="1600" height="900" alt="Cracked vinyl and ring-marked tabletop inside a booth" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/09-wall-history.webp" width="1600" height="900" alt="Decades of wheat-pasted paper layered on the wall" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/10-bathroom-door.webp" width="1600" height="900" alt="A restroom door carrying one dense layer of stickers" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/11-pool-light.webp" width="1600" height="900" alt="A three-shade enamel fixture glowing over the table" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/12-room-hero.webp" width="1600" height="900" alt="The whole room from the entry — table, bar, and booths in warm haze" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/13-table-hero.webp" width="1600" height="900" alt="The nine-foot table with fifteen balls racked tight" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/14-break-line.webp" width="1600" height="900" alt="The cue ball waiting on the head string, rack beyond in shallow focus" loading="lazy" decoding="async"></figure>
+    <figure><img src="img/15-rack-detail.webp" width="1600" height="900" alt="Close view of the tight fifteen-ball rack" loading="lazy" decoding="async"></figure>
+  </section>
+
+  <footer class="outro">
+    <p class="outro__eyebrow">What you just walked through</p>
+    <h2 class="outro__title">Built, not found.</h2>
+    <p class="outro__body"><b>The table is real engineering</b> — playing surface, cushions, and pocket geometry follow published tournament specifications, checked by automated audits before any frame renders.</p>
+    <p class="outro__body"><b>The room is a system</b> — more than two thousand placed objects, every light motivated by a fixture you can see, every year of wear put there on purpose.</p>
+    <p class="outro__body"><b>Next from this room:</b> the break. The balls move by solved physics, not animation — and the film cuts on the collisions themselves.</p>
+  </footer>
+
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

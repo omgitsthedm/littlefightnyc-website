@@ -61,8 +61,8 @@ const conceptLinks = [...hub.matchAll(/<a\b(?=[^>]*\bdata-concept-card\b)[^>]*\b
   (match) => match[1],
 );
 
-if (conceptLinks.length !== 8) {
-  failures.push(`expected 8 concept links, found ${conceptLinks.length}`);
+if (conceptLinks.length !== 9) {
+  failures.push(`expected 9 concept links, found ${conceptLinks.length}`);
 }
 
 if (
@@ -81,11 +81,11 @@ for (const reference of conceptLinks) {
 }
 
 if (manifest.version !== 3) failures.push(`expected concepts manifest version 3, found ${manifest.version}`);
-if (manifest.suites?.length !== 4) {
-  failures.push(`expected 4 suites in concepts.json, found ${manifest.suites?.length ?? 0}`);
+if (manifest.suites?.length !== 5) {
+  failures.push(`expected 5 suites in concepts.json, found ${manifest.suites?.length ?? 0}`);
 }
-if (manifest.concepts?.length !== 8) {
-  failures.push(`expected 8 concepts in concepts.json, found ${manifest.concepts?.length ?? 0}`);
+if (manifest.concepts?.length !== 9) {
+  failures.push(`expected 9 concepts in concepts.json, found ${manifest.concepts?.length ?? 0}`);
 }
 const suiteSlugs = (manifest.suites || []).map((suite) => suite.slug);
 const manifestSlugs = (manifest.concepts || []).map((concept) => concept.slug);

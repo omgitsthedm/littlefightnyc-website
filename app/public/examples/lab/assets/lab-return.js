@@ -57,6 +57,13 @@
       type: 'Brand campaign',
       suite: 'brand-campaign',
       hint: 'Scroll to paste the posters up. Scroll back to peel them off.'
+    },
+    {
+      slug: 'pool-room',
+      title: 'The Pool Room',
+      type: 'Cinema build',
+      suite: 'cinema',
+      hint: 'Scroll the fifteen frames — one room, built to the millimeter.'
     }
   ];
 

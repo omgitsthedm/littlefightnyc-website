@@ -37,6 +37,14 @@ const INDUSTRY_ICONS: Record<string, LucideIcon> = {
 
 const LAB_BUILDS = [
   {
+    title: "The Pool Room",
+    type: "Cinema build",
+    description: "A Lower East Side bar that never existed — tournament-spec table, two thousand aged objects, lit for film. Fifteen frames, one working room.",
+    href: "/examples/lab/concepts/pool-room/",
+    poster: "/images/lab-showcase/pool-room",
+    alt: "A dive-bar pool table with fifteen balls racked under a warm three-shade fixture",
+  },
+  {
     title: "Six-Story Walk-Up",
     type: "Capability build",
     description: "A living NYC block corner in real-time 3D. One asset that sells real estate, games, and cinema.",

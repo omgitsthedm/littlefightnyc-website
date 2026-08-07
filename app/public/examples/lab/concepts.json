@@ -2,6 +2,24 @@
   "version": 3,
   "suites": [
     {
+      "slug": "cinema",
+      "shortTitle": "Cinema",
+      "title": "Cinema Lab",
+      "label": "Places built for the camera",
+      "headline": "Build the place. Roll film.",
+      "description": "A dive-bar pool room that never existed, built to the millimeter and lit for film.",
+      "featuredConcept": "pool-room",
+      "concepts": [
+        "pool-room"
+      ],
+      "capabilities": [
+        "Full-scene set design",
+        "Specification-true modeling",
+        "Cinematic lighting and haze",
+        "Physics-solved motion"
+      ]
+    },
+    {
       "slug": "spatial-nyc",
       "shortTitle": "Spatial",
       "title": "Spatial NYC",
@@ -79,6 +97,14 @@
     }
   ],
   "concepts": [
+    {
+      "slug": "pool-room",
+      "title": "The Pool Room",
+      "type": "Cinema build",
+      "description": "A Lower East Side bar that never existed — tournament-spec table, two thousand aged objects, lit for film. Fifteen frames, one working room.",
+      "suite": "cinema",
+      "featured": true
+    },
     {
       "slug": "walkup-3d",
       "title": "Six-Story Walk-Up",
