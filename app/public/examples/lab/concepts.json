@@ -7,7 +7,7 @@
       "title": "Cinema Lab",
       "label": "Places built for the camera",
       "headline": "Build the place. Roll film.",
-      "description": "A dive-bar pool room that never existed, built to the millimeter and lit for film.",
+      "description": "A dive-bar pool room that never existed — and a thirty-second break film solved by real physics.",
       "featuredConcept": "pool-room",
       "concepts": [
         "pool-room"
@@ -101,7 +101,7 @@
       "slug": "pool-room",
       "title": "The Pool Room",
       "type": "Cinema build",
-      "description": "A Lower East Side bar that never existed — tournament-spec table, two thousand aged objects, lit for film. Fifteen frames, one working room.",
+      "description": "A dive bar built object by object — 2,229 of them — then a break solved by real physics, thirty seconds, with sound. Nothing filmed, nothing stock.",
       "suite": "cinema",
       "featured": true
     },

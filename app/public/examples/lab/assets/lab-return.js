@@ -63,7 +63,7 @@
       title: 'The Pool Room',
       type: 'Cinema build',
       suite: 'cinema',
-      hint: 'Scroll the fifteen frames — one room, built to the millimeter.'
+      hint: 'Turn the sound on — every clack sits on a real collision.'
     }
   ];
 

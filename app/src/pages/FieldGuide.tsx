@@ -39,7 +39,7 @@ const LAB_BUILDS = [
   {
     title: "The Pool Room",
     type: "Cinema build",
-    description: "A Lower East Side bar that never existed — tournament-spec table, two thousand aged objects, lit for film. Fifteen frames, one working room.",
+    description: "A dive bar built object by object — 2,229 of them — then a break solved by real physics, thirty seconds, with sound. Nothing filmed, nothing stock.",
     href: "/examples/lab/concepts/pool-room/",
     poster: "/images/lab-showcase/pool-room",
     alt: "A dive-bar pool table with fifteen balls racked under a warm three-shade fixture",
@@ -148,10 +148,10 @@ export default function FieldGuide() {
           <section className="lf-ex-lab-direct" aria-labelledby="lf-ex-lab-title">
             <div className="lf-ex-lab-direct__head">
               <div>
-                <p>8 working builds</p>
+                <p>9 working builds</p>
                 <h3 id="lf-ex-lab-title">Choose a direction and step inside.</h3>
                 <span>
-                  Most are experiments, two are client builds we can show. Each
+                  Most are experiments, two are client builds we can show, one is a thirty-second film. Each
                   one previews what a website can feel like before a business
                   chooses its direction.
                 </span>
