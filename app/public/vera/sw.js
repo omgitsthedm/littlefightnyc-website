@@ -5,14 +5,14 @@
    badge the staleness instead of pretending the sweep just ran. */
 'use strict';
 
-var SHELL = 'vera-shell-v2';
-var FEED = 'vera-feed-v1';
+var SHELL = 'vera-shell-v3';
+var FEED = 'vera-feed-v2';
 /* The receipts were left out of this list, so an offline visitor got the
    drop but not the record of every previous drop — on a page whose whole
-   claim is that nothing is edited after the fact. Both are cached the same
-   way now: network-first, with the stored copy stamped so the app can badge
-   its age rather than imply the sweep just ran. */
-var DATA_PATHS = ['/vera/data/public.json', '/vera/data/archive.json'];
+   claim is that nothing is edited after the fact. The drop, receipts, and
+   publication metadata are all cached network-first, with the stored copy
+   stamped so the app can badge its age rather than imply the sweep just ran. */
+var DATA_PATHS = ['/vera/data/public.json', '/vera/data/archive.json', '/vera/data/meta.json'];
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();

@@ -143,15 +143,16 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 # Netlify normalizes no-slash -> slash for existing directories natively,
 # so the dynamic rules were pure downside. Do not reintroduce them.
 
-# --- VERA (2026-07-23): live personalized-software example. App is static
-# at /vera/; data proxies to the pipeline feed site (David's Mac publishes
-# nightly). Engine docs: ~/Code/Personal/vera-apartment-search/CLAUDE.md
+# --- VERA: public Little Fight product. The complete browser surface lives at
+# /vera/ on this site. Its three sanitized data contracts are produced by the
+# VERA engine's nightly cloud workflow and exposed through first-party URLs.
+# 200! prevents an old built snapshot from shadowing the live feed.
 /VERA             /vera/                                                          301
-# Only the sanitized public lens is proxied. hunt.json / dashboard.json
-# are private and no longer exist on the feed site at all.
-/vera/data/public.json https://vera-pipeline.netlify.app/data/public.json 200
-/vera/data/archive.json https://vera-pipeline.netlify.app/data/archive.json 200
-/vera/artifacts/* https://vera-pipeline.netlify.app/artifacts/:splat  200
+# Only the sanitized public lens is proxied. Private/raw hunt data never enters
+# this repository, this Netlify property, or a browser response.
+/vera/data/public.json https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/public.json 200!
+/vera/data/archive.json https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/archive.json 200!
+/vera/data/meta.json https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/meta.json 200!
 
 # --- Retired Lab builds (2026-07-29). Tech Support Site, Hero Prototype, and
 # I Am Cooking were removed when the Lab was curated to eight. These were

@@ -713,16 +713,15 @@
       location.hash = '#/today'; app.route();
 
       /* ---- hygiene ---- */
-      // Reads the LIVE feed list, not a copy of it. The copy this replaced
-      // asserted a hardcoded pair, so it would have gone on passing no
-      // matter what origin was actually added.
+      // VERA is one public Little Fight product. The browser must use its
+      // first-party data contract rather than know about publication hosts.
       var feeds = (app.FEEDS || []).map(function (f) { return typeof f === 'string' ? f : f.url; });
-      check('every feed origin is declared', feeds.length >= 2, feeds.length + ' origins');
+      check('one first-party feed is declared', feeds.length === 1 && feeds[0] === './data/public.json', feeds.join(' '));
       check('no private feed touched', feeds.length > 0 && feeds.every(function (u) { return u.indexOf('hunt') === -1 && u.indexOf('dashboard.json') === -1; }), feeds.join(' '));
       check('every feed reads public.json only', feeds.every(function (u) { return /public\.json$/.test(u); }), '');
-      // The receipts used to be one hardcoded same-origin fetch whose failure
-      // handler painted an EMPTY archive — a network error read as "nothing
-      // ever cleared the bar" on the page that exists to prove otherwise.
+      check('browser feed stays same-origin', feeds.every(function (u) { return !/^https?:/.test(u); }), feeds.join(' '));
+      // Receipts derive from the same first-party contract so their route
+      // cannot silently drift to a second host.
       var arcs = (app.archiveOrigins ? app.archiveOrigins() : []).map(function (a) { return a.url; });
       check('receipts read every origin the feed does', arcs.length === feeds.length, arcs.length + ' vs ' + feeds.length);
       check('and each one points at archive.json', arcs.length > 0 && arcs.every(function (u) { return /archive\.json$/.test(u); }), arcs.join(' '));

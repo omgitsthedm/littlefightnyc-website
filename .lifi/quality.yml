@@ -347,10 +347,10 @@ integrations:
     direction: "browser -> CARTO"
     data: "tile requests for maps that enter the viewport"
     required: false
-  - name: "VERA pipeline proxy"
-    direction: "public /vera/data and /vera/artifacts routes -> vera-pipeline.netlify.app"
-    data: "public VERA data and artifacts"
-    required: false
+  - name: "VERA public feed"
+    direction: "sanitized GitHub Actions feed -> Little Fight /vera/data rewrites -> anonymous browser"
+    data: "public VERA feed, archive, and publication metadata only"
+    required: true
   - name: "Netlify Lighthouse build plugin"
     direction: "Netlify build -> Lighthouse plugin"
     data: "build preview performance report"

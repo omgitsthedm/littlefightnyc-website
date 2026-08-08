@@ -10,17 +10,13 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var esc = C.esc, money = C.money, num = C.num, median = C.median, timeago = C.timeago;
 
-  /* Three independent origins for the same sanitized feed. The third is
-     published straight from the nightly cloud sweep and needs no token, so
-     it keeps refreshing even when the two mirrors go stale. We do not take
-     the first that answers; we take
-     the FRESHEST that answers. See boot(). */
+  /* One first-party contract: visitors fetch VERA only through Little Fight.
+     Netlify resolves this path to the sanitized nightly cloud publication;
+     the private engine and its publication origin never enter browser code. */
   var FEEDS = [
     { url: './data/public.json', label: 'site' },
-    { url: 'https://vera-pipeline.netlify.app/data/public.json', label: 'pipeline' },
-    { url: 'https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/public.json', label: 'cloud' },
   ];
-  var FEED_RACE_MS = 3500;
+  var FEED_TIMEOUT_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
   /* phone overflow (C2): these five collapse behind More under 700px */
   var NAV_SECONDARY = ['market', 'atlas', 'manual', 'archive', 'system'];
@@ -1458,14 +1454,9 @@
      SYSTEM — the machine, its sources, and its ethics.
      ================================================================ */
 
-  /* Which of the three origins actually served this page, in plain words.
-     A visitor deciding whether to trust a listing should be able to see
-     where the data came from and how old it is, without reading network
-     traces. Same reason the sweep line never hides an offline cache. */
+  /* Keep the serving contract visible beside the feed age. */
   var ORIGIN_NOTE = {
-    site: 'this site’s own copy, written at deploy',
-    pipeline: 'the pipeline mirror',
-    cloud: 'the nightly cloud sweep — published independently of either mirror',
+    site: 'Little Fight NYC’s live VERA feed',
   };
 
   /* "New tonight" is a comparison, and a comparison needs something to
@@ -1485,8 +1476,8 @@
     return kpi('New tonight', cval(n), (dc.gone || 0) + ' gone', 'kpi--good', 'fresh');
   }
 
-  /* Derived from FEEDS rather than listed separately, so a fourth origin
-     can never be added to the feed and forgotten for the receipts. */
+  /* Derive receipts from the same first-party contract so the two endpoints
+     cannot drift into different hosting paths. */
   function archiveOrigins() {
     return FEEDS.map(function (f) {
       return { url: f.url.replace(/public\.json(\?.*)?$/, 'archive.json'), label: f.label };
@@ -1744,13 +1735,8 @@
     if (archiveCache) { paint(archiveCache); return; }
     page.innerHTML = '<header class="pagehead"><p class="kicker">Receipts</p><h1 class="pagehead__title">Every drop, on the record</h1></header>';
 
-    /* The archive used to be a single hardcoded same-origin fetch whose
-       failure handler painted an EMPTY archive — so a network error was
-       indistinguishable from "nothing has ever cleared the bar". On the one
-       page whose entire point is receipts, that is the worst possible thing
-       to get wrong. It now reads the same three origins as the feed, keeps
-       the most complete answer, and says plainly when it could not reach
-       any of them. */
+    /* Receipts use the companion first-party endpoint. A failed request must
+       still read as a connection problem, never as an empty historical record. */
     var archives = archiveOrigins();
     var got = [], left = archives.length, settled = false;
 
@@ -1765,8 +1751,7 @@
         page.classList.add('is-entered');
         return;
       }
-      // Most days wins: origins publish independently, so the fullest one is
-      // the most complete record, not merely the newest.
+      // Defensive even with one origin: keep the fullest valid response.
       got.sort(function (a, b) { return b.length - a.length; });
       archiveCache = got[0];
       paint(archiveCache);
@@ -1780,7 +1765,7 @@
           if (--left <= 0) decide();
         }, function () { if (--left <= 0) decide(); });
     });
-    setTimeout(decide, FEED_RACE_MS);
+    setTimeout(decide, FEED_TIMEOUT_MS);
   }
 
   function runAddressCheck(form) {
@@ -2123,7 +2108,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=51').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=52').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
@@ -2140,15 +2125,9 @@
   var feedOrigin = null;
   var sinceLastVisit = null; /* D4 — listings new since this browser's last sweep */
 
-  /* Ask every origin at once and keep the newest answer.
-
-     Taking the first origin that responded was wrong in the case that
-     matters most: the same-origin copy always wins the race, so a site
-     deployed three days ago permanently masked a cloud feed published two
-     hours ago. Freshness is the whole point of having more than one origin.
-
-     Bounded by FEED_RACE_MS so one hanging origin cannot hold up first
-     paint — whatever has arrived by then is used. */
+  /* Load the one Little Fight feed contract. The bounded result plumbing keeps
+     a hanging request from blocking first paint and keeps feed failures
+     separate from render failures. */
   function boot() {
     var results = [];
     var pending = FEEDS.length;
@@ -2202,7 +2181,7 @@
         }, settled);
     });
 
-    setTimeout(finish, FEED_RACE_MS);
+    setTimeout(finish, FEED_TIMEOUT_MS);
   }
 
   window.__VERA_APP = {

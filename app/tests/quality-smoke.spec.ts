@@ -58,10 +58,10 @@ const VERA_FEED_FIXTURE = readFileSync(
 );
 
 async function mockVeraData(page: Page, fixtureBody = VERA_FEED_FIXTURE) {
-  // VERA races three independently published copies of the same public feed.
-  // Stub window.fetch before VERA boots so a newly claiming service worker
+  // VERA reads one first-party public feed. Stub window.fetch before it boots
+  // so a newly claiming service worker
   // cannot bypass Playwright routing and turn the preview's SPA fallback into
-  // a JSON failure. Matching the filename covers all three feed origins.
+  // a JSON failure. Matching the filename covers the feed and its receipts.
   await page.addInitScript((fixture) => {
     const nativeFetch = window.fetch.bind(window);
     window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -1230,6 +1230,17 @@ test(
 
     await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
     await waitForVeraPool(page);
+    expect(
+      await page.evaluate(
+        () =>
+          (
+            window as unknown as {
+              __VERA_APP: { FEEDS: Array<{ url: string; label: string }> };
+            }
+          ).__VERA_APP.FEEDS,
+      ),
+      "the public demo must expose one first-party Little Fight feed contract",
+    ).toEqual([{ url: "./data/public.json", label: "site" }]);
     const rows = page.locator("tr[data-open]");
     await rows.first().waitFor();
 

@@ -32,7 +32,7 @@
   <p class="doc__kicker">Privacy</p>
   <h1>Your hunt stays yours.</h1>
   <p class="doc__lede">VERA has no accounts, advertising, analytics, or lead resale. Your saved hunt stays in this browser. If you choose to check an exact address, that address goes directly from your browser to NYC Planning’s GeoSearch service — not to Little Fight NYC.</p>
-  <p class="doc__meta">Effective 4 August 2026 · VERA is operated by Little Fight NYC</p>
+  <p class="doc__meta">Effective 8 August 2026 · VERA is operated by Little Fight NYC</p>
 
   <div class="callout">
     <p><strong>The short version.</strong> We do not ask who you are, set a VERA cookie, or run analytics or advertising scripts. Saved listings, notes, viewing checklists, preferences, commute anchors, income, and confirmed address matches live in your browser’s local storage. The optional address checker sends only the address you type directly to NYC Planning so you can confirm the building.</p>
@@ -58,13 +58,13 @@
   <p>Nothing is saved until you choose a candidate. The selected label, match confidence, BBL or BIN, and timestamp then stay in this browser. The confirmation does not alter VERA’s shared feed, score, ranking, or owner grade.</p>
 
   <h2>What we publish</h2>
-  <p>The console reads one sanitised public feed, usually named <code>public.json</code>, from redundant read-only mirrors. Before anything is published, the pipeline removes the private research layer — contact names, phone numbers, email addresses, working notes, and internal watch-list state — and neutralises subjective language about named owners. Building records, violation counts, litigation counts, and rent-stabilisation status remain because they come from public records.</p>
+  <p>The console reads one sanitised public feed through <code>littlefightnyc.com/vera/data/public.json</code>. Before anything is published, the pipeline removes the private research layer — contact names, phone numbers, email addresses, working notes, and internal watch-list state — and neutralises subjective language about named owners. Building records, violation counts, litigation counts, and rent-stabilisation status remain because they come from public records.</p>
 
   <h2>Where the data comes from</h2>
   <p>VERA indexes rental listings that are already publicly posted, and enriches them with New York City and State public records — including Housing Preservation and Development violation history, Department of Buildings records, housing-court signals, and rent-stabilisation registries. It displays selected published listing facts and photos for analysis and links every record back to its original source.</p>
 
   <h2>Third parties</h2>
-  <p>VERA makes only the network requests needed to operate: Netlify serves the site and may log requests; the public feed can load from VERA’s Netlify pipeline or a read-only GitHub mirror; OpenFreeMap supplies map tiles; and listing-photo hosts receive image requests when published photos appear. Those photo requests suppress the VERA page referrer, but the image host still receives normal connection data such as your IP address and user agent. NYC Planning receives an address only when you submit the optional address check. Clicking an original listing takes you to that publisher’s site and privacy practices.</p>
+  <p>VERA makes only the network requests needed to operate: Netlify serves the site and its first-party public-feed endpoint and may log requests; GitHub hosts the sanitised publication behind that endpoint and may receive normal proxy request metadata; OpenFreeMap supplies map tiles; and listing-photo hosts receive image requests when published photos appear. Your browser does not contact a separate VERA host. Those photo requests suppress the VERA page referrer, but the image host still receives normal connection data such as your IP address and user agent. NYC Planning receives an address only when you submit the optional address check. Clicking an original listing takes you to that publisher’s site and privacy practices.</p>
   <p>There is no advertising network, tag manager, analytics script, session recorder, social widget, or font CDN in VERA. Its typefaces are served from Little Fight NYC.</p>
 
   <h2>Your rights</h2>

@@ -2,14 +2,12 @@
  * audit-vera-csp — /vera/ gets its own CSP, and it must stay in step with the
  * site's.
  *
- * VERA falls back to fetching its feed straight from the pipeline origin when
- * the _redirects proxy hop fails. That is the single failure the redundancy
- * exists for, and connect-src did not allow the origin, so the fallback was
- * refused by CSP every time — the app had one path to its data while appearing
- * to have two. Nothing failed, because nothing exercises the fallback until the
- * proxy is already broken, which is exactly when nobody is reading logs.
+ * VERA is a public Little Fight product with one browser-side data contract:
+ * /vera/data/. Netlify proxies those same-origin URLs to the engine's sanitized
+ * cloud publication, so neither the publication host nor the retired standalone
+ * dashboard belongs in browser code or connect-src.
  *
- * VERA also renders MapLibre tiles, optionally queries the official NYC
+ * VERA renders MapLibre tiles, optionally queries the official NYC
  * Planning GeoSearch origin after a visitor submits an exact address, and uses
  * blob-backed images/workers for its map and offline runtime. Netlify replaces
  * headers per path rather than merging them, so the /vera/* block is a full
@@ -19,11 +17,9 @@
  * So this asserts the two policies differ by exactly those named runtime
  * capabilities, in exactly their named directives, and nothing else.
  *
- * Scope, stated plainly: this proves the CSP permits the fallback. It does NOT
- * prove the fallback works. As of 2026-07-30 it still does not — the pipeline
- * origin sends no Access-Control-Allow-Origin header, so the browser blocks the
- * response after CSP allows the request. That half is logged as VERA-CORS-001
- * and has to be fixed on the other site.
+ * This also verifies the three exact same-origin data rewrites and rejects an
+ * external feed URL in vera-app.js. Production response and freshness checks
+ * remain part of the live release gate.
  */
 
 import { readFile } from "node:fs/promises";
@@ -32,22 +28,27 @@ import { fileURLToPath } from "node:url";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = path.resolve(appRoot, "..");
-const PIPELINE_ORIGIN = "https://vera-pipeline.netlify.app";
 const TILE_ORIGIN = "https://tiles.openfreemap.org";
-// The token-free cloud feed. Added to the app on 2026-08-04 without being
-// added here or to the policy, which is exactly the failure this audit exists
-// to catch — production said "Could not reach the VERA feed" while curl saw 200.
-const CLOUD_FEED_ORIGIN = "https://raw.githubusercontent.com";
 const GEOSEARCH_ORIGIN = "https://geosearch.planninglabs.nyc";
+const CLOUD_FEED_BASE =
+  "https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed";
+const EXTERNAL_BROWSER_FEED_ORIGINS = [
+  "https://vera-pipeline.netlify.app",
+  "https://raw.githubusercontent.com",
+];
 const VERA_ONLY_ADDITIONS = {
   "img-src": ["blob:"],
-  "connect-src": [PIPELINE_ORIGIN, CLOUD_FEED_ORIGIN, TILE_ORIGIN, GEOSEARCH_ORIGIN],
+  "connect-src": [TILE_ORIGIN, GEOSEARCH_ORIGIN],
   "worker-src": ["'self'", "blob:"],
   "child-src": ["blob:"],
 };
 const failures = [];
 
 const toml = await readFile(path.join(repoRoot, "netlify.toml"), "utf8");
+const redirects = await readFile(
+  path.join(appRoot, "public", "_redirects"),
+  "utf8",
+);
 
 function policyFor(pathPattern) {
   const escaped = pathPattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -66,8 +67,8 @@ if (!sitePolicy) {
 if (!veraPolicy) {
   failures.push(
     'netlify.toml: /vera/* has no Content-Security-Policy block. Without it /vera/ ' +
-      "inherits the site policy, whose connect-src does not allow the pipeline origin, " +
-      "and the feed fallback is refused every time it is needed.",
+      "inherits the site policy, which does not include VERA's map, address, blob, " +
+      "and worker capabilities.",
   );
 }
 
@@ -112,16 +113,46 @@ if (sitePolicy && veraPolicy) {
   }
 }
 
-// The feed, map, and address origins must still be the things the policy is allowing.
+const normalizedRedirects = new Set(
+  redirects
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith("#"))
+    .map((line) => line.split(/\s+/).join(" ")),
+);
+for (const name of ["public", "archive", "meta"]) {
+  const rule =
+    "/vera/data/" +
+    name +
+    ".json " +
+    CLOUD_FEED_BASE +
+    "/" +
+    name +
+    ".json 200!";
+  if (!normalizedRedirects.has(rule)) {
+    failures.push("app/public/_redirects: missing exact VERA data rewrite: " + rule);
+  }
+}
+if (redirects.includes("vera-pipeline.netlify.app")) {
+  failures.push(
+    "app/public/_redirects still routes VERA through the retired Netlify project",
+  );
+}
+
+// Browser feed, map, and address dependencies must match the policy.
 const veraAppJs = await readFile(
   path.join(appRoot, "public", "vera", "assets", "js", "vera-app.js"),
   "utf8",
 );
-if (!veraAppJs.includes(PIPELINE_ORIGIN)) {
+if (!veraAppJs.includes("{ url: './data/public.json', label: 'site' }")) {
   failures.push(
-    `vera-app.js no longer references ${PIPELINE_ORIGIN} — if the fallback is gone, drop the ` +
-      "/vera/* CSP exception with it rather than leaving the origin allowed for nothing",
+    "vera-app.js must declare the one first-party ./data/public.json feed",
   );
+}
+for (const origin of EXTERNAL_BROWSER_FEED_ORIGINS) {
+  if (veraAppJs.includes(origin)) {
+    failures.push("vera-app.js must not reference external feed origin " + origin);
+  }
 }
 if (!veraAppJs.includes(GEOSEARCH_ORIGIN)) {
   failures.push(
@@ -148,5 +179,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "VERA CSP audit passed: /vera/* has only the exact feed, map, address, blob, and worker capabilities its runtime uses.",
+  "VERA CSP audit passed: one first-party feed contract, exact data rewrites, and only the map, address, blob, and worker capabilities VERA uses.",
 );

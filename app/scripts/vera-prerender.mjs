@@ -77,7 +77,7 @@ async function main() {
   // --- the receipts ---
   let archBody = '<p>The archive begins with the next publish cycle; entries are never edited after the fact.</p>';
   try {
-    const r = await fetch('https://vera-pipeline.netlify.app/data/archive.json');
+    const r = await fetch('https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/archive.json');
     if (r.ok) {
       const arch = await r.json();
       if (Array.isArray(arch) && arch.length) {

@@ -45,6 +45,16 @@ for (const [label, source, forbidden] of [
 
 assert.match(registerSource, /\.register\("\/sw\.js"\)/, "service worker must remain registered");
 assert.match(
+  workerSource,
+  /key\.startsWith\(CACHE_PREFIX\) && key !== CACHE_NAME/,
+  "the root service worker may delete only its own old caches, never VERA's caches",
+);
+assert.match(
+  workerSource,
+  /const CACHE_PREFIX = "littlefightnyc-"/,
+  "the root service worker must keep an explicit cache-ownership prefix",
+);
+assert.match(
   noticeSource,
   /const \[visible, setVisible\] = useState\(false\)/,
   "privacy preferences must start closed before the intentional first-visit delay",

@@ -1,4 +1,5 @@
 const CACHE_NAME = "littlefightnyc-20260729";
+const CACHE_PREFIX = "littlefightnyc-";
 const OFFLINE_URL = "/offline.html";
 
 const SHELL_URLS = [
@@ -23,7 +24,13 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))),
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
+            .map((key) => caches.delete(key)),
+        ),
+      ),
   );
 });
 

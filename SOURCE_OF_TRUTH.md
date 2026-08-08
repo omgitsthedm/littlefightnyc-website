@@ -1,19 +1,21 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-08-03
+Last source verification: 2026-08-08
 
-This file routes agents to the current website source. The Dakota consolidation
-was verified live on 2026-08-03: the marketing site and private Dakota desk use
-one GitHub repository, one build, and one Netlify production property. Recheck
-the point-in-time deploy, commit, Identity configuration, Blob state, and custom
-domain attachment before a future production release.
+This file routes agents to the current website source. The marketing site,
+private Dakota desk, and public VERA browser product use one public website
+repository, one build, and one Netlify production property. VERA's separate
+engine publishes only sanitized upstream data. Recheck the point-in-time deploy,
+commit, Identity configuration, Blob state, and custom-domain attachment before
+a future production release.
 
 ## Canonical map
 
 | Field | Verified value |
 | --- | --- |
-| Property | Little Fight NYC website, private Dakota desk, and embedded supporting experiences |
+| Property | Little Fight NYC website, private Dakota desk, public VERA product, and embedded supporting experiences |
 | Production URL | `https://littlefightnyc.com` |
+| VERA public product | `https://littlefightnyc.com/vera/` |
 | Netlify URL | `https://littlefightnyc.netlify.app` |
 | Current domain alias | `https://hey.littlefightnyc.com` |
 | Dakota primary host | `https://www.dakota.littlefightnyc.com` |
@@ -31,11 +33,11 @@ domain attachment before a future production release.
 | Publish directory | `app/dist` |
 
 There is one canonical website repository, build, and Netlify production
-property. The Dakota hosts and `littlefightnyc.com` must resolve to the same
-site ID above. The former standalone Dakota Netlify property was deleted after
-the verified cutover. Its preserved local checkout is historical material only:
-it is not a source, build, deployment target, or rollback path and must not
-receive new product work.
+property. The Dakota hosts, VERA route, and `littlefightnyc.com` must resolve to
+the same site ID above. The former standalone Dakota property and the
+`vera-pipeline` property are historical material only: they are not sources,
+builds, deployment targets, or rollback paths and must not receive new product
+work.
 
 ## Deployment relationship
 
@@ -71,6 +73,26 @@ The current visual system is Axiom Momentum. Read `app/DESIGN.md` for its contra
 The Website Audit has live function, storage, email, and optional provider surfaces. Routine tests must not create external side effects. Local environment files and secrets are never source.
 
 The former AI phone agent is retired. Public phone actions are ordinary `tel:` and `sms:` paths.
+
+## VERA public demo product
+
+VERA is David's working Little Fight product and a public demonstration of
+custom software at `https://littlefightnyc.com/vera/`. Its complete browser
+surface, metadata, privacy and terms pages, and PWA shell live under
+`app/public/vera/**`; its public rewrites, audits, and browser coverage live in
+`app/public/_redirects`, `app/scripts/**`, and `app/tests/**`. The resulting
+browser product publishes on the canonical Little Fight Netlify site ID above.
+
+The browser reads only first-party endpoints under `/vera/data/`. Exact forced
+rewrites in `app/public/_redirects` proxy `public.json`, `archive.json`, and
+`meta.json` from the VERA engine's sanitized GitHub Actions `feed` branch. That
+branch is upstream publication output, not a second website or Netlify product.
+Private/raw hunt data, contacts, working notes, credentials, and engine state
+must never enter this repository, its Netlify property, or a browser response.
+
+The former `vera-pipeline` Netlify project and `vera-dashboard` checkout are not
+runtime dependencies or deployment targets. Do not restore their browser feed
+fallback, proxy routes, CSP exceptions, scheduled Mac deploy, or standalone UI.
 
 ## Dakota architecture and private boundary
 
