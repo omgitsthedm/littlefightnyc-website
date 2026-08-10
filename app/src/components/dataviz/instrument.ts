@@ -5,8 +5,8 @@ import "./instrument.css";
 /**
  * instrument — the shared canvas-instrument harness (Small Craft doctrine).
  *
- * Every instrument (MoneyLeaving, AuditBench,
- * LeadsCaught, WhoAnswers, SiteInFourteen, TheFreeRead) is a 2D-canvas story
+ * Every instrument (LeadsCaught, WhoAnswers, SiteInFourteen, TheFreeRead) is a
+ * 2D-canvas story
  * with the same physical contract:
  *
  * - DPR-scaled canvas sized to its wrapper (ResizeObserver)
@@ -20,7 +20,7 @@ import "./instrument.css";
  * Only the story differs per instrument, so only the story lives per file:
  * pass a `create(cx)` that builds sprites/sim in closure and returns the three
  * renderer verbs. Everything else — the part that was previously copy-pasted
- * across seven files — lives here once.
+ * across the instrument files — lives here once.
  *
  * Font gotcha (the reason DISP/MONO exist): canvas `ctx.font` CANNOT parse CSS
  * `var()` — it silently falls back to 10px. Use these literal stacks.

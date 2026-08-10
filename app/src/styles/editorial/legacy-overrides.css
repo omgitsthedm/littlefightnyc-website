@@ -219,8 +219,8 @@
 
 /* ⚠️ Scope the canvas kill to the LEGACY hero treatments only. A previous
    bare `.lf-editorial canvas[aria-hidden="true"]` here silently display:none'd
-   EVERY modern canvas instrument (AuditBench, WhoAnswers, TheDirectLine, the
-   fight card…) on any page that loaded this sheet — found 2026-07-19. Pixel
+   EVERY modern canvas instrument (WhoAnswers, SiteInFourteen, the fight card…)
+   on any page that loaded this sheet — found 2026-07-19. Pixel
    readback (toDataURL) does NOT catch this class of bug: the canvas paints
    off-screen while hidden. Visibility must be asserted via computed display +
    offsetHeight. */
@@ -378,30 +378,6 @@
 .lf-editorial .site-footer,
 .lf-editorial .mobile-sticky-cta {
   display: none;
-}
-
-.lf-editorial .route-loading {
-  min-height: calc(100svh - 68px);
-  padding: var(--lf-space-8) var(--lf-margin-mobile);
-  display: grid;
-  place-content: center;
-  gap: var(--lf-space-3);
-  text-align: center;
-  color: var(--lf-bone-soft);
-}
-
-.lf-editorial .route-loading__label {
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: var(--lf-fight);
-}
-
-.lf-editorial .route-loading__line {
-  font-family: var(--lf-serif);
-  font-size: var(--lf-text-md);
-  color: var(--lf-bone-soft);
 }
 
 /* =========================================================================

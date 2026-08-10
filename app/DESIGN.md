@@ -202,7 +202,8 @@ sells — not more tools, one owned system where the parts talk to each other.
    motion.ts, instrument harness). No component invents its own physics.
 2. Signal is sacred — orange means act/live/the-point, never decoration
    (ratchet-enforced). Blue is ambient only. Red = fault, green = confirmed.
-3. Many → One is the house motion (MoneyLeaving is canonical).
+3. Many → One is the house motion; use the shared `consolidate` motion in
+   `kernel/motion.ts`.
 4. Weight before flash — mass, settle, follow-through; nothing teleports.
 5. No seams — complete first paint, silent enhancement, no spinners, NO SPLASH.
 6. Honest instruments — anything that looks like data IS data (counts come from
