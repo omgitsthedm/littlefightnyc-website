@@ -59,10 +59,10 @@
   }
 
   /* Liberty's three road-shield filters compare `ref_length` with a number.
-     OpenMapTiles legitimately omits that property on some road-name features,
-     which otherwise makes every worker warn about a null numeric input. A
-     missing length cannot produce a usable shield, so 99 preserves the filter's
-     intent (`<= 6`) without removing or visually changing any valid shield. */
+     OpenMapTiles legitimately omits that property or supplies an empty string
+     on some road-name features. Coerce it once and require a positive length:
+     this prevents both null-number warnings and the invalid `road_` sprite while
+     preserving every usable shield between one and six characters. */
   function hardenNullableStyleNumbers(style) {
     var guards = 0;
     function visit(expression) {
@@ -73,7 +73,15 @@
         expression[1][0] === 'get' &&
         expression[1][1] === 'ref_length'
       ) {
-        expression[1] = ['to-number', expression[1], 99];
+        var refLength = ['to-number', expression[1], -1];
+        var maximum = expression[2];
+        expression.splice(
+          0,
+          expression.length,
+          'all',
+          ['>=', refLength, 1],
+          ['<=', refLength, maximum]
+        );
         guards += 1;
       }
       expression.forEach(visit);
