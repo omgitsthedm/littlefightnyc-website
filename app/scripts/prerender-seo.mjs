@@ -188,6 +188,24 @@ const pages = [
 // It still belongs in the site's public discovery files.
 const standaloneDiscoveryPages = [
   {
+    path: "/examples/lab/",
+    title: "The Lab | Little Fight NYC",
+    h1: "Touch the work.",
+    image: "/examples/lab/assets/pool-room-poster.webp",
+    shortAnswer:
+      "The Lab is Little Fight NYC’s public showroom of working websites, motion studies, business tools, campaign worlds, spatial builds, and cinema pieces.",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/examples/lab/concepts/pool-room/",
+    title: "The Pool Room | The Lab · Little Fight NYC",
+    h1: "We built a bar that doesn’t exist. Then broke a rack in it.",
+    image: "/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp",
+    shortAnswer:
+      "The Pool Room is a thirty-second Little Fight NYC cinema build: a New York dive bar authored in Blender and a billiards break solved with real physics and collision-timed sound.",
+    updated: "2026-08-10",
+  },
+  {
     path: "/vera/",
     title: "VERA — NYC rental intelligence, on the record",
     h1: "VERA — NYC rental intelligence, on the record",

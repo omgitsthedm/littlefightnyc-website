@@ -214,7 +214,7 @@
       }, 1800);
     });
 
-    document.documentElement.append(shell, hint);
+    document.body.append(shell, hint);
 
     window.setTimeout(function () {
       hint.classList.add('is-visible');
@@ -223,15 +223,6 @@
       hint.classList.remove('is-visible');
     }, 4200);
 
-    document.addEventListener('keydown', function (event) {
-      var target = event.target;
-      var editable = target instanceof Element &&
-        target.matches('input, textarea, select, [contenteditable="true"]');
-      if (event.metaKey || event.ctrlKey || event.altKey || editable) return;
-      if (event.key === '[') location.href = previous.href;
-      if (event.key === ']') location.href = next.href;
-      if (event.key.toLowerCase() === 'r') replay.click();
-    });
   }
 
   if (document.readyState === 'loading') {

@@ -35,7 +35,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium-desktop",
-      grep: /@chromium-desktop|@all-projects|@vera-all-platforms|@vera-desktop/,
+      grep: /@chromium-desktop|@all-projects|@pool-room-all|@vera-all-platforms|@vera-desktop/,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },
@@ -43,7 +43,7 @@ export default defineConfig({
     },
     {
       name: "chromium-mobile",
-      grep: /@chromium-mobile|@all-projects/,
+      grep: /@chromium-mobile|@all-projects|@pool-room-all/,
       use: {
         ...devices["Pixel 7"],
         browserName: "chromium",
@@ -51,7 +51,7 @@ export default defineConfig({
     },
     {
       name: "firefox-desktop",
-      grep: /@firefox-desktop|@all-projects/,
+      grep: /@firefox-desktop|@all-projects|@pool-room-all/,
       use: {
         ...devices["Desktop Firefox"],
         viewport: { width: 1366, height: 768 },
@@ -59,7 +59,7 @@ export default defineConfig({
     },
     {
       name: "webkit-mobile",
-      grep: /@webkit-mobile|@all-projects|@vera-all-platforms|@vera-touch/,
+      grep: /@webkit-mobile|@all-projects|@pool-room-all|@vera-all-platforms|@vera-touch/,
       use: {
         ...devices["iPhone 13"],
         browserName: "webkit",
@@ -70,7 +70,7 @@ export default defineConfig({
       // desktop Safari contract without running the whole site-wide suite a
       // second time.
       name: "webkit-desktop",
-      grep: /@webkit-desktop|@vera-all-platforms|@vera-desktop/,
+      grep: /@webkit-desktop|@pool-room-all|@vera-all-platforms|@vera-desktop/,
       use: {
         ...devices["Desktop Safari"],
         browserName: "webkit",
@@ -81,7 +81,7 @@ export default defineConfig({
       // iPad is its own product surface: touch input, tablet viewport, and
       // WebKit. Keep it on the focused VERA contract for bounded runtime.
       name: "webkit-ipad",
-      grep: /@webkit-ipad|@vera-all-platforms|@vera-touch/,
+      grep: /@webkit-ipad|@pool-room-all|@vera-all-platforms|@vera-touch/,
       use: {
         ...devices["iPad Pro 11"],
         browserName: "webkit",

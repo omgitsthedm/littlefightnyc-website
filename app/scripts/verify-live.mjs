@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "..", "..");
 const baseUrl = (process.env.LIVE_URL || "https://littlefightnyc.com").replace(/\/$/, "");
+const canonicalBaseUrl = (process.env.CANONICAL_URL || baseUrl).replace(/\/$/, "");
 const failures = [];
 
 function gitHead() {
@@ -56,6 +57,18 @@ async function get(pathname, expectedStatus = 200) {
   return response;
 }
 
+async function head(pathname, expectedStatus = 200) {
+  const response = await fetch(`${baseUrl}${pathname}`, {
+    method: "HEAD",
+    redirect: "follow",
+    headers: { "user-agent": "LFNYC-Quality-Spine/1.0" },
+  });
+  if (response.status !== expectedStatus) {
+    failures.push(`${pathname}: expected ${expectedStatus}, got ${response.status}`);
+  }
+  return response;
+}
+
 const expectedRevision = process.env.EXPECTED_REVISION?.trim() || gitHead();
 const releaseResponse = await get("/release.json");
 if (releaseResponse.ok) {
@@ -79,6 +92,8 @@ const htmlRoutes = [
   "/clients/",
   "/tech-audit/?intent=website",
   "/examples/",
+  "/examples/lab/",
+  "/examples/lab/concepts/pool-room/",
   "/case-studies/hair-by-rachel-charles/",
   "/library/",
   "/about/",
@@ -95,7 +110,7 @@ for (const pathname of htmlRoutes) {
     failures.push(`${pathname}: unexpectedly noindex`);
   }
   const canonical = canonicalHref(html);
-  const expectedCanonical = `${baseUrl}${routePath}`;
+  const expectedCanonical = `${canonicalBaseUrl}${routePath}`;
   if (canonical !== expectedCanonical) {
     failures.push(`${pathname}: canonical ${canonical || "missing"} != ${expectedCanonical}`);
   }
@@ -136,7 +151,80 @@ for (const [pathname, contentType] of [
   }
 }
 
-await get("/examples/lab/");
+const poolPath = "/examples/lab/concepts/pool-room/";
+const poolResponse = await get(poolPath);
+const poolHtml = await poolResponse.text();
+for (const header of [
+  "content-security-policy",
+  "strict-transport-security",
+  "x-content-type-options",
+  "referrer-policy",
+  "permissions-policy",
+]) {
+  if (!poolResponse.headers.get(header)) failures.push(`${poolPath}: missing ${header} header`);
+}
+const poolCsp = poolResponse.headers.get("content-security-policy") || "";
+for (const forbidden of ["cdnjs.cloudflare.com", "unpkg.com", "esm.sh"]) {
+  if (poolCsp.includes(forbidden)) {
+    failures.push(`${poolPath}: Pool Room CSP still permits ${forbidden}`);
+  }
+}
+if (!poolCsp.includes("script-src 'self'")) {
+  failures.push(`${poolPath}: Pool Room CSP is not same-origin for scripts`);
+}
+for (const [attribute, name, expected] of [
+  ["property", "og:url", `${canonicalBaseUrl}${poolPath}`],
+  [
+    "property",
+    "og:image",
+    `${canonicalBaseUrl}${poolPath}img/opening/12-room-hero.webp`,
+  ],
+  ["name", "twitter:card", "summary_large_image"],
+]) {
+  const actual = tagContent(poolHtml, attribute, name);
+  if (actual !== expected) failures.push(`${poolPath}: ${name} ${actual || "missing"} != ${expected}`);
+}
+if (!poolHtml.includes('kind="captions"') || !poolHtml.includes('kind="descriptions"')) {
+  failures.push(`${poolPath}: caption or visual-description track is missing`);
+}
+if (!poolHtml.includes('href="break-film-audio-described.mp4"')) {
+  failures.push(`${poolPath}: audio-described film alternative is missing`);
+}
+try {
+  const jsonLd = JSON.parse(
+    poolHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i)?.[1] || "{}",
+  );
+  if (jsonLd["@type"] !== "VideoObject" || jsonLd.duration !== "PT30S") {
+    failures.push(`${poolPath}: VideoObject data is missing or incomplete`);
+  }
+} catch {
+  failures.push(`${poolPath}: VideoObject JSON-LD does not parse`);
+}
+
+for (const [pathname, contentType, cacheToken] of [
+  [`${poolPath}break-film.webm`, "video/webm", "max-age=86400"],
+  [`${poolPath}break-film.mp4`, "video/mp4", "max-age=86400"],
+  [`${poolPath}break-film-audio-described.mp4`, "video/mp4", "max-age=86400"],
+  [`${poolPath}img/break-film-poster.webp`, "image/webp", "max-age=86400"],
+  [`${poolPath}break-film-captions.vtt`, "text/vtt", null],
+  [`${poolPath}break-film-descriptions.vtt`, "text/vtt", null],
+]) {
+  const response = await head(pathname);
+  const actualType = response.headers.get("content-type") || "";
+  if (!actualType.includes(contentType)) {
+    failures.push(`${pathname}: expected ${contentType}, got ${actualType || "missing"}`);
+  }
+  if (cacheToken && !(response.headers.get("cache-control") || "").includes(cacheToken)) {
+    failures.push(`${pathname}: expected cache policy containing ${cacheToken}`);
+  }
+}
+
+const sitemapResponse = await get("/sitemap.xml");
+const sitemapBody = await sitemapResponse.text();
+for (const route of ["/examples/lab/", poolPath]) {
+  if (!sitemapBody.includes(`${canonicalBaseUrl}${route}`)) failures.push(`/sitemap.xml: missing ${route}`);
+}
+
 const missingResponse = await get("/quality-spine-definitely-missing/", 404);
 const missingHtml = await missingResponse.text();
 if (!tagContent(missingHtml, "name", "robots").includes("noindex")) {
@@ -149,7 +237,7 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Live verification passed for ${baseUrl} at ${expectedRevision.slice(0, 12)}: revision, core routes, metadata, headers, public assets, Lab, and 404.`,
+    `Live verification passed for ${baseUrl} at ${expectedRevision.slice(0, 12)}: revision, core routes, metadata, headers, public assets, Pool Room media and accessibility tracks, Lab, and 404.`,
   );
   console.log("This command does not submit the Tech Audit or assert provider/inbox delivery.");
 }

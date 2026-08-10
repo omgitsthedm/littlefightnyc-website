@@ -6,11 +6,48 @@
 <meta name="theme-color" content="#070605">
 <title>The Pool Room | The Lab · Little Fight NYC</title>
 <meta name="description" content="A New York dive bar built in Blender: 2,229 objects, 90 materials, visible-source lighting, and a 240 Hz physics-solved break with collision-timed sound.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='%23E9A23B'/></svg>">
+<meta name="robots" content="index,follow,max-image-preview:large,max-video-preview:-1">
+<link rel="canonical" href="https://littlefightnyc.com/examples/lab/concepts/pool-room/">
+<link rel="icon" href="/examples/lab/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="img/break-film-poster.webp" as="image" type="image/webp" fetchpriority="high">
 <meta property="og:title" content="NYC Dive-Bar Pool Room">
 <meta property="og:description" content="A dive bar built object by object in Blender, and one break solved at 240 Hz.">
 <meta property="og:image" content="https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="900">
+<meta property="og:image:alt" content="A worn New York dive-bar pool room, built in Blender and lit beneath a three-shade billiard fixture.">
+<meta property="og:url" content="https://littlefightnyc.com/examples/lab/concepts/pool-room/">
+<meta property="og:site_name" content="Little Fight NYC">
+<meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NYC Dive-Bar Pool Room">
+<meta name="twitter:description" content="A dive bar built object by object in Blender, and one break solved at 240 Hz.">
+<meta name="twitter:image" content="https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp">
+<meta name="twitter:image:alt" content="A worn New York dive-bar pool room, built in Blender and lit beneath a three-shade billiard fixture.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "The Pool Room",
+  "description": "A thirty-second cinematic film of a New York dive bar built in Blender, ending in a physics-solved billiards break.",
+  "thumbnailUrl": "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp",
+  "contentUrl": "https://littlefightnyc.com/examples/lab/concepts/pool-room/break-film.mp4",
+  "url": "https://littlefightnyc.com/examples/lab/concepts/pool-room/",
+  "uploadDate": "2026-08-07",
+  "duration": "PT30S",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Little Fight NYC",
+    "url": "https://littlefightnyc.com/"
+  }
+}
+</script>
 <style>
   :root {
     color-scheme: dark;
@@ -26,8 +63,6 @@
     --mute:   #918879;
     --amber:  #F0902A;
     --brass:  #B8842A;
-    --cloth:  #2E6B4F;
-    --crt:    #5FA8D3;
     --neon:   #E8443A;
 
     --edge: clamp(20px, 5vw, 88px);
@@ -45,7 +80,7 @@
      meaning, movement does not. */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .plate img { animation: none !important; clip-path: none !important; }
+    .plate img { animation: none !important; }
     * { transition-duration: 120ms !important; }
   }
 
@@ -64,6 +99,10 @@
   }
 
   img, video { display: block; max-width: 100%; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
 
   /* Grain. A dark bar shot on a cheap sensor has noise in it; a flyer stapled
      to a pole has paper in it. This is most of the difference between
@@ -81,7 +120,7 @@
   /* ---------------------------------------------------------- type ----- */
   .kicker {
     font-family: var(--mono);
-    font-size: clamp(10px, .55vw + 8px, 12px);
+    font-size: 16px;
     letter-spacing: .24em;
     text-transform: uppercase;
     color: var(--amber);
@@ -131,7 +170,7 @@
   .skip {
     position: absolute; left: -9999px; top: 0; z-index: 10;
     background: var(--amber); color: #16110A;
-    font-family: var(--mono); font-size: 13px; letter-spacing: .1em;
+    font-family: var(--mono); font-size: 16px; letter-spacing: .1em;
     text-transform: uppercase; text-decoration: none;
     padding: .85em 1.3em;
   }
@@ -142,7 +181,7 @@
 
   a.cta {
     display: inline-block;
-    font-family: var(--mono); font-size: clamp(14px,.4vw + 12px,16px);
+    font-family: var(--mono); font-size: 16px;
     letter-spacing: .01em; text-decoration: none;
     color: #120C04; background: var(--amber);
     padding: 1em 1.6em;
@@ -161,6 +200,19 @@
   }
   @media (hover: hover) and (pointer: fine) {
     a.quiet:hover { color: var(--amber); border-color: var(--amber); }
+  }
+  .hero-share { display: flex; align-items: center; gap: .8em; min-width: 0; }
+  .share-action {
+    min-height: 44px; padding: .7em 1em;
+    border: 1px solid var(--line); background: transparent; color: var(--bone);
+    font: 700 16px/1 var(--mono);
+    letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+    transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+  }
+  .share-action[hidden] { display: none; }
+  .share-status { color: var(--bone-d); font: 500 16px/1.4 var(--mono); }
+  @media (hover: hover) and (pointer: fine) {
+    .share-action:hover { color: var(--amber); border-color: var(--amber); background: rgba(240,144,42,.08); }
   }
 
   /* ---------------------------------------------------------- hero ----- */
@@ -190,12 +242,12 @@
   }
   .wordmark {
     font-family: var(--mono);
-    font-size: clamp(11px,.5vw + 9px,13px);
+    font-size: 16px;
     letter-spacing: .26em; text-transform: uppercase;
     color: var(--bone);
   }
   .hero-note {
-    font-family: var(--mono); font-size: clamp(11px,.5vw + 9px,13px);
+    font-family: var(--mono); font-size: 16px;
     letter-spacing: .02em; color: var(--bone-d); margin: 0;
   }
   .hero-title-block { padding-block: clamp(30px,5vw,84px) clamp(44px,6vw,104px); }
@@ -206,12 +258,17 @@
   .intro { display: grid; gap: clamp(28px,4vw,72px); grid-template-columns: 1fr; }
   @media (min-width: 900px) { .intro { grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); } }
   .intro-aside {
-    font-family: var(--mono); font-size: clamp(12px,.5vw + 10px,14px);
+    font-family: var(--mono); font-size: 16px;
     line-height: 1.85; color: var(--bone-d);
   }
   .intro-aside dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: .35em 1.4em; }
   .intro-aside dt { color: var(--mute); white-space: nowrap; }
   .intro-aside dd { margin: 0; color: var(--bone); text-align: right; font-variant-numeric: tabular-nums; }
+  @media (max-width: 520px) {
+    .intro-aside dl { grid-template-columns: 1fr; gap: .1em; }
+    .intro-aside dt { white-space: normal; }
+    .intro-aside dd { margin-bottom: .8em; text-align: left; }
+  }
 
   /* ---------------------------------------------------------- spec ----- */
   .spec { background: var(--ink); }
@@ -246,10 +303,10 @@
   }
   /* Units and denominators sit in a text token, not an accent hue - the
      figure carries the meaning, the suffix only needs to be distinguishable. */
-  .spec-n small { font-size: .42em; letter-spacing: -.01em; color: var(--mute); margin-left: .28em; font-weight: 700; }
+  .spec-n small { font-size: max(.42em,16px); letter-spacing: -.01em; color: var(--mute); margin-left: .28em; font-weight: 700; }
   .spec-l {
     margin-top: .85em; font-family: var(--mono);
-    font-size: clamp(11px,.45vw + 9px,13px); line-height: 1.55;
+    font-size: 16px; line-height: 1.55;
     letter-spacing: .01em; color: var(--mute);
     max-width: 20ch; text-wrap: pretty;
   }
@@ -257,9 +314,9 @@
   /* -------------------------------------------------------- figures ---- */
   .plate { margin: 0; }
   .plate img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; background: #000; }
-  /* Plates wipe up as they enter. Marketing-category motion, so it can be
-     longer than UI - but it is clip-path + opacity only, both compositor
-     friendly, and it never blocks reading. Browsers without scroll-driven
+  /* Plates settle up as they enter. Marketing-category motion, so it can be
+     longer than UI - but it uses transform + opacity only, stays compositor
+     friendly, and never blocks reading. Browsers without scroll-driven
      animations simply show the image. */
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
@@ -269,19 +326,19 @@
         animation-range: entry 8% cover 26%;
       }
       @keyframes plate-in {
-        from { clip-path: inset(14% 0 0 0); opacity: .55; }
-        to   { clip-path: inset(0 0 0 0);   opacity: 1; }
+        from { transform: translateY(24px) scale(.99); opacity: .55; }
+        to   { transform: translateY(0) scale(1); opacity: 1; }
       }
     }
   }
   .plate figcaption {
     margin-top: 1em; display: flex; gap: 1.1em; align-items: baseline;
-    font-family: var(--mono); font-size: clamp(11px,.45vw + 9px,13px);
+    font-family: var(--mono); font-size: 16px;
     line-height: 1.6; color: var(--bone-d);
   }
   .plate figcaption b {
     color: var(--neon); font-weight: 700; letter-spacing: .12em;
-    flex: none; font-size: .92em;
+    flex: none; font-size: 1em;
   }
   .plate figcaption span { min-width: 0; overflow-wrap: break-word; }
   .plates { display: grid; gap: clamp(30px,4.6vw,84px); }
@@ -301,7 +358,7 @@
   .steps li::before {
     content: attr(data-n);
     position: absolute; left: 0; top: clamp(18px,2vw,26px);
-    font-family: var(--mono); font-size: clamp(11px,.5vw + 9px,13px);
+    font-family: var(--mono); font-size: 16px;
     color: var(--neon); letter-spacing: .1em;
   }
   .steps h3 { margin-bottom: .45em; }
@@ -312,18 +369,28 @@
     border-left: 2px solid var(--brass);
     padding: .1em 0 .1em 1.35em;
     color: var(--bone-d);
-    font-size: .96em;
+    font-size: 1em;
   }
 
   /* -------------------------------------------------------- footer ----- */
   footer { background: var(--pitch); }
   .foot-grid { display: grid; gap: clamp(24px,3vw,56px); }
   @media (min-width: 780px) { .foot-grid { grid-template-columns: 1.4fr 1fr 1fr; } }
-  footer h4 {
-    margin: 0 0 1em; font-family: var(--mono); font-size: 12px;
-    letter-spacing: .02em; color: var(--mute); font-weight: 400;
+  footer h2 {
+    margin: 0 0 1em; font-family: var(--mono); font-size: 16px;
+    line-height: 1.4; letter-spacing: .02em; color: var(--mute); font-weight: 400;
+    text-shadow: none;
   }
-  footer ul { list-style: none; margin: 0; padding: 0; font-family: var(--mono); font-size: 13px; line-height: 2; color: var(--bone-d); }
+  footer ul { list-style: none; margin: 0; padding: 0; font-family: var(--mono); font-size: 16px; line-height: 2; color: var(--bone-d); }
+  .film-access { padding-bottom: clamp(28px,4vw,56px); }
+  .film-access details { max-width: 68ch; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .film-access summary {
+    min-height: 44px; padding-block: .75em; cursor: pointer;
+    color: var(--bone-d); font: 700 16px/1.4 var(--mono); letter-spacing: .04em;
+  }
+  .film-access-intro { margin: .4em 0 1.25em; }
+  .film-access ol { margin: 0 0 1.25em; padding-left: 1.5em; }
+  .film-access li + li { margin-top: .7em; }
 </style>
 </head>
 <body>
@@ -334,26 +401,51 @@
 <header class="hero">
   <p class="wordmark wrap">Little Fight NYC &nbsp;·&nbsp; The Lab &nbsp;·&nbsp; Build 09</p>
   <div class="hero-media">
-    <video controls playsinline preload="metadata"
+    <video controls playsinline preload="metadata" data-pool-room-film
            poster="img/break-film-poster.webp" width="1280" height="720"
-           aria-label="Thirty-second cinematic film of the authored New York dive-bar environment and a real-time physics-solved billiards break">
+           aria-label="Thirty-second cinematic film of the authored New York dive-bar environment and a real-time physics-solved billiards break"
+           aria-describedby="film-description">
       <source src="break-film.webm" type="video/webm">
       <source src="break-film.mp4" type="video/mp4">
+      <track kind="captions" src="break-film-captions.vtt" srclang="en" label="English sound captions">
+      <track kind="descriptions" src="break-film-descriptions.vtt" srclang="en" label="English visual descriptions">
+      Your browser cannot play the film. <a href="break-film.mp4">Download the 23 MB MP4.</a>
     </video>
   </div>
   <div class="wrap hero-strip">
     <p class="hero-note">30 seconds · turn the sound on</p>
     <p class="hero-note">Nothing here was filmed</p>
+    <div class="hero-share">
+      <button class="share-action" type="button" data-share-pool-room hidden>Share this build</button>
+      <span class="share-status" role="status" aria-live="polite" aria-atomic="true" data-share-status></span>
+    </div>
   </div>
+  <p class="visually-hidden" id="film-description">The camera moves through the modeled bar and settles at the pool table. Quiet room tone plays until the cue strike at 19 seconds. The rack breaks, balls collide with one another and the rails, two balls drop into pockets, and the final clicks fade back to room tone.</p>
 </header>
 
+<main id="content">
+
 <section class="wrap hero-title-block">
-  <h1 class="hero-title">We built a bar<br>that doesn’t exist.<span>Then broke a rack in it.</span></h1>
+  <h1 class="hero-title" aria-label="We built a bar that doesn’t exist. Then broke a rack in it.">We built a bar<br>that doesn’t exist.<span>Then broke a rack in it.</span></h1>
 </section>
 
-<hr class="rule">
+<div class="wrap film-access">
+  <details>
+    <summary>Audio description and film transcript</summary>
+    <p class="film-access-intro"><a class="quiet" href="break-film-audio-described.mp4">Open the audio-described film</a> (MP4, 23 MB). The original collision audio remains underneath concise spoken descriptions of every shot.</p>
+    <ol>
+      <li><strong>0:00–0:05</strong> — Inside the dark bar, the camera looks through a diamond-latticed window at wet Lower East Side storefronts and a backwards neon OPEN sign. Quiet room tone plays.</li>
+      <li><strong>0:05–0:10</strong> — The camera glides along rows of bottles, an old register, and fluorescent sections that stop on either side of it.</li>
+      <li><strong>0:10–0:14</strong> — A low view passes a foamy pint, condensation on the glass, and a rocks cocktail resting on its coaster.</li>
+      <li><strong>0:14–0:19</strong> — The view crosses the room and lowers past the three-shade fixture toward green cloth, a cue ball, and fifteen tightly racked balls.</li>
+      <li><strong>0:19–0:23</strong> — The cue strikes. Balls scatter with rapid clacks; the 7 ball and then the 4 ball fall into the southeast corner pocket.</li>
+      <li><strong>0:23–0:27</strong> — The camera follows the 13 ball, the last one moving, until its final rail contacts fade and it stops.</li>
+      <li><strong>0:27–0:30</strong> — The camera rises and pulls back over the settled table, booths, bar, overhead fixture, and lit storefront. Quiet room tone remains.</li>
+    </ol>
+  </details>
+</div>
 
-<main id="content">
+<hr class="rule">
 
 <!-- ================================================================ LEDE -->
 <section class="band wrap">
@@ -397,14 +489,14 @@
 <!-- ============================================================== ROOM -->
 <section class="band wrap">
   <p class="kicker">The room</p>
-  <h2 class="measure-tight">It had to look like<br>somebody drinks here.</h2>
+  <h2 class="measure-tight" aria-label="It had to look like somebody drinks here.">It had to look like<br>somebody drinks here.</h2>
   <p class="measure dim" style="margin-top:1.4em">Rooms read as real through small things. Every
     light has a fixture you can point at. Nothing floats. It’s worn, not dirty. We checked all
     1,127 objects for whether something actually holds them up.</p>
 
   <div class="plates" style="margin-top:clamp(40px,5vw,88px)">
     <figure class="plate bleed">
-      <img src="img/opening/12-room-hero.webp" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async"
+      <img src="img/opening/12-room-hero.webp" width="1600" height="900" loading="lazy" decoding="async"
            alt="Long room view from the bar rail toward the lit pool table and stickered bathroom door">
       <figcaption class="wrap"><b>01</b><span>One fixture over the table, and real air between it and the far wall.</span></figcaption>
     </figure>
@@ -485,7 +577,7 @@
   <p class="kicker">The break</p>
   <div class="split">
     <div>
-      <h2>Not animated.<br>Solved.</h2>
+      <h2 aria-label="Not animated. Solved.">Not animated.<br>Solved.</h2>
       <p class="measure" style="margin-top:1.3em">Tell the physics where the cue ball sits, how hard
         it’s hit and where the tip lands, and it works out the rest: <strong>248 collisions</strong>
         over 7.8 seconds. We didn’t place a single one.</p>
@@ -532,7 +624,7 @@
   <div class="split">
     <div>
       <p class="kicker">The sound</p>
-      <h2 class="measure-tight">Every sound sits<br>on a real hit.</h2>
+      <h2 class="measure-tight" aria-label="Every sound sits on a real hit.">Every sound sits<br>on a real hit.</h2>
     </div>
     <div>
       <p class="measure">Nothing was timed by ear. Each clack is placed on the collision that
@@ -548,7 +640,7 @@
 <!-- ============================================================= BUILD -->
 <section class="band wrap">
   <p class="kicker">What this means for you</p>
-  <h2 class="measure-tight">If it doesn’t exist yet,<br>we can still show it.</h2>
+  <h2 class="measure-tight" aria-label="If it doesn’t exist yet, we can still show it.">If it doesn’t exist yet,<br>we can still show it.</h2>
   <p class="measure dim" style="margin-top:1.3em">A space you haven’t built. A product you haven’t
     manufactured. A machine that would be dangerous to film. If we can measure it, we can show it
     working — and it will behave the way the real thing behaves.</p>
@@ -563,7 +655,7 @@
   </ol>
 
   <p style="margin-top:clamp(40px,5vw,72px)">
-    <a class="cta" href="/tech-audit/?intent=website&amp;source=lab_pool-room">See what we could build for you</a>
+    <a class="cta" href="/tech-audit/?source=lab_pool-room">Talk through your build</a>
   </p>
 
 
@@ -576,12 +668,12 @@
   <div class="band wrap">
     <div class="foot-grid">
       <div>
-        <h4>Little Fight NYC</h4>
-        <p class="measure dim" style="font-size:.95em">A demo we built to see how far we could push
+        <h2>Little Fight NYC</h2>
+        <p class="measure dim">A demo we built to see how far we could push
           it — the room, the physics, the sound, all of it. <a class="quiet" href="/">littlefightnyc.com</a></p>
       </div>
       <div>
-        <h4>This piece</h4>
+        <h2>This piece</h2>
         <ul>
           <li>30 seconds, 1280 × 720</li>
           <li>15 stills, one film</li>
@@ -589,10 +681,19 @@
           <li>Nothing filmed, nothing stock</li>
         </ul>
       </div>
+      <nav aria-label="Keep exploring">
+        <h2>Keep exploring</h2>
+        <ul>
+          <li><a class="quiet" href="/examples/lab/">The Lab</a></li>
+          <li><a class="quiet" href="/examples/">More work</a></li>
+          <li><a class="quiet" href="/legal/">Privacy &amp; terms</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
 </footer>
 
+<script defer src="pool-room.js"></script>
 <script defer src="/examples/lab/assets/lab-return.js"></script>
 </body>
 </html>

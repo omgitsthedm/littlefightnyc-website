@@ -131,7 +131,12 @@ html, body {
 
 /* ---------- the sign room ---------- */
 
-.stagewrap { padding: 12px max(20px, 3vw) 40px; }
+.stagewrap {
+  padding: 12px max(20px, 3vw) 40px;
+  /* The sign's ambient glow extends beyond its box; clip that decoration so
+     it cannot widen the document on phones or scrollbar-bearing desktops. */
+  overflow-x: clip;
+}
 
 .signroom {
   position: relative;

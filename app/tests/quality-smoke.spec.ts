@@ -50,7 +50,20 @@ const PHC_FILM_ROUTES = [
   })),
 ] as const;
 
+const LAB_CONCEPT_SLUGS = [
+  "walkup-3d",
+  "terminal-3d",
+  "pill-scroll",
+  "micro-animations",
+  "aha-laser",
+  "studio-engine",
+  "growth-street",
+  "goliath",
+  "pool-room",
+] as const;
+
 const WCAG_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"] as const;
+const WCAG_22_AA_TAG = "wcag22aa" as const;
 
 const VERA_FEED_FIXTURE = readFileSync(
   new URL("./fixtures/vera-feed.json", import.meta.url),
@@ -131,6 +144,8 @@ const ROUTE_METADATA = JSON.parse(
 ) as RouteMetadata;
 
 type ProjectTag =
+  | "@all-projects"
+  | "@pool-room-all"
   | "@chromium-desktop"
   | "@chromium-mobile"
   | "@firefox-desktop"
@@ -215,6 +230,15 @@ const ROUTES: readonly RouteContract[] = [
     h1: /See what works\.\s*Try what is next\./i,
     criticalLink: 'a[href="/case-studies/hair-by-rachel-charles/"]',
     tags: ["@chromium-desktop", "@firefox-desktop"],
+  },
+  {
+    key: "pool-room",
+    label: "Pool Room Lab film",
+    path: "/examples/lab/concepts/pool-room/",
+    title: "The Pool Room | The Lab · Little Fight NYC",
+    h1: /We built a bar\s*that doesn’t exist\.\s*Then broke a rack in it\./i,
+    criticalLink: 'a[href^="/tech-audit/"]',
+    tags: ["@pool-room-all"],
   },
   {
     key: "rachel",
@@ -306,6 +330,15 @@ function isFirstPartyConsoleMessage(message: ConsoleMessage): boolean {
   }
 }
 
+function isWebKitMediaControlNoise(message: ConsoleMessage): boolean {
+  return (
+    !message.location().url &&
+    /^Button failed to load, iconName = (?:invalid-placard|pip-placard|airplay-placard), layoutTraits = \[MacOSLayoutTraits Inline\], src = blob:/.test(
+      message.text(),
+    )
+  );
+}
+
 function watchRuntime(page: Page): RuntimeAudit {
   const audit: RuntimeAudit = {
     consoleErrors: [],
@@ -317,7 +350,11 @@ function watchRuntime(page: Page): RuntimeAudit {
   });
 
   page.on("console", (message) => {
-    if (message.type() !== "error" || !isFirstPartyConsoleMessage(message)) {
+    if (
+      message.type() !== "error" ||
+      isWebKitMediaControlNoise(message) ||
+      !isFirstPartyConsoleMessage(message)
+    ) {
       return;
     }
 
@@ -383,7 +420,7 @@ async function openRoute(page: Page, route: RouteContract): Promise<void> {
   await waitForStableDocument(page);
 }
 
-async function expectNoHorizontalOverflow(page: Page): Promise<void> {
+async function expectNoHorizontalOverflow(page: Page, label = ""): Promise<void> {
   const report = await page.evaluate(() => {
     const viewportWidth = document.documentElement.clientWidth;
     const scrollWidth = Math.max(
@@ -416,16 +453,21 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
 
   expect.soft(
     report.scrollWidth,
-    `Horizontal overflow: ${report.scrollWidth}px document in ${report.viewportWidth}px viewport. Possible offenders: ${report.offenders.join(", ") || "none identified"}`,
+    `${label ? `${label}: ` : ""}Horizontal overflow: ${report.scrollWidth}px document in ${report.viewportWidth}px viewport. Possible offenders: ${report.offenders.join(", ") || "none identified"}`,
   ).toBeLessThanOrEqual(report.viewportWidth + 1);
 }
 
 async function expectAxeClean(
   page: Page,
-  route: RouteContract,
+  route: Pick<RouteContract, "key" | "path">,
   testInfo: TestInfo,
+  scope?: string,
 ): Promise<void> {
-  let builder = new AxeBuilder({ page }).withTags([...WCAG_TAGS]);
+  const tags = route.key === "pool-room" || route.key.startsWith("lab-")
+    ? [...WCAG_TAGS, WCAG_22_AA_TAG]
+    : [...WCAG_TAGS];
+  let builder = new AxeBuilder({ page }).withTags(tags);
+  if (scope) builder = builder.include(scope);
   for (const selector of DOCUMENTED_AXE_EXCLUSIONS[route.key] ?? []) {
     builder = builder.exclude(selector);
   }
@@ -438,9 +480,13 @@ async function expectAxeClean(
     });
   }
 
-  const summary = results.violations.map((violation) => (
-    `${violation.id} [${violation.impact ?? "impact unknown"}] ${violation.nodes.length} node(s): ${violation.help}`
-  ));
+  const summary = results.violations.map((violation) => {
+    const nodes = violation.nodes.map((node) => {
+      const target = node.target.map(String).join(" ");
+      return `${target}: ${node.failureSummary ?? node.html}`;
+    }).join(" | ");
+    return `${violation.id} [${violation.impact ?? "impact unknown"}] ${violation.nodes.length} node(s): ${violation.help}. ${nodes}`;
+  });
   expect.soft(
     summary,
     `WCAG A/AA violations on ${route.path}:\n${summary.join("\n")}`,
@@ -463,12 +509,235 @@ for (const route of ROUTES) {
         `${route.label} is missing its visible critical content link`,
       ).toBeVisible();
 
-      await expectNoHorizontalOverflow(page);
+      await expectNoHorizontalOverflow(page, route.path);
       await expectAxeClean(page, route, testInfo);
+      if (route.key === "pool-room") {
+        await expect(main.getByRole("heading", { level: 1 })).toHaveCount(1);
+        await expect(page.locator("body > .lab-concept-shell")).toHaveCount(1);
+        await page.evaluate(() => {
+          document.documentElement.style.scrollBehavior = "auto";
+          window.scrollTo(0, document.documentElement.scrollHeight);
+        });
+        await page.waitForFunction(
+          () => Math.abs(window.scrollY + window.innerHeight - document.documentElement.scrollHeight) < 3,
+        );
+        const spacing = await page.evaluate(() => {
+          const shell = document.querySelector<HTMLElement>(".lab-concept-shell");
+          const footerLinks = Array.from(document.querySelectorAll<HTMLElement>("footer a"));
+          const lastLink = footerLinks.at(-1);
+          const controls = Array.from(
+            document.querySelectorAll<HTMLElement>(".lab-concept-shell a, .lab-concept-shell button"),
+          ).filter((control) => control.getClientRects().length > 0);
+          return {
+            controls: controls.map((control) => {
+              const rect = control.getBoundingClientRect();
+              return { height: rect.height, width: rect.width };
+            }),
+            lastLinkBottom: lastLink?.getBoundingClientRect().bottom ?? 0,
+            shellTop: shell?.getBoundingClientRect().top ?? 0,
+          };
+        });
+        expect(spacing.lastLinkBottom).toBeLessThanOrEqual(spacing.shellTop - 8);
+        for (const control of spacing.controls) {
+          expect(control.height).toBeGreaterThanOrEqual(44);
+          expect(control.width).toBeGreaterThanOrEqual(44);
+        }
+      }
       expectRuntimeClean(runtime);
     },
   );
 }
+
+test(
+  "Lab concept shell stays usable across every build @chromium-desktop @chromium-mobile",
+  async ({ page }, testInfo) => {
+    for (const slug of LAB_CONCEPT_SLUGS) {
+      const path = `/examples/lab/concepts/${slug}/`;
+      const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+      expect(response?.ok(), `${path} did not load`).toBe(true);
+
+      const shell = page.locator("body > .lab-concept-shell");
+      await expect(shell, `${path} did not receive the shared Lab shell`).toBeVisible();
+      await expect(page.locator("html.lab-concept-page")).toHaveCount(1);
+      await expectNoHorizontalOverflow(page, path);
+      await expectAxeClean(
+        page,
+        { key: `lab-${slug}`, path },
+        testInfo,
+        ".lab-concept-shell",
+      );
+
+      const metrics = await page.evaluate(() => {
+        const shellElement = document.querySelector<HTMLElement>(".lab-concept-shell");
+        const shellRect = shellElement?.getBoundingClientRect();
+        const controls = Array.from(
+          document.querySelectorAll<HTMLElement>(
+            ".lab-concept-shell a, .lab-concept-shell button",
+          ),
+        ).filter((control) => control.getClientRects().length > 0);
+        return {
+          bottomPadding: Number.parseFloat(getComputedStyle(document.body).paddingBottom) || 0,
+          shellBottomGap: shellRect ? window.innerHeight - shellRect.bottom : 0,
+          shellHeight: shellRect?.height ?? 0,
+          controls: controls.map((control) => {
+            const rect = control.getBoundingClientRect();
+            return { height: rect.height, width: rect.width };
+          }),
+        };
+      });
+      expect(metrics.bottomPadding).toBeGreaterThanOrEqual(
+        metrics.shellHeight + metrics.shellBottomGap + 8,
+      );
+      for (const control of metrics.controls) {
+        expect(control.height).toBeGreaterThanOrEqual(44);
+        expect(control.width).toBeGreaterThanOrEqual(44);
+      }
+    }
+  },
+);
+
+test(
+  "Pool Room discovery, captions, replay, and share fallback work @chromium-desktop",
+  async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, "share", {
+        configurable: true,
+        value: undefined,
+      });
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: {
+          writeText: async (value: string) => {
+            (window as unknown as { __poolRoomCopied?: string }).__poolRoomCopied = value;
+          },
+        },
+      });
+    });
+
+    const runtime = watchRuntime(page);
+    const response = await page.goto("/examples/lab/concepts/pool-room/", {
+      waitUntil: "domcontentloaded",
+    });
+    expect(response?.ok(), "The Pool Room page did not load").toBe(true);
+    await waitForStableDocument(page);
+
+    const discovery = await page.evaluate(() => {
+      const content = (selector: string, attribute = "content") =>
+        document.querySelector(selector)?.getAttribute(attribute) ?? "";
+      const structured = JSON.parse(
+        document.querySelector('script[type="application/ld+json"]')?.textContent ?? "{}",
+      ) as Record<string, unknown>;
+      return {
+        canonical: content('link[rel="canonical"]', "href"),
+        ogImage: content('meta[property="og:image"]'),
+        ogImageAlt: content('meta[property="og:image:alt"]'),
+        ogUrl: content('meta[property="og:url"]'),
+        robots: content('meta[name="robots"]'),
+        twitterCard: content('meta[name="twitter:card"]'),
+        structured,
+      };
+    });
+    expect(discovery).toMatchObject({
+      canonical: "https://littlefightnyc.com/examples/lab/concepts/pool-room/",
+      ogImage: "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp",
+      ogUrl: "https://littlefightnyc.com/examples/lab/concepts/pool-room/",
+      robots: "index,follow,max-image-preview:large,max-video-preview:-1",
+      twitterCard: "summary_large_image",
+      structured: {
+        "@type": "VideoObject",
+        duration: "PT30S",
+      },
+    });
+    expect(discovery.ogImageAlt.length).toBeGreaterThan(20);
+
+    for (const heading of [
+      "It had to look like somebody drinks here.",
+      "Not animated. Solved.",
+      "Every sound sits on a real hit.",
+      "If it doesn’t exist yet, we can still show it.",
+    ]) {
+      await expect(page.getByRole("heading", { name: heading, exact: true })).toBeVisible();
+    }
+
+    const film = page.locator("[data-pool-room-film]");
+    await expect(film.locator('track[kind="captions"]')).toHaveAttribute(
+      "src",
+      "break-film-captions.vtt",
+    );
+    await expect(film.locator('track[kind="descriptions"]')).toHaveAttribute(
+      "src",
+      "break-film-descriptions.vtt",
+    );
+    const captionResponse = await page.request.get(
+      "/examples/lab/concepts/pool-room/break-film-captions.vtt",
+    );
+    expect(captionResponse.ok(), "The sound-caption track is unavailable").toBe(true);
+    expect(await captionResponse.text()).toContain("Pool cue strikes");
+    const descriptionResponse = await page.request.get(
+      "/examples/lab/concepts/pool-room/break-film-descriptions.vtt",
+    );
+    expect(descriptionResponse.ok(), "The visual-description track is unavailable").toBe(true);
+    expect(await descriptionResponse.text()).toContain("The cue strikes");
+    await page.getByText("Audio description and film transcript", { exact: true }).click();
+    const describedFilm = page.getByRole("link", { name: "Open the audio-described film" });
+    await expect(describedFilm).toHaveAttribute("href", "break-film-audio-described.mp4");
+    const describedResponse = await page.request.head(
+      "/examples/lab/concepts/pool-room/break-film-audio-described.mp4",
+    );
+    expect(describedResponse.ok(), "The audio-described film is unavailable").toBe(true);
+    expect(describedResponse.headers()["content-type"]).toContain("video/mp4");
+
+    await film.evaluate(async (element) => {
+      const media = element as HTMLVideoElement;
+      if (media.readyState === HTMLMediaElement.HAVE_NOTHING) {
+        await new Promise<void>((resolve) => {
+          media.addEventListener("loadedmetadata", () => resolve(), { once: true });
+          media.load();
+        });
+      }
+      media.pause();
+      await new Promise<void>((resolve) => {
+        media.addEventListener("seeked", () => resolve(), { once: true });
+        media.currentTime = 5;
+      });
+    });
+    await page.getByRole("button", { name: "Replay" }).click();
+    await expect.poll(() => film.evaluate((element) => (element as HTMLVideoElement).currentTime))
+      .toBeLessThan(1);
+
+    await film.evaluate((element) => {
+      const media = element as HTMLVideoElement;
+      media.pause();
+      media.currentTime = 5;
+    });
+    await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+    await page.keyboard.press("r");
+    await page.waitForTimeout(80);
+    expect(await film.evaluate((element) => (element as HTMLVideoElement).currentTime))
+      .toBeGreaterThan(4.5);
+    const poolRoomUrl = page.url();
+    await page.keyboard.press("]");
+    await page.waitForTimeout(80);
+    expect(page.url()).toBe(poolRoomUrl);
+
+    const share = page.getByRole("button", { name: "Share this build" });
+    await expect(share).toBeVisible();
+    await share.click();
+    await expect(page.getByRole("status").filter({ hasText: "Link copied." })).toBeVisible();
+    expect(
+      await page.evaluate(
+        () => (window as unknown as { __poolRoomCopied?: string }).__poolRoomCopied,
+      ),
+    ).toBe("https://littlefightnyc.com/examples/lab/concepts/pool-room/");
+
+    const sitemap = await page.request.get("/sitemap.xml");
+    expect(sitemap.ok(), "The generated sitemap is unavailable").toBe(true);
+    expect(await sitemap.text()).toContain(
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/",
+    );
+    expectRuntimeClean(runtime);
+  },
+);
 
 test(
   "PHC process film selects the responsive cache-stable source @all-projects",

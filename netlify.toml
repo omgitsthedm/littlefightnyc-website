@@ -139,7 +139,52 @@ for = "/examples/lab/*"
 
   [headers.values]
   Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://unpkg.com https://esm.sh; media-src 'self' https:; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
   X-Frame-Options = "SAMEORIGIN"
+
+# Unlike the preserved interactive Lab builds, the Pool Room uses no inline
+# executable code and no third-party runtime. Keep its film page on a
+# same-origin-only policy while retaining inline CSS for the authored layout.
+[[headers]]
+for = "/examples/lab/concepts/pool-room/*"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; media-src 'self'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "SAMEORIGIN"
+
+# The Pool Room film is large and intentionally named for the piece rather
+# than with a content hash. Cache it long enough to make repeat viewing fast,
+# but keep revalidation available when a future cut replaces it in place.
+[[headers]]
+for = "/examples/lab/concepts/pool-room/break-film.mp4"
+
+  [headers.values]
+  Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/examples/lab/concepts/pool-room/break-film-audio-described.mp4"
+
+  [headers.values]
+  Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/examples/lab/concepts/pool-room/break-film.webm"
+
+  [headers.values]
+  Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/examples/lab/concepts/pool-room/img/*"
+
+  [headers.values]
+  Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
 
 # A demo built around a named third party — the page title is their name and
 # profession. The five client audit reports below already draw this boundary;
