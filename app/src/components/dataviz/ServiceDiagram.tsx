@@ -24,7 +24,7 @@ const DIAGRAMS: Record<string, () => React.ReactElement> = {
   "it-support": () => <WhoAnswers />,
 
   // The free read → self-ranking punch list, drawn as an instrument. Its
-  // mechanic is PRIORITISATION (the list sorts itself), distinct from AuditBench.
+  // mechanic is PRIORITISATION: the list sorts itself.
   "tech-consulting": () => <TheFreeRead />,
 };
 

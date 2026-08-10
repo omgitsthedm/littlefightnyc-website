@@ -10,8 +10,7 @@ import { rr, glow, DISP, MONO, ORANGE, useInstrumentCanvas } from "./instrument"
  * customer impact, then cost, then what can wait. One causal image: you don’t
  * get a pile of problems, you get an ordered list — and the first hour is free.
  *
- * Distinct from AuditBench (which consolidates scattered problems into one
- * system): this instrument's mechanic is PRIORITISATION — the list ranks itself.
+ * This instrument's mechanic is PRIORITISATION — the list ranks itself.
  * Every fact drawn (four lanes; ranked by impact/cost/can-wait; first hour free)
  * is already in the tech-consulting copy.
  *

@@ -8,8 +8,8 @@ Tools the chains use, sized for the corner shop.
 
 Custom websites. IT support. Software you own. Built for NYC small business.
 
-- **Website:** [littlefightnyc.com](https://www.littlefightnyc.com)
-- **Free first look:** [Tech Audit](https://www.littlefightnyc.com/tech-audit/)
+- **Website:** [littlefightnyc.com](https://littlefightnyc.com)
+- **Free first look:** [Tech Audit](https://littlefightnyc.com/tech-audit/)
 - **Call or text:** [(646) 360-0318](tel:+16463600318)
 - **Email:** [hello@littlefightnyc.com](mailto:hello@littlefightnyc.com)
 - **Hours:** 9am–9pm Eastern, every day

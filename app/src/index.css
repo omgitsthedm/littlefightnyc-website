@@ -76,21 +76,6 @@ canvas {
   50% { opacity: 1; transform: scale(1.15); }
 }
 
-.lf-route-fallback__label {
-  font-size: var(--lf-text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #f97316;
-}
-
-.lf-route-fallback__line {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: #a1a1aa;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .lf-route-fallback__dot {
     animation: none;
