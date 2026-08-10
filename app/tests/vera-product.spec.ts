@@ -372,13 +372,16 @@ test(
 test(
   "VERA Atlas has explicit map and list modes @vera-all-platforms",
   async ({ page }) => {
-    const nullableNumberWarnings: string[] = [];
+    const atlasStyleWarnings: string[] = [];
     page.on("console", (message) => {
       if (
         message.type() === "warning" &&
-        message.text() === "Expected value to be of type number, but found null instead."
+        (
+          message.text() === "Expected value to be of type number, but found null instead." ||
+          message.text().includes('Image "road_" could not be loaded')
+        )
       ) {
-        nullableNumberWarnings.push(message.text());
+        atlasStyleWarnings.push(message.text());
       }
     });
     await openVera(page, "atlas", { atlasMode: "list" });
@@ -479,8 +482,8 @@ test(
     await expect(page.locator("[data-veramap], .maplibregl-canvas")).toHaveCount(0);
     expect(await canvasHandle!.evaluate((canvas) => canvas.isConnected)).toBe(false);
     expect(
-      nullableNumberWarnings,
-      "Atlas passed nullable OpenMapTiles shield lengths into numeric style filters",
+      atlasStyleWarnings,
+      "Atlas accepted an invalid OpenMapTiles road-shield length",
     ).toEqual([]);
     await expectNoHorizontalOverflow(page);
   },

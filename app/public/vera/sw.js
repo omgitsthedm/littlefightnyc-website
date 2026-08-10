@@ -5,7 +5,7 @@
    badge the staleness instead of pretending the sweep just ran. */
 'use strict';
 
-var SHELL = 'vera-shell-v6';
+var SHELL = 'vera-shell-v7';
 var FEED = 'vera-feed-v2';
 /* Installation stores only the versioned UI shell. Publication data stays out
    of this list so its network-first, visibly timestamped fallback below remains
@@ -26,7 +26,7 @@ var SHELL_ASSETS = [
   '/vera/assets/icons/vera-icon-maskable-512.png',
   '/vera/assets/js/vera-core.js?v=50',
   '/vera/assets/js/vera-geo.js?v=47',
-  '/vera/assets/js/vera-map.js?v=54',
+  '/vera/assets/js/vera-map.js?v=55',
   '/vera/assets/js/vera-sweep.js?v=53',
   '/vera/assets/js/vera-ledger.js?v=54',
   '/vera/assets/js/vera-app.js?v=54'
