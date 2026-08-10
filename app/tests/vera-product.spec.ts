@@ -63,7 +63,6 @@ async function mockVeraData(
   await page.addInitScript(({ fixture, workspace }) => {
     localStorage.removeItem("vera-cases");
     localStorage.removeItem("vera-workspace");
-    sessionStorage.removeItem("vera-sweep-seen");
     if (workspace) localStorage.setItem("vera-workspace", JSON.stringify(workspace));
 
     const nativeFetch = window.fetch.bind(window);
@@ -643,10 +642,12 @@ test(
 );
 
 test(
-  "VERA has no blocking radar replay or infinite decorative motion @vera-all-platforms",
+  "VERA keeps the retired radar runtime absent and has no infinite decorative motion @vera-all-platforms",
   async ({ page }) => {
     await openVera(page, "today");
 
+    await expect(page.locator('script[src*="vera-sweep.js"]')).toHaveCount(0);
+    expect(await page.evaluate(() => "__VERAS" in window)).toBe(false);
     const blockingReplay = page.locator(
       ".sweepveil:visible, .sweephero:visible, [data-radar-overlay]:visible, [data-sweep-overlay]:visible",
     );
@@ -690,7 +691,7 @@ test(
 
     expect(
       infiniteAnimations,
-      "radar, status, background, and map decoration must settle instead of looping forever",
+      "status, background, and map decoration must settle instead of looping forever",
     ).toEqual([]);
   },
 );

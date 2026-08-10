@@ -2792,7 +2792,6 @@ test(
     };
     await page.addInitScript((seed) => {
       Object.entries(seed).forEach(([key, value]) => localStorage.setItem(key, value));
-      sessionStorage.setItem("vera-sweep-seen", "keep-session");
     }, sentinels);
     await mockVeraData(page);
     await page.goto(`${baseURL}/vera/?test=1#/today`, {
@@ -2809,9 +2808,6 @@ test(
         Object.fromEntries(keys.map((key) => [key, localStorage.getItem(key)])),
       Object.keys(sentinels)),
     ).toEqual(sentinels);
-    expect(await page.evaluate(() => sessionStorage.getItem("vera-sweep-seen"))).toBe(
-      "keep-session",
-    );
     expect(runtime.pageErrors).toEqual([]);
     expect(runtime.consoleErrors).toEqual([]);
   },

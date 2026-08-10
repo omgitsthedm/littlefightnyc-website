@@ -199,11 +199,7 @@
       }
       location.hash = '#/today'; app.route();
 
-      /* ---- the sweep veil (D1) and living-city tint (D2) ---- */
-      var bts = (window.__VERAS && window.__VERAS._beats) ? window.__VERAS._beats() : [];
-      check('sweep narration replays a past run, never a live one',
-        bts.length >= 2 && /replaying/.test(bts[0]) && !/\blive\b/i.test(bts.join(' ')), bts[0] || 'no beats');
-      check('sweep narration cites the run’s own numbers', /<b>\d+<\/b>/.test(bts.join(' ')), bts.length + ' beats');
+      /* ---- publication-time tint ---- */
       check('the page wears the sweep’s time of day',
         ['night', 'dawn', 'day', 'dusk'].indexOf(document.documentElement.getAttribute('data-sky')) > -1,
         document.documentElement.getAttribute('data-sky'));
@@ -442,7 +438,6 @@
       check('the sky follows the hour', pA !== pC && pC.indexOf('#26303e') > -1, '');
       check('sky buckets read right', C.skyOf(3) === 'night' && C.skyOf(6) === 'dawn' && C.skyOf(12) === 'day' && C.skyOf(19) === 'dusk', [C.skyOf(3), C.skyOf(6), C.skyOf(12), C.skyOf(19)].join(','));
       location.hash = '#/today'; app.route();
-      check('sweep hero suppressed after first play (session flag)', !$('.sweephero') && window.__VERAS && window.__VERAS.played(), '');
       check('installable: manifest linked', !!document.querySelector('link[rel="manifest"]'), '');
 
       /* ---- phase 3: receipts, memorial, field kit ---- */

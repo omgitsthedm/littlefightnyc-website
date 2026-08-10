@@ -849,7 +849,7 @@ ul.soft li::marker { color: var(--mute); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .insignia .sweep, .pulse, .loading__mark { animation: none; }
+  .pulse, .loading__mark { animation: none; }
   .is-entered .dropcard, .is-entered .mp-pin { animation: none; }
   .is-entered .chart path[stroke] { animation: none; stroke-dasharray: none; }
   .dropcard__hit, .brtile, .kpi--click, .bubcard, .inspector, .toast { transition: none; }
@@ -1059,37 +1059,10 @@ body { font-size: 18px; }
 
 [hidden] { display: none !important; }
 
-/* --- phase 2: the sweep hero, transitions, living windows, sky --- */
-/* --- phase D: the veil — the sweep replayed full-bleed, once per session --- */
-.sweepveil {
-  position: fixed; inset: 0; z-index: 90; background: var(--bg);
-  display: flex; align-items: flex-end; justify-content: center;
-  padding-bottom: 16vh; transition: opacity .75s var(--glide);
-}
-.sweepveil.is-lift { opacity: 0; pointer-events: none; }
-.sweepveil svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.sweepveil__beam path { fill: rgba(76, 195, 138, 0.13); }
-.sweepveil__beam { display: none; }
-.sweepveil__line {
-  position: relative; z-index: 1; margin: 0; padding: 0 24px; text-align: center;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--dim);
-  transition: opacity .22s, transform .22s;
-}
-.sweepveil__line b { color: var(--green); font-weight: 500; }
-.sweepveil__line.is-out { opacity: 0; transform: translateY(6px); }
-
-/* the whole page keeps the sweep's time of day — subtle, warm-black shifts */
+/* The page keeps the publication's time of day through subtle warm-black shifts. */
 :root[data-sky="night"] { --bg: #090c0a; --bg2: #0b0e0c; }
 :root[data-sky="dawn"] { --bg: #0e0d0c; --bg2: #110f0d; }
 :root[data-sky="day"] { --bg: #0c0e0d; --bg2: #0f1210; }
-
-.sweephero { position: relative; height: 300px; overflow: hidden; border-radius: var(--r); border: 1px solid var(--line); margin-top: 20px; transition: height .6s cubic-bezier(.22,1,.36,1), opacity .6s, margin .6s; }
-.sweephero svg { width: 100%; height: 100%; display: block; }
-.sweephero.is-done { height: 0; opacity: 0; margin-top: 0; border-width: 0; }
-.sweephero__beam path { fill: rgba(76, 195, 138, 0.16); }
-.sweephero__beam { display: none; }
-.sweephero__cap { position: absolute; left: 16px; bottom: 10px; margin: 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
 
 ::view-transition-old(vera-hero), ::view-transition-new(vera-hero) { animation-duration: .32s; }
 
@@ -1101,8 +1074,6 @@ body { font-size: 18px; }
 .mp[data-sky="dawn"] .mp-nta { fill: #171d15; }
 
 @media (prefers-reduced-motion: reduce) {
-  .sweephero, .sweephero__beam { animation: none; display: none; }
-  .sweepveil { display: none; }
   .pwin { animation: none; }
 }
 
@@ -1351,13 +1322,12 @@ body {
 .pulse.is-warn { outline-color: rgba(227, 181, 103, 0.12); }
 .pulse.is-bad { outline-color: rgba(224, 106, 112, 0.12); }
 
-/* Retired ambient/presentation motion. These elements may still appear in
-   older secondary views, but they never loop or gate content. */
-.insignia .sweep, .loading__mark, .pwin, .gm-halo, .mp-halo,
+/* Static fallbacks for data-driven decoration; none may loop or gate content. */
+.loading__mark, .pwin, .gm-halo, .mp-halo,
 .vpin, .vpin__pulse, .dropcard__fresh::after, .flipd.tick,
 .is-entered .dropcard, .is-entered .steward__grade,
 .is-entered .chart path[stroke], .is-entered .mp-pin,
-.funnel__bar i, .sweepveil__beam, .sweephero__beam {
+.funnel__bar i {
   animation: none !important;
 }
 .is-entered .chart path[stroke] { stroke-dasharray: none; stroke-dashoffset: 0; }
