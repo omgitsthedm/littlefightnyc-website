@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-08-08
+Last source verification: 2026-08-10
 
 This file routes agents to the current website source. The marketing site,
 private Dakota desk, and public VERA browser product use one public website
@@ -93,6 +93,12 @@ must never enter this repository, its Netlify property, or a browser response.
 The former `vera-pipeline` Netlify project and `vera-dashboard` checkout are not
 runtime dependencies or deployment targets. Do not restore their browser feed
 fallback, proxy routes, CSP exceptions, scheduled Mac deploy, or standalone UI.
+
+VERA's restartable cross-repository operating map is maintained in
+[`VERA-HANDOFF.md`](https://github.com/omgitsthedm/vera-apartment-search/blob/main/VERA-HANDOFF.md).
+Use it to locate the engine, sanitized publication contract, schedules, release
+rail, recovery boundary, and current verification commands without reviving a
+retired standalone property.
 
 ## Dakota architecture and private boundary
 

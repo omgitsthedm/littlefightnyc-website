@@ -191,15 +191,30 @@ if (!veraAppJs.includes(GEOSEARCH_ORIGIN)) {
       "update the exact /vera/* connect-src exception with it",
   );
 }
+const exactMapStyleDeclaration =
+  /mapStyleURL\s*=\s*["']https:\/\/tiles\.openfreemap\.org\/styles\/liberty["']/;
+const exactMapPreconnectDeclaration =
+  /origin\.href\s*=\s*["']https:\/\/tiles\.openfreemap\.org["']/;
+if (
+  !exactMapStyleDeclaration.test(veraAppJs) ||
+  !exactMapPreconnectDeclaration.test(veraAppJs)
+) {
+  failures.push(
+    `vera-app.js no longer declares the exact ${TILE_ORIGIN} Liberty style and preconnect — ` +
+      "update the exact /vera/* connect-src exception with it",
+  );
+}
 
 const veraMapJs = await readFile(
   path.join(appRoot, "public", "vera", "assets", "js", "vera-map.js"),
   "utf8",
 );
-if (!veraMapJs.includes(TILE_ORIGIN)) {
+const trustedMapHostGuard =
+  /parsed\.hostname\s*!==\s*["']tiles\.openfreemap\.org["']/;
+if (!trustedMapHostGuard.test(veraMapJs)) {
   failures.push(
-    `vera-map.js no longer references ${TILE_ORIGIN} — if the map source changed, update ` +
-      "the exact /vera/* connect-src exception with it",
+    "vera-map.js no longer validates tiles.openfreemap.org as its exact trusted map host — if the map " +
+      "source changed, update its runtime URL guard with the CSP exception",
   );
 }
 
