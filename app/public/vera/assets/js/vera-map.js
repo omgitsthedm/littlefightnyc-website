@@ -5,7 +5,6 @@
   'use strict';
 
   var C = window.__VERAC;
-  var STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty';
   /* Version the worker-facing source identity as well as the script URL. */
   var SOURCE_ID = 'vera-listings-v3';
   var POINT_LAYERS = ['vera-listing-points'];
@@ -25,6 +24,18 @@
 
   function shouldCompactAttribution(container) {
     return (container.clientWidth || viewportWidth()) < 680;
+  }
+
+  function messageHasTrustedMapURL(message, styleOnly) {
+    var matches = String(message || '').match(/https?:\/\/[^\s"'<>]+/g) || [];
+    for (var i = 0; i < matches.length; i++) {
+      try {
+        var parsed = new URL(matches[i].replace(/[\]),.;:!?]+$/, ''));
+        if (parsed.protocol !== 'https:' || parsed.hostname !== 'tiles.openfreemap.org' || parsed.port) continue;
+        if (!styleOnly || parsed.pathname === '/styles/liberty') return true;
+      } catch (e) {}
+    }
+    return false;
   }
 
   function isPhone() {
@@ -462,9 +473,9 @@
            a failed initial style request should replace the canvas at once;
            the timeout covers silent CSP/network failures without reacting to
            an ordinary later tile miss. */
-        if (message.indexOf(STYLE_URL) > -1 || /style(?:\s|\-|_)*(?:load|request|json)/i.test(message)) {
+        if (messageHasTrustedMapURL(message, true) || /style(?:\s|\-|_)*(?:load|request|json)/i.test(message)) {
           failInitialMap();
-        } else if (message.indexOf('tiles.openfreemap.org') > -1) {
+        } else if (messageHasTrustedMapURL(message, false)) {
           initialResourceErrors += 1;
           if (initialResourceErrors >= 4) failInitialMap();
         }
