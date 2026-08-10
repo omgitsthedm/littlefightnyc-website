@@ -1488,13 +1488,8 @@ test(
 test(
   "VERA listings can be opened with the keyboard @chromium-desktop",
   async ({ page, baseURL }) => {
-    // /vera/ is a vanilla-JS app outside the React build, so it gets no
-    // type checking and no lint. Everything interactive was wired to a single
-    // delegated click listener, and the only keydown handler in the file
-    // handled Escape. Measured on production: 226 Browse rows, 0 focusable;
-    // focus() left activeElement on BODY; Enter did nothing; click worked.
-    // A keyboard or switch user could not open one listing — WCAG 2.1.1,
-    // Level A, on the product this site showcases.
+    // The table row remains structural. One native button in its Listing cell
+    // owns the action, keyboard behavior, focus ring, and accessible name.
     await mockVeraData(page);
 
     await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
@@ -1510,15 +1505,16 @@ test(
       ),
       "the public demo must expose one first-party Little Fight feed contract",
     ).toEqual([{ url: "./data/public.json", label: "site" }]);
-    const rows = page.locator("tr[data-open]");
-    await rows.first().waitFor();
+    const rows = page.locator("tr[data-listing-row]");
+    const openButtons = rows.locator(".t-title[data-open]");
+    await openButtons.first().waitFor();
 
     const total = await rows.count();
     expect(total, "no listing rows rendered — the fixture may have gone stale").toBeGreaterThan(0);
-    expect(
-      await page.locator("tr[data-open][tabindex]").count(),
-      "every listing row must be reachable by keyboard",
-    ).toBe(total);
+    await expect(openButtons).toHaveCount(total);
+    expect(await page.locator("tr[data-listing-row][tabindex]").count()).toBe(0);
+    expect(await page.locator("tr[data-listing-row][data-open]").count()).toBe(0);
+    await expect(openButtons.first()).toHaveAccessibleName(/open ledger for/i);
 
     // A sortable column is a real button now, not a click handler on a <th>.
     // Enter must sort and expose that direction through the table semantics.
@@ -1540,34 +1536,35 @@ test(
       ),
     ).toEqual({ key: "rent", dir: -1 });
 
-    // Enter opens the inspector, and exactly one row reports itself expanded.
-    await rows.first().focus();
-    expect(await page.evaluate(() => document.activeElement?.tagName)).toBe("TR");
+    // Enter opens the inspector from the native Listing-cell button. The row's
+    // visual selection is a class, not an invalid disclosure state.
+    await openButtons.first().focus();
+    expect(await page.evaluate(() => document.activeElement?.tagName)).toBe("BUTTON");
     await page.keyboard.press("Enter");
     await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
-    expect(await page.locator('tr[data-open][aria-expanded="true"]').count()).toBe(1);
+    expect(await page.locator("tr[data-listing-row].is-open").count()).toBe(1);
+    expect(await page.locator("tr[data-listing-row][aria-expanded]").count()).toBe(0);
 
-    // Escape closes it and the claim is withdrawn.
+    // Escape closes it and the visual selection is withdrawn.
     await page.keyboard.press("Escape");
     await expect(page.locator("[data-inspector]")).not.toHaveClass(/is-open/);
-    expect(await page.locator('tr[data-open][aria-expanded="true"]').count()).toBe(0);
+    expect(await page.locator("tr[data-listing-row].is-open").count()).toBe(0);
 
     // Space activates too, and must not scroll the page instead.
     await page.evaluate(() => window.scrollTo(0, 0));
-    await rows.nth(1).focus();
+    await openButtons.nth(1).focus();
     await page.keyboard.press(" ");
     await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
     expect(await page.evaluate(() => window.scrollY), "Space must not scroll").toBe(0);
 
     // Close the modal before moving focus back into its inert background.
-    // A focusable row nobody can see focused is half a fix.
     await page.keyboard.press("Escape");
     await expect(page.locator("[data-inspector]")).not.toHaveClass(/is-open/);
-    const outline = await rows.nth(2).evaluate((el) => {
+    const outline = await openButtons.nth(2).evaluate((el) => {
       el.focus();
       return getComputedStyle(el).outlineStyle;
     });
-    expect(outline, "focused rows need a visible ring").not.toBe("none");
+    expect(outline, "focused ledger buttons need a visible ring").not.toBe("none");
   },
 );
 
@@ -1581,7 +1578,7 @@ test(
 
     await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
     await waitForVeraPool(page);
-    await page.locator("tr[data-open]").first().waitFor();
+    await page.locator(".t-title[data-open]").first().waitFor();
     await page.evaluate(() => {
       window.location.hash = "#/market";
     });
@@ -1605,18 +1602,18 @@ test(
     // modal in every way except the ones that matter to a keyboard. Focus stayed
     // on the row behind it and Tab walked the table under the scrim: the detail
     // a keyboard user had just opened was the one thing they could not reach.
-    // Making the rows keyboard-operable is what made this reachable at all.
+    // The Listing cell's native button is the stable keyboard origin.
     await mockVeraData(page);
     await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
     await waitForVeraPool(page);
-    const rows = page.locator("tr[data-open]");
-    await rows.first().waitFor();
+    const openButtons = page.locator("tr[data-listing-row] .t-title[data-open]");
+    await openButtons.first().waitFor();
 
     const inspector = page.locator("[data-inspector]");
     await expect(inspector).toHaveAttribute("role", "dialog");
     await expect(inspector).toHaveAttribute("aria-modal", "true");
 
-    await rows.nth(2).focus();
+    await openButtons.nth(2).focus();
     await page.keyboard.press("Enter");
     await expect(inspector).toHaveClass(/is-open/);
 
@@ -1653,7 +1650,7 @@ test(
       ).toBe(true);
     }
 
-    // Escape closes and hands focus back to the row that opened it.
+    // Escape closes and hands focus back to the button that opened it.
     await page.keyboard.press("Escape");
     await expect(inspector).not.toHaveClass(/is-open/);
     // The restore is deferred a tick so it lands after the panel finishes
@@ -1661,9 +1658,9 @@ test(
     await expect
       .poll(
         () => page.evaluate(() => document.activeElement?.tagName),
-        { message: "closing must return focus to the row, not the top of the document" },
+        { message: "closing must return focus to the ledger button, not the top of the document" },
       )
-      .toBe("TR");
+      .toBe("BUTTON");
   },
 );
 
@@ -2246,7 +2243,7 @@ test(
     await mockVeraData(page);
     await page.goto(`${baseURL}/vera/#/browse`, { waitUntil: "domcontentloaded" });
     await waitForVeraPool(page);
-    await page.locator("tr[data-open]").first().waitFor();
+    await page.locator(".t-title[data-open]").first().waitFor();
 
     const TOGGLES =
       "[data-bracket],[data-unit],[data-transit],[data-lens],[data-view]," +
@@ -2326,8 +2323,8 @@ test(
       window.location.hash = "#/browse";
     });
     await page.locator('button[data-view="all"]').click();
-    await page.locator("tr[data-open]").first().waitFor();
-    await page.locator("tr[data-open]").first().click();
+    await page.locator(".t-title[data-open]").first().waitFor();
+    await page.locator(".t-title[data-open]").first().click();
     await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
     for (const tab of ["money", "records", "owner"]) {
       await page.locator(`[data-insp-tabs] button[data-tab="${tab}"]`).click();

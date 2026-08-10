@@ -18,6 +18,7 @@
   ];
   var FEED_TIMEOUT_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
+  var ADDRESS_CHECK_TIMEOUT_MS = TESTMODE ? 250 : 9000;
   /* Today, Browse, Atlas, and My Hunt are the primary workspaces on every
      device. Context, receipts, and operating detail sit one level deeper. */
   var NAV_SECONDARY = ['market', 'manual', 'archive', 'system'];
@@ -304,7 +305,7 @@
 
   /* ---------- charts (hand-rolled svg) ---------- */
 
-  function sparkline(series, w, h, color) {
+  function sparkline(series, w, h, color, label) {
     if (!series.length) return '';
     var mx = Math.max.apply(null, series), mn = Math.min.apply(null, series);
     /* A constant series draws through the middle: a level line means level,
@@ -319,7 +320,7 @@
     var path = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
     var area = path + ' L' + pts[pts.length - 1][0].toFixed(1) + ' ' + (h - 4) + ' L' + pts[0][0].toFixed(1) + ' ' + (h - 4) + ' Z';
     var dots = pts.map(function (p, i) { return i === pts.length - 1 ? '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3" fill="' + color + '"/>' : ''; }).join('');
-    return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" role="img">' +
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" role="img" aria-label="' + esc(label || 'Trend chart') + '">' +
       '<path d="' + area + '" fill="' + color + '" opacity="0.12"/>' +
       '<path d="' + path + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-linecap="round"/>' + dots + '</svg>';
   }
@@ -385,6 +386,9 @@
   function refresh() {
     persist();
     renderFilters();
+    /* Filters should update the live Atlas source and its evidence list, not
+       tear down WebGL, refetch the style, and reset the visitor's camera. */
+    if (state.route === 'atlas' && state.atlasMode === 'map' && refreshAtlasMap()) return;
     renderRoute();
   }
 
@@ -465,7 +469,7 @@
     if (!urls.length) return C.portrait(l, 640, 340, sweepHour());
     var where = l.address_normalized || 'this listing';
     return C.portrait(l, 640, 340, sweepHour()) +
-      '<span class="gal" data-gal>' + urls.map(function (u, i) {
+      '<span class="gal" data-gal role="region" tabindex="0" aria-label="Photo gallery for ' + esc(where) + ', ' + urls.length + ' photo' + (urls.length === 1 ? '' : 's') + '. Use the left and right arrow keys to move between photos.">' + urls.map(function (u, i) {
         return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" referrerpolicy="no-referrer" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
       }).join('') + '</span>' +
       (urls.length > 1 ? '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
@@ -650,12 +654,12 @@
       bearing = ' data-bearing="' + Math.round((ang + 360) % 360) + '"';
     }
     return '<article class="dropcard"' + bearing + ' style="--i:' + i + '">' +
-      '<button type="button" class="dropcard__hit" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">' +
+      '<div class="dropcard__hit">' +
         '<span class="dropcard__media">' + gallery(l) +
           '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span>' + freshBadge +
           '<span class="dropcard__no">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span></span>' +
-        '<span class="dropcard__body">' +
-          '<span class="dropcard__main">' +
+        '<div class="dropcard__body">' +
+          '<div class="dropcard__main">' +
             '<span class="dropcard__hood">' + hoodLine + ' · ' + unit + (t ? ' · <span class="nowrap">≈' + t.mins + ' min walk ' + C.lineBullets(t.lines) + ' ' + esc(t.name) + '</span>' : '') + '</span>' +
             commuteLines(l) +
             '<h2 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h2>' +
@@ -680,10 +684,11 @@
               '<span class="tag">score ' + num(l.overall_score, 0) + '</span>' +
             '</span>' +
             provenance(l) +
-          '</span>' +
-          (mini ? '<span class="dropcard__map">' + mini + '</span>' : '') +
-        '</span>' +
-      '</button></article>';
+            '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">Open full ledger <span aria-hidden="true">→</span></button>' +
+          '</div>' +
+          (mini ? '<div class="dropcard__map">' + mini + '</div>' : '') +
+        '</div>' +
+      '</div></article>';
   }
 
   function renderToday(page) {
@@ -940,7 +945,7 @@
       var lanes = [['NYC', '#c8a468'], ['Manhattan', '#7ba7d9'], ['Brooklyn', '#4cc38a']];
       var lines = lanes.map(function (ln) {
         var s = seriesOf(ln[0]);
-        return s.length ? '<div class="mctx__lane"><span class="mctx__who"><i style="background:' + ln[1] + '"></i>' + ln[0] + ' <b>' + money(latestOf(ln[0])) + '</b></span>' + sparkline(s, 260, 64, ln[1]) + '</div>' : '';
+        return s.length ? '<div class="mctx__lane"><span class="mctx__who"><i style="background:' + ln[1] + '"></i>' + ln[0] + ' <b>' + money(latestOf(ln[0])) + '</b></span>' + sparkline(s, 260, 64, ln[1], ln[0] + ' median asking rent trend over 36 months') + '</div>' : '';
       }).join('');
       var hoodRows2 = Object.keys(mc.series).filter(function (k) {
         return mc.series[k].area_type === 'neighborhood';
@@ -983,7 +988,7 @@
       '<div class="brackets">' + brTiles + '</div>' +
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Sweep pulse — records discovered per run</h2><p class="panel__hint">' + trends.length + ' runs</p></div>' +
-          (discovered.length ? sparkline(discovered, 560, 190, '#4cc38a') : '<p class="lane__empty">Trend history arrives with the next publishes.</p>') +
+          (discovered.length ? sparkline(discovered, 560, 190, '#4cc38a', 'Records discovered per VERA run') : '<p class="lane__empty">Trend history arrives with the next publishes.</p>') +
           '<div class="strip srcstrip">' + (D.sources || []).slice(0, 12).map(function (s) {
             var cls = C.srcCls(s.status);
             return '<span class="chip ' + cls + '"><i></i>' + esc(s.source_name || '?') + '</span>';
@@ -1024,7 +1029,11 @@
     { key: 'overall_score', label: 'Score', render: function (l) { return '<span class="t-score">' + (l.overall_score != null ? num(l.overall_score, 1) : '—') + '</span>'; } },
     { key: 'rent', label: 'Rent', render: function (l) { return money(l.rent); } },
     { key: 'value_delta', label: 'Value', render: function (l) { return l.value_delta == null ? '<span class="t-dim">—</span>' : l.value_delta > 0 ? '<span class="t-under">' + l.value_delta + '% under</span>' : '<span class="t-over">' + (-l.value_delta) + '% over</span>'; } },
-    { key: 'title', label: 'Listing', render: function (l) { return '<span class="t-title">' + esc(l.title || l.address_normalized || '—') + '</span>'; } },
+    { key: 'title', label: 'Listing', render: function (l) {
+      var title = l.title || l.address_normalized || 'Listing';
+      return '<button type="button" class="t-title" data-open="' + esc(l.listing_uid) + '" aria-label="Open ledger for ' + esc(title) + '">' +
+        '<span class="t-title__name">' + esc(title) + '</span><span class="t-title__action" aria-hidden="true">Open ledger</span></button>';
+    } },
     { key: 'neighborhood', label: 'Hood', render: function (l) { return '<span class="t-dim">' + esc(l.neighborhood || '—') + '</span>'; } },
     { key: 'transit_mins', label: 'Subway', render: function (l) { var t = C.nearestStation(l); return t ? '<span class="t-mono">≈' + t.mins + 'm</span> ' + C.lineBullets(t.lines) : '<span class="t-dim">—</span>'; } },
     { key: 'unit_type', label: 'Unit', render: function (l) { return C.unitOf(l) === 'studio' ? 'Studio' : C.unitOf(l) === '1br' ? '1BR' : esc(l.unit_type || '—'); } },
@@ -1042,10 +1051,35 @@
     ['clean', 'Clean buildings'], ['verify', 'Needs verification'], ['scam', 'Scam wall'],
   ];
 
+  var BROWSE_BATCH = 50;
+
+  function browseRow(l, openUid) {
+    /* The row stays a row. Its Listing cell owns the native ledger button,
+       which is the one sequential keyboard stop for this result. */
+    return '<tr data-listing-row="' + esc(l.listing_uid) + '" class="' + (openUid === l.listing_uid ? 'is-open' : '') + '">' +
+      COLS.map(function (c) { return '<td>' + c.render(l) + '</td>'; }).join('') + '</tr>';
+  }
+
+  function browseRows(listings, openUid) {
+    return listings.map(function (listing) { return browseRow(listing, openUid); }).join('');
+  }
+
+  function browseLoadedText(rendered, total) {
+    if (rendered >= total) return 'All ' + total + ' matching listing' + (total === 1 ? '' : 's') + ' loaded.';
+    return rendered + ' of ' + total + ' matching listings loaded.';
+  }
+
+  function browseMoreText(rendered, total) {
+    var next = Math.min(BROWSE_BATCH, total - rendered);
+    return 'Show next ' + next + ' listing' + (next === 1 ? '' : 's');
+  }
+
   function renderBrowse(page) {
     var f = filtered();
     var clearCount = POOL.filter(C.isFullFit).length;
     var mappedCount = POOL.filter(function (listing) { return listing.latitude != null && listing.longitude != null; }).length;
+    var renderedCount = Math.min(BROWSE_BATCH, f.length);
+    var openUid = window.__VERAL ? window.__VERAL.openUid() : null;
     page.innerHTML =
       '<section class="workspace workspace--browse" data-workspace="browse">' +
         '<header class="workspacehead">' +
@@ -1067,13 +1101,15 @@
           '<label class="command-search"><span class="sr-only">Search listings</span>' +
             '<input type="search" placeholder="Search the net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
             '<kbd aria-hidden="true">⌘K</kbd></label>' +
-          '<span class="dtoolbar__count" aria-live="polite">' + f.length + ' shown</span>' +
+          '<span class="dtoolbar__count" data-browse-count aria-live="polite">' + f.length + ' matches · ' + renderedCount + ' loaded</span>' +
           '<span class="dtoolbar__density" aria-label="Result density">' +
             '<button type="button" data-density="comfortable" class="' + (state.density === 'comfortable' ? 'is-on' : '') + '">Roomy</button>' +
             '<button type="button" data-density="compact" class="' + (state.density === 'compact' ? 'is-on' : '') + '">Dense</button>' +
           '</span>' +
         '</div>' +
-      '<div class="tablewrap"><table class="dt ' + (state.density === 'compact' ? 'is-compact' : '') + '"><thead><tr>' +
+      '<div class="tablewrap"><table class="dt ' + (state.density === 'compact' ? 'is-compact' : '') + '" aria-rowcount="' + (f.length + 1) + '">' +
+        '<caption class="sr-only" data-browse-caption>' + browseLoadedText(renderedCount, f.length) + (renderedCount < f.length ? ' Use the control after the table to load more.' : '') + '</caption>' +
+        '<thead><tr>' +
         COLS.map(function (c) {
           var on = state.sort.key === c.key;
           return '<th class="' + (on ? 'is-sort' : '') + '"' + (on ? ' aria-sort="' + (state.sort.dir < 0 ? 'descending' : 'ascending') + '"' : '') + '>' +
@@ -1081,15 +1117,12 @@
               (on ? ' <span class="dir" aria-hidden="true">' + (state.sort.dir < 0 ? '▼' : '▲') + '</span>' : '') +
             '</button></th>';
         }).join('') +
-      '</tr></thead><tbody>' +
-        (f.length ? f.map(function (l) {
-          /* tabindex reaches the row; no role="button" so the table semantics
-             survive for screen readers. aria-expanded marks the open row. */
-          var openUid = window.__VERAL ? window.__VERAL.openUid() : null;
-          return '<tr data-open="' + esc(l.listing_uid) + '" tabindex="0" aria-expanded="' + (openUid === l.listing_uid ? 'true' : 'false') + '" class="' + (openUid === l.listing_uid ? 'is-open' : '') + '">' +
-            COLS.map(function (c) { return '<td>' + c.render(l) + '</td>'; }).join('') + '</tr>';
-        }).join('') : '<tr><td colspan="' + COLS.length + '" class="dt__empty">Nothing matches this lens. Widen a tier or clear a filter.</td></tr>') +
-      '</tbody></table></div></section>';
+      '</tr></thead><tbody data-browse-body>' +
+        (f.length ? browseRows(f.slice(0, renderedCount), openUid) : '<tr><td colspan="' + COLS.length + '" class="dt__empty">Nothing matches this lens. Widen a tier or clear a filter.</td></tr>') +
+      '</tbody></table></div>' +
+      (renderedCount < f.length ? '<div class="browse-more"><p data-browse-progress aria-live="polite" aria-atomic="true">' + browseLoadedText(renderedCount, f.length) + '</p>' +
+        '<button type="button" data-browse-more>' + browseMoreText(renderedCount, f.length) + '</button></div>' : '') +
+      '</section>';
 
     var qEl = $('[data-q]', page);
     qEl.addEventListener('input', function () {
@@ -1097,11 +1130,33 @@
       clearTimeout(qEl._t);
       qEl._t = setTimeout(function () { renderRoute(); var q2 = $('[data-q]'); if (q2) { q2.focus(); q2.setSelectionRange(q2.value.length, q2.value.length); } }, 160);
     });
+    var more = $('[data-browse-more]', page);
+    if (more) more.addEventListener('click', function () {
+      var start = renderedCount;
+      var end = Math.min(start + BROWSE_BATCH, f.length);
+      var body = $('[data-browse-body]', page);
+      if (!body || end <= start) return;
+      body.insertAdjacentHTML('beforeend', browseRows(f.slice(start, end), openUid));
+      renderedCount = end;
+      var count = $('[data-browse-count]', page);
+      if (count) count.textContent = f.length + ' matches · ' + renderedCount + ' loaded';
+      var caption = $('[data-browse-caption]', page);
+      if (caption) caption.textContent = browseLoadedText(renderedCount, f.length) + (renderedCount < f.length ? ' Use the control after the table to load more.' : '');
+      var progress = $('[data-browse-progress]', page);
+      if (progress) progress.textContent = browseLoadedText(renderedCount, f.length);
+      if (renderedCount >= f.length) {
+        more.hidden = true;
+      } else {
+        more.textContent = browseMoreText(renderedCount, f.length);
+      }
+      var firstNewOpen = $$('tr[data-listing-row] .t-title[data-open]', body)[start];
+      if (firstNewOpen) firstNewOpen.focus();
+    });
     renderFilters();
   }
 
   /* ================================================================
-     ATLAS — rivers, park, stations, tethers. No tiles, no libraries.
+     ATLAS — lazy street/building map with an honest drawn-city fallback.
      ================================================================ */
 
   function loadScript(src) {
@@ -1119,16 +1174,37 @@
      fails, the drawn-city fallback takes over and stays honest about it. */
   var mapAssetState = 'idle'; /* idle → loading → ready | failed */
   var mapAssetPromise = null;
+  var mapStyleURL = 'https://tiles.openfreemap.org/styles/liberty';
   function loadMapAssets() {
-    if (window.maplibregl) { mapAssetState = 'ready'; return Promise.resolve(); }
     if (mapAssetState === 'failed') return Promise.reject(new Error('map assets failed'));
+    if (window.maplibregl && window.__VERA_MAP_STYLE__) { mapAssetState = 'ready'; return Promise.resolve(); }
     if (mapAssetState === 'loading') return mapAssetPromise;
     mapAssetState = 'loading';
+    /* Establish the tile connection only after the visitor opens Atlas. This
+       overlaps it with the local MapLibre download without contacting the map
+       host from Today, Browse, or any other route that never uses the map. */
+    if (!document.querySelector('link[data-vera-map-origin]')) {
+      var origin = document.createElement('link');
+      origin.rel = 'preconnect';
+      origin.href = 'https://tiles.openfreemap.org';
+      origin.crossOrigin = 'anonymous';
+      origin.setAttribute('data-vera-map-origin', '');
+      document.head.appendChild(origin);
+    }
     var css = document.createElement('link');
     css.rel = 'stylesheet';
     css.href = './assets/vendor/maplibre/maplibre-gl.css';
     document.head.appendChild(css);
-    mapAssetPromise = loadScript('./assets/vendor/maplibre/maplibre-gl.js').then(function () {
+    var stylePromise = fetch(mapStyleURL, { mode: 'cors', credentials: 'omit' }).then(function (response) {
+      if (!response.ok) throw new Error('failed to load OpenFreeMap Liberty style');
+      return response.json();
+    }).then(function (style) {
+      window.__VERA_MAP_STYLE__ = style;
+    });
+    mapAssetPromise = Promise.all([
+      window.maplibregl ? Promise.resolve() : loadScript('./assets/vendor/maplibre/maplibre-gl.js'),
+      stylePromise,
+    ]).then(function () {
       mapAssetState = 'ready';
     }, function (e) {
       mapAssetState = 'failed';
@@ -1139,57 +1215,109 @@
 
   function atlasHeader(mapped, total) {
     return '<header class="workspacehead workspacehead--atlas">' +
-      '<div><p class="kicker">City lens</p><h1 class="workspacehead__title">Atlas</h1>' +
-      '<p class="workspacehead__lede">Move through the map and the evidence list as one workspace.</p></div>' +
-      '<div class="workspacehead__actions"><span class="workspace-count"><b>' + mapped + '</b> mapped · ' + total + ' shown</span>' +
+      '<div><p class="kicker">Four-borough lens</p><h1 class="workspacehead__title">Atlas</h1>' +
+      '<p class="workspacehead__lede">Open near downtown Manhattan, then move through Manhattan, Brooklyn, Queens and the Bronx. Switch to the evidence list at any time.</p></div>' +
+      '<div class="workspacehead__actions"><span class="workspace-count"><b>' + mapped + '</b> mapped · ' + total + ' in scope</span>' +
       '<div class="atlas-mode" role="group" aria-label="Atlas view"><button type="button" data-atlas-mode="map" aria-pressed="' + (state.atlasMode === 'map' ? 'true' : 'false') + '" class="' + (state.atlasMode === 'map' ? 'is-on' : '') + '">Map</button>' +
       '<button type="button" data-atlas-mode="list" aria-pressed="' + (state.atlasMode === 'list' ? 'true' : 'false') + '" class="' + (state.atlasMode === 'list' ? 'is-on' : '') + '">List</button></div></div>' +
     '</header>';
   }
 
+  var ATLAS_BOROUGHS = { manhattan: 1, brooklyn: 1, queens: 1, bronx: 1 };
+
+  function atlasScope(listings) {
+    return listings.filter(function (listing) {
+      return !!ATLAS_BOROUGHS[String(listing.borough || '').trim().toLowerCase()];
+    });
+  }
+
+  function atlasListContents(listings) {
+    var sorted = listings.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
+    return '<div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
+      (sorted.length ? '<div class="walklist">' + sorted.map(function (l) {
+        var t = C.nearestStation(l);
+        return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
+          '<span class="walkrow__min">' + (t ? '≈' + t.mins : '—') + '<small>min</small></span>' +
+          '<span class="walkrow__body"><b>' + esc(l.title || l.address_normalized || 'Listing') + '</b>' +
+          '<span>' + (t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
+          '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
+      }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet.</p>');
+  }
+
+  function atlasListPane(listings) {
+    return '<div class="panel atlas-list-pane">' + atlasListContents(listings) + '</div>';
+  }
+
+  function refreshAtlasMap() {
+    var page = $('#main [data-page="atlas"]');
+    var map = page && $('[data-veramap]', page);
+    if (!map || !window.__VERAM || !window.__VERAM.update) return false;
+    var all = atlasScope(filtered());
+    var mapped = all.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    window.__VERAM.update(mapped);
+    var count = $('.workspace-count', page);
+    if (count) count.innerHTML = '<b>' + mapped.length + '</b> mapped · ' + all.length + ' in scope';
+    var list = $('.atlas-list-pane', page);
+    if (list) list.innerHTML = atlasListContents(mapped);
+    syncPressed(page);
+    announceRoute();
+    return true;
+  }
+
   function renderAtlas(page) {
-    var f0 = filtered();
+    var f0 = atlasScope(filtered());
     var geo0 = f0.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    /* List is a complete, keyboard-native Atlas view. Do not allocate a
+       hidden canvas or contact the tile host until the visitor chooses Map. */
+    if (state.atlasMode === 'list') {
+      if (window.__VERAM) window.__VERAM.destroy();
+      page.innerHTML =
+        '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
+        '<div class="maplay atlas-layout atlas-layout--list">' + atlasListPane(geo0) + '</div></section>';
+      page.classList.add('is-entered');
+      renderFilters();
+      return;
+    }
     if (!window.maplibregl && mapAssetState !== 'failed') {
       page.innerHTML =
         '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
-        '<div class="panel mapwrap"><p class="lane__empty" data-map-loading>Drawing the city — the map engine loads the first time Atlas opens…</p></div>';
+        '<div class="panel mapwrap"><p class="lane__empty" data-map-loading>Drawing streets and building footprints — the map engine loads the first time Atlas opens…</p></div>';
       page.innerHTML += '</section>';
       page.classList.add('is-entered');
       renderFilters();
-      loadMapAssets().then(function () {
-        if (state.route === 'atlas') renderRoute();
-      }, function () {
-        if (state.route === 'atlas') renderRoute();
-      });
+      var redrawAfterMapAssets = function () {
+        if (state.route !== 'atlas') return;
+        var active = document.activeElement;
+        var restoreModeFocus = !!(active && active.hasAttribute && active.hasAttribute('data-atlas-mode'));
+        renderRoute();
+        if (restoreModeFocus) requestAnimationFrame(function () {
+          var selectedMode = $('[data-atlas-mode="' + state.atlasMode + '"]');
+          if (selectedMode) selectedMode.focus();
+        });
+      };
+      loadMapAssets().then(redrawAfterMapAssets, redrawAfterMapAssets);
       return;
     }
     if (window.__VERAM && window.__VERAM.available()) {
-      var sorted0 = geo0.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
       page.innerHTML =
         '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
         '<div class="maplay maplay--vector atlas-layout atlas-layout--' + state.atlasMode + '">' +
-          '<div class="panel mapwrap atlas-map-pane"><div class="veramap" data-veramap role="application" aria-label="Interactive map of listings"></div>' +
+          '<div class="panel mapwrap atlas-map-pane"><div class="veramap" data-veramap role="region" aria-label="Interactive street and building map of listings. Use List view for a text alternative." aria-describedby="vera-atlas-map-note"></div>' +
+            '<p class="atlas-map-note" id="vera-atlas-map-note"><strong>Street + building context.</strong> Atlas excludes Staten Island, New Jersey, and Nassau/Suffolk listings. Pins reflect feed coordinates; footprints are context, not a verified unit match. Some listings share one coordinate; List shows every record.</p>' +
             '<div class="mp-key">' +
+              '<span class="mp-key__i"><i class="mp-swatch mp-swatch--point"></i>Listing coordinate</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--good"></i>Clears the bar</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--warn"></i>Needs verification</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--bad"></i>Scam wall</span>' +
               '<span class="mp-key__i">tiles © OpenFreeMap · OpenMapTiles · OpenStreetMap contributors</span>' +
             '</div></div>' +
-          '<div class="panel atlas-list-pane"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
-            (sorted0.length ? '<div class="walklist">' + sorted0.map(function (l) {
-              var t = C.nearestStation(l);
-              return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
-                '<span class="walkrow__min">' + (t ? '≈' + t.mins : '—') + '<small>min</small></span>' +
-                '<span class="walkrow__body"><b>' + esc(l.title || l.address_normalized || 'Listing') + '</b>' +
-                '<span>' + (t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
-                '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
-            }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet.</p>') +
-          '</div></div></section>';
+          atlasListPane(geo0) + '</div></section>';
       page.classList.add('is-entered');
       renderFilters();
       var mounted = window.__VERAM.mount(page.querySelector('[data-veramap]'), geo0, function (uid) {
         if (window.__VERAL) window.__VERAL.open(uid);
+      }, function () {
+        if (state.route === 'atlas' && state.atlasMode === 'map' && page.isConnected) renderAtlasFallback(page);
       });
       if (mounted) return;
       /* WebGL or tiles refused — fall through to the drawn city */
@@ -1199,7 +1327,7 @@
 
   function renderAtlasFallback(page) {
     var M = C.MAP;
-    var f = filtered();
+    var f = atlasScope(filtered());
     var geo = f.filter(function (l) { return l.latitude != null && l.longitude != null; });
     // Only plot inside the hunt zone: out-of-zone listings project outside
     // the viewBox and would draw loose on the page (the SVG must not clip
@@ -1609,7 +1737,7 @@
       }).join('') + '</div>' +
       '<div class="grid grid--2">' +
         '<div class="panel chart"><div class="panel__head"><h2 class="panel__title">Source reliability</h2><p class="panel__hint">avg per run</p></div>' +
-          (rel.length ? sparkline(rel, 560, 170, '#c8a468') : '<p class="lane__empty">History arrives with the next publishes.</p>') + '</div>' +
+          (rel.length ? sparkline(rel, 560, 170, '#c8a468', 'Average source reliability by VERA run') : '<p class="lane__empty">History arrives with the next publishes.</p>') + '</div>' +
         '<div class="panel"><div class="panel__head"><h2 class="panel__title">Run</h2><p class="panel__hint">' + esc(run.run_id || 'latest sweep') + '</p></div>' +
           '<dl class="kv">' +
             '<dt>Generated</dt><dd>' + esc(D.generated_at || '—') + feedAge() + '</dd>' +
@@ -1710,7 +1838,9 @@
     if (state.route === 'today') {
       var n = $$('.dropcard').length;
       count = n ? ', ' + n + ' listing' + (n === 1 ? '' : 's') + ' in the drop' : ', nothing cleared the bar today';
-    } else if (state.route === 'browse' || state.route === 'atlas' || state.route === 'market') {
+    } else if (state.route === 'atlas') {
+      count = ', ' + atlasScope(filtered()).length + ' listings in the four-borough scope';
+    } else if (state.route === 'browse' || state.route === 'market') {
       count = ', ' + filtered().length + ' listings under the current filters';
     }
     el.textContent = name + count + '.';
@@ -1722,6 +1852,8 @@
 
   function renderRoute() {
     if (!D) return;
+    var main = $('[data-main]');
+    if (main) main.setAttribute('tabindex', state.route === 'archive' ? '0' : '-1');
     var page = $('#main [data-page]');
     if (!page) return;
     clearInterval(countdownT);
@@ -1833,13 +1965,31 @@
       if (input) input.focus();
       return;
     }
+    if (form.getAttribute('data-address-pending') === 'true') return;
 
+    form.setAttribute('data-address-pending', 'true');
     button.disabled = true;
     button.textContent = 'Checking…';
     result.className = 'address-check__result';
     result.textContent = 'Checking NYC Planning’s address directory…';
     var url = 'https://geosearch.planninglabs.nyc/v2/search?text=' + encodeURIComponent(address + ', New York NY') + '&size=3';
-    fetch(url, { cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' })
+    var controller = ('AbortController' in window) ? new AbortController() : null;
+    var timedOut = false;
+    var timeoutId = 0;
+    var request = fetch(url, {
+      cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer',
+      signal: controller ? controller.signal : undefined,
+    });
+    var timeout = new Promise(function (resolve, reject) {
+      timeoutId = setTimeout(function () {
+        timedOut = true;
+        if (controller) controller.abort();
+        var error = new Error('Address check timed out');
+        error.name = 'TimeoutError';
+        reject(error);
+      }, ADDRESS_CHECK_TIMEOUT_MS);
+    });
+    Promise.race([request, timeout])
       .then(function (response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         return response.json();
@@ -1861,12 +2011,16 @@
               (candidate.bbl ? ' · BBL ' + esc(candidate.bbl) : '') + (candidate.bin ? ' · BIN ' + esc(candidate.bin) : '') + '</span></button>';
           }).join('') + '</div>';
       })
-      .catch(function () {
+      .catch(function (error) {
         if (!document.contains(form)) return;
         result.className = 'address-check__result is-error';
-        result.textContent = 'NYC Planning could not be reached. No address was saved. Try again in a moment.';
+        result.textContent = timedOut || (error && error.name === 'TimeoutError')
+          ? 'NYC Planning took too long to respond. No address was saved. Check your connection and try again.'
+          : 'NYC Planning could not be reached. No address was saved. Check your connection and try again.';
       })
       .then(function () {
+        clearTimeout(timeoutId);
+        form.removeAttribute('data-address-pending');
         if (!document.contains(form)) return;
         button.disabled = false;
         button.textContent = 'Check with NYC Planning';
@@ -1912,6 +2066,10 @@
     if (t.hasAttribute('data-atlas-mode')) {
       state.atlasMode = t.getAttribute('data-atlas-mode') === 'list' ? 'list' : 'map';
       renderRoute();
+      requestAnimationFrame(function () {
+        var selectedMode = $('[data-atlas-mode="' + state.atlasMode + '"]');
+        if (selectedMode) selectedMode.focus();
+      });
       return;
     }
 
@@ -2042,8 +2200,17 @@
     }
   });
 
-  /* keyboard: rows + kpis act on Enter/Space; Escape closes the ledger */
+  /* keyboard: photo strips move by frame; rows + kpis act on Enter/Space;
+     Escape closes the ledger. */
   document.addEventListener('keydown', function (e) {
+    var galleryStrip = e.target && e.target.closest ? e.target.closest('[data-gal]') : null;
+    if (galleryStrip && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+      e.preventDefault();
+      var distance = galleryStrip.clientWidth * (e.key === 'ArrowLeft' ? -1 : 1);
+      if (galleryStrip.scrollBy) galleryStrip.scrollBy({ left: distance, behavior: RM ? 'auto' : 'smooth' });
+      else galleryStrip.scrollLeft += distance;
+      return;
+    }
     if ((e.metaKey || e.ctrlKey) && String(e.key).toLowerCase() === 'k') {
       e.preventDefault();
       if (state.route !== 'browse') location.hash = '#/browse';
@@ -2193,7 +2360,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=53').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=54').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };

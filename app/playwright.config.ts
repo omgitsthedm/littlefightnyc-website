@@ -43,7 +43,7 @@ export default defineConfig({
     },
     {
       name: "chromium-mobile",
-      grep: /@chromium-mobile|@all-projects|@pool-room-all/,
+      grep: /@chromium-mobile|@all-projects|@pool-room-all|@vera-all-platforms|@vera-touch/,
       use: {
         ...devices["Pixel 7"],
         browserName: "chromium",
@@ -51,7 +51,7 @@ export default defineConfig({
     },
     {
       name: "firefox-desktop",
-      grep: /@firefox-desktop|@all-projects|@pool-room-all/,
+      grep: /@firefox-desktop|@all-projects|@pool-room-all|@vera-all-platforms|@vera-desktop/,
       use: {
         ...devices["Desktop Firefox"],
         viewport: { width: 1366, height: 768 },

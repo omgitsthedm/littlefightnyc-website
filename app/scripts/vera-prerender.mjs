@@ -17,6 +17,8 @@ function esc(s) {
 }
 
 function page(title, lede, body) {
+  const slug = title === 'Field manual' ? 'manual' : 'archive';
+  const canonical = `https://littlefightnyc.com/vera/${slug}/`;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -26,17 +28,41 @@ function page(title, lede, body) {
 <meta name="description" content="${esc(lede)}">
 <meta name="theme-color" content="#0c0e0d">
 <meta name="color-scheme" content="dark">
-<link rel="canonical" href="https://littlefightnyc.com/vera/${title === 'Field manual' ? 'manual' : 'archive'}/">
-<link rel="stylesheet" href="../assets/css/doc.css?v=1">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="${canonical}">
+<meta property="og:title" content="${esc(title)} — VERA">
+<meta property="og:description" content="${esc(lede)}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="${canonical}">
+<meta property="og:site_name" content="Little Fight NYC">
+<meta property="og:image" content="https://littlefightnyc.com/assets/social/og-vera-34d78811.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="VERA rental-intelligence card highlighting public-record checks and honest uncertainty.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)} — VERA">
+<meta name="twitter:description" content="${esc(lede)}">
+<meta name="twitter:image" content="https://littlefightnyc.com/assets/social/og-vera-34d78811.jpg">
+<meta name="twitter:image:alt" content="VERA rental-intelligence card highlighting public-record checks and honest uncertainty.">
+<link rel="icon" href="../assets/icons/vera-icon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../assets/icons/vera-icon-180.png" sizes="180x180">
+<link rel="stylesheet" href="../assets/css/doc.css?v=2">
 </head>
 <body>
-<header class="docbar"><a class="docbar__brand" href="../"><b>VERA</b></a></header>
-<main class="doc">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="docbar">
+  <a class="docbar__brand" href="../"><img src="../assets/brand/vera-mark-96.png" width="26" height="26" alt="" aria-hidden="true" decoding="async"><b>VERA</b></a>
+  <nav class="docbar__links" aria-label="VERA documents">
+    <a href="../">Console</a><a href="../brand/">Brand</a><a href="../terms/">Terms</a><a href="../privacy/">Privacy</a><a href="../corrections/">Corrections</a>
+  </nav>
+</header>
+<main class="doc" id="main">
 <h1>${esc(title)}</h1>
 <p class="doc__lede">${esc(lede)}</p>
 ${body}
 <p class="doc__foot"><a href="../">← the live app</a> · every number here is computed from a cited public record or marked ≈</p>
 </main>
+<footer class="docfoot"><span>VERA is a <a href="/">Little Fight NYC</a> system.</span><a href="../">Console</a><a href="../brand/">Brand</a><a href="../terms/">Terms</a><a href="../privacy/">Privacy</a><a href="../corrections/">Corrections</a></footer>
 </body>
 </html>
 `;
