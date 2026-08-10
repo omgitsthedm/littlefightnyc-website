@@ -1,11 +1,12 @@
-/* Little Fight NYC — shared EXPERIENCE layer (motion + personality).
- * Canonical source: brand-system/experience.css (pairs with experience.js).
- * Mirrors the brand kit so every surface feels like one system.
+/* Little Fight NYC shared Audit experience layer (motion and personality).
+ * This file is the self-contained source for the Audit Lab example.
+ * Current brand authority: app/src/styles/editorial/tokens.css.
+ * Pair with experience.js.
  * Drop in: <link experience.css> + <script experience.js>. Then:
  *   - add  data-tug        to a tugboat <svg>  → it bobs on the water & toots on tap
  *   - add  data-reveal     to any element      → it settles in on scroll
  *   - add  data-press (or class lf-press)      → satisfying press-bounce
- * Uses canonical brand values (orange #F97316) with safe fallbacks — no token coupling. */
+ * Uses brand orange #F97316 with safe fallbacks and no token dependency. */
 
 /* scroll progress */
 .lf-prog{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:70;

@@ -1,5 +1,7 @@
-/* Little Fight NYC — shared EXPERIENCE layer (motion + personality).
- * Canonical source: brand-system/experience.js (pairs with experience.css).
+/* Little Fight NYC shared Audit experience layer (motion and personality).
+ * This file is the self-contained source for the Audit Lab example.
+ * Current brand authority: app/src/styles/editorial/tokens.css.
+ * Pair with experience.css.
  * Self-initialising, dependency-free, reduced-motion-safe. Load with `defer`.
  * Wires: scroll progress · cursor glow · tug bob/toot personality · scroll reveals. */
 (function () {
