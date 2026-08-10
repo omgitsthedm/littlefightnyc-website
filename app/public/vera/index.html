@@ -41,7 +41,7 @@
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=53">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=54">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -127,6 +127,7 @@
     <main id="main" class="main" data-main tabindex="-1">
       <section class="page" data-page="today"></section>
       <div class="loading" data-loading>
+        <h1 class="sr-only">VERA — NYC rental intelligence, on the record</h1>
         <img src="./assets/brand/vera-mark-96.png" width="40" height="40" alt="" aria-hidden="true" decoding="async">
         <p>Loading the current publication…</p>
       </div>
@@ -134,7 +135,7 @@
 
     <footer class="deckfoot">
       <p>A <a href="/">Little Fight NYC</a> system — read-only by principle: it never contacts landlords, never floods inboxes.</p>
-      <p><a href="./brand/">Brand</a> · <a href="./terms/">Terms</a> · <a href="./privacy/">Privacy</a></p>
+      <p><a href="./brand/">Brand</a> · <a href="./terms/">Terms</a> · <a href="./privacy/">Privacy</a> · <a href="./corrections/">Corrections</a></p>
     </footer>
 
     <!-- role/aria-modal so assistive tech announces this as a dialog and stops
@@ -184,9 +185,9 @@
   <!-- MapLibre (~1MB) and vera-tests.js are deliberately NOT here: the map
        engine loads on first Atlas open, the test suite only under ?test=1.
        Both are injected by vera-app.js. -->
-  <script src="./assets/js/vera-map.js?v=53" defer></script>
+  <script src="./assets/js/vera-map.js?v=54" defer></script>
   <script src="./assets/js/vera-sweep.js?v=53" defer></script>
-  <script src="./assets/js/vera-ledger.js?v=53" defer></script>
-  <script src="./assets/js/vera-app.js?v=53" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=54" defer></script>
+  <script src="./assets/js/vera-app.js?v=54" defer></script>
 </body>
 </html>

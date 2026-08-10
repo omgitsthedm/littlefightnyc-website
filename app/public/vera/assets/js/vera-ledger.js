@@ -80,11 +80,14 @@
   }
 
   function originTarget(uid, preferred) {
-    if (preferred && document.contains(preferred)) return preferred;
+    /* Safari does not consistently focus a button when it is clicked. Resolve
+       the stable listing opener first instead of restoring BODY (or whatever
+       control happened to retain focus before the click). */
     var candidates = $$('[data-open]');
     for (var i = 0; i < candidates.length; i++) {
       if (candidates[i].getAttribute('data-open') === uid && isVisible(candidates[i])) return candidates[i];
     }
+    if (preferred && preferred !== document.body && preferred !== document.documentElement && document.contains(preferred)) return preferred;
     return $('[data-main]');
   }
 
@@ -180,7 +183,9 @@
     }
 
     /* shared-element flight: the card's media flies into the ledger (2.2) */
-    var srcMedia = document.querySelector('[data-open="' + uid + '"] .dropcard__media');
+    var srcOpener = document.querySelector('[data-open="' + uid + '"]');
+    var srcCard = srcOpener && srcOpener.closest ? srcOpener.closest('.dropcard__hit') : null;
+    var srcMedia = srcCard ? $('.dropcard__media', srcCard) : null;
     function mount() {
       if (openId !== transitionSerial || openUid !== uid) return;
       var panel = $('[data-inspector]');
@@ -222,9 +227,9 @@
   function finishOpen(uid) {
     if (openUid !== uid) return;
     $$('#main tr.is-open, #main .card.is-open').forEach(function (el) { el.classList.remove('is-open'); });
-    $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
-    var row = $('[data-open="' + uid + '"]');
-    if (row && row.tagName === 'TR') { row.classList.add('is-open'); row.setAttribute('aria-expanded', 'true'); }
+    var opener = $('[data-open="' + uid + '"]');
+    var row = opener && opener.closest ? opener.closest('tr') : null;
+    if (row) row.classList.add('is-open');
     var firstStop = $('[data-insp-close]') || $('[data-inspector]');
     if (firstStop) firstStop.focus();
   }
@@ -246,7 +251,6 @@
     if (back && !document.contains(back)) back = null;
     setBackgroundBlocked(false);
     $$('#main tr.is-open, #main .card.is-open').forEach(function (el) { el.classList.remove('is-open'); });
-    $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     var panel = $('[data-inspector]');
     var scrim = $('[data-scrim]');
     if (panel) panel.classList.remove('is-open');

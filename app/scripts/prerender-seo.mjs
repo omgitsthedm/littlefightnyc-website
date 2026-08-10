@@ -212,7 +212,61 @@ const standaloneDiscoveryPages = [
     image: "/assets/social/og-vera-34d78811.jpg",
     shortAnswer:
       "VERA is a free Little Fight Lab rental-intelligence workspace for NYC renters. It joins resolvable listing addresses to public records, labels uncertainty, and keeps hunt state in the browser.",
-    updated: "2026-08-04",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/vera/privacy/",
+    title: "Privacy — VERA",
+    h1: "Your hunt stays yours.",
+    image: "/assets/social/og-vera-34d78811.jpg",
+    shortAnswer:
+      "VERA has no accounts, ads, or analytics. Hunt state stays in your browser; optional address checks go directly to NYC Planning.",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/vera/manual/",
+    title: "Field manual — VERA",
+    h1: "Field manual",
+    image: "/assets/social/og-vera-34d78811.jpg",
+    shortAnswer:
+      "New York rent law in hard numbers, sixteen scam tells, and VERA’s 26-point viewing checklist — free and available without an account.",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/vera/archive/",
+    title: "Receipts — VERA",
+    h1: "Receipts",
+    image: "/assets/social/og-vera-34d78811.jpg",
+    shortAnswer:
+      "Every VERA drop, on the record: what was shown and what happened to it, without backfilling or rewriting the original publication.",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/vera/terms/",
+    title: "Terms — VERA",
+    h1: "An instrument, not an agent.",
+    image: "/assets/social/og-vera-34d78811.jpg",
+    shortAnswer:
+      "Terms of use for VERA: a research instrument, not a broker, not a listing service, and not legal advice.",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/vera/brand/",
+    title: "Brand kit — VERA",
+    h1: "VERA looks like the instrument it is.",
+    image: "/assets/social/og-vera-34d78811.jpg",
+    shortAnswer:
+      "The VERA brand kit: mark, wordmark, palette, semantic colour rules, typography, and voice.",
+    updated: "2026-08-10",
+  },
+  {
+    path: "/vera/corrections/",
+    title: "Corrections — VERA",
+    h1: "Corrections",
+    image: "/assets/social/og-vera-34d78811.jpg",
+    shortAnswer:
+      "How VERA’s steward grades are computed, and how an owner or agent can report an error for correction.",
+    updated: "2026-08-10",
   },
 ].filter((standalone) => !pages.some((page) => page.path === standalone.path));
 

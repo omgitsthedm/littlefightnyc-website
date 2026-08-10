@@ -10,9 +10,10 @@
  * VERA renders MapLibre tiles, optionally queries the official NYC
  * Planning GeoSearch origin after a visitor submits an exact address, and uses
  * blob-backed images/workers for its map and offline runtime. Netlify replaces
- * headers per path rather than merging them, so the /vera/* block is a full
- * copy of the "/*" policy. Copies
- * rot: a directive tightened sitewide could silently not apply to /vera/.
+ * headers per path rather than merging them, so the /vera/* block starts from
+ * the "/*" policy but deliberately drops the analytics origins VERA does not
+ * use. Copies rot: a directive tightened sitewide could silently not apply to
+ * /vera/.
  *
  * So this asserts the two policies differ by exactly those named runtime
  * capabilities, in exactly their named directives, and nothing else.
@@ -41,6 +42,18 @@ const VERA_ONLY_ADDITIONS = {
   "connect-src": [TILE_ORIGIN, GEOSEARCH_ORIGIN],
   "worker-src": ["'self'", "blob:"],
   "child-src": ["blob:"],
+  "object-src": ["'none'"],
+};
+const VERA_ONLY_REMOVALS = {
+  "script-src": [
+    "https://www.googletagmanager.com",
+    "https://www.google-analytics.com",
+  ],
+  "connect-src": [
+    "https://www.google-analytics.com",
+    "https://analytics.google.com",
+    "https://region1.google-analytics.com",
+  ],
 };
 const failures = [];
 
@@ -92,6 +105,7 @@ if (sitePolicy && veraPolicy) {
     ...Object.keys(site),
     ...Object.keys(vera),
     ...Object.keys(VERA_ONLY_ADDITIONS),
+    ...Object.keys(VERA_ONLY_REMOVALS),
   ]);
   for (const name of names) {
     const siteValues = new Set(site[name] ?? []);
@@ -99,15 +113,32 @@ if (sitePolicy && veraPolicy) {
     const added = [...veraValues].filter((v) => !siteValues.has(v));
     const dropped = [...siteValues].filter((v) => !veraValues.has(v));
     const expectedAdded = new Set(VERA_ONLY_ADDITIONS[name] ?? []);
+    const expectedDropped = new Set(VERA_ONLY_REMOVALS[name] ?? []);
     const unexpected = added.filter((value) => !expectedAdded.has(value));
-    const missing = [...expectedAdded].filter((value) => !added.includes(value));
+    const missing = [...expectedAdded].filter((value) => !veraValues.has(value));
+    const unexpectedDropped = dropped.filter(
+      (value) => !expectedDropped.has(value),
+    );
+    const retained = [...expectedDropped].filter((value) =>
+      veraValues.has(value),
+    );
 
-    if (unexpected.length > 0 || missing.length > 0 || dropped.length > 0) {
+    if (
+      unexpected.length > 0 ||
+      missing.length > 0 ||
+      unexpectedDropped.length > 0 ||
+      retained.length > 0
+    ) {
       failures.push(
         `netlify.toml: /vera/* ${name} has drifted from the site policy` +
           (unexpected.length ? ` (unexpectedly adds ${unexpected.join(", ")})` : "") +
           (missing.length ? ` (must add ${missing.join(", ")})` : "") +
-          (dropped.length ? ` (drops ${dropped.join(", ")})` : ""),
+          (unexpectedDropped.length
+            ? ` (unexpectedly drops ${unexpectedDropped.join(", ")})`
+            : "") +
+          (retained.length
+            ? ` (must drop ${retained.join(", ")})`
+            : ""),
       );
     }
   }

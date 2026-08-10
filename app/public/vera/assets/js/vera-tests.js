@@ -135,7 +135,7 @@
       state.view = 'all';
 
       /* ---- the ledger ---- */
-      var first = $$('.dt tbody tr[data-open]')[0];
+      var first = $$('.dt tbody .t-title[data-open]')[0];
       if (first) {
         first.click();
         check('ledger opens', !$('[data-inspector]').hidden, '');
@@ -150,7 +150,7 @@
       }
 
       /* ---- two-tier forensics (David's ruling 2026-08-05) ---- */
-      var rowB = $$('.dt tbody tr[data-open]')[0];
+      var rowB = $$('.dt tbody .t-title[data-open]')[0];
       if (rowB) {
         rowB.click();
         L.setTab('verify');
@@ -183,7 +183,7 @@
         navSheetOpen && state.route === 'system' && $('[data-nav-sheet]').hidden, state.route);
       check('More wears the active state on a secondary route', $('[data-nav-more]').classList.contains('is-on'), '');
       location.hash = '#/browse'; app.route();
-      var rowC = $$('.dt tbody tr[data-open]')[0];
+      var rowC = $$('.dt tbody .t-title[data-open]')[0];
       if (rowC) {
         rowC.click();
         $('[data-tab-more]').click();

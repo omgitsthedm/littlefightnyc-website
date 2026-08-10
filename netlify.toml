@@ -244,8 +244,9 @@ for = "/examples/audit/the-cosmetic-clinic/*"
 # The in-site Audit showroom and sample reports under /examples/audit/ use
 # inline scripts plus Google Fonts, so they need a narrow policy instead of the
 # main application's policy.
-# Netlify replaces headers per path rather than merging them. This repeats the
-# site policy and adds only VERA's runtime capabilities: OpenFreeMap tiles, the
+# Netlify replaces headers per path rather than merging them. This starts from
+# the site policy, removes the analytics origins VERA's privacy contract does
+# not use, and adds only VERA's runtime capabilities: OpenFreeMap tiles, the
 # official NYC Planning GeoSearch endpoint used only when a visitor submits the
 # optional exact-address check, blob-backed images/workers, and its service
 # worker. VERA's public feed is first-party under /vera/data/*, so no feed host
@@ -255,7 +256,7 @@ for = "/examples/audit/the-cosmetic-clinic/*"
 for = "/vera/*"
 
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://tiles.openfreemap.org https://geosearch.planninglabs.nyc https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; worker-src 'self' blob:; child-src blob:; frame-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://tiles.openfreemap.org https://geosearch.planninglabs.nyc; worker-src 'self' blob:; child-src blob:; frame-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
   Permissions-Policy = "camera=(), microphone=(), geolocation=()"
   Referrer-Policy = "strict-origin-when-cross-origin"
   Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
