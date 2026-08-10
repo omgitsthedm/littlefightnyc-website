@@ -1,15 +1,14 @@
 /**
- * i18next runtime setup. This wires the CAPABILITY to translate — it does not
- * translate anything yet. Only `locales/en/common.json` exists, so every
- * language currently resolves to English via the fallback.
+ * i18next runtime for the optional shared-UI locale bundles. Only
+ * `locales/en/common.json` exists here, so this bundle system currently falls
+ * back to English. The standalone `/es/` and `/zh/` pages use separate sources.
  *
  * How it scales: `import.meta.glob` discovers whichever locale bundles exist at
  * build time. Drop in `locales/es/common.json` and Spanish auto-registers — no
  * change to this file. See README.md in this folder.
  *
- * SEO note: this is CLIENT-side switching. Prerendered pages stay English for
- * crawlers. Per-locale prerendering + hreflang + /es/ routing is the phase-2
- * work documented in the README; it is intentionally NOT set up here.
+ * SEO note: adding a bundle here does not create a localized public route.
+ * See README.md for the route-level requirements and existing standalone pages.
  */
 import i18n, { type Resource } from "i18next";
 import { initReactI18next } from "react-i18next";

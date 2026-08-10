@@ -1,7 +1,7 @@
 # Little Fight NYC — Voice Doctrine
 
 > Private doctrine. Drives every word on every page.
-> Last updated: July 24, 2026 — David's confirmed direction; retired phone-agent language removed.
+> Last updated: August 10, 2026 — confirmed direction; public-person conflicts removed.
 
 ## The mission (the WHY)
 
@@ -44,7 +44,8 @@ Every page should signal this without bragging:
 5. **Always fair for small business.** Even if not a fit, we refer to someone who is. We'd rather lose the work than let a NYC shop pay the wrong vendor.
 6. **NYC time.** 9am–9pm Eastern, real human. Not "global support" code for a call center in another timezone.
 
-When pitching the differentiation, **don't list it like marketing.** Show it through specifics: "If you call (646) 360-0318, David picks up." That's the proof. Not "world-class customer service" (forbidden phrase).
+When pitching the differentiation, **don't list it like marketing.** Show it through specifics:
+"Call (646) 360-0318. A real person picks up." Not "world-class customer service."
 
 ## The core principle
 
@@ -91,7 +92,8 @@ NYC blunt is *honest*, not *performative*.
 7. **No AI phone-agent language.** The phone is a normal call/text line. After hours, callers leave a message.
 8. **Care without sycophancy.** "If we can't help, we'll tell you who can."
 9. **No "we'd love to" / "we'd be happy to" / "feel free to" / "please don't hesitate."**
-10. **First-person plural** ("we") for actions; **first-person singular** ("David") when it's a real human moment.
+10. **First-person plural** ("we") for public actions. Do not render a personal name or
+    Person schema; Little Fight speaks as the company.
 
 ## Forbidden phrases (extends AI-tell scrub)
 
@@ -102,7 +104,7 @@ NYC blunt is *honest*, not *performative*.
 | "Don't hesitate" | "Call us" |
 | "How can we help?" | "What do you need?" |
 | "Trusted partner" | "Real human" |
-| "Our team" | "Us" or "David" |
+| "Our team" | "We" or "us" |
 | "Best-in-class" / "industry-leading" | "Real" or "good" |
 | "Unlock" / "supercharge" / "transform" | Use the actual verb |
 | "Solutions" | "Fixes" or "what we do" |
@@ -123,7 +125,7 @@ Every page must pass this test. From the moment a visitor lands:
 | 8 sec | Whether it's for them (sub) |
 | 15 sec | How to reach us (contact options visible) |
 | 25 sec | What to expect when they do (hours, response time) |
-| 30 sec | Reach out (click/dial/text) |
+| 30 sec | Choose a channel (click/dial/text) |
 
 If any page takes longer than 30 seconds for a busy NYC owner to figure out, it fails.
 
@@ -156,10 +158,9 @@ Don't hide channels behind dropdowns. Don't say "preferred contact method." Let 
 
 ## When to keep the brand metaphor
 
-The "fight" / "fires" framing is a **brand asset** — keep it in:
+The "fight" framing is a **brand asset** — keep it in:
 
-- Page names (`/fires/`, "The Four Fights")
-- Section headers ("Pick your fight")
+- Approved section headers and campaign names
 - Tagline-style copy
 
 The metaphor stays light. **Body copy stays plain.** Don't write "we'll fight for your business" in body text. The fight is in the brand name; the body says what we'll do.
@@ -169,6 +170,6 @@ The metaphor stays light. **Body copy stays plain.** Don't write "we'll fight fo
 Before shipping, ask:
 1. Would the 80-year-old cobbler understand it?
 2. Would the 20-year-old bar manager bounce on it?
-3. Would David himself say this out loud to a friend?
+3. Would we say this out loud to a friend?
 
 If any answer is no, rewrite.

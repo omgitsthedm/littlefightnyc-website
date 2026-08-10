@@ -101,6 +101,6 @@ if (failures.length) {
     `Release artifact verified at ${revision.slice(0, 12)}: ${expectedRouteCount} routes, identity edges, sitemaps, and public recovery files are present.`,
   );
   console.log(
-    "External form delivery, authenticated analytics/search, social debugger, and owner-evidence gates remain governed by SITE-REINVENTION-DOSSIER.md.",
+    "External form delivery, authenticated analytics/search, social debugger, and owner-evidence checks remain manual evidence gates outside this audit.",
   );
 }

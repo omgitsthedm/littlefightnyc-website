@@ -52,9 +52,9 @@ For an authorized application release:
    and server-contract suite through `npm run test:dakota`.
 3. Push the exact authorized commit to `main`.
 4. Wait for that exact commit to reach a ready production deploy.
-5. Run `npm run quality:live` and verify representative public routes plus the
-   authorized Dakota host, Identity, queue, and operator-state paths without
-   exposing or submitting prospect data.
+5. Run `npm run quality:live` to verify the exact revision and representative public routes.
+   Authenticated Dakota host, Identity, queue, and operator-state checks are separate,
+   explicitly authorized evidence gates; never expose or submit prospect data.
 
 Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, build settings, environment variables, or the production branch as part of routine work.
 

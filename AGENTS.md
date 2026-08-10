@@ -1,168 +1,105 @@
 # Little Fight NYC agent contract
 
-## Canonical project
+## Canonical route
 
-- Canonical physical root: `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`
-- GitHub: `https://github.com/omgitsthedm/littlefightnyc-website`
-- Default and production branch: `main`
-- Netlify site: `littlefightnyc`, ID `0907d8fe-7018-48db-a6be-1f906e4b2619`
+- Physical root: `/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/littlefightnyc-website`
+- GitHub: `omgitsthedm/littlefightnyc-website`
+- Production branch: `main`
+- Netlify site: `littlefightnyc` (`0907d8fe-7018-48db-a6be-1f906e4b2619`)
 - Production: `https://littlefightnyc.com`
-- Netlify domain: `https://littlefightnyc.netlify.app`
-- Current alias: `https://hey.littlefightnyc.com`
-- Private Dakota host: `https://www.dakota.littlefightnyc.com`
-- Dakota redirect host: `https://dakota.littlefightnyc.com`
-- Dakota operator route: `/app/`
-- Deployment IDs are intentionally not pinned here. Resolve the current ready
-  production deploy and `/release.json` revision before every release action.
 
-`SOURCE_OF_TRUTH.md` holds the concise deployment map and recovery pointers. Recheck live Netlify and GitHub state before a release because point-in-time IDs can change.
+Resolve current deploys, aliases, private routes, and recovery records from
+`SOURCE_OF_TRUTH.md` and live evidence. Do not pin mutable deploy IDs here. Do not route work
+to old Little Fight, Lab, brand-kit, template, demo, or experiment checkouts.
 
-Do not route website work to an older Little Fight checkout or to an independent Lab, brand-kit, template, demo, or experiment repository. Those are separate properties or history unless the fleet manifest explicitly maps them here.
-
-Repository-local `.agents/`, `.claude/`, `.superpowers/`, old static-site
-trees, and standalone Audit checkouts are retired. Do not recreate or load them.
-
-## Start here
-
-Run these checks before editing:
+## Before work
 
 ```bash
 pwd -P
 git rev-parse --show-toplevel
 git status --short --branch
-git remote -v
-git worktree list
 ```
 
-Preserve unrelated local work. Do not reset, clean, stash, commit, push, or deploy changes outside the requested scope.
+Check remotes or worktrees only when routing looks wrong. Preserve unrelated work; never
+reset, clean, or stash it.
 
-Read only the files the task needs:
+Open only what the task needs:
 
-- Deployment or routing: `SOURCE_OF_TRUTH.md`, `netlify.toml`
-- Product and visual work: `app/DESIGN.md`, then `app/src/styles/editorial/tokens.css`
-- Voice or claims: `VOICE.md` and the relevant on-demand business document named in `SOURCE_OF_TRUTH.md`
-- Quality behavior: `.lifi/quality.yml`, the applicable script in `app/package.json`, and the failing test
+- Deployment or routing: `SOURCE_OF_TRUTH.md` and `netlify.toml`
+- Product or visual work: `app/DESIGN.md`, then `app/src/styles/editorial/tokens.css`
+- Voice or public claims: `VOICE.md` and the relevant business policy
+- Quality behavior: `.lifi/quality.yml`, the applicable package script, and the failing test
 
-Do not load historical Git commits, recovery branches, evidence folders, or every Markdown file at startup.
+Do not load history, recovery branches, evidence folders, or all Markdown at startup.
 
-## Source boundaries
+## Source and safety
 
-The deployed React/Vite application lives in `app/`. Live Netlify functions live in `netlify/functions/`. Deployment configuration lives in `netlify.toml`.
+- Application: `app/src/**`, `app/public/**`, `app/index.html`, `app/dakota.html`
+- Tests and build tooling: `app/scripts/**`, `app/tests/**`, `app/playwright.config.ts`
+- Serverless code: `netlify/functions/**`
+- Deployment and quality: `netlify.toml`, `.lifi/**`
+- Generated output: `app/dist/**`; never hand-edit or commit it
 
-Key source paths:
+Never inspect, expose, or commit secrets, local environment files, credentials, private form
+data, provider payloads, or Netlify tokens. Website Audit functions can send email, write
+Blobs, or call providers; routine tests must remain read-only. Do not submit production forms
+without explicit authorization.
 
-- `app/src/**`
-- `app/public/**`
-- `app/index.html`
-- `app/scripts/**`
-- `app/tests/**`
-- `app/playwright.config.ts`
-- `netlify/functions/**`
-- `netlify.toml`
-- `.lifi/**`
+Dakota is the private operator surface in this same build and Netlify site. Its detailed
+authentication, privacy, data, and recovery contract is in `SOURCE_OF_TRUTH.md` under
+“Dakota architecture and private boundary.” Preserve server-side email-and-role enforcement,
+the ten-record queue cap, private-only data, and the ban on automatic outreach. Never move
+Identity, roles, Blobs, secrets, or domains to another property.
 
-`app/dist/` is generated and ignored. Never hand-edit or commit it. Never expose, inspect, or commit secrets, local environment files, credentials, private form data, or Netlify tokens.
+The retired AI phone agent is not a current service. Public phone actions are ordinary call
+and text links.
 
-The Website Audit functions can send email, write blobs, or call providers. Keep tests read-only unless the task explicitly authorizes an external side effect. Do not submit production forms during routine verification.
+## Validation
 
-The retired AI phone agent is not a current service. Public phone actions are ordinary `tel:` and `sms:` links. Do not restore or advertise AI call answering without a new explicit decision.
-
-## Dakota private operator surface
-
-Dakota is part of this canonical React/Vite build and the same Netlify site ID
-`0907d8fe-7018-48db-a6be-1f906e4b2619`. Its dedicated HTML entry is
-`app/dakota.html`, its browser source is `app/src/dakota/**`, and its private
-APIs and Identity hooks live under `netlify/functions/**`. Do not restore an
-independent Dakota website repository, build, or Netlify production property.
-
-Dakota's non-negotiable contract is:
-
-- The only authorized operator is normalized email `hello@littlefightnyc.com`
-  with the server-controlled Identity role `dakota_operator`.
-- Browser checks are presentation only. Queue reads, operator-state reads and
-  writes, and every other private request must enforce both exact email and role
-  server-side.
-- The public-source queue is capped at ten records. No queue, SQLite database,
-  raw upstream payload, prospect snapshot, credential, or operator notebook may
-  enter Git or the browser bundle.
-- Dakota may store bounded private human research, draft, next-action, and
-  outcome state in Netlify Blobs. It must not mutate the public-source queue or
-  trigger email, SMS, calls, form submission, CRM writes, or automatic outreach.
-- Queue publishing uses the signed `/api/dakota/publish` function and the
-  protected `DAKOTA_PUBLISH_TOKEN`; never add a static candidate-data endpoint.
-- Verified Netlify Tech Audit submissions and public Website Audit requests may
-  enter the private operator store through the server-side `dakota-inbound`
-  event bridge. Treat those as consented inbound evidence, never as permission
-  for automatic outreach or automatic qualification.
-
-The separate private engine remains at
-`/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Internal/dakota-2`.
-It performs bounded read-only public-source research and keeps SQLite, queues,
-snapshots, and logs under `~/Library/Application Support/LiFi NYC/Dakota 2.0`.
-The engine is not deployed with this website; only its validated, signed,
-maximum-ten-record queue crosses into the site's private Blob store.
-
-## Commands
-
-Node 24 and npm 10 or newer are required. Install only when dependencies are missing or changed:
+Node 24 and npm 10 or newer are required. Run the narrowest relevant lane from the repository
+root:
 
 ```bash
-nvm use
-npm ci
-npm --prefix app ci
-```
-
-Run commands from the repository root:
-
-```bash
-npm run dev
-npm run lint
-npm run build
-npm run typecheck:functions
-npm run test:dakota
 npm run quality:fast
 npm run quality:full
 npm run quality:release
 npm run quality:live
 ```
 
-Choose the narrowest proportional lane:
+- Markdown outside deployed source: check links, paths, prose, and the complete diff.
+- Small source change: targeted checks plus `quality:fast`.
+- Broad behavior change: `quality:full`.
+- Production candidate: `quality:release` before push and `quality:live` after the exact
+  deploy is ready.
 
-- Documentation-only changes: check links, paths, byte limits, and the staged diff. Do not rebuild the application solely for Markdown changes.
-- Small source changes: targeted checks plus `npm run quality:fast`.
-- Broad behavior changes: `npm run quality:full`.
-- Authorized production candidates: `npm run quality:release` before push and `npm run quality:live` after the exact deploy is ready.
-
-The Netlify build command is `cd app && npm ci && cd .. && npm run typecheck:functions && npm --prefix app run build`; the publish directory is `app/dist`. The root quality lanes run `npm run test:dakota` in addition to function typechecking and the established application gates.
+Changes under `app/public/` are production content, including Markdown.
 
 ## Design and content
 
-The current design system is Axiom Momentum. `app/DESIGN.md` is the only controlling design narrative, and `app/src/styles/editorial/tokens.css` is the implemented token source. Preserve the near-black editorial base, Oswald/Barlow/JetBrains Mono type system, orange lead accent, blue support accent, strong grid, restrained motion, and evidence/privacy guardrails unless the user explicitly authorizes a new direction.
+`app/DESIGN.md` is the controlling design narrative; implemented values live in
+`app/src/styles/editorial/tokens.css`. Preserve Axiom Momentum, the established type and color
+system, restrained motion, accessibility, honest claims, and privacy boundaries unless the
+task explicitly changes them. Do not duplicate those rules here.
 
-Do not duplicate design rules into this file or `CLAUDE.md`. Preserve approved brand, claim, legal, privacy, and client-proof boundaries in their existing on-demand documents.
+## Git and production
 
-## Git and deployment safety
+Netlify auto-builds GitHub `main`.
 
-Netlify is Git-connected to GitHub `main`. A normal source commit pushed to `main` can build and publish production.
-
-- Never run a manual `netlify deploy --prod` for this property.
-- Never link or unlink the Netlify site, change its site ID, domains, build settings, environment variables, or production branch without explicit authorization.
-- Dakota Identity users, roles, Blobs, secrets, and custom domains are
-  site-scoped. Never move or recreate them on another Netlify property; verify
-  the exact canonical site ID before any authorized configuration action.
-- Never push an application or configuration change to `main` without explicit production authorization.
-- For an authorized documentation-only housekeeping push that must not deploy, put `[skip netlify]` in the most recent commit message and verify that the production deploy ID and live fingerprint remain unchanged.
-- Do not rewrite shared history. Legacy branches belong in cold storage, not in
-  the active GitHub branch list or a routed local checkout.
+- Never run a manual production deploy.
+- Never relink the site or change its ID, domains, build settings, environment, or production
+  branch without explicit authorization.
+- Never push application or configuration changes to `main` without production authorization.
+- A non-deployed documentation-only housekeeping push must use `[skip netlify]` in its latest
+  commit and verify that production did not change.
+- For a production release, commit the exact candidate, run the release gate, push that
+  commit, wait for its ready deploy, then prove live revision parity.
+- Do not rewrite shared history.
 
 ## Completion
 
-Before handoff:
+1. Review `git diff --check`, the full scoped diff, and final status.
+2. Run proportional validation and report any external gate not exercised.
+3. Confirm no secret, generated output, unrelated change, or unintended side effect entered.
+4. If pushed, verify GitHub and production parity as applicable.
 
-1. Review `git diff --check`, the full scoped diff, and `git status --short --branch`.
-2. Run proportional validation and report any skipped external gate plainly.
-3. Confirm no secret, generated output, unrelated file, or production side effect entered the change.
-4. If anything was pushed, verify GitHub branch state and Netlify production parity.
-5. Keep the repository clean and leave no unexplained unpushed commit.
-
-Do not create append-only agent diaries or a new handoff for routine work. Update `SOURCE_OF_TRUTH.md` only when canonical routing or deployment facts change; Git history preserves completed work.
+Update `SOURCE_OF_TRUTH.md` only when its facts change. Git history is the work log.

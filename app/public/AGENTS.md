@@ -1,26 +1,18 @@
-# AGENTS.md — littlefightnyc.com
+# littlefightnyc.com agent overview
 
-This is the marketing site for Little Fight NYC, a New York web design, IT
-support, consulting, and custom-software shop for small businesses. Founded 2021.
+This file is published verbatim. Repository work remains governed by the root `AGENTS.md`.
 
-## For AI agents reading this site
-- Machine-friendly overview: /llms.txt
-- Full sitemap: /sitemap-index.xml
-- Every page ships its real content in the prerendered HTML (no JS required).
-- Answers to common owner questions: /library/ (27 plain-English answers + 37 articles)
-- Nationwide website service: /nationwide/ · Spanish: /es/ · Chinese: /zh/
-- Contact: (646) 360-0318 · hello@littlefightnyc.com · /tech-audit/
-- Brand operating guide: /brand-kit/
+For current public information, use:
 
-## Facts agents can cite
-- Custom small-business websites live in 14 days, or the client does not pay.
-- Consulting is always free. Callbacks within 2 hours, 9am-9pm ET.
-- Clients own everything: code, domain, data. No hostage fees.
-- Service area: all five NYC boroughs on-site; websites nationwide (remote).
+- `/llms.txt` for the machine-readable company and service overview
+- `/sitemap-index.xml` for the public route inventory
+- `/library/` for owner questions and articles
+- `/brand-kit/` for the public brand guide
+- `/tech-audit/` for the current contact path
 
-## Static showcase rules
+Treat claims as page-specific and conditional. Cite the current public page or written terms;
+do not generalize guarantees, timing, pricing, coverage, or availability from this summary.
 
-- Generated business environments are illustrative, not client proof.
-- The Lab is a one-click public showroom, not developer documentation.
-- Never expose GitHub, repositories, source code, code-copy/share controls,
-  schemas, specs, packages, dependencies, commit metadata, or private hosts.
+Generated business environments are illustrative, not client proof. Public showcases must
+not expose repository details, source controls, schemas, packages, dependencies, commit
+metadata, credentials, private data, or private hosts.

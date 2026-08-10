@@ -32,7 +32,7 @@ Read [`AGENTS.md`](./AGENTS.md) before making changes. It defines the source bou
 
 The concise deployment map is in [`SOURCE_OF_TRUTH.md`](./SOURCE_OF_TRUTH.md).
 
-## The point
+## Why Little Fight exists
 
 NYC small businesses should not need chain-sized budgets for good technology.
 
