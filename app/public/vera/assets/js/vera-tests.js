@@ -174,7 +174,7 @@
       }
 
       /* ---- phone overflow sheets (C2/C3) ---- */
-      check('nav declares five secondary sections', $$('.mastnav__2nd').length === 5, $$('.mastnav__2nd').length);
+      check('nav declares four secondary sections', $$('.mastnav__2nd').length === 4, $$('.mastnav__2nd').length);
       $('[data-nav-more]').click();
       var navSheetOpen = !$('[data-nav-sheet]').hidden;
       $('[data-nav-sheet] [data-nav="system"]').click();
@@ -312,8 +312,9 @@
       var emptyHuntH1 = $$('h1').filter(function (heading) {
         return !heading.closest('[hidden], [aria-hidden="true"]');
       });
-      check('an empty Hunt still exposes one h1',
-        emptyHuntH1.length === 1 && emptyHuntH1[0].textContent.indexOf('starts empty') > -1,
+      check('an empty saved Hunt exposes one h1 and honest demo framing',
+        emptyHuntH1.length === 1 && emptyHuntH1[0].textContent.indexOf('My Hunt') > -1 &&
+          (($('.hunt-privacy') || { textContent: '' }).textContent.indexOf('suggested shortlist') > -1),
         emptyHuntH1.map(function (heading) { return heading.textContent; }).join(' | '));
       Object.keys(liveCases).forEach(function (uid) { delete liveCases[uid]; });
       Object.keys(caseBackup).forEach(function (uid) { liveCases[uid] = caseBackup[uid]; });
@@ -328,7 +329,8 @@
         app.saveCases();
         check('viewing checklist persists per listing', app.caseOf(probe).checks.water === true, '');
         location.hash = '#/hunt'; app.route();
-        check('hunt board renders stage columns', $$('.board .col').length === app.STAGES.length, $$('.board .col').length + ' columns');
+        check('decision room renders every active stage', $$('.decision-timeline li').length === app.STAGES.length - 1,
+          $$('.decision-timeline li').length + ' steps');
         app.dropCase(probe);
         check('case can be removed', !app.caseOf(probe), '');
       } else {
@@ -482,10 +484,12 @@
       if (probeS && !app.caseOf(probeS)) {
         app.setStage(probeS, 'signed');
         check('signing stamps the date', !!app.caseOf(probeS).signedAt, app.caseOf(probeS).signedAt);
+        app.state.huntSelected = probeS;
         location.hash = '#/hunt'; app.route();
-        var mv = ($('.ccard__movein') || { textContent: '' }).textContent;
-        check('move-in ledger renders law countdowns', mv.indexOf('renewal watch') > -1 && mv.indexOf('deposit back in 14 days') > -1, mv.slice(0, 80));
-        check('hunt board grew a Signed column', $$('.board .col').length === app.STAGES.length, $$('.board .col').length + ' cols for ' + app.STAGES.length + ' stages');
+        var mv = ($('.movein-watch') || { textContent: '' }).textContent;
+        check('move-in ledger renders law countdowns', mv.toLowerCase().indexOf('renewal watch') > -1 && mv.toLowerCase().indexOf('deposit back in 14 days') > -1, mv.slice(0, 80));
+        check('decision timeline reaches Signed', !!$('.decision-timeline [data-stage="signed"][aria-current="step"]'),
+          $$('.decision-timeline li').length + ' steps for ' + app.STAGES.length + ' stages');
         app.dropCase(probeS);
       } else {
         check('signing stamps the date', true, 'skipped — no free probe');

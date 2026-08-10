@@ -15,19 +15,114 @@
   var openUid = null;
   var inspTab = 'overview';
   var inspReturnFocus = null;
+  var inspOriginHash = '#/today';
+  var inspOwnsHistoryEntry = false;
+  var inspOriginScroll = { x: 0, y: 0, main: 0 };
+  var closeTimer = null;
+  var openFrame = null;
+  var transitionSerial = 0;
+  var backgroundState = null;
+  var scrollLockState = null;
+  var motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+
+  function reducedMotion() { return !!(motionQuery && motionQuery.matches); }
+
+  function isVisible(el) {
+    if (!el || el.hidden) return false;
+    if (el.offsetWidth > 0 || el.offsetHeight > 0) return true;
+    return !!(el.getClientRects && el.getClientRects().length);
+  }
+
+  function setBackgroundBlocked(blocked) {
+    document.documentElement.classList.toggle('vera-inspector-open', blocked);
+    if (blocked) {
+      if (!backgroundState) {
+        backgroundState = $$('.masthead,[data-filters],.filter-dock,[data-route-announce],[data-main],.deckfoot').map(function (el) {
+          return { el: el, inert: !!el.inert, ariaHidden: el.getAttribute('aria-hidden') };
+        });
+        backgroundState.forEach(function (item) {
+          item.el.inert = true;
+          item.el.setAttribute('aria-hidden', 'true');
+        });
+      }
+      if (!scrollLockState) {
+        scrollLockState = {
+          html: document.documentElement.style.overflow,
+          body: document.body.style.overflow,
+        };
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      }
+      return;
+    }
+    if (backgroundState) {
+      backgroundState.forEach(function (item) {
+        item.el.inert = item.inert;
+        if (item.ariaHidden == null) item.el.removeAttribute('aria-hidden');
+        else item.el.setAttribute('aria-hidden', item.ariaHidden);
+      });
+      backgroundState = null;
+    }
+    if (scrollLockState) {
+      document.documentElement.style.overflow = scrollLockState.html;
+      document.body.style.overflow = scrollLockState.body;
+      scrollLockState = null;
+    }
+  }
+
+  function originScroll() {
+    var main = $('[data-main]');
+    return {
+      x: window.scrollX || window.pageXOffset || 0,
+      y: window.scrollY || window.pageYOffset || 0,
+      main: main ? main.scrollTop : 0,
+    };
+  }
+
+  function originTarget(uid, preferred) {
+    if (preferred && document.contains(preferred)) return preferred;
+    var candidates = $$('[data-open]');
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i].getAttribute('data-open') === uid && isVisible(candidates[i])) return candidates[i];
+    }
+    return $('[data-main]');
+  }
+
+  function restoreOriginContext(closeId, uid, preferred, scroll) {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        if (closeId !== transitionSerial || openUid) return;
+        var main = $('[data-main]');
+        window.scrollTo(scroll.x, scroll.y);
+        if (main) main.scrollTop = scroll.main;
+        var target = originTarget(uid, preferred);
+        if (target && target.focus) {
+          try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); }
+        }
+        /* Safari may scroll a newly focused row despite preventScroll. The
+           saved route position remains authoritative. */
+        window.scrollTo(scroll.x, scroll.y);
+        if (main) main.scrollTop = scroll.main;
+      });
+    });
+  }
 
   function inspFocusables() {
     var panel = $('[data-inspector]');
     if (!panel) return [];
     return $$('a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])', panel)
-      .filter(function (el) { return el.offsetWidth > 0 || el.offsetHeight > 0; });
+      .filter(isVisible);
   }
 
   /* keep Tab inside the dialog while it is open */
   document.addEventListener('keydown', function (e) {
     if (openUid && e.target && e.target.getAttribute && e.target.getAttribute('role') === 'tab' && ['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(e.key) > -1) {
-      var tabs = $$('[data-insp-tabs] [role="tab"]');
+      /* Responsive CSS hides secondary tabs behind More. Keep roving focus on
+         the tabs that are actually present in this layout. */
+      var tabs = $$('[data-insp-tabs] [role="tab"]').filter(isVisible);
+      if (!tabs.length) return;
       var index = tabs.indexOf(e.target);
+      if (index < 0) index = 0;
       if (e.key === 'Home') index = 0;
       else if (e.key === 'End') index = tabs.length - 1;
       else index = (index + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
@@ -44,7 +139,6 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
 
   function open(uid) {
@@ -60,25 +154,51 @@
       if ((location.hash || '').indexOf('#/listing/') === 0) location.hash = '#/today';
       return;
     }
-    inspReturnFocus = document.activeElement;
+    var wasOpen = !!openUid;
+    if (!wasOpen) {
+      inspReturnFocus = document.activeElement;
+      inspOriginScroll = originScroll();
+      inspOriginHash = (location.hash || '').indexOf('#/listing/') === 0
+        ? '#/' + ((app.state && app.state.route) || 'today')
+        : (location.hash || '#/today');
+      inspOwnsHistoryEntry = false;
+    }
     openUid = uid;
     inspTab = 'overview';
+    var openId = ++transitionSerial;
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    if (openFrame) { cancelAnimationFrame(openFrame); openFrame = null; }
     /* the URL knows which ledger is open — back closes it (2.3) */
     if ((location.hash || '') !== '#/listing/' + uid) {
-      try { history.pushState(null, '', '#/listing/' + uid); } catch (e) {}
+      try {
+        if (wasOpen && inspOwnsHistoryEntry) history.replaceState({ veraListing: uid }, '', '#/listing/' + uid);
+        else {
+          history.pushState({ veraListing: uid }, '', '#/listing/' + uid);
+          inspOwnsHistoryEntry = true;
+        }
+      } catch (e) {}
     }
 
     /* shared-element flight: the card's media flies into the ledger (2.2) */
     var srcMedia = document.querySelector('[data-open="' + uid + '"] .dropcard__media');
     function mount() {
-      $('[data-inspector]').hidden = false;
-      $('[data-scrim]').hidden = false;
-      requestAnimationFrame(function () { $('[data-inspector]').classList.add('is-open'); });
+      if (openId !== transitionSerial || openUid !== uid) return;
+      var panel = $('[data-inspector]');
+      var scrim = $('[data-scrim]');
+      if (!panel || !scrim) return;
+      panel.hidden = false;
+      scrim.hidden = false;
       render(l);
+      finishOpen(uid);
+      setBackgroundBlocked(true);
+      openFrame = requestAnimationFrame(function () {
+        openFrame = null;
+        if (openId === transitionSerial && openUid === uid) panel.classList.add('is-open');
+      });
       var dst = $('.insp-port__frame');
       if (dst) dst.style.viewTransitionName = 'vera-hero';
     }
-    if (!TESTMODE && !RM && document.startViewTransition && srcMedia) {
+    if (!TESTMODE && !reducedMotion() && document.startViewTransition && srcMedia) {
       srcMedia.style.viewTransitionName = 'vera-hero';
       var vt = document.startViewTransition(function () {
         srcMedia.style.viewTransitionName = '';
@@ -93,13 +213,14 @@
         var dst = $('.insp-port__frame');
         if (dst) dst.style.viewTransitionName = '';
       }).catch(function () {});
-      return finishOpen(uid);
+      return true;
     }
     mount();
-    return finishOpen(uid);
+    return true;
   }
 
   function finishOpen(uid) {
+    if (openUid !== uid) return;
     $$('#main tr.is-open, #main .card.is-open').forEach(function (el) { el.classList.remove('is-open'); });
     $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
     var row = $('[data-open="' + uid + '"]');
@@ -110,29 +231,64 @@
 
   function close() {
     var wasUid = openUid;
+    var originHash = inspOriginHash || '#/today';
+    var ownsHistoryEntry = inspOwnsHistoryEntry;
+    var savedScroll = inspOriginScroll;
+    var closeId = ++transitionSerial;
     openUid = null;
-    /* if the URL still names this ledger, step the hash back out */
-    if (wasUid && (location.hash || '') === '#/listing/' + wasUid) {
-      try { history.replaceState(null, '', '#/today'); } catch (e) {}
-    }
+    inspOwnsHistoryEntry = false;
+    inspOriginHash = '#/today';
+    inspOriginScroll = { x: 0, y: 0, main: 0 };
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    if (openFrame) { cancelAnimationFrame(openFrame); openFrame = null; }
     var back = inspReturnFocus;
     inspReturnFocus = null;
     if (back && !document.contains(back)) back = null;
-    if (back && back.focus) setTimeout(function () { back.focus(); }, 0);
+    setBackgroundBlocked(false);
+    $$('#main tr.is-open, #main .card.is-open').forEach(function (el) { el.classList.remove('is-open'); });
     $$('#main tr[data-open][aria-expanded="true"]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
-    $('[data-inspector]').classList.remove('is-open');
-    $('[data-scrim]').hidden = true;
-    setTimeout(function () { $('[data-inspector]').hidden = true; }, 280);
+    var panel = $('[data-inspector]');
+    var scrim = $('[data-scrim]');
+    if (panel) panel.classList.remove('is-open');
+    if (scrim) scrim.hidden = true;
+    closeTimer = setTimeout(function () {
+      closeTimer = null;
+      if (closeId === transitionSerial && !openUid && panel) panel.hidden = true;
+    }, reducedMotion() ? 0 : 280);
+
+    /* A ledger opened from a route owns one history entry, so browser Back and
+       the visible close controls both return to that exact route. A direct
+       listing URL has no in-app origin entry and falls back to Today. */
+    var stepsBack = wasUid && (location.hash || '') === '#/listing/' + wasUid && ownsHistoryEntry && !TESTMODE;
+    if (stepsBack) {
+      window.addEventListener('hashchange', function () {
+        restoreOriginContext(closeId, wasUid, back, savedScroll);
+      }, { once: true });
+    } else {
+      restoreOriginContext(closeId, wasUid, back, savedScroll);
+    }
+    if (wasUid && (location.hash || '') === '#/listing/' + wasUid) {
+      try {
+        if (stepsBack) history.back();
+        else history.replaceState(null, '', originHash);
+      } catch (e) {}
+    }
   }
 
   function setTab(t) {
     inspTab = t;
     var sheet = $('[data-tab-sheet]');
+    var focusCameFromSheet = !!(sheet && sheet.contains(document.activeElement));
     if (sheet) sheet.hidden = true;
+    var more = $('[data-tab-more]');
+    if (more) more.setAttribute('aria-expanded', 'false');
     var l = A().byUid(openUid);
     if (l) render(l);
     var active = $('[data-insp-tabs] [data-tab="' + t + '"]');
-    if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: RM ? 'auto' : 'smooth' });
+    if (active && isVisible(active) && active.scrollIntoView) {
+      active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reducedMotion() ? 'auto' : 'smooth' });
+    }
+    if (focusCameFromSheet && more) requestAnimationFrame(function () { if (openUid) more.focus(); });
   }
 
   function rerender() {

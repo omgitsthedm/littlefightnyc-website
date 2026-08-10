@@ -29,3 +29,36 @@
 - Console: no error or warning was produced by the final production-build preview route pass.
 
 Final result: passed
+
+---
+
+# Design QA — VERA Application Platform
+
+## Target and implementation
+
+- Canonical product route: `https://littlefightnyc.com/vera/`
+- Selected visual directions: Browse / Signal Desk, Atlas / City Lens, and My Hunt / Decision Room.
+- Final implementation captures: Browse, ledger-open Browse, Atlas, and My Hunt at 1440 × 1024 CSS pixels; Browse at 390 × 844 CSS pixels.
+- The implementation-session comparison and showcase remain review artifacts; they are not shipped with the public product.
+
+## Comparison and iteration
+
+1. Browse preserved the selected direction's evidence-desk hierarchy: persistent command rail, high-signal search/lenses, dense comparable rows, and an interruptible record inspector. The implementation uses the current 279-listing publication rather than concept placeholders.
+2. Atlas preserved the selected direction's map-plus-evidence composition and explicit Map/List modes. A visual pass exposed a valid MapLibre shell with zero rendered listings; the final canvas layer renders all 220 geocoded records with zoom-scaled, non-pulsing points.
+3. My Hunt preserved the selected direction's shortlist, selected casebook, score rationale, risk/commute/signals, and decision timeline. With no saved browser-local cases, it is honestly labeled as a live-data suggested shortlist.
+4. The new evidence-fold VERA mark replaced the radar glyph across the app, favicon, Apple touch icon, install icons, loading state, and manifest. It remains legible from 32 to 512 pixels and has a maskable safe-area variant.
+5. The phone pass exposed a fixed tab bar positioned against the filtered masthead instead of the viewport. The containing-block defect was corrected; the tab bar now lands at the bottom safe area and the first Browse result remains above the first fold.
+
+## Final findings
+
+- P0: none.
+- P1: none. The empty Atlas data layer and misplaced phone tab bar were resolved before this pass.
+- P2: none. Browse density, filter disclosure, touch targets, inspector focus/scroll restoration, Atlas modes, and decision-stage actions are covered by regression tests.
+- Motion: no blocking radar veil, ambient infinite loop, count-up theater, pulsing map marker, or scroll-gated content remains. State changes are short and interruptible; reduced-motion is read live.
+- Responsive application chrome: desktop uses a persistent rail, iPad and compact desktop use full-height top chrome, and iPhone uses bottom tabs plus a filter sheet. Safe areas, 44-pixel touch targets, and `touch-action: manipulation` are enforced.
+- PWA: stable `/vera/` manifest identity, Apple install metadata, real 192/512/maskable icons, shortcuts for the four primary workspaces, and a versioned offline shell are present. Publication data remains network-first with timestamped fallback.
+- Browser QA: 26/26 focused instances passed across Chromium desktop, desktop WebKit, iPad WebKit, and iPhone WebKit. Strict TypeScript, ESLint, CSP audit, diff checks, 2,014-module production build, and 207 prerendered routes passed.
+- Console: zero errors in the final local flows. OpenFreeMap's current dark style emits one non-blocking missing `wood-pattern` image warning; VERA's own data and layers render correctly.
+- Intentional differences from the concepts: all copy, counts, addresses, scores, photos, and map points come from live sanitized VERA data; Atlas frames the full current NYC result set instead of a staged Manhattan crop; the browser-local hunt never implies a server account.
+
+final result: passed

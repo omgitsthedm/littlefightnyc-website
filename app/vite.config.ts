@@ -2,6 +2,18 @@ import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
+const veraFeedProxy = {
+  "/vera/data": {
+    target: "https://raw.githubusercontent.com",
+    changeOrigin: true,
+    rewrite: (path: string) =>
+      path.replace(
+        /^\/vera\/data/,
+        "/omgitsthedm/vera-apartment-search/feed",
+      ),
+  },
+};
+
 export default defineConfig({
   plugins: [react()],
   build: {
@@ -59,6 +71,14 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    // Production serves VERA's sanitized publication through the exact
+    // same-origin Netlify rewrites. Mirror that boundary in local preview so
+    // design and interaction QA exercise the real public feed without adding
+    // a second browser origin to application code.
+    proxy: veraFeedProxy,
+  },
+  preview: {
+    proxy: veraFeedProxy,
   },
   resolve: {
     alias: {

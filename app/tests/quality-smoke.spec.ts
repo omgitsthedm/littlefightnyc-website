@@ -1290,7 +1290,10 @@ test(
     await expect(page.locator("[data-inspector]")).toHaveClass(/is-open/);
     expect(await page.evaluate(() => window.scrollY), "Space must not scroll").toBe(0);
 
+    // Close the modal before moving focus back into its inert background.
     // A focusable row nobody can see focused is half a fix.
+    await page.keyboard.press("Escape");
+    await expect(page.locator("[data-inspector]")).not.toHaveClass(/is-open/);
     const outline = await rows.nth(2).evaluate((el) => {
       el.focus();
       return getComputedStyle(el).outlineStyle;

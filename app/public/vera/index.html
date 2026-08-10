@@ -7,6 +7,12 @@
   <meta name="description" content="A free NYC rental lens that joins listings to public records, flags risk, shows uncertainty, and keeps every source record open for inspection.">
   <meta name="theme-color" content="#0c0e0d">
   <meta name="color-scheme" content="dark">
+  <meta name="application-name" content="VERA">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="VERA">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <!-- Hand-authored page, so none of this comes from the prerenderer the React
        routes use — it has to be stated here or it does not exist. Without a
@@ -29,12 +35,13 @@
   <meta name="twitter:description" content="NYC rentals, public-record checks, scam signals, and honest uncertainty — free, read-only, no account.">
   <meta name="twitter:image" content="https://littlefightnyc.com/assets/social/og-vera-34d78811.jpg">
   <meta name="twitter:image:alt" content="VERA rental-intelligence card over the 72nd Street subway kiosk, highlighting public-record checks and uncertainty.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%230c0e0d'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='9'%20fill='none'%20stroke='%23868c85'%20stroke-width='1.6'/%3E%3Cpath%20d='M16%2016%20L16%207%20A9%209%200%200%201%2023.8%2011.5%20Z'%20fill='%234cc38a'/%3E%3Ccircle%20cx='16'%20cy='16'%20r='1.8'%20fill='%23e9ece8'/%3E%3C/svg%3E">
+  <link rel="icon" href="./assets/icons/vera-icon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/icons/vera-icon-180.png" sizes="180x180">
   <link rel="preload" href="./assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=51">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=53">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -42,37 +49,32 @@
 
   <div class="shell" data-shell>
     <header class="masthead">
-      <a class="brand" href="#/today" aria-label="VERA — today's drop">
-        <svg class="insignia" width="34" height="34" viewBox="0 0 24 24" aria-hidden="true">
-          <circle class="ring" cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
-          <path class="sweep" d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z"/>
-          <circle class="core" cx="12" cy="12" r="1.7"/>
-        </svg>
+      <a class="brand" href="#/today" aria-label="VERA — NYC rental intelligence">
+        <img class="insignia" src="./assets/brand/vera-mark-96.png" width="34" height="34" alt="" aria-hidden="true" decoding="async">
         <span class="brand__word"><span class="brand__name">VERA</span>
-        <span class="brand__tag">Verified evaluation for rental analysis</span></span>
+        <span class="brand__tag">NYC rental intelligence</span></span>
       </a>
       <div class="masthead__status">
         <span class="pulse" data-pulse aria-hidden="true"></span>
-        <span class="mono" data-snapshot-line>Sweeping…</span>
+        <span class="mono" data-snapshot-line>Loading the current publication…</span>
       </div>
       <div class="mastnav__zone">
         <nav class="mastnav" aria-label="Sections">
           <a href="#/today" data-nav="today">Today</a>
           <a href="#/market" data-nav="market" class="mastnav__2nd">Market</a>
           <a href="#/browse" data-nav="browse">Browse</a>
-          <a href="#/atlas" data-nav="atlas" class="mastnav__2nd">Atlas</a>
+          <a href="#/atlas" data-nav="atlas">Atlas</a>
           <a href="#/hunt" data-nav="hunt">My hunt<b class="nv__badge" data-case-badge hidden>0</b></a>
           <a href="#/manual" data-nav="manual" class="mastnav__2nd">Field manual</a>
           <a href="#/archive" data-nav="archive" class="mastnav__2nd">Receipts</a>
           <a href="#/system" data-nav="system" class="mastnav__2nd">System</a>
           <button type="button" class="mastnav__more" data-nav-more aria-expanded="false" aria-haspopup="true">More</button>
         </nav>
-        <!-- Phone-only overflow: the five secondary sections live here under
+        <!-- Phone-only overflow: the four secondary sections live here under
              More. Links carry data-nav, so the router's active-state sync
              reaches them unchanged. -->
         <div class="mastnav__sheet" data-nav-sheet hidden>
           <a href="#/market" data-nav="market">Market</a>
-          <a href="#/atlas" data-nav="atlas">Atlas</a>
           <a href="#/manual" data-nav="manual">Field manual</a>
           <a href="#/archive" data-nav="archive">Receipts</a>
           <a href="#/system" data-nav="system">System</a>
@@ -80,7 +82,7 @@
       </div>
     </header>
 
-    <div class="filters" data-filters hidden>
+    <div id="vera-filters" class="filters" data-filters aria-label="Listing filters" hidden>
       <div class="filters__group" role="group" aria-label="Price bracket">
         <span class="filters__label">Bracket</span>
         <button type="button" data-bracket="b1">≤ $2,000</button>
@@ -113,6 +115,9 @@
       </div>
       <button type="button" class="filters__clear" data-clear hidden>Clear ×</button>
     </div>
+    <button type="button" class="filter-dock" data-filter-toggle aria-controls="vera-filters" aria-expanded="false" hidden>
+      Filters <span data-filter-count hidden></span>
+    </button>
 
     <!-- Route changes in a single-page app are silent to screen readers
          unless announced. This says what view you landed on and what is
@@ -122,11 +127,8 @@
     <main id="main" class="main" data-main tabindex="-1">
       <section class="page" data-page="today"></section>
       <div class="loading" data-loading>
-        <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" class="loading__mark">
-          <circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"/>
-          <path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a"/>
-        </svg>
-        <p>VERA is sweeping the city…</p>
+        <img src="./assets/brand/vera-mark-96.png" width="40" height="40" alt="" aria-hidden="true" decoding="async">
+        <p>Loading the current publication…</p>
       </div>
     </main>
 
@@ -182,9 +184,9 @@
   <!-- MapLibre (~1MB) and vera-tests.js are deliberately NOT here: the map
        engine loads on first Atlas open, the test suite only under ?test=1.
        Both are injected by vera-app.js. -->
-  <script src="./assets/js/vera-map.js?v=47" defer></script>
-  <script src="./assets/js/vera-sweep.js?v=50" defer></script>
-  <script src="./assets/js/vera-ledger.js?v=49" defer></script>
-  <script src="./assets/js/vera-app.js?v=52" defer></script>
+  <script src="./assets/js/vera-map.js?v=53" defer></script>
+  <script src="./assets/js/vera-sweep.js?v=53" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=53" defer></script>
+  <script src="./assets/js/vera-app.js?v=53" defer></script>
 </body>
 </html>

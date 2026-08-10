@@ -1,22 +1,26 @@
-/* VERA map — the real city, to the pixel. MapLibre GL (vendored, BSD)
-   over OpenFreeMap's keyless vector tiles: every street, every building
-   footprint, crisp at any zoom, recolored to VERA's warm black. The
-   hand-drawn SVG atlas remains the honest fallback when WebGL or the
-   tile host is unavailable. */
+/* VERA map — MapLibre GL over OpenFreeMap's keyless vector tiles. Listings
+   live in one canvas-rendered GeoJSON source, so Atlas stays responsive with
+   hundreds of results and never needs a pulsing DOM marker per listing. */
 (function () {
   'use strict';
 
   var C = window.__VERAC;
   var STYLE_URL = 'https://tiles.openfreemap.org/styles/dark';
+  /* Version the worker-facing source identity as well as the script URL. */
+  var SOURCE_ID = 'vera-listings-v2';
   var mapInstance = null;
+
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
 
   function available() {
     if (!window.maplibregl) return false;
-    try { return maplibregl.supported ? maplibregl.supported() : true; } catch (e) { return true; }
+    try { return window.maplibregl.supported ? window.maplibregl.supported() : true; } catch (e) { return true; }
   }
 
-  /* Recolor the base style into VERA's palette after load: warm blacks
-     for ground, muted pine for parks, brand water, quiet labels. */
+  /* Recolor the base style into VERA's palette after load: warm blacks for
+     ground, muted pine for parks, brand water, and quiet labels. */
   var TINTS = [
     [/water/i, 'fill-color', '#0c1512'],
     [/park|wood|grass|cemetery|golf|pitch|garden/i, 'fill-color', '#15231b'],
@@ -27,15 +31,15 @@
 
   function tint(map) {
     var layers = (map.getStyle() && map.getStyle().layers) || [];
-    layers.forEach(function (ly) {
+    layers.forEach(function (layer) {
       TINTS.forEach(function (t) {
-        if (t[0].test(ly.id)) {
-          try { map.setPaintProperty(ly.id, t[1], t[2]); } catch (e) {}
+        if (t[0].test(layer.id)) {
+          try { map.setPaintProperty(layer.id, t[1], t[2]); } catch (e) {}
         }
       });
-      if (ly.type === 'symbol') {
-        try { map.setPaintProperty(ly.id, 'text-color', '#8d877a'); } catch (e) {}
-        try { map.setPaintProperty(ly.id, 'text-halo-color', '#0b0d0c'); } catch (e) {}
+      if (layer.type === 'symbol') {
+        try { map.setPaintProperty(layer.id, 'text-color', '#8d877a'); } catch (e) {}
+        try { map.setPaintProperty(layer.id, 'text-halo-color', '#0b0d0c'); } catch (e) {}
       }
     });
   }
@@ -43,38 +47,112 @@
   function listingsGeoJSON(listings) {
     return {
       type: 'FeatureCollection',
-      features: listings.filter(function (l) { return l.latitude != null && l.longitude != null; })
-        .map(function (l) {
-          var state = C.isScam(l) ? 'bad' : C.needsVerify(l) ? 'warn' : 'good';
+      features: listings.filter(function (listing) { return listing.latitude != null && listing.longitude != null; })
+        .map(function (listing) {
+          var state = C.isScam(listing) ? 'bad' : C.needsVerify(listing) ? 'warn' : 'good';
           return {
             type: 'Feature',
-            geometry: { type: 'Point', coordinates: [+l.longitude, +l.latitude] },
+            geometry: { type: 'Point', coordinates: [+listing.longitude, +listing.latitude] },
             properties: {
-              uid: l.listing_uid,
-              rent: l.rent ? '$' + (Math.round(l.rent / 100) / 10) + 'k' : '?',
+              uid: listing.listing_uid,
+              rent: listing.rent ? '$' + (Math.round(listing.rent / 100) / 10) + 'k' : '?',
               state: state,
-              title: l.title || l.address_normalized || 'Listing',
             },
           };
         }),
     };
   }
 
-  function hoodBoundaries() {
-    if (!window.__VERAG || !window.__VERAG.ready || !window.__VERAG.ready()) return null;
-    /* rebuild light boundary lines from the vendored NTA polygons */
-    var geo = null;
-    try {
-      geo = { type: 'FeatureCollection', features: [] };
-      (window.__VERAG_RAW || []).forEach(function () {});
-    } catch (e) {}
-    return null; /* the base map's own boundaries suffice at v1 */
+  function addListingLayers(map, data, onOpen) {
+    map.addSource(SOURCE_ID, {
+      type: 'geojson',
+      data: data,
+    });
+
+    map.addLayer({
+      id: 'vera-listing-points',
+      type: 'circle',
+      source: SOURCE_ID,
+      paint: {
+        'circle-color': ['match', ['get', 'state'], 'bad', '#cf7352', 'warn', '#d4a24c', '#4cc38a'],
+        'circle-opacity': 0.94,
+        'circle-radius': ['interpolate', ['linear'], ['zoom'], 9.5, 5, 12.5, 9, 16, 14],
+        'circle-stroke-color': '#0b0d0c',
+        'circle-stroke-width': 1.5,
+      },
+    });
+
+    map.addLayer({
+      id: 'vera-listing-labels',
+      type: 'symbol',
+      source: SOURCE_ID,
+      minzoom: 12.5,
+      layout: {
+        'text-field': ['get', 'rent'],
+        'text-size': 9,
+        'text-allow-overlap': true,
+        'text-ignore-placement': true,
+      },
+      paint: {
+        'text-color': '#0b0d0c',
+        'text-halo-width': 0,
+      },
+    });
+
+    /* A transparent 44-ish-pixel target keeps touch selection forgiving
+       without making the visible point shout. */
+    map.addLayer({
+      id: 'vera-listing-hit',
+      type: 'circle',
+      source: SOURCE_ID,
+      paint: {
+        'circle-radius': 22,
+        'circle-color': '#000000',
+        'circle-opacity': 0.001,
+      },
+    });
+
+    map.on('click', 'vera-listing-hit', function (event) {
+      var feature = event.features && event.features[0];
+      if (feature && feature.properties && onOpen) onOpen(feature.properties.uid);
+    });
+
+    ['vera-listing-hit'].forEach(function (layerId) {
+      map.on('mouseenter', layerId, function () { map.getCanvas().style.cursor = 'pointer'; });
+      map.on('mouseleave', layerId, function () { map.getCanvas().style.cursor = ''; });
+    });
+  }
+
+  function frameListings(map, data) {
+    var features = data.features || [];
+    if (!features.length) return;
+    if (features.length === 1) {
+      map.easeTo({
+        center: features[0].geometry.coordinates,
+        zoom: 13.5,
+        duration: prefersReducedMotion() ? 0 : 320,
+        essential: false,
+      });
+      return;
+    }
+    var bounds = new window.maplibregl.LngLatBounds();
+    features.forEach(function (feature) { bounds.extend(feature.geometry.coordinates); });
+    map.fitBounds(bounds, {
+      padding: 60,
+      duration: prefersReducedMotion() ? 0 : 480,
+      maxZoom: 13.5,
+      essential: false,
+    });
   }
 
   function mount(container, listings, onOpen) {
     if (!available()) return null;
+    /* Atlas rerenders when its filters change. Release the previous WebGL
+       context before attaching the replacement map to the new container. */
+    if (mapInstance) destroy();
     try {
-      var map = new maplibregl.Map({
+      var pendingData = listingsGeoJSON(listings);
+      var map = new window.maplibregl.Map({
         container: container,
         style: STYLE_URL,
         center: [-73.9605, 40.755],
@@ -84,54 +162,33 @@
         attributionControl: { compact: true },
         cooperativeGestures: false,
       });
-      map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      map.addControl(new window.maplibregl.NavigationControl({ showCompass: false }), 'top-right');
 
-      var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      map.__setListings = function (nextListings) {
+        pendingData = listingsGeoJSON(nextListings);
+        var source = map.getSource && map.getSource(SOURCE_ID);
+        if (source) source.setData(pendingData);
+      };
 
-      var markers = [];
-      function placeMarkers(ls) {
-        markers.forEach(function (m) { m.remove(); });
-        markers = [];
-        var fs = listingsGeoJSON(ls).features;
-        fs.forEach(function (f, i) {
-          var el = document.createElement('div');
-          el.className = 'vpin vpin--' + f.properties.state;
-          el.style.setProperty('--pd', Math.min(i * 45, 1800) + 'ms');
-          el.title = f.properties.title + ' · ' + f.properties.rent;
-          el.textContent = f.properties.rent;
-          var pulse = document.createElement('span');
-          pulse.className = 'vpin__pulse';
-          el.appendChild(pulse);
-          el.addEventListener('click', function (ev) { ev.stopPropagation(); if (onOpen) onOpen(f.properties.uid); });
-          markers.push(new maplibregl.Marker({ element: el }).setLngLat(f.geometry.coordinates).addTo(map));
-        });
-      }
-      map.__placeMarkers = placeMarkers;
-
-      var placed = false;
-      function firstPlace() {
-        if (placed) return;
-        placed = true;
-        tint(map);
-        placeMarkers(listings);
-      }
-      /* 'load' can be missed on rapid re-mounts and 'idle' has proven shy
-         in embedded panes — take every road in, idempotently */
-      map.once('idle', firstPlace);
-      map.once('render', function () { setTimeout(firstPlace, 400); });
-      setTimeout(firstPlace, 2200);
-      if (map.loaded && map.loaded()) firstPlace();
       map.on('load', function () {
-        firstPlace();
-        map.addSource('vera-listings', { type: 'geojson', data: listingsGeoJSON(listings) });
-
-        /* frame the hunt zone on the actual pins */
-        var pts = listingsGeoJSON(listings).features;
-        if (pts.length) {
-          var b = new maplibregl.LngLatBounds();
-          pts.forEach(function (f) { b.extend(f.geometry.coordinates); });
-          map.fitBounds(b, { padding: 60, duration: RM ? 0 : 1200, maxZoom: 13.5 });
-        }
+        if (mapInstance !== map) return;
+        tint(map);
+        map.once('idle', function () {
+          if (mapInstance !== map) return;
+          /* Let the base vector style settle before adding VERA's data layer. */
+          addListingLayers(map, pendingData, onOpen);
+          frameListings(map, pendingData);
+          /* Keep the worker payload to the rendering primitives above. The
+             bundled MapLibre build drops worker payloads given arbitrary
+             source-title text or string top-level IDs. Listing UIDs
+             stay in properties for selection; this idle marker proves the
+             corrected source actually reached the rendered map. */
+          map.once('idle', function () {
+            if (mapInstance !== map) return;
+            var rendered = map.queryRenderedFeatures({ layers: ['vera-listing-points'] });
+            map.getContainer().setAttribute('data-veramap-features', String(rendered.length));
+          });
+        });
       });
 
       mapInstance = map;
@@ -142,10 +199,7 @@
   }
 
   function update(listings) {
-    if (mapInstance && mapInstance.__placeMarkers) mapInstance.__placeMarkers(listings);
-    if (mapInstance && mapInstance.getSource && mapInstance.getSource('vera-listings')) {
-      mapInstance.getSource('vera-listings').setData(listingsGeoJSON(listings));
-    }
+    if (mapInstance && mapInstance.__setListings) mapInstance.__setListings(listings);
   }
 
   function destroy() {

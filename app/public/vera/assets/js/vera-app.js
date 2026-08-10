@@ -18,9 +18,26 @@
   ];
   var FEED_TIMEOUT_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
-  /* phone overflow (C2): these five collapse behind More under 700px */
-  var NAV_SECONDARY = ['market', 'atlas', 'manual', 'archive', 'system'];
-  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Today, Browse, Atlas, and My Hunt are the primary workspaces on every
+     device. Context, receipts, and operating detail sit one level deeper. */
+  var NAV_SECONDARY = ['market', 'manual', 'archive', 'system'];
+  var RM_QUERY = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  var FILTER_SHEET_QUERY = window.matchMedia ? window.matchMedia('(max-width: 760px)') : null;
+  var RM = !!(RM_QUERY && RM_QUERY.matches);
+  if (RM_QUERY) {
+    var onMotionPreference = function (event) {
+      RM = !!event.matches;
+      document.documentElement.classList.toggle('vera-reduced-motion', RM);
+    };
+    if (RM_QUERY.addEventListener) RM_QUERY.addEventListener('change', onMotionPreference);
+    else if (RM_QUERY.addListener) RM_QUERY.addListener(onMotionPreference);
+  }
+  document.documentElement.classList.toggle('vera-reduced-motion', RM);
+  if (FILTER_SHEET_QUERY) {
+    var onFilterLayout = function () { if (D) renderFilters(); };
+    if (FILTER_SHEET_QUERY.addEventListener) FILTER_SHEET_QUERY.addEventListener('change', onFilterLayout);
+    else if (FILTER_SHEET_QUERY.addListener) FILTER_SHEET_QUERY.addListener(onFilterLayout);
+  }
 
   /* The public acceptance harness deliberately exercises every workspace
      control. In test mode it must start empty and stay memory-only so a
@@ -47,15 +64,16 @@
     bracket: 'all', unit: 'all', hoods: [], areas: [], transit: 0,
     lens: { noBrokers: false, noMgmt: false, privateFirst: false },
     view: 'all', q: '', sort: { key: 'overall_score', dir: -1 }, density: 'comfortable', route: 'today',
+    huntSelected: '', filtersOpen: false, atlasMode: 'map',
   };
 
   try {
     var saved = JSON.parse(localRead('vera-workspace') || 'null');
-    if (saved) { ['bracket', 'unit', 'hoods', 'areas', 'transit', 'lens', 'view', 'density'].forEach(function (k) { if (saved[k] !== undefined) state[k] = saved[k]; }); }
+    if (saved) { ['bracket', 'unit', 'hoods', 'areas', 'transit', 'lens', 'view', 'density', 'atlasMode'].forEach(function (k) { if (saved[k] !== undefined) state[k] = saved[k]; }); }
   } catch (e) {}
 
   function persist() {
-    localWrite('vera-workspace', JSON.stringify({ bracket: state.bracket, unit: state.unit, hoods: state.hoods, areas: state.areas, transit: state.transit, lens: state.lens, view: state.view, density: state.density }));
+    localWrite('vera-workspace', JSON.stringify({ bracket: state.bracket, unit: state.unit, hoods: state.hoods, areas: state.areas, transit: state.transit, lens: state.lens, view: state.view, density: state.density, atlasMode: state.atlasMode }));
   }
 
   function tidyTitle(t) {
@@ -71,49 +89,16 @@
 
   function byUid(uid) { for (var i = 0; i < POOL.length; i++) if (POOL[i].listing_uid === uid) return POOL[i]; return null; }
 
-  /* ---------- count-up: numbers that arrive, not appear ---------- */
+  /* ---------- metrics ----------
+     A work surface should never make the user wait for a number it already
+     knows. Metrics render at their final value; motion is reserved for state
+     changes that explain where something went. */
 
   function settleCounters(root) {
     $$('[data-count-to]', root).forEach(function (el) { el.textContent = el.getAttribute('data-count-final'); });
   }
 
-  function countUps(root) {
-    if (RM) { settleCounters(root); return; }
-
-    /* requestAnimationFrame does not fire in a hidden or background tab, so
-       a page rendered there left every counter sitting at its placeholder
-       0 — "In the net 0/231", "Median ask $0" — until something forced a
-       re-render. Open VERA in a background tab and switch to it and that is
-       what you got.
-
-       Hidden pages get the final value immediately, and the animation is
-       re-armed for the first time the page is actually looked at. A number
-       that arrives without ceremony beats a wrong one that animates. */
-    if (document.hidden) {
-      settleCounters(root);
-      var replay = function () {
-        document.removeEventListener('visibilitychange', replay);
-        if (!document.hidden) countUps(root);
-      };
-      document.addEventListener('visibilitychange', replay);
-      return;
-    }
-
-    $$('[data-count-to]', root).forEach(function (el) {
-      var target = +el.getAttribute('data-count-to') || 0;
-      var final = el.getAttribute('data-count-final');
-      var prefix = el.getAttribute('data-count-prefix') || '';
-      var t0 = performance.now(), dur = 650;
-      function stepFn(ts) {
-        var k = Math.min((ts - t0) / dur, 1);
-        var e = 1 - Math.pow(1 - k, 3);
-        el.textContent = prefix + Math.round(target * e).toLocaleString('en-US');
-        if (k < 1) requestAnimationFrame(stepFn);
-        else if (final) el.textContent = final;
-      }
-      requestAnimationFrame(stepFn);
-    });
-  }
+  function countUps(root) { settleCounters(root); }
 
   // data-count-final is what the reduced-motion path reads; without it every
   // counter rendered blank instead of jumping straight to its value.
@@ -343,8 +328,8 @@
 
   function renderChrome() {
     var sh = (D && D.source_health) || {};
-    $('[data-snapshot-line]').textContent = 'Sweep ' + timeago(D && D.generated_at) + ' · ' + POOL.length + ' in the net' +
-      (servedFromCache ? ' · OFFLINE — showing the sweep cached ' + timeago(servedFromCache) : '');
+    $('[data-snapshot-line]').textContent = 'Data ' + timeago(D && D.generated_at) + ' · ' + POOL.length + ' net' +
+      (servedFromCache ? ' · offline copy ' + timeago(servedFromCache) : '');
     var pulse = $('[data-pulse]');
     if (pulse) {
       pulse.className = 'pulse';
@@ -363,7 +348,16 @@
   function renderFilters() {
     var deck = $('[data-filters]');
     deck.hidden = !DATA_ROUTES[state.route];
-    if (deck.hidden) { syncPressed(deck); return; }
+    if (deck.hidden) state.filtersOpen = false;
+    deck.classList.toggle('is-open', !deck.hidden && state.filtersOpen);
+    var concealed = deck.hidden || (!!FILTER_SHEET_QUERY && FILTER_SHEET_QUERY.matches && !state.filtersOpen);
+    deck.setAttribute('aria-hidden', concealed ? 'true' : 'false');
+    deck.inert = concealed;
+    if (deck.hidden) {
+      $$('[data-filter-toggle]').forEach(function (button) { button.hidden = true; button.setAttribute('aria-expanded', 'false'); });
+      syncPressed(deck);
+      return;
+    }
     $$('[data-bracket]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-bracket') === state.bracket); });
     $$('[data-unit]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-unit') === state.unit); });
     $$('[data-transit]').forEach(function (b) { b.classList.toggle('is-on', +b.getAttribute('data-transit') === state.transit); });
@@ -374,8 +368,17 @@
     box.innerHTML = C.AREAS.map(function (a) {
       return '<button type="button" data-area="' + a.id + '" class="' + (state.areas.indexOf(a.id) > -1 ? 'is-on' : '') + '">' + esc(a.label) + ' <span class="dimcount">' + (counts[a.id] || 0) + '</span></button>';
     }).join('');
-    var dirty = state.bracket !== 'all' || state.unit !== 'all' || state.hoods.length || state.areas.length || state.transit || state.lens.noBrokers || state.lens.noMgmt || state.lens.privateFirst || state.view !== 'all' || state.q;
+    var filterCount = (state.bracket !== 'all' ? 1 : 0) + (state.unit !== 'all' ? 1 : 0) +
+      state.hoods.length + state.areas.length + (state.transit ? 1 : 0) +
+      (state.lens.noBrokers ? 1 : 0) + (state.lens.noMgmt ? 1 : 0) + (state.lens.privateFirst ? 1 : 0);
+    var dirty = filterCount || state.view !== 'all' || state.q;
     $('[data-clear]').hidden = !dirty;
+    $$('[data-filter-toggle]').forEach(function (button) {
+      button.hidden = false;
+      button.setAttribute('aria-expanded', state.filtersOpen ? 'true' : 'false');
+      var count = button.querySelector('[data-filter-count]');
+      if (count) { count.hidden = !filterCount; count.textContent = filterCount; }
+    });
     syncPressed(deck);
   }
 
@@ -409,24 +412,18 @@
     clearInterval(countdownT);
     var el = $('[data-countdown]');
     if (!el) return;
-    if (RM) { el.textContent = 'scheduled 05:30 UTC'; return; }
-    var lastStr = '';
     function tick() {
       var el2 = $('[data-countdown]');
       if (!el2) { clearInterval(countdownT); return; }
       var ms = nextSweepUTC() - new Date();
-      var str = fmtCountdown(ms);
-      if (str !== lastStr) {
-        el2.innerHTML = str.split('').map(function (ch, i) {
-          var was = lastStr[i];
-          return '<span class="flipd' + (was !== undefined && was !== ch ? ' tick' : '') + '">' + ch + '</span>';
-        }).join('');
-        lastStr = str;
-      }
+      var minutes = Math.max(0, Math.ceil(ms / 60000));
+      var hours = Math.floor(minutes / 60);
+      var remainder = minutes % 60;
+      el2.textContent = hours ? hours + 'h ' + remainder + 'm' : remainder + 'm';
       document.documentElement.classList.toggle('is-sweep-near', ms < 30 * 60000);
     }
     tick();
-    countdownT = setInterval(tick, 1000);
+    countdownT = setInterval(tick, 60000);
   }
 
   function provenance(l) {
@@ -1047,20 +1044,35 @@
 
   function renderBrowse(page) {
     var f = filtered();
+    var clearCount = POOL.filter(C.isFullFit).length;
+    var mappedCount = POOL.filter(function (listing) { return listing.latitude != null && listing.longitude != null; }).length;
     page.innerHTML =
-      '<header class="pagehead"><p class="kicker">Browse</p>' +
-      '<h1 class="pagehead__title">Every listing in the net</h1></header>' +
-      '<div class="pills">' + VIEW_PILLS.map(function (v) {
-        return '<button type="button" data-view="' + v[0] + '" class="' + (state.view === v[0] ? 'is-on' : '') + '">' + v[1] + '</button>';
-      }).join('') + '</div>' +
-      '<div class="dtoolbar">' +
-        '<input type="search" placeholder="Search title, hood, address, source…" value="' + esc(state.q) + '" data-q aria-label="Search listings">' +
-        '<span class="dtoolbar__count">' + f.length + ' of ' + POOL.length + '</span>' +
-        '<span class="dtoolbar__density">' +
-          '<button type="button" data-density="comfortable" class="' + (state.density === 'comfortable' ? 'is-on' : '') + '">Comfortable</button>' +
-          '<button type="button" data-density="compact" class="' + (state.density === 'compact' ? 'is-on' : '') + '">Compact</button>' +
-        '</span>' +
-      '</div>' +
+      '<section class="workspace workspace--browse" data-workspace="browse">' +
+        '<header class="workspacehead">' +
+          '<div><p class="kicker">Signal desk</p><h1 class="workspacehead__title">Every listing in the net</h1>' +
+          '<p class="workspacehead__lede">Search once, compare the evidence, keep the city record beside the listing.</p></div>' +
+          '<dl class="workspace-metrics" aria-label="Current VERA publication">' +
+            '<div><dt>Net</dt><dd>' + POOL.length + '</dd></div>' +
+            '<div><dt>Filtered</dt><dd>' + f.length + '</dd></div>' +
+            '<div><dt>Clear</dt><dd>' + clearCount + '</dd></div>' +
+            '<div><dt>Mapped</dt><dd>' + mappedCount + '</dd></div>' +
+          '</dl>' +
+        '</header>' +
+        '<div class="signalbar">' +
+          '<div class="pills" aria-label="Listing lenses">' + VIEW_PILLS.map(function (v) {
+            return '<button type="button" data-view="' + v[0] + '" class="' + (state.view === v[0] ? 'is-on' : '') + '">' + v[1] + '</button>';
+          }).join('') + '</div>' +
+        '</div>' +
+        '<div class="dtoolbar" role="search">' +
+          '<label class="command-search"><span class="sr-only">Search listings</span>' +
+            '<input type="search" placeholder="Search the net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
+            '<kbd aria-hidden="true">⌘K</kbd></label>' +
+          '<span class="dtoolbar__count" aria-live="polite">' + f.length + ' shown</span>' +
+          '<span class="dtoolbar__density" aria-label="Result density">' +
+            '<button type="button" data-density="comfortable" class="' + (state.density === 'comfortable' ? 'is-on' : '') + '">Roomy</button>' +
+            '<button type="button" data-density="compact" class="' + (state.density === 'compact' ? 'is-on' : '') + '">Dense</button>' +
+          '</span>' +
+        '</div>' +
       '<div class="tablewrap"><table class="dt ' + (state.density === 'compact' ? 'is-compact' : '') + '"><thead><tr>' +
         COLS.map(function (c) {
           var on = state.sort.key === c.key;
@@ -1077,7 +1089,7 @@
           return '<tr data-open="' + esc(l.listing_uid) + '" tabindex="0" aria-expanded="' + (openUid === l.listing_uid ? 'true' : 'false') + '" class="' + (openUid === l.listing_uid ? 'is-open' : '') + '">' +
             COLS.map(function (c) { return '<td>' + c.render(l) + '</td>'; }).join('') + '</tr>';
         }).join('') : '<tr><td colspan="' + COLS.length + '" class="dt__empty">Nothing matches this lens. Widen a tier or clear a filter.</td></tr>') +
-      '</tbody></table></div>';
+      '</tbody></table></div></section>';
 
     var qEl = $('[data-q]', page);
     qEl.addEventListener('input', function () {
@@ -1085,6 +1097,7 @@
       clearTimeout(qEl._t);
       qEl._t = setTimeout(function () { renderRoute(); var q2 = $('[data-q]'); if (q2) { q2.focus(); q2.setSelectionRange(q2.value.length, q2.value.length); } }, 160);
     });
+    renderFilters();
   }
 
   /* ================================================================
@@ -1124,16 +1137,26 @@
     return mapAssetPromise;
   }
 
+  function atlasHeader(mapped, total) {
+    return '<header class="workspacehead workspacehead--atlas">' +
+      '<div><p class="kicker">City lens</p><h1 class="workspacehead__title">Atlas</h1>' +
+      '<p class="workspacehead__lede">Move through the map and the evidence list as one workspace.</p></div>' +
+      '<div class="workspacehead__actions"><span class="workspace-count"><b>' + mapped + '</b> mapped · ' + total + ' shown</span>' +
+      '<div class="atlas-mode" role="group" aria-label="Atlas view"><button type="button" data-atlas-mode="map" aria-pressed="' + (state.atlasMode === 'map' ? 'true' : 'false') + '" class="' + (state.atlasMode === 'map' ? 'is-on' : '') + '">Map</button>' +
+      '<button type="button" data-atlas-mode="list" aria-pressed="' + (state.atlasMode === 'list' ? 'true' : 'false') + '" class="' + (state.atlasMode === 'list' ? 'is-on' : '') + '">List</button></div></div>' +
+    '</header>';
+  }
+
   function renderAtlas(page) {
     var f0 = filtered();
     var geo0 = f0.filter(function (l) { return l.latitude != null && l.longitude != null; });
     if (!window.maplibregl && mapAssetState !== 'failed') {
       page.innerHTML =
-        '<header class="pagehead"><p class="kicker">Atlas</p>' +
-        '<h1 class="pagehead__title">The city, to the pixel</h1>' +
-        '<p class="pagehead__lede">Every street and building footprint — OpenFreeMap vector tiles in VERA\'s own palette. ' + geo0.length + ' listings pinned; click any dot to open its ledger.</p></header>' +
+        '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
         '<div class="panel mapwrap"><p class="lane__empty" data-map-loading>Drawing the city — the map engine loads the first time Atlas opens…</p></div>';
+      page.innerHTML += '</section>';
       page.classList.add('is-entered');
+      renderFilters();
       loadMapAssets().then(function () {
         if (state.route === 'atlas') renderRoute();
       }, function () {
@@ -1144,18 +1167,16 @@
     if (window.__VERAM && window.__VERAM.available()) {
       var sorted0 = geo0.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
       page.innerHTML =
-        '<header class="pagehead"><p class="kicker">Atlas</p>' +
-        '<h1 class="pagehead__title">The city, to the pixel</h1>' +
-        '<p class="pagehead__lede">Every street and building footprint — OpenFreeMap vector tiles in VERA\'s own palette. ' + geo0.length + ' listings pinned; click any dot to open its ledger.</p></header>' +
-        '<div class="maplay maplay--vector">' +
-          '<div class="panel mapwrap"><div class="veramap" data-veramap role="application" aria-label="Interactive map of listings"></div>' +
+        '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
+        '<div class="maplay maplay--vector atlas-layout atlas-layout--' + state.atlasMode + '">' +
+          '<div class="panel mapwrap atlas-map-pane"><div class="veramap" data-veramap role="application" aria-label="Interactive map of listings"></div>' +
             '<div class="mp-key">' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--good"></i>Clears the bar</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--warn"></i>Needs verification</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--bad"></i>Scam wall</span>' +
               '<span class="mp-key__i">tiles © OpenFreeMap · OpenMapTiles · OpenStreetMap contributors</span>' +
             '</div></div>' +
-          '<div class="panel"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
+          '<div class="panel atlas-list-pane"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
             (sorted0.length ? '<div class="walklist">' + sorted0.map(function (l) {
               var t = C.nearestStation(l);
               return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
@@ -1164,8 +1185,9 @@
                 '<span>' + (t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
                 '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
             }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet.</p>') +
-          '</div></div>';
+          '</div></div></section>';
       page.classList.add('is-entered');
+      renderFilters();
       var mounted = window.__VERAM.mount(page.querySelector('[data-veramap]'), geo0, function (uid) {
         if (window.__VERAL) window.__VERAL.open(uid);
       });
@@ -1235,10 +1257,9 @@
     var sorted = placed.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
 
     page.innerHTML =
-      '<header class="pagehead"><p class="kicker">Atlas</p>' +
-      '<h1 class="pagehead__title">The hunt zone</h1></header>' +
-      '<div class="maplay">' +
-        '<div class="panel mapwrap">' +
+      '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(placed.length, f.length) +
+      '<div class="maplay atlas-layout atlas-layout--' + state.atlasMode + '">' +
+        '<div class="panel mapwrap atlas-map-pane">' +
           '<div class="panel__head"><h2 class="panel__title">Rivers, trains, and ' + placed.length + ' listings</h2>' +
           '<p class="panel__hint">' + placed.length + ' plotted' +
             (outside ? ' · ' + outside + ' outside the zone' : '') +
@@ -1258,7 +1279,7 @@
             '<span class="mp-key__i"><i class="mp-swatch mp-swatch--stn"></i>Subway · tethered to nearest walk</span>' +
           '</div>' +
         '</div>' +
-        '<div class="panel"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
+        '<div class="panel atlas-list-pane"><div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
           (sorted.length ? '<div class="walklist">' + sorted.map(function (l) {
             var t = C.nearestStation(l);
             return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
@@ -1268,8 +1289,9 @@
               '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
           }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet — widen a filter.</p>') +
         '</div>' +
-      '</div>';
+      '</div></section>';
     page.classList.add('is-entered');
+    renderFilters();
   }
 
   /* ================================================================
@@ -1278,70 +1300,107 @@
 
   function renderHunt(page) {
     var uids = Object.keys(cases);
-    var byStage = {};
-    STAGES.forEach(function (s) { byStage[s.id] = []; });
-    uids.forEach(function (u) {
-      var c = cases[u];
-      if (!byStage[c.stage]) byStage[c.stage] = [];
-      byStage[c.stage].push(c);
-    });
+    var liveUids = uids.filter(function (uid) { return cases[uid].stage !== 'dead' && byUid(uid); });
+    var demoMode = !liveUids.length;
+    var records = demoMode
+      ? POOL.filter(C.isFullFit).sort(function (a, b) { return (+b.overall_score || 0) - (+a.overall_score || 0); }).slice(0, 5)
+      : liveUids.map(byUid).filter(Boolean);
+    if (!records.length) records = POOL.slice().sort(function (a, b) { return (+b.overall_score || 0) - (+a.overall_score || 0); }).slice(0, 5);
 
-    var live = uids.filter(function (u) { return cases[u].stage !== 'dead'; });
-    var spend = live.reduce(function (a, u) { return a + (+cases[u].rent || 0); }, 0);
-    var avg = live.length ? Math.round(spend / live.length) : 0;
-    var savedFees = live.reduce(function (a, u) { return a + (+cases[u].rent || 0) * 1.5; }, 0);
-
-    if (!uids.length) {
-      page.innerHTML = '<div class="empty-hero">' +
-        '<svg width="70" height="70" viewBox="0 0 24 24" aria-hidden="true" class="empty-hero__mark">' +
-        '<circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".4"/>' +
-        '<path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a" opacity=".8"/></svg>' +
-        '<h1>Your hunt starts empty. That is fine.</h1>' +
-        '<p>Open any listing and hit <b>Save to hunt</b>. VERA will track it from first look to signed lease — reached out, tour booked, seen it, applied — and keep your notes and viewing checklists with it.</p>' +
-        '<p class="empty-hero__fine">Everything here lives in this browser only. No account, no server, nothing uploaded.</p>' +
-        '<a class="bigbtn" href="#/today">See today\'s drop ↗</a></div>';
+    if (!records.length) {
+      page.innerHTML = '<div class="empty-hero"><h1>The decision room is waiting for tonight\'s publication.</h1>' +
+        '<p>VERA will place the strongest current records here as soon as the public feed is available.</p></div>';
       return;
     }
 
+    var selected = byUid(state.huntSelected);
+    if (!selected || records.indexOf(selected) === -1) selected = records[0];
+    state.huntSelected = selected.listing_uid;
+    var selectedCase = caseOf(selected.listing_uid);
+    var selectedStage = selectedCase ? selectedCase.stage : 'saved';
+    var activeStageIndex = Math.max(0, STAGES.filter(function (stage) { return stage.id !== 'dead'; }).map(function (stage) { return stage.id; }).indexOf(selectedStage));
+    var clearCount = POOL.filter(C.isFullFit).length;
+    var selectedTransit = C.nearestStation(selected);
+    var selectedMoveIn = C.moveInMath(selected);
+    var selectedOwner = C.ownerRead(selected);
+    var selectedValue = valueRead(selected);
+    var selectedAuth = C.authenticity(selected);
+    var strengths = (selected.trust_strengths || []).slice(0, 3);
+    var caveats = (selected.trust_caveats || selected.what_to_verify_before_applying || []).slice(0, 3);
+    var stageFlow = STAGES.filter(function (stage) { return stage.id !== 'dead'; });
+    var moveInWatch = '';
+    if (selectedCase && selectedCase.stage === 'signed' && selectedCase.signedAt) {
+      var daysSinceSigning = Math.floor((Date.now() - new Date(selectedCase.signedAt + 'T12:00:00Z')) / 864e5);
+      var daysToRenewalWatch = 300 - daysSinceSigning;
+      moveInWatch = '<aside class="movein-watch" aria-label="Move-in law watch"><b>Signed ' + esc(selectedCase.signedAt) + '</b>' +
+        (daysSinceSigning < 7 ? '<span>Day one: request the rent history; New York State mails it to the apartment.</span>' : '') +
+        '<span>' + (daysToRenewalWatch > 0 ? 'Renewal watch in ' + daysToRenewalWatch + ' days.' : 'Renewal window: start the conversation.') + '</span>' +
+        '<span>At move-out: deposit back in ' + C.LAW.depositReturnDays + ' days, itemized, by law.</span></aside>';
+    }
+
     page.innerHTML =
-      '<header class="pagehead"><p class="kicker">My hunt</p>' +
-      '<h1 class="pagehead__title">The case file</h1></header>' +
-      '<div class="kpis">' +
-        '<div class="kpi"><p class="kpi__label">In play</p><p class="kpi__value">' + cval(live.length) + '</p><p class="kpi__note">' + (byStage.dead || []).length + ' passed on</p></div>' +
-        '<div class="kpi"><p class="kpi__label">Average ask</p><p class="kpi__value">' + (avg ? cmoney(avg) : '—') + '</p><p class="kpi__note">across your shortlist</p></div>' +
-        '<div class="kpi kpi--good"><p class="kpi__label">Broker fees avoided</p><p class="kpi__value">' + (savedFees ? cmoney(Math.round(savedFees)) : '$0') + '</p><p class="kpi__note">if every one had a fee</p></div>' +
-        '<div class="kpi"><p class="kpi__label">Furthest stage</p><p class="kpi__value kpi__value--word">' + esc((STAGES.filter(function (s) { return (byStage[s.id] || []).length && s.id !== 'dead'; }).pop() || { label: '—' }).label) + '</p><p class="kpi__note">keep going</p></div>' +
-      '</div>' +
-      '<div class="board">' + STAGES.map(function (s) {
-        var items = byStage[s.id] || [];
-        return '<div class="col' + (s.id === 'dead' ? ' col--dead' : '') + '">' +
-          '<p class="col__head">' + s.label + ' <b>' + items.length + '</b></p>' +
-          '<p class="col__hint">' + s.hint + '</p>' +
-          (items.length ? items.map(function (c) {
-            var gone = !byUid(c.uid);
-            return '<div class="ccard' + (gone ? ' ccard--gone' : '') + '"><button type="button" class="ccard__open" data-open="' + esc(c.uid) + '">' +
-              '<b>' + esc(c.title || c.uid) + '</b>' +
-              (gone ? '<span class="ccard__gone">No longer listed</span>' : '') +
-              '<span>' + (c.rent ? money(c.rent) : '—') + (c.hood ? ' · ' + esc(c.hood) : '') + '</span>' +
-              (c.notes ? '<em>“' + esc(c.notes.slice(0, 70)) + (c.notes.length > 70 ? '…' : '') + '”</em>' : '') +
-              (c.outcome ? '<span class="ccard__outcome ccard__outcome--' + esc(c.outcome) + '">' + (c.outcome === 'yes' ? 'as advertised' : c.outcome === 'roughly' ? 'roughly as advertised' : 'not as advertised') + '</span>' : '') +
-              (c.stage === 'signed' && c.signedAt ? (function () {
-                var days = Math.floor((Date.now() - new Date(c.signedAt + 'T12:00:00Z')) / 864e5);
-                var toRenewal = 300 - days;
-                return '<span class="ccard__movein">signed ' + esc(c.signedAt) +
-                  (days < 7 ? ' · day one: request the rent history (state mails it to the apartment)' : '') +
-                  (toRenewal > 0 ? ' · renewal watch in ' + toRenewal + 'd' : ' · RENEWAL WINDOW — start the conversation') +
-                  ' · at move-out: deposit back in ' + C.LAW.depositReturnDays + ' days, itemized, by law</span>';
-              })() : '') +
-              '</button><div class="ccard__moves">' +
-              STAGES.filter(function (x) { return x.id !== c.stage; }).slice(0, 3).map(function (x) {
-                return '<button type="button" data-stage="' + x.id + '" data-uid="' + esc(c.uid) + '" title="Move to ' + x.label + '">' + x.label + '</button>';
-              }).join('') +
-              '<button type="button" class="ccard__drop" data-drop="' + esc(c.uid) + '" title="Remove">×</button>' +
-              '</div></div>';
-          }).join('') : '<p class="col__empty">—</p>') +
-        '</div>';
-      }).join('') + '</div>';
+      '<section class="workspace workspace--hunt" data-workspace="hunt">' +
+        '<header class="workspacehead">' +
+          '<div><p class="kicker">Decision room</p><h1 class="workspacehead__title">My Hunt</h1>' +
+          '<p class="workspacehead__lede">Compare the shortlist, inspect the record, and move one decision forward.</p></div>' +
+          '<div class="hunt-privacy"><b>' + (demoMode ? 'VERA\'s suggested shortlist' : liveUids.length + ' saved locally') + '</b>' +
+          '<span>' + (demoMode ? clearCount + ' listings currently clear every published gate' : 'No account · nothing uploaded') + '</span></div>' +
+        '</header>' +
+        '<div class="decision-layout">' +
+          '<aside class="shortlist" aria-label="' + (demoMode ? 'Suggested shortlist' : 'Your shortlist') + '">' +
+            '<div class="shortlist__head"><div><h2>Shortlist</h2><p>' + records.length + ' of ' + Math.max(clearCount, records.length) + ' clear</p></div>' +
+            '<a href="#/browse">Compare all</a></div>' +
+            '<div class="shortlist__list">' + records.map(function (listing, index) {
+              var recordCase = caseOf(listing.listing_uid);
+              var name = addressOf(listing) || C.charName(listing);
+              return '<button type="button" class="shortlist-row' + (listing === selected ? ' is-selected' : '') + '" data-hunt-select="' + esc(listing.listing_uid) + '" aria-pressed="' + (listing === selected ? 'true' : 'false') + '">' +
+                '<span class="shortlist-row__index">' + String(index + 1).padStart(2, '0') + '</span>' +
+                '<span class="shortlist-row__body"><b>' + esc(name) + '</b><span>' + money(listing.rent) + ' · ' + esc(listing.neighborhood || 'NYC') + '</span>' +
+                '<small>' + (recordCase ? esc((STAGES.filter(function (stage) { return stage.id === recordCase.stage; })[0] || { label: 'Saved' }).label) : esc(listing.source_name || 'public listing')) + '</small></span>' +
+                '<span class="shortlist-row__score">' + (listing.overall_score != null ? num(listing.overall_score, 1) : '—') + '</span>' +
+              '</button>';
+            }).join('') + '</div>' +
+            (demoMode ? '<p class="shortlist__note">This is a live-data preview. Saving a listing creates your private, browser-only hunt.</p>' : '') +
+          '</aside>' +
+          '<article class="casebook" aria-labelledby="casebook-title">' +
+            '<header class="casebook__head"><div><p class="kicker">Selected listing</p><h2 id="casebook-title">' + esc(addressOf(selected) || C.charName(selected)) + '</h2>' +
+              '<p>' + money(selected.rent) + ' · ' + esc(selected.neighborhood || 'NYC') + ' · ' + esc(selected.source_name || 'public listing') + '</p></div>' +
+              '<div class="casebook-score"><span>VERA score</span><b>' + (selected.overall_score != null ? num(selected.overall_score, 1) : '—') + '</b><em>' + esc(selected.recommendation || 'Review') + '</em></div></header>' +
+            '<div class="casebook__tabs" aria-label="Casebook actions"><span class="casebook__current" aria-current="page">Casebook</span>' +
+              '<button type="button" data-open="' + esc(selected.listing_uid) + '">Open full ledger</button></div>' +
+            moveInWatch +
+            '<div class="evidence-grid">' +
+              '<section class="evidence-card evidence-card--facts"><h3>Record</h3><dl>' +
+                '<div><dt>Unit</dt><dd>' + esc(C.unitOf(selected) === 'studio' ? 'Studio' : C.unitOf(selected) === '1br' ? 'One bedroom' : selected.unit_type || 'Unconfirmed') + '</dd></div>' +
+                '<div><dt>Source</dt><dd>' + esc(selected.source_name || '—') + '</dd></div>' +
+                '<div><dt>Last seen</dt><dd>' + timeago(selected.last_seen_at) + '</dd></div>' +
+                '<div><dt>Owner read</dt><dd>' + esc(selectedOwner.label) + '</dd></div>' +
+                '<div><dt>Authenticity</dt><dd>' + (selectedAuth != null ? num(selectedAuth) + '/100' : 'Unproven') + '</dd></div>' +
+                '<div><dt>Move-in</dt><dd>' + (selectedMoveIn && selectedMoveIn.total ? money(selectedMoveIn.total) : 'Verify') + '</dd></div>' +
+              '</dl></section>' +
+              '<section class="evidence-card evidence-card--score"><h3>Why it scored this way</h3>' +
+                (strengths.length ? '<ul class="evidence-list evidence-list--good">' + strengths.map(function (item) { return '<li>' + esc(item) + '</li>'; }).join('') + '</ul>' : '<p class="evidence-empty">No positive claim is inferred beyond the published record.</p>') +
+                (caveats.length ? '<ul class="evidence-list evidence-list--warn">' + caveats.map(function (item) { return '<li>' + esc(item) + '</li>'; }).join('') + '</ul>' : '<p class="evidence-empty">No material caveat in the current public record.</p>') +
+              '</section>' +
+              '<section class="evidence-card"><h3>Commute</h3><p class="evidence-big">' + (selectedTransit ? '≈' + selectedTransit.mins + ' min' : 'Not mapped') + '</p><p>' + (selectedTransit ? C.lineBullets(selectedTransit.lines) + ' ' + esc(selectedTransit.name) : 'No reliable station walk yet') + '</p></section>' +
+              '<section class="evidence-card"><h3>Risks</h3><dl class="signal-list"><div><dt>HPD risk</dt><dd>' + num(selected.hpd_risk_score) + '</dd></div><div><dt>DOB risk</dt><dd>' + (selected.dob_risk_score != null ? num(selected.dob_risk_score) : '—') + '</dd></div><div><dt>Verification</dt><dd>' + (C.needsVerify(selected) ? 'Needed' : 'Clear') + '</dd></div></dl></section>' +
+              '<section class="evidence-card"><h3>Signals</h3><dl class="signal-list"><div><dt>Days on market</dt><dd>' + (selected.true_days_on_market != null ? selected.true_days_on_market + 'd' : '—') + '</dd></div><div><dt>Area value</dt><dd>' + (selectedValue ? esc(selectedValue.label) : 'No reliable peer set') + '</dd></div><div><dt>Rent-stabilized</dt><dd>' + (C.stabilized(selected) ? esc(C.stabilized(selected).label) : 'No signal') + '</dd></div></dl></section>' +
+            '</div>' +
+            '<section class="decision-timeline"><div class="decision-timeline__head"><div><h3>Decision timeline</h3><p>' + (selectedCase ? 'Stored only in this browser.' : 'Preview the path, then save when it earns a place.') + '</p></div>' +
+              (selectedCase ? '<button type="button" class="ghostbtn" data-open="' + esc(selected.listing_uid) + '">Open notes</button>' : '<button type="button" class="bigbtn" data-stage="saved" data-uid="' + esc(selected.listing_uid) + '">Save decision</button>') + '</div>' +
+              '<ol>' + stageFlow.map(function (stage, index) {
+                var done = selectedCase && index <= activeStageIndex;
+                var stateClass = done ? 'is-done' : index === activeStageIndex + 1 ? 'is-next' : '';
+                return '<li class="' + stateClass + '">' +
+                  (selectedCase
+                    ? '<button type="button" data-stage="' + stage.id + '" data-uid="' + esc(selected.listing_uid) + '"' + (stage.id === selectedStage ? ' disabled aria-current="step"' : '') + '>'
+                    : '<span class="decision-step">') +
+                  '<span aria-hidden="true"></span><b>' + esc(stage.label) + '</b><small>' + esc(stage.hint) + '</small>' +
+                  (selectedCase ? '</button>' : '</span>') + '</li>';
+              }).join('') + '</ol></section>' +
+          '</article>' +
+        '</div>' +
+      '</section>';
     page.classList.add('is-entered');
     countUps(page);
   }
@@ -1613,9 +1672,13 @@
     /* the More button wears the underline when a secondary section is
        active, and routing always closes the overflow sheet (C2) */
     var moreBtn = $('[data-nav-more]');
-    if (moreBtn) moreBtn.classList.toggle('is-on', NAV_SECONDARY.indexOf(h) > -1);
+    if (moreBtn) {
+      moreBtn.classList.toggle('is-on', NAV_SECONDARY.indexOf(h) > -1);
+      moreBtn.setAttribute('aria-expanded', 'false');
+    }
     var navSheet = $('[data-nav-sheet]');
     if (navSheet) navSheet.hidden = true;
+    state.filtersOpen = false;
     var activeNav = $('[data-nav="' + h + '"]');
     if (activeNav && activeNav.scrollIntoView) requestAnimationFrame(function () {
       activeNav.scrollIntoView({ block: 'nearest', inline: 'center', behavior: RM ? 'auto' : 'smooth' });
@@ -1653,20 +1716,9 @@
     el.textContent = name + count + '.';
   }
 
-  var revealObs = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (en.isIntersecting) { en.target.classList.add('rv-in'); revealObs.unobserve(en.target); }
-    });
-  }, { rootMargin: '0px 0px -8% 0px' }) : null;
-
-  function applyReveals(page) {
-    if (RM || !revealObs) return;
-    $$('.panel, .bubcard, .manual-sec, .arcday, .wire__card, .cgroup', page).forEach(function (el, i) {
-      if (el.classList.contains('rv') || el.classList.contains('rv-in')) return;
-      el.classList.add('rv');
-      revealObs.observe(el);
-    });
-  }
+  /* Every workspace is complete on first paint. Route transitions may soften
+     the swap, but content never waits below the fold for a reveal observer. */
+  function applyReveals() {}
 
   function renderRoute() {
     if (!D) return;
@@ -1835,15 +1887,39 @@
     if (e.target.closest && e.target.closest('[data-nav-sheet],[data-tab-sheet],[data-nav-more],[data-tab-more]')) return;
     $$('[data-nav-sheet],[data-tab-sheet]').forEach(function (s) { s.hidden = true; });
     $$('[data-nav-more],[data-tab-more]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+    if (!(e.target.closest && e.target.closest('[data-filters],[data-filter-toggle]')) && state.filtersOpen) {
+      state.filtersOpen = false;
+      renderFilters();
+    }
   });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
     $$('[data-nav-sheet],[data-tab-sheet]').forEach(function (s) { s.hidden = true; });
+    $$('[data-nav-more],[data-tab-more]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+    if (state.filtersOpen) { state.filtersOpen = false; renderFilters(); }
   });
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-hunt-select],[data-atlas-mode]') : null;
     if (!t) return;
+
+    if (t.hasAttribute('data-filter-toggle')) {
+      state.filtersOpen = !state.filtersOpen;
+      renderFilters();
+      return;
+    }
+
+    if (t.hasAttribute('data-atlas-mode')) {
+      state.atlasMode = t.getAttribute('data-atlas-mode') === 'list' ? 'list' : 'map';
+      renderRoute();
+      return;
+    }
+
+    if (t.hasAttribute('data-hunt-select')) {
+      state.huntSelected = t.getAttribute('data-hunt-select');
+      renderRoute();
+      return;
+    }
 
     /* overflow sheets (C2/C3): phone collapses secondary sections behind
        More — the button toggles its sheet and closes the other one */
@@ -1968,6 +2044,15 @@
 
   /* keyboard: rows + kpis act on Enter/Space; Escape closes the ledger */
   document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && String(e.key).toLowerCase() === 'k') {
+      e.preventDefault();
+      if (state.route !== 'browse') location.hash = '#/browse';
+      requestAnimationFrame(function () {
+        var search = $('[data-q]');
+        if (search) { search.focus(); search.select(); }
+      });
+      return;
+    }
     if (e.key === 'Escape' && window.__VERAL && window.__VERAL.openUid()) { window.__VERAL.close(); return; }
     if ((e.key === 'Enter' || e.key === ' ') && e.target.hasAttribute && (e.target.hasAttribute('data-open') || e.target.hasAttribute('data-kpi'))) {
       e.preventDefault();
@@ -2108,7 +2193,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=52').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=53').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };

@@ -4,7 +4,7 @@ const baseURL = "http://127.0.0.1:4173";
 
 export default defineConfig({
   testDir: "./tests",
-  testMatch: "quality-smoke.spec.ts",
+  testMatch: ["quality-smoke.spec.ts", "vera-product.spec.ts"],
   timeout: 45_000,
   expect: {
     timeout: 8_000,
@@ -28,13 +28,14 @@ export default defineConfig({
     command:
       "npm run build && npm run preview -- --host 127.0.0.1 --port 4173 --strictPort",
     url: baseURL,
-    reuseExistingServer: false,
+    reuseExistingServer:
+      !process.env.CI && process.env.PLAYWRIGHT_REUSE_SERVER === "1",
     timeout: 180_000,
   },
   projects: [
     {
       name: "chromium-desktop",
-      grep: /@chromium-desktop|@all-projects/,
+      grep: /@chromium-desktop|@all-projects|@vera-all-platforms|@vera-desktop/,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },
@@ -58,9 +59,31 @@ export default defineConfig({
     },
     {
       name: "webkit-mobile",
-      grep: /@webkit-mobile|@all-projects/,
+      grep: /@webkit-mobile|@all-projects|@vera-all-platforms|@vera-touch/,
       use: {
         ...devices["iPhone 13"],
+        browserName: "webkit",
+      },
+    },
+    {
+      // This project deliberately omits @all-projects. It gives VERA a
+      // desktop Safari contract without running the whole site-wide suite a
+      // second time.
+      name: "webkit-desktop",
+      grep: /@webkit-desktop|@vera-all-platforms|@vera-desktop/,
+      use: {
+        ...devices["Desktop Safari"],
+        browserName: "webkit",
+        viewport: { width: 1440, height: 900 },
+      },
+    },
+    {
+      // iPad is its own product surface: touch input, tablet viewport, and
+      // WebKit. Keep it on the focused VERA contract for bounded runtime.
+      name: "webkit-ipad",
+      grep: /@webkit-ipad|@vera-all-platforms|@vera-touch/,
+      use: {
+        ...devices["iPad Pro 11"],
         browserName: "webkit",
       },
     },
