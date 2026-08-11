@@ -1,13 +1,13 @@
 schema_version: 1
 manifest_id: "littlefightnyc-website"
-updated_at: "2026-08-03"
+updated_at: "2026-08-10"
 
 quality_charter:
-  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
-  version: null
-  owner: null
-  status: "ABSENT_VERIFIED_2026-08-01"
-  note: "The central charter does not exist at the required path. No version or policy owner is inferred."
+  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
+  version: "2026-08-10"
+  owner: "David Marsh"
+  status: "PRESENT_VERIFIED_2026-08-10"
+  note: "The agency standard supplies shared policy; this manifest and its scripts implement the repository-specific gates."
 
 surface: service-enabled
 risk_tier: moderate
@@ -554,7 +554,7 @@ monitors:
     status: "implemented; provider/account review external"
   - name: "Netlify Lighthouse build plugin"
     coverage: "build-time Lighthouse"
-    status: "configured; thresholds and retained evidence not proven in repository"
+    status: "UI-managed v6.0.1 is active and advisory; its latest verified run succeeded while reporting Performance 59, so no blocking threshold is evidenced. Retained evidence policy remains unverified."
   - name: "monthly Tech Audit form delivery test"
     coverage: "browser -> Netlify Forms -> inbox"
     status: "documented manual procedure; current completion evidence missing"
@@ -570,7 +570,6 @@ monitors:
 
 maintenance_tier: "CONDITIONAL — owner exists; backup owner, funded SLA, cadence, and alert ownership are unresolved"
 exceptions:
-  - "QSP-001"
   - "QSP-002"
   - "EXT-001"
   - "RES-001"

@@ -1,9 +1,9 @@
 schema_version: 1
-updated_at: "2026-08-01"
+updated_at: "2026-08-10"
 quality_charter:
-  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
-  version: null
-  status: "ABSENT_VERIFIED_2026-08-01"
+  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
+  version: "2026-08-10"
+  status: "PRESENT_VERIFIED_2026-08-10"
 
 policy:
   default_status: "open"
@@ -19,22 +19,22 @@ policy:
 items:
   - id: "QSP-001"
     type: "governance"
-    status: "open"
+    status: "closed"
     risk: "moderate"
-    finding: "The central Quality Charter is absent at the required canonical path, so no version, approver, amendment process, or shared minimum gate can be inherited."
+    finding: "The agency website launch, audit, and remediation standard now supplies the shared policy source for repository-specific quality gates."
     evidence:
-      - "Verified absent on 2026-08-01: /Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
-      - ".lifi/quality.yml records version: null rather than inventing a charter version."
-    impact: "Repository-local policy can drift from agency expectations and exceptions lack a central approval authority."
+      - "Verified on 2026-08-10: /Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
+      - ".lifi/quality.yml records the exact 2026-08-10 doctrine version and repository-specific implementation boundary."
+    impact: "Closed while the agency doctrine remains available and this repository records its exact version."
     mitigation:
-      - "Use this repository-local manifest and ledgers as a conditional baseline."
-      - "Create and approve the central charter, then reconcile this manifest against its exact version."
+      - "Keep the doctrine reference and repository manifest synchronized when shared policy changes."
+      - "Keep project-specific checks in this repository instead of copying the full agency standard into active instructions."
     owner: "David Marsh"
     review_by: null
     accepted_risk_expiry: null
     close_evidence:
-      - "Canonical charter file exists with version and owner."
-      - "Repository manifest records that exact version and any approved deviations."
+      - "Canonical agency doctrine exists with a dated version."
+      - "Repository manifest records that exact version and its local gate implementation."
 
   - id: "QSP-002"
     type: "quality-automation"

@@ -1,9 +1,9 @@
 schema_version: 1
-updated_at: "2026-07-24"
+updated_at: "2026-08-10"
 quality_charter:
-  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/quality/QUALITY-CHARTER.md"
-  version: null
-  status: "ABSENT_VERIFIED_2026-07-24"
+  source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
+  version: "2026-08-10"
+  status: "PRESENT_VERIFIED_2026-08-10"
 
 policy:
   default: "protect"
