@@ -153,9 +153,8 @@ declare global {
   }
 }
 
-const configuredGaId = import.meta.env.VITE_GA_ID?.trim();
-const GA_ID = configuredGaId || "G-0Q1TGWH0HL";
-const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`;
+const GTM_ID = "GTM-PGPGKMKC";
+const GTM_SRC = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(GTM_ID)}`;
 // No controlled Clarity project was handed off. Keep the dormant integration
 // incapable of activating from a stale or inherited build variable until the
 // destination account and data boundary are verified.
@@ -174,16 +173,10 @@ let vendorBootTimer: number | undefined;
 let pendingGaEvents: Array<{ eventName: string; parameters: Record<string, unknown> }> = [];
 let pendingTikTokEvents: Array<{ eventName: string; parameters?: Record<string, unknown> }> = [];
 
-function hasRealGaId() {
-  // The production property ID has a checked-in fallback so the live site can
-  // still measure after consent if a build variable is ever missing. Keep
-  // that convenience from polluting the same property from localhost,
-  // deploy previews, or branch deploys.
-  return (
-    isProdHost() &&
-    /^G-[A-Z0-9]{6,}$/.test(GA_ID) &&
-    GA_ID !== "G-XXXXXXXXXX"
-  );
+function hasRealGtmId() {
+  // Keep the production container from loading on localhost, deploy previews,
+  // or branch deploys.
+  return isProdHost() && /^GTM-[A-Z0-9]+$/.test(GTM_ID);
 }
 
 function hasRealClarityId() {
@@ -222,21 +215,19 @@ function ensureGtag() {
     };
 }
 
-function bootGoogleAnalytics() {
-  if (getAnalyticsConsent() !== "granted" || !hasRealGaId() || gaBooted) return;
+function bootGoogleTagManager() {
+  if (getAnalyticsConsent() !== "granted" || !hasRealGtmId() || gaBooted) return;
 
   ensureGtag();
   window.gtag?.("consent", "update", {
     analytics_storage: "granted",
   });
-  window.gtag?.("js", new Date());
-  window.gtag?.("config", GA_ID, { send_page_view: false });
 
-  const existing = document.querySelector<HTMLScriptElement>(`script[src="${GA_SRC}"]`);
-  if (!existing) {
+  if (!document.querySelector<HTMLScriptElement>(`script[src="${GTM_SRC}"]`)) {
+    window.dataLayer?.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
     const script = document.createElement("script");
     script.async = true;
-    script.src = GA_SRC;
+    script.src = GTM_SRC;
     document.head.appendChild(script);
   }
 
@@ -351,7 +342,7 @@ function bootTikTokPixel() {
 
 function sendGaEvent(eventName: string, parameters: Record<string, unknown>) {
   if (getAnalyticsConsent() !== "granted") return;
-  if (hasRealGaId() && typeof window.gtag === "function") {
+  if (hasRealGtmId() && typeof window.gtag === "function") {
     window.gtag("event", eventName, parameters);
     return;
   }
@@ -389,7 +380,7 @@ function flushPendingTikTokEvents() {
 
 function bootVendors() {
   if (getAnalyticsConsent() === "granted") {
-    bootGoogleAnalytics();
+    bootGoogleTagManager();
     bootClarity();
     flushPendingGaEvents();
   }
@@ -401,7 +392,7 @@ function bootVendors() {
 
 function scheduleVendorBoot() {
   const hasMeasurementVendor =
-    getAnalyticsConsent() === "granted" && (hasRealGaId() || hasRealClarityId());
+    getAnalyticsConsent() === "granted" && (hasRealGtmId() || hasRealClarityId());
   const hasAdvertisingVendor =
     getAdvertisingConsent() === "granted" && hasRealTikTokPixelId();
   if (

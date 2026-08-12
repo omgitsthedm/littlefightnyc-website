@@ -2,8 +2,8 @@
   "use strict";
 
   var CONSENT_KEY = "lf_analytics_consent_v1";
-  var GA_ID = "G-0Q1TGWH0HL";
-  var GA_SRC = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GA_ID);
+  var GTM_ID = "GTM-PGPGKMKC";
+  var GTM_SRC = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(GTM_ID);
   var ALLOWED_EVENTS = {
     page_view: true,
     audit_scan_started: true,
@@ -88,7 +88,7 @@
 
   function revoke() {
     updateGoogleConsent("denied");
-    document.querySelectorAll('script[src="' + GA_SRC + '"]').forEach(function (script) {
+    document.querySelectorAll('script[src="' + GTM_SRC + '"]').forEach(function (script) {
       script.remove();
     });
     clearGaCookies();
@@ -99,13 +99,11 @@
   function boot() {
     if (booted || !hasConsent() || !isCanonicalHost()) return;
     updateGoogleConsent("granted");
-    global.gtag("js", new Date());
-    global.gtag("config", GA_ID, { send_page_view: false });
-
-    if (!document.querySelector('script[src="' + GA_SRC + '"]')) {
+    if (!document.querySelector('script[src="' + GTM_SRC + '"]')) {
+      global.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
       var script = document.createElement("script");
       script.async = true;
-      script.src = GA_SRC;
+      script.src = GTM_SRC;
       document.head.appendChild(script);
     }
     booted = true;
