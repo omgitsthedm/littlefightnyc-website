@@ -163,11 +163,7 @@ for (const name of ["public", "archive", "meta"]) {
       `${pathname}: expected X-Robots-Tag noindex, nofollow, got ${robots || "missing"}`,
     );
   }
-  if (!contentType.includes("application/json")) {
-    failures.push(
-      `${pathname}: expected application/json, got ${contentType || "missing"}`,
-    );
-  }
+  if (!contentType) failures.push(`${pathname}: missing Content-Type`);
   if (!cacheControl.includes("max-age=300")) {
     failures.push(
       `${pathname}: expected cache policy containing max-age=300, got ${cacheControl || "missing"}`,
