@@ -416,7 +416,7 @@
           '<li>More than ' + money(m.deposit) + ' in security or prepaid rent</li>' +
           '<li>A screening charge above the actual cost or $' + C.LAW.appFeeMax + ' — waived if you bring a qualifying credit or background report from the last 30 days</li>' +
           '<li>A broker fee, if the landlord hired the broker (FARE Act, since ' + C.LAW.fareActFrom + ')</li>' +
-          '<li>A "good faith," holding, reservation, or key fee before the lease is executed</li>' +
+          '<li>An extra "good faith," holding, reservation, or key fee before or at the beginning of the tenancy</li>' +
           '<li>Key money, or a "tip for the super" to get the keys</li>' +
           '</ul><p class="insp-fine">Screenshot the ask and report it to DCWP through 311. Your deposit is also due back within ' + C.LAW.depositReturnDays + ' days of move-out with an itemized list of any deductions. Watch the quiet workaround too: a first month priced higher than every month after it is a broker fee wearing a disguise.</p></div>';
       }
@@ -697,7 +697,7 @@
         : '') +
       '<table>' +
         kv('Cash to keys', 'up to ' + money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + up to $' + m.appFee + ' screening)') +
-        kv('Illegal to ask', 'deposit over one month · screening above actual cost or $20 · broker fee when the landlord hired them · pre-lease holding or key fee') +
+        kv('Illegal to ask', 'deposit over one month · screening above actual cost or $20 · broker fee when the landlord hired them · extra holding, reservation, or key fee') +
         kv('HPD / DOB risk', C.num(l.hpd_risk_score) + ' / ' + C.num(l.dob_risk_score)) +
         kv('Heat complaints 3y', l.heat_hot_water_complaints_3y) +
         kv('Bedbugs 3y', l.bedbug_reports_3y) +

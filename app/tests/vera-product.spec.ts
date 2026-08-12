@@ -288,6 +288,18 @@ test(
         "the phone tab bar is attached to the header instead of the viewport bottom",
       ).toBeGreaterThan(viewport!.height / 2);
       expect(tabZone!.y + tabZone!.height).toBeGreaterThan(viewport!.height - 24);
+
+      const filterDock = page.locator(".filter-dock:visible");
+      const [dockBox, mainBox] = await Promise.all([
+        filterDock.boundingBox(),
+        page.locator("[data-main]").boundingBox(),
+      ]);
+      expect(dockBox, "the phone filter control has no measurable surface").not.toBeNull();
+      expect(mainBox, "the phone result surface has no measurable surface").not.toBeNull();
+      expect(
+        dockBox!.y + dockBox!.height,
+        "the phone filter control overlays the scrolling result surface",
+      ).toBeLessThanOrEqual(mainBox!.y + 1);
     }
     expect(
       resultBox!.y,

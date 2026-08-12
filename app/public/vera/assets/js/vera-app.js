@@ -1634,7 +1634,7 @@
           '<ul class="unlawful">' +
             '<li><b>More than one month\'s security.</b> "First, last and one month" is three months of your money and two months more than the law allows. <i>HSTPA, 2019.</i></li>' +
             '<li><b>A screening charge above the actual cost or $' + C.LAW.appFeeMax + '.</b> A qualifying credit or background report from the last 30 days waives it. <i>NYS Real Property Law §238-a.</i></li>' +
-            '<li><b>A holding or "good-faith" deposit before the lease is executed.</b> A reservation or key fee to take the apartment off the market is not lawful before an executed lease. <i>NYS Real Property Law §238-a.</i></li>' +
+            '<li><b>An extra holding, "good-faith," reservation, or key fee.</b> For a standard residential rental, a landlord cannot demand that extra payment before or at the beginning of the tenancy. Lawful rent and up to one month of security may still be due under the lease. <i>NYS Real Property Law §238-a.</i></li>' +
             '<li><b>Key money, or a tip for the super.</b> A payment to get the keys or move up the list is illegal however it is phrased. <i>Illegal in New York.</i></li>' +
             '<li><b>A broker fee when the landlord hired the broker.</b> If they found the agent, they pay the agent. <i>FARE Act, ' + C.LAW.fareActFrom + '.</i></li>' +
           '</ul>' +

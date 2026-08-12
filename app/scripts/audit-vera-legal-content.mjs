@@ -12,6 +12,8 @@ const corePath = path.join(appRoot, "public", "vera", "assets", "js", "vera-core
 const appPath = path.join(appRoot, "public", "vera", "assets", "js", "vera-app.js");
 const ledgerPath = path.join(appRoot, "public", "vera", "assets", "js", "vera-ledger.js");
 const prerenderPath = path.join(appRoot, "scripts", "vera-prerender.mjs");
+const indexPath = path.join(appRoot, "public", "vera", "index.html");
+const serviceWorkerPath = path.join(appRoot, "public", "vera", "sw.js");
 const manualPath = path.join(appRoot, "dist", "vera", "manual", "index.html");
 
 const sources = [
@@ -31,18 +33,21 @@ function mustNotContain(label, text, unexpected) {
   if (text.includes(unexpected)) failures.push(`${label}: retains superseded copy ${JSON.stringify(unexpected)}`);
 }
 
-const [core, app, ledger, prerender] = await Promise.all([
+const [core, app, ledger, prerender, index, serviceWorker] = await Promise.all([
   readFile(corePath, "utf8"),
   readFile(appPath, "utf8"),
   readFile(ledgerPath, "utf8"),
   readFile(prerenderPath, "utf8"),
+  readFile(indexPath, "utf8"),
+  readFile(serviceWorkerPath, "utf8"),
 ]);
 
 for (const source of sources) mustContain("vera-core.js LAW_SOURCES", core, source);
 mustContain("vera-core.js", core, "actual cost or $20, whichever is less");
 mustContain("vera-core.js", core, "legal tenant, owner, or an authorized representative");
 mustContain("vera-core.js", core, "Fewer than six units makes ordinary stabilization less likely, not impossible");
-mustContain("vera-core.js", core, "before the lease is executed");
+mustContain("vera-core.js", core, "before or at the beginning of the tenancy");
+mustContain("vera-core.js", core, "Lawful rent and up to one month of security may still be due under the lease");
 mustNotContain("vera-core.js", core, "upheld on appeal July 2026");
 mustNotContain("vera-core.js", core, "in about a week");
 mustNotContain("vera-core.js", core, "Nothing should leave your hand until");
@@ -50,23 +55,41 @@ mustNotContain("vera-core.js", core, "Nothing should leave your hand until");
 mustContain("vera-app.js", app, "data-legal-sources");
 mustContain("vera-app.js", app, "a broker representing the landlord, or publishing their listing with permission, cannot charge you");
 mustContain("vera-app.js", app, "actual cost or $20, whichever is less");
-mustContain("vera-app.js", app, "before the lease is executed");
+mustContain("vera-app.js", app, "before or at the beginning of the tenancy");
+mustContain("vera-app.js", app, "Lawful rent and up to one month of security may still be due under the lease");
 mustNotContain("vera-app.js", app, "upheld on appeal July 2026");
 
 mustContain("vera-ledger.js", ledger, "actual cost or $20, whichever is less");
-mustContain("vera-ledger.js", ledger, "before the lease is executed");
+mustContain("vera-ledger.js", ledger, "before or at the beginning of the tenancy");
 mustNotContain("vera-ledger.js", ledger, "any money before lease signing");
+mustNotContain("vera-ledger.js", ledger, "before the lease is executed");
 
 mustContain("vera-prerender.mjs", prerender, "C.LAW_SOURCES.map");
-mustContain("vera-prerender.mjs", prerender, "before the lease is executed");
+mustContain("vera-prerender.mjs", prerender, "before or at the beginning of the tenancy");
+mustContain("vera-prerender.mjs", prerender, "Lawful rent and up to one month of security may still be due under the lease");
 mustContain("vera-prerender.mjs", prerender, "a broker representing the landlord, or publishing their listing with permission, cannot charge you");
+
+for (const asset of [
+  "./assets/css/vera.css?v=56",
+  "./assets/js/vera-core.js?v=51",
+  "./assets/js/vera-ledger.js?v=55",
+  "./assets/js/vera-app.js?v=56",
+]) {
+  mustContain("vera/index.html cache contract", index, asset);
+  mustContain("vera/sw.js cache contract", serviceWorker, asset.replace("./", "/vera/"));
+}
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v9");
+mustNotContain("vera-core.js", core, "before the lease is executed");
+mustNotContain("vera-app.js", app, "before the lease is executed");
+mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");
 
 try {
   await access(manualPath);
   const manual = await readFile(manualPath, "utf8");
   for (const source of sources) mustContain("dist/vera/manual/index.html", manual, source);
   mustContain("dist/vera/manual/index.html", manual, "actual cost or $20, whichever is less");
-  mustContain("dist/vera/manual/index.html", manual, "before the lease is executed");
+  mustContain("dist/vera/manual/index.html", manual, "before or at the beginning of the tenancy");
+  mustContain("dist/vera/manual/index.html", manual, "Lawful rent and up to one month of security may still be due under the lease");
   mustNotContain("dist/vera/manual/index.html", manual, "upheld on appeal July 2026");
 } catch {
   // Source-only use is useful before a build. The normal quality lane runs this
