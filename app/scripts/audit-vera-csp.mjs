@@ -144,6 +144,21 @@ if (sitePolicy && veraPolicy) {
   }
 }
 
+for (const name of ["public", "archive", "meta"]) {
+  const endpoint = `/vera/data/${name}.json`;
+  const endpointPolicy = policyFor(endpoint);
+  if (endpointPolicy !== veraPolicy) {
+    failures.push(
+      `netlify.toml: ${endpoint} must retain the complete /vera/* CSP when its exact noindex header overrides the wildcard`,
+    );
+  }
+  const escaped = endpoint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const block = toml.match(new RegExp(`for = "${escaped}"[\\s\\S]*?(?=\\n\\[\\[headers\\]\\]|$)`));
+  if (!block || !/X-Robots-Tag = "noindex, nofollow"/.test(block[0])) {
+    failures.push(`netlify.toml: ${endpoint} must send X-Robots-Tag noindex, nofollow`);
+  }
+}
+
 const normalizedRedirects = new Set(
   redirects
     .split("\n")
@@ -175,9 +190,35 @@ const veraAppJs = await readFile(
   path.join(appRoot, "public", "vera", "assets", "js", "vera-app.js"),
   "utf8",
 );
+const veraCoreJs = await readFile(
+  path.join(appRoot, "public", "vera", "assets", "js", "vera-core.js"),
+  "utf8",
+);
+const veraPrerender = await readFile(
+  path.join(appRoot, "scripts", "vera-prerender.mjs"),
+  "utf8",
+);
 if (!veraAppJs.includes("{ url: './data/public.json', label: 'site' }")) {
   failures.push(
     "vera-app.js must declare the one first-party ./data/public.json feed",
+  );
+}
+if (
+  !veraCoreJs.includes("function trustedURL") ||
+  !veraCoreJs.includes("TRUSTED_URL_HOSTS") ||
+  !veraAppJs.includes("trustedURL(urls[i], 'image')")
+) {
+  failures.push(
+    "VERA public feed URL handling must parse HTTPS URLs through the narrow trusted host allowlist before rendering external images or links",
+  );
+}
+if (
+  !veraPrerender.includes("VERA_FEED_REVISION") ||
+  !veraPrerender.includes("resolveFeedRevision") ||
+  veraPrerender.includes("vera-apartment-search/feed/archive.json")
+) {
+  failures.push(
+    "vera-prerender.mjs must resolve and use one immutable VERA feed revision per build, with VERA_FEED_REVISION as the explicit replay override",
   );
 }
 for (const origin of EXTERNAL_BROWSER_FEED_ORIGINS) {

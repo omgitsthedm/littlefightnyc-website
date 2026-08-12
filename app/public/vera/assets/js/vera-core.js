@@ -8,6 +8,38 @@
   function money(n) { return n == null || isNaN(n) ? '—' : '$' + Math.round(+n).toLocaleString('en-US'); }
   function num(n, d) { return n == null || isNaN(n) ? '—' : (+n).toFixed(d == null ? 0 : d); }
   function median(a) { if (!a.length) return null; var s = a.slice().sort(function (x, y) { return x - y; }); var m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; }
+
+  /* The public feed is data, not executable link markup. These exact hosts
+     are the only external destinations presently evidenced by the live
+     sanitized feed, its fixture, and VERA's public-record citations. Keep
+     this list intentionally boring: adding a source requires an explicit
+     review, rather than turning an upstream string into a browser link. */
+  var TRUSTED_URL_HOSTS = {
+    listing: [
+      'github.com', 'newyork.craigslist.org', 'streeteasy.com',
+      'www.openigloo.com', 'www.reddit.com',
+    ],
+    image: [
+      'd15up2qb2e3glz.cloudfront.net', 'd206qjx0felmzj.cloudfront.net',
+      'images.craigslist.org', 'photos.zillowstatic.com',
+    ],
+    citation: [
+      'a810-bisweb.nyc.gov', 'a836-acris.nyc.gov', 'appext20.dos.ny.gov',
+      'geosearch.planninglabs.nyc', 'hcr.ny.gov', 'hpdonline.nyc.gov',
+      'huggingface.co', 'portal.311.nyc.gov', 'whoownswhat.justfix.org',
+      'www.nyc.gov', 'www.nysenate.gov', 'zola.planning.nyc.gov',
+    ],
+  };
+
+  function trustedURL(value, kind) {
+    if (typeof value !== 'string' || !TRUSTED_URL_HOSTS[kind]) return null;
+    try {
+      var parsed = new URL(value);
+      if (parsed.protocol !== 'https:' || parsed.username || parsed.password || parsed.port) return null;
+      if (TRUSTED_URL_HOSTS[kind].indexOf(parsed.hostname.toLowerCase()) === -1) return null;
+      return parsed.href;
+    } catch (e) { return null; }
+  }
   function timeago(iso) {
     if (!iso) return '—';
     var ms = Date.now() - new Date(iso).getTime();
@@ -740,7 +772,7 @@
   function poly(points) { return points.map(function (p) { return pt(p[0], p[1]); }).join(' '); }
 
   window.__VERAC = {
-    esc: esc, money: money, num: num, median: median, timeago: timeago,
+    esc: esc, money: money, num: num, median: median, timeago: timeago, trustedURL: trustedURL,
     BRACKETS: BRACKETS, bracketOf: bracketOf, AREAS: AREAS, areaOf: areaOf,
     LINE_COLORS: LINE_COLORS, STATIONS: STATIONS, nearestStation: nearestStation, lineBullets: lineBullets,
     ownerRead: ownerRead, isSmallOwner: isSmallOwner, authenticity: authenticity, isScam: isScam,
