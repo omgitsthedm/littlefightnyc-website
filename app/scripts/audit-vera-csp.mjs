@@ -18,9 +18,11 @@
  * So this asserts the two policies differ by exactly those named runtime
  * capabilities, in exactly their named directives, and nothing else.
  *
- * This also verifies the three exact same-origin data rewrites and rejects an
- * external feed URL in vera-app.js. Production response and freshness checks
- * remain part of the live release gate.
+ * This also verifies the three exact same-origin data rewrites, the edge
+ * response directive required because Netlify custom headers do not apply to
+ * external proxies, and rejects an external feed URL in vera-app.js.
+ * Production response and freshness checks remain part of the live release
+ * gate.
  */
 
 import { readFile } from "node:fs/promises";
@@ -60,6 +62,10 @@ const failures = [];
 const toml = await readFile(path.join(repoRoot, "netlify.toml"), "utf8");
 const redirects = await readFile(
   path.join(appRoot, "public", "_redirects"),
+  "utf8",
+);
+const veraDataEdge = await readFile(
+  path.join(repoRoot, "netlify", "edge-functions", "vera-data-robots.ts"),
   "utf8",
 );
 
@@ -146,17 +152,32 @@ if (sitePolicy && veraPolicy) {
 
 for (const name of ["public", "archive", "meta"]) {
   const endpoint = `/vera/data/${name}.json`;
-  const endpointPolicy = policyFor(endpoint);
-  if (endpointPolicy !== veraPolicy) {
-    failures.push(
-      `netlify.toml: ${endpoint} must retain the complete /vera/* CSP when its exact noindex header overrides the wildcard`,
-    );
+  if (!veraDataEdge.includes(`"${endpoint}"`)) {
+    failures.push(`vera-data-robots.ts: missing exact edge path ${endpoint}`);
   }
-  const escaped = endpoint.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const block = toml.match(new RegExp(`for = "${escaped}"[\\s\\S]*?(?=\\n\\[\\[headers\\]\\]|$)`));
-  if (!block || !/X-Robots-Tag = "noindex, nofollow"/.test(block[0])) {
-    failures.push(`netlify.toml: ${endpoint} must send X-Robots-Tag noindex, nofollow`);
-  }
+}
+if (
+  !/await\s+context\.next\(\{\s*sendConditionalRequest:\s*true\s*\}\)/.test(
+    veraDataEdge,
+  )
+) {
+  failures.push(
+    "vera-data-robots.ts must preserve conditional feed revalidation via context.next({ sendConditionalRequest: true })",
+  );
+}
+if (
+  !/response\.headers\.set\(\s*"X-Robots-Tag"\s*,\s*"noindex, nofollow"\s*\)/.test(
+    veraDataEdge,
+  )
+) {
+  failures.push(
+    "vera-data-robots.ts must set X-Robots-Tag to noindex, nofollow",
+  );
+}
+if ((veraDataEdge.match(/response\.headers\.set\(/g) ?? []).length !== 1) {
+  failures.push(
+    "vera-data-robots.ts must preserve every upstream header except its one X-Robots-Tag override",
+  );
 }
 
 const normalizedRedirects = new Set(
@@ -266,5 +287,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "VERA CSP audit passed: one first-party feed contract, exact data rewrites, and only the map, address, blob, and worker capabilities VERA uses.",
+  "VERA CSP audit passed: one first-party feed contract, exact data rewrites, edge-enforced data noindex, and only the map, address, blob, and worker capabilities VERA uses.",
 );

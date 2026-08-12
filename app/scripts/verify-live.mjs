@@ -151,6 +151,56 @@ for (const [pathname, contentType] of [
   }
 }
 
+for (const name of ["public", "archive", "meta"]) {
+  const pathname = `/vera/data/${name}.json`;
+  const response = await get(pathname);
+  const robots = response.headers.get("x-robots-tag") || "";
+  const contentType = response.headers.get("content-type") || "";
+  const cacheControl = response.headers.get("cache-control") || "";
+  const etag = response.headers.get("etag") || "";
+  if (robots !== "noindex, nofollow") {
+    failures.push(
+      `${pathname}: expected X-Robots-Tag noindex, nofollow, got ${robots || "missing"}`,
+    );
+  }
+  if (!contentType.includes("application/json")) {
+    failures.push(
+      `${pathname}: expected application/json, got ${contentType || "missing"}`,
+    );
+  }
+  if (!cacheControl.includes("max-age=300")) {
+    failures.push(
+      `${pathname}: expected cache policy containing max-age=300, got ${cacheControl || "missing"}`,
+    );
+  }
+  if (!etag) failures.push(`${pathname}: missing ETag validator`);
+
+  const headResponse = await head(pathname);
+  for (const header of ["x-robots-tag", "content-type", "cache-control", "etag"]) {
+    if (headResponse.headers.get(header) !== response.headers.get(header)) {
+      failures.push(`${pathname}: HEAD ${header} does not match GET`);
+    }
+  }
+
+  if (etag) {
+    const conditionalResponse = await fetch(`${baseUrl}${pathname}`, {
+      redirect: "follow",
+      headers: {
+        "if-none-match": etag,
+        "user-agent": "LFNYC-Quality-Spine/1.0",
+      },
+    });
+    if (conditionalResponse.status !== 304) {
+      failures.push(
+        `${pathname}: conditional GET expected 304, got ${conditionalResponse.status}`,
+      );
+    }
+    if (conditionalResponse.headers.get("x-robots-tag") !== "noindex, nofollow") {
+      failures.push(`${pathname}: conditional GET lost X-Robots-Tag`);
+    }
+  }
+}
+
 const poolPath = "/examples/lab/concepts/pool-room/";
 const poolResponse = await get(poolPath);
 const poolHtml = await poolResponse.text();
@@ -237,7 +287,7 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Live verification passed for ${baseUrl} at ${expectedRevision.slice(0, 12)}: revision, core routes, metadata, headers, public assets, Pool Room media and accessibility tracks, Lab, and 404.`,
+    `Live verification passed for ${baseUrl} at ${expectedRevision.slice(0, 12)}: revision, core routes, metadata, headers, VERA feed directives, public assets, Pool Room media and accessibility tracks, Lab, and 404.`,
   );
   console.log("This command does not submit the Tech Audit or assert provider/inbox delivery.");
 }
