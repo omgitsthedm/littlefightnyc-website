@@ -2797,11 +2797,26 @@ test(
     await page.goto(`${baseURL}/vera/?test=1#/today`, {
       waitUntil: "domcontentloaded",
     });
-    await page.waitForFunction(() => {
-      const result = (window as unknown as { __testResults?: { pass: boolean } })
-        .__testResults;
-      return result?.pass === true;
-    });
+    await page.waitForFunction(
+      () =>
+        (window as unknown as { __testResults?: { pass: boolean } })
+          .__testResults !== undefined,
+    );
+    const acceptance = await page.evaluate(
+      () =>
+        (
+          window as unknown as {
+            __testResults?: {
+              pass: boolean;
+              results: Array<{ name: string; ok: boolean; detail: string }>;
+            };
+          }
+        ).__testResults,
+    );
+    expect(
+      acceptance?.pass,
+      JSON.stringify(acceptance?.results.filter((result) => !result.ok), null, 2),
+    ).toBe(true);
 
     expect(
       await page.evaluate((keys) =>

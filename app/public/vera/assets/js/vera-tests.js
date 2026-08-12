@@ -568,7 +568,7 @@
       var manTxt = document.body.textContent;
       check('the manual teaches all five unlawful demands',
         $$('.unlawful li').length === 5 &&
-        /[“"]good-faith[”"] deposit/.test(manTxt) &&
+        manTxt.indexOf('extra holding, "good-faith," reservation, or key fee') > -1 &&
         manTxt.indexOf('Key money') > -1, $$('.unlawful li').length + ' listed');
 
       /* ---- attribution the licences actually require ---- */
