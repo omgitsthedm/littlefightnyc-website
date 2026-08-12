@@ -21,7 +21,10 @@ import { getAnalyticsConsent, installConsentDefaults, onAnalyticsConsentChange }
 /** Run at idle, or ASAP where requestIdleCallback is unavailable. */
 function onIdle(fn: () => void, timeout = 1) {
   if (typeof window !== "undefined" && window.requestIdleCallback) {
-    window.requestIdleCallback(fn);
+    // A bare requestIdleCallback can remain queued indefinitely while the
+    // browser is busy. Analytics is optional and consent-gated, but once a
+    // visitor opts in it must still initialize reliably.
+    window.requestIdleCallback(fn, { timeout });
   } else {
     window.setTimeout(fn, timeout);
   }
