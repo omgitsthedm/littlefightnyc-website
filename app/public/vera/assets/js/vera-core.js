@@ -427,9 +427,9 @@
   /* ================================================================
      THE MONEY ENGINE — NY law gives tenants hard numbers.
        · Security deposit: capped at 1 month (HSTPA, 2019)
-       · Application fee: capped at $20, or actual screening cost
-       · Broker fee: whoever HIRES the broker pays (FARE Act, in effect
-         since 11 Jun 2025; upheld on appeal July 2026).
+       · Screening fee: actual cost or $20, whichever is less
+       · Broker fee: the person who hires the broker pays (FARE Act,
+         in effect since 11 Jun 2025).
      ================================================================ */
 
   var LAW = {
@@ -486,8 +486,8 @@
     { id: 'super', group: 'People', label: 'Ask if there is a super and how fast they answer', why: 'The difference between a same-day fix and a three-week outage.' },
     { id: 'unit', group: 'Paper', label: 'Confirm this is THE unit, not "a similar one"', why: 'Bait-and-switch is the oldest move in the book.' },
     { id: 'legal', group: 'Paper', label: 'Is it a legal unit? (basement/cellar especially)', why: 'Illegal conversions have no protection and can be vacated by the city.' },
-    { id: 'rider', group: 'Paper', label: 'If stabilized, look for the rent-stabilization rider on the lease', why: 'Every stabilized lease must carry a long state-issued rider saying so. A lease handed to you without one is the single red flag you can catch before signing.' },
-    { id: 'stab', group: 'Paper', label: 'Ask the outgoing tenant to pull the rent history', why: 'State records only go to the current tenant or the owner, and get mailed to the apartment — so you cannot request it yourself before signing. The tenant leaving can, in about a week. Otherwise, request it the day you move in.' },
+    { id: 'rider', group: 'Paper', label: 'If it may be stabilized, ask for the rent-stabilization rider', why: 'A stabilized vacancy or renewal lease must include the state rider. Missing it is a reason to verify the unit — not proof that the unit is unregulated.' },
+    { id: 'stab', group: 'Paper', label: 'Ask the outgoing tenant for the rent history', why: 'HCR treats rent histories as confidential: it releases them to the legal tenant, owner, or an authorized representative. The history is mailed to the apartment, so an outgoing tenant can share theirs; once you are the legal tenant, request your own.' },
     { id: 'oddrent', group: 'Paper', label: 'Notice if the rent is an odd number', why: 'A rent like $1,187.59 rather than a round $1,200 is a classic sign of a regulated increase calculated off a legal rent.' },
     { id: 'lease', group: 'Paper', label: 'Read who pays the broker, in writing', why: 'Under the FARE Act, a landlord-hired broker cannot bill you a fee. Keep the fee conversation in text or email — a sudden insistence on a phone call is about the paper trail.' },
   ];
@@ -508,11 +508,11 @@
     { t: 'One phone number, thirty listings', d: 'Search the phone number and the email. Scaled operations reuse contact details across dozens of listings under different names in different neighborhoods. One search ends it.', k: 'who' },
     { t: 'A lease that looks completely legitimate', d: 'A DocuSign lease requires no verification of the sender. Renters have signed real-looking leases, wired real money, and arrived to find twenty other people with the same lease for the same unit.', k: 'paper' },
     { t: '"I am out of the country"', d: 'Missionary, oil rig, deployment, sick relative abroad. Same script for a decade, usually paired with "view it through the windows and we will mail the keys."', k: 'story' },
-    { t: 'Money before keys', d: 'Good-faith deposit, holding fee, key fee, "just to take it off the market." All of it illegal in New York before a signed lease. Nothing should leave your hand until the lease is signed and the keys are in the other one.', k: 'law' },
+    { t: 'Money before an executed lease', d: 'A holding, good-faith, reservation, or key fee to take an apartment off the market is not lawful before the lease is executed. Once it is signed, pay only the lawful, itemized amounts it requires — not an off-the-books extra.', k: 'law' },
     { t: 'Zelle, Venmo, wire, gift cards', d: 'Irreversible by design — that is the entire reason they were requested. A real landlord takes a check or an ACH transfer against a signed lease.', k: 'money' },
     { t: '"You hired me by emailing me"', d: 'The most common FARE Act dodge. It does not work: publishing a listing creates a legal presumption the landlord authorised the broker, and conditioning a rental on engaging an agent is barred outright.', k: 'law' },
     { t: 'A cheaper rent with a bigger fee', d: 'Offered a choice between $4,250 rent with a $3,600 fee, or $3,800 rent with a $6,840 fee? That is not a favour, it is fee laundering — and the owner often has no idea their rent is being quoted high.', k: 'law' },
-    { t: 'An application fee over $20', d: 'Capped at $20 statewide — or the actual cost of the credit and background check, whichever is less. Bring your own report from the last 30 days and it can be waived entirely. A "$500 processing fee" is not a red flag, it is illegal.', k: 'law' },
+    { t: 'An application fee over $20', d: 'Credit and background checks cost the actual cost or $20, whichever is less. Bring a qualifying credit or background report from the last 30 days and the fee must be waived. A "$500 processing fee" is not a red flag, it is illegal.', k: 'law' },
     { t: 'A tip for the super', d: 'Key money by another name. A demand for a few hundred dollars "for the super" before move-in is illegal, and brokers who ask for it know exactly what they are doing.', k: 'law' },
     { t: '"Let us just talk on the phone"', d: 'Insisting on a call after you asked in writing is a paper-trail problem, not a friendliness problem. Keep every fee conversation in text or email.', k: 'paper' },
     { t: 'Days on market reset to three', d: 'The same tired unit gets relisted — sometimes with the unit number flipped from #A1 to #1A — to wipe the counter. Four months of sitting reappears as brand new inventory.', k: 'dupe' },
@@ -548,9 +548,9 @@
       gives: 'a registered legal rent, guaranteed renewals, and board-set increases',
       state: stab ? 'likely in' : units != null && units < 6 ? 'likely out' : 'unknown',
       why: stab
-        ? 'Signals point to a stabilized unit — which is the prize. Note that the state will only release the rent history to the current tenant or the owner, and mails it to the apartment, so ask the outgoing tenant to pull it or request it the day you move in. Check the lease for the required stabilization rider before you sign.'
+        ? 'Signals point to a stabilized unit — which is the prize. HCR releases rent history only to the legal tenant, owner, or an authorized representative, and mails it to the apartment. Ask the outgoing tenant to share theirs; once you are the legal tenant, request your own. Ask for the required stabilization rider before you sign.'
         : units != null && units < 6
-          ? 'Stabilization generally needs six or more units, so a building this small is usually deregulated.'
+          ? 'Fewer than six units makes ordinary stabilization less likely, not impossible. Newer buildings can be regulated through tax benefits or other programs, so verify the unit before treating it as unregulated.'
           : 'Unit count is unconfirmed, so stabilization cannot be ruled in or out from the listing.',
     });
 
@@ -580,6 +580,17 @@
     ['DOB Building Information', 'https://a810-bisweb.nyc.gov/', 'Permits, complaints, and the Certificate of Occupancy that tells you whether the unit is even legal.'],
     ['NY licence check', 'https://appext20.dos.ny.gov/nydos/selSearchType.do', 'Every real broker holds a licence. Search the name before you send anything.'],
     ['311 complaint history', 'https://portal.311.nyc.gov/', 'Heat and hot water outages by date. A building that lost heat five times last winter will do it again.'],
+  ];
+
+  /* The Field Manual’s legal claims point back to the primary public record.
+     These are not a substitute for legal advice; they are the source a renter
+     can check before deciding what to pay or sign. */
+  var LAW_SOURCES = [
+    ['NYS fee and screening rule', 'https://www.nysenate.gov/legislation/laws/RPP/238-A', 'Application, screening, and pre-tenancy payment limits in Real Property Law §238-a.'],
+    ['NYC broker-fee rule', 'https://www.nyc.gov/site/dca/about/FAQ-Broker-Fees.page', 'DCWP’s current FARE Act guidance and complaint path.'],
+    ['HCR rent-history access', 'https://hcr.ny.gov/most-common-rent-regulation-issues-tenants', 'Who can obtain a rent history and how HCR delivers it.'],
+    ['HCR lease rider', 'https://hcr.ny.gov/fact-sheet-2', 'The required rider/addendum for stabilized vacancy and renewal leases.'],
+    ['NYC stabilization guide', 'https://www.nyc.gov/pl/main/services/rent-increase-guide', 'Why building age and size are clues, not a complete status determination.'],
   ];
 
   /* Market context — published figures, cited so they can be checked. */
@@ -738,7 +749,7 @@
     FIT: FIT, isFullFit: isFullFit, whyPassed: whyPassed, charName: charName, streetOf: streetOf, titleCase: titleCase,
     stewardOf: stewardOf, stewardText: stewardText, spatialLine: spatialLine,
     LAW: LAW, moveInMath: moveInMath, CHECKS: CHECKS, checkGroups: checkGroups, TELLS: TELLS,
-    protections: protections, VERIFY_TOOLS: VERIFY_TOOLS, MARKET: MARKET,
+    protections: protections, VERIFY_TOOLS: VERIFY_TOOLS, LAW_SOURCES: LAW_SOURCES, MARKET: MARKET,
     portrait: portrait, hashOf: hashOf, skyOf: skyOf,
     MAP: { B: B, VW: VW, VH: VH, px: px, py: py, pt: pt, poly: poly, HUDSON: HUDSON, EASTRIVER: EASTRIVER, CENTRAL_PARK: CENTRAL_PARK, HOOD_PINS: HOOD_PINS },
   };

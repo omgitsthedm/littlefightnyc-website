@@ -403,18 +403,18 @@
         html += '<div class="insp-sec"><h3>Cash to move in</h3><div class="ledger ledger--tight">' +
           '<div class="ledger__row"><span>First month</span><b>' + money(m.rent) + '</b></div>' +
           '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b>' + money(m.deposit) + '</b></div>' +
-          '<div class="ledger__row"><span>Application <em>$20 max, by law</em></span><b>' + money(m.appFee) + '</b></div>' +
+          '<div class="ledger__row"><span>Screening <em>actual cost or $20, whichever is less</em></span><b>up to ' + money(m.appFee) + '</b></div>' +
           '<div class="ledger__row ledger__row--zero"><span>Broker fee</span><b>$0</b></div>' +
-          '<div class="ledger__row ledger__row--total"><span>Total</span><b>' + money(m.total) + '</b></div>' +
+          '<div class="ledger__row ledger__row--total"><span>Total <em>using the $20 maximum</em></span><b>' + money(m.total) + '</b></div>' +
           '</div><p class="insp-save">You keep roughly <b>' + money(m.saved) + '</b> that a 15% broker fee would have taken.</p></div>' +
           '<div class="insp-sec"><h3>What a landlord will ask you to prove</h3>' +
           '<p>Annual income of about <b>' + money(m.annualIncomeNeeded) + '</b> (the 40× convention). Short of that, a guarantor is usually asked to show <b>' + money(m.guarantorIncomeNeeded) + '</b>, or an institutional guarantor will stand in for roughly <b>' + money(m.guarantorCost) + '</b> once.</p>' +
           '<p class="insp-fine">Income multiples are landlord convention, not law. Private landlords bend them. Corporate portfolios almost never do — which is exactly why VERA points you at the former.</p></div>' +
           '<div class="insp-sec"><h3>Illegal to ask you for</h3><ul class="bad">' +
           '<li>More than ' + money(m.deposit) + ' in security or prepaid rent</li>' +
-          '<li>An application fee over $' + C.LAW.appFeeMax + ' — waived entirely if you bring your own credit and background report from the last 30 days</li>' +
+          '<li>A screening charge above the actual cost or $' + C.LAW.appFeeMax + ' — waived if you bring a qualifying credit or background report from the last 30 days</li>' +
           '<li>A broker fee, if the landlord hired the broker (FARE Act, since ' + C.LAW.fareActFrom + ')</li>' +
-          '<li>A "good faith" or holding deposit before the lease is signed</li>' +
+          '<li>A "good faith," holding, reservation, or key fee before the lease is executed</li>' +
           '<li>Key money, or a "tip for the super" to get the keys</li>' +
           '</ul><p class="insp-fine">Screenshot the ask and report it to DCWP through 311. Your deposit is also due back within ' + C.LAW.depositReturnDays + ' days of move-out with an itemized list of any deductions. Watch the quiet workaround too: a first month priced higher than every month after it is a broker fee wearing a disguise.</p></div>';
       }
@@ -691,8 +691,8 @@
         ? '<p class="fk-cues"><b>Caution:</b> ' + esc(l.scam_cues_found.map(function (c) { return c.says; }).join('; ')) + '</p>'
         : '') +
       '<table>' +
-        kv('Cash to keys', money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + $' + m.appFee + ' application)') +
-        kv('Illegal to ask', 'deposit over one month · application over $20 · broker fee when the landlord hired them · any money before lease signing') +
+        kv('Cash to keys', 'up to ' + money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + up to $' + m.appFee + ' screening)') +
+        kv('Illegal to ask', 'deposit over one month · screening above actual cost or $20 · broker fee when the landlord hired them · pre-lease holding or key fee') +
         kv('HPD / DOB risk', C.num(l.hpd_risk_score) + ' / ' + C.num(l.dob_risk_score)) +
         kv('Heat complaints 3y', l.heat_hot_water_complaints_3y) +
         kv('Bedbugs 3y', l.bedbug_reports_3y) +

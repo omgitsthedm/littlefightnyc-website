@@ -83,10 +83,11 @@ async function main() {
   // --- the manual ---
   const law = `<h2>The money, by law</h2><ul>
 <li>Security deposit: capped at ${C.LAW.depositMaxMonths} month (HSTPA 2019), returned within ${C.LAW.depositReturnDays} days of move-out, itemized.</li>
-<li>Application fee: capped at $${C.LAW.appFeeMax} or the actual screening cost — waivable with your own report from the last 30 days.</li>
-<li>Broker fee: whoever hires the broker pays (FARE Act, in effect since ${esc(C.LAW.fareActFrom)}).</li>
+<li>Screening fee: the actual cost or $${C.LAW.appFeeMax}, whichever is less — waived with a qualifying credit or background report from the last 30 days.</li>
+<li>Pre-lease money: do not pay a holding, reservation, or key fee before the lease is executed.</li>
+<li>Broker fee: a broker representing the landlord, or publishing their listing with permission, cannot charge you; a broker you independently hire can (FARE Act, in effect since ${esc(C.LAW.fareActFrom)}).</li>
 <li>Income convention: ${C.LAW.incomeRuleX}× monthly rent annually; guarantors are asked for ${C.LAW.guarantorRuleX}×.</li>
-</ul>`;
+</ul><h2>Read the law itself</h2><ul>${C.LAW_SOURCES.map((source) => `<li><a href="${esc(source[1])}" rel="noopener">${esc(source[0])}</a> — ${esc(source[2])}</li>`).join('')}</ul>`;
   const tells = '<h2>Scam School — the sixteen tells</h2>' + C.TELLS.map((t) => `<h3>${esc(t.t)}</h3><p>${esc(t.d)}</p>`).join('');
   const checks = '<h2>The viewing checklist</h2>' + C.checkGroups().map((g) =>
     `<h3>${esc(g)}</h3><ul>` + C.CHECKS.filter((x) => x.group === g).map((x) => `<li><b>${esc(x.label)}</b> — ${esc(x.why)}</li>`).join('') + '</ul>'

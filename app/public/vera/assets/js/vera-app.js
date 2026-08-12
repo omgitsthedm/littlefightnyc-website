@@ -1573,18 +1573,18 @@
           '<div class="ledger">' +
             '<div class="ledger__row"><span>First month</span><b data-tr-first>' + money(r) + '</b></div>' +
             '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b data-tr-dep>' + money(deposit) + '</b></div>' +
-            '<div class="ledger__row"><span>Application <em>$20 max, by law</em></span><b>$' + C.LAW.appFeeMax + '</b></div>' +
+            '<div class="ledger__row"><span>Screening <em>actual cost or $20, whichever is less</em></span><b>up to $' + C.LAW.appFeeMax + '</b></div>' +
             '<div class="ledger__row ledger__row--zero"><span>Broker fee <em>owner-direct</em></span><b>$0</b></div>' +
-            '<div class="ledger__row ledger__row--total"><span>Total to keys</span><b data-tr-total>' + money(total) + '</b></div>' +
+            '<div class="ledger__row ledger__row--total"><span>Total to keys <em>using the $20 maximum</em></span><b data-tr-total>' + money(total) + '</b></div>' +
           '</div>' +
-          '<p class="insp-fine">Since the FARE Act (' + C.LAW.fareActFrom + ', upheld on appeal July 2026) whoever hires the broker pays the broker. Watch the workaround: a first month priced above every later month is a fee wearing a disguise.</p>' +
+          '<p class="insp-fine">The FARE Act has applied since ' + C.LAW.fareActFrom + ': a broker representing the landlord, or publishing their listing with permission, cannot charge you. A broker you independently hire can. Get every amount due itemized in writing before signing.</p>' +
           /* VERA scans every listing for these five demands; the manual has
              to teach all five or the app knows something it never told you. */
           '<h3 class="unlawful__h">Five demands that are simply unlawful</h3>' +
           '<ul class="unlawful">' +
             '<li><b>More than one month\'s security.</b> "First, last and one month" is three months of your money and two months more than the law allows. <i>HSTPA, 2019.</i></li>' +
-            '<li><b>An application fee over $' + C.LAW.appFeeMax + '.</b> And you can refuse even that by handing over your own credit report from the last 30 days. <i>HSTPA, 2019.</i></li>' +
-            '<li><b>A holding or "good-faith" deposit.</b> Money to take the apartment off the market before a lease exists is not lawful — and is the single most common way deposits vanish. <i>Not permitted in New York.</i></li>' +
+            '<li><b>A screening charge above the actual cost or $' + C.LAW.appFeeMax + '.</b> A qualifying credit or background report from the last 30 days waives it. <i>NYS Real Property Law §238-a.</i></li>' +
+            '<li><b>A holding or "good-faith" deposit before the lease is executed.</b> A reservation or key fee to take the apartment off the market is not lawful before an executed lease. <i>NYS Real Property Law §238-a.</i></li>' +
             '<li><b>Key money, or a tip for the super.</b> A payment to get the keys or move up the list is illegal however it is phrased. <i>Illegal in New York.</i></li>' +
             '<li><b>A broker fee when the landlord hired the broker.</b> If they found the agent, they pay the agent. <i>FARE Act, ' + C.LAW.fareActFrom + '.</i></li>' +
           '</ul>' +
@@ -1616,6 +1616,12 @@
       '<p class="manual-sec__lede">The chain of proof runs deed → registration → licence → portfolio. Every link is public and free.</p>' +
       '<div class="vtools">' + C.VERIFY_TOOLS.map(function (v) {
         return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
+      }).join('') + '</div></section>' +
+
+      '<section class="manual-sec"><h2 class="manual-sec__title">Read the law itself</h2>' +
+      '<p class="manual-sec__lede">These are the public sources behind the Field Manual. They are a starting point, not legal advice for a specific lease.</p>' +
+      '<div class="vtools" data-legal-sources>' + C.LAW_SOURCES.map(function (source) {
+        return '<a class="vtool" href="' + source[1] + '" target="_blank" rel="noopener noreferrer"><b>' + esc(source[0]) + ' ↗</b><span>' + esc(source[2]) + '</span></a>';
       }).join('') + '</div></section>';
 
     page.classList.add('is-entered');
