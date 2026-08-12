@@ -1414,6 +1414,16 @@ body {
 .hunt-privacy b { color: var(--ink); font-size: 13px; }
 .hunt-privacy span { margin-top: 3px; color: var(--mute); font: 10.5px/1.45 var(--mono); }
 .decision-layout { display: grid; grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); gap: 14px; margin-top: 14px; align-items: start; }
+.hunt-erase { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; margin-top: 14px; padding: 16px; border: 1px solid var(--app-line); border-radius: 13px; background: var(--app-surface); }
+.hunt-erase h2 { margin: 2px 0 6px; font-size: 18px; }
+.hunt-erase p { margin: 0; color: var(--mute); font-size: 13px; line-height: 1.5; }
+.hunt-erase__confirm, .hunt-erase__status { grid-column: 1 / -1; }
+.hunt-erase__confirm { display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--app-line); }
+.hunt-erase__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.hunt-erase__confirm-button { border-color: color-mix(in srgb, var(--red) 72%, var(--app-line)); color: #ffb2aa; }
+.hunt-erase__confirm-button:hover { border-color: var(--red); color: #fff; }
+.hunt-erase__status:not(:empty) { color: var(--green); }
+.hunt-erase__status:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
 .shortlist, .casebook { border: 1px solid var(--app-line); border-radius: 13px; background: var(--app-surface); min-width: 0; }
 .shortlist { position: sticky; top: 0; max-height: calc(100dvh - 176px); overflow: auto; }
 .shortlist__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 16px; border-bottom: 1px solid var(--app-line); }
@@ -1588,7 +1598,7 @@ button:active, .dropcard__hit:active, .walkrow:active, .shortlist-row:active { t
   html, body { height: 100%; overflow: hidden; }
   body { font-size: 16px; }
   .shell {
-    display: grid; grid-template-rows: auto minmax(0, 1fr); width: 100%; height: 100dvh;
+    display: grid; grid-template-rows: auto auto minmax(0, 1fr); width: 100%; height: 100dvh;
     margin: 0; padding: 0 max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
   }
   .masthead {
@@ -1634,16 +1644,17 @@ button:active, .dropcard__hit:active, .walkrow:active, .shortlist-row:active { t
   .command-search kbd, .dtoolbar__density { display: none; }
   .dtoolbar__count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   .filter-dock {
-    display: inline-flex; align-items: center; justify-content: center; position: fixed;
-    right: max(14px, env(safe-area-inset-right)); bottom: calc(76px + env(safe-area-inset-bottom)); z-index: 74;
+    display: inline-flex; align-items: center; justify-content: center; position: relative;
+    right: auto; bottom: auto; z-index: 74; justify-self: end; margin: 8px 0;
     min-height: 46px; padding: 10px 15px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.36);
   }
   .filters {
     position: fixed; z-index: 73; left: max(8px, env(safe-area-inset-left)); right: max(8px, env(safe-area-inset-right));
-    top: max(72px, env(safe-area-inset-top)); bottom: calc(68px + env(safe-area-inset-bottom));
+    top: calc(max(72px, env(safe-area-inset-top)) + 54px); bottom: calc(68px + env(safe-area-inset-bottom));
     display: flex; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 8px;
     padding: 14px; overflow: auto; border: 1px solid var(--app-line-strong); border-radius: 14px;
     background: rgba(12, 15, 13, 0.98); box-shadow: 0 24px 70px rgba(0, 0, 0, 0.52);
+    overscroll-behavior: contain;
     transform: translateY(18px); opacity: 0; visibility: hidden; pointer-events: none;
     transition: transform var(--app-settle) var(--app-ease-out), opacity var(--app-signal) ease, visibility 0s linear var(--app-settle);
   }
@@ -1694,6 +1705,7 @@ button:active, .dropcard__hit:active, .walkrow:active, .shortlist-row:active { t
   .walkrow { min-height: 64px; }
   .hunt-privacy { max-width: none; margin-top: 10px; }
   .decision-layout { display: block; margin-top: 8px; }
+  .hunt-erase { grid-template-columns: 1fr; align-items: stretch; }
   .shortlist { position: static; max-height: none; margin-bottom: 8px; }
   .shortlist__list { display: flex; overflow-x: auto; gap: 8px; padding: 8px; scroll-snap-type: x proximity; scrollbar-width: none; }
   .shortlist__list::-webkit-scrollbar { display: none; }

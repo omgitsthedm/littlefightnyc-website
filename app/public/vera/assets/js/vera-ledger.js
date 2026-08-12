@@ -11,6 +11,7 @@
   var esc = C.esc, money = C.money, num = C.num, timeago = C.timeago;
   function pct(x) { return Math.max(0, Math.min(100, +x || 0)); }
   function A() { return window.__VERA_APP; }
+  function trustedURL(value, kind) { return C.trustedURL ? C.trustedURL(value, kind) : null; }
 
   var openUid = null;
   var inspTab = 'overview';
@@ -323,12 +324,13 @@
     if (tabMore) tabMore.classList.toggle('is-on', ['money', 'owner', 'score', 'visit'].indexOf(inspTab) > -1);
 
     var c = app.caseOf(l.listing_uid);
+    var sourceURL = trustedURL(l.source_url, 'listing');
     $('[data-insp-actions]').innerHTML = c
       ? '<div class="stagepick">' + app.STAGES.map(function (s) {
           return '<button type="button" data-stage="' + s.id + '" data-uid="' + esc(l.listing_uid) + '" class="' + (c.stage === s.id ? 'is-on' : '') + '">' + s.label + '</button>';
         }).join('') + '</div>'
       : '<button type="button" class="bigbtn bigbtn--save" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button>' +
-        (l.source_url ? '<a class="ghostbtn" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Original ↗</a>' : '');
+        (sourceURL ? '<a class="ghostbtn" href="' + esc(sourceURL) + '" target="_blank" rel="noopener noreferrer">Original ↗</a>' : '');
     $('[data-insp-actions]').innerHTML += '<button type="button" class="ghostbtn" data-fieldkit="' + esc(l.listing_uid) + '">Field kit ⎙</button>';
 
     var body = $('[data-insp-body]');
@@ -371,7 +373,7 @@
         kvRow('Move-in cash', l.estimated_move_in_cash != null ? money(l.estimated_move_in_cash) : null) +
         kvRow('Fee status', esc(l.fee_status)) + kvRow('Sq ft', l.square_feet ? num(l.square_feet) : null) +
         kvRow('Source', esc(l.source_name)) + '</dl>';
-      if (l.source_url) html += '<a class="insp-link" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Open the original listing ↗</a>';
+      if (sourceURL) html += '<a class="insp-link" href="' + esc(sourceURL) + '" target="_blank" rel="noopener noreferrer">Open the original listing ↗</a>';
 
       /* Price memory — VERA's own days-on-market and price path. StreetEasy
          retired its counter; this one cannot be reset by a relist. */
@@ -403,18 +405,18 @@
         html += '<div class="insp-sec"><h3>Cash to move in</h3><div class="ledger ledger--tight">' +
           '<div class="ledger__row"><span>First month</span><b>' + money(m.rent) + '</b></div>' +
           '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b>' + money(m.deposit) + '</b></div>' +
-          '<div class="ledger__row"><span>Application <em>$20 max, by law</em></span><b>' + money(m.appFee) + '</b></div>' +
+          '<div class="ledger__row"><span>Screening <em>actual cost or $20, whichever is less</em></span><b>up to ' + money(m.appFee) + '</b></div>' +
           '<div class="ledger__row ledger__row--zero"><span>Broker fee</span><b>$0</b></div>' +
-          '<div class="ledger__row ledger__row--total"><span>Total</span><b>' + money(m.total) + '</b></div>' +
+          '<div class="ledger__row ledger__row--total"><span>Total <em>using the $20 maximum</em></span><b>' + money(m.total) + '</b></div>' +
           '</div><p class="insp-save">You keep roughly <b>' + money(m.saved) + '</b> that a 15% broker fee would have taken.</p></div>' +
           '<div class="insp-sec"><h3>What a landlord will ask you to prove</h3>' +
           '<p>Annual income of about <b>' + money(m.annualIncomeNeeded) + '</b> (the 40× convention). Short of that, a guarantor is usually asked to show <b>' + money(m.guarantorIncomeNeeded) + '</b>, or an institutional guarantor will stand in for roughly <b>' + money(m.guarantorCost) + '</b> once.</p>' +
           '<p class="insp-fine">Income multiples are landlord convention, not law. Private landlords bend them. Corporate portfolios almost never do — which is exactly why VERA points you at the former.</p></div>' +
           '<div class="insp-sec"><h3>Illegal to ask you for</h3><ul class="bad">' +
           '<li>More than ' + money(m.deposit) + ' in security or prepaid rent</li>' +
-          '<li>An application fee over $' + C.LAW.appFeeMax + ' — waived entirely if you bring your own credit and background report from the last 30 days</li>' +
+          '<li>A screening charge above the actual cost or $' + C.LAW.appFeeMax + ' — waived if you bring a qualifying credit or background report from the last 30 days</li>' +
           '<li>A broker fee, if the landlord hired the broker (FARE Act, since ' + C.LAW.fareActFrom + ')</li>' +
-          '<li>A "good faith" or holding deposit before the lease is signed</li>' +
+          '<li>An extra "good faith," holding, reservation, or key fee before or at the beginning of the tenancy</li>' +
           '<li>Key money, or a "tip for the super" to get the keys</li>' +
           '</ul><p class="insp-fine">Screenshot the ask and report it to DCWP through 311. Your deposit is also due back within ' + C.LAW.depositReturnDays + ' days of move-out with an itemized list of any deductions. Watch the quiet workaround too: a first month priced higher than every month after it is a broker fee wearing a disguise.</p></div>';
       }
@@ -457,8 +459,8 @@
       var stw = C.stewardOf(l);
       html += '<div class="steward steward--big steward--' + stw.grade + '"><b class="steward__grade">' + stw.grade + '</b>' +
         '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stw.word) + (stw.score != null ? ' · ' + stw.score + '/100 from ' + stw.known + ' city records (' + (stw.sources || []).join(' · ') + ')' : '') + '</span>' +
-        (stw.failures.length ? '<span class="steward__line steward__line--bad">' + stw.failures.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
-        (stw.strengths.length ? '<span class="steward__line steward__line--good">' + stw.strengths.map(function (f) { return esc(f.t) + ' <a class="citelink" href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>'; }).join('; ') + '</span>' : '') +
+        (stw.failures.length ? '<span class="steward__line steward__line--bad">' + stw.failures.map(function (f) { var url = trustedURL(f.url, 'citation'); return esc(f.t) + (url ? ' <a class="citelink" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>' : ''); }).join('; ') + '</span>' : '') +
+        (stw.strengths.length ? '<span class="steward__line steward__line--good">' + stw.strengths.map(function (f) { var url = trustedURL(f.url, 'citation'); return esc(f.t) + (url ? ' <a class="citelink" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">[' + esc(f.src) + ']</a>' : ''); }).join('; ') + '</span>' : '') +
         '</span></div>';
       /* Counts without a denominator mislead. Seven violations across 799
          apartments is a very different building from three across 89, and
@@ -513,13 +515,15 @@
           '<li><b>Portfolio</b> — Who Owns What links every building sharing those contacts. Over ten units statewide changes your legal protections above.</li>' +
         '</ol>' +
         '<div class="vtools">' + C.VERIFY_TOOLS.slice(0, 4).map(function (v) {
-          return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
+          var url = trustedURL(v[1], 'citation');
+          return url ? '<a class="vtool" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>' : '';
         }).join('') + '</div></div>';
       /* The portfolio: what this owner does to their OTHER tenants. A
          building's own file says how this address is kept; this says who
          keeps it, and how they behave everywhere else they hold. */
       var pf = l.landlord_portfolio;
       if (pf && pf.bldgs) {
+        var portfolioURL = trustedURL('https://whoownswhat.justfix.org/', 'citation');
         var evict = +pf.totalevictions || 0;
         var vpu = +pf.openviolationsperresunit || 0;
         var rsLost = +pf.totalrsdiff || 0;
@@ -535,7 +539,7 @@
             kvRow('Officers on file', (pf.topowners || []).length ? esc((pf.topowners || []).slice(0, 4).join(' · ')) : null) +
           '</dl>' +
           '<p class="insp-fine">Portfolio linked through HPD registration contacts and shared business addresses by ' +
-          '<a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix\'s Who Owns What</a>. ' +
+          (portfolioURL ? '<a href="' + esc(portfolioURL) + '" target="_blank" rel="noopener noreferrer">JustFix\'s Who Owns What</a>' : 'JustFix\'s Who Owns What') + '. ' +
           'Every figure is a public record, not an opinion — and a large portfolio is not itself a fault.</p></div>';
       }
     } else if (inspTab === 'score') {
@@ -615,7 +619,7 @@
         kvRow('Verification confidence', l.verification_confidence != null ? num(l.verification_confidence) : null) +
         kvRow('Address confidence', l.address_confidence != null ? num(l.address_confidence) : null) +
         kvRow('Duplicates seen', l.duplicate_count != null ? String(l.duplicate_count) : null) + '</dl>';
-      if (l.source_url) html += '<a class="insp-link" href="' + esc(l.source_url) + '" target="_blank" rel="noopener noreferrer">Cross-check the source listing ↗</a>';
+      if (sourceURL) html += '<a class="insp-link" href="' + esc(sourceURL) + '" target="_blank" rel="noopener noreferrer">Cross-check the source listing ↗</a>';
 
       /* Hand the check over when VERA could not make it.
          Verification needs a house number, and 87% of the net does not
@@ -636,8 +640,9 @@
           app.addressCheckMarkup(l) +
           '<h4 class="vtools__head">Or open the public records yourself</h4>' +
           '<div class="vtools">' + C.VERIFY_TOOLS.map(function (v) {
-            return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer">' +
-              '<b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
+            var url = trustedURL(v[1], 'citation');
+            return url ? '<a class="vtool" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+              '<b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>' : '';
           }).join('') + '</div></div>';
       }
     }
@@ -691,8 +696,8 @@
         ? '<p class="fk-cues"><b>Caution:</b> ' + esc(l.scam_cues_found.map(function (c) { return c.says; }).join('; ')) + '</p>'
         : '') +
       '<table>' +
-        kv('Cash to keys', money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + $' + m.appFee + ' application)') +
-        kv('Illegal to ask', 'deposit over one month · application over $20 · broker fee when the landlord hired them · any money before lease signing') +
+        kv('Cash to keys', 'up to ' + money(m.total) + ' (first ' + money(m.rent) + ' + deposit ' + money(m.deposit) + ' + up to $' + m.appFee + ' screening)') +
+        kv('Illegal to ask', 'deposit over one month · screening above actual cost or $20 · broker fee when the landlord hired them · extra holding, reservation, or key fee') +
         kv('HPD / DOB risk', C.num(l.hpd_risk_score) + ' / ' + C.num(l.dob_risk_score)) +
         kv('Heat complaints 3y', l.heat_hot_water_complaints_3y) +
         kv('Bedbugs 3y', l.bedbug_reports_3y) +

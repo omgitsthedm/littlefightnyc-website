@@ -11,6 +11,36 @@ import { dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const APP = join(here, '..');
 const DIST_VERA = join(APP, 'dist', 'vera');
+const VERA_ENGINE_REPOSITORY = 'omgitsthedm/vera-apartment-search';
+const FEED_REVISION_OVERRIDE = process.env.VERA_FEED_REVISION || '';
+
+function validFeedRevision(value) {
+  return /^[0-9a-f]{40}$/i.test(String(value || ''));
+}
+
+async function resolveFeedRevision() {
+  if (FEED_REVISION_OVERRIDE) {
+    if (!validFeedRevision(FEED_REVISION_OVERRIDE)) {
+      throw new Error('VERA_FEED_REVISION must be one 40-character Git commit SHA');
+    }
+    return FEED_REVISION_OVERRIDE.toLowerCase();
+  }
+
+  const response = await fetch(`https://api.github.com/repos/${VERA_ENGINE_REPOSITORY}/commits/feed`, {
+    headers: { Accept: 'application/vnd.github+json' },
+  });
+  if (!response.ok) throw new Error(`could not resolve feed revision (HTTP ${response.status})`);
+  const body = await response.json();
+  if (!validFeedRevision(body && body.sha)) throw new Error('feed revision response did not contain a commit SHA');
+  return body.sha.toLowerCase();
+}
+
+function pinnedFeedURL(revision, file) {
+  if (!validFeedRevision(revision) || !/^(?:archive|public|meta)\.json$/.test(file)) {
+    throw new Error('refusing an invalid VERA feed pin');
+  }
+  return `https://raw.githubusercontent.com/${VERA_ENGINE_REPOSITORY}/${revision}/${file}`;
+}
 
 function esc(s) {
   return String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -83,10 +113,11 @@ async function main() {
   // --- the manual ---
   const law = `<h2>The money, by law</h2><ul>
 <li>Security deposit: capped at ${C.LAW.depositMaxMonths} month (HSTPA 2019), returned within ${C.LAW.depositReturnDays} days of move-out, itemized.</li>
-<li>Application fee: capped at $${C.LAW.appFeeMax} or the actual screening cost — waivable with your own report from the last 30 days.</li>
-<li>Broker fee: whoever hires the broker pays (FARE Act, in effect since ${esc(C.LAW.fareActFrom)}).</li>
+<li>Screening fee: the actual cost or $${C.LAW.appFeeMax}, whichever is less — waived with a qualifying credit or background report from the last 30 days.</li>
+<li>Extra fees: for a standard residential rental, a landlord cannot demand an extra holding, reservation, or key fee before or at the beginning of the tenancy. Lawful rent and up to one month of security may still be due under the lease.</li>
+<li>Broker fee: a broker representing the landlord, or publishing their listing with permission, cannot charge you; a broker you independently hire can (FARE Act, in effect since ${esc(C.LAW.fareActFrom)}).</li>
 <li>Income convention: ${C.LAW.incomeRuleX}× monthly rent annually; guarantors are asked for ${C.LAW.guarantorRuleX}×.</li>
-</ul>`;
+</ul><h2>Read the law itself</h2><ul>${C.LAW_SOURCES.map((source) => `<li><a href="${esc(source[1])}" rel="noopener">${esc(source[0])}</a> — ${esc(source[2])}</li>`).join('')}</ul>`;
   const tells = '<h2>Scam School — the sixteen tells</h2>' + C.TELLS.map((t) => `<h3>${esc(t.t)}</h3><p>${esc(t.d)}</p>`).join('');
   const checks = '<h2>The viewing checklist</h2>' + C.checkGroups().map((g) =>
     `<h3>${esc(g)}</h3><ul>` + C.CHECKS.filter((x) => x.group === g).map((x) => `<li><b>${esc(x.label)}</b> — ${esc(x.why)}</li>`).join('') + '</ul>'
@@ -103,7 +134,11 @@ async function main() {
   // --- the receipts ---
   let archBody = '<p>The archive begins with the next publish cycle; entries are never edited after the fact.</p>';
   try {
-    const r = await fetch('https://raw.githubusercontent.com/omgitsthedm/vera-apartment-search/feed/archive.json');
+    /* Resolve `feed` once, then fetch an immutable Git object. A moving branch
+       cannot make two parts of one build disagree. CI may set
+       VERA_FEED_REVISION to replay an exact public-feed revision. */
+    const revision = await resolveFeedRevision();
+    const r = await fetch(pinnedFeedURL(revision, 'archive.json'));
     if (r.ok) {
       const arch = await r.json();
       if (Array.isArray(arch) && arch.length) {
@@ -114,7 +149,12 @@ async function main() {
         ).join('');
       }
     }
-  } catch { /* offline build — the honest default stands */ }
+    console.log('[vera-prerender] pinned archive feed at ' + revision);
+  } catch (error) {
+    /* Offline or GitHub-unavailable builds stay honest rather than consuming a
+       floating feed. The live app still reads its first-party data contract. */
+    console.log('[vera-prerender] archive skipped:', error.message);
+  }
 
   mkdirSync(join(DIST_VERA, 'archive'), { recursive: true });
   writeFileSync(join(DIST_VERA, 'archive', 'index.html'), page(

@@ -61,8 +61,10 @@ async function mockVeraData(
   // Stub the first-party public feed before VERA or a newly claiming service
   // worker can request it. The product remains read-only throughout the flow.
   await page.addInitScript(({ fixture, workspace }) => {
-    localStorage.removeItem("vera-cases");
-    localStorage.removeItem("vera-workspace");
+    for (let index = localStorage.length - 1; index >= 0; index -= 1) {
+      const key = localStorage.key(index);
+      if (key?.startsWith("vera-")) localStorage.removeItem(key);
+    }
     if (workspace) localStorage.setItem("vera-workspace", JSON.stringify(workspace));
 
     const nativeFetch = window.fetch.bind(window);
@@ -286,6 +288,18 @@ test(
         "the phone tab bar is attached to the header instead of the viewport bottom",
       ).toBeGreaterThan(viewport!.height / 2);
       expect(tabZone!.y + tabZone!.height).toBeGreaterThan(viewport!.height - 24);
+
+      const filterDock = page.locator(".filter-dock:visible");
+      const [dockBox, mainBox] = await Promise.all([
+        filterDock.boundingBox(),
+        page.locator("[data-main]").boundingBox(),
+      ]);
+      expect(dockBox, "the phone filter control has no measurable surface").not.toBeNull();
+      expect(mainBox, "the phone result surface has no measurable surface").not.toBeNull();
+      expect(
+        dockBox!.y + dockBox!.height,
+        "the phone filter control overlays the scrolling result surface",
+      ).toBeLessThanOrEqual(mainBox!.y + 1);
     }
     expect(
       resultBox!.y,
@@ -577,6 +591,88 @@ test(
 );
 
 test(
+  "VERA erases every local VERA workspace key only after confirmation @vera-all-platforms",
+  async ({ page }) => {
+    await openVera(page, "hunt");
+    await page.evaluate(() => {
+      localStorage.setItem("vera-cases", JSON.stringify({ one: { stage: "saved" } }));
+      localStorage.setItem("vera-workspace", JSON.stringify({ atlasMode: "list" }));
+      localStorage.setItem("vera-future-preference", "kept within VERA's namespace");
+      localStorage.setItem("littlefight-consent", "must remain");
+    });
+
+    const begin = page.getByRole("button", { name: /erase my vera workspace/i });
+    await expect(begin).toHaveAttribute("aria-expanded", "false");
+    await begin.click();
+    const confirm = page.getByRole("button", { name: /erase workspace now/i });
+    await expect(confirm).toBeVisible();
+    await expect(confirm).toBeFocused();
+    expect(
+      await page.evaluate(() => localStorage.getItem("vera-future-preference")),
+      "the first step must never erase data",
+    ).toBeTruthy();
+
+    await confirm.click();
+    await expect(page.locator("[data-erase-vera-status]")).toContainText(/workspace was erased/i);
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index)).filter((key) =>
+            key?.startsWith("vera-"),
+          ),
+        ),
+      )
+      .toEqual([]);
+    await expect
+      .poll(() => page.evaluate(() => localStorage.getItem("littlefight-consent")))
+      .toBe("must remain");
+  },
+);
+
+test(
+  "VERA renders only allowlisted HTTPS feed URLs @vera-desktop",
+  async ({ page }) => {
+    const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    fixture.pool = fixture.pool.slice(0, 1).map((listing) => ({
+      ...listing,
+      source_url: "https://untrusted.example/listing",
+      image_urls: ["https://images.craigslist.org/allowed.jpg", "https://untrusted.example/photo.jpg"],
+    }));
+    await mockVeraData(page, undefined, JSON.stringify(fixture));
+    await page.goto("/vera/#/browse", { waitUntil: "domcontentloaded" });
+    await waitForVera(page);
+
+    await expect(page.locator('img[src*="untrusted.example"]')).toHaveCount(0);
+    const opener = visibleListings(page).first();
+    await expect(opener).toBeVisible();
+    await opener.click();
+    const inspector = page.getByRole("dialog", { name: /ledger|listing|rental/i });
+    await expect(inspector).toBeVisible();
+    await expect(inspector.getByRole("link", { name: /original/i })).toHaveCount(0);
+    await expect
+      .poll(() =>
+        page.evaluate(() => {
+          const core = (window as unknown as {
+            __VERAC?: { trustedURL: (value: string, kind: string) => string | null };
+          }).__VERAC;
+          return {
+            script: core?.trustedURL("javascript:alert(1)", "listing"),
+            credentials: core?.trustedURL("https://user:pass@newyork.craigslist.org/x", "listing"),
+            port: core?.trustedURL("https://newyork.craigslist.org:8443/x", "listing"),
+            approved: core?.trustedURL("https://newyork.craigslist.org/x", "listing"),
+          };
+        }),
+      )
+      .toEqual({
+        script: null,
+        credentials: null,
+        port: null,
+        approved: "https://newyork.craigslist.org/x",
+      });
+  },
+);
+
+test(
   "VERA inspector preserves route, scroll, and modal accessibility @vera-all-platforms",
   async ({ page }) => {
     await openVera(page, "browse");
@@ -706,6 +802,10 @@ test(
     await expect(gallery).toHaveAttribute("role", "region");
     await expect(gallery).toHaveAttribute("tabindex", "0");
     await expect(gallery).toHaveAttribute("aria-label", /left and right arrow keys/i);
+    await expect(gallery).toHaveAttribute("data-gal-count", /[2-9]/);
+    const galleryStatus = gallery.locator("xpath=following-sibling::*[@data-gal-status]");
+    await expect(galleryStatus).toHaveText(/photo 1 of \d+.*arrow keys/i);
+    await expect(gallery.locator("img").first()).toHaveAttribute("alt", /photo 1 of \d+ for/i);
     expect(
       await gallery.evaluate((element) => element.closest("button") !== null),
       "the keyboard-focusable gallery must not be nested inside the ledger button",
@@ -718,6 +818,7 @@ test(
         message: "ArrowRight did not move the listing gallery by one frame",
       })
       .toBeGreaterThan(initialScroll);
+    await expect(galleryStatus).toHaveText(/photo 2 of \d+/i);
 
     const firstUid = await page.evaluate(
       () =>
@@ -769,6 +870,26 @@ test(
       }));
       expect(violations, `${route} has automated WCAG 2.2 AA violations`).toEqual([]);
     }
+  },
+);
+
+test(
+  "VERA gallery does not present a numeric address fragment as a location @vera-desktop",
+  async ({ page }) => {
+    const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    fixture.pool = fixture.pool.slice(0, 1).map((listing) => ({
+      ...listing,
+      address_normalized: "319",
+      address_raw: "319",
+    }));
+    await mockVeraData(page, undefined, JSON.stringify(fixture));
+    await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
+    await waitForVera(page);
+
+    const gallery = page.locator("[data-gal]").first();
+    await expect(gallery).toBeVisible();
+    await expect(gallery).not.toHaveAttribute("aria-label", /\b319\b/);
+    await expect(gallery.locator("img").first()).not.toHaveAttribute("alt", /\b319\b/);
   },
 );
 

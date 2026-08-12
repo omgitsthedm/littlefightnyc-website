@@ -51,6 +51,21 @@
     if (TESTMODE) return;
     try { localStorage.setItem(key, value); } catch (e) {}
   }
+  var VERA_STORAGE_PREFIX = 'vera-';
+
+  function eraseVeraWorkspace() {
+    if (TESTMODE) return;
+    try {
+      /* VERA owns this namespaced storage only. Reverse iteration stays safe
+         while entries are removed and leaves every non-VERA site key alone. */
+      for (var i = localStorage.length - 1; i >= 0; i--) {
+        var key = localStorage.key(i);
+        if (key && key.indexOf(VERA_STORAGE_PREFIX) === 0) localStorage.removeItem(key);
+      }
+    } catch (e) {}
+  }
+
+  function trustedURL(value, kind) { return C.trustedURL ? C.trustedURL(value, kind) : null; }
 
   var D = null;
   var POOL = [];
@@ -112,7 +127,8 @@
     var urls = l && l.image_urls;
     if (!urls || !urls.length) return null;
     for (var i = 0; i < urls.length; i++) {
-      if (typeof urls[i] === 'string' && urls[i].slice(0, 8) === 'https://') return urls[i];
+      var safe = trustedURL(urls[i], 'image');
+      if (safe) return safe;
     }
     return null;
   }
@@ -120,7 +136,7 @@
   function photoLayer(l) {
     var src = photoOf(l);
     if (!src) return '';
-    var n = +l.image_count || (l.image_urls || []).length;
+    var n = (l.image_urls || []).map(function (url) { return trustedURL(url, 'image'); }).filter(Boolean).length;
     var where = l.title || l.address_normalized || 'this listing';
     return '<img class="shot" src="' + esc(src) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" ' +
       'alt="Listing photo for ' + esc(where) + '">' +
@@ -152,6 +168,7 @@
 
   var cases = {};
   try { cases = JSON.parse(localRead('vera-cases') || '{}') || {}; } catch (e) { cases = {}; }
+  var eraseNotice = '';
 
   function saveCases() {
     localWrite('vera-cases', JSON.stringify(cases));
@@ -180,6 +197,28 @@
 
   function dropCase(uid) { delete cases[uid]; saveCases(); toast('Removed from your hunt.'); }
 
+  function confirmEraseVeraWorkspace() {
+    eraseVeraWorkspace();
+    cases = {};
+    addressResolutions = {};
+    pendingAddressCandidates = {};
+    replacingAddress = {};
+    anchors = [];
+    profile = {};
+    toolIncome = 0;
+    archiveCache = null;
+    sinceLastVisit = null;
+    state.bracket = 'all'; state.unit = 'all'; state.hoods = []; state.areas = []; state.transit = 0;
+    state.lens = { noBrokers: false, noMgmt: false, privateFirst: false }; state.view = 'all'; state.q = '';
+    state.density = 'comfortable'; state.huntSelected = ''; state.atlasMode = 'map';
+    eraseNotice = 'Your VERA workspace was erased from this browser. The public feed remains available.';
+    renderRoute();
+    requestAnimationFrame(function () {
+      var status = $('[data-erase-vera-status]');
+      if (status) status.focus();
+    });
+  }
+
   /* ---------- exact-address handoff (localStorage only) ---------- */
 
   var addressResolutions = {};
@@ -196,7 +235,7 @@
   function zolaUrl(bbl) {
     var digits = String(bbl || '').replace(/\D/g, '');
     if (digits.length !== 10) return null;
-    return 'https://zola.planning.nyc.gov/l/lot/' + (+digits.slice(0, 1)) + '/' + (+digits.slice(1, 6)) + '/' + (+digits.slice(6));
+    return trustedURL('https://zola.planning.nyc.gov/l/lot/' + (+digits.slice(0, 1)) + '/' + (+digits.slice(1, 6)) + '/' + (+digits.slice(6)), 'citation');
   }
 
   function addressResolutionMarkup(l) {
@@ -206,7 +245,8 @@
     var links = [];
     var lotUrl = zolaUrl(saved.bbl);
     if (lotUrl) links.push('<a href="' + lotUrl + '" target="_blank" rel="noopener noreferrer">Open the official ZoLa lot ↗</a>');
-    if (saved.bin) links.push('<a href="https://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=' + esc(saved.bin) + '" target="_blank" rel="noopener noreferrer">Open the DOB building record ↗</a>');
+    var dobUrl = saved.bin ? trustedURL('https://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?bin=' + encodeURIComponent(String(saved.bin)), 'citation') : null;
+    if (dobUrl) links.push('<a href="' + esc(dobUrl) + '" target="_blank" rel="noopener noreferrer">Open the DOB building record ↗</a>');
     return '<div class="address-proof" data-address-proof tabindex="-1">' +
       '<p class="address-proof__eyebrow">Resolved from the address you supplied</p>' +
       '<h4>' + esc(saved.label) + '</h4>' +
@@ -465,16 +505,16 @@
   }
 
   function gallery(l) {
-    var urls = (l.image_urls || []).filter(function (u) { return typeof u === 'string' && u.slice(0, 8) === 'https://'; }).slice(0, 6);
+    var urls = (l.image_urls || []).map(function (u) { return trustedURL(u, 'image'); }).filter(Boolean).slice(0, 6);
     if (!urls.length) return C.portrait(l, 640, 340, sweepHour());
-    var where = l.address_normalized || 'this listing';
+    var where = addressOf(l) || C.charName(l);
     return C.portrait(l, 640, 340, sweepHour()) +
-      '<span class="gal" data-gal role="region" tabindex="0" aria-label="Photo gallery for ' + esc(where) + ', ' + urls.length + ' photo' + (urls.length === 1 ? '' : 's') + '. Use the left and right arrow keys to move between photos.">' + urls.map(function (u, i) {
-        return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" referrerpolicy="no-referrer" alt="Photo ' + (i + 1) + ' of ' + esc(where) + '">';
+      '<span class="gal" data-gal data-gal-count="' + urls.length + '" role="region" tabindex="0" aria-label="Photo gallery for ' + esc(where) + ', ' + urls.length + ' photo' + (urls.length === 1 ? '' : 's') + '. Use the left and right arrow keys to move between photos.">' + urls.map(function (u, i) {
+        return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" referrerpolicy="no-referrer" alt="Photo ' + (i + 1) + ' of ' + urls.length + ' for ' + esc(where) + '">';
       }).join('') + '</span>' +
       (urls.length > 1 ? '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
         return '<span class="gal__dot' + (i === 0 ? ' is-on' : '') + '"></span>';
-      }).join('') + '</span><span class="gal__n">' + urls.length + ' photos — swipe</span>' : '');
+      }).join('') + '</span><span class="gal__n" data-gal-status role="status" aria-live="polite">Photo 1 of ' + urls.length + ' — swipe or use arrow keys</span>' : '');
   }
 
   /* ---------- commute anchors: the #1 community ask, honestly ----------
@@ -1527,6 +1567,16 @@
               }).join('') + '</ol></section>' +
           '</article>' +
         '</div>' +
+        '<section class="hunt-erase" aria-labelledby="erase-vera-title">' +
+          '<div><p class="kicker">Local privacy</p><h2 id="erase-vera-title">Erase my VERA workspace</h2>' +
+          '<p>Your saved listings, notes, filters, address checks, and local preferences stay in this browser. This removes every VERA local-storage entry and nothing else on Little Fight.</p></div>' +
+          '<button type="button" class="ghostbtn" data-erase-vera aria-expanded="false" aria-controls="erase-vera-confirm">Erase my VERA workspace…</button>' +
+          '<div id="erase-vera-confirm" class="hunt-erase__confirm" hidden>' +
+            '<p>This cannot be undone. The shared public feed will not change.</p>' +
+            '<div class="hunt-erase__actions"><button type="button" class="ghostbtn" data-erase-vera-cancel>Keep my workspace</button><button type="button" class="ghostbtn hunt-erase__confirm-button" data-erase-vera-confirm>Erase workspace now</button></div>' +
+          '</div>' +
+          '<p class="hunt-erase__status" data-erase-vera-status role="status" aria-live="polite" tabindex="-1">' + esc(eraseNotice) + '</p>' +
+        '</section>' +
       '</section>';
     page.classList.add('is-entered');
     countUps(page);
@@ -1573,18 +1623,18 @@
           '<div class="ledger">' +
             '<div class="ledger__row"><span>First month</span><b data-tr-first>' + money(r) + '</b></div>' +
             '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b data-tr-dep>' + money(deposit) + '</b></div>' +
-            '<div class="ledger__row"><span>Application <em>$20 max, by law</em></span><b>$' + C.LAW.appFeeMax + '</b></div>' +
+            '<div class="ledger__row"><span>Screening <em>actual cost or $20, whichever is less</em></span><b>up to $' + C.LAW.appFeeMax + '</b></div>' +
             '<div class="ledger__row ledger__row--zero"><span>Broker fee <em>owner-direct</em></span><b>$0</b></div>' +
-            '<div class="ledger__row ledger__row--total"><span>Total to keys</span><b data-tr-total>' + money(total) + '</b></div>' +
+            '<div class="ledger__row ledger__row--total"><span>Total to keys <em>using the $20 maximum</em></span><b data-tr-total>' + money(total) + '</b></div>' +
           '</div>' +
-          '<p class="insp-fine">Since the FARE Act (' + C.LAW.fareActFrom + ', upheld on appeal July 2026) whoever hires the broker pays the broker. Watch the workaround: a first month priced above every later month is a fee wearing a disguise.</p>' +
+          '<p class="insp-fine">The FARE Act has applied since ' + C.LAW.fareActFrom + ': a broker representing the landlord, or publishing their listing with permission, cannot charge you. A broker you independently hire can. Get every amount due itemized in writing before signing.</p>' +
           /* VERA scans every listing for these five demands; the manual has
              to teach all five or the app knows something it never told you. */
           '<h3 class="unlawful__h">Five demands that are simply unlawful</h3>' +
           '<ul class="unlawful">' +
             '<li><b>More than one month\'s security.</b> "First, last and one month" is three months of your money and two months more than the law allows. <i>HSTPA, 2019.</i></li>' +
-            '<li><b>An application fee over $' + C.LAW.appFeeMax + '.</b> And you can refuse even that by handing over your own credit report from the last 30 days. <i>HSTPA, 2019.</i></li>' +
-            '<li><b>A holding or "good-faith" deposit.</b> Money to take the apartment off the market before a lease exists is not lawful — and is the single most common way deposits vanish. <i>Not permitted in New York.</i></li>' +
+            '<li><b>A screening charge above the actual cost or $' + C.LAW.appFeeMax + '.</b> A qualifying credit or background report from the last 30 days waives it. <i>NYS Real Property Law §238-a.</i></li>' +
+            '<li><b>An extra holding, "good-faith," reservation, or key fee.</b> For a standard residential rental, a landlord cannot demand that extra payment before or at the beginning of the tenancy. Lawful rent and up to one month of security may still be due under the lease. <i>NYS Real Property Law §238-a.</i></li>' +
             '<li><b>Key money, or a tip for the super.</b> A payment to get the keys or move up the list is illegal however it is phrased. <i>Illegal in New York.</i></li>' +
             '<li><b>A broker fee when the landlord hired the broker.</b> If they found the agent, they pay the agent. <i>FARE Act, ' + C.LAW.fareActFrom + '.</i></li>' +
           '</ul>' +
@@ -1615,7 +1665,15 @@
       '<section class="manual-sec"><h2 class="manual-sec__title">Verify it yourself</h2>' +
       '<p class="manual-sec__lede">The chain of proof runs deed → registration → licence → portfolio. Every link is public and free.</p>' +
       '<div class="vtools">' + C.VERIFY_TOOLS.map(function (v) {
-        return '<a class="vtool" href="' + v[1] + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>';
+        var url = trustedURL(v[1], 'citation');
+        return url ? '<a class="vtool" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(v[0]) + ' ↗</b><span>' + esc(v[2]) + '</span></a>' : '';
+      }).join('') + '</div></section>' +
+
+      '<section class="manual-sec"><h2 class="manual-sec__title">Read the law itself</h2>' +
+      '<p class="manual-sec__lede">These are the public sources behind the Field Manual. They are a starting point, not legal advice for a specific lease.</p>' +
+      '<div class="vtools" data-legal-sources>' + C.LAW_SOURCES.map(function (source) {
+        var url = trustedURL(source[1], 'citation');
+        return url ? '<a class="vtool" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(source[0]) + ' ↗</b><span>' + esc(source[2]) + '</span></a>' : '';
       }).join('') + '</div></section>';
 
     page.classList.add('is-entered');
@@ -2053,7 +2111,7 @@
   });
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-hunt-select],[data-atlas-mode]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-hunt-select],[data-atlas-mode],[data-erase-vera],[data-erase-vera-cancel],[data-erase-vera-confirm]') : null;
     if (!t) return;
 
     if (t.hasAttribute('data-filter-toggle')) {
@@ -2077,6 +2135,25 @@
       renderRoute();
       return;
     }
+
+    if (t.hasAttribute('data-erase-vera')) {
+      var confirm = $('[data-erase-vera-confirm]') && $('[data-erase-vera-confirm]').closest('.hunt-erase__confirm');
+      if (confirm) confirm.hidden = false;
+      t.setAttribute('aria-expanded', 'true');
+      requestAnimationFrame(function () {
+        var approve = $('[data-erase-vera-confirm]');
+        if (approve) approve.focus();
+      });
+      return;
+    }
+    if (t.hasAttribute('data-erase-vera-cancel')) {
+      var panel = t.closest('.hunt-erase__confirm');
+      if (panel) panel.hidden = true;
+      var erase = $('[data-erase-vera]');
+      if (erase) { erase.setAttribute('aria-expanded', 'false'); erase.focus(); }
+      return;
+    }
+    if (t.hasAttribute('data-erase-vera-confirm')) { confirmEraseVeraWorkspace(); return; }
 
     /* overflow sheets (C2/C3): phone collapses secondary sections behind
        More — the button toggles its sheet and closes the other one */
@@ -2296,6 +2373,9 @@
     if (!dots.length) return;
     var idx = Math.round(gal.scrollLeft / gal.clientWidth);
     dots.forEach(function (d, i) { d.classList.toggle('is-on', i === idx); });
+    var status = gal.parentNode.querySelector('[data-gal-status]');
+    var count = +gal.getAttribute('data-gal-count') || dots.length;
+    if (status) status.textContent = 'Photo ' + Math.min(count, Math.max(1, idx + 1)) + ' of ' + count + ' — swipe or use arrow keys';
   }, true);
 
   window.addEventListener('hashchange', routeSmooth);
@@ -2359,7 +2439,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=55').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=56').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };

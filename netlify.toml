@@ -263,6 +263,45 @@ for = "/vera/*"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "DENY"
 
+# These are machine-readable public feed inputs, not browseable documents.
+# Keep them fetchable by the first-party VERA app while excluding the exact
+# payload URLs from search results and crawler link following.
+[[headers]]
+for = "/vera/data/public.json"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://tiles.openfreemap.org https://geosearch.planninglabs.nyc; worker-src 'self' blob:; child-src blob:; frame-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/vera/data/archive.json"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://tiles.openfreemap.org https://geosearch.planninglabs.nyc; worker-src 'self' blob:; child-src blob:; frame-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+for = "/vera/data/meta.json"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https:; connect-src 'self' https://tiles.openfreemap.org https://geosearch.planninglabs.nyc; worker-src 'self' blob:; child-src blob:; frame-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+  Referrer-Policy = "strict-origin-when-cross-origin"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "DENY"
+  X-Robots-Tag = "noindex, nofollow"
+
 [[headers]]
 for = "/examples/audit/*"
 
