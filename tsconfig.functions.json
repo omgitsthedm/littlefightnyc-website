@@ -19,5 +19,5 @@
     "resolveJsonModule": true,
     "types": []
   },
-  "include": ["netlify/**/*.mts"]
+  "include": ["netlify/**/*.mts", "netlify/edge-functions/**/*.ts"]
 }
