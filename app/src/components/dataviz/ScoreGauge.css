@@ -1,0 +1,53 @@
+/* ScoreGauge — a fixed-aspect ring (no CLS) with the verified score as real
+ * centered text. Base state is the settled score; the sweep is enhancement
+ * driven from the component's IntersectionObserver. Orange is the token path
+ * (var(--lf-fight)): the score is the point of the proof. */
+.lf-gauge {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--lf-gauge-size, 5.5rem);
+  aspect-ratio: 1;
+}
+
+.lf-gauge__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lf-gauge__track {
+  fill: none;
+  stroke: var(--lf-hairline);
+  stroke-width: 6;
+}
+
+.lf-gauge__arc {
+  fill: none;
+  stroke: var(--lf-fight);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.lf-gauge__value {
+  position: relative;
+  font-variant-numeric: tabular-nums;
+}
+
+.lf-gauge--sm {
+  --lf-gauge-size: 3.75rem;
+}
+
+.lf-gauge--sm .lf-gauge__track,
+.lf-gauge--sm .lf-gauge__arc {
+  stroke-width: 7;
+}
+
+.lf-gauge--sm .lf-gauge__value {
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lf-fight);
+}

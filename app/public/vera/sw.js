@@ -27,7 +27,7 @@ var SHELL_ASSETS = [
   '/vera/assets/js/vera-core.js?v=51',
   '/vera/assets/js/vera-geo.js?v=47',
   '/vera/assets/js/vera-map.js?v=55',
-  '/vera/assets/js/vera-ledger.js?v=55',
+  '/vera/assets/js/vera-ledger.js?v=57',
   '/vera/assets/js/vera-app.js?v=56'
 ];
 /* The receipts were left out of this list, so an offline visitor got the

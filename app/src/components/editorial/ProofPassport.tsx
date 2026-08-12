@@ -1,4 +1,5 @@
 import type { CaseStudy } from "@/data/site";
+import { ProofMetricValue } from "@/components/dataviz/ProofMetricValue";
 import { caseProofLabel, formatCaseProofDate } from "./caseProof";
 import "./ProofPassport.css";
 
@@ -65,7 +66,9 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
           <dl>
             {buildFacts.map((metric) => (
               <div key={metric.label}>
-                <dt>{metric.value}</dt>
+                <dt>
+                  <ProofMetricValue value={metric.value} label={metric.label} />
+                </dt>
                 <dd>{metric.label}</dd>
               </div>
             ))}
@@ -77,7 +80,9 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
           <dl>
             {releaseFacts.map((metric) => (
               <div key={metric.label}>
-                <dt>{metric.value}</dt>
+                <dt>
+                  <ProofMetricValue value={metric.value} label={metric.label} />
+                </dt>
                 <dd>{metric.label}</dd>
               </div>
             ))}
@@ -90,7 +95,9 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
             <dl>
               {businessOutcomes.map((metric) => (
                 <div key={metric.label}>
-                  <dt>{metric.value}</dt>
+                  <dt>
+                  <ProofMetricValue value={metric.value} label={metric.label} />
+                </dt>
                   <dd>{metric.label}</dd>
                 </div>
               ))}

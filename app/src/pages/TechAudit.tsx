@@ -5,6 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
+import { ScoreGauge } from "@/components/dataviz/ScoreGauge";
 import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
@@ -28,6 +29,15 @@ import "@/styles/editorial/tech-audit.css";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
+
+// Hair By Rachel Charles, measured 2026-07-30, Lighthouse 13.4.1 (mobile).
+// Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
+const AUDIT_PROOF_SCORES = [
+  { value: "96", label: "Performance" },
+  { value: "100", label: "Accessibility" },
+  { value: "100", label: "Best practices" },
+  { value: "100", label: "SEO" },
+] as const;
 type Step = 1 | 2 | 3;
 
 const OUTCOMES = [
@@ -559,7 +569,17 @@ export default function TechAudit() {
               {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
                     mobile: performance 96, accessibility 100, best practices 100, SEO 100.
                     Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
-              <span>Hair By Rachel Charles: live in two weeks; 96 mobile performance, with 100 in Lighthouse accessibility, best practices, and SEO.</span>
+              <span className="lf-audit-intro__caption">Hair By Rachel Charles: live in two weeks; 96 mobile performance, with 100 in Lighthouse accessibility, best practices, and SEO.</span>
+              {/* Same verified 2026-07-30 measurement as the caption, restated as
+                  instruments. Values must track the evidence artifact above. */}
+              <span className="lf-audit-intro__scores" aria-hidden="true">
+                {AUDIT_PROOF_SCORES.map((score) => (
+                  <span key={score.label} className="lf-audit-intro__score">
+                    <ScoreGauge value={score.value} className="lf-gauge--sm" />
+                    <span className="lf-audit-intro__score-label">{score.label}</span>
+                  </span>
+                ))}
+              </span>
             </Link>
           </div>
         </section>

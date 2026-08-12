@@ -9,6 +9,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
+import { CountUp } from "@/components/dataviz/CountUp";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/contact.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
@@ -156,7 +157,9 @@ export default function Contact() {
           <dl className="lf-contact-next__promises" aria-label="Response promises">
             {RESPONSE_PROMISES.map((promise) => (
               <div key={promise.label}>
-                <dt>{promise.value}</dt>
+                <dt>
+                  <CountUp text={promise.value} />
+                </dt>
                 <dd>{promise.label}</dd>
               </div>
             ))}

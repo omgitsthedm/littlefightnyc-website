@@ -389,9 +389,17 @@
           return x.toFixed(1) + ' ' + y.toFixed(1);
         });
         var move = vals[vals.length - 1] - vals[0];
+        var col = move > 0 ? '#cf7352' : '#4cc38a';
+        /* pathLength=100 normalizes the draw: CSS animates dashoffset
+           100 → 0 so the price path draws itself on tab open. */
         html += '<div class="insp-sec"><h3>Price memory' + (l.days_seen != null ? ' · seen ' + l.days_seen + ' day' + (l.days_seen === 1 ? '' : 's') : '') + '</h3>' +
           '<svg class="pricepath" viewBox="0 0 ' + w + ' ' + hgt + '" role="img" aria-label="Asking-price history">' +
-          '<polyline fill="none" stroke="' + (move > 0 ? '#cf7352' : '#4cc38a') + '" stroke-width="2" stroke-linecap="round" points="' + pts.join(',') + '"/>' +
+          '<polyline fill="none" stroke="' + col + '" stroke-width="2" stroke-linecap="round" pathLength="100" points="' + pts.join(',') + '"/>' +
+          pts.map(function (p, i) {
+            if (i !== 0 && i !== pts.length - 1) return '';
+            var xy = p.split(' ');
+            return '<circle cx="' + xy[0] + '" cy="' + xy[1] + '" r="' + (i === pts.length - 1 ? 3.4 : 2.4) + '" fill="' + col + '"/>';
+          }).join('') +
           '</svg>' +
           '<p class="insp-fine">' + (ph.length === 1
             ? 'Asking ' + money(vals[0]) + ' since ' + esc(ph[0][0]) + ' — no moves while VERA has watched.'

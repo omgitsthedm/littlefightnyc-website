@@ -773,8 +773,47 @@ ul.soft li::marker { color: var(--mute); }
 .prot__why { font-size: 12px; color: var(--mute); margin-top: 3px; }
 .scorebar { display: grid; grid-template-columns: 128px minmax(0, 1fr) 40px; gap: 10px; align-items: center; margin-bottom: 7px; font-size: 12px; color: var(--dim); }
 .scorebar__track { height: 7px; background: rgba(233, 226, 210, 0.06); border-radius: 4px; overflow: hidden; display: block; }
-.scorebar__fill { display: block; height: 100%; background: linear-gradient(90deg, var(--green), rgba(76, 195, 138, 0.4)); }
+.scorebar__fill { display: block; height: 100%; background: linear-gradient(90deg, var(--green), rgba(76, 195, 138, 0.4)); animation: vera-fillup 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .scorebar__num { font-family: var(--mono); font-size: 11.5px; text-align: right; }
+
+/* Score instruments — the number is real text; the ring/bar is paint that
+ * sweeps to the real value on insertion. Reduced-motion block below kills
+ * the sweep, leaving the settled final state. */
+@keyframes vera-fillup { from { width: 0; } }
+@keyframes vera-ringdraw { from { stroke-dashoffset: var(--ring-c); } }
+.scorering { position: relative; display: inline-grid; place-items: center; width: 38px; height: 38px; flex: none; }
+.scorering svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.scorering__track { fill: none; stroke: rgba(233, 226, 210, 0.1); stroke-width: 3; }
+.scorering__arc { fill: none; stroke: var(--green); stroke-width: 3; stroke-linecap: round; animation: vera-ringdraw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.scorering b { position: relative; font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--ink); }
+.t-score { display: inline-flex; align-items: center; gap: 8px; }
+.t-score b { font-weight: 600; }
+.t-score__track { display: block; width: 40px; height: 4px; background: rgba(233, 226, 210, 0.08); border-radius: 2px; overflow: hidden; }
+.t-score__fill { display: block; height: 100%; background: var(--green); border-radius: 2px; animation: vera-fillup 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Price moves — the direction glyph carries the same meaning as the words
+ * beside it (drop/hike, down/up), never color alone. */
+.t-delta { font-family: var(--mono); font-size: 10.5px; font-weight: 600; margin-left: 6px; }
+.t-delta--down { color: var(--green); }
+.t-delta--up { color: var(--amber); }
+
+/* Deal meter — center tick is the median, marker is THIS rent. Marker slides
+ * out from center on insertion; the label repeats the truth in words. */
+@keyframes vera-deal { from { transform: translateX(0); } }
+.deal { display: inline-flex; align-items: center; gap: 8px; }
+.deal__scale { position: relative; display: block; width: 90px; height: 4px; background: rgba(233, 226, 210, 0.08); border-radius: 2px; }
+.deal__median { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; margin-left: -1px; background: rgba(233, 226, 210, 0.35); border-radius: 1px; }
+.deal__marker { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; animation: vera-deal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.deal--under .deal__marker { background: var(--green); box-shadow: 0 0 8px rgba(76, 195, 138, 0.5); }
+.deal--over .deal__marker { background: var(--amber); box-shadow: 0 0 8px rgba(224, 172, 92, 0.5); }
+.deal__label { font-size: 11.5px; color: var(--dim); }
+
+/* Price memory — the asking-price path draws itself on tab open
+ * (pathLength=100 in the markup normalizes the dash). */
+@keyframes vera-pricedraw { from { stroke-dashoffset: 100; } }
+@keyframes vera-dotin { from { opacity: 0; } }
+.pricepath polyline { stroke-dasharray: 100; animation: vera-pricedraw 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pricepath circle { animation: vera-dotin 0.3s 0.85s both; }
 .notes { width: 100%; min-height: 84px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); font-family: var(--sans); font-size: 13.5px; padding: 11px 13px; resize: vertical; }
 .cprog { font-family: var(--mono); color: var(--green); margin-left: 8px; }
 .cbar { height: 6px; background: rgba(233, 226, 210, 0.06); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
@@ -852,6 +891,8 @@ ul.soft li::marker { color: var(--mute); }
   .pulse, .loading__mark { animation: none; }
   .is-entered .dropcard, .is-entered .mp-pin { animation: none; }
   .is-entered .chart path[stroke] { animation: none; stroke-dasharray: none; }
+  .scorering__arc, .t-score__fill, .scorebar__fill { animation: none; }
+  .deal__marker, .pricepath polyline, .pricepath circle { animation: none; }
   .dropcard__hit, .brtile, .kpi--click, .bubcard, .inspector, .toast { transition: none; }
 }
 

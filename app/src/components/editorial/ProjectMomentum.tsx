@@ -9,6 +9,8 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import CinematicMedia from "./CinematicMedia";
 import { useScrollReveal } from "./useScrollReveal";
+import { CountUp } from "@/components/dataviz/CountUp";
+import { usePlayOnView } from "@/components/dataviz/usePlayOnView";
 import "./ProjectMomentum.css";
 
 export default function ProjectMomentum({
@@ -19,6 +21,11 @@ export default function ProjectMomentum({
   variant?: "section" | "detail" | "embedded";
 }) {
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.15 });
+  const playRef = usePlayOnView<HTMLDivElement>(0.25);
+  const setInnerRefs = (el: HTMLDivElement | null) => {
+    ref.current = el;
+    playRef.current = el;
+  };
   const projects = slug
     ? [getProjectMomentum(slug)].filter(
         (project): project is NonNullable<typeof project> => Boolean(project),
@@ -33,7 +40,7 @@ export default function ProjectMomentum({
       data-variant={variant}
       aria-labelledby={`lf-momentum-title-${slug ?? "all"}`}
     >
-      <div ref={ref} className="lf-momentum__inner" data-reveal>
+      <div ref={setInnerRefs} className="lf-momentum__inner" data-reveal>
         <header className="lf-momentum__head">
           <div>
             <p className="lf-momentum__label">Build history</p>
@@ -103,7 +110,9 @@ export default function ProjectMomentum({
                       key={`${project.slug}-${milestone.label}`}
                       style={{ ["--lf-i" as string]: index }}
                     >
-                      <span className="lf-momentum__time">{milestone.time}</span>
+                      <span className="lf-momentum__time">
+                        <CountUp text={milestone.time} />
+                      </span>
                       <strong>{milestone.label}</strong>
                       <p>{milestone.detail}</p>
                     </li>

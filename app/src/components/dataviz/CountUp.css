@@ -1,0 +1,6 @@
+/* CountUp — the span swaps text in place; tabular figures keep the width
+ * from jittering while the number ticks. No entrance states here: the base
+ * render IS the final value. */
+.lf-countup {
+  font-variant-numeric: tabular-nums;
+}

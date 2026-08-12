@@ -114,12 +114,53 @@
     $$('[data-count-to]', root).forEach(function (el) { el.textContent = el.getAttribute('data-count-final'); });
   }
 
-  function countUps(root) { settleCounters(root); }
+  /* The counters render "0" and tick up to the real figure once the page
+     paints — the number earns its own weight instead of teleporting in.
+     Reduced motion (or no rAF) keeps the old jump-straight-to-final path. */
+  function countUps(root) {
+    var els = $$('[data-count-to]', root);
+    if (!els.length) return;
+    if (RM || !window.requestAnimationFrame) { settleCounters(root); return; }
+    els.forEach(function (el) {
+      var to = +el.getAttribute('data-count-to') || 0;
+      var from = +(el.getAttribute('data-count-from') || 0);
+      var prefix = el.getAttribute('data-count-prefix') || '';
+      var finalText = el.getAttribute('data-count-final') || '';
+      if (!to) { el.textContent = finalText; return; }
+      var commas = finalText.indexOf(',') > -1;
+      var t0 = null;
+      var step = function (now) {
+        if (t0 == null) t0 = now;
+        var t = Math.min(1, (now - t0) / 720);
+        var e = 1 - Math.pow(1 - t, 3);
+        if (t >= 1) { el.textContent = finalText; return; }
+        var v = Math.round(from + e * (to - from));
+        el.textContent = prefix + (commas ? v.toLocaleString('en-US') : String(v));
+        requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
 
   // data-count-final is what the reduced-motion path reads; without it every
   // counter rendered blank instead of jumping straight to its value.
   function cval(n) { var v = +n || 0; return '<span data-count-to="' + v + '" data-count-final="' + v + '">0</span>'; }
   function cmoney(m) { return m == null ? '—' : '<span data-count-to="' + Math.round(m) + '" data-count-prefix="$" data-count-final="' + money(m) + '">$0</span>'; }
+
+  /* The overall score as an instrument, not a tag: the ring sweeps to the
+     real value on insertion (vera-ringdraw starts from --ring-c), the number
+     stays real text. The span carries the accessible score; svg is paint. */
+  function scoreRing(score) {
+    if (score == null) return '';
+    var v = Math.max(0, Math.min(100, +score));
+    var c = +(2 * Math.PI * 15).toFixed(1);
+    var off = +(c * (1 - v / 100)).toFixed(1);
+    return '<span class="scorering" role="img" aria-label="VERA score ' + Math.round(v) + ' out of 100" style="--ring-c:' + c + '">' +
+      '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false">' +
+      '<circle class="scorering__track" cx="18" cy="18" r="15"/>' +
+      '<circle class="scorering__arc" cx="18" cy="18" r="15" stroke-dasharray="' + c + '" stroke-dashoffset="' + off + '" transform="rotate(-90 18 18)"/>' +
+      '</svg><b aria-hidden="true">' + Math.round(v) + '</b></span>';
+  }
 
   /* ---------- photos over portraits ---------- */
 
@@ -636,7 +677,31 @@
   function valueChip(l) {
     var v = valueRead(l);
     if (!v) return '';
-    return '<span class="tag ' + (v.under ? 'tag--green' : 'tag--amber') + '" title="' + esc(v.src) + '">' + esc(v.label) + '</span>';
+    /* The market-position meter: center tick is the median, the marker sits
+       where THIS rent lands against it (±50% clamp on a 90px scale), sliding
+       out from center on insertion. The label stays the honest text. */
+    var off = (v.under ? -1 : 1) * Math.min(50, v.pct) * 0.9;
+    return '<span class="deal deal--' + (v.under ? 'under' : 'over') + '" title="' + esc(v.src) + '">' +
+      '<span class="deal__scale" aria-hidden="true"><span class="deal__median"></span>' +
+      '<span class="deal__marker" style="transform:translateX(' + off.toFixed(1) + 'px)"></span></span>' +
+      '<span class="deal__label">' + esc(v.label) + '</span></span>';
+  }
+
+  /* Price memory at a glance: the last recorded move on VERA's own watch,
+     from the feed's price_history — never inferred, never estimated. */
+  function priceMove(l) {
+    var ph = l.price_history;
+    if (!ph || ph.length < 2) return null;
+    var d = +ph[ph.length - 1][1] - +ph[ph.length - 2][1];
+    if (!d) return null;
+    return { amt: Math.abs(d), down: d < 0 };
+  }
+
+  function priceMoveTag(l) {
+    var pm = priceMove(l);
+    if (!pm) return '';
+    return '<span class="tag ' + (pm.down ? 'tag--green' : 'tag--amber') + '">' +
+      (pm.down ? '▼' : '▲') + ' ' + money(pm.amt) + ' on VERA\'s watch</span>';
   }
 
   /* ---------- personal qualification: the 40× bar, yours ---------- */
@@ -718,10 +783,11 @@
             qualifyLine(l) +
             '<span class="dropcard__chips">' +
               valueChip(l) +
+              priceMoveTag(l) +
               (l.voucher_signal ? '<span class="tag tag--blue" title="The listing text states this explicitly — VERA never infers it">vouchers welcomed (stated)</span>' : '') +
               (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
               '<span class="tag">move-in ≈ ' + money(m.total) + '</span>' +
-              '<span class="tag">score ' + num(l.overall_score, 0) + '</span>' +
+              scoreRing(l.overall_score) +
             '</span>' +
             provenance(l) +
             '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">Open full ledger <span aria-hidden="true">→</span></button>' +
@@ -945,7 +1011,21 @@
     var changes = D.daily_changes || {};
     var feed = [];
     (changes.new_listings || []).slice(0, 5).forEach(function (c) { feed.push({ b: 'new', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
-    (changes.price_changes || []).slice(0, 4).forEach(function (c) { feed.push({ b: (+c.price_change || 0) < 0 ? 'drop' : 'hike', t: c.title || c.listing_uid, n: money(c.rent), hood: c.neighborhood }); });
+    (changes.price_changes || []).slice(0, 4).forEach(function (c) {
+      var rent = +c.rent || 0;
+      var delta = +c.price_change || 0;
+      var old = rent - delta;
+      /* The number travels old → new: the badge names the direction, the
+         tween makes the move itself visible. */
+      feed.push({
+        b: delta < 0 ? 'drop' : 'hike',
+        t: c.title || c.listing_uid,
+        n: rent && old > 0 && delta
+          ? '<span data-count-to="' + Math.round(rent) + '" data-count-from="' + Math.round(old) + '" data-count-prefix="$" data-count-final="' + money(rent) + '">' + money(old) + '</span>'
+          : money(c.rent),
+        hood: c.neighborhood,
+      });
+    });
     // gone_listings nests its readable fields under change_detail, unlike
     // new_listings — reading them flat rendered a bare uid and no price.
     (changes.gone_listings || []).slice(0, 3).forEach(function (c) {
@@ -1065,8 +1145,15 @@
      ================================================================ */
 
   var COLS = [
-    { key: 'overall_score', label: 'Score', render: function (l) { return '<span class="t-score">' + (l.overall_score != null ? num(l.overall_score, 1) : '—') + '</span>'; } },
-    { key: 'rent', label: 'Rent', render: function (l) { return money(l.rent); } },
+    { key: 'overall_score', label: 'Score', render: function (l) {
+      if (l.overall_score == null) return '<span class="t-score">—</span>';
+      var v = Math.max(0, Math.min(100, +l.overall_score));
+      return '<span class="t-score"><b>' + num(v, 1) + '</b><span class="t-score__track" aria-hidden="true"><span class="t-score__fill" style="width:' + v + '%"></span></span></span>';
+    } },
+    { key: 'rent', label: 'Rent', render: function (l) {
+      var pm = priceMove(l);
+      return money(l.rent) + (pm ? ' <span class="t-delta t-delta--' + (pm.down ? 'down' : 'up') + '">' + (pm.down ? '▼' : '▲') + ' ' + money(pm.amt) + '</span>' : '');
+    } },
     { key: 'value_delta', label: 'Value', render: function (l) { return l.value_delta == null ? '<span class="t-dim">—</span>' : l.value_delta > 0 ? '<span class="t-under">' + l.value_delta + '% under</span>' : '<span class="t-over">' + (-l.value_delta) + '% over</span>'; } },
     { key: 'title', label: 'Listing', render: function (l) {
       var title = l.title || l.address_normalized || 'Listing';

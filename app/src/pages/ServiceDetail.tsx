@@ -6,6 +6,7 @@ import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
+import { ProofMetricValue } from "@/components/dataviz/ProofMetricValue";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
@@ -78,7 +79,9 @@ function WebsiteAcquisitionBlock() {
               <dl className="lf-sd-web__metrics">
                 {proof.metrics.map((metric) => (
                   <div key={metric.label}>
-                    <dt>{metric.value}</dt>
+                    <dt>
+                      <ProofMetricValue value={metric.value} label={metric.label} />
+                    </dt>
                     <dd>{metric.label}</dd>
                   </div>
                 ))}

@@ -72,7 +72,7 @@ mustContain("vera-prerender.mjs", prerender, "a broker representing the landlord
 for (const asset of [
   "./assets/css/vera.css?v=56",
   "./assets/js/vera-core.js?v=51",
-  "./assets/js/vera-ledger.js?v=55",
+  "./assets/js/vera-ledger.js?v=57",
   "./assets/js/vera-app.js?v=56",
 ]) {
   mustContain("vera/index.html cache contract", index, asset);

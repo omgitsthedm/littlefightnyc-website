@@ -235,6 +235,46 @@
   transform: scale(1);
 }
 
+/* The rail draw is instrument storytelling (elapsed time accumulating), not a
+ * scroll-gated entrance: the base paint above is always the settled track, and
+ * usePlayOnView adds data-play only on viewport entry to replay the draw.
+ * Reduced motion never sets data-play, so the track simply stays settled. */
+.lf-momentum__inner[data-play="true"] .lf-momentum__track::after {
+  animation: lf-momentum-rail-x 900ms var(--m-settle-ease) 160ms both;
+}
+
+.lf-momentum__inner[data-play="true"] .lf-momentum__track li::before {
+  animation: lf-momentum-dot var(--m-settle-ms) var(--m-settle-ease) both;
+  animation-delay: calc(260ms + var(--lf-i, 0) * 150ms);
+}
+
+@keyframes lf-momentum-rail-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes lf-momentum-rail-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes lf-momentum-dot {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 .lf-momentum__time {
   display: block;
   color: var(--lf-fight);
@@ -349,6 +389,10 @@
     transform: scaleY(1);
   }
 
+  .lf-momentum__inner[data-play="true"] .lf-momentum__track::after {
+    animation-name: lf-momentum-rail-y;
+  }
+
   .lf-momentum__inner[data-revealed="true"] .lf-momentum__track::after {
     transform: scaleY(1);
   }
@@ -371,5 +415,6 @@
     opacity: 1;
     transform: none !important;
     transition: none !important;
+    animation: none !important;
   }
 }

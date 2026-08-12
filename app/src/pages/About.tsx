@@ -3,6 +3,7 @@ import PageHero from "@/components/editorial/PageHero";
 import OwnerStories from "@/components/editorial/OwnerStories";
 import QuietContact from "@/components/editorial/QuietContact";
 import { agencyProcess } from "@/data/site";
+import { CountUp } from "@/components/dataviz/CountUp";
 import "@/styles/editorial/about.css";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
@@ -64,7 +65,9 @@ export default function About() {
             {STANDARDS.map((standard) => (
               <div key={standard.label}>
                 <dt>{standard.label}</dt>
-                <dd>{standard.value}</dd>
+                <dd>
+                  <CountUp text={standard.value} />
+                </dd>
               </div>
             ))}
           </dl>
