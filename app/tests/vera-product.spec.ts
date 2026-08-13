@@ -792,6 +792,53 @@ test(
 );
 
 test(
+  "VERA Atlas absorbs unfamiliar optional POI icons without console noise @vera-desktop",
+  async ({ page }) => {
+    const missingImageWarnings: string[] = [];
+    page.on("console", (message) => {
+      if (message.type() === "warning" && /Image ".+" could not be loaded/.test(message.text())) {
+        missingImageWarnings.push(message.text());
+      }
+    });
+
+    await openVera(page, "atlas", { atlasMode: "list" });
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () =>
+            Boolean(
+              (window as unknown as { __VERA_MAP_STYLE__?: { layers?: Array<unknown> } })
+                .__VERA_MAP_STYLE__?.layers,
+            ),
+        ),
+      )
+      .toBe(true);
+    await page.evaluate(() => {
+      const style = (
+        window as unknown as {
+          __VERA_MAP_STYLE__: { layers: Array<Record<string, unknown>> };
+        }
+      ).__VERA_MAP_STYLE__;
+      style.layers.push({
+        id: "vera-test-missing-poi-icon",
+        type: "symbol",
+        source: "openmaptiles",
+        "source-layer": "aerodrome_label",
+        layout: { "icon-image": "vera-test-unfamiliar-poi" },
+      });
+    });
+
+    await page.getByRole("button", { name: /^map(?: view)?$/i }).click();
+    const vectorMap = page.locator("[data-veramap]");
+    await expectOpenAtlasContract(page, vectorMap);
+    await expect
+      .poll(async () => Number(await vectorMap.getAttribute("data-veramap-image-fallbacks")))
+      .toBeGreaterThan(0);
+    expect(missingImageWarnings).toEqual([]);
+  },
+);
+
+test(
   "VERA's listing minimap names walk and station context without a remote data request @vera-desktop",
   async ({ page }) => {
     const nonImageExternalRequests: string[] = [];

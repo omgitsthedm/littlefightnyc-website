@@ -603,6 +603,29 @@
     try { if (map.keyboard && map.keyboard.disableRotation) map.keyboard.disableRotation(); } catch (e) {}
   }
 
+  /* OpenMapTiles POI `class`/`subclass` values are an open vocabulary, while
+     Liberty's sprite is deliberately finite. Install a transparent fallback
+     synchronously during `styleimagemissing` so an unfamiliar optional POI
+     does not become a broken icon or a MapLibre console warning. VERA's own
+     listing layers use circles and text, so this affects base-map garnish only. */
+  function installMissingStyleImageFallback(map, container) {
+    var fallbackCount = 0;
+    var installed = Object.create(null);
+    container.setAttribute('data-veramap-image-fallbacks', '0');
+    map.on('styleimagemissing', function (event) {
+      var id = event && event.id;
+      if (typeof id !== 'string' || !id || id.length > 96 || !/^[a-zA-Z0-9_.:-]+$/.test(id)) return;
+      if (installed[id] || fallbackCount >= 128) return;
+      try {
+        if (map.hasImage && map.hasImage(id)) return;
+        map.addImage(id, { width: 1, height: 1, data: new Uint8Array([0, 0, 0, 0]) });
+        installed[id] = true;
+        fallbackCount += 1;
+        container.setAttribute('data-veramap-image-fallbacks', String(fallbackCount));
+      } catch (e) {}
+    });
+  }
+
   function mount(container, listings, onOpen, onFailure) {
     if (!available()) return null;
     /* Filter changes update this map in place. Release an older WebGL context
@@ -646,6 +669,7 @@
         cooperativeGestures: true,
         fadeDuration: reduced ? 0 : 180,
       });
+      installMissingStyleImageFallback(map, container);
       var initialReady = false;
       var initialFailed = false;
       var initialResourceErrors = 0;

@@ -97,7 +97,7 @@ for (const asset of [
   "./assets/css/vera.css?v=57",
   "./assets/js/vera-core.js?v=51",
   "./assets/js/vera-geo.js?v=48",
-  "./assets/js/vera-map.js?v=56",
+  "./assets/js/vera-map.js?v=57",
   "./assets/js/vera-ledger.js?v=58",
   "./assets/js/vera-app.js?v=57",
 ]) {

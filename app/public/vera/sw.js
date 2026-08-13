@@ -26,7 +26,7 @@ var SHELL_ASSETS = [
   '/vera/assets/icons/vera-icon-maskable-512.png',
   '/vera/assets/js/vera-core.js?v=51',
   '/vera/assets/js/vera-geo.js?v=48',
-  '/vera/assets/js/vera-map.js?v=56',
+  '/vera/assets/js/vera-map.js?v=57',
   '/vera/assets/js/vera-ledger.js?v=58',
   '/vera/assets/js/vera-app.js?v=57'
 ];
