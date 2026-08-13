@@ -30,14 +30,14 @@ export default function QuietHero() {
           </h1>
 
           <p className="lf-hero__brief">
-            A website that earns trust. Technology that keeps the day moving.
+            A clear website. Useful tech. One accountable path from first search to follow-up.
           </p>
           <p className="lf-hero__outcomes">
             Bookings. Visits. Orders. Consultations. Inquiries.
           </p>
           <p className="lf-hero__bridge">
             A table. A chair. A counter. A consultation. The next customer
-            should know what to do.
+            should not need a treasure map.
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export default function QuietHero() {
           </p>
           <h2 id="lf-home-check-title">See what gets in the way.</h2>
           <p className="lf-hero__check-dek">
-            A free public-page review in plain English.
+            A free public-page review. Plain English. No admin login needed.
           </p>
 
           <form
@@ -95,13 +95,13 @@ export default function QuietHero() {
           </form>
 
           <p id="home-report-note" className="lf-hero__form-note">
-            A useful first look. No account, card, or sales trap.
+            A useful first look. No account. No card. No sales trap.
           </p>
 
           <div className="lf-hero__human">
             <span aria-hidden="true"><Phone size={23} strokeWidth={1.8} /></span>
             <a href={PHONE_HREF} data-lf-label="home_hero_phone">
-              <strong>Call or text David</strong>
+              <strong>Call or text Little Fight</strong>
               <span>{PHONE_DISPLAY}</span>
             </a>
             <a

@@ -13,6 +13,7 @@ import { dirname, join } from "node:path";
 import { build as esbuildBundle } from "esbuild";
 import {
   NOT_FOUND_PAGE,
+  enrichAuthoredRoutePages,
   glossaryPages,
   industryPage,
   journalPage,
@@ -28,6 +29,22 @@ const assetsDir = join(appDir, "public", "assets");
 const seoData = JSON.parse(readFileSync(join(dataDir, "seo-pages.json"), "utf8"));
 const journal = JSON.parse(readFileSync(join(dataDir, "journal-index.json"), "utf8"));
 const industries = JSON.parse(readFileSync(join(dataDir, "industries.json"), "utf8"));
+
+// Dynamic routes render from typed app data, not seo-pages.json. Bundle the
+// same module the app imports so client-side metadata has the current H1,
+// short answer, and FAQ from that one authored source.
+const siteDataOut = join(appDir, "node_modules", ".prerender", "site-data-route-meta.mjs");
+mkdirSync(dirname(siteDataOut), { recursive: true });
+await esbuildBundle({
+  entryPoints: [join(dataDir, "site.ts")],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  outfile: siteDataOut,
+  logLevel: "silent",
+});
+const siteContent = await import(pathToFileURL(siteDataOut).href);
+const authoredPages = enrichAuthoredRoutePages(seoData.pages, siteContent, seoData.site.name);
 
 // Bundle the app's answer-art map so hydrated navigation and first-response
 // metadata resolve the same authored artwork from one source of truth.
@@ -61,6 +78,10 @@ function clientMeta(page) {
     path: page.path,
     title: page.title,
     description: page.description,
+    // Keep this browser payload to the fields RouteMeta actually uses. The
+    // complete H1, short answer, FAQ, and visible body remain auditable in the
+    // generated route HTML; duplicating them here made every visit download
+    // more than 100 KB of copy that no client-side code reads.
     image: page.image,
     share: shareForPage(page, seoData.site.name),
     type: page.type,
@@ -72,9 +93,9 @@ function clientMeta(page) {
 }
 
 const pages = [
-  ...seoData.pages,
+  ...authoredPages,
   ...serviceAreaPages(seoData),
-  ...glossaryPages(seoData),
+  ...glossaryPages(seoData, siteContent.glossaryTerms),
   ...journal.map((post) => journalPage(post, hasDedicatedJournalImage)),
   ...industries.map(industryPage),
   ...localePages(),

@@ -6,7 +6,9 @@
 
 - Four services: Custom Local Websites, IT Support, Tech Consulting, and
   Software You Own.
-- Websites ship in 14 days or the client does not pay.
+- Qualifying website scopes may carry the written 14-day promise. The scope
+  states eligibility, when the clock starts, what each side must provide, and
+  the remedy if Little Fight’s qualifying work is late.
 - Consulting is free. Do not publish base pricing for websites, support, or
   custom software unless David explicitly changes that policy.
 - Little Fight NYC was founded in **2021**.

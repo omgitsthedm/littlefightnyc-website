@@ -68,6 +68,42 @@
   line-height: 1.25;
 }
 
+.lf-proof-passport__source {
+  min-height: 44px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--lf-space-2);
+  padding: var(--lf-space-3) clamp(1.1rem, 2.5vw, 1.6rem);
+  color: var(--lf-bone-soft);
+  border-bottom: 1px solid var(--lf-hairline);
+  background: color-mix(in srgb, var(--lf-blue) 7%, transparent);
+  text-decoration: none;
+}
+
+.lf-proof-passport__source span {
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lf-proof-passport__source strong {
+  overflow: hidden;
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-xs);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lf-proof-passport__source:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: -2px;
+}
+
 .lf-proof-passport__dates {
   display: flex;
   flex-wrap: wrap;

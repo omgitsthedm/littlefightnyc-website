@@ -57,7 +57,8 @@ for (const file of files) {
 }
 
 async function status(url) {
-  const opts = {
+  const requestOptions = (method) => ({
+    method,
     redirect: "follow",
     signal: AbortSignal.timeout(TIMEOUT_MS),
     headers: {
@@ -66,11 +67,14 @@ async function status(url) {
       "user-agent":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
     },
-  };
+  });
 
   const get = async () => {
     try {
-      return (await fetch(url, { ...opts, method: "GET" })).status;
+      // HEAD may have consumed its entire timeout. GET needs a fresh signal;
+      // reusing the aborted signal makes the documented fallback fail before
+      // it sends a byte (ICANN's registrant page exposed this exact bug).
+      return (await fetch(url, requestOptions("GET"))).status;
     } catch {
       return 0;
     }
@@ -82,7 +86,7 @@ async function status(url) {
     // GET, and trusting HEAD reported 38 journal pages as linking somewhere
     // dead when the link was fine. Any HEAD result that looks like a failure
     // gets confirmed with a real GET before it is believed.
-    const head = await fetch(url, { ...opts, method: "HEAD" });
+    const head = await fetch(url, requestOptions("HEAD"));
     if (head.ok) return head.status;
     return await get();
   } catch {

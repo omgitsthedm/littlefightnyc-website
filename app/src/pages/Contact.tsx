@@ -9,7 +9,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
-import { CountUp } from "@/components/dataviz/CountUp";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/contact.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
@@ -32,8 +31,8 @@ const NEXT_STEPS = [
 
 const RESPONSE_PROMISES = [
   { value: "Free", label: "Consulting, always" },
-  { value: "2 hours", label: "Missed-call callback, 9am-9pm ET" },
-  { value: "24 hours", label: "Urgent on-site help" },
+  { value: "Within 2 hours", label: "Missed-call callback, 9am–9pm ET" },
+  { value: "Within 24 hours", label: "Urgent NYC on-site help when the fix needs hands" },
 ] as const;
 
 export default function Contact() {
@@ -68,8 +67,8 @@ export default function Contact() {
             <p>Start here</p>
             <h2 id="lf-contact-choice-title">Pick the easiest way to begin.</h2>
             <p>
-              No account. No phone tree. No perfect brief. Choose the option
-              that matches what is happening today.
+              No perfect brief needed. Choose the option that matches what is
+              happening today.
             </p>
           </header>
 
@@ -158,7 +157,7 @@ export default function Contact() {
             {RESPONSE_PROMISES.map((promise) => (
               <div key={promise.label}>
                 <dt>
-                  <CountUp text={promise.value} />
+                  {promise.value}
                 </dt>
                 <dd>{promise.label}</dd>
               </div>
@@ -205,8 +204,8 @@ export default function Contact() {
               <MapPin size={21} strokeWidth={1.9} aria-hidden="true" />
               <p>
                 Based in Manhattan and working across New York City. When an
-                urgent problem needs hands, on-site help is available within 24
-                hours.{" "}
+                urgent NYC problem needs hands, on-site help is available
+                within 24 hours.{" "}
                 <Link className="lf-contact-ready__coverage-link" to="/areas/">
                   See where we work.
                 </Link>

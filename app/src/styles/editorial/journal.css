@@ -1147,3 +1147,30 @@
   .lf-journal-featured__card:hover .lf-journal-featured__media img,
   .lf-journal__link:hover .lf-journal__thumb img { scale: none; }
 }
+
+/* Every hardened Journal route opens with a quotable owner answer and closes
+   with the direct sources behind time-sensitive or third-party facts. */
+.lf-post__body .lf-post__answer {
+  margin-block: 0 clamp(32px, 4vw, 56px);
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid color-mix(in srgb, var(--lf-fight) 55%, var(--lf-hairline));
+  border-radius: var(--lf-radius-card);
+  background: color-mix(in srgb, var(--lf-fight) 8%, var(--lf-paper));
+  color: var(--lf-bone);
+  font-size: clamp(1.15rem, 1.6vw, 1.35rem);
+  line-height: 1.5;
+}
+
+.lf-post__sources {
+  margin-top: clamp(48px, 7vw, 80px);
+  padding-top: clamp(28px, 4vw, 44px);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-post__sources li + li {
+  margin-top: 0.75rem;
+}
+
+.lf-post__sources a {
+  text-underline-offset: 0.2em;
+}

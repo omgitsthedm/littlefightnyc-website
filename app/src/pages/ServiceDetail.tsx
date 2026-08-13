@@ -43,7 +43,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",
-    lede: "Tell us about your business. If we build your site, it is live in 14 days or you don’t pay.",
+    lede: "Tell us about the business and the next customer action. If the written scope qualifies, it names the 14-day promise, what each side needs to provide, and the remedy.",
   },
   "business-systems": {
     heading: "Tired of running it all by hand?",

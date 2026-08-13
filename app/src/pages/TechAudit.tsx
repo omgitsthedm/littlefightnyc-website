@@ -545,31 +545,33 @@ export default function TechAudit() {
               </p>
               <h1 id="lf-audit-intro-title">Get a clear website plan.</h1>
               <p>Tell us what the site needs to do. A real person reviews it and replies with a practical next move.</p>
-              <p className="lf-audit-intro__meta">About two minutes. Reviewed by a person. Replies 9am-9pm Eastern.</p>
+              <p className="lf-audit-intro__meta">A short form. Reviewed by a person during 9am–9pm Eastern.</p>
             </div>
-            <Link
-              className="lf-audit-intro__proof"
-              to="/case-studies/hair-by-rachel-charles/"
-              aria-label="Read the Hair By Rachel Charles case study"
-            >
-              <img
-                {...skelImg}
-                src="/assets/case-hair-by-rachel-charles.webp"
-                {...responsiveImageProps(
-                  "/assets/case-hair-by-rachel-charles.webp",
-                  "(min-width: 1200px) 34vw, 42vw",
-                  [480, 640, 900],
-                )}
-                alt="The Hair By Rachel Charles booking website as it shipped"
-                width={1600}
-                height={1200}
-                fetchPriority="high"
-                decoding="async"
-              />
+            <article className="lf-audit-intro__proof">
+              <Link
+                className="lf-audit-intro__proof-image"
+                to="/case-studies/hair-by-rachel-charles/"
+                aria-label="Read the Hair By Rachel Charles case study"
+              >
+                <img
+                  {...skelImg}
+                  src="/assets/case-hair-by-rachel-charles.webp"
+                  {...responsiveImageProps(
+                    "/assets/case-hair-by-rachel-charles.webp",
+                    "(min-width: 1200px) 34vw, 42vw",
+                    [480, 640, 900],
+                  )}
+                  alt="The Hair By Rachel Charles booking website as it shipped"
+                  width={1600}
+                  height={1200}
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </Link>
               {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
                     mobile: performance 96, accessibility 100, best practices 100, SEO 100.
                     Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
-              <span className="lf-audit-intro__caption">Hair By Rachel Charles: live in two weeks; 96 mobile performance, with 100 in Lighthouse accessibility, best practices, and SEO.</span>
+              <span className="lf-audit-intro__caption">Hair By Rachel Charles: Lighthouse mobile measurement on July 30, 2026 — 96 performance; 100 accessibility, best practices, and SEO.</span>
               {/* Same verified 2026-07-30 measurement as the caption, restated as
                   instruments. Values must track the evidence artifact above. */}
               <span className="lf-audit-intro__scores" aria-hidden="true">
@@ -580,7 +582,17 @@ export default function TechAudit() {
                   </span>
                 ))}
               </span>
-            </Link>
+              <span className="lf-audit-intro__proof-links">
+                <Link to="/case-studies/hair-by-rachel-charles/">Read the case study</Link>
+                <a
+                  href="https://github.com/omgitsthedm/littlefightnyc-website/blob/main/.lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Public Lighthouse method and limits
+                </a>
+              </span>
+            </article>
           </div>
         </section>
       ) : (
@@ -745,8 +757,8 @@ export default function TechAudit() {
                 </h2>
                 <p className="lf-audit__step-sub">
                   {websiteIntent
-                    ? "About two minutes. A real person reads every brief."
-                    : "We only need enough to reply. The rest happens on the call."}
+                    ? "A short note is enough. A real person reads every brief."
+                    : "We only need enough to reply. We can work out the rest together."}
                 </p>
 
                 <form

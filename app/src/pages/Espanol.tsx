@@ -27,7 +27,7 @@ const SERVICES = [
   },
   {
     title: "Arreglamos lo que falló",
-    line: "Pagos, Wi-Fi, correo, caja o reservas. Vamos a su negocio o ayudamos a distancia.",
+    line: "Pagos, Wi-Fi, correo, caja o reservas. En Nueva York podemos ir al negocio; la ayuda a distancia depende del trabajo.",
   },
   {
     title: "Segunda opinión gratis",
@@ -41,7 +41,7 @@ const SERVICES = [
 
 const PROMISES = [
   "La segunda opinión siempre es gratis.",
-  "Su página web en 14 días o no paga.",
+  "El plan escrito de su página explica el plazo, lo que necesitamos y qué pasa si fallamos.",
   "Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m.",
   "El código, los datos y la documentación quedan en sus manos.",
 ];
@@ -63,10 +63,7 @@ const PROOF = [
     client: "Hair By Rachel Charles",
     status: "Sitio público",
     line: "De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar.",
-    // Medido 2026-07-30: accesibilidad 100, buenas prácticas 100, SEO 100,
-    // rendimiento 96 en móvil.
-    // .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
-    fact: "96 en rendimiento móvil; 100 en accesibilidad, buenas prácticas y SEO · lista en 2 semanas",
+    fact: "Vea el caso público para la prueba y el sitio en vivo.",
     image: "/assets/case-hair-by-rachel-charles-900.webp",
     alt: "La página de reservas de Hair By Rachel Charles",
   },
@@ -74,7 +71,7 @@ const PROOF = [
     client: "Sistema privado de presupuestos",
     status: "Proyecto privado",
     line: "El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días.",
-    fact: "3 herramientas, 1 fuente de verdad",
+    fact: "Sistema privado: mostramos el enfoque, no datos del cliente.",
     image: CABINETRY_PROCESS_FILM.poster,
     video: CABINETRY_PROCESS_FILM,
     alt: "Panel privado para preparar presupuestos de carpintería",
@@ -83,7 +80,7 @@ const PROOF = [
     client: "CC Films",
     status: "Sitio público",
     line: "Una sede oficial más clara para una película independiente.",
-    fact: "Estructura, buscadores y publicación reforzados",
+    fact: "Vea el caso público para la prueba y el sitio en vivo.",
     image: "/assets/case-cc-films-900.webp",
     alt: "El sitio oficial de la película If That Mockingbird Don't Sing",
   },
@@ -145,7 +142,7 @@ export default function Espanol() {
               </Link>
             </div>
             <p className="lf-es__action-note">
-              La segunda opinión es gratis. Primero un plan claro; después usted decide.
+              La segunda opinión es gratis. En Nueva York podemos ir al negocio; para una página web, también trabajamos a distancia. Primero un plan claro; después usted decide.
             </p>
 
             <ul className="lf-es__trust">
@@ -155,7 +152,7 @@ export default function Espanol() {
               </li>
               <li>
                 <Clock size={18} strokeWidth={1.75} aria-hidden="true" />
-                Devolvemos la llamada en 2 horas.
+                Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.
               </li>
               <li>
                 <ShieldCheck size={18} strokeWidth={1.75} aria-hidden="true" />

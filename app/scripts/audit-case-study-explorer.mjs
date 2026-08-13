@@ -33,6 +33,21 @@ const explorerCssPath = path.join(
   "LiveSiteExplorer.css",
 );
 const caseDetailPath = path.join(appRoot, "src", "pages", "CaseStudyDetail.tsx");
+const caseDataPath = path.join(appRoot, "src", "data", "site-cases.ts");
+const workShowcasePath = path.join(
+  appRoot,
+  "src",
+  "components",
+  "editorial",
+  "WorkShowcase.tsx",
+);
+const featureProofPath = path.join(
+  appRoot,
+  "src",
+  "components",
+  "editorial",
+  "FeatureProof.tsx",
+);
 const failures = [];
 const validDevices = new Set(["desktop", "tablet", "mobile"]);
 const forbiddenHostSuffixes = [
@@ -43,6 +58,30 @@ const forbiddenHostSuffixes = [
   ".web.app",
   ".firebaseapp.com",
 ];
+const requiredLiveCaseSlugs = [
+  "cc-films",
+  "hair-by-rachel-charles",
+  "after-hours-agenda",
+  "clearhelp",
+  "grand-funding-llc",
+  "logan-loans",
+  "chromatic-painting-design",
+];
+const requiredInternalFleetCaseSlugs = [
+  "legacy-music-group",
+  "army-navy-bags",
+  "brothers-pizzeria",
+  "venuecircuit",
+  "the-break-room",
+  "surviving-game",
+  "pole-position-it",
+  "all-pets-animal-hospital",
+];
+const requiredFleetCaseSlugs = [
+  ...requiredLiveCaseSlugs,
+  ...requiredInternalFleetCaseSlugs,
+];
+const frozenVenueCaseHash = "4b09916419a81c21622b29e770e059d40580e2e69ea030d47481556273abd379";
 const captureContracts = {
   desktop: {
     suffix: "",
@@ -365,6 +404,68 @@ for (const study of allCases) {
   }
 }
 
+for (const slug of requiredLiveCaseSlugs) {
+  const study = allCases.find((entry) => entry.slug === slug);
+  if (!study) {
+    fail(`live portfolio: ${slug} is missing from canonical case data`);
+    continue;
+  }
+
+  if (study.showcase?.linkPolicy !== "custom-domain" || !study.url) {
+    fail(`live portfolio: ${slug} must expose a client-owned custom-domain URL`);
+  }
+  if (
+    study.showcase?.availability !== "public"
+    || !["public-live", "owned-live"].includes(study.showcase?.proof?.status)
+  ) {
+    fail(`live portfolio: ${slug} must be marked public live work`);
+  }
+
+  const proof = study.featureProof;
+  if (!proof) {
+    fail(`live portfolio: ${slug} needs an owner-outcome feature proof`);
+    continue;
+  }
+  if (!proof.ownerOutcome || !proof.whyItMatters || !proof.textAlternative) {
+    fail(`live portfolio: ${slug} feature proof is missing accessible owner context`);
+  }
+  if (!Array.isArray(proof.steps) || proof.steps.length < 3) {
+    fail(`live portfolio: ${slug} feature proof needs at least three clear steps`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(proof.verifiedAt ?? "")) {
+    fail(`live portfolio: ${slug} feature proof needs a valid verifiedAt date`);
+  }
+  try {
+    const source = new URL(proof.sourceUrl);
+    const live = new URL(study.url);
+    if (source.protocol !== "https:" || source.hostname.replace(/^www\./, "") !== live.hostname.replace(/^www\./, "")) {
+      fail(`live portfolio: ${slug} feature-proof source must be the client domain`);
+    }
+  } catch {
+    fail(`live portfolio: ${slug} feature-proof source URL is invalid`);
+  }
+}
+
+const deckspace = allCases.find((study) => study.slug === "deckspace");
+if (!deckspace) fail("portfolio boundary: DeckSpace case record is unexpectedly missing");
+
+if (new Set(requiredFleetCaseSlugs).size !== 15) {
+  fail("portfolio fleet contract must enumerate exactly fifteen unique projects");
+}
+for (const slug of requiredInternalFleetCaseSlugs) {
+  const study = allCases.find((entry) => entry.slug === slug);
+  if (!study) {
+    fail(`internal portfolio: ${slug} is missing from canonical case data`);
+    continue;
+  }
+  if (study.slug !== "venuecircuit" && study.url) {
+    fail(`internal portfolio: ${slug} must not link to a temporary host`);
+  }
+  if (study.slug !== "venuecircuit" && study.showcase?.linkPolicy !== "case-only") {
+    fail(`internal portfolio: ${slug} must stay inside Little Fight as a case-only walkthrough`);
+  }
+}
+
 const capturedCases = allCases.filter(
   (study) => Boolean(study.showcase?.proof?.captureDate),
 );
@@ -477,10 +578,20 @@ for (const study of capturedCases) {
   }
 }
 
-const [explorerSource, explorerCss, caseDetailSource] = await Promise.all([
+const [
+  explorerSource,
+  explorerCss,
+  caseDetailSource,
+  caseDataSource,
+  workShowcaseSource,
+  featureProofSource,
+] = await Promise.all([
   readFile(explorerSourcePath, "utf8"),
   readFile(explorerCssPath, "utf8"),
   readFile(caseDetailPath, "utf8"),
+  readFile(caseDataPath, "utf8"),
+  readFile(workShowcasePath, "utf8"),
+  readFile(featureProofPath, "utf8"),
 ]);
 
 if (!/import\s+["']\.\/LiveSiteExplorer\.css["']/.test(explorerSource)) {
@@ -494,6 +605,31 @@ if (!/\bdata-live-site-explorer\b/.test(explorerSource)) {
 }
 if (!/<LiveSiteExplorer\b/.test(caseDetailSource)) {
   fail("CaseStudyDetail.tsx no longer renders LiveSiteExplorer");
+}
+if (!/<FeatureProof\b/.test(caseDetailSource) || !/data-feature-proof/.test(featureProofSource)) {
+  fail("live portfolio feature proof is missing from the case-study experience");
+}
+if (workShowcaseSource.includes('"deckspace"')) {
+  fail("portfolio boundary: DeckSpace must not appear in the current-work showcase");
+}
+for (const slug of requiredFleetCaseSlugs) {
+  if (!workShowcaseSource.includes(`"${slug}"`)) {
+    fail(`portfolio fleet: ${slug} is missing from the Work Showcase inventory`);
+  }
+}
+
+const venueStart = caseDataSource.indexOf('    type: "Live-event venue platform",');
+const venueEnd = caseDataSource.indexOf('    type: "Neighborhood pizzeria",', venueStart);
+if (venueStart < 0 || venueEnd < 0) {
+  fail("VenueCircuit freeze: unable to locate the frozen case record");
+} else if (
+  createHash("sha256").update(caseDataSource.slice(venueStart, venueEnd)).digest("hex")
+  !== frozenVenueCaseHash
+) {
+  fail("VenueCircuit freeze: case data changed while the recovery lock is active");
+}
+if (!/const preservedVenueLink/.test(caseDetailSource)) {
+  fail("VenueCircuit freeze: its existing outbound behavior is not explicitly preserved");
 }
 if (
   !/onError=/.test(explorerSource) ||

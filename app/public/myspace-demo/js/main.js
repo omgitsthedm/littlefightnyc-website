@@ -30,7 +30,7 @@
   });
 
   // ============================================
-  // CLASSIC MYSPACE MUSIC PLAYER (Fake/Visual)
+  // CLASSIC MYSPACE MUSIC PLAYER (visual-only; no audio is loaded or played)
   // ============================================
   const playlist = [
     { title: "Sugar, We're Goin Down", artist: "Fall Out Boy", duration: "3:49", durationSec: 229 },
@@ -82,6 +82,7 @@
     if(playBtn){
       playBtn.textContent = '❚❚';
       playBtn.classList.add('playing');
+      playBtn.setAttribute('aria-pressed', 'true');
     }
     playerInterval = setInterval(() => {
       currentTime += 1;
@@ -101,6 +102,7 @@
     if(playBtn){
       playBtn.textContent = '▶';
       playBtn.classList.remove('playing');
+      playBtn.setAttribute('aria-pressed', 'false');
     }
     if(playerInterval){
       clearInterval(playerInterval);
@@ -155,7 +157,7 @@
   if(contactForm){
     contactForm.addEventListener("submit", (e)=>{
       e.preventDefault();
-      alert("Thanks for reaching out! This form needs to be connected to a backend service (Netlify Forms, Formspree, etc.)");
+      alert("This archived demo does not send messages. Please use the current source linked on this page.");
     });
   }
 
@@ -175,7 +177,7 @@
     if(!listEl) return;
     const sorted = (items||[]).slice().sort((a,b)=> (b.ts||0)-(a.ts||0));
     if(sorted.length === 0){
-      listEl.innerHTML = '<div class="small">No comments yet. Be the first to leave a message!</div>';
+      listEl.innerHTML = '<div class="small">No comments stored on this device yet.</div>';
       return;
     }
     listEl.innerHTML = sorted.map(it => {

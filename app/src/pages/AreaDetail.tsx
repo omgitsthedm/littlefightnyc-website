@@ -38,87 +38,87 @@ const AREA_IMAGE: Record<string, string> = {
 };
 
 /* A second real frame per neighborhood — map-driven, so areas without a
- * photo simply skip it. Captions carry local truth, not decoration. */
+ * photo simply skip it. Captions describe the image, not a neighborhood stereotype. */
 const AREA_FIGURE: Record<string, { src: string; alt: string; caption: string }> = {
   "east-village": {
     src: "/assets/figure-ev-vendor.webp",
     alt: "A street vendor's clothes hung along an East Village fence, safety barriers in front",
-    caption: "Half the commerce here still happens right on the sidewalk. The other half happens on a phone.",
+    caption: "A street-level East Village frame. Your public details still need to work on a phone.",
   },
   midtown: {
     src: "/assets/figure-midtown-neon-pavement.webp",
     alt: "Wet Midtown pavement at night reflecting pink and purple neon",
-    caption: "Eight million people walk past. The ones who walk in searched first.",
+    caption: "A Midtown street frame after dark. Make the next action clear before someone arrives.",
   },
   "upper-east-side": {
     src: "/assets/figure-ues-diner.webp",
     alt: "An Upper East Side corner diner glowing warm at night",
-    caption: "The neighborhood spots that outlast every chain have one thing in common: people can find them.",
+    caption: "A warm Upper East Side diner frame. Clear hours and contact details give people a useful place to start.",
   },
   "upper-west-side": {
     src: "/assets/figure-uws-icecream.webp",
     alt: "An ice cream truck at Central Park West, golden-hour sun flaring down the cross street",
-    caption: "Season by season, block by block — the Upper West Side rewards the businesses that show up.",
+    caption: "An Upper West Side street frame. A customer should be able to check the basics without a scavenger hunt.",
   },
   "west-village": {
     src: "/assets/figure-wv-bistro.webp",
     alt: "A red-brick West Village corner bistro with sidewalk tables",
-    caption: "Corner rooms and sidewalk regulars. The Village runs on places like this.",
+    caption: "A West Village corner bistro frame. The online path should be as legible as the front door.",
   },
   "greenwich-village": {
     src: "/assets/figure-greenwich-pizza.webp",
     alt: "A busy Greenwich Village pizza corner seen from above, people crossing toward it",
-    caption: "The line out the door didn’t happen by accident.",
+    caption: "A Greenwich Village pizza-corner frame. A clear menu, booking, or contact route makes the next step easier.",
   },
   "the-bronx": {
     src: "/assets/figure-bronx-pizza.webp",
     alt: "A Bronx pizzeria storefront, counter glowing behind the window",
-    caption: "Four generations of regulars — and every new customer starts with a search.",
+    caption: "A Bronx pizzeria storefront frame. Keep the public information customers need in one dependable place.",
   },
   "staten-island": {
     src: "/assets/figure-si-houses.webp",
     alt: "A row of Staten Island houses with tidy lawns and a front-yard fountain",
-    caption: "Every one of these houses needs a plumber, a landscaper, a contractor. They all search first.",
+    caption: "A Staten Island residential street frame. Service businesses need a simple way for a customer to ask for help.",
   },
   chelsea: {
     src: "/assets/figure-chelsea-florist.webp",
     alt: "Chelsea Florist's storefront glowing pink at night, gate half open",
-    caption: "Open late, lit up, easy to find. That’s the whole playbook.",
+    caption: "A Chelsea florist storefront frame. A website should make the open, contact, or order path easy to see.",
   },
   "lower-east-side": {
     src: "/assets/figure-les-bottleshop.webp",
     alt: "A Lower East Side bottle shop at night, shelves glowing through the doorway",
-    caption: "The night crowd decides mid-walk. The listing has to be right before they look up.",
+    caption: "A Lower East Side bottle-shop frame. Check that your public hours and next step agree.",
   },
   soho: {
     src: "/assets/figure-soho-balloons.webp",
     alt: "Bright balloons over a SoHo sidewalk, a shopper passing below",
-    caption: "Foot traffic is the easy part here. Turning it into customers is the fight.",
+    caption: "A SoHo sidewalk frame. A clean route from curiosity to contact beats a clever dead end.",
   },
   williamsburg: {
     src: "/assets/figure-wburg-kitchen.webp",
     alt: "A late-night kitchen window with an OPEN neon sign, two cooks at work",
-    caption: "The kitchen's still on. The lights say open. Google better agree.",
+    caption: "A Williamsburg kitchen-window frame. When the business is open, the public details should say so too.",
   },
   bushwick: {
     src: "/assets/figure-bushwick-market.webp",
     alt: "A produce market on a corner, seen from above, shoppers crossing toward it",
-    caption: "Real commerce, cash and all. The block knows. The internet should too.",
+    caption: "A Bushwick market frame. A customer needs the same clear answer online that they get at the counter.",
   },
   "park-slope": {
     src: "/assets/figure-ps-cafe-table.webp",
     alt: "A café table with the newspaper, coffee, and a pastry",
-    caption: "Slow mornings, loyal regulars — and every new family checks the reviews first.",
+    caption: "A Park Slope cafe-table frame. Keep the first phone visit calm, clear, and useful.",
   },
   astoria: {
     src: "/assets/figure-astoria-market.webp",
     alt: "A shopper in a yellow coat choosing fruit at a neighborhood market",
-    caption: "Great produce never needed marketing. Being findable is another story.",
+    caption: "An Astoria market frame. Good in-person service deserves an equally clear online handoff.",
   },
   "financial-district": {
     src: "/assets/figure-fidi-corner.webp",
     alt: "An ornate Financial District building corner above a street-level storefront",
-    caption: "Old-money architecture upstairs. Small businesses keeping the lights on at street level.",
+    caption: "A Financial District streetscape frame. Put the useful details near the top, before a visitor has to hunt.",
   },
 };
 
@@ -196,10 +196,10 @@ export default function AreaDetail() {
               <p>{area.intro}</p>
             </EditorialBody>
             <h2 className="lf-area-disclosure__heading">
-              What shapes business in {area.name}
+              A practical {area.name} starting point.
             </h2>
             <div className="lf-area-context">
-              <p className="lf-area-context__label">The businesses here</p>
+              <p className="lf-area-context__label">The useful local question</p>
               <p>{area.businessLandscape}</p>
             </div>
           </article>
@@ -225,6 +225,26 @@ export default function AreaDetail() {
               <p>{area.localSearchReality}</p>
             </EditorialBody>
           </article>
+
+          <aside className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+            <p className="lf-content-tile__label">Check the public record</p>
+            <h2 className="lf-area-disclosure__heading">Your block is not a stereotype.</h2>
+            <p className="lf-area-services__intro">
+              The local notes here are a starting lens, not a claim about your business. We check
+              the live listing, public location information, and your own customer path before
+              recommending a change.
+            </p>
+            <p className="lf-area-services__intro">
+              <a href="https://zola.planning.nyc.gov/" target="_blank" rel="noreferrer">
+                NYC Planning’s ZoLa map ↗
+              </a>{" "}
+              and{" "}
+              <a href="https://www.nyc.gov/site/sbs/index.page" target="_blank" rel="noreferrer">
+                NYC Small Business Services ↗
+              </a>{" "}
+              are useful places to check the wider public picture.
+            </p>
+          </aside>
 
           <aside
             id="first-move"
@@ -308,7 +328,7 @@ export default function AreaDetail() {
 
       <QuietContact
         heading={`Near ${area.name}? We’re close.`}
-        lede="We work in your neighborhood. Call or text 9am-9pm New York time and we will set the right next move."
+        lede="Bring the page, tool, or handoff that is getting in the way. We will help you name a sensible next move."
       />
     </div>
   );

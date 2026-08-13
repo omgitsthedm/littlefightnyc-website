@@ -1,0 +1,96 @@
+.lf-owner-path {
+  padding: clamp(4.5rem, 8vw, 8rem) var(--lf-margin-mobile);
+  border-top: 1px solid var(--lf-hairline);
+  background: var(--lf-ink);
+}
+
+.lf-owner-path__inner {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+}
+
+.lf-editorial .lf-owner-path__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-3);
+  max-width: 48rem;
+}
+
+.lf-editorial .lf-owner-path__eyebrow {
+  margin: 0;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-owner-path__head h2 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: 0 !important;
+  line-height: 0.94;
+}
+
+.lf-editorial .lf-owner-path__head > p:last-child {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-md);
+  line-height: 1.48;
+}
+
+.lf-owner-path__flow {
+  margin: clamp(2.5rem, 6vw, 5rem) 0 0;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-owner-path__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3) var(--lf-space-5);
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--lf-space-5);
+}
+
+.lf-owner-path__footer p {
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+}
+
+.lf-owner-path__footer a {
+  display: inline-flex;
+  min-height: var(--lf-control-min);
+  align-items: center;
+  color: var(--lf-fight);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lf-owner-path__footer a:hover,
+.lf-owner-path__footer a:focus-visible {
+  color: var(--lf-fight-hover);
+}
+
+@media (min-width: 48rem) {
+  .lf-owner-path {
+    padding-inline: var(--lf-margin-tablet);
+  }
+}
+
+@media (min-width: 80rem) {
+  .lf-owner-path {
+    padding-inline: var(--lf-margin-desktop);
+  }
+}

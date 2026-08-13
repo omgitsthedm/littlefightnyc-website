@@ -53,6 +53,23 @@ body.lf-audit-report {
   margin: 0;
 }
 
+.lf-audit-reconstruction {
+  position: relative;
+  z-index: 20;
+  width: min(100% - 40px, 980px);
+  margin: 18px auto 0;
+  padding: 14px 16px;
+  border: 1px solid rgb(249 115 22 / 55%);
+  border-radius: var(--lf-radius-sm);
+  background: rgb(249 115 22 / 12%);
+  color: var(--lf-bone);
+  font: 500 16px/1.45 var(--lf-body);
+}
+
+.lf-audit-reconstruction strong { color: var(--lf-fight); }
+.lf-audit-reconstruction a { color: var(--lf-bone); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+@media (max-width: 640px) { .lf-audit-reconstruction { width: min(100% - 28px, 980px); font-size: 15px; } }
+
 body.lf-audit-shell-page *,
 body.lf-audit-shell-page *::before,
 body.lf-audit-shell-page *::after,

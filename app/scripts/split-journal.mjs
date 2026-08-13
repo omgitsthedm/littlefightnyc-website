@@ -1,8 +1,9 @@
 /**
  * Derive a lightweight metadata index from journal.json so the journal LIST
  * page, the publishing heatmap, and the read-time stats don't have to ship the
- * ~250KB of post HTML bodies (that payload belongs only on the single-post
- * chunk). journal.json stays the single source of truth; this file is
+ * post HTML bodies (that payload belongs only on the single-post chunk).
+ * journal.json owns route identity and dates; journal-copy.json owns public
+ * titles, descriptions, and owner-first bodies. This file is
  * generated — run automatically at build (see package.json) and committed so
  * `npm run dev` works without a prebuild step.
  *
@@ -14,11 +15,32 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from "nod
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { journalDates } from "./metadata-source.mjs";
+import { copyBySlug, renderJournalCopy } from "./journal-copy.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, "..", "src", "data");
 
 const posts = JSON.parse(readFileSync(join(dataDir, "journal.json"), "utf8"));
+const copyFile = JSON.parse(readFileSync(join(dataDir, "journal-copy.json"), "utf8"));
+const copy = copyBySlug(copyFile);
+
+const missingCopy = posts.filter((post) => !copy.has(post.slug)).map((post) => post.slug);
+const staleCopy = [...copy.keys()].filter((slug) => !posts.some((post) => post.slug === slug));
+if (missingCopy.length || staleCopy.length) {
+  throw new Error(
+    `Journal copy parity failed. Missing: ${missingCopy.join(", ") || "none"}. Stale: ${staleCopy.join(", ") || "none"}.`,
+  );
+}
+
+const resolvedPosts = posts.map((post) => {
+  const authored = copy.get(post.slug);
+  return {
+    ...post,
+    title: authored.title,
+    description: authored.description,
+    html: renderJournalCopy(authored),
+  };
+});
 
 function countWords(html) {
   if (typeof html !== "string") return 0;
@@ -28,7 +50,7 @@ function countWords(html) {
     .filter(Boolean).length;
 }
 
-const index = posts.map((p) => {
+const index = resolvedPosts.map((p) => {
   const dates = journalDates(p);
   return {
     slug: p.slug,
@@ -56,7 +78,7 @@ console.log(`journal-index.json: ${index.length} posts (meta only, bodies stripp
 const bodiesDir = join(dataDir, "journal-bodies");
 mkdirSync(bodiesDir, { recursive: true });
 
-const wanted = new Set(posts.map((p) => `${p.slug}.json`));
+const wanted = new Set(resolvedPosts.map((p) => `${p.slug}.json`));
 // Prune stale bodies (a renamed/removed post must not linger as a dead chunk).
 for (const file of readdirSync(bodiesDir)) {
   if (file.endsWith(".json") && !wanted.has(file)) {
@@ -64,7 +86,7 @@ for (const file of readdirSync(bodiesDir)) {
   }
 }
 
-for (const p of posts) {
+for (const p of resolvedPosts) {
   writeFileSync(
     join(bodiesDir, `${p.slug}.json`),
     JSON.stringify({ html: typeof p.html === "string" ? p.html : "" }) + "\n",

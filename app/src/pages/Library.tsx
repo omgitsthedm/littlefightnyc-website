@@ -215,7 +215,7 @@ export default function Library() {
             <span className="lf-em">Find the next move.</span>
           </>
         }
-        dek="Website down, Google wrong, email failing, or a software bill that makes no sense? Search the problem in your own words."
+        dek="Website down, Google wrong, email failing, or a software bill that makes no sense? Search the problem in your own words, then check the provider’s current help before changing an account."
         image={{
           src: "/images/brand-scenes/shop-back-office.webp",
           alt: "A small shop back office with orders, tools, and business systems ready for the day",
@@ -284,7 +284,7 @@ export default function Library() {
               <LibraryIcon aria-hidden="true" />
               <span>
                 <strong>Learn the system</strong>
-                <small>How-tos, field notes, and ideas for running the business better.</small>
+                <small>How-tos, field notes, and useful context before you change a tool.</small>
               </span>
               <ArrowUpRight aria-hidden="true" />
             </a>

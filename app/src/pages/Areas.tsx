@@ -40,7 +40,7 @@ export default function Areas() {
             <span className="lf-em">has a local story.</span>
           </>
         }
-        dek="We work across all five boroughs, with on-site visits usually within 24 hours. Start with your neighborhood and the kind of problem in front of you."
+        dek="We work across New York City. Start with your neighborhood, then tell us what is actually getting in the way. A map is useful. It is not a diagnosis."
         image={{
           src: "/assets/nyc-street-crowd.webp",
           alt: "A busy New York street at dusk",
@@ -60,7 +60,7 @@ export default function Areas() {
       <VisualIndex
         eyebrow="Neighborhoods"
         title="Find your neighborhood."
-        dek="See the local customer habits, common technology problems, and the first move we would inspect there."
+        dek="Each neighborhood page gives a useful starting lens. The real plan begins with your own site, listings, tools, and customer path."
         variant="grid"
         items={areaPages.map((area) => ({
           eyebrow: `ZIP ${area.zipCodes.join(" · ")}`,

@@ -9,17 +9,17 @@ const STAGES = [
     signal: "Check",
     title: "Start with the public page.",
     detail:
-      "The Website Check measures Lighthouse performance, SEO, accessibility, and best practices. If the provider fails, the report says unavailable instead of making up a score.",
+      "The Website Check reads public-page performance, accessibility, search basics, and obvious breakpoints. If a check cannot run, the report says so. It does not make up a score.",
     action: "Check my website",
-    href: "/examples/audit/",
-    external: true,
+    href: "/website-check/",
+    external: false,
   },
   {
     number: "02",
     signal: "Read",
     title: "Put a person on the findings.",
     detail:
-      "Book a free 30-minute second opinion. We separate what matters now from what can wait—and say when the current setup is already fine.",
+      "Book a free second opinion. We separate what matters now from what can wait—and say when the current setup is already fine.",
     action: "Book a second opinion",
     href: BOOKING_HREF,
     external: true,
@@ -29,7 +29,7 @@ const STAGES = [
     signal: "Move",
     title: "Fix, build, or leave it alone.",
     detail:
-      "The next move may be a repair, a 14-day website, or focused software you own. The scope and responsibility are written down before paid work starts.",
+      "The next move may be a repair, a qualifying 14-day website, or focused software you own. The scope and responsibility are written down before paid work starts.",
     action: "See the four ways we help",
     href: "/services/",
     external: false,
@@ -39,7 +39,7 @@ const STAGES = [
     signal: "Stay",
     title: "Keep the customer path working.",
     detail:
-      "Hours change. Staff change. Booking links and forms break. Ongoing care keeps the front door current without holding the code, domain, or data hostage.",
+      "Hours change. Staff change. Booking links and forms break. Ongoing care keeps the front door current. The business keeps the code, domain, and data.",
     action: "See ongoing care",
     href: "/services/ongoing-care/",
     external: false,
@@ -51,10 +51,10 @@ export default function GrowthPath() {
     <section className="lf-growth" aria-labelledby="lf-growth-title">
       <header className="lf-growth__head">
         <p className="lf-growth__eyebrow">One useful path</p>
-        <h2 id="lf-growth-title">From first look to a system that keeps earning its place.</h2>
+        <h2 id="lf-growth-title">From “what broke?” to “we know what to do.”</h2>
         <p>
-          No funnel theater. Each step should give the owner something useful,
-          even if the right next move is not hiring us.
+          No funnel theater. Each step should give you something useful, even
+          when the right next move is not hiring us.
         </p>
       </header>
 

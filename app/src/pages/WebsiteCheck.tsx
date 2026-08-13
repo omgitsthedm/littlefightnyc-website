@@ -11,7 +11,7 @@ export default function WebsiteCheck() {
         eyebrow="Free website check"
         icon={Search}
         title={<>See what gets in the way.</>}
-        dek="A public-page scan for measurable performance, SEO, accessibility, and best-practices signals—followed by a private report in plain English."
+        dek="A public-page read for performance, accessibility, search basics, and best-practice signals. The private report also says what it could not check."
         image={{
           src: "/assets/journal-what-a-free-tech-audit-actually-looks-like.webp",
           alt: "Little Fight NYC Website Audit Lab preview",
@@ -30,9 +30,9 @@ export default function WebsiteCheck() {
               card, password, analytics account, or access to the business.
             </p>
             <p>
-              An email is required in the Audit Lab because the report is
-              private and delivered to you. It can also be reviewed with a
-              human, free, but the report does not require a sales call.
+              The Audit Lab asks for an email before it delivers a private
+              report. A person can review it with you for free. A sales call is
+              not required.
             </p>
           </div>
         </header>
@@ -67,10 +67,10 @@ export default function WebsiteCheck() {
         >
           <div>
             <p>Prefer a human first?</p>
-            <h2 id="lf-website-check-booking-title">Free 30-minute second opinion.</h2>
+            <h2 id="lf-website-check-booking-title">Free second opinion.</h2>
             <p>
-              Choose a Monday–Friday time between 9am and 5pm Eastern. We’ll meet
-              on Google Meet, look at your public website together, and name the
+              The booking page shows its current available times and meeting
+              details. We look at your public website together and name the
               clearest next move. No login, prep, or commitment.
             </p>
           </div>

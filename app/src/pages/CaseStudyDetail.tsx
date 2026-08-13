@@ -9,6 +9,7 @@ import {
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
+import FeatureProof from "@/components/editorial/FeatureProof";
 import ProofPassport, { ProofStatus } from "@/components/editorial/ProofPassport";
 import ProjectWalkthrough from "@/components/editorial/ProjectWalkthrough";
 import ProjectMomentum from "@/components/editorial/ProjectMomentum";
@@ -87,12 +88,18 @@ export default function CaseStudyDetail() {
 
   if (!study) return <Navigate to="/examples/" replace />;
 
+  const hasLiveClientDomain = study.showcase.linkPolicy === "custom-domain"
+    && Boolean(study.url);
+  // VenueCircuit remains exactly available while its separate recovery is in progress.
+  const preservedVenueLink = study.slug === "venuecircuit" && Boolean(study.url);
+  const liveCaseUrl = hasLiveClientDomain || preservedVenueLink ? study.url : "";
+
   const related = caseStudies
     .filter(
       (entry) =>
         entry.slug !== study.slug
         && entry.showcase.availability === "public"
-        && Boolean(entry.url),
+        && (entry.showcase.linkPolicy === "custom-domain" || entry.slug === "venuecircuit"),
     )
     .sort((first, second) => {
       const firstSharedServices = first.services.filter((service) =>
@@ -132,14 +139,14 @@ export default function CaseStudyDetail() {
         icon={Award}
         title={<span className="lf-accent">{study.showcase.label}</span>}
         dek={study.title}
-        backdrop={{
+        backdrop={study.image && !study.inventoryOnly ? {
           src: study.image,
           video: study.video,
           fit: study.video ? "contain" : "cover",
           alt: "",
           position: study.showcase.heroPosition,
           mobilePosition: study.showcase.heroPositionMobile,
-        }}
+        } : undefined}
       />
 
       <div className="lf-case__hero-band">
@@ -148,14 +155,18 @@ export default function CaseStudyDetail() {
             {caseProofLabel(study)}
           </span>
           <span className="lf-case__hero-actions">
-            {study.showcase.availability === "public" && study.url ? (
+            {liveCaseUrl ? (
               <a
                 className="lf-case__hero-live"
-                href={study.url}
+                href={liveCaseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-lf-event={hasLiveClientDomain ? "portfolio_live_source" : undefined}
+                data-lf-label={hasLiveClientDomain ? study.slug : undefined}
               >
-                {displayDomain(study.url)}
+                {hasLiveClientDomain && study.featureProof
+                  ? `Visit ${study.featureProof.sourceLabel}`
+                  : displayDomain(liveCaseUrl)}
                 <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
               </a>
             ) : isCaseOnly ? (
@@ -261,12 +272,14 @@ export default function CaseStudyDetail() {
                   key={`explorer-${study.slug}`}
                   client={study.client}
                   slug={study.slug}
-                  url={study.url || undefined}
+                  url={liveCaseUrl || undefined}
                   captureDate={study.showcase.proof.captureDate!}
                   devices={study.showcase.proof.captureDevices}
+                  featureProof={study.featureProof}
                 />
               )}
               <ProjectWalkthrough key={study.slug} study={study} />
+              <FeatureProof study={study} />
             </div>
           </div>
         </section>
@@ -299,17 +312,19 @@ export default function CaseStudyDetail() {
                 <li key={entry.slug}>
                   <Link to={`/case-studies/${entry.slug}/`}>
                     <span className="lf-case-next__related-image">
-                      <img
-                        src={entry.image}
-                        alt=""
-                        width="900"
-                        height="675"
-                        loading="lazy"
-                        decoding="async"
-                        style={{
-                          objectPosition: entry.showcase.heroPosition ?? "center center",
-                        }}
-                      />
+                      {entry.image && (
+                        <img
+                          src={entry.image}
+                          alt=""
+                          width="900"
+                          height="675"
+                          loading="lazy"
+                          decoding="async"
+                          style={{
+                            objectPosition: entry.showcase.heroPosition ?? "center center",
+                          }}
+                        />
+                      )}
                     </span>
                     <span className="lf-case-next__related-copy">
                       <ProofStatus

@@ -3,7 +3,7 @@ import { MapPin } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
-import { areaPages, services, type AreaPage } from "@/data/site";
+import { areaPages, services } from "@/data/site";
 import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
 import "@/styles/editorial/longform-routes.css";
 
@@ -17,29 +17,6 @@ const AREA_ROUTE_SLUG: Record<string, string> = {
   "tech-consulting": "local-search",
 };
 
-const SERVICE_FRICTION_TERMS: Record<string, RegExp[]> = {
-  "custom-local-websites": [
-    /website|site|page|image|menu|mobile|phone/i,
-    /google|profile|listing|hours|photo|review/i,
-    /book|reserv|ticket|order|contact|inquir|appointment/i,
-  ],
-  "tech-consulting": [
-    /subscription|software|tool|app|cost|bill/i,
-    /website|google|profile|listing/i,
-    /staff|spreadsheet|lead|follow-up|inquir|booking|payment/i,
-  ],
-  "it-support": [
-    /break|fail|slow|wifi|pos|device|login|email|phone|printer|hardware/i,
-    /payment|booking|order|stall|support/i,
-    /website|site|form|link/i,
-  ],
-  "business-systems": [
-    /staff|spreadsheet|lead|inquir|follow-up|detail|head/i,
-    /booking|payment|order|deposit|waitlist|ticket|reservation/i,
-    /subscription|software|tool|app|workflow|dm/i,
-  ],
-};
-
 function detailServiceSlug(serviceSlug = "") {
   return DETAIL_SERVICE_SLUG[serviceSlug] ?? serviceSlug;
 }
@@ -48,23 +25,34 @@ function areaRouteSlug(serviceSlug: string) {
   return AREA_ROUTE_SLUG[serviceSlug] ?? serviceSlug;
 }
 
-function areaEvidence(area: AreaPage, serviceSlug: string) {
-  return serviceSlug === "custom-local-websites" || serviceSlug === "tech-consulting"
-    ? area.localSearchReality
-    : area.businessLandscape;
-}
-
-function relevantLocalFriction(area: AreaPage, serviceSlug: string) {
-  const terms = SERVICE_FRICTION_TERMS[serviceSlug] ?? [];
-  return area.whatWeFixHere
-    .map((item, index) => ({
-      item,
-      index,
-      score: terms.reduce((total, term) => total + Number(term.test(item)), 0),
-    }))
-    .sort((a, b) => b.score - a.score || a.index - b.index)
-    .slice(0, 4)
-    .map(({ item }) => item);
+function serviceChecks(serviceSlug: string) {
+  const checks: Record<string, string[]> = {
+    "custom-local-websites": [
+      "Can a first-time customer understand the offer on a phone?",
+      "Do hours, location, services, and trust details agree everywhere?",
+      "Can someone call, book, order, or inquire without hunting?",
+      "Does the next message reach a person who can answer it?",
+    ],
+    "tech-consulting": [
+      "Which tool, bill, or handoff is actually hurting the day?",
+      "What still works and should stay put?",
+      "Where does a customer or staff detail get copied by hand?",
+      "What is the smallest useful move before buying another tool?",
+    ],
+    "it-support": [
+      "What is broken: one device, the connection, the provider, or an account?",
+      "Can the business keep serving while that part is down?",
+      "Who owns the login, renewal, and recovery information?",
+      "What simple backup prevents the same bad day next time?",
+    ],
+    "business-systems": [
+      "Where does a new customer request begin and where does it disappear?",
+      "Which repeated handoff depends on memory or retyping?",
+      "Which current tool already earns its place?",
+      "Would one small connection remove more work than a new subscription adds?",
+    ],
+  };
+  return checks[serviceSlug] ?? checks["tech-consulting"];
 }
 
 export default function ServiceAreaDetail() {
@@ -75,8 +63,7 @@ export default function ServiceAreaDetail() {
   if (!area || !service) return <Navigate to="/services/" replace />;
 
   const related = services.filter((item) => item.slug !== service.slug);
-  const localFriction = relevantLocalFriction(area, service.slug);
-  const localEvidence = areaEvidence(area, service.slug);
+  const checks = serviceChecks(service.slug);
 
   return (
     <div className="lf-longform-route lf-longform-route--service-area">
@@ -104,9 +91,12 @@ export default function ServiceAreaDetail() {
       <section className="lf-content-section lf-content-section--tight">
         <div className="lf-content-grid">
           <article className="lf-content-tile lf-content-tile--third lf-service-area__beat">
-            <p className="lf-content-tile__label">What is happening here</p>
+            <p className="lf-content-tile__label">Start with the real setup</p>
             <EditorialBody>
-              <p>{area.localPattern}</p>
+              <p>
+                This page names {area.name}, not a pretend profile of your business. Tell us what
+                happens on a normal day and where the customer path gets sticky.
+              </p>
             </EditorialBody>
           </article>
 
@@ -120,7 +110,10 @@ export default function ServiceAreaDetail() {
           <article className="lf-content-tile lf-content-tile--third lf-content-tile--tablet-full lf-content-tile--signal lf-service-area__beat lf-service-area__beat--signal">
             <p className="lf-content-tile__label">First move</p>
             <EditorialBody>
-              <p>{area.firstMove}</p>
+              <p>
+                Start with one real customer path: search or referral, first question, next step,
+                then the person who has to answer.
+              </p>
             </EditorialBody>
           </article>
 
@@ -129,12 +122,16 @@ export default function ServiceAreaDetail() {
             aria-labelledby="lf-service-area-reality-title"
           >
             <header>
-              <p className="lf-content-tile__label">The {area.name} reality</p>
+              <p className="lf-content-tile__label">What this page can honestly say</p>
               <h2 id="lf-service-area-reality-title">
-                {service.eyebrow} has to fit how this neighborhood works.
+                {service.eyebrow} should fit your business, not a generic neighborhood page.
               </h2>
             </header>
-            <p>{localEvidence}</p>
+            <p>
+              We serve {area.name}, but we do not pretend a ZIP code tells us your margins,
+              staffing, customers, or current setup. The useful local work starts with the facts
+              you can show us: the site, listing, tools, handoffs, and the problem in front of you.
+            </p>
           </section>
 
           <section
@@ -145,8 +142,8 @@ export default function ServiceAreaDetail() {
               <p className="lf-content-tile__label">Checks for {service.eyebrow}</p>
               <h2 id="lf-service-area-checks-title">Where we would look first.</h2>
             </header>
-            <ol data-count={localFriction.length}>
-              {localFriction.map((item) => (
+            <ol data-count={checks.length}>
+              {checks.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ol>

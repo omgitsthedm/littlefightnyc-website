@@ -786,3 +786,188 @@ export const areaPages: AreaPage[] = [
     nearby: ["financial-district", "west-village"],
   },
 ];
+
+type AreaOwnerContext = Pick<
+  AreaPage,
+  "shortAnswer" | "localPattern" | "firstMove" | "intro" | "businessLandscape" | "localSearchReality" | "whatWeFixHere"
+>;
+
+/* Each is an owner scenario, not a census claim. The area name routes the
+ * conversation; the public record and the owner’s real path settle the facts. */
+const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
+  "lower-east-side": {
+    shortAnswer: "Short answer: for a Lower East Side business, make the after-hours question easy to answer: are you open, what is happening, and how does someone act now?",
+    localPattern: "A public page has to answer quickly when a customer is deciding between several nearby options.",
+    firstMove: "Test the hours, menu or service page, and booking or contact link on one phone after the business closes.",
+    intro: "Lower East Side owners do not need a generic nightlife pitch. They need a public front door that does not leave a customer guessing after a search, a post, or a recommendation.",
+    businessLandscape: "Start with the moment a customer needs an answer outside the normal office rhythm. Make that answer current and easy to use.",
+    localSearchReality: "Check whether the public facts match the actual day: open status, phone, service details, and the next action.",
+    whatWeFixHere: ["An evening customer path that ends in a dead link", "Hours or event details that disagree across public pages", "A contact route with no clear owner", "A page that takes too long to answer the basic question"],
+  },
+  "east-village": {
+    shortAnswer: "Short answer: for an East Village business, keep changing services, appointments, and public details easy to understand on a phone.",
+    localPattern: "When the offer changes often, the useful system is the one that keeps the public page and the working calendar in agreement.",
+    firstMove: "Compare one service, price or schedule entry on the website, the listing, and the booking tool.",
+    intro: "East Village business owners often do not need more software. They need the current service, schedule, and next step to say the same thing wherever a customer checks.",
+    businessLandscape: "A change is only useful when it removes a real mismatch between the public story and the staff’s day.",
+    localSearchReality: "A customer should not need three tabs to confirm a service, an hour, and how to book.",
+    whatWeFixHere: ["A schedule that changes in one place but not another", "A booking link that hides the real service options", "A public page that leaves price or fit unclear", "Staff retyping the same appointment detail"],
+  },
+  soho: {
+    shortAnswer: "Short answer: for a SoHo business, make visual proof, service detail, and the private inquiry path feel equally deliberate.",
+    localPattern: "A polished public surface still needs a simple handoff behind it. Looking finished is not the same as being usable.",
+    firstMove: "Ask a new customer to find one service, one proof point, and the inquiry path without help.",
+    intro: "A SoHo business may care deeply about how it appears. That is useful only when the appearance helps the right customer understand the offer and act.",
+    businessLandscape: "Keep the point of view. Remove the small frictions that make an interested customer abandon the next step.",
+    localSearchReality: "The public page should make the offer and the contact path clear before the customer has to ask.",
+    whatWeFixHere: ["A strong visual page with no clear inquiry route", "An appointment request that goes into a general inbox", "Images that hide the actual service information", "A private-client path that requires too much back-and-forth"],
+  },
+  chelsea: {
+    shortAnswer: "Short answer: for a Chelsea business, make it easy to separate a quick public question from a serious appointment or project inquiry.",
+    localPattern: "Not every visitor needs the same path. The site should make the useful route obvious without making staff sort every message by hand.",
+    firstMove: "List the two most common customer questions and give each its own clear next action.",
+    intro: "Chelsea owners can keep the public front door calm by deciding which questions need an answer now and which deserve a fuller conversation.",
+    businessLandscape: "A clearer choice at the start protects staff time later. No grand reinvention required.",
+    localSearchReality: "Useful local information is the information a customer can act on before sending a vague message.",
+    whatWeFixHere: ["One contact form doing five different jobs", "An appointment request mixed with general questions", "A public page missing the right first action", "Staff sorting the same vague inquiry repeatedly"],
+  },
+  midtown: {
+    shortAnswer: "Short answer: for a Midtown business, make the first screen answer the practical question fast: what is this, where is it, and what can I do next?",
+    localPattern: "A quick decision needs a quick answer. The useful test is whether the page works when someone has very little patience.",
+    firstMove: "Open the homepage on a phone and time how long it takes to find location, hours, and one action.",
+    intro: "Midtown is a good place to be ruthless about the first screen. If the answer is buried, the customer should not have to excavate it with a tiny phone shovel.",
+    businessLandscape: "Keep the essential facts high, current, and usable. Decorative complexity can wait.",
+    localSearchReality: "Check the path from a public listing to directions, a call, an order, or an inquiry.",
+    whatWeFixHere: ["A homepage that hides basic practical information", "Directions or phone links that do not work on mobile", "A public listing leading to the wrong page", "A quick-action path with too many steps"],
+  },
+  "upper-east-side": {
+    shortAnswer: "Short answer: for an Upper East Side business, make trust, contact, and appointment information steady enough for a careful customer to verify.",
+    localPattern: "Some customers need reassurance before they act. Clear ownership, current facts, and a calm next step do more than a pile of sales language.",
+    firstMove: "Check whether a first-time visitor can verify who you are, what you do, and how to start without calling for basic facts.",
+    intro: "An Upper East Side page can be plain and still feel considered. The job is to make trust easy to verify, not to perform confidence with a fog machine.",
+    businessLandscape: "Keep the expertise and relationships. Make the practical details and the handoff easier to follow.",
+    localSearchReality: "A careful customer should see current contact, service, and appointment information before making the first call.",
+    whatWeFixHere: ["A practice or service page missing plain fit information", "A contact route that does not say what happens next", "Out-of-date public details", "An appointment process that relies on phone tag"],
+  },
+  "upper-west-side": {
+    shortAnswer: "Short answer: for an Upper West Side business, make recurring customers and first-time visitors use the same clear public information.",
+    localPattern: "Regulars may know the routine already. New people do not. The site should serve both without asking staff to explain the basics again.",
+    firstMove: "Write down the three questions a first-time customer asks before they become a regular, then make those answers easy to find.",
+    intro: "An Upper West Side business can value regulars without making a newcomer work for every answer. The public page should welcome both.",
+    businessLandscape: "A simple information system helps staff preserve the personal service customers already value.",
+    localSearchReality: "Check that first-time details—service, schedule, contact, and next step—do not live only in somebody’s memory.",
+    whatWeFixHere: ["Important information known only by regulars", "A registration or booking path that needs staff rescue", "A public page that assumes insider knowledge", "A follow-up task with no shared record"],
+  },
+  "west-village": {
+    shortAnswer: "Short answer: for a West Village business, preserve the character while making reservations, requests, and public information plain to use.",
+    localPattern: "A distinctive business does not need a generic website. It does need an obvious route for the customer who is ready now.",
+    firstMove: "Follow one reservation, appointment, or inquiry from the first click to the staff member who sees it.",
+    intro: "West Village character is not an excuse for a mysterious customer path. A little charm is lovely; a hidden phone number is just cardio.",
+    businessLandscape: "Keep the business voice. Clarify the practical path that turns interest into a real conversation.",
+    localSearchReality: "The public page should make current availability, contact, and next action easy to confirm.",
+    whatWeFixHere: ["A reservation or request path hidden behind atmosphere", "A public page that does not say how to start", "A response route owned by one person", "A booking link that sends customers somewhere confusing"],
+  },
+  williamsburg: {
+    shortAnswer: "Short answer: for a Williamsburg business, make a changing event, product, or service update easy to publish without breaking the core customer path.",
+    localPattern: "The business can change week to week without making the public page feel unfinished. The core facts need one stable home.",
+    firstMove: "Separate the always-true information from the weekly update, then test both on a phone.",
+    intro: "Williamsburg owners can move fast without asking every customer to decode the latest post. Keep the changing piece flexible and the basic path steady.",
+    businessLandscape: "A good setup lets staff update what changed without disturbing the things a new customer always needs.",
+    localSearchReality: "Check that current public information does not disappear when an older social post falls out of view.",
+    whatWeFixHere: ["A weekly update replacing the basic customer information", "An event or product detail stranded in social posts", "A stale link from a public listing", "Staff making the same change in too many places"],
+  },
+  bushwick: {
+    shortAnswer: "Short answer: for a Bushwick business, turn a social or word-of-mouth moment into a public page that answers the next question.",
+    localPattern: "A post can create interest. The business-controlled page needs to catch it before the customer gets distracted by the entire rest of the internet.",
+    firstMove: "Open the link in a recent post and check whether it leads to current facts and one useful action.",
+    intro: "Bushwick businesses do not need to abandon social. They need the post, profile, and website to point to the same current truth.",
+    businessLandscape: "Use the tools that already bring attention. Give that attention somewhere clear to land.",
+    localSearchReality: "A customer should be able to move from a post or recommendation to hours, contact, and the next step without guessing.",
+    whatWeFixHere: ["A social link leading to an old page", "A public page with no current contact route", "Important information trapped in a caption", "A customer path that ends in a direct-message pile"],
+  },
+  "park-slope": {
+    shortAnswer: "Short answer: for a Park Slope business, make practical service or appointment information easy to check before someone commits time.",
+    localPattern: "When a customer needs to coordinate a schedule, the public page should answer the practical details before they have to call.",
+    firstMove: "Find the information a customer needs to plan: service, schedule, price context, contact, and the next step.",
+    intro: "Park Slope owners can reduce avoidable phone tag by putting the planning information where a first-time customer can actually use it.",
+    businessLandscape: "The useful website job is simple: help a customer decide whether the offering fits their day.",
+    localSearchReality: "Check that the public path does not make a customer hunt for scheduling or service details.",
+    whatWeFixHere: ["Planning details hidden in a long page", "Registration or appointment information spread across messages", "A first-time customer unable to tell fit", "Staff repeating the same logistical answer"],
+  },
+  dumbo: {
+    shortAnswer: "Short answer: for a DUMBO business, make referrals and polished public proof lead to a real inquiry path, not a dead-end portfolio.",
+    localPattern: "A referral may arrive already interested. The website still has to confirm the offer and give that person a clean way to continue.",
+    firstMove: "Ask a referral to find the relevant service, proof, and inquiry route without asking you for a link.",
+    intro: "DUMBO businesses can have strong work and still lose the practical handoff. Proof should help a new contact know what to do next.",
+    businessLandscape: "A portfolio is useful when it supports an action, not when it simply asks visitors to admire it from across the room.",
+    localSearchReality: "Check that a public proof page leads to a contact, booking, or next conversation.",
+    whatWeFixHere: ["A referral path that ends at a gallery", "A proof page without a next action", "An inquiry form that lacks context", "A handoff from website to staff that is not tracked"],
+  },
+  astoria: {
+    shortAnswer: "Short answer: for an Astoria business, make the core information plain enough to understand on a first phone visit.",
+    localPattern: "Clarity is not corporate. It is a respectful way to make the business easier to use.",
+    firstMove: "Check the public page for plain service names, readable contact details, and the information customers ask staff to repeat.",
+    intro: "Astoria owners can keep the familiar way they serve people while making the public facts easier for a new customer to understand.",
+    businessLandscape: "Start with the questions that arrive every week. Those are the best candidates for clearer pages, not more jargon.",
+    localSearchReality: "A phone number, hours, services, and next action should remain usable for someone who does not know the business yet.",
+    whatWeFixHere: ["Public information written only for insiders", "A menu or service list that is hard to read on a phone", "A contact path that assumes one way of communicating", "Frequently asked questions answered only at the counter"],
+  },
+  "long-island-city": {
+    shortAnswer: "Short answer: for a Long Island City business, make the address, access, appointment, pickup, or service-area detail impossible to misunderstand.",
+    localPattern: "A customer can be interested and still give up if they cannot tell where to go or how the handoff works.",
+    firstMove: "Test the directions, address, service area, and next action on a phone that has never visited the site.",
+    intro: "Long Island City owners can save everyone a small headache by making the physical or service handoff clear before the customer starts a trip.",
+    businessLandscape: "Clear access information protects staff from the avoidable questions that arrive when public details are incomplete.",
+    localSearchReality: "Check every map, directions, pickup, and appointment link against the real route a customer takes.",
+    whatWeFixHere: ["An address or service area that is hard to confirm", "A directions link that opens the wrong place", "Pickup or appointment instructions hidden after the click", "A public page that does not explain the handoff"],
+  },
+  "greenwich-village": {
+    shortAnswer: "Short answer: for a Greenwich Village business, make current hours, events, services, and contact information easy to confirm before a customer makes plans.",
+    localPattern: "A changing public schedule needs one trustworthy home. A customer should not have to compare posts, listings, and a vague phone message.",
+    firstMove: "Choose one source of truth for current information, then make every public link point there.",
+    intro: "Greenwich Village owners can keep the business spontaneous without making the public facts mysterious. The plan may change; the place to check should not.",
+    businessLandscape: "One current page prevents staff from spending the day correcting several older versions of the same answer.",
+    localSearchReality: "Check that a customer can confirm today’s practical information before starting a trip or sending a message.",
+    whatWeFixHere: ["Several pages each claiming to be current", "Event or service details only visible in old posts", "A phone message that disagrees with the site", "A customer path with no clear source of truth"],
+  },
+  "financial-district": {
+    shortAnswer: "Short answer: for a Financial District business, make practical service, location, and next-step information easy to use during a short decision window.",
+    localPattern: "A customer does not need a brand essay before a basic action. Put the useful facts where they can be found fast.",
+    firstMove: "Put one real customer task on a timer: find the service, the location, and the next action from a phone.",
+    intro: "Financial District business owners can respect a customer’s time by making the public page do the simple job before showing off.",
+    businessLandscape: "The best improvement may be small: a clear link, current hours, or a form that reaches the right person.",
+    localSearchReality: "Check the route from a public search result to the exact action the business needs a customer to take.",
+    whatWeFixHere: ["A useful action hidden below marketing copy", "Location details that need a second search", "A phone-first task that only works on desktop", "A form routed to the wrong team"],
+  },
+  "the-bronx": {
+    shortAnswer: "Short answer: for a Bronx business, make the useful public basics—service, phone, price context, and next step—easy to share and easy to check.",
+    localPattern: "A good referral should not die because the person who receives it cannot quickly confirm the business information.",
+    firstMove: "Ask someone who has never used the business to find the phone, service details, and one next action on a phone.",
+    intro: "Bronx owners can let the quality of the work speak without making a new customer decode the basics first.",
+    businessLandscape: "Public clarity helps the business keep control of the facts that get repeated in referrals, searches, and messages.",
+    localSearchReality: "Check that the public page gives a new customer enough information to decide whether to call or visit.",
+    whatWeFixHere: ["A referral with nowhere current to land", "Service or price context missing from the public page", "A phone number that is hard to tap", "A question answered only by whoever is working that day"],
+  },
+  "staten-island": {
+    shortAnswer: "Short answer: for a Staten Island business, turn a referral into a straightforward public check: what you do, how to reach you, and what happens next.",
+    localPattern: "A recommendation has more value when the business can confirm it with current public facts and a clean contact route.",
+    firstMove: "Follow a referral from a shared name to the website, listing, phone, and the person who receives the inquiry.",
+    intro: "Staten Island owners can keep the personal referral at the center while making the public proof and contact path easier for a new customer to use.",
+    businessLandscape: "The goal is not to replace word of mouth. It is to give word of mouth a clear, business-controlled landing place.",
+    localSearchReality: "Check that a search or referral finds current service information, a real contact route, and the right service area.",
+    whatWeFixHere: ["A referral path with no current public proof", "A service-area description that confuses customers", "An estimate or inquiry living in one person’s phone", "A public profile missing the next action"],
+  },
+};
+
+for (const area of areaPages) {
+  const context = AREA_OWNER_CONTEXT[area.slug];
+  if (!context) continue;
+  Object.assign(area, context, {
+    headline: `Websites, practical tech help, and a clear next move for ${area.name} businesses.`,
+    faq: [
+      { question: `What should a ${area.name} business check first?`, answer: context.firstMove },
+      { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },
+      { question: "Can Little Fight help outside New York?", answer: "Yes for websites, planning, and connected systems. NYC is where local, hands-on help can also be part of the conversation." },
+    ],
+  });
+}

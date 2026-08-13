@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: "2026-08-10"
+updated_at: "2026-08-13"
 quality_charter:
   source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
   version: "2026-08-10"
@@ -31,7 +31,7 @@ protected_surfaces:
       - "app/src/App.tsx"
       - "app/src/data/route-meta.json"
     status: "protected_not_candidate"
-    evidence: "The generated catalog contains 200 route records and is consumed by prerender, metadata, navigation, and route-quality behavior."
+    evidence: "The generated catalog contains 211 route records and is consumed by prerender, metadata, navigation, and route-quality behavior."
     contracts:
       - "React Router matching and lazy imports"
       - "prerender route enumeration"
@@ -49,7 +49,7 @@ protected_surfaces:
       - "app/src/data/journal-index.json"
       - "app/src/data/journal-bodies/**"
     status: "protected_not_candidate"
-    evidence: "Generated navigation covers 65 entries and the journal index covers 37 entries."
+    evidence: "Generated navigation covers 72 entries and the journal index covers 37 entries."
     contracts:
       - "Library search and navigation"
       - "journal route resolution"
@@ -64,7 +64,7 @@ protected_surfaces:
     paths:
       - "app/public/examples/lab/**"
     status: "protected_not_candidate"
-    evidence: "The Lab manifest declares version 3, four suites, and 11 concepts; public files are a showcase and compatibility surface."
+    evidence: "The Lab manifest declares version 3, five suites, and nine concepts; public files are a showcase and compatibility surface."
     contracts:
       - "one-click concept routes"
       - "concept manifest and thumbnail references"

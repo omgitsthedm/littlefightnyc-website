@@ -305,6 +305,24 @@ const INDUSTRY_STARTS: Record<string, IndustryStart[]> = {
   ],
 };
 
+const INDUSTRY_SOURCES: Record<string, { label: string; href: string; note: string }> = {
+  "medical-wellness-practices": {
+    label: "HHS health-information privacy guidance",
+    href: "https://www.hhs.gov/hipaa/for-professionals/privacy/index.html",
+    note: "Use approved private intake paths for health information; this page is not compliance advice.",
+  },
+  "restaurants-bars": {
+    label: "NYC Department of Health restaurant resources",
+    href: "https://www.nyc.gov/site/doh/business/healthcode/health-code-and-rules.page",
+    note: "Check official operating requirements directly; the customer-path advice here is practical, not regulatory.",
+  },
+  "law-firms": {
+    label: "New York State Unified Court System",
+    href: "https://ww2.nycourts.gov/",
+    note: "Check official professional obligations directly; this page is not legal advice.",
+  },
+};
+
 /**
  * Lift the authored "Fit map" or "Audit map" section out of the legacy body so it can render
  * as a real customer-path diagram (AuditMapDiagram) instead of borderless prose.
@@ -403,6 +421,11 @@ export default function IndustryDetail() {
   const tidied = tidyLegacyBody(body);
   const industryName = entry.title.replace(" Help", "");
   const startingPoints = INDUSTRY_STARTS[entry.slug] ?? DEFAULT_STARTS;
+  const source = INDUSTRY_SOURCES[entry.slug] ?? {
+    label: "Google Business Profile Help",
+    href: "https://support.google.com/business/",
+    note: "For public listing details, use Google’s current documentation; the right setup still depends on the business.",
+  };
   const recognition = INDUSTRY_RECOGNITION[entry.slug] ?? {
     situation:
       "The business already works. The technology should support it without changing what customers and staff value.",
@@ -505,6 +528,27 @@ export default function IndustryDetail() {
               </Link>
             ))}
           </nav>
+        </div>
+      </section>
+
+      <section className="lf-content-section lf-content-section--tight" aria-label="Fit and source note">
+        <div className="lf-content-grid">
+          <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
+            <p className="lf-content-tile__label">The fit boundary</p>
+            <h2>Same industry. Different day.</h2>
+            <p>
+              This is a planning lens, not a diagnosis. We do not assume every {industryName.toLowerCase()} has the
+              same customers, staff, systems, or risk. The first useful move comes from the path you can show us.
+            </p>
+          </article>
+          <aside className="lf-content-tile lf-content-tile--half">
+            <p className="lf-content-tile__label">Check the original</p>
+            <h2>Use the rulebook, not our vibes.</h2>
+            <p>
+              <a href={source.href} target="_blank" rel="noreferrer">{source.label} ↗</a>
+            </p>
+            <p>{source.note}</p>
+          </aside>
         </div>
       </section>
 

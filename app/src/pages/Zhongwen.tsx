@@ -27,7 +27,7 @@ const SERVICES = [
   },
   {
     title: "修好出故障的技术",
-    line: "收款、网络、邮箱、收银机或预约出了问题，我们可以上门，也可以远程处理。",
+    line: "收款、网络、邮箱、收银机或预约出了问题，纽约可上门；能否远程处理要看具体工作。",
   },
   {
     title: "先免费帮您看一遍",
@@ -41,7 +41,7 @@ const SERVICES = [
 
 const PROMISES = [
   "先帮您看一遍，永远免费。",
-  "网站14天上线，否则不收费。",
+  "网站书面方案会写明时间、双方要做的事，以及我们误期时怎么办。",
   "早9点到晚9点，2小时内回电。",
   "代码、数据和说明文档都交到您手里。",
 ];
@@ -63,10 +63,7 @@ const PROOF = [
     client: "Hair By Rachel Charles",
     status: "公开网站",
     line: "从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。",
-    // 原文称「四项满分」。2026-07-30 实测：无障碍 100、最佳实践 100、SEO 100，
-    // 性能 96（移动端）。
-    // .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
-    fact: "移动端性能 96；无障碍、最佳实践、SEO 均为 100；两周上线",
+    fact: "公开案例里有可点击的验证信息和上线网站。",
     image: "/assets/case-hair-by-rachel-charles-900.webp",
     alt: "Hair By Rachel Charles 的在线预约网站",
   },
@@ -74,7 +71,7 @@ const PROOF = [
     client: "私人报价系统",
     status: "私人客户项目",
     line: "把真实报价流程集中到团队每天使用的一套系统里。",
-    fact: "3个工具，1个可靠数据源",
+    fact: "私人项目：展示做法，不公开客户资料。",
     image: CABINETRY_PROCESS_FILM.poster,
     video: CABINETRY_PROCESS_FILM,
     alt: "用于准备木工报价的私人工作面板",
@@ -83,7 +80,7 @@ const PROOF = [
     client: "CC Films",
     status: "公开网站",
     line: "为独立电影打造更清楚、更可信的官方网站。",
-    fact: "搜索结构、安全标头和发布流程全面加固",
+    fact: "公开案例里有可点击的验证信息和上线网站。",
     image: "/assets/case-cc-films-900.webp",
     alt: "电影 If That Mockingbird Don't Sing 的官方网站",
   },
@@ -96,7 +93,7 @@ export default function Zhongwen() {
       path: "/zh/",
       title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
       description:
-        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码和数据归您；电话、短信或邮件都由真人回复。服务纽约五大区。",
+        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。网站时间写进方案，代码和数据归您；真人回复。",
     });
   }, []);
 
@@ -142,7 +139,7 @@ export default function Zhongwen() {
               </Link>
             </div>
             <p className="lf-es__action-note">
-              先免费帮您看一遍。给您清楚的方案，再由您决定。
+              先免费帮您看一遍。纽约可上门；网站项目也可远程做。给您清楚的方案，再由您决定。
             </p>
 
             <ul className="lf-es__trust">
@@ -152,7 +149,7 @@ export default function Zhongwen() {
               </li>
               <li>
                 <Clock size={18} strokeWidth={1.75} aria-hidden="true" />
-                2小时内回电。
+                美东时间早9点到晚9点，2小时内回电。
               </li>
               <li>
                 <ShieldCheck size={18} strokeWidth={1.75} aria-hidden="true" />

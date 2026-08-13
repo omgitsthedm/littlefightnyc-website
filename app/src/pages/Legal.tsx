@@ -35,8 +35,8 @@ export default function Legal() {
             <p>
               Forms on this site are handled by Netlify, which hosts the site
               and stores each submission so Little Fight can read and reply to
-              it. Nothing you send through a form is sold, and it is not used
-              for advertising.
+              it. Review Netlify’s <a href="https://www.netlify.com/privacy/" target="_blank" rel="noreferrer">privacy policy</a> for its handling details.
+              Little Fight does not sell form submissions or use them for advertising.
             </p>
             <p>
               The{" "}
@@ -52,7 +52,8 @@ export default function Legal() {
             <p>
               Little Fight uses Google Analytics, after consent, to understand
               which pages are useful and which contact paths work. Microsoft
-              Clarity and the TikTok Pixel are not active on this site.
+              Clarity and the TikTok Pixel are not active on this site. See
+              Google’s <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">privacy policy</a> for information about Google’s handling of data.
             </p>
             <p>
               These tools may record page views, approximate device/browser

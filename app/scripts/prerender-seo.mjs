@@ -4,8 +4,10 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { build as esbuildBundle } from "esbuild";
 import { prepareIndustryHtml, prepareLegacyHtml } from "../src/lib/legacy-html-core.mjs";
+import { copyBySlug, renderJournalCopy } from "./journal-copy.mjs";
 import {
   NOT_FOUND_PAGE,
+  enrichAuthoredRoutePages,
   glossaryPages,
   industryPage,
   journalPage,
@@ -66,7 +68,9 @@ const { AUDIT_MAP_PATHS, GENERIC_AUDIT_PATH } = await import(pathToFileURL(audit
 const lastmod = new Date().toISOString().slice(0, 10);
 const site = seoData.site;
 const siteUrl = site.url.replace(/\/$/, "");
-const basePages = seoData.pages;
+// Dynamic route copy has one authoring home: the typed data the React pages
+// render. This catalog is shared with hydrated route metadata as well.
+const basePages = enrichAuthoredRoutePages(seoData.pages, siteContent, seoData.site.name);
 
 const aiBots = [
   "GPTBot",
@@ -156,18 +160,46 @@ let libraryJournalLinks = [];
 
 async function journalPages() {
   const journal = JSON.parse(await readFile(path.join(appRoot, "src/data/journal.json"), "utf8"));
+  const journalCopyFile = JSON.parse(
+    await readFile(path.join(appRoot, "src/data/journal-copy.json"), "utf8"),
+  );
+  const journalCopy = copyBySlug(journalCopyFile);
   const industries = JSON.parse(await readFile(path.join(appRoot, "src/data/industries.json"), "utf8"));
+
+  const missingCopy = journal.filter((post) => !journalCopy.has(post.slug)).map((post) => post.slug);
+  const staleCopy = [...journalCopy.keys()].filter(
+    (slug) => !journal.some((post) => post.slug === slug),
+  );
+  if (missingCopy.length || staleCopy.length) {
+    throw new Error(
+      `Journal copy parity failed. Missing: ${missingCopy.join(", ") || "none"}. Stale: ${staleCopy.join(", ") || "none"}.`,
+    );
+  }
+
+  const resolvedJournal = journal.map((post) => {
+    const authored = journalCopy.get(post.slug);
+    return {
+      ...post,
+      title: authored.title,
+      description: authored.description,
+      html: renderJournalCopy(authored),
+      // The rewritten Journal body is the public answer source. Do not carry
+      // retired FAQ pairs from journal.json into JSON-LD when those questions
+      // are no longer visible on the page.
+      faq: undefined,
+    };
+  });
 
   // Journal hub retired 2026-07-19 — /library/ is the one front door (its
   // entry lives in seo-pages.json). Keep the post list for the Library body.
-  libraryJournalLinks = journal.map((post) => ({
+  libraryJournalLinks = resolvedJournal.map((post) => ({
     href: `/journal/${post.slug}/`,
     label: post.title,
   }));
 
   const hasDedicatedJournalImage = (slug) =>
     existsSync(path.join(appRoot, "public/assets", `journal-${slug}.webp`));
-  const journalPostPages = journal.map((post) =>
+  const journalPostPages = resolvedJournal.map((post) =>
     journalPage(post, hasDedicatedJournalImage),
   );
   const industryDetailPages = industries.map(industryPage);
@@ -178,7 +210,7 @@ async function journalPages() {
 const pages = [
   ...basePages,
   ...serviceAreaPages(seoData),
-  ...glossaryPages(seoData),
+  ...glossaryPages(seoData, siteContent.glossaryTerms),
   ...(await journalPages()),
   ...localePages(),
 ];
@@ -270,9 +302,10 @@ const standaloneDiscoveryPages = [
   },
 ].filter((standalone) => !pages.some((page) => page.path === standalone.path));
 
-// Enrich pages with authored data from site.ts: real dates for freshness
-// signals, and H1 sync guards so crawlers and hydrated users never index two
-// different headlines for the same route (this drift shipped live 3+ times).
+// Attach authored data for crawler-visible body content, dates, and answer
+// artwork. Headline, lead, description, FAQ, and social alt were already
+// derived above by enrichAuthoredRoutePages; do not reintroduce a second copy
+// source here.
 {
   const bySlug = (list) => Object.fromEntries(list.map((x) => [x.slug, x]));
   const cases = bySlug(siteContent.caseStudies);
@@ -285,20 +318,11 @@ const standaloneDiscoveryPages = [
 
     if (caseMatch && cases[caseMatch[1]]) {
       const study = cases[caseMatch[1]];
-      page.published ??= study.published;
-      page.updated ??= study.updated;
       page.caseStudy = study;
-      const renderedHeading = study.showcase?.label ?? study.client;
-      if (page.h1 && page.h1 !== renderedHeading) {
-        console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${renderedHeading}" — using rendered`);
-        page.h1 = renderedHeading;
-      }
     }
 
     if (answerMatch && answers[answerMatch[1]]) {
       const guide = answers[answerMatch[1]];
-      page.published ??= guide.published;
-      page.updated ??= guide.updated;
       page.answerGuide = guide;
       // Branded archetype art wins when it exists on disk (kept in lockstep
       // with src/data/answersArt.ts — same pattern as the journal art above).
@@ -306,20 +330,12 @@ const standaloneDiscoveryPages = [
       if (existsSync(path.join(appRoot, "public/assets", answerArtFile))) {
         page.image = `/assets/${answerArtFile}`;
       }
-      if (page.h1 && page.h1 !== guide.question) {
-        console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${guide.question}" — using rendered`);
-        page.h1 = guide.question;
-      }
     }
 
     if (serviceMatch) {
       const service = siteContent.services.find((s) => s.slug === serviceMatch[1]);
       if (service) {
         page.service = service;
-        if (page.h1 && service.headline && page.h1 !== service.headline) {
-          console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${service.headline}" — using rendered`);
-          page.h1 = service.headline;
-        }
       }
     }
 
@@ -329,10 +345,6 @@ const standaloneDiscoveryPages = [
       if (area) {
         page.area = area;
         page.updated ??= "2026-07-07"; // area content build-out wave
-        if (page.h1 && area.headline && page.h1 !== area.headline) {
-          console.warn(`[h1-sync] ${page.path}: prerender "${page.h1}" != rendered "${area.headline}" — using rendered`);
-          page.h1 = area.headline;
-        }
       }
     }
 
@@ -1288,23 +1300,10 @@ function snapshotParagraphs(page) {
 }
 
 /**
- * The one FAQ a page both renders and marks up.
- *
- * There were two sources and they disagreed. The JSON-LD emitter read
- * page.faq (authored in seo-pages.json) while the body builders rendered a
- * type-specific list — answerGuide.faq, area.faq, glossaryTerm.faq, or
- * service.faq. Where the two differed, the page published FAQPage markup for
- * Q&A a reader could not find: 16 pairs across 8 pages, question and answer
- * both absent. Google’s structured data policy requires FAQ content to be
- * present on the page, and markup describing invisible content is what a
- * manual "Spammy structured markup" action exists for.
- *
- * Resolving that by preferring one source would have quietly thrown the other
- * away — on /answers/ the seo-pages.json entries are different questions, not
- * stale duplicates, and they were written on purpose. So this returns the
- * union: the rendered list first, then any authored entry not already asked.
- * Both the body and the markup read it, so everything authored gets shown, and
- * nothing is claimed that is not shown.
+ * The one FAQ a page both renders and marks up. Dynamic pages render their
+ * FAQ from typed site data, so that source wins outright. Keeping an older
+ * seo-pages.json entry in the union would visibly publish retired Q&A and
+ * structured markup that the hydrated page no longer contains.
  */
 function resolvedFaqFor(page) {
   const rendered =
@@ -1313,21 +1312,8 @@ function resolvedFaqFor(page) {
     (page.glossaryTerm && page.glossaryTerm.faq) ||
     (page.service && page.service.faq) ||
     [];
-  const authored = Array.isArray(page.faq) ? page.faq : [];
-  const seen = new Set(
-    (Array.isArray(rendered) ? rendered : []).map((item) =>
-      String(item.question ?? "").trim().toLowerCase(),
-    ),
-  );
-  const merged = [...(Array.isArray(rendered) ? rendered : [])];
-  for (const item of authored) {
-    const key = String(item.question ?? "").trim().toLowerCase();
-    if (key && !seen.has(key)) {
-      seen.add(key);
-      merged.push(item);
-    }
-  }
-  return merged;
+  if (Array.isArray(rendered) && rendered.length > 0) return rendered;
+  return Array.isArray(page.faq) ? page.faq : [];
 }
 
 function faqHtml(faq, title = "Common questions") {
@@ -1642,27 +1628,18 @@ function legalBlock(page) {
   `;
 }
 
-// The four time promises are the business’s strongest trust signals and were
-// entirely absent from crawler-visible HTML. Every snapshot now carries them.
-//
-// Three of the four travel. "On-site within 24 hours" does not: it is a New
-// York promise, and it was being appended to /nationwide/ — the page that
-// exists to explain remote work, that says a website does not care about zip
-// codes, and that describes how a remote build runs. A prospect in Phoenix read
-// the site offering to turn up at their door tomorrow.
-//
-// The page’s own copy already handles this honestly ("run it yourself, or keep
-// us on call, like our New York clients do"), so only the injected block was
-// out of step. It now drops the clause it cannot keep rather than restating
-// one the page has already answered better.
+// Keep crawler-visible promises as carefully scoped as the hydrated pages.
+// Nationwide website work never inherits a New York on-site promise, and a
+// 14-day remedy is mentioned only when a qualifying written scope defines its
+// eligibility, clock, dependencies, and remedy.
 function promisesBlock(page) {
   const onSite =
     page?.path === "/nationwide/"
       ? ""
-      : " When something urgent breaks, we’re usually on-site within 24 hours.";
+      : " Urgent on-site help is a New York service; call so we can confirm the problem and the response.";
   return `
     <h2>What you can count on</h2>
-    <p>Every consult is free. Websites usually ship within 14 days — if our side misses the date, you don’t pay.${onSite} Callbacks come within 2 hours, 9am–9pm Eastern.</p>
+    <p>The first consultation is free. A qualifying website scope may include our written 14-day promise; that scope names eligibility, when the clock starts, what each side must provide, and the remedy if our work is late.${onSite} Missed-call callbacks come within 2 hours, 9am–9pm Eastern.</p>
   `;
 }
 
@@ -1701,12 +1678,12 @@ function zhSnapshot() {
       <h1>网站按您的生意来做。 技术出问题时，有真人帮您。</h1>
       <p class="es-sub">我们不拿套版硬塞给您。我们做定制网站，修好已经出故障的设备和系统，也能把昂贵、难用的月费软件换成您自己拥有的工具。</p>
       <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">给我一份清楚的方案</a></p>
-      <p class="es-sub">先免费帮您看一遍。给您清楚的方案，再由您决定。</p>
-      <ul class="es-list"><li>纽约五大区。我们可以上门。</li><li>2小时内回电。</li><li>做好的东西和控制权都归您。</li></ul>
+      <p class="es-sub">先免费帮您看一遍。纽约可上门；网站项目也可远程做。给您清楚的方案，再由您决定。</p>
+      <ul class="es-list"><li>纽约五大区。我们可以上门。</li><li>美东时间早9点到晚9点，2小时内回电。</li><li>做好的东西和控制权都归您。</li></ul>
       <p class="es-eyebrow">先从今天最麻烦的事开始</p>
       <h2>我们能帮您做这四件事。</h2>
       <div class="es-card"><h3>定制网站</h3><p>按您的顾客、服务和做事方式来做。生意不用迁就模板。</p></div>
-      <div class="es-card"><h3>修好出故障的技术</h3><p>收款、网络、邮箱、收银机或预约出了问题，我们可以上门，也可以远程处理。</p></div>
+      <div class="es-card"><h3>修好出故障的技术</h3><p>收款、网络、邮箱、收银机或预约出了问题，纽约可上门；能否远程处理要看具体工作。</p></div>
       <div class="es-card"><h3>先免费帮您看一遍</h3><p>告诉您什么该留、先修什么、哪些钱不用花。就算不需要我们，我们也会直说。</p></div>
       <div class="es-card"><h3>您自己拥有的软件</h3><p>用一套更简单的专用工具，替换不合适的表格和月费软件。代码和数据归您。</p></div>
       <p class="es-eyebrow">升级，不是全部推倒重来</p>
@@ -1718,13 +1695,11 @@ function zhSnapshot() {
       <p class="es-sub">生意怎么做，您最清楚。我们先听您怎么工作，留下好用的，修掉添乱的。您不需要先变成技术专家。</p>
       <p class="es-eyebrow">真实项目</p>
       <h2>这些已经在为客户做事。</h2>
-      <!-- Lighthouse 13.4.1, mobile, measured 2026-07-30.
-           Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md -->
-      <ul class="es-list"><li>公开网站 Hair By Rachel Charles 从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。移动端性能 96；无障碍、最佳实践、SEO 均为 100；两周上线</li><li>私人客户项目 私人报价系统 把真实报价流程集中到团队每天使用的一套系统里。 3个工具，1个可靠数据源</li><li>公开网站 CC Films 为独立电影打造更清楚、更可信的官方网站。 搜索结构、安全标头和发布流程全面加固</li></ul>
+      <ul class="es-list"><li>公开网站 Hair By Rachel Charles：从只靠私信预约，到一个新顾客能找到、看懂并进入熟悉预约流程的网站。公开案例里有可点击的验证信息和上线网站。</li><li>私人客户项目 私人报价系统：展示做法，不公开客户资料。</li><li>公开网站 CC Films：为独立电影打造更清楚、更可信的官方网站。公开案例里有可点击的验证信息和上线网站。</li></ul>
       <p class="es-actions"><a class="es-cta" href="/examples/">查看所有真实案例</a></p>
       <p class="es-eyebrow">没有意外</p>
       <h2>从第一通电话，到上线以后。</h2>
-      <ul class="es-list"><li>先帮您看一遍，永远免费。</li><li>网站14天上线，否则不收费。</li><li>早9点到晚9点，2小时内回电。</li><li>代码、数据和说明文档都交到您手里。</li></ul>
+      <ul class="es-list"><li>先帮您看一遍，永远免费。</li><li>网站书面方案会写明时间、双方要做的事，以及我们误期时怎么办。</li><li>美东时间早9点到晚9点，2小时内回电。</li><li>代码、数据和说明文档都交到您手里。</li></ul>
       <p class="es-eyebrow">回复您的是真人</p>
       <h2>告诉我们哪里不顺。</h2>
       <p class="es-sub">打电话、发短信或发邮件都行。写您最习惯的语言。没有机器人，也没有工单号。</p>
@@ -1774,12 +1749,12 @@ function esSnapshot() {
       <h1>Una página web hecha para su negocio.<em>Ayuda real cuando algo falla.</em></h1>
       <p class="es-sub">Construimos páginas a la medida, arreglamos la tecnología que ya tiene y reemplazamos software caro por herramientas que usted posee. Primero le damos una segunda opinión gratis.</p>
       <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Quiero un plan claro</a></p>
-      <p class="es-sub">La segunda opinión es gratis. Primero un plan claro; después usted decide.</p>
-      <ul class="es-list"><li>Nueva York. Vamos hasta su negocio.</li><li>Devolvemos la llamada en 2 horas.</li><li>Usted conserva el control y la propiedad.</li></ul>
+      <p class="es-sub">La segunda opinión es gratis. En Nueva York podemos ir al negocio; para una página web, también trabajamos a distancia. Primero un plan claro; después usted decide.</p>
+      <ul class="es-list"><li>Nueva York. Vamos hasta su negocio.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.</li><li>Usted conserva el control y la propiedad.</li></ul>
       <p class="es-eyebrow">EMPIECE POR EL PROBLEMA DE HOY</p>
       <h2>Esto es lo que hacemos.</h2>
       <div class="es-card"><h3>Páginas web hechas para su negocio</h3><p>Diseñadas para sus clientes, sus servicios y su forma de trabajar. Su negocio no tiene que adaptarse a una plantilla.</p></div>
-      <div class="es-card"><h3>Arreglamos lo que falló</h3><p>Pagos, Wi-Fi, correo, caja o reservas. Vamos a su negocio o ayudamos a distancia.</p></div>
+      <div class="es-card"><h3>Arreglamos lo que falló</h3><p>Pagos, Wi-Fi, correo, caja o reservas. En Nueva York podemos ir al negocio; la ayuda a distancia depende del trabajo.</p></div>
       <div class="es-card"><h3>Segunda opinión gratis</h3><p>Le decimos qué conservar, qué arreglar primero y qué no vale la pena pagar. Si no nos necesita, también se lo decimos.</p></div>
       <div class="es-card"><h3>Software que es suyo</h3><p>Reemplazamos hojas de cálculo y suscripciones que no encajan con una herramienta más simple. El código y los datos son suyos.</p></div>
       <p class="es-eyebrow">UN CAMBIO SIN PERDER LO QUE YA SIRVE</p>
@@ -1791,13 +1766,11 @@ function esSnapshot() {
       <p class="es-sub">Usted ya sabe llevar su negocio. Nosotros escuchamos cómo trabaja, conservamos lo que sirve y arreglamos lo que estorba. No tiene que volverse experto en tecnología.</p>
       <p class="es-eyebrow">PROYECTOS REALES</p>
       <h2>Esto ya está funcionando para clientes.</h2>
-      <!-- Lighthouse 13.4.1, mobile, measured 2026-07-30.
-           Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md -->
-      <ul class="es-list"><li>Sitio público Hair By Rachel Charles De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar. 96 en rendimiento móvil; 100 en accesibilidad, buenas prácticas y SEO · lista en 2 semanas</li><li>Proyecto privado Sistema privado de presupuestos El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días. 3 herramientas, 1 fuente de verdad</li><li>Sitio público CC Films Una sede oficial más clara para una película independiente. Estructura, buscadores y publicación reforzados</li></ul>
+      <ul class="es-list"><li>Sitio público Hair By Rachel Charles: una página que nuevos clientes pueden encontrar, entender y usar para llegar a su proceso habitual de reservas. El caso público enlaza la prueba y el sitio en vivo.</li><li>Proyecto privado Sistema privado de presupuestos: mostramos el enfoque, no datos del cliente.</li><li>Sitio público CC Films: una sede oficial más clara para una película independiente. El caso público enlaza la prueba y el sitio en vivo.</li></ul>
       <p class="es-actions"><a class="es-cta" href="/examples/">Ver todos los proyectos</a></p>
       <p class="es-eyebrow">SIN SORPRESAS</p>
       <h2>Desde la primera llamada hasta después del lanzamiento.</h2>
-      <ul class="es-list"><li>La segunda opinión siempre es gratis.</li><li>Su página web en 14 días o no paga.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m.</li><li>El código, los datos y la documentación quedan en sus manos.</li></ul>
+      <ul class="es-list"><li>La segunda opinión siempre es gratis.</li><li>El plan escrito de su página explica el plazo, lo que necesitamos y qué pasa si fallamos.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.</li><li>El código, los datos y la documentación quedan en sus manos.</li></ul>
       <p class="es-eyebrow">UNA PERSONA DE VERDAD CONTESTA</p>
       <h2>Cuéntenos qué está fallando.</h2>
       <p class="es-sub">Llame, mande un texto o escriba un correo en el idioma que le quede cómodo. Sin robots y sin número de ticket.</p>

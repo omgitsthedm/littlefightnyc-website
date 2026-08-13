@@ -5,7 +5,7 @@ import {
   Smartphone,
   Tablet,
 } from "lucide-react";
-import type { CaseCaptureDevice } from "@/data/site";
+import type { CaseCaptureDevice, CaseFeatureProof } from "@/data/site-cases";
 import "./LiveSiteExplorer.css";
 
 type Props = {
@@ -14,6 +14,7 @@ type Props = {
   url?: string;
   captureDate: string;
   devices?: CaseCaptureDevice[];
+  featureProof?: CaseFeatureProof;
 };
 
 const DEVICE_LABELS: Record<CaseCaptureDevice, string> = {
@@ -73,6 +74,7 @@ export default function LiveSiteExplorer({
   url,
   captureDate,
   devices = ["desktop", "mobile"],
+  featureProof,
 }: Props) {
   const initialDevice = (
     typeof window !== "undefined"
@@ -170,6 +172,19 @@ export default function LiveSiteExplorer({
           <span>
             {url ? "Custom-domain capture" : "Case-study capture"} ·{" "}
             <time dateTime={captureDate}>{formattedCaptureDate}</time>
+            {featureProof && (
+              <>
+                {" · "}Verified live{" "}
+                <time dateTime={featureProof.verifiedAt}>
+                  {new Intl.DateTimeFormat("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    timeZone: "UTC",
+                  }).format(new Date(`${featureProof.verifiedAt}T00:00:00Z`))}
+                </time>
+              </>
+            )}
           </span>
         </span>
         <div
@@ -199,8 +214,14 @@ export default function LiveSiteExplorer({
           })}
         </div>
         {url && (
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            Open live
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-lf-event={featureProof ? "portfolio_live_source" : undefined}
+            data-lf-label={featureProof ? slug : undefined}
+          >
+            {featureProof ? `Visit ${featureProof.sourceLabel}` : "Open live"}
             <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
           </a>
         )}

@@ -66,7 +66,10 @@
   border-radius: var(--lf-radius-card);
   background: var(--lf-paper-2);
   color: var(--lf-bone);
-  text-decoration: none;
+}
+
+.lf-audit-intro__proof-image {
+  display: block;
 }
 
 .lf-audit-intro__proof img {
@@ -109,12 +112,26 @@
   text-transform: uppercase;
 }
 
-.lf-audit-intro__proof:hover,
-.lf-audit-intro__proof:focus-visible {
+.lf-audit-intro__proof-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  padding: 0 var(--lf-space-4) var(--lf-space-4);
+}
+
+.lf-audit-intro__proof-links a {
+  color: var(--lf-fight-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  text-underline-offset: 0.2em;
+}
+
+.lf-audit-intro__proof:focus-within {
   border-color: var(--lf-fight);
 }
 
-.lf-audit-intro__proof:focus-visible {
+.lf-audit-intro__proof a:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }

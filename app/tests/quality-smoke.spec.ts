@@ -230,7 +230,7 @@ const ROUTES: readonly RouteContract[] = [
     key: "examples",
     label: "Examples",
     path: "/examples/",
-    title: "NYC Work & Small Business Answers | Little Fight NYC",
+    title: "Work Examples & Owner Answers | Little Fight NYC",
     h1: /See what works\.\s*Try what is next\./i,
     criticalLink: 'a[href="/case-studies/hair-by-rachel-charles/"]',
     tags: ["@chromium-desktop", "@firefox-desktop"],

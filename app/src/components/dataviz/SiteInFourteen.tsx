@@ -4,13 +4,9 @@ import { rr, glow, DISP, MONO, ORANGE, GREEN, useInstrumentCanvas } from "./inst
 /**
  * SiteInFourteen — the "custom local websites" argument, drawn.
  *
- * A site assembles in a browser frame while a day counter climbs 1 → 14 — hero,
- * content rows and footer snap into place behind an orange build-sweep line —
- * and on day 14 it goes LIVE — "in 14 days, or you don’t pay." One causal image:
- * a real custom build, coming together on a clock you can hold us to.
- *
- * Every fact drawn (ships by day 14, miss-the-date-you-don’t-pay) is already in
- * the custom-local-websites copy — no invented numbers.
+ * A qualifying website scope can carry a written 14-day launch promise. This
+ * instrument illustrates that scoped plan; the public copy and accessible
+ * name state the eligibility, dependency, clock, and remedy boundary.
  *
  * Rendered on a <canvas> (2D). Responsive to its container shape. Pauses when
  * off-viewport (IntersectionObserver). Under prefers-reduced-motion it paints a
@@ -226,15 +222,15 @@ function draw(
   if (live) {
     cx.fillStyle = "rgba(120,220,150,.95)";
     cx.font = "700 " + Math.max(12, (H * 0.055) | 0) + "px " + DISP;
-    cx.fillText("Live in 14 days.", dayX, ry);
+    cx.fillText("Day 14 target.", dayX, ry);
     cx.fillStyle = "rgba(200,205,215,.8)";
     cx.font = "500 " + Math.max(10, (H * 0.036) | 0) + "px " + DISP;
-    cx.fillText("Or you don’t pay.", dayX, ry + H * 0.055);
+    cx.fillText("Qualifying scope · terms written.", dayX, ry + H * 0.055);
   } else {
     cx.fillStyle = "rgba(200,205,215,.85)";
     cx.font = "500 " + Math.max(10, (H * 0.036) | 0) + "px " + DISP;
     cx.fillText("Custom, built for your block —", dayX, ry);
-    cx.fillText("shipping by day 14.", dayX, ry + H * 0.05);
+    cx.fillText("qualifying plan · day 14.", dayX, ry + H * 0.05);
   }
 
   if (S.flash > 0.02) {
@@ -281,7 +277,7 @@ export default function SiteInFourteen() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="A custom website comes together as the day counter moves from 1 to 14. The navigation, main message, content, and footer lock into place. On day 14, the site goes live at yourshop.com. Live in 14 days, or you don’t pay."
+      aria-label="Illustration of a qualifying website plan moving from day 1 to a day 14 target. The written scope states eligibility, when the clock starts, what each side must provide, and the remedy if Little Fight’s qualifying work is late."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

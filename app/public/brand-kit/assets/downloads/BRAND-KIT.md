@@ -177,8 +177,9 @@ and opacity.
 
 Approved standing claims:
 
-- Custom small-business websites go live in 14 days, or the client does not
-  pay.
+- A qualifying website scope may include the written 14-day promise. The scope
+  states eligibility, when the clock starts, what each side must provide, and
+  the remedy if Little Fight’s qualifying work is late.
 - Consulting is always free.
 - Callback target is within 2 hours, 9am to 9pm Eastern Time.
 - Clients own their code, data, domain, hosting, and documentation.

@@ -19,7 +19,7 @@ const CARE_WORK = [
   {
     label: "Reliability",
     title: "Keep the quiet machinery quiet.",
-    detail: "Hosting, dependencies, backups, security headers, and domain connections stay maintained so a customer is not the first person to report a break.",
+    detail: "Hosting, backups, security basics, and domain connections stay checked so a customer is less likely to find a break first.",
   },
   {
     label: "Ownership",
@@ -35,7 +35,7 @@ export default function OngoingCare() {
         eyebrow="Ongoing care"
         icon={RefreshCw}
         title={<>Keep the front door honest after launch.</>}
-        dek="A website is part of the business day. Care keeps its facts, forms, booking paths, and quiet machinery current without taking ownership away from you."
+        dek="A website is part of the business day. Care keeps its facts, forms, booking paths, and behind-the-scenes parts current. The business still owns them."
         image={{
           src: "/images/brand-scenes/shop-back-office.webp",
           alt: "A neighborhood shop back office with the everyday tools that keep the business running",
@@ -51,13 +51,12 @@ export default function OngoingCare() {
           <div>
             <p>
               A site can stay online while the useful parts quietly go stale.
-              The wrong hours, a dead form, an old service, or a booking link
-              pointed at the wrong person can cost trust without causing an outage.
+              Wrong hours, a dead form, an old service, or a booking link sent
+              to the wrong person can cost trust without looking like an outage.
             </p>
             <p>
-              Ongoing care is scoped around the business you actually run. No
-              mystery activity report and no ownership trap. If you only need
-              help once, ask once.
+              Care is scoped around the business you actually run. No mystery
+              activity report. No ownership trap. If you need help once, ask once.
             </p>
           </div>
         </header>
@@ -78,7 +77,7 @@ export default function OngoingCare() {
         <aside className="lf-revenue-page__handoff">
           <div>
             <p>Already a client?</p>
-            <h2>Do not hunt for the old project thread.</h2>
+            <h2>Do not hunt through old email threads.</h2>
             <p>
               Email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> or
               use the current-client desk. The Workspace priority flow routes

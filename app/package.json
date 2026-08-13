@@ -42,8 +42,8 @@
     "audit:release": "node scripts/audit-release-readiness.mjs",
     "test:browser": "playwright test",
     "test:browser:chromium": "playwright test --project=chromium-desktop --project=chromium-mobile",
-    "quality": "npm run lint && npm run build && npm run audit:bundle && npm run audit:conversion && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:vera-legal && npm run audit:legal-snapshot && npm run audit:meta-budget && npm run audit:claim-scope && npm run audit:typography && npm run audit:agency-voice",
-    "quality:fast": "npm run lint && npm run build && npm run audit:bundle && npm run audit:conversion && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:vera-legal",
+    "quality": "npm run lint && npm run build && npm run audit:bundle && npm run audit:conversion && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:vera-legal && npm run audit:legal-snapshot && npm run audit:meta-budget && npm run audit:claim-scope && npm run audit:typography && npm run audit:agency-voice && npm run audit:copy-contract",
+    "quality:fast": "npm run lint && npm run build && npm run audit:bundle && npm run audit:conversion && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:vera-legal && npm run audit:copy-contract",
     "quality:full": "npm run quality && npm run audit:quality-manifest && npm run test:browser",
     "quality:release": "npm run quality:full && npm run audit:release",
     "quality:live": "node scripts/verify-live.mjs",
@@ -54,7 +54,8 @@
     "audit:external-links": "node scripts/audit-external-links.mjs",
     "audit:claim-scope": "node scripts/audit-claim-scope.mjs",
     "audit:typography": "node scripts/audit-typography.mjs",
-    "audit:agency-voice": "node scripts/audit-agency-voice.mjs"
+    "audit:agency-voice": "node scripts/audit-agency-voice.mjs",
+    "audit:copy-contract": "node scripts/audit-copy-contract.mjs"
   },
   "dependencies": {
     "@fontsource-variable/oswald": "^5.2.8",

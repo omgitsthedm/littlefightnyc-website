@@ -6,7 +6,7 @@ const PATHS = [
   {
     name: "A website that helps them choose",
     situation: "People hear your name, search for you, and need to know whether to book, visit, order, call, or inquire.",
-    outcome: "A fast custom site that sounds like the business, earns trust on a phone, and makes the right next step obvious.",
+    outcome: "A custom site that sounds like the business, works on a phone, and makes the right next step obvious.",
     to: "/services/custom-local-websites/",
     cta: "See how websites work",
     image: "storefronts-dawn",
@@ -15,7 +15,7 @@ const PATHS = [
   {
     name: "Help when tech breaks",
     situation: "The register, Wi-Fi, email, booking, or printer stops the day.",
-    outcome: "We find the real problem, fix it, and leave clear instructions.",
+    outcome: "We find the real problem, explain the next step, and leave clear notes after the fix.",
     to: "/services/it-support/",
     cta: "Get tech help",
     image: "restaurant-counter",
@@ -24,7 +24,7 @@ const PATHS = [
   {
     name: "A free second opinion",
     situation: "A vendor says you need more software, but the answer does not feel right.",
-    outcome: "We look at the whole setup and tell you what to keep, fix, or skip.",
+    outcome: "We look at the whole setup and tell you what to keep, fix, stop paying for, or skip.",
     to: "/services/tech-consulting/",
     cta: "Get a second opinion",
     image: "shop-back-office",
@@ -33,7 +33,7 @@ const PATHS = [
   {
     name: "Software that fits the work",
     situation: "The monthly tool costs too much and still acts like a difficult spreadsheet.",
-    outcome: "We build the focused tool your team needs, and you own it.",
+    outcome: "When a focused build is the right move, you own the code, data, and notes.",
     to: "/services/business-systems/",
     cta: "See software you own",
     image: "salon-systems",
@@ -71,7 +71,7 @@ export default function TheFour() {
         </h2>
         <p className="lf-four__dek">
           Tell us what is getting in the way. We will show you the useful next
-          move, the cost, and what can stay exactly as it is.
+          move and what can stay exactly as it is.
         </p>
       </header>
 

@@ -15,6 +15,20 @@ export type CaseProofStatus =
 
 export type CaseCaptureDevice = "desktop" | "tablet" | "mobile";
 
+export type CaseFeatureProof = {
+  label: string;
+  ownerOutcome: string;
+  whyItMatters: string;
+  sourceUrl: string;
+  sourceLabel: string;
+  verifiedAt: string;
+  steps: Array<{
+    label: string;
+    detail: string;
+  }>;
+  textAlternative: string;
+};
+
 type CaseMetric =
   | {
       value: string;
@@ -46,12 +60,14 @@ export type CaseStudy = {
   url: string;
   slug: string;
   image: string;
+  inventoryOnly?: boolean;
   video?: CinematicMediaAsset;
   services: string[];
   published?: string;
   updated?: string;
   body?: string[];
   metrics?: CaseMetric[];
+  featureProof?: CaseFeatureProof;
   showcase: {
     label: string;
     kind: string;
@@ -71,6 +87,150 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    type: "Internal project inventory",
+    client: "The Break Room",
+    url: "",
+    slug: "the-break-room",
+    image: "/assets/hero-examples-market.webp",
+    inventoryOnly: true,
+    metrics: [
+      { value: "Internal", label: "Public-safe project walkthrough", evidence: "build" },
+      { value: "Withheld", label: "No temporary-host link", evidence: "release" },
+    ],
+    showcase: {
+      label: "Public-safe project walkthrough",
+      kind: "Internal project",
+      context: "Netlify fleet inventory",
+      availability: "private",
+      privacyLabel: "Public-safe walkthrough",
+      linkPolicy: "case-only",
+      proof: { status: "case-only" },
+      stages: [
+        { label: "Record", detail: "This project is part of the Little Fight fleet and belongs in the portfolio inventory." },
+        { label: "Protect", detail: "Its temporary host, private operating details, and unapproved proof stay out of the public portfolio." },
+        { label: "Expand", detail: "This walkthrough grows only when public-safe evidence and approval are available." },
+      ],
+    },
+    services: [],
+    title: "The Break Room is represented here without a temporary-host detour.",
+    problem: "The project belongs in the Little Fight fleet, but its client-facing details and temporary host are not public portfolio proof.",
+    kept: "The project boundary: no invented launch claim, no private details, and no temporary link presented as a client site.",
+    changed: "Added a public-safe project record inside Little Fight so the fleet is visible without exposing work that is not approved for a live case study.",
+    result: "A clear internal portfolio record. It confirms the project belongs in the fleet while keeping the proof boundary honest.",
+    body: [
+      "The Break Room is an active Little Fight fleet project. This record is intentionally small: it establishes that the work exists without treating an internal or temporary environment as a public client launch.",
+      "When public-safe proof is approved, this walkthrough can show the relevant customer path, source, date, and outcome. Until then, the honest version is a visible record with the private boundary intact.",
+    ],
+  },
+  {
+    type: "Internal project inventory",
+    client: "Surviving Game",
+    url: "",
+    slug: "surviving-game",
+    image: "/assets/hero-examples-market.webp",
+    inventoryOnly: true,
+    metrics: [
+      { value: "Internal", label: "Public-safe project walkthrough", evidence: "build" },
+      { value: "Withheld", label: "No temporary-host link", evidence: "release" },
+    ],
+    showcase: {
+      label: "Public-safe project walkthrough",
+      kind: "Internal project",
+      context: "Netlify fleet inventory",
+      availability: "private",
+      privacyLabel: "Public-safe walkthrough",
+      linkPolicy: "case-only",
+      proof: { status: "case-only" },
+      stages: [
+        { label: "Record", detail: "This project is part of the Little Fight fleet and belongs in the portfolio inventory." },
+        { label: "Protect", detail: "Its temporary host, private operating details, and unapproved proof stay out of the public portfolio." },
+        { label: "Expand", detail: "This walkthrough grows only when public-safe evidence and approval are available." },
+      ],
+    },
+    services: [],
+    title: "Surviving Game is represented here without making up a launch story.",
+    problem: "The project belongs in the Little Fight fleet, but its client-facing details and temporary host are not public portfolio proof.",
+    kept: "The project boundary: no invented launch claim, no private details, and no temporary link presented as a client site.",
+    changed: "Added a public-safe project record inside Little Fight so the fleet is visible without exposing work that is not approved for a live case study.",
+    result: "A clear internal portfolio record. It confirms the project belongs in the fleet while keeping the proof boundary honest.",
+    body: [
+      "Surviving Game is an active Little Fight fleet project. This record establishes that the work exists without treating an internal or temporary environment as a public client launch.",
+      "When public-safe proof is approved, this walkthrough can show the relevant customer path, source, date, and outcome. Until then, the honest version is a visible record with the private boundary intact.",
+    ],
+  },
+  {
+    type: "Internal project inventory",
+    client: "Pole Position IT",
+    url: "",
+    slug: "pole-position-it",
+    image: "/assets/hero-examples-market.webp",
+    inventoryOnly: true,
+    metrics: [
+      { value: "Internal", label: "Public-safe project walkthrough", evidence: "build" },
+      { value: "Withheld", label: "No temporary-host link", evidence: "release" },
+    ],
+    showcase: {
+      label: "Public-safe project walkthrough",
+      kind: "Internal project",
+      context: "Netlify fleet inventory",
+      availability: "private",
+      privacyLabel: "Public-safe walkthrough",
+      linkPolicy: "case-only",
+      proof: { status: "case-only" },
+      stages: [
+        { label: "Record", detail: "This project is part of the Little Fight fleet and belongs in the portfolio inventory." },
+        { label: "Protect", detail: "Its temporary host, private operating details, and unapproved proof stay out of the public portfolio." },
+        { label: "Expand", detail: "This walkthrough grows only when public-safe evidence and approval are available." },
+      ],
+    },
+    services: [],
+    title: "Pole Position IT is represented here without a temporary-host shortcut.",
+    problem: "The project belongs in the Little Fight fleet, but its client-facing details and temporary host are not public portfolio proof.",
+    kept: "The project boundary: no invented launch claim, no private details, and no temporary link presented as a client site.",
+    changed: "Added a public-safe project record inside Little Fight so the fleet is visible without exposing work that is not approved for a live case study.",
+    result: "A clear internal portfolio record. It confirms the project belongs in the fleet while keeping the proof boundary honest.",
+    body: [
+      "Pole Position IT is an active Little Fight fleet project. This record establishes that the work exists without treating an internal or temporary environment as a public client launch.",
+      "When public-safe proof is approved, this walkthrough can show the relevant customer path, source, date, and outcome. Until then, the honest version is a visible record with the private boundary intact.",
+    ],
+  },
+  {
+    type: "Internal project inventory",
+    client: "All Pets Animal Hospital",
+    url: "",
+    slug: "all-pets-animal-hospital",
+    image: "/assets/hero-examples-market.webp",
+    inventoryOnly: true,
+    metrics: [
+      { value: "Internal", label: "Public-safe project walkthrough", evidence: "build" },
+      { value: "Withheld", label: "No temporary-host link", evidence: "release" },
+    ],
+    showcase: {
+      label: "Public-safe project walkthrough",
+      kind: "Internal project",
+      context: "Netlify fleet inventory",
+      availability: "private",
+      privacyLabel: "Public-safe walkthrough",
+      linkPolicy: "case-only",
+      proof: { status: "case-only" },
+      stages: [
+        { label: "Record", detail: "This project is part of the Little Fight fleet and belongs in the portfolio inventory." },
+        { label: "Protect", detail: "Its temporary host, private operating details, and unapproved proof stay out of the public portfolio." },
+        { label: "Expand", detail: "This walkthrough grows only when public-safe evidence and approval are available." },
+      ],
+    },
+    services: [],
+    title: "All Pets Animal Hospital is represented here without an invented client result.",
+    problem: "The project belongs in the Little Fight fleet, but its client-facing details and temporary host are not public portfolio proof.",
+    kept: "The project boundary: no invented launch claim, no private details, and no temporary link presented as a client site.",
+    changed: "Added a public-safe project record inside Little Fight so the fleet is visible without exposing work that is not approved for a live case study.",
+    result: "A clear internal portfolio record. It confirms the project belongs in the fleet while keeping the proof boundary honest.",
+    body: [
+      "All Pets Animal Hospital is an active Little Fight fleet project. This record establishes that the work exists without treating an internal or temporary environment as a public client launch.",
+      "When public-safe proof is approved, this walkthrough can show the relevant customer path, source, date, and outcome. Until then, the honest version is a visible record with the private boundary intact.",
+    ],
+  },
   {
     type: "Lower East Side retail shop",
     client: "Army & Navy Bags",
@@ -175,6 +335,23 @@ export const caseStudies: CaseStudy[] = [
         evidence: "release",
       },
     ],
+    featureProof: {
+      label: "The official film path",
+      ownerOutcome:
+        "Press, festival audiences, and viewers have one official place to watch, read, and find the next step.",
+      whyItMatters:
+        "When the facts live in one clear home, a release does not depend on a scavenger hunt through social posts.",
+      sourceUrl: "https://ccfilms.net",
+      sourceLabel: "ccfilms.net",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "Watch", detail: "The trailer and film context arrive before a visitor has to hunt for them." },
+        { label: "Verify", detail: "Credits, reviews, and release facts have one official place to live." },
+        { label: "Remember", detail: "The premiere archive keeps a large photo record usable from phone through desktop." },
+      ],
+      textAlternative:
+        "The live site gives visitors one official path: watch the trailer, verify the film facts, then explore the premiere archive.",
+    },
     showcase: {
       label: "An analog screening room for Marrow",
       kind: "Website",
@@ -211,10 +388,10 @@ export const caseStudies: CaseStudy[] = [
   {
     type: "Cruise social network",
     client: "DeckSpace",
-    url: "https://www.getdeckspace.com",
+    url: "",
     slug: "deckspace",
     metrics: [
-      { value: "Live", label: "getdeckspace.com", evidence: "release" },
+      { value: "Archived", label: "Case walkthrough only", evidence: "release" },
       {
         value: "3 jobs",
         label: "Onboard guide, social network, memory layer",
@@ -228,10 +405,16 @@ export const caseStudies: CaseStudy[] = [
     ],
     showcase: {
       label: "Cruise guest network",
-      kind: "Public product",
+      kind: "Archived product walkthrough",
       context: "Life at sea",
-      availability: "public",
-      proof: { status: "public-live", captureDate: "2026-07-21" },
+      availability: "private",
+      privacyLabel: "Archived walkthrough",
+      linkPolicy: "case-only",
+      proof: {
+        status: "case-only",
+        captureDate: "2026-07-21",
+        captureDevices: ["desktop", "mobile"],
+      },
       stages: [
         { label: "Orient", detail: "Guests find voyage details, venue hours, shops, bars, restaurants, and what is happening next." },
         { label: "Connect", detail: "Profiles and shared events turn a ship full of strangers into a temporary neighborhood." },
@@ -246,11 +429,11 @@ export const caseStudies: CaseStudy[] = [
     problem: "DeckSpace needed to explain a cruise-ship social network without feeling like a generic travel app. Guests need events, venue hours, shops, bars, restaurants, voyage details, photos, profiles, and each other, all while moving around the ship.",
     kept: "The emotional center of cruising. Shared plans, temporary community, onboard discovery, and a trip people want to remember after they get home.",
     changed: "Framed the product around nostalgia, finding your way on the ship, guest profiles, event discovery, and ultra-fast performance. The experience feels immediate, not like another portal.",
-    result: "getdeckspace.com now tells the whole product in one pass. Part onboard guide, part social network, part cruise memory layer. The public site is built to the same speed bar the product promises.",
+    result: "An archived product walkthrough that explains the onboard guide, social network, and cruise-memory idea without presenting an old host as current client proof.",
     body: [
       "DeckSpace is built for a strange little world: a cruise ship. Guests are relaxed, distracted, and moving between decks. They keep asking the same questions. What is happening tonight? Where is the bar? What is open? Who else is on board? Where did that photo go? The site had to make the product feel like a guest companion, not a software dashboard.",
       "We kept the nostalgic heart of the idea. A cruise is part schedule, part map problem, and part temporary social world. DeckSpace turns that into a shared sailing page. Guests can follow events, check venues, keep up with the voyage, make a profile, find people, and share photos. They leave with a short-lived archive of the trip.",
-      "The story also had to respect speed. Ship life punishes slow screens. Guests will not wait just to find dinner hours or see who is going to an event. So DeckSpace is built around fast, low-lag onboard discovery with a warm retro feel. Useful, immediate, and specific to the sailing.",
+      "The story also had to respect speed. Ship life punishes slow screens. Guests will not wait just to find dinner hours or see who is going to an event. The retained captures show the intended fast, low-lag discovery path; this page does not present the former host as a current launch.",
     ],
   },
   {
@@ -282,6 +465,23 @@ export const caseStudies: CaseStudy[] = [
         evidence: "build",
       },
     ],
+    featureProof: {
+      label: "The booking handoff",
+      ownerOutcome:
+        "A new client can understand Rachel's work and reach the booking tool they already know without a DM detour.",
+      whyItMatters:
+        "The website does the explaining first, so the booking step is a handoff instead of another back-and-forth.",
+      sourceUrl: "https://hairbyrachelcharles.com",
+      sourceLabel: "hairbyrachelcharles.com",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "See", detail: "The work and point of view show what kind of chair a first-time client is booking." },
+        { label: "Choose", detail: "Service and neighborhood pages answer the practical questions before a visitor asks." },
+        { label: "Book", detail: "The path hands off to Square Appointments, the booking habit existing clients already know." },
+      ],
+      textAlternative:
+        "The live site shows the stylist's work, answers service questions, and sends a ready visitor into Square Appointments.",
+    },
     showcase: {
       label: "A bright editorial chair in Chelsea",
       kind: "Website",
@@ -335,11 +535,29 @@ export const caseStudies: CaseStudy[] = [
         evidence: "build",
       },
     ],
+    featureProof: {
+      label: "From drop to delivery",
+      ownerOutcome:
+        "The owner can launch a product drop without rebuilding the storefront or sacrificing the brand to a template.",
+      whyItMatters:
+        "One clear product source, a payment handoff, and fulfillment routing reduce the number of places a small store has to babysit.",
+      sourceUrl: "https://afterhoursagenda.com",
+      sourceLabel: "afterhoursagenda.com",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "Choose", detail: "The catalog presents a product drop in the brand's own visual language." },
+        { label: "Pay", detail: "The customer moves through a clear Square payment handoff." },
+        { label: "Ship", detail: "Fulfillment is routed to Printful so the owner is not rebuilding an order by hand." },
+      ],
+      textAlternative:
+        "The storefront presents a product drop, hands payment to Square, and routes paid orders to fulfillment without a platform-themed customer experience.",
+    },
     showcase: {
       label: "Custom storefront",
       kind: "Website + commerce",
       context: "Independent streetwear",
       availability: "public",
+      linkPolicy: "custom-domain",
       proof: { status: "owned-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Catalog", detail: "One JSON master holds the products, prices, and drop details without hardcoded storefront content." },
@@ -384,11 +602,29 @@ export const caseStudies: CaseStudy[] = [
         evidence: "release",
       },
     ],
+    featureProof: {
+      label: "One intake, a clear handoff",
+      ownerOutcome:
+        "Someone asking for help gets a clear public starting point while the team receives the request in the protected system built to handle it.",
+      whyItMatters:
+        "A customer should not have to know how the tools work behind the scenes. The business should not have to copy the same request between them.",
+      sourceUrl: "https://clearhelp.org",
+      sourceLabel: "clearhelp.org",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "Ask", detail: "The public site gives a person a clear, calm place to start." },
+        { label: "Route", detail: "The request reaches the connected intake layer without an exposed admin detour." },
+        { label: "Handle", detail: "The team works from its protected environment, separate from the public experience." },
+      ],
+      textAlternative:
+        "The public site lets someone ask for help, routes the request into a connected intake system, and keeps the team workspace protected.",
+    },
     showcase: {
       label: "Connected intake system",
       kind: "Connected system",
       context: "Help service",
       availability: "public",
+      linkPolicy: "custom-domain",
       proof: { status: "public-live", captureDate: "2026-07-23" },
       stages: [
         { label: "Receive", detail: "The public site gives people a clear place to ask for help without exposing the working system behind it." },
@@ -486,6 +722,23 @@ export const caseStudies: CaseStudy[] = [
         evidence: "release",
       },
     ],
+    featureProof: {
+      label: "From broad question to clear answer",
+      ownerOutcome:
+        "A partner or prospect can find the right service, policy, or contact path without decoding finance-speak or a generic funnel.",
+      whyItMatters:
+        "Complex businesses earn trust by answering the next real question clearly, not by making someone fill out a form before they understand the basics.",
+      sourceUrl: "https://www.grandfundingllc.com",
+      sourceLabel: "grandfundingllc.com",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "Start", detail: "A broad question begins with plain, client-approved context." },
+        { label: "Narrow", detail: "Services, audiences, locations, and reference pages give the question a precise home." },
+        { label: "Connect", detail: "A visitor reaches a measured contact path after they have the context to use it." },
+      ],
+      textAlternative:
+        "The live library moves a visitor from a broad funding question to a clear service or policy page, then to the appropriate contact path.",
+    },
     showcase: {
       label: "A desert-night lending library",
       kind: "Website",
@@ -694,7 +947,7 @@ export const caseStudies: CaseStudy[] = [
   {
     type: "Phoenix painting contractor",
     client: "Chromatic Painting & Design",
-    url: "",
+    url: "https://chromaticaz.com",
     slug: "chromatic-painting-design",
     metrics: [
       {
@@ -708,20 +961,36 @@ export const caseStudies: CaseStudy[] = [
         evidence: "build",
       },
       {
-        value: "Review gated",
-        label: "Deliberately noindex before approval",
+        value: "Own domain",
+        label: "Live at chromaticaz.com",
         evidence: "release",
       },
     ],
+    featureProof: {
+      label: "A local question gets a useful path",
+      ownerOutcome:
+        "A Phoenix customer can recognize the work, find the relevant service, and start a project conversation without a generic contractor maze.",
+      whyItMatters:
+        "Specific service and location pages give a customer a better answer than a single quote button trying to do every job.",
+      sourceUrl: "https://chromaticaz.com",
+      sourceLabel: "chromaticaz.com",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "Recognize", detail: "Phoenix color and place make the first screen feel specific to the business." },
+        { label: "Find", detail: "Service and local-intent paths give a question its own clear destination." },
+        { label: "Ask", detail: "The visitor reaches the right project conversation after seeing the relevant context." },
+      ],
+      textAlternative:
+        "The live site helps a Phoenix customer recognize the contractor, find the relevant service information, and begin the right project conversation.",
+    },
     showcase: {
       label: "Phoenix, repainted",
-      kind: "Client review build",
+      kind: "Website",
       context: "Painting and design",
-      availability: "private",
-      privacyLabel: "Case study only",
-      linkPolicy: "case-only",
+      availability: "public",
+      linkPolicy: "custom-domain",
       proof: {
-        status: "case-only",
+        status: "public-live",
         captureDate: "2026-07-27",
         captureDevices: ["desktop", "tablet", "mobile"],
       },
@@ -739,8 +1008,8 @@ export const caseStudies: CaseStudy[] = [
           detail: "Three art-directed social cards make the first impression intentional wherever a route appears.",
         },
         {
-          label: "Gate",
-          detail: "Noindex and review controls keep the work out of search until the client facts and media are approved.",
+          label: "Connect",
+          detail: "A clear project path gives a ready customer a direct next step after the relevant service context.",
         },
       ],
     },
@@ -756,11 +1025,11 @@ export const caseStudies: CaseStudy[] = [
     changed:
       "Built an 18-page review experience around Phoenix color and light. Separated services, local intent, and common questions, then added three route-specific social cards, responsive proof, and deliberate noindex controls for the approval period.",
     result:
-      "A distinctive client review build that reads clearly from desktop through phone while staying out of search until facts and media are approved. The work is shown here, with no temporary hosting link presented as a public launch.",
+      "A live custom-domain site at chromaticaz.com that gives Phoenix customers a specific service path from desktop through phone, without reducing the business to another generic contractor template.",
     body: [
       "A contractor does not become more trustworthy because a template puts a paint roller beside a rounded quote form. The useful proof is specificity. Where the company works, what it does, what a customer should expect, and whether the page feels considered before anyone asks for a project.",
       "The design starts with Phoenix rather than generic home-improvement imagery. Strong blocks of color, sun-washed surfaces, and direct typography make the site recognizable. Eighteen pages give services, local intent, project questions, and policy information their own clear destinations. Three art-directed social cards keep that identity intact when a page is shared.",
-      "This is still a client review build. Noindex controls are intentional, and final facts and approved media remain gates before a public release. The responsive screenshots document the real work now. An external link will appear only when the approved site has a client-owned domain.",
+      "The site is now live on the client-owned domain. The responsive proof documents the work across desktop, iPad, and phone, while the public path stays focused on a simple job: help a Phoenix customer find the relevant service and start the right project conversation.",
     ],
   },
   {
@@ -790,6 +1059,23 @@ export const caseStudies: CaseStudy[] = [
         evidence: "release",
       },
     ],
+    featureProof: {
+      label: "The right question finds the right form",
+      ownerOutcome:
+        "A visitor can understand the relevant lending question and choose a specific next step instead of being pushed through one generic funnel.",
+      whyItMatters:
+        "Clear paths reduce confusion for customers and keep a regulated business from making broad claims just to collect a lead.",
+      sourceUrl: "https://logan.loans",
+      sourceLabel: "logan.loans",
+      verifiedAt: "2026-08-13",
+      steps: [
+        { label: "Orient", detail: "The page begins with plain, approved context instead of a vague promise." },
+        { label: "Answer", detail: "Routes for services, locations, questions, and policies let a visitor narrow the subject." },
+        { label: "Choose", detail: "Five distinct forms give different conversations a deliberate next step." },
+      ],
+      textAlternative:
+        "The live site begins with approved lending context, helps a visitor narrow the question, and routes them to a specific form.",
+    },
     showcase: {
       label: "A warmer way through lending questions",
       kind: "Website",

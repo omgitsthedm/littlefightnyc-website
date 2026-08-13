@@ -34,9 +34,9 @@ export default function ClientContinuity() {
         <p className="lf-continuity__eyebrow">After launch</p>
         <h2 id="lf-continuity-title">The handoff should not become a disappearance.</h2>
         <p>
-          A useful site changes with the business. We keep the customer path
-          current, test the parts that carry inquiries and bookings, and write
-          down what changed. You still own the code, domain, content, and data.
+          A useful site changes with the business. We can keep the customer path
+          current, test forms and booking routes, and write down what changed.
+          You still own the code, domain, content, and data.
         </p>
         <div className="lf-continuity__lead-actions">
           <Link to="/services/ongoing-care/">See ongoing care</Link>

@@ -1,12 +1,11 @@
 // fonts/tokens/base are imported once at the entry (src/main.tsx) so their
 // @font-face rules live in a single stylesheet (no duplicate font downloads).
 
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
 import GrowthPath from "@/components/editorial/GrowthPath";
-import RecentClients from "@/components/editorial/RecentClients";
 import TheFight from "@/components/editorial/TheFight";
 import TheFour from "@/components/editorial/TheFour";
 import ClientContinuity from "@/components/editorial/ClientContinuity";
@@ -15,6 +14,14 @@ import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
 import CommandPalette from "@/components/editorial/CommandPalette";
 import { watchListReveals } from "@/lib/listReveal";
+
+// These rich below-the-hero sections keep their own chunks. The prerendered
+// first response already carries the page's complete owner-facing meaning;
+// splitting the interactive layer keeps every visit from paying for the full
+// portfolio catalog and calculator before the hero is useful.
+const OwnerPath = lazy(() => import("@/components/dataviz/OwnerPath"));
+const MoneyLeakMeter = lazy(() => import("@/components/dataviz/MoneyLeakMeter"));
+const RecentClients = lazy(() => import("@/components/editorial/RecentClients"));
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -31,9 +38,17 @@ export default function Home() {
       <QuietNav />
       <main id="main-content">
         <QuietHero />
+        <Suspense fallback={null}>
+          <OwnerPath />
+        </Suspense>
+        <Suspense fallback={null}>
+          <MoneyLeakMeter />
+        </Suspense>
         <GrowthPath />
         <TheFour />
-        <RecentClients />
+        <Suspense fallback={null}>
+          <RecentClients />
+        </Suspense>
         <TheFight />
         <ClientContinuity />
         <QuietContact />

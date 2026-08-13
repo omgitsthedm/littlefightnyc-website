@@ -128,8 +128,8 @@ export default function Thanks() {
           </>
         )}
         dek={websiteIntent
-          ? `You did the hard part — you said what you want. A real person reads this today and ${replyLanguage.action} with a clear next step, normally within two hours, 9am to 9pm Eastern. The consult is free, and nothing moves until the plan makes sense to you.`
-          : `You did the hard part — you said something. A real person reads this today, not a queue. Expect ${replyLanguage.expectation} within two hours, 9am to 9pm Eastern. If it’s urgent right now, call ${PHONE_DISPLAY} and we’ll triage the fire first.`}
+          ? `You did the hard part — you said what you want. A real person reviews it during the 9am–9pm Eastern response window and ${replyLanguage.action} with a clear next step. Requests sent after hours wait for the next response window. The consult is free, and nothing moves until the plan makes sense to you.`
+          : `You did the hard part — you said what is stuck. A real person reviews it during the 9am–9pm Eastern response window. Requests sent after hours wait for the next response window. If it is urgent, call ${PHONE_DISPLAY} so we can understand what is happening.`}
       />
 
       <section className="lf-thanks__handoff" aria-labelledby="thanks-next-title">
@@ -154,7 +154,7 @@ export default function Thanks() {
             <li>
               <span aria-hidden="true">03</span>
               <strong>Clear next step</strong>
-              <small>Expect {replyLanguage.expectation} inside the stated window.</small>
+              <small>We reply with the route you chose during the response window.</small>
             </li>
           </ol>
         </div>
@@ -165,12 +165,11 @@ export default function Thanks() {
           <div className="lf-thanks__booking-inner">
             <div>
               <p className="lf-thanks__eyebrow">A time you choose</p>
-              <h2 id="thanks-booking-title">Free 30-minute second opinion.</h2>
+              <h2 id="thanks-booking-title">Free second opinion.</h2>
               <p>
-                Your brief is already here. Choose a Monday–Friday time between
-                9am and 5pm Eastern. We’ll meet on Google Meet, look at the
-                website with you, and name the clearest next move. No prep or
-                commitment.
+                Your brief is already here. The booking page shows its current
+                available times and meeting details. We look at the website with
+                you and name the clearest next move. No prep or commitment.
               </p>
             </div>
             <a

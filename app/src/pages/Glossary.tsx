@@ -18,7 +18,7 @@ export default function Glossary() {
             <span className="lf-em">no vendor fog.</span>
           </>
         }
-        dek="The terms NYC owners hit when websites, tools, Google, and workflow start costing real money."
+        dek="A word should help you make one next move, not sell you another subscription. Start with the term that is blocking the day."
         image={{
           src: "/assets/sign-more-shops.webp",
           alt: "Hand-painted shop signage",
@@ -32,6 +32,16 @@ export default function Glossary() {
           <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
             <TermMap />
           </section>
+
+          <aside className="lf-content-tile lf-content-tile--full">
+            <p className="lf-content-tile__label">Before you buy anything</p>
+            <h2>Words are clues, not instructions.</h2>
+            <p>
+              A CRM, automation, or stack may be useful. It may also be a very expensive way to
+              avoid fixing one missed handoff. Read the plain definition, check the original
+              source when a rule or vendor is involved, then decide what the business needs.
+            </p>
+          </aside>
 
           <section className="lf-content-tile lf-content-tile--full">
             <ul className="lf-content-list lf-content-list--links lf-content-list--three" data-count={glossaryTerms.length}>

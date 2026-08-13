@@ -17,7 +17,7 @@ const STEPS = [
   },
   {
     verb: "Stay",
-    detail: "We write it down, train the right people, and answer after launch.",
+    detail: "We write down what changed, help the right people use it, and stay available after launch.",
   },
 ] as const;
 

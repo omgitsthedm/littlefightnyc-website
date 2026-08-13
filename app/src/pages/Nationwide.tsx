@@ -24,7 +24,7 @@ const NATIONWIDE_FAQ = [
   {
     question: "I’m on the West Coast. How do time zones work?",
     answer:
-      "We answer 9am to 9pm Eastern. That is 6am to 6pm Pacific. Text or email whenever you want, and we call back inside 2 hours during those windows. The 14 days do not change.",
+      "We answer 9am to 9pm Eastern. That is 6am to 6pm Pacific. Text or email whenever you want, and we call back inside 2 hours during that window. Your written scope sets the project dates.",
   },
   {
     question: "Who takes care of the site after it launches?",
@@ -34,7 +34,7 @@ const NATIONWIDE_FAQ = [
   {
     question: "Is a remote build different from a New York build?",
     answer:
-      "Same build. Same 14 days. Same promise: if we are late, you do not pay. The only difference is that we ask for a few more photos.",
+      "The website process is remote either way. A New York scope may include on-site work; a nationwide website scope does not promise a local visit. Dates, responsibilities, and any qualifying timing remedy are written down before paid work starts.",
   },
 ];
 
@@ -52,7 +52,7 @@ export default function Nationwide() {
             <span className="lf-em">Works anywhere.</span>
           </>
         }
-        dek="We build custom websites for small businesses in all 50 states. The process is clear, the 14-day promise travels, and the finished site belongs to you."
+        dek="We build custom websites remotely for small businesses across the United States. The finished site belongs to you. New York on-site support stays a New York service."
         image={{
           src: "/assets/hero-nationwide-wtc.webp",
           alt: "Seventh Avenue running south toward One World Trade Center on a bright day",
@@ -66,10 +66,10 @@ export default function Nationwide() {
           <article className="lf-content-tile lf-content-tile--half">
             <EditorialBody dropcap>
               <p>
-                Every main street has good businesses whose website no longer
-                matches the care people get in person. We learn what customers
-                need to know, then build the clear path to call, book, visit, or
-                buy. A website does not care about ZIP codes.
+                Good businesses everywhere get stuck with a website that no
+                longer matches the care people get in person. We learn what a
+                customer needs to know. Then we build a clear path to call,
+                book, visit, or buy. That work happens well on a screen.
               </p>
             </EditorialBody>
           </article>
@@ -78,10 +78,10 @@ export default function Nationwide() {
             <EditorialBody>
               <h2>How a remote build works</h2>
               <p>
-                You call, text, or email. We talk about your business for free,
-                like always. Then we build. You watch it come together and tell
-                us what feels right and what needs work. In 14 days it is live.
-                If it is not, you do not pay.
+                You call, text, or email. We talk through the business first.
+                Then we build, show you the working site, and revise the parts
+                that need a clearer answer. The written scope confirms timing,
+                responsibilities, and what happens if either side needs more time.
               </p>
             </EditorialBody>
           </article>
@@ -99,9 +99,9 @@ export default function Nationwide() {
             <EditorialBody>
               <h2>Every promise travels</h2>
               <p>
-                The consult is free. A real person answers, 9am to 9pm Eastern.
-                Callbacks in 2 hours. And when it’s done, the code, the domain,
-                the content, and the written handoff are yours.
+                The first read is free. A real person answers 9am–9pm Eastern.
+                The written handoff names what you own, where it lives, and how
+                to change it later.
               </p>
             </EditorialBody>
           </article>
@@ -121,7 +121,7 @@ export default function Nationwide() {
 
       <QuietContact
         heading="Show us the business from wherever you are."
-        lede="Send the current site, a few photos, or simply tell us what customers need to do. We will explain the next move in plain English."
+        lede="Send the current site, a few photos, or simply say what customers need to do. We will explain the next useful move in plain English."
         intent="website"
       />
     </>

@@ -1,4 +1,5 @@
 import type { CaseStudy } from "@/data/site";
+import { ArrowUpRight } from "lucide-react";
 import { ProofMetricValue } from "@/components/dataviz/ProofMetricValue";
 import { caseProofLabel, formatCaseProofDate } from "./caseProof";
 import "./ProofPassport.css";
@@ -41,6 +42,21 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
         <ProofStatus study={study} />
       </header>
 
+      {study.featureProof && (
+        <a
+          className="lf-proof-passport__source"
+          href={study.featureProof.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-lf-event="portfolio_live_source"
+          data-lf-label={study.slug}
+        >
+          <span>Live source</span>
+          <strong>{study.featureProof.sourceLabel}</strong>
+          <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
+        </a>
+      )}
+
       <dl className="lf-proof-passport__dates" aria-label="Proof dates">
         {captureDate && (
           <div>
@@ -55,6 +71,16 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
             <dt>Case updated</dt>
             <dd>
               <time dateTime={study.updated}>{formatCaseProofDate(study.updated)}</time>
+            </dd>
+          </div>
+        )}
+        {study.featureProof && (
+          <div>
+            <dt>Verified live</dt>
+            <dd>
+              <time dateTime={study.featureProof.verifiedAt}>
+                {formatCaseProofDate(study.featureProof.verifiedAt)}
+              </time>
             </dd>
           </div>
         )}

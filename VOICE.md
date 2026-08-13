@@ -173,3 +173,27 @@ Before shipping, ask:
 3. Would we say this out loud to a friend?
 
 If any answer is no, rewrite.
+
+## Proof, numbers, and citations
+
+An owner should be able to ask, "says who?" and get a useful answer in one
+click. A confident number without a source is just a nicer-looking guess.
+
+1. **Show the source beside the claim.** External research, platform rules,
+   benchmarks, comparisons, and client metrics need a readable clickable
+   source. Name the publisher and date when it changes the meaning.
+2. **Say what the number is.** A client measurement names the method and
+   verified date. A study says who it studied and does not become a promise.
+3. **Owner math is owner math.** Calculators begin with the visitor's own
+   inputs, show the formula, and say "estimate" or "at risk"—never "you are
+   losing" or "we will make you."
+4. **No benchmark in costume.** Do not quietly use an industry average as an
+   owner's result. If a benchmark is useful, make it optional, label its
+   geography and year, and link to it.
+5. **No source, no number.** Remove it, turn it into a clearly labelled
+   example, or wait for evidence. This includes exact savings, rankings,
+   response times, conversion lifts, customer counts, and competitor claims.
+
+The visual rule is the same: the final answer and its method must remain as
+real text for a person, a screen reader, search, and answer engines. Motion
+can help someone follow the cause. It cannot be the proof.

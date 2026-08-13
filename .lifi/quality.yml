@@ -1,6 +1,6 @@
 schema_version: 1
 manifest_id: "littlefightnyc-website"
-updated_at: "2026-08-10"
+updated_at: "2026-08-13"
 
 quality_charter:
   source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
@@ -195,11 +195,12 @@ route_classes:
     index_policy: "index"
   - id: "spa-services"
     source: "app/src/pages/Services.tsx and ServiceDetail.tsx"
-    cataloged_count: 5
+    cataloged_count: 7
     index_policy: "index"
   - id: "spa-case-studies"
     source: "app/src/data/site-cases.ts"
-    cataloged_count: 10
+    cataloged_count: 17
+    noindex_count: 4
     index_policy: "index when approved; proof status remains explicit"
   - id: "spa-answers"
     source: "app/src/data/site.ts"
@@ -212,7 +213,7 @@ route_classes:
   - id: "spa-areas"
     source: "app/src/data/seo-pages.json matrix and area data"
     cataloged_count: 91
-    noindex_count: 73
+    noindex_count: 72
     index_policy: "area hubs may index; service-area matrix routes remain noindex pending route-fanout decision"
   - id: "spa-industries"
     source: "app/src/data/industries.json"
@@ -236,7 +237,7 @@ route_classes:
     index_policy: "noindex, nofollow, noarchive, no-store; excluded from public route metadata and sitemaps"
   - id: "lab-static-showroom"
     source: "app/public/examples/lab/"
-    inventory: "4 suites and 11 manifest concepts"
+    inventory: "5 suites and 9 manifest concepts"
     index_policy: "route-specific; preserved client concepts may be noindex"
   - id: "audit-static-and-dynamic"
     source: "app/public/examples/audit/ and netlify/functions/"
@@ -396,7 +397,7 @@ data_boundaries:
 dynamic_entry_points:
   - "app/src/App.tsx React route graph"
   - "app/dakota.html and app/src/dakota/** private authenticated second Vite entry"
-  - "app/src/data/route-meta.json generated 200-route catalog"
+  - "app/src/data/route-meta.json generated 211-route catalog"
   - "app/src/data/nav-index.json generated navigation catalog"
   - "app/src/data/journal-index.json generated journal catalog"
   - "app/public/examples/lab/concepts.json manifest"
@@ -539,7 +540,7 @@ asset_budgets:
   standard_responsive_image_raw_bytes_max: 450000
   lab_showcase_thumbnail_raw_bytes_max: 120000
   social_share_card_raw_bytes_max: 600000
-  route_catalog_count_min: 200
+  route_catalog_count_min: 211
   generated_html_count_min: 220
 budget_baseline:
   source: ".lifi/evidence/baselines/2026-08-01.md"

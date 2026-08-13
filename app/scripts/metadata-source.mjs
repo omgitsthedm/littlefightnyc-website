@@ -159,6 +159,154 @@ function brandedTitle(title, maxLength = 60) {
   return withBrand.length <= maxLength ? withBrand : title;
 }
 
+function plainText(value) {
+  return String(value ?? "")
+    .replace(/^Short answer:\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Search snippets need to be complete thoughts. Never saw a word in half just
+ * to cram it under a character budget; use the last whole-word boundary and
+ * only add an ellipsis when there is room for it.
+ */
+export function clampDescription(value, limit = 160) {
+  const text = plainText(value);
+  if (text.length <= limit) return text;
+  const available = text.slice(0, limit + 1);
+  const sentenceEnds = [...available.matchAll(/[.!?](?=\s|$)/g)];
+  const lastSentenceEnd = sentenceEnds.at(-1)?.index;
+  if (typeof lastSentenceEnd === "number" && lastSentenceEnd >= 60) {
+    return available.slice(0, lastSentenceEnd + 1).trim();
+  }
+  const boundary = text.lastIndexOf(" ", limit - 1);
+  const safeEnd = boundary > 0 ? boundary : limit;
+  const clipped = text.slice(0, safeEnd).replace(/[,:;\-–—]+$/, "").trim();
+  return clipped.length <= limit - 1 ? `${clipped}…` : clipped;
+}
+
+function sourceShare(page, siteName) {
+  return {
+    ...(page.share ?? {}),
+    // Route copy is the source for a dynamic page's visible headline. Its
+    // social alt must name that same page, not a former SEO-only headline.
+    alt: `${siteName}: ${page.h1}`,
+  };
+}
+
+function sourcePage(page, patch, siteName) {
+  const next = { ...page, ...patch };
+  return { ...next, share: sourceShare(next, siteName) };
+}
+
+/**
+ * The app's typed data is the public copy source for dynamic route families.
+ * This derives the route catalog from it for both client navigation and the
+ * prerender instead of letting seo-pages.json keep a second, stale version of
+ * the title, lead, or FAQ. Curated title fields remain when they still name the
+ * current page truthfully; visible H1, description, short answer, and FAQ do
+ * not have a competing source.
+ */
+export function enrichAuthoredRoutePages(seoPages, siteContent, siteName = "Little Fight NYC") {
+  const answers = new Map((siteContent.answerGuides ?? []).map((guide) => [guide.slug, guide]));
+  const areas = new Map((siteContent.areaPages ?? []).map((area) => [area.slug, area]));
+  const cases = new Map((siteContent.caseStudies ?? []).map((study) => [study.slug, study]));
+  const services = new Map((siteContent.services ?? []).map((service) => [service.slug, service]));
+  const studio = new Map((siteContent.studioProjects ?? []).map((project) => [project.slug, project]));
+
+  const pages = seoPages.map((page) => {
+    const answerMatch = page.path.match(/^\/answers\/([^/]+)\/$/);
+    if (answerMatch && answers.has(answerMatch[1])) {
+      const guide = answers.get(answerMatch[1]);
+      return sourcePage(page, {
+        h1: guide.question,
+        description: clampDescription(guide.short),
+        shortAnswer: guide.short,
+        faq: guide.faq,
+        published: guide.published,
+        updated: guide.updated,
+      }, siteName);
+    }
+
+    const areaMatch = page.path.match(/^\/areas\/([^/]+)\/$/);
+    if (areaMatch && areas.has(areaMatch[1])) {
+      const area = areas.get(areaMatch[1]);
+      return sourcePage(page, {
+        h1: area.headline,
+        description: clampDescription(area.shortAnswer),
+        shortAnswer: area.shortAnswer,
+        faq: area.faq,
+      }, siteName);
+    }
+
+    const caseMatch = page.path.match(/^\/case-studies\/([^/]+)\/$/);
+    if (caseMatch && cases.has(caseMatch[1])) {
+      const study = cases.get(caseMatch[1]);
+      return sourcePage(page, {
+        h1: study.showcase.label,
+        description: clampDescription(study.title),
+        shortAnswer: study.title,
+        published: study.published ?? page.published,
+        updated: study.updated ?? page.updated,
+        // Case studies have no public FAQ in the rendered app. Do not carry a
+        // retired seo-pages.json FAQ into JSON-LD or the no-JS response.
+        faq: undefined,
+      }, siteName);
+    }
+
+    const serviceMatch = page.path.match(/^\/services\/([^/]+)\/$/);
+    if (serviceMatch && services.has(serviceMatch[1])) {
+      const service = services.get(serviceMatch[1]);
+      return sourcePage(page, {
+        h1: service.headline,
+        description: clampDescription(service.shortAnswer),
+        shortAnswer: service.shortAnswer,
+        faq: service.faq,
+      }, siteName);
+    }
+
+    const studioMatch = page.path.match(/^\/studio\/([^/]+)\/$/);
+    if (studioMatch && studio.has(studioMatch[1])) {
+      const project = studio.get(studioMatch[1]);
+      return sourcePage(page, {
+        h1: project.name,
+        description: clampDescription(project.description),
+        shortAnswer: project.oneline,
+        faq: undefined,
+      }, siteName);
+    }
+
+    return page;
+  });
+
+  // Fleet-inventory entries are real Little Fight records, not public client
+  // launches. Publish their internal case routes inside this site, but keep
+  // them out of the index until public-safe evidence exists.
+  const knownPaths = new Set(pages.map((page) => page.path));
+  for (const study of cases.values()) {
+    if (!study.inventoryOnly) continue;
+    const routePath = `/case-studies/${study.slug}/`;
+    if (knownPaths.has(routePath)) continue;
+    const record = {
+      path: routePath,
+      title: `${study.client} Project Record | ${siteName}`,
+      description: clampDescription(study.title),
+      shortAnswer: study.title,
+      h1: study.showcase.label,
+      type: "Article",
+      image: study.image || "/assets/og-tugboat.jpg",
+      noindex: true,
+      published: study.published,
+      updated: study.updated,
+    };
+    pages.push(sourcePage(record, {}, siteName));
+    knownPaths.add(routePath);
+  }
+
+  return pages;
+}
+
 export function journalTitle(post) {
   return JOURNAL_SEO_TITLES[post.slug] ?? brandedTitle(post.title);
 }
@@ -290,24 +438,24 @@ export function serviceAreaPages(seoData) {
   );
 }
 
-export function glossaryPages(seoData) {
-  const terms = seoData.glossaryTerms ?? [];
+export function glossaryPages(seoData, authoredTerms = seoData.glossaryTerms ?? []) {
+  const terms = authoredTerms;
   return [
     {
       path: "/glossary/",
       title: "Small Business Tech Glossary | Little Fight NYC",
       description:
-        "Plain-English definitions for small business websites, IT support, local search, software costs, and business systems for NYC owners.",
+        "A word should help you make one next move, not sell you another subscription. Start with the term blocking the day.",
       h1: "Useful words, no vendor fog.",
       shortAnswer:
-        "Short answer: these are the terms New York business owners run into when websites, tools, Google, and workflow start costing real money.",
+        "Short answer: a word should help you make one next move, not sell you another subscription. Start with the term blocking the day.",
       type: "CollectionPage",
-      image: "/assets/typing.webp",
+      image: "/assets/sign-more-shops.webp",
     },
     ...terms.map((term) => ({
       path: `/glossary/${term.slug}/`,
       title: `${term.term} Definition | Little Fight NYC`,
-      description: term.definition,
+      description: clampDescription(term.definition),
       h1: term.term,
       shortAnswer: `Short answer: ${term.plain}`,
       type: "DefinedTerm",
@@ -370,10 +518,10 @@ export function localePages() {
       locale: "zh",
       title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
       description:
-        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码和数据归您；电话、短信或邮件都由真人回复。服务纽约五大区。",
+        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。网站时间写进方案，代码和数据归您；真人回复。",
       h1: "网站按您的生意来做。技术出问题时，有真人帮您。",
       shortAnswer:
-        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。14天上线，代码归您。",
+        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。网站时间写进方案，代码和数据归您。",
       type: "WebPage",
       image: "/assets/og-tugboat.jpg",
     },

@@ -77,6 +77,20 @@ if (helperFiles.length !== 2) {
 
 for (const file of htmlFiles) {
   const source = fs.readFileSync(file, "utf8");
+  const relative = path.relative(auditRoot, file);
+  if (!source.includes('name="littlefight:content-status"')) {
+    failures.push(`${relative} is missing its public Audit experience-status disclosure`);
+  }
+  if (
+    /^(?:ivy-infusions|marcus-medical|premier-plastic-surgery|skinsmart-dermatology|the-cosmetic-clinic)\/index\.html$/.test(
+      relative.split(path.sep).join("/"),
+    ) &&
+    (!source.includes('class="lf-audit-reconstruction"') ||
+      !source.includes("developer.chrome.com/docs/lighthouse/overview") ||
+      !source.includes("www.w3.org/WAI/WCAG22/quickref"))
+  ) {
+    failures.push(`${relative} is missing its visible reconstructed-report evidence notice`);
+  }
   const references = [...source.matchAll(/(?:href|src|poster)=["']([^"']+)["']/gi)].map(
     (match) => match[1],
   );

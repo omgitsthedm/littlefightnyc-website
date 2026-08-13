@@ -181,6 +181,15 @@ for (const route of expectedConceptRoutes) {
 for (const file of htmlFiles) {
   const source = fs.readFileSync(file, "utf8");
   const relative = path.relative(labRoot, file);
+  if (!source.includes('name="littlefight:content-status"')) {
+    failures.push(`${relative} is missing its public showroom-status disclosure`);
+  }
+  if (
+    relative.startsWith(`concepts${path.sep}`) &&
+    !source.includes('class="lab-build-disclosure"')
+  ) {
+    failures.push(`${relative} is missing its visible illustrative-build disclosure`);
+  }
   if (
     /https?:\/\/(?:www\.)?(?:github|gitlab|bitbucket)\./i.test(source) ||
     /\bhref=["'][^"']+\.(?:md|schema\.json)(?:[?#][^"']*)?["']/i.test(source)

@@ -2,16 +2,11 @@ import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { HelpCircle } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
-import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
-import AnswerStepper from "@/components/dataviz/AnswerStepper";
-import AnswerVerdict from "@/components/dataviz/AnswerVerdict";
 import ShareButton from "@/components/ShareButton";
 import { answerGuides, answerServiceBridge } from "@/data/site";
 import {
   ANSWER_CLUSTERS,
-  ANSWER_VERDICTS,
   answerArt,
-  isTriageGuide,
 } from "@/data/answersArt";
 import "@/styles/editorial/answers.css";
 import "@/styles/editorial/longform-routes.css";
@@ -78,8 +73,6 @@ export default function AnswerGuide() {
   if (!guide) return <Navigate to="/examples/#answers" replace />;
 
   const related = relatedGuides(guide.slug);
-  const triage = isTriageGuide(guide.sections);
-  const verdict = ANSWER_VERDICTS[guide.slug];
 
   return (
     <div className="lf-longform-route lf-longform-route--answer">
@@ -120,28 +113,21 @@ export default function AnswerGuide() {
           <div
             className="lf-answer-page__sections"
             data-count={guide.sections.length}
-            data-layout={triage ? "triage" : "guide"}
+            data-layout="guide"
           >
-            {triage ? (
-              <AnswerStepper sections={guide.sections} />
-            ) : (
-              guide.sections.map((section) => (
-                <article key={section.heading} className="lf-answer-page__section">
-                  <h2>{section.heading}</h2>
-                  <p>{section.body}</p>
-                </article>
-              ))
-            )}
-          </div>
-
-          {verdict && (
-            <div className="lf-answer-page__feature">
-              <AnswerVerdict verdict={verdict} />
-            </div>
-          )}
-
-          <div className="lf-answer-page__feature lf-answer-page__feature--diagram">
-            <AnswerDiagram slug={guide.slug} />
+            {guide.sections.map((section) => (
+              <article key={section.heading} className="lf-answer-page__section">
+                <h2>{section.heading}</h2>
+                <p>{section.body}</p>
+                {section.source && (
+                  <p className="lf-answer-page__section-source">
+                    <a href={section.source.url} target="_blank" rel="noreferrer">
+                      Check the official source: {section.source.label} ↗
+                    </a>
+                  </p>
+                )}
+              </article>
+            ))}
           </div>
 
           {guide.faq.length > 0 && (

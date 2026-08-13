@@ -195,6 +195,14 @@
     hint.setAttribute('aria-live', 'polite');
     hint.textContent = current.item.hint;
 
+    var status = document.querySelector('.lab-build-disclosure');
+    if (!status) {
+      status = document.createElement('p');
+      status.className = 'lab-concept-status';
+      status.setAttribute('role', 'note');
+      status.textContent = 'Lab showroom build. Any people, places, numbers, or business states shown here are illustrative unless the page says otherwise. This is not a client result or a promise.';
+    }
+
     replay.addEventListener('click', function () {
       var replayEvent = new CustomEvent('lab:replay', { cancelable: true });
       var shouldFallback = document.dispatchEvent(replayEvent);
@@ -214,7 +222,7 @@
       }, 1800);
     });
 
-    document.body.append(shell, hint);
+    document.body.append(shell, status, hint);
 
     window.setTimeout(function () {
       hint.classList.add('is-visible');

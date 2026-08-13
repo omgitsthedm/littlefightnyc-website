@@ -13,6 +13,9 @@ const FEATURED_SLUGS = [
   "cc-films",
   "grand-funding-llc",
   "logan-loans",
+  "chromatic-painting-design",
+  "clearhelp",
+  "after-hours-agenda",
 ] as const;
 
 export default function RecentClients() {
@@ -28,8 +31,8 @@ export default function RecentClients() {
             <p className="lf-mono lf-clients__label">Shipped work</p>
             <h2 className="lf-clients__heading">See what changed.</h2>
             <p className="lf-clients__lede">
-              Four live websites. Each one opens on the client&apos;s own
-              domain, with real desktop, iPad, and phone proof first.
+              Seven live websites. Each one names its client-owned domain,
+              shows when it was checked, and gives you a real customer path to inspect.
             </p>
           </div>
           <Link to="/examples/" className="lf-clients__all">

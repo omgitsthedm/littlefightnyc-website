@@ -34,7 +34,7 @@
     {
       "path": "/services/",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
-      "description": "Website design, urgent IT support, free tech consulting, and custom software for NYC small businesses that need a clear first move.",
+      "description": "Websites, practical New York tech help, free second opinions, and focused software for small businesses that need one clear next move.",
       "h1": "You explain the day. We find the useful fix.",
       "shortAnswer": "Short answer: Little Fight NYC starts with the website, supports the tech behind it, gives free consulting, and builds focused software the business owns when generic tools no longer fit.",
       "type": "CollectionPage",
@@ -50,7 +50,7 @@
     {
       "path": "/services/custom-local-websites/",
       "title": "Custom Local Websites NYC | Little Fight NYC",
-      "description": "Custom-coded websites built for your NYC business and your block. No templates, no themes, no Squarespace skins. Ships in 14 days.",
+      "description": "Custom websites for NYC businesses: clear services, useful local facts, and an obvious next step to call, book, visit, order, or ask.",
       "h1": "Make the next customer’s step obvious.",
       "shortAnswer": "Short answer: Little Fight builds custom local websites for NYC small businesses. Each site is coded for the business, written for the neighborhood, and built around the right customer action: booking, visiting, ordering, calling, or inquiring.",
       "type": "Service",
@@ -74,16 +74,16 @@
         },
         {
           "question": "What if you miss the 14-day window?",
-          "answer": "If we miss the date on our side, you do not pay. We plan the launch around you."
+          "answer": "A qualifying written scope states whether the 14-day promise applies, when its clock starts, what each side must provide, and the remedy if Little Fight’s qualifying work is late."
         }
       ]
     },
     {
       "path": "/nationwide/",
       "title": "Custom Small Business Websites, All 50 States | Little Fight NYC",
-      "description": "A New York web shop that builds for the whole country. Small business websites live in 14 days \u2014 or you don’t pay. You own the code and the domain.",
+      "description": "Remote custom website work for small businesses across the United States. Clear customer paths, documented ownership, and no implied nationwide onsite support.",
       "h1": "Built in New York. Works anywhere.",
-      "shortAnswer": "Short answer: you don’t have to be in New York to get the New York treatment. We build custom websites for small businesses in all 50 states, live in 14 days, and you own every line of it. The consult is free and a real person answers.",
+      "shortAnswer": "Short answer: Little Fight builds custom websites remotely for small businesses across the United States. The first read is free, the written scope explains timing and ownership, and New York on-site support stays a New York service.",
       "type": "WebPage",
       "image": "/assets/hero-nationwide-wtc.webp",
       "share": {
@@ -94,9 +94,9 @@
         "alt": "Little Fight NYC nationwide website card over a New York street: Built in New York. Works anywhere."
       },
       "paragraphs": [
-        "Every main street in America has the same fight. The chains have tech teams. The corner shop has a template site from 2019 and a contact form nobody answers. We fix that for a living in New York \u2014 and a website does not care about zip codes.",
-        "How a remote build works: you call, text, or email. We talk about your business \u2014 free, like always. Then we build. You watch it come together and tell us what is right and what is wrong. In 14 days it is live. If it is not, you do not pay.",
-        "Every promise travels. The consult is free. A real person answers, 9am to 9pm Eastern. Callbacks in 2 hours. And when it is done, the code, the domain, the content \u2014 all of it is yours."
+        "Good businesses everywhere get stuck with a website that no longer matches the care people get in person. We learn what a customer needs to know, then build a clear path to call, book, visit, or buy.",
+        "How a remote build works: you call, text, or email. We learn the business, build a working site, and review what needs a clearer answer. The written scope confirms timing and responsibilities before work starts.",
+        "The first read is free. A real person answers 9am to 9pm Eastern. The written handoff names what you own, where it lives, and how to change it later."
       ],
       "faq": [
         {
@@ -105,7 +105,7 @@
         },
         {
           "question": "I’m on the West Coast. How do time zones work?",
-          "answer": "We answer 9am to 9pm Eastern \u2014 that’s 6am to 6pm Pacific. Text or email whenever you want, and we call back inside 2 hours during those windows. The 14 days doesn’t change."
+          "answer": "We answer 9am to 9pm Eastern, which is 6am to 6pm Pacific. Text or email whenever you want. The written scope confirms any response expectation and the project timing."
         },
         {
           "question": "Who takes care of the site after it launches?",
@@ -113,16 +113,16 @@
         },
         {
           "question": "Is a remote build different from a New York build?",
-          "answer": "Same build. Same 14 days. Same deal: if we’re late, you don’t pay. The only difference is we can’t walk to your shop \u2014 so we’ll ask for a few more photos."
+          "answer": "The website process is remote in either case. A New York project can include on-site work when the scope needs it; a nationwide project does not imply a local visit. The written scope explains timing and what we need from you."
         }
       ]
     },
     {
       "path": "/services/it-support/",
       "title": "Small Business IT Support NYC | Little Fight NYC",
-      "description": "Real local IT help for NYC small businesses. Email, domains, Wi-Fi, POS, booking, payments, devices, and locked accounts, fixed fast.",
+      "description": "Local NYC help for email, domains, Wi-Fi, POS, booking, payments, devices, and locked accounts. Start with the break, not a sales pitch.",
       "h1": "Fast help when the basics break.",
-      "shortAnswer": "Short answer: Little Fight gives NYC small businesses real local IT help. When email, Wi-Fi, POS, booking, payments, or devices stop working, we fix them.",
+      "shortAnswer": "Short answer: Little Fight diagnoses and repairs the technology NYC small businesses rely on. Call first when customers, payments, booking, email, or access are blocked.",
       "type": "Service",
       "serviceName": "Small business IT support",
       "image": "/assets/typing.webp",
@@ -147,9 +147,9 @@
     {
       "path": "/services/tech-consulting/",
       "title": "NYC Tech Consulting for Small Business | Little Fight NYC",
-      "description": "A free, plain-English look at your tools, bills, website, Google presence, and workflow. Learn what earns its place and what wastes money.",
+      "description": "A free, plain-English first read of your public website, recurring tools, Google presence, and customer handoffs. Learn the smallest useful next move.",
       "h1": "Know what to keep, cut, fix, or build.",
-      "shortAnswer": "Short answer: Little Fight gives NYC small businesses free, plain-English tech consulting. We check your tools, website, Google presence, and workflow. You learn where money leaks and what to fix first.",
+      "shortAnswer": "Short answer: Little Fight gives small businesses a free, plain-English first read of the public website, tools, Google presence, and customer handoffs. You get the smallest useful next move, including ‘leave it alone.’",
       "type": "Service",
       "serviceName": "Tech consulting for NYC small businesses",
       "image": "/assets/local-business-base.webp",
@@ -163,7 +163,7 @@
       "faq": [
         {
           "question": "How long does a consult take?",
-          "answer": "A first call takes 20 to 30 minutes. A full audit takes one to two weeks of background work. It ends with a written report and a talk to walk through it."
+          "answer": "The first conversation is short enough to find the real question. If a deeper review is useful, its scope, inputs, timing, and deliverable are written down before it starts."
         },
         {
           "question": "Does an audit mean I’m getting sold something at the end?",
@@ -174,7 +174,7 @@
     {
       "path": "/services/business-systems/",
       "title": "Custom Business Software NYC | Little Fight NYC",
-      "description": "Focused custom software for NYC small businesses. Replace bloated subscriptions with workflow tools you own, including the code, data, hosting, and docs.",
+      "description": "Focused software for NYC small businesses when a simpler tool will not fit. Start with the workflow; if a custom build earns its place, the business owns the code, data, and notes.",
       "h1": "Stop renting software that fights the way you work.",
       "shortAnswer": "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
       "type": "Service",
@@ -201,9 +201,9 @@
     {
       "path": "/services/new-business-launch/",
       "title": "New Business Website & Tech Launch NYC | Little Fight NYC",
-      "description": "Launch a new NYC business with the website, Google presence, branded email, booking or inquiry path, follow-up, measurement, and ownership connected.",
+      "description": "Launch a new NYC business with the website, Google presence, business email, customer action, follow-up, and ownership mapped as one clear path.",
       "h1": "Open with the front door already working.",
-      "shortAnswer": "Short answer: Little Fight connects the domain, website, Google presence, business email, customer action, follow-up, and consent-safe measurement as one documented launch.",
+      "shortAnswer": "Short answer: Little Fight maps the domain, website, Google presence, business email, customer action, follow-up, and ownership as one documented launch.",
       "type": "Service",
       "serviceName": "New business website and technology launch",
       "image": "/images/brand-scenes/storefronts-dawn.webp",
@@ -221,7 +221,7 @@
     {
       "path": "/services/ongoing-care/",
       "title": "Small Business Website Care NYC | Little Fight NYC",
-      "description": "Keep website facts, forms, booking paths, hosting, dependencies, and customer handoffs current without giving up the domain, code, content, or data.",
+      "description": "Keep website facts, forms, booking paths, hosting basics, and customer handoffs current. The business keeps the domain, code, content, and data.",
       "h1": "Keep the front door honest after launch.",
       "shortAnswer": "Short answer: Little Fight keeps the customer path, public facts, quiet website machinery, and change record current after launch while the business keeps every key.",
       "type": "Service",
@@ -285,8 +285,8 @@
     },
     {
       "path": "/examples/",
-      "title": "NYC Work & Small Business Answers | Little Fight NYC",
-      "description": "Real examples of our NYC work, plus plain answers on websites, IT support, local SEO, and software costs.",
+      "title": "Work Examples & Owner Answers | Little Fight NYC",
+      "description": "Explore verified live websites, public-safe project walkthroughs, interactive Lab work, and plain answers for small-business owners.",
       "h1": "See what works. Try what is next.",
       "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
       "type": "CollectionPage",
@@ -302,7 +302,7 @@
     {
       "path": "/library/",
       "title": "The Library: Owner Answers & Field Notes | Little Fight NYC",
-      "description": "Everything Little Fight NYC knows, free: straight answers to real owner questions, plus how-tos, essays, and software comparisons for NYC small businesses.",
+      "description": "Straight answers to real owner questions, plus practical how-tos, essays, and software comparisons for small businesses.",
       "h1": "Start with what happened. Find the next move.",
       "shortAnswer": "Short answer: the Library is every answer and field note Little Fight NYC has published \u2014 owner questions answered plainly, plus how-tos, essays, and software comparisons. Free, no selling.",
       "type": "CollectionPage",
@@ -1424,9 +1424,9 @@
     {
       "path": "/thanks/",
       "title": "Thanks for Reaching Out | Little Fight NYC",
-      "description": "You reached out to Little Fight NYC \u2014 here is exactly what happens next. A real person reads it today; callbacks within two hours, 9am-9pm Eastern.",
+      "description": "Little Fight received your message. See what happens next, what not to send publicly, and how missed-call callbacks work 9am–9pm Eastern.",
       "h1": "We’ve got it from here.",
-      "shortAnswer": "Short answer: you did the hard part. A real person at Little Fight NYC reads what you sent today and calls back within two hours, 9am to 9pm Eastern. Nothing moves until the next step makes sense to you.",
+      "shortAnswer": "Short answer: Little Fight received the message. A real person reviews it, and missed calls receive a callback within two hours during the 9am–9pm Eastern window.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg",
       "noindex": true

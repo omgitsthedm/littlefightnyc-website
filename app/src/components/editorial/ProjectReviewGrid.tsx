@@ -21,7 +21,15 @@ export default function ProjectReviewGrid({
 }) {
   return (
     <div className="lf-project-review-grid" data-variant={variant}>
-      {studies.map((study) => (
+      {studies.map((study) => {
+        const liveClientSite = study.showcase.linkPolicy === "custom-domain"
+          && Boolean(study.featureProof)
+          && Boolean(study.url);
+        // VenueCircuit is intentionally frozen while its separate recovery is underway.
+        const preservedVenueLink = study.slug === "venuecircuit" && Boolean(study.url);
+        const liveUrl = liveClientSite || preservedVenueLink ? study.url : "";
+
+        return (
         <article className="lf-project-review" key={study.slug}>
           <div className="lf-project-review__media">
             {study.video ? (
@@ -29,7 +37,7 @@ export default function ProjectReviewGrid({
                 media={study.video}
                 alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
               />
-            ) : (
+            ) : study.image && !study.inventoryOnly ? (
               <img
                 {...skelImg}
                 src={study.image}
@@ -54,6 +62,16 @@ export default function ProjectReviewGrid({
                     : undefined
                 }
               />
+            ) : (
+              <div
+                className="lf-project-review__inventory-media"
+                role="img"
+                aria-label={`${study.client}: public-safe internal project walkthrough`}
+              >
+                <span>Internal project</span>
+                <strong>{study.client}</strong>
+                <small>Public-safe walkthrough</small>
+              </div>
             )}
           </div>
 
@@ -68,7 +86,24 @@ export default function ProjectReviewGrid({
             <p className="lf-project-review__title">
               {variant === "all" ? study.showcase.label : study.title}
             </p>
-            <p className="lf-project-review__result">{study.result}</p>
+            <p className="lf-project-review__result">
+              {study.featureProof?.ownerOutcome ?? study.result}
+            </p>
+
+            {liveClientSite && study.featureProof && (
+              <p className="lf-project-review__source">
+                Source: <a href={study.featureProof.sourceUrl} target="_blank" rel="noopener noreferrer">{study.featureProof.sourceLabel}</a>
+                <span aria-hidden="true"> · </span>
+                <time dateTime={study.featureProof.verifiedAt}>
+                  Verified {new Intl.DateTimeFormat("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    timeZone: "UTC",
+                  }).format(new Date(`${study.featureProof.verifiedAt}T00:00:00Z`))}
+                </time>
+              </p>
+            )}
 
             {study.metrics && study.metrics.length > 0 && (
               <dl className="lf-project-review__facts">
@@ -87,9 +122,17 @@ export default function ProjectReviewGrid({
               Read the case
               <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
             </Link>
-            {study.showcase.availability === "public" && study.url ? (
-              <a href={study.url} target="_blank" rel="noopener noreferrer">
-                Open live
+            {liveUrl ? (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-lf-event={liveClientSite ? "portfolio_live_source" : undefined}
+                data-lf-label={liveClientSite ? study.slug : undefined}
+              >
+                {liveClientSite && study.featureProof
+                  ? `Visit ${study.featureProof.sourceLabel}`
+                  : "Open live"}
                 <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
               </a>
             ) : study.showcase.proof.status === "case-only" ? (
@@ -105,7 +148,8 @@ export default function ProjectReviewGrid({
             )}
           </footer>
         </article>
-      ))}
+        );
+      })}
     </div>
   );
 }

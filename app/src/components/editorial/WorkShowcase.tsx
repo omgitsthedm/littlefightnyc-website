@@ -3,23 +3,47 @@ import ProjectMomentum from "./ProjectMomentum";
 import ProjectReviewGrid from "./ProjectReviewGrid";
 import "./WorkShowcase.css";
 
-const SHOWCASE_ORDER = [
+export const FEATURED_LIVE_CASE_SLUGS = [
   "hair-by-rachel-charles",
   "cc-films",
   "grand-funding-llc",
   "logan-loans",
+  "chromatic-painting-design",
+  "clearhelp",
+  "after-hours-agenda",
+] as const;
+
+const INTERNAL_CASE_SLUGS = [
   "legacy-music-group",
   "army-navy-bags",
   "brothers-pizzeria",
-  "chromatic-painting-design",
-  "clearhelp",
-  "deckspace",
-  "after-hours-agenda",
+  // Frozen in place as a separate recovery item, not current client proof.
   "venuecircuit",
-  "public-house-creative",
+  "the-break-room",
+  "surviving-game",
+  "pole-position-it",
+  "all-pets-animal-hospital",
 ] as const;
 
-const orderedStudies = SHOWCASE_ORDER
+// PHC is not part of the fleet reconciliation. Its established approved case
+// presentation remains where it already lived; this prevents fleet work from
+// silently removing or rewriting the protected surface.
+const PROTECTED_EXISTING_CASE_SLUGS = ["public-house-creative"] as const;
+
+export const FLEET_PROJECT_CASE_SLUGS = [
+  ...FEATURED_LIVE_CASE_SLUGS,
+  ...INTERNAL_CASE_SLUGS,
+] as const;
+
+const featuredStudies = FEATURED_LIVE_CASE_SLUGS
+  .map((slug) => caseStudies.find((study) => study.slug === slug))
+  .filter((study): study is NonNullable<typeof study> => Boolean(study));
+
+const internalStudies = INTERNAL_CASE_SLUGS
+  .map((slug) => caseStudies.find((study) => study.slug === slug))
+  .filter((study): study is NonNullable<typeof study> => Boolean(study));
+
+const protectedExistingStudies = PROTECTED_EXISTING_CASE_SLUGS
   .map((slug) => caseStudies.find((study) => study.slug === slug))
   .filter((study): study is NonNullable<typeof study> => Boolean(study));
 
@@ -29,8 +53,8 @@ export default function WorkShowcase({
   mode?: "featured" | "archive";
 }) {
   const studies = mode === "featured"
-    ? orderedStudies.slice(0, 4)
-    : orderedStudies.slice(4);
+    ? featuredStudies
+    : [...internalStudies, ...protectedExistingStudies];
 
   return (
     <section
@@ -41,13 +65,13 @@ export default function WorkShowcase({
         <header className="lf-work-showcase__head">
           <h2 id={`lf-work-showcase-${mode}-title`}>
             {mode === "featured"
-              ? "Four current sites. Four real domains."
-              : "More work. Same clear read."}
+              ? "Seven live sites. Seven real customer paths."
+              : "More work. No pretend launches."}
           </h2>
           <p>
             {mode === "featured"
-              ? "Each site below opens on the client's own custom domain. The case study shows the real desktop, iPad, and phone build before you leave."
-              : "Private concepts and earlier shipped work stay in the case-study library. An external link appears only when the work is live on its own domain."}
+              ? "Each card names the client domain, shows when we last checked it, and explains one part of the customer path worth trying."
+              : "These projects stay useful inside Little Fight. We show the work and how it works, without sending anyone to a temporary host or private system."}
           </p>
         </header>
         <ProjectReviewGrid studies={studies} />

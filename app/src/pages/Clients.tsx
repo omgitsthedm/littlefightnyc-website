@@ -40,7 +40,7 @@ export default function Clients() {
         eyebrow="Current client desk"
         icon={Headphones}
         title={<>One clean door back in.</>}
-        dek="No portal to learn and no ticket maze. Pick the route that matches the need; all three reach the staffed Little Fight inbox with the right context."
+        dek="Pick the route that matches the need. Each one reaches Little Fight with enough context to start in the right place."
         image={{
           src: "/images/brand-scenes/restaurant-counter.webp",
           alt: "A restaurant counter ready for the business day",
@@ -56,8 +56,8 @@ export default function Clients() {
           <div>
             <p>
               These addresses are routing labels, not separate departments.
-              They reach the same Little Fight Workspace account and make the
-              reason for the message clear before a reply.
+              They reach the same Little Fight inbox and make the reason for
+              the message clear before a reply.
             </p>
           </div>
         </header>
@@ -96,8 +96,8 @@ export default function Clients() {
         <div className="lf-client-followup">
           <article>
             <p>Review the setup together</p>
-            <h2>Book a 30-minute check-in.</h2>
-            <p>The calendar shows the real weekday availability in Eastern Time.</p>
+            <h2>Book a check-in.</h2>
+            <p>The booking page shows the current availability and meeting details.</p>
             <a href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" data-lf-event="booking_started" data-lf-label="client_desk">
               Open the booking page
               <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />

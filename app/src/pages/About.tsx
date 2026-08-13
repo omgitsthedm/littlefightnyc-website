@@ -3,14 +3,13 @@ import PageHero from "@/components/editorial/PageHero";
 import OwnerStories from "@/components/editorial/OwnerStories";
 import QuietContact from "@/components/editorial/QuietContact";
 import { agencyProcess } from "@/data/site";
-import { CountUp } from "@/components/dataviz/CountUp";
 import "@/styles/editorial/about.css";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 const STANDARDS = [
   { label: "Consulting", value: "Free, always" },
-  { label: "Typical website ship", value: "14 days" },
-  { label: "Urgent on-site help", value: "Within 24 hours" },
+  { label: "Website timing", value: "A written 14-day promise for qualifying scopes" },
+  { label: "Urgent NYC on-site help", value: "Within 24 hours when the fix needs hands" },
   { label: "Missed-call callback", value: "Within 2 hours, 9am-9pm ET" },
 ] as const;
 
@@ -56,8 +55,9 @@ export default function About() {
               something new only when it earns its place.
             </p>
             <p>
-              The goal is not more technology. It is fewer missed calls, fewer
-              dead ends, clearer ownership, and a setup your people can trust.
+              The goal is not more technology. It is a clearer path for the
+              customer, fewer handoffs to guess through, and a setup your
+              people can trust.
             </p>
           </div>
 
@@ -66,7 +66,7 @@ export default function About() {
               <div key={standard.label}>
                 <dt>{standard.label}</dt>
                 <dd>
-                  <CountUp text={standard.value} />
+                  {standard.value}
                 </dd>
               </div>
             ))}
@@ -86,10 +86,10 @@ export default function About() {
             </h2>
             <div>
               <p>
-                Small means you speak to fewer people and one person stays
-                responsible. The person who learns how your business works
-                stays close to the decisions, the build, and the final files
-                and instructions.
+                Small means you speak to fewer people and the same accountable
+                lead stays close. The team that learns how your business works
+                stays with the decisions, the build, and the final files and
+                instructions.
               </p>
               <p>
                 That same firm can ship a focused website, stabilize the tools
@@ -105,10 +105,9 @@ export default function About() {
               <strong>Little Fight NYC</strong>
             </div>
             <p>
-              Little Fight NYC has worked this way since 2021. One senior team
-              stays accountable for the scope, the decisions, and the final
-              files and instructions. You should never have to explain the business
-              from the beginning every time the work moves.
+              Little Fight NYC stays accountable for the scope, the decisions,
+              and the final files and instructions. You should not have to
+              explain the business from the beginning every time the work moves.
             </p>
             <div className="lf-about-founder__meta">
               <span>New York City</span>

@@ -19,27 +19,27 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "business-system",
     term: "Business system",
     definition:
-      "The connected set of pages, tools, reminders, and records that moves work from first hello to finished job.",
-    plain: "The way the work actually moves, not just the software you bought.",
+      "The connected steps, tools, and records that move a customer from first question to finished work.",
+    plain: "The way the work moves, not just the software you bought.",
     whenItMatters:
-      "It matters when leads live in too many places. Or when staff copy the same details twice. Or when only the owner knows what happens next.",
+      "It matters when messages live in too many places, people copy the same details twice, or only the owner knows what happens next.",
     howItWorks:
-      "Think of every job as a trip. It starts with a customer’s first hello and ends when you get paid. A business system is the map for that trip. Where does a new message land? Who picks it up? What happens next? Where is the record kept? When the steps connect, a lead cannot fall through a crack. Each step hands the work to the next one. Most of the time you already own the tools. They just are not talking to each other yet.",
+      "Start with one customer path: a message comes in, someone sees it, the work is scheduled or quoted, payment is recorded, and the next person can see the status. A business system makes those handoffs visible. It can use tools you already have; the useful part is agreeing where each step belongs.",
     example:
-      "A neighborhood plumber gets calls, texts, and website forms all day. Each one lands somewhere different. He only remembers to call people back when he is sitting in the truck. A business system puts all three into one list. It sends the customer a 'got your message, we’ll call within the hour' note. And it reminds him if a job has no quote by end of day.",
+      "A neighborhood plumber gets calls, texts, and website forms. A simple system can put each new request in one shared list, show who owns the callback, and flag a quote that still needs a decision. The owner chooses the timing and message before any rule goes live.",
     costOfIgnoring:
-      "Without a system, the leaks are invisible until you add them up. The callback that never happened. The quote stuck in a text thread. The repeat customer who booked the other guy because he answered first. None of these feel like a crisis alone. Together they can quietly cost you a job or two a week. And the whole business stays trapped in the owner’s head, so you can never take a real day off.",
+      "Without a shared path, a callback can sit in a text thread, a quote can wait on an answer, and the work can live in one person’s memory. Count the requests that need a second ask in a normal week. That is a better starting point than a mystery benchmark.",
     related: ["workflow-automation", "crm", "software-stack"],
     faq: [
       {
         question: "Isn’t a business system just more software I have to learn?",
         answer:
-          "No. Usually it’s connecting the tools you already pay for so they work together, plus cleaning up a few messy handoffs. The goal is fewer things to check, not more apps to log into.",
+          "No. It can be a shared checklist, a better intake form, or a clearer handoff between tools you already use. The goal is fewer places to check, not more apps to log into.",
       },
       {
         question: "I’m a two-person shop. Am I too small for this?",
         answer:
-          "Small shops benefit the most, because there’s no big team to catch what falls through the cracks. When it’s just you, a simple system is the difference between remembering everything and losing jobs you never knew you had.",
+          "No. A two-person shop may only need one clear list and a few agreed steps. Start when the same handoff keeps getting stuck, not because a vendor says it is time to upgrade.",
       },
     ],
   },
@@ -47,27 +47,27 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "crm",
     term: "CRM",
     definition:
-      "A CRM keeps leads, customers, notes, follow-up, and sales history in one shared place so nothing falls through the cracks.",
+      "A CRM is a shared record for leads, customers, notes, and follow-up.",
     plain: "The list of people who asked for help, bought something, or need a reply.",
     whenItMatters:
       "It matters when customer notes are split between email, texts, spreadsheets, booking tools, and memory.",
     howItWorks:
-      "A CRM is one shared list of everyone who ever contacted you. Each name carries a little history. When someone calls, emails, or books, their details go into that one place. So do notes on what they wanted and when you last talked. Then it reminds you who is waiting on a callback and who has not heard from you in a while. You stop digging through your phone and inbox. You open one screen and it is all there.",
+      "A CRM gives each customer or lead one record. It can hold contact details, notes, status, and a next action. Some CRMs can create reminders or send messages, but the business still decides what information belongs there and who may see it.",
     example:
-      "A dental office keeps patient reminders in a paper book. Insurance notes live on sticky pads. 'Call back about the crown' lives in someone’s head. A CRM puts each patient’s contact, last visit, and follow-up in one record. When they call, whoever answers sees the whole picture. Nobody’s six-month cleaning gets forgotten.",
+      "A contractor keeps inquiries in email, texts, and a spreadsheet. A CRM can put the customer name, job notes, estimate status, and next callback in one record. The team can agree which fields belong there before moving any existing list.",
     costOfIgnoring:
-      "Without one place for people, the same customer gets asked the same question three times. Warm leads go cold because nobody remembered to follow up. Every repeat customer you lose track of is money you already earned once and let walk out the door. The business also lives in whoever’s memory is best that day. That is fragile, and you cannot hand it off.",
+      "When customer details live in several places, people can repeat questions, miss a handoff, or lack the context to help. Before buying a CRM, check whether a shared list and a clear follow-up owner would solve the actual problem.",
     related: ["business-system", "workflow-automation", "software-stack"],
     faq: [
       {
         question: "Do I need an expensive CRM like the big companies use?",
         answer:
-          "Almost never. Most small businesses are better off with something simple and cheap, set up to match how they actually work. A fancy CRM you don’t use is worse than a plain one you do.",
+          "Not automatically. Choose the smallest setup that supports the work you repeat. A fancy CRM that nobody opens is just a very expensive filing cabinet.",
       },
       {
         question: "I already have my customers in a spreadsheet. Isn’t that enough?",
         answer:
-          "A spreadsheet is a fine start, but it won’t remind you to follow up or catch a lead the moment it comes in. A CRM adds the nudges and the shared access a growing shop needs.",
+          "A spreadsheet can be enough when it is current, shared appropriately, and has a clear owner. A CRM is worth considering when the team needs a repeatable next-action process or better context across several customer conversations.",
       },
     ],
   },
@@ -75,27 +75,27 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "google-business-profile",
     term: "Google Business Profile",
     definition:
-      "The free Google listing that controls how a local business appears in Search and Maps, including hours, phone, reviews, services, photos, and location.",
+      "A free Google listing a verified business can manage in Google Search and Maps, including business details, hours, location, photos, and reviews.",
     plain: "The Google card people see before they ever reach your website.",
     whenItMatters:
-      "It matters when competitors show on Maps before you. Or when hours are wrong, reviews are stale, or customers keep calling with questions the card should answer.",
+      "It matters when your hours, phone, location, or business details are wrong or missing where local customers search.",
     howItWorks:
-      "Someone searches your business name, or 'florist near me.' Google shows a card with your hours, phone, photos, reviews, and a map pin. That card is your Google Business Profile. It is free to claim and control. Fill in the right details. Add real photos. List your services. Reply to reviews. Google uses all of it to decide who to show and where. For many local businesses, this card gets seen far more than the website.",
+      "A verified owner can update the profile information Google shows in Search and Maps. Keep the details accurate, use the official tools for verification and reviews, and check the current rules before changing anything. Google describes the profile and verification process in its own help center.",
     example:
-      "A corner florist makes beautiful arrangements. But the Google card shows old hours and one blurry photo from years ago. A customer searching 'flower delivery near me' sees a competitor with fresh photos, 200 reviews, and a call button. They pick the competitor without a second thought. Fixing the florist’s profile puts them back in that first-glance race. Real photos. Current hours. A few review replies.",
+      "A corner florist notices its profile still shows old holiday hours. The owner checks the official profile, corrects the hours, and makes sure the website and phone number match. That is a practical first fix; it does not promise a placement in search.",
     costOfIgnoring:
-      "An ignored profile quietly sends your customers to whoever looks more alive on the map. Wrong hours cost you the person who drove over and found you closed. That person often leaves a bad review on top. This card is usually the first thing a new customer sees. A stale one can lose the sale before they ever learn how good you are.",
+      "Wrong hours, location, or phone details can send a customer to the wrong place or stop them from reaching you. Start with the business facts you can verify; rankings and customer choices are not something anyone can promise.",
     related: ["local-search", "business-system"],
     faq: [
       {
         question: "Is this the same as having a website?",
         answer:
-          "No, and you need both. The website is your home; the Google profile is the sign on the busy street that points people to it. Many customers check the profile first and only visit the site if the card earns their trust.",
+          "They do different jobs. A profile helps people find basic business details in Google; a website gives you more room to explain offers, show work, and choose the customer path. Which comes first depends on what the business needs.",
       },
       {
         question: "How do I get more reviews without being pushy?",
         answer:
-          "The simplest way is to ask happy customers at the right moment, right after a good job, usually with a quick text or a link. A small, steady habit of asking beats any trick, and it keeps the card looking active.",
+          "Ask for an honest review in a way that follows Google’s current review policies. Do not offer incentives or try to screen out unhappy customers. Check Google’s own rules before building a review request into a workflow.",
       },
     ],
   },
@@ -103,27 +103,27 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "local-search",
     term: "Local search",
     definition:
-      "The work that helps nearby customers find, trust, and pick your business on Google and Maps.",
+      "The work of making accurate local business information easy to find in Google Search and Maps.",
     plain: "Showing up when someone nearby is already looking.",
     whenItMatters:
       "It matters when the business depends on local customers, appointments, walk-ins, or bookings.",
     howItWorks:
-      "When someone nearby searches for what you do, Google answers with the businesses it trusts most for that area. Local search is the work of earning that trust. A correct Google profile. Clear pages that say what you do and where. Steady reviews. The same name, address, and phone everywhere you appear. Google reads all those signals together to pick who shows on the map. Do them well and you appear right when someone is ready to call or walk in.",
+      "Google says local results use a range of factors. Start with information you control: correct business details, a useful profile, and pages that explain what you do and where you work. Google does not sell a guaranteed regular local ranking, so anyone promising a spot is selling fog with a tie on.",
     example:
-      "A diner two blocks away is packed. An equally good diner around the corner is empty. The difference often is not the food. The busy one shows up first when someone types 'breakfast near me.' Photos, hours, and reviews all lined up. Getting the quiet diner’s pages, profile, and reviews in order puts it in that same hungry-and-nearby moment.",
+      "A diner checks that its current hours, address, phone number, menu link, and website agree. It then makes a page that clearly explains the neighborhood and service it offers. Those updates make the information easier to verify; they do not guarantee a search result.",
     costOfIgnoring:
-      "If you are invisible in local search, you are paying rent on a spot customers cannot find online. Those searches go to the competitor down the block. These customers are looking right now and ready to buy. Every missed appearance is a sale that went to someone else for no good reason. Over a year, that is a steady stream of walk-ins and bookings you never got the chance to win.",
+      "If the business facts are inconsistent, a customer may find an old number, wrong hours, or a confusing result. Fixing those basics is useful housekeeping; it is not a guarantee of traffic, calls, or sales.",
     related: ["google-business-profile", "business-system"],
     faq: [
       {
         question: "How long until local search actually helps me?",
         answer:
-          "Quick wins like fixing your profile can help within weeks. Reviews and good pages build over a few months. It is a habit, not a one-time switch.",
+          "Some profile changes may appear quickly; others can need review or take longer to show. Search results also change over time. Set a maintenance habit, and do not accept a guaranteed timeline for rankings.",
       },
       {
         question: "Do I need to pay Google for ads to show up nearby?",
         answer:
-          "No. The regular map and search results are earned, not bought. Ads can add reach on top. A well-kept profile and honest pages do most of the work for free.",
+          "No. Google Ads and regular local results are separate products. Ads can be useful for a defined campaign, but they do not buy a guaranteed regular local ranking.",
       },
     ],
   },
@@ -131,27 +131,27 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "software-stack",
     term: "Software stack",
     definition:
-      "All the tools a business uses to run the day. Website, booking, POS, payments, email, spreadsheets, and reports.",
+      "All the tools a business uses to run the day: website, booking, point of sale, payments, email, spreadsheets, and reports.",
     plain: "All the apps you pay for, plus the work people still do around them.",
     whenItMatters:
       "It matters when the monthly bill keeps growing but the work still runs on workarounds.",
     howItWorks:
-      "Your software stack is every tool you use to run the business. The booking app. The card reader. The email. The spreadsheet. The trouble is usually not one tool. It is that they do not share information. So people become the glue, retyping the same details from one app into another. A good look at the stack asks three plain questions of each tool. Is it earning its cost? Does it talk to the others? Is anyone actually using it? Then you drop what is dead, connect what should link up, and keep what works.",
+      "List every tool, what it costs, who uses it, what data it holds, and what it connects to. Then ask three plain questions: does it support an important step, does the team use it, and is there a safer simpler option? Keep what earns its place. Change one thing at a time.",
     example:
-      "A busy salon pays for a booking app, a separate payment system, a newsletter tool, and a hand-kept spreadsheet. Nothing connects. The front desk copies each appointment into the spreadsheet and retypes new clients into the newsletter list. Trimming the dead tools and connecting the rest gives the manager back an hour a day.",
+      "A salon lists its booking app, payment system, newsletter tool, and spreadsheet. The owner can see which tool owns each task and where staff copy information by hand. That makes it possible to compare options without guessing that a new app will solve everything.",
     costOfIgnoring:
-      "A messy stack leaks money two ways. Subscriptions nobody uses anymore. And staff hours spent gluing tools together by hand. We often find a business paying for three tools that half-overlap while a person retypes data between them every morning. Left alone, the bill creeps up every year while the work still runs on the same tired workarounds.",
+      "A messy stack can hide unused subscriptions, overlapping features, and manual re-entry. Review the statements and ask the team what they actually use before cancelling anything that might hold customer records or business history.",
     related: ["business-system", "workflow-automation", "crm"],
     faq: [
       {
         question: "Does fixing my stack mean ripping everything out and starting over?",
         answer:
-          "Usually not. Most of the win comes from cutting a couple of unused tools and connecting the good ones, not a rip-and-replace. We keep what works and only replace what’s genuinely dragging you down.",
+          "Usually not. Start with an inventory and one frustrating handoff. A replacement is worth considering only when the current tool cannot support a needed step, costs more than its value, or creates a real risk.",
       },
       {
         question: "How do I know if I’m paying for tools I don’t use?",
         answer:
-          "A quick pass through your card statement for recurring charges almost always turns up a surprise or two. If you can’t remember the last time you opened it, that’s usually your answer.",
+          "Compare recurring charges with a current list of tools and ask who uses each one. Check export options, contract terms, and stored data before cancelling. The forgotten login might be holding something important. Sneaky little goblins do that.",
       },
     ],
   },
@@ -159,27 +159,27 @@ export const glossaryTerms: GlossaryTerm[] = [
     slug: "workflow-automation",
     term: "Workflow automation",
     definition:
-      "A rule that moves routine work forward on its own. It can send a lead to the right place, make a follow-up task, or update a dashboard.",
+      "A rule that moves a routine step forward on its own. It can send a lead to the right place, create a follow-up task, or update a record.",
     plain: "The boring repeatable step happens without someone remembering to do it.",
     whenItMatters:
       "It matters when staff spend time copying details, chasing reminders, or checking three places to answer one question.",
     howItWorks:
-      "Automation is a simple 'when this happens, do that' rule that runs on its own. When a form comes in, add the person to your list and send a thank-you. When a job is marked done, set a reminder to ask for a review a week later. You decide the rule once. Then it happens every single time without anyone thinking about it. Aim it at the small, boring, repeatable steps. Those are the ones humans forget, exactly because they are dull.",
+      "Automation is a simple “when this happens, do that” rule. For example: when a form comes in, add it to the shared list and create a follow-up task. Test the rule with a harmless example, decide who can see the data, and keep a person responsible for exceptions.",
     example:
-      "A dog groomer used to text every client the night before to confirm. When she remembered. Now a reminder goes out the evening before each appointment. A 'we’d love a review' note goes out the morning after. She did not hire anyone. She set two rules once. No-shows dropped and reviews went up.",
+      "A dog groomer wants appointment reminders to happen consistently. The business can test a reminder the evening before each appointment and keep an owner responsible for replies or changes. Whether it is worth keeping depends on the business’s own records and customer feedback.",
     costOfIgnoring:
-      "Doing the boring steps by hand costs you twice. First, the hours spent copying and reminding. Second, the times a human forgets and a customer slips away. Those lost bookings never show up as a bill, so the leak stays hidden. Meanwhile your best people spend the day on busywork a rule could handle, instead of on the customers in front of them.",
+      "Repeated copying and reminders can take attention away from customers, and a missed routine step can create extra cleanup. First measure the time and errors in one week. Automate only a step that is stable enough to trust.",
     related: ["business-system", "crm", "software-stack"],
     faq: [
       {
         question: "Will automation make my business feel cold or robotic to customers?",
         answer:
-          "Done right, it does the opposite. Customers get faster replies and never get forgotten. That feels more caring, not less. You automate the reminder. The relationship stays human.",
+          "It can, if it sends the wrong message or hides a real question. Automate the repeatable reminder; leave choices, exceptions, and conversation with a person.",
       },
       {
         question: "Is this only for big companies with tech teams?",
         answer:
-          "No. The best automations for a small shop are small and cheap. One confirmation text. One follow-up reminder. You do not need a tech team. Just the right rule, set up once.",
+          "No. A small business can begin with one carefully tested rule. The right size depends on the task, the data involved, and who will own it after launch.",
       },
     ],
   },

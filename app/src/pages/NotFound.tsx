@@ -16,7 +16,7 @@ export default function NotFound() {
             <span className="lf-em">{notFound.headingEmphasis}</span>
           </>
         }
-        dek={notFound.dek}
+        dek="That page moved, retired, or took the long way home. Start with the problem below, or call if you need something specific."
       />
 
       <TugAvatar />

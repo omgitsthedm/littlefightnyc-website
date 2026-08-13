@@ -7,7 +7,7 @@ const LAUNCH_LAYERS = [
   {
     label: "Identity",
     title: "Own the name and the keys.",
-    detail: "Domain control, branded email, account ownership, recovery paths, and a written record of who controls what.",
+    detail: "Domain control, business email, account ownership, recovery paths, and a plain record of who controls what.",
   },
   {
     label: "Front door",
@@ -17,7 +17,7 @@ const LAUNCH_LAYERS = [
   {
     label: "Findability",
     title: "Make the facts agree.",
-    detail: "The website, Google Business Profile, Search Console, structured data, sitemap, and useful public listings should describe the same real business.",
+    detail: "The website, Google Business Profile, search tools, map listings, and public facts should all describe the same real business.",
   },
   {
     label: "Follow-up",
@@ -27,7 +27,7 @@ const LAUNCH_LAYERS = [
   {
     label: "Measurement",
     title: "Measure the path without lying to the visitor.",
-    detail: "Consent-safe analytics, Search Console, and conversion events show which actions happen. Advertising storage remains separate and denied unless a visitor explicitly allows it.",
+    detail: "Simple, privacy-respecting measurement can show which actions happen. It cannot turn a visitor into a customer. It can show where the path needs work.",
   },
 ] as const;
 
@@ -38,7 +38,7 @@ export default function NewBusinessLaunch() {
         eyebrow="New business launch"
         icon={Store}
         title={<>Open with the front door already working.</>}
-        dek="Name, website, Google presence, booking or inquiry path, email, measurement, and ownership—set up as one launch instead of six disconnected accounts."
+        dek="Name, website, Google presence, booking or inquiry path, email, and ownership—set up as one clear launch instead of six disconnected accounts."
         image={{
           src: "/images/brand-scenes/storefronts-dawn.webp",
           alt: "Neighborhood storefronts opening at dawn",
@@ -54,13 +54,13 @@ export default function NewBusinessLaunch() {
           <div>
             <p>
               Most launch problems are handoff problems. The website lives in
-              one account, the domain in another, Google under a personal email,
-              and customer messages wherever the form vendor sends them.
+              one account. The domain lives in another. Google belongs to a
+              former employee. Customer messages go somewhere nobody checks.
             </p>
             <p>
-              We map the system before launch, use the simplest tool that fits
-              each job, and leave the business with the keys and plain-English
-              documentation.
+              We map the whole customer path before launch. Then we use the
+              smallest useful tool for each job and leave the business with the
+              keys and plain-English notes.
             </p>
           </div>
         </header>
@@ -81,7 +81,7 @@ export default function NewBusinessLaunch() {
 
       <QuietContact
         heading="Opening, relaunching, or finally making it official?"
-        lede="Tell us the date, the storefront, and how the first customer should act. We will map the launch, the responsibilities, and the smallest useful scope."
+        lede="Tell us the date, the business, and what the first customer should do. We will map the launch, who owns each step, and the smallest useful scope."
         intent="website"
       />
     </>

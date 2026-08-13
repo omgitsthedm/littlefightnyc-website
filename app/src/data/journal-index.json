@@ -2,334 +2,334 @@
   {
     "slug": "cybersecurity-for-small-business",
     "category": "blog",
-    "title": "Cybersecurity for Small Business",
-    "description": "Practical cybersecurity tips for small businesses. Learn how to protect your business from cyber threats with these actionable steps.",
-    "published": "January 15, 2025",
+    "title": "Small-Business Cybersecurity Without the Panic",
+    "description": "Lock the accounts, update the devices, back up the files, and give staff one clear rule for suspicious messages.",
+    "published": "",
     "updated": "March 20, 2026",
-    "wordCount": 927
+    "wordCount": 225
   },
   {
     "slug": "nyc-small-business-digital",
     "category": "blog",
-    "title": "NYC Small Business Digital Guide",
-    "description": "NYC small businesses need a digital presence to survive. Learn how going digital can increase foot traffic, customer loyalty, and sales for local shops.",
-    "published": "January 15, 2025",
+    "title": "What a NYC Business Actually Needs Online",
+    "description": "A clear Google profile, a useful website, and one working path to call, book, order, or visit. The rest is optional.",
+    "published": "",
     "updated": "March 20, 2026",
-    "wordCount": 996
+    "wordCount": 234
   },
   {
     "slug": "protecting-kids-from-ai",
     "category": "blog",
-    "title": "Protecting Your Kids From AI",
-    "description": "A practical guide for parents on AI safety for children. Learn what AI really is, the real risks, and how to talk to your kids about using AI responsibly.",
-    "published": "January 31, 2025",
+    "title": "A Plain Family Rulebook for AI",
+    "description": "Keep private information private, check surprising answers, and make sure a child can always bring a strange interaction to an adult.",
+    "published": "",
     "updated": "March 20, 2026",
-    "wordCount": 819
+    "wordCount": 226
   },
   {
     "slug": "airtable-vs-notion-vs-monday-small-business",
     "category": "guide",
-    "title": "Airtable vs Notion vs Monday",
-    "description": "Compare Airtable, Notion, and Monday for small business operations, lead tracking, owner views, tasks, and workflows without overbuilding.",
+    "title": "Airtable vs. Notion vs. monday.com: Pick the Job First",
+    "description": "Airtable organizes records. Notion organizes knowledge. monday.com organizes assigned work. Your workflow decides the winner.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 457
+    "wordCount": 230
   },
   {
     "slug": "custom-business-system-vs-saas-subscriptions",
     "category": "guide",
-    "title": "Custom Systems vs SaaS",
-    "description": "When off-the-shelf software makes sense, when a practical custom help may be cleaner, and how to compare cost, workflow, and fit.",
+    "title": "Rent Software or Build Your Own? Use the Boring Math",
+    "description": "Keep rented software when it fits. Build only when repeated work, stacked subscriptions, or missing ownership justify it.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 401
+    "wordCount": 183
   },
   {
     "slug": "shopify-vs-squarespace-nyc-retail",
     "category": "guide",
-    "title": "Shopify vs Squarespace for NYC Retail",
-    "description": "A practical comparison for NYC shops choosing Shopify or Squarespace for local retail, e-commerce, inventory, Google visibility, and conversion.",
+    "title": "Shopify vs. Squarespace for a Local Shop",
+    "description": "Shopify leads when inventory and selling drive the business. Squarespace can fit a smaller catalog where content leads.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 446
+    "wordCount": 218
   },
   {
     "slug": "square-appointments-vs-glossgenius-nyc-salons",
     "category": "guide",
-    "title": "Square vs GlossGenius for NYC Salons",
-    "description": "Compare Square Appointments and GlossGenius for NYC salons, stylists, and wellness operators choosing booking, payments, staff calendars, and follow-up.",
+    "title": "Square Appointments vs. GlossGenius for Salons",
+    "description": "Compare the real booking path: staff, chairs, deposits, reminders, checkout, reports, and what clients see.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 470
+    "wordCount": 211
   },
   {
     "slug": "square-vs-toast-manhattan-restaurants",
     "category": "guide",
-    "title": "Square vs Toast for Manhattan Restaurants",
-    "description": "Compare Square and Toast for Manhattan restaurants, bars, cafes, and hospitality teams choosing POS, payments, kitchen flow, and reporting.",
+    "title": "Square vs. Toast for a Manhattan Restaurant",
+    "description": "Pick the POS around service: checks, courses, kitchen flow, online orders, offline plans, reporting, and support.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 491
+    "wordCount": 222
   },
   {
     "slug": "webflow-vs-squarespace-manhattan-small-business",
     "category": "guide",
-    "title": "Webflow vs Squarespace for Manhattan",
-    "description": "A local guide to choosing Webflow or Squarespace for Manhattan small business websites, service pages, booking paths, Google visibility, and fit.",
+    "title": "Webflow vs. Squarespace for a Small Business",
+    "description": "Squarespace favors a simpler owner-managed site. Webflow offers more structure and control with more setup and care.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 473
+    "wordCount": 223
   },
   {
     "slug": "ai-google-broke-the-internet-websites-survive",
     "category": "essay",
-    "title": "AI & Google Broke the Internet",
-    "description": "AI and Google broke the old internet. Learn how small business websites survive in the age of zero-click searches and AI summaries.",
+    "title": "Your Website Still Matters When AI Answers First",
+    "description": "Search may answer before the click. A clear, useful, crawlable website gives people and answer engines something trustworthy to use.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
-    "wordCount": 873
+    "wordCount": 248
   },
   {
     "slug": "what-google-looks-for-business-website",
     "category": "essay",
-    "title": "What Google Looks For on a Business Website",
-    "description": "Google evaluates trust, clarity, and specificity — not keyword density. Learn what actually matters for your business website.",
+    "title": "What Google Needs From a Business Website",
+    "description": "Clear purpose, useful original information, crawlable text, accurate business facts, sensible links, and a page that works well.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
-    "wordCount": 1083
+    "wordCount": 226
   },
   {
     "slug": "why-business-websites-will-be-invisible",
     "category": "essay",
-    "title": "Why Business Websites Will Be Invisible",
-    "description": "Most business websites are fading from search results as AI decides trust before a click happens. Here’s what needs to change.",
+    "title": "Why a Vague Business Website Disappears",
+    "description": "If the page never gives a clear answer, current fact, original proof, or usable next step, people and search systems have little reason to choose it.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
-    "wordCount": 1019
+    "wordCount": 232
   },
   {
     "slug": "read-your-monthly-software-bill",
     "category": "howto",
-    "title": "How to Read Your Monthly Software Bill (And Find the $200 You’re Not Using)",
-    "description": "A 6-step audit any NYC small business owner can run on a Sunday afternoon to find the software subscriptions silently bleeding cash every month.",
+    "title": "Audit the Monthly Software Bill Without Guessing",
+    "description": "List the tools, owners, users, renewal dates, and actual jobs. Then keep, connect, downgrade, replace, or cancel with proof.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 315
+    "wordCount": 171
   },
   {
     "slug": "set-up-google-business-profile-nyc",
     "category": "howto",
-    "title": "How to Set Up a Google Business Profile in 30 Minutes (NYC Edition)",
-    "description": "A 30-minute walkthrough for NYC small businesses claiming or rebuilding their Google Business Profile so neighbors can actually find the shop.",
+    "title": "Set Up a Google Business Profile the Safe Way",
+    "description": "Claim the right profile, verify it, enter accurate facts, choose honest categories, and keep the website and profile aligned.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 283
+    "wordCount": 203
   },
   {
     "slug": "migrate-off-squarespace-without-breaking-booking",
     "category": "howto",
-    "title": "How to Migrate Off Squarespace Without Breaking Your Booking Page",
-    "description": "A safe migration sequence for NYC small businesses moving off Squarespace to a faster, cheaper, or more flexible platform without losing customers mid-jump.",
+    "title": "Leave Squarespace Without Breaking Booking",
+    "description": "Inventory the live path, build the replacement, preserve the domain and URLs, test every handoff, then switch with a rollback plan.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 320
+    "wordCount": 227
   },
   {
     "slug": "keep-connect-replace-build-framework",
     "category": "howto",
-    "title": "How to Know When to Keep, Connect, Replace, or Build a Business Tool",
-    "description": "The four-question framework Little Fight NYC uses on every engagement to figure out whether the right move on a software problem is to keep it, connect it, replace it, or build something new.",
+    "title": "Keep, Connect, Replace, or Build: Use This Order",
+    "description": "Start with the least disruptive fix. Keep what works, connect real gaps, replace poor fit, and build only when the business case earns it.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 276
+    "wordCount": 168
   },
   {
     "slug": "spot-developer-about-to-ghost",
     "category": "howto",
-    "title": "How to Spot a Developer Who’s About to Ghost You",
-    "description": "Six early warning signs that the freelance developer or agency you hired is going to disappear mid-project — and what to do before it happens.",
+    "title": "Six Signs a Website Project Is Losing Its Owner",
+    "description": "Missing access, vague milestones, no working preview, unexplained silence, and no handoff plan are project risks. Secure the business first.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 320
+    "wordCount": 212
   },
   {
     "slug": "how-do-i-back-up-my-business-data",
     "category": "howto",
-    "title": "How Do I Back Up My Business Data? A Plain-English Guide",
-    "description": "One dead laptop should not erase your customer list. The 3-2-1 backup rule in plain English, plus seven steps a busy NYC shop owner can do this week.",
+    "title": "Back Up the Business Before a Laptop Picks the Worst Day",
+    "description": "Know the important data, keep more than one copy, protect account access, and test a restore. A backup that cannot restore is décor.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1138
+    "wordCount": 227
   },
   {
     "slug": "what-to-do-when-business-wifi-keeps-dropping",
     "category": "howto",
-    "title": "What to Do When Your Business Wi-Fi Keeps Dropping",
-    "description": "Shop Wi-Fi that keeps dropping is one of three things: the line, the router, or a crowded network. Here is how to find which one, and how to fix it.",
+    "title": "Business Wi-Fi Keeps Dropping? Isolate the Fault",
+    "description": "Check the provider, router, local coverage, and one device separately. Random reboots are not a troubleshooting plan.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1215
+    "wordCount": 212
   },
   {
     "slug": "how-to-own-your-domain-name-not-your-web-guy",
     "category": "howto",
-    "title": "How to Own Your Domain Name, Not Your Web Guy",
-    "description": "If your web developer registered your domain, you may not control your own name online. Here is how to check who owns it and take it back, step by step.",
+    "title": "Make Sure the Business Controls Its Domain",
+    "description": "The business should control the registrar account, renewal, recovery, and authorized contacts. A developer can get access without owning the name.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1092
+    "wordCount": 200
   },
   {
     "slug": "how-to-answer-google-reviews-nyc-business",
     "category": "howto",
-    "title": "How to Answer Google Reviews for Your NYC Business",
-    "description": "Reply to every Google review, good and bad. Plain-English templates for happy, angry, unfair, and fake reviews, and why replies help you show up locally.",
+    "title": "Reply to Google Reviews Like a Real Business",
+    "description": "Keep replies short, specific, calm, and private. Thank good feedback, address the useful point, and move sensitive details offline.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1094
+    "wordCount": 204
   },
   {
     "slug": "how-to-get-your-business-into-chatgpt-answers",
     "category": "howto",
-    "title": "How to Get Your Business Into ChatGPT Answers",
-    "description": "AI assistants now answer \"best tailor near me.\" How a small NYC business becomes the answer: clear pages, consistent details, real reviews, no tricks.",
+    "title": "Help AI Search Understand Your Business",
+    "description": "Publish clear, crawlable, current facts and useful first-hand answers. Keep public profiles accurate. There is no guaranteed ChatGPT switch.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1139
+    "wordCount": 246
   },
   {
     "slug": "why-chains-always-show-up-first-on-google",
     "category": "essay",
-    "title": "Why Chains Always Show Up First on Google",
-    "description": "Chains rank first because corporate teams feed Google perfect data all day. Here is how that machine works, and how one shop wins its own neighborhood.",
+    "title": "Why Chains Look Easier to Trust Online",
+    "description": "Chains maintain consistent locations, categories, hours, pages, links, and reviews at scale. A local shop can win on accuracy and usefulness nearby.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1096
+    "wordCount": 233
   },
   {
     "slug": "your-website-is-your-hardest-working-employee",
     "category": "essay",
-    "title": "Your Website Is Your Hardest-Working Employee",
-    "description": "Your website works nights, weekends, and holidays answering customers while you sleep. Here is how to train it like staff, and check its work monthly.",
+    "title": "Give the Website One Clear Job After Closing",
+    "description": "A website should answer ordinary questions and hand a customer to the right action when nobody is at the counter.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1070
+    "wordCount": 170
   },
   {
     "slug": "the-pen-and-paper-tax",
     "category": "essay",
-    "title": "The Pen and Paper Tax: What It Costs You in Time",
-    "description": "Paper, memory, and one big spreadsheet quietly tax your shop in hours and mistakes: double bookings, lost messages, retyping. When paper is fine, too.",
+    "title": "When Paper Starts Charging the Business in Time",
+    "description": "Paper is fine until information must be found, copied, shared, checked, or reported repeatedly. Measure the repeat work before buying software.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1017
+    "wordCount": 171
   },
   {
     "slug": "ai-is-already-answering-questions-about-your-business",
     "category": "essay",
-    "title": "AI Is Already Answering Questions About Your Business",
-    "description": "AI assistants describe your shop whether you join in or not, reading your site, Google profile, and reviews. Here is how to own the sources they quote.",
+    "title": "AI Can Describe Your Business. Check Its Sources.",
+    "description": "Search systems may summarize public information. Keep the sources you control accurate, useful, and easy to verify.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1027
+    "wordCount": 227
   },
   {
     "slug": "why-small-business-tech-should-be-boring",
     "category": "essay",
-    "title": "Why Small Business Tech Should Be Boring",
-    "description": "Shiny tools break on Saturdays. The chains win with dull systems that open, ring, charge, and back up daily. Reliability is the real premium for shops.",
+    "title": "The Best Small-Business Tech Is Quiet on Saturday",
+    "description": "Reliable tools open, charge, book, print, back up, and recover. Excitement belongs in the business, not the login screen.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1072
+    "wordCount": 199
   },
   {
     "slug": "what-a-free-tech-audit-actually-looks-like",
     "category": "blog",
-    "title": "What a Free Tech Audit Actually Looks Like",
-    "description": "What happens when a NYC owner books our free Tech Audit: what we look at, what you get in writing, and why there is no sales pitch at the end of it.",
+    "title": "What Our Free Tech Audit Actually Does",
+    "description": "Tell us what is broken or expensive. We map the path, check the obvious risks and waste, and give you a plain next step.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1066
+    "wordCount": 178
   },
   {
     "slug": "signs-your-pos-is-about-to-fail",
     "category": "blog",
-    "title": "Signs Your POS Is About to Fail",
-    "description": "A POS rarely dies without warning. Freezes, more offline mode, and printer trouble are the signs. What each symptom means and what to have ready now.",
+    "title": "POS Trouble: Prepare Before the Friday-Night Failure",
+    "description": "Repeated freezes, connection errors, power trouble, pending updates, and offline-mode surprises deserve a documented check and backup plan.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 942
+    "wordCount": 223
   },
   {
     "slug": "questions-nyc-owners-actually-ask-us-about-ai",
     "category": "blog",
-    "title": "Questions NYC Owners Actually Ask Us About AI",
-    "description": "Real questions NYC small-business owners ask us about AI, with straight answers. What it can do for your shop, what it cannot, and what to ignore.",
+    "title": "Straight Answers to Small-Business AI Questions",
+    "description": "Use AI for drafts, sorting, and low-risk assistance. Keep people responsible for private data, important facts, customer promises, and final decisions.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 968
+    "wordCount": 216
   },
   {
     "slug": "ada-website-lawsuits-nyc-small-business",
     "category": "blog",
-    "title": "ADA Website Lawsuits and NYC Small Businesses",
-    "description": "Accessibility demand letters keep landing on NYC small businesses. What web accessibility really means, how to check your own site, and how we build it.",
+    "title": "Website Accessibility: Fix Barriers, Not Just Scores",
+    "description": "Keyboard access, headings, labels, contrast, zoom, captions, errors, and real manual testing matter. An overlay is not a legal shield.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1051
+    "wordCount": 219
   },
   {
     "slug": "how-to-stop-double-bookings-small-business",
     "category": "howto",
-    "title": "How to Stop Double Bookings at Your Small Business",
-    "description": "Double bookings happen when two calendars both think they own your time. The step-by-step fix, and when your booking tool must become the only door.",
+    "title": "Stop Double Bookings by Choosing One Booking Door",
+    "description": "One system must own availability. Every website, profile, staff calendar, and manual exception should feed or respect it.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1088
+    "wordCount": 207
   },
   {
     "slug": "gmail-vs-google-workspace-small-business",
     "category": "guide",
-    "title": "Gmail vs Google Workspace for Your Small Business",
-    "description": "A free @gmail.com address costs you trust, lands in spam more, and leaves the business exposed when staff leave. Here is when to move to Google Workspace.",
+    "title": "Personal Gmail vs. Google Workspace for a Business",
+    "description": "A personal Gmail account belongs to its user. A domain-verified Workspace setup gives the organization accounts and administrative control.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1020
+    "wordCount": 217
   },
   {
     "slug": "calendly-vs-square-appointments-nyc",
     "category": "guide",
-    "title": "Calendly vs Square Appointments for NYC Service Shops",
-    "description": "Calendly suits solo consultants who book calls. Square Appointments suits shops with staff, chairs, deposits, and no-shows. Here is how to pick for NYC.",
+    "title": "Calendly vs. Square Appointments: Meeting or Service?",
+    "description": "Calendly centers on meetings. Square Appointments connects service booking, staff, resources, deposits, and payment. Start with the actual appointment.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1000
+    "wordCount": 213
   },
   {
     "slug": "quickbooks-vs-wave-small-business-nyc",
     "category": "guide",
-    "title": "QuickBooks vs Wave for a Small NYC Business",
-    "description": "Wave keeps books simple for a solo owner. QuickBooks is what most accountants want once you have staff or sales tax. And sometimes a spreadsheet still wins.",
+    "title": "QuickBooks vs. Wave: Ask the Bookkeeper First",
+    "description": "Wave can fit simpler books. QuickBooks can fit broader accounting workflows and accountant expectations. Tax needs and clean records decide.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 968
+    "wordCount": 210
   },
   {
     "slug": "wordpress-vs-webflow-vs-custom-nyc",
     "category": "guide",
-    "title": "WordPress vs Webflow vs Custom for Your NYC Website",
-    "description": "WordPress, Webflow, or a custom-built site: all three can work for a serious NYC business. An honest look at upkeep, lock-in, and who fixes it when it breaks.",
+    "title": "WordPress vs. Webflow vs. Custom: Who Owns the Care?",
+    "description": "All three can build a serious site. Compare editing, integrations, updates, hosting, ownership, performance, and the person responsible after launch.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1027
+    "wordCount": 220
   },
   {
     "slug": "toast-vs-clover-nyc-bars",
     "category": "guide",
-    "title": "Toast vs Clover for NYC Bars and Small Restaurants",
-    "description": "Toast was built for bars: fast tabs, pre-auth, offline mode. Clover is flexible but support depends on the reseller. How to choose a POS that survives Friday.",
+    "title": "Toast vs. Clover for a Bar: Test the Rush",
+    "description": "Compare tabs, preauthorization, modifiers, printers, kitchen or bar routing, offline work, closeout, hardware, support, and contract terms.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 1086
+    "wordCount": 228
   }
 ]

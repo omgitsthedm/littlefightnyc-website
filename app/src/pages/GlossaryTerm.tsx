@@ -16,6 +16,30 @@ const GLOSSARY_IMAGE: Record<string, string> = {
   "workflow-automation": "/assets/typing.webp",
 };
 
+type TermSource = { label: string; href: string; note: string };
+
+const TERM_SOURCES: Record<string, TermSource[]> = {
+  "google-business-profile": [
+    {
+      label: "Google: Get started with a Business Profile",
+      href: "https://support.google.com/business/answer/7039811?hl=en-en",
+      note: "Google’s primary guide for profile details, verification, and managing how a business appears in Search and Maps.",
+    },
+    {
+      label: "Google: Tips to get more reviews",
+      href: "https://support.google.com/business/answer/3474122?hl=en-en",
+      note: "Google’s current rules for review requests, including its ban on incentives for reviews.",
+    },
+  ],
+  "local-search": [
+    {
+      label: "Google: Tips to improve local ranking",
+      href: "https://support.google.com/business/answer/7091?hl=en-en",
+      note: "Google’s primary guidance on the factors it says can affect regular local results; it does not promise a placement.",
+    },
+  ],
+};
+
 export default function GlossaryTerm() {
   const { slug } = useParams();
   const term = glossaryTerms.find((item) => item.slug === slug);
@@ -25,6 +49,7 @@ export default function GlossaryTerm() {
   const related = term.related
     .map((s) => glossaryTerms.find((t) => t.slug === s))
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
+  const source = TERM_SOURCES[term.slug];
 
   return (
     <>
@@ -59,6 +84,25 @@ export default function GlossaryTerm() {
 
           <aside className="lf-content-tile lf-content-tile--full lf-content-tile--signal">
             <PullQuote>{term.example}</PullQuote>
+          </aside>
+
+          <aside className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <EditorialBody>
+              <h2>Useful, not mandatory</h2>
+              <p>
+                This word names a tool or a way of working. It is not an order to buy something.
+                Keep the simple setup if it works. Change it when customers or staff keep paying
+                for the same avoidable mess.
+              </p>
+              {source?.map((item) => (
+                <p key={item.href}>
+                  <a href={item.href} target="_blank" rel="noreferrer">
+                    {item.label} ↗
+                  </a>{" "}
+                  — {item.note}
+                </p>
+              ))}
+            </EditorialBody>
           </aside>
 
           <article

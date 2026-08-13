@@ -73,7 +73,7 @@ export default function Services() {
             <span className="lf-accent">We find the useful fix.</span>
           </>
         }
-        dek="No brief required. Choose the situation that sounds familiar and see what we can do next."
+        dek="No tech speech required. Pick the problem that sounds familiar. We will show you the next useful move."
         image={{
           src: "/assets/hero-services-crossing.webp",
           alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",
@@ -122,8 +122,8 @@ export default function Services() {
             <Store size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
               <small>Opening or relaunching</small>
-              <strong>Set up the whole front door as one launch.</strong>
-              <em>Website, Google, email, booking, follow-up, measurement, and ownership.</em>
+              <strong>Open with one front door, not six loose accounts.</strong>
+              <em>Website, search, email, booking, follow-up, and the keys stay in one clear plan.</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
@@ -131,8 +131,8 @@ export default function Services() {
             <RefreshCw size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
               <small>Already live</small>
-              <strong>Keep the customer path working after launch.</strong>
-              <em>Current facts, tested forms, reliable handoffs, and documented changes.</em>
+              <strong>Keep the path working after launch.</strong>
+              <em>Current facts, tested forms, clear handoffs, and notes your business keeps.</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
@@ -147,8 +147,8 @@ export default function Services() {
               We do not arrive with a platform to sell.
             </h2>
             <p>
-              We start with the business you already have and change only what
-              makes the day easier or helps the next customer choose you.
+              We start with the business you already have. We change only what
+              makes the day easier or helps the next customer take a clear step.
             </p>
           </div>
           <ol className="lf-svc-assurance__list">
@@ -163,7 +163,7 @@ export default function Services() {
               <span>02</span>
               <div>
                 <strong>Explain the next move</strong>
-                <p>You see what to keep, what to fix, what it costs, and what can wait.</p>
+                <p>You see what to keep, fix, stop paying for, or leave alone.</p>
               </div>
             </li>
             <li>
