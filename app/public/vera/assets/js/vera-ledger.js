@@ -348,7 +348,7 @@
         if (mini) {
           var pr = window.__VERAG.placeRead(l);
           var exact = !!app.addressOf(l);
-          html += '<div class="insp-sec"><h3>' + (exact ? 'Exactly here' : 'Approximate area') + '</h3><div class="insp-map">' + mini + '</div>' +
+          html += '<div class="insp-sec"><h3>' + (exact ? 'Exactly here' : 'Approximate area') + '</h3><button type="button" class="insp-map insp-map--open" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show this listing on the Atlas map">' + mini + '<span class="dropcard__mapaction">View in Atlas <span aria-hidden="true">↗</span></span></button>' +
             (!exact ? '<p class="insp-fine">This post does not carry a complete street address. Its map pin can place the neighborhood, but VERA will not use that pin to name or grade a building.</p>' : '') +
             (pr && !pr.agrees ? '<p class="insp-fine">The post says ' + esc(l.neighborhood || '?') + '; the coordinates sit in <b>' + esc(pr.name) + '</b>. Small gaps are normal at borders — big ones are a tell.</p>' : '') +
             '</div>';
@@ -452,7 +452,7 @@
             (cs.outcome ? '<p class="insp-fine">Recorded. Outcomes stay in this browser and sharpen your own read of the sources.</p>' : '') + '</div>';
         }
         html += '<div class="insp-sec"><h3>Your notes</h3>' +
-          '<textarea class="notes" data-note="' + esc(l.listing_uid) + '" placeholder="Smelled fine. Radiator has a valve. Neighbor says the super is quick.">' + esc(cs.notes || '') + '</textarea></div>' +
+          '<textarea class="notes" name="vera-tour-notes" autocomplete="off" data-note="' + esc(l.listing_uid) + '" aria-label="Private tour notes" placeholder="e.g. Radiator has a valve; neighbor says the super is quick…">' + esc(cs.notes || '') + '</textarea></div>' +
           '<div class="insp-sec"><h3>Checklist <span class="cprog">' + done + ' / ' + C.CHECKS.length + '</span></h3>' +
           '<div class="cbar"><span style="width:' + Math.round(done / C.CHECKS.length * 100) + '%"></span></div>' +
           C.checkGroups().map(function (g) {

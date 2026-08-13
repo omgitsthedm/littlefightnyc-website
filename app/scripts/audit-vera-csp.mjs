@@ -215,6 +215,19 @@ const veraCoreJs = await readFile(
   path.join(appRoot, "public", "vera", "assets", "js", "vera-core.js"),
   "utf8",
 );
+const veraMapStyleText = await readFile(
+  path.join(
+    appRoot,
+    "public",
+    "vera",
+    "assets",
+    "vendor",
+    "maplibre",
+    "style",
+    "liberty-local.json",
+  ),
+  "utf8",
+);
 const veraPrerender = await readFile(
   path.join(appRoot, "scripts", "vera-prerender.mjs"),
   "utf8",
@@ -254,7 +267,7 @@ if (!veraAppJs.includes(GEOSEARCH_ORIGIN)) {
   );
 }
 const exactMapStyleDeclaration =
-  /mapStyleURL\s*=\s*["']https:\/\/tiles\.openfreemap\.org\/styles\/liberty["']/;
+  /mapStyleURL\s*=\s*["']\.\/assets\/vendor\/maplibre\/style\/liberty-local\.json["']/;
 const exactMapPreconnectDeclaration =
   /origin\.href\s*=\s*["']https:\/\/tiles\.openfreemap\.org["']/;
 if (
@@ -262,9 +275,48 @@ if (
   !exactMapPreconnectDeclaration.test(veraAppJs)
 ) {
   failures.push(
-    `vera-app.js no longer declares the exact ${TILE_ORIGIN} Liberty style and preconnect — ` +
-      "update the exact /vera/* connect-src exception with it",
+    `vera-app.js must load the exact first-party Liberty style and preconnect only to ${TILE_ORIGIN} — ` +
+      "update the exact /vera/* connect-src exception if the tile source changes",
   );
+}
+
+let veraMapStyle;
+try {
+  veraMapStyle = JSON.parse(veraMapStyleText);
+} catch {
+  failures.push("liberty-local.json must remain valid JSON");
+}
+if (veraMapStyle) {
+  const expectedSprite = "/vera/assets/vendor/maplibre/style/sprite/ofm";
+  const expectedGlyphs =
+    "/vera/assets/vendor/maplibre/style/fonts/{fontstack}/{range}.pbf";
+  if (veraMapStyle.sprite !== expectedSprite) {
+    failures.push("liberty-local.json must serve its sprite from the first-party VERA path");
+  }
+  if (veraMapStyle.glyphs !== expectedGlyphs) {
+    failures.push("liberty-local.json must serve its glyphs from the first-party VERA path");
+  }
+  const remoteStyleUrls = [];
+  const collectUrls = (value) => {
+    if (typeof value === "string" && /^https:\/\//.test(value)) {
+      remoteStyleUrls.push(value);
+    } else if (Array.isArray(value)) {
+      value.forEach(collectUrls);
+    } else if (value && typeof value === "object") {
+      Object.values(value).forEach(collectUrls);
+    }
+  };
+  collectUrls(veraMapStyle.sources);
+  if (remoteStyleUrls.length === 0) {
+    failures.push("liberty-local.json must declare its explicit remote tile source");
+  }
+  for (const url of remoteStyleUrls) {
+    if (new URL(url).origin !== TILE_ORIGIN) {
+      failures.push(
+        `liberty-local.json references unapproved remote source ${url}`,
+      );
+    }
+  }
 }
 
 const veraMapJs = await readFile(

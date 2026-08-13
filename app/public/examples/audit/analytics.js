@@ -88,8 +88,18 @@
 
   function revoke() {
     updateGoogleConsent("denied");
-    document.querySelectorAll('script[src="' + GTM_SRC + '"]').forEach(function (script) {
-      script.remove();
+    /* A visitor can withdraw after either the current GTM container or the
+       former direct gtag loader has entered the document. Remove both Google
+       analytics boot paths; the denied Consent Mode update above still lands
+       before their nodes are detached. */
+    document.querySelectorAll("script[src]").forEach(function (script) {
+      try {
+        var source = new URL(script.src, global.location.href);
+        if (source.hostname === "www.googletagmanager.com" &&
+          (source.pathname === "/gtm.js" || source.pathname === "/gtag/js")) {
+          script.remove();
+        }
+      } catch (_) {}
     });
     clearGaCookies();
     booted = false;

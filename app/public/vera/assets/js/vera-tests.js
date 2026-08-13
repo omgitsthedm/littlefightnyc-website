@@ -20,9 +20,14 @@
       check('pool populated', POOL.length > 0, POOL.length);
 
       /* ---- load path discipline ---- */
-      /* The map engine (~1MB) must not be in the initial document; it is
-         injected by vera-app.js the first time Atlas opens (below). */
-      check('map engine is not shipped to every visitor', !document.querySelector('script[src*="maplibre-gl"]'), '');
+      /* The engine is injected on idle for a fast first Atlas open, never as a
+         static index dependency and never as a mounted canvas on Today. The
+         idle callback is deliberately best-effort, so either pre-idle state or
+         a dynamically inserted script satisfies the same lazy-load contract. */
+      var mapScript = document.querySelector('script[src*="maplibre-gl"]');
+      check('map engine stays lazy and does not mount on Today',
+        (!mapScript || !mapScript.hasAttribute('defer')) && !document.querySelector('.maplibregl-canvas'),
+        mapScript ? 'idle prewarm arrived' : 'waiting for browser idle');
       /* This file itself must not be a static script tag in index.html —
          the fact that it is running proves the on-demand loader worked. */
       check('test suite arrived on demand, not in the page', !document.querySelector('script[src*="vera-tests"][defer]'), '');
@@ -106,7 +111,18 @@
       check('owner lens excludes brokers + corps', dirty === 0, 'violations=' + dirty);
       state.lens.noBrokers = false; state.lens.noMgmt = false;
 
-      var withCoords = POOL.filter(function (l) { return l.latitude != null; });
+      check('coordinate contract rejects missing, blank, nonnumeric, and out-of-range values',
+        app.hasValidLngLat({ latitude: ' 40.721767 ', longitude: ' -73.98225 ' }) === true &&
+        app.hasValidLngLat({ latitude: null, longitude: -73.98225 }) === false &&
+        app.hasValidLngLat({ latitude: 40.721767, longitude: '' }) === false &&
+        app.hasValidLngLat({ latitude: '   ', longitude: -73.98225 }) === false &&
+        app.hasValidLngLat({ latitude: NaN, longitude: -73.98225 }) === false &&
+        app.hasValidLngLat({ latitude: 'north', longitude: -73.98225 }) === false &&
+        app.hasValidLngLat({ latitude: 90.01, longitude: -73.98225 }) === false &&
+        app.hasValidLngLat({ latitude: 40.721767, longitude: -180.01 }) === false &&
+        app.hasValidLngLat({ latitude: false, longitude: -73.98225 }) === false,
+        'numeric strings accepted; invalid scalar shapes rejected');
+      var withCoords = POOL.filter(app.hasValidLngLat);
       var computed = withCoords.filter(function (l) { return C.nearestStation(l); });
       check('subway proximity computed', withCoords.length === 0 || computed.length > 0, computed.length + '/' + withCoords.length + ' within reach');
       var pubT = C.nearestStation({ transit: { station: 'Astor Pl', walk_mins: 7, lines: ['4', '6'] } });

@@ -41,7 +41,7 @@
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=56">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=57">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -61,9 +61,9 @@
       <div class="mastnav__zone">
         <nav class="mastnav" aria-label="Sections">
           <a href="#/today" data-nav="today">Today</a>
+          <a href="#/atlas" data-nav="atlas">Atlas</a>
           <a href="#/market" data-nav="market" class="mastnav__2nd">Market</a>
           <a href="#/browse" data-nav="browse">Browse</a>
-          <a href="#/atlas" data-nav="atlas">Atlas</a>
           <a href="#/hunt" data-nav="hunt">My hunt<b class="nv__badge" data-case-badge hidden>0</b></a>
           <a href="#/manual" data-nav="manual" class="mastnav__2nd">Field manual</a>
           <a href="#/archive" data-nav="archive" class="mastnav__2nd">Receipts</a>
@@ -115,6 +115,9 @@
       </div>
       <button type="button" class="filters__clear" data-clear hidden>Clear ×</button>
     </div>
+    <button type="button" class="filters__overflow-cue" data-filter-scroll="end" aria-controls="vera-filters" hidden>
+      More filters <span aria-hidden="true">→</span>
+    </button>
     <button type="button" class="filter-dock" data-filter-toggle aria-controls="vera-filters" aria-expanded="false" hidden>
       Filters <span data-filter-count hidden></span>
     </button>
@@ -176,17 +179,28 @@
       <div id="vera-tabpanel" class="inspector__body" data-insp-body role="tabpanel" aria-labelledby="vera-tab-overview"></div>
     </aside>
     <div class="scrim" data-scrim hidden></div>
+    <!-- Full-screen photo viewer. vera-app.js owns it: opens from any gallery
+         photo, traps focus while up, returns focus to what opened it. -->
+    <div class="lb" data-lb role="dialog" aria-modal="true" aria-label="Photo viewer" tabindex="-1" hidden>
+      <button type="button" class="lb__close" data-lb-close aria-label="Close the photo viewer">×</button>
+      <button type="button" class="lb__btn lb__btn--prev" data-lb-step="-1" aria-label="Previous photo">‹</button>
+      <button type="button" class="lb__btn lb__btn--next" data-lb-step="1" aria-label="Next photo">›</button>
+      <figure class="lb__stage">
+        <img class="lb__img" data-lb-img width="1600" height="1000" alt="">
+        <figcaption class="lb__n" data-lb-status role="status"></figcaption>
+      </figure>
+    </div>
     <div class="toast" data-toast hidden role="status"></div>
   </div>
 
   <noscript><p class="fallback">VERA renders a live data feed and needs JavaScript.</p></noscript>
   <script src="./assets/js/vera-core.js?v=51" defer></script>
-  <script src="./assets/js/vera-geo.js?v=47" defer></script>
+  <script src="./assets/js/vera-geo.js?v=48" defer></script>
   <!-- MapLibre (~1MB) and vera-tests.js are deliberately NOT here: the map
        engine loads on first Atlas open, the test suite only under ?test=1.
        Both are injected by vera-app.js. -->
-  <script src="./assets/js/vera-map.js?v=55" defer></script>
-  <script src="./assets/js/vera-ledger.js?v=57" defer></script>
-  <script src="./assets/js/vera-app.js?v=56" defer></script>
+  <script src="./assets/js/vera-map.js?v=56" defer></script>
+  <script src="./assets/js/vera-ledger.js?v=58" defer></script>
+  <script src="./assets/js/vera-app.js?v=57" defer></script>
 </body>
 </html>

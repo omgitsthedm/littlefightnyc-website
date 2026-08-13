@@ -6,6 +6,17 @@ const VERA_FEED_FIXTURE = readFileSync(
   new URL("./fixtures/vera-feed.json", import.meta.url),
   "utf8",
 );
+const VERA_MAP_TILE_FIXTURE = readFileSync(
+  new URL("./fixtures/vera-map-tile.pbf", import.meta.url),
+);
+const VERA_MAP_TILEJSON_FIXTURE = JSON.parse(
+  readFileSync(new URL("./fixtures/vera-map-tilejson.json", import.meta.url), "utf8"),
+) as Record<string, unknown>;
+const requestedPreviewPort = Number.parseInt(process.env.PLAYWRIGHT_PORT ?? "4173", 10);
+const previewPort = Number.isInteger(requestedPreviewPort) &&
+  requestedPreviewPort >= 1024 && requestedPreviewPort <= 65535
+  ? requestedPreviewPort : 4173;
+const PREVIEW_ORIGIN = `http://127.0.0.1:${previewPort}`;
 
 function expandedVeraFixture(count: number) {
   const fixture = JSON.parse(VERA_FEED_FIXTURE) as {
@@ -31,9 +42,9 @@ type VeraWorkspaceSeed = {
 
 type VeraListingScopeItem = {
   borough?: string | null;
-  latitude?: number | null;
+  latitude?: unknown;
   listing_uid?: string;
-  longitude?: number | null;
+  longitude?: unknown;
 };
 
 type VeraManifest = {
@@ -58,6 +69,41 @@ async function mockVeraData(
   workspaceSeed?: VeraWorkspaceSeed,
   fixture = VERA_FEED_FIXTURE,
 ) {
+  // Keep Atlas interaction coverage independent of the public tile CDN. The
+  // local Liberty style and VERA GeoJSON layers still execute normally; an
+  // empty, valid vector-tile source is enough for MapLibre to reach `load`.
+  await page.route("https://tiles.openfreemap.org/**", async (route) => {
+    const url = new URL(route.request().url());
+    if (url.pathname === "/planet") {
+      await route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          ...VERA_MAP_TILEJSON_FIXTURE,
+          tiles: ["https://tiles.openfreemap.org/__vera-test/{z}/{x}/{y}.pbf"],
+        }),
+      });
+      return;
+    }
+    if (url.pathname.startsWith("/__vera-test/") && url.pathname.endsWith(".pbf")) {
+      await route.fulfill({
+        contentType: "application/vnd.mapbox-vector-tile",
+        body: VERA_MAP_TILE_FIXTURE,
+      });
+      return;
+    }
+    if (url.pathname.endsWith(".png")) {
+      await route.fulfill({
+        contentType: "image/png",
+        body: Buffer.from(
+          "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScL8WQAAAABJRU5ErkJggg==",
+          "base64",
+        ),
+      });
+      return;
+    }
+    await route.fulfill({ status: 204, body: "" });
+  });
+
   // Stub the first-party public feed before VERA or a newly claiming service
   // worker can request it. The product remains read-only throughout the flow.
   await page.addInitScript(({ fixture, workspace }) => {
@@ -201,8 +247,8 @@ async function expectOpenAtlasContract(page: Page, vectorMap: Locator) {
     "vera-surveyor-liberty",
     { timeout: 15_000 },
   );
-  await expect(vectorMap).toHaveAttribute("data-veramap-clusters", "disabled");
-  await expect(vectorMap).toHaveAttribute("data-veramap-points", "unclustered");
+  await expect(vectorMap).toHaveAttribute("data-veramap-clusters", "enabled");
+  await expect(vectorMap).toHaveAttribute("data-veramap-points", "price-score");
   await expect(vectorMap).toHaveAttribute("data-veramap-streets", /^(?:detailed|vector)$/);
   await expect(vectorMap).toHaveAttribute("data-veramap-buildings", /^(?:3d|footprints)$/);
   await expect(vectorMap).toHaveAttribute("data-veramap-motion", /^(?:standard|reduced)$/);
@@ -213,22 +259,23 @@ async function expectOpenAtlasContract(page: Page, vectorMap: Locator) {
       async () => Number((await vectorMap.getAttribute("data-veramap-listings")) ?? "0"),
       {
         timeout: 15_000,
-        message: "Atlas did not publish the count loaded into its unclustered listing source",
+        message: "Atlas did not publish the count loaded into its listing source",
       },
     )
     .toBeGreaterThan(0);
   await expect
-    .poll(
-      async () => Number((await vectorMap.getAttribute("data-veramap-features")) ?? "0"),
-      {
-        timeout: 15_000,
-        message: "Atlas loaded its map shell but rendered no unclustered listing points",
-      },
-    )
-    .toBeGreaterThan(0);
-  await expect(vectorMap).toHaveAttribute("data-veramap-ready", "true", {
-    timeout: 15_000,
-  });
+    .poll(async () => {
+      const failure = page.locator("[data-map-errors]");
+      if (await failure.count()) {
+        return `failure: ${await failure.getAttribute("data-map-errors")}`;
+      }
+      return (await vectorMap.getAttribute("data-veramap-ready")) ?? "waiting";
+    }, { timeout: 15_000, message: "Atlas did not reach its ready state" })
+    .toBe("true");
+  await expect(vectorMap).toHaveAttribute(
+    "data-veramap-layer-contract",
+    "clusters points price-score focus hit",
+  );
   const pixelRatio = Number(await vectorMap.getAttribute("data-veramap-pixel-ratio"));
   expect(pixelRatio, "Atlas published no usable WebGL pixel ratio").toBeGreaterThan(0);
   expect(pixelRatio, "Atlas exceeds its mobile GPU pixel-ratio cap").toBeLessThanOrEqual(2);
@@ -313,6 +360,15 @@ test(
       await filterDeck.evaluate((element) => (element as HTMLElement).inert),
       "a visible filter deck must remain in the accessibility tree",
     ).toBe(false);
+    if (viewport!.width >= 1180) {
+      const overflowCue = page.locator("[data-filter-scroll]");
+      await expect(overflowCue).toBeVisible();
+      await overflowCue.click();
+      await expect.poll(() => filterDeck.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+      await expect(overflowCue).toContainText("Earlier filters");
+      await overflowCue.click();
+      await expect.poll(() => filterDeck.evaluate((element) => element.scrollLeft)).toBe(0);
+    }
     const underTwoThousand = bracket.getByRole("button", {
       name: /(?:≤|under|up to).*2[,.]?000/i,
     });
@@ -386,6 +442,11 @@ test(
   "VERA Atlas has explicit map and list modes @vera-all-platforms",
   async ({ page }) => {
     const atlasStyleWarnings: string[] = [];
+    const remoteMapRequests: string[] = [];
+    page.on("request", (request) => {
+      const url = new URL(request.url());
+      if (url.origin === "https://tiles.openfreemap.org") remoteMapRequests.push(url.href);
+    });
     page.on("console", (message) => {
       if (
         message.type() === "warning" &&
@@ -407,7 +468,11 @@ test(
     await expectSelected(listMode);
     await expect(page.locator(".atlas-layout")).toHaveClass(/atlas-layout--list/);
     await expect(page.locator("[data-veramap], .maplibregl-canvas")).toHaveCount(0);
-    await expect(page.locator('script[src*="maplibre-gl"]')).toHaveCount(0);
+    await expect(page.locator('script[src*="maplibre-gl"]')).toHaveCount(1);
+    expect(
+      remoteMapRequests,
+      "idle prewarming may cache first-party style assets but must not request live tiles before Map view",
+    ).toEqual([]);
 
     await expect(page.locator(".workspacehead--atlas")).toContainText(
       /four-borough.*Manhattan.*Brooklyn.*Queens.*Bronx/is,
@@ -423,9 +488,25 @@ test(
       const scoped = pool.filter((listing) =>
         allowed.has(String(listing.borough ?? "").trim().toLowerCase()),
       );
-      const mapped = scoped.filter(
-        (listing) => listing.latitude != null && listing.longitude != null,
-      );
+      const mapped = scoped.filter((listing) => {
+        const coordinateNumber = (value: unknown) => {
+          if (value == null) return null;
+          if (typeof value !== "number" && typeof value !== "string") return null;
+          if (typeof value === "string" && !value.trim()) return null;
+          const number = Number(value);
+          return Number.isFinite(number) ? number : null;
+        };
+        const latitude = coordinateNumber(listing.latitude);
+        const longitude = coordinateNumber(listing.longitude);
+        return (
+          latitude != null &&
+          longitude != null &&
+          latitude >= -90 &&
+          latitude <= 90 &&
+          longitude >= -180 &&
+          longitude <= 180
+        );
+      });
       const boroughByUid = new Map(
         pool.map((listing) => [listing.listing_uid ?? "", listing.borough ?? ""]),
       );
@@ -503,6 +584,110 @@ test(
 );
 
 test(
+  "VERA Atlas rejects absent and malformed coordinates without losing numeric strings @vera-all-platforms",
+  async ({ page }) => {
+    const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    const source = fixture.pool[0];
+    const coordinateCases: Array<{
+      uid: string;
+      latitude: unknown;
+      longitude: unknown;
+    }> = [
+      { uid: "coordinate-valid-number", latitude: 40.721767, longitude: -73.98225 },
+      { uid: "coordinate-valid-string", latitude: " 40.721767 ", longitude: " -73.98225 " },
+      { uid: "coordinate-null", latitude: null, longitude: null },
+      { uid: "coordinate-empty", latitude: 40.721767, longitude: "" },
+      { uid: "coordinate-whitespace", latitude: "   ", longitude: -73.98225 },
+      { uid: "coordinate-nan", latitude: "NaN", longitude: -73.98225 },
+      { uid: "coordinate-junk", latitude: "north", longitude: -73.98225 },
+      { uid: "coordinate-latitude-range", latitude: 90.01, longitude: -73.98225 },
+      { uid: "coordinate-longitude-range", latitude: 40.721767, longitude: -180.01 },
+      { uid: "coordinate-boolean", latitude: false, longitude: -73.98225 },
+    ];
+    const validUids = ["coordinate-valid-number", "coordinate-valid-string"];
+    const invalidUids = coordinateCases
+      .map(({ uid }) => uid)
+      .filter((uid) => !validUids.includes(uid));
+
+    fixture.pool = coordinateCases.map(({ uid, latitude, longitude }, index) => ({
+      ...source,
+      address_normalized: `${index + 1} Coordinate Contract Street`,
+      borough: "Manhattan",
+      latitude,
+      listing_uid: uid,
+      longitude,
+      title: `Coordinate case ${index + 1}`,
+    }));
+
+    await mockVeraData(
+      page,
+      { atlasMode: "list" },
+      JSON.stringify(fixture),
+    );
+    await page.goto("/vera/#/atlas", { waitUntil: "domcontentloaded" });
+    await waitForVera(page);
+
+    const renderedUids = await page
+      .locator(".atlas-list-pane [data-open]")
+      .evaluateAll((elements) =>
+        elements.map((element) => element.getAttribute("data-open") ?? "").sort(),
+      );
+    expect(renderedUids).toEqual(validUids.slice().sort());
+    await expect(page.locator(".workspace-count")).toHaveText("2 mapped · 10 in scope");
+
+    const mapMode = page.getByRole("button", { name: /^map(?: view)?$/i });
+    await mapMode.click();
+    const vectorMap = page.locator("[data-veramap]");
+    await expectOpenAtlasContract(page, vectorMap);
+    await expect(vectorMap).toHaveAttribute("data-veramap-listings", "2");
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () =>
+            Boolean(
+              (window as unknown as { __VERAG?: { ready: () => boolean } }).__VERAG?.ready(),
+            ),
+        ),
+      )
+      .toBe(true);
+
+    const validation = await page.evaluate(
+      ({ invalid, valid }) => {
+        const app = window as unknown as {
+          __vera?: { pool: () => Array<Record<string, unknown>> };
+          __VERAG?: {
+            minimap: (listing: Record<string, unknown>, width: number, height: number) => string;
+          };
+          __VERAM?: {
+            flyTo: (uid: string, options: { popup: boolean }) => boolean;
+            update: (listings: Array<Record<string, unknown>>) => void;
+          };
+        };
+        const pool = app.__vera?.pool() ?? [];
+        app.__VERAM?.update(pool);
+        return {
+          invalidFlyTo: invalid.map((uid) => app.__VERAM?.flyTo(uid, { popup: false })),
+          invalidMinimaps: pool
+            .filter((listing) => invalid.includes(String(listing.listing_uid ?? "")))
+            .map((listing) => Boolean(app.__VERAG?.minimap(listing, 300, 300))),
+          validFlyTo: valid.map((uid) => app.__VERAM?.flyTo(uid, { popup: false })),
+          validMinimaps: pool
+            .filter((listing) => valid.includes(String(listing.listing_uid ?? "")))
+            .map((listing) => Boolean(app.__VERAG?.minimap(listing, 300, 300))),
+        };
+      },
+      { invalid: invalidUids, valid: validUids },
+    );
+
+    await expect(vectorMap).toHaveAttribute("data-veramap-listings", "2");
+    expect(validation.invalidFlyTo).toEqual(invalidUids.map(() => false));
+    expect(validation.invalidMinimaps).toEqual(invalidUids.map(() => false));
+    expect(validation.validFlyTo).toEqual(validUids.map(() => true));
+    expect(validation.validMinimaps).toEqual(validUids.map(() => true));
+  },
+);
+
+test(
   "VERA Atlas removes camera motion when the platform requests it @vera-all-platforms",
   async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -515,8 +700,8 @@ test(
       await expect(vectorMap).toHaveAttribute("data-veramap-motion", "reduced", {
         timeout: 15_000,
       });
-      await expect(vectorMap).toHaveAttribute("data-veramap-clusters", "disabled");
-      await expect(vectorMap).toHaveAttribute("data-veramap-points", "unclustered");
+      await expect(vectorMap).toHaveAttribute("data-veramap-clusters", "enabled");
+      await expect(vectorMap).toHaveAttribute("data-veramap-points", "price-score");
       await expectNoHorizontalOverflow(page);
     } else {
       await expect(page.locator(".mp-pin").first()).toBeVisible();
@@ -527,7 +712,7 @@ test(
 test(
   "VERA Atlas falls back cleanly when the open style is unavailable @vera-desktop",
   async ({ page }) => {
-    await page.route("**/styles/liberty*", (route) => route.abort());
+    await page.route("**/vera/assets/vendor/maplibre/style/liberty-local.json", (route) => route.abort());
     await openVera(page, "atlas");
 
     await expect(page.locator('.page[data-page="atlas"]')).toBeVisible();
@@ -536,6 +721,100 @@ test(
     });
     await expect(page.locator(".mp-pin").first()).toBeVisible();
     await expect(page.locator("[data-veramap], .maplibregl-canvas")).toHaveCount(0);
+  },
+);
+
+test(
+  "VERA Atlas keeps MapLibre style assets first-party and opens an inspectable popup @vera-desktop",
+  async ({ page }) => {
+    const mapAssetRequests: string[] = [];
+    page.on("request", (request) => {
+      const url = new URL(request.url());
+      if (
+        url.pathname.includes("/vera/assets/vendor/maplibre/style/") ||
+        url.pathname.includes("/styles/liberty") ||
+        /(?:sprite|glyph)/i.test(url.pathname)
+      ) {
+        mapAssetRequests.push(url.href);
+      }
+    });
+
+    await openVera(page, "atlas");
+    const vectorMap = page.locator("[data-veramap]");
+    await expectOpenAtlasContract(page, vectorMap);
+    await expect.poll(() =>
+      mapAssetRequests.some((request) =>
+        new URL(request).pathname.endsWith("/vera/assets/vendor/maplibre/style/liberty-local.json"),
+      ),
+    ).toBe(true);
+    await expect.poll(() =>
+      mapAssetRequests.some((request) =>
+        /\/vera\/assets\/vendor\/maplibre\/style\/sprite\/ofm(?:@2x)?\.json$/.test(
+          new URL(request).pathname,
+        ),
+      ),
+    ).toBe(true);
+    await expect.poll(() =>
+      mapAssetRequests.some((request) =>
+        new URL(request).pathname.includes("/vera/assets/vendor/maplibre/style/fonts/Noto%20Sans%20Bold/"),
+      ),
+    ).toBe(true);
+    expect(
+      mapAssetRequests.every((request) => {
+        const url = new URL(request);
+        return (
+          url.origin === new URL(page.url()).origin &&
+          url.pathname.startsWith("/vera/assets/vendor/maplibre/style/")
+        );
+      }),
+      "MapLibre style, glyph, and sprite resources must stay under VERA's first-party vendor path",
+    ).toBe(true);
+    expect(
+      mapAssetRequests.filter((request) => {
+        const url = new URL(request);
+        return url.origin !== new URL(page.url()).origin && /\/styles\/liberty/.test(url.pathname);
+      }),
+      "Atlas must not return to OpenFreeMap for its style document",
+    ).toEqual([]);
+
+    const canvas = vectorMap.locator(".maplibregl-canvas");
+    await canvas.focus();
+    await canvas.press("Enter");
+    const popup = page.locator(".maplibregl-popup.vera-map-popup");
+    await expect(popup).toBeVisible();
+    const inspect = popup.getByRole("button", { name: "Inspect listing" });
+    await expect(inspect).toBeVisible();
+    await inspect.focus();
+    await expect(inspect).toBeFocused();
+    await inspect.press("Enter");
+    await expect(page.getByRole("dialog", { name: /ledger|listing|rental/i })).toBeVisible();
+  },
+);
+
+test(
+  "VERA's listing minimap names walk and station context without a remote data request @vera-desktop",
+  async ({ page }) => {
+    const nonImageExternalRequests: string[] = [];
+    page.on("request", (request) => {
+      const url = new URL(request.url());
+      if (request.resourceType() !== "image" && url.origin !== PREVIEW_ORIGIN) {
+        nonImageExternalRequests.push(url.href);
+      }
+    });
+
+    await openVera(page, "today");
+    const minimap = page.locator(".dropcard__map .gm").first();
+    await expect(minimap).toBeVisible();
+    await expect(minimap).toHaveAttribute(
+      "aria-label",
+      /neighborhood map:.*nearest station.*minutes walk/i,
+    );
+    await expect(minimap).toContainText(/5 min radius.*10 min radius/i);
+    await expect(minimap.locator("image, [href]")).toHaveCount(0);
+    expect(
+      nonImageExternalRequests,
+      "the static minimap must not require a remote geocoder, route, or station request",
+    ).toEqual([]);
   },
 );
 
@@ -738,6 +1017,94 @@ test(
 );
 
 test(
+  "VERA gallery opens a keyboard-safe photo viewer @vera-desktop",
+  async ({ page }) => {
+    await openVera(page, "today");
+
+    const gallery = page.locator("[data-gal]").first();
+    const opener = gallery.getByRole("button", { name: /open photo 1 of \d+.*full screen/i });
+    const count = Number(await gallery.getAttribute("data-gal-count"));
+    expect(count, "the gallery needs multiple photos to verify viewer navigation").toBeGreaterThan(1);
+    const backgroundBefore = await page.evaluate(() =>
+      [...document.querySelectorAll<HTMLElement>(".shell > *")]
+        .filter((element) => !element.matches("[data-lb]"))
+        .map((element) => ({ ariaHidden: element.getAttribute("aria-hidden"), inert: element.inert })),
+    );
+
+    await opener.click();
+    const viewer = page.getByRole("dialog", { name: "Photo viewer" });
+    const status = viewer.locator("[data-lb-status]");
+    await expect(viewer).toBeVisible();
+    await expect(viewer).toHaveAttribute("aria-modal", "true");
+    await expect(status).toHaveText(/photo 1 of \d+/i);
+    await expect(viewer.getByRole("button", { name: /close the photo viewer/i })).toBeFocused();
+    expect(
+      await page.evaluate(() =>
+        [...document.querySelectorAll<HTMLElement>(".shell > *")]
+          .filter((element) => !element.matches("[data-lb]"))
+          .every((element) => element.inert && element.getAttribute("aria-hidden") === "true"),
+      ),
+      "the viewer must remove the product shell behind it from interaction and the accessibility tree",
+    ).toBe(true);
+
+    await viewer.getByRole("button", { name: /next photo/i }).click();
+    await expect(status).toHaveText(/photo 2 of \d+/i);
+    await page.keyboard.press("ArrowLeft");
+    await expect(status).toHaveText(/photo 1 of \d+/i);
+    await viewer.getByRole("button", { name: /previous photo/i }).click();
+    await expect(status).toHaveText(new RegExp(`photo ${count} of ${count}`, "i"));
+    await page.keyboard.press("ArrowRight");
+    await expect(status).toHaveText(/photo 1 of \d+/i);
+
+    await page.keyboard.press("Escape");
+    await expect(viewer).toBeHidden();
+    await expectFocused(opener, "closing the viewer did not restore focus to its photo opener");
+    expect(
+      await page.evaluate((before) =>
+        [...document.querySelectorAll<HTMLElement>(".shell > *")]
+          .filter((element) => !element.matches("[data-lb]"))
+          .every(
+            (element, index) =>
+              element.inert === before[index]?.inert &&
+              element.getAttribute("aria-hidden") === before[index]?.ariaHidden,
+          ),
+      backgroundBefore),
+      "closing the viewer did not restore the background state it found",
+    ).toBe(true);
+  },
+);
+
+test(
+  "VERA photo viewer removes motion when the platform requests it @vera-desktop",
+  async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await openVera(page, "today");
+
+    await page.locator("[data-gal]").first().getByRole("button", { name: /open photo 1 of \d+.*full screen/i }).click();
+    const viewer = page.getByRole("dialog", { name: "Photo viewer" });
+    await expect(viewer).toBeVisible();
+    expect(
+      await viewer.evaluate((element) => {
+        const image = element.querySelector<HTMLElement>("[data-lb-img]");
+        const viewerStyle = getComputedStyle(element);
+        const imageStyle = image ? getComputedStyle(image) : null;
+        return {
+          imageAnimation: imageStyle?.animationName,
+          imageTransition: imageStyle?.transitionDuration,
+          viewerAnimation: viewerStyle.animationName,
+          viewerTransition: viewerStyle.transitionDuration,
+        };
+      }),
+    ).toEqual({
+      imageAnimation: "none",
+      imageTransition: "0s",
+      viewerAnimation: "none",
+      viewerTransition: "0s",
+    });
+  },
+);
+
+test(
   "VERA keeps the retired radar runtime absent and has no infinite decorative motion @vera-all-platforms",
   async ({ page }) => {
     await openVera(page, "today");
@@ -801,11 +1168,12 @@ test(
     await expect(gallery).toBeVisible();
     await expect(gallery).toHaveAttribute("role", "region");
     await expect(gallery).toHaveAttribute("tabindex", "0");
-    await expect(gallery).toHaveAttribute("aria-label", /left and right arrow keys/i);
+    await expect(gallery).toHaveAttribute("aria-label", /left and right arrow keys.*previous and next buttons.*full screen/i);
     await expect(gallery).toHaveAttribute("data-gal-count", /[2-9]/);
     const galleryStatus = gallery.locator("xpath=following-sibling::*[@data-gal-status]");
     await expect(galleryStatus).toHaveText(/photo 1 of \d+.*arrow keys/i);
-    await expect(gallery.locator("img").first()).toHaveAttribute("alt", /photo 1 of \d+ for/i);
+    await expect(gallery.getByRole("button", { name: /open photo 1 of \d+.*full screen/i }).first()).toBeVisible();
+    await expect(gallery.locator("img").first()).toHaveAttribute("alt", "");
     expect(
       await gallery.evaluate((element) => element.closest("button") !== null),
       "the keyboard-focusable gallery must not be nested inside the ledger button",
@@ -889,7 +1257,7 @@ test(
     const gallery = page.locator("[data-gal]").first();
     await expect(gallery).toBeVisible();
     await expect(gallery).not.toHaveAttribute("aria-label", /\b319\b/);
-    await expect(gallery.locator("img").first()).not.toHaveAttribute("alt", /\b319\b/);
+    await expect(gallery.getByRole("button", { name: /open photo 1 of \d+/i }).first()).not.toHaveAccessibleName(/\b319\b/);
   },
 );
 
@@ -1077,10 +1445,10 @@ test(
     await expect(page.locator("[data-veramap], .mp").first()).toBeVisible({ timeout: 15_000 });
     const vectorMap = page.locator("[data-veramap]");
     if (await vectorMap.count()) {
-      await expect(vectorMap).toHaveAttribute("data-veramap-clusters", "disabled", {
+      await expect(vectorMap).toHaveAttribute("data-veramap-clusters", "enabled", {
         timeout: 15_000,
       });
-      await expect(vectorMap).toHaveAttribute("data-veramap-points", "unclustered");
+      await expect(vectorMap).toHaveAttribute("data-veramap-points", "price-score");
       await expectMinimumTouchTarget(vectorMap.locator(".maplibregl-ctrl-zoom-in"));
       await expectMinimumTouchTarget(vectorMap.locator(".maplibregl-ctrl-zoom-out"));
       const attributionButton = vectorMap.locator(".maplibregl-ctrl-attrib-button");

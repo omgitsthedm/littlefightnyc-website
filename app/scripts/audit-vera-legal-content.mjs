@@ -3,7 +3,7 @@
  * the app and the crawlable Field Manual. This is a copy guard, not legal
  * advice and not a substitute for checking the cited primary sources.
  */
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -14,6 +14,13 @@ const ledgerPath = path.join(appRoot, "public", "vera", "assets", "js", "vera-le
 const prerenderPath = path.join(appRoot, "scripts", "vera-prerender.mjs");
 const indexPath = path.join(appRoot, "public", "vera", "index.html");
 const serviceWorkerPath = path.join(appRoot, "public", "vera", "sw.js");
+const mapStylePath = path.join(appRoot, "public", "vera", "assets", "vendor", "maplibre", "style", "liberty-local.json");
+const mapStyleRoot = path.dirname(mapStylePath);
+const openFreeMapLicensePath = path.join(mapStyleRoot, "LICENSE-OPENFREEMAP.md");
+const notoLicensePath = path.join(mapStyleRoot, "LICENSE-NOTO.txt");
+const mapSourcePath = path.join(mapStyleRoot, "SOURCE.md");
+const glyphRoot = path.join(mapStyleRoot, "fonts");
+const glyphFonts = ["Noto Sans Regular", "Noto Sans Bold", "Noto Sans Italic"];
 const manualPath = path.join(appRoot, "dist", "vera", "manual", "index.html");
 
 const sources = [
@@ -33,13 +40,30 @@ function mustNotContain(label, text, unexpected) {
   if (text.includes(unexpected)) failures.push(`${label}: retains superseded copy ${JSON.stringify(unexpected)}`);
 }
 
-const [core, app, ledger, prerender, index, serviceWorker] = await Promise.all([
+const [
+  core,
+  app,
+  ledger,
+  prerender,
+  index,
+  serviceWorker,
+  mapStyle,
+  openFreeMapLicense,
+  notoLicense,
+  mapSource,
+  glyphFiles,
+] = await Promise.all([
   readFile(corePath, "utf8"),
   readFile(appPath, "utf8"),
   readFile(ledgerPath, "utf8"),
   readFile(prerenderPath, "utf8"),
   readFile(indexPath, "utf8"),
   readFile(serviceWorkerPath, "utf8"),
+  readFile(mapStylePath, "utf8"),
+  readFile(openFreeMapLicensePath, "utf8"),
+  readFile(notoLicensePath, "utf8"),
+  readFile(mapSourcePath, "utf8"),
+  Promise.all(glyphFonts.map((font) => readdir(path.join(glyphRoot, font)))),
 ]);
 
 for (const source of sources) mustContain("vera-core.js LAW_SOURCES", core, source);
@@ -70,15 +94,43 @@ mustContain("vera-prerender.mjs", prerender, "Lawful rent and up to one month of
 mustContain("vera-prerender.mjs", prerender, "a broker representing the landlord, or publishing their listing with permission, cannot charge you");
 
 for (const asset of [
-  "./assets/css/vera.css?v=56",
+  "./assets/css/vera.css?v=57",
   "./assets/js/vera-core.js?v=51",
-  "./assets/js/vera-ledger.js?v=57",
-  "./assets/js/vera-app.js?v=56",
+  "./assets/js/vera-geo.js?v=48",
+  "./assets/js/vera-map.js?v=56",
+  "./assets/js/vera-ledger.js?v=58",
+  "./assets/js/vera-app.js?v=57",
 ]) {
   mustContain("vera/index.html cache contract", index, asset);
   mustContain("vera/sw.js cache contract", serviceWorker, asset.replace("./", "/vera/"));
 }
-mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v9");
+mustContain("vera-app.js Atlas style contract", app, "./assets/vendor/maplibre/style/liberty-local.json");
+mustContain("vera-app.js acceptance harness contract", app, "./assets/js/vera-tests.js?v=57");
+mustContain("liberty-local.json Atlas style contract", mapStyle, "\"sprite\":\"/vera/assets/vendor/maplibre/style/sprite/ofm\"");
+mustContain("liberty-local.json Atlas style contract", mapStyle, "\"glyphs\":\"/vera/assets/vendor/maplibre/style/fonts/{fontstack}/{range}.pbf\"");
+mustContain("OpenFreeMap vendor notice", openFreeMapLicense, "Copyright (c) 2023 Zsolt Ero");
+mustContain("Noto vendor notice", notoLicense, "SIL OPEN FONT LICENSE Version 1.1");
+mustContain("Atlas vendor provenance", mapSource, "72e1480dfc92858d334647037988bd2591fdb021");
+mustContain("Atlas vendor provenance", mapSource, "104,594,877");
+glyphFiles.forEach((files, fontIndex) => {
+  const publishedRanges = new Set(files.filter((file) => file.endsWith(".pbf")));
+  for (let start = 0; start <= 65280; start += 256) {
+    const expected = `${start}-${start + 255}.pbf`;
+    if (!publishedRanges.has(expected)) {
+      failures.push(`${glyphFonts[fontIndex]} Atlas glyph contract: missing ${expected}`);
+    }
+  }
+});
+const glyphStats = await Promise.all(glyphFonts.flatMap((font, fontIndex) =>
+  glyphFiles[fontIndex].filter((file) => file.endsWith(".pbf")).map((file) =>
+    stat(path.join(glyphRoot, font, file)),
+  ),
+));
+const glyphBytes = glyphStats.reduce((total, entry) => total + entry.size, 0);
+if (glyphBytes > 105_000_000) {
+  failures.push(`Atlas glyph bundle exceeds its 105,000,000-byte release cap (${glyphBytes})`);
+}
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v10");
 mustNotContain("vera-core.js", core, "before the lease is executed");
 mustNotContain("vera-app.js", app, "before the lease is executed");
 mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");

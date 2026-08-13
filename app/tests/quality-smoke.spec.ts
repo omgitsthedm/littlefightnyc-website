@@ -9,9 +9,13 @@ import {
 } from "@playwright/test";
 import { BOOKING_HREF } from "../src/data/contact";
 
+const requestedPreviewPort = Number.parseInt(process.env.PLAYWRIGHT_PORT ?? "4173", 10);
+const previewPort = Number.isInteger(requestedPreviewPort) &&
+  requestedPreviewPort >= 1024 && requestedPreviewPort <= 65535
+  ? requestedPreviewPort : 4173;
 const PREVIEW_ORIGINS = new Set([
-  "http://127.0.0.1:4173",
-  "http://localhost:4173",
+  `http://127.0.0.1:${previewPort}`,
+  `http://localhost:${previewPort}`,
 ]);
 
 const PHC_CASE_PATH = "/case-studies/public-house-creative/";
@@ -1549,6 +1553,11 @@ test(
     await page.keyboard.press("Escape");
     await expect(page.locator("[data-inspector]")).not.toHaveClass(/is-open/);
     expect(await page.locator("tr[data-listing-row].is-open").count()).toBe(0);
+    /* Closing an in-app ledger consumes the history entry it created. Wait
+       for that navigation to settle before starting a second interaction;
+       otherwise its pending hashchange can correctly close the new ledger. */
+    await expect(page).toHaveURL(/\/vera\/#\/browse$/);
+    await expect(openButtons.first()).toBeFocused();
 
     // Space activates too, and must not scroll the page instead.
     await page.evaluate(() => window.scrollTo(0, 0));

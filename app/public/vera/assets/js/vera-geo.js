@@ -58,6 +58,7 @@
   /* Where the listing's coordinates ACTUALLY are vs what the post claims.
      Returns {name, agrees} — agrees=false is a quiet mis-hood tell. */
   function placeRead(l) {
+    if (!hasValidLngLat(l)) return null;
     var h = hoodAt(+l.latitude, +l.longitude);
     if (!h) return null;
     var claimed = String(l.neighborhood || '').toLowerCase();
@@ -74,10 +75,54 @@
     }).join(' ');
   }
 
+  function stationPoint(station) {
+    if (!station) return null;
+    var best = null;
+    var wantedLines = String(station.lines || '').split(/\s+/).filter(Boolean);
+    for (var i = 0; i < C.STATIONS.length; i++) {
+      var candidate = C.STATIONS[i];
+      if (candidate[0] !== station.name) continue;
+      /* A published station name can map to several entrances; choose the
+         first table coordinate only when the feed did not publish one. */
+      if (!best) best = candidate;
+      var candidateLines = String(candidate[1] || '').split(/\s+/);
+      if (!wantedLines.length || wantedLines.some(function (line) { return candidateLines.indexOf(line) > -1; })) return candidate;
+    }
+    return best;
+  }
+
+  function coordinateNumber(value) {
+    if (value == null) return null;
+    if (typeof value !== 'number' && typeof value !== 'string') return null;
+    if (typeof value === 'string' && !value.trim()) return null;
+    var number = +value;
+    return isFinite(number) ? number : null;
+  }
+
+  function hasValidLngLat(l) {
+    if (!l) return false;
+    var lat = coordinateNumber(l.latitude), lng = coordinateNumber(l.longitude);
+    return lat != null && lng != null && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  }
+
+  function labelText(text, x, y, cls, anchor) {
+    return '<text class="' + cls + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '"' +
+      (anchor ? ' text-anchor="' + anchor + '"' : '') +
+      '>' + C.esc(text) + '</text>';
+  }
+
+  function shortMapLabel(text, limit) {
+    var value = String(text || '');
+    if (value.length <= limit) return value;
+    return value.slice(0, Math.max(1, limit - 1)).replace(/\s+$/, '') + '…';
+  }
+
   /* Per-listing minimap: the containing hood highlighted, neighbours dim,
-     the apartment pinned, the nearest station named. viewBox w×h. */
+     a true walking-scale ring, place cue, station, and the apartment pin.
+     Every cue derives from the coordinate, published feed, or local station
+     table — never from a geocoder or a private address lookup. viewBox w×h. */
   function minimap(l, w, h) {
-    if (!GEO.loaded || l.latitude == null) return '';
+    if (!GEO.loaded || !hasValidLngLat(l)) return '';
     var lat = +l.latitude, lng = +l.longitude;
     var home = hoodAt(lat, lng);
     var spanLat = 0.0135, cosL = Math.cos(lat * Math.PI / 180);
@@ -93,29 +138,44 @@
       polys += '<path class="' + cls + '" d="' + ringsPath(hd.r, px, py) + '"/>';
     });
 
+    /* Existing core distance math uses 80m/min. Five and ten minute rings
+       make that assumption visible instead of implying a routed walking ETA. */
+    var metersPerLat = 111320;
+    var metersPerLng = metersPerLat * cosL;
+    var walkRings = [5, 10].map(function (minutes) {
+      var meters = minutes * 80;
+      var rx = Math.abs(px(lng + meters / metersPerLng) - px(lng));
+      var ry = Math.abs(py(lat + meters / metersPerLat) - py(lat));
+      return '<ellipse class="gm-walkring" cx="' + px(lng).toFixed(1) + '" cy="' + py(lat).toFixed(1) + '" rx="' + rx.toFixed(1) + '" ry="' + ry.toFixed(1) + '" fill="none" stroke="rgba(76,195,138,' + (minutes === 5 ? '.34' : '.18') + ')" stroke-width="1" stroke-dasharray="' + (minutes === 5 ? '3 3' : '2 4') + '"/>';
+    }).join('');
+
     var stn = C.nearestStation(l);
+    var station = stationPoint(stn);
     var stnDot = '';
-    if (stn) {
-      for (var i = 0; i < C.STATIONS.length; i++) {
-        var s = C.STATIONS[i];
-        if (s[0] === stn.name && s[2] > vb.s && s[2] < vb.n && s[3] > vb.w && s[3] < vb.e) {
-          var first = String(s[1]).split(/\s+/)[0];
-          stnDot = '<line class="gm-tether" x1="' + px(lng).toFixed(1) + '" y1="' + py(lat).toFixed(1) + '" x2="' + px(s[3]).toFixed(1) + '" y2="' + py(s[2]).toFixed(1) + '"/>' +
-            '<circle class="gm-stn" cx="' + px(s[3]).toFixed(1) + '" cy="' + py(s[2]).toFixed(1) + '" r="4.5" fill="' + (C.LINE_COLORS[first] || '#888') + '"/>' +
-            '<text class="gm-stnname" x="' + px(s[3]).toFixed(1) + '" y="' + (py(s[2]) + 14).toFixed(1) + '">' + C.esc(stn.name) + '</text>';
-          break;
-        }
-      }
+    if (station && station[2] > vb.s && station[2] < vb.n && station[3] > vb.w && station[3] < vb.e) {
+      var first = String(stn.lines || station[1]).split(/\s+/)[0];
+      var stationLabel = stn.name + (stn.lines ? ' · ' + stn.lines : '');
+      stnDot = '<line class="gm-tether" x1="' + px(lng).toFixed(1) + '" y1="' + py(lat).toFixed(1) + '" x2="' + px(station[3]).toFixed(1) + '" y2="' + py(station[2]).toFixed(1) + '"/>' +
+        '<circle class="gm-stn" cx="' + px(station[3]).toFixed(1) + '" cy="' + py(station[2]).toFixed(1) + '" r="4.5" fill="' + (C.LINE_COLORS[first] || '#888') + '"/>' +
+        labelText(stationLabel, px(station[3]), Math.min(h - 26, py(station[2]) + 14), 'gm-stnname', 'middle');
     }
 
-    var label = home ? '<text class="gm-label" x="10" y="' + (h - 10) + '">' + C.esc(home.n.toUpperCase()) + '</text>' : '';
+    var place = placeRead(l);
+    var placeCue = place && !place.agrees && l.neighborhood
+      ? 'Map place: ' + place.name + ' · post says ' + l.neighborhood
+      : (home ? home.n : (l.neighborhood || 'Location'));
+    var labels =
+      labelText(shortMapLabel(placeCue, 42).toUpperCase(), 10, h - 10, 'gm-label') +
+      labelText('≈5 MIN RADIUS', 10, 18, 'gm-walklabel') +
+      labelText('≈10 MIN RADIUS', 10, 33, 'gm-walklabel') +
+      (stn ? labelText('≈' + stn.mins + ' MIN TO ' + stn.name, w - 10, 18, 'gm-walklabel', 'end') : '');
 
-    return '<svg class="gm" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Neighborhood map: ' + C.esc(home ? home.n : 'location') + '">' +
+    return '<svg class="gm" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Neighborhood map: ' + C.esc(placeCue) + (stn ? '; nearest station ' + C.esc(stn.name) + ', about ' + stn.mins + ' minutes walk' : '') + '">' +
       '<rect class="gm-water" width="' + w + '" height="' + h + '"/>' +
-      polys + stnDot +
+      polys + walkRings + stnDot +
       '<g class="gm-pin" transform="translate(' + px(lng).toFixed(1) + ' ' + py(lat).toFixed(1) + ')">' +
         '<circle class="gm-halo" r="16"/><circle class="gm-dot" r="7"/>' +
-      '</g>' + label + '</svg>';
+      '</g>' + labels + '</svg>';
   }
 
   /* Atlas land: every zone polygon, labelled at bbox centre. */

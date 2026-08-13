@@ -67,6 +67,22 @@
 
   function trustedURL(value, kind) { return C.trustedURL ? C.trustedURL(value, kind) : null; }
 
+  /* Public feeds sometimes carry coordinates as numeric strings. Accept those
+     without letting null, blank, boolean, or object values collapse to 0,0. */
+  function coordinateNumber(value) {
+    if (value == null) return null;
+    if (typeof value !== 'number' && typeof value !== 'string') return null;
+    if (typeof value === 'string' && !value.trim()) return null;
+    var number = +value;
+    return isFinite(number) ? number : null;
+  }
+
+  function hasValidLngLat(listing) {
+    if (!listing) return false;
+    var lat = coordinateNumber(listing.latitude), lng = coordinateNumber(listing.longitude);
+    return lat != null && lng != null && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+  }
+
   var D = null;
   var POOL = [];
   var HOODS = [];
@@ -179,7 +195,7 @@
     if (!src) return '';
     var n = (l.image_urls || []).map(function (url) { return trustedURL(url, 'image'); }).filter(Boolean).length;
     var where = l.title || l.address_normalized || 'this listing';
-    return '<img class="shot" src="' + esc(src) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer" ' +
+    return '<img class="shot" src="' + esc(src) + '" width="640" height="400" loading="lazy" decoding="async" referrerpolicy="no-referrer" ' +
       'alt="Listing photo for ' + esc(where) + '">' +
       (n > 1 ? '<span class="shot__n">' + n + ' photos</span>' : '');
   }
@@ -192,6 +208,40 @@
       var n = t.parentNode && t.parentNode.querySelector('.shot__n');
       if (n) n.parentNode.removeChild(n);
       t.parentNode.removeChild(t);
+      return;
+    }
+    if (t && t.tagName === 'IMG' && t.classList.contains('gal__shot')) {
+      var slide = t.closest('[data-gal-shot]');
+      var galleryRoot = slide && slide.closest('[data-gal]');
+      if (!slide || !galleryRoot) return;
+      slide.remove();
+      var remaining = $$('[data-gal-shot]', galleryRoot);
+      remaining.forEach(function (item, index) {
+        item.setAttribute('data-gal-shot', index);
+        item.setAttribute('aria-label', 'Open photo ' + (index + 1) + ' of ' + remaining.length + ' for ' + (galleryRoot.getAttribute('data-gal-where') || 'this listing') + ' full screen');
+      });
+      galleryRoot.setAttribute('data-gal-count', remaining.length);
+      galleryRoot.setAttribute('aria-label', 'Photo gallery for ' + (galleryRoot.getAttribute('data-gal-where') || 'this listing') + ', ' + remaining.length + ' photo' + (remaining.length === 1 ? '' : 's') + '. Use the left and right arrow keys or the previous and next buttons to move; open a photo to view it full screen.');
+      var host = galleryRoot.parentNode;
+      var status = host && $('[data-gal-status]', host);
+      var dots = host && $('.gal__dots', host);
+      if (dots) dots.innerHTML = remaining.map(function (_, index) { return '<span class="gal__dot' + (index === 0 ? ' is-on' : '') + '"></span>'; }).join('');
+      if (status) status.textContent = remaining.length ? 'Photo 1 of ' + remaining.length + ' · use arrow keys' : 'Listing photos could not be loaded.';
+      if (remaining.length < 2 && host) {
+        $$('.gal__btn,.gal__dots,[data-gal-status]', host).forEach(function (control) { control.remove(); });
+      }
+      if (!remaining.length) galleryRoot.remove();
+      return;
+    }
+    if (t && t.tagName === 'IMG' && t.hasAttribute('data-lb-img') && lbIsOpen()) {
+      if (lb.urls.length > 1) {
+        lb.urls.splice(lb.idx, 1);
+        lb.idx = Math.min(lb.idx, lb.urls.length - 1);
+        lbRender();
+      } else {
+        closeLightbox();
+        toast('That listing photo could not be loaded.');
+      }
     }
   }, true);
 
@@ -427,6 +477,21 @@
       });
   }
 
+  function syncFilterOverflowCue() {
+    var deck = $('[data-filters]');
+    var cue = $('[data-filter-scroll]');
+    if (!deck || !cue) return;
+    var desktopRail = window.matchMedia && window.matchMedia('(min-width: 1180px)').matches;
+    var overflowing = !deck.hidden && desktopRail && deck.scrollWidth > deck.clientWidth + 8;
+    cue.hidden = !overflowing;
+    if (!overflowing) return;
+    var atEnd = deck.scrollLeft >= deck.scrollWidth - deck.clientWidth - 8;
+    cue.setAttribute('data-filter-scroll', atEnd ? 'start' : 'end');
+    cue.innerHTML = atEnd
+      ? 'Earlier filters <span aria-hidden="true">←</span>'
+      : 'More filters <span aria-hidden="true">→</span>';
+  }
+
   function renderFilters() {
     var deck = $('[data-filters]');
     deck.hidden = !DATA_ROUTES[state.route];
@@ -438,6 +503,7 @@
     if (deck.hidden) {
       $$('[data-filter-toggle]').forEach(function (button) { button.hidden = true; button.setAttribute('aria-expanded', 'false'); });
       syncPressed(deck);
+      syncFilterOverflowCue();
       return;
     }
     $$('[data-bracket]').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-bracket') === state.bracket); });
@@ -462,7 +528,12 @@
       if (count) { count.hidden = !filterCount; count.textContent = filterCount; }
     });
     syncPressed(deck);
+    requestAnimationFrame(syncFilterOverflowCue);
   }
+
+  var filterDeck = $('[data-filters]');
+  if (filterDeck) filterDeck.addEventListener('scroll', syncFilterOverflowCue, { passive: true });
+  window.addEventListener('resize', syncFilterOverflowCue, { passive: true });
 
   function refresh() {
     persist();
@@ -546,16 +617,96 @@
   }
 
   function gallery(l) {
+    var sourceCount = (l.image_urls || []).length;
     var urls = (l.image_urls || []).map(function (u) { return trustedURL(u, 'image'); }).filter(Boolean).slice(0, 6);
     if (!urls.length) return C.portrait(l, 640, 340, sweepHour());
     var where = addressOf(l) || C.charName(l);
+    var multi = urls.length > 1;
     return C.portrait(l, 640, 340, sweepHour()) +
-      '<span class="gal" data-gal data-gal-count="' + urls.length + '" role="region" tabindex="0" aria-label="Photo gallery for ' + esc(where) + ', ' + urls.length + ' photo' + (urls.length === 1 ? '' : 's') + '. Use the left and right arrow keys to move between photos.">' + urls.map(function (u, i) {
-        return '<img class="gal__shot" src="' + esc(u) + '" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" referrerpolicy="no-referrer" alt="Photo ' + (i + 1) + ' of ' + urls.length + ' for ' + esc(where) + '">';
+      '<span class="gal" data-gal data-gal-count="' + urls.length + '" data-gal-source-count="' + sourceCount + '" data-gal-where="' + esc(where) + '" role="region" tabindex="0" aria-label="Photo gallery for ' + esc(where) + ', showing ' + urls.length + (sourceCount > urls.length ? ' of ' + sourceCount : '') + ' photo' + (urls.length === 1 ? '' : 's') + '. Use the left and right arrow keys or the previous and next buttons to move; open a photo to view it full screen.">' + urls.map(function (u, i) {
+        return '<button type="button" class="gal__slide" data-gal-shot="' + i + '" aria-label="Open photo ' + (i + 1) + ' of ' + urls.length + ' for ' + esc(where) + ' full screen"><img class="gal__shot" src="' + esc(u) + '" width="960" height="600" loading="' + (i ? 'lazy' : 'eager') + '" decoding="async" referrerpolicy="no-referrer" alt=""></button>';
       }).join('') + '</span>' +
-      (urls.length > 1 ? '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
-        return '<span class="gal__dot' + (i === 0 ? ' is-on' : '') + '"></span>';
-      }).join('') + '</span><span class="gal__n" data-gal-status role="status" aria-live="polite">Photo 1 of ' + urls.length + ' — swipe or use arrow keys</span>' : '');
+      (multi ? '<button type="button" class="gal__btn gal__btn--prev" data-gal-step="-1" aria-label="Previous photo">‹</button>' +
+        '<button type="button" class="gal__btn gal__btn--next" data-gal-step="1" aria-label="Next photo">›</button>' +
+        '<span class="gal__dots" aria-hidden="true">' + urls.map(function (u, i) {
+          return '<span class="gal__dot' + (i === 0 ? ' is-on' : '') + '"></span>';
+        }).join('') + '</span><span class="gal__n" data-gal-status role="status" aria-live="polite">Photo 1 of ' + urls.length + (sourceCount > urls.length ? ' · showing ' + urls.length + ' of ' + sourceCount : '') + ' · use arrow keys</span>' : '');
+  }
+
+  /* ---------- full-screen photo viewer (shared by every gallery) ---------- */
+
+  var lb = { urls: [], idx: 0, where: '', lastFocus: null, background: null };
+
+  function lbRoot() { return $('[data-lb]'); }
+
+  function lbIsOpen() { var root = lbRoot(); return !!(root && !root.hidden); }
+
+  function lbRender() {
+    var root = lbRoot();
+    if (!root || root.hidden) return;
+    var img = root.querySelector('[data-lb-img]');
+    var status = root.querySelector('[data-lb-status]');
+    var url = lb.urls[lb.idx];
+    if (img) {
+      img.src = url;
+      img.alt = 'Photo ' + (lb.idx + 1) + ' of ' + lb.urls.length + ' for ' + lb.where;
+    }
+    if (status) status.textContent = 'Photo ' + (lb.idx + 1) + ' of ' + lb.urls.length + ' — ' + lb.where;
+    root.querySelectorAll('[data-lb-step]').forEach(function (b) {
+      b.hidden = lb.urls.length < 2;
+    });
+  }
+
+  function openLightbox(strip, idx) {
+    var root = lbRoot();
+    if (!root || !strip) return;
+    var shots = strip.querySelectorAll('[data-gal-shot]');
+    if (!shots.length) return;
+    lb.urls = Array.prototype.map.call(shots, function (shot) {
+      var image = shot.querySelector('.gal__shot');
+      return image && (image.currentSrc || image.src);
+    }).filter(Boolean);
+    if (!lb.urls.length) return;
+    lb.idx = Math.min(lb.urls.length - 1, Math.max(0, idx || 0));
+    lb.where = strip.getAttribute('data-gal-where') || 'this listing';
+    lb.lastFocus = shots[lb.idx] || document.activeElement;
+    lb.background = $$('.skip-link,.grain,body > noscript,.shell > *').filter(function (el) { return el !== root; }).map(function (el) {
+      return { el: el, inert: !!el.inert, ariaHidden: el.getAttribute('aria-hidden') };
+    });
+    lb.background.forEach(function (item) {
+      item.el.inert = true;
+      item.el.setAttribute('aria-hidden', 'true');
+    });
+    root.hidden = false;
+    document.body.classList.add('lb-open');
+    lbRender();
+    var close = root.querySelector('[data-lb-close]');
+    if (close) close.focus();
+  }
+
+  function closeLightbox() {
+    var root = lbRoot();
+    if (!root || root.hidden) return;
+    root.hidden = true;
+    document.body.classList.remove('lb-open');
+    if (lb.background) lb.background.forEach(function (item) {
+      item.el.inert = item.inert;
+      if (item.ariaHidden == null) item.el.removeAttribute('aria-hidden');
+      else item.el.setAttribute('aria-hidden', item.ariaHidden);
+    });
+    lb.background = null;
+    if (lb.lastFocus && lb.lastFocus.isConnected && lb.lastFocus.focus) lb.lastFocus.focus();
+    else {
+      var main = document.getElementById('main');
+      if (main) main.focus();
+    }
+    lb.lastFocus = null;
+  }
+
+  function stepLightbox(n) {
+    if (!lb.urls.length) return;
+    lb.idx = (lb.idx + n + lb.urls.length) % lb.urls.length;
+    lbRender();
   }
 
   /* ---------- commute anchors: the #1 community ask, honestly ----------
@@ -597,7 +748,7 @@
   function commuteRead(l, anchorName) {
     var t = C.nearestStation(l);
     var a = stationByName(anchorName);
-    if (!t || !a || l.latitude == null) return null;
+    if (!t || !a || !hasValidLngLat(l)) return null;
     var mine = String(t.lines).split(/\s+/);
     var theirs = String(a[1]).split(/\s+/);
     var shared = mine.filter(function (x) { return theirs.indexOf(x) > -1; });
@@ -630,7 +781,7 @@
     var seenN = {};
     C.STATIONS.forEach(function (s) { var k = s[0] + '|' + s[1]; if (!seenN[k]) { seenN[k] = 1; uniq.push(s); } });
     function sel(idx) {
-      return '<select data-anchor-sel="' + idx + '" aria-label="Anchor station ' + (idx + 1) + '">' +
+      return '<select name="vera-anchor-' + (idx + 1) + '" autocomplete="off" data-anchor-sel="' + idx + '" aria-label="Anchor station ' + (idx + 1) + '">' +
         '<option value="">' + (idx ? 'second anchor (optional)' : 'pick a station you live around') + '</option>' +
         uniq.map(function (s) {
           var on = anchors[idx] === s[0] ? ' selected' : '';
@@ -639,7 +790,7 @@
     }
     return '<div class="anchorbar"><span class="anchorbar__label">Commute anchors</span>' + sel(0) + sel(1) +
       '<span class="anchorbar__label">Income</span>' +
-      '<input type="number" inputmode="numeric" min="0" step="5000" placeholder="annual, stays in this browser" value="' + (+profile.income || '') + '" data-profile-income aria-label="Annual income — stored locally only">' +
+      '<input type="number" name="vera-income" autocomplete="off" inputmode="numeric" min="0" step="5000" placeholder="e.g. 85000…" value="' + (+profile.income || '') + '" data-profile-income aria-label="Annual income — stored locally only">' +
       '<span class="anchorbar__hint">' + (anchors.length || profile.income ? 'printed on every card, marked ≈ — VERA never invents routing minutes; your income never leaves this browser' : 'work, a person, your income — VERA personalizes every card, all of it local-only') + '</span></div>';
   }
 
@@ -753,7 +904,7 @@
     var freshBadge = ageMs != null && ageMs < 24 * 3.6e6
       ? '<span class="dropcard__fresh">' + (ageMs < 3.6e6 ? 'just posted' : Math.round(ageMs / 3.6e6) + 'h fresh') + '</span>' : '';
     var bearing = '';
-    if (l.latitude != null && l.longitude != null) {
+    if (hasValidLngLat(l)) {
       var Mb = C.MAP.B;
       var ang = Math.atan2(+l.longitude - (Mb.w + Mb.e) / 2, +l.latitude - (Mb.s + Mb.n) / 2) * 180 / Math.PI;
       bearing = ' data-bearing="' + Math.round((ang + 360) % 360) + '"';
@@ -792,7 +943,7 @@
             provenance(l) +
             '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">Open full ledger <span aria-hidden="true">→</span></button>' +
           '</div>' +
-          (mini ? '<div class="dropcard__map">' + mini + '</div>' : '') +
+          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show ' + esc(addr || C.charName(l)) + ' on the Atlas map">' + mini + '<span class="dropcard__mapaction">View in Atlas <span aria-hidden="true">↗</span></span></button>' : '') +
         '</div>' +
       '</div></article>';
   }
@@ -1203,7 +1354,7 @@
   function renderBrowse(page) {
     var f = filtered();
     var clearCount = POOL.filter(C.isFullFit).length;
-    var mappedCount = POOL.filter(function (listing) { return listing.latitude != null && listing.longitude != null; }).length;
+    var mappedCount = POOL.filter(hasValidLngLat).length;
     var renderedCount = Math.min(BROWSE_BATCH, f.length);
     var openUid = window.__VERAL ? window.__VERAL.openUid() : null;
     page.innerHTML =
@@ -1225,7 +1376,7 @@
         '</div>' +
         '<div class="dtoolbar" role="search">' +
           '<label class="command-search"><span class="sr-only">Search listings</span>' +
-            '<input type="search" placeholder="Search the net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
+            '<input type="search" name="vera-search" autocomplete="off" placeholder="Search the net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
             '<kbd aria-hidden="true">⌘K</kbd></label>' +
           '<span class="dtoolbar__count" data-browse-count aria-live="polite">' + f.length + ' matches · ' + renderedCount + ' loaded</span>' +
           '<span class="dtoolbar__density" aria-label="Result density">' +
@@ -1300,7 +1451,21 @@
      fails, the drawn-city fallback takes over and stays honest about it. */
   var mapAssetState = 'idle'; /* idle → loading → ready | failed */
   var mapAssetPromise = null;
-  var mapStyleURL = 'https://tiles.openfreemap.org/styles/liberty';
+  /* The map style, glyphs, and sprites are vendored locally so the Atlas never
+     hangs on an external style fetch; only the vector tiles themselves still
+     stream from the OpenFreeMap data CDN. */
+  var mapStyleURL = './assets/vendor/maplibre/style/liberty-local.json';
+  function absoluteMapAssetURL(value) {
+    if (!value || /^[a-z][a-z0-9+.-]*:/i.test(value) || value.indexOf('//') === 0) return value;
+    /* URL() encodes the MapLibre {fontstack}/{range} placeholders. Keep local
+       style templates byte-for-byte while making their base unambiguous. */
+    if (value.charAt(0) === '/') return window.location.origin + value;
+    var openToken = '__vera_open_brace__';
+    var closeToken = '__vera_close_brace__';
+    return new URL(value.replace(/\{/g, openToken).replace(/\}/g, closeToken), window.location.href).href
+      .replace(new RegExp(openToken, 'g'), '{')
+      .replace(new RegExp(closeToken, 'g'), '}');
+  }
   function loadMapAssets() {
     if (mapAssetState === 'failed') return Promise.reject(new Error('map assets failed'));
     if (window.maplibregl && window.__VERA_MAP_STYLE__) { mapAssetState = 'ready'; return Promise.resolve(); }
@@ -1322,9 +1487,18 @@
     css.href = './assets/vendor/maplibre/maplibre-gl.css';
     document.head.appendChild(css);
     var stylePromise = fetch(mapStyleURL, { mode: 'cors', credentials: 'omit' }).then(function (response) {
-      if (!response.ok) throw new Error('failed to load OpenFreeMap Liberty style');
+      if (!response.ok) throw new Error('failed to load the vendored map style');
       return response.json();
     }).then(function (style) {
+      /* MapLibre resolves root-relative glyph URLs from an inline style, but
+         its sprite loader needs a fully qualified base when the style arrives
+         as an object instead of a URL. Normalize both local templates so the
+         vendored assets follow one explicit same-origin path. */
+      if (typeof style.sprite === 'string') style.sprite = absoluteMapAssetURL(style.sprite);
+      else if (Array.isArray(style.sprite)) style.sprite.forEach(function (entry) {
+        if (entry && entry.url) entry.url = absoluteMapAssetURL(entry.url);
+      });
+      if (style.glyphs) style.glyphs = absoluteMapAssetURL(style.glyphs);
       window.__VERA_MAP_STYLE__ = style;
     });
     mapAssetPromise = Promise.all([
@@ -1359,12 +1533,16 @@
 
   function atlasListContents(listings) {
     var sorted = listings.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
-    return '<div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">tap to inspect</p></div>' +
+    return '<div class="panel__head"><h2 class="panel__title">Closest to a train</h2><p class="panel__hint">' + (state.atlasMode === 'map' ? 'tap to focus' : 'tap to inspect') + '</p></div>' +
       (sorted.length ? '<div class="walklist">' + sorted.map(function (l) {
         var t = C.nearestStation(l);
-        return '<button type="button" class="walkrow" data-open="' + esc(l.listing_uid) + '">' +
+        var title = l.title || l.address_normalized || 'listing';
+        var action = state.atlasMode === 'map'
+          ? ' data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Focus ' + esc(title) + ' on the Atlas map"'
+          : ' data-open="' + esc(l.listing_uid) + '" aria-label="Open ledger for ' + esc(title) + '"';
+        return '<button type="button" class="walkrow"' + action + '>' +
           '<span class="walkrow__min">' + (t ? '≈' + t.mins : '—') + '<small>min</small></span>' +
-          '<span class="walkrow__body"><b>' + esc(l.title || l.address_normalized || 'Listing') + '</b>' +
+          '<span class="walkrow__body"><b>' + esc(title) + '</b>' +
           '<span>' + (t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
           '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
       }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet.</p>');
@@ -1379,7 +1557,7 @@
     var map = page && $('[data-veramap]', page);
     if (!map || !window.__VERAM || !window.__VERAM.update) return false;
     var all = atlasScope(filtered());
-    var mapped = all.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    var mapped = all.filter(hasValidLngLat);
     window.__VERAM.update(mapped);
     var count = $('.workspace-count', page);
     if (count) count.innerHTML = '<b>' + mapped.length + '</b> mapped · ' + all.length + ' in scope';
@@ -1392,7 +1570,7 @@
 
   function renderAtlas(page) {
     var f0 = atlasScope(filtered());
-    var geo0 = f0.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    var geo0 = f0.filter(hasValidLngLat);
     /* List is a complete, keyboard-native Atlas view. Do not allocate a
        hidden canvas or contact the tile host until the visitor chooses Map. */
     if (state.atlasMode === 'list') {
@@ -1407,7 +1585,7 @@
     if (!window.maplibregl && mapAssetState !== 'failed') {
       page.innerHTML =
         '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
-        '<div class="panel mapwrap"><p class="lane__empty" data-map-loading>Drawing streets and building footprints — the map engine loads the first time Atlas opens…</p></div>';
+        '<div class="panel mapwrap maploader" data-map-loading role="status"><span class="maploader__mark" aria-hidden="true"></span><p><strong>Opening the city.</strong><br>Loading the local Atlas style, then live street tiles…</p></div>';
       page.innerHTML += '</section>';
       page.classList.add('is-entered');
       renderFilters();
@@ -1442,19 +1620,47 @@
       renderFilters();
       var mounted = window.__VERAM.mount(page.querySelector('[data-veramap]'), geo0, function (uid) {
         if (window.__VERAL) window.__VERAL.open(uid);
-      }, function () {
-        if (state.route === 'atlas' && state.atlasMode === 'map' && page.isConnected) renderAtlasFallback(page);
+      }, function (failure) {
+        if (state.route !== 'atlas' || state.atlasMode !== 'map' || !page.isConnected) return;
+        renderAtlasFailure(page, failure, f0, geo0);
       });
-      if (mounted) return;
+      if (mounted) {
+        var pendingAtlasUid = localRead('vera-atlas-focus');
+        if (pendingAtlasUid) {
+          localWrite('vera-atlas-focus', '');
+          var focusPendingListing = function () {
+            if (state.route === 'atlas' && window.__VERAM && window.__VERAM.flyTo) window.__VERAM.flyTo(pendingAtlasUid);
+          };
+          window.setTimeout(focusPendingListing, 700);
+        }
+        return;
+      }
       /* WebGL or tiles refused — fall through to the drawn city */
     }
     renderAtlasFallback(page);
   }
 
-  function renderAtlasFallback(page) {
+  function renderAtlasFailure(page, failure, scoped, mapped) {
+    var failureDetail = failure && failure.errors ? failure.errors.join(' | ') : '';
+    page.innerHTML =
+      '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(mapped.length, scoped.length) +
+      '<div class="panel mapfailure" role="alert" data-map-errors="' + esc(failureDetail) + '"><p class="kicker">Atlas connection paused</p>' +
+      '<h2>The city did not finish drawing.</h2><p>The local map design loaded, but live street tiles did not arrive. Your listing evidence is still available in List view, and the drawn-city backup remains here.</p>' +
+      '<div class="mapfailure__actions"><button type="button" class="bigbtn" data-map-retry>Try the map again</button><button type="button" class="ghostbtn" data-atlas-mode="list">Open evidence list</button></div></div>' +
+      '<div data-atlas-fallback></div></section>';
+    var fallback = $('[data-atlas-fallback]', page);
+    if (fallback) renderAtlasFallback(fallback, true);
+    var retryButton = $('[data-map-retry]', page);
+    if (retryButton) retryButton.addEventListener('click', function () {
+      mapAssetState = 'idle'; mapAssetPromise = null; renderRoute();
+    });
+    page.classList.add('is-entered');
+  }
+
+  function renderAtlasFallback(page, embedded) {
     var M = C.MAP;
     var f = atlasScope(filtered());
-    var geo = f.filter(function (l) { return l.latitude != null && l.longitude != null; });
+    var geo = f.filter(hasValidLngLat);
     // Only plot inside the hunt zone: out-of-zone listings project outside
     // the viewBox and would draw loose on the page (the SVG must not clip
     // its own pin halos).
@@ -1511,7 +1717,7 @@
     var sorted = placed.slice().sort(function (a, b) { return (a.transit_mins || 999) - (b.transit_mins || 999); });
 
     page.innerHTML =
-      '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(placed.length, f.length) +
+      (embedded ? '' : '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(placed.length, f.length)) +
       '<div class="maplay atlas-layout atlas-layout--' + state.atlasMode + '">' +
         '<div class="panel mapwrap atlas-map-pane">' +
           '<div class="panel__head"><h2 class="panel__title">Rivers, trains, and ' + placed.length + ' listings</h2>' +
@@ -1543,7 +1749,7 @@
               '<span class="walkrow__rent">' + money(l.rent) + '</span></button>';
           }).join('') + '</div>' : '<p class="lane__empty">Nothing with coordinates under this lens yet — widen a filter.</p>') +
         '</div>' +
-      '</div></section>';
+      '</div>' + (embedded ? '' : '</section>');
     page.classList.add('is-entered');
     renderFilters();
   }
@@ -1706,7 +1912,7 @@
       '<div class="grid grid--2">' +
         '<div class="panel tool"><div class="panel__head"><h2 class="panel__title">What it really costs to move in</h2><p class="panel__hint">NY law, not vibes</p></div>' +
           '<label class="slider"><span>Monthly rent <b data-tool-rent-label>' + money(r) + '</b></span>' +
-          '<input type="range" min="1200" max="3000" step="50" value="' + r + '" data-tool-rent></label>' +
+          '<input type="range" name="vera-tool-rent" min="1200" max="3000" step="50" value="' + r + '" data-tool-rent></label>' +
           '<div class="ledger">' +
             '<div class="ledger__row"><span>First month</span><b data-tr-first>' + money(r) + '</b></div>' +
             '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b data-tr-dep>' + money(deposit) + '</b></div>' +
@@ -1729,7 +1935,7 @@
         '</div>' +
         '<div class="panel tool"><div class="panel__head"><h2 class="panel__title">Will the paperwork clear you</h2><p class="panel__hint">the 40× convention</p></div>' +
           '<label class="slider"><span>Your annual income <b data-tool-inc-label>' + (toolIncome ? money(toolIncome) : 'drag me') + '</b></span>' +
-          '<input type="range" min="0" max="200000" step="5000" value="' + toolIncome + '" data-tool-income></label>' +
+          '<input type="range" name="vera-tool-income" min="0" max="200000" step="5000" value="' + toolIncome + '" data-tool-income></label>' +
           '<div data-tool-verdict>' + manualVerdict(r, toolIncome) + '</div>' +
           '<p class="insp-fine">Income multiples are convention, not law — private landlords bend them, corporate portfolios never do. Which is one more reason VERA hunts private.</p>' +
         '</div>' +
@@ -2198,12 +2404,25 @@
   });
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-hunt-select],[data-atlas-mode],[data-erase-vera],[data-erase-vera-cancel],[data-erase-vera-confirm]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-filter-scroll],[data-hunt-select],[data-atlas-mode],[data-atlas-focus],[data-erase-vera],[data-erase-vera-cancel],[data-erase-vera-confirm],[data-gal-step],[data-gal-shot],[data-lb-close],[data-lb-step]') : null;
     if (!t) return;
 
     if (t.hasAttribute('data-filter-toggle')) {
       state.filtersOpen = !state.filtersOpen;
       renderFilters();
+      return;
+    }
+
+    if (t.hasAttribute('data-filter-scroll')) {
+      var deck = $('[data-filters]');
+      if (!deck) return;
+      var towardEnd = t.getAttribute('data-filter-scroll') !== 'start';
+      /* This is a two-state overflow affordance, not a scrollbar stepper.
+         Jump to the concealed end (or back to the beginning) so Safari and
+         rapid keyboard activation cannot repeatedly target a stale offset. */
+      deck.scrollLeft = towardEnd ? deck.scrollWidth - deck.clientWidth : 0;
+      syncFilterOverflowCue();
+      requestAnimationFrame(syncFilterOverflowCue);
       return;
     }
 
@@ -2214,6 +2433,19 @@
         var selectedMode = $('[data-atlas-mode="' + state.atlasMode + '"]');
         if (selectedMode) selectedMode.focus();
       });
+      return;
+    }
+
+    if (t.hasAttribute('data-atlas-focus')) {
+      var atlasUid = t.getAttribute('data-atlas-focus');
+      localWrite('vera-atlas-focus', atlasUid);
+      state.atlasMode = 'map';
+      persist();
+      if (state.route === 'atlas' && window.__VERAM && window.__VERAM.flyTo) {
+        window.__VERAM.flyTo(atlasUid);
+      } else {
+        location.hash = '#/atlas';
+      }
       return;
     }
 
@@ -2306,6 +2538,21 @@
       persist();
       return;
     }
+    if (t.hasAttribute('data-gal-step')) {
+      var galStrip = t.parentNode ? t.parentNode.querySelector('[data-gal]') : null;
+      if (galStrip) {
+        var galDir = +t.getAttribute('data-gal-step') || 1;
+        if (galStrip.scrollBy) galStrip.scrollBy({ left: galStrip.clientWidth * galDir, behavior: RM ? 'auto' : 'smooth' });
+        else galStrip.scrollLeft += galStrip.clientWidth * galDir;
+      }
+      return;
+    }
+    if (t.hasAttribute('data-gal-shot')) {
+      openLightbox(t.closest('[data-gal]'), +t.getAttribute('data-gal-shot') || 0);
+      return;
+    }
+    if (t.hasAttribute('data-lb-close')) { closeLightbox(); return; }
+    if (t.hasAttribute('data-lb-step')) { stepLightbox(+t.getAttribute('data-lb-step') || 1); return; }
     if (t.hasAttribute('data-open')) { if (window.__VERAL) window.__VERAL.open(t.getAttribute('data-open')); return; }
     if (t.hasAttribute('data-insp-close') || t.hasAttribute('data-scrim')) { if (window.__VERAL) window.__VERAL.close(); return; }
     if (t.hasAttribute('data-tab')) { if (window.__VERAL) window.__VERAL.setTab(t.getAttribute('data-tab')); return; }
@@ -2363,9 +2610,31 @@
     }
   });
 
+  /* Lightbox backdrop: only a direct hit on the dimmed stage surround closes —
+     clicks on the photo, caption, or controls keep browsing. */
+  document.addEventListener('click', function (e) {
+    var root = lbRoot();
+    if (!root || root.hidden) return;
+    if (e.target === root || e.target.classList.contains('lb__stage')) closeLightbox();
+  });
+
   /* keyboard: photo strips move by frame; rows + kpis act on Enter/Space;
      Escape closes the ledger. */
   document.addEventListener('keydown', function (e) {
+    if (lbIsOpen()) {
+      if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); return; }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); stepLightbox(e.key === 'ArrowLeft' ? -1 : 1); return; }
+      if (e.key === 'Tab') {
+        var root = lbRoot();
+        var focusables = root ? Array.prototype.filter.call(root.querySelectorAll('button'), function (b) { return !b.hidden; }) : [];
+        if (focusables.length) {
+          var first = focusables[0], last = focusables[focusables.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      }
+      return;
+    }
     var galleryStrip = e.target && e.target.closest ? e.target.closest('[data-gal]') : null;
     if (galleryStrip && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
       e.preventDefault();
@@ -2462,7 +2731,8 @@
     dots.forEach(function (d, i) { d.classList.toggle('is-on', i === idx); });
     var status = gal.parentNode.querySelector('[data-gal-status]');
     var count = +gal.getAttribute('data-gal-count') || dots.length;
-    if (status) status.textContent = 'Photo ' + Math.min(count, Math.max(1, idx + 1)) + ' of ' + count + ' — swipe or use arrow keys';
+    var sourceCount = +gal.getAttribute('data-gal-source-count') || count;
+    if (status) status.textContent = 'Photo ' + Math.min(count, Math.max(1, idx + 1)) + ' of ' + count + (sourceCount > count ? ' · showing ' + count + ' of ' + sourceCount : '') + ' · use arrow keys';
   }, true);
 
   window.addEventListener('hashchange', routeSmooth);
@@ -2526,7 +2796,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=56').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=57').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
@@ -2608,7 +2878,7 @@
     cases: function () { return cases; }, STAGES: STAGES, toast: toast, photoLayer: photoLayer,
     filtered: filtered, renderRoute: renderRoute, tidyTitle: tidyTitle, route: route,
     addressOf: addressOf, gallery: gallery, valueRead: valueRead, profile: function () { return profile; },
-    commuteRead: commuteRead,
+    commuteRead: commuteRead, hasValidLngLat: hasValidLngLat,
     addressResolutionOf: addressResolutionOf, addressCheckMarkup: addressCheckMarkup, syncPressed: syncPressed,
     FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
     archiveOrigins: archiveOrigins,
@@ -2630,4 +2900,13 @@
   };
 
   boot();
+
+  /* Warm the Atlas engine and the vendored style while the browser is idle,
+     so the first Atlas open draws streets immediately instead of spending its
+     first seconds on downloads. The map itself still boots only on open; a
+     failed warm-up resets to idle so a real Atlas visit retries cleanly. */
+  var idleFn = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1500); };
+  idleFn(function () {
+    loadMapAssets().catch(function () { mapAssetState = 'idle'; mapAssetPromise = null; });
+  });
 })();

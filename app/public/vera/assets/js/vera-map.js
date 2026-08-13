@@ -6,9 +6,11 @@
 
   var C = window.__VERAC;
   /* Version the worker-facing source identity as well as the script URL. */
-  var SOURCE_ID = 'vera-listings-v3';
-  var POINT_LAYERS = ['vera-listing-points'];
+  var SOURCE_ID = 'vera-listings-v4';
+  var POINT_LAYERS = ['vera-listing-points', 'vera-listing-clusters'];
+  var INTERACTIVE_LAYERS = ['vera-listing-hit', 'vera-listing-clusters'];
   var mapInstance = null;
+  var lastMount = null;
 
   function prefersReducedMotion() {
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -47,6 +49,20 @@
   function available() {
     if (!window.maplibregl) return false;
     try { return window.maplibregl.supported ? window.maplibregl.supported() : true; } catch (e) { return true; }
+  }
+
+  function coordinateNumber(value) {
+    if (value == null) return null;
+    if (typeof value !== 'number' && typeof value !== 'string') return null;
+    if (typeof value === 'string' && !value.trim()) return null;
+    var number = +value;
+    return isFinite(number) ? number : null;
+  }
+
+  function hasValidLngLat(listing) {
+    if (!listing) return false;
+    var lat = coordinateNumber(listing.latitude), lng = coordinateNumber(listing.longitude);
+    return lat != null && lng != null && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
   }
 
   function setPaint(target, layer, property, value) {
@@ -211,7 +227,7 @@
   function listingsGeoJSON(listings) {
     return {
       type: 'FeatureCollection',
-      features: listings.filter(function (listing) { return listing.latitude != null && listing.longitude != null; })
+      features: listings.filter(hasValidLngLat)
         .map(function (listing) {
           var state = C.isScam(listing) ? 'bad' : C.needsVerify(listing) ? 'warn' : 'good';
           return {
@@ -220,6 +236,10 @@
             properties: {
               uid: listing.listing_uid,
               rent: listing.rent ? '$' + (Math.round(listing.rent / 100) / 10) + 'k' : '?',
+              price_score: (listing.rent ? '$' + (Math.round(listing.rent / 100) / 10) + 'k' : 'price ?') +
+                (isFinite(+listing.overall_score) ? ' · ' + Math.round(+listing.overall_score) : ''),
+              title: String(listing.title || listing.address_normalized || 'Listing'),
+              neighborhood: String(listing.neighborhood || listing.borough || ''),
               state: state,
             },
           };
@@ -301,19 +321,174 @@
     return {
       type: 'geojson',
       data: data,
+      /* Clustering is presentation-only: the source remains one public feed
+         feature per listing and a cluster never becomes a new VERA record. */
+      cluster: true,
+      clusterMaxZoom: 13,
+      clusterRadius: 52,
       /* Stable numeric feature identities without exposing or mutating VERA's
          listing UID property. */
       generateId: true,
     };
   }
 
+  function pointFilter() { return ['!', ['has', 'point_count']]; }
+
+  function listingFromFeature(listings, feature) {
+    var uid = feature && feature.properties && feature.properties.uid;
+    if (!uid) return null;
+    for (var i = 0; i < listings.length; i++) {
+      if (String(listings[i].listing_uid) === String(uid)) return listings[i];
+    }
+    return null;
+  }
+
+  function nearestListingTo(listings, center) {
+    if (!center) return null;
+    var best = null;
+    var bestDistance = Infinity;
+    for (var i = 0; i < listings.length; i++) {
+      var listing = listings[i];
+      if (!hasValidLngLat(listing)) continue;
+      var dy = +listing.latitude - +center.lat;
+      var dx = (+listing.longitude - +center.lng) * Math.cos((+center.lat) * Math.PI / 180);
+      var distance = dx * dx + dy * dy;
+      if (distance < bestDistance) { best = listing; bestDistance = distance; }
+    }
+    return best;
+  }
+
+  function popupStatus(listing) {
+    if (C.isScam(listing)) return 'Scam wall';
+    if (C.needsVerify(listing)) return 'Needs verification';
+    return 'Clears the bar';
+  }
+
+  function popupNode(listing, onOpen) {
+    var wrap = document.createElement('article');
+    wrap.setAttribute('aria-label', 'Listing preview');
+    wrap.style.cssText = 'width:min(286px,calc(100vw - 48px));color:#10110e;font:14px/1.4 system-ui,sans-serif;';
+    var image = C.trustedURL && C.trustedURL((listing.image_urls || [])[0], 'image');
+    if (image) {
+      var photo = document.createElement('img');
+      photo.src = image;
+      photo.alt = 'Listing photo for ' + (listing.title || listing.address_normalized || 'listing');
+      photo.width = 286;
+      photo.height = 112;
+      photo.loading = 'lazy';
+      photo.decoding = 'async';
+      photo.referrerPolicy = 'no-referrer';
+      photo.style.cssText = 'display:block;width:100%;height:112px;object-fit:cover;background:#20211d;';
+      wrap.appendChild(photo);
+    }
+    var body = document.createElement('div');
+    body.style.cssText = 'padding:12px 2px 2px;';
+    var heading = document.createElement('strong');
+    heading.textContent = listing.title || listing.address_normalized || 'Listing';
+    heading.style.cssText = 'display:block;font-size:15px;line-height:1.25;';
+    body.appendChild(heading);
+    var facts = document.createElement('p');
+    var score = isFinite(+listing.overall_score) ? ' · score ' + Math.round(+listing.overall_score) : '';
+    facts.textContent = (listing.rent ? C.money(listing.rent) : 'Price not published') + score +
+      (listing.neighborhood ? ' · ' + listing.neighborhood : '');
+    facts.style.cssText = 'margin:5px 0;color:#45433d;';
+    body.appendChild(facts);
+    var station = C.nearestStation(listing);
+    if (station) {
+      var transit = document.createElement('p');
+      transit.textContent = '≈' + station.mins + ' min walk · ' + station.name + (station.lines ? ' · ' + station.lines : '');
+      transit.style.cssText = 'margin:4px 0;color:#45433d;font-size:12px;';
+      body.appendChild(transit);
+    }
+    var status = document.createElement('p');
+    status.textContent = popupStatus(listing) + '. Feed coordinate; building footprint is context, not a verified unit match.';
+    status.style.cssText = 'margin:7px 0 10px;color:#5c5142;font-size:12px;';
+    body.appendChild(status);
+    var open = document.createElement('button');
+    open.type = 'button';
+    open.textContent = 'Inspect listing';
+    open.style.cssText = 'min-height:44px;border:0;border-radius:999px;padding:0 15px;background:#184d35;color:#fff;font:600 13px/1 system-ui,sans-serif;cursor:pointer;';
+    open.addEventListener('click', function () { if (onOpen) onOpen(listing.listing_uid); });
+    body.appendChild(open);
+    wrap.appendChild(body);
+    return wrap;
+  }
+
+  function openListingPopup(map, listings, feature, onOpen) {
+    var listing = listingFromFeature(listings, feature);
+    if (!listing || !window.maplibregl || !window.maplibregl.Popup) return false;
+    if (map.__veraPopup) map.__veraPopup.remove();
+    var anchor;
+    try {
+      var point = map.project(feature.geometry.coordinates);
+      var height = map.getContainer().clientHeight;
+      anchor = point.y > height * 0.45 ? 'bottom' : 'top';
+    } catch (e) {}
+    var popupOptions = {
+      closeButton: true,
+      closeOnClick: false,
+      focusAfterOpen: true,
+      maxWidth: '300px',
+      className: 'vera-map-popup',
+      offset: 18,
+    };
+    if (anchor) popupOptions.anchor = anchor;
+    map.__veraPopup = new window.maplibregl.Popup(popupOptions)
+      .setLngLat(feature.geometry.coordinates).setDOMContent(popupNode(listing, onOpen)).addTo(map);
+    return true;
+  }
+
+  function expandCluster(map, feature) {
+    var source = map.getSource && map.getSource(SOURCE_ID);
+    var clusterId = feature && feature.properties && feature.properties.cluster_id;
+    if (!source || clusterId == null || !source.getClusterExpansionZoom) return;
+    var onZoom = function (zoom) {
+      moveCamera(map, { center: feature.geometry.coordinates, zoom: zoom, pitch: 0, bearing: 0, duration: 320 });
+    };
+    try {
+      var result = source.getClusterExpansionZoom(clusterId, function (error, zoom) {
+        if (!error && zoom != null) onZoom(zoom);
+      });
+      if (result && typeof result.then === 'function') result.then(onZoom).catch(function () {});
+    } catch (e) {}
+  }
+
   function addListingLayers(map, data, onOpen) {
     map.addSource(SOURCE_ID, listingSource(data));
+
+    map.addLayer({
+      id: 'vera-listing-clusters',
+      type: 'circle',
+      source: SOURCE_ID,
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': '#173f2e',
+        'circle-opacity': 0.98,
+        'circle-radius': ['step', ['get', 'point_count'], 18, 10, 22, 30, 27],
+        'circle-stroke-color': '#e8e1d4',
+        'circle-stroke-width': 1.8,
+      },
+    });
+
+    map.addLayer({
+      id: 'vera-listing-cluster-count',
+      type: 'symbol',
+      source: SOURCE_ID,
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': ['concat', ['to-string', ['get', 'point_count_abbreviated']], ' listings'],
+        'text-size': 12,
+        'text-font': ['Noto Sans Bold'],
+        'text-allow-overlap': true,
+      },
+      paint: { 'text-color': '#fff8ea' },
+    });
 
     map.addLayer({
       id: 'vera-listing-points',
       type: 'circle',
       source: SOURCE_ID,
+      filter: pointFilter(),
       paint: {
         'circle-color': ['match', ['get', 'state'], 'bad', '#cf7352', 'warn', '#d4a24c', '#4cc38a'],
         'circle-opacity': 0.96,
@@ -329,7 +504,7 @@
       id: 'vera-listing-focus',
       type: 'circle',
       source: SOURCE_ID,
-      filter: ['==', ['get', 'uid'], ''],
+      filter: ['all', pointFilter(), ['==', ['get', 'uid'], '']],
       paint: {
         'circle-color': '#000000',
         'circle-opacity': 0.001,
@@ -340,19 +515,26 @@
     });
 
     map.addLayer({
-      id: 'vera-listing-labels',
+      id: 'vera-listing-price-score',
       type: 'symbol',
       source: SOURCE_ID,
-      minzoom: 14.25,
+      filter: pointFilter(),
+      minzoom: 10.75,
       layout: {
-        'text-field': ['get', 'rent'],
-        'text-size': 10,
+        /* Price and score remain readable before street scale; collision
+           keeps the city view useful when points separate from clusters. */
+        'text-field': ['get', 'price_score'],
+        'text-font': ['Noto Sans Bold'],
+        'text-size': ['interpolate', ['linear'], ['zoom'], 10.75, 12, 14, 12.5],
+        'text-offset': [0, 1.45],
+        'text-anchor': 'top',
         'text-allow-overlap': true,
-        'text-ignore-placement': true,
+        'text-ignore-placement': false,
       },
       paint: {
-        'text-color': '#11120f',
-        'text-halo-width': 0,
+        'text-color': '#f7efe2',
+        'text-halo-color': '#11120f',
+        'text-halo-width': 1.25,
       },
     });
 
@@ -362,6 +544,7 @@
       id: 'vera-listing-hit',
       type: 'circle',
       source: SOURCE_ID,
+      filter: pointFilter(),
       paint: {
         'circle-radius': 22,
         'circle-color': '#000000',
@@ -373,13 +556,19 @@
       var feature = event.features && event.features[0];
       if (!feature || !feature.properties) return;
       focusListing(map, feature);
-      if (onOpen) onOpen(feature.properties.uid);
+      openListingPopup(map, map.__veraListings || data.__veraListings || [], feature, onOpen);
     });
 
-    ['vera-listing-hit'].forEach(function (layerId) {
+    map.on('click', 'vera-listing-clusters', function (event) {
+      var feature = event.features && event.features[0];
+      if (feature) expandCluster(map, feature);
+    });
+
+    INTERACTIVE_LAYERS.forEach(function (layerId) {
       map.on('mouseenter', layerId, function () { map.getCanvas().style.cursor = 'pointer'; });
       map.on('mouseleave', layerId, function () { map.getCanvas().style.cursor = ''; });
     });
+    map.getContainer().setAttribute('data-veramap-layer-contract', 'clusters points price-score focus hit');
   }
 
   function frameListings(map, data) {
@@ -422,6 +611,7 @@
     try {
       if (!window.__VERA_MAP_STYLE__) return null;
       var pendingData = listingsGeoJSON(listings);
+      pendingData.__veraListings = listings.slice();
       var reduced = prefersReducedMotion();
       /* Clone and theme Liberty before MapLibre sees it. This avoids mutating
          a live vector style while its workers are registering VERA's source. */
@@ -431,8 +621,8 @@
       container.setAttribute('role', 'region');
       container.setAttribute('aria-label', 'Interactive street and building map of listings. Use List view for a text alternative.');
       container.setAttribute('data-veramap-style', 'vera-surveyor-liberty');
-      container.setAttribute('data-veramap-clusters', 'disabled');
-      container.setAttribute('data-veramap-points', 'unclustered');
+      container.setAttribute('data-veramap-clusters', 'enabled');
+      container.setAttribute('data-veramap-points', 'price-score');
       container.setAttribute('data-veramap-motion', reduced ? 'reduced' : 'standard');
       container.setAttribute('data-veramap-listings', String(pendingData.features.length));
       container.setAttribute('data-veramap-attribution', 'OpenFreeMap, OpenMapTiles, OpenStreetMap contributors');
@@ -459,6 +649,7 @@
       var initialReady = false;
       var initialFailed = false;
       var initialResourceErrors = 0;
+      var initialErrorMessages = [];
       var initialTimer = 0;
       var clearInitialTimer = function () {
         if (initialTimer) window.clearTimeout(initialTimer);
@@ -470,13 +661,20 @@
         clearInitialTimer();
         try { map.remove(); } catch (e) {}
         if (mapInstance === map) mapInstance = null;
-        if (onFailure) onFailure();
+        container.setAttribute('data-veramap-ready', 'false');
+        container.setAttribute('data-veramap-failure', 'initial-load');
+        if (onFailure) onFailure({
+          code: 'initial-load',
+          errors: initialErrorMessages.slice(-6),
+          retry: function () { return retry(container, listings, onOpen, onFailure); },
+        });
       };
       map.__clearInitialTimer = clearInitialTimer;
       initialTimer = window.setTimeout(failInitialMap, 12000);
       map.on('error', function (event) {
         if (initialReady || initialFailed) return;
         var message = String(event && event.error && (event.error.message || event.error) || '');
+        if (message) initialErrorMessages.push(message);
         /* Tile requests can fail independently after the style is usable. Only
            a failed initial style request should replace the canvas at once;
            the timeout covers silent CSP/network failures without reacting to
@@ -500,6 +698,8 @@
 
       map.__setListings = function (nextListings) {
         pendingData = listingsGeoJSON(nextListings);
+        pendingData.__veraListings = nextListings.slice();
+        map.__veraListings = pendingData.__veraListings;
         container.setAttribute('data-veramap-listings', String(pendingData.features.length));
         var source = map.getSource && map.getSource(SOURCE_ID);
         if (source) {
@@ -522,6 +722,27 @@
       });
 
       mapInstance = map;
+      map.__veraListings = pendingData.__veraListings;
+      lastMount = { container: container, listings: listings.slice(), onOpen: onOpen, onFailure: onFailure };
+      var canvas = map.getCanvas && map.getCanvas();
+      if (canvas) {
+        canvas.setAttribute('tabindex', '0');
+        canvas.setAttribute('aria-label', 'Atlas listing map. Use arrow keys to move the map; press Enter to inspect the listing nearest the center.');
+        canvas.setAttribute('title', 'Arrow keys move the map. Enter inspects the listing nearest the center.');
+        canvas.addEventListener('keydown', function (event) {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          var center = map.getCenter && map.getCenter();
+          var listing = nearestListingTo(pendingData.__veraListings || [], center);
+          if (!listing) return;
+          event.preventDefault();
+          var feature = {
+            geometry: { type: 'Point', coordinates: [+listing.longitude, +listing.latitude] },
+            properties: { uid: listing.listing_uid },
+          };
+          focusListing(map, feature);
+          openListingPopup(map, pendingData.__veraListings || [], feature, onOpen);
+        });
+      }
       return map;
     } catch (e) {
       return null;
@@ -529,7 +750,39 @@
   }
 
   function update(listings) {
-    if (mapInstance && mapInstance.__setListings) mapInstance.__setListings(listings);
+    if (mapInstance && mapInstance.__setListings) {
+      mapInstance.__setListings(listings);
+      if (lastMount) lastMount.listings = listings.slice();
+    }
+  }
+
+  /* Public integration hook for the app shell: callers may focus an existing
+     public listing UID without knowing MapLibre's generated feature IDs. */
+  function flyTo(uid, options) {
+    if (!mapInstance || !mapInstance.__veraListings) return false;
+    var listings = mapInstance.__veraListings;
+    for (var i = 0; i < listings.length; i++) {
+      if (String(listings[i].listing_uid) !== String(uid)) continue;
+      if (!hasValidLngLat(listings[i])) return false;
+      var feature = {
+        geometry: { type: 'Point', coordinates: [+listings[i].longitude, +listings[i].latitude] },
+        properties: { uid: listings[i].listing_uid },
+      };
+      focusListing(mapInstance, feature);
+      if (!options || options.popup !== false) openListingPopup(mapInstance, listings, feature, lastMount && lastMount.onOpen);
+      return true;
+    }
+    return false;
+  }
+
+  /* The failure callback receives a retry function, but this public form also
+     supports a retry control mounted by a future Atlas shell integration. */
+  function retry(container, listings, onOpen, onFailure) {
+    var request = { container: container, listings: listings, onOpen: onOpen, onFailure: onFailure };
+    if (!request.container && lastMount) request = lastMount;
+    if (!request.container || !request.container.isConnected) return null;
+    destroy();
+    return mount(request.container, request.listings || [], request.onOpen, request.onFailure);
   }
 
   function destroy() {
@@ -540,5 +793,5 @@
     }
   }
 
-  window.__VERAM = { available: available, mount: mount, update: update, destroy: destroy };
+  window.__VERAM = { available: available, mount: mount, update: update, flyTo: flyTo, retry: retry, destroy: destroy };
 })();

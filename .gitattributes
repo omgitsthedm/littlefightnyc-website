@@ -1,0 +1,4 @@
+# Mapbox vector/glyph protocol buffers are binary even when a particular file
+# contains no NUL byte. Keep Git from treating them as text or normalizing them.
+app/public/vera/assets/vendor/maplibre/style/fonts/**/*.pbf binary
+app/tests/fixtures/vera-map-tile.pbf binary
