@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./MoneyLeakMeter.css";
+import { AccessibleDataTable, CurrencySelect, MethodologyDisclosure, OwnerMath, ScenarioBadge } from "./EvidenceFoundation";
+import { DEFAULT_CURRENCY, type CurrencyChoice } from "./currency";
+import { currencySymbol, formatCurrency, missedInquiryValue, parseOwnerNumber } from "./ownerMath";
 
 type FieldName = "missed" | "sale" | "closeRate";
 
@@ -16,44 +19,44 @@ const LIMITS: Record<FieldName, { min: number; max: number; step: number }> = {
 };
 
 function numeric(value: string, field: FieldName) {
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) return 0;
   const { min, max } = LIMITS[field];
-  return Math.min(max, Math.max(min, parsed));
-}
-
-function money(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(value);
+  return parseOwnerNumber(value, min, max);
 }
 
 export default function MoneyLeakMeter() {
   const [values, setValues] = useState(DEFAULTS);
+  const [currency, setCurrency] = useState<CurrencyChoice>(DEFAULT_CURRENCY);
+  const [edited, setEdited] = useState(false);
   const missed = numeric(values.missed, "missed");
   const sale = numeric(values.sale, "sale");
   const closeRate = numeric(values.closeRate, "closeRate") / 100;
-  const estimate = missed * sale * closeRate * 4;
-  const perWeek = missed * sale * closeRate;
+  const estimate = missedInquiryValue({ missedPerWeek: missed, averageSale: sale, closeRatePercent: closeRate * 100 });
+  const perWeek = missedInquiryValue({ missedPerWeek: missed, averageSale: sale, closeRatePercent: closeRate * 100, weeks: 1 });
+  const annual = missedInquiryValue({ missedPerWeek: missed, averageSale: sale, closeRatePercent: closeRate * 100, weeks: 52 });
   const barWidth = closeRate === 0 ? 0 : Math.min(100, Math.max(4, closeRate * 100));
 
   const setField = (field: FieldName, value: string) => {
+    setEdited(true);
     setValues((current) => ({ ...current, [field]: value }));
   };
 
   return (
-    <section className="lf-money-meter" aria-labelledby="lf-money-meter-title">
+    <section className="lf-money-meter" aria-labelledby="lf-money-meter-title" data-lf-visual-proof="owner-calculator">
       <div className="lf-money-meter__inner">
-        <header className="lf-money-meter__head">
-          <p className="lf-money-meter__eyebrow">Owner math</p>
-          <h2 id="lf-money-meter-title">The missed-message math is rude. Better to see it.</h2>
-          <p>
+        <OwnerMath visualProof={false} titleId="lf-money-meter-title" title="The missed-message math is rude. Better to see it." intro={
+          <>
             Use your own numbers. We will show one possible value of inquiries
             that never got a real answer. No industry average. No magic trick.
-          </p>
-        </header>
+          </>
+        }>
+          <ScenarioBadge kind={edited ? "your-numbers" : "example"} />
+        </OwnerMath>
+
+        <CurrencySelect
+          value={currency}
+          name="money-leak-currency"
+          onChange={(next) => { setCurrency(next); setEdited(true); }}
+        />
 
         <div className="lf-money-meter__panel">
           <form className="lf-money-meter__inputs" onSubmit={(event) => event.preventDefault()}>
@@ -61,7 +64,9 @@ export default function MoneyLeakMeter() {
               <span>Missed inquiries each week</span>
               <input
                 type="number"
+                name="money-leak-missed-inquiries"
                 inputMode="numeric"
+                autoComplete="off"
                 min={LIMITS.missed.min}
                 max={LIMITS.missed.max}
                 step={LIMITS.missed.step}
@@ -72,10 +77,12 @@ export default function MoneyLeakMeter() {
             <label>
               <span>Average sale or job value</span>
               <span className="lf-money-meter__money-input">
-                <span aria-hidden="true">$</span>
+                <span aria-hidden="true">{currencySymbol(currency.locale, currency.code)}</span>
                 <input
                   type="number"
+                  name="money-leak-average-sale"
                   inputMode="decimal"
+                  autoComplete="off"
                   min={LIMITS.sale.min}
                   max={LIMITS.sale.max}
                   step={LIMITS.sale.step}
@@ -89,7 +96,9 @@ export default function MoneyLeakMeter() {
               <span className="lf-money-meter__percent-input">
                 <input
                   type="number"
+                  name="money-leak-close-rate"
                   inputMode="numeric"
+                  autoComplete="off"
                   min={LIMITS.closeRate.min}
                   max={LIMITS.closeRate.max}
                   step={LIMITS.closeRate.step}
@@ -100,12 +109,13 @@ export default function MoneyLeakMeter() {
               </span>
             </label>
           </form>
+          <button className="lf-owner-add lf-money-meter__reset" type="button" onClick={() => { setValues(DEFAULTS); setCurrency(DEFAULT_CURRENCY); setEdited(false); }}>Reset Example</button>
 
-          <div className="lf-money-meter__answer" aria-live="polite">
-            <p className="lf-money-meter__answer-label">Estimated customer value at risk over four weeks</p>
-            <output className="lf-money-meter__value">{money(estimate)}</output>
+          <div className="lf-money-meter__answer">
+            <p className="lf-money-meter__answer-label">Estimated gross revenue at risk over 4 weeks</p>
+            <output className="lf-money-meter__value" aria-label="Estimated gross revenue at risk over four weeks" aria-live="polite" aria-atomic="true">{formatCurrency(estimate, currency.locale, currency.code)}</output>
             <p>
-              That is about {money(perWeek)} each week if those missed inquiries
+              That is about {formatCurrency(perWeek, currency.locale, currency.code)} each week if those missed inquiries
               would normally close at your stated rate.
             </p>
             <div className="lf-money-meter__track" aria-hidden="true">
@@ -114,18 +124,25 @@ export default function MoneyLeakMeter() {
           </div>
         </div>
 
-        <details className="lf-money-meter__method">
-          <summary>Show the math and the limit</summary>
+        <AccessibleDataTable caption="Your scenario table" rows={[
+          { label: "Missed inquiries", value: missed, note: "Per week" },
+          { label: "Average sale or job", value: formatCurrency(sale, currency.locale, currency.code), note: "Owner-entered" },
+          { label: "Normal close rate", value: `${Math.round(closeRate * 100)}%`, note: "Owner-entered" },
+          { label: "Estimated revenue at risk", value: formatCurrency(perWeek, currency.locale, currency.code), note: "Weekly scenario; not profit" },
+          { label: "Estimated revenue at risk", value: formatCurrency(estimate, currency.locale, currency.code), note: "Four-week scenario; not profit" },
+          { label: "Estimated revenue at risk", value: formatCurrency(annual, currency.locale, currency.code), note: "Annual scenario; not a forecast" },
+        ]} />
+        <MethodologyDisclosure title="Show the math and the limit">
           <p>
-            <strong>{missed}</strong> missed inquiries per week × <strong>{money(sale)}</strong>
-            {" "}average sale × <strong>{Math.round(closeRate * 100)}%</strong> close rate × <strong>4 weeks</strong> = <strong>{money(estimate)}</strong>.
+            <strong>{missed}</strong> missed inquiries per week × <strong>{formatCurrency(sale, currency.locale, currency.code)}</strong>
+            {" "}average sale × <strong>{Math.round(closeRate * 100)}%</strong> close rate × <strong>4 weeks</strong> = <strong>{formatCurrency(estimate, currency.locale, currency.code)}</strong>.
           </p>
           <p>
             This is an estimate from your inputs, not a prediction, profit
             figure, or promise. It does not use an outside benchmark. Change
             any field until it matches your business.
           </p>
-        </details>
+        </MethodologyDisclosure>
       </div>
     </section>
   );

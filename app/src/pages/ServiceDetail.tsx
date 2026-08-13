@@ -7,6 +7,15 @@ import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
 import { ProofMetricValue } from "@/components/dataviz/ProofMetricValue";
+import {
+  CopyPasteTax,
+  DowntimeClock,
+  MissedCallMeter,
+  SubscriptionStack,
+} from "@/components/dataviz/OwnerCalculators";
+import MoneyLeakMeter from "@/components/dataviz/MoneyLeakMeter";
+import WebsiteNightShift from "@/components/dataviz/WebsiteNightShift";
+import OwnerPath from "@/components/dataviz/OwnerPath";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
@@ -30,6 +39,14 @@ const LEGACY_SLUG_MAP: Record<string, string> = {
   websites: "custom-local-websites",
   "local-search": "tech-consulting",
 };
+
+function ServiceOwnerMath({ slug }: { slug: string }) {
+  if (slug === "tech-consulting") return <CopyPasteTax />;
+  if (slug === "it-support") return <><DowntimeClock /><MissedCallMeter /></>;
+  if (slug === "business-systems") return <SubscriptionStack />;
+  if (slug === "custom-local-websites") return <MoneyLeakMeter />;
+  return null;
+}
 
 // Per-service closing band — the last line matches the page you just read.
 const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
@@ -194,6 +211,12 @@ export default function ServiceDetail() {
       </section>
 
       {service.slug === "custom-local-websites" && <WebsiteAcquisitionBlock />}
+
+      {service.slug === "custom-local-websites" && <OwnerPath />}
+
+      {service.slug === "custom-local-websites" && <WebsiteNightShift />}
+
+      <ServiceOwnerMath slug={service.slug} />
 
       <section className="lf-sd-deep">
         <div className="lf-sd-deep__inner">

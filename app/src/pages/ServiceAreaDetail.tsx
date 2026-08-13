@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import QuietContact from "@/components/editorial/QuietContact";
+import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
 import { areaPages, services } from "@/data/site";
 import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
 import "@/styles/editorial/longform-routes.css";
@@ -147,6 +148,26 @@ export default function ServiceAreaDetail() {
                 <li key={item}>{item}</li>
               ))}
             </ol>
+          </section>
+
+          <section
+            className="lf-content-tile lf-content-tile--full lf-service-area__visual"
+            aria-labelledby="lf-service-area-visual-title"
+            data-lf-visual-proof="area-service"
+          >
+            <header>
+              <p className="lf-content-tile__label">The customer path, drawn</p>
+              <h2 id="lf-service-area-visual-title">
+                See the useful part of {service.eyebrow} before buying another thing.
+              </h2>
+            </header>
+            <div>
+              <p>
+                The same service explanation applies across New York. The neighborhood does not
+                change the facts of your business or invent a result for it.
+              </p>
+              <ServiceDiagram slug={service.slug} />
+            </div>
           </section>
 
           <section className="lf-content-tile lf-content-tile--full lf-service-area__related">

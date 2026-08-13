@@ -4,6 +4,9 @@ import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
 import FaqList from "@/components/editorial/FaqList";
 import QuietContact from "@/components/editorial/QuietContact";
+import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
+import { createConnectedPath } from "@/components/dataviz/connectedPath";
+import { SpeedTruthCard } from "@/components/dataviz/OwnerCalculators";
 import "@/styles/editorial/base.css";
 import "@/styles/editorial/nationwide.css";
 
@@ -37,6 +40,19 @@ const NATIONWIDE_FAQ = [
       "The website process is remote either way. A New York scope may include on-site work; a nationwide website scope does not promise a local visit. Dates, responsibilities, and any qualifying timing remedy are written down before paid work starts.",
   },
 ];
+
+const REMOTE_WEBSITE_PATH = createConnectedPath({
+  label: "A remote website project path",
+  summary:
+    "A remote website project begins with accurate business information, moves to a working website review, gives customers one clear action, and ends with the business owning the site and its instructions.",
+  caption: "The process is remote. Ownership and a clear customer path stay with the business.",
+  nodes: [
+    { id: "one", label: "Show us the real business", sub: "Services · photos · hours · questions", col: 0 },
+    { id: "two", label: "Review a working site", sub: "Plain language · real revisions", col: 1 },
+    { id: "three", label: "Customers get one clear action", sub: "Call · book · visit · buy", tone: "hub", col: 2 },
+    { id: "four", label: "The business keeps control", sub: "Site · domain · instructions", tone: "signal", col: 3 },
+  ],
+});
 
 export default function Nationwide() {
   return (
@@ -93,6 +109,7 @@ export default function Nationwide() {
               <li><span>02</span><strong>Watch it take shape</strong><p>You review a working site, not a pile of technical documents.</p></li>
               <li><span>03</span><strong>Launch with control</strong><p>You receive the site, ownership, and plain instructions for what comes next.</p></li>
             </ol>
+            <ConnectedPathDiagram path={REMOTE_WEBSITE_PATH} proof="nationwide" />
           </div>
 
           <article className="lf-content-tile lf-content-tile--narrow lf-content-tile--tablet-full">
@@ -105,6 +122,10 @@ export default function Nationwide() {
               </p>
             </EditorialBody>
           </article>
+
+          <div className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <SpeedTruthCard />
+          </div>
 
           <aside className="lf-content-tile lf-content-tile--full lf-content-tile--signal">
             <PullQuote cite="Why a New York shop, anywhere">

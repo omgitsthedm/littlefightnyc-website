@@ -15,7 +15,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from "nod
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { journalDates } from "./metadata-source.mjs";
-import { copyBySlug, renderJournalCopy } from "./journal-copy.mjs";
+import { copyBySlug, renderJournalCopy, resolveJournalSources } from "./journal-copy.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, "..", "src", "data");
@@ -87,9 +87,19 @@ for (const file of readdirSync(bodiesDir)) {
 }
 
 for (const p of resolvedPosts) {
+  const authored = copy.get(p.slug);
   writeFileSync(
     join(bodiesDir, `${p.slug}.json`),
-    JSON.stringify({ html: typeof p.html === "string" ? p.html : "" }) + "\n",
+    JSON.stringify({
+      html: typeof p.html === "string" ? p.html : "",
+      insight: {
+        answer: authored.answer,
+        watch: authored.watch ?? [],
+        next: authored.next ?? [],
+        fit: authored.fit,
+        sources: resolveJournalSources(authored),
+      },
+    }) + "\n",
   );
 }
 

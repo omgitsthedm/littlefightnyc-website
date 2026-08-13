@@ -40,7 +40,7 @@ const EDGES: FlowEdge[] = [
 
 export default function OwnerPath() {
   return (
-    <section className="lf-owner-path" aria-labelledby="lf-owner-path-title">
+    <section className="lf-owner-path" aria-labelledby="lf-owner-path-title" data-lf-visual-proof="customer-path">
       <div className="lf-owner-path__inner">
         <header className="lf-owner-path__head">
           <p className="lf-owner-path__eyebrow">One customer path</p>
@@ -51,11 +51,15 @@ export default function OwnerPath() {
           </p>
         </header>
 
+        <div className="lf-owner-path__before" aria-label="Before: search, the website, customer action, and follow-up sit in separate handoffs.">
+          <span>Search</span><i aria-hidden="true">handoff gap</i><span>Website</span><i aria-hidden="true">handoff gap</i><span>Action</span><i aria-hidden="true">handoff gap</i><span>Follow-up</span>
+        </div>
+
         <FlowDiagram
           className="lf-owner-path__flow"
           label="A customer path from discovery to follow-up"
           summary="A customer finds the business through search, a referral, or Maps. The website gives a clear answer. The customer can call, book, order, or ask a question. The right person can then follow up, take payment, and keep the details current."
-          caption="An illustration of the path. It is not a performance claim or a customer-count chart."
+          caption="After: one connected owner-controlled path. This is an illustration, not a performance claim or customer-count chart."
           nodes={NODES}
           edges={EDGES}
         />

@@ -168,11 +168,6 @@ export default function FlowDiagram({
                 pathLength={1}
                 style={{ ["--lf-i" as string]: i }}
               />
-              {e.pulse && (
-                <circle className="lf-flow__pulse" r="3">
-                  <animateMotion dur="2.6s" repeatCount="indefinite" path={e.d} />
-                </circle>
-              )}
             </g>
           ))}
         </svg>

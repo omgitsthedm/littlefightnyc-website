@@ -20,6 +20,7 @@ import { watchListReveals } from "@/lib/listReveal";
 // splitting the interactive layer keeps every visit from paying for the full
 // portfolio catalog and calculator before the hero is useful.
 const OwnerPath = lazy(() => import("@/components/dataviz/OwnerPath"));
+const WebsiteNightShift = lazy(() => import("@/components/dataviz/WebsiteNightShift"));
 const MoneyLeakMeter = lazy(() => import("@/components/dataviz/MoneyLeakMeter"));
 const RecentClients = lazy(() => import("@/components/editorial/RecentClients"));
 
@@ -40,6 +41,9 @@ export default function Home() {
         <QuietHero />
         <Suspense fallback={null}>
           <OwnerPath />
+        </Suspense>
+        <Suspense fallback={null}>
+          <WebsiteNightShift />
         </Suspense>
         <Suspense fallback={null}>
           <MoneyLeakMeter />

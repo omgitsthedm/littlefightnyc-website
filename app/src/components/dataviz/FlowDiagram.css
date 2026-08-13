@@ -23,7 +23,7 @@
   grid-auto-flow: column;
   grid-auto-columns: minmax(0, 1fr);
   align-items: center;
-  column-gap: clamp(40px, 7vw, 88px);
+  column-gap: clamp(64px, 8vw, 112px);
 }
 
 .lf-flow__col {
@@ -115,14 +115,13 @@
   align-self: center;
   min-width: min(200px, 100%);
 }
-/* The hub breathes once the diagram has resolved — same pulse language as
-   OneSystemDiagram's hub. */
+/* One short settle beat. There is no looping pulse competing with the text. */
 [data-revealed="true"] .lf-flow__node[data-tone="hub"] {
-  animation: lf-flow-hub-pulse 3200ms var(--lf-ease-standard) 1600ms infinite;
+  animation: lf-flow-hub-pulse var(--m-reveal-ms) var(--lf-ease-standard) 900ms 1 both;
 }
 @keyframes lf-flow-hub-pulse {
-  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--lf-fight) 10%, transparent); }
-  50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--lf-fight) 16%, transparent), 0 0 22px rgba(249, 115, 22, 0.22); }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .94; transform: scale(1.015); }
 }
 .lf-flow__node[data-tone="signal"] .lf-flow__node-label,
 .lf-flow__node[data-tone="hub"] .lf-flow__node-label {
@@ -161,31 +160,24 @@
 [data-revealed="true"] .lf-flow__wire {
   stroke-dashoffset: 0;
 }
-.lf-flow__pulse {
-  fill: var(--lf-fight);
-  opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.6));
-  transition: opacity var(--lf-time-base) var(--lf-ease-out) 900ms;
-}
-[data-revealed="true"] .lf-flow__pulse {
-  opacity: 0.9;
-}
-
 /* ---- Edge chip ---- */
 .lf-flow__edge-chip {
   position: absolute;
   z-index: 2;
   transform: translate(-50%, -50%);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  letter-spacing: 0.08em;
+  max-width: 7.5rem;
+  font-size: .62rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--lf-fight);
   background: var(--lf-ink);
   border: 1px solid color-mix(in srgb, var(--lf-fight) 45%, var(--lf-hairline));
   border-radius: var(--lf-radius-pill);
-  padding: 3px 9px;
-  white-space: nowrap;
+  padding: 3px 7px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
   opacity: 0;
   transition: opacity var(--lf-time-base) var(--lf-ease-out) 700ms;
 }
@@ -215,6 +207,9 @@
     grid-auto-columns: unset;
     grid-template-columns: minmax(0, 1fr);
     row-gap: var(--lf-space-6);
+  }
+  .lf-flow__edge-chip {
+    max-width: 8rem;
   }
   .lf-flow__col {
     flex-direction: column;
@@ -247,8 +242,5 @@
   .lf-flow__wire {
     stroke-dashoffset: 0 !important;
     transition: none !important;
-  }
-  .lf-flow__pulse {
-    display: none;
   }
 }

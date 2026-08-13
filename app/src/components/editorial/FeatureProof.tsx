@@ -75,6 +75,7 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
         </div>
 
         <div
+          key={activeStep}
           className="lf-feature-proof__panel"
           id={`${id}-panel-${activeStep}`}
           role="tabpanel"

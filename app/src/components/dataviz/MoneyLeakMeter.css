@@ -9,6 +9,19 @@
   margin-inline: auto;
 }
 
+.lf-money-meter .lf-owner-math {
+  width: 100%;
+  margin: 0 0 var(--lf-space-4);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.lf-money-meter .lf-currency-select {
+  margin-top: var(--lf-space-4);
+}
+
 .lf-money-meter__head {
   display: grid;
   gap: var(--lf-space-3);
@@ -217,11 +230,25 @@
 
   .lf-money-meter__panel {
     grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 1.1fr);
+    grid-template-areas:
+      "inputs answer"
+      "reset answer";
     align-items: stretch;
   }
 
   .lf-money-meter__inputs {
+    grid-area: inputs;
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lf-money-meter__reset {
+    grid-area: reset;
+    align-self: start;
+    justify-self: start;
+  }
+
+  .lf-money-meter__answer {
+    grid-area: answer;
   }
 }
 

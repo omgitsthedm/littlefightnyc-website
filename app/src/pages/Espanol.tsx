@@ -8,6 +8,8 @@ import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
 import CinematicMedia from "@/components/editorial/CinematicMedia";
+import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
+import type { ConnectedPath } from "@/components/dataviz/connectedPath";
 
 /**
  * /es/ is the complete pitch in Spanish. One fully Spanish page with its own
@@ -57,6 +59,24 @@ const EASIER = [
   "Reservar, pagar y comunicarse.",
   "Saber a quién llamar cuando algo falla.",
 ];
+
+const CUSTOMER_PATH: ConnectedPath = {
+  label: "El camino de un cliente",
+  summary:
+    "Un cliente encuentra información clara, entiende qué hacer, llega a una persona o a una reserva, y el negocio conserva las notas y las llaves.",
+  caption: "Un camino claro para el cliente; el negocio conserva el control.",
+  nodes: [
+    { id: "one", label: "El cliente encuentra datos claros", sub: "Servicio · horario · lugar", col: 0 },
+    { id: "two", label: "Entiende el siguiente paso", sub: "Llamar · reservar · preguntar", col: 1 },
+    { id: "three", label: "Llega a una persona o reserva", sub: "Una respuesta que alguien atiende", tone: "hub", col: 2 },
+    { id: "four", label: "El negocio conserva el control", sub: "Cuentas · notas · acceso", tone: "signal", col: 3 },
+  ],
+  edges: [
+    { from: "one", to: "two", tone: "muted", chip: "datos claros" },
+    { from: "two", to: "three", tone: "signal", chip: "un paso claro", pulse: true },
+    { from: "three", to: "four", tone: "signal", chip: "alguien responde", pulse: true },
+  ],
+};
 
 const PROOF = [
   {
@@ -219,6 +239,15 @@ export default function Espanol() {
               </ul>
             </article>
           </div>
+        </section>
+
+        <section className="lf-es__path" aria-labelledby="lf-es-path-title">
+          <div className="lf-es__section-head">
+            <p>Un camino claro</p>
+            <h2 id="lf-es-path-title">Así debe avanzar una consulta.</h2>
+            <span>Sin adivinar qué hacer, ni dónde termina el mensaje.</span>
+          </div>
+          <ConnectedPathDiagram path={CUSTOMER_PATH} proof="language" />
         </section>
 
         <section className="lf-es__fight">

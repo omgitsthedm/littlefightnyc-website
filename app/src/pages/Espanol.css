@@ -247,6 +247,7 @@
 
 .lf-es__services,
 .lf-es__fit,
+.lf-es__path,
 .lf-es__fight,
 .lf-es__proof,
 .lf-es__promises,
@@ -257,6 +258,21 @@
 .lf-es__section-head {
   max-width: 780px;
   margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.lf-es__path {
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid color-mix(in srgb, var(--lf-blue) 35%, var(--lf-hairline));
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-es__path .lf-es__section-head {
+  margin-bottom: 0;
+}
+
+.lf-es__path .lf-flow {
+  margin: var(--lf-space-5) 0 0;
 }
 
 .lf-editorial .lf-es__section-head h2,

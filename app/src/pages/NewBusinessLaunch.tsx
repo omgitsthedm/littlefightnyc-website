@@ -1,6 +1,9 @@
 import { Store } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
+import { createConnectedPath } from "@/components/dataviz/connectedPath";
+import { BreakEvenCustomerCount } from "@/components/dataviz/OwnerCalculators";
 import "@/styles/editorial/revenue-pages.css";
 
 const LAUNCH_LAYERS = [
@@ -30,6 +33,19 @@ const LAUNCH_LAYERS = [
     detail: "Simple, privacy-respecting measurement can show which actions happen. It cannot turn a visitor into a customer. It can show where the path needs work.",
   },
 ] as const;
+
+const LAUNCH_PATH = createConnectedPath({
+  label: "A new-business launch path",
+  summary:
+    "A launch starts with business ownership and recovery details, then accurate public facts, then one customer action, then an inbox or booking path a person owns.",
+  caption: "A launch path, not a promise about customer volume.",
+  nodes: [
+    { id: "one", label: "The business owns the keys", sub: "Domain · email · recovery", col: 0 },
+    { id: "two", label: "The facts agree", sub: "Website · Maps · hours", col: 1 },
+    { id: "three", label: "A customer can act", sub: "Call · book · visit · ask", tone: "hub", col: 2 },
+    { id: "four", label: "A real person follows up", sub: "Inbox · booking · next action", tone: "signal", col: 3 },
+  ],
+});
 
 export default function NewBusinessLaunch() {
   return (
@@ -77,6 +93,13 @@ export default function NewBusinessLaunch() {
             </li>
           ))}
         </ol>
+
+        <aside className="lf-revenue-page__visual" aria-label="The launch path, drawn">
+          <p>How the parts connect</p>
+          <ConnectedPathDiagram path={LAUNCH_PATH} proof="new-business-launch" />
+        </aside>
+
+        <BreakEvenCustomerCount />
       </section>
 
       <QuietContact

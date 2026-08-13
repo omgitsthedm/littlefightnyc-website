@@ -4,6 +4,12 @@ import { BookOpen } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import MiniToc, { type TocItem } from "@/components/dataviz/MiniToc";
+import JournalInsight, { type JournalInsightData } from "@/components/dataviz/JournalInsight";
+import {
+  CopyPasteTax,
+  DowntimeClock,
+  SubscriptionStack,
+} from "@/components/dataviz/OwnerCalculators";
 import TugMark from "@/components/editorial/TugMark";
 import { READ_MINUTES, WORD_COUNT } from "@/components/dataviz/journalStats";
 import ShareButton from "@/components/ShareButton";
@@ -30,13 +36,13 @@ type PostMeta = {
 // imports, so a reader downloads only the body of the post they opened.
 const BODY_LOADERS = import.meta.glob("../data/journal-bodies/*.json") as Record<
   string,
-  () => Promise<{ default: { html: string } }>
+  () => Promise<{ default: { html: string; insight: JournalInsightData } }>
 >;
 
-function loadBody(slug: string): Promise<string> {
+function loadBody(slug: string): Promise<{ html: string; insight: JournalInsightData } | null> {
   const loader = BODY_LOADERS[`../data/journal-bodies/${slug}.json`];
-  if (!loader) return Promise.resolve("");
-  return loader().then((m) => m.default?.html ?? "");
+  if (!loader) return Promise.resolve(null);
+  return loader().then((m) => m.default ?? null);
 }
 
 // Branded per-post art (same visual language as the category art) — per-post
@@ -176,6 +182,17 @@ function preparePostBody(post: PostMeta, rawHtml: string): { html: string; toc: 
   return { html, toc };
 }
 
+function JournalCalculator({ slug }: { slug: string }) {
+  if (slug === "the-pen-and-paper-tax") return <CopyPasteTax />;
+  if (slug === "read-your-monthly-software-bill" || slug === "custom-business-system-vs-saas-subscriptions") {
+    return <SubscriptionStack />;
+  }
+  if (slug === "what-to-do-when-business-wifi-keeps-dropping" || slug === "signs-your-pos-is-about-to-fail") {
+    return <DowntimeClock />;
+  }
+  return null;
+}
+
 export default function JournalPost() {
   const { slug } = useParams();
   const { pathname } = useLocation();
@@ -186,7 +203,12 @@ export default function JournalPost() {
   // instantly from the index; the body is a beat behind on a cold chunk fetch.
   // Tagged with its slug so a stale result from the previous post never renders
   // under the new one (and so we needn't reset state synchronously in the effect).
-  const [prepared, setPrepared] = useState<{ slug: string; html: string; toc: TocItem[] } | null>(null);
+  const [prepared, setPrepared] = useState<{
+    slug: string;
+    html: string;
+    toc: TocItem[];
+    insight: JournalInsightData;
+  } | null>(null);
   // The body chunk is modulepreloaded in the prerendered head (see
   // journalBodyModulePreload in prerender-seo.mjs), so on a fresh direct load it
   // resolves within a frame or two — faster than this timer. The skeleton then
@@ -200,11 +222,12 @@ export default function JournalPost() {
     const skelTimer = window.setTimeout(() => {
       if (alive) setShowSkeleton(true);
     }, 220);
-    loadBody(post.slug).then((raw) => {
+    loadBody(post.slug).then((payload) => {
       if (!alive) return;
       window.clearTimeout(skelTimer);
-      const body = preparePostBody(post, raw);
-      setPrepared({ slug: post.slug, html: body.html, toc: body.toc });
+      if (!payload) return;
+      const body = preparePostBody(post, payload.html);
+      setPrepared({ slug: post.slug, html: body.html, toc: body.toc, insight: payload.insight });
     });
     return () => {
       alive = false;
@@ -299,6 +322,15 @@ export default function JournalPost() {
           </p>
 
           {ready ? (
+            <JournalInsight
+              category={post.category}
+              slug={post.slug}
+              title={post.title}
+              insight={ready.insight}
+            />
+          ) : null}
+
+          {ready ? (
             <div
               className="lf-post__body"
               data-post-category={post.category}
@@ -317,6 +349,7 @@ export default function JournalPost() {
             // than a skeleton so a fast load never flashes text→skeleton→text.
             <div className="lf-post__body" aria-hidden="true" />
           )}
+          <JournalCalculator slug={post.slug} />
           </div>
         </div>
       </article>

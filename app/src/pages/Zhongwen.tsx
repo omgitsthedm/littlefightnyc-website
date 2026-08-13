@@ -8,6 +8,8 @@ import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
 import CinematicMedia from "@/components/editorial/CinematicMedia";
+import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
+import type { ConnectedPath } from "@/components/dataviz/connectedPath";
 
 /**
  * /zh/ is the complete pitch in Simplified Chinese, on the proven /es/ model:
@@ -57,6 +59,23 @@ const EASIER = [
   "预约、收款和联系。",
   "出问题时，知道该找谁。",
 ];
+
+const CUSTOMER_PATH: ConnectedPath = {
+  label: "顾客路径",
+  summary: "顾客先看到清楚的信息，知道下一步该做什么，能联系到真人或完成预约，生意自己保留账号、记录和控制权。",
+  caption: "让顾客走得明白，控制权仍在生意自己手里。",
+  nodes: [
+    { id: "one", label: "顾客看到清楚的信息", sub: "服务 · 时间 · 地点", col: 0 },
+    { id: "two", label: "知道下一步怎么做", sub: "打电话 · 预约 · 提问", col: 1 },
+    { id: "three", label: "联系到真人或完成预约", sub: "有人负责回复", tone: "hub", col: 2 },
+    { id: "four", label: "生意自己保留控制权", sub: "账号 · 记录 · 权限", tone: "signal", col: 3 },
+  ],
+  edges: [
+    { from: "one", to: "two", tone: "muted", chip: "信息清楚" },
+    { from: "two", to: "three", tone: "signal", chip: "下一步明确", pulse: true },
+    { from: "three", to: "four", tone: "signal", chip: "有人负责", pulse: true },
+  ],
+};
 
 const PROOF = [
   {
@@ -216,6 +235,15 @@ export default function Zhongwen() {
               </ul>
             </article>
           </div>
+        </section>
+
+        <section className="lf-es__path" aria-labelledby="lf-zh-path-title">
+          <div className="lf-es__section-head">
+            <p>顾客走得明白</p>
+            <h2 id="lf-zh-path-title">一次咨询应该这样往下走。</h2>
+            <span>不用猜下一步，也不用猜消息会落到哪里。</span>
+          </div>
+          <ConnectedPathDiagram path={CUSTOMER_PATH} proof="language" />
         </section>
 
         <section className="lf-es__fight">

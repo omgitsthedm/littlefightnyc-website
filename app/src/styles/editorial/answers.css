@@ -253,6 +253,17 @@
   margin: 0;
 }
 
+.lf-answer-page__feature .lf-answer-diagram,
+.lf-answer-page__feature .lf-verdict {
+  margin: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.lf-answer-page__feature .lf-triage {
+  margin: 0;
+}
+
 .lf-answer-page__feature:empty {
   display: none;
 }

@@ -3,10 +3,21 @@ import { HelpCircle } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import ShareButton from "@/components/ShareButton";
+import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
+import AnswerStepper from "@/components/dataviz/AnswerStepper";
+import AnswerVerdict from "@/components/dataviz/AnswerVerdict";
+import MoneyLeakMeter from "@/components/dataviz/MoneyLeakMeter";
+import {
+  BreakEvenCustomerCount,
+  DowntimeClock,
+  SubscriptionStack,
+} from "@/components/dataviz/OwnerCalculators";
 import { answerGuides, answerServiceBridge } from "@/data/site";
 import {
   ANSWER_CLUSTERS,
+  ANSWER_VERDICTS,
   answerArt,
+  answerVisualKind,
 } from "@/data/answersArt";
 import "@/styles/editorial/answers.css";
 import "@/styles/editorial/longform-routes.css";
@@ -65,6 +76,14 @@ function relatedGuides(slug: string) {
     .slice(0, 3);
 }
 
+function AnswerOwnerMath({ slug }: { slug: string }) {
+  if (slug === "website-form-not-working-small-business") return <MoneyLeakMeter />;
+  if (slug === "website-down-emergency-nyc" || slug === "pos-system-down-restaurant-nyc") return <DowntimeClock />;
+  if (slug === "reduce-monthly-software-costs-small-business" || slug === "hair-salon-save-money-software") return <SubscriptionStack />;
+  if (slug === "wix-vs-custom-website-reddit" || slug === "does-my-small-business-need-a-website-reddit") return <BreakEvenCustomerCount />;
+  return null;
+}
+
 export default function AnswerGuide() {
   const { slug } = useParams();
   const { pathname } = useLocation();
@@ -73,6 +92,7 @@ export default function AnswerGuide() {
   if (!guide) return <Navigate to="/examples/#answers" replace />;
 
   const related = relatedGuides(guide.slug);
+  const visualKind = answerVisualKind(guide.slug);
 
   return (
     <div className="lf-longform-route lf-longform-route--answer">
@@ -109,6 +129,25 @@ export default function AnswerGuide() {
           </p>
 
           {EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} urgent />}
+
+          <section
+            className="lf-answer-page__feature"
+            aria-label="A visual read of this answer"
+            data-lf-visual-proof="answer"
+          >
+            {visualKind === "diagram" && <AnswerDiagram slug={guide.slug} />}
+            {visualKind === "verdict" && ANSWER_VERDICTS[guide.slug] && (
+              <AnswerVerdict verdict={ANSWER_VERDICTS[guide.slug]} />
+            )}
+            {visualKind === "stepper" && (
+              <AnswerStepper
+                sections={guide.sections}
+                label={EMERGENCY.has(guide.slug) ? "Triage steps, in order" : "The useful path, in order"}
+              />
+            )}
+          </section>
+
+          <AnswerOwnerMath slug={guide.slug} />
 
           <div
             className="lf-answer-page__sections"

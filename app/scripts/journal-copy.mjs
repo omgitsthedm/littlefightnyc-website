@@ -26,7 +26,7 @@ function list(items, ordered = false) {
   return `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</${tag}>`;
 }
 
-const SOURCE_CATALOG = {
+export const SOURCE_CATALOG = {
   nistSmallBusiness: {
     label: "NIST Small Business Cybersecurity Corner",
     href: "https://www.nist.gov/itl/smallbusinesscyber",
@@ -169,16 +169,26 @@ const SOURCE_CATALOG = {
   },
 };
 
+export function resolveJournalSources(record) {
+  return (record?.sources ?? []).map((sourceRef) => {
+    const source = typeof sourceRef === "string" ? SOURCE_CATALOG[sourceRef] : sourceRef;
+    if (!source) throw new Error(`Unknown Journal source key: ${sourceRef}`);
+    return {
+      label: String(source.label),
+      href: safeHref(source.href),
+      note: source.note ? String(source.note) : "",
+    };
+  });
+}
+
 export function renderJournalCopy(record) {
   if (!record?.slug || !record?.answer || !record?.next?.length) {
     throw new Error(`Incomplete Journal copy record: ${record?.slug ?? "(unknown)"}`);
   }
 
-  const sources = (record.sources ?? [])
-    .map((sourceRef) => {
-      const source = typeof sourceRef === "string" ? SOURCE_CATALOG[sourceRef] : sourceRef;
-      if (!source) throw new Error(`Unknown Journal source key: ${sourceRef}`);
-      const href = safeHref(source.href);
+  const sources = resolveJournalSources(record)
+    .map((source) => {
+      const href = source.href;
       const external = href.startsWith("https://");
       const attributes = external ? ' target="_blank" rel="noreferrer"' : "";
       return `<li><a href="${escapeHtml(href)}"${attributes}>${escapeHtml(source.label)}</a>${source.note ? ` — ${escapeHtml(source.note)}` : ""}</li>`;

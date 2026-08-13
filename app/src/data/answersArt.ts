@@ -64,6 +64,29 @@ export function answerArt(slug: string): string {
   return `/assets/answers-${answerArchetype(slug)}.webp`;
 }
 
+/**
+ * Each owner answer gets one compact visual read before the full explanation.
+ *
+ * The three diagram guides have a concrete customer-path shape already stated
+ * in their authored copy. Existing side-by-side comparisons use their
+ * source-derived verdict tables. Every other guide uses its own four authored
+ * sections as a numbered readout, so a newly added guide can never silently
+ * ship without a visual explanation.
+ */
+export type AnswerVisualKind = "diagram" | "stepper" | "verdict";
+
+const DIAGRAM_GUIDES = new Set([
+  "website-form-not-working-small-business",
+  "reduce-monthly-software-costs-small-business",
+  "business-not-showing-on-google-maps",
+]);
+
+export function answerVisualKind(slug: string): AnswerVisualKind {
+  if (DIAGRAM_GUIDES.has(slug)) return "diagram";
+  if (ANSWER_VERDICTS[slug]) return "verdict";
+  return "stepper";
+}
+
 /* ---- Hub clusters — symptom-first grouping ------------------------------ */
 
 export type AnswerCluster = {

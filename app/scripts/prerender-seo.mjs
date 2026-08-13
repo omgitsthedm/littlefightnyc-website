@@ -1692,6 +1692,10 @@ function zhSnapshot() {
       <ul class="es-list"><li>您的店名、电话号码、域名和品牌。</li><li>现在真正好用的工具。</li><li>您招呼顾客、完成工作的方式。</li></ul>
       <h3>变得更轻松</h3>
       <ul class="es-list"><li>让新顾客找到您，也看懂您做什么。</li><li>预约、收款和联系。</li><li>出问题时，知道该找谁。</li></ul>
+      <p class="es-eyebrow">顾客走得明白</p>
+      <h2>一次咨询应该这样往下走。</h2>
+      <p class="es-sub">顾客先看到清楚的信息，知道下一步该做什么，能联系到真人或完成预约，生意自己保留账号、记录和控制权。</p>
+      <ul class="es-list"><li>看懂您能帮什么。</li><li>知道下一步怎么做。</li><li>联系到真人或完成预约。</li><li>您保留控制权。</li></ul>
       <p class="es-sub">生意怎么做，您最清楚。我们先听您怎么工作，留下好用的，修掉添乱的。您不需要先变成技术专家。</p>
       <p class="es-eyebrow">真实项目</p>
       <h2>这些已经在为客户做事。</h2>
@@ -1763,6 +1767,10 @@ function esSnapshot() {
       <ul class="es-list"><li>Su nombre, teléfono, dominio y marca.</li><li>Las herramientas que sí le sirven.</li><li>La forma en que atiende a sus clientes.</li></ul>
       <h3>Lo que se vuelve más fácil</h3>
       <ul class="es-list"><li>Que nuevos clientes lo encuentren y entiendan.</li><li>Reservar, pagar y comunicarse.</li><li>Saber a quién llamar cuando algo falla.</li></ul>
+      <p class="es-eyebrow">UN CAMINO CLARO</p>
+      <h2>Así debe avanzar una consulta.</h2>
+      <p class="es-sub">El cliente ve información clara, entiende el siguiente paso, puede hablar con una persona o completar una reserva, y usted conserva las cuentas, los registros y el control.</p>
+      <ul class="es-list"><li>Entiende cómo puede ayudarle.</li><li>Sabe qué hacer después.</li><li>Habla con una persona o completa la reserva.</li><li>Usted conserva el control.</li></ul>
       <p class="es-sub">Usted ya sabe llevar su negocio. Nosotros escuchamos cómo trabaja, conservamos lo que sirve y arreglamos lo que estorba. No tiene que volverse experto en tecnología.</p>
       <p class="es-eyebrow">PROYECTOS REALES</p>
       <h2>Esto ya está funcionando para clientes.</h2>

@@ -477,7 +477,8 @@
 }
 
 .lf-longform-route--service-area .lf-service-area__reality,
-.lf-longform-route--service-area .lf-service-area__checks {
+.lf-longform-route--service-area .lf-service-area__checks,
+.lf-longform-route--service-area .lf-service-area__visual {
   grid-column: 1 / -1;
   margin: 0;
   padding: clamp(var(--lf-space-7), 7vw, var(--lf-space-9)) 0;
@@ -488,20 +489,37 @@
 }
 
 .lf-longform-route--service-area
-  :where(.lf-service-area__reality, .lf-service-area__checks)
+  :where(.lf-service-area__reality, .lf-service-area__checks, .lf-service-area__visual)
   header {
   min-width: 0;
 }
 
+.lf-longform-route--service-area .lf-service-area__visual > div {
+  min-width: 0;
+}
+
+.lf-longform-route--service-area .lf-service-area__visual > div > p {
+  max-width: var(--lf-measure-reading);
+  margin: var(--lf-space-5) 0 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-md);
+  line-height: 1.65;
+}
+
+.lf-longform-route--service-area .lf-service-area__visual > div > :not(p) {
+  margin-top: var(--lf-space-5);
+}
+
 .lf-longform-route--service-area
-  :where(.lf-service-area__reality, .lf-service-area__checks)
+  :where(.lf-service-area__reality, .lf-service-area__checks, .lf-service-area__visual)
   .lf-content-tile__label {
   margin-bottom: var(--lf-space-3);
   color: var(--lf-fight);
 }
 
 .lf-longform-route--service-area
-  :where(.lf-service-area__reality, .lf-service-area__checks)
+  :where(.lf-service-area__reality, .lf-service-area__checks, .lf-service-area__visual)
   h2 {
   max-width: 18ch;
   margin: 0;
@@ -730,7 +748,8 @@
   }
 
   .lf-longform-route--service-area .lf-service-area__reality,
-  .lf-longform-route--service-area .lf-service-area__checks {
+  .lf-longform-route--service-area .lf-service-area__checks,
+  .lf-longform-route--service-area .lf-service-area__visual {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: var(--lf-space-7);
@@ -738,13 +757,14 @@
   }
 
   .lf-longform-route--service-area
-    :where(.lf-service-area__reality, .lf-service-area__checks)
+    :where(.lf-service-area__reality, .lf-service-area__checks, .lf-service-area__visual)
     header {
     grid-column: 1 / span 4;
   }
 
   .lf-longform-route--service-area .lf-service-area__reality > p,
-  .lf-longform-route--service-area .lf-service-area__checks ol {
+  .lf-longform-route--service-area .lf-service-area__checks ol,
+  .lf-longform-route--service-area .lf-service-area__visual > div {
     grid-column: 5 / -1;
     margin-top: 0;
   }

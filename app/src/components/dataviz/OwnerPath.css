@@ -53,6 +53,37 @@
   background: var(--lf-paper-2);
 }
 
+.lf-owner-path__before {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-2);
+  align-items: center;
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  padding: var(--lf-space-3);
+  border: 1px dashed var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.lf-owner-path__before span {
+  padding: .35rem .6rem;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-pill);
+}
+
+.lf-owner-path__before i {
+  color: var(--lf-red-soft, var(--lf-bone-dim));
+  font-style: normal;
+}
+
+.lf-owner-path__flow {
+  margin-top: var(--lf-space-4);
+}
+
 .lf-owner-path__footer {
   display: flex;
   flex-wrap: wrap;

@@ -3,6 +3,13 @@ import { ArrowRight } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import AuditMapDiagram from "@/components/dataviz/AuditMapDiagram";
+import WebsiteNightShift from "@/components/dataviz/WebsiteNightShift";
+import {
+  CheckoutLeak,
+  DowntimeClock,
+  MissedCallMeter,
+  RecoveryReadiness,
+} from "@/components/dataviz/OwnerCalculators";
 import industries from "@/data/industries.json";
 import { prepareIndustryHtml } from "@/lib/legacyHtml";
 import { responsiveImageProps } from "@/lib/responsiveImages";
@@ -323,6 +330,15 @@ const INDUSTRY_SOURCES: Record<string, { label: string; href: string; note: stri
   },
 };
 
+function IndustryInstrument({ slug }: { slug: string }) {
+  if (slug === "galleries-creative-studios") return <WebsiteNightShift />;
+  if (slug === "law-firms") return <RecoveryReadiness />;
+  if (slug === "professional-services" || slug === "salons-wellness") return <MissedCallMeter />;
+  if (slug === "restaurants-bars") return <DowntimeClock />;
+  if (slug === "retail-ecommerce") return <CheckoutLeak />;
+  return null;
+}
+
 /**
  * Lift the authored "Fit map" or "Audit map" section out of the legacy body so it can render
  * as a real customer-path diagram (AuditMapDiagram) instead of borderless prose.
@@ -551,6 +567,8 @@ export default function IndustryDetail() {
           </aside>
         </div>
       </section>
+
+      <IndustryInstrument slug={entry.slug} />
 
       <article className="lf-post lf-post--industry">
         <div className="lf-post__inner">

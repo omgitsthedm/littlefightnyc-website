@@ -2,6 +2,12 @@ import { RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
+import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
+import { createConnectedPath } from "@/components/dataviz/connectedPath";
+import {
+  MeasurementPath,
+  RecoveryReadiness,
+} from "@/components/dataviz/OwnerCalculators";
 import { HELLO_EMAIL } from "@/data/contact";
 import "@/styles/editorial/revenue-pages.css";
 
@@ -27,6 +33,19 @@ const CARE_WORK = [
     detail: "Every material change is documented. The domain, code, content, accounts, and business data remain yours whether care continues or stops.",
   },
 ] as const;
+
+const CARE_PATH = createConnectedPath({
+  label: "An ongoing-care path",
+  summary:
+    "Ongoing care checks the public facts, customer actions, and quiet technical connections. A change is documented and stays with the business owner.",
+  caption: "Care keeps the path current; it does not lock the business in.",
+  nodes: [
+    { id: "one", label: "A real business change", sub: "Hours · staff · service · policy", col: 0 },
+    { id: "two", label: "The public path is checked", sub: "Website · form · booking · call", col: 1 },
+    { id: "three", label: "The change is clear", sub: "Current facts · working handoff", tone: "hub", col: 2 },
+    { id: "four", label: "The owner keeps the record", sub: "Notes · access · recovery", tone: "signal", col: 3 },
+  ],
+});
 
 export default function OngoingCare() {
   return (
@@ -73,6 +92,14 @@ export default function OngoingCare() {
             </li>
           ))}
         </ol>
+
+        <aside className="lf-revenue-page__visual" aria-label="The ongoing care path, drawn">
+          <p>How care stays accountable</p>
+          <ConnectedPathDiagram path={CARE_PATH} proof="ongoing-care" />
+        </aside>
+
+        <RecoveryReadiness />
+        <MeasurementPath />
 
         <aside className="lf-revenue-page__handoff">
           <div>

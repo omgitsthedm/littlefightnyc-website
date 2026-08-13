@@ -6,6 +6,7 @@
 
 .lf-revenue-page__intro,
 .lf-revenue-page__rows,
+.lf-revenue-page__visual,
 .lf-revenue-page__handoff,
 .lf-client-desk,
 .lf-client-now,
@@ -104,6 +105,28 @@
   color: var(--lf-bone-soft);
   font-size: var(--lf-text-base);
   line-height: 1.52;
+}
+
+.lf-revenue-page__visual {
+  margin-top: clamp(3rem, 8vw, 7rem);
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid color-mix(in srgb, var(--lf-blue) 35%, var(--lf-hairline));
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-revenue-page__visual > p {
+  margin: 0;
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lf-revenue-page__visual .lf-flow {
+  margin: var(--lf-space-5) 0 0;
 }
 
 .lf-revenue-page__handoff {
