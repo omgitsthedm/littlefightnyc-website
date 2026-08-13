@@ -587,6 +587,7 @@ ledgers:
 evidence:
   summary_dir: ".lifi/evidence"
   baseline: ".lifi/evidence/baselines/2026-08-01.md"
+  release_dossiers: ".lifi/evidence/releases/<release-id>/"
   ci_artifact_policy: "UNDEFINED — add retained browser, accessibility, visual, performance, and live-smoke artifacts with the quality command implementation"
   retention_policy: "Version baseline summaries; never commit secrets, form submissions, client data, raw IPs, provider payloads, or production logs."
 independent_verifier: null

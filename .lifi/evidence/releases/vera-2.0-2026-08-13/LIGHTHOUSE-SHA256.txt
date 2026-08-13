@@ -1,0 +1,16 @@
+# VERA 2.0 Lighthouse evidence SHA-256 manifest
+# Release: vera-2.0-2026-08-13
+# Raw evidence root: /Users/davidmarsh/Documents/Codex/2026-08-12/ok-w/work/vera-lighthouse-2026-08-13
+# One SHA-256 digest per raw JSON report; raw reports remain at the evidence root and are not copied into this dossier.
+146ea14e6342ab31710f9e06a774e430e4df520256b530be424dd7c1177ab4a6  atlas-desktop-1.json
+1eb54950ae18b23d714f60175366a793bbaaf2f26834d2e9ca02db0bbb2c51f5  atlas-desktop-2.json
+1f32d9db2860e76cc8fa3fba0e6b4ce7bd55ebfd99a370183b8223f6035c8f34  atlas-desktop-3.json
+32a5aed0280e50ce1188b1bb52815761b49693cddf07621d91be7b3f3236649c  atlas-mobile-1.json
+f0e1ceeda23716ba724c5c1cb203cd9432d555bf14a4efb70a8a45e52ee3cf07  atlas-mobile-2.json
+c08bb9910dedd02ec9499b2b8b69586cab99569245c97f258df553427ab9e77d  atlas-mobile-3.json
+ab2ea600c0519e0325861d757e04f2c66aaeb6742f9c57d937ccf2baa4d4d0c0  today-desktop-1.json
+2ccf9150c6638d8bf43e209bc1b7236913262caeabb3cd842be8b4471ca9a63d  today-desktop-2.json
+56e53d773b3f588c9b6b27b4e10dece3713dba907e9b98fc75ed88a04f5453d5  today-desktop-3.json
+4cc34de8869d3192099a6be2dfe176197c7208eadd279459cf0052752eaf089b  today-mobile-1.json
+0b6e9fcdfc3a7ee747467fb410debe27522e255d598f1486549c3a52cd131eb8  today-mobile-2.json
+2c582499c872a3a4074668baff1a6204c29d8fdb7cec74780079ae025da03aa3  today-mobile-3.json

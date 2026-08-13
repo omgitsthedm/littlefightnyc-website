@@ -1,0 +1,87 @@
+{
+  "$schema": "https://cyclonedx.org/schema/bom-1.5.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:70a2d1bd-6b79-50af-9970-1a264397feca",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-08-13T07:42:18Z",
+    "tools": [
+      {
+        "vendor": "npm",
+        "name": "npm",
+        "version": "10"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "littlefightnyc-website-vera",
+      "version": "0a4d1d4a31ea3c2ac1f512afa653bb305dbc9183",
+      "purl": "pkg:github/omgitsthedm/littlefightnyc-website@0a4d1d4a31ea3c2ac1f512afa653bb305dbc9183"
+    },
+    "properties": [
+      {
+        "name": "lifi:scope",
+        "value": "21 production npm packages plus 3 vendored VERA map components; developer-only packages omitted"
+      },
+      {
+        "name": "lifi:package-lock-sha256",
+        "value": "75197f98103399d8f271c4b0d720cb27954fed84e598bd38d44ad77090441901"
+      }
+    ]
+  },
+  "components": [
+    {"type":"library","name":"@fontsource-variable/oswald","version":"5.2.8","purl":"pkg:npm/%40fontsource-variable/oswald@5.2.8"},
+    {"type":"library","name":"@fontsource/barlow","version":"5.2.8","purl":"pkg:npm/%40fontsource/barlow@5.2.8"},
+    {"type":"library","name":"@fontsource/jetbrains-mono","version":"5.2.8","purl":"pkg:npm/%40fontsource/jetbrains-mono@5.2.8"},
+    {"type":"library","name":"@netlify/identity","version":"1.2.0","purl":"pkg:npm/%40netlify/identity@1.2.0"},
+    {"type":"library","name":"gotrue-js","version":"1.0.1","purl":"pkg:npm/gotrue-js@1.0.1"},
+    {"type":"library","name":"i18next","version":"26.3.6","purl":"pkg:npm/i18next@26.3.6"},
+    {"type":"library","name":"typescript","version":"5.9.3","purl":"pkg:npm/typescript@5.9.3"},
+    {"type":"library","name":"leaflet","version":"1.9.4","purl":"pkg:npm/leaflet@1.9.4"},
+    {"type":"library","name":"lucide-react","version":"0.562.0","purl":"pkg:npm/lucide-react@0.562.0"},
+    {"type":"library","name":"react","version":"19.2.6","purl":"pkg:npm/react@19.2.6"},
+    {"type":"library","name":"react-dom","version":"19.2.6","purl":"pkg:npm/react-dom@19.2.6"},
+    {"type":"library","name":"scheduler","version":"0.27.0","purl":"pkg:npm/scheduler@0.27.0"},
+    {"type":"library","name":"react-i18next","version":"17.0.10","purl":"pkg:npm/react-i18next@17.0.10"},
+    {"type":"library","name":"@babel/runtime","version":"7.29.7","purl":"pkg:npm/%40babel/runtime@7.29.7"},
+    {"type":"library","name":"html-parse-stringify","version":"3.0.1","purl":"pkg:npm/html-parse-stringify@3.0.1"},
+    {"type":"library","name":"void-elements","version":"3.1.0","purl":"pkg:npm/void-elements@3.1.0"},
+    {"type":"library","name":"use-sync-external-store","version":"1.6.0","purl":"pkg:npm/use-sync-external-store@1.6.0"},
+    {"type":"library","name":"react-router-dom","version":"7.18.2","purl":"pkg:npm/react-router-dom@7.18.2"},
+    {"type":"library","name":"react-router","version":"7.18.2","purl":"pkg:npm/react-router@7.18.2"},
+    {"type":"library","name":"cookie","version":"1.1.1","purl":"pkg:npm/cookie@1.1.1"},
+    {"type":"library","name":"set-cookie-parser","version":"2.7.2","purl":"pkg:npm/set-cookie-parser@2.7.2"},
+    {
+      "type": "library",
+      "name": "maplibre-gl-js",
+      "version": "5.6.0",
+      "purl": "pkg:github/maplibre/maplibre-gl-js@v5.6.0",
+      "hashes": [
+        {"alg": "SHA-256", "content": "07e6ca71a5b6d835a7c3803fb484f0a6e5f0dcbfa131407666edb9e9316564f9"}
+      ],
+      "licenses": [{"license": {"id": "BSD-3-Clause"}}]
+    },
+    {
+      "type": "file",
+      "name": "OpenFreeMap Liberty local style and sprites",
+      "version": "72e1480dfc92858d334647037988bd2591fdb021",
+      "hashes": [
+        {"alg": "SHA-256", "content": "c3b181be9436e3e2eb80668382768644a8b14ec90fa1d158317d5dc6cb0f06ec"}
+      ],
+      "licenses": [{"license": {"id": "MIT"}}]
+    },
+    {
+      "type": "file",
+      "name": "Noto Sans MapLibre glyph snapshot",
+      "version": "2026-08-13",
+      "hashes": [
+        {"alg": "SHA-256", "content": "02f4cb94608d049fae80f6de53511836b4ce79e7540b75be4ad1b1b44c95a986"}
+      ],
+      "licenses": [{"license": {"id": "OFL-1.1"}}],
+      "properties": [
+        {"name": "lifi:hash-scope", "value": "SHA-256 of the sorted per-file SHA-256 manifest for 768 PBF glyph files"}
+      ]
+    }
+  ]
+}

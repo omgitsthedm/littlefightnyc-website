@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-08-10
+Last source verification: 2026-08-13
 
 This file routes agents to the current website source. The marketing site,
 private Dakota desk, and public VERA browser product use one public website
@@ -99,6 +99,15 @@ VERA's restartable cross-repository operating map is maintained in
 Use it to locate the engine, sanitized publication contract, schedules, release
 rail, recovery boundary, and current verification commands without reviving a
 retired standalone property.
+
+Durable public-product release evidence lives outside the deployed
+`app/public/**` tree under the repository's declared evidence registry,
+`.lifi/evidence/releases/<release-id>/`. The VERA 2.0 closeout is
+`.lifi/evidence/releases/vera-2.0-2026-08-13/`; it records the exact production
+revision, decision, verification, rollback, supply-chain evidence, and dated
+observation work without publishing private engine material. Do not create a
+top-level `docs/` tree: the repository-boundary audit reserves that retired
+path.
 
 ## Dakota architecture and private boundary
 
