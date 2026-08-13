@@ -1,37 +1,14 @@
 import { ExternalLink, Headphones, Mail, MessageSquare, Phone } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import {
-  BILLING_EMAIL,
   BOOKING_HREF,
   GOOGLE_REVIEW_HREF,
+  HELLO_EMAIL,
   PHONE_DISPLAY,
   PHONE_HREF,
-  PROJECTS_EMAIL,
   SMS_HREF,
-  SUPPORT_EMAIL,
 } from "@/data/contact";
 import "@/styles/editorial/revenue-pages.css";
-
-const CLIENT_ROUTES = [
-  {
-    label: "Support",
-    email: SUPPORT_EMAIL,
-    subject: "Client support request",
-    detail: "Something broke, changed, or needs attention.",
-  },
-  {
-    label: "Projects",
-    email: PROJECTS_EMAIL,
-    subject: "Project update",
-    detail: "Send content, feedback, an approval, or a project question.",
-  },
-  {
-    label: "Billing",
-    email: BILLING_EMAIL,
-    subject: "Billing question",
-    detail: "Ask about an invoice, receipt, scope, or payment record.",
-  },
-] as const;
 
 export default function Clients() {
   return (
@@ -40,7 +17,7 @@ export default function Clients() {
         eyebrow="Current client desk"
         icon={Headphones}
         title={<>One clean door back in.</>}
-        dek="Pick the route that matches the need. Each one reaches Little Fight with enough context to start in the right place."
+        dek="Email one inbox with the details. Call or text when customers are blocked right now."
         image={{
           src: "/images/brand-scenes/restaurant-counter.webp",
           alt: "A restaurant counter ready for the business day",
@@ -51,28 +28,26 @@ export default function Clients() {
 
       <section className="lf-revenue-page lf-revenue-page--clients" aria-labelledby="lf-client-title">
         <header className="lf-revenue-page__intro">
-          <p>Choose the real need</p>
-          <h2 id="lf-client-title">A person should understand the first message.</h2>
+          <p>One inbox. No department maze.</p>
+          <h2 id="lf-client-title">Tell us what needs attention.</h2>
           <div>
             <p>
-              These addresses are routing labels, not separate departments.
-              They reach the same Little Fight inbox and make the reason for
-              the message clear before a reply.
+              Use this address for support, project updates, billing questions,
+              or anything else about current work. Include the business name
+              and a plain description of what happened.
             </p>
           </div>
         </header>
 
-        <ul className="lf-client-desk">
-          {CLIENT_ROUTES.map((route) => (
-            <li key={route.email}>
-              <p>{route.label}</p>
-              <h3>{route.detail}</h3>
-              <a href={`mailto:${route.email}?subject=${encodeURIComponent(route.subject)}`}>
-                <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
-                {route.email}
-              </a>
-            </li>
-          ))}
+        <ul className="lf-client-desk lf-client-desk--single">
+          <li>
+            <p>Current client email</p>
+            <h3>Support, projects, and billing belong here.</h3>
+            <a href={`mailto:${HELLO_EMAIL}?subject=Current%20client%20request`}>
+              <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
+              {HELLO_EMAIL}
+            </a>
+          </li>
         </ul>
 
         <div className="lf-client-now">

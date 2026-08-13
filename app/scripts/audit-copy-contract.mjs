@@ -44,6 +44,8 @@ const BANNED_COPY = [
   { label: "seamless solutions", pattern: /\bseamless solutions\b/i },
 ];
 
+const RETIRED_EMAILS = /(?:support|projects|billing)@littlefightnyc\.com/gi;
+
 const PLACEHOLDER_COPY = [
   { label: "TODO", pattern: /\bTODO\b/i },
   { label: "TBD", pattern: /\bTBD\b/i },
@@ -233,6 +235,10 @@ for (const page of pages) {
   }
 
   const anchors = anchorTags(html);
+  const retiredEmails = [...new Set(html.match(RETIRED_EMAILS) ?? [])];
+  for (const email of retiredEmails) {
+    failures.push(`${routePath}: unverified retired email address (${email})`);
+  }
   for (const tag of anchors) {
     const href = attr(tag, "href");
     if (/^(?:http:|\/\/|www\.)/i.test(href)) {

@@ -122,16 +122,16 @@ if (tokens?.contact !== "hello@littlefightnyc.com") {
   fail("tokens.json: canonical contact must be hello@littlefightnyc.com");
 }
 
-// The phone lives in two machine-readable places by necessity: seo-pages.json
-// is authoritative and drives the build, but it is deliberately kept out of
-// the client bundle, so components read src/data/contact.ts instead. Two
-// sources can drift, and a stale number in the nav is the kind of thing nobody
-// notices until a customer cannot reach anyone. Assert they agree.
+// Canonical contact details live in two machine-readable places by necessity:
+// seo-pages.json is authoritative and drives the build, but it is deliberately
+// kept out of the client bundle, so components read src/data/contact.ts instead.
+// Assert they agree so a stale contact path cannot ship silently.
 const seoSite = JSON.parse(await read("src/data/seo-pages.json")).site;
 const contactModule = await read("src/data/contact.ts");
 for (const [field, constant] of [
   ["phone", "PHONE_E164"],
   ["phoneDisplay", "PHONE_DISPLAY"],
+  ["email", "HELLO_EMAIL"],
 ]) {
   const declared = contactModule.match(
     new RegExp(`export const ${constant} = "([^"]+)"`),

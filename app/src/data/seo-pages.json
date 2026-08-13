@@ -941,9 +941,9 @@
     {
       "path": "/clients/",
       "title": "Current Client Support | Little Fight NYC",
-      "description": "Current Little Fight clients can route support, project, and billing questions, call or text about urgent issues, book a check-in, or leave an honest review.",
+      "description": "Current Little Fight clients can email one inbox about support, projects, or billing, call or text about urgent issues, or book a check-in.",
       "h1": "One clean door back in.",
-      "shortAnswer": "Short answer: current clients can use support@littlefightnyc.com, projects@littlefightnyc.com, or billing@littlefightnyc.com; all three reach the staffed Little Fight inbox with clear context.",
+      "shortAnswer": "Short answer: current clients can email hello@littlefightnyc.com about support, projects, or billing. Call or text when customers are blocked right now.",
       "type": "ContactPage",
       "image": "/images/brand-scenes/restaurant-counter.webp"
     },

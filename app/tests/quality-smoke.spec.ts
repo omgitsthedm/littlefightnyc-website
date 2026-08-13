@@ -214,7 +214,7 @@ const ROUTES: readonly RouteContract[] = [
     path: "/clients/",
     title: "Current Client Support | Little Fight NYC",
     h1: /One clean door back in\./i,
-    criticalLink: 'a[href^="mailto:support@littlefightnyc.com"]',
+    criticalLink: 'a[href^="mailto:hello@littlefightnyc.com"]',
     tags: ["@chromium-desktop", "@chromium-mobile"],
   },
   {

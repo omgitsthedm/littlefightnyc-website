@@ -36,7 +36,5 @@ export const BOOKING_HREF =
 /** Public review destination. Use only after genuine completed work. */
 export const GOOGLE_REVIEW_HREF = "https://g.page/r/CRb0vlSFW_48EBM/review";
 
-/** Workspace aliases that route into the staffed hello@ inbox. */
-export const SUPPORT_EMAIL = "support@littlefightnyc.com";
-export const PROJECTS_EMAIL = "projects@littlefightnyc.com";
-export const BILLING_EMAIL = "billing@littlefightnyc.com";
+/** Confirmed public Google Workspace inbox. */
+export const HELLO_EMAIL = "hello@littlefightnyc.com";

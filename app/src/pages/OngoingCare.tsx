@@ -2,7 +2,7 @@ import { RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
-import { SUPPORT_EMAIL } from "@/data/contact";
+import { HELLO_EMAIL } from "@/data/contact";
 import "@/styles/editorial/revenue-pages.css";
 
 const CARE_WORK = [
@@ -79,10 +79,10 @@ export default function OngoingCare() {
             <p>Already a client?</p>
             <h2>Do not hunt through old email threads.</h2>
             <p>
-              Email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> or
-              use the current-client desk. The Workspace priority flow routes
-              real customer requests for a human reply; it does not auto-reply
-              or bury the message.
+              Email <a href={`mailto:${HELLO_EMAIL}`}>{HELLO_EMAIL}</a> or use
+              the current-client desk. Include the business name, the page or
+              system involved, and what you expected to happen. Call or text
+              when customers are blocked right now.
             </p>
           </div>
           <Link to="/clients/">Open the client desk</Link>
