@@ -7,7 +7,7 @@ import {
   type Page,
   type TestInfo,
 } from "@playwright/test";
-import { BOOKING_HREF } from "../src/data/contact";
+import { BOOKING_HREF, PHONE_HREF } from "../src/data/contact";
 
 const requestedPreviewPort = Number.parseInt(process.env.PLAYWRIGHT_PORT ?? "4173", 10);
 const previewPort = Number.isInteger(requestedPreviewPort) &&
@@ -173,7 +173,9 @@ const ROUTES: readonly RouteContract[] = [
     path: "/",
     title: "Little Fight NYC | Websites, IT Support & Custom Software",
     h1: /Make it easier\s*for the next\s*customer to\s*choose you\./i,
-    criticalLink: 'form[action="/examples/audit/"]',
+    // Desktop carries the full inline form; mobile carries the direct check
+    // link so the first screen stays useful on a small phone.
+    criticalLink: 'form[action="/examples/audit/"], a[href="/website-check/"]',
     tags: [
       "@chromium-desktop",
       "@chromium-mobile",
@@ -1022,9 +1024,11 @@ test(
       }),
     ).toBeVisible();
     await expect(
-      page.locator(".lf-hero").getByRole("button", {
-        name: /Check my website/i,
-      }),
+      page
+        .locator(".lf-hero")
+        .locator('button:has-text("Check my website"), a:has-text("Free site check")')
+        .filter({ visible: true })
+        .first(),
     ).toBeVisible();
 
     const mainState = await page.getByRole("main").evaluate((element) => {
@@ -1087,6 +1091,76 @@ test(
     ).toEqual([]);
 
     await expectNoHorizontalOverflow(page);
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "mobile homepage puts a real decision and direct help in the first screen @chromium-mobile @webkit-mobile",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    await openRoute(page, ROUTES[0]);
+
+    const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
+    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Free site check/i });
+    const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
+    const scene = page.locator('.lf-hero__scene[role="img"]');
+
+    await expect(directCall).toBeVisible();
+    await expect(directCall).toHaveAttribute("href", PHONE_HREF);
+    await expect(scene).toBeVisible();
+    await expect(websiteCheck).toBeVisible();
+    await expect(urgentCall).toBeVisible();
+    await expect(urgentCall).toHaveAttribute("href", PHONE_HREF);
+
+    const initialGeometry = await page.evaluate(() => {
+      const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
+      const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
+      const consent = document.querySelector<HTMLElement>(".lf-consent");
+      const hero = document.querySelector<HTMLElement>(".lf-hero__main");
+      if (!website || !urgent || !hero) throw new Error("mobile hero fixture is incomplete");
+      const websiteRect = website.getBoundingClientRect();
+      const urgentRect = urgent.getBoundingClientRect();
+      const consentRect = consent?.getBoundingClientRect();
+      return {
+        viewportHeight: window.innerHeight,
+        websiteBottom: websiteRect.bottom,
+        urgentBottom: urgentRect.bottom,
+        consentTop: consentRect?.top ?? window.innerHeight,
+        heroHeight: hero.getBoundingClientRect().height,
+      };
+    });
+
+    expect(initialGeometry.websiteBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.websiteBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
+    expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
+    expect(initialGeometry.heroHeight).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+
+    await expect(page.locator(".lf-owner-path")).toBeHidden();
+    await expect(page.locator(".lf-night-shift")).toBeHidden();
+    await expect(page.locator(".lf-money-meter")).toBeHidden();
+    await expect(page.locator(".lf-contact-block")).toBeVisible();
+    await expect(page.locator(".lf-clients")).toBeVisible();
+
+    const mobilePath = await page.evaluate(() => {
+      const contact = document.querySelector<HTMLElement>(".lf-contact-block");
+      const work = document.querySelector<HTMLElement>(".lf-clients");
+      if (!contact || !work) throw new Error("mobile path fixture is incomplete");
+      const fullHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      return {
+        contactBeforeWork: Boolean(
+          contact.compareDocumentPosition(work) & Node.DOCUMENT_POSITION_FOLLOWING,
+        ),
+        contactTopInScreens: contact.getBoundingClientRect().top / window.innerHeight,
+        pageScreens: fullHeight / window.innerHeight,
+      };
+    });
+
+    expect(mobilePath.contactBeforeWork).toBe(true);
+    expect(mobilePath.contactTopInScreens).toBeLessThanOrEqual(5);
+    expect(mobilePath.pageScreens).toBeLessThanOrEqual(12);
+    await expectNoHorizontalOverflow(page, "compact mobile home");
     expectRuntimeClean(runtime);
   },
 );
@@ -1867,12 +1941,21 @@ test(
     expect(measurementOnly.hasTikTokQueue).toBe(false);
     expect(measurementOnly.hasTikTokScript).toBe(false);
 
-    await page.locator("#home-website-url").fill("private-fixture.example");
-    await page.locator("#home-report-email").fill("private-fixture@example.com");
-    await page.locator(".lf-hero__form").evaluate((form) => {
-      form.addEventListener("submit", (event) => event.preventDefault(), { once: true });
-    });
-    await page.getByRole("button", { name: "Check my website", exact: true }).click();
+    const desktopWebsiteField = page.locator("#home-website-url");
+    if (await desktopWebsiteField.isVisible()) {
+      await desktopWebsiteField.fill("private-fixture.example");
+      await page.locator("#home-report-email").fill("private-fixture@example.com");
+      await page.locator(".lf-hero__form").evaluate((form) => {
+        form.addEventListener("submit", (event) => event.preventDefault(), { once: true });
+      });
+      await page.getByRole("button", { name: "Check my website", exact: true }).click();
+    } else {
+      const mobileWebsiteCheck = page.getByRole("link", { name: /Need a website\?\s*Free site check/i });
+      await mobileWebsiteCheck.evaluate((link) => {
+        link.addEventListener("click", (event) => event.preventDefault(), { once: true });
+      });
+      await mobileWebsiteCheck.click();
+    }
 
     const websiteCheckEvent = await page.evaluate(() =>
       (window.dataLayer ?? []).findLast(
@@ -1933,7 +2016,9 @@ test(
 
     await page.goto(`${baseURL}/about/`, { waitUntil: "networkidle" });
     await page.evaluate(() => {
-      const link = document.querySelector<HTMLAnchorElement>('a[href^="tel:"]');
+      const link = document.querySelector<HTMLAnchorElement>(
+        'a[data-lf-label="about_founder_phone"][href^="tel:"]',
+      );
       if (!link) throw new Error("phone link fixture is missing");
       link.addEventListener("click", (event) => event.preventDefault(), { once: true });
       link.click();

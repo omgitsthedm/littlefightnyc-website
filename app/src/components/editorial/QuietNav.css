@@ -229,6 +229,20 @@
   transition: color var(--lf-time-fast) var(--lf-ease-out-quart);
 }
 
+.lf-nav__phone--chooser {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .lf-nav__phone--direct {
+    display: none;
+  }
+
+  .lf-nav__phone--chooser {
+    display: inline-flex;
+  }
+}
+
 /* Keep the mono label and the number on a shared baseline where both show. */
 
 .lf-nav__phone:hover {

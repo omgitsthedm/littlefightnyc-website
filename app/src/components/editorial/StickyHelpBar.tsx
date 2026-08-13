@@ -24,7 +24,10 @@ export default function StickyHelpBar() {
 
   useEffect(() => {
     if (!onHome) return;
-    const hero = document.querySelector(".lf-hero");
+    // The compact mobile hero carries its decisions in the first panel and a
+    // real-work proof immediately after it. Reveal persistent help once the
+    // decision panel leaves view instead of waiting for all proof to pass.
+    const hero = document.querySelector(".lf-hero__main");
     if (!hero) return;
     const observer = new IntersectionObserver(
       ([entry]) => setHeroVisible(entry.isIntersecting),

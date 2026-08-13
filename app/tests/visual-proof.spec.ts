@@ -27,7 +27,9 @@ test("journal visual proof renders sourced owner guidance", async ({ page }) => 
 });
 
 test("owner calculator labels examples, then owner input", async ({ page }) => {
-  await page.goto("/");
+  // The compact phone homepage omits long-form instruments. Their service-page
+  // placement remains visible on every viewport.
+  await page.goto("/services/custom-local-websites/");
   const calculator = page.locator('[data-lf-visual-proof="owner-calculator"]').first();
   await expect(calculator).toContainText("Example");
   await calculator.getByLabel("Missed inquiries each week").fill("4");
@@ -58,7 +60,9 @@ test("owner formulas expose the promised business inputs", async ({ page }) => {
 });
 
 test("night-shift path is replayable and never loops", async ({ page }) => {
-  await page.goto("/");
+  // Mobile home is the short acquisition path; the full explainer lives on
+  // the website service page at every viewport.
+  await page.goto("/services/custom-local-websites/");
   const nightShift = page.locator('[data-lf-visual-proof="website-night-shift"]');
   await expect(nightShift).toBeVisible();
   await nightShift.getByRole("button", { name: "Replay the Path" }).click();

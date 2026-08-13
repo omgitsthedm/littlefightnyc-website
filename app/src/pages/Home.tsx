@@ -14,6 +14,7 @@ import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
 import CommandPalette from "@/components/editorial/CommandPalette";
 import { watchListReveals } from "@/lib/listReveal";
+import "./Home.css";
 
 // These rich below-the-hero sections keep their own chunks. The prerendered
 // first response already carries the page's complete owner-facing meaning;
@@ -37,7 +38,7 @@ export default function Home() {
       <RouteMeta />
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />
-      <main id="main-content">
+      <main id="main-content" className="lf-home-main">
         <QuietHero />
         <Suspense fallback={null}>
           <OwnerPath />
@@ -50,12 +51,12 @@ export default function Home() {
         </Suspense>
         <GrowthPath />
         <TheFour />
+        <QuietContact />
         <Suspense fallback={null}>
           <RecentClients />
         </Suspense>
         <TheFight />
         <ClientContinuity />
-        <QuietContact />
       </main>
       <StickyHelpBar />
       <QuietFooter />

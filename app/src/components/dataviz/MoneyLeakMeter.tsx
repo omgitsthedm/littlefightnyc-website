@@ -128,9 +128,9 @@ export default function MoneyLeakMeter() {
           { label: "Missed inquiries", value: missed, note: "Per week" },
           { label: "Average sale or job", value: formatCurrency(sale, currency.locale, currency.code), note: "Owner-entered" },
           { label: "Normal close rate", value: `${Math.round(closeRate * 100)}%`, note: "Owner-entered" },
-          { label: "Estimated revenue at risk", value: formatCurrency(perWeek, currency.locale, currency.code), note: "Weekly scenario; not profit" },
-          { label: "Estimated revenue at risk", value: formatCurrency(estimate, currency.locale, currency.code), note: "Four-week scenario; not profit" },
-          { label: "Estimated revenue at risk", value: formatCurrency(annual, currency.locale, currency.code), note: "Annual scenario; not a forecast" },
+          { label: "Weekly estimated revenue at risk", value: formatCurrency(perWeek, currency.locale, currency.code), note: "Scenario; not profit" },
+          { label: "Four-week estimated revenue at risk", value: formatCurrency(estimate, currency.locale, currency.code), note: "Scenario; not profit" },
+          { label: "Annual estimated revenue at risk", value: formatCurrency(annual, currency.locale, currency.code), note: "Scenario; not a forecast" },
         ]} />
         <MethodologyDisclosure title="Show the math and the limit">
           <p>

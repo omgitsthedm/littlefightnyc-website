@@ -170,8 +170,19 @@ export default function QuietNav() {
           {/* The open/replies chip moved out of the bar (2026-07-18, David:
               desktop header was cramped) — availability lives in the hero
               trust row, the neon sign, and the footer. */}
+          <a
+            className="lf-nav__phone lf-nav__phone--direct"
+            href={PHONE_HREF}
+            data-lf-label="nav_mobile_phone_direct"
+            aria-label={`Call ${PHONE_DISPLAY}`}
+          >
+            <Phone className="lf-nav__phone-icon" size={17} strokeWidth={1.9} aria-hidden="true" />
+            <span className="lf-nav__phone-short">Call</span>
+            <span className="lf-nav__phone-number">{PHONE_DISPLAY}</span>
+          </a>
+
           <PhoneAction
-            className="lf-nav__phone"
+            className="lf-nav__phone lf-nav__phone--chooser"
             align="right"
             analyticsLabel="nav_desktop_phone"
             ariaLabel={`Call or text ${PHONE_DISPLAY}`}

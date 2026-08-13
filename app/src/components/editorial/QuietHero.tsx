@@ -1,6 +1,21 @@
-import { CalendarDays, Circle, ExternalLink, Phone, Search } from "lucide-react";
+import {
+  CalendarDays,
+  Circle,
+  ExternalLink,
+  Mail,
+  MessageSquare,
+  Phone,
+  Search,
+} from "lucide-react";
+import { preload } from "react-dom";
 import { Link } from "react-router-dom";
-import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
+import {
+  BOOKING_HREF,
+  HELLO_EMAIL,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  SMS_HREF,
+} from "@/data/contact";
 import { handoffToAuditLab } from "@/lib/auditPrefill";
 import "./QuietHero.css";
 
@@ -13,9 +28,24 @@ import "./QuietHero.css";
  * lets the visitor check them and owns the measured scan state.
  */
 export default function QuietHero() {
+  preload("/brand-kit/assets/imagery/shop-systems-hero.webp", {
+    as: "image",
+    type: "image/webp",
+    fetchPriority: "high",
+    media: "(max-width: 47.99rem)",
+  });
+
   return (
     <section className="lf-hero" aria-labelledby="lf-home-title">
       <div className="lf-hero__main">
+        <figure
+          className="lf-hero__scene"
+          role="img"
+          aria-label="Illustrative neighborhood shop counter with a register, printer, and everyday business technology"
+        >
+          <figcaption>Illustrative shop scene — not client work</figcaption>
+        </figure>
+
         <div className="lf-hero__promise">
           <p className="lf-hero__eyebrow">
             <span aria-hidden="true">LF / 01</span>
@@ -32,6 +62,42 @@ export default function QuietHero() {
           <p className="lf-hero__brief">
             A clear website. Useful tech. One accountable path from first search to follow-up.
           </p>
+
+          <div className="lf-hero__quick" aria-label="Start here">
+            <Link
+              className="lf-hero__quick-action lf-hero__quick-action--website"
+              to="/website-check/"
+              data-lf-event="website_check_started"
+              data-lf-label="home_hero"
+              data-lf-source="home"
+            >
+              <span>Need a website?</span>
+              <strong>Free site check</strong>
+              <Search size={18} strokeWidth={2} aria-hidden="true" />
+            </Link>
+            <a
+              className="lf-hero__quick-action lf-hero__quick-action--urgent"
+              href={PHONE_HREF}
+              data-lf-label="home_mobile_urgent_phone"
+            >
+              <span>Something broke?</span>
+              <strong>Call now</strong>
+              <Phone size={18} strokeWidth={2} aria-hidden="true" />
+            </a>
+          </div>
+
+          <div className="lf-hero__quick-reach" aria-label="More ways to reach Little Fight NYC">
+            <a href={SMS_HREF} data-lf-label="home_mobile_hero_sms">
+              <MessageSquare size={14} strokeWidth={2} aria-hidden="true" />
+              Text instead
+            </a>
+            <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="home_mobile_hero_email">
+              <Mail size={14} strokeWidth={2} aria-hidden="true" />
+              Email us
+            </a>
+            <span>9am–9pm New York time</span>
+          </div>
+
           <p className="lf-hero__outcomes">
             Bookings. Visits. Orders. Consultations. Inquiries.
           </p>
