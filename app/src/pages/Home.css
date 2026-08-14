@@ -1,61 +1,5 @@
-/* Desktop tells one complete proof story. Mobile stays deliberately short:
- * decide, inspect real work, reach a human, then choose the right help. */
-.lf-home-proof-loading {
-  display: grid;
-  align-content: center;
-  gap: 1rem;
-  padding: clamp(4rem, 8vw, 8rem) max(var(--lf-margin-mobile), calc((100vw - 92rem) / 2));
-  color: var(--lf-bone);
-  border-top: 1px solid var(--lf-hairline);
-  background: var(--lf-ink);
-}
-
-.lf-home-proof-loading--path {
-  min-height: clamp(78.5rem, calc(153.75rem - 118vw), 95rem);
-}
-
-.lf-home-proof-loading--money {
-  min-height: clamp(78.25rem, calc(62.1rem + 32vw), 82.75rem);
-  background: var(--lf-paper-2);
-}
-
-.lf-home-proof-loading__eyebrow {
-  margin: 0;
-  color: var(--lf-blue-soft);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-sm);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.lf-home-proof-loading__title {
-  max-width: 13ch;
-  margin: 0;
-  font-family: var(--lf-heading);
-  font-size: clamp(3.25rem, 7vw, 6.75rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-
-.lf-home-proof-loading__body {
-  margin: 0;
-  color: var(--lf-bone-soft);
-  font-size: var(--lf-text-md);
-}
-
-@media (min-width: 80rem) {
-  .lf-home-proof-loading--path {
-    min-height: calc(52.5rem + 2vw);
-  }
-
-  .lf-home-proof-loading--money {
-    min-height: clamp(68.3rem, calc(55rem + 16.6vw), 71.2rem);
-  }
-}
+/* The homepage keeps one reading order at every size: decide, inspect real
+ * work, choose the right help, then reach the full contact desk. */
 
 @media (max-width: 47.99rem) {
   .lf-home-main .lf-four {
@@ -81,10 +25,6 @@
     gap: 0.65rem;
     min-height: 7.5rem;
     padding-block: 0.85rem;
-  }
-
-  .lf-home-main .lf-four__image {
-    display: none;
   }
 
   .lf-home-main .lf-four__name {
@@ -145,23 +85,6 @@
   .lf-editorial .lf-home-main .lf-contact-block__fine {
     margin-top: 1.25rem;
     font-size: var(--lf-text-2xs);
-  }
-
-  .lf-home-main .lf-clients {
-    padding-block: 3rem;
-  }
-
-  .lf-home-main .lf-clients__head {
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .lf-home-main .lf-clients__lede {
-    margin-top: 0.75rem;
-  }
-
-  .lf-home-main .lf-clients .lf-momentum {
-    display: none;
   }
 
 }

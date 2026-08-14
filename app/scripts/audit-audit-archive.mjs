@@ -91,6 +91,16 @@ for (const file of htmlFiles) {
   ) {
     failures.push(`${relative} is missing its visible reconstructed-report evidence notice`);
   }
+  if (
+    /^(?:ivy-infusions|marcus-medical|premier-plastic-surgery|skinsmart-dermatology|the-cosmetic-clinic)\/index\.html$/.test(
+      relative.split(path.sep).join("/"),
+    ) &&
+    /Missing Local Business Schema|schema markup|Complex JavaScript Bundles|Google Business Profile Integration|Appointment Schema Markup/i.test(
+      source,
+    )
+  ) {
+    failures.push(`${relative} brings developer-facing finding language back into a client example`);
+  }
   const references = [...source.matchAll(/(?:href|src|poster)=["']([^"']+)["']/gi)].map(
     (match) => match[1],
   );
@@ -216,8 +226,11 @@ const footer = fs.readFileSync(
 if (!fieldGuide.includes('href="/examples/audit/" data-no-vt')) {
   failures.push("main Examples page is not linked to the in-site Audit");
 }
-if (!footer.includes('to: "/examples/audit/", external: true')) {
+if (!footer.includes('{ label: "See a site audit", to: "/examples/audit/" }')) {
   failures.push("main footer is not linked to the in-site Audit");
+}
+if (footer.includes('to: "/examples/audit/", external: true')) {
+  failures.push("main footer incorrectly marks the in-site Audit as external");
 }
 
 if (!netlifyConfig.includes('for = "/examples/audit/*"')) {

@@ -37,15 +37,15 @@ const SERVICES = [
   },
   {
     title: "Software que es suyo",
-    line: "Reemplazamos hojas de cálculo y suscripciones que no encajan con una herramienta más simple. El código y los datos son suyos.",
+    line: "Reemplazamos hojas de cálculo y suscripciones que no encajan con una herramienta más simple. Usted conserva los archivos, los datos y el control.",
   },
 ];
 
 const PROMISES = [
   "La segunda opinión siempre es gratis.",
   "El plan escrito de su página explica el plazo, lo que necesitamos y qué pasa si fallamos.",
-  "Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m.",
-  "El código, los datos y la documentación quedan en sus manos.",
+  "Nuestro objetivo es devolver la llamada en 2 horas, de 9 a. m. a 9 p. m.",
+  "Los archivos, los datos y las instrucciones quedan en sus manos.",
 ];
 
 const STAYS = [
@@ -111,8 +111,8 @@ export default function Espanol() {
     return installLocalizedMeta({
       lang: "es",
       path: "/es/",
-      title: "Páginas web y tecnología en español | Little Fight NYC",
-      description: "Páginas web, soporte técnico y software propio para pequeños negocios de Nueva York. Vea trabajo real, llame o empiece un plan gratis.",
+      title: "Páginas web y ayuda diaria en español | Little Fight NYC",
+      description: "Páginas web y ayuda diaria para pequeños negocios de Nueva York. Vea ejemplos reales, llame o empiece un plan gratis.",
     });
   }, []);
 
@@ -129,7 +129,7 @@ export default function Espanol() {
       </header>
 
       <main className="lf-es__main">
-        <section className="lf-es__hero">
+        <section className="lf-es__hero" data-lf-owner-intro="true">
           <div className="lf-es__hero-copy">
             <p className="lf-es__eyebrow">
               Tecnología clara para negocios de Nueva York
@@ -146,7 +146,7 @@ export default function Espanol() {
               posee. Primero le damos una segunda opinión gratis.
             </p>
 
-            <div className="lf-es__actions">
+            <div className="lf-es__actions" data-lf-contact-rail="true">
               <a className="lf-es__cta lf-es__cta--primary" href={PHONE_HREF} data-lf-label="es_hero_phone">
                 <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
                 Llámenos: {PHONE_DISPLAY}
@@ -161,6 +161,19 @@ export default function Espanol() {
                 <ArrowUpRight size={18} strokeWidth={1.9} aria-hidden="true" />
               </Link>
             </div>
+            <div className="lf-es__hero-channels" aria-label="Más formas de comunicarse">
+              <a href={SMS_HREF}>
+                <MessageSquare size={16} strokeWidth={1.9} aria-hidden="true" />
+                Texto
+              </a>
+              <a href="mailto:hello@littlefightnyc.com">
+                <Mail size={16} strokeWidth={1.9} aria-hidden="true" />
+                Correo
+              </a>
+              <Link to="/tech-audit/?source=es_hero_form">
+                Formulario
+              </Link>
+            </div>
             <p className="lf-es__action-note">
               La segunda opinión es gratis. En Nueva York podemos ir al negocio; para una página web, también trabajamos a distancia. Primero un plan claro; después usted decide.
             </p>
@@ -172,7 +185,7 @@ export default function Espanol() {
               </li>
               <li>
                 <Clock size={18} strokeWidth={1.75} aria-hidden="true" />
-                Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.
+                Nuestro objetivo es devolver la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.
               </li>
               <li>
                 <ShieldCheck size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -334,7 +347,7 @@ export default function Espanol() {
           <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
         </Link>
         <button type="button" className="lf-es__foot-link" onClick={openConsentPreferences}>
-          Preferencias de analítica
+          Opciones de privacidad
         </button>
       </footer>
     </div>

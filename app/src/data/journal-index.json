@@ -6,7 +6,7 @@
     "description": "Lock the accounts, update the devices, back up the files, and give staff one clear rule for suspicious messages.",
     "published": "",
     "updated": "March 20, 2026",
-    "wordCount": 225
+    "wordCount": 198
   },
   {
     "slug": "nyc-small-business-digital",
@@ -15,25 +15,25 @@
     "description": "A clear Google profile, a useful website, and one working path to call, book, order, or visit. The rest is optional.",
     "published": "",
     "updated": "March 20, 2026",
-    "wordCount": 234
+    "wordCount": 203
   },
   {
     "slug": "protecting-kids-from-ai",
     "category": "blog",
-    "title": "A Plain Family Rulebook for AI",
-    "description": "Keep private information private, check surprising answers, and make sure a child can always bring a strange interaction to an adult.",
+    "title": "Set Safe AI Rules for Your Business",
+    "description": "Use AI for low-risk drafts. Keep private business information out, check important facts, and leave people in charge of customer promises.",
     "published": "",
     "updated": "March 20, 2026",
-    "wordCount": 226
+    "wordCount": 227
   },
   {
     "slug": "airtable-vs-notion-vs-monday-small-business",
     "category": "guide",
     "title": "Airtable vs. Notion vs. monday.com: Pick the Job First",
-    "description": "Airtable organizes records. Notion organizes knowledge. monday.com organizes assigned work. Your workflow decides the winner.",
+    "description": "Airtable organizes records. Notion organizes knowledge. monday.com organizes assigned work. Your day-to-day steps decides the winner.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 230
+    "wordCount": 197
   },
   {
     "slug": "custom-business-system-vs-saas-subscriptions",
@@ -42,7 +42,7 @@
     "description": "Keep rented software when it fits. Build only when repeated work, stacked subscriptions, or missing ownership justify it.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 183
+    "wordCount": 148
   },
   {
     "slug": "shopify-vs-squarespace-nyc-retail",
@@ -51,7 +51,7 @@
     "description": "Shopify leads when inventory and selling drive the business. Squarespace can fit a smaller catalog where content leads.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 218
+    "wordCount": 184
   },
   {
     "slug": "square-appointments-vs-glossgenius-nyc-salons",
@@ -60,16 +60,16 @@
     "description": "Compare the real booking path: staff, chairs, deposits, reminders, checkout, reports, and what clients see.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 211
+    "wordCount": 174
   },
   {
     "slug": "square-vs-toast-manhattan-restaurants",
     "category": "guide",
     "title": "Square vs. Toast for a Manhattan Restaurant",
-    "description": "Pick the POS around service: checks, courses, kitchen flow, online orders, offline plans, reporting, and support.",
+    "description": "Pick the register and payment system around service: checks, courses, kitchen flow, online orders, offline plans, reporting, and support.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 222
+    "wordCount": 193
   },
   {
     "slug": "webflow-vs-squarespace-manhattan-small-business",
@@ -78,25 +78,25 @@
     "description": "Squarespace favors a simpler owner-managed site. Webflow offers more structure and control with more setup and care.",
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
-    "wordCount": 223
+    "wordCount": 189
   },
   {
     "slug": "ai-google-broke-the-internet-websites-survive",
     "category": "essay",
     "title": "Your Website Still Matters When AI Answers First",
-    "description": "Search may answer before the click. A clear, useful, crawlable website gives people and answer engines something trustworthy to use.",
+    "description": "Search may answer before the click. A clear, useful, readable by search website gives people and answer engines something trustworthy to use.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
-    "wordCount": 248
+    "wordCount": 214
   },
   {
     "slug": "what-google-looks-for-business-website",
     "category": "essay",
     "title": "What Google Needs From a Business Website",
-    "description": "Clear purpose, useful original information, crawlable text, accurate business facts, sensible links, and a page that works well.",
+    "description": "Clear purpose, useful original information, readable by search text, accurate business facts, sensible links, and a page that works well.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
-    "wordCount": 226
+    "wordCount": 198
   },
   {
     "slug": "why-business-websites-will-be-invisible",
@@ -105,7 +105,7 @@
     "description": "If the page never gives a clear answer, current fact, original proof, or usable next step, people and search systems have little reason to choose it.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
-    "wordCount": 232
+    "wordCount": 196
   },
   {
     "slug": "read-your-monthly-software-bill",
@@ -114,7 +114,7 @@
     "description": "List the tools, owners, users, renewal dates, and actual jobs. Then keep, connect, downgrade, replace, or cancel with proof.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 171
+    "wordCount": 144
   },
   {
     "slug": "set-up-google-business-profile-nyc",
@@ -123,16 +123,16 @@
     "description": "Claim the right profile, verify it, enter accurate facts, choose honest categories, and keep the website and profile aligned.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 203
+    "wordCount": 168
   },
   {
     "slug": "migrate-off-squarespace-without-breaking-booking",
     "category": "howto",
     "title": "Leave Squarespace Without Breaking Booking",
-    "description": "Inventory the live path, build the replacement, preserve the domain and URLs, test every handoff, then switch with a rollback plan.",
+    "description": "Inventory the live path, build the replacement, preserve the domain and web addresses, test every handoff, then switch with a rollback plan.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 227
+    "wordCount": 200
   },
   {
     "slug": "keep-connect-replace-build-framework",
@@ -141,7 +141,7 @@
     "description": "Start with the least disruptive fix. Keep what works, connect real gaps, replace poor fit, and build only when the business case earns it.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 168
+    "wordCount": 154
   },
   {
     "slug": "spot-developer-about-to-ghost",
@@ -150,7 +150,7 @@
     "description": "Missing access, vague milestones, no working preview, unexplained silence, and no handoff plan are project risks. Secure the business first.",
     "published": "May 11, 2026",
     "updated": "",
-    "wordCount": 212
+    "wordCount": 183
   },
   {
     "slug": "how-do-i-back-up-my-business-data",
@@ -159,25 +159,25 @@
     "description": "Know the important data, keep more than one copy, protect account access, and test a restore. A backup that cannot restore is décor.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 227
+    "wordCount": 198
   },
   {
     "slug": "what-to-do-when-business-wifi-keeps-dropping",
     "category": "howto",
     "title": "Business Wi-Fi Keeps Dropping? Isolate the Fault",
-    "description": "Check the provider, router, local coverage, and one device separately. Random reboots are not a troubleshooting plan.",
+    "description": "Check the company that runs the tool, router, local coverage, and one device separately. Random reboots are not a troubleshooting plan.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 212
+    "wordCount": 195
   },
   {
     "slug": "how-to-own-your-domain-name-not-your-web-guy",
     "category": "howto",
     "title": "Make Sure the Business Controls Its Domain",
-    "description": "The business should control the registrar account, renewal, recovery, and authorized contacts. A developer can get access without owning the name.",
+    "description": "The business should control the company where the domain is registered account, renewal, recovery, and authorized contacts. A developer can get access without owning the name.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 200
+    "wordCount": 194
   },
   {
     "slug": "how-to-answer-google-reviews-nyc-business",
@@ -186,16 +186,16 @@
     "description": "Keep replies short, specific, calm, and private. Thank good feedback, address the useful point, and move sensitive details offline.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 204
+    "wordCount": 168
   },
   {
     "slug": "how-to-get-your-business-into-chatgpt-answers",
     "category": "howto",
     "title": "Help AI Search Understand Your Business",
-    "description": "Publish clear, crawlable, current facts and useful first-hand answers. Keep public profiles accurate. There is no guaranteed ChatGPT switch.",
+    "description": "Publish clear, readable by search, current facts and useful first-hand answers. Keep public profiles accurate. There is no guaranteed ChatGPT switch.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 246
+    "wordCount": 217
   },
   {
     "slug": "why-chains-always-show-up-first-on-google",
@@ -204,16 +204,16 @@
     "description": "Chains maintain consistent locations, categories, hours, pages, links, and reviews at scale. A local shop can win on accuracy and usefulness nearby.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 233
+    "wordCount": 191
   },
   {
     "slug": "your-website-is-your-hardest-working-employee",
     "category": "essay",
-    "title": "Give the Website One Clear Job After Closing",
+    "title": "Give Your Website One Clear Job After Closing",
     "description": "A website should answer ordinary questions and hand a customer to the right action when nobody is at the counter.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 170
+    "wordCount": 139
   },
   {
     "slug": "the-pen-and-paper-tax",
@@ -222,7 +222,7 @@
     "description": "Paper is fine until information must be found, copied, shared, checked, or reported repeatedly. Measure the repeat work before buying software.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 171
+    "wordCount": 148
   },
   {
     "slug": "ai-is-already-answering-questions-about-your-business",
@@ -231,7 +231,7 @@
     "description": "Search systems may summarize public information. Keep the sources you control accurate, useful, and easy to verify.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 227
+    "wordCount": 191
   },
   {
     "slug": "why-small-business-tech-should-be-boring",
@@ -240,7 +240,7 @@
     "description": "Reliable tools open, charge, book, print, back up, and recover. Excitement belongs in the business, not the login screen.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 199
+    "wordCount": 173
   },
   {
     "slug": "what-a-free-tech-audit-actually-looks-like",
@@ -249,7 +249,7 @@
     "description": "Tell us what is broken or expensive. We map the path, check the obvious risks and waste, and give you a plain next step.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 178
+    "wordCount": 150
   },
   {
     "slug": "signs-your-pos-is-about-to-fail",
@@ -258,7 +258,7 @@
     "description": "Repeated freezes, connection errors, power trouble, pending updates, and offline-mode surprises deserve a documented check and backup plan.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 223
+    "wordCount": 209
   },
   {
     "slug": "questions-nyc-owners-actually-ask-us-about-ai",
@@ -267,7 +267,7 @@
     "description": "Use AI for drafts, sorting, and low-risk assistance. Keep people responsible for private data, important facts, customer promises, and final decisions.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 216
+    "wordCount": 182
   },
   {
     "slug": "ada-website-lawsuits-nyc-small-business",
@@ -276,7 +276,7 @@
     "description": "Keyboard access, headings, labels, contrast, zoom, captions, errors, and real manual testing matter. An overlay is not a legal shield.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 219
+    "wordCount": 187
   },
   {
     "slug": "how-to-stop-double-bookings-small-business",
@@ -285,7 +285,7 @@
     "description": "One system must own availability. Every website, profile, staff calendar, and manual exception should feed or respect it.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 207
+    "wordCount": 172
   },
   {
     "slug": "gmail-vs-google-workspace-small-business",
@@ -294,7 +294,7 @@
     "description": "A personal Gmail account belongs to its user. A domain-verified Workspace setup gives the organization accounts and administrative control.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 217
+    "wordCount": 195
   },
   {
     "slug": "calendly-vs-square-appointments-nyc",
@@ -303,7 +303,7 @@
     "description": "Calendly centers on meetings. Square Appointments connects service booking, staff, resources, deposits, and payment. Start with the actual appointment.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 213
+    "wordCount": 184
   },
   {
     "slug": "quickbooks-vs-wave-small-business-nyc",
@@ -312,16 +312,16 @@
     "description": "Wave can fit simpler books. QuickBooks can fit broader accounting workflows and accountant expectations. Tax needs and clean records decide.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 210
+    "wordCount": 177
   },
   {
     "slug": "wordpress-vs-webflow-vs-custom-nyc",
     "category": "guide",
     "title": "WordPress vs. Webflow vs. Custom: Who Owns the Care?",
-    "description": "All three can build a serious site. Compare editing, integrations, updates, hosting, ownership, performance, and the person responsible after launch.",
+    "description": "All three can build a serious site. Compare editing, connections between tools, updates, hosting, ownership, performance, and the person responsible after launch.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 220
+    "wordCount": 192
   },
   {
     "slug": "toast-vs-clover-nyc-bars",
@@ -330,6 +330,6 @@
     "description": "Compare tabs, preauthorization, modifiers, printers, kitchen or bar routing, offline work, closeout, hardware, support, and contract terms.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
-    "wordCount": 228
+    "wordCount": 194
   }
 ]

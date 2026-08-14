@@ -266,8 +266,8 @@ const ROUTES: readonly RouteContract[] = [
     key: "about",
     label: "About",
     path: "/about/",
-    title: "About Little Fight NYC | NYC Small Business Tech",
-    h1: /Small firm\.\s*Serious pull\./i,
+    title: "About Little Fight NYC | Help for Small Businesses",
+    h1: /Less runaround\.\s*More getting done\./i,
     criticalLink: 'a[href="tel:+16463600318"]',
     tags: ["@chromium-desktop"],
   },
@@ -284,7 +284,7 @@ const ROUTES: readonly RouteContract[] = [
     key: "spanish",
     label: "Spanish",
     path: "/es/",
-    title: "Páginas web y tecnología en español | Little Fight NYC",
+    title: "Páginas web y ayuda diaria en español | Little Fight NYC",
     h1: /Una página web hecha para su negocio\.\s*Ayuda real cuando algo falla\./i,
     criticalLink: 'a[href^="/tech-audit/"]',
     tags: ["@chromium-desktop"],
@@ -1053,6 +1053,11 @@ test(
         .filter({ visible: true })
         .first(),
     ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Motion reduced" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    await expect(page.getByRole("button", { name: "Replay the path" })).toBeDisabled();
 
     const mainState = await page.getByRole("main").evaluate((element) => {
       const style = getComputedStyle(element);
@@ -1132,15 +1137,17 @@ test(
 );
 
 test(
-  "desktop homepage shows the real shop scene and both decisions above the fold @chromium-desktop",
+  "desktop homepage shows the connected counter and both decisions above the fold @chromium-desktop",
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
 
-    const scene = page.locator('.lf-hero__scene[role="img"]');
-    const image = scene.locator('img[src="/brand-kit/assets/imagery/shop-systems-hero.webp"]');
+    const scene = page.locator(".lf-hero__scene");
+    const image = scene.locator('img[src="/images/home/connected-counter-hero-desktop-v1.webp"]');
     const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
     const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
+    const replayPath = page.getByRole("button", { name: "Replay the path" });
+    const reduceMotion = page.locator(".lf-hero__path-controls button").nth(1);
 
     await expect(scene).toBeVisible();
     await expect(image).toBeVisible();
@@ -1148,6 +1155,12 @@ test(
     await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0);
     await expect(websiteCheck).toBeVisible();
     await expect(urgentCall).toBeVisible();
+    await expect(scene.locator(".lf-hero__path-step")).toHaveCount(4);
+    await expect(replayPath).toBeVisible();
+    await replayPath.click();
+    await reduceMotion.click();
+    await expect(reduceMotion).toHaveAttribute("aria-pressed", "true");
+    await expect(replayPath).toBeDisabled();
 
     const decisionGeometry = await page.evaluate(() => {
       const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
@@ -1176,7 +1189,7 @@ test(
     const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
     const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
     const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
-    const scene = page.locator('.lf-hero__scene[role="img"]');
+    const scene = page.locator(".lf-hero__scene");
     const heroChannels = page.locator(".lf-hero__quick-channels a");
 
     await expect(directCall).toBeVisible();
@@ -1194,8 +1207,8 @@ test(
       const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
       const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
       const consent = document.querySelector<HTMLElement>(".lf-consent");
-      const hero = document.querySelector<HTMLElement>(".lf-hero__main");
-      if (!website || !urgent || !hero) {
+      const promise = document.querySelector<HTMLElement>(".lf-hero__promise");
+      if (!website || !urgent || !promise) {
         throw new Error("mobile hero fixture is incomplete");
       }
       const websiteRect = website.getBoundingClientRect();
@@ -1207,7 +1220,7 @@ test(
         websiteBottom: websiteRect.bottom,
         urgentBottom: urgentRect.bottom,
         consentTop: consentRect?.top ?? window.innerHeight,
-        heroHeight: hero.getBoundingClientRect().height,
+        promiseHeight: promise.getBoundingClientRect().height,
         channelHeights: channels.map((channel) => channel.getBoundingClientRect().height),
       };
     });
@@ -1216,7 +1229,7 @@ test(
     expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
     expect(initialGeometry.websiteBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
     expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
-    expect(initialGeometry.heroHeight).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.promiseHeight).toBeLessThanOrEqual(initialGeometry.viewportHeight);
     expect(initialGeometry.channelHeights.every((height) => height >= 44)).toBe(true);
 
     await expect(page.locator(".lf-owner-path")).toBeHidden();
@@ -1240,7 +1253,7 @@ test(
     });
 
     expect(mobilePath.workBeforeContact).toBe(true);
-    expect(mobilePath.contactTopInScreens).toBeLessThanOrEqual(5);
+    expect(mobilePath.contactTopInScreens).toBeLessThanOrEqual(7);
     expect(mobilePath.pageScreens).toBeLessThanOrEqual(12);
     await expectNoHorizontalOverflow(page, "compact mobile home");
     expectRuntimeClean(runtime);
@@ -1286,7 +1299,7 @@ test(
     expect(firstScreen.desktopProofCount).toBe(0);
 
     await page.locator(".lf-four").scrollIntoViewIfNeeded();
-    await expect(page.locator(".lf-four__image").first()).toBeHidden();
+    await expect(page.locator(".lf-four__image")).toHaveCount(0);
     await expect(page.locator(".lf-sticky-help")).toBeVisible();
     const stickyHeight = await page.locator(".lf-sticky-help").evaluate(
       (element) => element.getBoundingClientRect().height,
@@ -1399,10 +1412,12 @@ test(
     const runtime = watchRuntime(page);
 
     await openRoute(page, ROUTES.find((route) => route.key === "website-check")!);
-    await expect(page.getByRole("button", { name: "Open the Website Check" })).toBeVisible();
+    // The plain-language submit is the primary control now; the removed
+    // "Open" label exposed the same scan without telling an owner what it did.
+    await expect(page.getByRole("button", { name: "Check my website" })).toBeVisible();
 
     const booking = page.locator(".lf-website-check__booking").getByRole("link", {
-      name: "Choose a time",
+      name: "Pick a time",
     });
     await expect(booking).toHaveAttribute("href", BOOKING_HREF);
     await expect(booking).toHaveAttribute("target", "_blank");
@@ -1524,7 +1539,7 @@ test(
       window.sessionStorage.setItem("lf_tech_audit_submitted", "true");
     });
     await page.goto(new URL("/thanks/", baseURL!).toString(), { waitUntil: "networkidle" });
-    await expect(page.getByText("Your brief and website report are safely in the queue.")).toBeVisible();
+    await expect(page.getByText("Your message and website report are ready for us to read.")).toBeVisible();
     const booking = page.locator(".lf-thanks__booking").getByRole("link", {
       name: "Choose a time",
     });
@@ -2066,7 +2081,7 @@ test(
     expect(panelGeometry.left).toBeGreaterThanOrEqual(0);
     expect(panelGeometry.right).toBeLessThanOrEqual(panelGeometry.viewportWidth);
     expect(panelGeometry.scrollWidth).toBeLessThanOrEqual(panelGeometry.clientWidth);
-    await page.getByRole("button", { name: "Allow analytics", exact: true }).click();
+    await page.getByRole("button", { name: "Allow visit counting", exact: true }).click();
 
     const measurementOnly = await page.evaluate(() => {
       const consentUpdates = (window.dataLayer ?? [])

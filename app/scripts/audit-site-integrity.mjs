@@ -389,15 +389,28 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
 }
 
 const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
-// The acquisition hero now uses one approved real-business scene as its LCP
-// image. Keep that exact source in the first response, and do not let a future
-// redesign quietly bring back one of the retired decorative hero assets.
-if (!/<img[^>]+src="\/brand-kit\/assets\/imagery\/shop-systems-hero\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
-  failures.push("home first response is missing the approved high-priority shop-systems hero image");
+// The acquisition hero uses separately composed connected-counter art for
+// wide and compact viewports. Both sources must be present in the first
+// response and the desktop fallback remains the high-priority image.
+if (!/<source[^>]+media="\(width &lt; 48rem\)"[^>]+srcset="\/images\/home\/connected-counter-hero-mobile-v1\.webp"/i.test(homeDocument)) {
+  failures.push("home first response is missing the compact connected-counter source");
+}
+if (!/<img[^>]+src="\/images\/home\/connected-counter-hero-desktop-v1\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
+  failures.push("home first response is missing the high-priority connected-counter fallback");
 }
 const homeRouteImagePreloads = homeDocument.match(/<link[^>]+rel="preload"[^>]+as="image"[^>]+data-route-preload[^>]*>/gi) ?? [];
-if (homeRouteImagePreloads.some((tag) => !/shop-systems-hero\.webp/i.test(tag))) {
-  failures.push("home route-preloads an image other than the approved shop-systems hero");
+const expectedHomePreloads = [
+  "connected-counter-hero-mobile-v1.webp",
+  "connected-counter-hero-desktop-v1.webp",
+];
+if (
+  homeRouteImagePreloads.length !== expectedHomePreloads.length
+  || expectedHomePreloads.some((asset) => !homeRouteImagePreloads.some((tag) => tag.includes(asset)))
+) {
+  failures.push("home route-preloads must contain exactly the two responsive connected-counter assets");
+}
+if (homeRouteImagePreloads.some((tag) => !/connected-counter-hero-(?:mobile|desktop)-v1\.webp/i.test(tag))) {
+  failures.push("home route-preloads an image outside the connected-counter pair");
 }
 if (/data-route-preload[^>]+(?:hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
   failures.push("home still preloads a retired image-led hero");

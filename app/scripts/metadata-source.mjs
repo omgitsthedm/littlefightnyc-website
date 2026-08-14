@@ -91,15 +91,15 @@ function imageDimensions(imagePath) {
 }
 
 const JOURNAL_SEO_TITLES = {
-  "read-your-monthly-software-bill": "Audit Your Monthly Software Bill | Little Fight NYC",
-  "set-up-google-business-profile-nyc": "Set Up Google Business Profile NYC | Little Fight NYC",
-  "migrate-off-squarespace-without-breaking-booking": "Migrate Off Squarespace Safely | Little Fight NYC",
-  "keep-connect-replace-build-framework": "Keep Connect Replace or Build | Little Fight NYC",
+  "read-your-monthly-software-bill": "Read Your Monthly Software Bill | Little Fight NYC",
+  "set-up-google-business-profile-nyc": "Set Up Your Google Business Profile | Little Fight NYC",
+  "migrate-off-squarespace-without-breaking-booking": "Leave Squarespace Without Breaking Booking | Little Fight NYC",
+  "keep-connect-replace-build-framework": "Keep, Connect, Replace, or Build | Little Fight NYC",
 };
 
 const JOURNAL_SEO_DESCRIPTIONS = {
   "keep-connect-replace-build-framework":
-    "A practical framework for deciding whether to keep, connect, replace, or build a business tool before spending on another platform.",
+    "Before you buy another tool, decide whether to keep, connect, replace, or build. Start with the part of the day that keeps getting stuck.",
 };
 
 const JOURNAL_CATEGORY_IMAGES = {
@@ -113,14 +113,14 @@ export const NOT_FOUND_PAGE = {
   path: "/404.html",
   title: "Page Not Found | Little Fight NYC",
   description:
-    "This Little Fight NYC page moved. Book a free Tech Audit or contact Little Fight for small business website, IT, or systems help.",
+    "That page is gone or moved. Tell us what you need, and we will point you to the right way to get help.",
   headingLead: "This page got",
   headingEmphasis: "knocked out.",
   h1: "This page got knocked out.",
   dek:
-    "Probably our fault. The page may have moved, been retired, or never existed at all. The good stuff is below — or call (646) 360-0318 if you needed something specific.",
+    "Probably our fault. The page may have moved, retired, or never existed. Tell us what you were trying to do and we will help you find the right next step.",
   shortAnswer:
-    "Short answer: start with the messy setup and Little Fight will route you to the right help.",
+    "Short answer: tell us what you were trying to do, and we will help you find the right next step.",
   type: "WebPage",
   image: "/assets/og-tugboat.jpg",
   noindex: true,
@@ -312,7 +312,7 @@ export function journalTitle(post) {
 }
 
 export function journalDescription(post) {
-  return JOURNAL_SEO_DESCRIPTIONS[post.slug] ?? post.description;
+  return clampDescription(JOURNAL_SEO_DESCRIPTIONS[post.slug] ?? post.description);
 }
 
 export function journalImage(post, hasDedicatedImage = () => false) {
@@ -416,22 +416,22 @@ export function serviceAreaPages(seoData) {
       // These recombined pages remain out of the index until they carry
       // genuinely distinct local content.
       noindex: true,
-      title: `${service.label} in ${area.name} | Little Fight NYC`,
-      description: `${service.label} help for ${area.name} businesses. Little Fight fixes websites, tools, Google signals, and handoffs that slow daily work.`,
+      title: `${service.label} for ${area.name} Businesses | Little Fight NYC`,
+      description: `${service.label} for ${area.name} businesses. Help people find you, reach you, and take the next step without extra runaround.`,
       h1: `${service.label} for ${area.name} businesses.`,
-      shortAnswer: `Short answer: ${area.name} businesses need ${service.plain}. Little Fight keeps what works, fixes what drags, and avoids another bloated monthly bill when a smaller move will do.`,
+      shortAnswer: `Short answer: ${area.name} businesses need ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
       type: "Service",
       serviceName: `${service.serviceName} in ${area.name}`,
       image: service.image ?? area.image,
       faq: [
         {
           question: `Does Little Fight work with ${area.name} businesses?`,
-          answer: `Yes. Little Fight helps ${area.name} businesses with websites, IT support, local search visibility, tool cleanup, and practical business systems.`,
+          answer: `Yes. Little Fight helps ${area.name} businesses with websites, everyday tech help, Google listings, and simpler ways to keep the work moving.`,
         },
         {
           question: `Should I start with ${service.label} or a Tech Audit?`,
           answer:
-            "If the problem touches more than one page, tool, person, or monthly bill, start with the free Tech Audit so the first fix is not guessed.",
+            "If the problem touches more than one part of the day—website, booking, email, payments, or bills—start with the free Tech Audit. It helps name the first useful fix.",
         },
       ],
     })),
@@ -443,19 +443,22 @@ export function glossaryPages(seoData, authoredTerms = seoData.glossaryTerms ?? 
   return [
     {
       path: "/glossary/",
-      title: "Small Business Tech Glossary | Little Fight NYC",
+      title: "Plain-English Small Business Tech Glossary | Little Fight NYC",
       description:
-        "A word should help you make one next move, not sell you another subscription. Start with the term blocking the day.",
-      h1: "Useful words, no vendor fog.",
+        "Simple explanations for the words that get in the way of a busy business day. Find the term, see what it means, and choose the next move.",
+      // Keep the no-JavaScript first response on the same owner-first question
+      // the hydrated Glossary page asks. This is visible copy, not SEO-only
+      // metadata, so a visitor should never see it rewrite on load.
+      h1: "What does that word mean for your business?",
       shortAnswer:
-        "Short answer: a word should help you make one next move, not sell you another subscription. Start with the term blocking the day.",
+        "Short answer: find the word that is slowing the day down, see what it means, and choose one useful next step.",
       type: "CollectionPage",
       image: "/assets/sign-more-shops.webp",
     },
     ...terms.map((term) => ({
       path: `/glossary/${term.slug}/`,
-      title: `${term.term} Definition | Little Fight NYC`,
-      description: clampDescription(term.definition),
+      title: `What Is ${term.term}? | Little Fight NYC`,
+      description: clampDescription(`${term.term}: ${term.plain}`),
       h1: term.term,
       shortAnswer: `Short answer: ${term.plain}`,
       type: "DefinedTerm",
@@ -489,9 +492,9 @@ export function industryPage(entry) {
   const fallbackH1 = entry.title.replace(" Help", "");
   return {
     path: `/industries/${entry.slug}/`,
-    title: `${fallbackH1} Tech Help | Little Fight NYC`,
-    description: entry.description,
-    shortAnswer: entry.description,
+    title: `Websites & Everyday Help for ${fallbackH1} | Little Fight NYC`,
+    description: clampDescription(entry.description),
+    shortAnswer: clampDescription(entry.description),
     h1: firstAuthoredH1(entry.html, fallbackH1),
     type: "WebPage",
     image: entry.image || "/assets/manhattan.webp",
@@ -504,12 +507,12 @@ export function localePages() {
     {
       path: "/es/",
       locale: "es",
-      title: "Páginas web y tecnología en español | Little Fight NYC",
+      title: "Páginas web y ayuda diaria en español | Little Fight NYC",
       description:
-        "Páginas web, soporte técnico y software propio para pequeños negocios de Nueva York. Vea trabajo real, llame o empiece un plan gratis.",
+        "Páginas web y ayuda diaria para pequeños negocios de Nueva York. Vea ejemplos reales, llame o empiece un plan gratis.",
       h1: "Una página web hecha para su negocio. Ayuda real cuando algo falla.",
       shortAnswer:
-        "Little Fight NYC en español: páginas web, soporte técnico, consultoría gratis y software propio para negocios pequeños de Nueva York.",
+        "Little Fight NYC en español: páginas web, ayuda cuando algo falla, una primera consulta gratis y herramientas que se adaptan a su negocio.",
       type: "WebPage",
       image: "/assets/og-tugboat.jpg",
     },
@@ -518,10 +521,10 @@ export function localePages() {
       locale: "zh",
       title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
       description:
-        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。网站时间写进方案，代码和数据归您；真人回复。",
+        "Little Fight NYC 中文：为纽约小生意提供网站、技术支持和免费咨询。计划写清时间，网站和资料归您；真人回复。",
       h1: "网站按您的生意来做。技术出问题时，有真人帮您。",
       shortAnswer:
-        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。网站时间写进方案，代码和数据归您。",
+        "Little Fight NYC 中文：为纽约小生意提供网站、技术支持、免费咨询和适合您生意的工具。网站和资料归您。",
       type: "WebPage",
       image: "/assets/og-tugboat.jpg",
     },

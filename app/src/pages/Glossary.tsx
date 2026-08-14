@@ -13,12 +13,12 @@ export default function Glossary() {
         icon={BookOpen}
         title={
           <>
-            Useful words,{" "}
+            What does that word{" "}
             <br />
-            <span className="lf-em">no vendor fog.</span>
+            <span className="lf-em">mean for your business?</span>
           </>
         }
-        dek="A word should help you make one next move, not sell you another subscription. Start with the term that is blocking the day."
+        dek="Pick the word somebody used in a proposal, bill, or sales call. We will explain it without making you feel like you should already know."
         image={{
           src: "/assets/sign-more-shops.webp",
           alt: "Hand-painted shop signage",
@@ -34,12 +34,12 @@ export default function Glossary() {
           </section>
 
           <aside className="lf-content-tile lf-content-tile--full">
-            <p className="lf-content-tile__label">Before you buy anything</p>
-            <h2>Words are clues, not instructions.</h2>
+            <p className="lf-content-tile__label">Before you buy another app</p>
+            <h2>Five logins. Three bills. The same customer typed twice.</h2>
             <p>
-              A CRM, automation, or stack may be useful. It may also be a very expensive way to
-              avoid fixing one missed handoff. Read the plain definition, check the original
-              source when a rule or vendor is involved, then decide what the business needs.
+              A new tool may help. It may also add one more place to check. Read the plain
+              definition, look at the real problem, and buy something only when it makes the
+              day easier for customers or staff.
             </p>
           </aside>
 

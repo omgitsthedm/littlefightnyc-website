@@ -5,7 +5,6 @@ import QuietContact from "@/components/editorial/QuietContact";
 import ShareButton from "@/components/ShareButton";
 import AnswerDiagram from "@/components/dataviz/AnswerDiagram";
 import AnswerStepper from "@/components/dataviz/AnswerStepper";
-import AnswerVerdict from "@/components/dataviz/AnswerVerdict";
 import MoneyLeakMeter from "@/components/dataviz/MoneyLeakMeter";
 import {
   BreakEvenCustomerCount,
@@ -15,10 +14,10 @@ import {
 import { answerGuides, answerServiceBridge } from "@/data/site";
 import {
   ANSWER_CLUSTERS,
-  ANSWER_VERDICTS,
   answerArt,
   answerVisualKind,
 } from "@/data/answersArt";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import "@/styles/editorial/answers.css";
 import "@/styles/editorial/longform-routes.css";
 
@@ -51,7 +50,13 @@ function ServiceBridge({ slug, urgent }: { slug: string; urgent?: boolean }) {
   return (
     <aside className="lf-answer-page__bridge" data-urgent={urgent || undefined}>
       <p className="lf-answer-page__bridge-eyebrow">
-        {urgent ? "Down right now? Skip the reading." : "Reading done. Want it handled?"}
+        {urgent ? "Need help right now?" : "Want a hand with this?"}
+      </p>
+      <p>
+        <a href={PHONE_HREF}>Call {PHONE_DISPLAY}</a>{" · "}
+        <a href={SMS_HREF}>Text</a>{" · "}
+        <a href="mailto:hello@littlefightnyc.com">Email</a>{" · "}
+        <Link to="/tech-audit/">Start a free first look</Link>
       </p>
       <Link
         to={bridge.to}
@@ -93,6 +98,7 @@ export default function AnswerGuide() {
 
   const related = relatedGuides(guide.slug);
   const visualKind = answerVisualKind(guide.slug);
+  const sources = guide.sections.flatMap((section) => section.sources ?? []);
 
   return (
     <div className="lf-longform-route lf-longform-route--answer">
@@ -128,7 +134,7 @@ export default function AnswerGuide() {
             />
           </p>
 
-          {EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} urgent />}
+          <ServiceBridge slug={guide.slug} urgent={EMERGENCY.has(guide.slug)} />
 
           <section
             className="lf-answer-page__feature"
@@ -136,9 +142,6 @@ export default function AnswerGuide() {
             data-lf-visual-proof="answer"
           >
             {visualKind === "diagram" && <AnswerDiagram slug={guide.slug} />}
-            {visualKind === "verdict" && ANSWER_VERDICTS[guide.slug] && (
-              <AnswerVerdict verdict={ANSWER_VERDICTS[guide.slug]} />
-            )}
             {visualKind === "stepper" && (
               <AnswerStepper
                 sections={guide.sections}
@@ -147,27 +150,49 @@ export default function AnswerGuide() {
             )}
           </section>
 
+          {visualKind === "stepper" && sources.length > 0 && (
+            <p className="lf-answer-page__section-source">
+              Check the official source: {" "}
+              {sources.map((source, index) => (
+                <span key={source.url}>
+                  {index > 0 ? " · " : null}
+                  <a href={source.url} target="_blank" rel="noreferrer">
+                    {source.label} ↗
+                  </a>
+                </span>
+              ))}
+            </p>
+          )}
+
           <AnswerOwnerMath slug={guide.slug} />
 
-          <div
-            className="lf-answer-page__sections"
-            data-count={guide.sections.length}
-            data-layout="guide"
-          >
-            {guide.sections.map((section) => (
-              <article key={section.heading} className="lf-answer-page__section">
-                <h2>{section.heading}</h2>
-                <p>{section.body}</p>
-                {section.source && (
-                  <p className="lf-answer-page__section-source">
-                    <a href={section.source.url} target="_blank" rel="noreferrer">
-                      Check the official source: {section.source.label} ↗
-                    </a>
-                  </p>
-                )}
-              </article>
-            ))}
-          </div>
+          {visualKind === "diagram" && (
+            <div
+              className="lf-answer-page__sections"
+              data-count={guide.sections.length}
+              data-layout="guide"
+            >
+              {guide.sections.map((section) => (
+                <article key={section.heading} className="lf-answer-page__section">
+                  <h2>{section.heading}</h2>
+                  <p>{section.body}</p>
+                  {section.sources?.length ? (
+                    <p className="lf-answer-page__section-source">
+                      Check the official source: {" "}
+                      {section.sources.map((source, index) => (
+                        <span key={source.url}>
+                          {index > 0 ? " · " : null}
+                          <a href={source.url} target="_blank" rel="noreferrer">
+                            {source.label} ↗
+                          </a>
+                        </span>
+                      ))}
+                    </p>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          )}
 
           {guide.faq.length > 0 && (
             <section className="lf-answer-page__faq">
@@ -182,8 +207,6 @@ export default function AnswerGuide() {
               </div>
             </section>
           )}
-
-          {!EMERGENCY.has(guide.slug) && <ServiceBridge slug={guide.slug} />}
 
           {related.length > 0 && (
             <section className="lf-answer-page__related">

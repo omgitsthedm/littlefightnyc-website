@@ -127,6 +127,34 @@
   margin-top: var(--lf-space-6);
 }
 
+.lf-es__hero-channels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-3) var(--lf-space-5);
+  margin-top: var(--lf-space-3);
+}
+
+.lf-editorial .lf-es__hero-channels a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--lf-bone);
+  font-weight: 600;
+  text-underline-offset: 0.22em;
+}
+
+.lf-editorial .lf-es__hero-channels a:hover,
+.lf-editorial .lf-es__hero-channels a:focus-visible {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-es__hero-channels a:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
+}
+
 .lf-editorial .lf-es__cta {
   min-height: 52px;
   display: inline-flex;

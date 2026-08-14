@@ -97,9 +97,9 @@ for = "/media/*"
 
 # /images/ had no rule at all, so it fell through to the SPA default and every
 # file came back "max-age=0, must-revalidate" — including
-# /images/brand-scenes/storefronts-dawn-1200.webp, which the home page
-# <link rel="preload">s as its LCP candidate. Repeat visitors revalidated the
-# one image that decides LCP on every single load.
+# /images/home/connected-counter-hero-*-v1.webp, which the home page preloads
+# responsively as its LCP candidate. Repeat visitors otherwise revalidate the
+# image that decides LCP on every single load.
 #
 # These filenames are not content-hashed, so "immutable" would be wrong: an
 # updated photo could never reach anyone. A day of caching with a week of

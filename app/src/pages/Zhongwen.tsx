@@ -37,15 +37,15 @@ const SERVICES = [
   },
   {
     title: "您自己拥有的软件",
-    line: "用一套更简单的专用工具，替换不合适的表格和月费软件。代码和数据归您。",
+    line: "用一套更简单的专用工具，替换不合适的表格和月费软件。文件、数据和控制权归您。",
   },
 ];
 
 const PROMISES = [
   "先帮您看一遍，永远免费。",
   "网站书面方案会写明时间、双方要做的事，以及我们误期时怎么办。",
-  "早9点到晚9点，2小时内回电。",
-  "代码、数据和说明文档都交到您手里。",
+  "早9点到晚9点，我们争取在2小时内回电。",
+  "文件、数据和使用说明都交到您手里。",
 ];
 
 const STAYS = [
@@ -112,7 +112,7 @@ export default function Zhongwen() {
       path: "/zh/",
       title: "Little Fight NYC 中文 | 纽约小生意的网站与技术支持",
       description:
-        "Little Fight NYC 中文：为纽约小生意提供网站建设、技术支持、免费咨询和自有软件。网站时间写进方案，代码和数据归您；真人回复。",
+        "Little Fight NYC 中文：为纽约小生意提供网站、技术支持和免费咨询。计划写清时间，网站和资料归您；真人回复。",
     });
   }, []);
 
@@ -129,7 +129,7 @@ export default function Zhongwen() {
       </header>
 
       <main className="lf-es__main">
-        <section className="lf-es__hero">
+        <section className="lf-es__hero" data-lf-owner-intro="true">
           <div className="lf-es__hero-copy">
             <p className="lf-es__eyebrow">为纽约小生意做清楚、好用的技术</p>
             <h1>
@@ -142,7 +142,7 @@ export default function Zhongwen() {
               我们不拿套版硬塞给您。我们做定制网站，修好已经出故障的设备和系统，也能把昂贵、难用的月费软件换成您自己拥有的工具。
             </p>
 
-            <div className="lf-es__actions">
+            <div className="lf-es__actions" data-lf-contact-rail="true">
               <a className="lf-es__cta lf-es__cta--primary" href={PHONE_HREF} data-lf-label="zh_hero_phone">
                 <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
                 打电话：{PHONE_DISPLAY}
@@ -157,6 +157,19 @@ export default function Zhongwen() {
                 <ArrowUpRight size={18} strokeWidth={1.9} aria-hidden="true" />
               </Link>
             </div>
+            <div className="lf-es__hero-channels" aria-label="其他联系方式">
+              <a href={SMS_HREF}>
+                <MessageSquare size={16} strokeWidth={1.9} aria-hidden="true" />
+                短信
+              </a>
+              <a href="mailto:hello@littlefightnyc.com">
+                <Mail size={16} strokeWidth={1.9} aria-hidden="true" />
+                邮件
+              </a>
+              <Link to="/tech-audit/?source=zh_hero_form">
+                表格
+              </Link>
+            </div>
             <p className="lf-es__action-note">
               先免费帮您看一遍。纽约可上门；网站项目也可远程做。给您清楚的方案，再由您决定。
             </p>
@@ -168,7 +181,7 @@ export default function Zhongwen() {
               </li>
               <li>
                 <Clock size={18} strokeWidth={1.75} aria-hidden="true" />
-                美东时间早9点到晚9点，2小时内回电。
+                美东时间早9点到晚9点，我们争取在2小时内回电。
               </li>
               <li>
                 <ShieldCheck size={18} strokeWidth={1.75} aria-hidden="true" />
@@ -327,7 +340,7 @@ export default function Zhongwen() {
           <ArrowUpRight size={14} strokeWidth={2} aria-hidden="true" />
         </Link>
         <button type="button" className="lf-es__foot-link" onClick={openConsentPreferences}>
-          分析偏好设置
+          隐私选项
         </button>
       </footer>
     </div>

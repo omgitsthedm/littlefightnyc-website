@@ -858,7 +858,7 @@
     <div class="lf-report-actions"><a class="lf-report-link" href="/examples/audit/">Audit Lab</a><button type="button" class="pdf-btn" onclick="window.print()">Save PDF</button><a class="lf-report-link lf-report-link--primary" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a></div>
 </nav>
   <aside class="lf-audit-reconstruction" role="note">
-    <strong>Showroom reconstruction.</strong> This is an interface sample, not an audit for the named business. Names, scores, dates, bars, findings, and money figures are invented display data. Do not use this page to judge a business, medical service, legal or accessibility compliance, security, or revenue. A live public-page check names what it observed, what it inferred, and when. Read <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener noreferrer">Chrome Lighthouse documentation</a>, <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">W3C accessibility guidance</a>, and <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer">Google Search structured-data documentation</a>.
+    <strong>Showroom reconstruction.</strong> This is an interface sample, not an audit for the named business. Names, scores, dates, bars, findings, and money figures are invented display data. No action is requested from the named business. Do not use this page to judge a business, medical service, legal or accessibility compliance, security, or revenue. A live public-page check names what it observed, what it inferred, and when. Read <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener noreferrer">Chrome Lighthouse documentation</a>, <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">W3C accessibility guidance</a>, and <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer">Google Search structured-data documentation</a>.
   </aside>
 
   <!-- ═══════════ HEADER ═══════════ -->
@@ -931,7 +931,7 @@
           <span class="finding-card__badge">Critical</span>
           <h3 class="finding-card__title">Heavy Font Loading Blocks Rendering</h3>
           <p class="finding-card__body">
-            Your site loads Cinzel and Gentium Book Basic&thinsp;&mdash;&thinsp;beautiful choices, but they’re not optimized. No <strong>font-display: swap</strong>, no preload hints. Visitors see a blank page for 1&ndash;2 seconds while fonts download. On mobile, this pushes your Largest Contentful Paint past <strong>4 seconds</strong>. Google penalizes this in search rankings.
+            <strong>Example finding:</strong> A page can keep a phone visitor waiting for type and images before the useful content appears. A real audit measures the live page before it recommends a loading change.
           </p>
         </article>
 
@@ -949,16 +949,16 @@
           <span class="finding-card__badge">Warning</span>
           <h3 class="finding-card__title">Gallery Images Missing Alt Text</h3>
           <p class="finding-card__body">
-            Your treatment gallery has <strong>20+ images</strong> with empty or generic alt attributes. Search engines can’t index these images. You’re missing visibility for searches like &ldquo;Botox results Greenwich CT&rdquo; or &ldquo;dermal filler before after&rdquo;&thinsp;&mdash;&thinsp;high-intent queries that drive bookings.
+            <strong>Example finding:</strong> A gallery needs useful descriptions for people using assistive technology and for a visitor trying to understand what they are seeing. A real audit checks the actual images before it recommends new descriptions.
           </p>
         </article>
 
         <!-- Finding 4 -->
         <article class="finding-card finding-card--info">
           <span class="finding-card__badge">Opportunity</span>
-          <h3 class="finding-card__title">No Appointment Schema Markup</h3>
+          <h3 class="finding-card__title">Booking details may be hard for search services to understand</h3>
           <p class="finding-card__body">
-            Adding <strong>MedicalBusiness</strong> and <strong>Service</strong> schema would help Google display your hours, services, and booking link directly in search results. Competitors with rich results get <strong>20&ndash;30% higher click-through rates</strong>.
+            <strong>Example finding:</strong> Hours, services, and booking details should agree wherever a customer sees them. A real audit checks the public facts and the supporting source before it recommends a search change.
           </p>
         </article>
       </div>

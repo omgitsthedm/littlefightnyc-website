@@ -12,7 +12,6 @@ import {
 } from "@/components/dataviz/OwnerCalculators";
 import industries from "@/data/industries.json";
 import { prepareIndustryHtml } from "@/lib/legacyHtml";
-import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/journal.css";
 import "@/styles/editorial/industry.css";
 import "@/styles/editorial/longform-routes.css";
@@ -463,6 +462,13 @@ export default function IndustryDetail() {
         eyebrow={`For ${industryName}`}
         title={<>{heroTitle}</>}
         dek={entry.description}
+        image={{
+          src: recognition.image.src,
+          alt: recognition.image.alt,
+          width: recognition.image.width,
+          height: recognition.image.height,
+          mobileWidths: recognition.image.widths,
+        }}
       />
 
       <section
@@ -500,25 +506,6 @@ export default function IndustryDetail() {
               </Link>
             )}
           </div>
-
-          <figure className="lf-industry-recognition__figure">
-            <div className="lf-industry-recognition__media">
-              <img
-                src={recognition.image.src}
-                {...responsiveImageProps(
-                  recognition.image.src,
-                  "(min-width: 1280px) 46vw, (min-width: 768px) 48vw, 100vw",
-                  recognition.image.widths,
-                )}
-                alt={recognition.image.alt}
-                width={recognition.image.width}
-                height={recognition.image.height}
-                fetchPriority="high"
-                decoding="async"
-              />
-            </div>
-            <figcaption>Illustrative scene. Not client evidence.</figcaption>
-          </figure>
         </div>
       </section>
 
@@ -550,16 +537,17 @@ export default function IndustryDetail() {
       <section className="lf-content-section lf-content-section--tight" aria-label="Fit and source note">
         <div className="lf-content-grid">
           <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
-            <p className="lf-content-tile__label">The fit boundary</p>
-            <h2>Same industry. Different day.</h2>
+            <p className="lf-content-tile__label">Your business is still your business</p>
+            <h2>Two similar shops can need different fixes.</h2>
             <p>
-              This is a planning lens, not a diagnosis. We do not assume every {industryName.toLowerCase()} has the
-              same customers, staff, systems, or risk. The first useful move comes from the path you can show us.
+              We do not assume every {industryName.toLowerCase()} has the same customers,
+              staff, tools, or problems. Show us what happens today. We will start with the
+              part that is actually getting in the way.
             </p>
           </article>
           <aside className="lf-content-tile lf-content-tile--half">
-            <p className="lf-content-tile__label">Check the original</p>
-            <h2>Use the rulebook, not our vibes.</h2>
+            <p className="lf-content-tile__label">When a rule matters</p>
+            <h2>Check the official source.</h2>
             <p>
               <a href={source.href} target="_blank" rel="noreferrer">{source.label} ↗</a>
             </p>

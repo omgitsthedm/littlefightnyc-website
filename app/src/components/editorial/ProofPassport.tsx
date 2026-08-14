@@ -88,7 +88,8 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
 
       <div className="lf-proof-passport__evidence">
         <section aria-label="Build facts">
-          <h3>Build facts</h3>
+          <h3>What was made</h3>
+          <p>These are build notes, not a promise about your business.</p>
           <dl>
             {buildFacts.map((metric) => (
               <div key={metric.label}>
@@ -101,19 +102,33 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
           </dl>
         </section>
 
-        <section aria-label="Verified release facts">
-          <h3>Verified release facts</h3>
-          <dl>
-            {releaseFacts.map((metric) => (
-              <div key={metric.label}>
-                <dt>
-                  <ProofMetricValue value={metric.value} label={metric.label} />
-                </dt>
-                <dd>{metric.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+        {study.featureProof && releaseFacts.length > 0 ? (
+          <section aria-label="Dated build checks">
+            <h3>Dated build checks</h3>
+            <p>
+              Measured for this project. See the live public site above; these are not
+              sales, revenue, or conversion results.
+            </p>
+            <dl>
+              {releaseFacts.map((metric) => (
+                <div key={metric.label}>
+                  <dt>
+                    <ProofMetricValue value={metric.value} label={metric.label} />
+                  </dt>
+                  <dd>{metric.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        ) : (
+          <section aria-label="Proof boundary">
+            <h3>What we will not claim</h3>
+            <p>
+              We do not publish unlinked speed, revenue, or client-result claims for
+              this project.
+            </p>
+          </section>
+        )}
 
         {businessOutcomes.length > 0 && (
           <section aria-label="Client-approved business outcomes">

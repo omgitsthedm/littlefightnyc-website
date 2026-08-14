@@ -1,15 +1,16 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, MessageSquare, Phone, Search, X } from "lucide-react";
+import { Mail, Menu, MessageSquare, Phone, Search, Send, X } from "lucide-react";
 import PhoneAction from "./PhoneAction";
 import TugMark from "./TugMark";
 import { useOpenNow } from "@/lib/openNow";
 import {
   acquisitionCtaForIntent,
   acquisitionIntentForPathname,
+  techAuditHref,
 } from "@/lib/acquisitionIntent";
 import "./QuietNav.css";
-import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 const NAV_LINKS = [
   { label: "Websites", to: "/services/custom-local-websites/" },
@@ -264,7 +265,7 @@ export default function QuietNav() {
               ))}
 
               <p className="lf-nav__panel-label lf-nav__panel-label--talk" aria-hidden="true">
-                Talk to us
+                Pick what is easiest
               </p>
               <div className="lf-nav__panel-actions">
                 <Link
@@ -291,9 +292,21 @@ export default function QuietNav() {
                     <MessageSquare size={16} strokeWidth={1.9} aria-hidden="true" />
                     Text
                   </a>
+                  <a className="lf-nav__panel-reach-btn" href={`mailto:${HELLO_EMAIL}`}>
+                    <Mail size={16} strokeWidth={1.9} aria-hidden="true" />
+                    Email
+                  </a>
+                  <Link
+                    className="lf-nav__panel-reach-btn"
+                    to={techAuditHref(routeIntent, "mobile_menu_form")}
+                    onClick={() => setOpen(false)}
+                  >
+                    <Send size={16} strokeWidth={1.9} aria-hidden="true" />
+                    Form
+                  </Link>
                 </div>
                 <p className="lf-nav__panel-note">
-                  Available 9am-9pm New York time.
+                  9am–9pm Eastern: a human answers. After hours: leave a message.
                 </p>
               </div>
             </nav>

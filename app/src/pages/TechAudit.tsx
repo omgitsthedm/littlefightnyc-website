@@ -33,10 +33,10 @@ type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
 // Hair By Rachel Charles, measured 2026-07-30, Lighthouse 13.4.1 (mobile).
 // Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
 const AUDIT_PROOF_SCORES = [
-  { value: "96", label: "Performance" },
-  { value: "100", label: "Accessibility" },
-  { value: "100", label: "Best practices" },
-  { value: "100", label: "SEO" },
+  { value: "96", label: "Fast on a phone" },
+  { value: "100", label: "Easy to use" },
+  { value: "100", label: "Built carefully" },
+  { value: "100", label: "Easy to find" },
 ] as const;
 type Step = 1 | 2 | 3;
 
@@ -571,7 +571,7 @@ export default function TechAudit() {
               {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
                     mobile: performance 96, accessibility 100, best practices 100, SEO 100.
                     Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
-              <span className="lf-audit-intro__caption">Hair By Rachel Charles: Lighthouse mobile measurement on July 30, 2026 — 96 performance; 100 accessibility, best practices, and SEO.</span>
+              <span className="lf-audit-intro__caption">Hair By Rachel Charles: checked on a phone on July 30, 2026. Fast to load, easy to use, built carefully, and easy for search to read.</span>
               {/* Same verified 2026-07-30 measurement as the caption, restated as
                   instruments. Values must track the evidence artifact above. */}
               <span className="lf-audit-intro__scores" aria-hidden="true">
@@ -589,7 +589,7 @@ export default function TechAudit() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Public Lighthouse method and limits
+                  How we checked it
                 </a>
               </span>
             </article>
@@ -607,6 +607,11 @@ export default function TechAudit() {
           </>
           )}
           dek="One short form. Tell us what feels broken, expensive, slow, or confusing in your own words. A person reads it and replies with a clear next move."
+          action={{
+            href: "#fit-step-title",
+            kicker: "About two minutes",
+            label: "Start the free review",
+          }}
           image={{
             src: "/images/brand-scenes/shop-back-office.webp",
             alt: "A small business back office with the everyday tools that keep the day moving",
@@ -631,8 +636,8 @@ export default function TechAudit() {
                 </h2>
                 <p className="lf-audit__step-sub">
                   {websiteIntent
-                    ? "We opened the website path. Confirm it, or choose the issue closest to the work ahead."
-                    : "Pick the closest fit. It helps us prep. You can say more later."}
+                    ? "We opened the website path. Keep it, or choose the problem that sounds closest."
+                    : "Pick the closest fit. It helps us understand the problem. You can say more later."}
                 </p>
                 <div
                   className="lf-audit__cards"
@@ -757,7 +762,7 @@ export default function TechAudit() {
                 </h2>
                 <p className="lf-audit__step-sub">
                   {websiteIntent
-                    ? "A short note is enough. A real person reads every brief."
+                    ? "A short note is enough. A real person reads every message."
                     : "We only need enough to reply. We can work out the rest together."}
                 </p>
 
@@ -959,7 +964,7 @@ export default function TechAudit() {
                       }
                     />
                     <p className="lf-audit__note" id="fit-message-note">
-                      No passwords or private customer data here. We never need them to scope.
+                      No passwords or private customer data here. We do not need them to understand the job.
                     </p>
                     {errors.message && (
                       <p className="lf-audit__error" role="alert" id="fit-message-error">
@@ -990,7 +995,7 @@ export default function TechAudit() {
                     {submitting ? "Sending securely. Keep this tab open for confirmation." : ""}
                   </p>
                   <p className="lf-audit__assurance">
-                    Free consultation / No obligation / Response window: 9am-9pm Eastern /
+                    Free first look / No obligation / We reply 9am-9pm Eastern /
                     Urgent? Call <a href={PHONE_HREF} data-lf-label="tech_audit_form_phone">{PHONE_DISPLAY}</a>
                   </p>
                   <p className="lf-audit__assurance lf-audit__assurance--data">
@@ -1032,11 +1037,11 @@ export default function TechAudit() {
             <TimelineStrip
               vertical
               className="lf-audit__next"
-              label="What happens after you send a Tech Audit brief"
-              summary="Little Fight NYC reviews the request, confirms the context, and returns a clear recommended next step."
+              label="What happens after you send your message"
+              summary="We read what is happening and reply with a clear next step."
               beats={[
-                { label: "Send the brief" },
-                { label: "We review the context", sub: "9am-9pm ET", marker: true },
+                { label: "Send your message" },
+                { label: "We read what is happening", sub: "9am-9pm ET", marker: true },
                 { label: "Clear next step", sub: "Free consultation" },
               ]}
             />

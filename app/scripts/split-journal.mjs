@@ -15,7 +15,7 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from "nod
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { journalDates } from "./metadata-source.mjs";
-import { copyBySlug, renderJournalCopy, resolveJournalSources } from "./journal-copy.mjs";
+import { copyBySlug, ownerWords, renderJournalCopy, resolveJournalSources } from "./journal-copy.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const dataDir = join(here, "..", "src", "data");
@@ -56,7 +56,7 @@ const index = resolvedPosts.map((p) => {
     slug: p.slug,
     category: p.category,
     title: p.title,
-    description: p.description,
+    description: ownerWords(p.description),
     published: dates.published,
     updated: dates.updated,
     wordCount: countWords(p.html),
@@ -93,10 +93,10 @@ for (const p of resolvedPosts) {
     JSON.stringify({
       html: typeof p.html === "string" ? p.html : "",
       insight: {
-        answer: authored.answer,
-        watch: authored.watch ?? [],
-        next: authored.next ?? [],
-        fit: authored.fit,
+        answer: ownerWords(authored.answer),
+        watch: (authored.watch ?? []).map(ownerWords),
+        next: (authored.next ?? []).map(ownerWords),
+        fit: ownerWords(authored.fit),
         sources: resolveJournalSources(authored),
       },
     }) + "\n",

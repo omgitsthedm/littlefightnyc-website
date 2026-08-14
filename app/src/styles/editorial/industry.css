@@ -34,18 +34,13 @@
   overflow: clip;
   padding: clamp(var(--lf-space-6), 5vw, var(--lf-space-8))
     var(--lf-page-gutter);
-  background:
-    radial-gradient(80% 70% at 100% 0%, rgba(59, 130, 246, 0.09), transparent 70%),
-    var(--lf-paper-2);
+  background: var(--lf-paper-2);
   border-bottom: 1px solid var(--lf-hairline);
 }
 
 .lf-industry-recognition__inner {
   width: min(100%, var(--lf-max-w));
   margin-inline: auto;
-  display: grid;
-  gap: clamp(var(--lf-space-6), 5vw, var(--lf-space-8));
-  align-items: center;
 }
 
 .lf-industry-recognition__copy {
@@ -647,10 +642,6 @@
 }
 
 @media (min-width: 48rem) {
-  .lf-industry-recognition__inner {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  }
-
   .lf-industry-recognition__outcomes {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -709,16 +700,8 @@
 }
 
 @media (min-width: 80rem) {
-  .lf-industry-recognition__inner {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
   .lf-industry-recognition__copy {
-    grid-column: 1 / span 5;
-  }
-
-  .lf-industry-recognition__figure {
-    grid-column: 6 / span 7;
+    max-width: 74rem;
   }
 
   .lf-industry-start header {

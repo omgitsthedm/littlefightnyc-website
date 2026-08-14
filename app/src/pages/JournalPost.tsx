@@ -17,6 +17,7 @@ import journalIndex from "@/data/journal-index.json";
 import { POST_IMAGE, CATEGORY_LABEL, CATEGORY_IMAGE } from "@/data/journalArt";
 import { prepareLegacyHtml } from "@/lib/legacyHtml";
 import { authoredDate } from "@/lib/authoredDate";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import "@/styles/editorial/journal.css";
 import "@/styles/editorial/longform-routes.css";
 
@@ -193,6 +194,22 @@ function JournalCalculator({ slug }: { slug: string }) {
   return null;
 }
 
+function JournalActionBridge({ category }: { category: PostMeta["category"] }) {
+  const lead = category === "howto"
+    ? "Want help doing this without breaking the day?"
+    : "Want us to look at your real setup?";
+
+  return (
+    <p className="lf-post__answer">
+      <strong>{lead}</strong>{" "}
+      <a href={PHONE_HREF}>Call {PHONE_DISPLAY}</a>{" · "}
+      <a href={SMS_HREF}>Text</a>{" · "}
+      <a href="mailto:hello@littlefightnyc.com">Email</a>{" · "}
+      <Link to="/tech-audit/">Start a free first look</Link>
+    </p>
+  );
+}
+
 export default function JournalPost() {
   const { slug } = useParams();
   const { pathname } = useLocation();
@@ -321,14 +338,9 @@ export default function JournalPost() {
             />
           </p>
 
-          {ready ? (
-            <JournalInsight
-              category={post.category}
-              slug={post.slug}
-              title={post.title}
-              insight={ready.insight}
-            />
-          ) : null}
+          {ready ? <JournalInsight category={post.category} slug={post.slug} insight={ready.insight} /> : null}
+
+          <JournalActionBridge category={post.category} />
 
           {ready ? (
             <div

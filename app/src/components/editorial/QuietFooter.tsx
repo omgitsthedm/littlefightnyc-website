@@ -48,8 +48,8 @@ const footerGroups: Array<{
     links: [
       { label: "See every project", to: "/examples/" },
       { label: "Check my website", to: "/website-check/" },
-      { label: "Try the Lab", to: "/examples/lab/", external: true },
-      { label: "See a site audit", to: "/examples/audit/", external: true },
+      { label: "Try the Lab", to: "/examples/lab/" },
+      { label: "See a site audit", to: "/examples/audit/" },
     ],
   },
   {
@@ -88,7 +88,7 @@ export default function QuietFooter() {
               className="lf-quiet-foot__privacy-button"
               onClick={openConsentPreferences}
             >
-              Analytics choices
+              Privacy choices
             </button>
             <Link to="/es/" lang="es">
               En español</Link>{" · "}<Link to="/zh/">中文

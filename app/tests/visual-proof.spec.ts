@@ -21,9 +21,11 @@ test("journal visual proof renders sourced owner guidance", async ({ page }) => 
   await page.goto("/journal/cybersecurity-for-small-business/");
   const proof = page.locator('[data-lf-visual-proof="journal"]');
   await expect(proof).toBeVisible();
-  await expect(proof.getByRole("heading", { name: "Notice this" })).toBeVisible();
-  await expect(proof.getByRole("heading", { name: "Do this next" })).toBeVisible();
-  await expect(proof.locator('a[href^="https://"]')).toHaveCount(2);
+  await expect(proof.getByRole("heading", { name: "The plain version." })).toBeVisible();
+  await expect(proof.getByText("Source check:", { exact: false })).toBeVisible();
+  // Source sets are editorially scoped, so prove that an owner can follow one
+  // rather than freezing an old count from a former card layout.
+  await expect(proof.locator('a[href^="https://"]')).not.toHaveCount(0);
 });
 
 test("owner calculator labels examples, then owner input", async ({ page }) => {

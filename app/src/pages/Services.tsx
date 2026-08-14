@@ -26,14 +26,14 @@ const ENTRY_ROUTES = [
     slug: "custom-local-websites",
     icon: Globe2,
     priority: "primary",
-    detail: "People need to find you, trust you, and know how to call, book, visit, or buy.",
+    detail: "People should find you, understand you, and know whether to call, book, visit, or buy.",
   },
   {
     label: "Something is broken",
     slug: "it-support",
     icon: Headphones,
     priority: "support",
-    detail: "A register, Wi-Fi network, email account, booking tool, or device is stopping the day.",
+    detail: "A card reader, Wi-Fi, email, booking link, or device is stopping the day.",
   },
   {
     label: "I need a free second opinion",
@@ -47,7 +47,7 @@ const ENTRY_ROUTES = [
     slug: "business-systems",
     icon: Workflow,
     priority: "software",
-    detail: "A costly tool still makes the team repeat work or manage the business in a spreadsheet.",
+    detail: "A costly tool still makes people type the same thing twice or run the business from a spreadsheet.",
   },
 ] as const;
 
@@ -122,8 +122,8 @@ export default function Services() {
             <Store size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
               <small>Opening or relaunching</small>
-              <strong>Open with one front door, not six loose accounts.</strong>
-              <em>Website, search, email, booking, follow-up, and the keys stay in one clear plan.</em>
+              <strong>Open with one front door, not six loose logins.</strong>
+              <em>Your website, Google listing, email, booking, follow-up, and account access start in one clear plan.</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
@@ -132,7 +132,7 @@ export default function Services() {
             <span>
               <small>Already live</small>
               <strong>Keep the path working after launch.</strong>
-              <em>Current facts, tested forms, clear handoffs, and notes your business keeps.</em>
+              <em>Current facts, checked forms, clear next steps, and notes your business keeps.</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
@@ -156,7 +156,7 @@ export default function Services() {
               <span>01</span>
               <div>
                 <strong>See the real setup</strong>
-                <p>We look at the website, accounts, devices, bills, and handoffs together.</p>
+                <p>We look at the website, logins, devices, bills, and the spots where work gets dropped.</p>
               </div>
             </li>
             <li>
@@ -181,7 +181,7 @@ export default function Services() {
         id="studio"
         eyebrow="Focused software"
         title="When the monthly tool becomes the problem."
-        dek="We can build the smaller, clearer tool your team actually needs. You own the code, data, hosting, and written handoff."
+        dek="We can build the smaller, clearer tool your business actually needs. You own the code, data, hosting, and plain notes."
         items={studioOverview}
         variant="compact"
       />

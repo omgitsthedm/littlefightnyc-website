@@ -17,7 +17,8 @@ export default function Legal() {
             <span className="lf-em">plain.</span>
           </>
         }
-        dek="Little Fight collects only what it needs to understand the issue, scopes work before quoting it, measures what is working, and handles account access through safer handoffs."
+        dek="We collect only what we need to understand the problem, agree on work before quoting it, check what is working, and use safer ways to access accounts."
+        action={false}
       />
 
       <section className="lf-content-section">
@@ -26,7 +27,7 @@ export default function Legal() {
             <EditorialBody wide>
             <h2 id="privacy">What forms collect</h2>
             <p>
-              Tech Audit and contact paths may collect your name, business
+              The website form and contact pages may collect your name, business
               name, contact information, follow-up preference, and a plain
               description of the issue. That is the minimum needed to reply
               usefully.
@@ -58,7 +59,7 @@ export default function Legal() {
             <p>
               These tools may record page views, approximate device/browser
               details, referral information, and events such as phone clicks,
-              email clicks, Tech Audit or contact button clicks, and form
+              email clicks, website-form or contact button clicks, and form
               submits. Little Fight uses this information for measurement,
               reporting, and improving marketing, not to sell personal
               information.
@@ -66,7 +67,7 @@ export default function Legal() {
             <h2>Cookies, pixels, and opt-outs</h2>
             <p>
               Analytics is off by default for a first-time visitor. Google
-              Analytics loads only after you choose “Allow analytics.” If you
+              Analytics loads only after you choose “Allow visit counting.” If you
               choose “Essential only,” the site still works and the optional
               script does not load. You can change the choice at any time.
             </p>
@@ -77,22 +78,21 @@ export default function Legal() {
             </p>
             <h2>What not to send</h2>
             <p>
-              Do not send passwords, recovery codes, API keys, credit card
+              Do not send passwords, recovery codes, secret developer keys, credit card
               numbers, bank details, protected health information, or private
               customer data through any public form on this site.
             </p>
             <h2 id="terms">Work and scope</h2>
             <p>
-              Project scope, pricing, access needs, and timelines are
-              confirmed in writing before work begins. If anything changes
-              mid-engagement, the change is written down and acknowledged
-              before the work continues.
+              What we will do, what it costs, what access is needed, and when
+              it happens are confirmed in writing before work begins. If
+              anything changes, we write it down and agree before work continues.
             </p>
             <h2>Safe account access</h2>
             <p>
               If access to a website, domain, payment tool, booking system, or
-              business account is required, Little Fight sets up a safer handoff
-              instead of asking for credentials over a public form, email, or
+              business account is required, Little Fight shows you a safer way
+              to give access instead of asking for credentials over a public form, email, or
               text thread.
             </p>
             <h2>Privacy questions</h2>

@@ -2,7 +2,7 @@
  * a broken laptop needs a safe next move, not a lecture or a made-up outcome. */
 
 export type AnswerSource = { label: string; url: string };
-export type AnswerSection = { heading: string; body: string; source?: AnswerSource };
+export type AnswerSection = { heading: string; body: string; sources?: AnswerSource[] };
 
 export type AnswerGuide = {
   slug: string;
@@ -25,6 +25,51 @@ const wix = { label: "Wix SEO Help Center", url: "https://support.wix.com/en/art
 const squarespace = { label: "Squarespace Help Center", url: "https://support.squarespace.com/" };
 const shopify = { label: "Shopify Help Center", url: "https://help.shopify.com/" };
 const airtable = { label: "Airtable: getting started", url: "https://support.airtable.com/docs/getting-started-with-airtable" };
+const notion = { label: "Notion: plans and features", url: "https://www.notion.com/pricing" };
+const glossgenius = { label: "GlossGenius: plans and features", url: "https://support.glossgenius.com/en/articles/189-glossgenius-pricing-and-subscription-plans" };
+
+const OWNER_QUESTIONS: Record<string, string> = {
+  "Best Web Designer NYC? What Reddit Actually Says": "How do I choose a web designer in NYC?",
+  "Best Web Design Agency NYC — a Reddit Roundup": "How do I choose website help in NYC?",
+  "Small Business IT Support NYC: Reddit Recommendations, Vetted": "Where can a NYC small business get practical tech help?",
+  "How to Find a Good IT Guy — What Reddit Gets Right (and Wrong)": "How do I find someone reliable to fix my business tech?",
+  "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly": "Should I use Squarespace or hire a web designer?",
+  "Wix vs Custom Website — Reddit’s Take vs Ours": "Should I use Wix or build a custom website?",
+  "Is Local SEO Worth It? Reddit’s Verdict for NYC": "Is local search work worth it for my NYC business?",
+  "Google Business Profile Tips Reddit Swears By — Checked by a Pro": "What should I fix on my Google Business Profile?",
+  "Web Developer Ghosted You? Reddit’s Advice, Improved": "What should I do if my website builder stops responding?",
+  "Best POS for a Small Business: What Reddit Recommends": "How do I choose a register and payment system?",
+  "Square vs Toast — the Reddit Threads, Summarized": "Should my restaurant use Square or Toast?",
+  "GlossGenius vs Square Appointments: the Reddit Roundup": "Should my salon use GlossGenius or Square Appointments?",
+  "Shopify vs Squarespace — the Reddit Debate for Small Shops": "Should my shop use Shopify or Squarespace?",
+  "Does My Small Business Need a Website? Reddit’s Honest Answer": "Does my small business need a website?",
+  "Airtable vs Notion for a Small Business: the Practical Answer": "Should my small business use Airtable or Notion?",
+  "NYC Small Business Tech Help: What Owners Actually Need": "Where can a NYC small business get tech help?",
+};
+
+function ownerWords(value: string) {
+  return value
+    .replace(/\bPOS system\b/gi, "register and payment setup")
+    .replace(/\bSaaS\b/g, "rented software")
+    .replace(/\bPOS\b/g, "register and payment system")
+    .replace(/\bIT\b/g, "business tech")
+    .replace(/\bSEO\b/g, "local search")
+    .replace(/\bMFA\b/g, "an extra sign-in check")
+    .replace(/\bplugins?\b/gi, (match) => (match.toLowerCase().endsWith("s") ? "add-ons" : "add-on"))
+    .replace(/\bworkflow\b/gi, "day-to-day steps")
+    .replace(/\bintegrations?\b/gi, "connections between tools")
+    .replace(/\bprovider\b/gi, "company that runs the tool")
+    .replace(/\bproviders\b/gi, "companies that run the tools")
+    .replace(/\bcompliance\b/gi, "required safety rules")
+    .replace(/\bSPF, DKIM, and DMARC\b/g, "email trust settings (SPF, DKIM, and DMARC)");
+}
+
+const COMPARISON_SOURCES: Record<string, AnswerSource[]> = {
+  "square-vs-toast-reddit": [square, toast],
+  "glossgenius-vs-square-appointments-reddit": [square, glossgenius],
+  "shopify-vs-squarespace-reddit": [shopify, squarespace],
+  "airtable-vs-notion-reddit-small-business": [airtable, notion],
+};
 
 const guide = (
   slug: string,
@@ -38,17 +83,21 @@ const guide = (
   source?: AnswerSource,
 ): AnswerGuide => ({
   slug,
-  question,
-  short: `Short answer: ${short}`,
+  question: OWNER_QUESTIONS[question] ?? question,
+  short: `Short answer: ${ownerWords(short)}`,
   published: "2026-05-13",
   updated: "2026-07-12",
   sections: [
-    { heading: "What this means", body: meaning, source },
-    { heading: "Safe steps", body: steps },
-    { heading: "When not to change or buy", body: boundary },
-    { heading: "Next move", body: next },
+    {
+      heading: "What this means",
+      body: ownerWords(meaning),
+      sources: COMPARISON_SOURCES[slug] ?? (source ? [source] : undefined),
+    },
+    { heading: "What to do first", body: ownerWords(steps) },
+    { heading: "When to leave it alone", body: ownerWords(boundary) },
+    { heading: "Your next move", body: ownerWords(next) },
   ],
-  faq,
+  faq: faq.map((item) => ({ question: ownerWords(item.question), answer: ownerWords(item.answer) })),
 });
 
 export const answerGuides: AnswerGuide[] = [

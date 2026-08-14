@@ -15,7 +15,7 @@ const CARE_WORK = [
   {
     label: "Customer path",
     title: "Keep the actions working.",
-    detail: "Forms, booking, calls, directions, orders, and payment handoffs get checked from the customer’s side—not just from an admin screen.",
+    detail: "Forms, booking, calls, directions, orders, and payment steps get checked from the customer’s side—not just from the business side.",
   },
   {
     label: "Public facts",
@@ -23,26 +23,26 @@ const CARE_WORK = [
     detail: "Hours, services, staff, offers, policies, and Google-facing facts change. Care keeps the website from confidently telling old stories.",
   },
   {
-    label: "Reliability",
-    title: "Keep the quiet machinery quiet.",
-    detail: "Hosting, backups, security basics, and domain connections stay checked so a customer is less likely to find a break first.",
+    label: "Keep it working",
+    title: "Check the parts nobody sees.",
+    detail: "The website, backups, basic safety, and website-address connection stay checked so a customer is less likely to find a break first.",
   },
   {
     label: "Ownership",
     title: "Keep the keys with the owner.",
-    detail: "Every material change is documented. The domain, code, content, accounts, and business data remain yours whether care continues or stops.",
+    detail: "Every important change is written down. The website address, code, content, accounts, and business data stay yours whether care continues or stops.",
   },
 ] as const;
 
 const CARE_PATH = createConnectedPath({
   label: "An ongoing-care path",
   summary:
-    "Ongoing care checks the public facts, customer actions, and quiet technical connections. A change is documented and stays with the business owner.",
+    "Ongoing care checks the public facts, customer actions, and behind-the-scenes connections. Every change is written down and stays with the business owner.",
   caption: "Care keeps the path current; it does not lock the business in.",
   nodes: [
     { id: "one", label: "A real business change", sub: "Hours · staff · service · policy", col: 0 },
     { id: "two", label: "The public path is checked", sub: "Website · form · booking · call", col: 1 },
-    { id: "three", label: "The change is clear", sub: "Current facts · working handoff", tone: "hub", col: 2 },
+    { id: "three", label: "The change is clear", sub: "Current facts · working next step", tone: "hub", col: 2 },
     { id: "four", label: "The owner keeps the record", sub: "Notes · access · recovery", tone: "signal", col: 3 },
   ],
 });
@@ -54,7 +54,7 @@ export default function OngoingCare() {
         eyebrow="Ongoing care"
         icon={RefreshCw}
         title={<>Keep the front door honest after launch.</>}
-        dek="A website is part of the business day. Care keeps its facts, forms, booking paths, and behind-the-scenes parts current. The business still owns them."
+        dek="A website is part of the business day. Care keeps its facts, forms, booking paths, and behind-the-scenes parts current. You still own them."
         image={{
           src: "/images/brand-scenes/shop-back-office.webp",
           alt: "A neighborhood shop back office with the everyday tools that keep the business running",
@@ -66,16 +66,16 @@ export default function OngoingCare() {
       <section className="lf-revenue-page" aria-labelledby="lf-care-title">
         <header className="lf-revenue-page__intro">
           <p>Care without lock-in</p>
-          <h2 id="lf-care-title">Launch is a date. Trust is maintenance.</h2>
+          <h2 id="lf-care-title">A website can be live and still quietly let people down.</h2>
           <div>
             <p>
               A site can stay online while the useful parts quietly go stale.
               Wrong hours, a dead form, an old service, or a booking link sent
-              to the wrong person can cost trust without looking like an outage.
+              to the wrong person can lose trust without looking broken.
             </p>
             <p>
-              Care is scoped around the business you actually run. No mystery
-              activity report. No ownership trap. If you need help once, ask once.
+              Care fits the business you actually run. No mystery report. No
+              ownership trap. If you need help once, ask once.
             </p>
           </div>
         </header>
@@ -108,7 +108,7 @@ export default function OngoingCare() {
             <p>
               Email <a href={`mailto:${HELLO_EMAIL}`}>{HELLO_EMAIL}</a> or use
               the current-client desk. Include the business name, the page or
-              system involved, and what you expected to happen. Call or text
+              tool involved, and what you expected to happen. Call or text
               when customers are blocked right now.
             </p>
           </div>
@@ -118,7 +118,7 @@ export default function OngoingCare() {
 
       <QuietContact
         heading="Want the site looked after?"
-        lede="Tell us what changes often, what cannot break, and who needs to know when it does. We will scope the smallest useful care plan."
+        lede="Tell us what changes often, what cannot break, and who needs to know when it does. We will suggest the smallest useful care plan."
         intent="website"
       />
     </>

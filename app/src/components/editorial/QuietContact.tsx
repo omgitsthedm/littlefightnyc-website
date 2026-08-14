@@ -67,7 +67,7 @@ export default function QuietContact({
     <section id="contact" className="lf-contact-block" aria-label="Contact Little Fight NYC">
       <div className="lf-contact-block__inner">
         <header className="lf-contact-block__head">
-          <p className="lf-contact-block__eyebrow">Talk to the person doing the work</p>
+          <p className="lf-contact-block__eyebrow">Pick the easiest way to start</p>
           <h2 className="lf-contact-block__title">{heading}</h2>
           <p className="lf-contact-block__dek">{lede}</p>
         </header>
@@ -105,7 +105,9 @@ export default function QuietContact({
               <PlanIcon size={23} strokeWidth={1.8} />
             </span>
             <span className="lf-contact-block__door-copy">
-              <span className="lf-contact-block__door-label">{plan.label}</span>
+              <span className="lf-contact-block__door-label">
+                {intent === "clients" ? "Client desk" : "Form"} · {plan.label}
+              </span>
               <strong>{plan.title}</strong>
               <span>{plan.detail}</span>
             </span>

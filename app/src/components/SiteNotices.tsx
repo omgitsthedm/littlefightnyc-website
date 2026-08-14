@@ -25,31 +25,31 @@ const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
   en: {
     ariaLabel: "Privacy preferences",
     title: "Privacy choices",
-    body: "Optional analytics helps us improve the site. Advertising measurement is not active.",
+    body: "Anonymous visit counts help us improve this website. Advertising tracking is off.",
     details: "Details",
     current: (analyticsOn) =>
-      `Current setting: analytics ${analyticsOn ? "on" : "off"}; advertising off`,
-    allowAnalytics: "Allow analytics",
+      `Current choice: anonymous visit counting ${analyticsOn ? "on" : "off"}; advertising off`,
+    allowAnalytics: "Allow visit counting",
     essentialOnly: "Essential only",
   },
   es: {
     ariaLabel: "Preferencias de privacidad",
     title: "Opciones de privacidad",
-    body: "Las estadísticas opcionales nos ayudan a mejorar el sitio. La medición publicitaria no está activa.",
+    body: "El conteo anónimo de visitas nos ayuda a mejorar este sitio. El seguimiento publicitario está desactivado.",
     details: "Detalles (en inglés)",
     current: (analyticsOn) =>
-      `Configuración actual: estadísticas ${analyticsOn ? "activadas" : "desactivadas"}; publicidad desactivada`,
-    allowAnalytics: "Permitir estadísticas",
+      `Opción actual: conteo anónimo ${analyticsOn ? "activado" : "desactivado"}; publicidad desactivada`,
+    allowAnalytics: "Permitir conteo",
     essentialOnly: "Solo lo esencial",
   },
   zh: {
     ariaLabel: "隐私设置",
     title: "隐私选项",
-    body: "可选的网站分析帮助我们改进网站。广告衡量目前未启用。",
+    body: "匿名访问统计帮助我们改进这个网站。广告跟踪已关闭。",
     details: "详细说明（英文）",
     current: (analyticsOn) =>
-      `当前设置：网站分析${analyticsOn ? "已开启" : "已关闭"}；广告已关闭`,
-    allowAnalytics: "允许网站分析",
+      `当前选择：匿名访问统计${analyticsOn ? "已开启" : "已关闭"}；广告已关闭`,
+    allowAnalytics: "允许访问统计",
     essentialOnly: "仅必要功能",
   },
 };

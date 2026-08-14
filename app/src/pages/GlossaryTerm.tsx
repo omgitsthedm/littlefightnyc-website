@@ -157,7 +157,7 @@ export default function GlossaryTerm() {
 
           <article className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
             <EditorialBody>
-              <h2>How it actually works</h2>
+              <h2>What happens in real life</h2>
               <p>{term.howItWorks}</p>
             </EditorialBody>
           </article>
@@ -169,17 +169,17 @@ export default function GlossaryTerm() {
           <aside
             className="lf-content-tile lf-content-tile--full lf-content-tile--quiet"
           >
-            <p className="lf-content-tile__label">The useful path, drawn</p>
+            <p className="lf-content-tile__label">See the steps</p>
             <ConnectedPathDiagram path={GLOSSARY_PATHS[term.slug]} proof="glossary" />
           </aside>
 
           <aside className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
             <EditorialBody>
-              <h2>Useful, not mandatory</h2>
+              <h2>You may not need to buy anything</h2>
               <p>
-                This word names a tool or a way of working. It is not an order to buy something.
-                Keep the simple setup if it works. Change it when customers or staff keep paying
-                for the same avoidable mess.
+                This word names a tool or a way of working. It is not an order. Keep the simple
+                setup if it works. Change it when the same problem keeps wasting a customer's
+                time or making staff repeat work.
               </p>
               {source?.map((item) => (
                 <p key={item.href}>
@@ -198,7 +198,7 @@ export default function GlossaryTerm() {
             }`}
           >
             <EditorialBody>
-              <h2>When it starts costing money</h2>
+              <h2>When this becomes a real problem</h2>
               <p>{term.whenItMatters}</p>
               <p>{term.costOfIgnoring}</p>
             </EditorialBody>

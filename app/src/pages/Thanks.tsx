@@ -113,48 +113,49 @@ export default function Thanks() {
   return (
     <div className="lf-thanks">
       <PageHero
-        eyebrow="Tech Audit Received"
+        eyebrow="Message received"
         icon={CheckCircle2}
         title={websiteIntent ? (
           <>
-            Your website plan<br />{" "}
-            <span className="lf-em">is in motion.</span>
+            Your website message<br />{" "}
+            <span className="lf-em">is with us.</span>
           </>
         ) : (
           <>
-            We’ve got it{" "}
+            Your message is{" "}
             <br />
-            <span className="lf-em">from here.</span>
+            <span className="lf-em">with us.</span>
           </>
         )}
         dek={websiteIntent
-          ? `You did the hard part — you said what you want. A real person reviews it during the 9am–9pm Eastern response window and ${replyLanguage.action} with a clear next step. Requests sent after hours wait for the next response window. The consult is free, and nothing moves until the plan makes sense to you.`
-          : `You did the hard part — you said what is stuck. A real person reviews it during the 9am–9pm Eastern response window. Requests sent after hours wait for the next response window. If it is urgent, call ${PHONE_DISPLAY} so we can understand what is happening.`}
+          ? `You told us what you want. A real person reads it 9am–9pm Eastern and ${replyLanguage.action} with a clear next step. Messages sent after hours wait for the next reply window. The first look is free, and nothing moves until the plan makes sense to you.`
+          : `You told us what is stuck. A real person reads it 9am–9pm Eastern. Messages sent after hours wait for the next reply window. If customers are blocked now, call ${PHONE_DISPLAY}.`}
+        action={false}
       />
 
       <section className="lf-thanks__handoff" aria-labelledby="thanks-next-title">
         <div className="lf-thanks__handoff-inner">
-          <p className="lf-thanks__eyebrow">The handoff</p>
-          <h2 id="thanks-next-title">Your note made it to the right place.</h2>
+          <p className="lf-thanks__eyebrow">What happens next</p>
+          <h2 id="thanks-next-title">Your message made it to us.</h2>
           <ol>
             <li className="is-complete">
               <span aria-hidden="true"><CheckCircle2 size={19} strokeWidth={2} /></span>
               <strong>Received</strong>
               <small>
                 {reportId
-                  ? "Your brief and website report are safely in the queue."
-                  : "Your brief is safely in the queue."}
+                  ? "Your message and website report are ready for us to read."
+                  : "Your message is ready for us to read."}
               </small>
             </li>
             <li>
               <span aria-hidden="true">02</span>
               <strong>Human review</strong>
-              <small>We read the details before we reply.</small>
+              <small>We read what is happening before we reply.</small>
             </li>
             <li>
               <span aria-hidden="true">03</span>
               <strong>Clear next step</strong>
-              <small>We reply with the route you chose during the response window.</small>
+              <small>We reply the way you chose during the reply window.</small>
             </li>
           </ol>
         </div>
@@ -167,9 +168,8 @@ export default function Thanks() {
               <p className="lf-thanks__eyebrow">A time you choose</p>
               <h2 id="thanks-booking-title">Free second opinion.</h2>
               <p>
-                Your brief is already here. The booking page shows its current
-                available times and meeting details. We look at the website with
-                you and name the clearest next move. No prep or commitment.
+                Your message is already here. Choose a time, and we will look
+                at the website with you. No prep or commitment.
               </p>
             </div>
             <a

@@ -18,9 +18,9 @@
     {
       "path": "/",
       "title": "Little Fight NYC | Websites, IT Support & Custom Software",
-      "description": "Little Fight NYC builds websites that help the next customer choose, fixes urgent tech, gives free second opinions, and builds focused software you own.",
+      "description": "Get a website that helps people choose you, quick help when something breaks, and fewer tools to fight with every day.",
       "h1": "Make it easier for the next customer to choose you.",
-      "shortAnswer": "Short answer: Little Fight NYC helps small businesses turn online attention into the right next step—booking, visiting, ordering, calling, or inquiring—then keeps the technology behind that path working.",
+      "shortAnswer": "Short answer: we make it easier for people to find you, understand you, and take the next step—then keep the everyday parts working.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg",
       "share": {
@@ -34,9 +34,9 @@
     {
       "path": "/services/",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
-      "description": "Websites, practical New York tech help, free second opinions, and focused software for small businesses that need one clear next move.",
+      "description": "Get a clearer website, help with the everyday things that break, a free second opinion, and simpler tools that fit your business.",
       "h1": "You explain the day. We find the useful fix.",
-      "shortAnswer": "Short answer: Little Fight NYC starts with the website, supports the tech behind it, gives free consulting, and builds focused software the business owns when generic tools no longer fit.",
+      "shortAnswer": "Short answer: tell us what is making the day harder. We can fix the customer-facing part, the everyday tools behind it, or both.",
       "type": "CollectionPage",
       "image": "/assets/hero-services-crossing.webp",
       "share": {
@@ -81,9 +81,9 @@
     {
       "path": "/nationwide/",
       "title": "Custom Small Business Websites, All 50 States | Little Fight NYC",
-      "description": "Remote custom website work for small businesses across the United States. Clear customer paths, documented ownership, and no implied nationwide onsite support.",
+      "description": "Remote website help for small businesses across the United States. Make it easy for customers to understand you, reach you, and take the next step.",
       "h1": "Built in New York. Works anywhere.",
-      "shortAnswer": "Short answer: Little Fight builds custom websites remotely for small businesses across the United States. The first read is free, the written scope explains timing and ownership, and New York on-site support stays a New York service.",
+      "shortAnswer": "Short answer: we build websites remotely for small businesses across the United States. The first look is free, and the written plan says what happens, when, and what stays yours.",
       "type": "WebPage",
       "image": "/assets/hero-nationwide-wtc.webp",
       "share": {
@@ -174,7 +174,7 @@
     {
       "path": "/services/business-systems/",
       "title": "Custom Business Software NYC | Little Fight NYC",
-      "description": "Focused software for NYC small businesses when a simpler tool will not fit. Start with the workflow; if a custom build earns its place, the business owns the code, data, and notes.",
+      "description": "Software for NYC small businesses when regular tools no longer fit. The business owns the work, information, and notes.",
       "h1": "Stop renting software that fights the way you work.",
       "shortAnswer": "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
       "type": "Service",
@@ -241,9 +241,9 @@
     {
       "path": "/website-check/",
       "title": "Free Small Business Website Check | Little Fight NYC",
-      "description": "Run a free public-page website check for measurable performance, SEO, accessibility, and best-practices signals, then receive a private plain-English report.",
+      "description": "Get a free check of the public parts of your website. See what may make it hard to find, read, or use, then get a plain-English report.",
       "h1": "See what gets in the way.",
-      "shortAnswer": "Short answer: enter a public website and receive a private report based on measured signals. No login, card, password, or access to the business is required.",
+      "shortAnswer": "Short answer: enter a public website and get a private report on what a visitor can see. No login, card, password, or business access needed.",
       "type": "WebPage",
       "image": "/assets/journal-what-a-free-tech-audit-actually-looks-like.webp",
       "faq": [
@@ -260,9 +260,9 @@
     {
       "path": "/tech-audit/",
       "title": "Free Tech Audit for NYC Small Businesses | Little Fight NYC",
-      "description": "Book a free Tech Audit. A real person reads your website, tools, Google presence, and monthly costs \u2014 then tells you what to fix first.",
+      "description": "Book a free Tech Audit. A real person looks at your website, Google listing, tools, and monthly bills, then names the first useful fix.",
       "h1": "Tell us what is getting in the way.",
-      "shortAnswer": "Short answer: the Tech Audit is a free, human review of your business tech \u2014 website, tools, Google, and monthly costs. You get a straight answer, not a pitch.",
+      "shortAnswer": "Short answer: the Tech Audit is a free, human look at your website, Google listing, tools, and monthly bills. You get a plain next step, not a pitch.",
       "type": "ContactPage",
       "image": "/assets/og-tugboat.jpg",
       "share": {
@@ -286,9 +286,9 @@
     {
       "path": "/examples/",
       "title": "Work Examples & Owner Answers | Little Fight NYC",
-      "description": "Explore verified live websites, public-safe project walkthroughs, interactive Lab work, and plain answers for small-business owners.",
+      "description": "See live websites, project stories, and simple answers, so you can picture what would make your own business easier to choose.",
       "h1": "See what works. Try what is next.",
-      "shortAnswer": "Short answer: this is where owners see real examples of our work, find their business type, and get plain answers to the questions we hear most. Before any pitch.",
+      "shortAnswer": "Short answer: see real work, find a business like yours, and get a plain answer before you decide whether to reach out.",
       "type": "CollectionPage",
       "image": "/assets/hero-examples-market.webp",
       "share": {
@@ -302,9 +302,9 @@
     {
       "path": "/library/",
       "title": "The Library: Owner Answers & Field Notes | Little Fight NYC",
-      "description": "Straight answers to real owner questions, plus practical how-tos, essays, and software comparisons for small businesses.",
+      "description": "Plain answers for small-business owners: what happened, what it means, and the next small move worth making.",
       "h1": "Start with what happened. Find the next move.",
-      "shortAnswer": "Short answer: the Library is every answer and field note Little Fight NYC has published \u2014 owner questions answered plainly, plus how-tos, essays, and software comparisons. Free, no selling.",
+      "shortAnswer": "Short answer: start with the problem in front of you. The Library gives plain answers and small next steps, free of charge.",
       "type": "CollectionPage",
       "image": "/assets/hero-ind-bookshop.webp",
       "share": {
@@ -412,7 +412,7 @@
     },
     {
       "path": "/answers/when-custom-business-system-beats-saas/",
-      "title": "Custom Business Systems vs SaaS | Little Fight NYC",
+      "title": "When Is Custom Software Worth It? | Little Fight NYC",
       "description": "When a right-sized custom system beats another SaaS subscription for small teams stuck with spreadsheets and hand-done follow-up.",
       "h1": "When does a custom business system beat another subscription?",
       "shortAnswer": "Short answer: custom may make sense when you pay for a big platform but still lean on spreadsheets, double typing, hand-done follow-up, or reports nobody trusts.",
@@ -431,7 +431,7 @@
     },
     {
       "path": "/answers/best-web-designer-nyc-reddit/",
-      "title": "Best Web Designer NYC? What Reddit Actually Says",
+      "title": "How to Choose a Web Designer in NYC | Little Fight NYC",
       "description": "Reddit says check portfolios, vet the person, get scope in writing. Here is what that advice misses for NYC small businesses \u2014 and how to actually choose.",
       "h1": "Best Web Designer NYC? What Reddit Actually Says",
       "shortAnswer": "Short answer: Reddit’s advice is to check real portfolios, ask who actually does the work, and walk away from anyone who talks in jargon. That holds up. What it misses is fit: the right designer for a Midtown law firm is the wrong one for a Bushwick coffee shop.",
@@ -454,7 +454,7 @@
     },
     {
       "path": "/answers/best-web-design-agency-nyc-reddit/",
-      "title": "Best Web Design Agency NYC \u2014 a Reddit Roundup",
+      "title": "Do I Need a Web Design Agency in NYC? | Little Fight NYC",
       "description": "Reddit says most small businesses skip the big agency \u2014 mostly right. When an NYC agency is worth it, when a small studio wins, and the questions to ask.",
       "h1": "Best Web Design Agency NYC \u2014 a Reddit Roundup",
       "shortAnswer": "Short answer: Reddit says most small businesses do not need a big agency, and that is mostly right. Agencies earn their keep on large scopes. For a storefront or small team, what matters is who personally does your work and what they promise in writing.",
@@ -477,7 +477,7 @@
     },
     {
       "path": "/answers/small-business-it-support-nyc-reddit-recommendations/",
-      "title": "Small Business IT Support NYC: Reddit Recommendations, Vetted",
+      "title": "How to Choose Small-Business IT Help in NYC | Little Fight NYC",
       "description": "Reddit’s IT support advice: local, responsive, no long contracts. We vet it for NYC storefronts, where response time and on-site help decide everything.",
       "h1": "Small Business IT Support NYC: Reddit Recommendations, Vetted",
       "shortAnswer": "Short answer: Reddit’s standard advice is solid. Find responsive local help, avoid long contracts, keep your own passwords. The part it undersells: in NYC, response time is everything. A remote-only provider cannot fix the dead router in your basement.",
@@ -500,7 +500,7 @@
     },
     {
       "path": "/answers/how-to-find-good-it-guy-reddit/",
-      "title": "How to Find a Good IT Guy \u2014 What Reddit Gets Right (and Wrong)",
+      "title": "How to Find Good Small-Business IT Help | Little Fight NYC",
       "description": "Reddit is right about referrals and test jobs, wrong to stop there. The real tests: accounts in your name, written response times, plain-English answers.",
       "h1": "How to Find a Good IT Guy \u2014 What Reddit Gets Right (and Wrong)",
       "shortAnswer": "Short answer: Reddit is right that referrals and a small test job beat any directory. It is wrong to stop there. The real test of an IT person is whether your accounts stay in your name and whether they explain things you can repeat back.",
@@ -523,7 +523,7 @@
     },
     {
       "path": "/answers/squarespace-vs-hiring-web-designer-reddit/",
-      "title": "Squarespace vs a Web Designer: Reddit’s Honest Answer",
+      "title": "Squarespace vs a Web Designer for Small Business | Little Fight NYC",
       "description": "Reddit’s Squarespace-vs-designer debate, settled honestly: when DIY is genuinely enough, when hiring pays, and why owner time is the real budget in NYC.",
       "h1": "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly",
       "shortAnswer": "Short answer: Reddit is right that Squarespace is enough for many simple businesses \u2014 and right that most owners never finish the DIY site they start. The honest question is not which tool wins. It is whether your evenings are the budget.",
@@ -546,7 +546,7 @@
     },
     {
       "path": "/answers/wix-vs-custom-website-reddit/",
-      "title": "Wix vs Custom Website \u2014 Reddit’s Take vs Ours",
+      "title": "Wix vs a Custom Website for Small Business | Little Fight NYC",
       "description": "Reddit is right: the Wix-hurts-SEO claim is outdated, but the lock-in is real. When Wix is enough for an NYC business and when a custom site earns its cost.",
       "h1": "Wix vs Custom Website \u2014 Reddit’s Take vs Ours",
       "shortAnswer": "Short answer: Reddit is right that the old Wix-is-bad-for-Google claim is outdated, and right that you cannot take a Wix site with you when you leave. Wix is fine as a starting point. Custom earns its cost when the website is a revenue channel.",
@@ -569,7 +569,7 @@
     },
     {
       "path": "/answers/is-local-seo-worth-it-reddit/",
-      "title": "Is Local SEO Worth It? Reddit’s Verdict for NYC",
+      "title": "Is Local Search Help Worth It in NYC? | Little Fight NYC",
       "description": "Reddit’s verdict holds up: SEO agencies often waste money, and local SEO is real. What NYC owners can do themselves and where paid help actually earns it.",
       "h1": "Is Local SEO Worth It? Reddit’s Verdict for NYC",
       "shortAnswer": "Short answer: Reddit’s verdict is that SEO agencies are often a waste but local SEO itself is real \u2014 and that is basically correct. For NYC businesses, showing up in map results and neighborhood searches is worth serious effort. Much of it you can do yourself.",
@@ -592,7 +592,7 @@
     },
     {
       "path": "/answers/google-business-profile-tips-reddit/",
-      "title": "Google Business Profile Tips Reddit Swears By \u2014 Checked by a Pro",
+      "title": "Google Business Profile Tips for NYC Businesses | Little Fight NYC",
       "description": "Reddit’s favorite Google Business Profile tips, checked by a pro: what actually moves NYC map rankings, what barely matters, and what risks suspension.",
       "h1": "Google Business Profile Tips Reddit Swears By \u2014 Checked by a Pro",
       "shortAnswer": "Short answer: Reddit’s favorite tips are correct. Complete every field, use real photos, keep reviews steady, and pick the right category. The one it undersells: your primary category and review replies matter more than posting frequency. And keyword-stuffing your business name can get you suspended.",
@@ -615,7 +615,7 @@
     },
     {
       "path": "/answers/web-developer-ghosted-me-reddit/",
-      "title": "Web Developer Ghosted You? Reddit’s Advice, Improved",
+      "title": "Your Website Person Disappeared: What to Do | Little Fight NYC",
       "description": "Reddit says document and dispute. Better: secure your domain, hosting, and email first, then recover the project. A calm triage plan for stranded sites.",
       "h1": "Web Developer Ghosted You? Reddit’s Advice, Improved",
       "shortAnswer": "Short answer: Reddit says document everything, dispute the payment, and warn others. Fair \u2014 but the first move is different: secure what you own. Get control of your domain, hosting, and email today, before you spend one minute on blame.",
@@ -638,7 +638,7 @@
     },
     {
       "path": "/answers/best-pos-system-small-business-reddit/",
-      "title": "Best POS for a Small Business: What Reddit Recommends",
+      "title": "How to Pick a POS for a Small Business | Little Fight NYC",
       "description": "Reddit recommends Square for simplicity and Toast for restaurants \u2014 fair. What the threads miss: the right POS is the one that connects to everything else.",
       "h1": "Best POS for a Small Business: What Reddit Recommends",
       "shortAnswer": "Short answer: Reddit’s shorthand is a fine starting point. Square for simplicity, Toast for restaurants, and read the processing terms before signing anything. What the threads miss: the right POS depends on what it must connect to, not the logo on the terminal.",
@@ -661,7 +661,7 @@
     },
     {
       "path": "/answers/square-vs-toast-reddit/",
-      "title": "Square vs Toast \u2014 the Reddit Threads, Summarized",
+      "title": "Square vs Toast for NYC Restaurants | Little Fight NYC",
       "description": "Reddit’s Square vs Toast verdict, summarized: counters lean Square, full service leans Toast. Plus the NYC restaurant realities the threads leave out.",
       "h1": "Square vs Toast \u2014 the Reddit Threads, Summarized",
       "shortAnswer": "Short answer: Reddit’s split decision is consistent \u2014 Square for counters, cafes, and simple service; Toast for full-service restaurants that live and die by kitchen flow. Both verdicts hold up. The contract terms and your service style decide it, not the brand.",
@@ -684,7 +684,7 @@
     },
     {
       "path": "/answers/glossgenius-vs-square-appointments-reddit/",
-      "title": "GlossGenius vs Square Appointments: the Reddit Roundup",
+      "title": "GlossGenius vs Square Appointments for Salons | Little Fight NYC",
       "description": "Reddit’s take: solo stylists lean GlossGenius, staffed salons lean Square Appointments. The roundup, checked against real NYC salon setups and no-shows.",
       "h1": "GlossGenius vs Square Appointments: the Reddit Roundup",
       "shortAnswer": "Short answer: Reddit’s pattern is clear \u2014 solo stylists and chair renters lean GlossGenius for the polish and flat pricing; salons with staff and retail lean Square Appointments for the free tier and ecosystem. Both readings hold up in practice.",
@@ -707,7 +707,7 @@
     },
     {
       "path": "/answers/shopify-vs-squarespace-reddit/",
-      "title": "Shopify vs Squarespace \u2014 Reddit’s Answers for NYC Retail",
+      "title": "Shopify vs Squarespace for NYC Retail | Little Fight NYC",
       "description": "Reddit says Shopify when selling is the business, Squarespace when it is presence. For NYC retail the tiebreaker is inventory sync between floor and web.",
       "h1": "Shopify vs Squarespace \u2014 Reddit’s Answers for NYC Retail",
       "shortAnswer": "Short answer: Reddit’s rule of thumb is right. Shopify when selling is the business, Squarespace when the site is mostly presence with some selling. For NYC retail the deciding question is inventory: if the shop floor and the website must share stock, Shopify pulls ahead.",
@@ -730,7 +730,7 @@
     },
     {
       "path": "/answers/does-my-small-business-need-a-website-reddit/",
-      "title": "Do I Even Need a Website? Reddit vs Reality in 2026",
+      "title": "Does My Small Business Need a Website? | Little Fight NYC",
       "description": "Reddit is split on whether small businesses need websites. In 2026, search engines and AI assistants answer customers by reading them. The honest call.",
       "h1": "Do I Even Need a Website? Reddit vs Reality in 2026",
       "shortAnswer": "Short answer: Reddit is split \u2014 half say a Google profile and Instagram are enough, half say own your own ground. In 2026 the tiebreaker is that search engines and AI assistants answer customers by reading websites. If you are not there, someone else is the answer.",
@@ -753,7 +753,7 @@
     },
     {
       "path": "/answers/airtable-vs-notion-reddit-small-business/",
-      "title": "Airtable vs Notion for Small Business: Reddit Roundup",
+      "title": "Airtable vs Notion for Small Business | Little Fight NYC",
       "description": "Reddit’s rule is right: Notion for docs, Airtable for records. The harder small-business question: which tool will your least techy employee open?",
       "h1": "Airtable vs Notion for Small Business: Reddit Roundup",
       "shortAnswer": "Short answer: Reddit’s rule is correct. Notion for documents and wikis, Airtable for structured records. Most fights start when someone forces one tool to do the other’s job. For a small business the harder question is simpler: which one will your least techy person actually open?",
@@ -776,7 +776,7 @@
     },
     {
       "path": "/answers/nyc-small-business-tech-help-reddit/",
-      "title": "Where NYC Owners Actually Get Tech Help (Reddit Included)",
+      "title": "How NYC Small Businesses Can Get Tech Help | Little Fight NYC",
       "description": "Where NYC small business owners really find tech help: referrals, Reddit, neighborhood groups, free city programs. And how to vet whoever you choose.",
       "h1": "Where NYC Owners Actually Get Tech Help (Reddit Included)",
       "shortAnswer": "Short answer: NYC owners get tech help from referrals, neighborhood groups, Reddit threads, city small-business programs, and whoever built the last thing that worked. Referrals are the best of these \u2014 and even they only work if you know what to ask for.",
@@ -914,10 +914,10 @@
     },
     {
       "path": "/about/",
-      "title": "About Little Fight NYC | NYC Small Business Tech",
-      "description": "Little Fight NYC helps New York small business owners get working websites, reliable IT, stronger Google visibility, and systems that fit.",
-      "h1": "Small firm. Serious pull.",
-      "shortAnswer": "Short answer: Little Fight NYC helps local businesses get better websites, working tech, stronger Google visibility, and practical systems. Call (646) 360-0318 or use the Tech Audit.",
+      "title": "About Little Fight NYC | Help for Small Businesses",
+      "description": "Little Fight NYC helps New York small businesses get clearer websites, help when things break, and simpler ways to run the day.",
+      "h1": "Less runaround. More getting done.",
+      "shortAnswer": "Short answer: Little Fight NYC helps local businesses get clearer websites, help when things break, and simpler ways to run the day.",
       "type": "AboutPage",
       "image": "/assets/owner.webp",
       "share": {
@@ -925,7 +925,7 @@
         "type": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "alt": "Little Fight NYC about card over a New York diner at night: Small firm. Serious technology."
+        "alt": "Little Fight NYC at a New York diner: a small team that helps small businesses move forward."
       },
       "faq": [
         {
@@ -941,7 +941,7 @@
     {
       "path": "/clients/",
       "title": "Current Client Support | Little Fight NYC",
-      "description": "Current Little Fight clients can email one inbox about support, projects, or billing, call or text about urgent issues, or book a check-in.",
+      "description": "Already working with Little Fight? Email one inbox for support, project, or billing questions. Call or text if customers are blocked now.",
       "h1": "One clean door back in.",
       "shortAnswer": "Short answer: current clients can email hello@littlefightnyc.com about support, projects, or billing. Call or text when customers are blocked right now.",
       "type": "ContactPage",
@@ -950,18 +950,18 @@
     {
       "path": "/legal/",
       "title": "Privacy and Terms | Little Fight NYC",
-      "description": "Little Fight NYC privacy and terms. Forms, private information, safe account access, scope, quotes, and project promises.",
+      "description": "Plain privacy and work terms: what we collect, how we keep it safe, and what gets written down before work starts.",
       "h1": "Privacy and terms, plain.",
-      "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Work is scoped before it is quoted. Account access uses safer handoffs.",
+      "shortAnswer": "Short answer: we ask only for what we need to understand the problem, and we put the work plan in writing before work starts.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg"
     },
     {
       "path": "/contact/",
       "title": "Contact Little Fight NYC | Call, Text, Email, Form",
-      "description": "Call, text, email, or use the Tech Audit to reach Little Fight NYC. Websites, IT support, local visibility, software cleanup, and business systems.",
+      "description": "Tell us what is stuck. Call, text, email, or start the free Tech Audit for a website, Google listing, everyday tool, or monthly bill.",
       "h1": "Tell us what feels stuck.",
-      "shortAnswer": "Short answer: call or text (646) 360-0318. Email hello@littlefightnyc.com. Or start a Tech Audit when the problem has moving parts.",
+      "shortAnswer": "Short answer: call, text, email, or start the free Tech Audit. Pick the easiest way to tell us what is getting in the way.",
       "type": "ContactPage",
       "image": "/assets/hero-contact-door.webp",
       "share": {
@@ -975,7 +975,7 @@
     {
       "path": "/privacy/",
       "title": "Privacy Policy | Little Fight NYC",
-      "description": "Little Fight NYC privacy policy. Forms, private information, contact details, safe account access, and data handling.",
+      "description": "How Little Fight handles the information you share, including forms, contact details, and safe account access.",
       "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Account access uses safer handoffs.",
       "type": "WebPage",
@@ -984,18 +984,18 @@
     {
       "path": "/terms/",
       "title": "Terms and Work Scope | Little Fight NYC",
-      "description": "Little Fight NYC terms. Scope, quotes, project promises, safe account access, and written approvals before work begins.",
+      "description": "How Little Fight plans work: clear prices, written approvals, safe access, and no surprise next step.",
       "h1": "Privacy and terms, plain.",
-      "shortAnswer": "Short answer: Little Fight confirms scope, price, access needs, and timelines in writing before work begins.",
+      "shortAnswer": "Short answer: we write down the work, price, timing, and access needs before work begins.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg"
     },
     {
       "path": "/areas/",
       "title": "NYC Neighborhoods We Serve | Little Fight NYC",
-      "description": "Little Fight NYC works across New York City. See the Manhattan, Brooklyn, and Queens neighborhoods we serve most.",
+      "description": "Little Fight helps small businesses across New York City. Find your neighborhood and see how we can make the next customer step easier.",
       "h1": "Every New York business has a local story.",
-      "shortAnswer": "Little Fight NYC serves law firms, bars, shops, salons, restaurants, and owner-run teams across Manhattan, Brooklyn, and Queens. On-site visits usually within 24 hours. Callbacks within 2 hours, 9am to 9pm ET.",
+      "shortAnswer": "Little Fight helps bars, shops, salons, restaurants, offices, and owner-run teams across Manhattan, Brooklyn, and Queens.",
       "type": "WebPage",
       "image": "/assets/nyc-street-crowd.webp"
     },

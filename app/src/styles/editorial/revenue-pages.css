@@ -391,6 +391,28 @@
   background: color-mix(in srgb, var(--lf-blue-soft) 88%, white);
 }
 
+.lf-website-check__direct {
+  display: flex;
+  width: min(100%, var(--lf-max-w));
+  flex-wrap: wrap;
+  gap: var(--lf-space-3);
+  align-items: center;
+  margin: var(--lf-space-5) auto 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+}
+
+.lf-website-check__direct a {
+  display: inline-flex;
+  min-height: var(--lf-control-min);
+  gap: var(--lf-space-1);
+  align-items: center;
+  color: var(--lf-bone);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .lf-editorial .lf-revenue-page__handoff > a:hover,
 .lf-editorial .lf-revenue-page__handoff > a:focus-visible,
 .lf-editorial .lf-client-now a:hover,

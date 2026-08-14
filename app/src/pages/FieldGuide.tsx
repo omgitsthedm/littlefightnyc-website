@@ -253,7 +253,7 @@ export default function FieldGuide() {
               <span className="lf-ex-tool__media">
                 <img
                   src="/assets/examples-myspace-preview.webp"
-                  alt="A client profile page styled like a 2006 MySpace profile, Top 8 included"
+                  alt="An archived profile interface study styled like a 2006 MySpace page, Top 8 included"
                   width="1200"
                   height="675"
                   loading="lazy"
@@ -261,9 +261,9 @@ export default function FieldGuide() {
                 />
               </span>
               <span className="lf-ex-tool__copy">
-                <span className="lf-ex-tool__type">Just for fun</span>
+                <span className="lf-ex-tool__type">Archived interface study · supplied snapshot</span>
                 <strong>The MySpace Demo</strong>
-                <span>A client's profile rebuilt like it is 2006, Top 8 and all. Custom means anything you can picture.</span>
+                <span>A supplied profile snapshot rebuilt like it is 2006, Top 8 and all. It shows how far a visual direction can go without pretending the archive is a current client result.</span>
                 <span className="lf-ex-tool__open">
                   Open the throwback
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />

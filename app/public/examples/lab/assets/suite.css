@@ -401,6 +401,17 @@ img {
   text-underline-offset: 4px;
 }
 
+.suite-footer .suite-footer__plan {
+  padding-inline: 16px;
+  color: #09090b;
+  background: var(--suite-signal);
+  text-decoration: none;
+}
+
+.suite-footer .suite-footer__plan:hover {
+  background: #ff8a3d;
+}
+
 @media (max-width: 767px) {
   .suite-bar {
     min-height: 62px;

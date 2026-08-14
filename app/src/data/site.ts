@@ -82,12 +82,12 @@ export const services: Service[] = [
     verb: "Audit",
     title: "A free second opinion before you spend",
     headline: "Know what to keep, cut, fix, or build.",
-    plain: "We look at the public website, Google presence, tools, recurring bills, and handoffs. Then we name what looks healthy, what needs a closer look, and the smallest useful next move.",
+    plain: "We look at what a customer sees, what you pay for, and where the day gets stuck. Then we tell you what is fine, what needs attention, and what to do first.",
     outcome: "The first read is free. If paid work is not the useful next move, we say so.",
     includes: [
-      "A plain inventory of the tools and recurring bills you choose to show us",
-      "Website, Google profile, and lead path check",
-      "A walk through how the work moves",
+      "A plain list of the tools and monthly bills you want us to see",
+      "A check of your website, Google listing, and customer path",
+      "A walk through of how a question becomes booked, paid, or finished work",
       "A written next-step list, ranked by what affects customers first",
     ],
     image: "/assets/interior-grocery.webp",
@@ -96,16 +96,16 @@ export const services: Service[] = [
     shortAnswer:
       "Short answer: Little Fight gives NYC small businesses a free first look at their website, Google profile, tools, bills, and daily work. You learn what to keep, connect, replace, or build.",
     whatItDoes: [
-      "Most owners do not start with a tidy tech problem. They start with a strange bill, a quiet form, or a Google listing that looks wrong.",
-      "The consult is the first read. We walk through the public site, the accounts you can see, recurring bills, and how customer messages reach you. Then we name what earns its place, what needs a closer look, and what can wait.",
-      "It works the same for any trade. A bar’s POS. A law firm’s intake email. A clothing brand’s online store. A salon’s booking page. The tools change, the read is the same.",
-      "You leave with a written next-step list. It is ranked by the customer path first. You can hand it to your own vendor, another developer, or back to us.",
+      "Most owners do not start with a neat little problem. They start with a strange bill, a form nobody answers, or Google showing the wrong thing.",
+      "The first look is simple. We check the public site, the accounts you can see, the monthly bills, and how customer messages reach you. Then we name what earns its place, what needs attention, and what can wait.",
+      "It works for every kind of shop. A bar’s card reader. A law office’s new-client email. A clothing store’s online order. A salon’s booking page. The details change. The read does not.",
+      "You leave with a written next-step list. The customer-facing problem comes first. You can use it yourself, give it to your current help, or bring it back to us.",
       "The consult is a real read, not a trap door into a pitch. Sometimes the best answer is to leave a working thing alone.",
     ],
     commonIssues: [
       {
         title: "Software bills nobody can explain",
-        body: "We often find two booking tools, old logins, and apps nobody opens. We list each tool, its cost, its owner, and what it earns.",
+        body: "We often find two booking tools, old logins, and apps nobody opens. We list what each one costs, who can get in, and whether it still helps.",
       },
       {
         title: "A website nobody can describe",
@@ -117,7 +117,7 @@ export const services: Service[] = [
       },
       {
         title: "Work that lives in one person’s head",
-        body: "Leads come in by phone, form, email, and walk-ins. Then they get tracked nowhere. Sometimes the fix is just writing the steps down so anyone can run them.",
+        body: "Questions arrive by phone, form, email, and walk-in. Then they disappear. Sometimes the fix is one clear list so anyone can see what happens next.",
       },
       {
         title: "Decisions made under pressure",
@@ -131,7 +131,7 @@ export const services: Service[] = [
       },
       {
         myth: "I should just trust whoever is already managing my tech.",
-        reality: "Often they are doing fine, and we say so. A second look just checks that the setup still fits the business, the bill, and how customers reach you now.",
+        reality: "They may be doing fine, and we say so. A second look checks that the setup still fits the business, the bill, and the way customers reach you now.",
       },
       {
         myth: "AI tools will figure all this out for me.",
@@ -151,7 +151,7 @@ export const services: Service[] = [
       {
         question: "What do I need to give you to get started?",
         answer:
-          "Nothing private on the first call. Tell us what you pay for, what your website is, and what bugs you. If we need access later, we use a safe handoff. Never email or text passwords.",
+          "Nothing private on the first call. Tell us what you pay for, what your website is, and what bugs you. If we need access later, we show you a safer way to share it. Never email or text passwords.",
       },
     ],
   },
@@ -159,15 +159,15 @@ export const services: Service[] = [
     slug: "it-support",
     eyebrow: "IT Support",
     verb: "Fix",
-    title: "Computer broken, POS frozen, Wi-Fi down",
+    title: "Computer broken, card reader frozen, Wi-Fi down",
     headline: "Fast help when the basics break.",
-    plain: "Email, domains, Wi-Fi, POS, booking, payments, accounts, and devices. We diagnose the customer-facing problem first, then leave a plain record of what changed.",
+    plain: "Email, Wi-Fi, card readers, booking, payments, logins, and devices. We start with what is stopping the day, then write down what changed.",
     outcome: "Call or text first. New York on-site help and response timing are confirmed from the actual problem and written scope.",
     includes: [
       "Fast help when something breaks",
-      "Email, domain, and DNS repair",
-      "POS, booking, and payment fixes",
-      "Device, account, and Wi-Fi setup",
+      "Email and website-address fixes",
+      "Card reader, booking, and payment fixes",
+      "Device, login, and Wi-Fi setup",
     ],
     image: "/assets/pos.webp",
     accent: "teal",
@@ -175,11 +175,11 @@ export const services: Service[] = [
     shortAnswer:
       "Short answer: Little Fight gives NYC small businesses real local IT help. When email, Wi-Fi, POS, booking, payments, or devices stop working, we fix them.",
     whatItDoes: [
-      "When a card reader, inbox, printer, or login breaks, you do not need a ticket number. You need a person who fixes the urgent thing first.",
+      "When a card reader, inbox, printer, or login breaks, you do not need a ticket number. You need a person who starts with the urgent thing.",
       "We answer the phone. We come on-site when the fix needs hands. And we keep notes, so the next call does not start from zero.",
-      "We work on the boring middle: email routing, domain renewals, DNS records, POS connections, booking links, Wi-Fi, payments, and locked accounts.",
+      "We fix the parts that make the day run: email, website addresses, card readers, booking links, Wi-Fi, payments, and locked accounts.",
       "The trade does not matter. A bar’s card reader on a Friday night. A law firm’s intake email. A clinic’s booking link. A shop’s printer. Broken is broken, and we fix it.",
-      "The goal is not to make you depend on us. Every fix gets written down in plain words, so your business is safer next time something changes.",
+      "The goal is not to make you depend on us. Every fix gets written down in plain words, so the next change is less scary.",
     ],
     commonIssues: [
       {
@@ -188,7 +188,7 @@ export const services: Service[] = [
       },
       {
         title: "Email stopped arriving (or stopped sending)",
-        body: "Quotes never land, and customers think you ignored them. The cause is often a DNS record, a missed bill, a spam rule, or a full mailbox.",
+        body: "Quotes never land, and customers think you ignored them. The cause may be a missed bill, a mail rule, or a full mailbox. We find it before guessing.",
       },
       {
         title: "An account nobody has the password to",
@@ -218,7 +218,7 @@ export const services: Service[] = [
       },
       {
         myth: "Geek Squad / corporate support is the same thing.",
-        reality: "Retail support can fix one device. A business setup has POS, domains, payments, booking, staff accounts, Wi-Fi, and Google all touching each other.",
+        reality: "Retail support can fix one device. Your business has payments, booking, email, Wi-Fi, Google, and staff logins touching each other.",
       },
       {
         myth: "I’ll just Google it.",
@@ -238,7 +238,7 @@ export const services: Service[] = [
       {
         question: "Do you need passwords on the first call?",
         answer:
-          "No. Never share passwords on a call or in a form. If we need access, we use a safer handoff. Never text, never email.",
+          "No. Never share passwords on a call or in a form. If we need access, we show you a safer way to share it. Never text, never email.",
       },
       {
         question: "Do you require a contract or retainer?",
@@ -253,27 +253,27 @@ export const services: Service[] = [
     verb: "Build",
     title: "A website built to help customers choose",
     headline: "Make the next customer’s step obvious.",
-    plain: "Custom websites for NYC businesses. Clear service pages, calls, booking, orders, forms, maps, payments, and follow-up can all point to one understandable next step.",
+    plain: "Custom websites for NYC businesses. Your services, phone, booking, orders, forms, map, payments, and follow-up can all point to one clear next step.",
     outcome: "Qualifying website scopes carry the written 14-day promise. The scope names the timing, dependencies, and remedy before work starts.",
     includes: [
-      "Custom design and build around the real customer path",
-      "Local search and Google profile basics where they fit",
-      "Forms, booking, and payment connections",
+      "A custom website built around what customers need to do",
+      "Clear Google and map basics where they help",
+      "Working forms, booking, and payment links",
       "Useful service and neighborhood pages",
-      "Hosting and care options with a documented handoff",
+      "Care options with plain notes about what changed",
     ],
     image: "/assets/nyc-hair-salon-street.webp",
     accent: "orange",
     icon: Laptop,
     shortAnswer:
-      "Short answer: Little Fight builds custom local websites for NYC small businesses. The site explains the offer plainly, gives each customer a clear action, and gives search systems truthful business details.",
+      "Short answer: Little Fight builds custom local websites for NYC small businesses. The site says what you do, helps people choose you, and makes the important business facts easy to check.",
     whatItDoes: [
       "A custom local website is built around one business and its customers. It is not a theme with new colors. It does not sound like every other shop.",
-      "The site works for people first, then for search. A visitor should know what you do, where you are, and what to do next. No hunting.",
+      "The site works for people first. A visitor should know what you do, where you are, and what to do next. No hunting.",
       "The public facts should agree. Service pages, Maps details, reviews, booking links, and Google profile information should not make a customer guess which one is right.",
       "It works for any trade. A bar. A law firm. A clothing brand. A salon. A hardware store. The look changes. The job is the same: make the next step obvious.",
-      "The process is tight: build, review, ship. The written scope says what each side needs to do before the launch date means anything.",
-      "Hosting and care can keep the public path current when hours, offers, or tools change. The business keeps the accounts and the handoff notes.",
+      "We build, you review, then we launch. Before we start, the written plan says what we need from each other and what happens next.",
+      "Care can keep the public path current when hours, offers, or tools change. The business keeps the accounts and the notes.",
     ],
     commonIssues: [
       {
@@ -294,7 +294,7 @@ export const services: Service[] = [
       },
       {
         title: "A phone page that takes too long to become useful",
-        body: "Heavy images and scripts can delay the first useful answer. We measure the public page before guessing at the fix.",
+        body: "A slow page can hide the answer people came for. We check what the customer sees before guessing at the fix.",
       },
       {
         title: "Hosting scattered across three vendors",
@@ -312,7 +312,7 @@ export const services: Service[] = [
       },
       {
         myth: "AI website builders will replace agencies.",
-        reality: "AI is great for drafts and speed. It cannot decide what to leave out, how your customers talk, or what your staff can keep running.",
+        reality: "AI can help with a first draft. It cannot decide what your customers need to know, what to leave out, or what your staff can keep current.",
       },
       {
         myth: "More pages = better SEO.",
@@ -336,7 +336,7 @@ export const services: Service[] = [
       {
         question: "Can you connect the site to booking or payments?",
         answer:
-          "Yes. The site should connect to what makes you money: booking, calls, forms, payments, and follow-up. Custom code where it matters. Simple embeds where they win.",
+          "Yes. The site should connect to what makes you money: booking, calls, forms, payments, and follow-up. We use the simplest dependable connection that fits.",
       },
       {
         question: "What if I miss the 14-day window?",
@@ -351,27 +351,27 @@ export const services: Service[] = [
     verb: "Build",
     title: "A focused tool built around your business",
     headline: "Stop renting software that fights the way you work.",
-    plain: "Lead tracking, follow-up, reports, and focused workflow tools. We first check whether a simpler tool can do the job. If a custom build earns its place, the business receives the code, data, and handoff notes.",
-    outcome: "One focused build. You own the code, data, hosting, domain, and docs.",
+    plain: "One clear place for customer questions, follow-up, reports, and daily work. We first check whether a simpler tool can do the job. If we build one for you, you keep the files, data, accounts, and notes.",
+    outcome: "One focused tool. You own it, the data, the accounts, the website address, and the instructions.",
     includes: [
-      "A workflow and software cost read",
-      "Custom lead tracking and internal tools",
-      "Dashboards, reports, and clearly reviewed follow-up rules",
-      "Documented technology another qualified developer can review",
-      "Full ownership of the code, data, and docs",
+      "A look at the steps and software bills that slow the day down",
+      "A clear place to track customer questions and work",
+      "Simple reports and follow-up reminders you approve",
+      "Plain notes another qualified person can use if you ever need them",
+      "Full ownership of the files, data, accounts, and instructions",
     ],
     image: CABINETRY_PROCESS_FILM.poster,
     video: CABINETRY_PROCESS_FILM,
     accent: "green",
     icon: ClipboardCheck,
     shortAnswer:
-      "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
+      "Short answer: Little Fight builds focused software that NYC small businesses own. It can replace scattered spreadsheets, double typing, and monthly tools that no longer fit.",
     whatItDoes: [
-      "Business systems are the work behind the storefront. The lead list. The job board. The quote path. The owner’s view of the week.",
+      "This is the work behind the storefront: the customer list, the job board, the quote, and the owner’s view of the week.",
       "Many small businesses run that layer on spreadsheets, inboxes, sticky notes, and memory. The work gets done, but one person becomes the memory for the whole business.",
-      "We start by reading what you have. What earns its place? What costs too much? What should connect? What deserves a custom build?",
-      "Custom tools are for work a generic app handles badly: intake, inventory, event deposits, or quoting with real-world rules. The small thing that fits can beat the big thing that fights every step.",
-      "Everything we ship is written down and sized for the job. The code, data, hosting, domain, and instructions belong to the business.",
+      "We start with what you have. What helps? What costs too much? What needs to share information? What truly needs a custom build?",
+      "Custom tools are for work a generic app handles badly: new customer questions, inventory, event deposits, or quotes with real rules. The small thing that fits can beat the big thing that fights every step.",
+      "Everything we deliver is written down and sized for the job. The files, data, accounts, website address, and instructions belong to the business.",
     ],
     commonIssues: [
       {
@@ -384,7 +384,7 @@ export const services: Service[] = [
       },
       {
         title: "Reports that eat half a day",
-        body: "The owner pulls numbers from five places and stitches them by hand. A simple dashboard shows the same view without killing Monday morning.",
+        body: "You pull numbers from five places and stitch them together by hand. One simple view can save Monday morning.",
       },
       {
         title: "A subscription that costs more than it saves",
@@ -392,33 +392,33 @@ export const services: Service[] = [
       },
       {
         title: "Work locked in one person’s head",
-        body: "When that person is out, the business slows down. Writing the workflow down does not replace them. It makes the business less fragile.",
+        body: "When that person is out, the business slows down. Writing the steps down does not replace them. It makes the business less fragile.",
       },
       {
-        title: "A workflow no off-the-shelf software will fit",
-        body: "Quoting, specialty inventory, or scheduling around real-world limits can be too specific for generic tools. That is when custom earns its place.",
+        title: "A job no ready-made tool can handle",
+        body: "Quoting, specialty inventory, or tricky scheduling can be too specific for generic tools. That is when custom earns its place.",
       },
     ],
     fallacies: [
       {
         myth: "We need the biggest CRM we can afford.",
-        reality: "Maybe. A large platform can be useful when a business has the process, people, and administration to support it. Many small teams need a smaller shared list and a few dependable handoffs first.",
+        reality: "Maybe. A large platform can help when a business has enough people and time to keep it current. Many small teams need one smaller shared list and a few dependable next steps first.",
       },
       {
         myth: "We should just use Airtable or Notion for everything.",
-        reality: "Sometimes yes. No-code tools are great at the right size. But they hit ceilings: complex data, permissions, and steps that involve customers, not just staff. Knowing when they are the answer, and when they are a stopgap, is part of the job.",
+        reality: "Sometimes. Simple tools can be great at the right size. But they have limits when customer details, access, or tricky steps get involved. We tell you when one is enough and when it is only buying time.",
       },
       {
         myth: "Custom is too expensive.",
         reality: "Sometimes. Often the math surprises people. A subscription plus lost staff time can cost more than one focused build. The answer depends on the work, the cost, and how long you will use it.",
       },
       {
-        myth: "Custom means we’re locked into one developer forever.",
-        reality: "It should not. We document the code, data, accounts, and deployment path so another qualified developer can review or continue the work. The business owns those materials.",
+        myth: "Custom means we’re stuck with one company forever.",
+        reality: "It should not. We write down the files, data, accounts, and how the tool runs so another qualified person can take over if you want. The business owns it all.",
       },
       {
-        myth: "If we just had better software, the workflow would fix itself.",
-        reality: "Software speeds up whatever you feed it. If the process is unclear, new software makes the confusion faster and pricier. Half the job is naming the steps before touching the tools.",
+        myth: "If we buy better software, the mess will fix itself.",
+        reality: "Software makes every step faster. If the steps are unclear, it makes the confusion faster and pricier. First we name the steps. Then we choose the tool.",
       },
       {
         myth: "Internal tools have to be ugly.",
@@ -434,12 +434,12 @@ export const services: Service[] = [
       {
         question: "What can a small business system include?",
         answer:
-          "Lead tracking, follow-up, dashboards, forms, booking and payment handoffs, staff alerts, inventory, and reports. And when nothing fits, a fully custom internal app.",
+          "Customer questions, follow-up, simple reports, forms, booking, payments, staff reminders, inventory, and quotes. And when nothing fits, a small custom tool built around the job.",
       },
       {
-        question: "Do I own the code if you build something custom?",
+        question: "Do I own what you build for my business?",
         answer:
-          "Yes. You own the code, the data, the hosting, the domain, and the docs. We build on standard technology any developer can pick up. No lock-in. No hostage pricing.",
+          "Yes. You own the files, data, accounts, website address, and notes. Another qualified person can take it over if you ever want a change. No lock-in. No hostage pricing.",
       },
     ],
   },
@@ -448,22 +448,22 @@ export const services: Service[] = [
 export const agencyProcess = [
   {
     label: "Learn the business",
-    copy: "We look at the website, the tools, and the way the day works before naming the fix.",
+    copy: "We look at what customers see, what the day needs, and what keeps getting stuck before naming the fix.",
     icon: FileSearch,
   },
   {
     label: "Start with the stuck part",
-    copy: "We name the customer step or staff handoff that is unclear, blocked, or taking too much attention, then decide what should move first.",
+    copy: "We name the customer step or staff step that is unclear, blocked, or taking too much attention. Then we decide what to fix first.",
     icon: MousePointerClick,
   },
   {
     label: "Keep what works",
-    copy: "Keep the useful tools. Check recurring costs with the owner. Connect only the parts that need to share a handoff.",
+    copy: "Keep the useful tools. Check the monthly costs. Connect only the parts that need to share the same information.",
     icon: ReceiptText,
   },
   {
     label: "Build the missing piece",
-    copy: "When ready-made software is too big or simply wrong, we build the smaller tool the team needs.",
+    copy: "When a ready-made tool is too big or simply wrong, we build the smaller tool you need.",
     icon: Sparkles,
   },
 ];

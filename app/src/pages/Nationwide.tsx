@@ -27,12 +27,12 @@ const NATIONWIDE_FAQ = [
   {
     question: "I’m on the West Coast. How do time zones work?",
     answer:
-      "We answer 9am to 9pm Eastern. That is 6am to 6pm Pacific. Text or email whenever you want, and we call back inside 2 hours during that window. Your written scope sets the project dates.",
+      "We answer 9am to 9pm Eastern. That is 6am to 6pm Pacific. Text or email whenever you want. During that window, we aim to call back within 2 hours. Your written scope sets the project dates.",
   },
   {
     question: "Who takes care of the site after it launches?",
     answer:
-      "You own it, so that is your call. Run it yourself with the plain instructions we provide, or keep us on call like our New York clients do.",
+      "You own it, so you decide. Run it yourself with the plain instructions we provide, or keep us on call like our New York clients do.",
   },
   {
     question: "Is a remote build different from a New York build?",
@@ -68,7 +68,7 @@ export default function Nationwide() {
             <span className="lf-em">Works anywhere.</span>
           </>
         }
-        dek="We build custom websites remotely for small businesses across the United States. The finished site belongs to you. New York on-site support stays a New York service."
+        dek="We build custom websites remotely for small businesses across the United States. You own the finished site. On-site help stays a New York service."
         image={{
           src: "/assets/hero-nationwide-wtc.webp",
           alt: "Seventh Avenue running south toward One World Trade Center on a bright day",
@@ -83,8 +83,8 @@ export default function Nationwide() {
             <EditorialBody dropcap>
               <p>
                 Good businesses everywhere get stuck with a website that no
-                longer matches the care people get in person. We learn what a
-                customer needs to know. Then we build a clear path to call,
+                longer feels like the place customers visit in person. We learn
+                what a customer needs to know. Then we make it easy to call,
                 book, visit, or buy. That work happens well on a screen.
               </p>
             </EditorialBody>
@@ -96,8 +96,8 @@ export default function Nationwide() {
               <p>
                 You call, text, or email. We talk through the business first.
                 Then we build, show you the working site, and revise the parts
-                that need a clearer answer. The written scope confirms timing,
-                responsibilities, and what happens if either side needs more time.
+                that still feel unclear. The written plan says who does what,
+                when, and what happens if either side needs more time.
               </p>
             </EditorialBody>
           </article>
@@ -106,8 +106,8 @@ export default function Nationwide() {
             <p className="lf-content-tile__label">One clear remote process</p>
             <ol className="lf-nationwide-steps">
               <li><span>01</span><strong>Show us the business</strong><p>A call, the current site, photos, hours, services, and the way customers reach you.</p></li>
-              <li><span>02</span><strong>Watch it take shape</strong><p>You review a working site, not a pile of technical documents.</p></li>
-              <li><span>03</span><strong>Launch with control</strong><p>You receive the site, ownership, and plain instructions for what comes next.</p></li>
+              <li><span>02</span><strong>Watch it take shape</strong><p>You review a working website, not a pile of paperwork.</p></li>
+              <li><span>03</span><strong>Launch with control</strong><p>You receive the site and plain instructions for what comes next.</p></li>
             </ol>
             <ConnectedPathDiagram path={REMOTE_WEBSITE_PATH} proof="nationwide" />
           </div>
@@ -117,8 +117,8 @@ export default function Nationwide() {
               <h2>Every promise travels</h2>
               <p>
                 The first read is free. A real person answers 9am–9pm Eastern.
-                The written handoff names what you own, where it lives, and how
-                to change it later.
+                The written notes say what you own, where it lives, and how to
+                change it later.
               </p>
             </EditorialBody>
           </article>
@@ -142,7 +142,7 @@ export default function Nationwide() {
 
       <QuietContact
         heading="Show us the business from wherever you are."
-        lede="Send the current site, a few photos, or simply say what customers need to do. We will explain the next useful move in plain English."
+        lede="Send the current site, a few photos, or simply say what customers need to do. We will explain the next useful move in plain words."
         intent="website"
       />
     </>

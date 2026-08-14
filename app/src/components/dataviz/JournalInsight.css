@@ -192,6 +192,20 @@
   text-underline-offset: 0.2em;
 }
 
+.lf-journal-insight__sources strong {
+  color: var(--lf-bone);
+  font-weight: 650;
+}
+
+.lf-journal-insight__sources a:hover {
+  color: var(--lf-fight);
+}
+
+.lf-journal-insight__sources a:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
+}
+
 .lf-editorial .lf-journal-insight__tool-note {
   padding: var(--lf-space-3);
   border-radius: var(--lf-radius-sm);

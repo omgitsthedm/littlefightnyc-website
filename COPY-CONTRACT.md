@@ -4,6 +4,17 @@ Every public page speaks to an owner or working manager. The reader is busy,
 not stupid, and should never need a technology dictionary to know what happens
 next.
 
+The page is never written for a developer, an agency, an award judge, or the
+person who runs Little Fight. Every public sentence must help a future client
+answer at least one of these questions:
+
+1. Is this for my business?
+2. What gets better?
+3. What happens next?
+4. How do I start?
+
+If a sentence only proves that Little Fight knows a technical term, remove it.
+
 ## The promise in plain words
 
 Little Fight helps a small business be found, keep the day moving, cut the
@@ -20,6 +31,34 @@ to everyone.
 4. State the boundary. Say when a simpler tool, a current vendor, or no work is
    the right answer.
 5. Give one clear action. Call, text, email, or start the free read.
+
+## First-screen contract
+
+Within the first screen or the first short scroll, a visitor gets:
+
+- one plain promise;
+- one short explanation in everyday words;
+- one main action that matches the page;
+- Call, Text, Email, and Form choices;
+- the 9am–9pm Eastern response window.
+
+Long articles give the useful answer before the visual, source list, service
+pitch, or deeper explanation. Emergency pages put the safe first step and Call
+or Text before everything else.
+
+## No inside baseball
+
+Do not lead with frameworks, scores, code, repositories, databases, schemas,
+APIs, deployments, stacks, architecture, funnels, conversion language, or
+agency process. When one of those terms is the subject of the page, define it
+in the same sentence using a shop task an owner recognizes.
+
+Case studies lead with what a customer or staff member can do now. Build facts
+come later under a plain heading such as “How we made it work.” Lab and sample
+Audit pages say “example” or “illustration” before any invented screen, score,
+date, finding, or business behavior.
+
+Technical accuracy stays. Technical theater goes.
 
 ## Claim contract
 

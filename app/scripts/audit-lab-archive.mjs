@@ -130,6 +130,13 @@ for (const suite of manifest.suites || []) {
   if (/<iframe\b/i.test(suiteSource)) {
     failures.push(`${suite.slug} still uses an embedded workbench instead of direct build links`);
   }
+  if (
+    !/<a\b[^>]*class="suite-footer__plan"[^>]*href="\/tech-audit\/\?source=lab_[^"]+"[^>]*>\s*Want this for your business\? Start a plan\s*<\/a>/i.test(
+      suiteSource,
+    )
+  ) {
+    failures.push(`${suite.slug} is missing its plain owner plan action`);
+  }
   for (const slug of suite.concepts || []) {
     assignedConcepts.push(slug);
     const concept = manifestConcepts.get(slug);

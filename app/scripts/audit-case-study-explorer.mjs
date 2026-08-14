@@ -387,8 +387,8 @@ const homeFeaturedModule = await import(
 const homeFeaturedWork = homeFeaturedModule.HOME_FEATURED_WORK;
 
 const requiredHomeFeaturedSlugs = [
-  "cc-films",
   "hair-by-rachel-charles",
+  "cc-films",
   "clearhelp",
 ];
 if (

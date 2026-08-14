@@ -1,14 +1,10 @@
 /* answersArt — the /answers/ template’s structural map.
  *
- * Three derived layers, all keyed off the authored guides in site.ts:
+ * Two derived layers, all keyed off the authored guides in site.ts:
  *  1. slug → archetype: which of the 6 branded art pieces a guide carries
  *     (public/assets/answers-<archetype>.webp, generated in the journal-art
  *     language; scripts/prerender-seo.mjs mirrors this for og:image).
  *  2. clusters: the hub’s symptom grouping — every slug appears exactly once.
- *  3. verdicts: for guides whose authored copy contrasts two roads, the SAME
- *     contrast restated as a good-if / skip-if table. Every line is tightened
- *     from the guide’s own sections in site.ts — nothing invented, nothing
- *     priced.
  */
 
 type AnswerArchetype =
@@ -35,7 +31,7 @@ const ARCHETYPE_BY_SLUG: Record<string, AnswerArchetype> = {
   // Money-saving — bill/scissors motif
   "reduce-monthly-software-costs-small-business": "bill",
   "hair-salon-save-money-software": "bill",
-  // Comparisons + Reddit roundups — versus motif
+  // Comparisons and choosing help — versus motif
   "when-custom-business-system-beats-saas": "versus",
   "best-web-designer-nyc-reddit": "versus",
   "best-web-design-agency-nyc-reddit": "versus",
@@ -69,11 +65,11 @@ export function answerArt(slug: string): string {
  *
  * The three diagram guides have a concrete customer-path shape already stated
  * in their authored copy. Existing side-by-side comparisons use their
- * source-derived verdict tables. Every other guide uses its own four authored
+ * source-derived diagrams. Every other guide uses its own four authored
  * sections as a numbered readout, so a newly added guide can never silently
  * ship without a visual explanation.
  */
-export type AnswerVisualKind = "diagram" | "stepper" | "verdict";
+export type AnswerVisualKind = "diagram" | "stepper";
 
 const DIAGRAM_GUIDES = new Set([
   "website-form-not-working-small-business",
@@ -83,7 +79,6 @@ const DIAGRAM_GUIDES = new Set([
 
 export function answerVisualKind(slug: string): AnswerVisualKind {
   if (DIAGRAM_GUIDES.has(slug)) return "diagram";
-  if (ANSWER_VERDICTS[slug]) return "verdict";
   return "stepper";
 }
 
@@ -170,20 +165,8 @@ export const ANSWER_CLUSTERS: AnswerCluster[] = [
   },
 ];
 
-/* ---- Triage detection ---------------------------------------------------- */
-
-/**
- * A guide whose authored sections open with "What to check first" reads as an
- * ordered triage sequence — render those sections as a numbered stepper rail
- * instead of plain stacked prose. Purely structural: the authored order IS
- * the content.
- */
-export function isTriageGuide(sections: Array<{ heading: string }>): boolean {
-  return sections[0]?.heading === "What to check first";
-}
-
-/* ---- Verdict tables ------------------------------------------------------ */
-
+// Kept as a shared component contract while comparison pages use the authored
+// stepper. A future verdict needs source-linked fields before it may render.
 type AnswerVerdictColumn = {
   name: string;
   goodIf: string[];
@@ -191,260 +174,7 @@ type AnswerVerdictColumn = {
 };
 
 export type AnswerVerdict = {
-  /** Mono kicker above the table. */
   kicker: string;
   columns: [AnswerVerdictColumn, AnswerVerdictColumn];
-  /** The guide’s own honesty line, quoted under the table. */
   note?: string;
-};
-
-export const ANSWER_VERDICTS: Record<string, AnswerVerdict> = {
-  "squarespace-vs-hiring-web-designer-reddit": {
-    kicker: "The honest split",
-    columns: [
-      {
-        name: "Build it yourself",
-        goodIf: [
-          "The business is simple: hours, photos, and a contact path",
-          "You have a decent eye — and you genuinely have the hours",
-          "You need a clean site live fast",
-        ],
-        skipIf: [
-          "The draft has sat half-finished for months",
-          "The weekend the site was supposed to take does not exist",
-        ],
-      },
-      {
-        name: "Hire a designer",
-        goodIf: [
-          "The site must produce revenue from bookings, visits, calls, orders, or inquiries",
-          "You need custom features, local search work, or booking and ordering integrations",
-          "A half-built draft has been quietly stealing your Sundays",
-        ],
-        skipIf: [
-          "A template already covers the actual need",
-          "Deciding what to say is the only hard part left — the tool was never the problem",
-        ],
-      },
-    ],
-    note: "Either way, the consult is free and there is no pitch. Plenty of owners leave that call with a plan to finish it themselves.",
-  },
-  "wix-vs-custom-website-reddit": {
-    kicker: "The honest split",
-    columns: [
-      {
-        name: "Wix",
-        goodIf: [
-          "You need a presence this month and the budget is tight",
-          "A template covers the actual need",
-          "A clean Wix site beats no site — and beats an expensive site that takes six months",
-        ],
-        skipIf: [
-          "You may need to leave later — a Wix site cannot be meaningfully exported",
-          "The website is a revenue channel: bookings, orders, steady calls",
-        ],
-      },
-      {
-        name: "Custom build",
-        goodIf: [
-          "The website is a revenue channel: bookings, orders, steady calls",
-          "You need speed, local search structure, and integrations a template fights you on",
-        ],
-        skipIf: [
-          "A template covers the need — then custom is wasted money",
-          "Nothing measurable is broken and you would only be rebuilding out of shame",
-        ],
-      },
-    ],
-    note: "Rebuild when something measurable is broken: speed, visibility, conversions, or your ability to leave.",
-  },
-  "square-vs-toast-reddit": {
-    kicker: "The crowd verdict, checked",
-    columns: [
-      {
-        name: "Square",
-        goodIf: [
-          "Counter service, cafes, retail hybrids, or a food truck",
-          "You want simple, transparent fees and hardware you own outright",
-        ],
-        skipIf: [
-          "Table service, coursing, and kitchen timing enter the picture — Square strains there",
-        ],
-      },
-      {
-        name: "Toast",
-        goodIf: [
-          "A full-service restaurant",
-          "You need kitchen display, table and course management, and online ordering that understands food",
-        ],
-        skipIf: [
-          "A counter-service spot where the hardware and contracts feel heavy",
-          "Contract weight and add-on creep would sting",
-        ],
-      },
-    ],
-    note: "A well-configured second choice beats a sloppily configured first choice every week.",
-  },
-  "glossgenius-vs-square-appointments-reddit": {
-    kicker: "The crowd verdict, checked",
-    columns: [
-      {
-        name: "GlossGenius",
-        goodIf: [
-          "You are an independent stylist or chair renter",
-          "You want polished booking pages and a flat, predictable subscription",
-          "The whole experience should flatter a personal brand",
-        ],
-        skipIf: [
-          "You run staff calendars, retail products, and higher volume under one roof",
-        ],
-      },
-      {
-        name: "Square Appointments",
-        goodIf: [
-          "A salon with employees, retail, and higher volume",
-          "You want the free solo tier and cheap card hardware",
-          "Payments, payroll, and inventory should live in one ecosystem",
-        ],
-        skipIf: [
-          "You are solo and the booking page IS the brand",
-        ],
-      },
-    ],
-    note: "The unhappy owners we meet are rarely on the wrong app — they are on the right app configured wrong.",
-  },
-  "shopify-vs-squarespace-reddit": {
-    kicker: "The honest sorting",
-    columns: [
-      {
-        name: "Shopify",
-        goodIf: [
-          "The register and shelves must share truth with the website",
-          "You need real inventory management and a POS that syncs with the online store",
-        ],
-        skipIf: [
-          "Online selling is secondary — the app-fee creep is a toll you do not need",
-        ],
-      },
-      {
-        name: "Squarespace",
-        goodIf: [
-          "Online selling is secondary: a presence, a catalog, occasional orders",
-          "You want beautiful templates and a simple, cheaper setup",
-        ],
-        skipIf: [
-          "Selling online becomes the main event — you will feel the limits",
-        ],
-      },
-    ],
-    note: "The most common mistake we clean up is not the wrong platform — it is two disconnected systems reconciled by hand at midnight.",
-  },
-  "airtable-vs-notion-reddit-small-business": {
-    kicker: "The docs-versus-records rule",
-    columns: [
-      {
-        name: "Airtable",
-        goodIf: [
-          "Structured records: clients, orders, inventory",
-          "Anything with fields you filter and count",
-        ],
-        skipIf: [
-          "What you really need is documents, wikis, and written-down processes",
-        ],
-      },
-      {
-        name: "Notion",
-        goodIf: [
-          "Documents, wikis, notes, and processes — anything you would explain or write down",
-        ],
-        skipIf: [
-          "You would force it to be a database — messy tables that hide errors",
-          "Nobody owns the workspace’s tidiness — it decays into a junk drawer within months",
-        ],
-      },
-    ],
-    note: "The system must survive the least technical employee on their busiest day.",
-  },
-  "when-custom-business-system-beats-saas": {
-    kicker: "Weigh it honestly",
-    columns: [
-      {
-        name: "Keep the subscription",
-        goodIf: [
-          "The tool handles most of the work, has good support, and the team uses it daily",
-          "It mostly works and just needs connecting — the better and cheaper move",
-        ],
-        skipIf: [
-          "The real numbers live in a spreadsheet next to the platform you pay for",
-          "The same job gets typed into two systems",
-          "Staff work around the tool instead of through it",
-        ],
-      },
-      {
-        name: "Build the missing piece",
-        goodIf: [
-          "The missing piece is specific: a right-sized dashboard, intake path, or follow-up flow",
-          "The monthly bill is real, the lost staff time is real, and you will use it for years",
-        ],
-        skipIf: [
-          "Custom is not always cheaper — a connected off-the-shelf tool covers it",
-          "You would use the system for months, not years",
-        ],
-      },
-    ],
-    note: "We only suggest building when the numbers clearly beat one more subscription.",
-  },
-  "does-my-small-business-need-a-website-reddit": {
-    kicker: "Where your next customer comes from",
-    columns: [
-      {
-        name: "Skip it, for now",
-        goodIf: [
-          "Your books are full, your customers are loyal, and you have no growth ambitions",
-          "Referrals forever is a real plan for you — and it is working",
-        ],
-        skipIf: [
-          "Your next customer is a stranger searching — new residents, tourists, anyone outside your circle",
-        ],
-      },
-      {
-        name: "Own your ground",
-        goodIf: [
-          "Customers find you through Google or AI assistants — answers assembled from websites",
-          "You are done building on rented land: suspended accounts, buried pages, overnight rule changes",
-        ],
-        skipIf: [
-          "Word of mouth genuinely keeps you booked and you want nothing more",
-        ],
-      },
-    ],
-    note: "Both camps agree on one floor: keep your Google Business Profile complete and alive — that is where local customers actually look first.",
-  },
-  "best-web-design-agency-nyc-reddit": {
-    kicker: "Match the help to the job",
-    columns: [
-      {
-        name: "Big agency",
-        goodIf: [
-          "Big scopes: a brand overhaul, a national campaign, a complex build with many moving parts",
-          "A rebrand across forty locations needs a real bench",
-        ],
-        skipIf: [
-          "You get quoted like a startup: long discovery, retainers, deliverables you did not ask for",
-          "The person you meet will not be the person who builds",
-        ],
-      },
-      {
-        name: "Small studio",
-        goodIf: [
-          "You need a site that moves the right customer to the right next step",
-          "You want one accountable person, a shorter timeline, and promises in writing",
-        ],
-        skipIf: [
-          "The scope genuinely needs a big firm’s bench",
-        ],
-      },
-    ],
-    note: "Ask every candidate exactly who will touch your project, by name and role. If the answer is vague, the work will be too.",
-  },
 };

@@ -688,7 +688,7 @@
         <div class="lf-report-actions"><a class="lf-report-link" href="/examples/audit/">Audit Lab</a><button type="button" class="pdf-btn" onclick="window.print()">Save PDF</button><a class="lf-report-link lf-report-link--primary" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a></div>
 </nav>
   <aside class="lf-audit-reconstruction" role="note">
-    <strong>Showroom reconstruction.</strong> This is an interface sample, not an audit for the named business. Names, scores, dates, bars, findings, and money figures are invented display data. Do not use this page to judge a business, medical service, legal or accessibility compliance, security, or revenue. A live public-page check names what it observed, what it inferred, and when. Read <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener noreferrer">Chrome Lighthouse documentation</a>, <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">W3C accessibility guidance</a>, and <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer">Google Search structured-data documentation</a>.
+    <strong>Showroom reconstruction.</strong> This is an interface sample, not an audit for the named business. Names, scores, dates, bars, findings, and money figures are invented display data. No action is requested from the named business. Do not use this page to judge a business, medical service, legal or accessibility compliance, security, or revenue. A live public-page check names what it observed, what it inferred, and when. Read <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener noreferrer">Chrome Lighthouse documentation</a>, <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">W3C accessibility guidance</a>, and <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer">Google Search structured-data documentation</a>.
   </aside>
 
     <!-- ============================
@@ -785,10 +785,10 @@
                 <article class="finding finding--1">
                     <div class="finding-header">
                         <span class="severity-badge severity-badge--warning">Warning</span>
-                        <h2 class="finding-title">Complex JavaScript Bundles</h2>
+                        <h2 class="finding-title">The phone page may be doing too much at once</h2>
                     </div>
                     <div class="finding-body">
-                        <p>Your site loads multiple third-party scripts including analytics, chat widgets, and scheduling tools that add over 800KB of JavaScript. This blocks the main thread on mobile devices, causing 2&#8211;3 second interaction delays. Patients trying to book appointments on their phones experience unresponsive buttons and form fields, directly impacting your consultation booking rate.</p>
+                        <p><strong>Example finding:</strong> Too many outside tools can make a phone page feel slow or unresponsive. A real audit tests the live booking path before it names the tools to keep, remove, or change.</p>
                     </div>
                 </article>
 

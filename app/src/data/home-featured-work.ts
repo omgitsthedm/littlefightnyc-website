@@ -5,19 +5,6 @@
  */
 export const HOME_FEATURED_WORK = [
   {
-    slug: "cc-films",
-    name: "CC Films",
-    label: "The official film path",
-    outcome:
-      "Press, festival audiences, and viewers have one official place to watch, read, and find the next step.",
-    image: "/assets/case-cc-films.webp",
-    imageWidth: 1600,
-    imageHeight: 1200,
-    source: "https://ccfilms.net",
-    sourceLabel: "ccfilms.net",
-    verifiedAt: "2026-08-13",
-  },
-  {
     slug: "hair-by-rachel-charles",
     name: "Hair By Rachel Charles",
     label: "The booking handoff",
@@ -28,6 +15,19 @@ export const HOME_FEATURED_WORK = [
     imageHeight: 1200,
     source: "https://hairbyrachelcharles.com",
     sourceLabel: "hairbyrachelcharles.com",
+    verifiedAt: "2026-08-13",
+  },
+  {
+    slug: "cc-films",
+    name: "CC Films",
+    label: "The official film path",
+    outcome:
+      "Press, festival audiences, and viewers have one official place to watch, read, and find the next step.",
+    image: "/assets/case-cc-films.webp",
+    imageWidth: 1600,
+    imageHeight: 1200,
+    source: "https://ccfilms.net",
+    sourceLabel: "ccfilms.net",
     verifiedAt: "2026-08-13",
   },
   {

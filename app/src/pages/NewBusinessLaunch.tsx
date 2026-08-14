@@ -8,9 +8,9 @@ import "@/styles/editorial/revenue-pages.css";
 
 const LAUNCH_LAYERS = [
   {
-    label: "Identity",
-    title: "Own the name and the keys.",
-    detail: "Domain control, business email, account ownership, recovery paths, and a plain record of who controls what.",
+    label: "Your keys",
+    title: "Own the name and the logins.",
+    detail: "Your website address, business email, account access, backup ways in, and a plain record of who controls what.",
   },
   {
     label: "Front door",
@@ -18,19 +18,19 @@ const LAUNCH_LAYERS = [
     detail: "A custom website built around the storefront: booking for a chair, directions for a shop, ordering for a counter, intake for a practice, or a qualified inquiry for a service firm.",
   },
   {
-    label: "Findability",
+    label: "Be easy to find",
     title: "Make the facts agree.",
-    detail: "The website, Google Business Profile, search tools, map listings, and public facts should all describe the same real business.",
+    detail: "Your website, Google listing, map listing, hours, phone, and services should all tell the same true story.",
   },
   {
     label: "Follow-up",
     title: "Give interest somewhere to land.",
-    detail: "Forms, booking notices, and real customer email reach an inbox somebody checks. Conservative routing can label priority messages without auto-replying or hiding them.",
+    detail: "Forms, booking notices, and customer email reach an inbox somebody checks. Important messages are easy to spot, and nothing answers customers by itself.",
   },
   {
-    label: "Measurement",
-    title: "Measure the path without lying to the visitor.",
-    detail: "Simple, privacy-respecting measurement can show which actions happen. It cannot turn a visitor into a customer. It can show where the path needs work.",
+    label: "See what happens",
+    title: "Check the path without guessing.",
+    detail: "A simple, respectful count can show which actions people take. It cannot promise customers. It can show where the path needs help.",
   },
 ] as const;
 
@@ -54,7 +54,7 @@ export default function NewBusinessLaunch() {
         eyebrow="New business launch"
         icon={Store}
         title={<>Open with the front door already working.</>}
-        dek="Name, website, Google presence, booking or inquiry path, email, and ownership—set up as one clear launch instead of six disconnected accounts."
+        dek="Your name, website, Google listing, booking or question path, email, and logins—set up together instead of scattered across six accounts."
         image={{
           src: "/images/brand-scenes/storefronts-dawn.webp",
           alt: "Neighborhood storefronts opening at dawn",
@@ -65,18 +65,18 @@ export default function NewBusinessLaunch() {
 
       <section className="lf-revenue-page" aria-labelledby="lf-launch-title">
         <header className="lf-revenue-page__intro">
-          <p>Launch as one system</p>
-          <h2 id="lf-launch-title">A new storefront should not inherit old digital confusion.</h2>
+          <p>Open with the basics ready</p>
+          <h2 id="lf-launch-title">A new shop should not inherit old online confusion.</h2>
           <div>
             <p>
-              Most launch problems are handoff problems. The website lives in
-              one account. The domain lives in another. Google belongs to a
-              former employee. Customer messages go somewhere nobody checks.
+              Most launch problems happen when the important parts live apart.
+              The website is in one account. The website address is in another.
+              Google belongs to a former employee. Customer messages go somewhere nobody checks.
             </p>
             <p>
-              We map the whole customer path before launch. Then we use the
-              smallest useful tool for each job and leave the business with the
-              keys and plain-English notes.
+              We trace what a customer sees and does before launch. Then we use
+              the smallest useful tool for each job and leave you with the
+              logins and plain notes.
             </p>
           </div>
         </header>
@@ -104,7 +104,7 @@ export default function NewBusinessLaunch() {
 
       <QuietContact
         heading="Opening, relaunching, or finally making it official?"
-        lede="Tell us the date, the business, and what the first customer should do. We will map the launch, who owns each step, and the smallest useful scope."
+        lede="Tell us the date, the business, and what the first customer should do. We will map the launch, who owns each step, and the smallest useful plan."
         intent="website"
       />
     </>

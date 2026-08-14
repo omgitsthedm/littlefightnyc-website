@@ -21,9 +21,37 @@ function safeHref(value = "") {
   throw new Error(`Journal copy contains an unsafe link: ${href || "(empty)"}`);
 }
 
+export function ownerWords(value = "") {
+  return String(value)
+    .replace(/\btechnical SEO\b/gi, "search basics")
+    .replace(/\bPOS platform\b/gi, "register and payment setup")
+    .replace(/\brush workflow\b/gi, "rush")
+    .replace(/\bSaaS\b/g, "rented software")
+    .replace(/\bPOS\b/g, "register and payment system")
+    .replace(/\bSEO\b/g, "local search")
+    .replace(/\bAEO\b/g, "AI search")
+    .replace(/\bMFA\b/g, "an extra sign-in check")
+    .replace(/\bDNS\b/g, "domain settings")
+    .replace(/\bURLs?\b/g, (match) => (match === "URLs" ? "web addresses" : "web address"))
+    .replace(/\bplugins?\b/gi, (match) => (match.toLowerCase().endsWith("s") ? "add-ons" : "add-on"))
+    .replace(/\bworkflow\b/gi, "day-to-day steps")
+    .replace(/\bintegrations?\b/gi, "connections between tools")
+    .replace(/\btech stack\b/gi, "tools that run the site")
+    .replace(/\brepositor(?:y|ies)\b/gi, "project files")
+    .replace(/\banalytics\b/gi, "visit tracking")
+    .replace(/\bcrawlable\b/gi, "readable by search")
+    .replace(/\bcrawler\b/gi, "search system")
+    .replace(/\bschema\b/gi, "page facts")
+    .replace(/\bcanonical\b/gi, "main web address")
+    .replace(/\bregistrar\b/gi, "company where the domain is registered")
+    .replace(/\bprovider\b/gi, "company that runs the tool")
+    .replace(/\bproviders\b/gi, "companies that run the tools")
+    .replace(/\bcompliance\b/gi, "required safety rules");
+}
+
 function list(items, ordered = false) {
   const tag = ordered ? "ol" : "ul";
-  return `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</${tag}>`;
+  return `<${tag}>${items.map((item) => `<li>${escapeHtml(ownerWords(item))}</li>`).join("")}</${tag}>`;
 }
 
 export const SOURCE_CATALOG = {
@@ -176,7 +204,7 @@ export function resolveJournalSources(record) {
     return {
       label: String(source.label),
       href: safeHref(source.href),
-      note: source.note ? String(source.note) : "",
+      note: source.note ? ownerWords(source.note) : "",
     };
   });
 }
@@ -199,17 +227,16 @@ export function renderJournalCopy(record) {
   const fitLabel = record.cta?.label ?? "Get a plain-English second opinion";
 
   return [
-    `<p class="lf-post__answer"><strong>Short answer:</strong> ${escapeHtml(record.answer)}</p>`,
     `<h2>What this means for your business</h2>`,
-    `<p>${escapeHtml(record.meaning)}</p>`,
+    `<p>${escapeHtml(ownerWords(record.meaning))}</p>`,
     record.watch?.length ? `<h2>What to watch</h2>${list(record.watch)}` : "",
     `<h2>Do this next</h2>`,
     list(record.next, true),
     `<h2>When Little Fight fits</h2>`,
-    `<p>${escapeHtml(record.fit)}</p>`,
+    `<p>${escapeHtml(ownerWords(record.fit))}</p>`,
     `<p><a href="${escapeHtml(fitHref)}">${escapeHtml(fitLabel)}</a></p>`,
     sources
-      ? `<section class="lf-post__sources" aria-labelledby="journal-sources"><h2 id="journal-sources">Sources and further reading</h2><p>Checked August 13, 2026. Product features and rules can change, so use the linked source as the current word.</p><ul>${sources}</ul></section>`
+      ? `<section class="lf-post__sources" aria-labelledby="journal-sources"><h2 id="journal-sources">Sources and further reading</h2><p>Product features and rules can change. Use the linked source as the current word.</p><ul>${sources}</ul></section>`
       : "",
   ]
     .filter(Boolean)

@@ -256,14 +256,18 @@ export default function CaseStudyDetail() {
               <h2 id="lf-case-live-title">
                 {includesCapture
                   ? study.url
-                    ? "Explore the responsive build."
-                    : "Explore the responsive proof."
-                  : "Walk through the build."}
+                    ? preservedVenueLink
+                      ? "Explore the responsive build."
+                      : "See the customer path in action."
+                    : "See the customer path we planned."
+                  : "See how the customer path was planned."}
               </h2>
               <p>
                 {includesCapture
-                  ? "See the available screens as one system, then scroll each real capture and follow the working path from need to result."
-                  : "Every stage is shown below, from the first customer need to the result the business uses."}
+                  ? preservedVenueLink
+                    ? "See the available screens as one system, then scroll each real capture and follow the working path from need to result."
+                    : "Follow the real screens from a customer question to the next useful action."
+                  : "Follow the plan from the first customer question to the useful next action."}
               </p>
             </header>
             <div className="lf-case-next__explorer">

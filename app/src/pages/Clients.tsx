@@ -18,6 +18,11 @@ export default function Clients() {
         icon={Headphones}
         title={<>One clean door back in.</>}
         dek="Email one inbox with the details. Call or text when customers are blocked right now."
+        action={{
+          href: `mailto:${HELLO_EMAIL}?subject=Current%20client%20request`,
+          kicker: "Current client",
+          label: "Email the client desk",
+        }}
         image={{
           src: "/images/brand-scenes/restaurant-counter.webp",
           alt: "A restaurant counter ready for the business day",

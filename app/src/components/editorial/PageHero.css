@@ -11,6 +11,14 @@
     clamp(var(--lf-space-8), 8vw, var(--lf-space-10))
     var(--lf-margin-mobile)
     clamp(var(--lf-space-8), 7vw, var(--lf-space-9));
+  background: var(--lf-ink);
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+/* Protected product/case presentations keep their established frame. The
+ * acquisition rail and new squared editorial treatment intentionally stop at
+ * these boundaries. */
+.lf-pagehero--protected {
   background:
     radial-gradient(
       105% 90% at
@@ -27,7 +35,6 @@
       transparent 68%
     ),
     var(--lf-ink);
-  border-bottom: 1px solid var(--lf-hairline);
 }
 
 @media (min-width: 48rem) {
@@ -78,6 +85,11 @@
     grid-template-columns: minmax(0, 1.08fr) minmax(20rem, 0.76fr);
     align-items: center;
     gap: clamp(var(--lf-space-8), 5vw, var(--lf-space-9));
+  }
+
+  .lf-pagehero--with-image .lf-pagehero__text {
+    padding-inline-end: clamp(var(--lf-space-7), 4vw, var(--lf-space-9));
+    border-inline-end: 1px solid var(--lf-hairline);
   }
 }
 
@@ -175,11 +187,8 @@
   overflow: hidden;
   background: var(--lf-paper);
   border: 1px solid var(--lf-hairline);
-  border-radius: clamp(1.25rem, 2vw, var(--lf-radius-card));
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.07) inset,
-    0 30px 90px rgba(0, 0, 0, 0.46),
-    0 12px 38px rgba(59, 130, 246, 0.08);
+  border-radius: 0;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.46);
 }
 
 .lf-pagehero__image::after {
@@ -189,7 +198,153 @@
   z-index: 2;
   pointer-events: none;
   border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 0;
+}
+
+.lf-pagehero--protected .lf-pagehero__image {
+  border-radius: clamp(1.25rem, 2vw, var(--lf-radius-card));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.07) inset,
+    0 30px 90px rgba(0, 0, 0, 0.46),
+    0 12px 38px rgba(59, 130, 246, 0.08);
+}
+
+.lf-pagehero--protected .lf-pagehero__image::after {
   border-radius: inherit;
+}
+
+@media (min-width: 64rem) {
+  .lf-pagehero--protected.lf-pagehero--with-image .lf-pagehero__text {
+    padding-inline-end: 0;
+    border-inline-end: 0;
+  }
+}
+
+/* Owner decisions ------------------------------------------------------- */
+
+.lf-pagehero__actions {
+  position: relative;
+  z-index: 3;
+  inline-size: min(100%, 45rem);
+  display: grid;
+  gap: var(--lf-space-3);
+  margin-block-start: clamp(var(--lf-space-2), 1.4vw, var(--lf-space-4));
+  pointer-events: auto;
+}
+
+.lf-pagehero__decisions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--lf-space-3);
+}
+
+.lf-pagehero__decision {
+  position: relative;
+  display: grid;
+  min-block-size: 74px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: center;
+  gap: 0.2rem var(--lf-space-4);
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--lf-hairline);
+  color: var(--lf-bone);
+  background: var(--lf-paper-2);
+  text-decoration: none;
+  transition:
+    background-color var(--m-signal-ms) var(--m-signal-ease),
+    border-color var(--m-signal-ms) var(--m-signal-ease),
+    color var(--m-signal-ms) var(--m-signal-ease),
+    transform var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-pagehero__decision > span {
+  min-inline-size: 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-xs);
+  line-height: 1.2;
+}
+
+.lf-pagehero__decision > strong {
+  min-inline-size: 0;
+  font-family: var(--lf-heading);
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lf-pagehero__decision > svg {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.lf-pagehero__decision--primary {
+  border-color: var(--lf-fight);
+  color: #09090b;
+  background: var(--lf-fight);
+}
+
+.lf-pagehero__decision--primary > span {
+  color: rgba(9, 9, 11, 0.72);
+}
+
+.lf-pagehero__decision:hover {
+  border-color: var(--lf-bone-soft);
+  background: var(--lf-paper);
+  transform: translateY(-2px);
+}
+
+.lf-pagehero__decision--primary:hover {
+  border-color: var(--lf-fight-hover);
+  color: #09090b;
+  background: var(--lf-fight-hover);
+}
+
+.lf-pagehero__decision:focus-visible,
+.lf-pagehero__channels a:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
+}
+
+.lf-pagehero__channels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-3) var(--lf-space-5);
+}
+
+.lf-pagehero__channels a {
+  display: inline-flex;
+  min-block-size: 44px;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--lf-bone);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  text-underline-offset: 0.22em;
+}
+
+.lf-pagehero__channels a:hover {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-pagehero__hours {
+  margin: 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-xs);
+  line-height: 1.4;
+}
+
+@media (min-width: 38rem) {
+  .lf-pagehero__decisions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .lf-pagehero__picture,
@@ -492,7 +647,7 @@
   background: var(--lf-paper);
   border: 1px solid color-mix(in srgb, var(--lf-fight) 34%, var(--lf-hairline));
   border-inline-start: 4px solid var(--lf-fight);
-  border-radius: var(--lf-radius-card);
+  border-radius: 0;
   box-shadow: 0 24px 68px rgba(0, 0, 0, 0.3);
 }
 
@@ -574,6 +729,111 @@
   border-radius: var(--lf-radius-pill);
 }
 
+/* Phone opening: keep help and real photography in the first screen together.
+ * The same image becomes a dark, readable backdrop instead of waiting below a
+ * long title and five contact choices. Protected presentations keep their
+ * original framed treatment. */
+@media (max-width: 47.99rem) {
+  .lf-pagehero:not(.lf-pagehero--case) {
+    padding-block: 1.75rem 2rem;
+  }
+
+  .lf-pagehero:not(.lf-pagehero--case) .lf-pagehero__inner {
+    gap: 1rem;
+  }
+
+  .lf-pagehero:not(.lf-pagehero--case) .lf-pagehero__text {
+    gap: 0.8rem;
+  }
+
+  .lf-pagehero:not(.lf-pagehero--case) .lf-pagehero__title,
+  .lf-pagehero--answer .lf-pagehero__title {
+    font-size: clamp(2.55rem, 12vw, 3.35rem);
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .lf-pagehero__dek {
+    font-size: clamp(1rem, 4.6vw, 1.1rem);
+    line-height: 1.42;
+  }
+
+  .lf-pagehero__quick {
+    gap: 0.5rem;
+    margin-block-start: 0.2rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .lf-pagehero__actions {
+    gap: 0.45rem;
+    margin-block-start: 0.2rem;
+  }
+
+  .lf-pagehero__decisions {
+    grid-template-columns: minmax(0, 1fr) minmax(6.6rem, 0.68fr);
+    gap: 0.5rem;
+  }
+
+  .lf-pagehero__decision {
+    min-block-size: 60px;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .lf-pagehero__decision > span {
+    display: none;
+  }
+
+  .lf-pagehero__decision > strong {
+    font-size: clamp(1.05rem, 5vw, 1.3rem);
+    line-height: 0.98;
+  }
+
+  .lf-pagehero__channels {
+    inline-size: 100%;
+    justify-content: space-between;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .lf-pagehero__channels a {
+    font-size: 0.9rem;
+  }
+
+  .lf-editorial .lf-pagehero__hours {
+    font-size: 0.75rem;
+  }
+
+  .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__inner {
+    min-block-size: clamp(29rem, 76svh, 37rem);
+    align-content: center;
+  }
+
+  .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__text {
+    position: relative;
+    z-index: 3;
+    max-inline-size: 34rem;
+  }
+
+  .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    aspect-ratio: auto;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__image::after {
+    border: 0;
+    background:
+      linear-gradient(90deg, rgba(5, 5, 7, 0.96) 0%, rgba(5, 5, 7, 0.8) 63%, rgba(5, 5, 7, 0.45) 100%),
+      linear-gradient(0deg, rgba(5, 5, 7, 0.93) 0%, rgba(5, 5, 7, 0.22) 72%);
+  }
+
+  .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__picture > img {
+    filter: contrast(1.05) saturate(0.88) brightness(0.72);
+  }
+}
+
 /* Motion safety ---------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -588,11 +848,16 @@
       .lf-pagehero__image,
       .lf-pagehero__backdrop
     ),
+  .lf-pagehero__decision,
   .lf-pagehero__picture > img,
   .lf-pagehero__image > .lf-cinematic-media,
   .lf-pagehero__backdrop > :is(img, .lf-cinematic-media) {
     opacity: 1;
     transform: none;
     animation: none;
+  }
+
+  .lf-pagehero__decision:hover {
+    transform: none;
   }
 }

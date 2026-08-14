@@ -20,18 +20,18 @@ const NEXT_STEPS = [
     copy: "Use ordinary words. A website address, screenshot, bill, or the thing a customer could not do is enough to begin.",
   },
   {
-    title: "We check the path",
-    copy: "We look at the surrounding website, account, tool, or handoff before we name the fix.",
+    title: "We look at the whole problem",
+    copy: "We check the website, login, tool, or missed step around the problem before we name the fix.",
   },
   {
     title: "You get a clear next move",
-    copy: "We explain what to keep, what needs attention, and what the work would involve before anything changes.",
+    copy: "We explain what to keep, what needs attention, and what the work would mean before anything changes.",
   },
 ] as const;
 
 const RESPONSE_PROMISES = [
   { value: "Free", label: "Consulting, always" },
-  { value: "Within 2 hours", label: "Missed-call callback, 9am–9pm ET" },
+  { value: "2-hour target", label: "Missed-call callback, 9am–9pm ET" },
   { value: "Within 24 hours", label: "Urgent NYC on-site help when the fix needs hands" },
 ] as const;
 
@@ -48,7 +48,7 @@ export default function Contact() {
             Tell us what feels <span className="lf-em">stuck.</span>
           </>
         }
-        dek="Call or text now. For a website, send the address. You do not need the technical name."
+        dek="Call or text now. For a website, send the address. You do not need to know the right name for the problem."
         image={{
           src: "/assets/hero-contact-door.webp",
           alt: "A warm-lit shop doorway open at dusk in New York",
@@ -85,8 +85,8 @@ export default function Contact() {
               </span>
               <strong>Send us your website</strong>
               <small>
-                Get a free first read on what to keep, what is unclear, and what
-                should change first.
+                Get a free first look at what is clear, what is confusing, and
+                what should change first.
               </small>
               <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
             </Link>
@@ -139,8 +139,8 @@ export default function Contact() {
               A short conversation. A clear next move.
             </h2>
             <p>
-              You stay in control. We explain the problem and the options
-              before any paid work or system change begins.
+              You stay in control. We explain the problem and the choices
+              before any paid work begins.
             </p>
           </header>
 

@@ -852,7 +852,7 @@
     <div class="lf-report-actions"><a class="lf-report-link" href="/examples/audit/">Audit Lab</a><button type="button" class="pdf-btn" onclick="window.print()">Save PDF</button><a class="lf-report-link lf-report-link--primary" href="https://littlefightnyc.com/tech-audit/?intent=website&amp;source=audit-lab">Free Tech Audit</a></div>
 </nav>
   <aside class="lf-audit-reconstruction" role="note">
-    <strong>Showroom reconstruction.</strong> This is an interface sample, not an audit for the named business. Names, scores, dates, bars, findings, and money figures are invented display data. Do not use this page to judge a business, medical service, legal or accessibility compliance, security, or revenue. A live public-page check names what it observed, what it inferred, and when. Read <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener noreferrer">Chrome Lighthouse documentation</a>, <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">W3C accessibility guidance</a>, and <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer">Google Search structured-data documentation</a>.
+    <strong>Showroom reconstruction.</strong> This is an interface sample, not an audit for the named business. Names, scores, dates, bars, findings, and money figures are invented display data. No action is requested from the named business. Do not use this page to judge a business, medical service, legal or accessibility compliance, security, or revenue. A live public-page check names what it observed, what it inferred, and when. Read <a href="https://developer.chrome.com/docs/lighthouse/overview/" target="_blank" rel="noopener noreferrer">Chrome Lighthouse documentation</a>, <a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer">W3C accessibility guidance</a>, and <a href="https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" target="_blank" rel="noopener noreferrer">Google Search structured-data documentation</a>.
   </aside>
 
   <!-- ====================================================
@@ -981,7 +981,7 @@
             </div>
             <h3 class="finding__title">Unoptimized Images Slowing Load Time</h3>
             <div class="finding__body">
-              <p>Your hero images and gallery load as full-resolution JPEG/PNG files with no WebP conversion, no lazy loading, and no srcset responsive attributes. This adds 3&ndash;4 seconds to your initial page load.</p>
+              <p><strong>Example finding:</strong> A page that sends oversized images to a phone can make the first screen slow to appear. A real audit measures the page before naming the cause or the fix.</p>
               <p>Visitors on mobile connections may leave before ever seeing your services. Clients searching for treatments on their phones are the most likely to bounce.</p>
             </div>
             <div class="finding__impact">
@@ -996,10 +996,10 @@
               <span class="finding__badge-dot" aria-hidden="true"></span>
               Warning
             </div>
-            <h3 class="finding__title">Missing Local Business Schema</h3>
+            <h3 class="finding__title">Search results may be missing useful business details</h3>
             <div class="finding__body">
-              <p>Your site lacks structured data markup&mdash;LocalBusiness, MedicalBusiness, and FAQPage schemas are all absent. Google and AI answer engines can&rsquo;t properly categorize your services, hours, or location.</p>
-              <p>Competitors with schema markup appear in rich results. You don&rsquo;t. This means fewer clicks from &ldquo;med spa Greenwich CT&rdquo; searches.</p>
+              <p><strong>Example finding:</strong> A site can leave its services, hours, and location unclear. A real audit checks the live page before recommending a change.</p>
+              <p>A clearer page can help search services show your hours, location, and services in a more useful way. A real check confirms what is missing before anyone promises a change.</p>
             </div>
           </article>
 
@@ -1011,8 +1011,7 @@
             </div>
             <h3 class="finding__title">No FAQ Section for AI Search Engines</h3>
             <div class="finding__body">
-              <p>Perplexity, ChatGPT, and Google&rsquo;s AI Overviews pull answers from well-structured FAQ content. Your site has no FAQ section.</p>
-              <p>When potential clients ask AI assistants &ldquo;best med spa in Greenwich CT,&rdquo; your site can&rsquo;t be referenced. Adding 8&ndash;10 real questions with 2&ndash;3 sentence answers would make you visible to these platforms.</p>
+              <p><strong>Example finding:</strong> When customers ask common questions, a clear answer page can save them from guessing. A real audit checks the actual questions, wording, and source before recommending content.</p>
             </div>
           </article>
 

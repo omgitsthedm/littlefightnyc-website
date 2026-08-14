@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { build as esbuildBundle } from "esbuild";
 import { prepareIndustryHtml, prepareLegacyHtml } from "../src/lib/legacy-html-core.mjs";
-import { copyBySlug, renderJournalCopy } from "./journal-copy.mjs";
+import { copyBySlug, ownerWords, renderJournalCopy } from "./journal-copy.mjs";
 import {
   NOT_FOUND_PAGE,
   enrichAuthoredRoutePages,
@@ -181,7 +181,7 @@ async function journalPages() {
     return {
       ...post,
       title: authored.title,
-      description: authored.description,
+      description: ownerWords(authored.description),
       html: renderJournalCopy(authored),
       // The rewritten Journal body is the public answer source. Do not carry
       // retired FAQ pairs from journal.json into JSON-LD when those questions
@@ -848,14 +848,17 @@ function routeImagePreload(page) {
     return "";
   }
 
-  if (!asset?.endsWith(".webp")) return "";
-
   if (page.path === "/") {
-    // The approved shop scene is the homepage's responsive LCP image. It is a
-    // single local WebP at every viewport, so preload the exact request the
-    // hydrated and no-JS heroes both use.
-    return `<link rel="preload" href="/brand-kit/assets/imagery/shop-systems-hero.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+    // The connected counter is composed separately for wide and compact
+    // viewports. Keep the media hints identical to the hydrated <picture> so
+    // each browser preloads one exact LCP candidate instead of both assets.
+    return [
+      `<link rel="preload" media="(width &lt; 48rem)" href="/images/home/connected-counter-hero-mobile-v1.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+      `<link rel="preload" media="(width &gt;= 48rem)" href="/images/home/connected-counter-hero-desktop-v1.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+    ].join("\n    ");
   }
+
+  if (!asset?.endsWith(".webp")) return "";
 
   // The website service now leads with real shipped work instead of the
   // generic laptop image used by its social card. Keep the preload aligned
@@ -1560,7 +1563,7 @@ function articleMeta(page) {
 // Fight first looks…" into ~100 routes of crawler-visible text.
 function methodSubject(page) {
   if (page.path === "/") return "a small business tech problem";
-  if (page.service) return `a ${page.service.eyebrow ? page.service.eyebrow.toLowerCase() : "service"} engagement`;
+  if (page.service) return "this kind of problem";
   if (page.area) return `a ${page.area.name} business`;
   if (page.answerGuide || page.path.startsWith("/answers/")) return "a question like this";
   if (page.path === "/tech-audit/") return "a Tech Audit";
@@ -1574,8 +1577,8 @@ function methodBlock(page) {
 
   return `
     <h2>How the work starts</h2>
-    <p>Before recommending anything for ${escapeHtml(subject)}, Little Fight looks at public signals, customer-facing paths, staff handoffs, account ownership, and the monthly tools already in place — never a rebuild or another subscription by default.</p>
-    <p>The output is a plain-English path: what to keep, what to fix now, what can wait, and what should not be guessed until access, screenshots, analytics, or vendor records make the decision traceable.</p>
+    <p>Before recommending anything for ${escapeHtml(subject)}, we look at what customers see, where staff repeat work, who controls the accounts, and what the business already pays for. We do not begin by selling a rebuild or another monthly tool.</p>
+    <p>The next-step list says what to keep, what to fix now, what can wait, and what we still need to learn before anyone should guess.</p>
   `;
 }
 
@@ -1586,7 +1589,7 @@ function founderBlock(page) {
   if (page.path !== "/about/") return "";
   return `
     <h2>How we work</h2>
-    <p>Founded in 2021, Little Fight NYC runs on a real standard: one accountable owner on every project, a two-hour callback window, and on-site help within a day when it’s urgent. We’re building the tech service company New York’s small businesses deserve — the one the chains never sent.</p>
+    <p>Founded in 2021, Little Fight NYC gives every project one accountable person, returns missed calls within two hours from 9am–9pm Eastern, and confirms urgent New York on-site help from the real problem. The goal is simple: small-business help that answers, explains, and stays responsible.</p>
   `;
 }
 
@@ -1616,7 +1619,7 @@ function legalBlock(page) {
     <p>Little Fight uses Google Analytics, after consent, to understand which pages are useful and which contact paths work. Microsoft Clarity and the TikTok Pixel are not active on this site.</p>
     <p>These tools may record page views, approximate device/browser details, referral information, and events such as phone clicks, email clicks, Tech Audit or contact button clicks, and form submits. Little Fight uses this information for measurement, reporting, and improving marketing, not to sell personal information.</p>
     <h2>Cookies, pixels, and opt-outs</h2>
-    <p>Analytics is off by default for a first-time visitor. Google Analytics loads only after you choose &ldquo;Allow analytics.&rdquo; If you choose &ldquo;Essential only,&rdquo; the site still works and the optional script does not load. You can change the choice at any time from this page.</p>
+    <p>Analytics is off by default for a first-time visitor. Google Analytics loads only after you choose &ldquo;Allow visit counting.&rdquo; If you choose &ldquo;Essential only,&rdquo; the site still works and the optional script does not load. You can change the choice at any time from this page.</p>
     <h2>What not to send</h2>
     <p>Do not send passwords, recovery codes, API keys, credit card numbers, bank details, protected health information, or private customer data through any public form on this site.</p>
     <h2 id="terms">Work and scope</h2>
@@ -1639,7 +1642,7 @@ function promisesBlock(page) {
       : " Urgent on-site help is a New York service; call so we can confirm the problem and the response.";
   return `
     <h2>What you can count on</h2>
-    <p>The first consultation is free. A qualifying website scope may include our written 14-day promise; that scope names eligibility, when the clock starts, what each side must provide, and the remedy if our work is late.${onSite} Missed-call callbacks come within 2 hours, 9am–9pm Eastern.</p>
+    <p>The first look is free. Some website plans include our written 14-day promise. The plan says which jobs qualify, when the days start, what each side needs to provide, and what you receive if our work is late.${onSite} We return missed calls within 2 hours, 9am–9pm Eastern.</p>
   `;
 }
 
@@ -1674,18 +1677,20 @@ function zhSnapshot() {
       <a class="lf-seo__skip" href="#main-content">跳到主要内容</a>
       <header><strong>Little Fight NYC</strong> · <a href="tel:${site.phone}">${site.phoneDisplay}</a></header>
       <main id="main-content">
+      <section data-lf-owner-intro="true">
       <p class="es-eyebrow">为纽约小生意做清楚、好用的技术</p>
       <h1>网站按您的生意来做。 技术出问题时，有真人帮您。</h1>
       <p class="es-sub">我们不拿套版硬塞给您。我们做定制网站，修好已经出故障的设备和系统，也能把昂贵、难用的月费软件换成您自己拥有的工具。</p>
-      <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">给我一份清楚的方案</a></p>
+      <p class="es-actions" data-lf-contact-rail="true"><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">给我一份清楚的方案</a><a href="sms:${site.phone}">发短信</a><a href="mailto:${site.email}">发邮件</a><a href="/tech-audit/?source=zh_hero_form">填写表格</a></p>
       <p class="es-sub">先免费帮您看一遍。纽约可上门；网站项目也可远程做。给您清楚的方案，再由您决定。</p>
       <ul class="es-list"><li>纽约五大区。我们可以上门。</li><li>美东时间早9点到晚9点，2小时内回电。</li><li>做好的东西和控制权都归您。</li></ul>
+      </section>
       <p class="es-eyebrow">先从今天最麻烦的事开始</p>
       <h2>我们能帮您做这四件事。</h2>
       <div class="es-card"><h3>定制网站</h3><p>按您的顾客、服务和做事方式来做。生意不用迁就模板。</p></div>
       <div class="es-card"><h3>修好出故障的技术</h3><p>收款、网络、邮箱、收银机或预约出了问题，纽约可上门；能否远程处理要看具体工作。</p></div>
       <div class="es-card"><h3>先免费帮您看一遍</h3><p>告诉您什么该留、先修什么、哪些钱不用花。就算不需要我们，我们也会直说。</p></div>
-      <div class="es-card"><h3>您自己拥有的软件</h3><p>用一套更简单的专用工具，替换不合适的表格和月费软件。代码和数据归您。</p></div>
+      <div class="es-card"><h3>您自己拥有的软件</h3><p>用一套更简单的专用工具，替换不合适的表格和月费软件。文件、数据和控制权归您。</p></div>
       <p class="es-eyebrow">升级，不是全部推倒重来</p>
       <h2>不推翻您的生意，只把麻烦拿掉。</h2>
       <h3>继续保留</h3>
@@ -1703,7 +1708,7 @@ function zhSnapshot() {
       <p class="es-actions"><a class="es-cta" href="/examples/">查看所有真实案例</a></p>
       <p class="es-eyebrow">没有意外</p>
       <h2>从第一通电话，到上线以后。</h2>
-      <ul class="es-list"><li>先帮您看一遍，永远免费。</li><li>网站书面方案会写明时间、双方要做的事，以及我们误期时怎么办。</li><li>美东时间早9点到晚9点，2小时内回电。</li><li>代码、数据和说明文档都交到您手里。</li></ul>
+      <ul class="es-list"><li>先帮您看一遍，永远免费。</li><li>网站书面方案会写明时间、双方要做的事，以及我们误期时怎么办。</li><li>美东时间早9点到晚9点，2小时内回电。</li><li>文件、数据和使用说明都交到您手里。</li></ul>
       <p class="es-eyebrow">回复您的是真人</p>
       <h2>告诉我们哪里不顺。</h2>
       <p class="es-sub">打电话、发短信或发邮件都行。写您最习惯的语言。没有机器人，也没有工单号。</p>
@@ -1749,18 +1754,20 @@ function esSnapshot() {
       <a class="lf-seo__skip" href="#main-content">Saltar al contenido</a>
       <header><strong>Little Fight NYC</strong> · <a href="tel:${site.phone}">${site.phoneDisplay}</a></header>
       <main id="main-content">
+      <section data-lf-owner-intro="true">
       <p class="es-eyebrow">TECNOLOGÍA CLARA PARA NEGOCIOS DE NUEVA YORK</p>
       <h1>Una página web hecha para su negocio.<em>Ayuda real cuando algo falla.</em></h1>
       <p class="es-sub">Construimos páginas a la medida, arreglamos la tecnología que ya tiene y reemplazamos software caro por herramientas que usted posee. Primero le damos una segunda opinión gratis.</p>
-      <p class="es-actions"><a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Quiero un plan claro</a></p>
+      <p class="es-actions" data-lf-contact-rail="true"><a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Quiero un plan claro</a><a href="sms:${site.phone}">Texto</a><a href="mailto:${site.email}">Correo</a><a href="/tech-audit/?source=es_hero_form">Formulario</a></p>
       <p class="es-sub">La segunda opinión es gratis. En Nueva York podemos ir al negocio; para una página web, también trabajamos a distancia. Primero un plan claro; después usted decide.</p>
       <ul class="es-list"><li>Nueva York. Vamos hasta su negocio.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.</li><li>Usted conserva el control y la propiedad.</li></ul>
+      </section>
       <p class="es-eyebrow">EMPIECE POR EL PROBLEMA DE HOY</p>
       <h2>Esto es lo que hacemos.</h2>
       <div class="es-card"><h3>Páginas web hechas para su negocio</h3><p>Diseñadas para sus clientes, sus servicios y su forma de trabajar. Su negocio no tiene que adaptarse a una plantilla.</p></div>
       <div class="es-card"><h3>Arreglamos lo que falló</h3><p>Pagos, Wi-Fi, correo, caja o reservas. En Nueva York podemos ir al negocio; la ayuda a distancia depende del trabajo.</p></div>
       <div class="es-card"><h3>Segunda opinión gratis</h3><p>Le decimos qué conservar, qué arreglar primero y qué no vale la pena pagar. Si no nos necesita, también se lo decimos.</p></div>
-      <div class="es-card"><h3>Software que es suyo</h3><p>Reemplazamos hojas de cálculo y suscripciones que no encajan con una herramienta más simple. El código y los datos son suyos.</p></div>
+      <div class="es-card"><h3>Software que es suyo</h3><p>Reemplazamos hojas de cálculo y suscripciones que no encajan con una herramienta más simple. Usted conserva los archivos, los datos y el control.</p></div>
       <p class="es-eyebrow">UN CAMBIO SIN PERDER LO QUE YA SIRVE</p>
       <h2>No cambiamos su negocio. Quitamos los obstáculos.</h2>
       <h3>Lo que se queda</h3>
@@ -1778,7 +1785,7 @@ function esSnapshot() {
       <p class="es-actions"><a class="es-cta" href="/examples/">Ver todos los proyectos</a></p>
       <p class="es-eyebrow">SIN SORPRESAS</p>
       <h2>Desde la primera llamada hasta después del lanzamiento.</h2>
-      <ul class="es-list"><li>La segunda opinión siempre es gratis.</li><li>El plan escrito de su página explica el plazo, lo que necesitamos y qué pasa si fallamos.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.</li><li>El código, los datos y la documentación quedan en sus manos.</li></ul>
+      <ul class="es-list"><li>La segunda opinión siempre es gratis.</li><li>El plan escrito de su página explica el plazo, lo que necesitamos y qué pasa si fallamos.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.</li><li>Los archivos, los datos y las instrucciones quedan en sus manos.</li></ul>
       <p class="es-eyebrow">UNA PERSONA DE VERDAD CONTESTA</p>
       <h2>Cuéntenos qué está fallando.</h2>
       <p class="es-sub">Llame, mande un texto o escriba un correo en el idioma que le quede cómodo. Sin robots y sin número de ticket.</p>
@@ -1789,6 +1796,40 @@ function esSnapshot() {
         <p><a href="/">Ver el sitio completo en inglés</a></p>
       </footer>
     </div>`;
+}
+
+function ownerStartBlock(page) {
+  if (
+    new Set([
+      "/legal/",
+      "/privacy/",
+      "/terms/",
+      "/thanks/",
+      "/studio/dakota/",
+      "/studio/cockpit/",
+      "/studio/venuecircuit/",
+      "/case-studies/public-house-creative/",
+      "/case-studies/venuecircuit/",
+    ]).has(page.path)
+  ) {
+    return "";
+  }
+
+  const websiteFirst = /(?:website|web-design|wix|squarespace|wordpress|shopify|domain)/i.test(
+    `${page.path} ${page.h1 ?? ""}`,
+  );
+  const primary = websiteFirst
+    ? { href: "/website-check/", kicker: "Need a better website?", label: "Check my website" }
+    : { href: "/tech-audit/", kicker: "Not sure what to fix?", label: "Get a clear plan" };
+
+  return `
+    <aside class="lf-seo__owner-start" data-lf-contact-rail="true" aria-label="Start here">
+      <div class="lf-seo__owner-decisions">
+        <a class="lf-seo__owner-action lf-seo__owner-action--primary" href="${primary.href}"><span>${primary.kicker}</span><strong>${primary.label}</strong></a>
+        <a class="lf-seo__owner-action" href="tel:${site.phone}"><span>Something is broken?</span><strong>Call now</strong></a>
+      </div>
+      <p class="lf-seo__owner-channels"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
+    </aside>`;
 }
 
 function snapshot(page) {
@@ -1846,15 +1887,29 @@ function snapshot(page) {
     .lf-seo .lf-seo__home-reach { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 14px 0 0; color: #8A8A94; font-size: 14px; }
     .lf-seo .lf-seo__home-reach a { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
     .lf-seo .lf-seo__home-scene { position: relative; min-width: 0; min-height: 100%; overflow: hidden; margin: 0; border-left: 1px solid #27272A; background: #020203; }
-    .lf-seo .lf-seo__home-scene img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 58% 52%; }
-    .lf-seo .lf-seo__home-scene figcaption { position: absolute; right: 20px; bottom: 18px; padding: 6px 10px; border: 1px solid #27272A; border-radius: 999px; color: #D4D4D8; background: rgba(5,7,12,.86); font-family: ${mono}; font-size: 10px; text-transform: uppercase; }
-    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { position: relative; isolation: isolate; min-height: 560px; } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: inherit; } .lf-seo .lf-seo__home-promise { position: relative; z-index: 2; min-height: inherit; justify-content: flex-start; padding: 28px 20px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.85rem); max-width: none; text-wrap: balance; } .lf-seo .lf-seo__home-scene { position: absolute; z-index: 0; inset: 0; border: 0; } .lf-seo .lf-seo__home-scene::after { position: absolute; inset: 0; content: ""; background: rgba(5,7,12,.72); } .lf-seo .lf-seo__home-scene img { object-position: 76% 52%; } .lf-seo .lf-seo__home-scene figcaption { z-index: 1; right: 16px; bottom: 8px; padding: 0; border: 0; background: transparent; font-size: 8px; } }
+    .lf-seo .lf-seo__home-scene picture, .lf-seo .lf-seo__home-scene img { display: block; width: 100%; height: 100%; }
+    .lf-seo .lf-seo__home-scene img { object-fit: cover; object-position: 51% 50%; }
+    .lf-seo .lf-seo__home-path { position: absolute; left: 20px; right: 20px; bottom: 64px; display: flex; flex-wrap: wrap; gap: 6px; max-width: none; margin: 0; color: #FFFFFF; font-family: ${mono}; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
+    .lf-seo .lf-seo__home-path span { padding: 6px 8px; border: 1px solid rgba(255,255,255,.3); background: rgba(5,5,7,.9); }
+    .lf-seo .lf-seo__home-path strong { color: #F97316; }
+    .lf-seo .lf-seo__home-scene figcaption { position: absolute; left: 20px; bottom: 18px; color: #D4D4D8; font-family: ${mono}; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
+    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { min-height: auto; } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: auto; } .lf-seo .lf-seo__home-promise { min-height: 0; justify-content: flex-start; padding: clamp(32px, 6svh, 48px) 20px 22px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.95rem); max-width: 12ch; text-wrap: balance; } .lf-seo .lf-seo__home-scene { height: clamp(20rem, 82vw, 25rem); min-height: 0; border: 0; border-top: 1px solid #27272A; } .lf-seo .lf-seo__home-scene img { object-position: 50% 66%; } .lf-seo .lf-seo__home-path { bottom: 54px; } .lf-seo .lf-seo__home-scene figcaption { bottom: 12px; } }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
     .lf-seo .lf-seo__links { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 980px; }
     .lf-seo .lf-seo__links li { border-top: 1px solid #27272A; padding-top: 10px; }
     .lf-seo .lf-seo__refs { display: flex; flex-wrap: wrap; gap: 10px 18px; list-style: none; padding: 0; margin: 16px 0 0; max-width: 860px; }
+    .lf-seo .lf-seo__owner-start { max-width: 760px; margin: 26px 0 38px; padding: 18px; border: 1px solid #27272A; background: #12141A; }
+    .lf-seo .lf-seo__owner-decisions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+    .lf-seo .lf-seo__owner-action { min-height: 70px; display: flex; flex-direction: column; justify-content: center; gap: 3px; padding: 12px 16px; border: 1px solid #3F3F46; color: #FFFFFF; box-sizing: border-box; }
+    .lf-seo .lf-seo__owner-action span { color: #A1A1AA; font-size: 14px; }
+    .lf-seo .lf-seo__owner-action strong { font-family: ${display}; font-size: 20px; text-transform: uppercase; }
+    .lf-seo .lf-seo__owner-action--primary { color: #050507; border-color: #F97316; background: #F97316; }
+    .lf-seo .lf-seo__owner-action--primary span { color: #3F230D; }
+    .lf-seo .lf-seo__owner-channels { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 12px 0 0; font-size: 14px; }
+    .lf-seo .lf-seo__owner-channels a { min-height: 44px; display: inline-flex; align-items: center; color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 560px) { .lf-seo .lf-seo__owner-decisions { grid-template-columns: 1fr; } }
     .lf-seo .lf-seo__cta { font-family: ${mono}; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: #71717A; margin-top: 32px; }
     .lf-seo .lf-seo__cta-number { display: block; font-family: ${sans}; font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem); color: #FFFFFF; margin-top: 8px; letter-spacing: -0.025em; }
     .lf-seo footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid #27272A; color: #A1A1AA; }
@@ -1862,26 +1917,30 @@ function snapshot(page) {
   `;
 
   const homeBody = `
-    <section class="lf-seo__home-hero" aria-label="Little Fight NYC">
+    <section class="lf-seo__home-hero" aria-label="Little Fight NYC" data-lf-owner-intro="true">
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
           <p class="lf-seo__home-kicker">Websites · Tech · Software</p>
           <h1>Make it easier for the next customer to <em>choose you.</em></h1>
           <p class="lf-seo__home-sub">We plan the website, connect the useful parts, and stay when something breaks.</p>
-          <div class="lf-seo__home-actions" aria-label="Start here">
+          <div class="lf-seo__home-actions" aria-label="Start here" data-lf-contact-rail="true">
             <a class="lf-seo__home-action lf-seo__home-action--primary" href="/website-check/"><span>Need a website?</span><strong>Get a better website</strong></a>
             <a class="lf-seo__home-action" href="tel:${site.phone}"><span>Something broke?</span><strong>Call now</strong></a>
           </div>
           <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
-        <figure class="lf-seo__home-scene" role="img" aria-label="Illustrative neighborhood shop counter with a register, printer, and everyday business technology">
-          <img src="/brand-kit/assets/imagery/shop-systems-hero.webp" width="1440" height="901" alt="" fetchpriority="high">
-          <figcaption>Illustrative shop scene — not client work</figcaption>
+        <figure class="lf-seo__home-scene">
+          <picture>
+            <source media="(width &lt; 48rem)" srcset="/images/home/connected-counter-hero-mobile-v1.webp" type="image/webp">
+            <img src="/images/home/connected-counter-hero-desktop-v1.webp" width="1672" height="941" alt="Illustrative small-business counter with keys, a website tablet, booking terminal, router, phone, receipt printer, and support notebook joined by an orange cable" fetchpriority="high">
+          </picture>
+          <p class="lf-seo__home-path"><span>Search</span><span>Website</span><span>Booking</span><span>Support</span><strong>One working path</strong></p>
+          <figcaption>Illustrative Little Fight scene — no client data</figcaption>
         </figure>
       </div>
     </section>
     <p>Websites, IT support, Google visibility, and business systems—built around the way each storefront earns the next customer. Founded 2021. Manhattan, New York. Little Fight helps owner-operated teams keep what works, connect what matters, replace what drags, and build only what actually fits.</p>
-    <p>If something is hurting customers right now, call first. If the setup is messy, expensive, slow, or unclear, book the free Tech Audit so the first move is based on your real website, tools, search presence, and workflow.</p>
+    <p>If something is hurting customers right now, call first. If the setup is messy, expensive, slow, or unclear, start the free review so the first move is based on your real website, tools, search presence, and daily handoffs.</p>
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
     ${methodBlock(page)}
@@ -1913,11 +1972,14 @@ function snapshot(page) {
     (page.path === "/tech-audit/") || page.service || page.area || page.answerGuide
   );
 
+  const [leadParagraph, ...remainingParagraphs] = paragraphs;
   const innerBody = `
-    <article${articleAttrs}>
+    <article${articleAttrs} data-lf-owner-intro="true">
     <h1 itemprop="headline">${escapeHtml(page.h1)}</h1>
     ${articleMeta(page)}
-    ${paragraphs.map((paragraph, i) => `<p${i === 0 ? ' class="short-answer"' : ""}>${escapeHtml(paragraph)}</p>`).join("\n")}
+    ${leadParagraph ? `<p class="short-answer">${escapeHtml(leadParagraph)}</p>` : ""}
+    ${ownerStartBlock(page)}
+    ${remainingParagraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n")}
     ${authored}
     ${founderBlock(page)}
     ${legalBlock(page)}

@@ -22,10 +22,10 @@ import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
 import "@/styles/editorial/service-detail.css";
 
 const FIGURE_CAPTION: Record<string, string> = {
-  "tech-consulting": "The middle of the stack is where time and money often leak.",
+  "tech-consulting": "The middle of the day is where time and money often leak.",
   "it-support": "The register, reader, and tablet are the tools the day runs on.",
   "custom-local-websites": "Built for your block, not picked from a template menu.",
-  "business-systems": "One source of truth instead of a stack of spreadsheets and memory.",
+  "business-systems": "One clear place to check instead of scattered spreadsheets and memory.",
 };
 
 const FEATURE_IMAGE: Record<string, string> = {
@@ -51,7 +51,7 @@ function ServiceOwnerMath({ slug }: { slug: string }) {
 // Per-service closing band — the last line matches the page you just read.
 const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   "tech-consulting": {
-    heading: "Want us to read your setup?",
+    heading: "Want a second set of eyes?",
     lede: "The first hour is free. We tell you what to keep, what to cut, and what to fix first. If you do not need us, we say so.",
   },
   "it-support": {
@@ -64,7 +64,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "business-systems": {
     heading: "Tired of running it all by hand?",
-    lede: "Tell us how your day works. We will show you what the software should be doing for you instead.",
+    lede: "Tell us how your day works. We will show you what should happen without all the repeat typing.",
   },
 };
 
@@ -119,7 +119,7 @@ function WebsiteAcquisitionBlock() {
             </div>
             <div className="lf-sd-web__owner">
               <p>
-                <strong>One accountable project lead.</strong> The person who understands the work stays close from the first read through launch.{" "}
+                <strong>One person stays with the job.</strong> You do not have to explain the business again every time we make progress.{" "}
                 <Link to="/about/">How we work</Link>
               </p>
             </div>
@@ -129,24 +129,24 @@ function WebsiteAcquisitionBlock() {
         <div className="lf-sd-web__terms">
           <header className="lf-sd-web__terms-head">
             <h2>Know the fit before the quote.</h2>
-            <p>The first read is free. The scope, responsibilities, and exact quote are written down before work starts.</p>
+            <p>The first look is free. Before work starts, you get a written plan, who does what, and the exact price.</p>
           </header>
           <dl className="lf-sd-web__terms-grid">
             <div>
               <dt>Works best for</dt>
-              <dd>Owner-led businesses where calls, bookings, visits, or qualified inquiries matter, and one team should own the path.</dd>
+              <dd>Businesses where calls, bookings, visits, or serious questions matter, and one person should know what happens next.</dd>
             </div>
             <div>
               <dt>Not the right fit</dt>
-              <dd>A large catalog that changes every day may belong on a maintained commerce platform. A working site may need a cleanup, not a rebuild.</dd>
+              <dd>A store with thousands of items changing every day may need a different kind of shop. A working site may only need a cleanup.</dd>
             </div>
             <div>
               <dt>What we need from you</dt>
-              <dd>One decision-maker, accurate services and hours, usable brand assets, and access to the domain and business tools. Never send passwords through the form.</dd>
+              <dd>One decision-maker, accurate services and hours, usable photos or logos, and access to the website address and business tools. Never send passwords through the form.</dd>
             </div>
             <div>
               <dt>Scope, ownership, and care</dt>
-              <dd>The written scope names review rounds, launch responsibilities, timing, and care. You own the code, domain, and content.</dd>
+              <dd>The written plan names review rounds, launch timing, and care. You own the code, website address, and content.</dd>
             </div>
           </dl>
         </div>

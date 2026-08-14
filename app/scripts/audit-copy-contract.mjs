@@ -9,8 +9,8 @@
  *
  * Deliberate scope boundary:
  * - route-meta is the marketing-route catalog;
- * - Dakota, VERA, Lab/static experiences, PHC, and the frozen VenueCircuit
- *   presentation are not read here;
+ * - Dakota, VERA, Lab, PHC, and the frozen VenueCircuit presentation are not
+ *   read here; the one public MySpace utility is checked explicitly;
  * - this script never writes route metadata or page content.
  */
 import { readFile } from "node:fs/promises";
@@ -42,6 +42,16 @@ const BANNED_COPY = [
   { label: "best-in-class", pattern: /\bbest[- ]in[- ]class\b/i },
   { label: "industry-leading", pattern: /\bindustry[- ]leading\b/i },
   { label: "seamless solutions", pattern: /\bseamless solutions\b/i },
+  { label: "frontend/backend", pattern: /\b(?:front[- ]?end|back[- ]?end)\b/i },
+  { label: "full-stack", pattern: /\bfull[- ]?stack\b/i },
+  { label: "tech stack", pattern: /\btech stack\b/i },
+  { label: "codebase", pattern: /\bcodebase\b/i },
+  { label: "repository", pattern: /\brepositor(?:y|ies)\b/i },
+  { label: "deployment", pattern: /\bdeployment(?: path)?\b/i },
+  { label: "technical architecture", pattern: /\btechnical architecture\b/i },
+  { label: "schema markup", pattern: /\bschema markup\b/i },
+  { label: "API integration", pattern: /\bAPI integration\b/i },
+  { label: "conversion rate", pattern: /\bconversion rate\b/i },
 ];
 
 const RETIRED_EMAILS = /(?:support|projects|billing)@littlefightnyc\.com/gi;
@@ -247,8 +257,30 @@ for (const page of pages) {
   }
 
   if (!NON_MARKETING_ROUTES.has(routePath)) {
+    if (!html.includes('data-lf-owner-intro="true"')) {
+      failures.push(`${routePath}: missing the owner-first opening contract`);
+    }
+    if (!html.includes('data-lf-contact-rail="true"')) {
+      failures.push(`${routePath}: missing the first-screen contact rail`);
+    }
+
     const hasAction = anchors.some((tag) => ACTION_HREF.test(attr(tag, "href")));
     if (!hasAction) failures.push(`${routePath}: marketing route has no visible next action or contact path`);
+
+    const hrefs = anchors.map((tag) => attr(tag, "href"));
+    const contactChecks = [
+      ["Call", hrefs.some((href) => /^tel:/i.test(href))],
+      ["Text", hrefs.some((href) => /^sms:/i.test(href))],
+      ["Email", hrefs.some((href) => /^mailto:/i.test(href))],
+      [
+        "Form",
+        hrefs.some((href) => /^\/tech-audit\/?(?:[?#].*)?$/i.test(href)) ||
+          (routePath === "/tech-audit/" && hrefs.includes("#fit-step-title")),
+      ],
+    ];
+    for (const [label, present] of contactChecks) {
+      if (!present) failures.push(`${routePath}: ${label} is missing from the rendered contact choices`);
+    }
   }
 }
 
@@ -268,6 +300,29 @@ for (const post of journal) {
   }
 }
 
+try {
+  const myspace = await readFile(path.join(distRoot, "myspace-demo", "index.html"), "utf8");
+  const myspaceAnchors = anchorTags(myspace);
+  const myspaceHrefs = myspaceAnchors.map((tag) => attr(tag, "href"));
+  if (!myspace.includes("Archived interface study.")) {
+    failures.push("/myspace-demo/: missing the plain archived-interface disclosure");
+  }
+  if (myspaceHrefs.some((href) => /^https?:|^\/\//i.test(href))) {
+    failures.push("/myspace-demo/: archive actions must stay inside Little Fight");
+  }
+  const myspaceContacts = [
+    ["Call", myspaceHrefs.some((href) => /^tel:\+16463600318$/i.test(href))],
+    ["Text", myspaceHrefs.some((href) => /^sms:\+16463600318$/i.test(href))],
+    ["Email", myspaceHrefs.some((href) => /^mailto:hello@littlefightnyc\.com$/i.test(href))],
+    ["Form", myspaceHrefs.some((href) => /^\/tech-audit\/\?source=myspace_/i.test(href))],
+  ];
+  for (const [label, present] of myspaceContacts) {
+    if (!present) failures.push(`/myspace-demo/: ${label} is missing from the Little Fight next actions`);
+  }
+} catch {
+  failures.push("/myspace-demo/: missing generated HTML");
+}
+
 if (failures.length > 0) {
   console.error(`FAIL copy-contract — ${failures.length} rendered copy issue(s):\n`);
   for (const failure of failures) console.error(`  - ${failure}`);
@@ -276,5 +331,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `PASS copy-contract — ${checked} rendered marketing routes; ${answerPaths.size} answer guides and ${journalIdentitySlugs.size} journal posts are in parity.`,
+  `PASS copy-contract — ${checked} rendered marketing routes plus MySpace; ${answerPaths.size} answer guides and ${journalIdentitySlugs.size} journal posts are in parity.`,
 );

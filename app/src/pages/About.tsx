@@ -10,7 +10,7 @@ const STANDARDS = [
   { label: "Consulting", value: "Free, always" },
   { label: "Website timing", value: "A written 14-day promise for qualifying scopes" },
   { label: "Urgent NYC on-site help", value: "Within 24 hours when the fix needs hands" },
-  { label: "Missed-call callback", value: "Within 2 hours, 9am-9pm ET" },
+  { label: "Missed-call callback", value: "We aim for within 2 hours, 9am-9pm ET" },
 ] as const;
 
 export default function About() {
@@ -21,10 +21,10 @@ export default function About() {
         icon={Users}
         title={
           <>
-            Small firm. <span className="lf-em">Serious pull.</span>
+            Less runaround. <span className="lf-em">More getting done.</span>
           </>
         }
-        dek="We make websites and business technology easier to trust, own, and use."
+        dek="We make it easier for customers to choose you and for the day to keep moving."
         image={{
           src: "/assets/about-empire-diner.webp",
           alt: "The chrome-clad Empire Diner glowing on a Manhattan corner at night",
@@ -38,7 +38,7 @@ export default function About() {
           <header className="lf-about-belief__head">
             <p>What we believe</p>
             <h2 id="lf-about-belief-title">
-              The business should not have to bend around the technology.
+              Your business should not have to bend around a tool.
             </h2>
           </header>
 
@@ -55,9 +55,8 @@ export default function About() {
               something new only when it earns its place.
             </p>
             <p>
-              The goal is not more technology. It is a clearer path for the
-              customer, fewer handoffs to guess through, and a setup your
-              people can trust.
+              The goal is not more stuff to learn. It is a clearer path for the
+              customer, fewer dropped steps, and a setup your people can trust.
             </p>
           </div>
 
@@ -81,20 +80,17 @@ export default function About() {
           <header className="lf-about-operating__head">
             <p>Small on purpose</p>
             <h2 id="lf-about-operating-title">
-              Close enough to understand the business. Strong enough to build
-              what it needs.
+              We learn the business. Then we build what it actually needs.
             </h2>
             <div>
               <p>
-                Small means you speak to fewer people and the same accountable
-                lead stays close. The team that learns how your business works
-                stays with the decisions, the build, and the final files and
-                instructions.
+                You speak to fewer people. The person who learns how your
+                business works stays close through the decisions, the build,
+                and the final files and instructions.
               </p>
               <p>
-                That same firm can ship a focused website, stabilize the tools
-                behind the counter, or build software around work that no
-                off-the-shelf product understands.
+                We can build a focused website, fix the tools behind the
+                counter, or make a small tool when nothing you can buy fits the job.
               </p>
             </div>
           </header>
@@ -105,9 +101,9 @@ export default function About() {
               <strong>Little Fight NYC</strong>
             </div>
             <p>
-              Little Fight NYC stays accountable for the scope, the decisions,
-              and the final files and instructions. You should not have to
-              explain the business from the beginning every time the work moves.
+              We stay responsible for the plan, the decisions, and the final
+              files and instructions. You should not have to explain the
+              business from the beginning every time the work moves.
             </p>
             <div className="lf-about-founder__meta">
               <span>New York City</span>
