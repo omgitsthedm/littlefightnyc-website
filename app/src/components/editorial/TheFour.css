@@ -1,4 +1,4 @@
-/* Four plain entry points. Real business environments replace abstract diagrams. */
+/* Four owner problems, arranged as a service index rather than a card grid. */
 
 .lf-four {
   padding: clamp(4.5rem, 8vw, 8rem) var(--lf-margin-mobile);
@@ -7,63 +7,137 @@
 }
 
 .lf-editorial .lf-four__head,
-.lf-editorial .lf-four__grid {
+.lf-editorial .lf-four__list,
+.lf-editorial .lf-four__footnote {
   width: min(100%, var(--lf-max-w));
   margin-inline: auto;
 }
 
 .lf-editorial .lf-four__head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--lf-space-3);
-  margin-bottom: clamp(2.5rem, 5vw, 5rem);
+  gap: var(--lf-space-4);
+  margin-bottom: clamp(2.25rem, 5vw, 4.75rem);
 }
 
-.lf-editorial .lf-four__eyebrow {
+.lf-editorial .lf-four__eyebrow,
+.lf-editorial .lf-four__service {
   margin: 0;
   color: var(--lf-fight);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-xs);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .lf-editorial .lf-four__title {
-  max-width: 16ch;
-  margin: 0;
+  max-width: 12ch;
+  margin: var(--lf-space-3) 0 0;
   color: var(--lf-bone);
-  font-family: var(--lf-display);
-  font-size: clamp(2.6rem, 6vw, 5.75rem);
-  font-weight: var(--lf-display-weight);
-  letter-spacing: -0.035em;
-  line-height: 0.96;
+  font-family: var(--lf-heading);
+  font-size: clamp(3rem, 7.4vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+}
+
+.lf-editorial .lf-four__head-side {
+  display: grid;
+  align-content: end;
+  gap: var(--lf-space-4);
 }
 
 .lf-editorial .lf-four__dek {
-  max-width: 54ch;
-  margin: var(--lf-space-2) 0 0;
+  max-width: 40ch;
+  margin: 0;
   color: var(--lf-bone-soft);
   font-size: var(--lf-text-md);
   line-height: 1.48;
 }
 
-.lf-editorial .lf-four__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--lf-space-4);
+.lf-editorial .lf-four__all {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--lf-bone);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
 }
 
-.lf-editorial .lf-four__path {
+.lf-editorial .lf-four__all svg,
+.lf-editorial .lf-four__arrow svg {
+  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-four__all:hover svg,
+.lf-editorial .lf-four__all:focus-visible svg,
+.lf-editorial .lf-four__row:hover .lf-four__arrow svg,
+.lf-editorial .lf-four__row:focus-visible .lf-four__arrow svg {
+  transform: translateX(0.3rem);
+}
+
+.lf-editorial .lf-four__list {
+  margin-block: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-four__item {
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-four__row {
+  display: grid;
+  grid-template-columns: minmax(2.5rem, auto) minmax(0, 1fr) 6.5rem 2.25rem;
+  gap: clamp(0.9rem, 2vw, 2rem);
+  align-items: center;
+  min-height: 10.25rem;
+  padding: clamp(1.15rem, 2.5vw, 2.1rem) 0;
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard), background-color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-editorial .lf-four__number {
+  align-self: start;
+  padding-top: 0.25rem;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-sm);
+  letter-spacing: 0.08em;
+}
+
+.lf-editorial .lf-four__body {
   min-width: 0;
-  overflow: hidden;
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-card-bg);
+}
+
+.lf-editorial .lf-four__name {
+  max-width: 18ch;
+  margin: 0.4rem 0 0;
+  color: var(--lf-bone);
+  font-family: var(--lf-heading);
+  font-size: clamp(2rem, 4.2vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.91;
+}
+
+.lf-editorial .lf-four__outcome {
+  max-width: 54ch;
+  margin: var(--lf-space-3) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.45;
 }
 
 .lf-editorial .lf-four__image {
-  position: relative;
-  aspect-ratio: 16 / 9;
+  width: 6.5rem;
+  aspect-ratio: 1;
   overflow: hidden;
   background: var(--lf-paper-2);
 }
@@ -77,93 +151,62 @@
 
 .lf-editorial .lf-four__image img {
   object-fit: cover;
-  filter: saturate(0.82) contrast(1.05);
-  transition: transform 700ms var(--lf-ease-out-quart), filter 300ms ease;
+  filter: saturate(0.78) contrast(1.04);
+  transition: transform 500ms var(--lf-ease-out-quart);
 }
 
-.lf-editorial .lf-four__path:hover .lf-four__image img {
-  transform: scale(1.025);
-  filter: saturate(1) contrast(1.03);
+.lf-editorial .lf-four__row:hover .lf-four__image img,
+.lf-editorial .lf-four__row:focus-visible .lf-four__image img {
+  transform: scale(1.035);
 }
 
-.lf-editorial .lf-four__image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 54%, rgba(5, 7, 12, 0.66));
-  pointer-events: none;
-}
-
-.lf-editorial .lf-four__number {
-  position: absolute;
-  right: var(--lf-space-4);
-  bottom: var(--lf-space-3);
-  z-index: 1;
+.lf-editorial .lf-four__arrow {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
   color: var(--lf-bone);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-sm);
-  letter-spacing: 0.12em;
 }
 
-.lf-editorial .lf-four__copy {
-  display: flex;
-  min-width: 0;
-  height: 100%;
-  flex-direction: column;
-  padding: clamp(1.4rem, 3vw, 2.25rem);
+.lf-editorial .lf-four__item--primary .lf-four__number,
+.lf-editorial .lf-four__item--primary .lf-four__service,
+.lf-editorial .lf-four__item--primary .lf-four__arrow {
+  color: var(--lf-fight);
 }
 
-.lf-editorial .lf-four__name {
-  margin: 0;
-  color: var(--lf-bone);
-  font-family: var(--lf-display);
-  font-size: clamp(1.8rem, 3vw, 3rem);
-  font-weight: var(--lf-display-weight);
-  letter-spacing: -0.025em;
-  line-height: 1;
+.lf-editorial .lf-four__item--primary .lf-four__row {
+  background: var(--lf-fight);
+  margin-inline: clamp(-1.25rem, -3vw, -3.5rem);
+  padding-inline: clamp(1.25rem, 3vw, 3.5rem);
 }
 
-.lf-editorial .lf-four__situation,
-.lf-editorial .lf-four__outcome {
-  margin: var(--lf-space-4) 0 0;
+.lf-editorial .lf-four__item--primary .lf-four__number,
+.lf-editorial .lf-four__item--primary .lf-four__service,
+.lf-editorial .lf-four__item--primary .lf-four__arrow,
+.lf-editorial .lf-four__item--primary .lf-four__outcome {
+  color: var(--lf-ink);
+}
+
+.lf-editorial .lf-four__item--primary .lf-four__name {
+  color: var(--lf-ink);
+}
+
+.lf-editorial .lf-four__row:focus-visible,
+.lf-editorial .lf-four__all:focus-visible {
+  outline: 2px solid var(--lf-bone);
+  outline-offset: -2px;
+}
+
+.lf-editorial .lf-four__item--primary .lf-four__row:focus-visible {
+  outline-color: var(--lf-ink);
+}
+
+.lf-editorial .lf-four__footnote {
+  max-width: 64ch;
+  margin-top: clamp(2rem, 4vw, 3.75rem);
+  color: var(--lf-bone-soft);
   font-size: var(--lf-text-base);
   line-height: 1.5;
-}
-
-.lf-editorial .lf-four__situation {
-  color: var(--lf-bone);
-}
-
-.lf-editorial .lf-four__outcome {
-  color: var(--lf-bone-soft);
-}
-
-.lf-editorial .lf-four__cta {
-  display: inline-flex;
-  width: fit-content;
-  min-height: 48px;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: auto;
-  padding-top: var(--lf-space-5);
-  color: var(--lf-fight);
-  font-size: var(--lf-text-sm);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.lf-editorial .lf-four__cta svg {
-  transition: transform var(--lf-time-snappy) var(--lf-ease-standard);
-}
-
-.lf-editorial .lf-four__cta:hover svg,
-.lf-editorial .lf-four__cta:focus-visible svg {
-  transform: translate(2px, -2px);
-}
-
-.lf-editorial .lf-four__cta:focus-visible {
-  outline: 2px solid var(--lf-fight);
-  outline-offset: 4px;
 }
 
 @media (min-width: 720px) {
@@ -172,30 +215,17 @@
   }
 
   .lf-editorial .lf-four__head {
-    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+    grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 0.8fr);
     align-items: end;
   }
 
-  .lf-editorial .lf-four__eyebrow {
-    grid-column: 1 / -1;
+  .lf-editorial .lf-four__row {
+    grid-template-columns: minmax(3.4rem, 0.5fr) minmax(0, 4fr) minmax(8rem, 1.25fr) 3rem;
   }
 
-  .lf-editorial .lf-four__dek {
-    margin: 0 0 0 auto;
-  }
-
-  .lf-editorial .lf-four__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lf-editorial .lf-four__path--lead {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.14fr) minmax(20rem, 0.86fr);
-  }
-
-  .lf-editorial .lf-four__path--lead .lf-four__image {
-    aspect-ratio: 16 / 10;
+  .lf-editorial .lf-four__image {
+    width: auto;
+    aspect-ratio: 1.1 / 1;
   }
 }
 
@@ -204,26 +234,26 @@
     padding-inline: var(--lf-margin-desktop);
   }
 
-  .lf-editorial .lf-four__grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  .lf-editorial .lf-four__row {
+    grid-template-columns: minmax(4rem, 0.55fr) minmax(0, 4.8fr) minmax(12rem, 1.6fr) 4rem;
+    min-height: 14rem;
   }
 
-  .lf-editorial .lf-four__path--lead {
-    grid-column: 1 / -1;
-  }
-
-  .lf-editorial .lf-four__path:not(.lf-four__path--lead) {
-    grid-column: span 2;
+  .lf-editorial .lf-four__image {
+    aspect-ratio: 1.45 / 1;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-editorial .lf-four__image img,
-  .lf-editorial .lf-four__cta svg {
+  .lf-editorial .lf-four__row,
+  .lf-editorial .lf-four__all svg,
+  .lf-editorial .lf-four__arrow svg,
+  .lf-editorial .lf-four__image img {
     transition: none;
   }
 
-  .lf-editorial .lf-four__path:hover .lf-four__image img {
+  .lf-editorial .lf-four__row:hover .lf-four__image img,
+  .lf-editorial .lf-four__row:focus-visible .lf-four__image img {
     transform: none;
   }
 }

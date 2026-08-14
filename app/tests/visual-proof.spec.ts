@@ -32,7 +32,7 @@ test("owner calculator labels examples, then owner input", async ({ page }) => {
   await page.goto("/services/custom-local-websites/");
   const calculator = page.locator('[data-lf-visual-proof="owner-calculator"]').first();
   await expect(calculator).toContainText("Example");
-  await calculator.getByLabel("Missed inquiries each week").fill("4");
+  await calculator.getByLabel("Average sale or job value").fill("400");
   await expect(calculator).toContainText("Your numbers");
   await expect(calculator.getByRole("status")).toContainText("$3,200");
   await calculator.getByLabel("Currency & number style").selectOption("GBP");

@@ -851,10 +851,10 @@ function routeImagePreload(page) {
   if (!asset?.endsWith(".webp")) return "";
 
   if (page.path === "/") {
-    // The selected home direction is type + form led. The first real image is
-    // the proof rail below the acquisition surface, so preloading it would
-    // compete with the heading fonts and form CSS without improving LCP.
-    return "";
+    // The approved shop scene is the homepage's responsive LCP image. It is a
+    // single local WebP at every viewport, so preload the exact request the
+    // hydrated and no-JS heroes both use.
+    return `<link rel="preload" href="/brand-kit/assets/imagery/shop-systems-hero.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
 
   // The website service now leads with real shipped work instead of the
@@ -1830,22 +1830,25 @@ function snapshot(page) {
     .lf-seo .lf-seo__phone { min-height: 44px; display: inline-flex; align-items: center; font-size: 16px; font-weight: 600; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-cta { min-height: 44px; display: inline-flex; align-items: center; background: #F97316; color: #050507; font-weight: 700; font-size: 16px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
     @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
-    .lf-seo .lf-seo__home-hero { min-height: min(100svh, 760px); margin: -32px -20px 32px; border-bottom: 1px solid #27272A; background: #050507; }
-    .lf-seo .lf-seo__home-hero-copy { display: grid; grid-template-columns: minmax(0, 1fr); gap: 44px; align-items: center; width: min(100%, 1440px); min-height: inherit; margin: 0 auto; padding: 72px 20px; box-sizing: border-box; }
+    .lf-seo .lf-seo__home-hero { min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; border-bottom: 1px solid #27272A; background: #050507; }
+    .lf-seo .lf-seo__home-hero-copy { display: grid; grid-template-columns: minmax(0, .94fr) minmax(31rem, 1.06fr); align-items: stretch; width: min(100%, 1600px); min-height: inherit; margin: 0 auto; box-sizing: border-box; }
+    .lf-seo .lf-seo__home-promise { display: flex; flex-direction: column; justify-content: center; padding: 64px 44px 64px max(64px, calc((100vw - 1440px) / 2 + 64px)); box-sizing: border-box; }
     .lf-seo .lf-seo__home-kicker { font-family: ${mono}; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: #60A5FA; margin: 0 0 22px; }
     .lf-seo h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98; letter-spacing: 0; font-weight: 700; margin: 32px 0 24px; color: #FFFFFF; max-width: 18ch; }
     .lf-seo h1 em { color: #F97316; font-style: italic; font-weight: 700; }
-    .lf-seo .lf-seo__home-hero h1 { max-width: 9ch; font-size: clamp(4rem, 10vw, 8rem); line-height: 0.87; text-transform: uppercase; margin: 0 0 28px; }
+    .lf-seo .lf-seo__home-hero h1 { max-width: none; font-size: clamp(3.35rem, 4.25vw, 4.8rem); line-height: 0.87; text-transform: uppercase; margin: 0 0 28px; }
     .lf-seo .lf-seo__home-hero h1 em { font-style: normal; display: block; }
-    .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0 0 16px; }
-    .lf-seo .lf-seo__home-outcomes { color: #F97316; font-weight: 700; margin: 0; }
-    .lf-seo .lf-seo__home-check { display: grid; gap: 12px; padding: clamp(24px, 4vw, 42px); border: 1px solid #27272A; border-radius: 32px; background: #12141A; }
-    .lf-seo .lf-seo__home-check h2 { max-width: none; margin: 0 0 8px; font-size: clamp(2rem, 4vw, 3.2rem); }
-    .lf-seo .lf-seo__home-check p { margin: 0 0 10px; }
-    .lf-seo .lf-seo__home-check label { margin-top: 8px; color: #A1A1AA; font-family: ${mono}; font-size: 16px; text-transform: uppercase; }
-    .lf-seo .lf-seo__home-check input { min-height: 54px; padding: 0 16px; border: 1px solid #27272A; border-radius: 12px; color: #FFFFFF; background: #050507; font: inherit; font-size: 16px; }
-    .lf-seo .lf-seo__home-check button { min-height: 56px; margin-top: 8px; border: 0; border-radius: 12px; color: #050507; background: #F97316; font-family: ${display}; font-size: 18px; font-weight: 700; text-transform: uppercase; }
-    @media (min-width: 1024px) { .lf-seo .lf-seo__home-hero-copy { grid-template-columns: minmax(0, 1.08fr) minmax(28rem, 0.92fr); padding: 88px 64px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(5.8rem, 7.2vw, 8.3rem); } }
+    .lf-seo .lf-seo__home-sub { font-size: clamp(1.05rem, 2.2vw, 1.28rem); line-height: 1.5; color: #D4D4D8; max-width: 42ch; margin: 0; }
+    .lf-seo .lf-seo__home-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+    .lf-seo .lf-seo__home-action { min-height: 68px; display: flex; flex-direction: column; justify-content: center; padding: 10px 16px; border: 1px solid #27272A; border-radius: 12px; color: #FFFFFF; background: #12141A; box-sizing: border-box; }
+    .lf-seo .lf-seo__home-action strong { font-family: ${display}; font-size: 18px; text-transform: uppercase; }
+    .lf-seo .lf-seo__home-action--primary { color: #050507; border-color: #F97316; background: #F97316; }
+    .lf-seo .lf-seo__home-reach { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 14px 0 0; color: #8A8A94; font-size: 14px; }
+    .lf-seo .lf-seo__home-reach a { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
+    .lf-seo .lf-seo__home-scene { position: relative; min-width: 0; min-height: 100%; overflow: hidden; margin: 0; border-left: 1px solid #27272A; background: #020203; }
+    .lf-seo .lf-seo__home-scene img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 58% 52%; }
+    .lf-seo .lf-seo__home-scene figcaption { position: absolute; right: 20px; bottom: 18px; padding: 6px 10px; border: 1px solid #27272A; border-radius: 999px; color: #D4D4D8; background: rgba(5,7,12,.86); font-family: ${mono}; font-size: 10px; text-transform: uppercase; }
+    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { position: relative; isolation: isolate; min-height: 560px; } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: inherit; } .lf-seo .lf-seo__home-promise { position: relative; z-index: 2; min-height: inherit; justify-content: flex-start; padding: 28px 20px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.85rem); max-width: none; text-wrap: balance; } .lf-seo .lf-seo__home-scene { position: absolute; z-index: 0; inset: 0; border: 0; } .lf-seo .lf-seo__home-scene::after { position: absolute; inset: 0; content: ""; background: rgba(5,7,12,.72); } .lf-seo .lf-seo__home-scene img { object-position: 76% 52%; } .lf-seo .lf-seo__home-scene figcaption { z-index: 1; right: 16px; bottom: 8px; padding: 0; border: 0; background: transparent; font-size: 8px; } }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
@@ -1862,22 +1865,19 @@ function snapshot(page) {
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC">
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
-          <p class="lf-seo__home-kicker">Street-level technology</p>
+          <p class="lf-seo__home-kicker">Websites · Tech · Software</p>
           <h1>Make it easier for the next customer to <em>choose you.</em></h1>
-          <p class="lf-seo__home-sub">A website that earns trust. Technology that keeps the day moving.</p>
-          <p class="lf-seo__home-outcomes">Bookings. Visits. Orders. Consultations. Inquiries.</p>
+          <p class="lf-seo__home-sub">We plan the website, connect the useful parts, and stay when something breaks.</p>
+          <div class="lf-seo__home-actions" aria-label="Start here">
+            <a class="lf-seo__home-action lf-seo__home-action--primary" href="/website-check/"><span>Need a website?</span><strong>Get a better website</strong></a>
+            <a class="lf-seo__home-action" href="tel:${site.phone}"><span>Something broke?</span><strong>Call now</strong></a>
+          </div>
+          <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
-        <form class="lf-seo__home-check" action="/examples/audit/" method="get">
-          <input type="hidden" name="source" value="home_nojs">
-          <p class="lf-seo__home-kicker">Free website check</p>
-          <h2>See what gets in the way.</h2>
-          <p>Measure the public page and get the available findings in plain English.</p>
-          <label for="seo-home-url">Website URL</label>
-          <input id="seo-home-url" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com" required>
-          <label for="seo-home-email">Email for report (optional here)</label>
-          <input id="seo-home-email" type="email" autocomplete="email" placeholder="you@company.com">
-          <button type="submit">Check my website</button>
-        </form>
+        <figure class="lf-seo__home-scene" role="img" aria-label="Illustrative neighborhood shop counter with a register, printer, and everyday business technology">
+          <img src="/brand-kit/assets/imagery/shop-systems-hero.webp" width="1440" height="901" alt="" fetchpriority="high">
+          <figcaption>Illustrative shop scene — not client work</figcaption>
+        </figure>
       </div>
     </section>
     <p>Websites, IT support, Google visibility, and business systems—built around the way each storefront earns the next customer. Founded 2021. Manhattan, New York. Little Fight helps owner-operated teams keep what works, connect what matters, replace what drags, and build only what actually fits.</p>

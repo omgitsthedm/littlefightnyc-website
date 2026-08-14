@@ -71,10 +71,10 @@ export default function QuietNav() {
   }, []);
 
   // The mobile drawer cannot survive into the desktop layout. Close it as
-  // soon as a resize or device rotation crosses the toggle breakpoint so the
+  // soon as a resize or device rotation crosses the full-navigation breakpoint so the
   // page never remains scroll-locked or inert without a visible close button.
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 82rem)");
+    const desktop = window.matchMedia("(min-width: 76rem)");
     const closeAtDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setOpen(false);
     };
@@ -238,6 +238,15 @@ export default function QuietNav() {
             aria-modal="true"
             aria-label="Menu"
           >
+            <button
+              type="button"
+              className="lf-nav__panel-close"
+              aria-label="Close navigation panel"
+              onClick={() => setOpen(false)}
+            >
+              Close menu
+              <X size={18} strokeWidth={1.9} aria-hidden="true" />
+            </button>
             <nav className="lf-nav__panel-nav" aria-label="Primary mobile">
               <p className="lf-nav__panel-label" aria-hidden="true">Go to</p>
               {NAV_LINKS.map((link, i) => (

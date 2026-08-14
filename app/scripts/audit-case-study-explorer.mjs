@@ -34,6 +34,12 @@ const explorerCssPath = path.join(
 );
 const caseDetailPath = path.join(appRoot, "src", "pages", "CaseStudyDetail.tsx");
 const caseDataPath = path.join(appRoot, "src", "data", "site-cases.ts");
+const homeFeaturedWorkPath = path.join(
+  appRoot,
+  "src",
+  "data",
+  "home-featured-work.ts",
+);
 const workShowcasePath = path.join(
   appRoot,
   "src",
@@ -366,6 +372,53 @@ const caseModule = await import(
   `data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString("base64")}`
 );
 const allCases = caseModule.caseStudies;
+
+const homeFeaturedBundle = await esbuildBundle({
+  entryPoints: [homeFeaturedWorkPath],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  write: false,
+  logLevel: "silent",
+});
+const homeFeaturedModule = await import(
+  `data:text/javascript;base64,${Buffer.from(homeFeaturedBundle.outputFiles[0].text).toString("base64")}`
+);
+const homeFeaturedWork = homeFeaturedModule.HOME_FEATURED_WORK;
+
+const requiredHomeFeaturedSlugs = [
+  "cc-films",
+  "hair-by-rachel-charles",
+  "clearhelp",
+];
+if (
+  homeFeaturedWork.length !== requiredHomeFeaturedSlugs.length
+  || requiredHomeFeaturedSlugs.some((slug, index) => homeFeaturedWork[index]?.slug !== slug)
+) {
+  fail("homepage portfolio must keep the approved three live proofs in their deliberate order");
+}
+
+for (const homeProof of homeFeaturedWork) {
+  const study = allCases.find((entry) => entry.slug === homeProof.slug);
+  if (!study?.featureProof) {
+    fail(`homepage portfolio: ${homeProof.slug} is missing canonical feature proof`);
+    continue;
+  }
+  const expected = {
+    name: study.client,
+    label: study.featureProof.label,
+    outcome: study.featureProof.ownerOutcome,
+    image: study.image,
+    source: study.featureProof.sourceUrl,
+    sourceLabel: study.featureProof.sourceLabel,
+    verifiedAt: study.featureProof.verifiedAt,
+  };
+  for (const [field, value] of Object.entries(expected)) {
+    if (homeProof[field] !== value) {
+      fail(`homepage portfolio: ${homeProof.slug} ${field} drifted from canonical case data`);
+    }
+  }
+}
 
 for (const study of allCases) {
   const linkPolicy = study.showcase?.linkPolicy;

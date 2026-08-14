@@ -190,7 +190,13 @@ for (const contract of [
 }
 
 const moneyLeakSource = await text("src/components/dataviz/MoneyLeakMeter.tsx");
-if (!/Estimated gross revenue at risk over 4 weeks/u.test(moneyLeakSource) || !/weeks:\s*52/u.test(moneyLeakSource)) {
+if (
+  !/Estimated gross revenue at risk/u.test(moneyLeakSource) ||
+  !/<th scope="row">Weekly<\/th>/u.test(moneyLeakSource) ||
+  !/<th scope="row">Four weeks<\/th>/u.test(moneyLeakSource) ||
+  !/<th scope="row">Annual<\/th>/u.test(moneyLeakSource) ||
+  !/weeks:\s*52/u.test(moneyLeakSource)
+) {
   fail("MoneyLeakMeter must show weekly, four-week, and annual gross-revenue-at-risk scenarios");
 }
 

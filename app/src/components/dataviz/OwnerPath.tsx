@@ -1,74 +1,99 @@
+import { useState } from "react";
+import { RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
 import FlowDiagram, { type FlowEdge, type FlowNode } from "./FlowDiagram";
 import "./OwnerPath.css";
 
 const NODES: FlowNode[] = [
   {
-    id: "found",
-    label: "Someone finds you",
-    sub: "Search · referral · map",
+    id: "plan",
+    label: "Plan",
+    sub: "What is slowing people down?",
     col: 0,
   },
   {
-    id: "website",
-    label: "They get a clear answer",
-    sub: "Website · hours · services",
+    id: "build",
+    label: "Build",
+    sub: "Website · words · useful tools",
     col: 1,
   },
   {
-    id: "action",
-    label: "They can act",
-    sub: "Call · book · order · ask",
-    chips: ["one clear next step"],
+    id: "connect",
+    label: "Connect",
+    sub: "Search · calls · booking · payment",
+    chips: ["one clear path"],
     tone: "hub",
     col: 2,
   },
   {
-    id: "followup",
-    label: "The right person follows up",
-    sub: "Notes · payment · care",
+    id: "care",
+    label: "Keep working",
+    sub: "Support when life happens",
     tone: "signal",
     col: 3,
   },
 ];
 
 const EDGES: FlowEdge[] = [
-  { from: "found", to: "website", tone: "muted", chip: "real facts" },
-  { from: "website", to: "action", tone: "signal", chip: "less hunting", pulse: true },
-  { from: "action", to: "followup", tone: "signal", chip: "clear handoff", pulse: true },
+  { from: "plan", to: "build", tone: "signal" },
+  { from: "build", to: "connect", tone: "signal" },
+  { from: "connect", to: "care", tone: "signal" },
 ];
 
 export default function OwnerPath() {
+  const [replay, setReplay] = useState(0);
+
   return (
     <section className="lf-owner-path" aria-labelledby="lf-owner-path-title" data-lf-visual-proof="customer-path">
       <div className="lf-owner-path__inner">
         <header className="lf-owner-path__head">
-          <p className="lf-owner-path__eyebrow">One customer path</p>
-          <h2 id="lf-owner-path-title">Five logins. One customer waiting.</h2>
+          <p className="lf-owner-path__eyebrow">LF / 03 · One accountable path</p>
+          <h2 id="lf-owner-path-title">Five handoffs. One customer waiting.</h2>
           <p>
-            A website is not a poster. It is where search, calls, bookings,
-            payments, and follow-up should stop arguing with each other.
+            Search, website, booking, payment, and follow-up are one customer
+            experience. We plan the handoffs so you do not have to referee them.
           </p>
+          <p className="lf-owner-path__snark">No vendor ping-pong.</p>
         </header>
 
-        <div className="lf-owner-path__before" aria-label="Before: search, the website, customer action, and follow-up sit in separate handoffs.">
-          <span>Search</span><i aria-hidden="true">handoff gap</i><span>Website</span><i aria-hidden="true">handoff gap</i><span>Action</span><i aria-hidden="true">handoff gap</i><span>Follow-up</span>
-        </div>
+        <div className="lf-owner-path__instrument">
+          <div className="lf-owner-path__before" role="group" aria-label="Before: search, website, booking, payment, and follow-up sit in separate handoffs without a clear owner.">
+            {[
+              "Search",
+              "Website",
+              "Booking",
+              "Payment",
+              "Follow-up",
+            ].map((step, index) => (
+              <span key={step}>
+                <b>{step}</b>
+                {index < 4 && <i aria-hidden="true">Who owns this?</i>}
+              </span>
+            ))}
+          </div>
 
-        <FlowDiagram
-          className="lf-owner-path__flow"
-          label="A customer path from discovery to follow-up"
-          summary="A customer finds the business through search, a referral, or Maps. The website gives a clear answer. The customer can call, book, order, or ask a question. The right person can then follow up, take payment, and keep the details current."
-          caption="After: one connected owner-controlled path. This is an illustration, not a performance claim or customer-count chart."
-          nodes={NODES}
-          edges={EDGES}
-        />
+          <FlowDiagram
+            key={replay}
+            className="lf-owner-path__flow"
+            label="One connected Little Fight delivery path"
+            summary="Little Fight plans what is slowing the customer down, builds the website, words, and useful tools, connects search, calls, booking, and payment, then supports the setup when life happens."
+            caption="This shows who owns the handoffs. It is not a performance or revenue claim."
+            nodes={NODES}
+            edges={EDGES}
+          />
 
-        <div className="lf-owner-path__footer">
-          <p>
-            We can fix one break, or make the whole path easier to own.
-          </p>
-          <Link to="/services/">See the useful next move</Link>
+          <div className="lf-owner-path__footer">
+            <p>
+              Fix one break, or make the whole path easier to own.
+            </p>
+            <div>
+              <button type="button" onClick={() => setReplay((current) => current + 1)}>
+                <RotateCcw size={15} strokeWidth={2} aria-hidden="true" />
+                Replay path
+              </button>
+              <Link to="/services/">See how the pieces connect</Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,51 +1,24 @@
-/* Street-level diagnostic — selected Product Design direction.
- * One oversized promise, one useful instrument, then checkable proof. */
+/* Owner decision desk — one promise, one real business scene, two next moves. */
 
 .lf-hero {
   position: relative;
   overflow: clip;
   color: var(--lf-bone);
+  border-bottom: 1px solid var(--lf-hairline);
   background: var(--lf-ink);
-}
-
-.lf-hero__main,
-.lf-hero__proof {
-  width: min(100%, var(--lf-max-w));
-  margin-inline: auto;
 }
 
 .lf-hero__main {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: clamp(2.5rem, 6vw, 5.5rem);
-  align-items: center;
-  min-height: min(760px, calc(100svh - 72px));
-  padding: clamp(3rem, 7vw, 6rem) var(--lf-margin-mobile);
-}
-
-.lf-hero__scene,
-.lf-hero__quick,
-.lf-hero__quick-reach {
-  display: none;
+  width: 100%;
+  max-width: 100rem;
+  margin-inline: auto;
 }
 
 .lf-hero__promise {
   min-width: 0;
-}
-
-.lf-editorial .lf-hero__eyebrow,
-.lf-editorial .lf-hero__check-label,
-.lf-editorial .lf-hero__proof-label,
-.lf-editorial .lf-hero__proof-copy > p:first-child,
-.lf-editorial .lf-hero__proof-status > p:first-child {
-  margin: 0;
-  color: var(--lf-blue-soft);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1.4;
-  text-transform: uppercase;
+  padding: clamp(3rem, 8vw, 5.5rem) var(--lf-margin-mobile);
 }
 
 .lf-editorial .lf-hero__eyebrow {
@@ -53,7 +26,14 @@
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   align-items: center;
-  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  margin: 0 0 clamp(1.25rem, 3vw, 2rem);
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .lf-hero__eyebrow > span {
@@ -65,7 +45,7 @@
   margin: 0;
   color: var(--lf-bone);
   font-family: var(--lf-heading);
-  font-size: clamp(3.25rem, 14vw, 4.25rem);
+  font-size: clamp(4rem, 10vw, 6rem);
   font-weight: 700;
   letter-spacing: -0.025em !important;
   line-height: 0.86;
@@ -78,336 +58,240 @@
 }
 
 .lf-editorial .lf-hero__brief {
-  max-width: 42rem;
-  margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
+  max-width: 34rem;
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
   color: var(--lf-bone-soft);
   font-size: var(--lf-text-md);
-  line-height: 1.45;
+  line-height: 1.48;
 }
 
-.lf-editorial .lf-hero__outcomes {
-  margin: var(--lf-space-4) 0 0;
-  color: var(--lf-fight);
-  font-size: var(--lf-text-base);
-  font-weight: 600;
-  line-height: 1.45;
+.lf-hero__quick {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-3);
+  max-width: 46rem;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-.lf-editorial .lf-hero__bridge {
-  max-width: 49rem;
-  margin: clamp(1.75rem, 4vw, 2.75rem) 0 0;
-  padding-left: var(--lf-space-4);
-  border-left: 2px solid var(--lf-fight);
-  color: var(--lf-bone-dim);
-  font-size: var(--lf-text-sm);
-  line-height: 1.5;
-}
-
-.lf-hero__check {
+.lf-editorial .lf-hero__quick-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
   min-width: 0;
-  padding: clamp(1.5rem, 4vw, 2.75rem);
-  border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
-  background: var(--lf-paper-2);
-  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.28);
-}
-
-.lf-editorial .lf-hero__check-label {
-  display: flex;
-  gap: var(--lf-space-3);
-  align-items: center;
-  color: var(--lf-blue-soft);
-}
-
-.lf-editorial .lf-hero__check h2 {
-  max-width: 13ch;
-  margin: var(--lf-space-5) 0 0;
-  color: var(--lf-bone);
-  font-family: var(--lf-heading);
-  font-size: clamp(2.25rem, 5vw, 3.6rem);
-  font-weight: 700;
-  letter-spacing: 0 !important;
-  line-height: 0.98;
-}
-
-.lf-editorial .lf-hero__check-dek {
-  max-width: 40rem;
-  margin: var(--lf-space-3) 0 0;
-  color: var(--lf-bone-soft);
-  font-size: var(--lf-text-sm);
-  line-height: 1.5;
-}
-
-.lf-hero__form {
-  display: grid;
-  gap: var(--lf-space-4);
-  margin-top: var(--lf-space-6);
-}
-
-.lf-hero__field {
-  display: grid;
-  gap: var(--lf-space-2);
-}
-
-.lf-hero__field label {
-  color: var(--lf-bone-soft);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
-  text-transform: uppercase;
-}
-
-.lf-hero__field label span {
-  color: var(--lf-bone-dim);
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.lf-editorial .lf-hero__field input {
-  width: 100%;
-  min-height: 54px;
-  padding: 0 var(--lf-space-4);
+  min-height: 76px;
+  align-content: center;
+  gap: 0.15rem var(--lf-space-3);
+  padding: 0.9rem 1.15rem;
   border: 1px solid var(--lf-hairline);
   border-radius: var(--lf-radius-sm);
-  outline: 0;
   color: var(--lf-bone);
-  background: var(--lf-ink);
-  caret-color: var(--lf-fight);
+  background: rgba(18, 20, 26, 0.96);
+  text-decoration: none;
   transition:
     border-color var(--m-signal-ms) var(--m-signal-ease),
-    box-shadow var(--m-signal-ms) var(--m-signal-ease);
-}
-
-.lf-hero__field input::placeholder {
-  color: var(--lf-bone-dim);
-}
-
-.lf-editorial .lf-hero__field input:hover {
-  border-color: color-mix(in srgb, var(--lf-bone-soft) 55%, var(--lf-hairline));
-}
-
-.lf-editorial .lf-hero__field input:focus-visible {
-  border-color: var(--lf-fight);
-  outline: 0;
-  box-shadow: 0 0 0 4px var(--lf-fight-ring);
-}
-
-.lf-editorial .lf-hero__form button {
-  display: inline-flex;
-  width: 100%;
-  min-height: 56px;
-  align-items: center;
-  justify-content: center;
-  gap: var(--lf-space-3);
-  margin-top: var(--lf-space-1);
-  padding: 0 var(--lf-space-5);
-  border: 1px solid var(--lf-fight);
-  border-radius: var(--lf-radius-sm);
-  color: var(--lf-ink);
-  background: var(--lf-fight);
-  font-family: var(--lf-heading);
-  font-size: var(--lf-text-base);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  transition:
     background-color var(--m-signal-ms) var(--m-signal-ease),
-    border-color var(--m-signal-ms) var(--m-signal-ease),
     transform var(--m-signal-ms) var(--m-signal-ease);
 }
 
-.lf-editorial .lf-hero__form button:hover,
-.lf-editorial .lf-hero__form button:focus-visible {
+.lf-editorial .lf-hero__quick-action--website {
+  color: var(--lf-ink);
+  border-color: var(--lf-fight);
+  background: var(--lf-fight);
+}
+
+.lf-hero__quick-action > span {
+  min-width: 0;
+  color: currentColor;
+  font-size: var(--lf-text-xs);
+  line-height: 1.2;
+}
+
+.lf-hero__quick-action > strong {
+  min-width: 0;
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-md);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lf-hero__quick-action > svg {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: center;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.lf-editorial .lf-hero__quick-action--website:hover,
+.lf-editorial .lf-hero__quick-action--website:focus-visible {
   border-color: var(--lf-fight-hover);
   background: var(--lf-fight-hover);
   transform: translateY(-2px);
 }
 
-.lf-editorial .lf-hero__form button:active {
-  border-color: var(--lf-fight-active);
-  background: var(--lf-fight-active);
-  transform: translateY(0);
+.lf-editorial .lf-hero__quick-action--urgent:hover,
+.lf-editorial .lf-hero__quick-action--urgent:focus-visible {
+  border-color: var(--lf-blue-soft);
+  background: color-mix(in srgb, var(--lf-blue) 12%, var(--lf-paper-2));
+  transform: translateY(-2px);
 }
 
-.lf-editorial .lf-hero__form-note {
-  margin: var(--lf-space-3) 0 0;
-  color: var(--lf-bone-dim);
-  font-size: var(--lf-text-2xs);
-  line-height: 1.48;
+.lf-editorial .lf-hero__quick-action:focus-visible,
+.lf-editorial .lf-hero__quick-reach a:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 3px;
 }
 
-.lf-hero__human {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--lf-space-3);
-  align-items: center;
-  margin-top: var(--lf-space-6);
-  padding-top: var(--lf-space-5);
-  border-top: 1px solid var(--lf-hairline);
-}
-
-.lf-hero__human > span {
-  display: inline-flex;
-  color: var(--lf-bone);
-}
-
-.lf-editorial .lf-hero__human > a:not(.lf-hero__human-book) {
+.lf-hero__quick-reach {
   display: flex;
-  min-width: 0;
-  min-height: var(--lf-control-min);
-  flex-direction: column;
-  justify-content: center;
-  color: var(--lf-bone);
-  text-decoration: none;
-}
-
-.lf-hero__human strong {
-  font-family: var(--lf-heading);
-  font-size: var(--lf-text-lg);
-  line-height: 1.05;
-}
-
-.lf-hero__human a > span {
-  color: var(--lf-bone-soft);
-  font-size: var(--lf-text-sm);
-}
-
-.lf-editorial .lf-hero__human-book {
-  grid-column: 1 / -1;
-  display: inline-flex;
-  width: fit-content;
-  min-height: var(--lf-control-min);
   align-items: center;
-  gap: var(--lf-space-2);
-  color: var(--lf-blue-soft);
-  font-size: var(--lf-text-sm);
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  max-width: 46rem;
+  margin-top: var(--lf-space-3);
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-xs);
+  line-height: 1.35;
+}
+
+.lf-hero__quick-channels {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: 0.25rem 0.9rem;
+}
+
+.lf-hero__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lf-editorial .lf-hero__quick-reach a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--lf-bone);
   font-weight: 700;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
 }
 
-.lf-editorial .lf-hero__human a:hover,
-.lf-editorial .lf-hero__human a:focus-visible {
-  color: var(--lf-fight);
-}
-
-.lf-hero__proof {
+.lf-hero__quick-hours {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  max-width: 23rem;
+  justify-items: end;
+  text-align: right;
+}
+
+.lf-hero__quick-hours > span {
+  max-width: 23rem;
+}
+
+.lf-hero__scene {
+  position: relative;
+  min-width: 0;
+  min-height: 28rem;
+  overflow: hidden;
+  margin: 0;
   border-top: 1px solid var(--lf-hairline);
-  border-bottom: 1px solid var(--lf-hairline);
   background: #020203;
 }
 
-.lf-editorial .lf-hero__proof-label {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--lf-space-2) var(--lf-space-5);
-  padding: var(--lf-space-5) var(--lf-margin-mobile);
-  color: var(--lf-blue-soft);
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-.lf-hero__proof-label > span:last-child {
-  color: var(--lf-bone-dim);
-}
-
-.lf-hero__proof-media {
-  display: block;
-  min-width: 0;
-  overflow: hidden;
-  border-bottom: 1px solid var(--lf-hairline);
-  background: var(--lf-paper-2);
-}
-
-.lf-hero__proof-media picture,
-.lf-hero__proof-media img {
+.lf-hero__scene img {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.lf-hero__proof-media img {
-  aspect-ratio: 4 / 3;
   object-fit: cover;
-  transition: transform var(--m-settle-ms) var(--m-settle-ease);
+  object-position: 58% 52%;
 }
 
-.lf-hero__proof-media:hover img,
-.lf-hero__proof-media:focus-visible img {
-  transform: scale(1.015);
-}
-
-.lf-hero__proof-copy,
-.lf-hero__proof-status {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--lf-space-3);
-  padding: clamp(1.5rem, 4vw, 2.75rem) var(--lf-margin-mobile);
-}
-
-.lf-hero__proof-copy {
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-.lf-editorial .lf-hero__proof-copy h2 {
-  margin: 0;
-  color: var(--lf-bone);
-  font-family: var(--lf-heading);
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1;
-}
-
-.lf-editorial .lf-hero__proof-copy > p:nth-of-type(2) {
-  max-width: 32rem;
-  margin: 0;
+.lf-hero__scene figcaption {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(0.75rem, 2vw, 1.25rem);
+  padding: 0.4rem 0.65rem;
   color: var(--lf-bone-soft);
-  font-size: var(--lf-text-sm);
-  line-height: 1.5;
-}
-
-.lf-editorial .lf-hero__proof-copy > a,
-.lf-editorial .lf-hero__proof-status > a {
-  display: inline-flex;
-  width: fit-content;
-  min-height: var(--lf-control-min);
-  align-items: center;
-  gap: var(--lf-space-2);
-  color: var(--lf-fight);
-  font-size: var(--lf-text-sm);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.lf-hero__proof-status strong {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--lf-space-2);
-  color: var(--lf-success);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--lf-radius-pill);
+  background: rgba(5, 7, 12, 0.86);
   font-family: var(--lf-mono);
-  font-size: var(--lf-text-sm);
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.04em;
+  line-height: 1.25;
   text-transform: uppercase;
 }
 
-.lf-hero__proof-status > span {
-  overflow-wrap: anywhere;
+.lf-hero__handoff {
+  position: absolute;
+  z-index: 2;
+  right: clamp(1.5rem, 4vw, 4rem);
+  bottom: clamp(4.25rem, 8vw, 7rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  width: min(28rem, calc(100% - 3rem));
+  padding: 0.9rem;
+  border: 1px solid rgba(245, 242, 234, 0.32);
+  background: rgba(5, 7, 12, 0.88);
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.28);
+}
+
+.lf-hero__handoff-sources {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.lf-hero__handoff-sources span,
+.lf-hero__handoff-path {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.55rem;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.lf-hero__handoff-sources span {
   color: var(--lf-bone-soft);
-  font-size: var(--lf-text-sm);
+  border: 1px solid var(--lf-hairline);
+  background: rgba(18, 20, 26, 0.9);
 }
 
-.lf-editorial .lf-hero__proof-status > a {
-  color: var(--lf-blue-soft);
+.lf-hero__handoff-path {
+  position: relative;
+  min-height: 4.4rem;
+  max-width: 8.2rem;
+  color: var(--lf-ink);
+  background: var(--lf-fight);
 }
 
-/* On a phone, the homepage is a decision screen—not a brochure squeezed into
- * 390px. The scene supplies immediate business context; the two large actions
- * put a website start and urgent help above the fold. The detailed form stays
- * intact at tablet/desktop sizes. */
+.lf-hero__handoff-path::before {
+  position: absolute;
+  right: 100%;
+  width: 0.75rem;
+  height: 1px;
+  background: var(--lf-fight);
+  content: "";
+}
+
+/* Phones remain a one-screen decision surface. */
 @media (max-width: 47.99rem) {
   .lf-hero__main {
     position: relative;
@@ -415,58 +299,55 @@
     display: block;
     min-height: clamp(540px, calc(100svh - 77px), 620px);
     overflow: hidden;
-    padding: 1.25rem var(--lf-margin-mobile) 2.25rem;
   }
 
   .lf-hero__scene {
     position: absolute;
     z-index: -1;
     inset: 0;
-    display: block;
-    margin: 0;
-    background-color: #020203;
-    background-image: url("/brand-kit/assets/imagery/shop-systems-hero.webp");
-    background-position: 76% 52%;
-    background-size: cover;
+    min-height: 0;
+    border: 0;
   }
 
   .lf-hero__scene::after {
     position: absolute;
+    z-index: 1;
     inset: 0;
     content: "";
-    background:
-      linear-gradient(180deg, rgba(5, 7, 12, 0.55) 0%, rgba(5, 7, 12, 0.82) 48%, rgba(5, 7, 12, 0.98) 100%),
-      linear-gradient(90deg, rgba(5, 7, 12, 0.88) 0%, rgba(5, 7, 12, 0.24) 100%);
+    background: rgba(5, 7, 12, 0.72);
+  }
+
+  .lf-hero__scene img {
+    object-position: 76% 52%;
   }
 
   .lf-hero__scene figcaption {
-    position: absolute;
-    z-index: 1;
-    right: var(--lf-margin-mobile);
-    bottom: 0.45rem;
-    color: color-mix(in srgb, var(--lf-bone) 62%, transparent);
-    font-family: var(--lf-mono);
-    font-size: 0.55rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    display: none;
+  }
+
+  .lf-hero__handoff {
+    display: none;
   }
 
   .lf-hero__promise {
+    position: relative;
+    z-index: 2;
     display: flex;
-    min-height: calc(clamp(540px, calc(100svh - 77px), 620px) - 3.5rem);
+    min-height: clamp(540px, calc(100svh - 77px), 620px);
     flex-direction: column;
+    padding: 1.25rem var(--lf-margin-mobile) 2.25rem;
   }
 
   .lf-editorial .lf-hero__eyebrow {
-    margin-bottom: 0.9rem;
-    font-size: 0.61rem;
+    display: none;
   }
 
   .lf-editorial .lf-hero__claim {
     max-width: none;
-    font-size: clamp(2.65rem, 12vw, 3.15rem);
+    font-size: clamp(2.45rem, 10.8vw, 2.85rem);
     line-height: 0.88;
     text-shadow: 0 2px 22px rgba(0, 0, 0, 0.42);
+    text-wrap: balance;
   }
 
   .lf-hero__claim br {
@@ -477,280 +358,150 @@
     max-width: 30rem;
     margin-top: 0.9rem;
     color: var(--lf-bone);
-    font-size: 0.98rem;
+    font-size: var(--lf-text-2xs);
     line-height: 1.38;
     text-shadow: 0 1px 14px rgba(0, 0, 0, 0.52);
   }
 
   .lf-hero__quick {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.55rem;
     margin-top: 1rem;
     padding-top: 1rem;
   }
 
   .lf-editorial .lf-hero__quick-action {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: auto auto;
-    min-width: 0;
     min-height: 64px;
-    align-content: center;
     gap: 0.1rem 0.4rem;
     padding: 0.7rem 0.75rem;
-    border: 1px solid var(--lf-hairline);
-    border-radius: var(--lf-radius-sm);
-    color: var(--lf-bone);
     background: rgba(5, 7, 12, 0.94);
-    text-decoration: none;
   }
 
   .lf-editorial .lf-hero__quick-action--website {
-    color: var(--lf-ink);
-    border-color: var(--lf-fight);
     background: var(--lf-fight);
   }
 
-  .lf-editorial .lf-hero__quick-action--website:hover,
-  .lf-editorial .lf-hero__quick-action--website:focus-visible {
-    border-color: var(--lf-fight-hover);
-    background: var(--lf-fight-hover);
-  }
-
-  .lf-editorial .lf-hero__quick-action--urgent:hover,
-  .lf-editorial .lf-hero__quick-action--urgent:focus-visible {
-    border-color: var(--lf-blue-soft);
-    background: rgba(12, 18, 30, 0.98);
-  }
-
-  .lf-editorial .lf-hero__quick-action:focus-visible,
-  .lf-editorial .lf-hero__quick-reach a:focus-visible {
-    outline: 3px solid var(--lf-blue-soft);
-    outline-offset: 3px;
-  }
-
   .lf-hero__quick-action > span {
-    min-width: 0;
-    overflow: hidden;
-    font-size: 0.68rem;
-    line-height: 1.2;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: none;
+    font-size: var(--lf-text-2xs);
   }
 
   .lf-hero__quick-action > strong {
-    min-width: 0;
-    font-family: var(--lf-heading);
-    font-size: 0.9rem;
-    line-height: 1;
-    text-transform: uppercase;
+    font-size: var(--lf-text-2xs);
   }
 
   .lf-hero__quick-action > svg {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    align-self: center;
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   .lf-hero__quick-reach {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.4rem 0.8rem;
     margin-top: 0.65rem;
     padding-bottom: 0.35rem;
-    color: var(--lf-bone-dim);
-    font-size: 0.68rem;
-    line-height: 1.3;
+    font-size: var(--lf-text-2xs);
   }
 
-  .lf-editorial .lf-hero__quick-reach a {
-    display: inline-flex;
-    min-height: 30px;
-    align-items: center;
-    gap: 0.3rem;
-    color: var(--lf-bone);
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.2em;
+  .lf-hero__quick-channels {
+    flex-wrap: nowrap;
+    gap: 0.2rem 0.65rem;
   }
 
-  .lf-hero__quick-reach > span {
-    margin-left: auto;
-  }
-
-  .lf-hero__outcomes,
-  .lf-hero__bridge,
-  .lf-hero__check {
-    display: none;
-  }
-
-  .lf-editorial .lf-hero__proof-label {
-    padding: 0.75rem var(--lf-margin-mobile);
-    font-size: 0.55rem;
-  }
-
-  .lf-hero__proof-media img {
-    aspect-ratio: 16 / 9;
-    object-position: center;
-  }
-
-  .lf-hero__proof-copy {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.35rem 1rem;
-    align-items: center;
-    padding: 1rem var(--lf-margin-mobile);
-  }
-
-  .lf-hero__proof-copy > p {
-    display: none;
-  }
-
-  .lf-editorial .lf-hero__proof-copy h2 {
-    font-size: 1.65rem;
-  }
-
-  .lf-editorial .lf-hero__proof-copy > a {
-    min-height: 44px;
-    text-align: right;
-  }
-
-  .lf-hero__proof-status {
-    display: none;
+  .lf-hero__quick-hours {
+    max-width: none;
+    justify-items: start;
+    font-size: var(--lf-text-2xs);
+    text-align: left;
   }
 }
 
 @media (min-width: 48rem) {
-  .lf-hero__main {
+  .lf-hero__promise {
     padding-inline: var(--lf-margin-tablet);
   }
 
-  .lf-editorial .lf-hero__claim {
-    font-size: clamp(5.5rem, 12vw, 9rem);
-  }
-
-  .lf-editorial .lf-hero__proof-label,
-  .lf-hero__proof-copy,
-  .lf-hero__proof-status {
-    padding-inline: var(--lf-margin-tablet);
-  }
-
-  .lf-hero__proof {
-    grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
-  }
-
-  .lf-hero__proof-label {
-    grid-column: 1 / -1;
-  }
-
-  .lf-hero__proof-media {
-    grid-row: span 2;
-    border-right: 1px solid var(--lf-hairline);
-    border-bottom: 0;
-  }
-
-  .lf-hero__proof-copy {
-    border-bottom: 1px solid var(--lf-hairline);
+  .lf-hero__scene {
+    min-height: 32rem;
   }
 }
 
-@media (min-width: 70rem) {
+@media (min-width: 64rem) {
   .lf-hero__main {
-    grid-template-columns: minmax(0, 1.2fr) minmax(28rem, 0.8fr);
-    gap: clamp(3rem, 5vw, 5rem);
-    align-items: start;
-    min-height: auto;
-    padding-block: 2rem 2.25rem;
-    padding-inline: var(--lf-margin-desktop);
+    grid-template-columns: minmax(0, 0.94fr) minmax(31rem, 1.06fr);
+    min-height: min(48rem, calc(100svh - 72px));
+  }
+
+  .lf-hero__promise {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.75rem, 5vw, 4.5rem) clamp(2rem, 3vw, 3.5rem)
+      clamp(2.75rem, 5vw, 4.5rem) max(var(--lf-margin-tablet), calc((100vw - var(--lf-max-w)) / 2 + var(--lf-margin-tablet)));
   }
 
   .lf-editorial .lf-hero__claim {
-    max-width: none;
-    font-size: clamp(5.4rem, 6vw, 6.6rem);
+    font-size: clamp(3.35rem, 4.25vw, 4.8rem);
   }
 
-  .lf-editorial .lf-hero__eyebrow {
-    margin-bottom: 1.25rem;
+  .lf-hero__scene {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 100%;
+    border-top: 0;
+    border-left: 1px solid var(--lf-hairline);
   }
+}
 
-  .lf-editorial .lf-hero__brief {
-    margin-top: 1.25rem;
+@media (min-width: 64rem) and (max-width: 74.99rem) {
+  .lf-hero__handoff {
+    right: 1.5rem;
+    bottom: 4.25rem;
+    width: min(24rem, calc(100% - 3rem));
   }
+}
 
-  .lf-editorial .lf-hero__bridge {
-    margin-top: 1.25rem;
+@media (min-width: 80rem) {
+  .lf-editorial .lf-hero__claim {
+    font-size: clamp(3.75rem, 4.25vw, 4.8rem);
   }
+}
 
-  .lf-hero__check {
-    padding: 1.75rem;
-  }
-
-  .lf-editorial .lf-hero__check h2 {
-    max-width: none;
-    margin-top: 1rem;
-    font-size: clamp(2.25rem, 2.6vw, 2.6rem);
-  }
-
-  .lf-hero__form {
-    gap: 0.875rem;
-    margin-top: 1.5rem;
-  }
-
-  .lf-editorial .lf-hero__field input {
-    min-height: 50px;
-  }
-
-  .lf-editorial .lf-hero__form button {
-    min-height: 52px;
-  }
-
-  .lf-hero__human {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    margin-top: 1.25rem;
+@media (max-width: 380px) {
+  .lf-hero__promise {
     padding-top: 1rem;
   }
 
-  .lf-editorial .lf-hero__human-book {
-    grid-column: auto;
-    justify-self: end;
+  .lf-editorial .lf-hero__claim {
+    font-size: 2.3rem;
   }
 
-  .lf-editorial .lf-hero__proof-label {
-    padding-inline: var(--lf-margin-desktop);
+  .lf-editorial .lf-hero__brief {
+    margin-top: 0.7rem;
+    font-size: var(--lf-text-2xs);
   }
 
-  .lf-hero__proof {
-    grid-template-columns: minmax(0, 1.12fr) minmax(20rem, 0.68fr) minmax(15rem, 0.42fr);
+  .lf-hero__quick {
+    margin-top: 0.7rem;
+    padding-top: 0.7rem;
   }
 
-  .lf-hero__proof-media {
-    grid-row: auto;
-  }
-
-  .lf-hero__proof-copy {
-    padding-inline: clamp(1.75rem, 3vw, 3.25rem);
-    border-right: 1px solid var(--lf-hairline);
-    border-bottom: 0;
-  }
-
-  .lf-hero__proof-status {
-    padding-inline: clamp(1.5rem, 2.5vw, 2.75rem);
+  .lf-hero__quick-hours {
+    width: 100%;
+    max-width: none;
+    text-align: left;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lf-editorial .lf-hero__form button,
-  .lf-hero__proof-media img {
+  .lf-editorial .lf-hero__quick-action {
     transition: none;
   }
 
-  .lf-editorial .lf-hero__form button:hover,
-  .lf-editorial .lf-hero__form button:focus-visible,
-  .lf-hero__proof-media:hover img,
-  .lf-hero__proof-media:focus-visible img {
+  .lf-editorial .lf-hero__quick-action:hover,
+  .lf-editorial .lf-hero__quick-action:focus-visible {
     transform: none;
   }
 }

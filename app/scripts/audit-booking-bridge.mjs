@@ -3,11 +3,12 @@
  * Keep the public appointment route useful, optional, and safe.
  *
  * The Google Calendar URL has one authored source in data/contact.ts. Every
- * public surface consumes that constant, opens the third-party page in a new
- * tab without an opener, and keeps the Tech Audit / Website Check as the main
- * path. This catches the easy regressions: a copied calendar URL, a booking
- * link with unsafe attributes, or a generated report/email that loses its
- * plain-English handoff.
+ * selected public surfaces consume that constant, open the third-party page
+ * in a new tab without an opener, and keep the Tech Audit / Website Check as
+ * the main path. The compact homepage hero deliberately stops at call, text,
+ * email, and form; booking stays one section lower in QuietContact. This
+ * catches copied calendar URLs, unsafe attributes, or a report/email that
+ * loses its plain-English handoff.
  */
 import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
@@ -56,7 +57,6 @@ for (const relativePath of [
   "src/pages/WebsiteCheck.tsx",
   "src/pages/Thanks.tsx",
   "src/pages/Clients.tsx",
-  "src/components/editorial/QuietHero.tsx",
   "src/components/editorial/QuietContact.tsx",
   "src/components/editorial/ClientContinuity.tsx",
 ]) {
@@ -72,6 +72,21 @@ for (const relativePath of [
     );
   }
 }
+
+const heroSource = await readFile(
+  join(appRoot, "src/components/editorial/QuietHero.tsx"),
+  "utf8",
+);
+assert.doesNotMatch(
+  heroSource,
+  /BOOKING_HREF/,
+  "compact homepage hero must not push the third-party booking route into the first decision screen",
+);
+assert.match(
+  heroSource,
+  /to="\/tech-audit\/"/,
+  "compact homepage hero must retain the first-party form path",
+);
 
 const growthPathSource = await readFile(
   join(appRoot, "src/components/editorial/GrowthPath.tsx"),

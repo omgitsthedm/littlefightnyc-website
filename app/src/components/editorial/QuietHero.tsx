@@ -1,40 +1,25 @@
 import {
-  CalendarDays,
-  Circle,
-  ExternalLink,
+  ArrowRight,
   Mail,
   MessageSquare,
   Phone,
-  Search,
+  Send,
 } from "lucide-react";
-import { preload } from "react-dom";
 import { Link } from "react-router-dom";
 import {
-  BOOKING_HREF,
   HELLO_EMAIL,
-  PHONE_DISPLAY,
   PHONE_HREF,
   SMS_HREF,
 } from "@/data/contact";
-import { handoffToAuditLab } from "@/lib/auditPrefill";
 import "./QuietHero.css";
 
 /**
- * Homepage acquisition surface.
- *
- * The form deliberately hands off to the existing Audit Lab instead of
- * duplicating its network logic in the eager home bundle. A one-time same-tab
- * handoff keeps the submitted URL and email out of browser history; the Lab
- * lets the visitor check them and owns the measured scan state.
+ * Homepage acquisition surface: one promise, one real business scene, and two
+ * obvious decisions. The full Website Check owns its form and scan state; the
+ * homepage gets a faster, privacy-safe handoff instead of asking an owner to
+ * type before they understand the offer.
  */
 export default function QuietHero() {
-  preload("/brand-kit/assets/imagery/shop-systems-hero.webp", {
-    as: "image",
-    type: "image/webp",
-    fetchPriority: "high",
-    media: "(max-width: 47.99rem)",
-  });
-
   return (
     <section className="lf-hero" aria-labelledby="lf-home-title">
       <div className="lf-hero__main">
@@ -43,41 +28,62 @@ export default function QuietHero() {
           role="img"
           aria-label="Illustrative neighborhood shop counter with a register, printer, and everyday business technology"
         >
+          <img
+            src="/brand-kit/assets/imagery/shop-systems-hero.webp"
+            width="1440"
+            height="901"
+            alt=""
+            aria-hidden="true"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+          <div className="lf-hero__handoff" aria-hidden="true">
+            <div className="lf-hero__handoff-sources">
+              <span>Search</span>
+              <span>Website</span>
+              <span>Booking</span>
+              <span>Support</span>
+            </div>
+            <span className="lf-hero__handoff-path">One working path</span>
+          </div>
           <figcaption>Illustrative shop scene — not client work</figcaption>
         </figure>
 
         <div className="lf-hero__promise">
           <p className="lf-hero__eyebrow">
             <span aria-hidden="true">LF / 01</span>
-            Street-level technology
+            Websites · Tech · Software
           </p>
 
           <h1 id="lf-home-title" className="lf-hero__claim">
-            Make it easier{" "}<br />
-            for the next{" "}<br />
-            customer to{" "}<br />
+            Make it easier for{" "}<br />
+            the next customer to{" "}<br />
             <span>choose you.</span>
           </h1>
 
           <p className="lf-hero__brief">
-            A clear website. Useful tech. One accountable path from first search to follow-up.
+            We plan the website, connect the useful parts, and stay when
+            something breaks.
           </p>
 
           <div className="lf-hero__quick" aria-label="Start here">
             <Link
               className="lf-hero__quick-action lf-hero__quick-action--website"
               to="/website-check/"
+              aria-label="Need a website? Get a better website"
               data-lf-event="website_check_started"
               data-lf-label="home_hero"
               data-lf-source="home"
             >
               <span>Need a website?</span>
-              <strong>Free site check</strong>
-              <Search size={18} strokeWidth={2} aria-hidden="true" />
+              <strong>Get a better website</strong>
+              <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
             </Link>
             <a
               className="lf-hero__quick-action lf-hero__quick-action--urgent"
               href={PHONE_HREF}
+              aria-label="Something broke? Call now"
               data-lf-label="home_mobile_urgent_phone"
             >
               <span>Something broke?</span>
@@ -87,157 +93,24 @@ export default function QuietHero() {
           </div>
 
           <div className="lf-hero__quick-reach" aria-label="More ways to reach Little Fight NYC">
-            <a href={SMS_HREF} data-lf-label="home_mobile_hero_sms">
-              <MessageSquare size={14} strokeWidth={2} aria-hidden="true" />
-              Text instead
-            </a>
-            <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="home_mobile_hero_email">
-              <Mail size={14} strokeWidth={2} aria-hidden="true" />
-              Email us
-            </a>
-            <span>9am–9pm New York time</span>
-          </div>
-
-          <p className="lf-hero__outcomes">
-            Bookings. Visits. Orders. Consultations. Inquiries.
-          </p>
-          <p className="lf-hero__bridge">
-            A table. A chair. A counter. A consultation. The next customer
-            should not need a treasure map.
-          </p>
-        </div>
-
-        <aside className="lf-hero__check" aria-labelledby="lf-home-check-title">
-          <p className="lf-hero__check-label">
-            <Search size={17} strokeWidth={1.8} aria-hidden="true" />
-            Free website check
-          </p>
-          <h2 id="lf-home-check-title">See what gets in the way.</h2>
-          <p className="lf-hero__check-dek">
-            A free public-page review. Plain English. No admin login needed.
-          </p>
-
-          <form
-            className="lf-hero__form"
-            action="/examples/audit/"
-            method="get"
-            data-lf-event="website_check_started"
-            data-lf-label="home_hero"
-            data-lf-source="home"
-            onSubmit={(event) => {
-              if (event.defaultPrevented) return;
-              event.preventDefault();
-              handoffToAuditLab(event.currentTarget, "home");
-            }}
-          >
-            <input type="hidden" name="source" value="home" />
-            <div className="lf-hero__field">
-              <label htmlFor="home-website-url">Website URL</label>
-              <input
-                id="home-website-url"
-                data-audit-prefill="url"
-                type="text"
-                inputMode="url"
-                autoComplete="url"
-                placeholder="yourbusiness.com"
-                required
-              />
+            <div className="lf-hero__quick-channels">
+              <a href={SMS_HREF} data-lf-label="home_mobile_hero_sms">
+                <MessageSquare size={14} strokeWidth={2} aria-hidden="true" />
+                Text
+              </a>
+              <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="home_mobile_hero_email">
+                <Mail size={14} strokeWidth={2} aria-hidden="true" />
+                Email
+              </a>
+              <Link to="/tech-audit/" data-lf-label="home_hero_form">
+                <Send size={14} strokeWidth={2} aria-hidden="true" />
+                Form
+              </Link>
             </div>
-            <div className="lf-hero__field">
-              <label htmlFor="home-report-email">Email for the report <span>(optional here)</span></label>
-              <input
-                id="home-report-email"
-                data-audit-prefill="email"
-                type="email"
-                autoComplete="email"
-                placeholder="you@company.com"
-                aria-describedby="home-report-note"
-              />
+            <div className="lf-hero__quick-hours">
+              <span>9am–9pm Eastern: a human answers. After hours: leave a message.</span>
             </div>
-            <button type="submit">
-              Check my website
-              <Search size={18} strokeWidth={2} aria-hidden="true" />
-            </button>
-          </form>
-
-          <p id="home-report-note" className="lf-hero__form-note">
-            A useful first look. No account. No card. No sales trap.
-          </p>
-
-          <div className="lf-hero__human">
-            <span aria-hidden="true"><Phone size={23} strokeWidth={1.8} /></span>
-            <a href={PHONE_HREF} data-lf-label="home_hero_phone">
-              <strong>Call or text Little Fight</strong>
-              <span>{PHONE_DISPLAY}</span>
-            </a>
-            <a
-              className="lf-hero__human-book"
-              href={BOOKING_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-lf-event="booking_started"
-              data-lf-label="home_hero"
-            >
-              <CalendarDays size={17} strokeWidth={1.8} aria-hidden="true" />
-              Book 30 minutes
-            </a>
           </div>
-        </aside>
-      </div>
-
-      <div className="lf-hero__proof" aria-label="Real client work">
-        <div className="lf-hero__proof-label">
-          <span>Real work, owner-approved</span>
-          <span>Website / independent stylist</span>
-        </div>
-
-        <Link
-          className="lf-hero__proof-media"
-          to="/case-studies/hair-by-rachel-charles/"
-          aria-label="Read the Hair By Rachel Charles case study"
-        >
-          <picture>
-            <source
-              srcSet="/assets/case-hair-by-rachel-charles-480.webp 480w, /assets/case-hair-by-rachel-charles-640.webp 640w, /assets/case-hair-by-rachel-charles.webp 1600w"
-              sizes="(min-width: 900px) 46vw, 100vw"
-              type="image/webp"
-            />
-            <img
-              src="/assets/case-hair-by-rachel-charles.webp"
-              width="1600"
-              height="1200"
-              alt="The Hair By Rachel Charles website shown across desktop, tablet, and phone"
-              loading="eager"
-              fetchPriority="low"
-              decoding="async"
-            />
-          </picture>
-        </Link>
-
-        <div className="lf-hero__proof-copy">
-          <p>Custom website</p>
-          <h2>Hair By Rachel Charles</h2>
-          <p>
-            Clear services. A familiar Square booking path. Built for a
-            business that earns the next appointment one chair at a time.
-          </p>
-          <Link to="/case-studies/hair-by-rachel-charles/">
-            See what changed
-          </Link>
-        </div>
-
-        <div className="lf-hero__proof-status">
-          <p>Public proof</p>
-          <strong><Circle size={12} fill="currentColor" aria-hidden="true" /> Live site</strong>
-          <span>hairbyrachelcharles.com</span>
-          <a
-            href="https://hairbyrachelcharles.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open client site
-            <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
-          </a>
         </div>
       </div>
     </section>

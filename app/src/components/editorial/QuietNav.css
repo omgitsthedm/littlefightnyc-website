@@ -117,7 +117,7 @@
   display: none;
 }
 
-@media (min-width: 82rem) {
+@media (min-width: 76rem) {
   .lf-nav__primary {
     display: flex;
     align-items: center;
@@ -275,7 +275,7 @@
   font-weight: 600;
 }
 
-@media (min-width: 64rem) and (max-width: 74.99rem) {
+@media (min-width: 64rem) and (max-width: 81.99rem) {
   .lf-nav__phone-number {
     display: none;
   }
@@ -408,7 +408,7 @@
   outline-offset: 2px;
 }
 
-@media (min-width: 82rem) {
+@media (min-width: 76rem) {
   .lf-nav__toggle {
     display: none;
   }
@@ -433,10 +433,42 @@
   left: 0;
   right: 0;
   top: 100%;
+  max-block-size: calc(100dvh - 100%);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: env(safe-area-inset-bottom);
   background: var(--lf-ink);
   border-bottom: 1px solid var(--lf-hairline);
   box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.7);
   animation: lf-nav-panel-in var(--lf-time-fast) var(--lf-ease-out) both;
+}
+
+.lf-nav__panel-close {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: var(--lf-space-3) var(--lf-margin-mobile) 0 auto;
+  padding: 0 var(--lf-space-3);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-bone);
+  background: transparent;
+  font: inherit;
+  font-size: var(--lf-text-sm);
+  cursor: pointer;
+}
+
+.lf-nav__panel-close:hover {
+  color: var(--lf-fight);
+  border-color: var(--lf-fight);
+}
+
+.lf-nav__panel-close:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 2px;
 }
 
 @keyframes lf-nav-panel-in {
@@ -459,6 +491,10 @@
 }
 
 @media (min-width: 768px) {
+  .lf-nav__panel-close {
+    margin-right: var(--lf-margin-tablet);
+  }
+
   .lf-nav__panel-nav {
     padding-inline: var(--lf-margin-tablet);
   }

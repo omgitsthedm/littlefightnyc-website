@@ -1,15 +1,15 @@
 import { useState } from "react";
 import "./MoneyLeakMeter.css";
-import { AccessibleDataTable, CurrencySelect, MethodologyDisclosure, OwnerMath, ScenarioBadge } from "./EvidenceFoundation";
+import { CurrencySelect, MethodologyDisclosure, OwnerMath, ScenarioBadge } from "./EvidenceFoundation";
 import { DEFAULT_CURRENCY, type CurrencyChoice } from "./currency";
 import { currencySymbol, formatCurrency, missedInquiryValue, parseOwnerNumber } from "./ownerMath";
 
 type FieldName = "missed" | "sale" | "closeRate";
 
 const DEFAULTS: Record<FieldName, string> = {
-  missed: "3",
-  sale: "500",
-  closeRate: "40",
+  missed: "4",
+  sale: "250",
+  closeRate: "50",
 };
 
 const LIMITS: Record<FieldName, { min: number; max: number; step: number }> = {
@@ -33,7 +33,6 @@ export default function MoneyLeakMeter() {
   const estimate = missedInquiryValue({ missedPerWeek: missed, averageSale: sale, closeRatePercent: closeRate * 100 });
   const perWeek = missedInquiryValue({ missedPerWeek: missed, averageSale: sale, closeRatePercent: closeRate * 100, weeks: 1 });
   const annual = missedInquiryValue({ missedPerWeek: missed, averageSale: sale, closeRatePercent: closeRate * 100, weeks: 52 });
-  const barWidth = closeRate === 0 ? 0 : Math.min(100, Math.max(4, closeRate * 100));
 
   const setField = (field: FieldName, value: string) => {
     setEdited(true);
@@ -43,95 +42,107 @@ export default function MoneyLeakMeter() {
   return (
     <section className="lf-money-meter" aria-labelledby="lf-money-meter-title" data-lf-visual-proof="owner-calculator">
       <div className="lf-money-meter__inner">
-        <OwnerMath visualProof={false} titleId="lf-money-meter-title" title="The missed-message math is rude. Better to see it." intro={
-          <>
-            Use your own numbers. We will show one possible value of inquiries
-            that never got a real answer. No industry average. No magic trick.
-          </>
-        }>
-          <ScenarioBadge kind={edited ? "your-numbers" : "example"} />
-        </OwnerMath>
+        <div className="lf-money-meter__intro">
+          <OwnerMath
+            eyebrow="LF / 05 · Owner math"
+            visualProof={false}
+            titleId="lf-money-meter-title"
+            title="Where does the customer path leak?"
+            intro={
+              <>
+                Use your own numbers. Change any input. This is a scenario,
+                not a promise.
+              </>
+            }
+          >
+            <ScenarioBadge kind={edited ? "your-numbers" : "example"} />
+          </OwnerMath>
 
-        <CurrencySelect
-          value={currency}
-          name="money-leak-currency"
-          onChange={(next) => { setCurrency(next); setEdited(true); }}
-        />
+          <CurrencySelect
+            value={currency}
+            name="money-leak-currency"
+            onChange={(next) => { setCurrency(next); setEdited(true); }}
+          />
+        </div>
 
         <div className="lf-money-meter__panel">
-          <form className="lf-money-meter__inputs" onSubmit={(event) => event.preventDefault()}>
-            <label>
-              <span>Missed inquiries each week</span>
-              <input
-                type="number"
-                name="money-leak-missed-inquiries"
-                inputMode="numeric"
-                autoComplete="off"
-                min={LIMITS.missed.min}
-                max={LIMITS.missed.max}
-                step={LIMITS.missed.step}
-                value={values.missed}
-                onChange={(event) => setField("missed", event.target.value)}
-              />
-            </label>
-            <label>
-              <span>Average sale or job value</span>
-              <span className="lf-money-meter__money-input">
-                <span aria-hidden="true">{currencySymbol(currency.locale, currency.code)}</span>
+          <div className="lf-money-meter__controls">
+            <fieldset className="lf-money-meter__inputs">
+              <legend className="lf-money-meter__legend">Change your scenario</legend>
+              <label>
+                <span>Missed inquiries each week</span>
                 <input
                   type="number"
-                  name="money-leak-average-sale"
-                  inputMode="decimal"
-                  autoComplete="off"
-                  min={LIMITS.sale.min}
-                  max={LIMITS.sale.max}
-                  step={LIMITS.sale.step}
-                  value={values.sale}
-                  onChange={(event) => setField("sale", event.target.value)}
-                />
-              </span>
-            </label>
-            <label>
-              <span>Normal close rate</span>
-              <span className="lf-money-meter__percent-input">
-                <input
-                  type="number"
-                  name="money-leak-close-rate"
+                  name="money-leak-missed-inquiries"
                   inputMode="numeric"
                   autoComplete="off"
-                  min={LIMITS.closeRate.min}
-                  max={LIMITS.closeRate.max}
-                  step={LIMITS.closeRate.step}
-                  value={values.closeRate}
-                  onChange={(event) => setField("closeRate", event.target.value)}
+                  min={LIMITS.missed.min}
+                  max={LIMITS.missed.max}
+                  step={LIMITS.missed.step}
+                  value={values.missed}
+                  onChange={(event) => setField("missed", event.target.value)}
                 />
-                <span aria-hidden="true">%</span>
-              </span>
-            </label>
-          </form>
-          <button className="lf-owner-add lf-money-meter__reset" type="button" onClick={() => { setValues(DEFAULTS); setCurrency(DEFAULT_CURRENCY); setEdited(false); }}>Reset Example</button>
+              </label>
+              <label>
+                <span>Average sale or job value</span>
+                <span className="lf-money-meter__money-input">
+                  <span aria-hidden="true">{currencySymbol(currency.locale, currency.code)}</span>
+                  <input
+                    type="number"
+                    name="money-leak-average-sale"
+                    inputMode="decimal"
+                    autoComplete="off"
+                    min={LIMITS.sale.min}
+                    max={LIMITS.sale.max}
+                    step={LIMITS.sale.step}
+                    value={values.sale}
+                    onChange={(event) => setField("sale", event.target.value)}
+                  />
+                </span>
+              </label>
+              <label>
+                <span>Normal close rate</span>
+                <span className="lf-money-meter__percent-input">
+                  <input
+                    type="number"
+                    name="money-leak-close-rate"
+                    inputMode="numeric"
+                    autoComplete="off"
+                    min={LIMITS.closeRate.min}
+                    max={LIMITS.closeRate.max}
+                    step={LIMITS.closeRate.step}
+                    value={values.closeRate}
+                    onChange={(event) => setField("closeRate", event.target.value)}
+                  />
+                  <span aria-hidden="true">%</span>
+                </span>
+              </label>
+            </fieldset>
+
+            <ol className="lf-money-meter__path" aria-label="Illustrative customer path">
+              <li>Seen</li>
+              <li>Understood</li>
+              <li>Contacted</li>
+              <li>Confirmed</li>
+            </ol>
+
+            <button className="lf-owner-add lf-money-meter__reset" type="button" onClick={() => { setValues(DEFAULTS); setCurrency(DEFAULT_CURRENCY); setEdited(false); }}>Reset example</button>
+          </div>
 
           <div className="lf-money-meter__answer">
-            <p className="lf-money-meter__answer-label">Estimated gross revenue at risk over 4 weeks</p>
-            <output className="lf-money-meter__value" aria-label="Estimated gross revenue at risk over four weeks" aria-live="polite" aria-atomic="true">{formatCurrency(estimate, currency.locale, currency.code)}</output>
-            <p>
-              That is about {formatCurrency(perWeek, currency.locale, currency.code)} each week if those missed inquiries
-              would normally close at your stated rate.
-            </p>
-            <div className="lf-money-meter__track" aria-hidden="true">
-              <span style={{ width: `${barWidth}%` }} />
-            </div>
+            <p className="lf-money-meter__answer-label">Estimated gross revenue at risk</p>
+            <table className="lf-money-meter__results">
+              <caption>Your scenario result</caption>
+              <tbody>
+                <tr><th scope="row">Weekly</th><td>{formatCurrency(perWeek, currency.locale, currency.code)}</td></tr>
+                <tr className="lf-money-meter__results-focus"><th scope="row">Four weeks</th><td><output aria-label="Estimated gross revenue at risk over four weeks" aria-live="polite" aria-atomic="true">{formatCurrency(estimate, currency.locale, currency.code)}</output></td></tr>
+                <tr><th scope="row">Annual</th><td>{formatCurrency(annual, currency.locale, currency.code)}</td></tr>
+              </tbody>
+            </table>
+            <p>Your estimate. Not profit, recovered revenue, a forecast, or a market average.</p>
           </div>
         </div>
 
-        <AccessibleDataTable caption="Your scenario table" rows={[
-          { label: "Missed inquiries", value: missed, note: "Per week" },
-          { label: "Average sale or job", value: formatCurrency(sale, currency.locale, currency.code), note: "Owner-entered" },
-          { label: "Normal close rate", value: `${Math.round(closeRate * 100)}%`, note: "Owner-entered" },
-          { label: "Weekly estimated revenue at risk", value: formatCurrency(perWeek, currency.locale, currency.code), note: "Scenario; not profit" },
-          { label: "Four-week estimated revenue at risk", value: formatCurrency(estimate, currency.locale, currency.code), note: "Scenario; not profit" },
-          { label: "Annual estimated revenue at risk", value: formatCurrency(annual, currency.locale, currency.code), note: "Scenario; not a forecast" },
-        ]} />
         <MethodologyDisclosure title="Show the math and the limit">
           <p>
             <strong>{missed}</strong> missed inquiries per week × <strong>{formatCurrency(sale, currency.locale, currency.code)}</strong>

@@ -389,11 +389,15 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
 }
 
 const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
-// The acquisition hero is intentionally type + form led. Its first real image
-// sits in the proof rail below the fold, so an eager route image competes with
-// the heading fonts and form CSS without improving LCP.
-if (/rel="preload"[^>]+as="image"[^>]+data-route-preload/i.test(homeDocument)) {
-  failures.push("home preloads an image even though the current hero is type and form led");
+// The acquisition hero now uses one approved real-business scene as its LCP
+// image. Keep that exact source in the first response, and do not let a future
+// redesign quietly bring back one of the retired decorative hero assets.
+if (!/<img[^>]+src="\/brand-kit\/assets\/imagery\/shop-systems-hero\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
+  failures.push("home first response is missing the approved high-priority shop-systems hero image");
+}
+const homeRouteImagePreloads = homeDocument.match(/<link[^>]+rel="preload"[^>]+as="image"[^>]+data-route-preload[^>]*>/gi) ?? [];
+if (homeRouteImagePreloads.some((tag) => !/shop-systems-hero\.webp/i.test(tag))) {
+  failures.push("home route-preloads an image other than the approved shop-systems hero");
 }
 if (/data-route-preload[^>]+(?:hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
   failures.push("home still preloads a retired image-led hero");

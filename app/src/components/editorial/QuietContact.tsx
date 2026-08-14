@@ -72,7 +72,7 @@ export default function QuietContact({
           <p className="lf-contact-block__dek">{lede}</p>
         </header>
 
-        <div className="lf-contact-block__doors" aria-label="Choose how to start">
+        <div className="lf-contact-block__doors" role="group" aria-label="Choose how to start">
           <a
             className="lf-contact-block__door lf-contact-block__door--urgent"
             href={PHONE_HREF}
@@ -113,7 +113,7 @@ export default function QuietContact({
           </Link>
         </div>
 
-        <div className="lf-contact-block__other" aria-label="More contact options">
+        <div className="lf-contact-block__other" role="group" aria-label="More contact options">
           <a href={SMS_HREF} data-lf-label="contact_block_sms">
             <MessageSquare size={18} strokeWidth={1.8} aria-hidden="true" />
             Text {PHONE_DISPLAY}
@@ -136,7 +136,7 @@ export default function QuietContact({
           )}
         </div>
 
-        <div className="lf-contact-block__next" aria-label="What happens next">
+        <div className="lf-contact-block__next" role="group" aria-label="What happens next">
           <p className="lf-contact-block__next-label">What happens next</p>
           <ol>
             <li>

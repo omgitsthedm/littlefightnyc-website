@@ -3,9 +3,7 @@
 .lf-contact-block {
   padding: clamp(4.5rem, 9vw, 9rem) var(--lf-margin-mobile);
   border-top: 1px solid var(--lf-hairline);
-  background:
-    linear-gradient(130deg, color-mix(in srgb, var(--lf-fight) 7%, transparent), transparent 45%),
-    var(--lf-ink);
+  background: var(--lf-ink);
 }
 
 .lf-contact-block__inner {
@@ -33,9 +31,9 @@
   max-width: 14ch;
   margin: 0;
   color: var(--lf-bone);
-  font-family: var(--lf-display);
-  font-size: clamp(3rem, 7vw, 7rem);
-  font-weight: var(--lf-display-weight);
+  font-family: var(--lf-heading);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.94;
 }
@@ -44,7 +42,7 @@
   max-width: 54ch;
   margin: 0;
   color: var(--lf-bone-soft);
-  font-family: var(--lf-serif);
+  font-family: var(--lf-body);
   font-size: var(--lf-text-md);
   line-height: 1.48;
 }
@@ -64,7 +62,7 @@
   min-height: 10rem;
   padding: clamp(1.4rem, 3.5vw, 2.5rem);
   border: 1px solid var(--lf-hairline);
-  border-radius: var(--lf-radius-card);
+  border-radius: 0;
   color: var(--lf-bone);
   background: var(--lf-card-bg);
   text-decoration: none;
@@ -119,7 +117,7 @@
 }
 
 .lf-contact-block__door-copy strong {
-  font-family: var(--lf-display);
+  font-family: var(--lf-heading);
   font-size: clamp(1.75rem, 3.2vw, 2.75rem);
   letter-spacing: -0.025em;
   line-height: 1;
@@ -165,6 +163,12 @@
 .lf-editorial .lf-contact-block__other a:hover,
 .lf-editorial .lf-contact-block__other button:hover {
   color: var(--lf-fight);
+}
+
+.lf-editorial .lf-contact-block__other a:focus-visible,
+.lf-editorial .lf-contact-block__other button:focus-visible {
+  outline: 2px solid var(--lf-blue-soft);
+  outline-offset: 4px;
 }
 
 .lf-contact-block__next {
@@ -234,6 +238,39 @@
 
   .lf-contact-block__next ol {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .lf-contact-block__inner {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1.25rem, 2.2vw, 2.5rem);
+    align-items: start;
+  }
+
+  .lf-contact-block__head {
+    position: sticky;
+    top: 7rem;
+    grid-column: 1 / 5;
+  }
+
+  .lf-contact-block__title {
+    font-size: clamp(4.5rem, 6.2vw, 6.5rem);
+  }
+
+  .lf-contact-block__doors,
+  .lf-contact-block__other,
+  .lf-contact-block__fine {
+    grid-column: 5 / 13;
+  }
+
+  .lf-contact-block__doors {
+    margin-top: 0;
+  }
+
+  .lf-contact-block__next {
+    grid-column: 1 / 13;
   }
 }
 

@@ -1,52 +1,52 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import "./TheFour.css";
 
-const PATHS = [
+const SERVICES = [
   {
-    name: "A website that helps them choose",
-    situation: "People hear your name, search for you, and need to know whether to book, visit, order, call, or inquire.",
-    outcome: "A custom site that sounds like the business, works on a phone, and makes the right next step obvious.",
+    number: "01",
+    title: "Get found",
+    service: "Websites",
+    outcome: "Give the right person a clear reason to choose you, then make the next click easy.",
     to: "/services/custom-local-websites/",
-    cta: "See how websites work",
     image: "storefronts-dawn",
     alt: "New York storefronts opening at dawn",
   },
   {
-    name: "Help when tech breaks",
-    situation: "The register, Wi-Fi, email, booking, or printer stops the day.",
-    outcome: "We find the real problem, explain the next step, and leave clear notes after the fix.",
+    number: "02",
+    title: "Fix the thing",
+    service: "Tech support",
+    outcome: "When the day stops working, get a straight answer and a useful next move.",
     to: "/services/it-support/",
-    cta: "Get tech help",
     image: "restaurant-counter",
     alt: "A restaurant counter set up for service",
   },
   {
-    name: "A free second opinion",
-    situation: "A vendor says you need more software, but the answer does not feel right.",
-    outcome: "We look at the whole setup and tell you what to keep, fix, stop paying for, or skip.",
-    to: "/services/tech-consulting/",
-    cta: "Get a second opinion",
-    image: "shop-back-office",
-    alt: "A neighborhood shop back office with everyday business tools",
-  },
-  {
-    name: "Software that fits the work",
-    situation: "The monthly tool costs too much and still acts like a difficult spreadsheet.",
-    outcome: "When a focused build is the right move, you own the code, data, and notes.",
+    number: "03",
+    title: "Stop renting around the problem",
+    service: "Software you own",
+    outcome: "Use a focused tool that fits the work instead of paying monthly for five almost-right ones.",
     to: "/services/business-systems/",
-    cta: "See software you own",
     image: "salon-systems",
     alt: "A salon work area with booking and payment tools",
   },
+  {
+    number: "04",
+    title: "Figure out what matters",
+    service: "Free consult",
+    outcome: "Bring the messy version. Leave knowing what to keep, fix, skip, or stop paying for.",
+    to: "/services/tech-consulting/",
+    image: "shop-back-office",
+    alt: "A neighborhood shop back office with everyday business tools",
+  },
 ] as const;
 
-function PathImage({ image, alt }: { image: string; alt: string }) {
+function ServiceImage({ image, alt }: { image: string; alt: string }) {
   return (
     <picture>
       <source
         srcSet={`/images/brand-scenes/${image}-480.webp 480w, /images/brand-scenes/${image}-640.webp 640w, /images/brand-scenes/${image}-900.webp 900w`}
-        sizes="(min-width: 960px) 38vw, calc(100vw - 4rem)"
+        sizes="(min-width: 1080px) 15vw, (min-width: 720px) 18vw, 6.5rem"
         type="image/webp"
       />
       <img
@@ -65,40 +65,51 @@ export default function TheFour() {
   return (
     <section className="lf-four" aria-labelledby="lf-four-title">
       <header className="lf-four__head">
-        <p className="lf-four__eyebrow">Start with the problem</p>
-        <h2 id="lf-four-title" className="lf-four__title">
-          You do not need to know the tech word.
-        </h2>
-        <p className="lf-four__dek">
-          Tell us what is getting in the way. We will show you the useful next
-          move and what can stay exactly as it is.
-        </p>
+        <div>
+          <p className="lf-four__eyebrow">LF / 04 · Choose the right help</p>
+          <h2 id="lf-four-title" className="lf-four__title">
+            What needs to work better?
+          </h2>
+        </div>
+        <div className="lf-four__head-side">
+          <p className="lf-four__dek">
+            Start with the thing customers or your team are feeling. We will help
+            you find the useful fix—without making you learn a new vocabulary.
+          </p>
+          <Link className="lf-four__all" to="/services/">
+            See all services <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+          </Link>
+        </div>
       </header>
 
-      <div className="lf-four__grid">
-        {PATHS.map((path, index) => (
-          <article
-            className={`lf-four__path${index === 0 ? " lf-four__path--lead" : ""}`}
-            key={path.name}
+      <ol className="lf-four__list">
+        {SERVICES.map((service, index) => (
+          <li
+            className={`lf-four__item${index === 0 ? " lf-four__item--primary" : ""}`}
+            key={service.title}
           >
-            <div className="lf-four__image">
-              <PathImage image={path.image} alt={path.alt} />
-              <span className="lf-four__number" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
+            <Link className="lf-four__row" to={service.to}>
+              <span className="lf-four__number">{service.number}</span>
+              <div className="lf-four__body">
+                <p className="lf-four__service">{service.service}</p>
+                <h3 className="lf-four__name">{service.title}</h3>
+                <p className="lf-four__outcome">{service.outcome}</p>
+              </div>
+              <div className="lf-four__image">
+                <ServiceImage image={service.image} alt={service.alt} />
+              </div>
+              <span className="lf-four__arrow" aria-hidden="true">
+                <ArrowRight size={25} strokeWidth={1.8} />
               </span>
-            </div>
-            <div className="lf-four__copy">
-              <h3 className="lf-four__name">{path.name}</h3>
-              <p className="lf-four__situation">{path.situation}</p>
-              <p className="lf-four__outcome">{path.outcome}</p>
-              <Link className="lf-four__cta" to={path.to}>
-                {path.cta}
-                <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
-              </Link>
-            </div>
-          </article>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ol>
+
+      <p className="lf-four__footnote">
+        Not sure which one? Start with a free consult. We are good at translating
+        “the thing is weird” into a real plan.
+      </p>
     </section>
   );
 }

@@ -20,15 +20,12 @@ const PREVIEW_ORIGINS = new Set([
 
 const PHC_CASE_PATH = "/case-studies/public-house-creative/";
 const PHC_FILM_SELECTOR = ".lf-cinematic-media";
+// PHC is protected client work. Keep coverage on the routes that deliberately
+// retain its approved film; the owner-first homepage no longer uses it.
 const PHC_FILM_ROUTES = [
-  { path: "/", placements: 1 },
-  { path: "/examples/", placements: 2 },
   { path: PHC_CASE_PATH, placements: 2 },
-  { path: "/services/", placements: 1 },
   { path: "/services/business-systems/", placements: 1 },
   { path: "/studio/cockpit/", placements: 1 },
-  { path: "/es/", placements: 1 },
-  { path: "/zh/", placements: 1 },
   ...[
     "lower-east-side",
     "east-village",
@@ -53,6 +50,7 @@ const PHC_FILM_ROUTES = [
     placements: 1,
   })),
 ] as const;
+const PHC_FILM_NOT_EAGER_ROUTES = ["/", "/examples/", "/services/", "/es/", "/zh/"] as const;
 
 const LAB_CONCEPT_SLUGS = [
   "walkup-3d",
@@ -173,8 +171,8 @@ const ROUTES: readonly RouteContract[] = [
     path: "/",
     title: "Little Fight NYC | Websites, IT Support & Custom Software",
     h1: /Make it easier\s*for the next\s*customer to\s*choose you\./i,
-    // Desktop carries the full inline form; mobile carries the direct check
-    // link so the first screen stays useful on a small phone.
+    // Every viewport carries the same direct decision: start the full Website
+    // Check or call for the thing that is already broken.
     criticalLink: 'form[action="/examples/audit/"], a[href="/website-check/"]',
     tags: [
       "@chromium-desktop",
@@ -557,6 +555,7 @@ for (const route of ROUTES) {
 test(
   "Lab concept shell stays usable across every build @chromium-desktop @chromium-mobile",
   async ({ page }, testInfo) => {
+    test.setTimeout(90_000);
     for (const slug of LAB_CONCEPT_SLUGS) {
       const path = `/examples/lab/concepts/${slug}/`;
       const response = await page.goto(path, { waitUntil: "domcontentloaded" });
@@ -828,7 +827,7 @@ test(
 );
 
 test(
-  "every PHC work surface renders the film and no legacy logo @chromium-desktop",
+  "every remaining PHC work surface renders the film and no legacy logo @chromium-desktop",
   async ({ page }) => {
     test.setTimeout(90_000);
     const runtime = watchRuntime(page);
@@ -860,8 +859,32 @@ test(
       placementCount += await films.count();
     }
 
-    expect(PHC_FILM_ROUTES).toHaveLength(26);
-    expect(placementCount).toBe(28);
+    expect(PHC_FILM_ROUTES).toHaveLength(21);
+    expect(placementCount).toBe(22);
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "owner-first first views do not eagerly mount the protected PHC film @chromium-desktop",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+
+    for (const path of PHC_FILM_NOT_EAGER_ROUTES) {
+      const response = await page.goto(path, { waitUntil: "domcontentloaded" });
+      expect.soft(response?.ok(), `${path} did not load`).toBe(true);
+      await waitForStableDocument(page);
+      await expect(
+        page.locator('source[data-src^="/media/cabinetry-process-film-"]'),
+        `${path} eagerly embeds the protected PHC process film`,
+      ).toHaveCount(0);
+      await expect(
+        page.locator('img[src="/media/cabinetry-process-poster-c6d59dbc.webp"]'),
+        `${path} eagerly renders the protected PHC process poster`,
+      ).toHaveCount(0);
+    }
+
+    expect(PHC_FILM_NOT_EAGER_ROUTES).toHaveLength(5);
     expectRuntimeClean(runtime);
   },
 );
@@ -1026,7 +1049,7 @@ test(
     await expect(
       page
         .locator(".lf-hero")
-        .locator('button:has-text("Check my website"), a:has-text("Free site check")')
+        .locator('button:has-text("Check my website"), a:has-text("Get a better website")')
         .filter({ visible: true })
         .first(),
     ).toBeVisible();
@@ -1063,6 +1086,19 @@ test(
       `Long-running animations remained active under reduced motion: ${unsafeAnimations.join(", ")}`,
     ).toEqual([]);
 
+    // The homepage now uses a real business scene. Exercise the protected
+    // PHC film on its own retained case-study surface, under the same motion
+    // preference, so the poster/no-download contract stays independently real.
+    await openRoute(page, {
+      key: "public-house-creative",
+      label: "Public House Creative case study",
+      path: PHC_CASE_PATH,
+      title: "Private Estimating Software Case Study | Little Fight NYC",
+      h1: /Private estimating software/i,
+      criticalLink: "/contact/",
+      tags: ["@all-projects"],
+    });
+
     const film = page.locator(PHC_FILM_SELECTOR).first();
     await expect(film).toBeAttached();
     await expect(film).toHaveAttribute("data-motion", "still");
@@ -1096,15 +1132,52 @@ test(
 );
 
 test(
+  "desktop homepage shows the real shop scene and both decisions above the fold @chromium-desktop",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    await openRoute(page, ROUTES[0]);
+
+    const scene = page.locator('.lf-hero__scene[role="img"]');
+    const image = scene.locator('img[src="/brand-kit/assets/imagery/shop-systems-hero.webp"]');
+    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
+    const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
+
+    await expect(scene).toBeVisible();
+    await expect(image).toBeVisible();
+    await expect(image).toHaveAttribute("fetchpriority", "high");
+    await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0);
+    await expect(websiteCheck).toBeVisible();
+    await expect(urgentCall).toBeVisible();
+
+    const decisionGeometry = await page.evaluate(() => {
+      const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
+      const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
+      if (!website || !urgent) throw new Error("desktop hero decision fixture is incomplete");
+      return {
+        viewportHeight: window.innerHeight,
+        websiteBottom: website.getBoundingClientRect().bottom,
+        urgentBottom: urgent.getBoundingClientRect().bottom,
+      };
+    });
+
+    expect(decisionGeometry.websiteBottom).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
+    expect(decisionGeometry.urgentBottom).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
+    await expectNoHorizontalOverflow(page, "desktop decision hero");
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
   "mobile homepage puts a real decision and direct help in the first screen @chromium-mobile @webkit-mobile",
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
 
     const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
-    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Free site check/i });
+    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
     const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
     const scene = page.locator('.lf-hero__scene[role="img"]');
+    const heroChannels = page.locator(".lf-hero__quick-channels a");
 
     await expect(directCall).toBeVisible();
     await expect(directCall).toHaveAttribute("href", PHONE_HREF);
@@ -1112,22 +1185,30 @@ test(
     await expect(websiteCheck).toBeVisible();
     await expect(urgentCall).toBeVisible();
     await expect(urgentCall).toHaveAttribute("href", PHONE_HREF);
-
+    await expect(heroChannels).toHaveCount(3);
+    await expect(page.locator('.lf-hero__quick-channels a[href^="sms:"]')).toBeVisible();
+    await expect(page.locator('.lf-hero__quick-channels a[href^="mailto:"]')).toBeVisible();
+    await expect(page.locator('.lf-hero__quick-channels a[href="/tech-audit/"]')).toBeVisible();
+    await expect(page.getByText(/9am–9pm Eastern: a human answers/i)).toBeVisible();
     const initialGeometry = await page.evaluate(() => {
       const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
       const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
       const consent = document.querySelector<HTMLElement>(".lf-consent");
       const hero = document.querySelector<HTMLElement>(".lf-hero__main");
-      if (!website || !urgent || !hero) throw new Error("mobile hero fixture is incomplete");
+      if (!website || !urgent || !hero) {
+        throw new Error("mobile hero fixture is incomplete");
+      }
       const websiteRect = website.getBoundingClientRect();
       const urgentRect = urgent.getBoundingClientRect();
       const consentRect = consent?.getBoundingClientRect();
+      const channels = Array.from(document.querySelectorAll<HTMLElement>(".lf-hero__quick-channels a"));
       return {
         viewportHeight: window.innerHeight,
         websiteBottom: websiteRect.bottom,
         urgentBottom: urgentRect.bottom,
         consentTop: consentRect?.top ?? window.innerHeight,
         heroHeight: hero.getBoundingClientRect().height,
+        channelHeights: channels.map((channel) => channel.getBoundingClientRect().height),
       };
     });
 
@@ -1136,6 +1217,7 @@ test(
     expect(initialGeometry.websiteBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
     expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
     expect(initialGeometry.heroHeight).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.channelHeights.every((height) => height >= 44)).toBe(true);
 
     await expect(page.locator(".lf-owner-path")).toBeHidden();
     await expect(page.locator(".lf-night-shift")).toBeHidden();
@@ -1149,18 +1231,94 @@ test(
       if (!contact || !work) throw new Error("mobile path fixture is incomplete");
       const fullHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       return {
-        contactBeforeWork: Boolean(
-          contact.compareDocumentPosition(work) & Node.DOCUMENT_POSITION_FOLLOWING,
+        workBeforeContact: Boolean(
+          work.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING,
         ),
         contactTopInScreens: contact.getBoundingClientRect().top / window.innerHeight,
         pageScreens: fullHeight / window.innerHeight,
       };
     });
 
-    expect(mobilePath.contactBeforeWork).toBe(true);
+    expect(mobilePath.workBeforeContact).toBe(true);
     expect(mobilePath.contactTopInScreens).toBeLessThanOrEqual(5);
     expect(mobilePath.pageScreens).toBeLessThanOrEqual(12);
     await expectNoHorizontalOverflow(page, "compact mobile home");
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "narrow mobile keeps every help path reachable without a desktop payload @chromium-mobile @webkit-mobile",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    await page.setViewportSize({ width: 320, height: 568 });
+    await openRoute(page, ROUTES[0]);
+
+    const essentialOnly = page.getByRole("button", { name: "Essential only" });
+    if (await essentialOnly.isVisible()) await essentialOnly.click();
+
+    const firstScreen = await page.evaluate(() => {
+      const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
+      const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
+      const channels = document.querySelector<HTMLElement>(".lf-hero__quick-channels");
+      const hours = document.querySelector<HTMLElement>(".lf-hero__quick-hours");
+      if (!website || !urgent || !channels || !hours) {
+        throw new Error("narrow mobile decision fixture is incomplete");
+      }
+      return {
+        viewportHeight: window.innerHeight,
+        websiteBottom: website.getBoundingClientRect().bottom,
+        urgentBottom: urgent.getBoundingClientRect().bottom,
+        channelsBottom: channels.getBoundingClientRect().bottom,
+        hoursBottom: hours.getBoundingClientRect().bottom,
+        pageScreens: document.documentElement.scrollHeight / window.innerHeight,
+        horizontalOverflow: document.documentElement.scrollWidth - window.innerWidth,
+        desktopProofCount: document.querySelectorAll(".lf-owner-path,.lf-money-meter").length,
+      };
+    });
+
+    expect(firstScreen.websiteBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
+    expect(firstScreen.urgentBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
+    expect(firstScreen.channelsBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
+    expect(firstScreen.hoursBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
+    expect(firstScreen.pageScreens).toBeLessThanOrEqual(11.25);
+    expect(firstScreen.horizontalOverflow).toBeLessThanOrEqual(0);
+    expect(firstScreen.desktopProofCount).toBe(0);
+
+    await page.locator(".lf-four").scrollIntoViewIfNeeded();
+    await expect(page.locator(".lf-four__image").first()).toBeHidden();
+    await expect(page.locator(".lf-sticky-help")).toBeVisible();
+    const stickyHeight = await page.locator(".lf-sticky-help").evaluate(
+      (element) => element.getBoundingClientRect().height,
+    );
+    expect(stickyHeight).toBeLessThanOrEqual(81);
+
+    await page.getByRole("button", { name: "Open menu" }).click();
+    const panel = page.getByRole("dialog", { name: "Menu" });
+    await expect(panel).toBeVisible();
+    const panelGeometry = await panel.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        bottom: rect.bottom,
+        clientHeight: element.clientHeight,
+        scrollHeight: element.scrollHeight,
+        overflowY: getComputedStyle(element).overflowY,
+      };
+    });
+    expect(panelGeometry.bottom).toBeLessThanOrEqual(568);
+    expect(panelGeometry.clientHeight).toBeLessThan(panelGeometry.scrollHeight);
+    expect(panelGeometry.overflowY).toBe("auto");
+
+    const panelCall = panel.getByRole("link", { name: "Call", exact: true });
+    await panelCall.scrollIntoViewIfNeeded();
+    await expect(panelCall).toBeVisible();
+    const callBox = await panelCall.boundingBox();
+    expect(callBox).not.toBeNull();
+    expect((callBox?.y ?? 568) + (callBox?.height ?? 0)).toBeLessThanOrEqual(568);
+    await page.getByRole("button", { name: "Close navigation panel" }).click();
+    await expect(panel).toBeHidden();
+
+    await expectNoHorizontalOverflow(page, "320px mobile home");
     expectRuntimeClean(runtime);
   },
 );
@@ -1941,21 +2099,11 @@ test(
     expect(measurementOnly.hasTikTokQueue).toBe(false);
     expect(measurementOnly.hasTikTokScript).toBe(false);
 
-    const desktopWebsiteField = page.locator("#home-website-url");
-    if (await desktopWebsiteField.isVisible()) {
-      await desktopWebsiteField.fill("private-fixture.example");
-      await page.locator("#home-report-email").fill("private-fixture@example.com");
-      await page.locator(".lf-hero__form").evaluate((form) => {
-        form.addEventListener("submit", (event) => event.preventDefault(), { once: true });
-      });
-      await page.getByRole("button", { name: "Check my website", exact: true }).click();
-    } else {
-      const mobileWebsiteCheck = page.getByRole("link", { name: /Need a website\?\s*Free site check/i });
-      await mobileWebsiteCheck.evaluate((link) => {
-        link.addEventListener("click", (event) => event.preventDefault(), { once: true });
-      });
-      await mobileWebsiteCheck.click();
-    }
+    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
+    await websiteCheck.evaluate((link) => {
+      link.addEventListener("click", (event) => event.preventDefault(), { once: true });
+    });
+    await websiteCheck.click();
 
     const websiteCheckEvent = await page.evaluate(() =>
       (window.dataLayer ?? []).findLast(
