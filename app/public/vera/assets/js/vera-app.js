@@ -2706,6 +2706,12 @@
   /* keyboard: photo strips move by frame; rows + kpis act on Enter/Space;
      Escape closes the ledger. */
   document.addEventListener('keydown', function (e) {
+    /* Chromium can enter the dynamically rendered command rail before the
+       document-root skip link. Preserve the first keyboard stop explicitly. */
+    if (e.key === 'Tab' && !e.shiftKey && document.activeElement === document.body) {
+      var skip = $('.skip-link');
+      if (skip && !skip.inert) { e.preventDefault(); skip.focus(); return; }
+    }
     if (lbIsOpen()) {
       if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); return; }
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); stepLightbox(e.key === 'ArrowLeft' ? -1 : 1); return; }

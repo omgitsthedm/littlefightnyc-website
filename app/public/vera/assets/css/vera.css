@@ -118,11 +118,13 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 }
 
 .skip-link {
-  position: absolute; left: -999px; top: 8px; z-index: 200;
+  /* Keep the box in-viewport so VERA's dynamic rail cannot bypass it in Chromium. */
+  position: fixed; left: 12px; top: max(8px, env(safe-area-inset-top)); z-index: 200;
+  opacity: 0; pointer-events: none;
   background: var(--brass); color: #14110a; padding: 9px 16px; border-radius: 8px;
   font-family: var(--mono); font-size: var(--fs-data); text-decoration: none;
 }
-.skip-link:focus { left: 12px; }
+.skip-link:focus { opacity: 1; pointer-events: auto; }
 
 .shell {
   max-width: 1460px;

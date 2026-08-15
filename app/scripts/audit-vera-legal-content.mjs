@@ -94,7 +94,7 @@ mustContain("vera-prerender.mjs", prerender, "Lawful rent and up to one month of
 mustContain("vera-prerender.mjs", prerender, "a broker representing the landlord, or publishing their listing with permission, cannot charge you");
 
 for (const asset of [
-  "./assets/css/vera.css?v=60",
+  "./assets/css/vera.css?v=61",
   "./assets/js/vera-core.js?v=51",
   "./assets/js/vera-geo.js?v=60",
   "./assets/js/vera-map.js?v=60",
@@ -130,7 +130,7 @@ const glyphBytes = glyphStats.reduce((total, entry) => total + entry.size, 0);
 if (glyphBytes > 105_000_000) {
   failures.push(`Atlas glyph bundle exceeds its 105,000,000-byte release cap (${glyphBytes})`);
 }
-mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v12");
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v13");
 mustNotContain("vera-core.js", core, "before the lease is executed");
 mustNotContain("vera-app.js", app, "before the lease is executed");
 mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");

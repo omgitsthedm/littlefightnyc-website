@@ -232,6 +232,55 @@ const veraPrerender = await readFile(
   path.join(appRoot, "scripts", "vera-prerender.mjs"),
   "utf8",
 );
+const veraIndex = await readFile(
+  path.join(appRoot, "public", "vera", "index.html"),
+  "utf8",
+);
+const veraCss = await readFile(
+  path.join(appRoot, "public", "vera", "assets", "css", "vera.css"),
+  "utf8",
+);
+const veraServiceWorker = await readFile(
+  path.join(appRoot, "public", "vera", "sw.js"),
+  "utf8",
+);
+const veraCssHref = veraIndex.match(
+  /<link rel="stylesheet" href="\.\/assets\/css\/vera\.css\?v=(\d+)">/,
+);
+if (!/<a class="skip-link" href="#main">Skip to content<\/a>/.test(veraIndex)) {
+  failures.push(
+    "index.html must keep the root VERA skip link ahead of the application shell",
+  );
+}
+if (
+  !/\.skip-link\s*\{[^}]*position:\s*fixed[^}]*opacity:\s*0[^}]*\}/s.test(
+    veraCss,
+  ) ||
+  !/\.skip-link:focus\s*\{[^}]*opacity:\s*1[^}]*\}/s.test(veraCss)
+) {
+  failures.push(
+    "vera.css must keep the skip link in the viewport and reveal it on keyboard focus",
+  );
+}
+if (
+  !/e\.key === 'Tab' && !e\.shiftKey && document\.activeElement === document\.body[\s\S]{0,240}skip\.focus\(\)/.test(
+    veraAppJs,
+  )
+) {
+  failures.push(
+    "vera-app.js must preserve the explicit first-Tab handoff to the root skip link",
+  );
+}
+if (
+  !veraCssHref ||
+  !veraServiceWorker.includes(
+    `/vera/assets/css/vera.css?v=${veraCssHref[1]}`,
+  )
+) {
+  failures.push(
+    "VERA's service-worker shell list must cache the same versioned CSS that index.html loads",
+  );
+}
 if (!veraAppJs.includes("{ url: './data/public.json', label: 'site' }")) {
   failures.push(
     "vera-app.js must declare the one first-party ./data/public.json feed",

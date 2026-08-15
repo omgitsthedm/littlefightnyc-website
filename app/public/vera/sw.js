@@ -5,7 +5,7 @@
    badge the staleness instead of pretending the sweep just ran. */
 'use strict';
 
-var SHELL = 'vera-shell-v12';
+var SHELL = 'vera-shell-v13';
 var FEED = 'vera-feed-v2';
 /* Installation stores only the versioned UI shell. Publication data stays out
    of this list so its network-first, visibly timestamped fallback below remains
@@ -14,7 +14,7 @@ var SHELL_ASSETS = [
   '/vera/',
   '/vera/index.html',
   '/vera/manifest.webmanifest',
-  '/vera/assets/css/vera.css?v=60',
+  '/vera/assets/css/vera.css?v=61',
   '/vera/assets/fonts/ibm-plex-sans-var.woff2',
   '/vera/assets/fonts/ibm-plex-serif-latin-600-normal.woff2',
   '/vera/assets/fonts/ibm-plex-mono-500.woff2',
