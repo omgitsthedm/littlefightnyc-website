@@ -369,8 +369,11 @@ function ensureGtag() {
   window.dataLayer = window.dataLayer ?? [];
   window.gtag =
     window.gtag ??
-    function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args);
+    function gtag() {
+      // Preserve Google's native command shape. Pushing a rest-parameter array
+      // leaves commands visible in dataLayer without starting GA4 collection.
+      // eslint-disable-next-line prefer-rest-params -- Google requires Arguments, not an Array.
+      window.dataLayer?.push(arguments);
     };
 }
 

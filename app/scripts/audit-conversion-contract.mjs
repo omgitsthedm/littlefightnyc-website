@@ -7,6 +7,7 @@ async function read(relativePath) {
 
 const [
   analytics,
+  consent,
   thanks,
   auditAnalytics,
   serviceDetail,
@@ -19,6 +20,7 @@ const [
   caseStudyDetail,
 ] = await Promise.all([
   read("src/lib/analytics.ts"),
+  read("src/lib/consent.ts"),
   read("src/pages/Thanks.tsx"),
   read("public/examples/audit/analytics.js"),
   read("src/pages/ServiceDetail.tsx"),
@@ -30,6 +32,22 @@ const [
   read("src/pages/WebsiteCheck.tsx"),
   read("src/pages/CaseStudyDetail.tsx"),
 ]);
+
+for (const [label, source] of [
+  ["analytics", analytics],
+  ["consent", consent],
+]) {
+  assert.match(
+    source,
+    /function gtag\(\) \{[\s\S]{0,600}?dataLayer\?\.push\(arguments\)/u,
+    `${label} must queue Google's native Arguments command shape`,
+  );
+  assert.doesNotMatch(
+    source,
+    /function gtag\(\.\.\.args[\s\S]{0,160}?dataLayer\?\.push\(args\)/u,
+    `${label} must not turn gtag commands into inert arrays`,
+  );
+}
 
 // Analytics is deliberately a direct, consent-gated GA4 transport. A GTM
 // container cannot be the only bridge here: it made a successful first-party

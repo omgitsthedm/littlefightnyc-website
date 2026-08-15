@@ -25,8 +25,11 @@ function ensureGtagQueue() {
   window.dataLayer = window.dataLayer ?? [];
   window.gtag =
     window.gtag ??
-    function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args);
+    function gtag() {
+      // Google Tag consumes the native Arguments object. An ordinary array
+      // looks similar in tests but does not initialize the GA4 destination.
+      // eslint-disable-next-line prefer-rest-params -- Google requires Arguments, not an Array.
+      window.dataLayer?.push(arguments);
     };
 }
 
