@@ -1685,24 +1685,34 @@
           atlasListPane(geo0) + '</div></section>';
       page.classList.add('is-entered');
       renderFilters();
-      var mounted = window.__VERAM.mount(page.querySelector('[data-veramap]'), geo0, function (uid) {
-        if (window.__VERAL) window.__VERAL.open(uid);
-      }, function (failure) {
-        if (state.route !== 'atlas' || state.atlasMode !== 'map' || !page.isConnected) return;
-        renderAtlasFailure(page, failure, f0, geo0);
-      });
-      if (mounted) {
-        var pendingAtlasUid = localRead('vera-atlas-focus');
-        if (pendingAtlasUid) {
-          localWrite('vera-atlas-focus', '');
-          var focusPendingListing = function () {
-            if (state.route === 'atlas' && window.__VERAM && window.__VERAM.flyTo) window.__VERAM.flyTo(pendingAtlasUid);
-          };
-          window.setTimeout(focusPendingListing, 700);
+      var mapContainer = page.querySelector('[data-veramap]');
+      /* `renderAtlas` can run inside startViewTransition's synchronous DOM
+         callback. Construct MapLibre on the next layout frame instead: a
+         remounted canvas otherwise can retain the outgoing route snapshot,
+         leaving controls visible but the city and listing layers blank. */
+      window.requestAnimationFrame(function () {
+        if (state.route !== 'atlas' || state.atlasMode !== 'map' || !page.isConnected || !mapContainer || !mapContainer.isConnected) return;
+        var mounted = window.__VERAM.mount(mapContainer, geo0, function (uid) {
+          if (window.__VERAL) window.__VERAL.open(uid);
+        }, function (failure) {
+          if (state.route !== 'atlas' || state.atlasMode !== 'map' || !page.isConnected) return;
+          renderAtlasFailure(page, failure, f0, geo0);
+        });
+        if (mounted) {
+          var pendingAtlasUid = localRead('vera-atlas-focus');
+          if (pendingAtlasUid) {
+            localWrite('vera-atlas-focus', '');
+            var focusPendingListing = function () {
+              if (state.route === 'atlas' && window.__VERAM && window.__VERAM.flyTo) window.__VERAM.flyTo(pendingAtlasUid);
+            };
+            window.setTimeout(focusPendingListing, 700);
+          }
+          return;
         }
-        return;
-      }
-      /* WebGL or tiles refused — fall through to the drawn city */
+        /* WebGL or tiles refused — fall through to the drawn city. */
+        renderAtlasFallback(page);
+      });
+      return;
     }
     renderAtlasFallback(page);
   }

@@ -726,6 +726,34 @@ test(
 );
 
 test(
+  "VERA remounts populated Atlas layers after leaving the map workspace @vera-all-platforms",
+  async ({ page }) => {
+    await openVera(page, "atlas");
+    const firstMap = page.locator("[data-veramap]");
+    await expectOpenAtlasContract(page, firstMap);
+    await expect
+      .poll(async () => Number((await firstMap.getAttribute("data-veramap-features")) ?? "0"))
+      .toBeGreaterThan(0);
+    const firstCanvas = await firstMap.locator(".maplibregl-canvas").elementHandle();
+    expect(firstCanvas, "Atlas mounted no initial WebGL canvas").not.toBeNull();
+
+    await page.getByRole("link", { name: /^today$/i }).click();
+    await expect(page.locator('.page[data-page="today"]')).toBeVisible();
+    await page.getByRole("link", { name: /^atlas$/i }).click();
+
+    const remountedMap = page.locator("[data-veramap]");
+    await expectOpenAtlasContract(page, remountedMap);
+    await expect
+      .poll(async () => Number((await remountedMap.getAttribute("data-veramap-features")) ?? "0"), {
+        timeout: 15_000,
+        message: "Atlas returned with controls but no rendered listing features",
+      })
+      .toBeGreaterThan(0);
+    expect(await firstCanvas!.evaluate((canvas) => canvas.isConnected)).toBe(false);
+  },
+);
+
+test(
   "VERA Atlas uses NYC geometry instead of borough labels for four-borough scope @vera-all-platforms",
   async ({ page }) => {
     const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
