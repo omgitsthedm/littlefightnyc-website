@@ -68,6 +68,7 @@ async function mockVeraData(
   page: Page,
   workspaceSeed?: VeraWorkspaceSeed,
   fixture = VERA_FEED_FIXTURE,
+  archive = "[]",
 ) {
   // Keep Atlas interaction coverage independent of the public tile CDN. The
   // local Liberty style and VERA GeoJSON layers still execute normally; an
@@ -106,7 +107,7 @@ async function mockVeraData(
 
   // Stub the first-party public feed before VERA or a newly claiming service
   // worker can request it. The product remains read-only throughout the flow.
-  await page.addInitScript(({ fixture, workspace }) => {
+  await page.addInitScript(({ fixture, workspace, archive }) => {
     for (let index = localStorage.length - 1; index >= 0; index -= 1) {
       const key = localStorage.key(index);
       if (key?.startsWith("vera-")) localStorage.removeItem(key);
@@ -130,14 +131,14 @@ async function mockVeraData(
         });
       }
       if (path.endsWith("/archive.json")) {
-        return new Response("[]", {
+        return new Response(archive, {
           status: 200,
           headers: { "Content-Type": "application/json" },
         });
       }
       return nativeFetch(input, init);
     };
-  }, { fixture, workspace: workspaceSeed ?? null });
+  }, { fixture, workspace: workspaceSeed ?? null, archive });
 }
 
 async function waitForVera(page: Page) {
@@ -164,6 +165,109 @@ async function openVera(page: Page, route: string, workspaceSeed?: VeraWorkspace
   await page.goto(`/vera/#/${route}`, { waitUntil: "domcontentloaded" });
   await waitForVera(page);
 }
+
+test(
+  "VERA keeps a slow current publication alive past the soft loading message @vera-desktop",
+  async ({ page }) => {
+    await page.addInitScript(({ fixture }) => {
+      const nativeFetch = window.fetch.bind(window);
+      window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+        const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
+          await new Promise((resolve) => window.setTimeout(resolve, 5_000));
+          return new Response(fixture, { status: 200, headers: { "Content-Type": "application/json" } });
+        }
+        return nativeFetch(input, init);
+      };
+    }, { fixture: VERA_FEED_FIXTURE });
+
+    await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
+    await expect(page.locator("[data-loading]")).toContainText(/still loading the current vera publication/i, {
+      timeout: 6_000,
+    });
+    await waitForVera(page);
+  },
+);
+
+test(
+  "VERA retry starts a fresh current-publication request after a feed failure @vera-desktop",
+  async ({ page }) => {
+    await page.addInitScript(({ fixture }) => {
+      const nativeFetch = window.fetch.bind(window);
+      let attempts = 0;
+      window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+        const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
+          attempts += 1;
+          (window as unknown as { __veraFeedAttempts: number }).__veraFeedAttempts = attempts;
+          if (attempts === 1) return new Response("unavailable", { status: 503 });
+          return new Response(fixture, { status: 200, headers: { "Content-Type": "application/json" } });
+        }
+        return nativeFetch(input, init);
+      };
+    }, { fixture: VERA_FEED_FIXTURE });
+
+    await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
+    const retry = page.getByRole("button", { name: /try again/i });
+    await expect(retry).toBeVisible();
+    await retry.click();
+    await waitForVera(page);
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(2);
+  },
+);
+
+test(
+  "VERA renders a route even when the View Transition DOM update times out @vera-desktop",
+  async ({ page }) => {
+    const transitionErrors: string[] = [];
+    page.on("console", (message) => {
+      if (message.type() === "error" && message.text().includes("VERA route transition failed")) {
+        transitionErrors.push(message.text());
+      }
+    });
+    await page.addInitScript(() => {
+      Object.defineProperty(document, "startViewTransition", {
+        configurable: true,
+        value: (update: () => void) => {
+          update();
+          const error = Object.assign(new Error("transition DOM update timed out"), { name: "TimeoutError" });
+          const rejected = Promise.reject(error);
+          return { ready: rejected, updateCallbackDone: rejected, finished: rejected };
+        },
+      });
+    });
+    await openVera(page, "atlas");
+    await page.evaluate(() => { window.location.hash = "#/hunt"; });
+    await expect(page.locator('.page[data-page="hunt"]')).toBeVisible();
+    expect(transitionErrors).toEqual([]);
+  },
+);
+
+test(
+  "VERA archive rows are native buttons when a live listing can be opened @vera-desktop",
+  async ({ page }) => {
+    const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    const listing = fixture.pool[0];
+    const archive = JSON.stringify([{
+      date: "2026-08-13",
+      listings: [{
+        listing_uid: listing.listing_uid,
+        address_normalized: listing.address_normalized,
+        neighborhood: listing.neighborhood,
+        rent: listing.rent,
+        title: listing.title,
+      }],
+    }]);
+    await mockVeraData(page, undefined, JSON.stringify(fixture), archive);
+    await page.goto("/vera/#/archive", { waitUntil: "domcontentloaded" });
+    await waitForVera(page);
+    const row = page.locator(".arcrow[data-open]");
+    await expect(row).toHaveCount(1);
+    expect(await row.evaluate((element) => element.tagName)).toBe("BUTTON");
+    await row.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+  },
+);
 
 function visibleListings(page: Page) {
   return page.locator("#main [data-open]:visible");
@@ -230,6 +334,11 @@ async function expectMinimumTouchTarget(target: Locator) {
 }
 
 async function closeVisibleFilterSheet(page: Page) {
+  const close = page.locator("[data-filter-close]:visible").first();
+  if (await close.count()) {
+    await close.click();
+    return;
+  }
   const disclosure = page.locator("[data-filter-toggle]:visible").first();
   if (
     (await disclosure.count()) &&
@@ -347,6 +456,9 @@ test(
         dockBox!.y + dockBox!.height,
         "the phone filter control overlays the scrolling result surface",
       ).toBeLessThanOrEqual(mainBox!.y + 1);
+      const trustLine = page.locator("[data-browse-trust]:visible").first();
+      await expect(trustLine).toBeVisible();
+      await expect(trustLine).toContainText(/clears the bar|needs verification|scam signals/i);
     }
     expect(
       resultBox!.y,
@@ -360,6 +472,24 @@ test(
       await filterDeck.evaluate((element) => (element as HTMLElement).inert),
       "a visible filter deck must remain in the accessibility tree",
     ).toBe(false);
+    if (viewport!.width <= 760) {
+      await expect(filterDeck).toHaveAttribute("role", "dialog");
+      await expect(filterDeck).toHaveAttribute("aria-modal", "true");
+      const done = filterDeck.getByRole("button", { name: /^done$/i });
+      await expectFocused(done, "opening the mobile filter sheet did not move focus to Done");
+      const backgroundLocked = await page.evaluate(() => {
+        const main = document.querySelector<HTMLElement>("[data-main]");
+        const masthead = document.querySelector<HTMLElement>(".masthead");
+        const dock = document.querySelector<HTMLElement>(".filter-dock");
+        return Boolean(
+          document.documentElement.classList.contains("vera-filters-open") &&
+          main?.inert && masthead?.inert && dock?.inert &&
+          main.getAttribute("aria-hidden") === "true" &&
+          masthead.getAttribute("aria-hidden") === "true"
+        );
+      });
+      expect(backgroundLocked, "the mobile filter sheet left the workspace interactive").toBe(true);
+    }
     if (viewport!.width >= 1180) {
       const overflowCue = page.locator("[data-filter-scroll]");
       await expect(overflowCue).toBeVisible();
@@ -376,6 +506,15 @@ test(
     await underTwoThousand.click();
     await expectSelected(underTwoThousand);
     await expect(visibleListings(page).first()).toBeVisible();
+
+    if (viewport!.width <= 760) {
+      const done = filterDeck.getByRole("button", { name: /^done$/i });
+      await done.click();
+      await expect(filterDeck).toHaveAttribute("aria-hidden", "true");
+      const dock = page.locator(".filter-dock:visible");
+      await expectFocused(dock, "closing the mobile filter sheet did not return focus to Filters");
+      await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains("vera-filters-open"))).toBe(false);
+    }
 
     await expectNoHorizontalOverflow(page);
   },
@@ -460,6 +599,9 @@ test(
     });
     await openVera(page, "atlas", { atlasMode: "list" });
     await expect(page.locator('.page[data-page="atlas"]')).toBeVisible();
+    await expect
+      .poll(() => page.evaluate(() => Boolean((window as unknown as { __VERAG?: { ready: () => boolean } }).__VERAG?.ready())))
+      .toBe(true);
 
     const mapMode = page.getByRole("button", { name: /^map(?: view)?$/i });
     const listMode = page.getByRole("button", { name: /^list(?: view)?$/i });
@@ -584,6 +726,67 @@ test(
 );
 
 test(
+  "VERA Atlas uses NYC geometry instead of borough labels for four-borough scope @vera-all-platforms",
+  async ({ page }) => {
+    const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    const source = fixture.pool[0];
+    const spoofedBrooklynOnStatenIsland = "spoofed-brooklyn-on-staten-island";
+    const spoofedBronxInConnecticut = "spoofed-bronx-in-connecticut";
+    fixture.pool.push(
+      {
+        ...source,
+        address_normalized: "1 Spoofed Borough Street",
+        borough: "Brooklyn",
+        latitude: 40.520001,
+        listing_uid: spoofedBrooklynOnStatenIsland,
+        longitude: -74.209137,
+        title: "Spoofed Brooklyn on Staten Island",
+      },
+      {
+        ...source,
+        address_normalized: "2 Spoofed Borough Street",
+        borough: "Bronx",
+        latitude: 41.466592,
+        listing_uid: spoofedBronxInConnecticut,
+        longitude: -73.546515,
+        title: "Spoofed Bronx in Connecticut",
+      },
+    );
+    await mockVeraData(page, { atlasMode: "list" }, JSON.stringify(fixture));
+    await page.goto("/vera/#/atlas", { waitUntil: "domcontentloaded" });
+    await waitForVera(page);
+    await expect
+      .poll(() => page.evaluate(() => Boolean((window as unknown as { __VERAG?: { ready: () => boolean } }).__VERAG?.ready())))
+      .toBe(true);
+
+    const scope = await page.evaluate((spoofed) => {
+      const app = window as unknown as {
+        __VERAG?: {
+          placeRead: (listing: Record<string, unknown>) => { boro: string | null } | null;
+          withinAtlasBoroughs: (listing: Record<string, unknown>) => boolean | null;
+        };
+        __vera?: { pool: () => Array<Record<string, unknown>> };
+      };
+      const pool = app.__vera?.pool() ?? [];
+      const rendered = [...document.querySelectorAll<HTMLElement>(".atlas-list-pane [data-open]")]
+        .map((element) => element.getAttribute("data-open") ?? "");
+      const byUid = new Map(pool.map((listing) => [String(listing.listing_uid ?? ""), listing]));
+      return {
+        renderedSpoofs: spoofed.filter((uid) => rendered.includes(uid)),
+        geometrySpoofs: spoofed.map((uid) => app.__VERAG?.withinAtlasBoroughs(byUid.get(uid) ?? {})),
+        boroughNames: [
+          app.__VERAG?.placeRead({ latitude: 40.6782, longitude: -73.9442 })?.boro,
+          app.__VERAG?.placeRead({ latitude: 40.8448, longitude: -73.8648 })?.boro,
+        ],
+      };
+    }, [spoofedBrooklynOnStatenIsland, spoofedBronxInConnecticut]);
+    expect(scope.renderedSpoofs).toEqual([]);
+    expect(scope.geometrySpoofs).toEqual([false, false]);
+    expect(scope.boroughNames).toEqual(["Brooklyn", "Bronx"]);
+  },
+);
+
+test(
   "VERA Atlas rejects absent and malformed coordinates without losing numeric strings @vera-all-platforms",
   async ({ page }) => {
     const fixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
@@ -626,6 +829,9 @@ test(
     );
     await page.goto("/vera/#/atlas", { waitUntil: "domcontentloaded" });
     await waitForVera(page);
+    await expect
+      .poll(() => page.evaluate(() => Boolean((window as unknown as { __VERAG?: { ready: () => boolean } }).__VERAG?.ready())))
+      .toBe(true);
 
     const renderedUids = await page
       .locator(".atlas-list-pane [data-open]")
@@ -1463,20 +1669,24 @@ test(
     expect(safeAreaCoverage).toEqual(["top", "right", "bottom", "left"]);
 
     const bracket = await revealBrowseFilters(page);
-    const targets = [
+    const filterTargets = [
+      bracket.getByRole("button").first(),
+      bracket.getByRole("button").last(),
+    ];
+
+    for (const target of filterTargets) await expectMinimumTouchTarget(target);
+
+    await closeVisibleFilterSheet(page);
+
+    const navTargets = [
       page
         .getByRole("navigation", { name: /sections/i })
         .getByRole("link", { name: /^browse$/i }),
       page
         .getByRole("navigation", { name: /sections/i })
         .getByRole("link", { name: /^my hunt/i }),
-      bracket.getByRole("button").first(),
-      bracket.getByRole("button").last(),
     ];
-
-    for (const target of targets) await expectMinimumTouchTarget(target);
-
-    await closeVisibleFilterSheet(page);
+    for (const target of navTargets) await expectMinimumTouchTarget(target);
 
     const atlasLink = page
       .getByRole("navigation", { name: /sections/i })

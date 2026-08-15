@@ -41,7 +41,7 @@
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=57">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=59">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -83,6 +83,13 @@
     </header>
 
     <div id="vera-filters" class="filters" data-filters aria-label="Listing filters" hidden>
+      <div class="filters__sheethead">
+        <div>
+          <p class="filters__eyebrow">VERA workspace</p>
+          <h2 id="vera-filter-title">Refine the net</h2>
+        </div>
+        <button type="button" class="filters__done" data-filter-close aria-controls="vera-filters">Done</button>
+      </div>
       <div class="filters__group" role="group" aria-label="Price bracket">
         <span class="filters__label">Bracket</span>
         <button type="button" data-bracket="b1">≤ $2,000</button>
@@ -195,12 +202,12 @@
 
   <noscript><p class="fallback">VERA renders a live data feed and needs JavaScript.</p></noscript>
   <script src="./assets/js/vera-core.js?v=51" defer></script>
-  <script src="./assets/js/vera-geo.js?v=48" defer></script>
+  <script src="./assets/js/vera-geo.js?v=59" defer></script>
   <!-- MapLibre (~1MB) and vera-tests.js are deliberately NOT here: the map
        engine loads on first Atlas open, the test suite only under ?test=1.
        Both are injected by vera-app.js. -->
-  <script src="./assets/js/vera-map.js?v=57" defer></script>
+  <script src="./assets/js/vera-map.js?v=59" defer></script>
   <script src="./assets/js/vera-ledger.js?v=58" defer></script>
-  <script src="./assets/js/vera-app.js?v=57" defer></script>
+  <script src="./assets/js/vera-app.js?v=59" defer></script>
 </body>
 </html>
