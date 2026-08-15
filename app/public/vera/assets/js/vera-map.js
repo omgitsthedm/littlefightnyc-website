@@ -366,11 +366,12 @@
 
   function popupNode(listing, onOpen) {
     var wrap = document.createElement('article');
+    wrap.className = 'vera-map-popup__card';
     wrap.setAttribute('aria-label', 'Listing preview');
-    wrap.style.cssText = 'width:min(286px,calc(100vw - 48px));color:#10110e;font:14px/1.4 system-ui,sans-serif;';
     var image = C.trustedURL && C.trustedURL((listing.image_urls || [])[0], 'image');
     if (image) {
       var photo = document.createElement('img');
+      photo.className = 'vera-map-popup__photo';
       photo.src = image;
       photo.alt = 'Listing photo for ' + (listing.title || listing.address_normalized || 'listing');
       photo.width = 286;
@@ -378,36 +379,35 @@
       photo.loading = 'lazy';
       photo.decoding = 'async';
       photo.referrerPolicy = 'no-referrer';
-      photo.style.cssText = 'display:block;width:100%;height:112px;object-fit:cover;background:#20211d;';
       wrap.appendChild(photo);
     }
     var body = document.createElement('div');
-    body.style.cssText = 'padding:12px 2px 2px;';
+    body.className = 'vera-map-popup__body';
     var heading = document.createElement('strong');
+    heading.className = 'vera-map-popup__title';
     heading.textContent = listing.title || listing.address_normalized || 'Listing';
-    heading.style.cssText = 'display:block;font-size:15px;line-height:1.25;';
     body.appendChild(heading);
     var facts = document.createElement('p');
+    facts.className = 'vera-map-popup__facts';
     var score = isFinite(+listing.overall_score) ? ' · score ' + Math.round(+listing.overall_score) : '';
     facts.textContent = (listing.rent ? C.money(listing.rent) : 'Price not published') + score +
       (listing.neighborhood ? ' · ' + listing.neighborhood : '');
-    facts.style.cssText = 'margin:5px 0;color:#45433d;';
     body.appendChild(facts);
     var station = C.nearestStation(listing);
     if (station) {
       var transit = document.createElement('p');
+      transit.className = 'vera-map-popup__transit';
       transit.textContent = '≈' + station.mins + ' min walk · ' + station.name + (station.lines ? ' · ' + station.lines : '');
-      transit.style.cssText = 'margin:4px 0;color:#45433d;font-size:12px;';
       body.appendChild(transit);
     }
     var status = document.createElement('p');
+    status.className = 'vera-map-popup__status';
     status.textContent = popupStatus(listing) + '. Feed coordinate; building footprint is context, not a verified unit match.';
-    status.style.cssText = 'margin:7px 0 10px;color:#5c5142;font-size:12px;';
     body.appendChild(status);
     var open = document.createElement('button');
+    open.className = 'vera-map-popup__open';
     open.type = 'button';
     open.textContent = 'Inspect listing';
-    open.style.cssText = 'min-height:44px;border:0;border-radius:999px;padding:0 15px;background:#184d35;color:#fff;font:600 13px/1 system-ui,sans-serif;cursor:pointer;';
     open.addEventListener('click', function () { if (onOpen) onOpen(listing.listing_uid); });
     body.appendChild(open);
     wrap.appendChild(body);
