@@ -2065,7 +2065,12 @@ test(
       if (host !== "localhost" && host !== "127.0.0.1") thirdPartyHosts.add(host);
     });
 
-    await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+    const approvedCampaign =
+      "utm_source=google&utm_medium=organic&utm_campaign=business_profile&utm_content=booking";
+    await page.goto(
+      `${baseURL}/?${approvedCampaign}&email=private-fixture%40example.com`,
+      { waitUntil: "networkidle" },
+    );
     const consentPanel = page.locator(".lf-consent");
     await expect(consentPanel).toBeVisible();
     const panelGeometry = await consentPanel.evaluate((element) => {
@@ -2114,6 +2119,39 @@ test(
     expect(measurementOnly.hasTikTokQueue).toBe(false);
     expect(measurementOnly.hasTikTokScript).toBe(false);
 
+    const pageViewEvent = await page.evaluate(() =>
+      (window.dataLayer ?? []).findLast(
+        (entry) =>
+          typeof entry === "object" &&
+          entry !== null &&
+          (entry as { event?: string }).event === "page_view",
+      ) as Record<string, unknown> | undefined,
+    );
+    expect(pageViewEvent).toMatchObject({
+      event: "page_view",
+      funnel_stage: "awareness",
+      page_location: `${baseURL}/?${approvedCampaign}`,
+      page_path: "/",
+    });
+    expect(JSON.stringify(pageViewEvent)).not.toContain("private-fixture");
+    await page.evaluate(() => {
+      window.dispatchEvent(
+        new CustomEvent("lf:analytics-consent", { detail: "granted" }),
+      );
+    });
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          (window.dataLayer ?? []).filter(
+            (entry) =>
+              typeof entry === "object" &&
+              entry !== null &&
+              (entry as { event?: string }).event === "page_view",
+          ).length,
+        ),
+      )
+      .toBe(1);
+
     const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
     await websiteCheck.evaluate((link) => {
       link.addEventListener("click", (event) => event.preventDefault(), { once: true });
@@ -2133,7 +2171,7 @@ test(
       funnel_stage: "consideration",
       page_path: "/",
       placement: "home_hero",
-      source: "home",
+      entry_source: "home",
     });
     expect(JSON.stringify(websiteCheckEvent)).not.toContain("private-fixture");
 
@@ -2307,7 +2345,7 @@ test(
         funnel_stage: "submit",
         page_path: "/examples/audit/",
         response_status: 201,
-        source: "audit_lab",
+        entry_source: "audit_lab",
       },
     });
     const serialized = JSON.stringify(events);

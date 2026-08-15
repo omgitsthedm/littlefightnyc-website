@@ -114,6 +114,164 @@ const SERVICE_INQUIRY_TYPES = new Set<ServiceInquiryType>([
   "other",
 ]);
 
+// One bounded event contract protects the GA4 property even when a future
+// component accidentally supplies a free-form data attribute or payload.
+// Anything not named here stays on the page and never reaches a vendor.
+const ANALYTICS_EVENT_NAMES = new Set([
+  "booking_started",
+  "client_error",
+  "door_bridge",
+  "email_click",
+  "external_link_click",
+  "form_submit",
+  "generate_lead",
+  "human_review_requested",
+  "intake_step_1",
+  "intake_step_2",
+  "page_view",
+  "phone_click",
+  "portfolio_live_source",
+  "report_opened",
+  "scroll_50",
+  "service_inquiry",
+  "sms_click",
+  "tech_audit_intent",
+  "tech_audit_started",
+  "tech_audit_submit",
+  "web_vital",
+  "website_check_ready",
+  "website_check_started",
+  "website_plan_intent",
+]);
+
+const ANALYTICS_PARAMETER_KEYS = new Set([
+  "browser",
+  "connection",
+  "contact_channel",
+  "destination_path",
+  "device",
+  "entry_point",
+  "entry_source",
+  "failure_category",
+  "form_name",
+  "funnel_stage",
+  "intent",
+  "link_domain",
+  "link_path",
+  "method",
+  "metric_name",
+  "metric_rating",
+  "metric_value",
+  "page_location",
+  "page_path",
+  "page_title",
+  "placement",
+  "response_status",
+  "selection",
+  "service",
+  "skipped",
+]);
+
+const PATH_PARAMETER_KEYS = new Set([
+  "destination_path",
+  "link_path",
+  "page_path",
+]);
+
+function safeAnalyticsPath(value: unknown) {
+  if (typeof value !== "string" || !value.startsWith("/")) return undefined;
+  try {
+    return new URL(value, window.location.origin).pathname.slice(0, 512);
+  } catch {
+    return undefined;
+  }
+}
+
+function safeAnalyticsString(value: unknown, maxLength = 80) {
+  if (typeof value !== "string") return undefined;
+  const normalized = value.replace(/[\r\n\t]+/g, " ").replace(/\s+/g, " ").trim();
+  return normalized ? normalized.slice(0, maxLength) : undefined;
+}
+
+const BUSINESS_PROFILE_CAMPAIGN = Object.freeze({
+  utm_source: "google",
+  utm_medium: "organic",
+  utm_campaign: "business_profile",
+});
+const BUSINESS_PROFILE_BOOKING_CONTENT = "booking";
+
+function safeAnalyticsLocation(value: unknown) {
+  if (typeof value !== "string") return undefined;
+  try {
+    const location = new URL(value, window.location.origin);
+    if (location.origin !== window.location.origin) return undefined;
+    const safeLocation = new URL(location.pathname, location.origin);
+    const isBusinessProfileCampaign = Object.entries(
+      BUSINESS_PROFILE_CAMPAIGN,
+    ).every(([key, approvedValue]) =>
+      location.searchParams.get(key) === approvedValue,
+    );
+    if (isBusinessProfileCampaign) {
+      for (const [key, approvedValue] of Object.entries(BUSINESS_PROFILE_CAMPAIGN)) {
+        safeLocation.searchParams.set(key, approvedValue);
+      }
+      if (
+        location.searchParams.get("utm_content") ===
+        BUSINESS_PROFILE_BOOKING_CONTENT
+      ) {
+        safeLocation.searchParams.set(
+          "utm_content",
+          BUSINESS_PROFILE_BOOKING_CONTENT,
+        );
+      }
+    }
+    return safeLocation.href.slice(0, 512);
+  } catch {
+    return undefined;
+  }
+}
+
+function safeAnalyticsParameters(parameters: Record<string, unknown>) {
+  const safe: Record<string, string | number | boolean> = {};
+
+  for (const [key, value] of Object.entries(parameters)) {
+    if (!ANALYTICS_PARAMETER_KEYS.has(key)) continue;
+
+    if (PATH_PARAMETER_KEYS.has(key)) {
+      const path = safeAnalyticsPath(value);
+      if (path) safe[key] = path;
+      continue;
+    }
+
+    if (key === "page_location") {
+      const location = safeAnalyticsLocation(value);
+      if (location) safe[key] = location;
+      continue;
+    }
+
+    if (key === "link_domain") {
+      const domain = safeAnalyticsString(value, 253)?.toLowerCase();
+      if (domain && /^[a-z0-9.-]+$/u.test(domain)) safe[key] = domain;
+      continue;
+    }
+
+    if (typeof value === "number") {
+      if (Number.isFinite(value) && Math.abs(value) <= 1_000_000_000) safe[key] = value;
+      continue;
+    }
+
+    if (typeof value === "boolean") {
+      safe[key] = value;
+      continue;
+    }
+
+    const text = safeAnalyticsString(value, key === "page_title" ? 160 : 80);
+    if (text) safe[key] = text;
+  }
+
+  return safe;
+}
+
 function isFirstPartyEventName(value: string): value is FirstPartyEventName {
   return FIRST_PARTY_EVENT_NAMES.has(value as FirstPartyEventName);
 }
@@ -153,8 +311,8 @@ declare global {
   }
 }
 
-const GTM_ID = "GTM-PGPGKMKC";
-const GTM_SRC = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(GTM_ID)}`;
+const GA_MEASUREMENT_ID = "G-0Q1TGWH0HL";
+const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
 // No controlled Clarity project was handed off. Keep the dormant integration
 // incapable of activating from a stale or inherited build variable until the
 // destination account and data boundary are verified.
@@ -172,11 +330,12 @@ let tikTokPageTracked = false;
 let vendorBootTimer: number | undefined;
 let pendingGaEvents: Array<{ eventName: string; parameters: Record<string, unknown> }> = [];
 let pendingTikTokEvents: Array<{ eventName: string; parameters?: Record<string, unknown> }> = [];
+let lastTrackedPageViewSignature = "";
 
-function hasRealGtmId() {
-  // Keep the production container from loading on localhost, deploy previews,
+function hasRealGaMeasurementId() {
+  // Keep the production stream from loading on localhost, deploy previews,
   // or branch deploys.
-  return isProdHost() && /^GTM-[A-Z0-9]+$/.test(GTM_ID);
+  return isProdHost() && /^G-[A-Z0-9]+$/.test(GA_MEASUREMENT_ID);
 }
 
 function hasRealClarityId() {
@@ -215,19 +374,28 @@ function ensureGtag() {
     };
 }
 
-function bootGoogleTagManager() {
-  if (getAnalyticsConsent() !== "granted" || !hasRealGtmId() || gaBooted) return;
+function bootGoogleAnalytics() {
+  if (getAnalyticsConsent() !== "granted" || !hasRealGaMeasurementId() || gaBooted) return;
 
   ensureGtag();
   window.gtag?.("consent", "update", {
     analytics_storage: "granted",
   });
+  window.gtag?.("js", new Date());
+  window.gtag?.("config", GA_MEASUREMENT_ID, {
+    // React Router owns page-view delivery so a route change and the initial
+    // page never become two page views.
+    send_page_view: false,
+    // There is no advertising program. Keep signals and ad personalization
+    // off even after a visitor permits anonymous visit counting.
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+  });
 
-  if (!document.querySelector<HTMLScriptElement>(`script[src="${GTM_SRC}"]`)) {
-    window.dataLayer?.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+  if (!document.querySelector<HTMLScriptElement>(`script[src="${GA_SRC}"]`)) {
     const script = document.createElement("script");
     script.async = true;
-    script.src = GTM_SRC;
+    script.src = GA_SRC;
     document.head.appendChild(script);
   }
 
@@ -342,7 +510,7 @@ function bootTikTokPixel() {
 
 function sendGaEvent(eventName: string, parameters: Record<string, unknown>) {
   if (getAnalyticsConsent() !== "granted") return;
-  if (hasRealGtmId() && typeof window.gtag === "function") {
+  if (hasRealGaMeasurementId() && typeof window.gtag === "function") {
     window.gtag("event", eventName, parameters);
     return;
   }
@@ -380,7 +548,7 @@ function flushPendingTikTokEvents() {
 
 function bootVendors() {
   if (getAnalyticsConsent() === "granted") {
-    bootGoogleTagManager();
+    bootGoogleAnalytics();
     bootClarity();
     flushPendingGaEvents();
   }
@@ -392,7 +560,8 @@ function bootVendors() {
 
 function scheduleVendorBoot() {
   const hasMeasurementVendor =
-    getAnalyticsConsent() === "granted" && (hasRealGtmId() || hasRealClarityId());
+    getAnalyticsConsent() === "granted" &&
+    (hasRealGaMeasurementId() || hasRealClarityId());
   const hasAdvertisingVendor =
     getAdvertisingConsent() === "granted" && hasRealTikTokPixelId();
   if (
@@ -447,13 +616,17 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
     sendTikTokEvent("ClickButton", { ...page, content_name: eventName, ...parameters });
   } else if (eventName === "website_check_ready" || eventName === "report_opened") {
     sendTikTokEvent("ViewContent", { ...page, content_name: eventName, ...parameters });
-  } else if (eventName === "tech_audit_submit" || eventName === "form_submit" || eventName === "lead_success") {
+  } else if (
+    eventName === "tech_audit_submit" ||
+    eventName === "form_submit" ||
+    eventName === "generate_lead"
+  ) {
     sendTikTokEvent("SubmitForm", { ...page, content_name: eventName, ...parameters });
   }
 }
 
 function funnelStage(eventName: string) {
-  if (eventName === "lead_success" || eventName === "generate_lead") return "lead";
+  if (eventName === "generate_lead") return "lead";
   if (eventName === "tech_audit_submit" || eventName === "form_submit") return "submit";
   if (eventName === "human_review_requested" || eventName === "service_inquiry") return "contact";
   if (eventName === "booking_started") return "submit";
@@ -472,15 +645,16 @@ function funnelStage(eventName: string) {
 }
 
 function track(eventName: string, parameters: Record<string, unknown> = {}, deferVendorBoot = false) {
+  if (!ANALYTICS_EVENT_NAMES.has(eventName)) return;
   const analyticsAllowed = getAnalyticsConsent() === "granted";
   const advertisingAllowed = getAdvertisingConsent() === "granted";
   if (!analyticsAllowed && !advertisingAllowed) return;
-  const normalized = {
+  const normalized = safeAnalyticsParameters({
     funnel_stage: funnelStage(eventName),
     ...parameters,
-  };
+  });
 
-  if (deferVendorBoot && analyticsAllowed && !gaBooted) {
+  if (deferVendorBoot && analyticsAllowed && !gaBooted && hasRealGaMeasurementId()) {
     pendingGaEvents.push({ eventName, parameters: normalized });
     scheduleVendorBoot();
     return;
@@ -514,7 +688,7 @@ export function trackFirstPartyEvent<K extends FirstPartyEventName>(
     placement,
     page_path: window.location.pathname,
   };
-  if (source) safeParameters.source = source;
+  if (source) safeParameters.entry_source = source;
 
   if (eventName === "service_inquiry") {
     const requestedService = (parameters as FirstPartyEventContract["service_inquiry"]).service;
@@ -528,8 +702,20 @@ export function trackFirstPartyEvent<K extends FirstPartyEventName>(
 
 export function trackPageView(path: string, title: string) {
   const pagePath = new URL(path, window.location.origin).pathname;
+  if (
+    getAnalyticsConsent() !== "granted" &&
+    getAdvertisingConsent() !== "granted"
+  ) return;
+  const safeLocation = safeAnalyticsLocation(window.location.href) ??
+    new URL(pagePath, window.location.origin).href;
+  const signature = `${safeLocation}\n${pagePath}`;
+  if (signature === lastTrackedPageViewSignature) return;
+  lastTrackedPageViewSignature = signature;
   track("page_view", {
-    page_location: pagePath,
+    // GA4 expects an absolute location. The sanitizer keeps only the exact
+    // approved Business Profile campaign and removes every other query value
+    // or hash that may contain a visitor's form or report state.
+    page_location: window.location.href,
     page_path: pagePath,
     page_title: title,
   }, true);
@@ -700,8 +886,6 @@ export function installAnalyticsHooks() {
     if (event.defaultPrevented) return;
 
     const formName = form.getAttribute("name") ?? "unknown";
-    track("form_submit", { form_name: formName, page_path: window.location.pathname });
-
     if (formName === "tech-audit-scratch") {
       try {
         window.sessionStorage.setItem("lf_tech_audit_submitted", "true");
@@ -713,7 +897,13 @@ export function installAnalyticsHooks() {
         form_name: formName,
         page_path: window.location.pathname,
       });
+      return;
     }
+
+    track("form_submit", {
+      form_name: formName,
+      page_path: window.location.pathname,
+    });
   };
 
   const onScroll = () => {
@@ -749,6 +939,7 @@ export function installAnalyticsHooks() {
     }
 
     pendingGaEvents = [];
+    lastTrackedPageViewSignature = "";
     if (vendorBootTimer !== undefined && getAdvertisingConsent() !== "granted") {
       window.clearTimeout(vendorBootTimer);
       vendorBootTimer = undefined;

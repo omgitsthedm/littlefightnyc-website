@@ -7,6 +7,8 @@ async function read(relativePath) {
 
 const [
   analytics,
+  thanks,
+  auditAnalytics,
   serviceDetail,
   contact,
   espanol,
@@ -17,6 +19,8 @@ const [
   caseStudyDetail,
 ] = await Promise.all([
   read("src/lib/analytics.ts"),
+  read("src/pages/Thanks.tsx"),
+  read("public/examples/audit/analytics.js"),
   read("src/pages/ServiceDetail.tsx"),
   read("src/pages/Contact.tsx"),
   read("src/pages/Espanol.tsx"),
@@ -26,6 +30,131 @@ const [
   read("src/pages/WebsiteCheck.tsx"),
   read("src/pages/CaseStudyDetail.tsx"),
 ]);
+
+// Analytics is deliberately a direct, consent-gated GA4 transport. A GTM
+// container cannot be the only bridge here: it made a successful first-party
+// event dependent on unpublished container configuration. Keep the canonical
+// measurement ID and manual SPA page-view ownership in both public surfaces.
+for (const [label, source] of [
+  ["main site analytics", analytics],
+  ["Website Check analytics", auditAnalytics],
+]) {
+  assert.match(
+    source,
+    /(?:const|var) GA_MEASUREMENT_ID\s*=\s*"G-0Q1TGWH0HL"/u,
+    `${label} must use the controlled GA4 measurement ID directly`,
+  );
+  assert.match(
+    source,
+    /https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=/u,
+    `${label} must load the direct gtag.js transport`,
+  );
+  assert.match(
+    source,
+    /gtag(?:\?\.)?\([\s\S]{0,120}?"config"[\s\S]{0,160}?send_page_view:\s*false/u,
+    `${label} must leave SPA page-view delivery to the application`,
+  );
+  assert.doesNotMatch(
+    source,
+    /(?:const|var) GTM_ID\s*=/u,
+    `${label} must not fall back to a GTM-only event bridge`,
+  );
+  assert.doesNotMatch(
+    source,
+    /bootGoogleTagManager/u,
+    `${label} must not boot a retired GTM-only bridge`,
+  );
+}
+
+// A successful Tech Audit form has exactly one submit event and exactly one
+// lead event. Counting the generic and specialized events together quietly
+// doubled the funnel, which makes real owner demand look better than it is.
+const onSubmit = analytics.match(
+  /const onSubmit = \(event: SubmitEvent\) => \{([\s\S]*?)\n {2}\};\n\n {2}const onScroll/u,
+);
+assert.ok(onSubmit, "analytics hooks must retain the bounded submit handler");
+const techAuditBranch = onSubmit[1].match(
+  /if \(formName === "tech-audit-scratch"\) \{([\s\S]*?)\n {4}\}\n\n {4}track\("form_submit"/u,
+);
+assert.ok(
+  techAuditBranch,
+  "the Tech Audit form must return before the generic form_submit event",
+);
+assert.match(
+  techAuditBranch[1],
+  /track\("tech_audit_submit"/u,
+  "the Tech Audit form must retain its dedicated submit event",
+);
+assert.match(
+  techAuditBranch[1],
+  /return;/u,
+  "the dedicated Tech Audit submit must stop the generic form_submit event",
+);
+assert.doesNotMatch(
+  techAuditBranch[1],
+  /track\("form_submit"/u,
+  "the Tech Audit branch must never emit generic form_submit too",
+);
+assert.match(
+  thanks,
+  /trackEvent\("generate_lead"/u,
+  "a confirmed Tech Audit handoff must record GA4's standard generate_lead event",
+);
+assert.doesNotMatch(
+  thanks,
+  /trackEvent\("lead_success"/u,
+  "a confirmed Tech Audit handoff must not duplicate generate_lead with lead_success",
+);
+assert.match(
+  analytics,
+  /function sendGaEvent\(eventName: string, parameters: Record<string, unknown>\) \{[\s\S]{0,260}?hasRealGaMeasurementId\(\)[\s\S]{0,160}?window\.gtag\("event", eventName, parameters\)/u,
+  "a consented first-party event must be handed to GA4's direct gtag transport",
+);
+assert.match(
+  analytics,
+  /export function trackFirstPartyEvent[\s\S]{0,900}?track\(eventName, safeParameters\)/u,
+  "website_check_started and every typed first-party event must enter the GA4 event path",
+);
+assert.match(
+  analytics,
+  /const ANALYTICS_EVENT_NAMES = new Set\([\s\S]{0,900}?"generate_lead"[\s\S]{0,900}?\);/u,
+  "the public site must allowlist event names before vendor delivery",
+);
+assert.match(
+  analytics,
+  /const ANALYTICS_PARAMETER_KEYS = new Set\([\s\S]{0,1200}?"failure_category"[\s\S]{0,1200}?\);/u,
+  "the public site must allowlist event parameters before vendor delivery",
+);
+assert.match(
+  analytics,
+  /if \(!ANALYTICS_EVENT_NAMES\.has\(eventName\)\) return;/u,
+  "unknown DOM or component event names must never reach a measurement vendor",
+);
+assert.match(
+  analytics,
+  /const BUSINESS_PROFILE_CAMPAIGN = Object\.freeze\([\s\S]{0,260}?utm_source: "google"[\s\S]{0,260}?utm_campaign: "business_profile"[\s\S]{0,260}?BUSINESS_PROFILE_BOOKING_CONTENT = "booking"/u,
+  "only the approved Business Profile main and booking campaigns may survive URL sanitization",
+);
+assert.match(
+  analytics,
+  /function safeAnalyticsLocation[\s\S]{0,1200}?location\.origin !== window\.location\.origin[\s\S]{0,1200}?\.every\([\s\S]{0,500}?BUSINESS_PROFILE_BOOKING_CONTENT[\s\S]{0,500}?safeLocation\.href\.slice\(0, 512\)/u,
+  "page_location must be exact-origin, bounded, and query-sanitized",
+);
+assert.match(
+  analytics,
+  /page_location:\s*window\.location\.href/u,
+  "GA4 page views must enter sanitization with the current absolute location",
+);
+assert.match(
+  analytics,
+  /deferVendorBoot && analyticsAllowed && !gaBooted && hasRealGaMeasurementId\(\)/u,
+  "production may defer a page view for GA4 boot, while previews keep a testable local event",
+);
+assert.match(
+  analytics,
+  /if \(signature === lastTrackedPageViewSignature\) return;/u,
+  "the consent listener and route metadata must not duplicate the same page view",
+);
 
 assert.match(
   analytics,

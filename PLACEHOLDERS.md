@@ -1,6 +1,6 @@
 # Resolved inputs — Little Fight NYC
 
-> Last verified: July 20, 2026. This file is no longer an open-placeholder queue. Current routing, brand, and product truth lives in `SOURCE_OF_TRUTH.md`, `VOICE.md`, and `app/src/data/site.ts`.
+> Last verified: August 14, 2026. This file is no longer an open-placeholder queue. Current routing, brand, and product truth lives in `SOURCE_OF_TRUTH.md`, `VOICE.md`, and `app/src/data/site.ts`.
 
 ## Current confirmed facts
 
@@ -18,10 +18,11 @@
 - Current proof uses real, named case studies and approved facts from
   `app/src/data/site-cases.ts`; do not restore placeholder clients or invent
   testimonials, savings percentages, dates, prices, or business counts.
+- The owned Google Business Profile resolves to the Maps identity already used
+  in public `sameAs` data. Instagram is the approved public social profile.
 
 ## Still requires owner-supplied truth
 
-- Google Business Profile URL and approved social profiles for `sameAs`.
 - A real registered address only if David chooses to publish it; the business
   currently operates correctly as a service-area business.
 - Approval-backed client outcomes or quotes collected through

@@ -2,8 +2,9 @@
   "use strict";
 
   var CONSENT_KEY = "lf_analytics_consent_v1";
-  var GTM_ID = "GTM-PGPGKMKC";
-  var GTM_SRC = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(GTM_ID);
+  var GA_MEASUREMENT_ID = "G-0Q1TGWH0HL";
+  var GA_SRC = "https://www.googletagmanager.com/gtag/js?id=" +
+    encodeURIComponent(GA_MEASUREMENT_ID);
   var ALLOWED_EVENTS = {
     page_view: true,
     audit_scan_started: true,
@@ -24,7 +25,7 @@
     page_path: true,
     placement: true,
     response_status: true,
-    source: true
+    entry_source: true
   };
   var GA_COOKIE_PREFIXES = ["_ga", "_gid", "_gat"];
   var booted = false;
@@ -88,10 +89,8 @@
 
   function revoke() {
     updateGoogleConsent("denied");
-    /* A visitor can withdraw after either the current GTM container or the
-       former direct gtag loader has entered the document. Remove both Google
-       analytics boot paths; the denied Consent Mode update above still lands
-       before their nodes are detached. */
+    /* Remove either the current direct tag or a retired container left by a
+       cached page. The denied Consent Mode update above lands first. */
     document.querySelectorAll("script[src]").forEach(function (script) {
       try {
         var source = new URL(script.src, global.location.href);
@@ -109,11 +108,16 @@
   function boot() {
     if (booted || !hasConsent() || !isCanonicalHost()) return;
     updateGoogleConsent("granted");
-    if (!document.querySelector('script[src="' + GTM_SRC + '"]')) {
-      global.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    global.gtag("js", new Date());
+    global.gtag("config", GA_MEASUREMENT_ID, {
+      send_page_view: false,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
+    if (!document.querySelector('script[src="' + GA_SRC + '"]')) {
       var script = document.createElement("script");
       script.async = true;
-      script.src = GTM_SRC;
+      script.src = GA_SRC;
       document.head.appendChild(script);
     }
     booted = true;
@@ -125,7 +129,7 @@
       if (SAFE_PARAMETER_KEYS[key]) safe[key] = parameters[key];
     });
     safe.page_path = global.location.pathname;
-    safe.source = "audit_lab";
+    safe.entry_source = "audit_lab";
     safe.placement = safe.placement ||
       (global.location.pathname.indexOf("/report/") !== -1 ? "audit_report" : "audit_lab");
     return safe;

@@ -75,9 +75,12 @@ function reportError(kind: string, message: unknown, file = "") {
 
   trackEvent("client_error", {
     ...context(),
-    error_type: kind,
-    error_message: cleaned,
-    file_name: file.split("/").pop()?.split("?")[0]?.slice(0, 80) ?? "",
+    // Keep diagnostics useful without sending a browser error message, URL,
+    // filename, or other uncontrolled text to Google Analytics.
+    failure_category: safeText(kind, "client_error")
+      .toLowerCase()
+      .replace(/[^a-z0-9_-]+/g, "_")
+      .slice(0, 40),
   });
 }
 

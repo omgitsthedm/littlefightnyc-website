@@ -102,12 +102,6 @@ export default function Thanks() {
       page_path: "/thanks/",
       intent: leadIntent,
     });
-    trackEvent("lead_success", {
-      method: "tech_audit_form",
-      form_name: "tech-audit-scratch",
-      page_path: "/thanks/",
-      intent: leadIntent,
-    });
   }, [leadIntent]);
 
   return (

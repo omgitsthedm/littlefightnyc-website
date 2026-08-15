@@ -69,6 +69,7 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /services/branding-and-identity-design/*        /services/custom-local-websites/   301
 /services/ecommerce-setup-shopify-square-woocommerce/*  /services/custom-local-websites/  301
 /nyc-websites-it-support/*                     /services/                        301
+/services-7                                    /services/                        301
 /software-cost-calculator/*                    /answers/reduce-monthly-software-costs-small-business/  301
 
 # --- Information architecture consolidation (May 2026)
