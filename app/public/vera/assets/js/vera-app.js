@@ -16,7 +16,9 @@
   var FEEDS = [
     { url: './data/public.json', label: 'site' },
   ];
-  var FEED_TIMEOUT_MS = 3500;
+  var FEED_SOFT_TIMEOUT_MS = 3500;
+  var FEED_TIMEOUT_MS = 12000;
+  var ARCHIVE_TIMEOUT_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
   var ADDRESS_CHECK_TIMEOUT_MS = TESTMODE ? 250 : 9000;
   /* Today, Browse, Atlas, and My Hunt are the primary workspaces on every
@@ -1527,7 +1529,9 @@
 
   function atlasScope(listings) {
     return listings.filter(function (listing) {
-      return !!ATLAS_BOROUGHS[String(listing.borough || '').trim().toLowerCase()];
+      if (!ATLAS_BOROUGHS[String(listing.borough || '').trim().toLowerCase()]) return false;
+      if (!hasValidLngLat(listing)) return true;
+      return !!(window.__VERAG && window.__VERAG.ready && window.__VERAG.ready() && window.__VERAG.withinAtlasBoroughs && window.__VERAG.withinAtlasBoroughs(listing));
     });
   }
 
@@ -2257,10 +2261,12 @@
               if (!live) { badge = 'no longer listed'; cls = 'is-gone'; }
               else if (+live.rent && +r.rent && +live.rent < +r.rent) { badge = 'price dropped to ' + money(live.rent); cls = 'is-drop'; }
               else { badge = 'still listed'; cls = 'is-live'; }
-              return '<div class="arcrow' + (live ? '" data-open="' + esc(r.listing_uid) + '"' : ' arcrow--dead"') + '>' +
+              var tag = live ? 'button type="button"' : 'div';
+              var attrs = live ? ' data-open="' + esc(r.listing_uid) + '" aria-label="Open ledger for ' + esc(r.address_normalized || r.title || 'listing') + '"' : '';
+              return '<' + tag + ' class="arcrow' + (live ? '"' : ' arcrow--dead"') + attrs + '>' +
                 '<b>' + esc(C.titleCase(String(r.address_normalized || r.title || 'listing').toLowerCase())) + '</b>' +
                 '<span>' + money(r.rent) + ' · ' + esc(r.neighborhood || '—') + '</span>' +
-                '<span class="arcrow__badge ' + cls + '">' + badge + '</span></div>';
+                '<span class="arcrow__badge ' + cls + '">' + badge + '</span></' + (live ? 'button' : 'div') + '>';
             }).join('') : '<p class="lane__empty">Nothing cleared the bar that day — and the page said so.</p>') +
           '</div></section>';
         }).join('');
@@ -2299,7 +2305,7 @@
           if (--left <= 0) decide();
         }, function () { if (--left <= 0) decide(); });
     });
-    setTimeout(decide, FEED_TIMEOUT_MS);
+    setTimeout(decide, ARCHIVE_TIMEOUT_MS);
   }
 
   function runAddressCheck(form) {
@@ -2697,8 +2703,16 @@
 
   /* Route changes ride the View Transitions API where it exists — the
      buttery cross-fade costs nothing and respects reduced motion. */
-  function observeRouteTransition(transition) {
+  function observeRouteTransition(transition, renderNow) {
     function report(err) {
+      /* Chromium can abort a transition's DOM update after it has started.
+         The route callback remains the source of truth, so make sure the
+         destination has painted and do not turn an animation hiccup into a
+         user-visible error state. */
+      if (err && err.name === 'TimeoutError') {
+        renderNow();
+        return;
+      }
       if (err && err.name !== 'AbortError' && window.console && console.error) {
         console.error('VERA route transition failed', err);
       }
@@ -2707,18 +2721,24 @@
        ViewTransition promise can reject independently, so observing only
        `finished` still leaves a noisy, unhandled `ready` rejection. */
     if (transition && transition.ready) transition.ready.catch(report);
-    if (transition && transition.updateCallbackDone) transition.updateCallbackDone.catch(function () {});
+    if (transition && transition.updateCallbackDone) transition.updateCallbackDone.catch(report);
     if (transition && transition.finished) transition.finished.catch(report);
   }
 
   function routeSmooth() {
     if (!TESTMODE && !RM && document.startViewTransition) {
-      try {
-        var transition = document.startViewTransition(function () { route(); });
-        observeRouteTransition(transition);
-      } catch (err) {
+      var didRender = false;
+      function renderNow() {
+        if (didRender) return;
+        didRender = true;
         route();
-        if (err && err.name !== 'AbortError' && window.console && console.error) console.error('VERA route transition failed', err);
+      }
+      try {
+        var transition = document.startViewTransition(renderNow);
+        observeRouteTransition(transition, renderNow);
+      } catch (err) {
+        renderNow();
+        if (err && err.name !== 'AbortError' && err.name !== 'TimeoutError' && window.console && console.error) console.error('VERA route transition failed', err);
       }
     } else route();
   }
@@ -2821,17 +2841,31 @@
     var pending = FEEDS.length;
     var done = false;
     var racers = [];
+    var softTimer = 0;
+    var hardTimer = 0;
+
+    function showRetry() {
+      var out = $('[data-loading]');
+      if (!out) return;
+      out.innerHTML = '<p>VERA could not reach the current publication. Your saved workspace is still here.</p><button type="button" class="ghostbtn" data-feed-retry>Try again</button>';
+      var retry = $('[data-feed-retry]', out);
+      if (retry) retry.addEventListener('click', function () {
+        out.innerHTML = '<p>Loading the current VERA publication…</p>';
+        boot();
+      }, { once: true });
+    }
 
     function finish() {
       if (done) return;
       done = true;
+      clearTimeout(softTimer);
+      clearTimeout(hardTimer);
       /* Once the newest answer is decided, every response still in flight is
          a 2MB download nobody will read. Cut the stragglers; the winner has
          already resolved, so aborting its controller is a no-op. */
       racers.forEach(function (c) { try { c.abort(); } catch (e) {} });
       if (!results.length) {
-        var out = $('[data-loading]');
-        if (out) out.innerHTML = '<p>Could not reach the VERA feed. It publishes nightly — try again shortly.</p>';
+        showRetry();
         return;
       }
       results.sort(function (a, b) { return b.at - a.at; });
@@ -2869,7 +2903,12 @@
         }, settled);
     });
 
-    setTimeout(finish, FEED_TIMEOUT_MS);
+    softTimer = setTimeout(function () {
+      if (done) return;
+      var out = $('[data-loading]');
+      if (out) out.innerHTML = '<p>Still loading the current VERA publication. The connection is taking longer than usual.</p>';
+    }, FEED_SOFT_TIMEOUT_MS);
+    hardTimer = setTimeout(finish, FEED_TIMEOUT_MS);
   }
 
   window.__VERA_APP = {

@@ -7,6 +7,8 @@
 
   var C = window.__VERAC;
   var GEO = { loaded: false, hoods: [], byName: {} };
+  var BOROUGH_NAMES = { M: 'Manhattan', B: 'Brooklyn', Q: 'Queens', X: 'Bronx', S: 'Staten Island' };
+  var ATLAS_BOROUGH_CODES = { M: 1, B: 1, Q: 1, X: 1 };
 
   fetch('./assets/geo/hoods-full.json', { cache: 'force-cache' })
     .catch(function () { return fetch('./assets/geo/hoods.json', { cache: 'force-cache' }); })
@@ -66,7 +68,16 @@
     var agrees = !claimed || truth.indexOf(claimed.split(' (')[0]) > -1 || claimed.indexOf(truth.split(' (')[0]) > -1 ||
       truth.split(/[-(]/)[0].trim().indexOf(claimed.split(/[-(]/)[0].trim()) > -1 ||
       claimed.split(/[-(]/)[0].trim().indexOf(truth.split(/[-(]/)[0].trim()) > -1;
-    return { name: h.n, boro: h.b === 'M' ? 'Manhattan' : 'Brooklyn', agrees: agrees, hood: h };
+    return { name: h.n, boro: BOROUGH_NAMES[h.b] || null, agrees: agrees, hood: h };
+  }
+
+  /* Atlas is a four-borough product boundary. A listing with coordinates is
+     admitted only when the vendored NYC Planning geometry says it is inside
+     Manhattan, Brooklyn, Queens, or the Bronx; feed labels are not authority. */
+  function withinAtlasBoroughs(l) {
+    if (!GEO.loaded || !hasValidLngLat(l)) return null;
+    var hood = hoodAt(+l.latitude, +l.longitude);
+    return !!(hood && ATLAS_BOROUGH_CODES[hood.b]);
   }
 
   function ringsPath(rings, px, py) {
@@ -194,5 +205,5 @@
     return { polys: polys, labels: labels };
   }
 
-  window.__VERAG = { ready: function () { return GEO.loaded; }, hoodAt: hoodAt, placeRead: placeRead, minimap: minimap, atlasLand: atlasLand };
+  window.__VERAG = { ready: function () { return GEO.loaded; }, hoodAt: hoodAt, placeRead: placeRead, withinAtlasBoroughs: withinAtlasBoroughs, minimap: minimap, atlasLand: atlasLand };
 })();
