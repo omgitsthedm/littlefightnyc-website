@@ -49,6 +49,27 @@ for (const [label, source] of [
   );
 }
 
+assert.match(
+  analytics,
+  /function setGoogleAnalyticsDisabled[\s\S]{0,180}?GA_DISABLE_KEY/u,
+  "main site analytics must own Google's property-level disable switch",
+);
+assert.match(
+  analytics,
+  /setGoogleAnalyticsDisabled\(false\)/u,
+  "main site analytics must re-enable GA4 only after consent",
+);
+assert.match(
+  analytics,
+  /setGoogleAnalyticsDisabled\(true\)/u,
+  "main site analytics must disable GA4 on withdrawal",
+);
+assert.match(
+  auditAnalytics,
+  /GA_DISABLE_KEY[\s\S]{0,3200}?global\[GA_DISABLE_KEY\] = true[\s\S]{0,2400}?global\[GA_DISABLE_KEY\] = false/u,
+  "Website Check analytics must disable GA4 on withdrawal and re-enable it only after consent",
+);
+
 // Analytics is deliberately a direct, consent-gated GA4 transport. A GTM
 // container cannot be the only bridge here: it made a successful first-party
 // event dependent on unpublished container configuration. Keep the canonical

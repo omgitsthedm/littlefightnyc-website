@@ -313,6 +313,7 @@ declare global {
 
 const GA_MEASUREMENT_ID = "G-0Q1TGWH0HL";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
+const GA_DISABLE_KEY = `ga-disable-${GA_MEASUREMENT_ID}`;
 // No controlled Clarity project was handed off. Keep the dormant integration
 // incapable of activating from a stale or inherited build variable until the
 // destination account and data boundary are verified.
@@ -377,9 +378,14 @@ function ensureGtag() {
     };
 }
 
+function setGoogleAnalyticsDisabled(disabled: boolean) {
+  Object.assign(window, { [GA_DISABLE_KEY]: disabled });
+}
+
 function bootGoogleAnalytics() {
   if (getAnalyticsConsent() !== "granted" || !hasRealGaMeasurementId() || gaBooted) return;
 
+  setGoogleAnalyticsDisabled(false);
   ensureGtag();
   window.gtag?.("consent", "update", {
     analytics_storage: "granted",
@@ -812,6 +818,9 @@ function trackFirstPartyElementEvent(target: HTMLElement) {
 }
 
 export function installAnalyticsHooks() {
+  // Google's property-level switch stops a previously loaded tag immediately
+  // after withdrawal, including automatic cookieless pings.
+  setGoogleAnalyticsDisabled(getAnalyticsConsent() !== "granted");
   // A legacy analytics opt-in used to imply advertising consent. The new
   // contract does not: absent advertising consent is denied, and any durable
   // TikTok identifiers left by the old behavior are removed on the next load.
@@ -929,6 +938,7 @@ export function installAnalyticsHooks() {
   window.addEventListener("scroll", onScroll, { passive: true });
   const removeConsentListener = onAnalyticsConsentChange((consent) => {
     if (consent === "granted") {
+      setGoogleAnalyticsDisabled(false);
       window.clarity?.("consentv2", {
         ad_Storage: getAdvertisingConsent() === "granted" ? "granted" : "denied",
         analytics_Storage: "granted",
@@ -941,6 +951,7 @@ export function installAnalyticsHooks() {
       return;
     }
 
+    setGoogleAnalyticsDisabled(true);
     pendingGaEvents = [];
     lastTrackedPageViewSignature = "";
     if (vendorBootTimer !== undefined && getAdvertisingConsent() !== "granted") {

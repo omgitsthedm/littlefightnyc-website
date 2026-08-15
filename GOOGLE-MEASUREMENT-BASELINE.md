@@ -26,6 +26,8 @@ Profile hides the street address and uses NYC service areas.
 
 - Google Analytics is **Basic Consent Mode**: denied by default and the Google
   tag does not load until the visitor chooses `Allow visit counting`.
+- Choosing `Essential only` sets Google’s property-level disable switch before
+  cleanup, so a tag loaded earlier cannot send later cookieless pings.
 - Advertising storage, advertising user data, advertising personalization,
   Google Signals, and ad-personalization signals stay denied/off.
 - The site loads the owned GA4 stream directly after consent. The previous GTM

@@ -2038,6 +2038,15 @@ test(
       localStorage.setItem("lf_analytics_consent_v1", "denied");
       window.dispatchEvent(new CustomEvent("lf:analytics-consent", { detail: "denied" }));
     });
+    expect(
+      await page.evaluate(() =>
+        Boolean(
+          (window as unknown as Record<string, unknown>)[
+            "ga-disable-G-0Q1TGWH0HL"
+          ],
+        ),
+      ),
+    ).toBe(true);
 
     await expect
       .poll(
@@ -2101,6 +2110,11 @@ test(
         hasTikTokScript: Boolean(
           document.querySelector('script[src*="analytics.tiktok.com"]'),
         ),
+        gaDisabled: Boolean(
+          (window as unknown as Record<string, unknown>)[
+            "ga-disable-G-0Q1TGWH0HL"
+          ],
+        ),
       };
     });
 
@@ -2118,6 +2132,7 @@ test(
     ).toBe(false);
     expect(measurementOnly.hasTikTokQueue).toBe(false);
     expect(measurementOnly.hasTikTokScript).toBe(false);
+    expect(measurementOnly.gaDisabled).toBe(false);
 
     const pageViewEvent = await page.evaluate(() =>
       (window.dataLayer ?? []).findLast(

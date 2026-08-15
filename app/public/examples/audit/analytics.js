@@ -3,6 +3,7 @@
 
   var CONSENT_KEY = "lf_analytics_consent_v1";
   var GA_MEASUREMENT_ID = "G-0Q1TGWH0HL";
+  var GA_DISABLE_KEY = "ga-disable-" + GA_MEASUREMENT_ID;
   var GA_SRC = "https://www.googletagmanager.com/gtag/js?id=" +
     encodeURIComponent(GA_MEASUREMENT_ID);
   var ALLOWED_EVENTS = {
@@ -88,6 +89,7 @@
   }
 
   function revoke() {
+    global[GA_DISABLE_KEY] = true;
     updateGoogleConsent("denied");
     /* Remove either the current direct tag or a retired container left by a
        cached page. The denied Consent Mode update above lands first. */
@@ -107,6 +109,7 @@
 
   function boot() {
     if (booted || !hasConsent() || !isCanonicalHost()) return;
+    global[GA_DISABLE_KEY] = false;
     updateGoogleConsent("granted");
     global.gtag("js", new Date());
     global.gtag("config", GA_MEASUREMENT_ID, {
