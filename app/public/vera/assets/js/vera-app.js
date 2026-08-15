@@ -494,14 +494,64 @@
       : 'More filters <span aria-hidden="true">→</span>';
   }
 
+  var filterSheetOrigin = null;
+  var filterSheetWasOpen = false;
+
+  function lockFilterSheetBackground(locked) {
+    ['.masthead', '[data-filter-scroll]', '.filter-dock', '[data-route-announce]', '[data-main]', '.deckfoot'].forEach(function (selector) {
+      var element = $(selector);
+      if (!element) return;
+      element.inert = locked;
+      if (locked) element.setAttribute('aria-hidden', 'true');
+      else element.removeAttribute('aria-hidden');
+    });
+    document.documentElement.classList.toggle('vera-filters-open', locked);
+  }
+
   function renderFilters() {
     var deck = $('[data-filters]');
     deck.hidden = !DATA_ROUTES[state.route];
     if (deck.hidden) state.filtersOpen = false;
     deck.classList.toggle('is-open', !deck.hidden && state.filtersOpen);
-    var concealed = deck.hidden || (!!FILTER_SHEET_QUERY && FILTER_SHEET_QUERY.matches && !state.filtersOpen);
+    var mobileSheet = !!(FILTER_SHEET_QUERY && FILTER_SHEET_QUERY.matches);
+    var mobileOpen = !deck.hidden && mobileSheet && state.filtersOpen;
+    var concealed = deck.hidden || (mobileSheet && !state.filtersOpen);
     deck.setAttribute('aria-hidden', concealed ? 'true' : 'false');
     deck.inert = concealed;
+    if (mobileSheet) {
+      deck.setAttribute('role', 'dialog');
+      deck.setAttribute('aria-modal', 'true');
+      deck.setAttribute('aria-labelledby', 'vera-filter-title');
+    } else {
+      deck.removeAttribute('role');
+      deck.removeAttribute('aria-modal');
+      deck.removeAttribute('aria-labelledby');
+    }
+    if (mobileOpen && !filterSheetWasOpen) {
+      filterSheetOrigin = $$('[data-filter-toggle]').filter(function (button) {
+        return !button.hidden;
+      })[0] || document.activeElement;
+      lockFilterSheetBackground(true);
+      requestAnimationFrame(function () {
+        var done = $('[data-filter-close]', deck);
+        if (done) done.focus();
+      });
+    } else if (!mobileOpen && filterSheetWasOpen) {
+      lockFilterSheetBackground(false);
+      var origin = filterSheetOrigin;
+      filterSheetOrigin = null;
+      var restoreFilterFocus = function () {
+        var active = document.activeElement;
+        if (active && active !== document.body && !deck.contains(active)) return;
+        var target = (origin && origin.isConnected) ? origin : $('.filter-dock');
+        if (target && target.focus) target.focus({ preventScroll: true });
+      };
+      requestAnimationFrame(function () { requestAnimationFrame(restoreFilterFocus); });
+      setTimeout(restoreFilterFocus, 50);
+    } else {
+      lockFilterSheetBackground(mobileOpen);
+    }
+    filterSheetWasOpen = mobileOpen;
     if (deck.hidden) {
       $$('[data-filter-toggle]').forEach(function (button) { button.hidden = true; button.setAttribute('aria-expanded', 'false'); });
       syncPressed(deck);
@@ -1006,7 +1056,7 @@
         '<h1 class="drophead__title">' + esc(dateStr) + '</h1>' +
         '<p class="drophead__lede">' +
           (drop.length
-            ? 'Out of <b>' + POOL.length + '</b> listings across the net, <b>' + clearedCount + '</b> clear' + (clearedCount === 1 ? 's' : '') + ' every gate — price, papers, building record, and an owner worth talking to.' +
+            ? 'Out of <b>' + POOL.length + '</b> listings across the four-borough net, <b>' + clearedCount + '</b> clear' + (clearedCount === 1 ? 's' : '') + ' every gate — price, papers, building record, and an owner worth talking to.' +
               (beyondDrop ? ' The <b>' + drop.length + '</b> strongest are below; <a href="#/browse" data-view-jump="cleared">the other ' + beyondDrop + ' are here ↗</a>' : '')
             : 'Nothing met the bar today — out of ' + POOL.length + ' swept, none cleared every gate. That is not a bug. The net stays out and tomorrow sweeps again.') +
         '</p>' +
@@ -1245,9 +1295,9 @@
     }
 
     page.innerHTML =
-      '<header class="pagehead"><p class="kicker">The wide net</p>' +
+      '<header class="pagehead"><p class="kicker">Four-borough market</p>' +
       '<h1 class="pagehead__title">The market, whole</h1>' +
-      '<p class="pagehead__lede">Everything VERA is watching under ' + money(C.FIT.maxRent) + ' — not just what cleared. The published market medians sit at ' + money(mk.manhattanMedian) + ' Manhattan / ' + money(mk.brooklynMedian) + ' Brooklyn (' + esc(mk.asOf) + '); this net hunts the floor beneath them.</p></header>' +
+      '<p class="pagehead__lede">Everything VERA is watching across Manhattan, Brooklyn, Queens, and the Bronx under ' + money(C.FIT.maxRent) + ' — not just what cleared. The published market medians sit at ' + money(mk.manhattanMedian) + ' Manhattan / ' + money(mk.brooklynMedian) + ' Brooklyn (' + esc(mk.asOf) + '); this net hunts the floor beneath them.</p></header>' +
       '<div class="kpis">' +
         kpi('In the net', cval(f.length) + '<small>/' + POOL.length + '</small>', 'under current lens', '', 'browse') +
         newTonightKPI(sm, dc, fresh) +
@@ -1297,6 +1347,16 @@
      BROWSE — the whole table, dense and sortable.
      ================================================================ */
 
+  function browseTrustLine(l) {
+    var status = C.isScam(l) ? 'Scam signals' : C.needsVerify(l) ? 'Needs verification' : 'Clears the bar';
+    var cls = C.isScam(l) ? 'is-bad' : C.needsVerify(l) ? '' : 'is-good';
+    var owner = C.ownerRead(l);
+    var hpd = l.hpd_risk_score == null ? 'HPD not matched' : 'HPD ' + num(l.hpd_risk_score);
+    return '<span class="browse-mobile-trust ' + cls + '" data-browse-trust>' +
+      '<strong>' + status + '</strong><span aria-hidden="true">·</span>' +
+      '<span>' + esc(owner.label) + ' · ' + esc(hpd) + '</span></span>';
+  }
+
   var COLS = [
     { key: 'overall_score', label: 'Score', render: function (l) {
       if (l.overall_score == null) return '<span class="t-score">—</span>';
@@ -1311,7 +1371,8 @@
     { key: 'title', label: 'Listing', render: function (l) {
       var title = l.title || l.address_normalized || 'Listing';
       return '<button type="button" class="t-title" data-open="' + esc(l.listing_uid) + '" aria-label="Open ledger for ' + esc(title) + '">' +
-        '<span class="t-title__name">' + esc(title) + '</span><span class="t-title__action" aria-hidden="true">Open ledger</span></button>';
+        '<span class="t-title__name">' + esc(title) + '</span><span class="t-title__action" aria-hidden="true">Open ledger</span></button>' +
+        browseTrustLine(l);
     } },
     { key: 'neighborhood', label: 'Hood', render: function (l) { return '<span class="t-dim">' + esc(l.neighborhood || '—') + '</span>'; } },
     { key: 'transit_mins', label: 'Subway', render: function (l) { var t = C.nearestStation(l); return t ? '<span class="t-mono">≈' + t.mins + 'm</span> ' + C.lineBullets(t.lines) : '<span class="t-dim">—</span>'; } },
@@ -1362,7 +1423,7 @@
     page.innerHTML =
       '<section class="workspace workspace--browse" data-workspace="browse">' +
         '<header class="workspacehead">' +
-          '<div><p class="kicker">Signal desk</p><h1 class="workspacehead__title">Every listing in the net</h1>' +
+          '<div><p class="kicker">Signal desk</p><h1 class="workspacehead__title">Every listing in the four-borough net</h1>' +
           '<p class="workspacehead__lede">Search once, compare the evidence, keep the city record beside the listing.</p></div>' +
           '<dl class="workspace-metrics" aria-label="Current VERA publication">' +
             '<div><dt>Net</dt><dd>' + POOL.length + '</dd></div>' +
@@ -1378,7 +1439,7 @@
         '</div>' +
         '<div class="dtoolbar" role="search">' +
           '<label class="command-search"><span class="sr-only">Search listings</span>' +
-            '<input type="search" name="vera-search" autocomplete="off" placeholder="Search the net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
+            '<input type="search" name="vera-search" autocomplete="off" placeholder="Search the four-borough net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
             '<kbd aria-hidden="true">⌘K</kbd></label>' +
           '<span class="dtoolbar__count" data-browse-count aria-live="polite">' + f.length + ' matches · ' + renderedCount + ' loaded</span>' +
           '<span class="dtoolbar__density" aria-label="Result density">' +
@@ -1589,7 +1650,9 @@
     if (!window.maplibregl && mapAssetState !== 'failed') {
       page.innerHTML =
         '<section class="workspace workspace--atlas" data-workspace="atlas">' + atlasHeader(geo0.length, f0.length) +
-        '<div class="panel mapwrap maploader" data-map-loading role="status"><span class="maploader__mark" aria-hidden="true"></span><p><strong>Opening the city.</strong><br>Loading the local Atlas style, then live street tiles…</p></div>';
+        '<div class="panel mapwrap maploader" data-map-loading role="region" aria-label="Atlas street map loading"><span class="maploader__mark" aria-hidden="true"></span>' +
+          '<p role="status"><strong>Opening the city.</strong><br>The evidence list is ready while live streets and buildings load.</p>' +
+          '<button type="button" class="ghostbtn" data-atlas-mode="list">Open evidence list</button></div>';
       page.innerHTML += '</section>';
       page.classList.add('is-entered');
       renderFilters();
@@ -2179,8 +2242,8 @@
   /* Tell a screen reader where it just landed, and what is there. Polite,
      so it waits for a pause rather than interrupting. */
   var ROUTE_NAMES = {
-    today: 'Today, the daily drop', market: 'Market, the whole net',
-    browse: 'Browse, every listing', atlas: 'Atlas, the map',
+    today: 'Today, the daily drop', market: 'Market, the four-borough net',
+    browse: 'Browse, every four-borough listing', atlas: 'Atlas, the map',
     hunt: 'My hunt', manual: 'Field manual', archive: 'Receipts', system: 'System',
   };
 
@@ -2397,7 +2460,7 @@
     if (e.target.closest && e.target.closest('[data-nav-sheet],[data-tab-sheet],[data-nav-more],[data-tab-more]')) return;
     $$('[data-nav-sheet],[data-tab-sheet]').forEach(function (s) { s.hidden = true; });
     $$('[data-nav-more],[data-tab-more]').forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
-    if (!(e.target.closest && e.target.closest('[data-filters],[data-filter-toggle]')) && state.filtersOpen) {
+    if (!(e.target.closest && e.target.closest('[data-filters],[data-filter-toggle],[data-filter-close]')) && state.filtersOpen) {
       state.filtersOpen = false;
       renderFilters();
     }
@@ -2410,11 +2473,17 @@
   });
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-filter-scroll],[data-hunt-select],[data-atlas-mode],[data-atlas-focus],[data-erase-vera],[data-erase-vera-cancel],[data-erase-vera-confirm],[data-gal-step],[data-gal-shot],[data-lb-close],[data-lb-step]') : null;
+    var t = e.target.closest ? e.target.closest('[data-open],[data-view-jump],[data-bracket],[data-brtile],[data-unit],[data-transit],[data-lens],[data-view],[data-area],[data-hoodbar],[data-kpi],[data-clear],[data-density],[data-sort],[data-stage],[data-outcome],[data-drop],[data-tell],[data-insp-close],[data-scrim],[data-tab],[data-address-candidate],[data-address-replace],[data-address-forget],[data-nav-more],[data-tab-more],[data-filter-toggle],[data-filter-close],[data-filter-scroll],[data-hunt-select],[data-atlas-mode],[data-atlas-focus],[data-erase-vera],[data-erase-vera-cancel],[data-erase-vera-confirm],[data-gal-step],[data-gal-shot],[data-lb-close],[data-lb-step]') : null;
     if (!t) return;
 
     if (t.hasAttribute('data-filter-toggle')) {
       state.filtersOpen = !state.filtersOpen;
+      renderFilters();
+      return;
+    }
+
+    if (t.hasAttribute('data-filter-close')) {
+      state.filtersOpen = false;
       renderFilters();
       return;
     }

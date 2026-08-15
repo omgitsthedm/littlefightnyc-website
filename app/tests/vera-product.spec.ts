@@ -263,7 +263,7 @@ test(
     await waitForVera(page);
     const row = page.locator(".arcrow[data-open]");
     await expect(row).toHaveCount(1);
-    await expect(row).toEvaluate((element) => element.tagName === "BUTTON");
+    expect(await row.evaluate((element) => element.tagName)).toBe("BUTTON");
     await row.click();
     await expect(page.getByRole("dialog")).toBeVisible();
   },
@@ -334,6 +334,11 @@ async function expectMinimumTouchTarget(target: Locator) {
 }
 
 async function closeVisibleFilterSheet(page: Page) {
+  const close = page.locator("[data-filter-close]:visible").first();
+  if (await close.count()) {
+    await close.click();
+    return;
+  }
   const disclosure = page.locator("[data-filter-toggle]:visible").first();
   if (
     (await disclosure.count()) &&
@@ -451,6 +456,9 @@ test(
         dockBox!.y + dockBox!.height,
         "the phone filter control overlays the scrolling result surface",
       ).toBeLessThanOrEqual(mainBox!.y + 1);
+      const trustLine = page.locator("[data-browse-trust]:visible").first();
+      await expect(trustLine).toBeVisible();
+      await expect(trustLine).toContainText(/clears the bar|needs verification|scam signals/i);
     }
     expect(
       resultBox!.y,
@@ -464,6 +472,24 @@ test(
       await filterDeck.evaluate((element) => (element as HTMLElement).inert),
       "a visible filter deck must remain in the accessibility tree",
     ).toBe(false);
+    if (viewport!.width <= 760) {
+      await expect(filterDeck).toHaveAttribute("role", "dialog");
+      await expect(filterDeck).toHaveAttribute("aria-modal", "true");
+      const done = filterDeck.getByRole("button", { name: /^done$/i });
+      await expectFocused(done, "opening the mobile filter sheet did not move focus to Done");
+      const backgroundLocked = await page.evaluate(() => {
+        const main = document.querySelector<HTMLElement>("[data-main]");
+        const masthead = document.querySelector<HTMLElement>(".masthead");
+        const dock = document.querySelector<HTMLElement>(".filter-dock");
+        return Boolean(
+          document.documentElement.classList.contains("vera-filters-open") &&
+          main?.inert && masthead?.inert && dock?.inert &&
+          main.getAttribute("aria-hidden") === "true" &&
+          masthead.getAttribute("aria-hidden") === "true"
+        );
+      });
+      expect(backgroundLocked, "the mobile filter sheet left the workspace interactive").toBe(true);
+    }
     if (viewport!.width >= 1180) {
       const overflowCue = page.locator("[data-filter-scroll]");
       await expect(overflowCue).toBeVisible();
@@ -480,6 +506,15 @@ test(
     await underTwoThousand.click();
     await expectSelected(underTwoThousand);
     await expect(visibleListings(page).first()).toBeVisible();
+
+    if (viewport!.width <= 760) {
+      const done = filterDeck.getByRole("button", { name: /^done$/i });
+      await done.click();
+      await expect(filterDeck).toHaveAttribute("aria-hidden", "true");
+      const dock = page.locator(".filter-dock:visible");
+      await expectFocused(dock, "closing the mobile filter sheet did not return focus to Filters");
+      await expect.poll(() => page.evaluate(() => document.documentElement.classList.contains("vera-filters-open"))).toBe(false);
+    }
 
     await expectNoHorizontalOverflow(page);
   },
@@ -1634,20 +1669,24 @@ test(
     expect(safeAreaCoverage).toEqual(["top", "right", "bottom", "left"]);
 
     const bracket = await revealBrowseFilters(page);
-    const targets = [
+    const filterTargets = [
+      bracket.getByRole("button").first(),
+      bracket.getByRole("button").last(),
+    ];
+
+    for (const target of filterTargets) await expectMinimumTouchTarget(target);
+
+    await closeVisibleFilterSheet(page);
+
+    const navTargets = [
       page
         .getByRole("navigation", { name: /sections/i })
         .getByRole("link", { name: /^browse$/i }),
       page
         .getByRole("navigation", { name: /sections/i })
         .getByRole("link", { name: /^my hunt/i }),
-      bracket.getByRole("button").first(),
-      bracket.getByRole("button").last(),
     ];
-
-    for (const target of targets) await expectMinimumTouchTarget(target);
-
-    await closeVisibleFilterSheet(page);
+    for (const target of navTargets) await expectMinimumTouchTarget(target);
 
     const atlasLink = page
       .getByRole("navigation", { name: /sections/i })
