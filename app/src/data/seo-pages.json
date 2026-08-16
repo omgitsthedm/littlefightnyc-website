@@ -1592,6 +1592,18 @@
       "shortAnswer": "The operating system for independent live-event venues. Close the night in 90 seconds and know every number down to the receipt.",
       "type": "Article",
       "image": "/assets/case-venuecircuit.webp"
+    },
+    {
+      "path": "/trivia/1979/",
+      "title": "First Hip-Hop Song in the Billboard Top 40 | Little Fight NYC",
+      "description": "The answer to Little Fight NYC table trivia: “Rapper’s Delight” by The Sugarhill Gang became the first hip-hop song to reach the Billboard Top 40.",
+      "h1": "“Rapper’s Delight” by The Sugarhill Gang.",
+      "shortAnswer": "Released in 1979, “Rapper’s Delight” reached No. 37 on January 5, 1980, becoming the first hip-hop song to enter the Billboard Top 40.",
+      "type": "Article",
+      "noindex": true,
+      "published": "2026-08-15",
+      "updated": "2026-08-15",
+      "image": "/assets/og-tugboat.jpg"
     }
   ],
   "matrix": {
