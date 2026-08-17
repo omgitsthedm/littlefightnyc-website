@@ -41,6 +41,7 @@
     "audit:quality-manifest": "node scripts/audit-quality-manifest.mjs",
     "audit:release": "node scripts/audit-release-readiness.mjs",
     "test:browser": "playwright test",
+    "test:vera-service-worker": "node scripts/test-vera-service-worker.mjs",
     "test:owner-math": "node scripts/test-owner-math.mjs",
     "test:browser:chromium": "playwright test --project=chromium-desktop --project=chromium-mobile",
     "quality": "npm run test:owner-math && npm run lint && npm run build && npm run audit:bundle && npm run audit:conversion && npm run audit:integrity && npm run audit:lab && npm run audit:audit && npm run audit:booking && npm run audit:mobile-lifecycle && npm run audit:signal && npm run audit:brand && npm run audit:llm-coercion && npm run audit:vera-csp && npm run audit:vera-legal && npm run audit:legal-snapshot && npm run audit:meta-budget && npm run audit:claim-scope && npm run audit:typography && npm run audit:agency-voice && npm run audit:copy-contract && npm run audit:visual-coverage",

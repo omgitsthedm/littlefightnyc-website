@@ -130,7 +130,7 @@ const glyphBytes = glyphStats.reduce((total, entry) => total + entry.size, 0);
 if (glyphBytes > 105_000_000) {
   failures.push(`Atlas glyph bundle exceeds its 105,000,000-byte release cap (${glyphBytes})`);
 }
-mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v13");
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v14");
 mustNotContain("vera-core.js", core, "before the lease is executed");
 mustNotContain("vera-app.js", app, "before the lease is executed");
 mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");

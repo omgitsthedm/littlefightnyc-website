@@ -5,7 +5,7 @@
    badge the staleness instead of pretending the sweep just ran. */
 'use strict';
 
-var SHELL = 'vera-shell-v13';
+var SHELL = 'vera-shell-v14';
 var FEED = 'vera-feed-v2';
 /* Installation stores only the versioned UI shell. Publication data stays out
    of this list so its network-first, visibly timestamped fallback below remains
@@ -37,6 +37,47 @@ var SHELL_ASSETS = [
    stamped so the app can badge its age rather than imply the sweep just ran. */
 var DATA_PATHS = ['/vera/data/public.json', '/vera/data/archive.json', '/vera/data/meta.json'];
 
+/* A 200 alone is not enough to overwrite the last known-good publication.
+   GitHub's edge may return an HTML error page with a 200, and an interrupted
+   body may still look successful until the browser reads it. Validate the
+   tiny publication contract before it can replace the durable fallback. */
+function persistPublication(dataPath, response) {
+  if (!response || !response.ok || response.status !== 200 || response.type === 'opaque') {
+    return Promise.resolve();
+  }
+
+  return response.clone().text().then(function (text) {
+    if (!text.trim()) throw new Error('empty VERA publication');
+    JSON.parse(text);
+
+    var headers = new Headers(response.headers);
+    headers.set('X-Vera-Cached-At', new Date().toISOString());
+    return caches.open(FEED).then(function (cache) {
+      return cache.put(dataPath, new Response(text, { status: 200, headers: headers }));
+    });
+  }).catch(function () {
+    /* A bad fresh response must not poison the saved publication. The live
+       response still reaches the app, which owns its own JSON error state. */
+    return undefined;
+  });
+}
+
+function cachedPublication(dataPath, networkResponse) {
+  return caches.open(FEED).then(function (cache) {
+    return cache.match(dataPath);
+  }).then(function (hit) {
+    if (!hit) {
+      if (networkResponse) return networkResponse;
+      throw new Error('offline, no cached sweep');
+    }
+    var headers = new Headers(hit.headers);
+    headers.set('X-Vera-Cache', headers.get('X-Vera-Cached-At') || 'unknown');
+    return hit.blob().then(function (body) {
+      return new Response(body, { status: 200, headers: headers });
+    });
+  });
+}
+
 self.addEventListener('install', function (e) {
   e.waitUntil(
     caches.open(SHELL).then(function (cache) {
@@ -62,28 +103,23 @@ self.addEventListener('fetch', function (e) {
 
   if (DATA_PATHS.indexOf(url.pathname) !== -1) {
     var dataPath = url.pathname;
+    var networkPublication = fetch(e.request);
+    /* waitUntil has to be registered while the FetchEvent is being handled.
+       Chaining it inside the resolved fetch promise is too late on WebKit. */
+    e.waitUntil(networkPublication.then(function (resp) {
+      return persistPublication(dataPath, resp);
+    }, function () {
+      return undefined;
+    }));
     e.respondWith(
-      fetch(e.request).then(function (resp) {
-        if (resp.ok) {
-          var copy = resp.clone();
-          caches.open(FEED).then(function (c) {
-            var headers = new Headers(copy.headers);
-            headers.set('X-Vera-Cached-At', new Date().toISOString());
-            copy.blob().then(function (body) {
-              c.put(dataPath, new Response(body, { status: 200, headers: headers }));
-            });
-          });
+      networkPublication.then(function (resp) {
+        if (!resp || !resp.ok) {
+          return cachedPublication(dataPath, resp);
         }
+
         return resp;
-      }).catch(function () {
-        return caches.open(FEED).then(function (c) { return c.match(dataPath); }).then(function (hit) {
-          if (!hit) throw new Error('offline, no cached sweep');
-          var headers = new Headers(hit.headers);
-          headers.set('X-Vera-Cache', headers.get('X-Vera-Cached-At') || 'unknown');
-          return hit.blob().then(function (body) {
-            return new Response(body, { status: 200, headers: headers });
-          });
-        });
+      }, function () {
+        return cachedPublication(dataPath);
       })
     );
     return;
