@@ -17,7 +17,12 @@
     { url: './data/public.json', label: 'site' },
   ];
   var FEED_SOFT_TIMEOUT_MS = 3500;
-  var FEED_TIMEOUT_MS = 12000;
+  /* The public drop is roughly 1.7 MB. Twelve seconds is a useful status
+     checkpoint, not a valid reason to kill a slow but healthy mobile request.
+     A 45-second per-attempt ceiling catches truly stalled connections; two
+     short, bounded retries cover temporary edge/origin revalidation failures. */
+  var FEED_ATTEMPT_TIMEOUT_MS = 45000;
+  var FEED_RETRY_DELAYS_MS = [750, 2250];
   var ARCHIVE_TIMEOUT_MS = 3500;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
   var ADDRESS_CHECK_TIMEOUT_MS = TESTMODE ? 250 : 9000;
@@ -2917,22 +2922,42 @@
   var servedFromCache = null;
   var feedOrigin = null;
   var sinceLastVisit = null; /* D4 — listings new since this browser's last sweep */
+  var feedBootGeneration = 0;
+  var activeFeedController = null;
 
   /* Load the one Little Fight feed contract. The bounded result plumbing keeps
      a hanging request from blocking first paint and keeps feed failures
      separate from render failures. */
   function boot() {
-    var results = [];
-    var pending = FEEDS.length;
+    /* A deliberate retry owns the session from this point forward. Abort the
+       prior transport when the platform honors it; generation checks below
+       still reject a late resolution from transports that do not. */
+    if (activeFeedController) { try { activeFeedController.abort(); } catch (e) {} }
+    var bootGeneration = ++feedBootGeneration;
+    var attempt = 0;
     var done = false;
-    var racers = [];
     var softTimer = 0;
-    var hardTimer = 0;
+    var retryTimer = 0;
+    var attemptTimer = 0;
+    var currentController = null;
+
+    function ownsAttempt() { return bootGeneration === feedBootGeneration; }
+    function clearTimers() {
+      clearTimeout(softTimer);
+      clearTimeout(retryTimer);
+      clearTimeout(attemptTimer);
+    }
+    function setLoading(message) {
+      if (!ownsAttempt()) return;
+      var out = $('[data-loading]');
+      if (out) out.innerHTML = '<p>' + message + '</p>';
+    }
 
     function showRetry() {
+      if (!ownsAttempt()) return;
       var out = $('[data-loading]');
       if (!out) return;
-      out.innerHTML = '<p>VERA could not reach the current publication. Your saved workspace is still here.</p><button type="button" class="ghostbtn" data-feed-retry>Try again</button>';
+      out.innerHTML = '<p>VERA could not reach the current publication after three tries. Your saved workspace is still here.</p><button type="button" class="ghostbtn" data-feed-retry>Try again</button>';
       var retry = $('[data-feed-retry]', out);
       if (retry) retry.addEventListener('click', function () {
         out.innerHTML = '<p>Loading the current VERA publication…</p>';
@@ -2940,25 +2965,21 @@
       }, { once: true });
     }
 
-    function finish() {
-      if (done) return;
+    function finish(abortTransport) {
+      if (done || !ownsAttempt()) return;
       done = true;
-      clearTimeout(softTimer);
-      clearTimeout(hardTimer);
-      /* Once the newest answer is decided, every response still in flight is
-         a 2MB download nobody will read. Cut the stragglers; the winner has
-         already resolved, so aborting its controller is a no-op. */
-      racers.forEach(function (c) { try { c.abort(); } catch (e) {} });
-      if (!results.length) {
-        showRetry();
-        return;
-      }
-      results.sort(function (a, b) { return b.at - a.at; });
-      var best = results[0];
-      feedOrigin = best.label;
-      servedFromCache = best.cache;
+      clearTimers();
+      if (abortTransport && currentController) { try { currentController.abort(); } catch (e) {} }
+      if (activeFeedController === currentController) activeFeedController = null;
+    }
+
+    function adoptCurrent(result) {
+      if (done || !ownsAttempt()) return;
+      finish(false);
+      feedOrigin = result.label;
+      servedFromCache = result.cache;
       try {
-        adopt(best.data);
+        adopt(result.data);
       } catch (err) {
         // A render error is not a feed error: catching them together used to
         // refetch the fallback origin and re-run the same broken render.
@@ -2968,32 +2989,58 @@
       }
     }
 
-    function settled() { if (--pending <= 0) finish(); }
+    function scheduleRetry() {
+      if (done || !ownsAttempt()) return;
+      if (attempt > FEED_RETRY_DELAYS_MS.length) {
+        finish(true);
+        showRetry();
+        return;
+      }
+      var delay = FEED_RETRY_DELAYS_MS[attempt - 1];
+      setLoading('The current VERA publication is taking a moment. Retrying automatically (' + (attempt + 1) + ' of ' + (FEED_RETRY_DELAYS_MS.length + 1) + ')…');
+      retryTimer = setTimeout(requestCurrentPublication, delay);
+    }
 
-    FEEDS.forEach(function (feed) {
+    function requestCurrentPublication() {
+      if (done || !ownsAttempt()) return;
+      attempt += 1;
+      var feed = FEEDS[0];
       var cache = null;
       var ctrl = ('AbortController' in window) ? new AbortController() : null;
-      if (ctrl) racers.push(ctrl);
-      fetch(feed.url, { cache: 'no-cache', signal: ctrl ? ctrl.signal : undefined })
+      currentController = ctrl;
+      activeFeedController = ctrl;
+      var requestGeneration = bootGeneration;
+      var requestAttempt = attempt;
+      attemptTimer = setTimeout(function () {
+        if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
+        if (ctrl) { try { ctrl.abort(); } catch (e) {} }
+      }, FEED_ATTEMPT_TIMEOUT_MS);
+      fetch(feed.url, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
         .then(function (r) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           cache = r.headers.get('X-Vera-Cache');
           return r.json();
         })
         .then(function (data) {
-          // An unparseable date sorts last rather than winning by accident.
+          if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
+          clearTimeout(attemptTimer);
+          // An unparseable date is still valid; it simply receives the oldest
+          // sort key rather than pretending to be newer than a dated drop.
           var at = Date.parse((data && data.generated_at) || '') || 0;
-          results.push({ data: data, at: at, label: feed.label, cache: cache });
-          settled();
-        }, settled);
-    });
+          adoptCurrent({ data: data, at: at, label: feed.label, cache: cache });
+        }, function () {
+          if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
+          clearTimeout(attemptTimer);
+          if (activeFeedController === ctrl) activeFeedController = null;
+          scheduleRetry();
+        });
+    }
 
     softTimer = setTimeout(function () {
-      if (done) return;
-      var out = $('[data-loading]');
-      if (out) out.innerHTML = '<p>Still loading the current VERA publication. The connection is taking longer than usual.</p>';
+      if (done || !ownsAttempt()) return;
+      setLoading('Still loading the current VERA publication. The connection is taking longer than usual.');
     }, FEED_SOFT_TIMEOUT_MS);
-    hardTimer = setTimeout(finish, FEED_TIMEOUT_MS);
+    requestCurrentPublication();
   }
 
   window.__VERA_APP = {
@@ -3005,6 +3052,7 @@
     commuteRead: commuteRead, hasValidLngLat: hasValidLngLat,
     addressResolutionOf: addressResolutionOf, addressCheckMarkup: addressCheckMarkup, syncPressed: syncPressed,
     FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
+    retryPublication: boot,
     archiveOrigins: archiveOrigins,
     sinceLastVisit: function () { return sinceLastVisit; },
   };
@@ -3024,6 +3072,21 @@
   };
 
   boot();
+
+  /* WebKit can resume an interrupted same-tab session with either bfcache's
+     `pageshow` or only a visible lifecycle event. If no publication has been
+     adopted, start a fresh owned attempt; generation guards make any resumed
+     older transport harmless. */
+  function recoverPublicationOnResume() {
+    if (D || document.visibilityState !== 'visible') return;
+    boot();
+  }
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) recoverPublicationOnResume();
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && !D) recoverPublicationOnResume();
+  });
 
   /* Warm the Atlas engine and the vendored style while the browser is idle,
      so the first Atlas open draws streets immediately instead of spending its

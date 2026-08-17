@@ -186,9 +186,9 @@ for (const name of ["public", "archive", "meta"]) {
         "user-agent": "LFNYC-Quality-Spine/1.0",
       },
     });
-    if (conditionalResponse.status !== 304) {
+    if (conditionalResponse.status !== 200) {
       failures.push(
-        `${pathname}: conditional GET expected 304, got ${conditionalResponse.status}`,
+        `${pathname}: conditional GET expected the edge's complete 200 publication, got ${conditionalResponse.status}`,
       );
     }
     if (conditionalResponse.headers.get("x-robots-tag") !== "noindex, nofollow") {

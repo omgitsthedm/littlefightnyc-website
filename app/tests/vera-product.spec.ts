@@ -167,14 +167,22 @@ async function openVera(page: Page, route: string, workspaceSeed?: VeraWorkspace
 }
 
 test(
-  "VERA keeps a slow current publication alive past the soft loading message @vera-desktop",
+  "VERA keeps a slow current publication alive past the former twelve-second cutoff @vera-desktop",
   async ({ page }) => {
+    test.setTimeout(30_000);
     await page.addInitScript(({ fixture }) => {
       const nativeFetch = window.fetch.bind(window);
       window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
         const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
         if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
-          await new Promise((resolve) => window.setTimeout(resolve, 5_000));
+          let resolved = false;
+          init?.signal?.addEventListener("abort", () => {
+            if (!resolved) {
+              (window as unknown as { __veraSlowPublicationAbortedBeforeResponse?: boolean }).__veraSlowPublicationAbortedBeforeResponse = true;
+            }
+          });
+          await new Promise((resolve) => window.setTimeout(resolve, 12_500));
+          resolved = true;
           return new Response(fixture, { status: 200, headers: { "Content-Type": "application/json" } });
         }
         return nativeFetch(input, init);
@@ -186,11 +194,14 @@ test(
       timeout: 6_000,
     });
     await waitForVera(page);
+    await expect
+      .poll(() => page.evaluate(() => Boolean((window as unknown as { __veraSlowPublicationAbortedBeforeResponse?: boolean }).__veraSlowPublicationAbortedBeforeResponse)))
+      .toBe(false);
   },
 );
 
 test(
-  "VERA retry starts a fresh current-publication request after a feed failure @vera-desktop",
+  "VERA automatically recovers from one transient 503 publication response @vera-desktop",
   async ({ page }) => {
     await page.addInitScript(({ fixture }) => {
       const nativeFetch = window.fetch.bind(window);
@@ -208,11 +219,71 @@ test(
     }, { fixture: VERA_FEED_FIXTURE });
 
     await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
-    const retry = page.getByRole("button", { name: /try again/i });
-    await expect(retry).toBeVisible();
-    await retry.click();
     await waitForVera(page);
     await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(2);
+  },
+);
+
+test(
+  "VERA bounds automatic publication retries, then honors a manual retry @vera-desktop",
+  async ({ page }) => {
+    await page.addInitScript(({ fixture }) => {
+      const nativeFetch = window.fetch.bind(window);
+      let attempts = 0;
+      window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+        const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
+          attempts += 1;
+          (window as unknown as { __veraFeedAttempts: number }).__veraFeedAttempts = attempts;
+          if (attempts <= 3) return new Response("unavailable", { status: 503 });
+          return new Response(fixture, { status: 200, headers: { "Content-Type": "application/json" } });
+        }
+        return nativeFetch(input, init);
+      };
+    }, { fixture: VERA_FEED_FIXTURE });
+
+    await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
+    const retry = page.getByRole("button", { name: /try again/i });
+    await expect(retry).toBeVisible({ timeout: 8_000 });
+    await expect(page.locator("[data-loading]")).toContainText(/after three tries/i);
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(3);
+    await retry.click();
+    await waitForVera(page);
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(4);
+  },
+);
+
+test(
+  "VERA ignores a stale publication attempt after a newer retry owns the session @vera-desktop",
+  async ({ page }) => {
+    const staleFixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    staleFixture.pool[0].title = "Stale publication that must not replace the current drop";
+    const currentFixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
+    currentFixture.pool[0].title = "Current publication owns this session";
+    await page.addInitScript(({ stale, current }) => {
+      const nativeFetch = window.fetch.bind(window);
+      let attempts = 0;
+      window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+        const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
+          attempts += 1;
+          if (attempts === 1) {
+            await new Promise((resolve) => window.setTimeout(resolve, 1_000));
+            return new Response(stale, { status: 200, headers: { "Content-Type": "application/json" } });
+          }
+          return new Response(current, { status: 200, headers: { "Content-Type": "application/json" } });
+        }
+        return nativeFetch(input, init);
+      };
+    }, { stale: JSON.stringify(staleFixture), current: JSON.stringify(currentFixture) });
+
+    await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
+    await expect.poll(() => page.evaluate(() => typeof (window as unknown as { __VERA_APP?: { retryPublication?: unknown } }).__VERA_APP?.retryPublication)).toBe("function");
+    await page.evaluate(() => (window as unknown as { __VERA_APP: { retryPublication: () => void } }).__VERA_APP.retryPublication());
+    await waitForVera(page);
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __vera?: { pool: () => Array<{ title?: string }> } }).__vera?.pool()[0]?.title)).toBe("Current publication owns this session");
+    await page.waitForTimeout(1_200);
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __vera?: { pool: () => Array<{ title?: string }> } }).__vera?.pool()[0]?.title)).toBe("Current publication owns this session");
   },
 );
 

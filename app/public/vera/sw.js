@@ -28,7 +28,7 @@ var SHELL_ASSETS = [
   '/vera/assets/js/vera-geo.js?v=60',
   '/vera/assets/js/vera-map.js?v=60',
   '/vera/assets/js/vera-ledger.js?v=58',
-  '/vera/assets/js/vera-app.js?v=60'
+  '/vera/assets/js/vera-app.js?v=61'
 ];
 /* The receipts were left out of this list, so an offline visitor got the
    drop but not the record of every previous drop — on a page whose whole

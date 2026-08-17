@@ -99,7 +99,7 @@ for (const asset of [
   "./assets/js/vera-geo.js?v=60",
   "./assets/js/vera-map.js?v=60",
   "./assets/js/vera-ledger.js?v=58",
-  "./assets/js/vera-app.js?v=60",
+  "./assets/js/vera-app.js?v=61",
 ]) {
   mustContain("vera/index.html cache contract", index, asset);
   mustContain("vera/sw.js cache contract", serviceWorker, asset.replace("./", "/vera/"));
