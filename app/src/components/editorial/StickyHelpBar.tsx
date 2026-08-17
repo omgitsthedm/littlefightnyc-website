@@ -85,7 +85,7 @@ export default function StickyHelpBar() {
         data-lf-event={helpCta.event}
         data-lf-label="sticky_help"
       >
-        <span className="lf-mono lf-sticky-help__label">{helpCta.kicker}</span>
+        <span className="lf-mono lf-sticky-help__label">{helpCta.compactKicker ?? helpCta.kicker}</span>
         <span className="lf-sticky-help__detail">
           {helpCta.compactLabel}
           <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />

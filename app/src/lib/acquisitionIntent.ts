@@ -75,6 +75,12 @@ export type AcquisitionCta = {
   label: string;
   compactLabel: string;
   kicker: string;
+  /**
+   * The sticky mobile help bar has a hard height budget (a 320px phone gives
+   * it ~14% of the viewport, permanently). Longer, better kickers stay on the
+   * roomy surfaces; this is the short form for that one bar.
+   */
+  compactKicker?: string;
   event?: "human_review_requested";
 };
 
@@ -88,6 +94,7 @@ export function acquisitionCtaForIntent(
       label: "Check my website",
       compactLabel: "Check website",
       kicker: "Free first look",
+      compactKicker: "Free look",
     };
   }
   if (intent === "support") {
@@ -105,6 +112,7 @@ export function acquisitionCtaForIntent(
       label: "Plan software you own",
       compactLabel: "Plan it",
       kicker: "Free consult",
+      compactKicker: "Free consult",
       event: "human_review_requested",
     };
   }
