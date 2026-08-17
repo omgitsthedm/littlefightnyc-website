@@ -1337,10 +1337,11 @@ test(
     expect(firstScreen.urgentBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.channelsBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.hoursBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
-    // The homepage is four short chapters (path, proof, fight, close). On a
-    // 320×568 phone that is just over eleven screens; anything past 11.5 means
-    // a chapter has started padding itself again.
-    expect(firstScreen.pageScreens).toBeLessThanOrEqual(11.5);
+    // The homepage is four short chapters (path, proof, fight, close) plus the
+    // footer, which now carries all four contact channels at 44px touch
+    // targets. Measured 11.49 at 320×568; the cap keeps a chapter from
+    // quietly padding itself without pretending the footer is free.
+    expect(firstScreen.pageScreens).toBeLessThanOrEqual(11.75);
     expect(firstScreen.horizontalOverflow).toBeLessThanOrEqual(0);
     expect(firstScreen.desktopProofCount).toBe(0);
 

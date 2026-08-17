@@ -62,13 +62,25 @@
 
 .lf-quiet-foot .lf-quiet-foot__brand p,
 .lf-quiet-foot .lf-quiet-foot__legal,
+/* Four channels in one compact row. Before this was a flex row it stacked one
+   link per line on a 320px phone and cost 233px of footer. */
 .lf-quiet-foot .lf-quiet-foot__contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.6rem;
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--lf-bone-soft);
   margin: 0;
+}
+
+.lf-quiet-foot .lf-quiet-foot__contact a {
+  display: inline-flex;
+  min-height: var(--lf-control-min);
+  align-items: center;
 }
 
 .lf-quiet-foot__nav {
