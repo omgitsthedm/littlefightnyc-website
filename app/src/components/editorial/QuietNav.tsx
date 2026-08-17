@@ -12,9 +12,11 @@ import {
 import "./QuietNav.css";
 import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
-/* The free check and the contact page were missing here, so the two pages a
- * ready visitor looks for were reachable only from the homepage hero and the
- * footer. Order runs down the commercial ladder, then proof, then help. */
+/* The free check — the site's one free offer and the homepage's primary
+ * action — was missing here, reachable only from the homepage hero and the
+ * footer. Contact stays out of the primary row: the phone number, the hero
+ * action, the mobile menu, and the footer all carry it, and a seventh link
+ * overflows the header against the logo at 1280px. */
 const NAV_LINKS = [
   { label: "Websites", to: "/services/custom-local-websites/" },
   { label: "Fix something", to: "/services/it-support/" },
@@ -22,7 +24,6 @@ const NAV_LINKS = [
   { label: "Free check", to: "/website-check/" },
   { label: "Results", to: "/examples/" },
   { label: "Answers", to: "/library/" },
-  { label: "Contact", to: "/contact/" },
 ] as const;
 
 /**

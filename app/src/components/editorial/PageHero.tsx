@@ -67,6 +67,13 @@ type Props = {
   /** Area archetype: small mono chips (e.g. ZIP codes) under the dek. */
   chips?: string[];
   /**
+   * The middle layer of the pyramid: two or three short benefit lines that sit
+   * directly under the answer, above the fold. The h1 states the claim, these
+   * carry the reasons, and the evidence stays further down the page. Keep them
+   * to a few words each — they are scanned, not read.
+   */
+  pillars?: string[];
+  /**
    * The owner-facing first move. Omit it to derive the route-appropriate
    * action. Pass false only when the page itself is a completed action, such
    * as the thank-you screen.
@@ -102,6 +109,7 @@ export default function PageHero({
   quickAnswer,
   displayName,
   chips,
+  pillars,
   action,
   showContactRail = true,
 }: Props) {
@@ -212,6 +220,13 @@ export default function PageHero({
           )}
           <h1 className="lf-pagehero__title">{title}</h1>
           {dek && <p className="lf-pagehero__dek">{dek}</p>}
+          {pillars && pillars.length > 0 && (
+            <ul className="lf-pagehero__pillars">
+              {pillars.map((pillar) => (
+                <li key={pillar} className="lf-pagehero__pillar">{pillar}</li>
+              ))}
+            </ul>
+          )}
           {quickAnswer && (
             <aside className="lf-pagehero__quick" aria-label="Quick answer">
               <span className="lf-pagehero__quick-label">Quick answer</span>

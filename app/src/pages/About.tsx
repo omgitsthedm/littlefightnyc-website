@@ -25,6 +25,11 @@ export default function About() {
           </>
         }
         dek="We make it easier for customers to choose you and for the day to keep moving."
+        pillars={[
+          "Consulting is free, always",
+          "One studio, start to finish",
+          "9am–9pm Eastern, a human answers",
+        ]}
         image={{
           src: "/assets/about-empire-diner.webp",
           alt: "The chrome-clad Empire Diner glowing on a Manhattan corner at night",
@@ -33,32 +38,19 @@ export default function About() {
         }}
       />
 
+      {/* Answer first. This section used to open with a three-paragraph belief
+          essay and put the four standards last — so the concrete, checkable
+          facts an owner is actually shopping for sat below the philosophy.
+          The standards now come directly under the claim; the beliefs became
+          the supporting layer they always were. */}
       <section className="lf-about-belief" aria-labelledby="lf-about-belief-title">
         <div className="lf-about-belief__inner">
           <header className="lf-about-belief__head">
-            <p>What we believe</p>
+            <p>What you can count on</p>
             <h2 id="lf-about-belief-title">
               Your business should not have to bend around a tool.
             </h2>
           </header>
-
-          <div className="lf-about-belief__copy">
-            <p>
-              You already know how to run the shop, serve the table, advise the
-              client, or manage the office. Nobody should make you feel behind
-              because a website, booking tool, or monthly software bill is hard
-              to explain.
-            </p>
-            <p>
-              Little Fight starts with the way the day really works. We keep the
-              useful parts, repair the places where work gets lost, and build
-              something new only when it earns its place.
-            </p>
-            <p>
-              The goal is not more stuff to learn. It is a clearer path for the
-              customer, fewer dropped steps, and a setup your people can trust.
-            </p>
-          </div>
 
           <dl className="lf-about-standards" aria-label="Little Fight operating standards">
             {STANDARDS.map((standard) => (
@@ -70,6 +62,22 @@ export default function About() {
               </div>
             ))}
           </dl>
+
+          <div className="lf-about-belief__copy">
+            <p>
+              We keep the useful parts, repair the places where work gets lost,
+              and build something new only when it earns its place.
+            </p>
+            <p>
+              You already know how to run the shop, serve the table, advise the
+              client, or manage the office. Nobody should feel behind because a
+              website, booking tool, or software bill is hard to explain.
+            </p>
+            <p>
+              The goal is not more to learn. It is a clearer path for the
+              customer, fewer dropped steps, and a setup your people can trust.
+            </p>
+          </div>
         </div>
       </section>
 

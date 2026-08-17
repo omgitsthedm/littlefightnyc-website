@@ -172,6 +172,43 @@
   color: var(--lf-bone-soft);
 }
 
+/* The pyramid's middle layer, above the fold: the claim is the h1, these are
+ * the reasons, the evidence lives further down the page. */
+.lf-pagehero__pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  max-inline-size: 47ch;
+  margin: var(--lf-space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-editorial .lf-pagehero__pillar {
+  position: relative;
+  padding-inline-start: 1.05rem;
+  color: var(--lf-bone);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.lf-pagehero__pillar::before {
+  position: absolute;
+  inset-block-start: 0.52em;
+  inset-inline-start: 0;
+  inline-size: 0.5rem;
+  block-size: 2px;
+  background: var(--lf-fight);
+  content: "";
+}
+
+@media (min-width: 48rem) {
+  .lf-pagehero__pillars {
+    max-inline-size: 54ch;
+  }
+}
+
 @media (max-width: 23.75rem) {
   .lf-pagehero__title {
     font-size: clamp(3rem, 14vw, 3.35rem);
@@ -383,6 +420,7 @@
     .lf-pagehero__display,
     .lf-pagehero__title,
     .lf-pagehero__dek,
+    .lf-pagehero__pillars,
     .lf-pagehero__chips
   ) {
   animation: lf-pagehero-copy-in var(--m-reveal-ms) var(--lf-ease-slam)

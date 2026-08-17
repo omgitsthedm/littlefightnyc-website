@@ -320,6 +320,8 @@
 }
 
 @media (min-width: 64rem) {
+  /* Claim on the left, the four checkable standards beside it, supporting
+     prose underneath. The standards used to sit below the essay. */
   .lf-about-belief__inner {
     display: grid;
     grid-template-columns: minmax(0, 7fr) minmax(24rem, 5fr);
@@ -327,12 +329,21 @@
     align-items: start;
   }
 
-  .lf-about-belief__copy {
-    margin-top: var(--lf-space-7);
+  .lf-about-belief__head {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .lf-about-standards {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .lf-about-belief__copy {
     grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: var(--lf-measure-reading);
+    margin-top: var(--lf-space-7);
   }
 
   .lf-about-page .lf-owner-stories__grid {
