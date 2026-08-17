@@ -18,7 +18,7 @@ const FIGHTS = [
     kicker: "Websites · the front door",
     title: "A website that does the explaining.",
     body:
-      "Give the right person a clear reason to choose you, then make the next click easy. The site answers the practical questions first, so the booking is a handoff, not a back-and-forth.",
+      "Booking becomes a handoff, not a back-and-forth. The site answers the practical questions first. The right person sees a clear reason to choose you. The next click is easy.",
     action: { label: "How we build websites", to: "/services/custom-local-websites/" },
     proof: { label: "How it went for Rachel", to: "/case-studies/hair-by-rachel-charles/" },
     tone: "lead",
@@ -37,7 +37,7 @@ const FIGHTS = [
   {
     key: "tools",
     tab: "My tools don’t fit",
-    kicker: "Software you own · the premium continuation",
+    kicker: "Software you own · instead of renting",
     title: "One focused tool instead of five almost-right ones.",
     body:
       "When renting another platform stops making sense, we build the small system that fits how the work actually happens. You own it, and your data.",
@@ -87,8 +87,8 @@ export default function OwnerFight() {
             your way<span aria-hidden="true">?</span>
           </h2>
           <p className="lf-fight__dek">
-            Start with the thing customers or your team are feeling. Pick one — we
-            will translate it into a real plan without a new vocabulary.
+            You get a plan in plain words, and one next move. Pick the one
+            you are in.
           </p>
         </header>
 

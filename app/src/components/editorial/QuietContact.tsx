@@ -53,7 +53,7 @@ type Props = {
 
 export default function QuietContact({
   heading = "Show us what you have.",
-  lede = "You do not need a brief or the right tech words. Tell us what the business needs to do, or what stopped working.",
+  lede = "Tell us what stopped working, or what the business needs to do. No brief needed. No tech words needed.",
   intent = "general",
   showBooking = true,
 }: Props) {
@@ -158,7 +158,7 @@ export default function QuietContact({
 
         <p className="lf-contact-block__fine">
           {intent === "website"
-            ? "The first conversation is free. Qualifying website scopes explain the 14-day promise in writing before work starts. Your domain, code, and business data stay yours."
+            ? "The first conversation is free. Not every website qualifies for the 14-day promise. When one does, the terms go in writing before work starts. Your domain, code, and business data stay yours."
             : "The first conversation is free. You approve any paid work before it begins. Your accounts, code, and business data stay yours."}
         </p>
       </div>

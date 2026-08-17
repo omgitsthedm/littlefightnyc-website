@@ -52,7 +52,7 @@ function ServiceOwnerMath({ slug }: { slug: string }) {
 const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   "tech-consulting": {
     heading: "Want a second set of eyes?",
-    lede: "The first hour is free. We tell you what to keep, what to cut, and what to fix first. If you do not need us, we say so.",
+    lede: "The consult is free. We tell you what to keep, what to cut, and what to fix first. If you do not need us, we say so.",
   },
   "it-support": {
     heading: "Something broken right now?",
@@ -63,8 +63,8 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
     lede: "Tell us about the business and the next customer action. If the written scope qualifies, it names the 14-day promise, what each side needs to provide, and the remedy.",
   },
   "business-systems": {
-    heading: "Tired of running it all by hand?",
-    lede: "Tell us how your day works. We will show you what should happen without all the repeat typing.",
+    heading: "Own the tool instead of renting it.",
+    lede: "Tell us how your day works. The first look is free. We show you what should happen without the repeat typing. If a simpler tool fits, we say so.",
   },
 };
 
@@ -134,7 +134,7 @@ function WebsiteAcquisitionBlock() {
           <dl className="lf-sd-web__terms-grid">
             <div>
               <dt>Works best for</dt>
-              <dd>Businesses where calls, bookings, visits, or serious questions matter, and one person should know what happens next.</dd>
+              <dd>Businesses that run on calls, bookings, visits, or real questions. One person should know what happens next.</dd>
             </div>
             <div>
               <dt>Not the right fit</dt>
@@ -169,7 +169,7 @@ export default function ServiceDetail() {
   return (
     <>
       <PageHero
-        eyebrow={service.verb}
+        eyebrow={service.eyebrow}
         icon={service.icon}
         title={<>{service.headline}</>}
         dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
@@ -242,7 +242,7 @@ export default function ServiceDetail() {
         <div className="lf-sd-issues__inner">
           <header className="lf-sd-issues__head">
             <p className="lf-sd-issues__label">Common problems</p>
-            <h2 className="lf-sd-issues__title">What owners bring us.</h2>
+            <h2 className="lf-sd-issues__title">Most of these problems cost time, money, or a customer.</h2>
           </header>
           <div className="lf-sd-issues__list">
             {service.commonIssues.map((issue, i) => (

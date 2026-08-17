@@ -16,7 +16,7 @@ export default function Clients() {
       <PageHero
         eyebrow="Current client desk"
         icon={Headphones}
-        title={<>One clean door back in.</>}
+        title={<>One inbox for support, projects, and billing.</>}
         dek="Email one inbox with the details. Call or text when customers are blocked right now."
         action={{
           href: `mailto:${HELLO_EMAIL}?subject=Current%20client%20request`,
@@ -77,7 +77,7 @@ export default function Clients() {
           <article>
             <p>Review the setup together</p>
             <h2>Book a check-in.</h2>
-            <p>The booking page shows the current availability and meeting details.</p>
+            <p>Pick a time that works. We go through what's working and what isn't.</p>
             <a href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" data-lf-event="booking_started" data-lf-label="client_desk">
               Open the booking page
               <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
@@ -86,7 +86,7 @@ export default function Clients() {
           <article>
             <p>Completed real work with us?</p>
             <h2>Tell the next owner what happened.</h2>
-            <p>An honest review helps. There is no incentive, review gate, or preferred rating.</p>
+            <p>An honest review helps. No reward, no screening, no preferred rating.</p>
             <a href={GOOGLE_REVIEW_HREF} target="_blank" rel="noreferrer">
               Leave a Google review
               <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />

@@ -192,7 +192,7 @@ export default function QuietHero() {
           </h1>
 
           <p className="lf-hero__brief">
-            We plan the website, connect the useful parts, and stay when
+            We build the website. We make the tools fit. We stay when
             something breaks.
           </p>
 

@@ -456,7 +456,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         value: "49 routes",
-        label: "Services and local intent mapped clearly",
+        label: "Pages for services, neighborhoods, and common questions",
         evidence: "build",
       },
       {
@@ -468,7 +468,7 @@ export const caseStudies: CaseStudy[] = [
     featureProof: {
       label: "The booking handoff",
       ownerOutcome:
-        "A new client can understand Rachel's work and reach the booking tool they already know without a DM detour.",
+        "A new client can book without a DM detour. The site explains Rachel’s work. Then it hands off to the booking tool they already know.",
       whyItMatters:
         "The website does the explaining first, so the booking step is a handoff instead of another back-and-forth.",
       sourceUrl: "https://hairbyrachelcharles.com",
@@ -506,11 +506,11 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
     updated: "2026-08-04",
-    title: "An Instagram business became a searchable editorial booking system.",
+    title: "A new client can find the salon, see the work, and book. No Instagram DM needed.",
     problem: "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
     kept: "Rachel’s point of view, the work itself, and the Square Appointments setup her clients already knew.",
     changed: "Built a bold phone-first site that explains services, location, and what a new client should do next. The booking habit stayed the same: the site leads clearly into Square. We also set up the studio’s Google Business Profile.",
-    result: "A public home at hairbyrachelcharles.com where a new client can find the studio, understand Rachel’s work, and book from a desktop, tablet, or phone. The dated build checks are shown beside the live source; they are not booking or revenue claims.",
+    result: "A new client can find the studio, see Rachel’s work, and book. Phone, tablet, or desktop. The public home is hairbyrachelcharles.com. The dated build checks sit beside the live source; they are not booking or revenue claims.",
     body: [
       "When we first sat down with Rachel, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed. The site started as a question. What if every new client could find her, see the work, and book without a single message?",
       "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. Electric yellow, confident type, close-cropped work, and Rachel’s own voice give the experience a point of view before the booking button appears. We also set up her Google Business Profile from scratch and wired the site to support it.",

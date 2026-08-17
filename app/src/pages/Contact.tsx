@@ -48,7 +48,7 @@ export default function Contact() {
             Tell us what feels <span className="lf-em">stuck.</span>
           </>
         }
-        dek="Call or text now. For a website, send the address. You do not need to know the right name for the problem."
+        dek="Call or text now. Consulting is always free. For a website, send the address. You do not need to know the right name for the problem."
         image={{
           src: "/assets/hero-contact-door.webp",
           alt: "A warm-lit shop doorway open at dusk in New York",
@@ -120,7 +120,7 @@ export default function Contact() {
 
           <p className="lf-contact-choice__email">
             <Mail size={19} strokeWidth={1.9} aria-hidden="true" />
-            Prefer email?{" "}
+            Prefer email, or a time on the calendar?{" "}
             <a
               className="lf-contact-choice__email-link"
               href="mailto:hello@littlefightnyc.com"

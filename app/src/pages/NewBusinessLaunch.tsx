@@ -66,7 +66,7 @@ export default function NewBusinessLaunch() {
       <section className="lf-revenue-page" aria-labelledby="lf-launch-title">
         <header className="lf-revenue-page__intro">
           <p>Open with the basics ready</p>
-          <h2 id="lf-launch-title">A new shop should not inherit old online confusion.</h2>
+          <h2 id="lf-launch-title">We set up the whole online opening, not just the website.</h2>
           <div>
             <p>
               Most launch problems happen when the important parts live apart.

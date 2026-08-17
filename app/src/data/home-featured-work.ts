@@ -10,7 +10,7 @@ export const HOME_FEATURED_WORK = [
     type: "Solo stylist salon",
     label: "The booking handoff",
     outcome:
-      "A new client can understand Rachel's work and reach the booking tool they already know without a DM detour.",
+      "A new client can book without a DM detour. The site explains Rachel’s work. Then it hands off to the booking tool they already know.",
     image: "/assets/case-hair-by-rachel-charles.webp",
     imageWidth: 1600,
     imageHeight: 1200,
@@ -18,7 +18,7 @@ export const HOME_FEATURED_WORK = [
     sourceLabel: "hairbyrachelcharles.com",
     verifiedAt: "2026-08-13",
     story: {
-      title: "An Instagram business became a searchable editorial booking system.",
+      title: "A new client can find the salon, see the work, and book. No Instagram DM needed.",
       problem:
         "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
       kept: "Rachel’s point of view, the work itself, and the Square Appointments setup her clients already knew.",

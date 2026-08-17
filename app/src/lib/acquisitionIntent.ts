@@ -87,7 +87,7 @@ export function acquisitionCtaForIntent(
       href: "/website-check/",
       label: "Check my website",
       compactLabel: "Check website",
-      kicker: "Website",
+      kicker: "Free first look",
     };
   }
   if (intent === "support") {
@@ -102,9 +102,9 @@ export function acquisitionCtaForIntent(
   if (intent === "systems") {
     return {
       href: techAuditHref(intent, source),
-      label: "Plan my system",
+      label: "Plan software you own",
       compactLabel: "Plan it",
-      kicker: "Systems",
+      kicker: "Free consult",
       event: "human_review_requested",
     };
   }

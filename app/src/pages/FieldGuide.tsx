@@ -39,7 +39,7 @@ const LAB_BUILDS = [
   {
     title: "The Pool Room",
     type: "Cinema build",
-    description: "A dive bar built object by object — 2,229 of them — then a break solved by real physics, thirty seconds, with sound. Nothing filmed, nothing stock.",
+    description: "Thirty seconds of film, made without a camera. A dive bar built object by object — 2,229 of them. Then a real break, real physics, real sound. Nothing filmed, nothing stock.",
     href: "/examples/lab/concepts/pool-room/",
     poster: "/images/lab-showcase/pool-room",
     alt: "A dive-bar pool table with fifteen balls racked under a warm three-shade fixture",
@@ -241,7 +241,7 @@ export default function FieldGuide() {
               <span className="lf-ex-tool__copy">
                 <span className="lf-ex-tool__type">Little Fight Lab · live public system</span>
                 <strong>VERA</strong>
-                <span>VERA joins resolvable NYC rental addresses to public building records, labels what it cannot confirm, and keeps hunt state in the visitor&apos;s browser. Verify before paying.</span>
+                <span>Check a NYC rental before you pay a deposit. VERA pulls the public record for that building. It says plainly what it cannot confirm. Your saved hunt stays in your browser.</span>
                 <span className="lf-ex-tool__open">
                   Explore VERA
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />
@@ -263,7 +263,7 @@ export default function FieldGuide() {
               <span className="lf-ex-tool__copy">
                 <span className="lf-ex-tool__type">Archived interface study · supplied snapshot</span>
                 <strong>The MySpace Demo</strong>
-                <span>A supplied profile snapshot rebuilt like it is 2006, Top 8 and all. It shows how far a visual direction can go without pretending the archive is a current client result.</span>
+                <span>A supplied profile snapshot rebuilt like it is 2006, Top 8 and all. It shows how far a look can go. It is an archive study, not a current client result.</span>
                 <span className="lf-ex-tool__open">
                   Open the throwback
                   <ArrowUpRight size={17} strokeWidth={2} aria-hidden="true" />

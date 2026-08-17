@@ -33,7 +33,7 @@ export default function WebsiteCheck() {
       <section className="lf-revenue-page lf-website-check" aria-labelledby="lf-website-check-title">
         <header className="lf-revenue-page__intro">
           <p>Website in</p>
-          <h2 id="lf-website-check-title">A clear first look out.</h2>
+          <h2 id="lf-website-check-title">A free report, in plain words.</h2>
           <div>
             <p>
               We look only at what anyone can see on your website. We do not
@@ -67,7 +67,7 @@ export default function WebsiteCheck() {
             Check my website
             <Search size={18} strokeWidth={2} aria-hidden="true" />
           </button>
-          <p>A useful first look. No account, card, password, or automatic sales call.</p>
+          <p>Free. No account, card, or password. No automatic sales call.</p>
         </form>
 
         <section

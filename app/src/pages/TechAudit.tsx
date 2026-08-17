@@ -544,7 +544,7 @@ export default function TechAudit() {
                 Free website plan
               </p>
               <h1 id="lf-audit-intro-title">Get a clear website plan.</h1>
-              <p>Tell us what the site needs to do. A real person reviews it and replies with a practical next move.</p>
+              <p>You get what to keep and what to fix first. Tell us what the site needs to do. A real person reviews it and replies with a next move.</p>
               <p className="lf-audit-intro__meta">A short form. Reviewed by a person during 9am–9pm Eastern.</p>
 
               {/* Every website lead from the nav, the audit report, the contact
@@ -634,7 +634,7 @@ export default function TechAudit() {
             <span className="lf-em">getting in the way.</span>
           </>
           )}
-          dek="One short form. Tell us what feels broken, expensive, slow, or confusing in your own words. A person reads it and replies with a clear next move."
+          dek="A free look at your website, tools, and monthly bills. We name what to keep and what to fix first. One short form. A person reads it and replies."
           action={{
             href: "#fit-step-title",
             kicker: "About two minutes",
@@ -791,7 +791,7 @@ export default function TechAudit() {
                 <p className="lf-audit__step-sub">
                   {websiteIntent
                     ? "A short note is enough. A real person reads every message."
-                    : "We only need enough to reply. We can work out the rest together."}
+                    : "Free, and no obligation. We only need enough to reply."}
                 </p>
 
                 {/* This list used to sit below the submit button, so an owner
@@ -998,7 +998,7 @@ export default function TechAudit() {
                       onBlur={(e) => validateField("message", e.target.value)}
                       placeholder={websiteIntent
                         ? "For example: customers cannot find what we offer, we need online booking, or the current site no longer reflects the business."
-                        : "A short sentence is fine. We will ask the rest on the call."}
+                        : "A short sentence is fine. We will ask the rest when we reply."}
                       aria-invalid={errors.message ? true : undefined}
                       aria-describedby={
                         errors.message ? "fit-message-error" : "fit-message-note"

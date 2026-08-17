@@ -54,7 +54,7 @@ export default function OngoingCare() {
         eyebrow="Ongoing care"
         icon={RefreshCw}
         title={<>Keep the front door honest after launch.</>}
-        dek="A website is part of the business day. Care keeps its facts, forms, booking paths, and behind-the-scenes parts current. You still own them."
+        dek="Care keeps your hours, forms, booking paths, and the quiet parts current. Ask once or keep us on call. You own the website address, code, and content either way."
         image={{
           src: "/images/brand-scenes/shop-back-office.webp",
           alt: "A neighborhood shop back office with the everyday tools that keep the business running",
@@ -118,7 +118,7 @@ export default function OngoingCare() {
 
       <QuietContact
         heading="Want the site looked after?"
-        lede="Tell us what changes often, what cannot break, and who needs to know when it does. We will suggest the smallest useful care plan."
+        lede="No long contract. The first look is free. Tell us what changes often, what cannot break, and who needs to know when it does. We suggest the smallest useful care plan."
         intent="website"
       />
     </>

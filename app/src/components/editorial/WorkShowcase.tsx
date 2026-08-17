@@ -70,7 +70,7 @@ export default function WorkShowcase({
           </h2>
           <p>
             {mode === "featured"
-              ? "Each card names the client domain, shows when we last checked it, and explains one part of the customer path worth trying."
+              ? "Every card names a real business and its live site. Visit any of them yourself. Each card shows when we last checked it."
               : "These projects stay useful inside Little Fight. We show the work and how it works, without sending anyone to a temporary host or private system."}
           </p>
         </header>

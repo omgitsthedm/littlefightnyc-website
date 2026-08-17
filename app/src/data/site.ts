@@ -172,15 +172,15 @@ export const services: Service[] = [
     verb: "Fix",
     title: "Computer broken, card reader frozen, Wi-Fi down",
     headline: "Fast help when the basics break.",
-    plain: "Email, Wi-Fi, card readers, booking, payments, logins, and devices. We start with what is stopping the day, then write down what changed.",
-    outcome: "Call or text first. New York on-site help and response timing are confirmed from the actual problem and written scope.",
+    plain: "We fix what is stopping the day first. Then we write down what changed. Email, Wi-Fi, card readers, booking, payments, logins, and devices.",
+    outcome: "Call or text first. Urgent New York jobs: we can be on site within 24 hours. The written scope names the rest.",
     pillars: [
       "Call or text first — a human answers 9am–9pm Eastern",
       "We start with what is stopping the day",
       "What changed gets written down",
     ],
     includes: [
-      "Fast help when something breaks",
+      "Urgent New York jobs: usually on-site within 24 hours",
       "Email and website-address fixes",
       "Card reader, booking, and payment fixes",
       "Device, login, and Wi-Fi setup",
@@ -268,9 +268,9 @@ export const services: Service[] = [
     eyebrow: "Custom Local Websites",
     verb: "Build",
     title: "A website built to help customers choose",
-    headline: "Make the next customer’s step obvious.",
+    headline: "Websites that make the next step obvious.",
     plain: "Custom websites for NYC businesses. Your services, phone, booking, orders, forms, map, payments, and follow-up can all point to one clear next step.",
-    outcome: "Qualifying website scopes carry the written 14-day promise. The scope names the timing, dependencies, and remedy before work starts.",
+    outcome: "A qualifying website launches in 14 days. The written scope names the start date and what each side provides. It names the remedy if we are late.",
     pillars: [
       "Built for one business, not a theme",
       "Every page ends in a clear next step",
@@ -287,7 +287,7 @@ export const services: Service[] = [
     accent: "orange",
     icon: Laptop,
     shortAnswer:
-      "Short answer: Little Fight builds custom local websites for NYC small businesses. The site says what you do, helps people choose you, and makes the important business facts easy to check.",
+      "Short answer: Little Fight builds custom local websites for NYC small businesses. Your site shows what you do. Booking, calling, or visiting is easy.",
     whatItDoes: [
       "A custom local website is built around one business and its customers. It is not a theme with new colors. It does not sound like every other shop.",
       "The site works for people first. A visitor should know what you do, where you are, and what to do next. No hunting.",
@@ -375,11 +375,11 @@ export const services: Service[] = [
     plain: "One clear place for customer questions, follow-up, reports, and daily work. We first check whether a simpler tool can do the job. If we build one for you, you keep the files, data, accounts, and notes.",
     outcome: "One focused tool. You own it, the data, the accounts, the website address, and the instructions.",
     includes: [
-      "A look at the steps and software bills that slow the day down",
-      "A clear place to track customer questions and work",
+            "A clear place to track customer questions and work",
+      "Full ownership of the files, data, accounts, and instructions",
       "Simple reports and follow-up reminders you approve",
       "Plain notes another qualified person can use if you ever need them",
-      "Full ownership of the files, data, accounts, and instructions",
+      "A look at the steps and software bills that slow the day down",
     ],
     image: CABINETRY_PROCESS_FILM.poster,
     video: CABINETRY_PROCESS_FILM,
@@ -423,7 +423,7 @@ export const services: Service[] = [
     fallacies: [
       {
         myth: "We need the biggest CRM we can afford.",
-        reality: "Maybe. A large platform can help when a business has enough people and time to keep it current. Many small teams need one smaller shared list and a few dependable next steps first.",
+        reality: "Usually not. Most small teams need one shared list and a few dependable next steps. A big platform earns its keep only if you keep it current. That takes people and time.",
       },
       {
         myth: "We should just use Airtable or Notion for everything.",
@@ -469,7 +469,7 @@ export const services: Service[] = [
 export const agencyProcess = [
   {
     label: "Learn the business",
-    copy: "We look at what customers see, what the day needs, and what keeps getting stuck before naming the fix.",
+    copy: "We look before we name the fix. What customers see. What the day needs. What keeps getting stuck.",
     icon: FileSearch,
   },
   {

@@ -136,7 +136,7 @@ export default function Services() {
             <RefreshCw size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
               <small>Already live</small>
-              <strong>Keep the path working after launch.</strong>
+              <strong>Keep the front door working after launch.</strong>
               <em>Current facts, checked forms, clear next steps, and notes your business keeps.</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
@@ -185,7 +185,7 @@ export default function Services() {
       <VisualIndex
         id="studio"
         eyebrow="Focused software"
-        title="When the monthly tool becomes the problem."
+        title="You can own the tool instead of renting it."
         dek="We can build the smaller, clearer tool your business actually needs. You own the code, data, hosting, and plain notes."
         items={studioOverview}
         variant="compact"

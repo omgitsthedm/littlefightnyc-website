@@ -55,7 +55,7 @@ const footerGroups: Array<{
     ],
   },
   {
-    title: "Explore",
+    title: "Answers and areas",
     links: [
       { label: "Plain-English answers", to: "/library/" },
       { label: "NYC Neighborhoods", to: "/areas/" },
@@ -144,7 +144,7 @@ export default function QuietFooter() {
             <a href={PHONE_HREF} data-lf-label="footer_phone">{PHONE_DISPLAY}</a>
             <OpenNowBadge />
             <span aria-hidden="true">·</span>
-            <span>Daily 9am–9pm ET</span>
+            <span>A human answers, 9am–9pm ET daily</span>
             <span aria-hidden="true">·</span>
             <a href={SMS_HREF} data-lf-label="footer_sms">Text</a>
             <span aria-hidden="true">·</span>

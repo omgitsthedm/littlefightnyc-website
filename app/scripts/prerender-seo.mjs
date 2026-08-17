@@ -1928,7 +1928,7 @@ function snapshot(page) {
         <div class="lf-seo__home-promise">
           <p class="lf-seo__home-kicker">Websites · Tech · Software</p>
           <h1>Make it easier for the next customer to <em>choose you.</em></h1>
-          <p class="lf-seo__home-sub">We plan the website, connect the useful parts, and stay when something breaks.</p>
+          <p class="lf-seo__home-sub">We build the website. We make the tools fit. We stay when something breaks.</p>
           <div class="lf-seo__home-actions" aria-label="Start here" data-lf-contact-rail="true">
             <a class="lf-seo__home-action lf-seo__home-action--primary" href="/website-check/"><span>Need a website?</span><strong>Get a better website</strong></a>
             <a class="lf-seo__home-action" href="tel:${site.phone}"><span>Something broke?</span><strong>Call now</strong></a>
