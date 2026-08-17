@@ -397,7 +397,7 @@ data_boundaries:
 dynamic_entry_points:
   - "app/src/App.tsx React route graph"
   - "app/dakota.html and app/src/dakota/** private authenticated second Vite entry"
-  - "app/src/data/route-meta.json generated 211-route catalog"
+  - "app/src/data/route-meta.json generated 212-route catalog"
   - "app/src/data/nav-index.json generated navigation catalog"
   - "app/src/data/journal-index.json generated journal catalog"
   - "app/public/examples/lab/concepts.json manifest"
@@ -540,7 +540,7 @@ asset_budgets:
   standard_responsive_image_raw_bytes_max: 450000
   lab_showcase_thumbnail_raw_bytes_max: 120000
   social_share_card_raw_bytes_max: 600000
-  route_catalog_count_min: 211
+  route_catalog_count_min: 212
   generated_html_count_min: 220
 budget_baseline:
   source: ".lifi/evidence/baselines/2026-08-01.md"
