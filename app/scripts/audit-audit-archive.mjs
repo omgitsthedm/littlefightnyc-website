@@ -33,7 +33,7 @@ function existsAsRoute(target) {
 
 function localTarget(reference, sourceFile) {
   const clean = reference.split("#", 1)[0].split("?", 1)[0];
-  if (!clean || /^(?:https?:|mailto:|tel:|data:|javascript:|#)/i.test(clean)) {
+  if (!clean || /^(?:https?:|mailto:|tel:|sms:|data:|javascript:|#)/i.test(clean)) {
     return null;
   }
   if (clean.startsWith("/")) return path.join(publicRoot, clean);
@@ -226,7 +226,7 @@ const footer = fs.readFileSync(
 if (!fieldGuide.includes('href="/examples/audit/" data-no-vt')) {
   failures.push("main Examples page is not linked to the in-site Audit");
 }
-if (!footer.includes('{ label: "See a site audit", to: "/examples/audit/" }')) {
+if (!/\{\s*label:\s*"[^"]+",\s*to:\s*"\/examples\/audit\/"\s*\}/.test(footer)) {
   failures.push("main footer is not linked to the in-site Audit");
 }
 if (footer.includes('to: "/examples/audit/", external: true')) {
