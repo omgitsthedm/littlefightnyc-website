@@ -5,6 +5,12 @@ import vm from "node:vm";
 const workerSource = await readFile(new URL("../public/vera/sw.js", import.meta.url), "utf8");
 const dataURL = "https://littlefightnyc.com/vera/data/public.json";
 const dataPath = "/vera/data/public.json";
+const savedPublication = {
+  generated_at: "2026-08-16T00:00:00Z",
+  origin: "cloud",
+  pool: [{ listing_uid: "saved-listing" }],
+  shortlist: [],
+};
 
 function createHarness(fetchImplementation) {
   const listeners = new Map();
@@ -22,6 +28,9 @@ function createHarness(fetchImplementation) {
       async match(key) {
         const response = store.get(key);
         return response ? response.clone() : undefined;
+      },
+      async delete(key) {
+        return store.delete(key);
       },
     };
   };
@@ -86,7 +95,7 @@ function createHarness(fetchImplementation) {
 
 async function seedPublication(harness) {
   const cache = await harness.caches.open("vera-feed-v2");
-  await cache.put(dataPath, new Response('{"saved":true}', {
+  await cache.put(dataPath, new Response(JSON.stringify(savedPublication), {
     headers: { "X-Vera-Cached-At": "2026-08-16T00:00:00.000Z" },
   }));
   harness.putCalls.length = 0;
@@ -100,7 +109,7 @@ async function assertCachedFallback(status) {
 
   assert.equal(response.status, 200, `${status} should use the saved publication`);
   assert.equal(response.headers.get("X-Vera-Cache"), "2026-08-16T00:00:00.000Z");
-  assert.deepEqual(await response.json(), { saved: true });
+  assert.deepEqual(await response.json(), savedPublication);
   assert.equal(harness.putCalls.length, 0, `${status} must not overwrite cached data`);
 }
 
@@ -126,6 +135,19 @@ await assertCachedFallback(503);
 }
 
 {
+  const harness = createHarness(async () => new Response("upstream unavailable", { status: 503 }));
+  const cache = await harness.caches.open("vera-feed-v2");
+  await cache.put(dataPath, new Response('{"legacy":"invalid"}', {
+    headers: { "X-Vera-Cached-At": "2026-08-15T00:00:00.000Z" },
+  }));
+  const operation = harness.dispatch();
+  const response = await operation.response;
+  assert.equal(response.status, 503, "an invalid legacy cache must not mask the real network status");
+  assert.equal(await cache.match(dataPath), undefined, "an invalid legacy cache should be pruned during migration");
+  await operation.waitUntil();
+}
+
+{
   const harness = createHarness(async () => {
     throw new TypeError("network unavailable");
   });
@@ -137,19 +159,20 @@ await assertCachedFallback(503);
 }
 
 {
-  const harness = createHarness(async () => new Response('{"generated_at":"2026-08-16T00:00:00Z","pool":[]}', {
+  const freshPublication = { generated_at: "2026-08-16T00:00:00Z", origin: "cloud", pool: [], shortlist: [] };
+  const harness = createHarness(async () => new Response(JSON.stringify(freshPublication), {
     headers: { "Content-Type": "application/json" },
   }));
   const operation = harness.dispatch();
   const response = await operation.response;
 
-  assert.deepEqual(await response.json(), { generated_at: "2026-08-16T00:00:00Z", pool: [] });
+  assert.deepEqual(await response.json(), freshPublication);
   assert.equal(operation.waits.length, 1, "a successful publication write must extend the worker lifetime");
   await operation.waitUntil();
   const cached = await (await harness.caches.open("vera-feed-v2")).match(dataPath);
   assert.ok(cached, "the completed lifetime task must persist the fresh publication");
   assert.equal(cached.headers.get("X-Vera-Cached-At") !== null, true);
-  assert.deepEqual(await cached.json(), { generated_at: "2026-08-16T00:00:00Z", pool: [] });
+  assert.deepEqual(await cached.json(), freshPublication);
 }
 
 {
@@ -158,10 +181,57 @@ await assertCachedFallback(503);
     headers: { "Content-Type": "application/json" },
   }));
   const operation = harness.dispatch();
-  assert.equal((await operation.response).status, 200, "the live response remains transparent to the app");
+  assert.equal((await operation.response).status, 200, "without a cache, preserve the invalid live response for app retries");
   await operation.waitUntil();
   const cached = await (await harness.caches.open("vera-feed-v2")).match(dataPath);
   assert.equal(cached, undefined, "a schema-invalid publication must never enter the fallback cache");
 }
 
-console.log("VERA service-worker resilience checks passed: cached fallbacks, lifecycle persistence, and cache validation are covered.");
+{
+  const harness = createHarness(async () => new Response("{}", {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  }));
+  await seedPublication(harness);
+  const operation = harness.dispatch();
+  const response = await operation.response;
+  assert.equal(response.headers.get("X-Vera-Cache"), "2026-08-16T00:00:00.000Z");
+  assert.deepEqual(await response.json(), savedPublication, "invalid 200 data should fall back to the saved publication");
+  await operation.waitUntil();
+  assert.equal(harness.putCalls.length, 0, "an invalid 200 must not replace a saved publication");
+}
+
+{
+  let requestCount = 0;
+  let resolveOlder;
+  let resolveNewer;
+  const olderResponse = new Promise((resolve) => { resolveOlder = resolve; });
+  const newerResponse = new Promise((resolve) => { resolveNewer = resolve; });
+  const harness = createHarness(() => {
+    requestCount += 1;
+    return requestCount === 1 ? olderResponse : newerResponse;
+  });
+  const olderOperation = harness.dispatch();
+  const newerOperation = harness.dispatch();
+
+  resolveNewer(new Response('{"generated_at":"2026-08-17T00:00:00Z","origin":"cloud","pool":[],"shortlist":[]}', {
+    headers: { "Content-Type": "application/json" },
+  }));
+  assert.equal((await newerOperation.response).status, 200);
+  await newerOperation.waitUntil();
+
+  resolveOlder(new Response('{"generated_at":"2026-08-15T00:00:00Z","origin":"cloud","pool":[],"shortlist":[]}', {
+    headers: { "Content-Type": "application/json" },
+  }));
+  assert.equal((await olderOperation.response).status, 200);
+  await olderOperation.waitUntil();
+
+  const cached = await (await harness.caches.open("vera-feed-v2")).match(dataPath);
+  assert.equal(
+    (await cached.json()).generated_at,
+    "2026-08-17T00:00:00Z",
+    "a slower older response must not overwrite a newer saved publication",
+  );
+}
+
+console.log("VERA service-worker resilience checks passed: fallbacks, validation, lifecycle persistence, and monotonic writes are covered.");

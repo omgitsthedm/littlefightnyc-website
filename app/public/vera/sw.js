@@ -36,50 +36,107 @@ var SHELL_ASSETS = [
    publication metadata are all cached network-first, with the stored copy
    stamped so the app can badge its age rather than imply the sweep just ran. */
 var DATA_PATHS = ['/vera/data/public.json', '/vera/data/archive.json', '/vera/data/meta.json'];
+var publicationWrites = {};
 
 /* A 200 alone is not enough to overwrite the last known-good publication.
    GitHub's edge may return an HTML error page with a 200, and an interrupted
-   body may still look successful until the browser reads it. Validate the
-   tiny publication contract before it can replace the durable fallback. */
-function persistPublication(dataPath, response) {
+   body may still look successful until the browser reads it. Inspect the
+   endpoint-specific contract before either the app or the fallback sees it. */
+function publicationStamp(dataPath, publication) {
+  if (dataPath.endsWith('/archive.json')) {
+    return publication.reduce(function (latest, entry) {
+      var value = entry && (entry.generated_at || entry.date);
+      var parsed = Date.parse(value || '') || 0;
+      return Math.max(latest, parsed);
+    }, 0);
+  }
+  return Date.parse((publication && publication.generated_at) || '') || 0;
+}
+
+function matchesPublicationContract(dataPath, publication) {
+  if (dataPath.endsWith('/archive.json')) {
+    return Array.isArray(publication) && publication.every(function (entry) {
+      return entry && typeof entry === 'object' && Date.parse(entry.date || '') > 0 && Array.isArray(entry.listings);
+    });
+  }
+  if (!publication || typeof publication !== 'object' || publicationStamp(dataPath, publication) <= 0) return false;
+  if (dataPath.endsWith('/public.json')) {
+    return Array.isArray(publication.pool) && Array.isArray(publication.shortlist);
+  }
+  return dataPath.endsWith('/meta.json') && Number.isFinite(publication.pool) && Number.isFinite(publication.shortlist);
+}
+
+function inspectPublication(dataPath, response) {
   if (!response || !response.ok || response.status !== 200 || response.type === 'opaque') {
-    return Promise.resolve();
+    return Promise.resolve({ response: response, valid: false });
   }
 
   return response.clone().text().then(function (text) {
     if (!text.trim()) throw new Error('empty VERA publication');
     var publication = JSON.parse(text);
-    var valid = dataPath.endsWith('/public.json')
-      ? publication && typeof publication === 'object' && Array.isArray(publication.pool) && typeof publication.generated_at === 'string'
-      : dataPath.endsWith('/archive.json')
-        ? Array.isArray(publication)
-        : publication && typeof publication === 'object' && typeof publication.generated_at === 'string';
-    if (!valid) throw new Error('invalid VERA publication contract');
-
-    var headers = new Headers(response.headers);
-    headers.set('X-Vera-Cached-At', new Date().toISOString());
-    return caches.open(FEED).then(function (cache) {
-      return cache.put(dataPath, new Response(text, { status: 200, headers: headers }));
-    });
+    if (!matchesPublicationContract(dataPath, publication)) throw new Error('invalid VERA publication contract');
+    return {
+      response: response,
+      valid: true,
+      text: text,
+      stamp: publicationStamp(dataPath, publication),
+    };
   }).catch(function () {
-    /* A bad fresh response must not poison the saved publication. The live
-       response still reaches the app, which owns its own JSON error state. */
+    return { response: response, valid: false };
+  });
+}
+
+function persistPublication(dataPath, inspected) {
+  if (!inspected || !inspected.valid) return Promise.resolve();
+  var previous = publicationWrites[dataPath] || Promise.resolve();
+  var write = previous.catch(function () {}).then(function () {
+    return caches.open(FEED).then(function (cache) {
+      return cache.match(dataPath).then(function (existing) {
+        if (!existing) return 0;
+        return existing.clone().json().then(function (publication) {
+          return publicationStamp(dataPath, publication);
+        }).catch(function () { return 0; });
+      }).then(function (existingStamp) {
+        /* A slower older request must not win after a newer tab or retry has
+           already stored a later generated publication. */
+        if (existingStamp > 0 && inspected.stamp > 0 && inspected.stamp < existingStamp) return;
+        var headers = new Headers(inspected.response.headers);
+        headers.set('X-Vera-Cached-At', new Date().toISOString());
+        return cache.put(dataPath, new Response(inspected.text, { status: 200, headers: headers }));
+      });
+    });
+  });
+  publicationWrites[dataPath] = write.catch(function () {});
+  return write.catch(function () {
+    /* Cache persistence is an availability enhancement. A storage error must
+       not turn a valid network publication into an application failure. */
     return undefined;
   });
 }
 
 function cachedPublication(dataPath, networkResponse) {
   return caches.open(FEED).then(function (cache) {
-    return cache.match(dataPath);
-  }).then(function (hit) {
+    return cache.match(dataPath).then(function (hit) {
+      return { cache: cache, hit: hit };
+    });
+  }).then(function (cached) {
+    var hit = cached.hit;
     if (!hit) {
       if (networkResponse) return networkResponse;
       throw new Error('offline, no cached sweep');
     }
-    var headers = new Headers(hit.headers);
-    headers.set('X-Vera-Cache', headers.get('X-Vera-Cached-At') || 'unknown');
-    return hit.blob().then(function (body) {
-      return new Response(body, { status: 200, headers: headers });
+    return inspectPublication(dataPath, hit).then(function (inspected) {
+      if (!inspected.valid) {
+        return cached.cache.delete(dataPath).then(function () {
+          if (networkResponse) return networkResponse;
+          throw new Error('offline, invalid cached sweep');
+        });
+      }
+      var headers = new Headers(hit.headers);
+      headers.set('X-Vera-Cache', headers.get('X-Vera-Cached-At') || 'unknown');
+      return hit.blob().then(function (body) {
+        return new Response(body, { status: 200, headers: headers });
+      });
     });
   });
 }
@@ -110,20 +167,22 @@ self.addEventListener('fetch', function (e) {
   if (DATA_PATHS.indexOf(url.pathname) !== -1) {
     var dataPath = url.pathname;
     var networkPublication = fetch(e.request);
+    var inspectedPublication = networkPublication.then(function (response) {
+      return inspectPublication(dataPath, response);
+    });
     /* waitUntil has to be registered while the FetchEvent is being handled.
        Chaining it inside the resolved fetch promise is too late on WebKit. */
-    e.waitUntil(networkPublication.then(function (resp) {
-      return persistPublication(dataPath, resp);
+    e.waitUntil(inspectedPublication.then(function (inspected) {
+      return persistPublication(dataPath, inspected);
     }, function () {
       return undefined;
     }));
     e.respondWith(
-      networkPublication.then(function (resp) {
-        if (!resp || !resp.ok) {
-          return cachedPublication(dataPath, resp);
+      inspectedPublication.then(function (inspected) {
+        if (!inspected.valid) {
+          return cachedPublication(dataPath, inspected.response);
         }
-
-        return resp;
+        return inspected.response;
       }, function () {
         return cachedPublication(dataPath);
       })

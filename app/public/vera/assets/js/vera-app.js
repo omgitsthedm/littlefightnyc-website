@@ -3038,7 +3038,7 @@
         })
         .then(function (data) {
           if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
-          if (!data || typeof data !== 'object' || !Array.isArray(data.pool) || typeof data.generated_at !== 'string') {
+          if (!data || typeof data !== 'object' || !Array.isArray(data.pool) || !Array.isArray(data.shortlist) || typeof data.generated_at !== 'string') {
             throw new Error('Invalid VERA publication contract');
           }
           clearTimeout(attemptTimer);

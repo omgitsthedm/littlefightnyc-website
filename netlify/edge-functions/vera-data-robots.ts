@@ -6,6 +6,51 @@ const VERA_DATA_PATHS = [
   "/vera/data/meta.json",
 ] as const;
 
+const hasValidTimestamp = (value: unknown): boolean =>
+  typeof value === "string" && Number.isFinite(Date.parse(value));
+
+const matchesPublicationContract = (pathname: string, publication: unknown): boolean => {
+  if (pathname.endsWith("/archive.json")) {
+    return Array.isArray(publication) && publication.every((entry: unknown) => {
+      if (entry === null || typeof entry !== "object") return false;
+      const record = entry as Record<string, unknown>;
+      return hasValidTimestamp(record.date) && Array.isArray(record.listings);
+    });
+  }
+  if (publication === null || typeof publication !== "object") return false;
+  const record = publication as Record<string, unknown>;
+  if (!hasValidTimestamp(record.generated_at)) return false;
+  if (pathname.endsWith("/public.json")) {
+    return Array.isArray(record.pool) &&
+      Array.isArray(record.shortlist);
+  }
+  return pathname.endsWith("/meta.json") &&
+    typeof record.pool === "number" &&
+    Number.isFinite(record.pool) &&
+    typeof record.shortlist === "number" &&
+    Number.isFinite(record.shortlist);
+};
+
+const isCompletePublication = async (
+  request: Request,
+  response: Response,
+): Promise<boolean> => {
+  const contentType = response.headers.get("Content-Type") ?? "";
+  if (
+    request.method !== "GET" ||
+    response.status !== 200 ||
+    !contentType.toLowerCase().includes("json")
+  ) {
+    return false;
+  }
+  try {
+    const publication: unknown = await response.clone().json();
+    return matchesPublicationContract(new URL(request.url).pathname, publication);
+  } catch {
+    return false;
+  }
+};
+
 /**
  * Netlify custom response headers do not apply to externally proxied content.
  * Keep the sanitized engine feed first-party and add the crawler directive
@@ -15,19 +60,17 @@ const VERA_DATA_PATHS = [
  * then can serve the last known-good daily publication while it revalidates
  * for the same 36-hour health horizon the product reports to visitors.
  */
-export default async (_request: Request, context: Context): Promise<Response> => {
+export default async (request: Request, context: Context): Promise<Response> => {
   const response = await context.next();
   response.headers.set("X-Robots-Tag", "noindex, nofollow");
-  const contentType = response.headers.get("Content-Type") ?? "";
-  const isCompletePublication =
-    response.status === 200 && contentType.toLowerCase().includes("json");
+  const cacheable = await isCompletePublication(request, response);
 
   /* Manual caching must never preserve a rate-limit page, upstream failure,
      or HTML error under a public JSON URL. Successful JSON gets a five-minute
      freshness window plus the same 36-hour stale safety horizon VERA monitors. */
   response.headers.set(
     "Netlify-CDN-Cache-Control",
-    isCompletePublication
+    cacheable
       ? "public, max-age=300, stale-while-revalidate=129600"
       : "no-store",
   );
