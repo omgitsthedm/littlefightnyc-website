@@ -17,7 +17,7 @@ async function invoke(pathname, body, init = {}) {
       return new Response(body, {
         status: init.status ?? 200,
         headers: {
-          "Content-Type": init.contentType ?? "application/json; charset=utf-8",
+          "Content-Type": init.contentType ?? "text/plain; charset=utf-8",
           ETag: '"vera-test"',
         },
       });
@@ -37,6 +37,9 @@ for (const [pathname, publication] of [
   assert.equal(nextCalls[0].length, 0, "context.next must not forward conditional validators");
   assert.equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow");
   assert.equal(response.headers.get("Netlify-CDN-Cache-Control"), CACHE_POLICY);
+  assert.equal(response.headers.get("Cache-Control"), "no-store");
+  assert.equal(response.headers.get("ETag"), null);
+  assert.equal(response.headers.get("Content-Type"), "application/json; charset=utf-8");
   assert.equal(await response.text(), body, "edge validation must leave the response body usable");
 }
 
@@ -55,6 +58,8 @@ for (const testCase of [
     `${label} must never enter the shared edge cache`,
   );
   assert.equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow");
+  assert.equal(response.headers.get("Cache-Control"), "no-store");
+  assert.equal(response.headers.get("ETag"), null);
 }
 
 assert.equal(edgeModule.config.cache, "manual");

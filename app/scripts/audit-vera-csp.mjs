@@ -182,12 +182,14 @@ if (!veraDataEdge.includes('"public, max-age=300, stale-while-revalidate=129600"
 }
 if (
   !veraDataEdge.includes('response.status !== 200') ||
-  !veraDataEdge.includes('contentType.toLowerCase().includes("json")') ||
   !veraDataEdge.includes('response.clone().json()') ||
   !veraDataEdge.includes('Array.isArray(record.pool)') ||
   !veraDataEdge.includes('Array.isArray(record.shortlist)') ||
   !veraDataEdge.includes('Array.isArray(record.listings)') ||
   !veraDataEdge.includes('hasValidTimestamp(record.generated_at)') ||
+  !veraDataEdge.includes('response.headers.set("Cache-Control", "no-store")') ||
+  !veraDataEdge.includes('response.headers.delete("ETag")') ||
+  !veraDataEdge.includes('response.headers.set("Content-Type", "application/json; charset=utf-8")') ||
   !veraDataEdge.includes(': "no-store"')
 ) {
   failures.push(
