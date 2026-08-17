@@ -1,0 +1,219 @@
+/* /start/ — business-card QR landing.
+   Orange hero (the card's own field), then the site's ink for the rest so the
+   shared editorial bone-white h2/p defaults are the right colour everywhere. */
+
+.lf-card-start {
+  --start-orange: var(--lf-fight);
+  --start-ink: #050507;
+  background: var(--start-ink);
+  color: white;
+  overflow: hidden;
+}
+
+.lf-card-start__wrap {
+  width: min(1120px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.lf-card-start .lf-card-start__eyebrow {
+  margin: 0 0 22px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.lf-card-start h1,
+.lf-card-start h2,
+.lf-card-start h3 {
+  margin: 0;
+  font-family: "Oswald", Impact, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* Hero: the card back's orange with the card's black ink on it. */
+.lf-card-start__hero {
+  background: var(--start-orange);
+  padding: clamp(72px, 10vw, 140px) 0 clamp(64px, 9vw, 116px);
+}
+
+.lf-editorial .lf-card-start__hero .lf-card-start__eyebrow,
+.lf-editorial .lf-card-start__hero h1,
+.lf-editorial .lf-card-start__hero p {
+  color: var(--start-ink);
+}
+
+.lf-card-start__hero h1 {
+  max-width: 12ch;
+  font-size: clamp(3.4rem, 9vw, 8.4rem);
+  line-height: 0.92;
+}
+
+.lf-card-start__hero h1 span {
+  display: block;
+  color: white;
+}
+
+.lf-card-start .lf-card-start__lede {
+  max-width: 58ch;
+  margin: 30px 0 0;
+  font-size: clamp(1.08rem, 1.9vw, 1.35rem);
+  line-height: 1.65;
+  font-weight: 500;
+}
+
+/* Promises: the three lines printed on the card back. */
+.lf-card-start__promises {
+  padding: clamp(72px, 10vw, 124px) 0;
+}
+
+.lf-card-start__promises .lf-card-start__eyebrow {
+  color: var(--start-orange);
+}
+
+.lf-card-start__promises h2,
+.lf-card-start__cta h2 {
+  font-size: clamp(2.6rem, 6vw, 5.6rem);
+  line-height: 0.96;
+  max-width: 16ch;
+}
+
+.lf-card-start__list {
+  list-style: none;
+  margin: clamp(36px, 5vw, 56px) 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.lf-card-start__list li {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 20px;
+  padding: clamp(24px, 3.5vw, 40px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.lf-card-start .lf-card-start__num {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--start-orange);
+  letter-spacing: 0.08em;
+  padding-top: 0.55em;
+}
+
+.lf-card-start__list h3 {
+  font-size: clamp(1.7rem, 3.2vw, 2.6rem);
+  line-height: 1;
+}
+
+.lf-card-start .lf-card-start__list p {
+  max-width: 60ch;
+  margin: 12px 0 0;
+  color: #e5e7eb;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 1.7;
+}
+
+/* CTA: same shape as the coaster answer page's close. */
+.lf-card-start__cta {
+  padding: clamp(64px, 9vw, 116px) 0 clamp(80px, 10vw, 132px);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.lf-card-start__cta .lf-card-start__eyebrow {
+  color: var(--start-orange);
+}
+
+.lf-card-start .lf-card-start__cta-copy {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  color: #e5e7eb;
+  font-size: clamp(1.05rem, 1.9vw, 1.3rem);
+  line-height: 1.7;
+}
+
+.lf-card-start__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 40px;
+}
+
+.lf-card-start__button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  border: 2px solid white;
+  border-radius: 999px;
+  color: white;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.lf-card-start__button:hover {
+  transform: translateY(-2px);
+}
+
+.lf-card-start__button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+
+.lf-card-start__button--primary {
+  border-color: var(--start-orange);
+  background: var(--start-orange);
+  color: var(--start-ink);
+}
+
+.lf-card-start .lf-card-start__more {
+  margin: 36px 0 0;
+  color: #cfd3d8;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.lf-editorial main .lf-card-start__more > a {
+  color: var(--start-orange);
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 780px) {
+  .lf-card-start__wrap {
+    width: min(100% - 28px, 680px);
+  }
+
+  .lf-card-start__list li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .lf-card-start .lf-card-start__num {
+    padding-top: 0;
+  }
+
+  .lf-card-start__button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-card-start__button {
+    transition: none;
+  }
+
+  .lf-card-start__button:hover {
+    transform: none;
+  }
+}

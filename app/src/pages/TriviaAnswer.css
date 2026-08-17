@@ -175,6 +175,23 @@
   text-underline-offset: 3px;
 }
 
+/* The story block sits on the paper field. The shared editorial sheet paints
+   every h2/p bone-white for the dark routes, which made this copy invisible
+   (white on #f7f3ea) on the live coaster QR page. Pin it to the trivia ink. */
+.lf-editorial .lf-trivia-answer__story h2,
+.lf-editorial .lf-trivia-answer__story p:not(.lf-trivia-answer__eyebrow),
+.lf-editorial .lf-trivia-answer__sources p {
+  color: var(--trivia-ink);
+}
+
+.lf-editorial main .lf-trivia-answer__sources p > a {
+  color: #c2410c;
+  background: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
 .lf-trivia-answer__cta {
   background: var(--trivia-ink);
   color: white;

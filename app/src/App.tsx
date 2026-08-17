@@ -45,6 +45,7 @@ const Services = lazyRoute(() => import("@/pages/Services"));
 const StudioDetail = lazyRoute(() => import("@/pages/StudioDetail"));
 const TechAudit = lazyRoute(() => import("@/pages/TechAudit"));
 const Thanks = lazyRoute(() => import("@/pages/Thanks"));
+const CardStart = lazyRoute(() => import("@/pages/CardStart"));
 const TriviaAnswer = lazyRoute(() => import("@/pages/TriviaAnswer"));
 const WebsiteCheck = lazyRoute(() => import("@/pages/WebsiteCheck"));
 const Zhongwen = lazyRoute(() => import("@/pages/Zhongwen"));
@@ -135,6 +136,7 @@ export default function App() {
           <Route path="nationwide" element={route(Nationwide)} />
           <Route path="answers" element={<Navigate to="/library/" replace />} />
           <Route path="answers/:slug" element={route(AnswerGuide)} />
+          <Route path="start" element={route(CardStart)} />
           <Route path="trivia/1979" element={route(TriviaAnswer)} />
           <Route path="glossary" element={route(Glossary)} />
           <Route path="glossary/:slug" element={route(GlossaryTerm)} />

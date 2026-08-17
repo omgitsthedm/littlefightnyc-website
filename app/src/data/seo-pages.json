@@ -1604,6 +1604,18 @@
       "published": "2026-08-15",
       "updated": "2026-08-15",
       "image": "/assets/og-tugboat.jpg"
+    },
+    {
+      "path": "/start/",
+      "title": "Websites & Tech Support From Humans | Little Fight NYC",
+      "description": "You scanned the Little Fight NYC card. Websites that work, help when you need it, and tools that save time — from a real human. Call or text to start.",
+      "h1": "Websites & tech support from humans.",
+      "shortAnswer": "Little Fight NYC helps small businesses get a website that makes people choose them, fixes tech when it breaks, and sets up tools that save time. A real person answers.",
+      "type": "WebPage",
+      "noindex": true,
+      "published": "2026-08-17",
+      "updated": "2026-08-17",
+      "image": "/assets/og-tugboat.jpg"
     }
   ],
   "matrix": {
