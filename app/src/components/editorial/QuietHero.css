@@ -740,6 +740,12 @@
   }
 }
 
+@media (min-width: 80rem) {
+  .lf-hero__scene {
+    grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+  }
+}
+
 /* The 1024px split is still a desktop composition, just with less runway. */
 @media (min-width: 64rem) and (max-width: 69.99rem) {
   .lf-hero__main {
