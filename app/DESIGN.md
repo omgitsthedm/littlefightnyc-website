@@ -145,15 +145,19 @@ under `prefers-reduced-motion: reduce`.
 
 ## Imagery
 
-The primary subject is the business at work: storefronts, counters, booking
-stations, shelves, devices, receipts, cables, back offices, and shipped
-products. People are absent, distant, blurred, or visually incidental unless a
-real approved client image is the proof.
+**Any imagery is allowed** (David, 2026-08-17). Photography, generated work,
+illustration, 3D, motion — whatever makes the page land. Earlier versions of
+this section banned whole categories on taste grounds; that was never a
+business rule and it is retired. Pick the strongest image for the job.
 
-Generated environments are illustrative and must never be presented as a
-client location, testimonial, or case-study result. Use real screenshots,
-verified dates, and approved client records for proof. Avoid generic offices,
-posed teams, AI faces, skyline postcards, holographic UI, and abstract filler.
+One rule survives, and it is about honesty rather than taste: an illustrative
+or generated image must never be presented as a client location, testimonial,
+or case-study result. Proof needs real screenshots, verified dates, and
+approved client records. Label an illustration as one.
+
+Real client captures are usually the most persuasive option on a page that is
+asking for trust — `WorkWall` puts live client sites in a hero — but that is a
+judgment call, not a restriction.
 
 ## Project timelines
 
