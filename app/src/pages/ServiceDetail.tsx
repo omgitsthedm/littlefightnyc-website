@@ -173,6 +173,7 @@ export default function ServiceDetail() {
         icon={service.icon}
         title={<>{service.headline}</>}
         dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
+        pillars={service.pillars ? [...service.pillars] : undefined}
         image={{
           src: FEATURE_IMAGE[service.slug] ?? service.image,
           alt: service.slug === "custom-local-websites"

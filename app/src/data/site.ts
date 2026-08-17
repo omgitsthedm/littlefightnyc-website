@@ -47,6 +47,12 @@ export type Service = {
   accent: string;
   icon: LucideIcon;
   shortAnswer: string;
+  /**
+   * Two or three checkable reasons, shown directly under the answer in the
+   * hero. Every entry must restate a fact this page already makes elsewhere —
+   * these are the pyramid's middle layer, not new claims.
+   */
+  pillars?: string[];
   whatItDoes: string[];
   commonIssues: Array<{ title: string; body: string }>;
   fallacies: Array<{ myth: string; reality: string }>;
@@ -84,6 +90,11 @@ export const services: Service[] = [
     headline: "Know what to keep, cut, fix, or build.",
     plain: "We look at what a customer sees, what you pay for, and where the day gets stuck. Then we tell you what is fine, what needs attention, and what to do first.",
     outcome: "The first read is free. If paid work is not the useful next move, we say so.",
+    pillars: [
+      "The first read is free",
+      "We say so when paid work is not the answer",
+      "You keep the accounts and the notes",
+    ],
     includes: [
       "A plain list of the tools and monthly bills you want us to see",
       "A check of your website, Google listing, and customer path",
@@ -163,6 +174,11 @@ export const services: Service[] = [
     headline: "Fast help when the basics break.",
     plain: "Email, Wi-Fi, card readers, booking, payments, logins, and devices. We start with what is stopping the day, then write down what changed.",
     outcome: "Call or text first. New York on-site help and response timing are confirmed from the actual problem and written scope.",
+    pillars: [
+      "Call or text first — a human answers 9am–9pm Eastern",
+      "We start with what is stopping the day",
+      "What changed gets written down",
+    ],
     includes: [
       "Fast help when something breaks",
       "Email and website-address fixes",
@@ -255,6 +271,11 @@ export const services: Service[] = [
     headline: "Make the next customer’s step obvious.",
     plain: "Custom websites for NYC businesses. Your services, phone, booking, orders, forms, map, payments, and follow-up can all point to one clear next step.",
     outcome: "Qualifying website scopes carry the written 14-day promise. The scope names the timing, dependencies, and remedy before work starts.",
+    pillars: [
+      "Built for one business, not a theme",
+      "Every page ends in a clear next step",
+      "A written 14-day promise on qualifying scopes",
+    ],
     includes: [
       "A custom website built around what customers need to do",
       "Clear Google and map basics where they help",

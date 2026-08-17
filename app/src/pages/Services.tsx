@@ -74,6 +74,11 @@ export default function Services() {
           </>
         }
         dek="No tech speech required. Pick the problem that sounds familiar. We will show you the next useful move."
+        pillars={[
+          "Websites that help customers choose you",
+          "Fast help when the basics break",
+          "Software you own when renting stops making sense",
+        ]}
         image={{
           src: "/assets/hero-services-crossing.webp",
           alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",

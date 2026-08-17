@@ -794,6 +794,19 @@ export default function TechAudit() {
                     : "We only need enough to reply. We can work out the rest together."}
                 </p>
 
+                {/* This list used to sit below the submit button, so an owner
+                    gave us a name, a business, a contact and a problem before
+                    learning what came back. Answer first, then ask. */}
+                <p className="lf-audit__outcomes lf-audit__outcomes--lead">
+                  You get back:{" "}
+                  {OUTCOMES.map((o, i) => (
+                    <span key={o}>
+                      <strong>{o}</strong>
+                      {i < OUTCOMES.length - 1 ? "; " : "."}
+                    </span>
+                  ))}
+                </p>
+
                 <form
                   className="lf-audit__form"
                   name="tech-audit-scratch"
@@ -1035,15 +1048,6 @@ export default function TechAudit() {
               </div>
             )}
 
-            <p className="lf-audit__outcomes">
-              Here is what we will give you:{" "}
-              {OUTCOMES.map((o, i) => (
-                <span key={o}>
-                  <strong>{o}</strong>
-                  {i < OUTCOMES.length - 1 ? "; " : "."}
-                </span>
-              ))}
-            </p>
           </div>
 
           <aside className="lf-audit__aside">

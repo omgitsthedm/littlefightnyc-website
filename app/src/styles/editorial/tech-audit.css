@@ -632,6 +632,16 @@
   max-width: 62ch;
 }
 
+/* Leading the form with the payoff: same list, promoted above the fields, so
+   it reads as the answer rather than a footnote. */
+.lf-audit__outcomes--lead {
+  margin: var(--lf-space-4) 0 var(--lf-space-5);
+  padding: var(--lf-space-4) var(--lf-space-5);
+  border-left: 2px solid var(--lf-fight);
+  background: var(--lf-paper-2);
+  font-style: normal;
+}
+
 .lf-audit__outcomes strong {
   color: var(--lf-bone);
   font-weight: 600;

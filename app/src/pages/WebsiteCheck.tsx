@@ -12,6 +12,11 @@ export default function WebsiteCheck() {
         icon={Search}
         title={<>See what gets in the way.</>}
         dek="Put in your website. We check the public parts: can people read it, use it, find the basics, and take the next step? The report also says what we could not see."
+        pillars={[
+          "Free, and no sales call required",
+          "No login, card, or password",
+          "Says plainly what we could not see",
+        ]}
         action={{
           href: "#website-check-url",
           kicker: "Free first look",
