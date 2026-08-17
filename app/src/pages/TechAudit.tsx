@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame } from "lucide-react";
+import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone, Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
@@ -26,7 +26,7 @@ import {
   type TechAuditLeadIntent,
 } from "@/lib/techAuditContact";
 import "@/styles/editorial/tech-audit.css";
-import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
+import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
 
@@ -546,6 +546,34 @@ export default function TechAudit() {
               <h1 id="lf-audit-intro-title">Get a clear website plan.</h1>
               <p>Tell us what the site needs to do. A real person reviews it and replies with a practical next move.</p>
               <p className="lf-audit-intro__meta">A short form. Reviewed by a person during 9am–9pm Eastern.</p>
+
+              {/* Every website lead from the nav, the audit report, the contact
+                  block, and the case studies lands here. This branch replaces
+                  PageHero, so it has to carry the same first-screen contract:
+                  all four channels and the hours line, before the form. */}
+              <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
+                <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
+                  <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
+                    <Phone size={16} strokeWidth={2} aria-hidden="true" />
+                    Call {PHONE_DISPLAY}
+                  </a>
+                  <a href={SMS_HREF} data-lf-label="audit_intro_sms">
+                    <MessageSquare size={16} strokeWidth={2} aria-hidden="true" />
+                    Text
+                  </a>
+                  <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="audit_intro_email">
+                    <Mail size={16} strokeWidth={2} aria-hidden="true" />
+                    Email
+                  </a>
+                  <a href="#fit-step-title" data-lf-label="audit_intro_form">
+                    <Send size={16} strokeWidth={2} aria-hidden="true" />
+                    Form
+                  </a>
+                </div>
+                <p className="lf-audit-intro__hours">
+                  9am–9pm Eastern: a human answers. After hours: leave a message.
+                </p>
+              </div>
             </div>
             <article className="lf-audit-intro__proof">
               <Link

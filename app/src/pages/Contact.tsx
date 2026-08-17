@@ -11,7 +11,7 @@ import {
 import PageHero from "@/components/editorial/PageHero";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import "@/styles/editorial/contact.css";
-import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 
 const NEXT_STEPS = [
@@ -126,6 +126,19 @@ export default function Contact() {
               href="mailto:hello@littlefightnyc.com"
             >
               hello@littlefightnyc.com
+            </a>
+            <span className="lf-contact-choice__email-sep" aria-hidden="true">·</span>
+            {/* The page named for contacting the studio was the one page with
+                no way to book a time. */}
+            <a
+              className="lf-contact-choice__email-link"
+              href={BOOKING_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-lf-event="booking_started"
+              data-lf-label="contact_page"
+            >
+              Book a free 30-minute second opinion
             </a>
           </p>
         </div>

@@ -344,6 +344,16 @@ function generateLivingInstrument(data: AuditData): string {
         <a class="instrument-cta__booking-link" href="${esc(BOOKING_HREF)}" target="_blank" rel="noopener noreferrer" data-audit-event="booking_started">Book a free 30-minute second opinion</a>
       </div>
       <p class="instrument-cta__booking-note">Prefer a set time? Choose a Monday–Friday appointment between 9am and 5pm Eastern. We’ll meet on Google Meet, review the report with you, and name the clearest next move. No prep or commitment.</p>
+      <!-- Someone reading their own report is the warmest reader we get. The
+           block used to offer a form and a calendar and no way to just talk. -->
+      <p class="instrument-cta__reach">
+        <a href="tel:+16463600318">Call (646) 360-0318</a>
+        <span aria-hidden="true">·</span>
+        <a href="sms:+16463600318">Text</a>
+        <span aria-hidden="true">·</span>
+        <a href="mailto:hello@littlefightnyc.com">Email</a>
+      </p>
+      <p class="instrument-cta__reach-hours">9am&ndash;9pm Eastern: a human answers. After hours: leave a message.</p>
     </section>
   </main>
 

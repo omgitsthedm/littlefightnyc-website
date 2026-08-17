@@ -333,7 +333,11 @@
     box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
-@media (min-width: 64rem) {
+/* Tablets (768-1023px) used to be a dead zone: the sticky help bar stops at
+ * 767px and this pill used to start at 1024px, so that whole band had no
+ * visible action anywhere on screen. The pill now starts exactly where the
+ * sticky bar stops. */
+@media (min-width: 48rem) {
   .lf-nav__start {
     display: inline-flex;
     margin-inline-start: var(--lf-space-2);

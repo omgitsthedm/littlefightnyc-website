@@ -12,12 +12,17 @@ import {
 import "./QuietNav.css";
 import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
+/* The free check and the contact page were missing here, so the two pages a
+ * ready visitor looks for were reachable only from the homepage hero and the
+ * footer. Order runs down the commercial ladder, then proof, then help. */
 const NAV_LINKS = [
   { label: "Websites", to: "/services/custom-local-websites/" },
   { label: "Fix something", to: "/services/it-support/" },
   { label: "Software You Own", to: "/services/business-systems/" },
+  { label: "Free check", to: "/website-check/" },
   { label: "Results", to: "/examples/" },
   { label: "Answers", to: "/library/" },
+  { label: "Contact", to: "/contact/" },
 ] as const;
 
 /**
@@ -48,6 +53,15 @@ export default function QuietNav() {
   const routeIntent = acquisitionIntentForPathname(pathname);
   const startCta = acquisitionCtaForIntent(routeIntent, "navigation");
   const StartIcon = routeIntent === "website" ? Search : MessageSquare;
+  // Two ways this pill used to work against the visitor:
+  // 1. On /clients/, /website-check/ and /tech-audit/ it pointed at the page
+  //    already open, so the header's one action did nothing.
+  // 2. On /tech-audit/ the route is keyed by its query string, so following it
+  //    mid-fill remounted the form and discarded the message field.
+  // Both are the same fix: no header CTA on the page it would send you to.
+  const normalizedPath = pathname === "/" ? "/" : `${pathname.replace(/\/$/, "")}/`;
+  const startHrefPath = startCta.href.split("?")[0];
+  const showStartCta = startHrefPath !== normalizedPath && normalizedPath !== "/tech-audit/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const scrollSentinelRef = useRef<HTMLSpanElement>(null);
@@ -193,6 +207,7 @@ export default function QuietNav() {
             <span className="lf-nav__phone-number">{PHONE_DISPLAY}</span>
           </PhoneAction>
 
+          {showStartCta && (
           <Link
             to={startCta.href}
             className="lf-nav__start"
@@ -203,6 +218,7 @@ export default function QuietNav() {
             {startCta.label}
             <StartIcon size={16} strokeWidth={2} aria-hidden="true" />
           </Link>
+          )}
 
           <button
             ref={toggleRef}

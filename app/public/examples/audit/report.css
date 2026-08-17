@@ -480,6 +480,42 @@ body.lf-report-instrument {
   font-size: 0.92rem;
 }
 
+/* The four channels under the report CTA. A person reading their own report
+   is the warmest reader in the funnel; the block used to offer only a form
+   and a calendar. */
+.instrument-cta p.instrument-cta__reach {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  align-items: center;
+  margin: 18px 0 0;
+  font-size: 1rem;
+}
+
+.instrument-cta p.instrument-cta__reach a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--report-ink, #ffffff);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.instrument-cta p.instrument-cta__reach a:first-child {
+  color: #F97316;
+}
+
+.instrument-cta p.instrument-cta__reach span {
+  color: var(--report-dim);
+}
+
+.instrument-cta p.instrument-cta__reach-hours {
+  margin: 2px 0 0;
+  color: var(--report-dim);
+  font-size: 0.92rem;
+}
+
 .lf-report-instrument footer .footer-prepared { margin-top: 6px; }
 
 @media (max-width: 900px) {

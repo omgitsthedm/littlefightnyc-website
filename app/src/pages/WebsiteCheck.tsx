@@ -13,7 +13,7 @@ export default function WebsiteCheck() {
         title={<>See what gets in the way.</>}
         dek="Put in your website. We check the public parts: can people read it, use it, find the basics, and take the next step? The report also says what we could not see."
         action={{
-          href: "#lf-website-check-title",
+          href: "#website-check-url",
           kicker: "Free first look",
           label: "Start the website check",
         }}
@@ -56,7 +56,7 @@ export default function WebsiteCheck() {
           <input type="hidden" name="source" value="website_check_page" />
           <label htmlFor="website-check-url">Website URL</label>
           <input id="website-check-url" data-audit-prefill="url" type="text" inputMode="url" autoComplete="url" placeholder="yourbusiness.com" required />
-          <label htmlFor="website-check-email">Email for your private report <span>(optional here)</span></label>
+          <label htmlFor="website-check-email">Email for your private report</label>
           <input id="website-check-email" data-audit-prefill="email" type="email" autoComplete="email" placeholder="you@company.com" />
           <button type="submit">
             Check my website

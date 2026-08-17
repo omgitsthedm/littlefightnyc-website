@@ -5,7 +5,7 @@ import { OpenNowBadge } from "./QuietNav";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { openConsentPreferences } from "@/lib/consent";
 import "./QuietFooter.css";
-import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
+import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 // Hydration-safe mobile check: server snapshot says desktop (plain lists),
 // the client corrects to accordions right after mount on small screens.
@@ -49,7 +49,9 @@ const footerGroups: Array<{
       { label: "See every project", to: "/examples/" },
       { label: "Check my website", to: "/website-check/" },
       { label: "Try the Lab", to: "/examples/lab/" },
-      { label: "See a site audit", to: "/examples/audit/" },
+      // /examples/audit/ IS the live check, not a sample of one. The old
+      // label ("See a site audit") read like a specimen.
+      { label: "Run the free check", to: "/examples/audit/" },
     ],
   },
   {
@@ -76,7 +78,6 @@ export default function QuietFooter() {
             <p>New York City · Since 2021 · Still picking up the phone</p>
           </div>
           <nav className="lf-quiet-foot__company" aria-label="Company and legal">
-            <Link to="/website-check/">Check my website</Link>
             <Link to="/about/">About</Link>
             <Link to="/contact/">Contact</Link>
             {/* /privacy/ and /terms/ render this same page and canonicalise to
@@ -145,7 +146,11 @@ export default function QuietFooter() {
             <span aria-hidden="true">·</span>
             <span>Daily 9am–9pm ET</span>
             <span aria-hidden="true">·</span>
+            <a href={SMS_HREF} data-lf-label="footer_sms">Text</a>
+            <span aria-hidden="true">·</span>
             <a href="mailto:hello@littlefightnyc.com">hello@littlefightnyc.com</a>
+            <span aria-hidden="true">·</span>
+            <Link to="/tech-audit/" data-lf-label="footer_form">Form</Link>
           </p>
           <p className="lf-quiet-foot__legal">
             © {year} Little Fight NYC. All rights reserved.

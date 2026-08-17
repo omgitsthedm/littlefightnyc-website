@@ -179,6 +179,10 @@
   color: var(--lf-fight);
 }
 
+.lf-contact-choice__email-sep {
+  color: var(--lf-bone-dim);
+}
+
 .lf-contact-choice__email a,
 .lf-contact-ready__coverage a {
   color: var(--lf-bone);

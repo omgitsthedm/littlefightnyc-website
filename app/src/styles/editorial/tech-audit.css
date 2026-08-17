@@ -59,6 +59,51 @@
   line-height: 1.45;
 }
 
+/* The four channels on the website-plan hero. This branch stands in for
+ * PageHero, so it owes the reader the same first-screen contract. */
+.lf-audit-intro__reach {
+  display: grid;
+  gap: var(--lf-space-2);
+  margin-top: var(--lf-space-5);
+  padding-top: var(--lf-space-4);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-audit-intro__channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+}
+
+.lf-editorial .lf-audit-intro__channels a {
+  display: inline-flex;
+  min-height: var(--lf-control-min);
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--lf-bone);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+  transition: color var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-editorial .lf-audit-intro__channels a:first-child {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-audit-intro__channels a:hover,
+.lf-editorial .lf-audit-intro__channels a:focus-visible {
+  color: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-audit-intro__hours {
+  margin: 0;
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.4;
+}
+
 .lf-audit-intro__proof {
   display: none;
   overflow: hidden;

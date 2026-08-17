@@ -1148,3 +1148,42 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
   body.lf-audit-report .logo-bar { position: static; }
   .lf-report-actions { display: none; }
 }
+
+/* Contact row under the check form. The Lab is a separate static app, so it
+   carries its own copy of the four-channel contract instead of inheriting the
+   site chrome. */
+.lf-audit-shell-page .audit-reach {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  align-items: center;
+  justify-content: center;
+  margin: 14px 0 0;
+  font-size: 16px;
+}
+
+.lf-audit-shell-page .audit-reach a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: #FFFFFF;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lf-audit-shell-page .audit-reach a:first-child {
+  color: #F97316;
+}
+
+.lf-audit-shell-page .audit-reach span {
+  color: #8A8A94;
+}
+
+.lf-audit-shell-page .audit-reach-hours {
+  margin: 2px 0 0;
+  color: #A1A1AA;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: center;
+}
