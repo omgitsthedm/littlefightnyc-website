@@ -25,7 +25,7 @@ const shellSource = await readFile(
 );
 const examplesSource = await readFile(new URL("../src/pages/FieldGuide.tsx", import.meta.url), "utf8");
 const homePathsSource = await readFile(
-  new URL("../src/components/editorial/TheFour.tsx", import.meta.url),
+  new URL("../src/components/editorial/OwnerFight.tsx", import.meta.url),
   "utf8",
 );
 

@@ -26,13 +26,11 @@ work remains visibly separated from illustrative direction.
 
 ## Production visual assets
 
-- Desktop connected-counter scene, 1672×941:
-  `app/public/images/home/connected-counter-hero-desktop-v1.webp`
-- Separately composed mobile scene, 853×1844:
-  `app/public/images/home/connected-counter-hero-mobile-v1.webp`
-
-Both are WebP, below 125 KB, and selected by responsive picture markup with
-matching preload media conditions.
+- Homepage living path (2026-08-17): the hero renders the real Hair By Rachel
+  Charles mobile capture, `app/public/assets/case-hair-by-rachel-charles-explore-mobile.webp`
+  (390×2400 WebP, ~97 KB), inside a phone frame at every viewport and scrolls
+  it beat by beat. One preload, one image. The illustrative connected-counter
+  scenes were retired with that change.
 
 ## Current comparison evidence
 

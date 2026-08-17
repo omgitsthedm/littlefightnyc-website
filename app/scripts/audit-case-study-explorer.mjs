@@ -406,6 +406,7 @@ for (const homeProof of homeFeaturedWork) {
   }
   const expected = {
     name: study.client,
+    type: study.type,
     label: study.featureProof.label,
     outcome: study.featureProof.ownerOutcome,
     image: study.image,
@@ -418,6 +419,24 @@ for (const homeProof of homeFeaturedWork) {
       fail(`homepage portfolio: ${homeProof.slug} ${field} drifted from canonical case data`);
     }
   }
+  // The homepage lead story repeats the case study's own beats verbatim, so
+  // the same parity rule covers them whenever a proof carries a story.
+  if (homeProof.story) {
+    const expectedStory = {
+      title: study.title,
+      problem: study.problem,
+      kept: study.kept,
+      changed: study.changed,
+    };
+    for (const [field, value] of Object.entries(expectedStory)) {
+      if (homeProof.story[field] !== value) {
+        fail(`homepage portfolio: ${homeProof.slug} story.${field} drifted from canonical case data`);
+      }
+    }
+  }
+}
+if (!homeFeaturedWork[0]?.story) {
+  fail("homepage portfolio: the lead proof must carry its story beats");
 }
 
 for (const study of allCases) {

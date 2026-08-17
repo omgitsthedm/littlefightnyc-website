@@ -1,52 +1,180 @@
 import {
   ArrowRight,
-  EyeOff,
   Mail,
   MessageSquare,
+  Pause,
   Phone,
+  Play,
   RotateCcw,
   Send,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  HELLO_EMAIL,
-  PHONE_HREF,
-  SMS_HREF,
-} from "@/data/contact";
+import { HELLO_EMAIL, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { HOME_FEATURED_WORK } from "@/data/home-featured-work";
 import "./QuietHero.css";
 
-const CONNECTED_PATH = [
-  { label: "Search", note: "They find you" },
-  { label: "Website", note: "They get it" },
-  { label: "Booking", note: "They take action" },
-  { label: "Support", note: "It keeps working" },
+/**
+ * The living customer path. Every beat is a real place on a real client
+ * site: the phone scrolls the live capture to the moment where a new
+ * customer finds, understands, trusts, and finally books. Offsets are
+ * measured in source-image pixels against the 390×2400 capture, so the
+ * frame can be any size and the beats still land.
+ */
+const CAPTURE = {
+  src: "/assets/case-hair-by-rachel-charles-explore-mobile.webp",
+  width: 390,
+  height: 2400,
+  domain: "hairbyrachelcharles.com",
+} as const;
+
+const PATH_BEATS = [
+  {
+    key: "found",
+    step: "01",
+    label: "Found",
+    note: "They find you.",
+    detail: "A real page to land on from search or a shared link — not a message thread.",
+    offset: 0,
+  },
+  {
+    key: "understood",
+    step: "02",
+    label: "Understood",
+    note: "They get it.",
+    detail: "Services and what to do next, answered before anyone has to ask.",
+    offset: 1140,
+  },
+  {
+    key: "trusted",
+    step: "03",
+    label: "Trusted",
+    note: "They believe it.",
+    detail: "Real work and real client words do the convincing.",
+    offset: 830,
+  },
+  {
+    key: "booked",
+    step: "04",
+    label: "Booked",
+    note: "They act.",
+    detail: "One clear button hands off to the booking tool the client already uses.",
+    offset: 405,
+  },
 ] as const;
 
-/**
- * Homepage acquisition surface: one promise, one real business scene, and two
- * obvious decisions. The full Website Check owns its form and scan state; the
- * homepage gets a faster, privacy-safe handoff instead of asking an owner to
- * type before they understand the offer.
- */
+/** Where the live "Book appointment" button sits once beat 04 is framed. */
+const BOOK_TARGET = { top: 32.4, height: 6.7, left: 5.5, width: 88.3 } as const;
+
+const FIRST_BEAT_DELAY_MS = 900;
+const BEAT_HOLD_MS = 2600;
+const FEATURED = HOME_FEATURED_WORK[0];
+const CHECKED_DATE = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+type PlayState = "idle" | "playing" | "paused" | "done" | "still";
+
 export default function QuietHero() {
-  const [replay, setReplay] = useState(0);
-  const [manualReducedMotion, setManualReducedMotion] = useState(false);
+  const [beat, setBeat] = useState(0);
+  const [play, setPlay] = useState<PlayState>("idle");
   const [systemReducedMotion, setSystemReducedMotion] = useState(false);
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const timerRef = useRef<number | null>(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setSystemReducedMotion(query.matches);
+    const sync = () => {
+      setSystemReducedMotion(query.matches);
+      if (query.matches) setPlay("still");
+    };
     sync();
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
   }, []);
 
-  const motionReduced = systemReducedMotion || manualReducedMotion;
+  const clearTimer = useCallback(() => {
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  // Autoplay begins once the phone is actually on screen. On a phone the
+  // stage sits under the promise, so a show that started on mount would
+  // play to nobody.
+  useEffect(() => {
+    if (systemReducedMotion || startedRef.current) return;
+    const stage = stageRef.current;
+    if (!stage) return;
+    if (typeof IntersectionObserver === "undefined") {
+      const fallback = window.setTimeout(() => {
+        startedRef.current = true;
+        setPlay((current) => (current === "idle" ? "playing" : current));
+      }, FIRST_BEAT_DELAY_MS);
+      return () => window.clearTimeout(fallback);
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          startedRef.current = true;
+          setPlay((current) => (current === "idle" ? "playing" : current));
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.45 },
+    );
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, [systemReducedMotion]);
+
+  useEffect(() => {
+    clearTimer();
+    if (play !== "playing") return;
+    const hold = beat === 0 && startedRef.current ? FIRST_BEAT_DELAY_MS + BEAT_HOLD_MS : BEAT_HOLD_MS;
+    timerRef.current = window.setTimeout(() => {
+      if (beat >= PATH_BEATS.length - 1) {
+        setPlay("done");
+        return;
+      }
+      setBeat(beat + 1);
+    }, hold);
+    return clearTimer;
+  }, [beat, play, clearTimer]);
+
+  const jumpTo = (index: number) => {
+    setBeat(index);
+    if (play === "playing") setPlay("paused");
+  };
+
+  const onControl = () => {
+    if (play === "playing") {
+      setPlay("paused");
+      return;
+    }
+    if (play === "done" || beat === PATH_BEATS.length - 1) {
+      setBeat(0);
+      startedRef.current = true;
+      setPlay("playing");
+      return;
+    }
+    startedRef.current = true;
+    setPlay("playing");
+  };
+
+  const active = PATH_BEATS[beat];
+  const isBooked = beat === PATH_BEATS.length - 1;
+  const controlLabel =
+    play === "playing" ? "Pause" : play === "done" || isBooked ? "Replay the path" : "Play the path";
+  const ControlIcon = play === "playing" ? Pause : play === "done" || isBooked ? RotateCcw : Play;
 
   return (
     <section
-      className={`lf-hero${motionReduced ? " lf-hero--motion-reduced" : ""}`}
+      className={`lf-hero${systemReducedMotion ? " lf-hero--motion-reduced" : ""}`}
       aria-labelledby="lf-home-title"
       data-lf-owner-intro="true"
     >
@@ -118,63 +246,81 @@ export default function QuietHero() {
           </div>
         </div>
 
-        <figure className="lf-hero__scene" aria-labelledby="lf-counter-caption">
-          <picture>
-            <source
-              media="(width < 48rem)"
-              srcSet="/images/home/connected-counter-hero-mobile-v1.webp"
-              type="image/webp"
-            />
-            <img
-              src="/images/home/connected-counter-hero-desktop-v1.webp"
-              width="1672"
-              height="941"
-              alt="Illustrative small-business counter with keys, a website tablet, booking terminal, router, phone, receipt printer, and support notebook joined by an orange cable"
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </picture>
+        <figure
+          className="lf-hero__scene"
+          aria-labelledby="lf-hero-scene-title"
+          data-lf-beat={active.key}
+          data-lf-play={play}
+        >
+          <p id="lf-hero-scene-title" className="lf-hero__scene-title">
+            <span aria-hidden="true">The path</span>
+            One customer, start to finish — on a real client site.
+          </p>
 
-          <ol
-            key={`${replay}-${motionReduced ? "still" : "motion"}`}
-            className={`lf-hero__path${replay > 0 && !motionReduced ? " lf-hero__path--replaying" : ""}`}
-            aria-label="One connected customer path"
-          >
-            {CONNECTED_PATH.map((step, index) => (
+          <div className="lf-hero__phone" aria-hidden="true" ref={stageRef}>
+            <div className="lf-hero__phone-bar">
+              <span className="lf-hero__phone-notch" />
+              <span className="lf-hero__phone-url">{CAPTURE.domain}</span>
+            </div>
+            <div className="lf-hero__phone-screen">
+              <img
+                src={CAPTURE.src}
+                width={CAPTURE.width}
+                height={CAPTURE.height}
+                alt=""
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                style={{
+                  transform: `translate3d(0, ${-((active.offset / CAPTURE.height) * 100).toFixed(3)}%, 0)`,
+                }}
+              />
+              <span
+                className="lf-hero__phone-target"
+                style={{
+                  top: `${BOOK_TARGET.top}%`,
+                  height: `${BOOK_TARGET.height}%`,
+                  left: `${BOOK_TARGET.left}%`,
+                  width: `${BOOK_TARGET.width}%`,
+                }}
+              />
+            </div>
+          </div>
+
+          <ol className="lf-hero__path" aria-label="The customer path">
+            {PATH_BEATS.map((step, index) => (
               <li
-                key={step.label}
-                className={`lf-hero__path-step lf-hero__path-step--${index + 1}`}
-                style={{ "--lf-path-order": index } as React.CSSProperties}
+                key={step.key}
+                className={`lf-hero__path-step${index === beat ? " lf-hero__path-step--active" : ""}${index < beat ? " lf-hero__path-step--passed" : ""}`}
               >
-                <strong>{step.label}</strong>
-                <span>{step.note}</span>
+                <button
+                  type="button"
+                  aria-current={index === beat ? "step" : undefined}
+                  onClick={() => jumpTo(index)}
+                >
+                  <span className="lf-hero__path-num" aria-hidden="true">{step.step}</span>
+                  <strong>{step.label}</strong>
+                  <span className="lf-hero__path-note">{step.note}</span>
+                </button>
               </li>
             ))}
           </ol>
 
-          <div className="lf-hero__path-controls" aria-label="Connected path motion controls">
-            <button
-              type="button"
-              onClick={() => setReplay((current) => current + 1)}
-              disabled={motionReduced}
-            >
-              <RotateCcw size={16} strokeWidth={2} aria-hidden="true" />
-              Replay the path
-            </button>
-            <button
-              type="button"
-              aria-pressed={motionReduced}
-              disabled={systemReducedMotion}
-              onClick={() => setManualReducedMotion((current) => !current)}
-            >
-              <EyeOff size={16} strokeWidth={2} aria-hidden="true" />
-              {motionReduced ? "Motion reduced" : "Reduce motion"}
-            </button>
-          </div>
+          <p className="lf-hero__path-detail" aria-live="polite">
+            <strong>{active.label}.</strong> {active.detail}
+          </p>
 
-          <figcaption id="lf-counter-caption">
-            Illustrative Little Fight scene — no client data
+          {!systemReducedMotion && (
+            <div className="lf-hero__path-controls">
+              <button type="button" onClick={onControl} aria-pressed={play === "playing"}>
+                <ControlIcon size={16} strokeWidth={2} aria-hidden="true" />
+                {controlLabel}
+              </button>
+            </div>
+          )}
+          <figcaption className="lf-hero__caption">
+            Live client site · {FEATURED.sourceLabel} · checked{" "}
+            {CHECKED_DATE.format(new Date(`${FEATURED.verifiedAt}T12:00:00Z`))}
           </figcaption>
         </figure>
       </div>

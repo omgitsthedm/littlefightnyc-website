@@ -389,28 +389,19 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
 }
 
 const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
-// The acquisition hero uses separately composed connected-counter art for
-// wide and compact viewports. Both sources must be present in the first
-// response and the desktop fallback remains the high-priority image.
-if (!/<source[^>]+media="\(width &lt; 48rem\)"[^>]+srcset="\/images\/home\/connected-counter-hero-mobile-v1\.webp"/i.test(homeDocument)) {
-  failures.push("home first response is missing the compact connected-counter source");
+// The acquisition hero is the living path: one real client capture rendered
+// inside a phone at every viewport. The first response must carry that exact
+// image as the high-priority candidate and preload nothing else for the route.
+const HOME_PATH_CAPTURE = "/assets/case-hair-by-rachel-charles-explore-mobile.webp";
+if (!/<img[^>]+src="\/assets\/case-hair-by-rachel-charles-explore-mobile\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
+  failures.push("home first response is missing the high-priority living-path capture");
 }
-if (!/<img[^>]+src="\/images\/home\/connected-counter-hero-desktop-v1\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
-  failures.push("home first response is missing the high-priority connected-counter fallback");
+if (/connected-counter-hero-(?:mobile|desktop)-v1\.webp/i.test(homeDocument)) {
+  failures.push("home first response still references the retired connected-counter illustration");
 }
 const homeRouteImagePreloads = homeDocument.match(/<link[^>]+rel="preload"[^>]+as="image"[^>]+data-route-preload[^>]*>/gi) ?? [];
-const expectedHomePreloads = [
-  "connected-counter-hero-mobile-v1.webp",
-  "connected-counter-hero-desktop-v1.webp",
-];
-if (
-  homeRouteImagePreloads.length !== expectedHomePreloads.length
-  || expectedHomePreloads.some((asset) => !homeRouteImagePreloads.some((tag) => tag.includes(asset)))
-) {
-  failures.push("home route-preloads must contain exactly the two responsive connected-counter assets");
-}
-if (homeRouteImagePreloads.some((tag) => !/connected-counter-hero-(?:mobile|desktop)-v1\.webp/i.test(tag))) {
-  failures.push("home route-preloads an image outside the connected-counter pair");
+if (homeRouteImagePreloads.length !== 1 || !homeRouteImagePreloads[0].includes(HOME_PATH_CAPTURE)) {
+  failures.push("home route-preloads must contain exactly the living-path capture");
 }
 if (/data-route-preload[^>]+(?:hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
   failures.push("home still preloads a retired image-led hero");

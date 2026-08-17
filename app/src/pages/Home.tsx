@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "@/components/editorial/QuietNav";
 import QuietHero from "@/components/editorial/QuietHero";
-import TheFour from "@/components/editorial/TheFour";
+import OwnerFight from "@/components/editorial/OwnerFight";
 import QuietContact from "@/components/editorial/QuietContact";
 import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
@@ -30,8 +30,8 @@ export default function Home() {
       <main id="main-content" className="lf-home-main">
         <QuietHero />
         <RecentClients />
-        <TheFour />
-        <QuietContact />
+        <OwnerFight />
+        <QuietContact intent="website" />
       </main>
       <StickyHelpBar />
       <QuietFooter />

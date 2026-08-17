@@ -1053,11 +1053,16 @@ test(
         .filter({ visible: true })
         .first(),
     ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Motion reduced" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
-    await expect(page.getByRole("button", { name: "Replay the path" })).toBeDisabled();
+    // The living path never plays on its own under reduced motion: no autoplay
+    // control renders, the beats stay a working (tap-to-jump) diagram, and the
+    // capture sits still on the first beat.
+    const scene = page.locator(".lf-hero__scene");
+    await expect(scene).toHaveAttribute("data-lf-play", "still");
+    await expect(scene.locator(".lf-hero__path-controls")).toHaveCount(0);
+    await expect(scene.locator(".lf-hero__path-step")).toHaveCount(4);
+    await expect(scene.locator('.lf-hero__path-step button[aria-current="step"]')).toHaveText(/Found/);
+    await scene.locator(".lf-hero__path-step button").nth(3).click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "booked");
 
     const mainState = await page.getByRole("main").evaluate((element) => {
       const style = getComputedStyle(element);
@@ -1137,44 +1142,57 @@ test(
 );
 
 test(
-  "desktop homepage shows the connected counter and both decisions above the fold @chromium-desktop",
+  "desktop homepage shows the living path and both decisions above the fold @chromium-desktop",
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
 
     const scene = page.locator(".lf-hero__scene");
-    const image = scene.locator('img[src="/images/home/connected-counter-hero-desktop-v1.webp"]');
+    const capture = scene.locator('img[src="/assets/case-hair-by-rachel-charles-explore-mobile.webp"]');
     const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
     const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
-    const replayPath = page.getByRole("button", { name: "Replay the path" });
-    const reduceMotion = page.locator(".lf-hero__path-controls button").nth(1);
+    const control = scene.locator(".lf-hero__path-controls button");
 
     await expect(scene).toBeVisible();
-    await expect(image).toBeVisible();
-    await expect(image).toHaveAttribute("fetchpriority", "high");
-    await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0);
+    await expect(capture).toBeVisible();
+    await expect(capture).toHaveAttribute("fetchpriority", "high");
+    await expect.poll(() => capture.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0);
     await expect(websiteCheck).toBeVisible();
     await expect(urgentCall).toBeVisible();
     await expect(scene.locator(".lf-hero__path-step")).toHaveCount(4);
-    await expect(replayPath).toBeVisible();
-    await replayPath.click();
-    await reduceMotion.click();
-    await expect(reduceMotion).toHaveAttribute("aria-pressed", "true");
-    await expect(replayPath).toBeDisabled();
+
+    // The path plays once the phone is on screen, moves the capture, and
+    // stops on the booked beat with a replay affordance — never a loop.
+    await expect(scene).toHaveAttribute("data-lf-play", "playing", { timeout: 5_000 });
+    await expect(control).toHaveText(/Pause/);
+    await expect(scene).toHaveAttribute("data-lf-beat", "booked", { timeout: 15_000 });
+    await expect(scene).toHaveAttribute("data-lf-play", "done", { timeout: 6_000 });
+    await expect(control).toHaveText(/Replay the path/);
+    const bookedTransform = await capture.evaluate((node) => node.style.transform);
+    expect(bookedTransform).not.toBe("translate3d(0, 0%, 0)");
+    await control.click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "found");
+    await expect(scene).toHaveAttribute("data-lf-play", "playing");
+    await scene.locator(".lf-hero__path-step button").nth(2).click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "trusted");
+    await expect(scene).toHaveAttribute("data-lf-play", "paused");
 
     const decisionGeometry = await page.evaluate(() => {
       const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
       const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
-      if (!website || !urgent) throw new Error("desktop hero decision fixture is incomplete");
+      const phone = document.querySelector<HTMLElement>(".lf-hero__phone");
+      if (!website || !urgent || !phone) throw new Error("desktop hero decision fixture is incomplete");
       return {
         viewportHeight: window.innerHeight,
         websiteBottom: website.getBoundingClientRect().bottom,
         urgentBottom: urgent.getBoundingClientRect().bottom,
+        phoneTop: phone.getBoundingClientRect().top,
       };
     });
 
     expect(decisionGeometry.websiteBottom).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
     expect(decisionGeometry.urgentBottom).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
+    expect(decisionGeometry.phoneTop).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
     await expectNoHorizontalOverflow(page, "desktop decision hero");
     expectRuntimeClean(runtime);
   },
@@ -1238,6 +1256,31 @@ test(
     await expect(page.locator(".lf-contact-block")).toBeVisible();
     await expect(page.locator(".lf-clients")).toBeVisible();
 
+    // The living path sits right under the first screen: phone beside the
+    // beat rail, both inside the viewport width, and the beats are tappable.
+    await scene.scrollIntoViewIfNeeded();
+    const pathGeometry = await page.evaluate(() => {
+      const phone = document.querySelector<HTMLElement>(".lf-hero__phone");
+      const rail = document.querySelector<HTMLElement>(".lf-hero__path");
+      if (!phone || !rail) throw new Error("mobile living path fixture is incomplete");
+      const phoneRect = phone.getBoundingClientRect();
+      const railRect = rail.getBoundingClientRect();
+      return {
+        sideBySide: railRect.left >= phoneRect.right,
+        phoneWidth: phoneRect.width,
+        railRight: railRect.right,
+        viewportWidth: window.innerWidth,
+        beatTargets: Array.from(document.querySelectorAll<HTMLElement>(".lf-hero__path-step button"))
+          .map((button) => button.getBoundingClientRect().height),
+      };
+    });
+    expect(pathGeometry.sideBySide).toBe(true);
+    expect(pathGeometry.phoneWidth).toBeGreaterThanOrEqual(120);
+    expect(pathGeometry.railRight).toBeLessThanOrEqual(pathGeometry.viewportWidth);
+    expect(pathGeometry.beatTargets.every((height) => height >= 44)).toBe(true);
+    await scene.locator(".lf-hero__path-step button").nth(1).click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "understood");
+
     const mobilePath = await page.evaluate(() => {
       const contact = document.querySelector<HTMLElement>(".lf-contact-block");
       const work = document.querySelector<HTMLElement>(".lf-clients");
@@ -1294,12 +1337,25 @@ test(
     expect(firstScreen.urgentBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.channelsBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.hoursBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
-    expect(firstScreen.pageScreens).toBeLessThanOrEqual(11.25);
+    // The homepage is four short chapters (path, proof, fight, close). On a
+    // 320×568 phone that is just over eleven screens; anything past 11.5 means
+    // a chapter has started padding itself again.
+    expect(firstScreen.pageScreens).toBeLessThanOrEqual(11.5);
     expect(firstScreen.horizontalOverflow).toBeLessThanOrEqual(0);
     expect(firstScreen.desktopProofCount).toBe(0);
 
-    await page.locator(".lf-four").scrollIntoViewIfNeeded();
-    await expect(page.locator(".lf-four__image")).toHaveCount(0);
+    // Name-the-fight keeps three tappable choices, one panel, and switches
+    // without loading imagery on the phone payload.
+    const fight = page.locator(".lf-fight");
+    await fight.scrollIntoViewIfNeeded();
+    await expect(fight.getByRole("tab")).toHaveCount(3);
+    await expect(fight.getByRole("tab", { selected: true })).toHaveText(/more customers/i);
+    await expect(fight.locator("img")).toHaveCount(0);
+    await fight.getByRole("tab", { name: /Something is broken/i }).click();
+    await expect(fight).toHaveAttribute("data-lf-fight", "broken");
+    await expect(fight.getByRole("tabpanel").locator('a[href^="tel:"]')).toBeVisible();
+    await fight.getByRole("tab", { name: /tools/i }).click();
+    await expect(fight.getByRole("tabpanel").locator('a[href="/services/business-systems/"]')).toBeVisible();
     await expect(page.locator(".lf-sticky-help")).toBeVisible();
     const stickyHeight = await page.locator(".lf-sticky-help").evaluate(
       (element) => element.getBoundingClientRect().height,

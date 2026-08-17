@@ -110,6 +110,9 @@ const aiBots = [
 // new area cannot be published without being served, and a retired one cannot
 // linger in the schema. The three boroughs and the city itself are named
 // explicitly because they are containers, not area pages.
+// The homepage living path renders one real client capture; the hydrated
+// QuietHero, the SEO shell, and the route preload must all name this file.
+const HOME_PATH_CAPTURE = "/assets/case-hair-by-rachel-charles-explore-mobile.webp";
 const AREA_CONTAINERS = ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"];
 
 const areaServed = [
@@ -849,13 +852,9 @@ function routeImagePreload(page) {
   }
 
   if (page.path === "/") {
-    // The connected counter is composed separately for wide and compact
-    // viewports. Keep the media hints identical to the hydrated <picture> so
-    // each browser preloads one exact LCP candidate instead of both assets.
-    return [
-      `<link rel="preload" media="(width &lt; 48rem)" href="/images/home/connected-counter-hero-mobile-v1.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
-      `<link rel="preload" media="(width &gt;= 48rem)" href="/images/home/connected-counter-hero-desktop-v1.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
-    ].join("\n    ");
+    // The living path shows one real client capture at every viewport, so a
+    // single preload matches the hydrated <img> exactly.
+    return `<link rel="preload" href="${HOME_PATH_CAPTURE}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
 
   if (!asset?.endsWith(".webp")) return "";
@@ -1886,14 +1885,21 @@ function snapshot(page) {
     .lf-seo .lf-seo__home-action--primary { color: #050507; border-color: #F97316; background: #F97316; }
     .lf-seo .lf-seo__home-reach { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 14px 0 0; color: #8A8A94; font-size: 14px; }
     .lf-seo .lf-seo__home-reach a { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
-    .lf-seo .lf-seo__home-scene { position: relative; min-width: 0; min-height: 100%; overflow: hidden; margin: 0; border-left: 1px solid #27272A; background: #020203; }
-    .lf-seo .lf-seo__home-scene picture, .lf-seo .lf-seo__home-scene img { display: block; width: 100%; height: 100%; }
-    .lf-seo .lf-seo__home-scene img { object-fit: cover; object-position: 51% 50%; }
-    .lf-seo .lf-seo__home-path { position: absolute; left: 20px; right: 20px; bottom: 64px; display: flex; flex-wrap: wrap; gap: 6px; max-width: none; margin: 0; color: #FFFFFF; font-family: ${mono}; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; }
-    .lf-seo .lf-seo__home-path span { padding: 6px 8px; border: 1px solid rgba(255,255,255,.3); background: rgba(5,5,7,.9); }
-    .lf-seo .lf-seo__home-path strong { color: #F97316; }
-    .lf-seo .lf-seo__home-scene figcaption { position: absolute; left: 20px; bottom: 18px; color: #D4D4D8; font-family: ${mono}; font-size: 10px; letter-spacing: .04em; text-transform: uppercase; }
-    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { min-height: auto; } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: auto; } .lf-seo .lf-seo__home-promise { min-height: 0; justify-content: flex-start; padding: clamp(32px, 6svh, 48px) 20px 22px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.95rem); max-width: 12ch; text-wrap: balance; } .lf-seo .lf-seo__home-scene { height: clamp(20rem, 82vw, 25rem); min-height: 0; border: 0; border-top: 1px solid #27272A; } .lf-seo .lf-seo__home-scene img { object-position: 50% 66%; } .lf-seo .lf-seo__home-path { bottom: 54px; } .lf-seo .lf-seo__home-scene figcaption { bottom: 12px; } }
+    .lf-seo .lf-seo__home-scene { position: relative; display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); align-content: center; align-items: center; gap: 20px 40px; min-width: 0; min-height: 100%; margin: 0; padding: 40px 44px; border-left: 1px solid #27272A; background: #020203; box-sizing: border-box; }
+    .lf-seo .lf-seo__home-scene-title { grid-column: 2; margin: 0; color: #A1A1AA; font-size: 16px; line-height: 1.4; }
+    .lf-seo .lf-seo__home-scene-title span { display: block; margin-bottom: 6px; color: #60A5FA; font-family: ${mono}; font-size: 16px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .lf-seo .lf-seo__home-phone { grid-column: 1; grid-row: 1 / span 4; align-self: center; box-sizing: border-box; padding: 7px; border: 1px solid #27272A; border-radius: 32px; background: #1A1C23; }
+    .lf-seo .lf-seo__home-phone-screen { position: relative; aspect-ratio: 390 / 780; overflow: hidden; border-radius: 24px; background: #fff; }
+    .lf-seo .lf-seo__home-phone-screen img { display: block; width: 100%; height: auto; }
+    .lf-seo .lf-seo__home-path { grid-column: 2; display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .lf-seo .lf-seo__home-path li { display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 14px; align-items: start; color: #A1A1AA; }
+    .lf-seo .lf-seo__home-path li span:first-child { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #27272A; border-radius: 50%; color: #8A8A94; font-family: ${mono}; font-size: 16px; font-weight: 700; }
+    .lf-seo .lf-seo__home-path li:first-child span:first-child { color: #050507; border-color: #F97316; background: #F97316; }
+    .lf-seo .lf-seo__home-path strong { display: block; color: #FFFFFF; font-family: ${display}; font-size: 26px; line-height: 1; text-transform: uppercase; }
+    .lf-seo .lf-seo__home-path li:first-child strong { color: #FFFFFF; }
+    .lf-seo .lf-seo__home-path li > span:last-child { display: block; font-size: 16px; line-height: 1.3; }
+    .lf-seo .lf-seo__home-scene figcaption { grid-column: 2; margin: 0; color: #8A8A94; font-family: ${mono}; font-size: 16px; letter-spacing: .04em; line-height: 1.35; text-transform: uppercase; }
+    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { min-height: auto; } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: auto; } .lf-seo .lf-seo__home-promise { min-height: 0; justify-content: flex-start; padding: clamp(32px, 6svh, 48px) 20px 22px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.95rem); max-width: 12ch; text-wrap: balance; } .lf-seo .lf-seo__home-scene { grid-template-columns: minmax(0, 46%) minmax(0, 1fr); gap: 16px; min-height: 0; padding: 24px 20px; border-left: 0; border-top: 1px solid #27272A; } .lf-seo .lf-seo__home-scene-title, .lf-seo .lf-seo__home-scene figcaption { grid-column: 1 / -1; } .lf-seo .lf-seo__home-phone { grid-row: auto; } .lf-seo .lf-seo__home-path strong { font-size: 20px; } }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
@@ -1930,12 +1936,15 @@ function snapshot(page) {
           <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
         <figure class="lf-seo__home-scene">
-          <picture>
-            <source media="(width &lt; 48rem)" srcset="/images/home/connected-counter-hero-mobile-v1.webp" type="image/webp">
-            <img src="/images/home/connected-counter-hero-desktop-v1.webp" width="1672" height="941" alt="Illustrative small-business counter with keys, a website tablet, booking terminal, router, phone, receipt printer, and support notebook joined by an orange cable" fetchpriority="high">
-          </picture>
-          <p class="lf-seo__home-path"><span>Search</span><span>Website</span><span>Booking</span><span>Support</span><strong>One working path</strong></p>
-          <figcaption>Illustrative Little Fight scene — no client data</figcaption>
+          <p class="lf-seo__home-scene-title"><span>The path</span>One customer, start to finish — on a real client site.</p>
+          <div class="lf-seo__home-phone" aria-hidden="true"><div class="lf-seo__home-phone-screen"><img src="${HOME_PATH_CAPTURE}" width="390" height="2400" alt="" fetchpriority="high"></div></div>
+          <ol class="lf-seo__home-path" aria-label="The customer path">
+            <li><span>01</span><span><strong>Found</strong><span>They find you.</span></span></li>
+            <li><span>02</span><span><strong>Understood</strong><span>They get it.</span></span></li>
+            <li><span>03</span><span><strong>Trusted</strong><span>They believe it.</span></span></li>
+            <li><span>04</span><span><strong>Booked</strong><span>They act.</span></span></li>
+          </ol>
+          <figcaption>Live client site · hairbyrachelcharles.com · checked Aug 13, 2026</figcaption>
         </figure>
       </div>
     </section>
