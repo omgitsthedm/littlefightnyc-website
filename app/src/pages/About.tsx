@@ -8,9 +8,15 @@ import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
 
 const STANDARDS = [
   { label: "Consulting", value: "Free, always" },
-  { label: "Website timing", value: "A written 14-day promise for qualifying scopes" },
+  {
+    label: "Website timing",
+    // COPY-CONTRACT: the 14-day promise may only appear with its eligibility,
+    // timing, dependency, and remedy terms. Standing alone it read as an
+    // unconditional guarantee.
+    value: "A written 14-day promise on qualifying scopes. The scope names the timing, what each side provides, and the remedy.",
+  },
   { label: "Urgent NYC on-site help", value: "Within 24 hours when the fix needs hands" },
-  { label: "Missed-call callback", value: "We aim for within 2 hours, 9am-9pm ET" },
+  { label: "Missed-call callback", value: "We aim for 2 hours, 9am–9pm Eastern" },
 ] as const;
 
 export default function About() {
@@ -24,7 +30,7 @@ export default function About() {
             Less runaround. <span className="lf-em">More getting done.</span>
           </>
         }
-        dek="We make it easier for customers to choose you and for the day to keep moving."
+        dek="We build websites, fix what breaks, and build software you own — so customers choose you and the day keeps moving."
         pillars={[
           "Consulting is free, always",
           "One studio, start to finish",
