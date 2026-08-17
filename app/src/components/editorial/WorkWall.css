@@ -1,0 +1,176 @@
+/* The work wall — real shipped client sites in place of a stock photo.
+ * Three plates, staggered in depth, drifting slowly through their own scroll
+ * so the page has something alive that is also the proof. */
+
+.lf-workwall {
+  position: relative;
+  display: grid;
+  gap: var(--lf-space-3);
+  min-width: 0;
+  margin: 0;
+}
+
+.lf-workwall__stack {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  aspect-ratio: 4 / 3.6;
+  min-width: 0;
+}
+
+.lf-editorial .lf-workwall__plate {
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: #0b0b0f;
+  box-shadow: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.62);
+  text-decoration: none;
+  transition:
+    transform var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-settle-ms) var(--m-settle-ease),
+    box-shadow var(--m-settle-ms) var(--m-settle-ease);
+}
+
+/* Back plate, deepest and dimmest. */
+.lf-workwall__plate--3 {
+  top: 0;
+  right: 2%;
+  width: 58%;
+  height: 60%;
+  opacity: 0.5;
+  filter: saturate(0.75);
+  transform: rotate(2.2deg) scale(0.97);
+}
+
+/* Middle plate. */
+.lf-workwall__plate--2 {
+  top: 13%;
+  left: 0;
+  width: 54%;
+  height: 64%;
+  opacity: 0.8;
+  filter: saturate(0.9);
+  transform: rotate(-2.4deg);
+}
+
+/* Lead plate — the one an owner reads. */
+.lf-workwall__plate--1 {
+  right: 3%;
+  bottom: 0;
+  z-index: 2;
+  width: 66%;
+  height: 82%;
+  box-shadow: 0 2rem 4.5rem rgba(0, 0, 0, 0.72);
+}
+
+.lf-editorial .lf-workwall__plate:hover,
+.lf-editorial .lf-workwall__plate:focus-visible {
+  z-index: 3;
+  border-color: color-mix(in srgb, var(--lf-fight) 60%, var(--lf-hairline));
+  opacity: 1;
+  transform: translateY(-6px) rotate(0deg);
+}
+
+.lf-editorial .lf-workwall__plate:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
+}
+
+.lf-workwall__screen {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Each capture is a tall full-page scroll of a live site. The plate shows a
+ * window onto it and drifts down the page, so the wall reads as three real
+ * sites being browsed rather than three flat thumbnails. */
+.lf-workwall__screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform;
+  animation: lf-workwall-drift 38s var(--lf-ease-in-out) infinite alternate;
+  animation-delay: calc(var(--lf-plate-order) * -9s);
+}
+
+@keyframes lf-workwall-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, calc(-100% + 100px), 0);
+  }
+}
+
+.lf-workwall__tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: 0.05rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  color: var(--lf-bone);
+  background: linear-gradient(to top, rgba(5, 5, 7, 0.94), rgba(5, 5, 7, 0));
+}
+
+.lf-workwall__tag > span {
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.lf-workwall__tag > strong {
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-md);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lf-workwall__plate--2 .lf-workwall__tag,
+.lf-workwall__plate--3 .lf-workwall__tag {
+  padding: 0.45rem 0.6rem;
+}
+
+.lf-workwall__plate--2 .lf-workwall__tag > strong,
+.lf-workwall__plate--3 .lf-workwall__tag > strong {
+  font-size: var(--lf-text-sm);
+}
+
+.lf-editorial .lf-workwall__caption {
+  margin: 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+  .lf-workwall__stack {
+    aspect-ratio: 4 / 3.2;
+  }
+}
+
+/* The drift is atmosphere, not information: the plates and their labels stay
+ * exactly as readable when it is off. */
+@media (prefers-reduced-motion: reduce) {
+  .lf-workwall__screen img {
+    animation: none;
+  }
+
+  .lf-editorial .lf-workwall__plate {
+    transition: none;
+  }
+
+  .lf-editorial .lf-workwall__plate:hover {
+    transform: rotate(0deg);
+  }
+}

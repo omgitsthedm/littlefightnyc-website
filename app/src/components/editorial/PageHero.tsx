@@ -74,6 +74,12 @@ type Props = {
    */
   pillars?: string[];
   /**
+   * A bespoke hero visual, in place of the photo. Inner pages used to share
+   * one shape — headline left, stock photo right — on every route; this lets
+   * a page show the actual thing it is about instead.
+   */
+  visual?: React.ReactNode;
+  /**
    * The owner-facing first move. Omit it to derive the route-appropriate
    * action. Pass false only when the page itself is a completed action, such
    * as the thank-you screen.
@@ -110,6 +116,7 @@ export default function PageHero({
   displayName,
   chips,
   pillars,
+  visual,
   action,
   showContactRail = true,
 }: Props) {
@@ -143,7 +150,10 @@ export default function PageHero({
     : undefined;
 
   const variantClass = [
-    image ? "lf-pagehero--with-image" : "",
+    // A bespoke visual occupies the same column as a photo, so it earns the
+    // same two-column hero.
+    image || visual ? "lf-pagehero--with-image" : "",
+    visual ? "lf-pagehero--visual" : "",
     backdrop ? "lf-pagehero--case" : "",
     quickAnswer ? "lf-pagehero--answer" : "",
     displayName ? "lf-pagehero--area" : "",
@@ -299,6 +309,10 @@ export default function PageHero({
             </div>
           )}
         </div>
+
+        {visual && !image && (
+          <div className="lf-pagehero__image lf-pagehero__image--visual">{visual}</div>
+        )}
 
         {image && (
           <div className="lf-pagehero__image">

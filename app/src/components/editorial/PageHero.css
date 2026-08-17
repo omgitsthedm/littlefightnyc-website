@@ -874,6 +874,23 @@
     box-shadow: none;
   }
 
+  /* A photo can sit behind the copy under a scrim. A bespoke visual is
+     content — real client screens with their own labels — so on a phone it
+     stays in the flow under the decisions instead of behind the headline. */
+  .lf-pagehero--with-image.lf-pagehero--visual:not(.lf-pagehero--protected)
+    .lf-pagehero__image--visual {
+    position: static;
+    inset: auto;
+    margin-top: var(--lf-space-6);
+  }
+
+  /* The text no longer sits over a scrimmed photo here, so it does not need
+     the stacking context or the narrow measure the backdrop treatment gives. */
+  .lf-pagehero--with-image.lf-pagehero--visual:not(.lf-pagehero--protected)
+    .lf-pagehero__text {
+    max-inline-size: none;
+  }
+
   .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__image::after {
     border: 0;
     background:
@@ -912,4 +929,41 @@
   .lf-pagehero__decision:hover {
     transform: none;
   }
+}
+
+/* A bespoke hero visual (the work wall) is the point of the page, not a
+   decoration beside it — so it takes a full half of the hero and loses the
+   photo variant's height cap. */
+@media (min-width: 64rem) {
+  .lf-pagehero--visual .lf-pagehero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(26rem, 1fr);
+    align-items: center;
+  }
+
+  .lf-pagehero--visual .lf-pagehero__image {
+    align-self: stretch;
+    display: grid;
+    align-content: center;
+  }
+}
+
+@media (min-width: 90rem) {
+  .lf-pagehero--visual .lf-pagehero__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(32rem, 1.05fr);
+  }
+}
+
+/* The photo variant frames its image in a bordered panel. A bespoke visual
+   brings its own composition — the panel, the fixed 4:3 crop and the inner
+   hairline just box it in. */
+.lf-pagehero__image--visual {
+  aspect-ratio: auto;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.lf-pagehero__image--visual::after {
+  content: none;
 }

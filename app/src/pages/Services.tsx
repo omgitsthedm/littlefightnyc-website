@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
+import WorkWall from "@/components/editorial/WorkWall";
 import QuietContact from "@/components/editorial/QuietContact";
 import { services, studioProjects } from "@/data/site";
 import "@/styles/editorial/services-hub.css";
@@ -79,12 +80,14 @@ export default function Services() {
           "Fast help when the basics break",
           "Software you own when renting stops making sense",
         ]}
-        image={{
-          src: "/assets/hero-services-crossing.webp",
-          alt: "A crowded Little Italy street in Manhattan at dusk, the Empire State Building lit in the distance",
-          width: 1600,
-          height: 1200,
-        }}
+        // Was a stock Manhattan street. The page that says what we do now
+        // shows what we shipped.
+        visual={
+          <WorkWall
+            slugs={["hair-by-rachel-charles", "cc-films", "chromatic-painting-design"]}
+            label="Recent shipped websites"
+          />
+        }
       />
 
       <nav className="lf-svc-router" aria-label="Start from the symptom">
