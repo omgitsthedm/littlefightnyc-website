@@ -194,6 +194,23 @@ for (const name of ["public", "archive", "meta"]) {
     if (conditionalResponse.headers.get("x-robots-tag") !== "noindex, nofollow") {
       failures.push(`${pathname}: conditional GET lost X-Robots-Tag`);
     }
+    for (const header of ["content-type", "cache-control", "etag"]) {
+      if (conditionalResponse.headers.get(header) !== response.headers.get(header)) {
+        failures.push(`${pathname}: conditional GET ${header} does not match full GET`);
+      }
+    }
+    if (conditionalResponse.status === 200) {
+      try {
+        const publication = await conditionalResponse.json();
+        const usable =
+          name === "archive"
+            ? Array.isArray(publication)
+            : publication !== null && typeof publication === "object";
+        if (!usable) failures.push(`${pathname}: conditional GET body is not a usable JSON publication`);
+      } catch {
+        failures.push(`${pathname}: conditional GET returned 200 without a valid JSON body`);
+      }
+    }
   }
 }
 

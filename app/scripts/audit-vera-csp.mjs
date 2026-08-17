@@ -161,6 +161,11 @@ if (!/await\s+context\.next\(\s*\)/.test(veraDataEdge)) {
     "vera-data-robots.ts must fetch a complete upstream feed rather than forwarding a bodyless conditional revalidation",
   );
 }
+if (veraDataEdge.includes("sendConditionalRequest")) {
+  failures.push(
+    "vera-data-robots.ts must never forward a browser conditional request to the publication origin",
+  );
+}
 if (
   !/response\.headers\.set\(\s*"X-Robots-Tag"\s*,\s*"noindex, nofollow"\s*\)/.test(
     veraDataEdge,
@@ -170,13 +175,18 @@ if (
     "vera-data-robots.ts must set X-Robots-Tag to noindex, nofollow",
   );
 }
-if (
-  !/"Netlify-CDN-Cache-Control"\s*,\s*"public, max-age=300, stale-while-revalidate=129600"/.test(
-    veraDataEdge,
-  )
-) {
+if (!veraDataEdge.includes('"public, max-age=300, stale-while-revalidate=129600"')) {
   failures.push(
     "vera-data-robots.ts must keep a five-minute CDN freshness window and 36-hour stale-while-revalidate safety net",
+  );
+}
+if (
+  !veraDataEdge.includes('response.status === 200') ||
+  !veraDataEdge.includes('contentType.toLowerCase().includes("json")') ||
+  !veraDataEdge.includes(': "no-store"')
+) {
+  failures.push(
+    "vera-data-robots.ts must cache only complete 200 JSON publications and mark every other response no-store",
   );
 }
 if (!/cache:\s*"manual"/.test(veraDataEdge)) {

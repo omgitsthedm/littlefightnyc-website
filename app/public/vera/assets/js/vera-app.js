@@ -23,7 +23,8 @@
      short, bounded retries cover temporary edge/origin revalidation failures. */
   var FEED_ATTEMPT_TIMEOUT_MS = 45000;
   var FEED_RETRY_DELAYS_MS = [750, 2250];
-  var ARCHIVE_TIMEOUT_MS = 3500;
+  var FEED_MAX_RETRY_AFTER_MS = 10000;
+  var ARCHIVE_TIMEOUT_MS = 12000;
   var TESTMODE = /(^|[?&])test=1/.test(location.search);
   var ADDRESS_CHECK_TIMEOUT_MS = TESTMODE ? 250 : 9000;
   /* Today, Browse, Atlas, and My Hunt are the primary workspaces on every
@@ -2376,7 +2377,7 @@
     }
 
     archives.forEach(function (a) {
-      fetch(a.url, { cache: 'no-cache' })
+      fetch(a.url, { cache: 'no-store' })
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
         .then(function (d) {
           if (Array.isArray(d)) got.push(d);
@@ -2925,6 +2926,16 @@
   var feedBootGeneration = 0;
   var activeFeedController = null;
 
+  function boundedRetryAfter(value) {
+    if (!value) return 0;
+    var seconds = Number(value);
+    var delay = Number.isFinite(seconds)
+      ? seconds * 1000
+      : Date.parse(value) - Date.now();
+    if (!Number.isFinite(delay) || delay <= 0) return 0;
+    return Math.min(delay, FEED_MAX_RETRY_AFTER_MS);
+  }
+
   /* Load the one Little Fight feed contract. The bounded result plumbing keeps
      a hanging request from blocking first paint and keeps feed failures
      separate from render failures. */
@@ -2989,14 +3000,14 @@
       }
     }
 
-    function scheduleRetry() {
+    function scheduleRetry(retryAfterMs) {
       if (done || !ownsAttempt()) return;
       if (attempt > FEED_RETRY_DELAYS_MS.length) {
         finish(true);
         showRetry();
         return;
       }
-      var delay = FEED_RETRY_DELAYS_MS[attempt - 1];
+      var delay = Math.max(FEED_RETRY_DELAYS_MS[attempt - 1], retryAfterMs || 0);
       setLoading('The current VERA publication is taking a moment. Retrying automatically (' + (attempt + 1) + ' of ' + (FEED_RETRY_DELAYS_MS.length + 1) + ')…');
       retryTimer = setTimeout(requestCurrentPublication, delay);
     }
@@ -3006,6 +3017,7 @@
       attempt += 1;
       var feed = FEEDS[0];
       var cache = null;
+      var retryAfterMs = 0;
       var ctrl = ('AbortController' in window) ? new AbortController() : null;
       currentController = ctrl;
       activeFeedController = ctrl;
@@ -3017,25 +3029,33 @@
       }, FEED_ATTEMPT_TIMEOUT_MS);
       fetch(feed.url, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
         .then(function (r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status);
+          if (!r.ok) {
+            retryAfterMs = boundedRetryAfter(r.headers.get('Retry-After'));
+            throw new Error('HTTP ' + r.status);
+          }
           cache = r.headers.get('X-Vera-Cache');
           return r.json();
         })
         .then(function (data) {
           if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
+          if (!data || typeof data !== 'object' || !Array.isArray(data.pool) || typeof data.generated_at !== 'string') {
+            throw new Error('Invalid VERA publication contract');
+          }
           clearTimeout(attemptTimer);
           // An unparseable date is still valid; it simply receives the oldest
           // sort key rather than pretending to be newer than a dated drop.
           var at = Date.parse((data && data.generated_at) || '') || 0;
           adoptCurrent({ data: data, at: at, label: feed.label, cache: cache });
-        }, function () {
+        })
+        .catch(function () {
           if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
           clearTimeout(attemptTimer);
           if (activeFeedController === ctrl) activeFeedController = null;
-          scheduleRetry();
+          scheduleRetry(retryAfterMs);
         });
     }
 
+    if (bootGeneration > 1) setLoading('Loading the current VERA publication…');
     softTimer = setTimeout(function () {
       if (done || !ownsAttempt()) return;
       setLoading('Still loading the current VERA publication. The connection is taking longer than usual.');
@@ -3052,7 +3072,6 @@
     commuteRead: commuteRead, hasValidLngLat: hasValidLngLat,
     addressResolutionOf: addressResolutionOf, addressCheckMarkup: addressCheckMarkup, syncPressed: syncPressed,
     FEEDS: FEEDS, feedOrigin: function () { return feedOrigin; },
-    retryPublication: boot,
     archiveOrigins: archiveOrigins,
     sinceLastVisit: function () { return sinceLastVisit; },
   };

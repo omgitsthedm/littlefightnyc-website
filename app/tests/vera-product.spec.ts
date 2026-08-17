@@ -201,7 +201,7 @@ test(
 );
 
 test(
-  "VERA automatically recovers from one transient 503 publication response @vera-desktop",
+  "VERA honors Retry-After and recovers from a transient 429 publication response @vera-desktop",
   async ({ page }) => {
     await page.addInitScript(({ fixture }) => {
       const nativeFetch = window.fetch.bind(window);
@@ -211,7 +211,14 @@ test(
         if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
           attempts += 1;
           (window as unknown as { __veraFeedAttempts: number }).__veraFeedAttempts = attempts;
-          if (attempts === 1) return new Response("unavailable", { status: 503 });
+          const times = ((window as unknown as { __veraFeedAttemptTimes?: number[] }).__veraFeedAttemptTimes ??= []);
+          times.push(Date.now());
+          if (attempts === 1) {
+            return new Response("rate limited", {
+              status: 429,
+              headers: { "Retry-After": "1" },
+            });
+          }
           return new Response(fixture, { status: 200, headers: { "Content-Type": "application/json" } });
         }
         return nativeFetch(input, init);
@@ -221,6 +228,12 @@ test(
     await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
     await waitForVera(page);
     await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(2);
+    await expect
+      .poll(() => page.evaluate(() => {
+        const times = (window as unknown as { __veraFeedAttemptTimes?: number[] }).__veraFeedAttemptTimes ?? [];
+        return times.length === 2 ? times[1] - times[0] : 0;
+      }))
+      .toBeGreaterThanOrEqual(900);
   },
 );
 
@@ -235,6 +248,9 @@ test(
         if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
           attempts += 1;
           (window as unknown as { __veraFeedAttempts: number }).__veraFeedAttempts = attempts;
+          if (attempts === 1) {
+            return new Response("{}", { status: 200, headers: { "Content-Type": "application/json" } });
+          }
           if (attempts <= 3) return new Response("unavailable", { status: 503 });
           return new Response(fixture, { status: 200, headers: { "Content-Type": "application/json" } });
         }
@@ -254,7 +270,7 @@ test(
 );
 
 test(
-  "VERA ignores a stale publication attempt after a newer retry owns the session @vera-desktop",
+  "VERA resumes a publication boot safely after persisted navigation @vera-all-platforms",
   async ({ page }) => {
     const staleFixture = JSON.parse(VERA_FEED_FIXTURE) as { pool: Array<Record<string, unknown>> };
     staleFixture.pool[0].title = "Stale publication that must not replace the current drop";
@@ -267,6 +283,7 @@ test(
         const raw = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
         if (new URL(raw, window.location.href).pathname.endsWith("/public.json")) {
           attempts += 1;
+          (window as unknown as { __veraFeedAttempts: number }).__veraFeedAttempts = attempts;
           if (attempts === 1) {
             await new Promise((resolve) => window.setTimeout(resolve, 1_000));
             return new Response(stale, { status: 200, headers: { "Content-Type": "application/json" } });
@@ -278,9 +295,14 @@ test(
     }, { stale: JSON.stringify(staleFixture), current: JSON.stringify(currentFixture) });
 
     await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
-    await expect.poll(() => page.evaluate(() => typeof (window as unknown as { __VERA_APP?: { retryPublication?: unknown } }).__VERA_APP?.retryPublication)).toBe("function");
-    await page.evaluate(() => (window as unknown as { __VERA_APP: { retryPublication: () => void } }).__VERA_APP.retryPublication());
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(1);
+    await page.evaluate(() => {
+      const resume = new Event("pageshow");
+      Object.defineProperty(resume, "persisted", { value: true });
+      window.dispatchEvent(resume);
+    });
     await waitForVera(page);
+    await expect.poll(() => page.evaluate(() => (window as unknown as { __veraFeedAttempts?: number }).__veraFeedAttempts ?? 0)).toBe(2);
     await expect.poll(() => page.evaluate(() => (window as unknown as { __vera?: { pool: () => Array<{ title?: string }> } }).__vera?.pool()[0]?.title)).toBe("Current publication owns this session");
     await page.waitForTimeout(1_200);
     await expect.poll(() => page.evaluate(() => (window as unknown as { __vera?: { pool: () => Array<{ title?: string }> } }).__vera?.pool()[0]?.title)).toBe("Current publication owns this session");

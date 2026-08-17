@@ -18,9 +18,18 @@ const VERA_DATA_PATHS = [
 export default async (_request: Request, context: Context): Promise<Response> => {
   const response = await context.next();
   response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  const contentType = response.headers.get("Content-Type") ?? "";
+  const isCompletePublication =
+    response.status === 200 && contentType.toLowerCase().includes("json");
+
+  /* Manual caching must never preserve a rate-limit page, upstream failure,
+     or HTML error under a public JSON URL. Successful JSON gets a five-minute
+     freshness window plus the same 36-hour stale safety horizon VERA monitors. */
   response.headers.set(
     "Netlify-CDN-Cache-Control",
-    "public, max-age=300, stale-while-revalidate=129600",
+    isCompletePublication
+      ? "public, max-age=300, stale-while-revalidate=129600"
+      : "no-store",
   );
   return response;
 };

@@ -48,7 +48,13 @@ function persistPublication(dataPath, response) {
 
   return response.clone().text().then(function (text) {
     if (!text.trim()) throw new Error('empty VERA publication');
-    JSON.parse(text);
+    var publication = JSON.parse(text);
+    var valid = dataPath.endsWith('/public.json')
+      ? publication && typeof publication === 'object' && Array.isArray(publication.pool) && typeof publication.generated_at === 'string'
+      : dataPath.endsWith('/archive.json')
+        ? Array.isArray(publication)
+        : publication && typeof publication === 'object' && typeof publication.generated_at === 'string';
+    if (!valid) throw new Error('invalid VERA publication contract');
 
     var headers = new Headers(response.headers);
     headers.set('X-Vera-Cached-At', new Date().toISOString());

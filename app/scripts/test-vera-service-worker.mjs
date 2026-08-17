@@ -137,28 +137,31 @@ await assertCachedFallback(503);
 }
 
 {
-  const harness = createHarness(async () => new Response('{"fresh":true}', {
+  const harness = createHarness(async () => new Response('{"generated_at":"2026-08-16T00:00:00Z","pool":[]}', {
     headers: { "Content-Type": "application/json" },
   }));
   const operation = harness.dispatch();
   const response = await operation.response;
 
-  assert.deepEqual(await response.json(), { fresh: true });
+  assert.deepEqual(await response.json(), { generated_at: "2026-08-16T00:00:00Z", pool: [] });
   assert.equal(operation.waits.length, 1, "a successful publication write must extend the worker lifetime");
   await operation.waitUntil();
   const cached = await (await harness.caches.open("vera-feed-v2")).match(dataPath);
   assert.ok(cached, "the completed lifetime task must persist the fresh publication");
   assert.equal(cached.headers.get("X-Vera-Cached-At") !== null, true);
-  assert.deepEqual(await cached.json(), { fresh: true });
+  assert.deepEqual(await cached.json(), { generated_at: "2026-08-16T00:00:00Z", pool: [] });
 }
 
 {
-  const harness = createHarness(async () => new Response("not JSON", { status: 200 }));
+  const harness = createHarness(async () => new Response("{}", {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
+  }));
   const operation = harness.dispatch();
   assert.equal((await operation.response).status, 200, "the live response remains transparent to the app");
   await operation.waitUntil();
   const cached = await (await harness.caches.open("vera-feed-v2")).match(dataPath);
-  assert.equal(cached, undefined, "an invalid publication must never enter the fallback cache");
+  assert.equal(cached, undefined, "a schema-invalid publication must never enter the fallback cache");
 }
 
 console.log("VERA service-worker resilience checks passed: cached fallbacks, lifecycle persistence, and cache validation are covered.");
