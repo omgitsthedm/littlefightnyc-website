@@ -99,7 +99,7 @@ for (const asset of [
   "./assets/js/vera-geo.js?v=60",
   "./assets/js/vera-map.js?v=60",
   "./assets/js/vera-ledger.js?v=58",
-  "./assets/js/vera-app.js?v=60",
+  "./assets/js/vera-app.js?v=61",
 ]) {
   mustContain("vera/index.html cache contract", index, asset);
   mustContain("vera/sw.js cache contract", serviceWorker, asset.replace("./", "/vera/"));
@@ -130,7 +130,7 @@ const glyphBytes = glyphStats.reduce((total, entry) => total + entry.size, 0);
 if (glyphBytes > 105_000_000) {
   failures.push(`Atlas glyph bundle exceeds its 105,000,000-byte release cap (${glyphBytes})`);
 }
-mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v13");
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v14");
 mustNotContain("vera-core.js", core, "before the lease is executed");
 mustNotContain("vera-app.js", app, "before the lease is executed");
 mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");

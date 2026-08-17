@@ -156,13 +156,14 @@ for (const name of ["public", "archive", "meta"]) {
     failures.push(`vera-data-robots.ts: missing exact edge path ${endpoint}`);
   }
 }
-if (
-  !/await\s+context\.next\(\{\s*sendConditionalRequest:\s*true\s*\}\)/.test(
-    veraDataEdge,
-  )
-) {
+if (!/await\s+context\.next\(\s*\)/.test(veraDataEdge)) {
   failures.push(
-    "vera-data-robots.ts must preserve conditional feed revalidation via context.next({ sendConditionalRequest: true })",
+    "vera-data-robots.ts must fetch a complete upstream feed rather than forwarding a bodyless conditional revalidation",
+  );
+}
+if (veraDataEdge.includes("sendConditionalRequest")) {
+  failures.push(
+    "vera-data-robots.ts must never forward a browser conditional request to the publication origin",
   );
 }
 if (
@@ -174,10 +175,27 @@ if (
     "vera-data-robots.ts must set X-Robots-Tag to noindex, nofollow",
   );
 }
-if ((veraDataEdge.match(/response\.headers\.set\(/g) ?? []).length !== 1) {
+if (!veraDataEdge.includes('"public, max-age=300, stale-while-revalidate=129600"')) {
   failures.push(
-    "vera-data-robots.ts must preserve every upstream header except its one X-Robots-Tag override",
+    "vera-data-robots.ts must keep a five-minute CDN freshness window and 36-hour stale-while-revalidate safety net",
   );
+}
+if (
+  !veraDataEdge.includes('response.status !== 200') ||
+  !veraDataEdge.includes('contentType.toLowerCase().includes("json")') ||
+  !veraDataEdge.includes('response.clone().json()') ||
+  !veraDataEdge.includes('Array.isArray(record.pool)') ||
+  !veraDataEdge.includes('Array.isArray(record.shortlist)') ||
+  !veraDataEdge.includes('Array.isArray(record.listings)') ||
+  !veraDataEdge.includes('hasValidTimestamp(record.generated_at)') ||
+  !veraDataEdge.includes(': "no-store"')
+) {
+  failures.push(
+    "vera-data-robots.ts must cache only complete 200 JSON publications and mark every other response no-store",
+  );
+}
+if (!/cache:\s*"manual"/.test(veraDataEdge)) {
+  failures.push("vera-data-robots.ts must opt in to Netlify's manual edge response cache");
 }
 
 const normalizedRedirects = new Set(

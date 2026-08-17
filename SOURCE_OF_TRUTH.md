@@ -90,6 +90,14 @@ branch is upstream publication output, not a second website or Netlify product.
 Private/raw hunt data, contacts, working notes, credentials, and engine state
 must never enter this repository, its Netlify property, or a browser response.
 
+Publication delivery has three deliberate resilience layers: the browser uses
+one same-origin Little Fight URL; the VERA Netlify edge middleware keeps a
+short shared cache with a bounded stale-while-revalidate safety window; and the
+VERA service worker retains only the last validated public JSON publication for
+an explicitly labeled offline fallback. Browser conditional requests must not
+surface a bodyless `304` to the app, and errors must never replace either cache.
+The generated publication timestamp remains the freshness truth at every layer.
+
 The former `vera-pipeline` Netlify project and `vera-dashboard` checkout are not
 runtime dependencies or deployment targets. Do not restore their browser feed
 fallback, proxy routes, CSP exceptions, scheduled Mac deploy, or standalone UI.
