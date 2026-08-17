@@ -163,13 +163,15 @@ for (const name of ["public", "archive", "meta"]) {
       `${pathname}: expected X-Robots-Tag noindex, nofollow, got ${robots || "missing"}`,
     );
   }
-  if (!contentType) failures.push(`${pathname}: missing Content-Type`);
-  if (!cacheControl.includes("max-age=300")) {
+  if (!contentType.includes("application/json")) {
+    failures.push(`${pathname}: expected application/json, got ${contentType || "missing"}`);
+  }
+  if (!cacheControl.includes("no-store")) {
     failures.push(
-      `${pathname}: expected cache policy containing max-age=300, got ${cacheControl || "missing"}`,
+      `${pathname}: expected browser no-store policy, got ${cacheControl || "missing"}`,
     );
   }
-  if (!etag) failures.push(`${pathname}: missing ETag validator`);
+  if (etag) failures.push(`${pathname}: browser-visible ETag can reintroduce bodyless publication responses`);
 
   const headResponse = await head(pathname);
   for (const header of ["x-robots-tag", "content-type", "cache-control", "etag"]) {
@@ -178,11 +180,11 @@ for (const name of ["public", "archive", "meta"]) {
     }
   }
 
-  if (etag) {
+  {
     const conditionalResponse = await fetch(`${baseUrl}${pathname}`, {
       redirect: "follow",
       headers: {
-        "if-none-match": etag,
+        "if-none-match": etag || 'W/"vera-body-required"',
         "user-agent": "LFNYC-Quality-Spine/1.0",
       },
     });
@@ -194,7 +196,7 @@ for (const name of ["public", "archive", "meta"]) {
     if (conditionalResponse.headers.get("x-robots-tag") !== "noindex, nofollow") {
       failures.push(`${pathname}: conditional GET lost X-Robots-Tag`);
     }
-    for (const header of ["content-type", "cache-control", "etag"]) {
+    for (const header of ["content-type", "cache-control"]) {
       if (conditionalResponse.headers.get(header) !== response.headers.get(header)) {
         failures.push(`${pathname}: conditional GET ${header} does not match full GET`);
       }

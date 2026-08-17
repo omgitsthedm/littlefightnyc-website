@@ -35,11 +35,9 @@ const isCompletePublication = async (
   request: Request,
   response: Response,
 ): Promise<boolean> => {
-  const contentType = response.headers.get("Content-Type") ?? "";
   if (
     request.method !== "GET" ||
-    response.status !== 200 ||
-    !contentType.toLowerCase().includes("json")
+    response.status !== 200
   ) {
     return false;
   }
@@ -64,6 +62,16 @@ export default async (request: Request, context: Context): Promise<Response> => 
   const response = await context.next();
   response.headers.set("X-Robots-Tag", "noindex, nofollow");
   const cacheable = await isCompletePublication(request, response);
+
+  /* Cache Storage is VERA's explicit browser fallback. Keep the HTTP cache
+     out of that role so browser revalidation cannot turn a complete edge
+     response into a bodyless 304 before the worker can evaluate it. The
+     Netlify-only header below still gives the shared CDN its bounded cache. */
+  response.headers.set("Cache-Control", "no-store");
+  response.headers.delete("ETag");
+  if (cacheable || (request.method === "HEAD" && response.status === 200)) {
+    response.headers.set("Content-Type", "application/json; charset=utf-8");
+  }
 
   /* Manual caching must never preserve a rate-limit page, upstream failure,
      or HTML error under a public JSON URL. Successful JSON gets a five-minute
