@@ -31,7 +31,7 @@ protected_surfaces:
       - "app/src/App.tsx"
       - "app/src/data/route-meta.json"
     status: "protected_not_candidate"
-    evidence: "The generated catalog contains 211 route records and is consumed by prerender, metadata, navigation, and route-quality behavior."
+    evidence: "The generated catalog contains 212 route records and is consumed by prerender, metadata, navigation, and route-quality behavior."
     contracts:
       - "React Router matching and lazy imports"
       - "prerender route enumeration"
