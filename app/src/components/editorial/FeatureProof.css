@@ -145,7 +145,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .lf-feature-proof__panel {
+  .lf-feature-proof__panel--enter {
     animation: lf-feature-proof-panel-in var(--m-signal-ms) var(--m-signal-ease) both;
   }
 }

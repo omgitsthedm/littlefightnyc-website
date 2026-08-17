@@ -8,6 +8,9 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
   const proof = study.featureProof;
   const id = useId();
   const [activeStep, setActiveStep] = useState(0);
+  // The first panel paints complete; only a real step change animates, so the
+  // page never presents copy at partial opacity on first load.
+  const [switched, setSwitched] = useState(false);
 
   if (!proof) return null;
 
@@ -65,7 +68,10 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
                 aria-selected={selected}
                 aria-controls={`${id}-panel-${index}`}
                 tabIndex={selected ? 0 : -1}
-                onClick={() => setActiveStep(index)}
+                onClick={() => {
+                  if (index !== activeStep) setSwitched(true);
+                  setActiveStep(index);
+                }}
               >
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {step.label}
@@ -76,7 +82,7 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
 
         <div
           key={activeStep}
-          className="lf-feature-proof__panel"
+          className={`lf-feature-proof__panel${switched ? " lf-feature-proof__panel--enter" : ""}`}
           id={`${id}-panel-${activeStep}`}
           role="tabpanel"
           aria-labelledby={`${id}-tab-${activeStep}`}
