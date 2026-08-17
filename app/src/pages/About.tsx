@@ -30,7 +30,7 @@ export default function About() {
             Less runaround. <span className="lf-em">More getting done.</span>
           </>
         }
-        dek="We build websites, fix what breaks, and build software you own — so customers choose you and the day keeps moving."
+        dek="We build websites, fix what breaks, and build software you own."
         pillars={[
           "Consulting is free, always",
           "One studio, start to finish",
