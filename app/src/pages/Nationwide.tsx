@@ -68,7 +68,7 @@ export default function Nationwide() {
             <span className="lf-em">Works anywhere.</span>
           </>
         }
-        dek="We build custom websites remotely for small businesses across the United States. You own the finished site. On-site help stays a New York service."
+        dek="You get a custom website, built remotely, wherever your business is in the United States. You own the finished site. On-site help stays a New York service."
         image={{
           src: "/assets/hero-nationwide-wtc.webp",
           alt: "Seventh Avenue running south toward One World Trade Center on a bright day",
