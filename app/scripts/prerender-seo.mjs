@@ -865,7 +865,7 @@ function routeImagePreload(page) {
       // and this high-priority fetch was competing with the backdrop (the
       // phone's LCP element) for the first ~500KB on a slow connection.
       `<link rel="preload" href="${HOME_WALL_LEAD}" media="(min-width: 64rem)" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
-      `<link rel="preload" href="/assets/hero-ues-lights-900.webp" imagesrcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" imagesizes="(min-width: 64rem) 640px, 100vw" as="image" type="image/webp" fetchpriority="high">`,
+      `<link rel="preload" href="/assets/hero-contact-door-900.webp" imagesrcset="/assets/hero-contact-door-480.webp 480w, /assets/hero-contact-door-640.webp 640w, /assets/hero-contact-door-900.webp 900w" imagesizes="(min-width: 64rem) 640px, 100vw" as="image" type="image/webp" fetchpriority="high">`,
     ].join("\n");
   }
 
@@ -1884,7 +1884,7 @@ function snapshot(page) {
     @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
     .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; border-bottom: 1px solid #27272A; background: #050507; }
     .lf-seo .lf-seo__home-backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-    .lf-seo .lf-seo__home-backdrop img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 60% 45%; opacity: .85; filter: blur(1.5px); transform: scale(1.02); }
+    .lf-seo .lf-seo__home-backdrop img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 68% 50%; opacity: .85; filter: blur(1.5px); transform: scale(1.02); }
     .lf-seo .lf-seo__home-backdrop::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, rgb(5 5 7 / 94%) 0%, rgb(5 5 7 / 82%) 38%, rgb(5 5 7 / 40%) 70%, rgb(5 5 7 / 30%) 100%), linear-gradient(180deg, rgb(5 5 7 / 55%) 0%, rgb(5 5 7 / 0%) 28%, rgb(5 5 7 / 35%) 62%, rgb(5 5 7 / 100%) 100%); }
     .lf-seo .lf-seo__home-hero-copy { position: relative; z-index: 1; }
     .lf-seo .lf-seo__home-hero-copy { display: grid; grid-template-columns: minmax(0, .94fr) minmax(31rem, 1.06fr); align-items: stretch; width: min(100%, 1600px); min-height: inherit; margin: 0 auto; box-sizing: border-box; }
@@ -1940,7 +1940,7 @@ function snapshot(page) {
 
   const homeBody = `
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC" data-lf-owner-intro="true">
-      <div class="lf-seo__home-backdrop" aria-hidden="true"><img src="/assets/hero-ues-lights-900.webp" srcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" sizes="(min-width: 64rem) 640px, 100vw" width="900" height="600" alt="" fetchpriority="high" decoding="async"></div>
+      <div class="lf-seo__home-backdrop" aria-hidden="true"><img src="/assets/hero-contact-door-900.webp" srcset="/assets/hero-contact-door-480.webp 480w, /assets/hero-contact-door-640.webp 640w, /assets/hero-contact-door-900.webp 900w" sizes="(min-width: 64rem) 640px, 100vw" width="900" height="600" alt="" fetchpriority="high" decoding="async"></div>
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
           <p class="lf-seo__home-kicker">New York City</p>
