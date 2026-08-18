@@ -143,6 +143,8 @@
   color: var(--lf-bone);
   font-weight: 600;
   text-underline-offset: 0.22em;
+  min-inline-size: 44px; /* the two-character ZH "表格" link was 33px wide */
+  justify-content: center;
 }
 
 .lf-editorial .lf-es__hero-channels a:hover,
