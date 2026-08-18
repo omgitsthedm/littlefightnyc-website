@@ -249,9 +249,11 @@
     align-items: start;
   }
 
+  /* Not sticky. The head is a grid item; Chrome constrains a sticky grid item
+     to the whole grid container rather than its own row, so on scroll the
+     heading slid down out of row 1 and landed on top of "What happens next".
+     The right column is shorter than the heading anyway — nothing to stick for. */
   .lf-contact-block__head {
-    position: sticky;
-    top: 7rem;
     grid-column: 1 / 5;
   }
 
