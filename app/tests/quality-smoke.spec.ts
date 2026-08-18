@@ -186,7 +186,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "Website Check",
     path: "/website-check/",
     title: "Free Small Business Website Check | Little Fight NYC",
-    h1: /See what gets in the way\./i,
+    h1: /See what stops customers on your website\./i,
     criticalLink: 'form[action="/examples/audit/"]',
     tags: ["@chromium-desktop", "@chromium-mobile"],
   },

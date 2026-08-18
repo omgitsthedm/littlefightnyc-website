@@ -10,8 +10,11 @@ export default function WebsiteCheck() {
       <PageHero
         eyebrow="Free website check"
         icon={Search}
-        title={<>See what gets in the way.</>}
-        dek="Put in your website. We check the public parts: can people read it, use it, find the basics, and take the next step? The report also says what we could not see."
+        // Answer first: what you get (a free plain-words report on what stops
+        // customers), then how it works. The old H1 was vague ("See what gets
+        // in the way") and the dek opened with an instruction.
+        title={<>See what stops customers on your website.</>}
+        dek="A free report in plain words. We check the public parts: can people read it, use it, find the basics, and take the next step? It also says what we could not see."
         pillars={[
           "Free, and no sales call required",
           "No login, card, or password",
