@@ -963,7 +963,10 @@ for (const area of areaPages) {
   const context = AREA_OWNER_CONTEXT[area.slug];
   if (!context) continue;
   Object.assign(area, context, {
-    headline: `Websites, practical tech help, and a clear next move for ${area.name} businesses.`,
+    // Short on purpose: the neighborhood name is already the display line above
+    // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
+    // decisions past the first screen. The dek carries the specifics.
+    headline: `Websites and tech help for ${area.name} businesses.`,
     faq: [
       { question: `What should a ${area.name} business check first?`, answer: context.firstMove },
       { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },

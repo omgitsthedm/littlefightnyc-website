@@ -982,3 +982,59 @@
   transform: none;
   animation: none;
 }
+
+/* First-screen contract at desktop (1440×900): the H1, dek, and both decisions
+   have to land inside the first screen. Measured Aug-18 across all 213 routes:
+   with-image titles at 91px wrapped to 4–5 lines in the half-width column,
+   answer questions ran 4 lines, case titles hit 130px, and area display names
+   took three lines — decisions sat 60–300px below the fold on 35 routes. The
+   phone rules above are untouched; this only trims desktop. */
+@media (min-width: 64rem) {
+  .lf-pagehero {
+    padding-block-start: clamp(var(--lf-space-7), 5vw, var(--lf-space-8));
+  }
+
+  .lf-editorial .lf-pagehero__title {
+    font-size: clamp(3.5rem, 5.6vw, 6.5rem);
+  }
+
+  .lf-editorial .lf-pagehero--with-image .lf-pagehero__title {
+    /* 11.5ch forced four lines at 72px; the text column is ~40ch wide */
+    max-inline-size: 15ch;
+    font-size: clamp(3.5rem, 5vw, 5.75rem);
+  }
+
+  .lf-editorial .lf-pagehero__title:not(.lf-pagehero--case *) {
+    max-inline-size: 15ch;
+  }
+
+  .lf-editorial .lf-pagehero--answer .lf-pagehero__title {
+    font-size: clamp(2.5rem, 4.4vw, 4.25rem);
+  }
+
+  .lf-editorial .lf-pagehero--case .lf-pagehero__title {
+    font-size: clamp(3rem, 5.2vw, 5.5rem);
+  }
+
+  /* The case hero is image-led and bottom-aligned; at 900px tall its 72svh
+     minimum plus the bottom padding put the two decisions at the fold line
+     (top 899). Trim the height floor and the bottom padding so they sit
+     clearly inside the first screen without losing the cinematic capture. */
+  .lf-pagehero--case {
+    min-block-size: clamp(34rem, 64svh, 48rem);
+  }
+
+  .lf-pagehero--case .lf-pagehero__inner {
+    padding-block:
+      clamp(8rem, 18vh, 12rem)
+      clamp(var(--lf-space-7), 5vw, var(--lf-space-8));
+  }
+
+  .lf-editorial .lf-pagehero--area .lf-pagehero__title {
+    font-size: clamp(1.75rem, 2.7vw, 2.75rem);
+  }
+
+  .lf-editorial .lf-pagehero__display {
+    font-size: min(clamp(3.25rem, 6vw, 6rem), calc(204cqi / var(--lf-display-ch, 8)));
+  }
+}
