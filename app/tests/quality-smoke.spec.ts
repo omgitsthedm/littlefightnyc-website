@@ -1053,14 +1053,28 @@ test(
         .filter({ visible: true })
         .first(),
     ).toBeVisible();
-    // The living path never plays on its own under reduced motion: no autoplay
-    // control renders, the beats stay a working (tap-to-jump) diagram, and the
-    // capture sits still on the first beat.
+    // The living path never plays on its own under reduced motion — but the
+    // path is content, not decoration, so it must stay walkable. The control
+    // becomes a stepper and the beats change without animating.
     const scene = page.locator(".lf-hero__scene");
     await expect(scene).toHaveAttribute("data-lf-play", "still");
-    await expect(scene.locator(".lf-hero__path-controls")).toHaveCount(0);
     await expect(scene.locator(".lf-hero__path-step")).toHaveCount(4);
     await expect(scene.locator('.lf-hero__path-step button[aria-current="step"]')).toHaveText(/Found/);
+
+    const stepper = scene.locator(".lf-hero__path-controls button");
+    await expect(stepper).toBeVisible();
+    await expect(stepper).toHaveText(/Next step/i);
+    await stepper.click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "understood");
+    await expect(scene).toHaveAttribute("data-lf-play", "still");
+    await stepper.click();
+    await stepper.click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "booked");
+    await expect(stepper).toHaveText(/Start the path over/i);
+    await stepper.click();
+    await expect(scene).toHaveAttribute("data-lf-beat", "found");
+
+    // Tapping a beat directly still works.
     await scene.locator(".lf-hero__path-step button").nth(3).click();
     await expect(scene).toHaveAttribute("data-lf-beat", "booked");
 

@@ -152,6 +152,13 @@ export default function QuietHero() {
   };
 
   const onControl = () => {
+    // Reduced motion turns off the autoplay, not the story. The path is
+    // content — an owner still needs to walk it — so the control becomes a
+    // stepper and the beats change instantly instead of animating.
+    if (systemReducedMotion) {
+      setBeat((current) => (current >= PATH_BEATS.length - 1 ? 0 : current + 1));
+      return;
+    }
     if (play === "playing") {
       setPlay("paused");
       return;
@@ -168,9 +175,12 @@ export default function QuietHero() {
 
   const active = PATH_BEATS[beat];
   const isBooked = beat === PATH_BEATS.length - 1;
-  const controlLabel =
-    play === "playing" ? "Pause" : play === "done" || isBooked ? "Replay the path" : "Play the path";
-  const ControlIcon = play === "playing" ? Pause : play === "done" || isBooked ? RotateCcw : Play;
+  const controlLabel = systemReducedMotion
+    ? (isBooked ? "Start the path over" : "Next step")
+    : play === "playing" ? "Pause" : play === "done" || isBooked ? "Replay the path" : "Play the path";
+  const ControlIcon = systemReducedMotion
+    ? (isBooked ? RotateCcw : ArrowRight)
+    : play === "playing" ? Pause : play === "done" || isBooked ? RotateCcw : Play;
 
   return (
     <section
@@ -310,14 +320,16 @@ export default function QuietHero() {
             <strong>{active.label}.</strong> {active.detail}
           </p>
 
-          {!systemReducedMotion && (
-            <div className="lf-hero__path-controls">
-              <button type="button" onClick={onControl} aria-pressed={play === "playing"}>
-                <ControlIcon size={16} strokeWidth={2} aria-hidden="true" />
-                {controlLabel}
-              </button>
-            </div>
-          )}
+          <div className="lf-hero__path-controls">
+            <button
+              type="button"
+              onClick={onControl}
+              aria-pressed={systemReducedMotion ? undefined : play === "playing"}
+            >
+              <ControlIcon size={16} strokeWidth={2} aria-hidden="true" />
+              {controlLabel}
+            </button>
+          </div>
           <figcaption className="lf-hero__caption">
             Live client site · {FEATURED.sourceLabel} · checked{" "}
             {CHECKED_DATE.format(new Date(`${FEATURED.verifiedAt}T12:00:00Z`))}
