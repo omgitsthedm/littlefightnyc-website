@@ -1879,7 +1879,11 @@ function snapshot(page) {
     .lf-seo .lf-seo__phone { min-height: 44px; display: inline-flex; align-items: center; font-size: 16px; font-weight: 600; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-cta { min-height: 44px; display: inline-flex; align-items: center; background: #F97316; color: #050507; font-weight: 700; font-size: 16px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
     @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
-    .lf-seo .lf-seo__home-hero { min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; border-bottom: 1px solid #27272A; background: #050507; }
+    .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; border-bottom: 1px solid #27272A; background: #050507; }
+    .lf-seo .lf-seo__home-backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .lf-seo .lf-seo__home-backdrop img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 60% 45%; opacity: .85; filter: blur(1.5px); transform: scale(1.02); }
+    .lf-seo .lf-seo__home-backdrop::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, rgb(5 5 7 / 94%) 0%, rgb(5 5 7 / 82%) 38%, rgb(5 5 7 / 40%) 70%, rgb(5 5 7 / 30%) 100%), linear-gradient(180deg, rgb(5 5 7 / 55%) 0%, rgb(5 5 7 / 0%) 28%, rgb(5 5 7 / 35%) 62%, rgb(5 5 7 / 100%) 100%); }
+    .lf-seo .lf-seo__home-hero-copy { position: relative; z-index: 1; }
     .lf-seo .lf-seo__home-hero-copy { display: grid; grid-template-columns: minmax(0, .94fr) minmax(31rem, 1.06fr); align-items: stretch; width: min(100%, 1600px); min-height: inherit; margin: 0 auto; box-sizing: border-box; }
     .lf-seo .lf-seo__home-promise { display: flex; flex-direction: column; justify-content: center; padding: 64px 44px 64px max(64px, calc((100vw - 1440px) / 2 + 64px)); box-sizing: border-box; }
     .lf-seo .lf-seo__home-kicker { font-family: ${mono}; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: #60A5FA; margin: 0 0 22px; }
@@ -1908,7 +1912,7 @@ function snapshot(page) {
     .lf-seo .lf-seo__home-path li:first-child strong { color: #FFFFFF; }
     .lf-seo .lf-seo__home-path li > span:last-child { display: block; font-size: 16px; line-height: 1.3; }
     .lf-seo .lf-seo__home-scene figcaption { grid-column: 2; margin: 0; color: #8A8A94; font-family: ${mono}; font-size: 16px; letter-spacing: .04em; line-height: 1.35; text-transform: uppercase; }
-    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { min-height: auto; } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: auto; } .lf-seo .lf-seo__home-promise { min-height: 0; justify-content: flex-start; padding: clamp(32px, 6svh, 48px) 20px 22px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.95rem); max-width: 12ch; text-wrap: balance; } .lf-seo .lf-seo__home-scene { grid-template-columns: minmax(0, 46%) minmax(0, 1fr); gap: 16px; min-height: 0; padding: 24px 20px; border-left: 0; border-top: 1px solid #27272A; } .lf-seo .lf-seo__home-scene-title, .lf-seo .lf-seo__home-scene figcaption { grid-column: 1 / -1; } .lf-seo .lf-seo__home-phone { grid-row: auto; } .lf-seo .lf-seo__home-path strong { font-size: 20px; } }
+    @media (max-width: 899px) { .lf-seo .lf-seo__home-hero { min-height: auto; } .lf-seo .lf-seo__home-backdrop::after { background: linear-gradient(180deg, rgb(5 5 7 / 82%) 0%, rgb(5 5 7 / 76%) 55%, rgb(5 5 7 / 100%) 100%); } .lf-seo .lf-seo__home-hero-copy { display: block; min-height: auto; } .lf-seo .lf-seo__home-promise { min-height: 0; justify-content: flex-start; padding: clamp(32px, 6svh, 48px) 20px 22px; } .lf-seo .lf-seo__home-hero h1 { font-size: clamp(2.45rem, 10.8vw, 2.95rem); max-width: 12ch; text-wrap: balance; } .lf-seo .lf-seo__home-scene { grid-template-columns: minmax(0, 46%) minmax(0, 1fr); gap: 16px; min-height: 0; padding: 24px 20px; border-left: 0; border-top: 1px solid #27272A; } .lf-seo .lf-seo__home-scene-title, .lf-seo .lf-seo__home-scene figcaption { grid-column: 1 / -1; } .lf-seo .lf-seo__home-phone { grid-row: auto; } .lf-seo .lf-seo__home-path strong { font-size: 20px; } }
     .lf-seo h2 { font-size: 24px; line-height: 1.15; letter-spacing: 0; font-weight: 700; margin: 40px 0 14px; color: #FFFFFF; max-width: 24ch; }
     .lf-seo p { font-size: 17px; line-height: 1.6; color: #A1A1AA; max-width: 68ch; margin: 0 0 18px; }
     .lf-seo .lf-seo__byline { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #A1A1AA; }
@@ -1933,6 +1937,7 @@ function snapshot(page) {
 
   const homeBody = `
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC" data-lf-owner-intro="true">
+      <div class="lf-seo__home-backdrop" aria-hidden="true"><img src="/assets/hero-ues-lights-900.webp" srcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" sizes="(min-width: 64rem) 640px, 100vw" width="900" height="600" alt="" fetchpriority="high" decoding="async"></div>
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
           <p class="lf-seo__home-kicker">New York City</p>
@@ -1941,7 +1946,7 @@ function snapshot(page) {
           <p class="lf-seo__home-sub">A website customers can find and book from · Urgent NYC jobs, usually on-site within 24 hours · Software you own — code, data, and accounts</p>
           <div class="lf-seo__home-actions" aria-label="Start here" data-lf-contact-rail="true">
             <a class="lf-seo__home-action lf-seo__home-action--primary" href="tel:${site.phone}"><span>Call</span><strong>${site.phoneDisplay}</strong></a>
-            <a class="lf-seo__home-action" href="/website-check/"><span>Not ready to call?</span><strong>Check my website</strong></a>
+            <a class="lf-seo__home-action" href="/website-check/#website-check-url"><span>Not ready to call?</span><strong>Check my website</strong></a>
           </div>
           <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
@@ -2044,7 +2049,7 @@ function snapshot(page) {
         <span class="lf-seo__nav-right">
           <span class="lf-seo__replies">Replies at 9am ET</span>
           <a class="lf-seo__phone" href="tel:${site.phone}">${site.phoneDisplay}</a>
-          <a class="lf-seo__nav-cta" href="/website-check/">Check my website</a>
+          <a class="lf-seo__nav-cta" href="/website-check/#website-check-url">Check my website</a>
         </span>
       </header>
       <main id="main-content">
