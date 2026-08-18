@@ -66,7 +66,7 @@ export default function Services() {
   return (
     <>
       <PageHero
-        eyebrow="Start with what is getting in the way"
+        eyebrow="What we do"
         icon={Layers}
         title={
           <>
@@ -74,11 +74,10 @@ export default function Services() {
             <span className="lf-accent">We find the useful fix.</span>
           </>
         }
-        dek="No tech speech required. Pick the problem that sounds familiar. We will show you the next useful move."
+        dek="Pick the problem that sounds familiar. No tech words needed."
         pillars={[
           "Websites that help customers choose you",
           "Fast help when the basics break",
-          "Software you own when renting stops making sense",
         ]}
         // Was a stock Manhattan street. The page that says what we do now
         // shows what we shipped.

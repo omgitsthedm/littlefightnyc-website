@@ -105,7 +105,7 @@ export const services: Service[] = [
     accent: "gold",
     icon: Search,
     shortAnswer:
-      "Short answer: Little Fight gives NYC small businesses a free first look at their website, Google profile, tools, bills, and daily work. You learn what to keep, connect, replace, or build.",
+      "Short answer: A free first look at your website, Google profile, tools, and bills. You learn what to keep, fix, replace, or skip.",
     whatItDoes: [
       "Most owners do not start with a neat little problem. They start with a strange bill, a form nobody answers, or Google showing the wrong thing.",
       "The first look is simple. We check the public site, the accounts you can see, the monthly bills, and how customer messages reach you. Then we name what earns its place, what needs attention, and what can wait.",
@@ -176,8 +176,7 @@ export const services: Service[] = [
     outcome: "Call or text first. Urgent New York jobs: we can be on site within 24 hours. The written scope names the rest.",
     pillars: [
       "Call or text first — a human answers 9am–9pm Eastern",
-      "We start with what is stopping the day",
-      "What changed gets written down",
+      "We fix what is stopping the day, then write down what changed",
     ],
     includes: [
       "Urgent New York jobs: usually on-site within 24 hours",
@@ -189,7 +188,7 @@ export const services: Service[] = [
     accent: "teal",
     icon: Wrench,
     shortAnswer:
-      "Short answer: Little Fight gives NYC small businesses real local IT help. When email, Wi-Fi, POS, booking, payments, or devices stop working, we fix them.",
+      "Short answer: When email, Wi-Fi, the card reader, booking, or a device stops working, we fix it. Real local help, same day where we can.",
     whatItDoes: [
       "When a card reader, inbox, printer, or login breaks, you do not need a ticket number. You need a person who starts with the urgent thing.",
       "We answer the phone. We come on-site when the fix needs hands. And we keep notes, so the next call does not start from zero.",
