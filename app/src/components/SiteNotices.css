@@ -52,7 +52,10 @@
   font-size: var(--lf-text-xs);
   line-height: 1.4;
 }
-.lf-notice__copy a { color: var(--lf-bone); }
+.lf-notice__copy a { position: relative; color: var(--lf-bone); }
+/* 44px hit area for an inline link without breaking the line: the paragraph
+   is 19px tall, so the box extends above and below the text. */
+.lf-notice__copy a::before { content: ""; position: absolute; inset: -13px -8px; }
 .lf-consent__current {
   display: inline-flex;
   align-items: center;
