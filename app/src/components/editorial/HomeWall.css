@@ -35,8 +35,8 @@
   /* the lit trees run down the right of the frame; keep them under the player */
   object-position: 60% 45%;
   opacity: 0.85;
-  /* hides the 900→1440 upscale; the street is atmosphere, not a subject */
-  filter: blur(1px);
+  /* hides the 640→1440 upscale; the street is atmosphere, not a subject */
+  filter: blur(1.5px);
   transform: scale(1.02);
 }
 

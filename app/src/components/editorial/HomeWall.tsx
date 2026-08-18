@@ -54,12 +54,12 @@ export default function HomeWall() {
       <div className="lf-wall__backdrop" aria-hidden="true">
         <img
           src="/assets/hero-ues-lights-900.webp"
-          /* Capped at 900w on purpose: it sits dimmed under a scrim and a
-             1px blur, so a 900px source stretched to a 1440px screen is
-             indistinguishable from the 331KB 1600px one — and this image is
-             the largest paint on the page, so its bytes ARE the LCP. */
+          /* Desktop takes the 640w (90KB) on purpose: it sits dimmed under a
+             scrim and a 1px blur, so a 640px source stretched to a 1440px
+             screen reads the same as the 331KB 1600px one — and this image
+             is the largest paint on the page, so its bytes ARE the LCP. */
           srcSet="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w"
-          sizes="(min-width: 64rem) 900px, 100vw"
+          sizes="(min-width: 64rem) 640px, 100vw"
           width={900}
           height={600}
           alt=""

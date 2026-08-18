@@ -862,7 +862,7 @@ function routeImagePreload(page) {
     // data-route-preload) matching HomeWall's srcset/sizes exactly.
     return [
       `<link rel="preload" href="${HOME_WALL_LEAD}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
-      `<link rel="preload" href="/assets/hero-ues-lights-900.webp" imagesrcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" imagesizes="(min-width: 64rem) 900px, 100vw" as="image" type="image/webp" fetchpriority="high">`,
+      `<link rel="preload" href="/assets/hero-ues-lights-900.webp" imagesrcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" imagesizes="(min-width: 64rem) 640px, 100vw" as="image" type="image/webp" fetchpriority="high">`,
     ].join("\n");
   }
 
