@@ -292,6 +292,45 @@
   transform: scale(1.03);
 }
 
+/* ── the tile plays its site ─────────────────────────────────────────────── */
+
+/* The full-page capture sits over the still, invisible until the pointer is
+   on the tile; then it fades in and scrolls top to bottom (object-position
+   is animatable) — a real page moving inside the frame. */
+.lf-wall__shot .lf-wall__scroll {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+  opacity: 0;
+  transform: none;
+  transition: opacity var(--m-reveal-ms) var(--m-reveal-ease);
+}
+
+.lf-wall__shot {
+  position: relative;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lf-editorial .lf-wall__tile a:hover .lf-wall__scroll,
+  .lf-editorial .lf-wall__tile a:focus-visible .lf-wall__scroll {
+    opacity: 1;
+    animation: lf-wall-scroll 9s cubic-bezier(0.45, 0, 0.55, 1) 0.35s infinite alternate;
+  }
+
+  .lf-editorial .lf-wall__tile a:hover .lf-wall__shot img:not(.lf-wall__scroll),
+  .lf-editorial .lf-wall__tile a:focus-visible .lf-wall__shot img:not(.lf-wall__scroll) {
+    transform: none;
+  }
+}
+
+@keyframes lf-wall-scroll {
+  from { object-position: 50% 0%; }
+  to { object-position: 50% 100%; }
+}
+
 .lf-editorial .lf-wall__tile a:focus-visible .lf-wall__shot {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
@@ -494,6 +533,13 @@
 @media (prefers-reduced-motion: reduce) {
   .lf-wall__shot img {
     transition: none;
+  }
+
+  /* The capture still appears on hover; it just does not scroll. */
+  .lf-editorial .lf-wall__tile a:hover .lf-wall__scroll,
+  .lf-editorial .lf-wall__tile a:focus-visible .lf-wall__scroll {
+    animation: none;
+    opacity: 1;
   }
 
   .lf-editorial .lf-wall__tile a:hover .lf-wall__shot img,

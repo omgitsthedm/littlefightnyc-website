@@ -1,4 +1,5 @@
 import { ArrowRight, Mail, MessageSquare, Phone, Send } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HOME_WALL } from "@/data/home-wall";
 import CustomerPath from "./CustomerPath";
@@ -49,6 +50,60 @@ import "./HomeWall.css";
 // tile for the integrity audit.
 const TILES_IN_FIRST_SCREEN =
   typeof window !== "undefined" && window.matchMedia("(min-width: 64rem)").matches;
+
+/**
+ * A tile that plays its site. On a pointer device, hover or focus swaps the
+ * thumbnail for the full-page desktop capture (1200×2000, 72–142KB, fetched
+ * on first hover only) and scrolls it top to bottom inside the frame — the
+ * six trades stop being pictures of websites and become the websites. Touch
+ * devices keep the still (no hover, and the tap is the link). Reduced motion
+ * shows the capture without the scroll.
+ */
+function WallTile({ study, index }: { study: (typeof HOME_WALL)[number]; index: number }) {
+  const [live, setLive] = useState(false);
+  const base = `/assets/case-${study.slug}`;
+  return (
+    <li className="lf-wall__tile" data-live={live || undefined}>
+      <Link
+        to={`/case-studies/${study.slug}/`}
+        onPointerEnter={(event) => {
+          if (event.pointerType === "mouse") setLive(true);
+        }}
+        onFocus={() => setLive(true)}
+      >
+        <span className="lf-wall__shot">
+          <img
+            src={`${base}-900.webp`}
+            srcSet={`${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w`}
+            sizes="(min-width: 64rem) 16vw, (min-width: 48rem) 30vw, 45vw"
+            width={900}
+            height={640}
+            alt={`${study.client} — a live client site`}
+            /* The first tile is the largest thing in the first screen on
+               desktop, so it is the LCP candidate and the one route preload.
+               audit-site-integrity pins this pair. */
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchPriority={index === 0 && TILES_IN_FIRST_SCREEN ? "high" : undefined}
+            decoding="async"
+          />
+          {live && (
+            <img
+              className="lf-wall__scroll"
+              src={`${base}-explore.webp`}
+              width={1200}
+              height={2000}
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+            />
+          )}
+        </span>
+        <span className="lf-wall__trade">{study.trade}</span>
+        <span className="lf-wall__client">{study.client}</span>
+      </Link>
+    </li>
+  );
+}
 
 export default function HomeWall() {
   return (
@@ -146,33 +201,9 @@ export default function HomeWall() {
         <p className="lf-wall__proof">Shops like yours, already working.</p>
 
         <ul className="lf-wall__grid" aria-label="Six live client sites">
-          {HOME_WALL.map((study, index) => {
-            const base = `/assets/case-${study.slug}`;
-            return (
-              <li key={study.slug} className="lf-wall__tile">
-                <Link to={`/case-studies/${study.slug}/`}>
-                  <span className="lf-wall__shot">
-                    <img
-                      src={`${base}-900.webp`}
-                      srcSet={`${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w`}
-                      sizes="(min-width: 64rem) 16vw, (min-width: 48rem) 30vw, 45vw"
-                      width={900}
-                      height={640}
-                      alt={`${study.client} — a live client site`}
-                      /* The first tile is the largest thing in the first screen,
-                         so it is the LCP candidate and the one route preload.
-                         audit-site-integrity pins this pair. */
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 && TILES_IN_FIRST_SCREEN ? "high" : undefined}
-                      decoding="async"
-                    />
-                  </span>
-                  <span className="lf-wall__trade">{study.trade}</span>
-                  <span className="lf-wall__client">{study.client}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {HOME_WALL.map((study, index) => (
+            <WallTile key={study.slug} study={study} index={index} />
+          ))}
         </ul>
       </div>
     </section>
