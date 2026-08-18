@@ -374,6 +374,32 @@
   line-height: 1.5;
 }
 
+/* Pending state — the button keeps its shape and answers in the same frame */
+.lf-editorial .lf-website-check__form button[data-checking] {
+  cursor: progress;
+  background: var(--lf-fight-hover);
+}
+
+.lf-website-check__status:empty {
+  display: none;
+}
+
+.lf-website-check__status {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone);
+  font-size: var(--lf-text-2xs);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lf-website-check__spinner {
+    animation: lf-check-spin 0.9s linear infinite;
+  }
+}
+
+@keyframes lf-check-spin {
+  to { transform: rotate(360deg); }
+}
+
 .lf-website-check__booking {
   border-color: color-mix(in srgb, var(--lf-blue) 42%, var(--lf-hairline));
   background:

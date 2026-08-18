@@ -1,10 +1,16 @@
-import { CalendarDays, ExternalLink, Mail, MessageSquare, Phone, Search } from "lucide-react";
+import { CalendarDays, ExternalLink, Loader2, Mail, MessageSquare, Phone, Search } from "lucide-react";
+import { useState } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { handoffToAuditLab } from "@/lib/auditPrefill";
 import "@/styles/editorial/revenue-pages.css";
 
 export default function WebsiteCheck() {
+  // Doherty: the submit hands off to the Lab with a full-page load (~1s on a
+  // phone). The button answers within the same frame — "Checking
+  // yourbusiness.com…", spinner, aria-busy — so the wait is never silent, and
+  // a second tap cannot start a second handoff.
+  const [checking, setChecking] = useState<string | null>(null);
   return (
     <>
       <PageHero
@@ -58,18 +64,38 @@ export default function WebsiteCheck() {
           data-lf-source="website_check"
           onSubmit={(event) => {
             event.preventDefault();
-            handoffToAuditLab(event.currentTarget, "website_check_page");
+            if (checking !== null) return;
+            const form = event.currentTarget;
+            const url = (form.querySelector<HTMLInputElement>("#website-check-url")?.value ?? "").trim();
+            setChecking(url.replace(/^https?:\/\//i, "").replace(/\/.*$/, "") || "your website");
+            // Let the pending state paint before the navigation starts.
+            window.requestAnimationFrame(() => {
+              window.requestAnimationFrame(() => handoffToAuditLab(form, "website_check_page"));
+            });
           }}
+          aria-busy={checking !== null}
         >
           <input type="hidden" name="source" value="website_check_page" />
           <label htmlFor="website-check-url">Website URL</label>
           <input id="website-check-url" data-audit-prefill="url" type="text" inputMode="url" autoComplete="url" placeholder="yourbusiness.com" required />
           <label htmlFor="website-check-email">Email for your private report</label>
           <input id="website-check-email" data-audit-prefill="email" type="email" autoComplete="email" placeholder="you@company.com" />
-          <button type="submit">
-            Check my website
-            <Search size={18} strokeWidth={2} aria-hidden="true" />
+          <button type="submit" disabled={checking !== null} data-checking={checking !== null || undefined}>
+            {checking !== null ? (
+              <>
+                Checking {checking}…
+                <Loader2 className="lf-website-check__spinner" size={18} strokeWidth={2} aria-hidden="true" />
+              </>
+            ) : (
+              <>
+                Check my website
+                <Search size={18} strokeWidth={2} aria-hidden="true" />
+              </>
+            )}
           </button>
+          <p className="lf-website-check__status" role="status" aria-live="polite">
+            {checking !== null ? `Opening the report for ${checking}. This takes a moment.` : ""}
+          </p>
           <p>Free. No account, card, or password. No automatic sales call.</p>
         </form>
 
