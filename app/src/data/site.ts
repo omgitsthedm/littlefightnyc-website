@@ -176,6 +176,7 @@ export const services: Service[] = [
     outcome: "Call or text first. Urgent New York jobs: we can be on site within 24 hours. The written scope names the rest.",
     pillars: [
       "Call or text first — a human answers 9am–9pm Eastern",
+      "Urgent New York jobs: usually on-site within 24 hours",
       "We fix what is stopping the day, then write down what changed",
     ],
     includes: [
@@ -286,7 +287,9 @@ export const services: Service[] = [
     accent: "orange",
     icon: Laptop,
     shortAnswer:
-      "Short answer: Little Fight builds custom local websites for NYC small businesses. Your site shows what you do. Booking, calling, or visiting is easy.",
+      // "You get…", not "Little Fight builds…". The first sentence is what
+      // changes for the owner; who built it is the second-screen detail.
+      "Short answer: You get a custom website built around your business, so customers find you, see what you do, and book without calling. Built for one business, not a theme.",
     whatItDoes: [
       "A custom local website is built around one business and its customers. It is not a theme with new colors. It does not sound like every other shop.",
       "The site works for people first. A visitor should know what you do, where you are, and what to do next. No hunting.",
@@ -377,14 +380,14 @@ export const services: Service[] = [
     headline: "Software you own, built around your day.",
     plain: "One clear place for customer questions, follow-up, reports, and daily work. We first check whether a simpler tool can do the job. If we build one for you, you keep the files, data, accounts, and notes.",
     outcome: "One focused tool. You own it, the data, the accounts, the website address, and the instructions.",
-    includes: [
-            "A clear place to track customer questions and work",
-      "Full ownership of the files, data, accounts, and instructions",
     pillars: [
       "One place for customers, jobs, and follow-up",
       "You own the code, data, and accounts",
       "We check first whether a simpler tool can do it",
     ],
+    includes: [
+            "A clear place to track customer questions and work",
+      "Full ownership of the files, data, accounts, and instructions",
       "Simple reports and follow-up reminders you approve",
       "Plain notes another qualified person can use if you ever need them",
       "A look at the steps and software bills that slow the day down",
