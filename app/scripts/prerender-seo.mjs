@@ -854,9 +854,16 @@ function routeImagePreload(page) {
   }
 
   if (page.path === "/") {
-    // The living path shows one real client capture at every viewport, so a
-    // single preload matches the hydrated <img> exactly.
-    return `<link rel="preload" href="${HOME_WALL_LEAD}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+    // The wall's lead capture is the pinned route preload (audit-site-integrity
+    // requires exactly one). The hero backdrop is the largest paint in the
+    // first screen — the LCP element on phone and desktop — and it is rendered
+    // by React after hydration, so without a hint the browser discovers it
+    // ~1s late. This second link is a plain responsive preload (no
+    // data-route-preload) matching HomeWall's srcset/sizes exactly.
+    return [
+      `<link rel="preload" href="${HOME_WALL_LEAD}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+      `<link rel="preload" href="/assets/hero-ues-lights-900.webp" imagesrcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" imagesizes="(min-width: 64rem) 900px, 100vw" as="image" type="image/webp" fetchpriority="high">`,
+    ].join("\n");
   }
 
   if (!asset?.endsWith(".webp")) return "";
