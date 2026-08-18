@@ -41,7 +41,9 @@ export default function About() {
         // A different trio than the services hub, so the two do not repeat.
         visual={
           <WorkWall
-            slugs={["clearhelp", "after-hours-agenda", "brothers-pizzeria"]}
+            // brothers-pizzeria is a private case, so the wall correctly refused to
+            // render it and About lost its back plate. Public cases only.
+            slugs={["clearhelp", "after-hours-agenda", "logan-loans"]}
             label="Recent shipped work"
           />
         }
