@@ -15,7 +15,13 @@ export default function StickyHelpBar() {
   const onHome = trimmed === "";
   const routeIntent = acquisitionIntentForPathname(pathname);
   const helpCta = acquisitionCtaForIntent(routeIntent, "sticky_help");
-  const [heroVisible, setHeroVisible] = useState(onHome);
+  // Von Restorff, measured Aug-18 across every route: this bar's orange cell
+  // sat on screen together with the hero's orange primary decision on ~half
+  // the site. Now, on every page, the bar stays hidden while the hero's
+  // primary action ([data-lf-primary-action]; the whole wall on the home
+  // page) is in view, and appears once it scrolls away — persistent help
+  // below the fold, never a second copy of what is already on screen.
+  const [heroVisible, setHeroVisible] = useState(true);
   const [consentVisible, setConsentVisible] = useState(
     () =>
       typeof document !== "undefined" &&
@@ -23,30 +29,32 @@ export default function StickyHelpBar() {
   );
 
   useEffect(() => {
-    if (!onHome) return;
-    // The hero already carries the number and both decisions, so persistent
-    // help would be a second copy of what is on screen. Reveal it once the
-    // hero leaves view.
-    //
-    // Fail OPEN, not closed. This used to query `.lf-hero__main` and bail when
-    // it was absent, leaving `heroVisible` stuck at its initial `true` — so
-    // when the homepage hero was rebuilt, the bar silently never appeared and
-    // the page lost its persistent help on every screen below the fold.
-    // Nothing errored. If the hero cannot be found, show the bar.
-    const hero = document.querySelector(".lf-wall");
-    if (!hero) {
-      // Queued rather than called straight from the effect body: a synchronous
-      // setState here cascades a second render, and React lints against it.
-      queueMicrotask(() => setHeroVisible(false));
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => setHeroVisible(entry.isIntersecting),
-      { threshold: 0.1 },
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, [onHome]);
+    let observer: IntersectionObserver | null = null;
+    let timer: number | null = null;
+    let attempts = 0;
+    const attach = () => {
+      const target =
+        document.querySelector<HTMLElement>("[data-lf-primary-action]") ??
+        (onHome ? document.querySelector<HTMLElement>(".lf-wall") : null);
+      if (!target) {
+        // Route content can mount a beat after this bar. Look a few times;
+        // if there is no hero action at all, fail OPEN and show the bar.
+        if (attempts++ < 12) timer = window.setTimeout(attach, 80);
+        else setHeroVisible(false);
+        return;
+      }
+      observer = new IntersectionObserver(
+        ([entry]) => setHeroVisible(entry.isIntersecting),
+        { threshold: 0 },
+      );
+      observer.observe(target);
+    };
+    attach();
+    return () => {
+      if (timer !== null) window.clearTimeout(timer);
+      observer?.disconnect();
+    };
+  }, [pathname, onHome]);
 
   useEffect(() => {
     const syncConsentVisibility = (event: Event) => {
@@ -62,7 +70,7 @@ export default function StickyHelpBar() {
     trimmed === "/tech-audit" ||
     trimmed === "/website-check" ||
     trimmed === "/thanks" ||
-    (onHome && heroVisible)
+    heroVisible
   ) {
     return null;
   }

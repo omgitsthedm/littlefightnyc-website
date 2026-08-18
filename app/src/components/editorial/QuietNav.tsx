@@ -106,7 +106,7 @@ export default function QuietNav() {
       }
       observer = new IntersectionObserver(
         ([entry]) => setHeroActionVisible(entry.isIntersecting),
-        { threshold: 0.4 },
+        { threshold: 0 },
       );
       observer.observe(target);
     };
