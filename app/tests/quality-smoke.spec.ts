@@ -267,7 +267,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "About",
     path: "/about/",
     title: "About Little Fight NYC | Help for Small Businesses",
-    h1: /Less runaround\.\s*More getting done\./i,
+    h1: /One studio\s*for all of it\./i,
     criticalLink: 'a[href="tel:+16463600318"]',
     tags: ["@chromium-desktop"],
   },

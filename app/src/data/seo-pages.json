@@ -915,9 +915,9 @@
     {
       "path": "/about/",
       "title": "About Little Fight NYC | Help for Small Businesses",
-      "description": "Little Fight NYC helps New York small businesses get clearer websites, help when things break, and simpler ways to run the day.",
-      "h1": "Less runaround. More getting done.",
-      "shortAnswer": "Short answer: Little Fight NYC helps local businesses get clearer websites, help when things break, and simpler ways to run the day.",
+      "description": "One studio for a New York small business’s website, the fixes when things break, and software you own. A real person answers 9am–9pm Eastern.",
+      "h1": "One studio for all of it.",
+      "shortAnswer": "Short answer: Little Fight NYC is one studio for a small business’s website, the fixes when things break, and software the business owns. One person stays accountable from the free first look to the final files.",
       "type": "AboutPage",
       "image": "/assets/owner.webp",
       "share": {
@@ -925,7 +925,7 @@
         "type": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "alt": "Little Fight NYC at a New York diner: a small team that helps small businesses move forward."
+        "alt": "Little Fight NYC at a New York diner: Small firm. Serious technology."
       },
       "faq": [
         {

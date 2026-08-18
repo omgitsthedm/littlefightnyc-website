@@ -26,16 +26,22 @@ export default function About() {
       <PageHero
         eyebrow="About"
         icon={Users}
+        // Answer first. The old H1 was a slogan ("Less runaround. More getting
+        // done.") and the dek was a service list; the reasons to pick us sat
+        // three screens down. Now: what we are (one studio for all of it), what
+        // that means for the owner (one accountable person), then the three
+        // reasons that make it true. Evidence — clients, standards, since 2021 —
+        // follows underneath.
         title={
           <>
-            Less runaround. <span className="lf-em">More getting done.</span>
+            One studio <span className="lf-em">for all of it.</span>
           </>
         }
-        dek="We build websites, fix what breaks, and build software you own."
+        dek="The website, the fixes when things break, and the software you own. One person stays accountable, from the free first look to the final files."
         pillars={[
-          "Consulting is free, always",
-          "One studio, start to finish",
-          "9am–9pm Eastern, a human answers",
+          "A real person answers, 9am–9pm Eastern",
+          "The tools the chains use, sized for your shop",
+          "You keep the domain, code, data, and notes",
         ]}
         // The page that explains who we are now opens on what we shipped.
         // A different trio than the services hub, so the two do not repeat.
@@ -59,7 +65,7 @@ export default function About() {
           <header className="lf-about-belief__head">
             <p>What you can count on</p>
             <h2 id="lf-about-belief-title">
-              Your business should not have to bend around a tool.
+              Four things you can hold us to.
             </h2>
           </header>
 
@@ -76,17 +82,14 @@ export default function About() {
 
           <div className="lf-about-belief__copy">
             <p>
-              We keep the useful parts, repair the places where work gets lost,
-              and build something new only when it earns its place.
+              Your business should not have to bend around a tool. We keep what
+              works, fix where work gets lost, and build new only when it earns
+              its place.
             </p>
             <p>
-              You already know how to run the shop, serve the table, advise the
-              client, or manage the office. Nobody should feel behind because a
-              website, booking tool, or software bill is hard to explain.
-            </p>
-            <p>
-              The goal is not more to learn. It is a clearer path for the
-              customer, fewer dropped steps, and a setup your people can trust.
+              You already know how to run the shop. Nobody should feel behind
+              because a website, booking tool, or software bill is hard to
+              explain.
             </p>
           </div>
         </div>
@@ -99,13 +102,12 @@ export default function About() {
           <header className="lf-about-operating__head">
             <p>Small on purpose</p>
             <h2 id="lf-about-operating-title">
-              We learn the business. Then we build what it actually needs.
+              You talk to the same person the whole way.
             </h2>
             <div>
               <p>
-                You speak to fewer people. The person who learns how your
-                business works stays close through the decisions, the build,
-                and the final files and instructions.
+                That person learns how your business works and stays through
+                the decisions, the build, and the final files and instructions.
               </p>
               <p>
                 We can build a focused website, fix the tools behind the
@@ -125,7 +127,7 @@ export default function About() {
               business from the beginning every time the work moves.
             </p>
             <div className="lf-about-founder__meta">
-              <span>New York City</span>
+              <span>New York City · Since 2021</span>
               <a href={PHONE_HREF} data-lf-label="about_founder_phone">
                 <Phone size={18} strokeWidth={1.9} aria-hidden="true" />
                 {PHONE_DISPLAY}
