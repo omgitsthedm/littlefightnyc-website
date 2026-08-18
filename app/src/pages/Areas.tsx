@@ -33,14 +33,17 @@ export default function Areas() {
       <PageHero
         eyebrow="Local"
         icon={MapPin}
+        // Answer first: what an owner gets on this page (help that knows the
+        // block), then how to use it. The old H1 was a story line and the dek
+        // opened on us ("We work across…").
         title={
           <>
-            Every New York business{" "}
+            Help that knows{" "}
             <br />
-            <span className="lf-em">has a local story.</span>
+            <span className="lf-em">your block.</span>
           </>
         }
-        dek="We work across New York City. Start with your neighborhood, then tell us what is actually getting in the way. A map is useful. It is not a diagnosis."
+        dek="Websites, tech help, and software you own, across New York City. Start with your neighborhood, then tell us what is actually getting in the way. A map is useful. It is not a diagnosis."
         image={{
           src: "/assets/nyc-street-crowd.webp",
           alt: "A busy New York street at dusk",

@@ -1681,7 +1681,7 @@ function zhSnapshot() {
       <section data-lf-owner-intro="true">
       <p class="es-eyebrow">为纽约小生意做清楚、好用的技术</p>
       <h1>网站按您的生意来做。 技术出问题时，有真人帮您。</h1>
-      <p class="es-sub">我们不拿套版硬塞给您。我们做定制网站，修好已经出故障的设备和系统，也能把昂贵、难用的月费软件换成您自己拥有的工具。</p>
+      <p class="es-sub">您得到的是：按您的生意定制的网站、修好的设备和系统，以及您自己拥有的工具，来代替昂贵难用的月费软件。不拿套版硬塞给您。</p>
       <p class="es-actions" data-lf-contact-rail="true"><a class="es-cta" href="tel:${site.phone}">打电话：${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=zh">给我一份清楚的方案</a><a href="sms:${site.phone}">发短信</a><a href="mailto:${site.email}">发邮件</a><a href="/tech-audit/?source=zh_hero_form">填写表格</a></p>
       <p class="es-sub">先免费帮您看一遍。纽约可上门；网站项目也可远程做。给您清楚的方案，再由您决定。</p>
       <ul class="es-list"><li>纽约五大区。我们可以上门。</li><li>美东时间早9点到晚9点，2小时内回电。</li><li>做好的东西和控制权都归您。</li></ul>
@@ -1758,7 +1758,7 @@ function esSnapshot() {
       <section data-lf-owner-intro="true">
       <p class="es-eyebrow">TECNOLOGÍA CLARA PARA NEGOCIOS DE NUEVA YORK</p>
       <h1>Una página web hecha para su negocio.<em>Ayuda real cuando algo falla.</em></h1>
-      <p class="es-sub">Construimos páginas a la medida, arreglamos la tecnología que ya tiene y reemplazamos software caro por herramientas que usted posee. Primero le damos una segunda opinión gratis.</p>
+      <p class="es-sub">Usted recibe una página a la medida, la tecnología que ya tiene arreglada, y herramientas que usted posee en lugar de software caro. Primero, una segunda opinión gratis.</p>
       <p class="es-actions" data-lf-contact-rail="true"><a class="es-cta" href="tel:${site.phone}">Llámenos: ${site.phoneDisplay}</a><a class="es-cta" href="/tech-audit/?intent=website&amp;source=es">Quiero un plan claro</a><a href="sms:${site.phone}">Texto</a><a href="mailto:${site.email}">Correo</a><a href="/tech-audit/?source=es_hero_form">Formulario</a></p>
       <p class="es-sub">La segunda opinión es gratis. En Nueva York podemos ir al negocio; para una página web, también trabajamos a distancia. Primero un plan claro; después usted decide.</p>
       <ul class="es-list"><li>Nueva York. Vamos hasta su negocio.</li><li>Devolvemos la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.</li><li>Usted conserva el control y la propiedad.</li></ul>

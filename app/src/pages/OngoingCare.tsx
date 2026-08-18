@@ -66,16 +66,18 @@ export default function OngoingCare() {
       <section className="lf-revenue-page" aria-labelledby="lf-care-title">
         <header className="lf-revenue-page__intro">
           <p>Care without lock-in</p>
-          <h2 id="lf-care-title">A website can be live and still quietly let people down.</h2>
+          <h2 id="lf-care-title">Your hours, forms, and booking stay right after launch.</h2>
           <div>
             <p>
-              A site can stay online while the useful parts quietly go stale.
-              Wrong hours, a dead form, an old service, or a booking link sent
-              to the wrong person can lose trust without looking broken.
+              You get a website that keeps telling the truth: current hours,
+              a form that lands, the right service, a booking link that reaches
+              the right person. Every change is written down and stays yours.
             </p>
             <p>
               Care fits the business you actually run. No mystery report. No
-              ownership trap. If you need help once, ask once.
+              ownership trap. If you need help once, ask once. Without it, a
+              site can stay online while the useful parts quietly go stale, and
+              lose trust without ever looking broken.
             </p>
           </div>
         </header>

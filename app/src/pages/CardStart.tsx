@@ -25,9 +25,8 @@ export default function CardStart() {
             Websites &amp; tech support <span>from humans.</span>
           </h1>
           <p className="lf-card-start__lede">
-            Little Fight NYC helps small businesses get a website that makes
-            people choose them, fixes tech when it breaks, and sets up tools
-            that save time. A real person answers.
+            You get a website that makes people choose you, tech fixed when
+            it breaks, and tools that save time. A real person answers.
           </p>
         </div>
       </section>

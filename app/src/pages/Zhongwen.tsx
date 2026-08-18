@@ -139,7 +139,7 @@ export default function Zhongwen() {
               </span>
             </h1>
             <p className="lf-es__sub">
-              我们不拿套版硬塞给您。我们做定制网站，修好已经出故障的设备和系统，也能把昂贵、难用的月费软件换成您自己拥有的工具。
+              您得到的是：按您的生意定制的网站、修好的设备和系统，以及您自己拥有的工具，来代替昂贵难用的月费软件。不拿套版硬塞给您。
             </p>
 
             <div className="lf-es__actions" data-lf-contact-rail="true">

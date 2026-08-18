@@ -67,17 +67,18 @@ export default function NewBusinessLaunch() {
       <section className="lf-revenue-page" aria-labelledby="lf-launch-title">
         <header className="lf-revenue-page__intro">
           <p>Open with the basics ready</p>
-          <h2 id="lf-launch-title">We set up the whole online opening, not just the website.</h2>
+          <h2 id="lf-launch-title">You open with the whole online front door working, not just the website.</h2>
           <div>
             <p>
-              Most launch problems happen when the important parts live apart.
-              The website is in one account. The website address is in another.
-              Google belongs to a former employee. Customer messages go somewhere nobody checks.
+              You get the website, the website address, Google, email, and
+              customer messages set up together, with the logins and plain
+              notes in your hands on opening day.
             </p>
             <p>
-              We trace what a customer sees and does before launch. Then we use
-              the smallest useful tool for each job and leave you with the
-              logins and plain notes.
+              We trace what a customer sees and does before launch, then use
+              the smallest useful tool for each job. That is what stops the
+              usual launch problems: the site in one account, the address in
+              another, Google under a former employee, messages nobody checks.
             </p>
           </div>
         </header>

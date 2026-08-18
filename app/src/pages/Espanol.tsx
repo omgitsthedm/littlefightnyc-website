@@ -141,9 +141,9 @@ export default function Espanol() {
               </span>
             </h1>
             <p className="lf-es__sub">
-              Construimos páginas a la medida, arreglamos la tecnología que ya
-              tiene y reemplazamos software caro por herramientas que usted
-              posee. Primero le damos una segunda opinión gratis.
+              Usted recibe una página a la medida, la tecnología que ya tiene
+              arreglada, y herramientas que usted posee en lugar de software
+              caro. Primero, una segunda opinión gratis.
             </p>
 
             <div className="lf-es__actions" data-lf-contact-rail="true">

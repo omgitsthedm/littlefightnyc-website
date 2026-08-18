@@ -217,8 +217,8 @@ export default function Contact() {
               <MapPin size={21} strokeWidth={1.9} aria-hidden="true" />
               <p>
                 Based in Manhattan and working across New York City. When an
-                urgent NYC problem needs hands, on-site help is available
-                within 24 hours.{" "}
+                urgent NYC problem needs hands, on-site help is usually
+                available within 24 hours.{" "}
                 <Link className="lf-contact-ready__coverage-link" to="/areas/">
                   See where we work.
                 </Link>
