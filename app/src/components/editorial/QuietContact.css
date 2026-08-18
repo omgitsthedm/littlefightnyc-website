@@ -273,6 +273,9 @@
 
   .lf-contact-block__next {
     grid-column: 1 / 13;
+    /* Row 1 is as tall as the heading, so the right column already ends well
+       above this rule; the mobile-sized top margin doubled that gap. */
+    margin-top: var(--lf-space-6);
   }
 }
 
