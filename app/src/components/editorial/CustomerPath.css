@@ -1,0 +1,450 @@
+/* CustomerPath — the phone playing the four-beat customer path on a real
+ * client site (found → understood → trusted → booked). Extracted from the
+ * old three-column hero (QuietHero.css) so it can sit beside the pyramid
+ * copy on desktop without dragging the retired hero back. Rules are the
+ * originals with the class prefix renamed; QuietHero.* stays on disk because
+ * the booking-bridge and mobile-lifecycle audits read it. */
+
+.lf-editorial .lf-cpath__path-controls button:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 3px;
+}
+
+.lf-cpath__scene {
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "title title"
+    "phone rail"
+    "detail detail"
+    "controls controls"
+    "caption caption";
+  grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  gap: clamp(1rem, 2.4vw, 1.5rem) clamp(0.9rem, 3.5vw, 2rem);
+  margin: 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem) var(--lf-margin-mobile) clamp(1.5rem, 4vw, 2.25rem);
+  border-top: 1px solid var(--lf-hairline);
+  background: #020203;
+}
+
+.lf-editorial .lf-cpath__scene-title {
+  grid-area: title;
+  display: grid;
+  gap: 0.35rem;
+  max-width: 30rem;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-xs);
+  line-height: 1.4;
+}
+
+.lf-cpath__scene-title > span {
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.lf-cpath__phone {
+  grid-area: phone;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.35rem;
+  border: 1px solid var(--lf-hairline);
+  border-radius: clamp(1.25rem, 7vw, 2rem);
+  background: var(--lf-paper);
+  box-shadow:
+    0 1.5rem 3rem rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+}
+
+.lf-cpath__phone-bar {
+  position: relative;
+  display: flex;
+  height: 1.7rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.lf-cpath__phone-notch {
+  position: absolute;
+  top: 0.45rem;
+  left: 50%;
+  width: 34%;
+  height: 0.42rem;
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-ink);
+  transform: translateX(-50%);
+}
+
+.lf-cpath__phone-url {
+  display: none;
+}
+
+.lf-cpath__phone-screen {
+  position: relative;
+  aspect-ratio: 390 / 780;
+  overflow: hidden;
+  border-radius: clamp(0.9rem, 5vw, 1.5rem);
+  background: #ffffff;
+}
+
+.lf-cpath__phone-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: translate3d(0, 0, 0);
+  transition: transform 1100ms var(--lf-ease-out);
+  will-change: transform;
+}
+
+.lf-cpath__phone-target {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  border: 2px solid var(--lf-fight);
+  border-radius: 0.45rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-cpath__phone-target::after {
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--lf-fight);
+  border-radius: inherit;
+  opacity: 0;
+  content: "";
+}
+
+.lf-cpath__scene[data-lf-beat="booked"] .lf-cpath__phone-target {
+  opacity: 1;
+  transition-delay: 700ms;
+}
+
+.lf-cpath__scene[data-lf-beat="booked"] .lf-cpath__phone-target::after {
+  animation: lf-hero-target-pulse 1300ms var(--lf-ease-out) 800ms 3 both;
+}
+
+.lf-cpath__path {
+  grid-area: rail;
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-cpath__path::before {
+  position: absolute;
+  top: 1.35rem;
+  bottom: 1.35rem;
+  left: 1rem;
+  width: 1px;
+  background: var(--lf-hairline);
+  content: "";
+}
+
+.lf-cpath__path-step {
+  position: relative;
+  min-width: 0;
+}
+
+.lf-editorial .lf-cpath__path-step button {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  width: 100%;
+  min-height: 44px;
+  align-items: start;
+  column-gap: 0.6rem;
+  padding: 0.35rem 0.25rem 0.35rem 0;
+  border: 0;
+  border-radius: var(--lf-radius-sm);
+  color: var(--lf-bone-dim);
+  background: transparent;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-cpath__path-num {
+  position: relative;
+  z-index: 1;
+  grid-row: 1 / span 2;
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  margin-top: 0.05rem;
+  border: 1px solid var(--lf-hairline);
+  border-radius: 50%;
+  color: var(--lf-bone-dim);
+  background: #020203;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  transition:
+    color var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-settle-ms) var(--m-settle-ease),
+    background-color var(--m-settle-ms) var(--m-settle-ease),
+    transform var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-cpath__path-step button strong {
+  min-width: 0;
+  color: inherit;
+  font-family: var(--lf-heading);
+  font-size: clamp(1.15rem, 4.6vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  transition: color var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-cpath__path-note {
+  grid-column: 2;
+  min-width: 0;
+  margin-top: 0.15rem;
+  color: var(--lf-bone-dim);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.25;
+}
+
+.lf-cpath__path-step--passed .lf-cpath__path-num {
+  border-color: var(--lf-bone-soft);
+  color: var(--lf-bone-soft);
+}
+
+.lf-cpath__path-step--passed button strong {
+  color: var(--lf-bone-soft);
+}
+
+.lf-cpath__path-step--active .lf-cpath__path-num {
+  color: var(--lf-ink);
+  border-color: var(--lf-fight);
+  background: var(--lf-fight);
+  transform: scale(1.08);
+}
+
+.lf-cpath__path-step--active button strong {
+  color: var(--lf-bone);
+}
+
+.lf-cpath__path-step--active .lf-cpath__path-note {
+  color: var(--lf-bone-soft);
+}
+
+.lf-editorial .lf-cpath__path-step button:hover strong {
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-cpath__path-step button:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 2px;
+}
+
+.lf-editorial .lf-cpath__path-detail {
+  grid-area: detail;
+  min-height: 2.6em;
+  max-width: 34rem;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-xs);
+  line-height: 1.4;
+}
+
+.lf-cpath__path-detail strong {
+  color: var(--lf-bone);
+  font-weight: 600;
+}
+
+.lf-cpath__path-controls {
+  grid-area: controls;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-2);
+}
+
+.lf-editorial .lf-cpath__path-controls button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: var(--lf-radius-pill);
+  color: var(--lf-bone);
+  background: rgba(5, 5, 7, 0.9);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--m-signal-ms) var(--m-signal-ease),
+    border-color var(--m-signal-ms) var(--m-signal-ease),
+    background-color var(--m-signal-ms) var(--m-signal-ease);
+}
+
+.lf-editorial .lf-cpath__path-controls button:hover, .lf-editorial .lf-cpath__path-controls button:focus-visible {
+  border-color: var(--lf-bone);
+}
+
+.lf-editorial .lf-cpath__path-controls button:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 3px;
+}
+
+.lf-editorial .lf-cpath__caption {
+  grid-area: caption;
+  margin: 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+@media (width < 48rem) {
+  .lf-editorial .lf-cpath__caption {
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+@media (width >= 48rem) {
+  .lf-cpath__scene {
+    padding-inline: var(--lf-margin-tablet);
+  }
+  .lf-cpath__scene {
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 3rem);
+  }
+  .lf-cpath__phone {
+    padding: 0.45rem;
+  }
+  .lf-cpath__phone-bar {
+    height: 2.7rem;
+  }
+  .lf-cpath__phone-notch {
+    top: 0.35rem;
+    width: 30%;
+    height: 0.4rem;
+  }
+  .lf-cpath__phone-url {
+    display: block;
+    margin-top: 0.95rem;
+    color: var(--lf-bone-dim);
+    font-family: var(--lf-mono);
+    font-size: var(--lf-text-2xs);
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .lf-cpath__path {
+    gap: 0.4rem;
+  }
+  .lf-cpath__path::before {
+    left: 1.125rem;
+  }
+  .lf-editorial .lf-cpath__path-step button {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    column-gap: 0.85rem;
+  }
+  .lf-cpath__path-num {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .lf-cpath__path-step button strong {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  }
+  .lf-cpath__path-note {
+    font-size: var(--lf-text-xs);
+  }
+}
+
+@media (min-width: 64rem) {
+  /* Placement inside its parent is the parent's job (HomeWall puts it in the
+     hero's right column); this block only lays out the phone beside the rail. */
+  .lf-cpath__scene {
+    align-content: center;
+    padding: clamp(1.5rem, 2.5vw, 2.25rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    border: 1px solid var(--lf-hairline);
+    border-radius: var(--lf-radius-sm);
+  }
+  .lf-cpath__scene {
+    grid-template-areas:
+      "phone title"
+      "phone rail"
+      "phone detail"
+      "phone controls"
+      "phone caption";
+    grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto auto;
+    align-content: center;
+    align-items: start;
+    row-gap: clamp(0.9rem, 1.6vw, 1.25rem);
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+  }
+  .lf-cpath__phone {
+    align-self: center;
+  }
+  .lf-editorial .lf-cpath__scene-title {
+    max-width: 26rem;
+  }
+  .lf-cpath__path {
+    align-self: start;
+  }
+}
+
+@media (min-width: 80rem) {
+  .lf-cpath__scene {
+    grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 64rem) and (max-width: 69.99rem) {
+  .lf-cpath__scene {
+    grid-template-columns: minmax(0, 13rem) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 380px) {
+  .lf-cpath__scene {
+    grid-template-columns: minmax(0, 44%) minmax(0, 1fr);
+    column-gap: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-cpath__quick-action,
+  .lf-editorial .lf-cpath__path-controls button,
+  .lf-cpath__phone-screen img,
+  .lf-cpath__phone-target,
+  .lf-cpath__path-num,
+  .lf-editorial .lf-cpath__path-step button,
+  .lf-cpath__path-step button strong {
+    animation: none;
+    transition: none;
+  }
+  .lf-cpath__scene[data-lf-beat="booked"] .lf-cpath__phone-target::after {
+    animation: none;
+  }
+}
+
+.lf-cpath--motion-reduced .lf-cpath__phone-screen img, .lf-cpath--motion-reduced .lf-cpath__phone-target, .lf-cpath--motion-reduced .lf-cpath__phone-target::after, .lf-cpath--motion-reduced .lf-cpath__path-num, .lf-cpath--motion-reduced .lf-cpath__path-step button, .lf-cpath--motion-reduced .lf-cpath__path-step button strong {
+  animation: none;
+  transition: none;
+}

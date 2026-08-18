@@ -1,6 +1,7 @@
 import { ArrowRight, Mail, MessageSquare, Phone, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { HOME_WALL } from "@/data/home-wall";
+import CustomerPath from "./CustomerPath";
 import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import "./HomeWall.css";
 
@@ -15,6 +16,13 @@ import "./HomeWall.css";
  *
  * The screen still answers "is this for someone like me?" — the six trades
  * do that — it just answers "what do you do for me?" first.
+ *
+ * On desktop the phone playing one customer's four-beat path (found →
+ * understood → trusted → booked, on a real client site) sits to the right of
+ * the copy — the "slideshow" from the old hero, back as the hero's visual.
+ * Below 64rem it is not rendered into the layout (display:none, lazy image),
+ * because the phone-sized first screen and the 15-screen page budget are the
+ * contract there and the six tiles already carry the proof.
  *
  * It used to answer a different one. The hero was three columns — a promise, a
  * phone playing a four-beat customer path, and the beat list beside it — all
@@ -38,6 +46,7 @@ export default function HomeWall() {
   return (
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
       <div className="lf-wall__inner">
+        <div className="lf-wall__copy">
         <p className="lf-wall__kicker">
           <span aria-hidden="true">LF / 01</span>
           New York City
@@ -96,6 +105,11 @@ export default function HomeWall() {
           <p className="lf-wall__hours">
             9am–9pm Eastern: a human answers. After hours: leave a message.
           </p>
+        </div>
+        </div>
+
+        <div className="lf-wall__scene">
+          <CustomerPath />
         </div>
 
         <p className="lf-wall__proof">Shops like yours, already working.</p>

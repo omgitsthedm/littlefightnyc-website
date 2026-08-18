@@ -316,7 +316,7 @@
    the check link past the fold on WebKit; after the hours line they are still
    in the first scroll and cost the first screen nothing. */
 @media (max-width: 47.99rem) {
-  .lf-wall__inner {
+  .lf-wall__copy {
     display: flex;
     flex-direction: column;
   }
@@ -327,8 +327,6 @@
   .lf-wall__act { order: 3; }
   .lf-wall__reach { order: 4; }
   .lf-wall__pillars { order: 5; }
-  .lf-editorial .lf-wall__proof { order: 6; }
-  .lf-wall__grid { order: 7; }
 
   .lf-wall__pillars {
     gap: 0.35rem 1.25rem;
@@ -347,7 +345,38 @@
   }
 }
 
+/* ── the phone path (desktop only) ──────────────────────────────────────── */
+
+.lf-wall__scene {
+  display: none;
+}
+
 @media (min-width: 64rem) {
+  /* 1024–1279: the phone-and-rail needs ~36rem to breathe, so the player
+     sits under the copy at full width. From 1280 it moves beside the copy. */
+  .lf-wall__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "copy"
+      "scene"
+      "proof"
+      "grid";
+    align-items: center;
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .lf-wall__copy { grid-area: copy; }
+  .lf-editorial .lf-wall__proof { grid-area: proof; }
+  .lf-wall__grid { grid-area: grid; }
+
+  .lf-wall__scene {
+    display: block;
+    grid-area: scene;
+    min-width: 0;
+    margin-top: clamp(var(--lf-space-6), 4vw, var(--lf-space-8));
+  }
+
   .lf-editorial .lf-wall__claim {
     font-size: clamp(4rem, 7vw, 7.5rem);
   }
@@ -355,6 +384,46 @@
   .lf-wall__grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: var(--lf-space-4);
+  }
+}
+
+@media (min-width: 80rem) {
+  .lf-wall__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    grid-template-areas:
+      "copy scene"
+      "proof proof"
+      "grid grid";
+  }
+
+  .lf-wall__scene {
+    margin-top: 0;
+  }
+
+  /* With the player beside the copy, the first tile has to start inside a
+     900px-tall screen (the desktop smoke test pins it): trim the top padding
+     and the proof label's margin at this width. Measured: tile top 917 → ~850. */
+  .lf-wall {
+    padding-block-start: clamp(var(--lf-space-7), 5vw, var(--lf-space-8));
+  }
+
+  .lf-editorial .lf-wall__proof {
+    margin-top: var(--lf-space-6);
+  }
+
+  /* Half a column: "WE HANDLE THE TECH." has to hold one line so the two
+     decisions and the hours line stay in a 900px-tall first screen. */
+  .lf-editorial .lf-wall__claim {
+    font-size: clamp(3.25rem, 4.3vw, 4.25rem);
+  }
+
+  .lf-wall .lf-cpath__scene {
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+
+  .lf-wall .lf-cpath__path-step button strong {
+    font-size: clamp(1.35rem, 1.5vw, 1.75rem);
   }
 }
 
