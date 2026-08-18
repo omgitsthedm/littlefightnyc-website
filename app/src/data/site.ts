@@ -527,7 +527,7 @@ export const studioProjects: StudioProject[] = [
     name: "Dakota",
     kind: "Sales operating system",
     status: "Active",
-    oneline: "An evidence-backed sales operating system that turns public research and consented inquiries into a deliberate next action—without contacting anyone automatically.",
+    oneline: "A small services firm can run a real sales process—consented inquiries, public research, evidence, next action—in one bounded queue, and nothing sends by itself.",
     description:
       "Dakota helps a small services firm work like a careful sales team without pretending a lead is a client. It brings consented inquiries and verified public research into one bounded review queue, prepares pursuit kits for an operator to approve, and tracks real activity from follow-up through proposal and cleared payment. Nothing sends from Dakota.",
     stack: ["React", "Netlify", "Operator-controlled"],
@@ -556,7 +556,7 @@ export const studioProjects: StudioProject[] = [
     image: CABINETRY_PROCESS_FILM.poster,
     video: CABINETRY_PROCESS_FILM,
     body: [
-      "The Cockpit is the largest non-public build Little Fight has shipped. It turns the messy first pass of a custom cabinetry estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out.",
+      "An estimator turns the messy first pass of a custom cabinetry estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out. It is the largest non-public build Little Fight has shipped.",
       "The build is Next.js, Supabase, Anthropic for classification, and Netlify Functions for the heavy processing. The screens show dense information without hiding anything. The data tells the truth. The estimator’s judgment makes the call.",
       "Real estimates run through it. The math is honest. The team uses it on every project.",
     ],
@@ -567,7 +567,7 @@ export const studioProjects: StudioProject[] = [
     kind: "Financial OS for live-event venues",
     status: "Live",
     oneline:
-      "A full product Little Fight shipped to the public. The operating system for independent live-event venues. Close the night in 90 seconds and know every number down to the receipt.",
+      "A venue GM closes the night in 90 seconds and knows every number down to the receipt. The operating system for independent live-event venues—a full product Little Fight shipped to the public.",
     description:
       "VenueCircuit is the most ambitious thing in the Studio. Not a website. Not an internal tool. A complete software product, live to the public. It is a financial operating system for independent music venues and event spaces. The GM closes the night in about 90 seconds. The venue’s money stays separate from the promoter’s. The quarter is already reconciled. Live at venuecircuit.app.",
     stack: ["Next.js", "Supabase", "TypeScript", "Netlify"],

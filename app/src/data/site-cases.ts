@@ -294,7 +294,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-23",
     updated: "2026-07-27",
-    title: "A packed neighborhood shop became part of the walk.",
+    title: "A new neighbor or traveler can see why the shop belongs on a Lower East Side walk, and plan the stop.",
     problem:
       "A long-running Lower East Side shop had history, character, and shelves people could get lost in. Its old website mostly acted like a listing. It did not show a new neighbor or traveler why the store belonged in their day.",
     kept:
@@ -374,13 +374,13 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
     updated: "2026-07-27",
-    title: "A debut horror feature got an official home that feels like cinema.",
+    title: "Press, festivals, and viewers have one official place to watch Marrow and check the facts.",
     problem: "CC Films had the raw material for Marrow, but it needed one official home for audiences, press, festivals, and reviewers without flattening the film into a generic entertainment template.",
     kept: "The analog horror mood, the Marrow poster and trailer, premiere photography, review coverage, core credits, and the way the team already publishes updates.",
     changed: "Made one official home with five focused pages. The trailer, credits, reviews, and premiere photos now have clear places to live, so viewers know where to look next.",
     result: "A live official home at ccfilms.net. Press, festival audiences, and viewers can watch, verify the facts, and keep exploring on a phone, tablet, or desktop. The dated build check appears beside the live source; it is not a sales result.",
     body: [
-      "CC Films is the Dallas-based production company behind Marrow, a debut psychological horror feature. The site has one important job: give press, festival audiences, reviewers, and viewers one official place for the film. Watch the trailer. See the cast and credits. Browse premiere photos. Find the right next step.",
+      "Press, festival audiences, reviewers, and viewers now have one official place for the film. Watch the trailer. See the cast and credits. Browse premiere photos. Find the right next step. That was the site’s one job: CC Films is the Dallas-based production company behind Marrow, a debut psychological horror feature, and it needed an official home.",
       "The team already had the good parts: a strong poster, a trailer, festival context, reviews, cast names, and a deep premiere gallery. We kept the analog, VHS-flavored mood. Then we made the site easier to use as the official answer instead of a loose brochure.",
       "The finished site gives each important thing a clear home. It can carry press, festival, and release news without losing the film’s tone or making a visitor guess where the facts live.",
     ],
@@ -425,13 +425,13 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
     updated: "2026-07-12",
-    title: "A nostalgic onboard social layer for life at sea.",
+    title: "A cruise guest can find tonight’s events, the venue hours, and each other from anywhere on the ship.",
     problem: "DeckSpace needed to explain a cruise-ship social network without feeling like a generic travel app. Guests need events, venue hours, shops, bars, restaurants, voyage details, photos, profiles, and each other, all while moving around the ship.",
     kept: "The emotional center of cruising. Shared plans, temporary community, onboard discovery, and a trip people want to remember after they get home.",
     changed: "Framed the product around nostalgia, finding your way on the ship, guest profiles, and event discovery. The experience aims to feel like a helpful companion, not another portal.",
     result: "An archived product walkthrough that explains the onboard guide, social network, and cruise-memory idea without presenting an old host as current client proof.",
     body: [
-      "DeckSpace is built for a strange little world: a cruise ship. Guests are relaxed, distracted, and moving between decks. They keep asking the same questions. What is happening tonight? Where is the bar? What is open? Who else is on board? Where did that photo go? The site had to make the product feel like a guest companion, not a software dashboard.",
+      "A guest can answer the questions a cruise keeps asking — what is happening tonight, where is the bar, what is open, who else is on board, where did that photo go — without digging through a dashboard. DeckSpace is built for a strange little world: a ship full of relaxed, distracted people moving between decks. The product had to feel like a guest companion, not software.",
       "We kept the nostalgic heart of the idea. A cruise is part schedule, part map problem, and part temporary social world. DeckSpace turns that into a shared sailing page. Guests can follow events, check venues, keep up with the voyage, make a profile, find people, and share photos. They leave with a short-lived archive of the trip.",
       "The story also had to make quick questions feel easy. A guest should not have to dig through a maze just to find dinner hours or see who is going to an event. The retained captures show the intended discovery path; this page does not present the former host as a current launch.",
     ],
@@ -512,7 +512,7 @@ export const caseStudies: CaseStudy[] = [
     changed: "Built a bold phone-first site that explains services, location, and what a new client should do next. The booking habit stayed the same: the site leads clearly into Square. We also set up the studio’s Google Business Profile.",
     result: "A new client can find the studio, see Rachel’s work, and book. Phone, tablet, or desktop. The public home is hairbyrachelcharles.com. The dated build checks sit beside the live source; they are not booking or revenue claims.",
     body: [
-      "When we first sat down with Rachel, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed. The site started as a question. What if every new client could find her, see the work, and book without a single message?",
+      "A new client can now find Rachel, see the work, and book without sending a single message. That was the question the site started with. Before it, her whole business ran through Instagram DMs. She built her client base through word of mouth and showing up. But every booking took a back-and-forth in messages. Every confirmation lived in her thumbs. And Google had no idea she existed.",
       "We kept the part that already worked: her Square Appointments setup, which her clients knew. The site became the front door. Electric yellow, confident type, close-cropped work, and Rachel’s own voice give the experience a point of view before the booking button appears. We also set up her Google Business Profile from scratch and wired the site to support it.",
       "The finished site gives services, common questions, and neighborhood details their own clear pages. Square remains the booking destination. The website does the work before it: help a new client recognize the right fit, trust the work, and book without a long message chain.",
     ],
@@ -569,15 +569,15 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
     updated: "2026-07-12",
-    title: "An online store that keeps the brand’s character.",
+    title: "The owner can put out a product drop in a day, and the store still looks like the brand.",
     problem: "A streetwear brand with a real point of view needed a real storefront. But Shopify’s templates were going to flatten everything that made the brand interesting.",
     kept: "The brand identity, the product designs, and the NYC nightlife voice.",
     changed: "Made one storefront that keeps product details together, sends payment through Square, and sends paid orders to Printful for shipping. The owner does not have to rebuild the store for every drop.",
     result: "A storefront that looks like the brand, not like a Shopify theme. Payment and shipping have clear handoffs, and a new product drop can go out in a day.",
     body: [
-      "After Hours Agenda is Little Fight NYC’s own streetwear experiment. It is the rare case where the agency is also the client, with all the dangers that brings. The brand was tight. The designs were ready. The audience was building. But the storefront was Shopify, and Shopify was flattening the brand. Every product page looked like every other Shopify product page, no matter what we put on it.",
+      "A customer can choose a product, pay, and wait for shipping without seeing the machinery behind it, and the owner can put out a new drop in a day. After Hours Agenda is Little Fight NYC’s own streetwear experiment — the rare case where the agency is also the client, with all the dangers that brings. The brand was tight. The designs were ready. The audience was building. But the storefront was Shopify, and Shopify was flattening the brand. Every product page looked like every other Shopify product page, no matter what we put on it.",
       "The choice was to keep patching a template or make a store that fit the brand from the start. We made the second one. Product details live in one place. Square takes payment. Printful handles shipping. The owner does not have to babysit a pile of disconnected tools to put out a new drop.",
-      "The result is a storefront that looks like the brand instead of the platform. A customer can choose a product, pay, and wait for shipping without seeing the machinery behind it. New product drops can take a day, not a long rebuild.",
+      "The result is a storefront that looks like the brand instead of the platform. New product drops take a day, not a long rebuild.",
     ],
   },
   {
@@ -642,7 +642,7 @@ export const caseStudies: CaseStudy[] = [
     changed: "Made the public, intake, and staff parts work together without forcing the team to copy a request from place to place.",
     result: "A working setup where a request reaches the right place, the team can see its information, and updates do not make the other parts fall over.",
     body: [
-      "ClearHelp needed three connected places: one for the public, one for requests, and one for the staff who handle them. They needed to feel like one service, not three unrelated tabs.",
+      "Someone asking for help gets one clear public starting point, and the staff receive the request in the protected system built to handle it. Behind that are three connected places — one for the public, one for requests, one for the staff — that feel like one service, not three unrelated tabs.",
       "We kept the team’s own categories and names, so the human work did not have to change. A request now starts in one clear place and reaches the right staff view without someone retyping it.",
       "The result is a connected setup the team can use and update with confidence. The useful proof is not the plumbing. It is that a request can reach the right place without extra copying.",
     ],
@@ -761,13 +761,13 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites"],
     published: "2026-05-13",
     updated: "2026-07-27",
-    title: "A finance landing page grew into a full answer system.",
+    title: "A partner or prospect can go from a broad funding question to a precise answer, without finance-speak.",
     problem: "A funding LLC needed a credible public presence that could explain a complex category without the glass towers, stock handshakes, and vague promises that make finance sites look interchangeable.",
     kept: "The team’s approved positioning, contact paths, policy boundaries, and the language they use to describe the business.",
     changed: "Built a clear library for services, audiences, locations, questions, and reference material. Each page gives a partner or prospect the next useful answer instead of a vague sales push.",
     result: "A distinctive public resource at grandfundingllc.com. Partners and prospects can move from a broad question to a precise answer on any screen, while claims and regulated language remain explicitly client-controlled.",
     body: [
-      "Grand Funding is a financial funding business. Finance sites have a template problem: glass towers, stock handshakes, the word 'solutions.' Those defaults exist because trust is hard to show. But to the exact partners this site must convince, a template reads as risk. The brief was to be credible without one borrowed cliche.",
+      "A partner or prospect can find the right service, policy, or contact path on any screen without decoding finance language. That is the whole brief: be credible without one borrowed cliche. Grand Funding is a financial funding business, and finance sites have a template problem — glass towers, stock handshakes, the word 'solutions.' Those defaults exist because trust is hard to show. But to the exact partners this site must convince, a template reads as risk.",
       "We kept the team’s approved positioning and their own words. No invented mission statement and no unapproved lending claims. The design builds trust by making company, service, policy, and founder information easier to find.",
       "What began as a landing page became a library. Services, audiences, locations, questions, and references each get a clear route. The result is a public site a partner or prospect can use on a desktop or a phone without having to decode finance language.",
     ],
@@ -861,7 +861,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites"],
     published: "2026-07-23",
     updated: "2026-07-27",
-    title: "A digital menu became a family handbill.",
+    title: "A customer sees the family story, the full menu with every price, and a phone order one tap away.",
     problem: "The first proof worked as a digital menu, but it looked like a generic black restaurant template. It buried the family story, reduced the shop’s history to badges, and squeezed the price grid on phones and tablets.",
     kept: "The logo, full menu, every price, hours, contact facts, phone-first ordering, real food photography, and the true family story: Johnny came west in 1979 and opened this shop in 1998.",
     changed: "Rebuilt the whole experience as a printed neighborhood handbill. The family story and customer voices now lead. Butcher paper, tomato red, basil green, heavy sign-painter type, and a real slice carry the character. The menu stacks cleanly on small screens, reading text stays at sixteen points or larger, and the call action remains thumb-sized.",
@@ -929,7 +929,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-27",
     updated: "2026-07-27",
-    title: "A music company got a real world, not a record-label template.",
+    title: "Artists, services, booking, and company facts each have a clear path, with the label’s character intact.",
     problem:
       "Legacy Music Group needed more than a dark landing page. Artists, services, booking, company context, and search systems all needed a coherent official source without sanding away the independent label’s character.",
     kept:
@@ -939,7 +939,7 @@ export const caseStudies: CaseStudy[] = [
     result:
       "A reviewed client release candidate with desktop, tablet, and phone proof. The case stays inside Little Fight until the approved build is on a client-owned domain.",
     body: [
-      "Music-company sites often collapse into one of two defaults: a black poster with no useful path, or a corporate roster template with no atmosphere. Legacy Music Group needed both sides at once. Visitors should feel the label immediately, then find an artist, understand the services, or reach booking without decoding the page.",
+      "A visitor feels the label immediately, then finds an artist, understands the services, or reaches booking without decoding the page. Legacy Music Group needed both sides at once, because music-company sites usually collapse into one of two defaults: a black poster with no useful path, or a corporate roster template with no atmosphere.",
       "We built the experience like a late-night control room. Deep contrast, precise type, luminous signals, and measured movement create the mood. Underneath it are clear paths for the roster, services, booking, company details, and policies. The visual world never has to carry information it cannot prove.",
       "The current release candidate has been checked across desktop, tablet, and phone. Final approved photography, the production booking connection, and the client-owned domain remain release gates. Until that last gate is real, Little Fight shows the work inside this case study and does not send visitors to a temporary hosting address.",
     ],
@@ -1017,7 +1017,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-27",
     updated: "2026-07-27",
-    title: "A painting contractor site began with Phoenix itself.",
+    title: "A Phoenix customer can recognize the work, find the right service, and start a project conversation.",
     problem:
       "Painting websites tend to look interchangeable: white rooms, a row of service cards, and a quote button. Chromatic needed a useful customer path with a visual identity rooted in the city and enough structure to answer real service questions.",
     kept:
@@ -1027,9 +1027,9 @@ export const caseStudies: CaseStudy[] = [
     result:
       "A live custom-domain site at chromaticaz.com that gives Phoenix customers a specific service path from desktop through phone, without reducing the business to another generic contractor template.",
     body: [
-      "A contractor does not become more trustworthy because a template puts a paint roller beside a rounded quote form. The useful proof is specificity. Where the company works, what it does, what a customer should expect, and whether the page feels considered before anyone asks for a project.",
+      "A Phoenix customer can see where the company works, what it does, and what to expect, then start the right project conversation from a desktop, tablet, or phone. That specificity is the useful proof. A contractor does not become more trustworthy because a template puts a paint roller beside a rounded quote form.",
       "The design starts with Phoenix rather than generic home-improvement imagery. Strong blocks of color, sun-washed surfaces, and direct type make the site recognizable. Services, project questions, and policy information each have clear destinations.",
-      "The site is now live on the client-owned domain. The public path has one job: help a Phoenix customer find the relevant service and start the right project conversation from a desktop, tablet, or phone.",
+      "The site is now live on the client-owned domain, and the public path keeps that one job: find the relevant service, start the right conversation.",
     ],
   },
   {
@@ -1110,7 +1110,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-27",
     updated: "2026-07-27",
-    title: "A financial website became a warm Arizona guide with clear next steps.",
+    title: "A visitor can find the lending question that fits and go straight to the right form.",
     problem:
       "Lending is dense, regulated, and full of repeated questions. Logan Loans needed a public site that could separate those questions cleanly, guide different visitors to the right form, and remain readable without leaning on generic blue-bank design.",
     kept:
@@ -1120,7 +1120,7 @@ export const caseStudies: CaseStudy[] = [
     result:
       "A public custom-domain site at logan.loans that makes a large information set feel calm on desktop, iPad, and phone. The architecture improves clarity while regulated terms and claims remain under client control.",
     body: [
-      "Financial websites often try to make a difficult category feel simple by hiding the detail. That can create a clean first screen and a confusing second step. Logan Loans needed the opposite: a warm entry point with enough structure to let a visitor find the exact page, question, policy, or form they came for.",
+      "A visitor can find the exact page, question, policy, or form they came for, from a warm entry point instead of a wall of fine print. Financial websites often try to make a difficult category feel simple by hiding the detail. That creates a clean first screen and a confusing second step. Logan Loans needed the opposite: warmth up front, enough structure underneath.",
       "The visual system takes its cues from Arizona rather than a generic bank. Warm fields, editorial typography, calm spacing, and clear route labels make the experience feel human without turning the subject into lifestyle marketing. Services, locations, questions, policies, and forms each have their own useful place.",
       "Different forms keep different conversations from collapsing into one generic request. The work is practical: name the question, show the relevant context, and give the visitor a clear next step. The live site does that on its own domain while approved financial language remains client-controlled.",
     ],
