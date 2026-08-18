@@ -26,7 +26,10 @@
   margin: 0;
   padding: clamp(1.5rem, 4vw, 2.5rem) var(--lf-margin-mobile) clamp(1.5rem, 4vw, 2.25rem);
   border-top: 1px solid var(--lf-hairline);
-  background: #020203;
+  /* translucent so the street behind the hero reads through the panel */
+  background: rgb(2 2 3 / 78%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .lf-editorial .lf-cpath__scene-title {

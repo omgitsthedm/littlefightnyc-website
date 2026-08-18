@@ -45,6 +45,24 @@ import "./HomeWall.css";
 export default function HomeWall() {
   return (
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
+      {/* The street behind the promise: an Upper East Side block under string
+          lights at night — New York, warm, and no readable business names or
+          logos (the imagery rule). Decorative (alt=""), low fetch priority and
+          never route-preloaded, so the wall's first tile stays the one LCP
+          candidate; the scrim in CSS keeps the copy AA on top of it. */}
+      <div className="lf-wall__backdrop" aria-hidden="true">
+        <img
+          src="/assets/hero-ues-lights-900.webp"
+          srcSet="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w, /assets/hero-ues-lights.webp 1600w"
+          sizes="100vw"
+          width={1600}
+          height={1067}
+          alt=""
+          loading="eager"
+          fetchPriority="low"
+          decoding="async"
+        />
+      </div>
       <div className="lf-wall__inner">
         <div className="lf-wall__copy">
         <p className="lf-wall__kicker">

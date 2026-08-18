@@ -17,7 +17,49 @@
     var(--lf-ink);
 }
 
+/* ── the street behind it ───────────────────────────────────────────────── */
+
+.lf-wall__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.lf-wall__backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* the lit trees run down the right of the frame; keep them under the player */
+  object-position: 60% 45%;
+  opacity: 0.85;
+}
+
+/* Scrim: heavy over the copy column so type stays AA, lighter to the right,
+   and solid ink by the bottom so the six tiles sit on a flat ground. */
+.lf-wall__backdrop::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, rgb(5 5 7 / 94%) 0%, rgb(5 5 7 / 82%) 38%, rgb(5 5 7 / 40%) 70%, rgb(5 5 7 / 30%) 100%),
+    linear-gradient(180deg, rgb(5 5 7 / 55%) 0%, rgb(5 5 7 / 0%) 28%, rgb(5 5 7 / 35%) 62%, rgb(5 5 7 / 100%) 100%);
+}
+
+/* Below desktop the copy spans the full width, so the scrim is even rather
+   than column-weighted; the bottom still runs to solid ink under the tiles. */
+@media (max-width: 63.99rem) {
+  .lf-wall__backdrop::after {
+    background:
+      linear-gradient(180deg, rgb(5 5 7 / 82%) 0%, rgb(5 5 7 / 76%) 55%, rgb(5 5 7 / 100%) 100%);
+  }
+}
+
 .lf-wall__inner {
+  position: relative;
+  z-index: 1;
   width: min(100%, var(--lf-max-w));
   margin-inline: auto;
   padding-inline: var(--lf-page-gutter);
