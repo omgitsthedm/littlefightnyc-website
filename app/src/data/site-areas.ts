@@ -24,7 +24,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10002"],
     headline: "Tech support, websites, and local search for Lower East Side businesses.",
     shortAnswer:
-      "Short answer: Lower East Side businesses need fast mobile websites, clear local search signals, and tools that keep up with busy nights and small teams.",
+      "Short answer: In the Lower East Side, you get a fast mobile website, clear local search signals, and tools that keep up with busy nights and small teams.",
     localPattern:
       "Bars, restaurants, galleries, shops, and studios compete in a packed neighborhood where people search nearby and decide fast.",
     firstMove: "Check the website, the Google profile, the booking or payment flow, and the follow-up.",
@@ -66,7 +66,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10003", "10009"],
     headline: "Right-sized websites and systems for East Village local businesses.",
     shortAnswer:
-      "Short answer: East Village businesses win when locals can find them, get the offer fast, and act without chasing broken links or confusing booking paths.",
+      "Short answer: In the East Village, you get a site locals can find, an offer they get fast, and booking that works without broken links or confusing paths.",
     localPattern:
       "Restaurants, salons, wellness studios, shops, and service businesses need clear pages and practical systems without corporate bloat.",
     firstMove: "Clean up the service pages, Google visibility, booking path, and tools before buying more software.",
@@ -108,7 +108,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10012", "10013"],
     headline: "Premium websites and business systems for SoHo shops and studios.",
     shortAnswer:
-      "Short answer: SoHo businesses need polished public pages and simple back-office systems that protect leads, appointments, payments, and follow-up.",
+      "Short answer: In SoHo, you get polished public pages and simple back-office systems that protect leads, appointments, payments, and follow-up.",
     localPattern:
       "Retail, galleries, design studios, and premium services need trust fast. Customers compare several options in one walk or one search.",
     firstMove: "Review the website, the local proof, the contact path, and whether staff still run on memory and spreadsheets.",
@@ -150,7 +150,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10001", "10011"],
     headline: "Websites, local SEO, and workflow cleanup for Chelsea businesses.",
     shortAnswer:
-      "Short answer: Chelsea businesses need strong search visibility, sharp service pages, and systems that keep inquiries, bookings, and follow-up easy to see.",
+      "Short answer: In Chelsea, you get strong search visibility, sharp service pages, and systems that keep inquiries, bookings, and follow-up easy to see.",
     localPattern:
       "Studios, galleries, salons, fitness, restaurants, and service firms compete for customers who search locally and expect fast answers.",
     firstMove: "Line up Google visibility, service pages, intake forms, booking, and follow-up into one clean path.",
@@ -192,7 +192,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10016", "10017", "10018", "10019", "10022"],
     headline: "IT support and digital systems for Midtown small businesses.",
     shortAnswer:
-      "Short answer: Midtown businesses need tech that works every day, fast website actions, and workflows that cut interruptions for busy teams.",
+      "Short answer: In Midtown, you get tech that works every day, fast website actions, and workflows that cut interruptions for busy teams.",
     localPattern:
       "Law firms, practices, studios, retailers, and lunch spots need practical support without enterprise overhead.",
     firstMove: "Start with what is blocking calls, bookings, staff access, payments, or customer trust.",
@@ -234,7 +234,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10021", "10028", "10065", "10128"],
     headline: "Local SEO, websites, and support for Upper East Side businesses.",
     shortAnswer:
-      "Short answer: Upper East Side businesses need high-trust websites, local SEO that keeps Google correct, and simple systems that make appointments and follow-up easy.",
+      "Short answer: On the Upper East Side, you get a high-trust website, local SEO that keeps Google correct, and simple systems that make appointments and follow-up easy.",
     localPattern:
       "Salons, wellness practices, clinics, shops, and professional offices need clarity and trust before customers call.",
     firstMove: "Review the service pages, the profile, the reviews, the booking, and what happens after a customer reaches out.",
@@ -287,7 +287,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10023", "10024", "10025"],
     headline: "Better websites and practical tech help for Upper West Side businesses.",
     shortAnswer:
-      "Short answer: Upper West Side businesses need clear websites, reliable support, and search visibility that helps nearby customers pick them.",
+      "Short answer: On the Upper West Side, you get a clear website, reliable support, and search visibility that helps nearby customers pick you.",
     localPattern:
       "Neighborhood shops, studios, restaurants, practices, and service teams often need fewer tools and cleaner customer paths.",
     firstMove: "Find the biggest leak across the website, Google visibility, booking, payments, or follow-up.",
@@ -329,7 +329,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10014"],
     headline: "Premium local websites and systems for West Village businesses.",
     shortAnswer:
-      "Short answer: West Village businesses need elegant, fast websites and practical systems that help customers act. No new expensive platform required.",
+      "Short answer: In the West Village, you get an elegant, fast website and practical systems that help customers act. No new expensive platform required.",
     localPattern:
       "Restaurants, boutiques, salons, studios, and service businesses run on neighborhood trust and fast customer decisions.",
     firstMove: "Check the public website, local search signals, booking or contact path, and software bills.",
@@ -371,7 +371,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["11211", "11249"],
     headline: "Websites, local search, and weekend-proof systems for Williamsburg businesses.",
     shortAnswer:
-      "Short answer: Williamsburg businesses need fast mobile pages, correct Google listings, and booking and ordering paths that hold up when the weekend crowd arrives.",
+      "Short answer: In Williamsburg, you get fast mobile pages, correct Google listings, and booking and ordering paths that hold up when the weekend crowd arrives.",
     localPattern:
       "Boutiques, restaurants, bars, venues, and studios ride heavy weekend foot traffic and compete for people who decide on their phones mid-walk.",
     firstMove: "Check the website on a phone, the Google profile, the reservation or ticket link, and what breaks when the weekend rush hits.",
@@ -413,7 +413,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["11221", "11237"],
     headline: "Websites, Google visibility, and simple systems for Bushwick businesses.",
     shortAnswer:
-      "Short answer: Bushwick businesses need to be easy to find at night, easy to check on a phone, and easy to book or order from without a big platform bill.",
+      "Short answer: In Bushwick, you get a business that is easy to find at night, easy to check on a phone, and easy to book or order from without a big platform bill.",
     localPattern:
       "Art studios, bars, music spots, food counters, and family shops draw a crowd that looks everything up on a phone first, often after dark.",
     firstMove: "Check how the business looks in a late-night search, then the hours, the photos, and the way people order or book.",
@@ -455,7 +455,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["11215", "11217"],
     headline: "Clear websites and reliable systems for Park Slope’s family businesses.",
     shortAnswer:
-      "Short answer: Park Slope businesses need correct hours, easy booking, and pages that answer a parent’s questions fast, because families here research before they walk in.",
+      "Short answer: In Park Slope, you get correct hours, easy booking, and pages that answer a parent’s questions fast, because families here research before they walk in.",
     localPattern:
       "Family-facing services, medical and dental practices, kids’ programs, boutiques, and cafes serve parents who check everything online first.",
     firstMove: "Check the schedule, the booking path, the Google reviews, and whether a parent can get every answer on a phone in one minute.",
@@ -497,7 +497,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["11201"],
     headline: "Polished websites and clean systems for DUMBO studios, galleries, and brands.",
     shortAnswer:
-      "Short answer: DUMBO businesses need an online presence as sharp as the neighborhood, because the offices, galleries, and shops here get judged on polish fast.",
+      "Short answer: In DUMBO, you get an online presence as sharp as the neighborhood, because the offices, galleries, and shops here get judged on polish fast.",
     localPattern:
       "Galleries, design studios, small product brands, and cafes serve a mix of office workers, clients, and weekend visitors who all judge on the first screen.",
     firstMove: "Review the website against the neighborhood’s standard, then the Google profile, the contact path, and how leads are tracked.",
@@ -539,7 +539,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["11102", "11103", "11105", "11106"],
     headline: "Websites, Google listings, and honest tech help for Astoria’s family businesses.",
     shortAnswer:
-      "Short answer: Astoria businesses need correct listings, simple websites, and help in plain language, so loyal neighborhood customers and new arrivals can both find them.",
+      "Short answer: In Astoria, you get correct listings, a simple website, and help in plain language, so loyal neighborhood customers and new arrivals can both find you.",
     localPattern:
       "Greek and Middle Eastern restaurants, bakeries, groceries, family shops, and medical offices run on loyalty but win new customers through search.",
     firstMove: "Check what a new neighbor sees when they search, then the hours, the menu or services, and the phone number on every listing.",
@@ -581,7 +581,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["11101", "11109"],
     headline: "Local search, websites, and systems for Long Island City businesses.",
     shortAnswer:
-      "Short answer: Long Island City businesses serve thousands of brand-new residents who have no habits yet. Whoever shows up best in search wins them first.",
+      "Short answer: In Long Island City, you get a correct profile, a fast website, and simple booking in front of thousands of brand-new residents who have no habits yet and are choosing their places now.",
     localPattern:
       "Gyms, vets, daycares, cafes, and ground-floor services under new towers compete for residents who pick everything by phone because everything is new to them.",
     firstMove: "Check how the business ranks in a 'near me' search, then the reviews, the booking path, and whether new residents can become regulars in one visit.",
@@ -623,7 +623,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10003", "10011", "10012"],
     headline: "Websites, tech help, and local search for Greenwich Village businesses.",
     shortAnswer:
-      "Short answer: Greenwich Village businesses live on foot traffic, students, and reputation. They need websites that load mid-walk, hours that are never wrong, and booking that works at midnight.",
+      "Short answer: In Greenwich Village, you get a website that loads mid-walk, hours that are never wrong, and booking that works at midnight, because the business lives on foot traffic, students, and reputation.",
     localPattern:
       "Cafés, comedy rooms, music venues, bookshops, and student-serving services compete for a crowd that decides on the sidewalk.",
     firstMove: "Check what a first-time visitor sees: the Google profile, the hours, the menu or ticket link, and whether any of it works on a phone at night.",
@@ -665,7 +665,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10004", "10005", "10006", "10007", "10038"],
     headline: "Websites, tech help, and local search for Financial District businesses.",
     shortAnswer:
-      "Short answer: FiDi businesses serve two different neighborhoods — office workers on a clock and a residential boom that never leaves. They need search visibility and systems that work for both.",
+      "Short answer: In the Financial District, you get search visibility and systems that work for both of FiDi’s crowds: office workers on a clock and a residential boom that never leaves.",
     localPattern:
       "Delis, barbers, tailors, gyms, and street-level services survive on the lunch rush while a new residential crowd changes what the neighborhood needs.",
     firstMove: "Check when customers actually search — the 11:45am lunch scramble and the 8pm resident scroll — and whether the business shows up for either.",
@@ -707,7 +707,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10451", "10453", "10458", "10462", "10467"],
     headline: "Websites, tech help, and local search for Bronx businesses.",
     shortAnswer:
-      "Short answer: Bronx businesses have the most loyal customers in the city and the least tech help. A correct Google profile, a fast website, and simple tools change everything here.",
+      "Short answer: In the Bronx, you get a correct Google profile, a fast website, and simple tools, for businesses with the most loyal customers in the city and the least tech help.",
     localPattern:
       "Auto shops, bodegas, barbershops, bakeries, and family restaurants run on loyalty and word of mouth — and go digital late.",
     firstMove: "Check the Google profile first. Wrong hours and old phone numbers cost Bronx businesses more walk-ins than anything else.",
@@ -749,7 +749,7 @@ export const areaPages: AreaPage[] = [
     zipCodes: ["10301", "10304", "10306", "10312", "10314"],
     headline: "Websites, tech help, and local search for Staten Island businesses.",
     shortAnswer:
-      "Short answer: Staten Island runs on trades, family restaurants, and referrals. The businesses that win put their reputation online — correct profile, real reviews, a site that turns a referral into a call.",
+      "Short answer: On Staten Island, you get your reputation online — a correct profile, real reviews, and a site that turns a referral into a call — for a borough that runs on trades, family restaurants, and referrals.",
     localPattern:
       "Contractors, plumbers, landscapers, pizzerias, salons, and family shops serve a borough that searches first and drives second.",
     firstMove: "Check what a referral sees: the Google profile, the reviews, and whether the website makes calling easy from a phone.",
@@ -796,7 +796,7 @@ type AreaOwnerContext = Pick<
  * conversation; the public record and the owner’s real path settle the facts. */
 const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
   "lower-east-side": {
-    shortAnswer: "Short answer: for a Lower East Side business, make the after-hours question easy to answer: are you open, what is happening, and how does someone act now?",
+    shortAnswer: "Short answer: In the Lower East Side, you get a site that answers the after-hours question fast: are you open, what is happening, and how does someone act now?",
     localPattern: "A public page has to answer quickly when a customer is deciding between several nearby options.",
     firstMove: "Test the hours, menu or service page, and booking or contact link on one phone after the business closes.",
     intro: "Lower East Side owners do not need a generic nightlife pitch. They need a public front door that does not leave a customer guessing after a search, a post, or a recommendation.",
@@ -805,7 +805,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["An evening customer path that ends in a dead link", "Hours or event details that disagree across public pages", "A contact route with no clear owner", "A page that takes too long to answer the basic question"],
   },
   "east-village": {
-    shortAnswer: "Short answer: for an East Village business, keep changing services, appointments, and public details easy to understand on a phone.",
+    shortAnswer: "Short answer: In the East Village, you get changing services, appointments, and public details that stay easy to understand on a phone.",
     localPattern: "When the offer changes often, the useful system is the one that keeps the public page and the working calendar in agreement.",
     firstMove: "Compare one service, price or schedule entry on the website, the listing, and the booking tool.",
     intro: "East Village business owners often do not need more software. They need the current service, schedule, and next step to say the same thing wherever a customer checks.",
@@ -814,7 +814,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A schedule that changes in one place but not another", "A booking link that hides the real service options", "A public page that leaves price or fit unclear", "Staff retyping the same appointment detail"],
   },
   soho: {
-    shortAnswer: "Short answer: for a SoHo business, make visual proof, service detail, and the private inquiry path feel equally deliberate.",
+    shortAnswer: "Short answer: In SoHo, you get visual proof, service detail, and a private inquiry path that feel equally deliberate.",
     localPattern: "A polished public surface still needs a simple handoff behind it. Looking finished is not the same as being usable.",
     firstMove: "Ask a new customer to find one service, one proof point, and the inquiry path without help.",
     intro: "A SoHo business may care deeply about how it appears. That is useful only when the appearance helps the right customer understand the offer and act.",
@@ -823,7 +823,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A strong visual page with no clear inquiry route", "An appointment request that goes into a general inbox", "Images that hide the actual service information", "A private-client path that requires too much back-and-forth"],
   },
   chelsea: {
-    shortAnswer: "Short answer: for a Chelsea business, make it easy to separate a quick public question from a serious appointment or project inquiry.",
+    shortAnswer: "Short answer: In Chelsea, you get a site that separates a quick public question from a serious appointment or project inquiry.",
     localPattern: "Not every visitor needs the same path. The site should make the useful route obvious without making staff sort every message by hand.",
     firstMove: "List the two most common customer questions and give each its own clear next action.",
     intro: "Chelsea owners can keep the public front door calm by deciding which questions need an answer now and which deserve a fuller conversation.",
@@ -832,7 +832,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["One contact form doing five different jobs", "An appointment request mixed with general questions", "A public page missing the right first action", "Staff sorting the same vague inquiry repeatedly"],
   },
   midtown: {
-    shortAnswer: "Short answer: for a Midtown business, make the first screen answer the practical question fast: what is this, where is it, and what can I do next?",
+    shortAnswer: "Short answer: In Midtown, you get a first screen that answers the practical question fast: what is this, where is it, and what can I do next?",
     localPattern: "A quick decision needs a quick answer. The useful test is whether the page works when someone has very little patience.",
     firstMove: "Open the homepage on a phone and time how long it takes to find location, hours, and one action.",
     intro: "Midtown is a good place to be ruthless about the first screen. If the answer is buried, the customer should not have to excavate it with a tiny phone shovel.",
@@ -841,7 +841,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A homepage that hides basic practical information", "Directions or phone links that do not work on mobile", "A public listing leading to the wrong page", "A quick-action path with too many steps"],
   },
   "upper-east-side": {
-    shortAnswer: "Short answer: for an Upper East Side business, make trust, contact, and appointment information steady enough for a careful customer to verify.",
+    shortAnswer: "Short answer: On the Upper East Side, you get trust, contact, and appointment information steady enough for a careful customer to verify.",
     localPattern: "Some customers need reassurance before they act. Clear ownership, current facts, and a calm next step do more than a pile of sales language.",
     firstMove: "Check whether a first-time visitor can verify who you are, what you do, and how to start without calling for basic facts.",
     intro: "An Upper East Side page can be plain and still feel considered. The job is to make trust easy to verify, not to perform confidence with a fog machine.",
@@ -850,7 +850,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A practice or service page missing plain fit information", "A contact route that does not say what happens next", "Out-of-date public details", "An appointment process that relies on phone tag"],
   },
   "upper-west-side": {
-    shortAnswer: "Short answer: for an Upper West Side business, make recurring customers and first-time visitors use the same clear public information.",
+    shortAnswer: "Short answer: On the Upper West Side, you get one clear set of public information that works for regulars and first-time visitors alike.",
     localPattern: "Regulars may know the routine already. New people do not. The site should serve both without asking staff to explain the basics again.",
     firstMove: "Write down the three questions a first-time customer asks before they become a regular, then make those answers easy to find.",
     intro: "An Upper West Side business can value regulars without making a newcomer work for every answer. The public page should welcome both.",
@@ -859,7 +859,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["Important information known only by regulars", "A registration or booking path that needs staff rescue", "A public page that assumes insider knowledge", "A follow-up task with no shared record"],
   },
   "west-village": {
-    shortAnswer: "Short answer: for a West Village business, preserve the character while making reservations, requests, and public information plain to use.",
+    shortAnswer: "Short answer: In the West Village, you keep the character and get reservations, requests, and public information that are plain to use.",
     localPattern: "A distinctive business does not need a generic website. It does need an obvious route for the customer who is ready now.",
     firstMove: "Follow one reservation, appointment, or inquiry from the first click to the staff member who sees it.",
     intro: "West Village character is not an excuse for a mysterious customer path. A little charm is lovely; a hidden phone number is just cardio.",
@@ -868,7 +868,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A reservation or request path hidden behind atmosphere", "A public page that does not say how to start", "A response route owned by one person", "A booking link that sends customers somewhere confusing"],
   },
   williamsburg: {
-    shortAnswer: "Short answer: for a Williamsburg business, make a changing event, product, or service update easy to publish without breaking the core customer path.",
+    shortAnswer: "Short answer: In Williamsburg, you get a site where a changing event, product, or service update is easy to publish without breaking the core customer path.",
     localPattern: "The business can change week to week without making the public page feel unfinished. The core facts need one stable home.",
     firstMove: "Separate the always-true information from the weekly update, then test both on a phone.",
     intro: "Williamsburg owners can move fast without asking every customer to decode the latest post. Keep the changing piece flexible and the basic path steady.",
@@ -877,7 +877,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A weekly update replacing the basic customer information", "An event or product detail stranded in social posts", "A stale link from a public listing", "Staff making the same change in too many places"],
   },
   bushwick: {
-    shortAnswer: "Short answer: for a Bushwick business, turn a social or word-of-mouth moment into a public page that answers the next question.",
+    shortAnswer: "Short answer: In Bushwick, you get a public page that turns a social or word-of-mouth moment into the answer to the next question.",
     localPattern: "A post can create interest. The business-controlled page needs to catch it before the customer gets distracted by the entire rest of the internet.",
     firstMove: "Open the link in a recent post and check whether it leads to current facts and one useful action.",
     intro: "Bushwick businesses do not need to abandon social. They need the post, profile, and website to point to the same current truth.",
@@ -886,7 +886,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A social link leading to an old page", "A public page with no current contact route", "Important information trapped in a caption", "A customer path that ends in a direct-message pile"],
   },
   "park-slope": {
-    shortAnswer: "Short answer: for a Park Slope business, make practical service or appointment information easy to check before someone commits time.",
+    shortAnswer: "Short answer: In Park Slope, you get practical service and appointment information that is easy to check before someone commits time.",
     localPattern: "When a customer needs to coordinate a schedule, the public page should answer the practical details before they have to call.",
     firstMove: "Find the information a customer needs to plan: service, schedule, price context, contact, and the next step.",
     intro: "Park Slope owners can reduce avoidable phone tag by putting the planning information where a first-time customer can actually use it.",
@@ -895,7 +895,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["Planning details hidden in a long page", "Registration or appointment information spread across messages", "A first-time customer unable to tell fit", "Staff repeating the same logistical answer"],
   },
   dumbo: {
-    shortAnswer: "Short answer: for a DUMBO business, make referrals and polished public proof lead to a real inquiry path, not a dead-end portfolio.",
+    shortAnswer: "Short answer: In DUMBO, you get referrals and polished public proof that lead to a real inquiry path, not a dead-end portfolio.",
     localPattern: "A referral may arrive already interested. The website still has to confirm the offer and give that person a clean way to continue.",
     firstMove: "Ask a referral to find the relevant service, proof, and inquiry route without asking you for a link.",
     intro: "DUMBO businesses can have strong work and still lose the practical handoff. Proof should help a new contact know what to do next.",
@@ -904,7 +904,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A referral path that ends at a gallery", "A proof page without a next action", "An inquiry form that lacks context", "A handoff from website to staff that is not tracked"],
   },
   astoria: {
-    shortAnswer: "Short answer: for an Astoria business, make the core information plain enough to understand on a first phone visit.",
+    shortAnswer: "Short answer: In Astoria, you get core information plain enough to understand on a first phone visit.",
     localPattern: "Clarity is not corporate. It is a respectful way to make the business easier to use.",
     firstMove: "Check the public page for plain service names, readable contact details, and the information customers ask staff to repeat.",
     intro: "Astoria owners can keep the familiar way they serve people while making the public facts easier for a new customer to understand.",
@@ -913,7 +913,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["Public information written only for insiders", "A menu or service list that is hard to read on a phone", "A contact path that assumes one way of communicating", "Frequently asked questions answered only at the counter"],
   },
   "long-island-city": {
-    shortAnswer: "Short answer: for a Long Island City business, make the address, access, appointment, pickup, or service-area detail impossible to misunderstand.",
+    shortAnswer: "Short answer: In Long Island City, you get address, access, appointment, pickup, and service-area details that are impossible to misunderstand.",
     localPattern: "A customer can be interested and still give up if they cannot tell where to go or how the handoff works.",
     firstMove: "Test the directions, address, service area, and next action on a phone that has never visited the site.",
     intro: "Long Island City owners can save everyone a small headache by making the physical or service handoff clear before the customer starts a trip.",
@@ -922,7 +922,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["An address or service area that is hard to confirm", "A directions link that opens the wrong place", "Pickup or appointment instructions hidden after the click", "A public page that does not explain the handoff"],
   },
   "greenwich-village": {
-    shortAnswer: "Short answer: for a Greenwich Village business, make current hours, events, services, and contact information easy to confirm before a customer makes plans.",
+    shortAnswer: "Short answer: In Greenwich Village, you get current hours, events, services, and contact information that are easy to confirm before a customer makes plans.",
     localPattern: "A changing public schedule needs one trustworthy home. A customer should not have to compare posts, listings, and a vague phone message.",
     firstMove: "Choose one source of truth for current information, then make every public link point there.",
     intro: "Greenwich Village owners can keep the business spontaneous without making the public facts mysterious. The plan may change; the place to check should not.",
@@ -931,7 +931,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["Several pages each claiming to be current", "Event or service details only visible in old posts", "A phone message that disagrees with the site", "A customer path with no clear source of truth"],
   },
   "financial-district": {
-    shortAnswer: "Short answer: for a Financial District business, make practical service, location, and next-step information easy to use during a short decision window.",
+    shortAnswer: "Short answer: In the Financial District, you get practical service, location, and next-step information that works during a short decision window.",
     localPattern: "A customer does not need a brand essay before a basic action. Put the useful facts where they can be found fast.",
     firstMove: "Put one real customer task on a timer: find the service, the location, and the next action from a phone.",
     intro: "Financial District business owners can respect a customer’s time by making the public page do the simple job before showing off.",
@@ -940,7 +940,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A useful action hidden below marketing copy", "Location details that need a second search", "A phone-first task that only works on desktop", "A form routed to the wrong team"],
   },
   "the-bronx": {
-    shortAnswer: "Short answer: for a Bronx business, make the useful public basics—service, phone, price context, and next step—easy to share and easy to check.",
+    shortAnswer: "Short answer: In the Bronx, you get the useful public basics—service, phone, price context, and next step—easy to share and easy to check.",
     localPattern: "A good referral should not die because the person who receives it cannot quickly confirm the business information.",
     firstMove: "Ask someone who has never used the business to find the phone, service details, and one next action on a phone.",
     intro: "Bronx owners can let the quality of the work speak without making a new customer decode the basics first.",
@@ -949,7 +949,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A referral with nowhere current to land", "Service or price context missing from the public page", "A phone number that is hard to tap", "A question answered only by whoever is working that day"],
   },
   "staten-island": {
-    shortAnswer: "Short answer: for a Staten Island business, turn a referral into a straightforward public check: what you do, how to reach you, and what happens next.",
+    shortAnswer: "Short answer: On Staten Island, you get a referral turned into a straightforward public check: what you do, how to reach you, and what happens next.",
     localPattern: "A recommendation has more value when the business can confirm it with current public facts and a clean contact route.",
     firstMove: "Follow a referral from a shared name to the website, listing, phone, and the person who receives the inquiry.",
     intro: "Staten Island owners can keep the personal referral at the center while making the public proof and contact path easier for a new customer to use.",

@@ -22,6 +22,25 @@ function detailServiceSlug(serviceSlug = "") {
   return DETAIL_SERVICE_SLUG[serviceSlug] ?? serviceSlug;
 }
 
+// The first sentence under the H1 is what the owner gets, said for their
+// neighborhood — not "{Service} for {Area} businesses" repeated from the H1.
+// One template, 72 routes: keep it in the same "you get" register as the
+// service pages it points to.
+function serviceAreaLead(serviceSlug: string, areaName: string) {
+  switch (serviceSlug) {
+    case "custom-local-websites":
+      return `A website built around your ${areaName} business, so customers find you, see what you do, and book without calling.`;
+    case "it-support":
+      return `When email, Wi-Fi, the card reader, or booking breaks in ${areaName}, we fix it. Urgent jobs: usually on-site within 24 hours.`;
+    case "business-systems":
+      return `One focused tool for how your ${areaName} business already works, and you own it. It replaces the spreadsheets and monthly tools that stopped fitting.`;
+    case "tech-consulting":
+      return `A free first look at your ${areaName} business’s website, Google profile, tools, and bills. You learn what to keep, fix, replace, or skip.`;
+    default:
+      return `We keep what works for your ${areaName} business and fix what gets in the way.`;
+  }
+}
+
 function areaRouteSlug(serviceSlug: string) {
   return AREA_ROUTE_SLUG[serviceSlug] ?? serviceSlug;
 }
@@ -78,7 +97,7 @@ export default function ServiceAreaDetail() {
             <span className="lf-em">{area.name}.</span>
           </>
         }
-        dek={`${service.eyebrow} for ${area.name} businesses. We keep what works and fix what gets in the way.`}
+        dek={serviceAreaLead(service.slug, area.name)}
         image={{
           src: service.image,
           video: service.video,

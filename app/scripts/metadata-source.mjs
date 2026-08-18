@@ -419,7 +419,9 @@ export function serviceAreaPages(seoData) {
       title: `${service.label} for ${area.name} Businesses | Little Fight NYC`,
       description: `${service.label} for ${area.name} businesses. Help people find you, reach you, and take the next step without extra runaround.`,
       h1: `${service.label} for ${area.name} businesses.`,
-      shortAnswer: `Short answer: ${area.name} businesses need ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
+      // Answer first, in the owner's terms: what they get in their neighborhood,
+      // then how we work. (Was "{Area} businesses need …".)
+      shortAnswer: `Short answer: For a ${area.name} business, you get ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
       type: "Service",
       serviceName: `${service.serviceName} in ${area.name}`,
       image: service.image ?? area.image,
