@@ -1,7 +1,7 @@
 /* Generated Website Audit reports: Living Instrument presentation. */
 
 body.lf-report-instrument {
-  --report-bg: #06080f;
+  --report-bg: #050507;
   --report-surface: #0b0e15;
   --report-surface-2: #10141d;
   --report-line: rgba(240, 242, 248, 0.12);
@@ -74,7 +74,7 @@ body.lf-report-instrument {
   margin: 0;
   color: var(--report-orange);
   font-family: var(--lf-mono);
-  font-size: 0.66rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   line-height: 1.4;
@@ -96,7 +96,7 @@ body.lf-report-instrument {
 
 .instrument-domain {
   color: var(--report-blue);
-  font-size: 0.72rem;
+  font-size: 1rem;
   overflow-wrap: anywhere;
 }
 
@@ -165,7 +165,7 @@ body.lf-report-instrument {
   margin-top: 14px;
   color: var(--report-orange);
   font-family: var(--lf-mono);
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -181,7 +181,7 @@ body.lf-report-instrument {
   background: rgba(6, 8, 15, 0.82);
   color: var(--report-muted);
   font-family: var(--lf-mono);
-  font-size: 0.58rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -313,7 +313,7 @@ body.lf-report-instrument {
 .instrument-finding p {
   margin: 0;
   color: var(--report-muted);
-  font-size: 0.94rem;
+  font-size: 1rem;
   line-height: 1.66;
 }
 
@@ -353,7 +353,7 @@ body.lf-report-instrument {
   margin-top: 12px;
   color: var(--report-dim);
   font-family: var(--lf-mono);
-  font-size: 0.62rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -395,7 +395,7 @@ body.lf-report-instrument {
   position: relative;
   padding-left: 18px;
   color: var(--report-muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
   line-height: 1.55;
 }
 
@@ -477,7 +477,7 @@ body.lf-report-instrument {
   max-width: 62ch;
   margin: 18px 0 0;
   color: var(--report-dim);
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 
 /* The four channels under the report CTA. A person reading their own report
@@ -513,7 +513,7 @@ body.lf-report-instrument {
 .instrument-cta p.instrument-cta__reach-hours {
   margin: 2px 0 0;
   color: var(--report-dim);
-  font-size: 0.92rem;
+  font-size: 1rem;
 }
 
 .lf-report-instrument footer .footer-prepared { margin-top: 6px; }

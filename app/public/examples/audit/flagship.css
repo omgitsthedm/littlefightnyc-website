@@ -118,7 +118,7 @@
 .lf-audit-shell-page .btn-primary::after {
   content: "Run scan  ↗";
   font-family: var(--lf-mono);
-  font-size: 0.64rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -234,7 +234,7 @@
 .audit-instrument__center span {
   color: var(--audit-blue);
   font-family: var(--lf-mono);
-  font-size: 0.58rem;
+  font-size: 1rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
 }
@@ -269,11 +269,11 @@
   border-top-color: rgba(240, 242, 248, 0.08);
 }
 
-.audit-scan__list strong { font-size: 0.86rem; }
+.audit-scan__list strong { font-size: 1rem; }
 
 .audit-scan__foot {
   border-top-color: var(--audit-line);
-  font-size: 0.78rem;
+  font-size: 1rem;
 }
 
 .lf-audit-shell-page .audit-progress-section {
@@ -304,7 +304,7 @@
   content: counter(audit-progress, decimal-leading-zero);
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.6rem;
+  font-size: 1rem;
 }
 
 .lf-audit-shell-page .progress-step.active::after { color: var(--lf-fight); }
@@ -406,7 +406,7 @@
 .audit-pipeline li > span {
   color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: 0.7rem;
+  font-size: 1rem;
   letter-spacing: 0.08em;
 }
 
@@ -424,7 +424,7 @@
   max-width: 50ch;
   margin: 0;
   color: var(--lf-bone-soft);
-  font-size: 0.94rem;
+  font-size: 1rem;
   line-height: 1.6;
 }
 
@@ -457,7 +457,7 @@
   border-bottom: 1px solid var(--audit-line);
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.62rem;
+  font-size: 1rem;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
@@ -493,7 +493,7 @@
 .audit-result-preview__score small {
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.6rem;
+  font-size: 1rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -548,7 +548,7 @@
 .audit-result-preview__signals dt {
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.55rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -565,7 +565,7 @@
   padding: 18px 22px;
   border-top: 1px solid var(--audit-line);
   color: var(--lf-bone-soft);
-  font-size: 0.82rem;
+  font-size: 1rem;
 }
 
 .lf-audit-shell-page .info-section {

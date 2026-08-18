@@ -1,10 +1,10 @@
 :root {
   color-scheme: dark;
-  --lf-ink: #06080f;
-  --lf-paper: #0e1220;
-  --lf-paper-2: #0a0d18;
-  --lf-hairline: #1b2233;
-  --lf-bone: #f0f2f8;
+  --lf-ink: #050507;
+  --lf-paper: #1A1C23;
+  --lf-paper-2: #12141A;
+  --lf-hairline: #27272A;
+  --lf-bone: #FFFFFF;
   --lf-bone-soft: #a1a1aa;
   --lf-bone-dim: #8a8a94;
   --lf-fight: #f97316;
@@ -68,7 +68,7 @@ body.lf-audit-report {
 
 .lf-audit-reconstruction strong { color: var(--lf-fight); }
 .lf-audit-reconstruction a { color: var(--lf-bone); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-@media (max-width: 640px) { .lf-audit-reconstruction { width: min(100% - 28px, 980px); font-size: 15px; } }
+@media (max-width: 640px) { .lf-audit-reconstruction { width: min(100% - 28px, 980px); font-size: 16px; } }
 
 body.lf-audit-shell-page *,
 body.lf-audit-shell-page *::before,
@@ -159,7 +159,7 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .brand a {
   color: var(--lf-bone);
   font-family: var(--lf-display);
-  font-size: clamp(0.95rem, 1.6vw, 1.18rem);
+  font-size: clamp(1rem, 1.6vw, 1.18rem); /* 16px floor */
   font-weight: 600;
   letter-spacing: -0.015em;
   text-decoration: none;
@@ -188,13 +188,20 @@ body.lf-audit-shell-page input:focus-visible {
   padding: 0 12px;
   border-radius: var(--lf-radius-sm);
   color: var(--lf-bone-soft);
-  font-size: 0.875rem;
+  font-size: 1rem; /* 16px floor, same as the main site's nav */
   font-weight: 500;
   letter-spacing: -0.005em;
   text-decoration: none;
   white-space: nowrap;
   transition: color var(--lf-time-snappy) var(--lf-ease-standard);
 }
+
+.lf-audit-shell-page .audit-nav .audit-nav__phone {
+  color: var(--lf-bone);
+  font-weight: 600;
+}
+
+.lf-audit-shell-page .audit-nav__phone-short { display: none; }
 
 .lf-audit-shell-page .audit-nav a:hover,
 .lf-audit-shell-page .audit-nav a[aria-current="page"] { color: var(--lf-bone); }
@@ -216,13 +223,16 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .audit-nav a:hover::after,
 .lf-audit-shell-page .audit-nav a[aria-current="page"]::after { transform: scaleX(1); }
 
+/* Quiet on purpose: on this page the one orange action is "Check my website"
+   in the form (Von Restorff); the human path stays visible as an outline. */
 .lf-audit-shell-page .audit-nav .audit-nav__cta {
   min-height: 44px;
   margin-left: 8px;
   padding-inline: 18px;
   border-radius: var(--lf-radius-pill);
-  background: var(--lf-fight);
-  color: var(--lf-ink);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--lf-hairline);
+  color: var(--lf-bone);
   font-weight: 700;
   transition:
     background var(--lf-time-snappy) var(--lf-ease-standard),
@@ -230,7 +240,7 @@ body.lf-audit-shell-page input:focus-visible {
 }
 
 .lf-audit-shell-page .audit-nav .audit-nav__cta:hover {
-  background: var(--lf-ember);
+  background: var(--lf-fight);
   color: var(--lf-ink);
   transform: translateY(-2px);
 }
@@ -269,7 +279,7 @@ body.lf-audit-shell-page input:focus-visible {
   margin: 0 0 16px;
   color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: 0.72rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   line-height: 1.4;
@@ -316,7 +326,7 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .form-label {
   color: var(--lf-bone-soft);
   font-family: var(--lf-mono);
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.1em;
 }
@@ -354,7 +364,7 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .field-error {
   min-height: 18px;
   color: #fca5a5;
-  font-size: 0.78rem;
+  font-size: 1rem;
 }
 
 /* Point-of-collection disclosure under the email field. --lf-bone-soft is
@@ -362,7 +372,7 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .field-note {
   margin-top: 2px;
   color: var(--lf-bone-soft);
-  font-size: 0.78rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -391,7 +401,7 @@ body.lf-audit-shell-page input:focus-visible {
   background: var(--lf-fight);
   color: var(--lf-ink);
   font-family: var(--lf-body);
-  font-size: 0.94rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   text-decoration: none;
@@ -427,7 +437,7 @@ body.lf-audit-shell-page input:focus-visible {
   margin: 16px 0 0;
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.68rem;
+  font-size: 1rem;
   letter-spacing: 0.04em;
   line-height: 1.5;
   text-align: center;
@@ -494,7 +504,7 @@ body.lf-audit-shell-page input:focus-visible {
   gap: 8px;
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.66rem;
+  font-size: 1rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -569,14 +579,14 @@ body.lf-audit-shell-page input:focus-visible {
 
 .audit-scan__list strong {
   color: var(--lf-bone);
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .audit-scan__list span {
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.62rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -585,7 +595,7 @@ body.lf-audit-shell-page input:focus-visible {
   padding: 18px 22px;
   border-top: 1px solid var(--lf-hairline);
   color: var(--lf-bone-soft);
-  font-size: 0.82rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -682,7 +692,7 @@ body.lf-audit-shell-page input:focus-visible {
   left: 0;
   color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: 0.65rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
 }
 
@@ -701,7 +711,7 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .info-item p {
   margin: 0;
   color: var(--lf-bone-soft);
-  font-size: 0.94rem;
+  font-size: 1rem;
   line-height: 1.65;
 }
 
@@ -718,7 +728,7 @@ body.lf-audit-shell-page input:focus-visible {
 .lf-audit-shell-page .info-cta {
   margin-top: 32px;
   color: var(--lf-bone-soft);
-  font-size: 0.95rem;
+  font-size: 1rem;
   text-align: left;
 }
 
@@ -802,11 +812,39 @@ body.lf-audit-shell-page > footer {
   background: var(--lf-ink);
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.68rem;
+  font-size: 1rem;
   letter-spacing: 0.07em;
   line-height: 1.6;
   text-align: center;
   text-transform: uppercase;
+}
+
+/* The site's closing contract — Call, Text, Email, Form, and the hours line —
+   so the journey ends in the same room it started. */
+.lf-audit-shell-page .footer-reach {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  margin: 0 0 18px;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: 1rem;
+}
+
+.lf-audit-shell-page .footer-reach a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--lf-bone);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lf-audit-shell-page .footer-reach span {
+  flex-basis: 100%;
+  text-align: center;
 }
 
 .lf-audit-shell-page .footer-links {
@@ -916,7 +954,7 @@ body.lf-audit-report .logo-bar {
 .lf-report-brand span {
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.62rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -937,7 +975,7 @@ body.lf-audit-report .pdf-btn {
   background: transparent;
   color: var(--lf-bone-soft) !important;
   font-family: var(--lf-body);
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 600;
   text-decoration: none !important;
   cursor: pointer;
@@ -1023,7 +1061,7 @@ body.lf-audit-report :is(
 ) {
   color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: 0.68rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1035,7 +1073,7 @@ body.lf-audit-report footer {
   background: var(--lf-ink);
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 0.68rem;
+  font-size: 1rem;
   letter-spacing: 0.06em;
   line-height: 1.6;
   text-align: center;
@@ -1077,7 +1115,7 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
   margin: 0;
   color: var(--lf-fight);
   font-family: var(--lf-mono);
-  font-size: 0.72rem;
+  font-size: 1rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -1109,7 +1147,9 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
 
 @media (max-width: 720px) {
   .audit-nav-shell { min-height: 58px; padding-block: 7px; }
-  .lf-audit-shell-page .audit-nav a:not(.audit-nav__cta) { display: none; }
+  .lf-audit-shell-page .audit-nav a:not(.audit-nav__cta):not(.audit-nav__phone) { display: none; }
+  .lf-audit-shell-page .audit-nav__phone-full { display: none; }
+  .lf-audit-shell-page .audit-nav__phone-short { display: inline; }
   .lf-audit-shell-page .audit-nav .audit-nav__cta { margin-left: 0; padding-inline: 14px; }
   .lf-audit-shell-page .site-main { padding-top: 56px; }
   .lf-audit-shell-page .info-grid { grid-template-columns: 1fr; }
@@ -1121,15 +1161,14 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
 
 @media (max-width: 420px) {
   .audit-nav-shell { gap: 10px; padding-inline: 14px; }
-  .lf-audit-shell-page .brand a { font-size: 0.88rem; }
-  .lf-audit-shell-page .audit-nav .audit-nav__cta { min-height: 40px; font-size: 0.78rem; }
+  .lf-audit-shell-page .audit-nav .audit-nav__cta { padding-inline: 12px; }
   .lf-audit-shell-page .headline { font-size: clamp(2.7rem, 14vw, 4rem); }
   .audit-panel,
   .audit-progress-section { padding: 20px; border-radius: 24px; }
   .audit-scan { border-radius: 24px; }
   .lf-report-nav,
   body.lf-audit-report .logo-bar { padding-inline: 14px; }
-  .lf-report-link--primary { min-height: 40px; padding-inline: 12px; font-size: 0.72rem; }
+  .lf-report-link--primary { padding-inline: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
