@@ -53,23 +53,23 @@ const TILES_IN_FIRST_SCREEN =
 export default function HomeWall() {
   return (
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
-      {/* The street behind the promise: a lit shop doorway at night — New
-          York, warm, no season, and no readable business names or logos (the
-          imagery rule; the string-lights block read as holidays). Decorative (alt="") and never route-preloaded
+      {/* The city behind the promise: Manhattan from the air at night — the
+          park's grid, the downtown towers, the lights. Unmistakably New York,
+          no season, no readable business names or logos (the imagery rule). Decorative (alt="") and never route-preloaded
           (the wall's first tile keeps that pin), but fetched high: it is the
           largest paint in the first screen, so it is what LCP measures. The
           scrim in CSS keeps the copy AA on top of it. */}
       <div className="lf-wall__backdrop" aria-hidden="true">
         <img
-          src="/assets/hero-contact-door-900.webp"
+          src="/assets/manhattan-900.webp"
           /* Desktop takes the 640w (90KB) on purpose: it sits dimmed under a
              scrim and a 1px blur, so a 640px source stretched to a 1440px
              screen reads the same as the 331KB 1600px one — and this image
              is the largest paint on the page, so its bytes ARE the LCP. */
-          srcSet="/assets/hero-contact-door-480.webp 480w, /assets/hero-contact-door-640.webp 640w, /assets/hero-contact-door-900.webp 900w"
+          srcSet="/assets/manhattan-480.webp 480w, /assets/manhattan-640.webp 640w, /assets/manhattan-900.webp 900w"
           sizes="(min-width: 64rem) 640px, 100vw"
           width={900}
-          height={600}
+          height={514}
           alt=""
           loading="eager"
           fetchPriority="high"
