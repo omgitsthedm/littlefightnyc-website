@@ -861,7 +861,10 @@ function routeImagePreload(page) {
     // ~1s late. This second link is a plain responsive preload (no
     // data-route-preload) matching HomeWall's srcset/sizes exactly.
     return [
-      `<link rel="preload" href="${HOME_WALL_LEAD}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+      // Desktop only: on a phone the six tiles start below the first screen,
+      // and this high-priority fetch was competing with the backdrop (the
+      // phone's LCP element) for the first ~500KB on a slow connection.
+      `<link rel="preload" href="${HOME_WALL_LEAD}" media="(min-width: 64rem)" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
       `<link rel="preload" href="/assets/hero-ues-lights-900.webp" imagesrcset="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w" imagesizes="(min-width: 64rem) 640px, 100vw" as="image" type="image/webp" fetchpriority="high">`,
     ].join("\n");
   }

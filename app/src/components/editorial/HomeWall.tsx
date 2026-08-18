@@ -42,6 +42,14 @@ import "./HomeWall.css";
  * public — so this cannot drift, and a case going private fails the build.
  */
 
+// The first tile is the desktop LCP candidate and the one route preload; on
+// a phone the six tiles start below the first screen, where the backdrop is
+// the LCP element, so the tile must not outrank it. Client-only module, so
+// matchMedia is safe here; the prerendered shell keeps its own high-priority
+// tile for the integrity audit.
+const TILES_IN_FIRST_SCREEN =
+  typeof window !== "undefined" && window.matchMedia("(min-width: 64rem)").matches;
+
 export default function HomeWall() {
   return (
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
@@ -155,7 +163,7 @@ export default function HomeWall() {
                          so it is the LCP candidate and the one route preload.
                          audit-site-integrity pins this pair. */
                       loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 ? "high" : undefined}
+                      fetchPriority={index === 0 && TILES_IN_FIRST_SCREEN ? "high" : undefined}
                       decoding="async"
                     />
                   </span>
