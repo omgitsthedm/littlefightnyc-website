@@ -33,6 +33,15 @@
   margin: 0 0 var(--lf-space-4);
 }
 
+.lf-journal__group + .lf-journal__group {
+  margin-top: var(--lf-space-7);
+}
+
+.lf-journal__group-count {
+  color: var(--lf-bone-dim);
+  font-weight: 400;
+}
+
 .lf-journal__list {
   list-style: none;
   margin: 0;

@@ -154,11 +154,26 @@
 }
 
 /* ---- ZIP chips ---- */
+.lf-minimap__chip-groups {
+  flex: 1 1 260px;
+  min-width: 0;
+  display: grid;
+  gap: var(--lf-space-4);
+}
+
+.lf-minimap__chip-borough {
+  margin: 0 0 var(--lf-space-2);
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .lf-minimap__chips {
   list-style: none;
   margin: 0;
   padding: 0;
-  flex: 1 1 260px;
   min-width: 0;
   display: flex;
   flex-wrap: wrap;

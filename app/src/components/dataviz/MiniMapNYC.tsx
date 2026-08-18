@@ -3,6 +3,25 @@ import { MapPin } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useScrollReveal } from "@/components/editorial/useScrollReveal";
 import { areaPages } from "@/data/site";
+
+/** Chips chunked by borough. Any area not listed here falls into no group and
+ *  is caught by the build (the count check below), so a new neighborhood must
+ *  be placed on purpose. */
+const BOROUGHS = [
+  // Manhattan splits the way New Yorkers say it — Downtown, Midtown, Uptown —
+  // so no chunk runs past nine (Miller's law; ten read as one long run).
+  { name: "Downtown Manhattan", slugs: ["financial-district", "lower-east-side", "east-village", "soho", "west-village", "greenwich-village"] },
+  { name: "Midtown & Chelsea", slugs: ["chelsea", "midtown"] },
+  { name: "Uptown Manhattan", slugs: ["upper-east-side", "upper-west-side"] },
+  { name: "Brooklyn", slugs: ["williamsburg", "bushwick", "park-slope", "dumbo"] },
+  { name: "Queens", slugs: ["astoria", "long-island-city"] },
+  { name: "The Bronx", slugs: ["the-bronx"] },
+  { name: "Staten Island", slugs: ["staten-island"] },
+] as const;
+if (import.meta.env.DEV) {
+  const placed = new Set(BOROUGHS.flatMap((b) => b.slugs as readonly string[]));
+  for (const area of areaPages) if (!placed.has(area.slug)) console.warn(`MiniMapNYC: ${area.slug} is not in a borough group`);
+}
 import "./MiniMapNYC.css";
 
 /**
@@ -242,21 +261,35 @@ export default function MiniMapNYC({
           )}
         </div>
 
-        <ul className="lf-minimap__chips">
-          {areaPages.map((area) => (
-            <li key={area.slug}>
-              <Link
-                to={`/areas/${area.slug}/`}
-                className="lf-minimap__chip"
-                data-state={stateOf(area.slug)}
-                aria-current={area.slug === current ? "page" : undefined}
-              >
-                <span className="lf-minimap__chip-name">{area.name}</span>
-                <span className="lf-minimap__chip-zips">{area.zipCodes.join(" · ")}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {/* Eighteen chips in one run read as noise (Miller's law); grouped by
+            borough they read as a map you can scan — the borough label is the
+            chunk, and Manhattan's ten is the biggest group. */}
+        <div className="lf-minimap__chip-groups">
+          {BOROUGHS.map((borough) => {
+            const areas = areaPages.filter((area) => (borough.slugs as readonly string[]).includes(area.slug));
+            if (areas.length === 0) return null;
+            return (
+              <div key={borough.name} className="lf-minimap__chip-group">
+                <p className="lf-minimap__chip-borough">{borough.name}</p>
+                <ul className="lf-minimap__chips">
+                  {areas.map((area) => (
+                    <li key={area.slug}>
+                      <Link
+                        to={`/areas/${area.slug}/`}
+                        className="lf-minimap__chip"
+                        data-state={stateOf(area.slug)}
+                        aria-current={area.slug === current ? "page" : undefined}
+                      >
+                        <span className="lf-minimap__chip-name">{area.name}</span>
+                        <span className="lf-minimap__chip-zips">{area.zipCodes.join(" · ")}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
       </div>
       <figcaption className="lf-minimap__caption">
         {currentArea

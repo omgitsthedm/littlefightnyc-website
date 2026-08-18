@@ -461,49 +461,71 @@ export default function Library() {
           </section>
         )}
 
-        {/* Everything else — compact editorial rows. One list, no repeats. */}
+        {/* Everything else — compact editorial rows, chunked by kind (Miller's
+            law: 36 flat rows read as one undifferentiated column; four groups
+            of 7–11 with a label read as a shelf). Order follows the four
+            categories; each group keeps its posts newest-first. */}
         {rows.length > 0 && (
           <section className="lf-journal">
             <div ref={listRef} className="lf-journal__inner" data-reveal>
-              <p className="lf-journal__group-label">All entries</p>
-              <ol className="lf-journal__list">
-                {rows.map((post) => (
-                  <li key={post.slug} className="lf-journal__item">
-                    <Link
-                      to={`/journal/${post.slug}/`}
-                      className="lf-journal__link lf-journal__link--thumb"
-                    >
-                      <span className="lf-journal__thumb" aria-hidden="true">
-                        <img {...skelImg}
-                          src={POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category]}
-                          alt=""
-                          {...responsiveImageProps(
-                            POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category],
-                            "(min-width: 768px) 72px, 56px",
-                            [480],
-                          )}
-                          width={120}
-                          height={120}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </span>
-                      <span className="lf-journal__body">
-                        <span className="lf-journal__title">
-                          <span style={{ viewTransitionName: `post-${post.slug}` }}>
-                            {post.title}
-                          </span>
-                          <span className="lf-journal__chips">
-                            <span className="lf-journal__cat">{CATEGORY_LABEL[post.category]}</span>
-                            <span className="lf-journal__read">~{READ_MINUTES[post.slug]} min read</span>
-                          </span>
-                        </span>
-                        <span className="lf-journal__desc">{post.description}</span>
-                      </span>
-                    </Link>
-                  </li>
+              {(["howto", "guide", "essay", "blog"] as const)
+                .flatMap((cat) => {
+                  // No shelf runs past nine rows: a category with more splits
+                  // into "…" and "More …", each still newest-first.
+                  const posts = rows.filter((post) => post.category === cat);
+                  if (posts.length <= 9) return posts.length ? [{ key: cat, cat, label: CATEGORY_LABEL[cat], posts }] : [];
+                  const half = Math.ceil(posts.length / 2);
+                  return [
+                    { key: cat, cat, label: CATEGORY_LABEL[cat], posts: posts.slice(0, half) },
+                    { key: `${cat}-more`, cat, label: `${CATEGORY_LABEL[cat]}, continued`, posts: posts.slice(half) },
+                  ];
+                })
+                .map((group) => (
+                  <div key={group.key} className="lf-journal__group">
+                    <p className="lf-journal__group-label">
+                      {group.label}
+                      <span className="lf-journal__group-count"> · {group.posts.length}</span>
+                    </p>
+                    <ol className="lf-journal__list">
+                      {group.posts.map((post) => (
+                        <li key={post.slug} className="lf-journal__item">
+                          <Link
+                            to={`/journal/${post.slug}/`}
+                            className="lf-journal__link lf-journal__link--thumb"
+                          >
+                            <span className="lf-journal__thumb" aria-hidden="true">
+                              <img {...skelImg}
+                                src={POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category]}
+                                alt=""
+                                {...responsiveImageProps(
+                                  POST_IMAGE[post.slug] ?? CATEGORY_IMAGE[post.category],
+                                  "(min-width: 768px) 72px, 56px",
+                                  [480],
+                                )}
+                                width={120}
+                                height={120}
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </span>
+                            <span className="lf-journal__body">
+                              <span className="lf-journal__title">
+                                <span style={{ viewTransitionName: `post-${post.slug}` }}>
+                                  {post.title}
+                                </span>
+                                <span className="lf-journal__chips">
+                                  <span className="lf-journal__cat">{CATEGORY_LABEL[post.category]}</span>
+                                  <span className="lf-journal__read">~{READ_MINUTES[post.slug]} min read</span>
+                                </span>
+                              </span>
+                              <span className="lf-journal__desc">{post.description}</span>
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 ))}
-              </ol>
             </div>
           </section>
         )}
