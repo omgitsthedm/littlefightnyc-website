@@ -41,6 +41,13 @@ export default function RouteScrollManager() {
       const target = document.getElementById(targetId);
       if (target) {
         target.scrollIntoView({ block: "start", behavior: "auto" });
+        // A link straight to a form field should land the visitor typing,
+        // not hunting for the box: /website-check/#website-check-url puts the
+        // cursor in the URL input. Only form controls — a heading anchor must
+        // not steal focus.
+        if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+          target.focus({ preventScroll: true });
+        }
         return;
       }
 

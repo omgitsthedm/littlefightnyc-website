@@ -90,7 +90,10 @@ export function acquisitionCtaForIntent(
 ): AcquisitionCta {
   if (intent === "website") {
     return {
-      href: "/website-check/",
+      // Straight to the URL field, focused (RouteScrollManager focuses form
+      // controls named by a hash) — one tap fewer than landing at the top of
+      // the page and finding the box two screens down.
+      href: "/website-check/#website-check-url",
       label: "Check my website",
       compactLabel: "Check website",
       kicker: "Free first look",

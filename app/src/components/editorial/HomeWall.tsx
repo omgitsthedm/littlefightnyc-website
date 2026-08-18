@@ -100,7 +100,7 @@ export default function HomeWall() {
           </a>
           <Link
             className="lf-wall__check"
-            to="/website-check/"
+            to="/website-check/#website-check-url"
             data-lf-event="website_check_started"
             data-lf-label="home_hero"
             data-lf-source="home"

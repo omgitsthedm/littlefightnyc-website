@@ -61,7 +61,7 @@ export default function QuietNav() {
   //    mid-fill remounted the form and discarded the message field.
   // Both are the same fix: no header CTA on the page it would send you to.
   const normalizedPath = pathname === "/" ? "/" : `${pathname.replace(/\/$/, "")}/`;
-  const startHrefPath = startCta.href.split("?")[0];
+  const startHrefPath = startCta.href.split(/[?#]/)[0];
   const showStartCta = startHrefPath !== normalizedPath && normalizedPath !== "/tech-audit/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);

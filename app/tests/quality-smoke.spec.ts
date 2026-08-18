@@ -173,7 +173,7 @@ const ROUTES: readonly RouteContract[] = [
     h1: /We handle the tech\.\s*You run the shop\./i,
     // Every viewport carries the same direct decision: start the full Website
     // Check or call for the thing that is already broken.
-    criticalLink: 'form[action="/examples/audit/"], a[href="/website-check/"]',
+    criticalLink: 'form[action="/examples/audit/"], a[href^="/website-check/"]',
     tags: [
       "@chromium-desktop",
       "@chromium-mobile",
@@ -1181,7 +1181,7 @@ test(
     expect(new Set(clients.map((client) => client.trim())).size).toBe(6);
 
     const call = wall.locator('a[href^="tel:"]');
-    const websiteCheck = wall.locator('a[href="/website-check/"]');
+    const websiteCheck = wall.locator('a[href^="/website-check/"]');
     await expect(call).toBeVisible();
     await expect(websiteCheck).toBeVisible();
 
@@ -1218,7 +1218,7 @@ test(
     const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
     const wall = page.locator(".lf-wall");
     const heroCall = wall.locator(".lf-wall__call");
-    const websiteCheck = wall.locator('a[href="/website-check/"]');
+    const websiteCheck = wall.locator('a[href^="/website-check/"]');
     const heroChannels = page.locator(".lf-wall__channels a");
 
     await expect(directCall).toBeVisible();
@@ -2238,7 +2238,7 @@ test(
       )
       .toBe(1);
 
-    const websiteCheck = page.locator('.lf-wall a[href="/website-check/"]');
+    const websiteCheck = page.locator('.lf-wall a[href^="/website-check/"]');
     await websiteCheck.evaluate((link) => {
       link.addEventListener("click", (event) => event.preventDefault(), { once: true });
     });
