@@ -65,6 +65,11 @@ export default function QuietNav() {
   const showStartCta = startHrefPath !== normalizedPath && normalizedPath !== "/tech-audit/";
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // Von Restorff: one filled-orange action per screen. While a hero's primary
+  // action ([data-lf-primary-action]) is on screen the nav pill goes quiet
+  // (outline, bone); once it scrolls away the pill fills and carries the
+  // conversion. Re-observed per route because heroes mount after navigation.
+  const [heroActionVisible, setHeroActionVisible] = useState(false);
   const scrollSentinelRef = useRef<HTMLSpanElement>(null);
   const panelId = useId();
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -85,6 +90,35 @@ export default function QuietNav() {
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+    let attempts = 0;
+    let timer: number | null = null;
+    const attach = () => {
+      const target = document.querySelector<HTMLElement>("[data-lf-primary-action]");
+      if (!target) {
+        // Route content can mount a beat after the nav; look a few times, then
+        // settle on "not visible" so the pill simply stays filled.
+        if (attempts++ < 12) timer = window.setTimeout(attach, 80);
+        else setHeroActionVisible(false);
+        return;
+      }
+      observer = new IntersectionObserver(
+        ([entry]) => setHeroActionVisible(entry.isIntersecting),
+        { threshold: 0.4 },
+      );
+      observer.observe(target);
+    };
+    // No synchronous reset here (the lint rule guards cascading renders):
+    // the observer's first callback delivers the truthful value within a
+    // frame, and a route with no marker resolves to "filled" via attach().
+    attach();
+    return () => {
+      if (timer !== null) window.clearTimeout(timer);
+      observer?.disconnect();
+    };
+  }, [pathname]);
 
   // The mobile drawer cannot survive into the desktop layout. Close it as
   // soon as a resize or device rotation crosses the full-navigation breakpoint so the
@@ -211,7 +245,7 @@ export default function QuietNav() {
           {showStartCta && (
           <Link
             to={startCta.href}
-            className="lf-nav__start"
+            className={`lf-nav__start${heroActionVisible ? " lf-nav__start--quiet" : ""}`}
             data-lf-event={startCta.event}
             data-lf-label="nav_desktop"
             data-lf-source="navigation"

@@ -102,7 +102,7 @@ export default function HomeWall() {
         </ul>
 
         <div className="lf-wall__act">
-          <a className="lf-wall__call" href={PHONE_HREF} data-lf-label="home_wall_phone">
+          <a className="lf-wall__call" href={PHONE_HREF} data-lf-label="home_wall_phone" data-lf-primary-action="true">
             <Phone size={20} strokeWidth={2.5} aria-hidden="true" />
             {PHONE_DISPLAY}
           </a>

@@ -258,6 +258,7 @@ export default function PageHero({
                 {resolvedAction.href.startsWith("/") ? (
                   <Link
                     className="lf-pagehero__decision lf-pagehero__decision--primary"
+                    data-lf-primary-action="true"
                     to={resolvedAction.href}
                     data-lf-event={resolvedAction.event}
                     data-lf-label="page_hero"
@@ -269,6 +270,7 @@ export default function PageHero({
                 ) : (
                   <a
                     className="lf-pagehero__decision lf-pagehero__decision--primary"
+                    data-lf-primary-action="true"
                     href={resolvedAction.href}
                     data-lf-event={resolvedAction.event}
                     data-lf-label="page_hero"

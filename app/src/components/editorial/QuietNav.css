@@ -333,6 +333,19 @@
     box-shadow var(--lf-time-snappy) var(--lf-ease-standard);
 }
 
+.lf-nav__start--quiet {
+  background: transparent;
+  color: var(--lf-bone);
+  box-shadow: inset 0 0 0 1px var(--lf-hairline);
+}
+
+.lf-nav__start--quiet:hover,
+.lf-nav__start--quiet:focus-visible {
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--lf-fight) 22%, transparent);
+}
+
 /* Tablets (768-1023px) used to be a dead zone: the sticky help bar stops at
  * 767px and this pill used to start at 1024px, so that whole band had no
  * visible action anywhere on screen. The pill now starts exactly where the
@@ -382,6 +395,16 @@
 .lf-editorial a.lf-nav__start,
 .lf-editorial a.lf-nav__start:hover,
 .lf-editorial a.lf-nav__start:focus-visible {
+  color: var(--lf-ink);
+}
+
+/* Quiet variant outranks the ink-text pin above (same 0,2,1 + one class). */
+.lf-editorial a.lf-nav__start.lf-nav__start--quiet {
+  color: var(--lf-bone);
+}
+
+.lf-editorial a.lf-nav__start.lf-nav__start--quiet:hover,
+.lf-editorial a.lf-nav__start.lf-nav__start--quiet:focus-visible {
   color: var(--lf-ink);
 }
 
