@@ -1,0 +1,486 @@
+/* The four services, lit by one light.
+ *
+ * Every panel shares the same key light (upper left), the same cool rim
+ * (right), and the same warm bounce off the floor. That shared lighting is the
+ * whole reason four different drawings read as one product rather than four
+ * clip-art tiles — it is the cheapest, most load-bearing decision in the file.
+ *
+ * Type note: Oswald is CONDENSED, so it takes --lf-display-tracking (0em).
+ * Negative tracking makes a condensed face's letters touch, which is why the
+ * poster numerals below set tracking explicitly rather than inheriting a
+ * display default from anywhere else.
+ */
+
+.lf-quad {
+  padding-block: var(--lf-section-space);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-quad__inner {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+  padding-inline: var(--lf-page-gutter);
+}
+
+/* ── head ───────────────────────────────────────────────────────────────── */
+
+.lf-quad__head {
+  max-width: var(--lf-measure-compact);
+}
+
+.lf-editorial .lf-quad__eyebrow {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-editorial .lf-quad__title {
+  margin: var(--lf-space-4) 0 0;
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-2xl);
+  line-height: 0.94;
+  letter-spacing: var(--lf-display-tracking);
+  text-transform: uppercase;
+  color: var(--lf-bone);
+}
+
+.lf-quad__title > span {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-quad__dek {
+  margin: var(--lf-space-4) 0 0;
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+}
+
+/* ── the four cells ─────────────────────────────────────────────────────── */
+
+.lf-quad__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-6);
+}
+
+.lf-editorial .lf-quad__cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--lf-space-3);
+  min-height: 6.5rem;
+  padding: var(--lf-space-4);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
+  color: var(--lf-bone);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-settle-ms) var(--m-settle-ease),
+    transform var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-quad__cell-num {
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  color: var(--lf-bone-dim);
+}
+
+.lf-quad__cell-label {
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-lg);
+  line-height: 1;
+  letter-spacing: var(--lf-display-tracking);
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-quad__cell:hover {
+  border-color: var(--lf-bone-dim);
+  transform: translateY(var(--lf-lift));
+}
+
+.lf-editorial .lf-quad__cell--selected,
+.lf-editorial .lf-quad__cell--selected:hover {
+  background: var(--lf-fight);
+  border-color: var(--lf-fight);
+  color: var(--lf-ink);
+  transform: none;
+}
+
+/* 62% ink on the orange measures 3.87:1 — under the 4.5:1 that 16px normal
+   weight needs. 78% measures ~5.5:1. The number is decorative but it is still
+   rendered text, so it meets the same bar as everything else. */
+.lf-quad__cell--selected .lf-quad__cell-num {
+  color: rgb(5 5 7 / 78%);
+}
+
+.lf-editorial .lf-quad__cell:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* ── the panel ──────────────────────────────────────────────────────────── */
+
+.lf-quad__panel {
+  margin-top: var(--lf-space-4);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  overflow: hidden;
+}
+
+.lf-quad__panel:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-quad__panel--enter {
+  animation: lf-quad-in var(--m-reveal-ms) var(--m-reveal-ease) both;
+}
+
+@keyframes lf-quad-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ONE stage light, shared by all four panels. The tone modifiers only swing
+   the rim colour, so the room never changes — just what is lit in it. */
+.lf-quad__stage {
+  position: relative;
+  padding: var(--lf-space-6) var(--lf-space-5) var(--lf-space-5);
+  background:
+    radial-gradient(120% 78% at 22% 8%, rgb(255 255 255 / 7.5%) 0%, rgb(255 255 255 / 0%) 55%),
+    radial-gradient(80% 55% at 88% 30%, var(--lf-quad-rim, rgb(96 165 250 / 10%)) 0%, rgb(96 165 250 / 0%) 60%),
+    radial-gradient(90% 60% at 50% 108%, rgb(249 115 22 / 14%) 0%, rgb(249 115 22 / 0%) 62%),
+    var(--lf-ink);
+}
+
+.lf-quad__panel--urgent .lf-quad__stage {
+  --lf-quad-rim: rgb(74 222 128 / 10%);
+}
+
+.lf-quad__panel--own .lf-quad__stage,
+.lf-quad__panel--free .lf-quad__stage {
+  --lf-quad-rim: rgb(96 165 250 / 12%);
+}
+
+/* ── the figure — the outcome as one number ─────────────────────────────── */
+
+.lf-quad__figure {
+  position: relative;
+  z-index: 2;
+  /* Leaves the status chip its lane so a long kicker can never run under it. */
+  max-width: calc(100% - 8.5rem);
+}
+
+.lf-editorial .lf-quad__kicker {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-quad__number {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--lf-space-3);
+  margin: var(--lf-space-2) 0 0;
+}
+
+.lf-quad__value {
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-3xl);
+  line-height: 1.04;
+  letter-spacing: var(--lf-display-tracking);
+  /* The gradient is clipped to the GLYPHS but painted over the PADDING BOX, so
+     anything outside that box is simply never painted. The bottom padding is
+     what keeps a descender (the "g" in Nothing) from vanishing. */
+  padding-block: 2px 0.12em;
+  background: linear-gradient(178deg, var(--lf-bone) 34%, #9a9aa3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.lf-quad__value--word {
+  font-size: var(--lf-text-2xl);
+}
+
+.lf-quad__unit {
+  margin-bottom: 0.5em;
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-lg);
+  line-height: 1;
+  letter-spacing: var(--lf-display-tracking);
+  color: var(--lf-bone);
+  white-space: nowrap;
+}
+
+.lf-editorial .lf-quad__sub {
+  margin: var(--lf-space-3) 0 0;
+  max-width: 34ch;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  color: var(--lf-bone-soft);
+}
+
+/* ── status chip — a real translucent material, not a flat swatch ───────── */
+
+.lf-editorial .lf-quad__chip {
+  position: absolute;
+  top: var(--lf-space-6);
+  right: var(--lf-space-5);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  margin: 0;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: var(--lf-radius-pill);
+  background: rgb(255 255 255 / 7%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 22%),
+    0 10px 26px rgb(0 0 0 / 55%);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.06em;
+  color: var(--lf-bone);
+  white-space: nowrap;
+}
+
+.lf-quad__chip > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lf-success);
+  box-shadow: 0 0 10px 2px rgb(74 222 128 / 60%);
+}
+
+.lf-quad__panel--own .lf-quad__chip > span {
+  background: var(--lf-fight);
+  box-shadow: 0 0 10px 2px rgb(249 115 22 / 60%);
+}
+
+.lf-quad__panel--free .lf-quad__chip > span {
+  background: var(--lf-blue-soft);
+  box-shadow: 0 0 10px 2px rgb(96 165 250 / 60%);
+}
+
+/* ── the object ─────────────────────────────────────────────────────────── */
+
+.lf-quad__object {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--lf-space-5);
+}
+
+/* ── the sentence a customer would say ──────────────────────────────────── */
+
+.lf-quad__say {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--lf-space-5);
+}
+
+.lf-editorial .lf-quad__headline {
+  margin: 0;
+  max-width: 22ch;
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-xl);
+  line-height: 1.02;
+  letter-spacing: var(--lf-display-tracking);
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-quad__proof {
+  margin: var(--lf-space-3) 0 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  color: var(--lf-bone-soft);
+}
+
+/* ── actions ────────────────────────────────────────────────────────────── */
+
+.lf-quad__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-4);
+  padding: var(--lf-space-5);
+  background: var(--lf-paper-2);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-quad__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-height);
+  padding-inline: var(--lf-control-padding-inline);
+  border: 1px solid var(--lf-fight);
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-mono);
+  font-weight: 700;
+  font-size: var(--lf-text-2xs);
+  text-decoration: none;
+  transition:
+    background var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-editorial .lf-quad__action:hover,
+.lf-editorial .lf-quad__action:focus-visible {
+  background: var(--lf-fight-hover);
+  border-color: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-quad__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-min);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-2xs);
+  text-decoration: none;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-quad__more:hover,
+.lf-editorial .lf-quad__more:focus-visible {
+  color: var(--lf-bone);
+  border-bottom-color: var(--lf-bone);
+}
+
+.lf-editorial .lf-quad__action:focus-visible,
+.lf-editorial .lf-quad__more:focus-visible,
+.lf-editorial .lf-quad__order a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* ── the order the work usually goes in ────────────────────────────────── */
+
+.lf-editorial .lf-quad__order {
+  margin: var(--lf-space-6) 0 0;
+  padding-top: var(--lf-space-5);
+  max-width: var(--lf-measure-reading);
+  border-top: 1px solid var(--lf-hairline);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+}
+
+.lf-editorial .lf-quad__order a {
+  color: var(--lf-bone);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lf-editorial .lf-quad__order a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* ── tablet and up ──────────────────────────────────────────────────────── */
+
+@media (min-width: 48rem) {
+  .lf-quad__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lf-quad__stage {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    grid-template-areas:
+      "figure object"
+      "say    object";
+    align-items: start;
+    column-gap: var(--lf-space-7);
+    padding: var(--lf-space-7);
+  }
+
+  .lf-quad__figure {
+    grid-area: figure;
+    max-width: none;
+  }
+
+  .lf-quad__object {
+    grid-area: object;
+    margin-top: 0;
+  }
+
+  /* The instrument's own default box (620/390, min 300px) is a wide service-page
+     shape. Dropped into this column it becomes squat — 284×300 at 768px — and a
+     drawing that budgets its height in fractions runs out of room and paints the
+     last card off the bottom edge. Nothing errors; the card is simply never
+     drawn. audit-instrument-frame.mjs reads the canvas pixels to catch it.
+     The taller box here is what all four instruments actually get to lay out in. */
+  .lf-quad__object .lf-instrument {
+    --lf-instrument-ratio: 5 / 4;
+    --lf-instrument-minh: 400px;
+  }
+
+  .lf-quad__say {
+    grid-area: say;
+    align-self: end;
+    margin-top: var(--lf-space-6);
+  }
+
+  .lf-quad__chip {
+    top: var(--lf-space-7);
+    right: var(--lf-space-7);
+  }
+
+}
+
+@media (min-width: 70rem) {
+  .lf-quad__head {
+    max-width: var(--lf-measure-reading);
+  }
+}
+
+/* ── reduced motion ─────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-quad__cell,
+  .lf-editorial .lf-quad__action {
+    transition: none;
+  }
+
+  .lf-editorial .lf-quad__cell:hover {
+    transform: none;
+  }
+
+  /* A cross-fade, never a slide — the panel still confirms that the choice
+     registered, without moving anything across the reader's field. */
+  .lf-quad__panel--enter {
+    animation: lf-quad-fade 200ms linear both;
+  }
+
+  @keyframes lf-quad-fade {
+    from {
+      opacity: 0;
+    }
+  }
+}

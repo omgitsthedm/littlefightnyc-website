@@ -1351,26 +1351,35 @@ test(
     expect(firstScreen.urgentBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.channelsBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.hoursBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
-    // The homepage is four short chapters (path, proof, fight, close) plus the
-    // footer, which now carries all four contact channels at 44px touch
-    // targets. Measured 11.49 at 320×568; the cap keeps a chapter from
-    // quietly padding itself without pretending the footer is free.
-    expect(firstScreen.pageScreens).toBeLessThanOrEqual(11.75);
+    // The homepage is four short chapters (path, proof, the four services,
+    // close) plus the footer, which carries all four contact channels at 44px
+    // touch targets. Re-baselined from 11.75 when "name the fight" — three text
+    // panels — became the four services, where choosing one draws a ~415px
+    // animated instrument. That is the section doing its job, not padding: the
+    // whole point of the rebuild is that each service is explained by a picture
+    // rather than a paragraph. Measured 12.66 at 320×568 on chromium-mobile;
+    // the cap keeps its original job of catching a chapter that quietly grows.
+    expect(firstScreen.pageScreens).toBeLessThanOrEqual(13);
     expect(firstScreen.horizontalOverflow).toBeLessThanOrEqual(0);
     expect(firstScreen.desktopProofCount).toBe(0);
 
-    // Name-the-fight keeps three tappable choices, one panel, and switches
-    // without loading imagery on the phone payload.
-    const fight = page.locator(".lf-fight");
-    await fight.scrollIntoViewIfNeeded();
-    await expect(fight.getByRole("tab")).toHaveCount(3);
-    await expect(fight.getByRole("tab", { selected: true })).toHaveText(/more customers/i);
-    await expect(fight.locator("img")).toHaveCount(0);
-    await fight.getByRole("tab", { name: /Something is broken/i }).click();
-    await expect(fight).toHaveAttribute("data-lf-fight", "broken");
-    await expect(fight.getByRole("tabpanel").locator('a[href^="tel:"]')).toBeVisible();
-    await fight.getByRole("tab", { name: /tools/i }).click();
-    await expect(fight.getByRole("tabpanel").locator('a[href="/services/business-systems/"]')).toBeVisible();
+    // The four services keep four tappable choices and one panel, and switch
+    // without loading imagery on the phone payload — the drawings are canvas,
+    // so choosing a service costs no extra bytes.
+    const quad = page.locator(".lf-quad");
+    await quad.scrollIntoViewIfNeeded();
+    await expect(quad.getByRole("tab")).toHaveCount(4);
+    await expect(quad.getByRole("tab", { selected: true })).toHaveText(/websites/i);
+    await expect(quad.locator("img")).toHaveCount(0);
+    await quad.getByRole("tab", { name: /tech support/i }).click();
+    await expect(quad).toHaveAttribute("data-lf-quadrant", "support");
+    await expect(quad.getByRole("tabpanel").locator('a[href^="tel:"]')).toBeVisible();
+    await quad.getByRole("tab", { name: /software you own/i }).click();
+    await expect(quad).toHaveAttribute("data-lf-quadrant", "software");
+    await expect(quad.getByRole("tabpanel").locator('a[href="/services/business-systems/"]')).toBeVisible();
+    // Every quadrant draws something. A missing instrument is invisible in a
+    // screenshot — the canvas element is simply absent — so assert it directly.
+    await expect(quad.getByRole("tabpanel").locator("canvas")).toHaveCount(1);
     await expect(page.locator(".lf-sticky-help")).toBeVisible();
     const stickyHeight = await page.locator(".lf-sticky-help").evaluate(
       (element) => element.getBoundingClientRect().height,
@@ -3206,5 +3215,103 @@ test(
     ).toEqual(sentinels);
     expect(runtime.pageErrors).toEqual([]);
     expect(runtime.consoleErrors).toEqual([]);
+  },
+);
+
+test(
+  "Every homepage instrument stays inside its own canvas at every width @chromium-mobile",
+  async ({ page, baseURL }) => {
+    // The instruments lay themselves out in FRACTIONS of the canvas box, so a
+    // budget that fits at one aspect ratio quietly amputates itself at another.
+    // Nothing throws and nothing overflows — the missing part is simply never
+    // painted, which a screenshot cannot tell you. This reads the pixels: ink
+    // touching the outermost rows was either cut off there or is one resize
+    // from it. Caught the websites instrument losing its third booking card in
+    // the 284×300 box the tablet grid handed it.
+    const WIDTHS = [320, 390, 430, 720, 768, 1024, 1280, 1600];
+    const QUADRANTS = ["websites", "support", "software", "consult"];
+    // Bright enough to be a drawn object; the atmosphere washes sit well under.
+    const INK_MIN = 86;
+    // Enough consecutive inked pixels to be an object, not antialiasing dust.
+    const RUN_MIN = 6;
+
+    const problems: string[] = [];
+
+    // A settled frame is the honest thing to measure: it is exactly what a
+    // reduced-motion reader sees, and it is the fullest the drawing ever gets.
+    await page.emulateMedia({ reducedMotion: "reduce" });
+
+    for (const width of WIDTHS) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
+      await page.evaluate(() => document.fonts.ready);
+
+      for (const key of QUADRANTS) {
+        const tab = page.locator(`.lf-quad__cell[data-lf-label="home_quadrant_${key}"]`);
+        await tab.click();
+        await page.locator(".lf-quad__object canvas").waitFor({ state: "visible" });
+        // Let the ResizeObserver settle and the still frame repaint.
+        await page.waitForTimeout(300);
+
+        const report = await page.evaluate(
+          ({ inkMin, runMin }) => {
+            const canvas = document.querySelector("canvas.lf-instrument__canvas");
+            if (!(canvas instanceof HTMLCanvasElement)) return { error: "no canvas" };
+            const cx = canvas.getContext("2d", { willReadFrequently: true });
+            const { width: w, height: h } = canvas;
+            if (!cx || !w || !h) return { error: "canvas has no size" };
+            const data = cx.getImageData(0, 0, w, h).data;
+
+            const inked = (x: number, y: number) => {
+              const i = (y * w + x) * 4;
+              if (data[i + 3] < 24) return false;
+              return 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2] >= inkMin;
+            };
+            const longestRun = (count: number, at: (n: number) => boolean) => {
+              let run = 0;
+              let best = 0;
+              for (let n = 0; n < count; n += 1) {
+                run = at(n) ? run + 1 : 0;
+                if (run > best) best = run;
+              }
+              return best;
+            };
+
+            const edges: Record<string, number> = {
+              top: Math.max(longestRun(w, (x) => inked(x, 0)), longestRun(w, (x) => inked(x, 1))),
+              bottom: Math.max(
+                longestRun(w, (x) => inked(x, h - 1)),
+                longestRun(w, (x) => inked(x, h - 2)),
+              ),
+              left: Math.max(longestRun(h, (y) => inked(0, y)), longestRun(h, (y) => inked(1, y))),
+              right: Math.max(
+                longestRun(h, (y) => inked(w - 1, y)),
+                longestRun(h, (y) => inked(w - 2, y)),
+              ),
+            };
+            return {
+              size: `${w}×${h}`,
+              hits: Object.entries(edges)
+                .filter(([, run]) => run >= runMin)
+                .map(([edge, run]) => `${edge} (${run}px of ink)`),
+            };
+          },
+          { inkMin: INK_MIN, runMin: RUN_MIN },
+        );
+
+        if ("error" in report && report.error) {
+          problems.push(`${width}px · ${key} · ${report.error}`);
+        } else if ("hits" in report && report.hits.length) {
+          problems.push(
+            `${width}px · ${key} · canvas ${report.size} · ink at ${report.hits.join(", ")}`,
+          );
+        }
+      }
+    }
+
+    expect(
+      problems,
+      `An instrument runs off its own canvas. Re-budget its layout fractions for that\naspect ratio, or give the wrapper a taller --lf-instrument-ratio-m:\n${problems.join("\n")}`,
+    ).toEqual([]);
   },
 );

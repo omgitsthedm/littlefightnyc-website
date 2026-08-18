@@ -36,6 +36,19 @@ export const ORANGE = "#F97316";
 export const RED = "#F87171";
 export const GREEN = "#4ADE80";
 
+/**
+ * `#RRGGBB` → `rgba(r,g,b,1)`, the shape `glow()` needs.
+ *
+ * Instruments used to hand glow() a hand-typed `"rgba(249,115,22,1)"`, which is
+ * the signal orange written out as a raw value — the exact thing
+ * audit-signal.mjs ratchets against, and a second place for the token to drift
+ * from. Deriving it from the constant means the signal has one source.
+ */
+export const rgba1 = (hex: string): string => {
+  const n = Number.parseInt(hex.slice(1), 16);
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},1)`;
+};
+
 /** Rounded-rect path (does not fill/stroke — caller does). */
 export function rr(
   c: CanvasRenderingContext2D,

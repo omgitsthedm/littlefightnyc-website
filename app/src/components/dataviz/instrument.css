@@ -51,8 +51,17 @@
    the 300px that already renders cleanly at 390px. min() keeps the element from
    ever exceeding the viewport if a classic scrollbar is present, because 100vw
    includes it and this site has a standing no-horizontal-overflow rule. */
+/* The doubled class is load-bearing, not a typo.
+   `.lf-content-tile > :where(…, .lf-instrument)` in tiled-layout.css sets
+   `width: 100%; margin: 0`. `:where()` contributes nothing, so that rule is
+   (0,1,0) — the SAME specificity as a bare `.lf-instrument`, which means the
+   winner was decided purely by which stylesheet the bundler emitted last.
+   That held until the homepage began importing an instrument eagerly, which
+   moved this file earlier in the bundle and silently un-bled every instrument
+   on a small phone. Stating the precedence here makes it independent of
+   import order. */
 @media (max-width: 480px) {
-  .lf-instrument {
+  .lf-instrument.lf-instrument {
     width: min(100vw, 100% + 88px);
     margin-inline: calc(50% - min(50vw, 50% + 44px));
   }

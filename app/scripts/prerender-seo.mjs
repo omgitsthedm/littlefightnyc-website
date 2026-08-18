@@ -1953,7 +1953,15 @@ function snapshot(page) {
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
     ${methodBlock(page)}
-    ${promisesBlock(page)}
+    <h2>Four ways to get unstuck</h2>
+    <p>The homepage explains four services, and each one leads with what the owner ends up with rather than how the work is delivered.</p>
+    <ul class="lf-seo__home-four">
+      <li><a href="/services/custom-local-websites/"><strong>Websites</strong></a> — your front door stays open 24/7, even at 2am and on a Sunday. Customers can find you and book without calling.</li>
+      <li><a href="/services/it-support/"><strong>On-site tech support</strong></a> — urgent New York jobs are usually on site within 24 hours, and a person answers 9am–9pm Eastern. You call, we come, and we fix it or tell you who can.</li>
+      <li><a href="/services/business-systems/"><strong>Software you own</strong></a> — your clients, files, and jobs live in one place, built around how you already work. You own it; the data and the accounts stay yours.</li>
+      <li><a href="/services/tech-consulting/"><strong>Free second opinion</strong></a> — the first read costs nothing, whether you hire us or not. You leave knowing what to fix first.</li>
+    </ul>
+    <p>The first look is free. We return missed calls within 2 hours, 9am–9pm Eastern. Written website plans carry their own timing terms, including which jobs qualify and what you receive if our work is late — those terms live on the <a href="/services/custom-local-websites/">websites page</a>, where you can read them in full.</p>
     <h2>What we fix</h2>
     ${linkList(usefulLinksFor(page))}
     <h2>Recent proof</h2>
