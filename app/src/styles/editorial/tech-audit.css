@@ -150,7 +150,7 @@
 .lf-audit-intro__score-label {
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: 10px;
+  font-size: var(--lf-text-2xs);
   letter-spacing: 0.04em;
   line-height: 1.3;
   text-align: center;

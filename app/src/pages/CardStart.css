@@ -18,7 +18,7 @@
 .lf-card-start .lf-card-start__eyebrow {
   margin: 0 0 22px;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.82rem;
+  font-size: 1rem; /* 16px floor — was 0.82rem */
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -100,7 +100,7 @@
 
 .lf-card-start .lf-card-start__num {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.95rem;
+  font-size: 1rem; /* 16px floor — was 0.95rem */
   font-weight: 800;
   color: var(--start-orange);
   letter-spacing: 0.08em;

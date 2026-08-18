@@ -166,8 +166,8 @@
   z-index: 2;
   transform: translate(-50%, -50%);
   font-family: var(--lf-mono);
-  max-width: 7.5rem;
-  font-size: .62rem;
+  max-width: 9.5rem;
+  font-size: var(--lf-text-2xs); /* 16px floor — was .62rem */
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--lf-fight);

@@ -195,9 +195,9 @@
   margin-top: var(--lf-space-2);
   color: var(--lf-bone-dim);
   font-family: var(--lf-mono);
-  font-size: clamp(0.56rem, 0.78vw, 0.7rem);
+  font-size: var(--lf-text-2xs); /* 16px floor — was 9–11px */
   line-height: 1.3;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .lf-live-explorer__device figcaption span {

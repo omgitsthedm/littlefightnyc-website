@@ -846,12 +846,16 @@
     gap: 0.25rem 0.75rem;
   }
 
+  /* 16px is the floor. These two are first-screen contract lines — the
+     channels and the hours — and were the only text under it on a phone
+     (14.4px and 12px). Measured Aug-18 across every section on iPhone. */
   .lf-pagehero__channels a {
-    font-size: 0.9rem;
+    font-size: var(--lf-text-2xs);
   }
 
   .lf-editorial .lf-pagehero__hours {
-    font-size: 0.75rem;
+    font-size: var(--lf-text-2xs);
+    line-height: 1.35;
   }
 
   .lf-pagehero--with-image:not(.lf-pagehero--protected) .lf-pagehero__inner {

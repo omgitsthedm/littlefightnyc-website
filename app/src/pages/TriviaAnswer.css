@@ -20,7 +20,7 @@
 .lf-trivia-answer .lf-trivia-answer__eyebrow {
   margin: 0 0 24px;
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.82rem;
+  font-size: var(--lf-text-2xs);
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -64,7 +64,7 @@
   margin: 0 0 16px;
   color: var(--trivia-orange);
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.78rem;
+  font-size: var(--lf-text-2xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -145,7 +145,7 @@
 
 .lf-trivia-answer__facts dt {
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.75rem;
+  font-size: var(--lf-text-2xs);
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -164,7 +164,7 @@
 
 .lf-trivia-answer__sources p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--lf-text-2xs);
   line-height: 1.6;
 }
 
