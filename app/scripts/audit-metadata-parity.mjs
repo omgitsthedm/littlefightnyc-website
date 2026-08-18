@@ -141,10 +141,13 @@ for (const page of routeMeta.pages) {
     } else {
       const attrs = tagAttributes(`<a ${navCta[1]} ${navCta[2]}>`);
       expectEqual(`${page.path} nav CTA label`, cleanText(navCta[3]), "Check my website");
+      // The primary CTA lands in the URL field, focused (RouteScrollManager
+      // focuses a form control named by the hash) — one tap fewer than the
+      // top of the page. The hydrated nav uses the same href.
       expectEqual(
         `${page.path} nav CTA destination`,
         attrs.href,
-        "/website-check/",
+        "/website-check/#website-check-url",
       );
     }
   }
