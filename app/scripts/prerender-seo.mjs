@@ -112,7 +112,9 @@ const aiBots = [
 // explicitly because they are containers, not area pages.
 // The homepage living path renders one real client capture; the hydrated
 // QuietHero, the SEO shell, and the route preload must all name this file.
-const HOME_PATH_CAPTURE = "/assets/case-hair-by-rachel-charles-explore-mobile.webp";
+// The first screen is a row of six trades; its first tile is the LCP
+// candidate and the one route preload. audit-site-integrity pins the pair.
+const HOME_WALL_LEAD = "/assets/case-chromatic-painting-design-900.webp";
 const AREA_CONTAINERS = ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"];
 
 const areaServed = [
@@ -854,7 +856,7 @@ function routeImagePreload(page) {
   if (page.path === "/") {
     // The living path shows one real client capture at every viewport, so a
     // single preload matches the hydrated <img> exactly.
-    return `<link rel="preload" href="${HOME_PATH_CAPTURE}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+    return `<link rel="preload" href="${HOME_WALL_LEAD}" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
 
   if (!asset?.endsWith(".webp")) return "";
@@ -1926,25 +1928,26 @@ function snapshot(page) {
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC" data-lf-owner-intro="true">
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
-          <p class="lf-seo__home-kicker">Websites · Tech · Software</p>
-          <h1>Make it easier for the next customer to <em>choose you.</em></h1>
-          <p class="lf-seo__home-sub">We build the website. We make the tools fit. We stay when something breaks.</p>
+          <p class="lf-seo__home-kicker">New York City</p>
+          <h1>Shops like yours, <em>already working.</em></h1>
+          <p class="lf-seo__home-sub">Websites, on-site tech help, and software you own.</p>
           <div class="lf-seo__home-actions" aria-label="Start here" data-lf-contact-rail="true">
-            <a class="lf-seo__home-action lf-seo__home-action--primary" href="/website-check/"><span>Need a website?</span><strong>Get a better website</strong></a>
-            <a class="lf-seo__home-action" href="tel:${site.phone}"><span>Something broke?</span><strong>Call now</strong></a>
+            <a class="lf-seo__home-action lf-seo__home-action--primary" href="tel:${site.phone}"><span>Call</span><strong>${site.phoneDisplay}</strong></a>
+            <a class="lf-seo__home-action" href="/website-check/"><span>Not ready to call?</span><strong>Check my website</strong></a>
           </div>
           <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
         <figure class="lf-seo__home-scene">
-          <p class="lf-seo__home-scene-title"><span>The path</span>One customer, start to finish — on a real client site.</p>
-          <div class="lf-seo__home-phone" aria-hidden="true"><div class="lf-seo__home-phone-screen"><img src="${HOME_PATH_CAPTURE}" width="390" height="2400" alt="" fetchpriority="high"></div></div>
-          <ol class="lf-seo__home-path" aria-label="The customer path">
-            <li><span>01</span><span><strong>Found</strong><span>They find you.</span></span></li>
-            <li><span>02</span><span><strong>Understood</strong><span>They get it.</span></span></li>
-            <li><span>03</span><span><strong>Trusted</strong><span>They believe it.</span></span></li>
-            <li><span>04</span><span><strong>Booked</strong><span>They act.</span></span></li>
-          </ol>
-          <figcaption>Live client site · hairbyrachelcharles.com · checked Aug 13, 2026</figcaption>
+          <p class="lf-seo__home-scene-title"><span>Live client sites</span>Six trades, six live sites — a painting contractor, a lender, a film company, a help service, a clothing label, a salon.</p>
+          <div class="lf-seo__home-phone"><div class="lf-seo__home-phone-screen"><img src="${HOME_WALL_LEAD}" width="900" height="640" alt="Chromatic Painting &amp; Design — a live client site" fetchpriority="high"></div></div>
+          <ul class="lf-seo__home-path" aria-label="Live client sites">
+            <li><a href="/case-studies/chromatic-painting-design/"><strong>Painting contractor</strong> — Chromatic Painting &amp; Design</a></li>
+            <li><a href="/case-studies/grand-funding-llc/"><strong>Lender</strong> — Grand Funding LLC</a></li>
+            <li><a href="/case-studies/cc-films/"><strong>Film company</strong> — CC Films</a></li>
+            <li><a href="/case-studies/clearhelp/"><strong>Help service</strong> — ClearHelp</a></li>
+            <li><a href="/case-studies/after-hours-agenda/"><strong>Clothing label</strong> — After Hours Agenda</a></li>
+            <li><a href="/case-studies/hair-by-rachel-charles/"><strong>Salon</strong> — Hair By Rachel Charles</a></li>
+          </ul>
         </figure>
       </div>
     </section>

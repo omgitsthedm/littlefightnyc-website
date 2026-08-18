@@ -170,7 +170,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "Home",
     path: "/",
     title: "Little Fight NYC | Websites, IT Support & Custom Software",
-    h1: /Make it easier\s*for the next\s*customer to\s*choose you\./i,
+    h1: /Shops like yours,\s*already working\./i,
     // Every viewport carries the same direct decision: start the full Website
     // Check or call for the thing that is already broken.
     criticalLink: 'form[action="/examples/audit/"], a[href="/website-check/"]',
@@ -1043,40 +1043,33 @@ test(
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Make it easier\s*for the next\s*customer to\s*choose you\./i,
+        name: /Shops like yours,\s*already working\./i,
       }),
     ).toBeVisible();
     await expect(
       page
-        .locator(".lf-hero")
-        .locator('button:has-text("Check my website"), a:has-text("Get a better website")')
+        .locator(".lf-wall")
+        .locator('a:has-text("Check my website"), a[href^="tel:"]')
         .filter({ visible: true })
         .first(),
     ).toBeVisible();
-    // The living path never plays on its own under reduced motion — but the
-    // path is content, not decoration, so it must stay walkable. The control
-    // becomes a stepper and the beats change without animating.
-    const scene = page.locator(".lf-hero__scene");
-    await expect(scene).toHaveAttribute("data-lf-play", "still");
-    await expect(scene.locator(".lf-hero__path-step")).toHaveCount(4);
-    await expect(scene.locator('.lf-hero__path-step button[aria-current="step"]')).toHaveText(/Found/);
+    // The first screen is six live client sites, which is content rather than
+    // motion — reduced motion takes nothing away from it. Each of the four
+    // service drawings paints one settled frame and starts no rAF loop, so the
+    // whole argument is still readable with every animation switched off.
+    const wall = page.locator(".lf-wall__tile");
+    await expect(wall).toHaveCount(6);
+    await expect(wall.first().locator("img")).toBeVisible();
 
-    const stepper = scene.locator(".lf-hero__path-controls button");
-    await expect(stepper).toBeVisible();
-    await expect(stepper).toHaveText(/Next step/i);
-    await stepper.click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "understood");
-    await expect(scene).toHaveAttribute("data-lf-play", "still");
-    await stepper.click();
-    await stepper.click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "booked");
-    await expect(stepper).toHaveText(/Start the path over/i);
-    await stepper.click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "found");
-
-    // Tapping a beat directly still works.
-    await scene.locator(".lf-hero__path-step button").nth(3).click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "booked");
+    const services = page.locator(".lf-svc");
+    await expect(services).toHaveCount(4);
+    for (const key of ["websites", "support", "software", "consult"]) {
+      const section = page.locator(`.lf-svc[data-lf-service="${key}"]`);
+      await section.scrollIntoViewIfNeeded();
+      await expect(section.locator("canvas")).toBeVisible();
+      await expect(section.locator(".lf-svc__headline")).toBeVisible();
+    }
+    await page.locator(".lf-wall").scrollIntoViewIfNeeded();
 
     const mainState = await page.getByRole("main").evaluate((element) => {
       const style = getComputedStyle(element);
@@ -1156,58 +1149,62 @@ test(
 );
 
 test(
-  "desktop homepage shows the living path and both decisions above the fold @chromium-desktop",
+  "desktop homepage leads with six trades and the phone above the fold @chromium-desktop",
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
 
-    const scene = page.locator(".lf-hero__scene");
-    const capture = scene.locator('img[src="/assets/case-hair-by-rachel-charles-explore-mobile.webp"]');
-    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
-    const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
-    const control = scene.locator(".lf-hero__path-controls button");
+    // The old hero was a promise, a phone playing a four-beat path, and the
+    // beat list — three columns built around one salon, which on a desktop
+    // read as a control panel and told a painting contractor this was not for
+    // them. The first screen is now the argument itself: six live client sites
+    // across six visibly different trades.
+    const wall = page.locator(".lf-wall");
+    const tiles = wall.locator(".lf-wall__tile");
+    const lead = tiles.first().locator("img");
 
-    await expect(scene).toBeVisible();
-    await expect(capture).toBeVisible();
-    await expect(capture).toHaveAttribute("fetchpriority", "high");
-    await expect.poll(() => capture.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBeGreaterThan(0);
+    await expect(wall).toBeVisible();
+    await expect(tiles).toHaveCount(6);
+    await expect(lead).toHaveAttribute("fetchpriority", "high");
+    await expect
+      .poll(() => lead.evaluate((node: HTMLImageElement) => node.naturalWidth))
+      .toBeGreaterThan(0);
+
+    // Six DIFFERENT trades is the whole point — a repeated label would mean
+    // the page is arguing by volume instead of by range.
+    const trades = await wall.locator(".lf-wall__trade").allInnerTexts();
+    expect(trades).toHaveLength(6);
+    expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(6);
+
+    // No single client may own the first screen.
+    const clients = await wall.locator(".lf-wall__client").allInnerTexts();
+    expect(new Set(clients.map((client) => client.trim())).size).toBe(6);
+
+    const call = wall.locator('a[href^="tel:"]');
+    const websiteCheck = wall.locator('a[href="/website-check/"]');
+    await expect(call).toBeVisible();
     await expect(websiteCheck).toBeVisible();
-    await expect(urgentCall).toBeVisible();
-    await expect(scene.locator(".lf-hero__path-step")).toHaveCount(4);
 
-    // The path plays once the phone is on screen, moves the capture, and
-    // stops on the booked beat with a replay affordance — never a loop.
-    await expect(scene).toHaveAttribute("data-lf-play", "playing", { timeout: 5_000 });
-    await expect(control).toHaveText(/Pause/);
-    await expect(scene).toHaveAttribute("data-lf-beat", "booked", { timeout: 15_000 });
-    await expect(scene).toHaveAttribute("data-lf-play", "done", { timeout: 6_000 });
-    await expect(control).toHaveText(/Replay the path/);
-    const bookedTransform = await capture.evaluate((node) => node.style.transform);
-    expect(bookedTransform).not.toBe("translate3d(0, 0%, 0)");
-    await control.click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "found");
-    await expect(scene).toHaveAttribute("data-lf-play", "playing");
-    await scene.locator(".lf-hero__path-step button").nth(2).click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "trusted");
-    await expect(scene).toHaveAttribute("data-lf-play", "paused");
-
-    const decisionGeometry = await page.evaluate(() => {
-      const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
-      const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
-      const phone = document.querySelector<HTMLElement>(".lf-hero__phone");
-      if (!website || !urgent || !phone) throw new Error("desktop hero decision fixture is incomplete");
+    const geometry = await page.evaluate(() => {
+      const phone = document.querySelector<HTMLElement>(".lf-wall__call");
+      const check = document.querySelector<HTMLElement>(".lf-wall__check");
+      const firstTile = document.querySelector<HTMLElement>(".lf-wall__tile");
+      if (!phone || !check || !firstTile) throw new Error("desktop wall fixture is incomplete");
       return {
         viewportHeight: window.innerHeight,
-        websiteBottom: website.getBoundingClientRect().bottom,
-        urgentBottom: urgent.getBoundingClientRect().bottom,
-        phoneTop: phone.getBoundingClientRect().top,
+        phoneBottom: phone.getBoundingClientRect().bottom,
+        checkBottom: check.getBoundingClientRect().bottom,
+        tileTop: firstTile.getBoundingClientRect().top,
       };
     });
 
-    expect(decisionGeometry.websiteBottom).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
-    expect(decisionGeometry.urgentBottom).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
-    expect(decisionGeometry.phoneTop).toBeLessThanOrEqual(decisionGeometry.viewportHeight);
-    await expectNoHorizontalOverflow(page, "desktop decision hero");
+    // The number and the low-commitment alternative both land in the first
+    // screen, and the wall has started before the fold so it is discoverable.
+    expect(geometry.phoneBottom).toBeLessThanOrEqual(geometry.viewportHeight);
+    expect(geometry.checkBottom).toBeLessThanOrEqual(geometry.viewportHeight);
+    expect(geometry.tileTop).toBeLessThanOrEqual(geometry.viewportHeight);
+
+    await expectNoHorizontalOverflow(page, "desktop wall hero");
     expectRuntimeClean(runtime);
   },
 );
@@ -1219,99 +1216,95 @@ test(
     await openRoute(page, ROUTES[0]);
 
     const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
-    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
-    const urgentCall = page.getByRole("link", { name: /Something broke\?\s*Call now/i });
-    const scene = page.locator(".lf-hero__scene");
-    const heroChannels = page.locator(".lf-hero__quick-channels a");
+    const wall = page.locator(".lf-wall");
+    const heroCall = wall.locator(".lf-wall__call");
+    const websiteCheck = wall.locator('a[href="/website-check/"]');
+    const heroChannels = page.locator(".lf-wall__channels a");
 
     await expect(directCall).toBeVisible();
     await expect(directCall).toHaveAttribute("href", PHONE_HREF);
-    await expect(scene).toBeVisible();
+    await expect(wall).toBeVisible();
+    await expect(heroCall).toBeVisible();
+    await expect(heroCall).toHaveAttribute("href", PHONE_HREF);
     await expect(websiteCheck).toBeVisible();
-    await expect(urgentCall).toBeVisible();
-    await expect(urgentCall).toHaveAttribute("href", PHONE_HREF);
+
+    // All four reach channels stay in the hero: call, text, email, form.
     await expect(heroChannels).toHaveCount(3);
-    await expect(page.locator('.lf-hero__quick-channels a[href^="sms:"]')).toBeVisible();
-    await expect(page.locator('.lf-hero__quick-channels a[href^="mailto:"]')).toBeVisible();
-    await expect(page.locator('.lf-hero__quick-channels a[href="/tech-audit/"]')).toBeVisible();
+    await expect(page.locator('.lf-wall__channels a[href^="sms:"]')).toBeVisible();
+    await expect(page.locator('.lf-wall__channels a[href^="mailto:"]')).toBeVisible();
+    await expect(page.locator('.lf-wall__channels a[href="/tech-audit/"]')).toBeVisible();
     await expect(page.getByText(/9am–9pm Eastern: a human answers/i)).toBeVisible();
+
     const initialGeometry = await page.evaluate(() => {
-      const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
-      const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
+      const call = document.querySelector<HTMLElement>(".lf-wall__call");
+      const check = document.querySelector<HTMLElement>(".lf-wall__check");
       const consent = document.querySelector<HTMLElement>(".lf-consent");
-      const promise = document.querySelector<HTMLElement>(".lf-hero__promise");
-      if (!website || !urgent || !promise) {
-        throw new Error("mobile hero fixture is incomplete");
-      }
-      const websiteRect = website.getBoundingClientRect();
-      const urgentRect = urgent.getBoundingClientRect();
+      if (!call || !check) throw new Error("mobile hero fixture is incomplete");
       const consentRect = consent?.getBoundingClientRect();
-      const channels = Array.from(document.querySelectorAll<HTMLElement>(".lf-hero__quick-channels a"));
+      const channels = Array.from(document.querySelectorAll<HTMLElement>(".lf-wall__channels a"));
       return {
         viewportHeight: window.innerHeight,
-        websiteBottom: websiteRect.bottom,
-        urgentBottom: urgentRect.bottom,
+        callBottom: call.getBoundingClientRect().bottom,
+        checkBottom: check.getBoundingClientRect().bottom,
         consentTop: consentRect?.top ?? window.innerHeight,
-        promiseHeight: promise.getBoundingClientRect().height,
         channelHeights: channels.map((channel) => channel.getBoundingClientRect().height),
       };
     });
 
-    expect(initialGeometry.websiteBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
-    expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
-    expect(initialGeometry.websiteBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
-    expect(initialGeometry.urgentBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
-    expect(initialGeometry.promiseHeight).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.callBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.checkBottom).toBeLessThanOrEqual(initialGeometry.viewportHeight);
+    expect(initialGeometry.callBottom).toBeLessThanOrEqual(initialGeometry.consentTop);
     expect(initialGeometry.channelHeights.every((height) => height >= 44)).toBe(true);
 
     await expect(page.locator(".lf-owner-path")).toBeHidden();
     await expect(page.locator(".lf-night-shift")).toBeHidden();
     await expect(page.locator(".lf-money-meter")).toBeHidden();
     await expect(page.locator(".lf-contact-block")).toBeVisible();
-    await expect(page.locator(".lf-clients")).toBeVisible();
 
-    // The living path sits right under the first screen: phone beside the
-    // beat rail, both inside the viewport width, and the beats are tappable.
-    await scene.scrollIntoViewIfNeeded();
-    const pathGeometry = await page.evaluate(() => {
-      const phone = document.querySelector<HTMLElement>(".lf-hero__phone");
-      const rail = document.querySelector<HTMLElement>(".lf-hero__path");
-      if (!phone || !rail) throw new Error("mobile living path fixture is incomplete");
-      const phoneRect = phone.getBoundingClientRect();
-      const railRect = rail.getBoundingClientRect();
-      return {
-        sideBySide: railRect.left >= phoneRect.right,
-        phoneWidth: phoneRect.width,
-        railRight: railRect.right,
-        viewportWidth: window.innerWidth,
-        beatTargets: Array.from(document.querySelectorAll<HTMLElement>(".lf-hero__path-step button"))
-          .map((button) => button.getBoundingClientRect().height),
-      };
-    });
-    expect(pathGeometry.sideBySide).toBe(true);
-    expect(pathGeometry.phoneWidth).toBeGreaterThanOrEqual(120);
-    expect(pathGeometry.railRight).toBeLessThanOrEqual(pathGeometry.viewportWidth);
-    expect(pathGeometry.beatTargets.every((height) => height >= 44)).toBe(true);
-    await scene.locator(".lf-hero__path-step button").nth(1).click();
-    await expect(scene).toHaveAttribute("data-lf-beat", "understood");
+    // Six trades, six different clients — the range IS the argument, so a
+    // duplicate label would mean the page is arguing by volume instead.
+    const tiles = wall.locator(".lf-wall__tile");
+    await expect(tiles).toHaveCount(6);
+    const trades = await wall.locator(".lf-wall__trade").allInnerTexts();
+    expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(6);
+
+    // Each tile is a real tap target that leads to that client's case.
+    const tileTargets = await page.evaluate(() =>
+      Array.from(document.querySelectorAll<HTMLElement>(".lf-wall__tile a")).map((link) => ({
+        height: link.getBoundingClientRect().height,
+        href: link.getAttribute("href") ?? "",
+      })),
+    );
+    expect(tileTargets).toHaveLength(6);
+    expect(tileTargets.every((tile) => tile.height >= 44)).toBe(true);
+    expect(tileTargets.every((tile) => /^\/case-studies\/[a-z0-9-]+\/$/.test(tile.href))).toBe(true);
+
+    // The four services are sections now, not tabs — all four are reachable
+    // by scrolling, and each one draws something.
+    const services = page.locator(".lf-svc");
+    await expect(services).toHaveCount(4);
+    for (const key of ["websites", "support", "software", "consult"]) {
+      const section = page.locator(`.lf-svc[data-lf-service="${key}"]`);
+      await section.scrollIntoViewIfNeeded();
+      await expect(section.locator("canvas")).toBeVisible();
+    }
 
     const mobilePath = await page.evaluate(() => {
       const contact = document.querySelector<HTMLElement>(".lf-contact-block");
-      const work = document.querySelector<HTMLElement>(".lf-clients");
-      if (!contact || !work) throw new Error("mobile path fixture is incomplete");
+      const services = document.querySelector<HTMLElement>(".lf-svcs");
+      if (!contact || !services) throw new Error("mobile path fixture is incomplete");
       const fullHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
       return {
-        workBeforeContact: Boolean(
-          work.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING,
+        servicesBeforeContact: Boolean(
+          services.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING,
         ),
         contactTopInScreens: contact.getBoundingClientRect().top / window.innerHeight,
         pageScreens: fullHeight / window.innerHeight,
       };
     });
 
-    expect(mobilePath.workBeforeContact).toBe(true);
-    expect(mobilePath.contactTopInScreens).toBeLessThanOrEqual(7);
-    expect(mobilePath.pageScreens).toBeLessThanOrEqual(12);
+    expect(mobilePath.servicesBeforeContact).toBe(true);
+    expect(mobilePath.pageScreens).toBeLessThanOrEqual(14);
     await expectNoHorizontalOverflow(page, "compact mobile home");
     expectRuntimeClean(runtime);
   },
@@ -1328,10 +1321,10 @@ test(
     if (await essentialOnly.isVisible()) await essentialOnly.click();
 
     const firstScreen = await page.evaluate(() => {
-      const website = document.querySelector<HTMLElement>(".lf-hero__quick-action--website");
-      const urgent = document.querySelector<HTMLElement>(".lf-hero__quick-action--urgent");
-      const channels = document.querySelector<HTMLElement>(".lf-hero__quick-channels");
-      const hours = document.querySelector<HTMLElement>(".lf-hero__quick-hours");
+      const website = document.querySelector<HTMLElement>(".lf-wall__check");
+      const urgent = document.querySelector<HTMLElement>(".lf-wall__call");
+      const channels = document.querySelector<HTMLElement>(".lf-wall__channels");
+      const hours = document.querySelector<HTMLElement>(".lf-wall__hours");
       if (!website || !urgent || !channels || !hours) {
         throw new Error("narrow mobile decision fixture is incomplete");
       }
@@ -1351,35 +1344,33 @@ test(
     expect(firstScreen.urgentBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.channelsBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
     expect(firstScreen.hoursBottom).toBeLessThanOrEqual(firstScreen.viewportHeight);
-    // The homepage is four short chapters (path, proof, the four services,
-    // close) plus the footer, which carries all four contact channels at 44px
-    // touch targets. Re-baselined from 11.75 when "name the fight" — three text
-    // panels — became the four services, where choosing one draws a ~415px
-    // animated instrument. That is the section doing its job, not padding: the
-    // whole point of the rebuild is that each service is explained by a picture
-    // rather than a paragraph. Measured 12.66 at 320×568 on chromium-mobile;
-    // the cap keeps its original job of catching a chapter that quietly grows.
-    expect(firstScreen.pageScreens).toBeLessThanOrEqual(13);
+    // The homepage is three moves now — the wall, the four services, the close
+    // — plus the footer, which carries all four contact channels at 44px touch
+    // targets. The separate proof chapter is gone, because the wall IS the
+    // proof and each service section names its own client; it was saying a
+    // third time what the reader had been told twice. The four drawings are
+    // sections rather than tabs, so all four are on the page at once. The cap
+    // keeps its original job of catching a chapter that quietly pads itself.
+    expect(firstScreen.pageScreens).toBeLessThanOrEqual(15);
     expect(firstScreen.horizontalOverflow).toBeLessThanOrEqual(0);
     expect(firstScreen.desktopProofCount).toBe(0);
 
-    // The four services keep four tappable choices and one panel, and switch
-    // without loading imagery on the phone payload — the drawings are canvas,
-    // so choosing a service costs no extra bytes.
-    const quad = page.locator(".lf-quad");
-    await quad.scrollIntoViewIfNeeded();
-    await expect(quad.getByRole("tab")).toHaveCount(4);
-    await expect(quad.getByRole("tab", { selected: true })).toHaveText(/websites/i);
-    await expect(quad.locator("img")).toHaveCount(0);
-    await quad.getByRole("tab", { name: /tech support/i }).click();
-    await expect(quad).toHaveAttribute("data-lf-quadrant", "support");
-    await expect(quad.getByRole("tabpanel").locator('a[href^="tel:"]')).toBeVisible();
-    await quad.getByRole("tab", { name: /software you own/i }).click();
-    await expect(quad).toHaveAttribute("data-lf-quadrant", "software");
-    await expect(quad.getByRole("tabpanel").locator('a[href="/services/business-systems/"]')).toBeVisible();
-    // Every quadrant draws something. A missing instrument is invisible in a
-    // screenshot — the canvas element is simply absent — so assert it directly.
-    await expect(quad.getByRole("tabpanel").locator("canvas")).toHaveCount(1);
+    // The four services are four sections, not a tab strip. All four are on
+    // the page at once, each draws on a canvas rather than shipping imagery,
+    // and the urgent one still offers the phone directly.
+    const svcs = page.locator(".lf-svcs");
+    await svcs.scrollIntoViewIfNeeded();
+    await expect(page.locator(".lf-svc")).toHaveCount(4);
+    await expect(svcs.locator("img")).toHaveCount(0);
+    // A missing instrument is invisible in a screenshot — the canvas element is
+    // simply absent — so assert one per section directly.
+    await expect(svcs.locator("canvas")).toHaveCount(4);
+    await expect(
+      page.locator('.lf-svc[data-lf-service="support"] a[href^="tel:"]'),
+    ).toBeVisible();
+    await expect(
+      page.locator('.lf-svc[data-lf-service="software"] a[href="/services/business-systems/"]'),
+    ).toBeVisible();
     await expect(page.locator(".lf-sticky-help")).toBeVisible();
     const stickyHeight = await page.locator(".lf-sticky-help").evaluate(
       (element) => element.getBoundingClientRect().height,
@@ -2247,7 +2238,7 @@ test(
       )
       .toBe(1);
 
-    const websiteCheck = page.getByRole("link", { name: /Need a website\?\s*Get a better website/i });
+    const websiteCheck = page.locator('.lf-wall a[href="/website-check/"]');
     await websiteCheck.evaluate((link) => {
       link.addEventListener("click", (event) => event.preventDefault(), { once: true });
     });
@@ -3229,7 +3220,7 @@ test(
     // from it. Caught the websites instrument losing its third booking card in
     // the 284×300 box the tablet grid handed it.
     const WIDTHS = [320, 390, 430, 720, 768, 1024, 1280, 1600];
-    const QUADRANTS = ["websites", "support", "software", "consult"];
+    const SERVICES = ["websites", "support", "software", "consult"];
     // Bright enough to be a drawn object; the atmosphere washes sit well under.
     const INK_MIN = 86;
     // Enough consecutive inked pixels to be an object, not antialiasing dust.
@@ -3246,16 +3237,18 @@ test(
       await page.goto(`${baseURL}/`, { waitUntil: "networkidle" });
       await page.evaluate(() => document.fonts.ready);
 
-      for (const key of QUADRANTS) {
-        const tab = page.locator(`.lf-quad__cell[data-lf-label="home_quadrant_${key}"]`);
-        await tab.click();
-        await page.locator(".lf-quad__object canvas").waitFor({ state: "visible" });
+      for (const key of SERVICES) {
+        const section = page.locator(`.lf-svc[data-lf-service="${key}"]`);
+        await section.scrollIntoViewIfNeeded();
+        await section.locator("canvas").waitFor({ state: "visible" });
         // Let the ResizeObserver settle and the still frame repaint.
         await page.waitForTimeout(300);
 
         const report = await page.evaluate(
-          ({ inkMin, runMin }) => {
-            const canvas = document.querySelector("canvas.lf-instrument__canvas");
+          ({ inkMin, runMin, service }) => {
+            const canvas = document.querySelector(
+              `.lf-svc[data-lf-service="${service}"] canvas.lf-instrument__canvas`,
+            );
             if (!(canvas instanceof HTMLCanvasElement)) return { error: "no canvas" };
             const cx = canvas.getContext("2d", { willReadFrequently: true });
             const { width: w, height: h } = canvas;
@@ -3296,7 +3289,7 @@ test(
                 .map(([edge, run]) => `${edge} (${run}px of ink)`),
             };
           },
-          { inkMin: INK_MIN, runMin: RUN_MIN },
+          { inkMin: INK_MIN, runMin: RUN_MIN, service: key },
         );
 
         if ("error" in report && report.error) {

@@ -1,0 +1,320 @@
+/* Four services, four sections, one light.
+ *
+ * They were a tab strip; three quarters of the offer sat behind a click nobody
+ * makes. These are the reason the page exists, so each gets a full section and
+ * a visitor gets all four by scrolling.
+ *
+ * Every section shares the same key light (upper left), cool rim (right), and
+ * warm bounce off the floor. That shared lighting is what makes four different
+ * drawings read as one product rather than four clip-art tiles.
+ *
+ * Type note: Oswald is CONDENSED, so it takes --lf-display-tracking (0em).
+ * Negative tracking makes a condensed face's letters touch.
+ */
+
+.lf-svcs {
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-svcs__title {
+  width: min(100%, var(--lf-max-w));
+  margin: 0 auto;
+  padding: var(--lf-space-7) var(--lf-page-gutter) 0;
+  font-family: var(--lf-mono);
+  font-weight: 400;
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-editorial .lf-svcs__title span {
+  color: var(--lf-fight);
+}
+
+/* ONE stage light per section. The tone modifiers only swing the rim colour,
+   so the room never changes — just what is lit in it. */
+.lf-svc {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(var(--lf-space-7), 6vw, var(--lf-space-9));
+  background:
+    radial-gradient(110% 74% at 20% 6%, rgb(255 255 255 / 7%) 0%, rgb(255 255 255 / 0%) 55%),
+    radial-gradient(75% 55% at 88% 26%, var(--lf-svc-rim, rgb(96 165 250 / 10%)) 0%, rgb(96 165 250 / 0%) 60%),
+    radial-gradient(85% 58% at 50% 106%, rgb(249 115 22 / 13%) 0%, rgb(249 115 22 / 0%) 62%),
+    var(--lf-ink);
+}
+
+.lf-svc + .lf-svc {
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-svc--urgent { --lf-svc-rim: rgb(74 222 128 / 10%); }
+.lf-svc--own,
+.lf-svc--free { --lf-svc-rim: rgb(96 165 250 / 12%); }
+
+.lf-svc__inner {
+  position: relative;
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+  padding-inline: var(--lf-page-gutter);
+}
+
+.lf-editorial .lf-svc__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-3);
+  margin: 0 0 var(--lf-space-5);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lf-bone);
+}
+
+.lf-svc__eyebrow > span:first-child {
+  color: var(--lf-fight);
+}
+
+/* ── the argument column: eyebrow, figure, headline, actions ───────────── */
+
+.lf-svc__say {
+  position: relative;
+  z-index: 2;
+}
+
+.lf-editorial .lf-svc__kicker {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-svc__number {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--lf-space-3);
+  margin: var(--lf-space-2) 0 0;
+}
+
+.lf-svc__value {
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-3xl);
+  line-height: 1.04;
+  letter-spacing: var(--lf-display-tracking);
+  /* The gradient is clipped to the GLYPHS but painted over the PADDING BOX, so
+     anything outside that box is simply never painted. The bottom padding is
+     what keeps a descender (the "g" in Nothing) from vanishing. */
+  padding-block: 2px 0.12em;
+  background: linear-gradient(178deg, var(--lf-bone) 34%, #9a9aa3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.lf-svc__value--word {
+  font-size: var(--lf-text-2xl);
+}
+
+.lf-svc__unit {
+  margin-bottom: 0.5em;
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-lg);
+  line-height: 1;
+  letter-spacing: var(--lf-display-tracking);
+  color: var(--lf-bone);
+  white-space: nowrap;
+}
+
+.lf-editorial .lf-svc__sub {
+  margin: var(--lf-space-3) 0 0;
+  max-width: 34ch;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  color: var(--lf-bone-soft);
+}
+
+/* ── status chip — a real translucent material, not a flat swatch ───────── */
+
+.lf-editorial .lf-svc__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  margin: 0;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: var(--lf-radius-pill);
+  background: rgb(255 255 255 / 7%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 22%),
+    0 10px 26px rgb(0 0 0 / 55%);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.06em;
+  color: var(--lf-bone);
+  white-space: nowrap;
+}
+
+.lf-svc__chip > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lf-success);
+  box-shadow: 0 0 10px 2px rgb(74 222 128 / 60%);
+}
+
+.lf-svc--own .lf-svc__chip > span {
+  background: var(--lf-fight);
+  box-shadow: 0 0 10px 2px rgb(249 115 22 / 60%);
+}
+
+.lf-svc--free .lf-svc__chip > span {
+  background: var(--lf-blue-soft);
+  box-shadow: 0 0 10px 2px rgb(96 165 250 / 60%);
+}
+
+/* ── the object ─────────────────────────────────────────────────────────── */
+
+.lf-svc__object {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--lf-space-7);
+}
+
+/* ── the sentence a customer would say ──────────────────────────────────── */
+
+.lf-editorial .lf-svc__headline {
+  margin: var(--lf-space-6) 0 0;
+  max-width: 26ch;
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  font-size: var(--lf-text-xl);
+  line-height: 1.02;
+  letter-spacing: var(--lf-display-tracking);
+  color: var(--lf-bone);
+}
+
+.lf-editorial .lf-svc__proof {
+  margin: var(--lf-space-3) 0 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  color: var(--lf-bone-soft);
+}
+
+/* ── actions ────────────────────────────────────────────────────────────── */
+
+.lf-svc__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-4);
+  margin-top: var(--lf-space-6);
+}
+
+.lf-editorial .lf-svc__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-height);
+  padding-inline: var(--lf-control-padding-inline);
+  border: 1px solid var(--lf-fight);
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-mono);
+  font-weight: 700;
+  font-size: var(--lf-text-2xs);
+  text-decoration: none;
+  transition:
+    background var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-editorial .lf-svc__action:hover,
+.lf-editorial .lf-svc__action:focus-visible {
+  background: var(--lf-fight-hover);
+  border-color: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-svc__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-min);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-2xs);
+  text-decoration: none;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-svc__more:hover,
+.lf-editorial .lf-svc__more:focus-visible {
+  color: var(--lf-bone);
+  border-bottom-color: var(--lf-bone);
+}
+
+.lf-editorial .lf-svc__action:focus-visible,
+.lf-editorial .lf-svc__more:focus-visible,
+/* ── the order the work usually goes in ────────────────────────────────── */
+
+.lf-editorial .lf-svcs__order {
+  width: min(100%, var(--lf-max-w));
+  margin: 0 auto;
+  padding: var(--lf-space-6) var(--lf-page-gutter) var(--lf-space-8);
+  max-width: none;
+  font-size: var(--lf-text-2xs);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-svcs__order a {
+  color: var(--lf-bone);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lf-editorial .lf-svcs__order a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+/* ── desktop: the drawing sits beside the argument, never under it ─────── */
+
+@media (min-width: 64rem) {
+  .lf-svc__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(var(--lf-space-7), 5vw, var(--lf-space-9));
+  }
+
+  .lf-svc__object {
+    margin-top: 0;
+  }
+
+  /* The instrument's own default box is a wide service-page shape. In this
+     column it would go squat, and a drawing that budgets its height in
+     fractions then paints its last element off the bottom edge. Nothing
+     errors — the element is simply never drawn. The homepage instrument test
+     reads the canvas pixels to catch exactly that. */
+  .lf-svc__object .lf-instrument {
+    --lf-instrument-ratio: 5 / 4;
+    --lf-instrument-minh: 430px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-svc__action {
+    transition: none;
+  }
+}

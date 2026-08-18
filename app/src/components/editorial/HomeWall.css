@@ -1,0 +1,274 @@
+/* The first screen: one promise, one number, six trades.
+ *
+ * The row of six is the argument, so it gets the room. On a phone it is two
+ * columns (six tiles still read as "lots of different people"); at tablet it is
+ * three; on a desktop all six sit in one line under the headline, which is the
+ * only arrangement where a visitor takes in the whole range at a glance.
+ */
+
+.lf-wall {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(var(--lf-space-7), 7vw, var(--lf-space-9)) var(--lf-section-space);
+  background:
+    radial-gradient(90% 70% at 18% 4%, rgb(255 255 255 / 7%) 0%, rgb(255 255 255 / 0%) 55%),
+    radial-gradient(70% 55% at 86% 22%, rgb(96 165 250 / 9%) 0%, rgb(96 165 250 / 0%) 60%),
+    radial-gradient(80% 55% at 50% 104%, rgb(249 115 22 / 13%) 0%, rgb(249 115 22 / 0%) 62%),
+    var(--lf-ink);
+}
+
+.lf-wall__inner {
+  width: min(100%, var(--lf-max-w));
+  margin-inline: auto;
+  padding-inline: var(--lf-page-gutter);
+}
+
+.lf-editorial .lf-wall__kicker {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-3);
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-wall__kicker > span {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-wall__claim {
+  margin: var(--lf-space-4) 0 0;
+  font-family: var(--lf-heading);
+  font-weight: var(--lf-display-weight);
+  /* Oswald is condensed — it takes zero tracking, never negative. */
+  letter-spacing: var(--lf-display-tracking);
+  font-size: var(--lf-text-2xl);
+  line-height: 0.92;
+  text-transform: uppercase;
+  color: var(--lf-bone);
+}
+
+.lf-wall__claim > span {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-wall__dek {
+  margin: var(--lf-space-5) 0 0;
+  max-width: 46ch;
+  font-size: var(--lf-text-md);
+  line-height: 1.45;
+  color: var(--lf-bone-soft);
+}
+
+/* ── the call ───────────────────────────────────────────────────────────── */
+
+.lf-wall__act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-4);
+  margin-top: var(--lf-space-6);
+}
+
+.lf-editorial .lf-wall__call {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-3);
+  min-height: 3.5rem;
+  padding-inline: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  border-radius: var(--lf-radius-pill);
+  background: var(--lf-fight);
+  color: var(--lf-ink);
+  font-family: var(--lf-mono);
+  font-weight: 700;
+  font-size: var(--lf-text-md);
+  text-decoration: none;
+  transition: background var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-editorial .lf-wall__call:hover,
+.lf-editorial .lf-wall__call:focus-visible {
+  background: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-wall__check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-min);
+  color: var(--lf-bone);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  text-decoration: none;
+  border-bottom: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-wall__check:hover,
+.lf-editorial .lf-wall__check:focus-visible {
+  border-bottom-color: var(--lf-bone);
+}
+
+/* ── the other three channels ───────────────────────────────────────────── */
+
+.lf-wall__reach {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--lf-space-3) var(--lf-space-5);
+  margin-top: var(--lf-space-5);
+}
+
+.lf-wall__channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-5);
+}
+
+.lf-editorial .lf-wall__channels a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-min);
+  color: var(--lf-bone);
+  font-size: var(--lf-text-2xs);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.lf-editorial .lf-wall__hours {
+  margin: 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  color: var(--lf-bone-dim);
+}
+
+/* ── the six ────────────────────────────────────────────────────────────── */
+
+.lf-wall__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-4) var(--lf-space-3);
+  margin: clamp(var(--lf-space-6), 5vw, var(--lf-space-8)) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-editorial .lf-wall__tile a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lf-wall__shot {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-paper-2);
+  box-shadow: 0 20px 40px rgb(0 0 0 / 60%);
+}
+
+.lf-wall__shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--m-reveal-ms) var(--m-reveal-ease);
+}
+
+.lf-editorial .lf-wall__tile a:hover .lf-wall__shot img,
+.lf-editorial .lf-wall__tile a:focus-visible .lf-wall__shot img {
+  transform: scale(1.03);
+}
+
+.lf-editorial .lf-wall__tile a:focus-visible .lf-wall__shot {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
+.lf-wall__trade {
+  display: block;
+  margin-top: var(--lf-space-3);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  color: var(--lf-bone);
+}
+
+.lf-wall__client {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--lf-text-2xs);
+  color: var(--lf-bone-dim);
+}
+
+/* At 320px the promise, the number, and the low-commitment alternative all
+   have to fit above the fold — the copy contract puts both decisions in the
+   first screen. Measured: the CTA pair ended 49px past the fold before this. */
+@media (max-width: 22.5rem) {
+  .lf-wall {
+    padding-block-start: var(--lf-space-6);
+  }
+
+  /* At 2.5rem the headline wrapped to four lines and pushed the hours line —
+     which the copy contract requires in the first screen — 72px past the fold.
+     2rem keeps "SHOPS LIKE YOURS," on one line inside 288px of column. */
+  .lf-editorial .lf-wall__claim {
+    font-size: 2rem;
+    line-height: 0.94;
+  }
+
+  .lf-editorial .lf-wall__dek {
+    margin-top: var(--lf-space-4);
+    font-size: var(--lf-text-base);
+  }
+
+  .lf-wall__act {
+    gap: var(--lf-space-3);
+    margin-top: var(--lf-space-4);
+  }
+
+  /* The hours line has to clear a 568px fold with room for a different
+     engine's line-breaking, not just Chromium's. */
+  .lf-wall__reach {
+    gap: var(--lf-space-2) var(--lf-space-4);
+    margin-top: var(--lf-space-3);
+  }
+
+  .lf-editorial .lf-wall__hours {
+    line-height: 1.35;
+  }
+}
+
+@media (min-width: 48rem) {
+  .lf-wall__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .lf-editorial .lf-wall__claim {
+    font-size: clamp(4rem, 7vw, 7.5rem);
+  }
+
+  .lf-wall__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--lf-space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-wall__shot img {
+    transition: none;
+  }
+
+  .lf-editorial .lf-wall__tile a:hover .lf-wall__shot img,
+  .lf-editorial .lf-wall__tile a:focus-visible .lf-wall__shot img {
+    transform: none;
+  }
+}

@@ -4,16 +4,24 @@
 import { useEffect, useRef } from "react";
 import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "@/components/editorial/QuietNav";
-import QuietHero from "@/components/editorial/QuietHero";
-import ServiceQuadrants from "@/components/editorial/ServiceQuadrants";
+import HomeWall from "@/components/editorial/HomeWall";
+import ServiceSections from "@/components/editorial/ServiceSections";
 import QuietContact from "@/components/editorial/QuietContact";
 import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
 import CommandPalette from "@/components/editorial/CommandPalette";
-import RecentClients from "@/components/editorial/RecentClients";
 import { watchListReveals } from "@/lib/listReveal";
 import "./Home.css";
 
+/**
+ * Three moves: who this is for, what we do, how to reach us.
+ *
+ * The page used to run hero → proof chapter → services → close, and the client
+ * work appeared in all three. The hero now IS the proof — six trades in the
+ * first screen — and each service section carries its own client, so the
+ * separate proof chapter was saying a third time what the reader had already
+ * been told twice. It is gone, and the page is shorter for it.
+ */
 export default function Home() {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,9 +36,8 @@ export default function Home() {
       <a href="#main-content" className="lf-skip-link">Skip to content</a>
       <QuietNav />
       <main id="main-content" className="lf-home-main">
-        <QuietHero />
-        <RecentClients />
-        <ServiceQuadrants />
+        <HomeWall />
+        <ServiceSections />
         <QuietContact intent="website" />
       </main>
       <StickyHelpBar />

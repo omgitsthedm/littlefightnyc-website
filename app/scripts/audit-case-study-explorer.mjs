@@ -40,6 +40,7 @@ const homeFeaturedWorkPath = path.join(
   "data",
   "home-featured-work.ts",
 );
+const homeWallPath = path.join(appRoot, "src", "data", "home-wall.ts");
 const workShowcasePath = path.join(
   appRoot,
   "src",
@@ -385,6 +386,54 @@ const homeFeaturedModule = await import(
   `data:text/javascript;base64,${Buffer.from(homeFeaturedBundle.outputFiles[0].text).toString("base64")}`
 );
 const homeFeaturedWork = homeFeaturedModule.HOME_FEATURED_WORK;
+
+// ── the homepage hero wall ────────────────────────────────────────────────
+// The hero is six live client sites across six trades. It reads a tiny module
+// rather than site-cases.ts, because importing the 52KB catalog into the hero
+// pulled the whole portfolio into the eager marketing entry and broke the
+// bundle budget. That saving is only safe if the small copy cannot drift, so
+// every field is compared with the canonical catalog here — including that the
+// case is still PUBLIC. A client going private fails the build instead of
+// quietly staying on the homepage.
+const homeWallBundle = await esbuildBundle({
+  entryPoints: [homeWallPath],
+  bundle: true,
+  format: "esm",
+  platform: "node",
+  write: false,
+  logLevel: "silent",
+});
+const homeWallModule = await import(
+  `data:text/javascript;base64,${Buffer.from(homeWallBundle.outputFiles[0].text).toString("base64")}`
+);
+const homeWall = homeWallModule.HOME_WALL;
+
+if (!Array.isArray(homeWall) || homeWall.length !== 6) {
+  fail("homepage wall must carry exactly six live client sites");
+}
+
+const wallTrades = new Set();
+for (const tile of homeWall ?? []) {
+  const study = allCases.find((entry) => entry.slug === tile.slug);
+  if (!study) {
+    fail(`homepage wall: ${tile.slug} is not in the canonical case catalog`);
+    continue;
+  }
+  if (study.showcase?.availability !== "public") {
+    fail(`homepage wall: ${tile.slug} is not public and must not appear on the homepage`);
+  }
+  if (study.client !== tile.client) {
+    fail(
+      `homepage wall: ${tile.slug} client "${tile.client}" does not match the catalog "${study.client}"`,
+    );
+  }
+  // The row argues by RANGE. Two tiles sharing a trade means the homepage is
+  // arguing by volume instead, which is the thing it was rebuilt to stop doing.
+  const trade = String(tile.trade ?? "").trim().toLowerCase();
+  if (!trade) fail(`homepage wall: ${tile.slug} is missing its trade label`);
+  if (wallTrades.has(trade)) fail(`homepage wall: "${tile.trade}" appears twice — the row must show six different trades`);
+  wallTrades.add(trade);
+}
 
 const requiredHomeFeaturedSlugs = [
   "hair-by-rachel-charles",

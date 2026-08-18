@@ -389,19 +389,21 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
 }
 
 const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
-// The acquisition hero is the living path: one real client capture rendered
-// inside a phone at every viewport. The first response must carry that exact
-// image as the high-priority candidate and preload nothing else for the route.
-const HOME_PATH_CAPTURE = "/assets/case-hair-by-rachel-charles-explore-mobile.webp";
-if (!/<img[^>]+src="\/assets\/case-hair-by-rachel-charles-explore-mobile\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
-  failures.push("home first response is missing the high-priority living-path capture");
+// The acquisition hero is the wall: six live client sites across six trades,
+// so a visitor sees someone like themselves before they read anything. The
+// first tile is the largest thing in the first screen, so the first response
+// must carry that exact image as the high-priority candidate and preload
+// nothing else for the route.
+const HOME_WALL_LEAD = "/assets/case-chromatic-painting-design-900.webp";
+if (!/<img[^>]+src="\/assets\/case-chromatic-painting-design-900\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
+  failures.push("home first response is missing the high-priority wall lead capture");
 }
 if (/connected-counter-hero-(?:mobile|desktop)-v1\.webp/i.test(homeDocument)) {
   failures.push("home first response still references the retired connected-counter illustration");
 }
 const homeRouteImagePreloads = homeDocument.match(/<link[^>]+rel="preload"[^>]+as="image"[^>]+data-route-preload[^>]*>/gi) ?? [];
-if (homeRouteImagePreloads.length !== 1 || !homeRouteImagePreloads[0].includes(HOME_PATH_CAPTURE)) {
-  failures.push("home route-preloads must contain exactly the living-path capture");
+if (homeRouteImagePreloads.length !== 1 || !homeRouteImagePreloads[0].includes(HOME_WALL_LEAD)) {
+  failures.push("home route-preloads must contain exactly the wall lead capture");
 }
 if (/data-route-preload[^>]+(?:hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
   failures.push("home still preloads a retired image-led hero");

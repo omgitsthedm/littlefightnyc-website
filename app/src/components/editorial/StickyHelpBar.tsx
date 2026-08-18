@@ -24,11 +24,22 @@ export default function StickyHelpBar() {
 
   useEffect(() => {
     if (!onHome) return;
-    // The compact mobile hero carries its decisions in the first panel and a
-    // real-work proof immediately after it. Reveal persistent help once the
-    // decision panel leaves view instead of waiting for all proof to pass.
-    const hero = document.querySelector(".lf-hero__main");
-    if (!hero) return;
+    // The hero already carries the number and both decisions, so persistent
+    // help would be a second copy of what is on screen. Reveal it once the
+    // hero leaves view.
+    //
+    // Fail OPEN, not closed. This used to query `.lf-hero__main` and bail when
+    // it was absent, leaving `heroVisible` stuck at its initial `true` — so
+    // when the homepage hero was rebuilt, the bar silently never appeared and
+    // the page lost its persistent help on every screen below the fold.
+    // Nothing errored. If the hero cannot be found, show the bar.
+    const hero = document.querySelector(".lf-wall");
+    if (!hero) {
+      // Queued rather than called straight from the effect body: a synchronous
+      // setState here cascades a second render, and React lints against it.
+      queueMicrotask(() => setHeroVisible(false));
+      return;
+    }
     const observer = new IntersectionObserver(
       ([entry]) => setHeroVisible(entry.isIntersecting),
       { threshold: 0.1 },
