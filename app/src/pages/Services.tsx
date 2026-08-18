@@ -68,16 +68,22 @@ export default function Services() {
       <PageHero
         eyebrow="What we do"
         icon={Layers}
+        // Answer first. The old H1 described the process ("You explain the
+        // day. We find the useful fix.") and named only two of the four
+        // services. The H1 now IS the answer to "what do you do" — the three
+        // things an owner can buy — and the free read rides in the dek as the
+        // way in. One pillar per paid service; the router below is the detail.
         title={
           <>
-            You explain the day.<br />{" "}
-            <span className="lf-accent">We find the useful fix.</span>
+            Websites, fixes,<br />{" "}
+            <span className="lf-accent">and software you own.</span>
           </>
         }
-        dek="Pick the problem that sounds familiar. No tech words needed."
+        dek="Pick the one that sounds like your day. The first look is free. No tech words needed."
         pillars={[
           "Websites that help customers choose you",
           "Fast help when the basics break",
+          "Software built around how you already work",
         ]}
         // Was a stock Manhattan street. The page that says what we do now
         // shows what we shipped.

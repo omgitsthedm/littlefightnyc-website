@@ -222,7 +222,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "Services",
     path: "/services/",
     title: "NYC Websites, IT Support & Custom Software | Little Fight NYC",
-    h1: /You explain the day\.\s*We find the useful fix\./i,
+    h1: /Websites, fixes,\s*and software you own\./i,
     criticalLink: 'a[href="/services/custom-local-websites/"]',
     tags: ["@chromium-desktop", "@firefox-desktop"],
   },
