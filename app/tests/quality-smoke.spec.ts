@@ -170,7 +170,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "Home",
     path: "/",
     title: "Little Fight NYC | Websites, IT Support & Custom Software",
-    h1: /Shops like yours,\s*already working\./i,
+    h1: /We handle the tech\.\s*You run the shop\./i,
     // Every viewport carries the same direct decision: start the full Website
     // Check or call for the thing that is already broken.
     criticalLink: 'form[action="/examples/audit/"], a[href="/website-check/"]',
@@ -1043,7 +1043,7 @@ test(
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Shops like yours,\s*already working\./i,
+        name: /We handle the tech\.\s*You run the shop\./i,
       }),
     ).toBeVisible();
     await expect(

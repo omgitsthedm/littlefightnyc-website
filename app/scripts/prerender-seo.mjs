@@ -1929,8 +1929,9 @@ function snapshot(page) {
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
           <p class="lf-seo__home-kicker">New York City</p>
-          <h1>Shops like yours, <em>already working.</em></h1>
+          <h1>We handle the tech. <em>You run the shop.</em></h1>
           <p class="lf-seo__home-sub">Websites, on-site tech help, and software you own.</p>
+          <p class="lf-seo__home-sub">A website customers can find and book from · Urgent NYC jobs, usually on-site within 24 hours · Software you own — code, data, and accounts</p>
           <div class="lf-seo__home-actions" aria-label="Start here" data-lf-contact-rail="true">
             <a class="lf-seo__home-action lf-seo__home-action--primary" href="tel:${site.phone}"><span>Call</span><strong>${site.phoneDisplay}</strong></a>
             <a class="lf-seo__home-action" href="/website-check/"><span>Not ready to call?</span><strong>Check my website</strong></a>
@@ -1938,7 +1939,7 @@ function snapshot(page) {
           <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
         <figure class="lf-seo__home-scene">
-          <p class="lf-seo__home-scene-title"><span>Live client sites</span>Six trades, six live sites — a painting contractor, a lender, a film company, a help service, a clothing label, a salon.</p>
+          <p class="lf-seo__home-scene-title"><span>Shops like yours, already working</span>Six trades, six live sites — a painting contractor, a lender, a film company, a help service, a clothing label, a salon.</p>
           <div class="lf-seo__home-phone"><div class="lf-seo__home-phone-screen"><img src="${HOME_WALL_LEAD}" width="900" height="640" alt="Chromatic Painting &amp; Design — a live client site" fetchpriority="high"></div></div>
           <ul class="lf-seo__home-path" aria-label="Live client sites">
             <li><a href="/case-studies/chromatic-painting-design/"><strong>Painting contractor</strong> — Chromatic Painting &amp; Design</a></li>

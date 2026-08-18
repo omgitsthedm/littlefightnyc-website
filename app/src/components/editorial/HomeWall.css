@@ -63,6 +63,37 @@
   color: var(--lf-bone-soft);
 }
 
+/* ── the three reasons ──────────────────────────────────────────────────── */
+
+.lf-wall__pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  max-inline-size: 60ch;
+  margin: var(--lf-space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lf-editorial .lf-wall__pillar {
+  position: relative;
+  padding-inline-start: 1.05rem;
+  color: var(--lf-bone);
+  font-size: var(--lf-text-sm);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.lf-wall__pillar::before {
+  position: absolute;
+  inset-block-start: 0.52em;
+  inset-inline-start: 0;
+  inline-size: 0.5rem;
+  block-size: 2px;
+  background: var(--lf-fight);
+  content: "";
+}
+
 /* ── the call ───────────────────────────────────────────────────────────── */
 
 .lf-wall__act {
@@ -148,11 +179,32 @@
 
 /* ── the six ────────────────────────────────────────────────────────────── */
 
+/* The proof label. This line was the H1; it now names what the six tiles are. */
+.lf-editorial .lf-wall__proof {
+  display: flex;
+  align-items: center;
+  gap: var(--lf-space-3);
+  margin: clamp(var(--lf-space-6), 5vw, var(--lf-space-8)) 0 0;
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lf-bone-dim);
+}
+
+.lf-wall__proof::before {
+  flex: none;
+  inline-size: 1.5rem;
+  block-size: 2px;
+  background: var(--lf-fight);
+  content: "";
+}
+
 .lf-wall__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--lf-space-4) var(--lf-space-3);
-  margin: clamp(var(--lf-space-6), 5vw, var(--lf-space-8)) 0 0;
+  margin: var(--lf-space-4) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -242,6 +294,50 @@
 
   .lf-editorial .lf-wall__hours {
     line-height: 1.35;
+  }
+
+  /* At 320px even the reordered pillars and the proof label push the page
+     past its 15-screen budget, so the smallest phones skip both; the same
+     three reasons open the four service sections directly below, and the
+     six tiles keep their aria-label. */
+  .lf-wall__pillars,
+  .lf-editorial .lf-wall__proof {
+    display: none;
+  }
+
+  .lf-wall__grid {
+    margin-top: clamp(var(--lf-space-6), 5vw, var(--lf-space-8));
+  }
+}
+
+/* On a phone the two decisions come before the reasons: answer → what →
+   call / check / channels / hours → the three pillars → proof. Between the
+   dek and the buttons the pillars wrapped to five lines at 375px and pushed
+   the check link past the fold on WebKit; after the hours line they are still
+   in the first scroll and cost the first screen nothing. */
+@media (max-width: 47.99rem) {
+  .lf-wall__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lf-wall__kicker { order: 0; }
+  .lf-editorial .lf-wall__claim { order: 1; }
+  .lf-editorial .lf-wall__dek { order: 2; }
+  .lf-wall__act { order: 3; }
+  .lf-wall__reach { order: 4; }
+  .lf-wall__pillars { order: 5; }
+  .lf-editorial .lf-wall__proof { order: 6; }
+  .lf-wall__grid { order: 7; }
+
+  .lf-wall__pillars {
+    gap: 0.35rem 1.25rem;
+    margin-top: var(--lf-space-5);
+  }
+
+  .lf-editorial .lf-wall__pillar {
+    font-size: var(--lf-text-2xs);
+    line-height: 1.3;
   }
 }
 

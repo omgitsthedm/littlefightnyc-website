@@ -12,7 +12,7 @@ const cards = [
   {
     file: "og-home.jpg",
     category: "WEBSITES / TECH SUPPORT / SOFTWARE",
-    title: "Shops like yours, already working.",
+    title: "We handle the tech. You run the shop.",
     note: "Bookings. Visits. Orders. Consultations. Inquiries.",
     image: "images/brand-scenes/storefronts-dawn-1200.webp",
     position: "58% center",

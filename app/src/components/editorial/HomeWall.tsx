@@ -5,7 +5,16 @@ import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact
 import "./HomeWall.css";
 
 /**
- * The first screen answers one question: is this for someone like me?
+ * The first screen is a pyramid: the answer, then the three reasons, then
+ * the proof. H1 = what we do for the owner ("We handle the tech. You run the
+ * shop."). Dek = the three things that means. Pillars = the three reasons an
+ * owner would pick us, one per service line. Actions and channels. Then the
+ * six-trade wall, now labelled as what it is — proof: "Shops like yours,
+ * already working." That line used to be the H1, which led with evidence
+ * before saying what the evidence was for.
+ *
+ * The screen still answers "is this for someone like me?" — the six trades
+ * do that — it just answers "what do you do for me?" first.
  *
  * It used to answer a different one. The hero was three columns — a promise, a
  * phone playing a four-beat customer path, and the beat list beside it — all
@@ -35,14 +44,22 @@ export default function HomeWall() {
         </p>
 
         <h1 id="lf-home-title" className="lf-wall__claim">
-          Shops like yours,
+          We handle the tech.
           <br />
-          <span>already working.</span>
+          <span>You run the shop.</span>
         </h1>
 
         <p className="lf-wall__dek">
           Websites, on-site tech help, and software you own.
         </p>
+
+        <ul className="lf-wall__pillars" aria-label="Three reasons">
+          <li className="lf-wall__pillar">A website customers can find and book from</li>
+          {/* The 24-hour figure rides with its hedge, and the 9am–9pm line is on
+              this same screen — the evidence ledger's condition for publishing it. */}
+          <li className="lf-wall__pillar">Urgent NYC jobs, usually on-site within 24 hours</li>
+          <li className="lf-wall__pillar">Software you own — code, data, and accounts</li>
+        </ul>
 
         <div className="lf-wall__act">
           <a className="lf-wall__call" href={PHONE_HREF} data-lf-label="home_wall_phone">
@@ -80,6 +97,8 @@ export default function HomeWall() {
             9am–9pm Eastern: a human answers. After hours: leave a message.
           </p>
         </div>
+
+        <p className="lf-wall__proof">Shops like yours, already working.</p>
 
         <ul className="lf-wall__grid" aria-label="Six live client sites">
           {HOME_WALL.map((study, index) => {
