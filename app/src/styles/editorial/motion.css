@@ -71,11 +71,35 @@ html[data-vt-route] .lf-page-enter {
   .lf-editorial .lf-audit__submit:active,
   .lf-editorial .lf-post__cta-row a:active,
   .lf-editorial .lf-contact-block__channel:active,
+  .lf-editorial .lf-contact-block__door:active,
+  .lf-editorial .lf-pagehero__decision:active,
+  .lf-editorial .lf-wall__call:active,
+  .lf-editorial .lf-website-check__form button:active,
+  .lf-editorial .lf-cpath__path-controls button:active,
   .lf-editorial .lf-hero__action:active,
   .lf-editorial .lf-nav__start:active,
   .lf-editorial .lf-visual-index__item:active {
     transform: translateY(1px) scale(0.994);
     transition-duration: var(--m-signal-ms);
+  }
+
+  /* The arrow in a "door" control leans into the direction of travel on
+     hover — a small tell that the whole slab is the button. */
+  .lf-editorial .lf-pagehero__decision > svg,
+  .lf-editorial .lf-contact-block__door > svg,
+  .lf-editorial .lf-wall__check > svg {
+    transition: transform var(--m-signal-ms) var(--m-signal-ease);
+  }
+
+  .lf-editorial .lf-pagehero__decision:hover > svg,
+  .lf-editorial .lf-contact-block__door:hover > svg,
+  .lf-editorial .lf-wall__check:hover > svg {
+    transform: translateX(3px);
+  }
+
+  .lf-editorial .lf-contact-block__door--urgent:hover > svg,
+  .lf-editorial .lf-pagehero__decision:not(.lf-pagehero__decision--primary):hover > svg {
+    transform: translate(2px, -2px);
   }
 }
 

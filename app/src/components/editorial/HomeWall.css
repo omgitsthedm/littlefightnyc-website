@@ -162,12 +162,20 @@
   font-weight: 700;
   font-size: var(--lf-text-md);
   text-decoration: none;
-  transition: background var(--m-settle-ms) var(--m-settle-ease);
+  transition:
+    background var(--m-settle-ms) var(--m-settle-ease),
+    transform var(--m-signal-ms) var(--m-signal-ease);
 }
 
 .lf-editorial .lf-wall__call:hover,
 .lf-editorial .lf-wall__call:focus-visible {
   background: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-wall__call:focus-visible,
+.lf-editorial .lf-wall__check:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
 }
 
 .lf-editorial .lf-wall__check {
@@ -390,8 +398,13 @@
   }
 }
 
-/* ── the phone path (desktop only) ──────────────────────────────────────── */
+/* ── the phone path ─────────────────────────────────────────────────────── */
 
+/* Phones get the stacked version — title, then the phone beside the beat
+   rail, detail, controls — under the reach block, ahead of the proof. It is
+   the old hero's mobile layout, kept out of the first screen so the two
+   decisions and the hours line still lead. The smallest phones (≤360px) skip
+   it for the 15-screen budget, like the pillars. */
 .lf-wall__scene {
   display: block;
   margin-top: clamp(var(--lf-space-6), 6vw, var(--lf-space-8));
@@ -407,11 +420,6 @@
   /* 1024–1279: the phone-and-rail needs ~36rem to breathe, so the player
      sits under the copy at full width. From 1280 it moves beside the copy. */
   .lf-wall__inner {
-/* Phones get the stacked version — title, then the phone beside the beat
-   rail, detail, controls — under the reach block, ahead of the proof. It is
-   the old hero's mobile layout, kept out of the first screen so the two
-   decisions and the hours line still lead. The smallest phones (≤360px) skip
-   it for the 15-screen budget, like the pillars. */
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
@@ -428,7 +436,6 @@
   .lf-wall__grid { grid-area: grid; }
 
   .lf-wall__scene {
-    display: block;
     grid-area: scene;
     min-width: 0;
     margin-top: clamp(var(--lf-space-6), 4vw, var(--lf-space-8));
