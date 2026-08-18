@@ -47,19 +47,24 @@ export default function HomeWall() {
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
       {/* The street behind the promise: an Upper East Side block under string
           lights at night — New York, warm, and no readable business names or
-          logos (the imagery rule). Decorative (alt=""), low fetch priority and
-          never route-preloaded, so the wall's first tile stays the one LCP
-          candidate; the scrim in CSS keeps the copy AA on top of it. */}
+          logos (the imagery rule). Decorative (alt="") and never route-preloaded
+          (the wall's first tile keeps that pin), but fetched high: it is the
+          largest paint in the first screen, so it is what LCP measures. The
+          scrim in CSS keeps the copy AA on top of it. */}
       <div className="lf-wall__backdrop" aria-hidden="true">
         <img
           src="/assets/hero-ues-lights-900.webp"
-          srcSet="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w, /assets/hero-ues-lights.webp 1600w"
-          sizes="100vw"
-          width={1600}
-          height={1067}
+          /* Capped at 900w on purpose: it sits dimmed under a scrim and a
+             1px blur, so a 900px source stretched to a 1440px screen is
+             indistinguishable from the 331KB 1600px one — and this image is
+             the largest paint on the page, so its bytes ARE the LCP. */
+          srcSet="/assets/hero-ues-lights-480.webp 480w, /assets/hero-ues-lights-640.webp 640w, /assets/hero-ues-lights-900.webp 900w"
+          sizes="(min-width: 64rem) 900px, 100vw"
+          width={900}
+          height={600}
           alt=""
           loading="eager"
-          fetchPriority="low"
+          fetchPriority="high"
           decoding="async"
         />
       </div>

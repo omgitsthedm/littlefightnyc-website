@@ -35,6 +35,9 @@
   /* the lit trees run down the right of the frame; keep them under the player */
   object-position: 60% 45%;
   opacity: 0.85;
+  /* hides the 900→1440 upscale; the street is atmosphere, not a subject */
+  filter: blur(1px);
+  transform: scale(1.02);
 }
 
 /* Scrim: heavy over the copy column so type stays AA, lighter to the right,
