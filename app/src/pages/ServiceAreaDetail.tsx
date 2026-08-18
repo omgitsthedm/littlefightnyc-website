@@ -27,17 +27,20 @@ function detailServiceSlug(serviceSlug = "") {
 // One template, 72 routes: keep it in the same "you get" register as the
 // service pages it points to.
 function serviceAreaLead(serviceSlug: string, areaName: string) {
+  // "The Bronx" → "your Bronx business" / "in the Bronx"; every other name is unchanged.
+  const adj = areaName.replace(/^The\s+/, "");
+  const loc = areaName.replace(/^The\s+/, "the ");
   switch (serviceSlug) {
     case "custom-local-websites":
-      return `A website built around your ${areaName} business, so customers find you, see what you do, and book without calling.`;
+      return `A website built around your ${adj} business, so customers find you, see what you do, and book without calling.`;
     case "it-support":
-      return `When email, Wi-Fi, the card reader, or booking breaks in ${areaName}, we fix it. Urgent jobs: usually on-site within 24 hours.`;
+      return `When email, Wi-Fi, the card reader, or booking breaks in ${loc}, we fix it. Urgent jobs: usually on-site within 24 hours.`;
     case "business-systems":
-      return `One focused tool for how your ${areaName} business already works, and you own it. It replaces the spreadsheets and monthly tools that stopped fitting.`;
+      return `One focused tool for how your ${adj} business already works, and you own it. It replaces the spreadsheets and monthly tools that stopped fitting.`;
     case "tech-consulting":
-      return `A free first look at your ${areaName} business’s website, Google profile, tools, and bills. You learn what to keep, fix, replace, or skip.`;
+      return `A free first look at your ${adj} business’s website, Google profile, tools, and bills. You learn what to keep, fix, replace, or skip.`;
     default:
-      return `We keep what works for your ${areaName} business and fix what gets in the way.`;
+      return `We keep what works for your ${adj} business and fix what gets in the way.`;
   }
 }
 

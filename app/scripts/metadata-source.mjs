@@ -421,7 +421,7 @@ export function serviceAreaPages(seoData) {
       h1: `${service.label} for ${area.name} businesses.`,
       // Answer first, in the owner's terms: what they get in their neighborhood,
       // then how we work. (Was "{Area} businesses need …".)
-      shortAnswer: `Short answer: For a ${area.name} business, you get ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
+      shortAnswer: `Short answer: For a ${area.name.replace(/^The\s+/, "")} business, you get ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
       type: "Service",
       serviceName: `${service.serviceName} in ${area.name}`,
       image: service.image ?? area.image,
