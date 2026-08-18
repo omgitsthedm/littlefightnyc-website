@@ -28,8 +28,9 @@ const DIAGRAMS: Record<string, (surface: Surface) => React.ReactElement> = {
   "custom-local-websites": (surface) =>
     surface === "home" ? <OpenWhileClosed /> : <SiteInFourteen />,
 
-  // The before/after intake story, drawn as an instrument (leads slip away →
-  // one intake layer catches every one) rather than a static node diagram.
+  // The intake story, drawn as an instrument: opens on one intake layer catching
+  // every lead; the layer drops out and leads slip away (the contrast); it
+  // returns. Solved state first — the reader is already living the problem.
   "business-systems": () => <LeadsCaught />,
 
   // "It breaks → a human answers on a real timeline", drawn as an instrument.

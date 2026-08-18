@@ -5,11 +5,18 @@ import { rr, glow, DISP, MONO, ORANGE, useInstrumentCanvas } from "./instrument"
  * LeadsCaught — the "business systems" argument, drawn.
  *
  * Leads fall from the four channels a shop actually gets them on — a phone call,
- * a contact form, an Instagram DM, a Saturday walk-in. With nothing catching
- * them (tracked in zero places) they fall straight past and slip away. Then one
- * orange INTAKE LAYER slides in across the bottom; now every falling lead lands
- * on it and slides to FOLLOW-UP — nothing dropped. One causal image: leads slip
+ * a contact form, an Instagram DM, a Saturday walk-in. It OPENS on the solved
+ * state: one orange INTAKE LAYER already across the bottom, every falling lead
+ * landing on it and sliding to FOLLOW-UP — nothing dropped. Then, as the
+ * contrast beat, the layer drops out; with nothing catching them (tracked in
+ * zero places) the same leads fall straight past and slip away. The layer
+ * slides back in and every lead is caught again. One causal image: leads slip
  * *because* nothing catches them, and one intake layer catches every one.
+ *
+ * Why solved-first: the owner's rule for the service sections is "lead with the
+ * solved state, never the problem — the reader is already living the problem."
+ * The other three instruments open on their calm/positive beat; this one used
+ * to open cold on red "leads slipped away", and now it does not.
  *
  * It illustrates the mechanism, not a statistic — the counts are the leads this
  * animation itself drops vs. catches, so nothing here is a fabricated metric.
@@ -30,9 +37,10 @@ const TOKEN: Record<(typeof SOURCES)[number], string> = {
   "WALK-IN": "WALK-IN",
 };
 
-// Phase timing (ms). painMs → the beat → fixMs → hold → loop. Emission is dense
-// and continuous (incl. through the beat) so the fall column is never empty.
-const T = { pain: 3400, beat: 500, fix: 4400, hold: 1300, emit: 180 };
+// Phase timing (ms). solved → without (layer drops out) → beat (layer slides
+// back) → solved → … Emission is dense and continuous so the fall column is
+// never empty and the loop point is seamless (no reset, no pop).
+const T = { solved: 4200, without: 2400, beat: 500, emit: 180 };
 
 type Lead = {
   src: number;
@@ -47,7 +55,7 @@ type Lead = {
 
 type Sim = {
   t0: number;
-  phase: 0 | 1 | 2 | 3; // pain | beat | fix | hold
+  phase: 0 | 1 | 2; // solved | without | beat
   leads: Lead[];
   lost: number;
   caught: number;
@@ -58,32 +66,41 @@ type Sim = {
   pulse: number; // follow-up arrival pulse
 };
 
+// Deterministic-ish drift per lead index (no Math.random reliance for testability).
+const driftFor = (n: number) => ((n * 2654435761) % 1000) / 1000 - 0.5;
+
+// The opening frame IS the solved state: the intake layer up, a few leads
+// mid-slide toward follow-up plus a couple falling into the bar. The
+// reduced-motion still paints this exact frame, so first paint and the still
+// are the same image. Counts match the seeded tokens (3 caught, 0 lost).
+const SEEDS = 5;
 const freshSim = (now: number): Sim => ({
-  t0: now,
+  t0: now - 400,
   phase: 0,
-  leads: [],
+  leads: Array.from({ length: SEEDS }, (_, n) => ({
+    src: n % SOURCES.length,
+    x0: 0.16 + ((n * 3) % 4) * 0.22,
+    born: now - 700 - n * 120,
+    drift: driftFor(n),
+    fate: n < 3 ? ("caught" as const) : ("falling" as const),
+    catchAt: now - 300,
+    slide: n < 3 ? 0.3 + n * 0.22 : 0,
+  })),
   lost: 0,
-  caught: 0,
+  caught: 3,
   lastEmit: 0,
-  seq: 0,
-  barIn: 0,
+  seq: SEEDS,
+  barIn: 1,
   flash: 0,
   pulse: 0,
 });
-
-// Deterministic-ish drift per lead index (no Math.random reliance for testability).
-const driftFor = (n: number) => ((n * 2654435761) % 1000) / 1000 - 0.5;
 
 function step(S: Sim, now: number) {
   const pt = now - S.t0;
   S.flash *= 0.88;
   S.pulse *= 0.9;
 
-  const emitting =
-    (S.phase === 0 && pt < T.pain - 300) ||
-    S.phase === 1 ||
-    (S.phase === 2 && pt < T.fix - 700);
-  if (emitting && now - S.lastEmit > T.emit) {
+  if (now - S.lastEmit > T.emit) {
     S.lastEmit = now;
     const n = S.seq++;
     S.leads.push({
@@ -97,28 +114,33 @@ function step(S: Sim, now: number) {
     });
   }
 
-  if (S.phase === 0 && pt > T.pain) {
-    S.phase = 1;
-    S.t0 = now;
-    S.flash = 1;
+  if (S.phase === 0) {
+    S.barIn = 1;
+    if (pt > T.solved) {
+      // the layer drops out — the contrast beat begins
+      S.phase = 1;
+      S.t0 = now;
+      S.lost = 0;
+    }
   } else if (S.phase === 1) {
-    S.barIn = clamp(S.barIn + 0.05, 0, 1);
-    if (now - S.t0 > T.beat) {
+    S.barIn = clamp(S.barIn - 0.06, 0, 1);
+    if (pt > T.without) {
+      // the layer slides back in; "routed to follow-up" counts from here
       S.phase = 2;
       S.t0 = now;
+      S.flash = 1;
+      S.caught = 0;
     }
-  } else if (S.phase === 2) {
-    S.barIn = 1;
-    if (pt > T.fix) {
-      S.phase = 3;
+  } else {
+    S.barIn = clamp(S.barIn + 0.05, 0, 1);
+    if (pt > T.beat) {
+      S.phase = 0;
       S.t0 = now;
     }
-  } else if (S.phase === 3) {
-    if (now - S.t0 > T.hold) Object.assign(S, freshSim(now));
   }
 
   // resolve leads that cross the catch line (fate decided by whether the bar is up)
-  const barUp = S.phase >= 1 && S.barIn > 0.5;
+  const barUp = S.barIn > 0.5;
   for (const L of S.leads) {
     if (L.fate !== "falling") {
       if (L.fate === "caught") L.slide = clamp(L.slide + 0.026, 0, 1);
@@ -282,13 +304,13 @@ function draw(
       const s = eoc(L.slide);
       const x = lerp(sx, collX, s);
       const y = lerp(lineY - th * 0.2, collY, s * s);
-      const a = 1 - clamp((L.slide - 0.8) / 0.2, 0, 1);
+      const a = (1 - clamp((L.slide - 0.8) / 0.2, 0, 1)) * clamp(S.barIn * 2, 0, 1);
       if (a > 0.02) token(x, y, a, label, "caught");
     }
   }
 
   // --- readout ---
-  const fixing = S.phase >= 2;
+  const fixing = S.phase !== 1;
   cx.textAlign = wide ? "left" : "center";
   const rx = wide ? W * 0.08 : W * 0.5;
   const ry = H * (wide ? 0.9 : 0.04);
@@ -305,35 +327,17 @@ function draw(
     cx.fillStyle = "rgba(210,214,222,.8)";
     cx.font = "500 " + Math.max(9, (H * 0.03) | 0) + "px " + MONO;
     cx.fillText("EVERY LEAD CAUGHT", rx, ry);
-    cx.fillStyle = "#eaf1ff";
-    cx.font = "700 " + Math.max(11, (H * 0.05) | 0) + "px " + DISP;
-    cx.fillText(S.caught + " routed to follow-up · 0 lost", rx, ry + H * 0.06);
+    if (S.caught > 0) {
+      cx.fillStyle = "#eaf1ff";
+      cx.font = "700 " + Math.max(11, (H * 0.05) | 0) + "px " + DISP;
+      cx.fillText(S.caught + " routed to follow-up · 0 lost", rx, ry + H * 0.06);
+    }
   }
 
   if (S.flash > 0.02) {
     cx.fillStyle = "rgba(249,115,22," + S.flash * 0.14 + ")";
     cx.fillRect(0, 0, W, H);
   }
-}
-
-// Settled "resolved" frame: the intake layer up, catching every lead — a few
-// leads mid-slide toward follow-up plus a couple falling into the bar.
-function settledSim(now: number): Sim {
-  const S = freshSim(now);
-  S.phase = 2;
-  S.t0 = now - 400;
-  S.barIn = 1;
-  S.caught = 6;
-  S.leads = [0, 1, 2, 3, 4].map((n) => ({
-    src: n % SOURCES.length,
-    x0: 0.16 + ((n * 3) % 4) * 0.22,
-    born: now - 700 - n * 120,
-    drift: driftFor(n),
-    fate: n < 3 ? "caught" : "falling",
-    catchAt: now - 300,
-    slide: n < 3 ? 0.3 + n * 0.22 : 0,
-  }));
-  return S;
 }
 
 export default function LeadsCaught() {
@@ -348,7 +352,8 @@ export default function LeadsCaught() {
         step(S, now);
         draw(S, cx, W, H, GO, now);
       },
-      still: (now, W, H) => draw(settledSim(now), cx, W, H, GO, now),
+      // Reduced motion: the settled solved frame — identical to the opening frame.
+      still: (now, W, H) => draw(freshSim(now), cx, W, H, GO, now),
     };
   });
 
@@ -364,7 +369,7 @@ export default function LeadsCaught() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Leads arrive through phone calls, contact forms, Instagram messages, and Saturday walk-ins. Without one place to track them, they slip away. One intake system catches each lead and routes it to follow-up."
+      aria-label="Leads arrive through phone calls, contact forms, Instagram messages, and Saturday walk-ins. One intake system catches each lead and routes it to follow-up. Without it, they slip away."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>
