@@ -175,8 +175,8 @@
       "path": "/services/business-systems/",
       "title": "Custom Business Software NYC | Little Fight NYC",
       "description": "Software for NYC small businesses when regular tools no longer fit. The business owns the work, information, and notes.",
-      "h1": "Stop renting software that fights the way you work.",
-      "shortAnswer": "Short answer: Little Fight builds focused software that NYC small businesses own. It replaces scattered spreadsheets, double typing, and bloated subscriptions when off-the-shelf tools no longer fit.",
+      "h1": "Software you own, built around your day.",
+      "shortAnswer": "Short answer: You get one focused tool built around how your business already works, and you own it. It replaces the scattered spreadsheets, double typing, and monthly tools that no longer fit.",
       "type": "Service",
       "serviceName": "Custom software for NYC small businesses",
       "image": "/assets/manhattan.webp",
@@ -185,7 +185,7 @@
         "type": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "alt": "Little Fight NYC software card over a salon workstation: Stop renting software that fights the way you work."
+        "alt": "Little Fight NYC software card over a salon workstation: Software you own, built around your day."
       },
       "faq": [
         {

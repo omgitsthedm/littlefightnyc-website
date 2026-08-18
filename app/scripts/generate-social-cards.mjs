@@ -57,7 +57,7 @@ const cards = [
   {
     file: "og-business-systems.jpg",
     category: "SOFTWARE YOU OWN",
-    title: "Stop renting software that fights the way you work.",
+    title: "Software you own, built around your day.",
     note: "Build the focused tool. Lose the bloated monthly bill.",
     image: "images/brand-scenes/salon-systems-1200.webp",
     position: "66% center",

@@ -370,12 +370,21 @@ export const services: Service[] = [
     eyebrow: "Software You Own",
     verb: "Build",
     title: "A focused tool built around your business",
-    headline: "Stop renting software that fights the way you work.",
+    // Solved state first. The old headline led with the problem ("Stop
+    // renting software that fights the way you work"); the reader is already
+    // living it. The headline is now what they get, the short answer says it in
+    // "you" terms, and the hero carries three pillars like the other services.
+    headline: "Software you own, built around your day.",
     plain: "One clear place for customer questions, follow-up, reports, and daily work. We first check whether a simpler tool can do the job. If we build one for you, you keep the files, data, accounts, and notes.",
     outcome: "One focused tool. You own it, the data, the accounts, the website address, and the instructions.",
     includes: [
             "A clear place to track customer questions and work",
       "Full ownership of the files, data, accounts, and instructions",
+    pillars: [
+      "One place for customers, jobs, and follow-up",
+      "You own the code, data, and accounts",
+      "We check first whether a simpler tool can do it",
+    ],
       "Simple reports and follow-up reminders you approve",
       "Plain notes another qualified person can use if you ever need them",
       "A look at the steps and software bills that slow the day down",
@@ -385,7 +394,7 @@ export const services: Service[] = [
     accent: "green",
     icon: ClipboardCheck,
     shortAnswer:
-      "Short answer: Little Fight builds focused software that NYC small businesses own. It can replace scattered spreadsheets, double typing, and monthly tools that no longer fit.",
+      "Short answer: You get one focused tool built around how your business already works, and you own it. It replaces the scattered spreadsheets, double typing, and monthly tools that no longer fit.",
     whatItDoes: [
       "This is the work behind the storefront: the customer list, the job board, the quote, and the owner’s view of the week.",
       "Many small businesses run that layer on spreadsheets, inboxes, sticky notes, and memory. The work gets done, but one person becomes the memory for the whole business.",
