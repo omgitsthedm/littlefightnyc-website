@@ -967,3 +967,14 @@
 .lf-pagehero__image--visual::after {
   content: none;
 }
+
+/* A photo may fade up from 0.68 on reveal — it carries no words. A bespoke
+   visual carries client names, build names and a caption, and the entrance
+   animation's fill state dims that text below AA until the reveal fires.
+   Content-bearing visuals paint complete. */
+.lf-pagehero__image--visual,
+.lf-pagehero[data-revealed="true"] .lf-pagehero__image--visual {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}

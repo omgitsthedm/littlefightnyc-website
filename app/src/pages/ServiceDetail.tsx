@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { caseStudies, services } from "@/data/site";
 import PageHero from "@/components/editorial/PageHero";
+import LabVisual, { type LabBuildSlug } from "@/components/editorial/LabVisual";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
@@ -26,6 +27,20 @@ const FIGURE_CAPTION: Record<string, string> = {
   "it-support": "The register, reader, and tablet are the tools the day runs on.",
   "custom-local-websites": "Built for your block, not picked from a template menu.",
   "business-systems": "One clear place to check instead of scattered spreadsheets and memory.",
+};
+
+/**
+ * Where a Lab build proves the capability the page is selling, the build takes
+ * the hero instead of a photograph. Studio Engine earns it: it literally
+ * assembles a site from one sentence, which is the argument the software page
+ * is making. Every other service routed through here keeps its image — a build
+ * that does not demonstrate the claim is just decoration.
+ */
+const LAB_PROOF: Record<string, { slug: LabBuildSlug; because: string }> = {
+  "business-systems": {
+    slug: "studio-engine",
+    because: "the same idea as a tool built for one business",
+  },
 };
 
 const FEATURE_IMAGE: Record<string, string> = {
@@ -166,6 +181,8 @@ export default function ServiceDetail() {
 
   const related = services.filter((item) => item.slug !== service.slug);
 
+  const labProof = LAB_PROOF[service.slug];
+
   return (
     <>
       <PageHero
@@ -174,7 +191,8 @@ export default function ServiceDetail() {
         title={<>{service.headline}</>}
         dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
         pillars={service.pillars ? [...service.pillars] : undefined}
-        image={{
+        visual={labProof ? <LabVisual slug={labProof.slug} because={labProof.because} /> : undefined}
+        image={labProof ? undefined : {
           src: FEATURE_IMAGE[service.slug] ?? service.image,
           alt: service.slug === "custom-local-websites"
             ? "The Hair By Rachel Charles booking website as it shipped"

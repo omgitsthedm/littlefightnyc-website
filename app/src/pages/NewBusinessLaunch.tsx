@@ -1,5 +1,6 @@
 import { Store } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
+import LabVisual from "@/components/editorial/LabVisual";
 import QuietContact from "@/components/editorial/QuietContact";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import { createConnectedPath } from "@/components/dataviz/connectedPath";
@@ -55,12 +56,12 @@ export default function NewBusinessLaunch() {
         icon={Store}
         title={<>Open with the front door already working.</>}
         dek="Your name, website, Google listing, booking or question path, email, and logins—set up together instead of scattered across six accounts."
-        image={{
-          src: "/images/brand-scenes/storefronts-dawn.webp",
-          alt: "Neighborhood storefronts opening at dawn",
-          width: 1672,
-          height: 941,
-        }}
+        visual={
+          <LabVisual
+            slug="growth-street"
+            because="what connecting the parts looks like from the street"
+          />
+        }
       />
 
       <section className="lf-revenue-page" aria-labelledby="lf-launch-title">

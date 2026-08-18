@@ -1,6 +1,7 @@
 import { Phone, Users } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import OwnerStories from "@/components/editorial/OwnerStories";
+import WorkWall from "@/components/editorial/WorkWall";
 import QuietContact from "@/components/editorial/QuietContact";
 import { agencyProcess } from "@/data/site";
 import "@/styles/editorial/about.css";
@@ -36,12 +37,14 @@ export default function About() {
           "One studio, start to finish",
           "9am–9pm Eastern, a human answers",
         ]}
-        image={{
-          src: "/assets/about-empire-diner.webp",
-          alt: "The chrome-clad Empire Diner glowing on a Manhattan corner at night",
-          width: 1200,
-          height: 900,
-        }}
+        // The page that explains who we are now opens on what we shipped.
+        // A different trio than the services hub, so the two do not repeat.
+        visual={
+          <WorkWall
+            slugs={["clearhelp", "after-hours-agenda", "brothers-pizzeria"]}
+            label="Recent shipped work"
+          />
+        }
       />
 
       {/* Answer first. This section used to open with a three-paragraph belief

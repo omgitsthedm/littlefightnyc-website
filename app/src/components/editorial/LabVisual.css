@@ -1,0 +1,142 @@
+/* A Lab build as the hero visual: the poster carries the page, and the whole
+ * plate is the door into the working thing. */
+
+.lf-labvisual {
+  display: grid;
+  gap: var(--lf-space-3);
+  min-width: 0;
+  margin: 0;
+}
+
+.lf-editorial .lf-labvisual__frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: #08080c;
+  box-shadow: 0 2rem 4.5rem rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  transition:
+    transform var(--m-settle-ms) var(--m-settle-ease),
+    border-color var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-labvisual__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms var(--lf-ease-out);
+}
+
+.lf-labvisual__shade {
+  position: absolute;
+  inset: 0;
+  /* The posters are busy — several carry their own display type — so the
+     label band is nearly solid rather than a polite fade. */
+  background: linear-gradient(
+    to top,
+    rgba(5, 5, 7, 0.985) 0%,
+    rgba(5, 5, 7, 0.96) 30%,
+    rgba(5, 5, 7, 0.72) 52%,
+    rgba(5, 5, 7, 0.08) 84%
+  );
+}
+
+.lf-labvisual__body {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: 0.3rem;
+  padding: clamp(1rem, 3vw, 1.6rem);
+  color: var(--lf-bone);
+}
+
+.lf-labvisual__kind {
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lf-labvisual__title {
+  font-family: var(--lf-heading);
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.lf-labvisual__line {
+  max-width: 40ch;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.35;
+}
+
+.lf-labvisual__open {
+  display: inline-flex;
+  min-height: var(--lf-control-min);
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+  color: var(--lf-fight);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lf-editorial .lf-labvisual__frame:hover,
+.lf-editorial .lf-labvisual__frame:focus-visible {
+  border-color: color-mix(in srgb, var(--lf-fight) 60%, var(--lf-hairline));
+  transform: translateY(-4px);
+}
+
+.lf-editorial .lf-labvisual__frame:hover img {
+  transform: scale(1.03);
+}
+
+.lf-editorial .lf-labvisual__frame:hover .lf-labvisual__open,
+.lf-editorial .lf-labvisual__frame:focus-visible .lf-labvisual__open {
+  color: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-labvisual__frame:focus-visible {
+  outline: 3px solid var(--lf-blue-soft);
+  outline-offset: 4px;
+}
+
+.lf-editorial .lf-labvisual__caption {
+  margin: 0;
+  color: var(--lf-bone-dim);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-editorial .lf-labvisual__frame,
+  .lf-labvisual__frame img {
+    transition: none;
+  }
+
+  .lf-editorial .lf-labvisual__frame:hover {
+    transform: none;
+  }
+
+  .lf-editorial .lf-labvisual__frame:hover img {
+    transform: none;
+  }
+}
