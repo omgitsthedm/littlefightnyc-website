@@ -107,10 +107,10 @@ export const services: Service[] = [
     shortAnswer:
       "Short answer: A free first look at your website, Google profile, tools, and bills. You learn what to keep, fix, replace, or skip.",
     whatItDoes: [
-      "Most owners do not start with a neat little problem. They start with a strange bill, a form nobody answers, or Google showing the wrong thing.",
+      "You leave with a written next-step list, ranked by what affects customers first. Use it yourself, hand it to your current help, or bring it back to us.",
       "The first look is simple. We check the public site, the accounts you can see, the monthly bills, and how customer messages reach you. Then we name what earns its place, what needs attention, and what can wait.",
       "It works for every kind of shop. A bar’s card reader. A law office’s new-client email. A clothing store’s online order. A salon’s booking page. The details change. The read does not.",
-      "You leave with a written next-step list. The customer-facing problem comes first. You can use it yourself, give it to your current help, or bring it back to us.",
+      "You do not need a neat little problem to start. A strange bill, a form nobody answers, or Google showing the wrong thing is enough.",
       "The consult is a real read, not a trap door into a pitch. Sometimes the best answer is to leave a working thing alone.",
     ],
     commonIssues: [
@@ -191,8 +191,7 @@ export const services: Service[] = [
     shortAnswer:
       "Short answer: When email, Wi-Fi, the card reader, booking, or a device stops working, we fix it. Real local help, same day where we can.",
     whatItDoes: [
-      "When a card reader, inbox, printer, or login breaks, you do not need a ticket number. You need a person who starts with the urgent thing.",
-      "We answer the phone. We come on-site when the fix needs hands. And we keep notes, so the next call does not start from zero.",
+      "You get a person who starts with the urgent thing. No ticket number, no queue. We answer the phone, come on-site when the fix needs hands, and keep notes so the next call does not start from zero.",
       "We fix the parts that make the day run: email, website addresses, card readers, booking links, Wi-Fi, payments, and locked accounts.",
       "The trade does not matter. A bar’s card reader on a Friday night. A law firm’s intake email. A clinic’s booking link. A shop’s printer. Broken is broken, and we fix it.",
       "The goal is not to make you depend on us. Every fix gets written down in plain words, so the next change is less scary.",
@@ -291,12 +290,11 @@ export const services: Service[] = [
       // changes for the owner; who built it is the second-screen detail.
       "Short answer: You get a custom website built around your business, so customers find you, see what you do, and book without calling. Built for one business, not a theme.",
     whatItDoes: [
-      "A custom local website is built around one business and its customers. It is not a theme with new colors. It does not sound like every other shop.",
-      "The site works for people first. A visitor should know what you do, where you are, and what to do next. No hunting.",
-      "The public facts should agree. Service pages, Maps details, reviews, booking links, and Google profile information should not make a customer guess which one is right.",
+      "You get a website built around one business and its customers, so a visitor knows what you do, where you are, and what to do next. No hunting. Not a theme with new colors.",
+      "The public facts agree. Service pages, Maps details, reviews, booking links, and Google profile information should not make a customer guess which one is right.",
       "It works for any trade. A bar. A law firm. A clothing brand. A salon. A hardware store. The look changes. The job is the same: make the next step obvious.",
       "We build, you review, then we launch. Before we start, the written plan says what we need from each other and what happens next.",
-      "Care can keep the public path current when hours, offers, or tools change. The business keeps the accounts and the notes.",
+      "Care can keep the public path current when hours, offers, or tools change. You keep the accounts and the notes.",
     ],
     commonIssues: [
       {
@@ -399,11 +397,11 @@ export const services: Service[] = [
     shortAnswer:
       "Short answer: You get one focused tool built around how your business already works, and you own it. It replaces the scattered spreadsheets, double typing, and monthly tools that no longer fit.",
     whatItDoes: [
-      "This is the work behind the storefront: the customer list, the job board, the quote, and the owner’s view of the week.",
-      "Many small businesses run that layer on spreadsheets, inboxes, sticky notes, and memory. The work gets done, but one person becomes the memory for the whole business.",
+      "You get one focused tool for the work behind the storefront: the customer list, the job board, the quote, and the owner’s view of the week. You own the files, data, accounts, website address, and instructions.",
       "We start with what you have. What helps? What costs too much? What needs to share information? What truly needs a custom build?",
       "Custom tools are for work a generic app handles badly: new customer questions, inventory, event deposits, or quotes with real rules. The small thing that fits can beat the big thing that fights every step.",
-      "Everything we deliver is written down and sized for the job. The files, data, accounts, website address, and instructions belong to the business.",
+      "Many small businesses run that layer on spreadsheets, inboxes, sticky notes, and memory. The work gets done, but one person becomes the memory for the whole business. One written-down tool makes it less fragile.",
+      "Everything we deliver is written down and sized for the job.",
     ],
     commonIssues: [
       {
