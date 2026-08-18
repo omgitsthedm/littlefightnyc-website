@@ -393,13 +393,25 @@
 /* ── the phone path (desktop only) ──────────────────────────────────────── */
 
 .lf-wall__scene {
-  display: none;
+  display: block;
+  margin-top: clamp(var(--lf-space-6), 6vw, var(--lf-space-8));
+}
+
+@media (max-width: 22.5rem) {
+  .lf-wall__scene {
+    display: none;
+  }
 }
 
 @media (min-width: 64rem) {
   /* 1024–1279: the phone-and-rail needs ~36rem to breathe, so the player
      sits under the copy at full width. From 1280 it moves beside the copy. */
   .lf-wall__inner {
+/* Phones get the stacked version — title, then the phone beside the beat
+   rail, detail, controls — under the reach block, ahead of the proof. It is
+   the old hero's mobile layout, kept out of the first screen so the two
+   decisions and the hours line still lead. The smallest phones (≤360px) skip
+   it for the 15-screen budget, like the pillars. */
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:

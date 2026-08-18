@@ -200,9 +200,9 @@ export default function CustomerPath() {
             width={CAPTURE.width}
             height={CAPTURE.height}
             alt=""
-            /* Lazy on purpose: the wall's first tile is the pinned LCP
-               candidate, and below 64rem this figure is display:none, so a
-               phone never downloads a 2400px capture it will not show. */
+            /* Lazy on purpose: the wall's first tile and the backdrop own the
+               first screen; on a phone this figure sits one scroll down and
+               the smallest phones do not render it at all. */
             loading="lazy"
             decoding="async"
             style={{

@@ -20,9 +20,9 @@ import "./HomeWall.css";
  * On desktop the phone playing one customer's four-beat path (found →
  * understood → trusted → booked, on a real client site) sits to the right of
  * the copy — the "slideshow" from the old hero, back as the hero's visual.
- * Below 64rem it is not rendered into the layout (display:none, lazy image),
- * because the phone-sized first screen and the 15-screen page budget are the
- * contract there and the six tiles already carry the proof.
+ * On phones it is the stacked version — under the reach block, ahead of the
+ * proof — so the two decisions and the hours line still lead the first
+ * screen; the smallest phones (≤360px) skip it for the 15-screen budget.
  *
  * It used to answer a different one. The hero was three columns — a promise, a
  * phone playing a four-beat customer path, and the beat list beside it — all
