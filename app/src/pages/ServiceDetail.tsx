@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { caseStudies, services } from "@/data/site";
+import { answerGuides, answerServiceBridge } from "@/data/site-answers";
 import PageHero from "@/components/editorial/PageHero";
 import LabVisual, { type LabBuildSlug } from "@/components/editorial/LabVisual";
 import EditorialBody from "@/components/editorial/EditorialBody";
@@ -180,6 +181,9 @@ export default function ServiceDetail() {
   if (!service) return <Navigate to="/services/" replace />;
 
   const related = services.filter((item) => item.slug !== service.slug);
+  const relatedAnswers = answerGuides.filter(
+    (guide) => answerServiceBridge[guide.slug]?.to === `/services/${service.slug}/`,
+  );
 
   const labProof = LAB_PROOF[service.slug];
 
@@ -328,6 +332,32 @@ export default function ServiceDetail() {
           </Link>
         </div>
       </section>
+
+      {/* The straight answers that point at this service. This is the crawl
+          path Search Console said was missing: 79 answer/area URLs sat
+          "discovered, never crawled" with no link from an indexed page. Each
+          service page now links every answer that bridges to it (4–8 each), so
+          the four most-crawled service URLs carry all 27 answers. */}
+      {relatedAnswers.length > 0 && (
+        <section className="lf-sd-answers" aria-labelledby="lf-sd-answers-title">
+          <div className="lf-sd-related__inner">
+            <p className="lf-sd-related__label">Straight answers</p>
+            <h2 id="lf-sd-answers-title" className="lf-sd-answers__title">
+              Owner questions this work comes up in.
+            </h2>
+            <ul className="lf-sd-answers__list">
+              {relatedAnswers.map((guide) => (
+                <li key={guide.slug}>
+                  <Link to={`/answers/${guide.slug}/`} className="lf-sd-answers__link">
+                    <span className="lf-sd-answers__q">{guide.question}</span>
+                    <span className="lf-sd-answers__a">{guide.short.replace(/^Short answer:\s*/i, "")}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="lf-sd-related">
         <div className="lf-sd-related__inner">
