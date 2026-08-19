@@ -87,28 +87,34 @@ function WallTile({ study, index }: { study: (typeof HOME_WALL)[number]; index: 
 export default function HomeWall() {
   return (
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
-      {/* The city behind the promise: Manhattan from the air at night — the
-          park's grid, the downtown towers, the lights. Unmistakably New York,
-          no season, no readable business names or logos (the imagery rule). Decorative (alt="") and never route-preloaded
+      {/* The city behind the promise: an Upper East Side avenue at dusk, the
+          towers straight down the avenue, streetlights just on. Shot at 6000px
+          (Brand/New York Neighborhoods), served up to 2000w — unmistakably New
+          York, no season, no readable business names (the imagery rule). Decorative (alt="") and never route-preloaded
           (the wall's first tile keeps that pin), but fetched high: it is the
           largest paint in the first screen, so it is what LCP measures. The
           scrim in CSS keeps the copy AA on top of it. */}
       <div className="lf-wall__backdrop" aria-hidden="true">
-        <img
-          src="/assets/manhattan-900.webp"
-          /* Desktop takes the 640w (90KB) on purpose: it sits dimmed under a
-             scrim and a 1px blur, so a 640px source stretched to a 1440px
-             screen reads the same as the 331KB 1600px one — and this image
-             is the largest paint on the page, so its bytes ARE the LCP. */
-          srcSet="/assets/manhattan-480.webp 480w, /assets/manhattan-640.webp 640w, /assets/manhattan-900.webp 900w"
-          sizes="(min-width: 64rem) 640px, 100vw"
-          width={900}
-          height={514}
-          alt=""
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-        />
+        <picture>
+          {/* Phones take ≤900w (30–94KB); desktop takes 1280–2000w (178–442KB),
+              which is 1.4× on a 1440 screen — sharp, no upscale, no blur. */}
+          <source
+            media="(min-width: 64rem)"
+            srcSet="/assets/hero-home-avenue-1280.webp 1280w, /assets/hero-home-avenue-1600.webp 1600w, /assets/hero-home-avenue-2000.webp 2000w"
+            sizes="100vw"
+          />
+          <img
+            src="/assets/hero-home-avenue-900.webp"
+            srcSet="/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w"
+            sizes="100vw"
+            width={2000}
+            height={1333}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
       <div className="lf-wall__inner">
         <div className="lf-wall__copy">

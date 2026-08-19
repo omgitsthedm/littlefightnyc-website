@@ -38,20 +38,15 @@
   position: relative;
   overflow: hidden;
   padding-block: clamp(var(--lf-space-7), 6vw, var(--lf-space-9));
-  background:
-    radial-gradient(110% 74% at 20% 6%, rgb(255 255 255 / 7%) 0%, rgb(255 255 255 / 0%) 55%),
-    radial-gradient(75% 55% at 88% 26%, var(--lf-svc-rim, rgb(96 165 250 / 10%)) 0%, rgb(96 165 250 / 0%) 60%),
-    radial-gradient(85% 58% at 50% 106%, rgb(249 115 22 / 13%) 0%, rgb(249 115 22 / 0%) 62%),
-    var(--lf-ink);
+  /* Flat ink, same as the hero's floor and the contact block: one ground
+     down the whole page (the per-section blooms and per-tone rims made the
+     background change four times). The drawings carry their own light. */
+  background: var(--lf-ink);
 }
 
 .lf-svc + .lf-svc {
   border-top: 1px solid var(--lf-hairline);
 }
-
-.lf-svc--urgent { --lf-svc-rim: rgb(74 222 128 / 10%); }
-.lf-svc--own,
-.lf-svc--free { --lf-svc-rim: rgb(96 165 250 / 12%); }
 
 .lf-svc__inner {
   position: relative;
