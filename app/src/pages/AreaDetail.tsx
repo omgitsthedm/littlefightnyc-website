@@ -161,7 +161,7 @@ export default function AreaDetail() {
             <p>Pick the closest problem. Each path stays specific to {area.name}.</p>
           </header>
 
-          <nav className="lf-area-start__routes" aria-label={`Ways to start in ${area.name}`}>
+          <nav className="lf-area-start__routes" aria-label={`Ways to start ${area.locative ?? `in ${area.name}`}`}>
             <a href="#visibility">
               <span>Get found</span>
               <strong>Customers cannot find the right information.</strong>
@@ -232,7 +232,7 @@ export default function AreaDetail() {
               className="lf-content-tile lf-content-tile--half lf-area-anchor"
             >
               <EditorialBody>
-                <h2>Website design in {area.name}</h2>
+                <h2>Website design {area.locative ?? `in ${area.name}`}</h2>
                 <p>{area.webDesign}</p>
                 <p>
                   <Link to="/services/custom-local-websites/">How we build websites</Link>
@@ -267,7 +267,7 @@ export default function AreaDetail() {
             id="first-move"
             className="lf-content-tile lf-content-tile--half lf-content-tile--tablet-full lf-content-tile--signal lf-area-anchor"
           >
-            <PullQuote cite={`First move in ${area.name}`}>{area.firstMove}</PullQuote>
+            <PullQuote cite={`First move ${area.locative ?? `in ${area.name}`}`}>{area.firstMove}</PullQuote>
           </aside>
 
           <section
@@ -289,7 +289,7 @@ export default function AreaDetail() {
             <div className="lf-area-faq" aria-labelledby="lf-area-faq-title">
               <header className="lf-area-faq__head">
                 <p>Questions from local owners</p>
-                <h2 id="lf-area-faq-title">Owning a business in {area.name}</h2>
+                <h2 id="lf-area-faq-title">Owning a business {area.locative ?? `in ${area.name}`}</h2>
               </header>
               <div className="lf-area-faq__list">
                 {area.faq.map((item) => (
@@ -306,10 +306,10 @@ export default function AreaDetail() {
           </section>
 
           <section className="lf-content-tile lf-content-tile--full">
-            <h2 className="lf-area-disclosure__heading">Services in {area.name}</h2>
+            <h2 className="lf-area-disclosure__heading">Services {area.locative ?? `in ${area.name}`}</h2>
             <p className="lf-area-services__intro">
               Choose the situation that matches the business. Every path starts
-              with what already works in {area.name}.
+              with what already works {area.locative ?? `in ${area.name}`}.
             </p>
             <ul className="lf-content-list lf-content-list--links" data-count={services.length}>
               {services.map((service) => (

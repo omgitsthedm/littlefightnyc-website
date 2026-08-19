@@ -16,6 +16,10 @@ export type AreaPage = {
   /** Optional: a neighborhood-specific web-design paragraph for areas that
    *  already draw "web design {area}" searches (GSC, Aug 2026). */
   webDesign?: string;
+  /** The neighborhood as a place phrase: "on the Upper East Side", "in SoHo",
+   *  "in the East Village". Set once in the override loop; use it wherever copy
+   *  says "in {area}" so headings read like a New Yorker wrote them. */
+  locative?: string;
   faq: Array<{ question: string; answer: string }>;
   nearby: string[];
 };
@@ -978,20 +982,35 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
   },
 };
 
+/** "on the Upper East Side", "in the East Village", "in SoHo". */
+export function areaLocative(name: string): string {
+  if (/^(Upper|Lower) /.test(name)) return `on the ${name}`;
+  if (name === "The Bronx") return "in the Bronx";
+  if (/Village$|District$/.test(name)) return `in the ${name}`;
+  return `in ${name}`;
+}
+
 for (const area of areaPages) {
   const context = AREA_OWNER_CONTEXT[area.slug];
   if (!context) continue;
   const { extraFaq, ...owner } = context;
+  // The authored, neighborhood-specific questions used to be discarded here
+  // (the override replaced the whole array), so a reader never saw them. They
+  // are the best local writing on the page: keep them, framed by the shared
+  // first-move question up top and the two shared scope questions at the end.
+  const authoredFaq = area.faq ?? [];
   Object.assign(area, owner, {
     // Short on purpose: the neighborhood name is already the display line above
     // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
     // decisions past the first screen. The dek carries the specifics.
     headline: `Websites, local search, and tech help for ${area.name} businesses.`,
+    locative: areaLocative(area.name),
     faq: [
       { question: `What should a ${area.name} business check first?`, answer: context.firstMove },
+      ...authoredFaq,
+      ...(extraFaq ?? []),
       { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },
       { question: "Can Little Fight help outside New York?", answer: "Yes for websites, planning, and connected systems. NYC is where local, hands-on help can also be part of the conversation." },
-      ...(extraFaq ?? []),
     ],
   });
 }

@@ -105,7 +105,7 @@ export default function ServiceAreaDetail() {
           src: service.image,
           video: service.video,
           fit: service.video ? "contain" : "cover",
-          alt: `${service.eyebrow} help in ${area.name}`,
+          alt: `${service.eyebrow} help ${area.locative ?? `in ${area.name}`}`,
           width: 1200,
           height: 900,
         }}
@@ -193,7 +193,7 @@ export default function ServiceAreaDetail() {
           </section>
 
           <section className="lf-content-tile lf-content-tile--full lf-service-area__related">
-            <h2 className="lf-service-area__related-title">The other services in {area.name}</h2>
+            <h2 className="lf-service-area__related-title">The other services {area.locative ?? `in ${area.name}`}</h2>
             <ul className="lf-content-list lf-content-list--links" data-count={related.length}>
               {related.map((item) => (
                 <li key={item.slug}>
