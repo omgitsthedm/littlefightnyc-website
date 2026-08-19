@@ -416,6 +416,7 @@ export function serviceAreaPages(seoData) {
       // takes a locative that reads like a New Yorker wrote it (in the Bronx,
       // on the Upper East Side, in the East Village, in SoHo).
       const attributive = area.name.replace(/^The\s+/, "");
+      const article = /^[AEIOU]/.test(attributive) ? "an" : "a";
       const locative = /^(Upper|Lower) /.test(area.name)
         ? `on the ${area.name}`
         : area.name === "The Bronx"
@@ -433,7 +434,7 @@ export function serviceAreaPages(seoData) {
       h1: `${service.label} for ${attributive} businesses.`,
       // Answer first, in the owner's terms: what they get in their neighborhood,
       // then how we work. (Was "{Area} businesses need …".)
-      shortAnswer: `Short answer: For a ${area.name.replace(/^The\s+/, "")} business, you get ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
+      shortAnswer: `Short answer: For ${article} ${attributive} business, you get ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
       type: "Service",
       serviceName: `${service.serviceName} ${locative}`,
       image: service.image ?? area.image,

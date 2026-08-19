@@ -1001,6 +1001,7 @@ for (const area of areaPages) {
   const authoredFaq = area.faq ?? [];
   // "The Bronx" as an adjective drops its article: Bronx businesses, a Bronx shop.
   const attributive = area.name.replace(/^The /, "");
+  const article = /^[AEIOU]/.test(attributive) ? "an" : "a";
   Object.assign(area, owner, {
     // Short on purpose: the neighborhood name is already the display line above
     // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
@@ -1008,7 +1009,7 @@ for (const area of areaPages) {
     headline: `Websites, local search, and tech help for ${attributive} businesses.`,
     locative: areaLocative(area.name),
     faq: [
-      { question: `What should a ${attributive} business check first?`, answer: context.firstMove },
+      { question: `What should ${article} ${attributive} business check first?`, answer: context.firstMove },
       ...authoredFaq,
       ...(extraFaq ?? []),
       { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },
