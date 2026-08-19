@@ -999,14 +999,16 @@ for (const area of areaPages) {
   // are the best local writing on the page: keep them, framed by the shared
   // first-move question up top and the two shared scope questions at the end.
   const authoredFaq = area.faq ?? [];
+  // "The Bronx" as an adjective drops its article: Bronx businesses, a Bronx shop.
+  const attributive = area.name.replace(/^The /, "");
   Object.assign(area, owner, {
     // Short on purpose: the neighborhood name is already the display line above
     // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
     // decisions past the first screen. The dek carries the specifics.
-    headline: `Websites, local search, and tech help for ${area.name} businesses.`,
+    headline: `Websites, local search, and tech help for ${attributive} businesses.`,
     locative: areaLocative(area.name),
     faq: [
-      { question: `What should a ${area.name} business check first?`, answer: context.firstMove },
+      { question: `What should a ${attributive} business check first?`, answer: context.firstMove },
       ...authoredFaq,
       ...(extraFaq ?? []),
       { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },

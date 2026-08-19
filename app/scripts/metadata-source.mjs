@@ -411,24 +411,36 @@ export function serviceAreaPages(seoData) {
   const areas = seoData.matrix?.areas ?? [];
 
   return areas.flatMap((area) =>
-    services.map((service) => ({
+    services.map((service) => {
+      // "The Bronx" drops its article as an adjective (Bronx businesses) and
+      // takes a locative that reads like a New Yorker wrote it (in the Bronx,
+      // on the Upper East Side, in the East Village, in SoHo).
+      const attributive = area.name.replace(/^The\s+/, "");
+      const locative = /^(Upper|Lower) /.test(area.name)
+        ? `on the ${area.name}`
+        : area.name === "The Bronx"
+          ? "in the Bronx"
+          : /Village$|District$/.test(area.name)
+            ? `in the ${area.name}`
+            : `in ${area.name}`;
+      return {
       path: `/areas/${area.slug}/${service.slug}/`,
       // These recombined pages remain out of the index until they carry
       // genuinely distinct local content.
       noindex: true,
-      title: `${service.label} for ${area.name} Businesses | Little Fight NYC`,
-      description: `${service.label} for ${area.name} businesses. Help people find you, reach you, and take the next step without extra runaround.`,
-      h1: `${service.label} for ${area.name} businesses.`,
+      title: `${service.label} for ${attributive} Businesses | Little Fight NYC`,
+      description: `${service.label} for ${attributive} businesses. Help people find you, reach you, and take the next step without extra runaround.`,
+      h1: `${service.label} for ${attributive} businesses.`,
       // Answer first, in the owner's terms: what they get in their neighborhood,
       // then how we work. (Was "{Area} businesses need …".)
       shortAnswer: `Short answer: For a ${area.name.replace(/^The\s+/, "")} business, you get ${service.plain}. We keep what works, fix what gets in the way, and start with the smallest useful move.`,
       type: "Service",
-      serviceName: `${service.serviceName} in ${area.name}`,
+      serviceName: `${service.serviceName} ${locative}`,
       image: service.image ?? area.image,
       faq: [
         {
-          question: `Does Little Fight work with ${area.name} businesses?`,
-          answer: `Yes. Little Fight helps ${area.name} businesses with websites, everyday tech help, Google listings, and simpler ways to keep the work moving.`,
+          question: `Does Little Fight work with ${attributive} businesses?`,
+          answer: `Yes. Little Fight helps ${attributive} businesses with websites, everyday tech help, Google listings, and simpler ways to keep the work moving.`,
         },
         {
           question: `Should I start with ${service.label} or a Tech Audit?`,
@@ -436,7 +448,8 @@ export function serviceAreaPages(seoData) {
             "If the problem touches more than one part of the day—website, booking, email, payments, or bills—start with the free Tech Audit. It helps name the first useful fix.",
         },
       ],
-    })),
+      };
+    }),
   );
 }
 
