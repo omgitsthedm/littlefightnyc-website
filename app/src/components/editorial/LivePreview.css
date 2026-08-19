@@ -1,0 +1,46 @@
+/* LivePreview — a still that plays its site on hover.
+ *
+ * The wrapper takes the still's box; the full-page capture sits over it,
+ * invisible until the pointer is on it, then fades in and scrolls top to
+ * bottom (object-position is animatable) — a real page moving inside the
+ * frame. Pointer devices only; touch keeps the still. */
+
+.lf-live-preview {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.lf-live-preview__scroll {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--m-reveal-ms, 320ms) var(--m-reveal-ease, ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lf-live-preview:hover .lf-live-preview__scroll,
+  .lf-live-preview:focus-within .lf-live-preview__scroll {
+    opacity: 1;
+    animation: lf-live-preview-scroll 9s cubic-bezier(0.45, 0, 0.55, 1) 0.35s infinite alternate;
+  }
+}
+
+@keyframes lf-live-preview-scroll {
+  from { object-position: 50% 0%; }
+  to { object-position: 50% 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf-live-preview:hover .lf-live-preview__scroll,
+  .lf-live-preview:focus-within .lf-live-preview__scroll {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -10,6 +10,7 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { ProofStatus } from "./ProofPassport";
 import CinematicMedia from "./CinematicMedia";
+import LivePreview from "./LivePreview";
 import "./ProjectReviewGrid.css";
 
 export default function ProjectReviewGrid({
@@ -38,6 +39,9 @@ export default function ProjectReviewGrid({
                 alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
               />
             ) : study.image && !study.inventoryOnly ? (
+              /* Captured cases play their live site on hover (LivePreview);
+                 the rest keep the still. */
+              <LivePreview slug={study.showcase?.proof?.captureDate ? study.slug : undefined}>
               <img
                 {...skelImg}
                 src={study.image}
@@ -62,6 +66,7 @@ export default function ProjectReviewGrid({
                     : undefined
                 }
               />
+              </LivePreview>
             ) : (
               <div
                 className="lf-project-review__inventory-media"

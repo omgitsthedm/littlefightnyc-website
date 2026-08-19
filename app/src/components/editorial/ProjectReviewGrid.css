@@ -35,13 +35,22 @@
   background: var(--lf-paper-2);
 }
 
-.lf-project-review__media > :is(img, .lf-cinematic-media) {
+.lf-project-review__media > :is(img, .lf-cinematic-media, .lf-live-preview) {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   transition: transform var(--m-settle-ms) var(--m-settle-ease);
+}
+
+/* The still inside a LivePreview wrapper takes the same box. */
+.lf-project-review__media .lf-live-preview > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: inherit;
 }
 
 .lf-project-review__inventory-media {
@@ -78,7 +87,7 @@
 
 .lf-project-review:hover
   .lf-project-review__media
-  > :is(img, .lf-cinematic-media) {
+  > :is(img, .lf-cinematic-media, .lf-live-preview) {
   transform: scale(1.02);
 }
 
@@ -356,14 +365,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lf-project-review,
-  .lf-project-review__media > :is(img, .lf-cinematic-media) {
+  .lf-project-review__media > :is(img, .lf-cinematic-media, .lf-live-preview) {
     transition: none;
   }
 
   .lf-project-review:hover,
   .lf-project-review:hover
     .lf-project-review__media
-    > :is(img, .lf-cinematic-media) {
+    > :is(img, .lf-cinematic-media, .lf-live-preview) {
     transform: none;
   }
 }
