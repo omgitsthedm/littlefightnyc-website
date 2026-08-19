@@ -865,7 +865,7 @@ function routeImagePreload(page) {
       // and this high-priority fetch was competing with the backdrop (the
       // phone's LCP element) for the first ~500KB on a slow connection.
       `<link rel="preload" href="${HOME_WALL_LEAD}" media="(min-width: 64rem)" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
-      `<link rel="preload" media="(max-width: 63.99rem)" href="/assets/hero-home-avenue-900.webp" imagesrcset="/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high">`,
+      `<link rel="preload" media="(max-width: 63.99rem)" href="/assets/hero-home-avenue-900.webp" imagesrcset="/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w" imagesizes="50vw" as="image" type="image/webp" fetchpriority="high">`,
       `<link rel="preload" media="(min-width: 64rem)" href="/assets/hero-home-avenue-1600.webp" imagesrcset="/assets/hero-home-avenue-1280.webp 1280w, /assets/hero-home-avenue-1600.webp 1600w, /assets/hero-home-avenue-2000.webp 2000w" imagesizes="100vw" as="image" type="image/webp" fetchpriority="high">`,
     ].join("\n");
   }
@@ -1942,7 +1942,7 @@ function snapshot(page) {
 
   const homeBody = `
     <section class="lf-seo__home-hero" aria-label="Little Fight NYC" data-lf-owner-intro="true">
-      <div class="lf-seo__home-backdrop" aria-hidden="true"><picture><source media="(min-width: 64rem)" srcset="/assets/hero-home-avenue-1280.webp 1280w, /assets/hero-home-avenue-1600.webp 1600w, /assets/hero-home-avenue-2000.webp 2000w" sizes="100vw"><img src="/assets/hero-home-avenue-900.webp" srcset="/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w" sizes="100vw" width="2000" height="1333" alt="" fetchpriority="high" decoding="async"></picture></div>
+      <div class="lf-seo__home-backdrop" aria-hidden="true"><picture><source media="(min-width: 64rem)" srcset="/assets/hero-home-avenue-1280.webp 1280w, /assets/hero-home-avenue-1600.webp 1600w, /assets/hero-home-avenue-2000.webp 2000w" sizes="100vw"><img src="/assets/hero-home-avenue-900.webp" srcset="/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w" sizes="50vw" width="2000" height="1333" alt="" fetchpriority="high" decoding="async"></picture></div>
       <div class="lf-seo__home-hero-copy">
         <div class="lf-seo__home-promise">
           <p class="lf-seo__home-kicker">New York City</p>

@@ -106,7 +106,10 @@ export default function HomeWall() {
           <img
             src="/assets/hero-home-avenue-900.webp"
             srcSet="/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w"
-            sizes="100vw"
+            /* 50vw is deliberate: on a 3× phone it selects the 640w (51KB)
+               instead of the 900w (94KB). Under the phone scrim the two are
+               indistinguishable, and the difference is ~0.4s of LCP on 4G. */
+            sizes="50vw"
             width={2000}
             height={1333}
             alt=""
