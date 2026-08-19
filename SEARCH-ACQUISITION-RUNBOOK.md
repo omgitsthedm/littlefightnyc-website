@@ -147,7 +147,7 @@ service pages first.
 
 `/`, `/services/`, `/services/custom-local-websites/`, `/services/it-support/`,
 `/areas/upper-east-side/`, `/areas/soho/`, `/nationwide/`, `/website-check/`,
-`/journal/cybersecurity-for-a-small-business-in-nyc-without-the-panic/`, `/about/`.
+`/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
 - last refreshed: — (none yet)
