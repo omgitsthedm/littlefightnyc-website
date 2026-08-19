@@ -796,7 +796,7 @@ type AreaOwnerContext = Pick<
  * conversation; the public record and the owner’s real path settle the facts. */
 const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
   "lower-east-side": {
-    shortAnswer: "Short answer: In the Lower East Side, you get a site that answers the after-hours question fast: are you open, what is happening, and how does someone act now?",
+    shortAnswer: "Short answer: In the Lower East Side, you get found for the right thing — a correct Google profile and a site that answers the after-hours question fast: are you open, what is happening, and how does someone act now? Local search done plainly, no rank promises.",
     localPattern: "A public page has to answer quickly when a customer is deciding between several nearby options.",
     firstMove: "Test the hours, menu or service page, and booking or contact link on one phone after the business closes.",
     intro: "You get a public front door that does not leave a customer guessing after a search, a post, or a recommendation. No generic nightlife pitch — a page that answers the late question and takes the booking.",
@@ -805,7 +805,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["An evening customer path that ends in a dead link", "Hours or event details that disagree across public pages", "A contact route with no clear owner", "A page that takes too long to answer the basic question"],
   },
   "east-village": {
-    shortAnswer: "Short answer: In the East Village, you get changing services, appointments, and public details that stay easy to understand on a phone.",
+    shortAnswer: "Short answer: In the East Village, you get local search that stays honest — Google profile, hours, and services that agree — and changing services, appointments, and public details that stay easy to understand on a phone.",
     localPattern: "When the offer changes often, the useful system is the one that keeps the public page and the working calendar in agreement.",
     firstMove: "Compare one service, price or schedule entry on the website, the listing, and the booking tool.",
     intro: "You get the current service, schedule, and next step saying the same thing wherever a customer checks. Usually that takes less software, not more.",
@@ -841,7 +841,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A homepage that hides basic practical information", "Directions or phone links that do not work on mobile", "A public listing leading to the wrong page", "A quick-action path with too many steps"],
   },
   "upper-east-side": {
-    shortAnswer: "Short answer: On the Upper East Side, you get trust, contact, and appointment information steady enough for a careful customer to verify.",
+    shortAnswer: "Short answer: If you searched for an SEO company on the Upper East Side, here is the honest version: you get the part of local search that moves a shop — a correct Google profile, pages that answer the question, and a site that books — plus trust and appointment details steady enough for a careful customer to verify. No retainer, no rank promises.",
     localPattern: "Some customers need reassurance before they act. Clear ownership, current facts, and a calm next step do more than a pile of sales language.",
     firstMove: "Check whether a first-time visitor can verify who you are, what you do, and how to start without calling for basic facts.",
     intro: "You get a page that makes trust easy to verify: who you are, how to reach you, how to book, all current. Plain and considered beats confident and foggy.",
@@ -966,7 +966,7 @@ for (const area of areaPages) {
     // Short on purpose: the neighborhood name is already the display line above
     // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
     // decisions past the first screen. The dek carries the specifics.
-    headline: `Websites and tech help for ${area.name} businesses.`,
+    headline: `Websites, local search, and tech help for ${area.name} businesses.`,
     faq: [
       { question: `What should a ${area.name} business check first?`, answer: context.firstMove },
       { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },

@@ -2,8 +2,8 @@
   "posts": [
     {
       "slug": "cybersecurity-for-small-business",
-      "title": "Small-Business Cybersecurity Without the Panic",
-      "description": "Lock the accounts, update the devices, back up the files, and give staff one clear rule for suspicious messages.",
+      "title": "Cybersecurity for a Small Business in NYC, Without the Panic",
+      "description": "Computer security for a New York small business, in plain words: lock the accounts, update the devices, back up the files, and give staff one clear rule for suspicious messages.",
       "answer": "Start with four boring jobs: strong logins, updates, backups, and a plan for suspicious messages. You do not need a movie hacker dashboard.",
       "meaning": "Your email, payment account, domain, booking tool, and file storage are the keys to the shop. Protect those first. A giant security shopping list can wait.",
       "watch": ["Shared passwords or one password used everywhere.", "Old staff accounts that still work.", "Updates postponed on the register, router, or office computer.", "A backup nobody has tested."],

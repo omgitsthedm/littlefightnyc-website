@@ -169,7 +169,7 @@ const ROUTES: readonly RouteContract[] = [
     key: "home",
     label: "Home",
     path: "/",
-    title: "Little Fight NYC | Websites, IT Support & Custom Software",
+    title: "NYC Small Business Websites, IT Support & Software | Little Fight NYC",
     h1: /We handle the tech\.\s*You run the shop\./i,
     // Every viewport carries the same direct decision: start the full Website
     // Check or call for the thing that is already broken.
