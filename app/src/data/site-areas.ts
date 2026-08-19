@@ -793,7 +793,12 @@ export const areaPages: AreaPage[] = [
 type AreaOwnerContext = Pick<
   AreaPage,
   "shortAnswer" | "localPattern" | "firstMove" | "intro" | "businessLandscape" | "localSearchReality" | "whatWeFixHere" | "webDesign"
->;
+> & {
+  /** Appended after the three shared area questions. Use it when a sub-
+   *  neighborhood draws its own searches ("web designer lenox hill", GSC
+   *  Aug 2026) and the answer is specific enough to be worth its own entry. */
+  extraFaq?: AreaPage["faq"];
+};
 
 /* Each is an owner scenario, not a census claim. The area name routes the
  * conversation; the public record and the owner’s real path settle the facts. */
@@ -853,8 +858,15 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     intro: "You get a page that makes trust easy to verify: who you are, how to reach you, how to book, all current. Plain and considered beats confident and foggy.",
     businessLandscape: "Keep the expertise and relationships. Make the practical details and the handoff easier to follow.",
     localSearchReality: "A careful customer should see current contact, service, and appointment information before making the first call.",
-    webDesign: "Website design on the Upper East Side is a trust job. Practices, salons, tutors, and shops here get checked before they get called: hours, the address, who you are, how to book. We build the site around that check — the facts agree with Google, the booking or contact step is one tap, the pages read like a considered practice and not a template — and you own the domain, code, and words when it launches.",
+    webDesign: "Website design on the Upper East Side is a trust job. Practices, salons, tutors, and shops here get checked before they get called: hours, the address, who you are, how to book. In Lenox Hill the check is tighter. The blocks around Lenox Hill Hospital and the storefronts on Lexington and Third run on private practices — dentists, dermatology, physical therapy, personal care — and a new patient reads the page before making the first call. You get a site built for that read: public facts that agree with your Google profile, one-tap booking or contact, new-patient and insurance details where people look for them, and pages that read like a considered practice instead of a template. You own the domain, code, and words when it launches.",
     whatWeFixHere: ["A practice or service page missing plain fit information", "A contact route that does not say what happens next", "Out-of-date public details", "An appointment process that relies on phone tag"],
+    extraFaq: [
+      {
+        question: "Do you build websites for Lenox Hill businesses?",
+        answer:
+          "Yes. Practices, salons, and shops around the hospital and along Lexington get the same build as the rest of the Upper East Side, with the details a careful patient checks first: the cross street, the floor, what a first visit involves, insurance if it applies, and one tap to book or call. Those facts match your Google profile so nobody has to guess. The domain, code, and words stay in your name.",
+      },
+    ],
   },
   "upper-west-side": {
     shortAnswer: "Short answer: On the Upper West Side, you get one clear set of public information that works for regulars and first-time visitors alike.",
@@ -969,7 +981,8 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
 for (const area of areaPages) {
   const context = AREA_OWNER_CONTEXT[area.slug];
   if (!context) continue;
-  Object.assign(area, context, {
+  const { extraFaq, ...owner } = context;
+  Object.assign(area, owner, {
     // Short on purpose: the neighborhood name is already the display line above
     // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
     // decisions past the first screen. The dek carries the specifics.
@@ -978,6 +991,7 @@ for (const area of areaPages) {
       { question: `What should a ${area.name} business check first?`, answer: context.firstMove },
       { question: "Do I need to replace everything?", answer: "No. Keep the tools and habits that work. Change the specific path that evidence says is getting in the way." },
       { question: "Can Little Fight help outside New York?", answer: "Yes for websites, planning, and connected systems. NYC is where local, hands-on help can also be part of the conversation." },
+      ...(extraFaq ?? []),
     ],
   });
 }

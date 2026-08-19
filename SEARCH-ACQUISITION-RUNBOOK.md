@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-08-14
+Last updated: 2026-08-19
 
 ## Current code readiness
 
@@ -132,7 +132,7 @@ service pages first.
 | done 2026-08-18 | it consultants for small business nyc | /answers/it-consultants-for-small-business-nyc/ |
 | done 2026-08-18 | computer security for small business ny | /answers/computer-security-for-small-business-ny/ |
 | done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
-| pending | web designer lenox hill | expand the Upper East Side page's web-design block to name Lenox Hill and its practices; add a Lenox Hill FAQ |
+| done 2026-08-19 | web designer lenox hill | /areas/upper-east-side/ — Lenox Hill named in the web-design block, plus a "Do you build websites for Lenox Hill businesses?" FAQ |
 | pending | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
 | pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
 | pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
@@ -150,4 +150,5 @@ service pages first.
 `/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
-- last refreshed: — (none yet)
+- last refreshed: `/` 2026-08-19 (home quick answer rewritten in owner voice so it
+  names the same three things the first screen does; `updated` bumped with it)
