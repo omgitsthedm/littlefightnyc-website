@@ -349,7 +349,7 @@ const standaloneDiscoveryPages = [
       const area = siteContent.areaPages.find((a) => a.slug === areaMatch[1]);
       if (area) {
         page.area = area;
-        page.updated ??= "2026-07-07"; // area content build-out wave
+        page.updated ??= "2026-08-18"; // area deks + intros rewritten Aug 18
       }
     }
 
@@ -409,7 +409,8 @@ function modifiedDateFor(page) {
     if (isJournalArticle(page)) return publishedDateFor(page);
   }
   if (isJournalArticle(page)) return publishedDateFor(page);
-  if (/^\/(areas|glossary|industries)\/.+/.test(page.path)) return "2026-07-07";
+  if (/^\/areas\/.+/.test(page.path)) return "2026-08-18"; // area deks + intros rewritten
+  if (/^\/(glossary|industries)\/.+/.test(page.path)) return "2026-07-07";
   // Nineteen pages used to land here and print the build date as their
   // "Updated" date, so every deploy re-stamped the privacy policy, the service
   // pages and the About page as freshly revised. Deploying is not editing.

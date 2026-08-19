@@ -17,6 +17,7 @@
   "pages": [
     {
       "path": "/",
+      "updated": "2026-08-18",
       "title": "Little Fight NYC | Websites, IT Support & Custom Software",
       "description": "Get a website that helps people choose you, quick help when something breaks, and fewer tools to fight with every day.",
       "h1": "We handle the tech. You run the shop.",
@@ -33,6 +34,7 @@
     },
     {
       "path": "/services/",
+      "updated": "2026-08-18",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
       "description": "Get a clearer website, help with the everyday things that break, a free second opinion, and simpler tools that fit your business.",
       "h1": "Websites, fixes, and software you own.",
@@ -49,6 +51,7 @@
     },
     {
       "path": "/services/custom-local-websites/",
+      "updated": "2026-08-18",
       "title": "Custom Local Websites NYC | Little Fight NYC",
       "description": "Custom websites for NYC businesses: clear services, useful local facts, and an obvious next step to call, book, visit, order, or ask.",
       "h1": "Websites that make the next step obvious.",
@@ -80,6 +83,7 @@
     },
     {
       "path": "/nationwide/",
+      "updated": "2026-08-18",
       "title": "Custom Small Business Websites, All 50 States | Little Fight NYC",
       "description": "Remote website help for small businesses across the United States. Make it easy for customers to understand you, reach you, and take the next step.",
       "h1": "Built in New York. Works anywhere.",
@@ -119,6 +123,7 @@
     },
     {
       "path": "/services/it-support/",
+      "updated": "2026-08-18",
       "title": "Small Business IT Support NYC | Little Fight NYC",
       "description": "Local NYC help for email, domains, Wi-Fi, POS, booking, payments, devices, and locked accounts. Start with the break, not a sales pitch.",
       "h1": "Fast help when the basics break.",
@@ -146,6 +151,7 @@
     },
     {
       "path": "/services/tech-consulting/",
+      "updated": "2026-08-18",
       "title": "NYC Tech Consulting for Small Business | Little Fight NYC",
       "description": "A free, plain-English first read of your public website, recurring tools, Google presence, and customer handoffs. Learn the smallest useful next move.",
       "h1": "Know what to keep, cut, fix, or build.",
@@ -173,6 +179,7 @@
     },
     {
       "path": "/services/business-systems/",
+      "updated": "2026-08-18",
       "title": "Custom Business Software NYC | Little Fight NYC",
       "description": "Software for NYC small businesses when regular tools no longer fit. The business owns the work, information, and notes.",
       "h1": "Software you own, built around your day.",
@@ -200,6 +207,7 @@
     },
     {
       "path": "/services/new-business-launch/",
+      "updated": "2026-08-18",
       "title": "New Business Website & Tech Launch NYC | Little Fight NYC",
       "description": "Launch a new NYC business with the website, Google presence, business email, customer action, follow-up, and ownership mapped as one clear path.",
       "h1": "Open with the front door already working.",
@@ -220,6 +228,7 @@
     },
     {
       "path": "/services/ongoing-care/",
+      "updated": "2026-08-18",
       "title": "Small Business Website Care NYC | Little Fight NYC",
       "description": "Keep website facts, forms, booking paths, hosting basics, and customer handoffs current. The business keeps the domain, code, content, and data.",
       "h1": "Keep the front door honest after launch.",
@@ -240,6 +249,7 @@
     },
     {
       "path": "/website-check/",
+      "updated": "2026-08-18",
       "title": "Free Small Business Website Check | Little Fight NYC",
       "description": "Get a free check of the public parts of your website. See what may make it hard to find, read, or use, then get a plain-English report.",
       "h1": "See what stops customers on your website.",
@@ -914,6 +924,7 @@
     },
     {
       "path": "/about/",
+      "updated": "2026-08-18",
       "title": "About Little Fight NYC | Help for Small Businesses",
       "description": "One studio for a New York small business’s website, the fixes when things break, and software you own. A real person answers 9am–9pm Eastern.",
       "h1": "One studio for all of it.",
@@ -958,6 +969,7 @@
     },
     {
       "path": "/contact/",
+      "updated": "2026-08-18",
       "title": "Contact Little Fight NYC | Call, Text, Email, Form",
       "description": "Tell us what is stuck. Call, text, email, or start the free Tech Audit for a website, Google listing, everyday tool, or monthly bill.",
       "h1": "Tell us what feels stuck.",
@@ -992,6 +1004,7 @@
     },
     {
       "path": "/areas/",
+      "updated": "2026-08-18",
       "title": "NYC Neighborhoods We Serve | Little Fight NYC",
       "description": "Websites, tech help, and software you own for small businesses across New York City. Find your neighborhood and see how we make the next customer step easier.",
       "h1": "Help that knows your block.",
@@ -1607,6 +1620,7 @@
     },
     {
       "path": "/start/",
+      "updated": "2026-08-18",
       "title": "Websites & Tech Support From Humans | Little Fight NYC",
       "description": "You scanned the Little Fight NYC card. Websites that work, help when you need it, and tools that save time — from a real human. Call or text to start.",
       "h1": "Websites & tech support from humans.",

@@ -71,6 +71,18 @@ const COMPARISON_SOURCES: Record<string, AnswerSource[]> = {
   "airtable-vs-notion-reddit-small-business": [airtable, notion],
 };
 
+// Guides whose quick answer was rewritten on a later date. The default below
+// is the July content wave; a slug here carries its own honest lastmod.
+const UPDATED_OVERRIDES: Record<string, string> = {
+  "website-form-not-working-small-business": "2026-08-18",
+  "business-not-showing-on-google-maps": "2026-08-18",
+  "small-business-it-support-nyc-reddit-recommendations": "2026-08-18",
+  "is-local-seo-worth-it-reddit": "2026-08-18",
+  "does-my-small-business-need-a-website-reddit": "2026-08-18",
+  "nyc-small-business-tech-help-reddit": "2026-08-18",
+  "business-email-going-to-spam": "2026-08-18",
+};
+
 const guide = (
   slug: string,
   question: string,
@@ -86,7 +98,7 @@ const guide = (
   question: OWNER_QUESTIONS[question] ?? question,
   short: `Short answer: ${ownerWords(short)}`,
   published: "2026-05-13",
-  updated: "2026-07-12",
+  updated: UPDATED_OVERRIDES[slug] ?? "2026-07-12",
   sections: [
     {
       heading: "What this means",
