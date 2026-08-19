@@ -69,8 +69,8 @@ const routeMeta = JSON.parse(await text("src/data/route-meta.json"));
 const routes = routeMeta.pages;
 
 const answerRoutes = routes.filter((page) => page.path.startsWith("/answers/"));
-if (answerRoutes.length !== 27) {
-  fail(`answer route coverage: expected 27 routes, found ${answerRoutes.length}`);
+if (answerRoutes.length !== 30) {
+  fail(`answer route coverage: expected 30 routes, found ${answerRoutes.length}`);
 }
 const answerGuideSource = await text("src/pages/AnswerGuide.tsx");
 if (!/data-lf-visual-proof="answer"/u.test(answerGuideSource)) {
@@ -274,5 +274,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "Visual-proof coverage audit passed: 27 answers, 37 journal insights, 72 noindex service-area routes, revenue paths, owner calculators, motion limits, citations, and protected boundaries.",
+  "Visual-proof coverage audit passed: 30 answers, 37 journal insights, 72 noindex service-area routes, revenue paths, owner calculators, motion limits, citations, and protected boundaries.",
 );

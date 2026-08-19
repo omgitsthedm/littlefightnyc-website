@@ -226,6 +226,23 @@ export default function AreaDetail() {
             </EditorialBody>
           </article>
 
+          {area.webDesign && (
+            <article
+              id="web-design"
+              className="lf-content-tile lf-content-tile--half lf-area-anchor"
+            >
+              <EditorialBody>
+                <h2>Website design in {area.name}</h2>
+                <p>{area.webDesign}</p>
+                <p>
+                  <Link to="/services/custom-local-websites/">How we build websites</Link>
+                  {" · "}
+                  <Link to="/website-check/#website-check-url">Check your current site, free</Link>
+                </p>
+              </EditorialBody>
+            </article>
+          )}
+
           <aside className="lf-content-tile lf-content-tile--half lf-content-tile--quiet">
             <p className="lf-content-tile__label">Check the public record</p>
             <h2 className="lf-area-disclosure__heading">Your block is not a stereotype.</h2>

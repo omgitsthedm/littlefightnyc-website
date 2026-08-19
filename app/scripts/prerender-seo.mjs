@@ -1428,6 +1428,9 @@ function authoredContentHtml(page) {
     const a = page.area;
     return [
       paragraphsHtml([a.intro, a.businessLandscape, a.localSearchReality]),
+      a.webDesign
+        ? `<h2>Website design in ${escapeHtml(a.name)}</h2>\n<p>${escapeHtml(a.webDesign)}</p>\n<p><a href="/services/custom-local-websites/">How we build websites</a> · <a href="/website-check/#website-check-url">Check your current site, free</a></p>`
+        : "",
       (a.whatWeFixHere?.length ?? 0) > 0
         ? `<h2>What we fix in ${escapeHtml(a.name)}</h2>\n<ul>${a.whatWeFixHere.map((x) => `<li>${escapeHtml(x)}</li>`).join("\n")}</ul>`
         : "",

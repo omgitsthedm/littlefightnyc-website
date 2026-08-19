@@ -13,6 +13,9 @@ export type AreaPage = {
   businessLandscape: string;
   localSearchReality: string;
   whatWeFixHere: string[];
+  /** Optional: a neighborhood-specific web-design paragraph for areas that
+   *  already draw "web design {area}" searches (GSC, Aug 2026). */
+  webDesign?: string;
   faq: Array<{ question: string; answer: string }>;
   nearby: string[];
 };
@@ -789,7 +792,7 @@ export const areaPages: AreaPage[] = [
 
 type AreaOwnerContext = Pick<
   AreaPage,
-  "shortAnswer" | "localPattern" | "firstMove" | "intro" | "businessLandscape" | "localSearchReality" | "whatWeFixHere"
+  "shortAnswer" | "localPattern" | "firstMove" | "intro" | "businessLandscape" | "localSearchReality" | "whatWeFixHere" | "webDesign"
 >;
 
 /* Each is an owner scenario, not a census claim. The area name routes the
@@ -802,6 +805,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     intro: "You get a public front door that does not leave a customer guessing after a search, a post, or a recommendation. No generic nightlife pitch — a page that answers the late question and takes the booking.",
     businessLandscape: "Start with the moment a customer needs an answer outside the normal office rhythm. Make that answer current and easy to use.",
     localSearchReality: "Check whether the public facts match the actual day: open status, phone, service details, and the next action.",
+    webDesign: "Website design on the Lower East Side is a night-and-phone job. Bars, venues, restaurants, and small shops here get found after a search or a post at 11pm on a phone, so the site answers the late question first — open now, what is on, how to act — loads fast on a bad signal, and hands off to the tool you already use for the reservation, the ticket, or the order.",
     whatWeFixHere: ["An evening customer path that ends in a dead link", "Hours or event details that disagree across public pages", "A contact route with no clear owner", "A page that takes too long to answer the basic question"],
   },
   "east-village": {
@@ -811,6 +815,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     intro: "You get the current service, schedule, and next step saying the same thing wherever a customer checks. Usually that takes less software, not more.",
     businessLandscape: "A change is only useful when it removes a real mismatch between the public story and the staff’s day.",
     localSearchReality: "A customer should not need three tabs to confirm a service, an hour, and how to book.",
+    webDesign: "Website design in the East Village has to keep up with a business that changes: menus, services, events, appointments. The site is built so the changing thing is easy to update without breaking the customer path, the public facts agree with Google, and a phone visitor can act in one step without a platform bill you do not need.",
     whatWeFixHere: ["A schedule that changes in one place but not another", "A booking link that hides the real service options", "A public page that leaves price or fit unclear", "Staff retyping the same appointment detail"],
   },
   soho: {
@@ -820,6 +825,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     intro: "You keep the look you care about, and it starts doing a job: the right customer understands the offer and acts. Appearance that does not lead to an inquiry is decoration.",
     businessLandscape: "Keep the point of view. Remove the small frictions that make an interested customer abandon the next step.",
     localSearchReality: "The public page should make the offer and the contact path clear before the customer has to ask.",
+    webDesign: "Website design in SoHo has to carry the look and still do a job. Galleries, studios, and shops here are judged on polish in seconds, so the site is built to that standard, then pointed at one clear step: the inquiry, the appointment, the order. Visual proof up top, service detail underneath, a private inquiry path that feels as deliberate as the storefront.",
     whatWeFixHere: ["A strong visual page with no clear inquiry route", "An appointment request that goes into a general inbox", "Images that hide the actual service information", "A private-client path that requires too much back-and-forth"],
   },
   chelsea: {
@@ -847,6 +853,7 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     intro: "You get a page that makes trust easy to verify: who you are, how to reach you, how to book, all current. Plain and considered beats confident and foggy.",
     businessLandscape: "Keep the expertise and relationships. Make the practical details and the handoff easier to follow.",
     localSearchReality: "A careful customer should see current contact, service, and appointment information before making the first call.",
+    webDesign: "Website design on the Upper East Side is a trust job. Practices, salons, tutors, and shops here get checked before they get called: hours, the address, who you are, how to book. We build the site around that check — the facts agree with Google, the booking or contact step is one tap, the pages read like a considered practice and not a template — and you own the domain, code, and words when it launches.",
     whatWeFixHere: ["A practice or service page missing plain fit information", "A contact route that does not say what happens next", "Out-of-date public details", "An appointment process that relies on phone tag"],
   },
   "upper-west-side": {

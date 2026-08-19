@@ -808,6 +808,36 @@
       ]
     },
     {
+      "path": "/answers/website-design-for-small-business-nyc/",
+      "updated": "2026-08-19",
+      "title": "Website Design for Small Business NYC: What to Expect | Little Fight NYC",
+      "description": "A site built around the one thing a customer needs to do — find you, see what you do, book or call — with the domain, code, and words in your name. Ask…",
+      "h1": "What should a small-business website in NYC include, and how does the work go?",
+      "shortAnswer": "Short answer: A site built around the one thing a customer needs to do — find you, see what you do, book or call — with the domain, code, and words in your name. Ask any designer for that in writing.",
+      "type": "Article",
+      "image": "/assets/nyc-hair-salon-street.webp"
+    },
+    {
+      "path": "/answers/it-consultants-for-small-business-nyc/",
+      "updated": "2026-08-19",
+      "title": "IT Consultants for Small Business NYC: How to Choose | Little Fight NYC",
+      "description": "Pick someone who starts with the problem you have, writes down what they change, and leaves you owning every login. A retainer is optional; ownership is…",
+      "h1": "How do I choose IT consultants for a small business in NYC?",
+      "shortAnswer": "Short answer: Pick someone who starts with the problem you have, writes down what they change, and leaves you owning every login. A retainer is optional; ownership is not.",
+      "type": "Article",
+      "image": "/assets/nyc-street-crowd.webp"
+    },
+    {
+      "path": "/answers/computer-security-for-small-business-ny/",
+      "updated": "2026-08-19",
+      "title": "Computer Security for Small Business NY: What Actually Matters | Little Fight NYC",
+      "description": "Four boring jobs done well: one strong login per person with two-step codes, updates on the devices that take money, a backup you have restored once, and…",
+      "h1": "What does computer security for a small business in New York actually require?",
+      "shortAnswer": "Short answer: Four boring jobs done well: one strong login per person with two-step codes, updates on the devices that take money, a backup you have restored once, and one rule for suspicious messages. Everything else can wait.",
+      "type": "Article",
+      "image": "/assets/nyc-street.webp"
+    },
+    {
       "path": "/answers/google-business-profile-suspended/",
       "title": "Google Business Profile Suspended? What to Do (NYC Guide)",
       "description": "Suspended Google Business Profile? Do not create a new one. Find the trigger, fix it fully, and file one complete reinstatement request. NYC recovery guide.",

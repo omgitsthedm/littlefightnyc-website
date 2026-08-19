@@ -102,6 +102,7 @@ export const ANSWER_CLUSTERS: AnswerCluster[] = [
       "website-down-emergency-nyc",
       "pos-system-down-restaurant-nyc",
       "google-business-profile-suspended",
+      "computer-security-for-small-business-ny",
     ],
   },
   {
@@ -132,6 +133,7 @@ export const ANSWER_CLUSTERS: AnswerCluster[] = [
       "reduce-monthly-software-costs-small-business",
       "hair-salon-save-money-software",
       "local-pharmacy-website-community-support",
+      "website-design-for-small-business-nyc",
     ],
   },
   {
@@ -161,6 +163,7 @@ export const ANSWER_CLUSTERS: AnswerCluster[] = [
       "how-to-find-good-it-guy-reddit",
       "web-developer-ghosted-me-reddit",
       "nyc-small-business-tech-help-reddit",
+      "it-consultants-for-small-business-nyc",
     ],
   },
 ];
