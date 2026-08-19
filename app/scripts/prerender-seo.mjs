@@ -1198,6 +1198,20 @@ function contextualLinksFor(page) {
       { href: "/services/", label: "What Little Fight does" },
       { href: "/tech-audit/", label: "Book your free Tech Audit" }
     );
+  } else if (/^\/services\/[^/]+\/$/.test(page.path)) {
+    // Search Console, Aug 18: 79 URLs "discovered – currently not indexed",
+    // almost all /answers/*. The service pages are the most-crawled URLs on
+    // the site and, in the HTML a crawler reads first, linked none of them.
+    // Each service page now lists every answer that bridges to it (the same
+    // list the hydrated page renders as "Straight answers"), so all 27 answers
+    // hang off an indexed page. Same source of truth as the app: site-answers.
+    const serviceHref = page.path;
+    const bridge = siteContent.answerServiceBridge ?? {};
+    links.push(
+      ...(siteContent.answerGuides ?? [])
+        .filter((guide) => bridge[guide.slug]?.to === serviceHref)
+        .map((guide) => ({ href: `/answers/${guide.slug}/`, label: guide.question })),
+    );
   } else if (page.glossaryTerm || page.term) {
     links.push(
       { href: "/glossary/", label: "More plain-English terms" },
