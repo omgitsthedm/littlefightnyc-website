@@ -520,7 +520,7 @@ export const caseStudies: CaseStudy[] = [
   {
     type: "Streetwear brand",
     client: "After Hours Agenda",
-    url: "https://www.afterhoursagenda.com",
+    url: "https://afterhoursagenda.com",
     slug: "after-hours-agenda",
     metrics: [
       {
@@ -530,8 +530,8 @@ export const caseStudies: CaseStudy[] = [
       },
       { value: "1 day", label: "To ship a new product drop", evidence: "release" },
       {
-        value: "Square + Printful",
-        label: "Payments + fulfillment wired",
+        value: "Square + APLIIQ",
+        label: "Payments + made-to-order fulfillment wired",
         evidence: "build",
       },
     ],
@@ -543,11 +543,11 @@ export const caseStudies: CaseStudy[] = [
         "One clear product source, a payment handoff, and fulfillment routing reduce the number of places a small store has to babysit.",
       sourceUrl: "https://afterhoursagenda.com",
       sourceLabel: "afterhoursagenda.com",
-      verifiedAt: "2026-08-13",
+      verifiedAt: "2026-08-19",
       steps: [
         { label: "Choose", detail: "The catalog presents a product drop in the brand's own visual language." },
         { label: "Pay", detail: "The customer moves through a clear Square payment handoff." },
-        { label: "Ship", detail: "Fulfillment is routed to Printful so the owner is not rebuilding an order by hand." },
+        { label: "Ship", detail: "Paid orders are routed to APLIIQ, printed one at a time, and tracked back to the customer — nobody rebuilds an order by hand." },
       ],
       textAlternative:
         "The storefront presents a product drop, hands payment to Square, and routes paid orders to fulfillment without a platform-themed customer experience.",
@@ -562,21 +562,21 @@ export const caseStudies: CaseStudy[] = [
       stages: [
         { label: "Catalog", detail: "One source keeps the products, prices, and drop details together." },
         { label: "Sell", detail: "The storefront keeps the brand intact while Square handles the payment step." },
-        { label: "Fulfill", detail: "Paid orders go to Printful for shipping, so a new drop does not mean rebuilding the store." },
+        { label: "Fulfill", detail: "Paid orders go to APLIIQ, made to order, so a new drop does not mean rebuilding the store." },
       ],
     },
     image: "/assets/case-after-hours-agenda.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
-    updated: "2026-08-18",
+    updated: "2026-08-19",
     title: "The owner can put out a product drop in a day, and the store still looks like the brand.",
     problem: "A streetwear brand with a real point of view needed a real storefront. But Shopify’s templates were going to flatten everything that made the brand interesting.",
-    kept: "The brand identity, the product designs, and the NYC nightlife voice.",
-    changed: "Made one storefront that keeps product details together, sends payment through Square, and sends paid orders to Printful for shipping. The owner does not have to rebuild the store for every drop.",
+    kept: "The brand identity, the product designs, and the voice — for the dreamers and the doers.",
+    changed: "Made one storefront that keeps product details together, sends payment through Square, and sends paid orders to APLIIQ for made-to-order printing and shipping. The owner does not have to rebuild the store for every drop.",
     result: "A storefront that looks like the brand, not like a Shopify theme. Payment and shipping have clear handoffs, and a new product drop can go out in a day.",
     body: [
       "A customer can choose a product, pay, and wait for shipping without seeing the machinery behind it, and the owner can put out a new drop in a day. After Hours Agenda is Little Fight NYC’s own streetwear experiment — the rare case where the agency is also the client, with all the dangers that brings. The brand was tight. The designs were ready. The audience was building. But the storefront was Shopify, and Shopify was flattening the brand. Every product page looked like every other Shopify product page, no matter what we put on it.",
-      "The choice was to keep patching a template or make a store that fit the brand from the start. We made the second one. Product details live in one place. Square takes payment. Printful handles shipping. The owner does not have to babysit a pile of disconnected tools to put out a new drop.",
+      "The choice was to keep patching a template or make a store that fit the brand from the start. We made the second one. Product details live in one place. Square takes payment. APLIIQ prints and ships, one order at a time. The owner does not have to babysit a pile of disconnected tools to put out a new drop.",
       "The result is a storefront that looks like the brand instead of the platform. New product drops take a day, not a long rebuild.",
     ],
   },
