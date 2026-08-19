@@ -91,3 +91,63 @@ Report four groups separately:
 - Proof pipeline: approved quotes, verified outcome metrics, pending approvals, and claims retired because their source is weak.
 
 Never combine impressions, clicks, form starts, and qualified leads into one percentage. Keep the whole path visible.
+
+## Weekly content cadence (routine-driven)
+
+A scheduled cloud routine ("LFNYC weekly search cadence", Tuesdays 09:17 ET)
+clones this repo, does ONE unit of work, and opens a pull request. It never
+pushes to `main`. A human (or a Claude Code session) merges after the release
+gate passes.
+
+Each run:
+
+1. Takes the first `pending` row below, writes the page it names in the house
+   voice (VOICE.md, COPY-CONTRACT.md, EVIDENCE-CLAIM-LEDGER.md; no prices;
+   answer first, then 2–3 pillars, proof last; sources cited), registers it
+   everywhere the neighbours are registered (`site-answers.ts` guide +
+   OWNER_QUESTIONS + UPDATED_OVERRIDES + bridge; `answersArt.ts` cluster;
+   `seo-pages.json` entry; audit pins in `audit-visual-coverage.mjs`,
+   `audit-copy-contract.mjs`, `audit-release-readiness.mjs`,
+   `tests/quality-smoke.spec.ts` indexed-route count), and marks the row `done`
+   with the date and path.
+2. Refreshes ONE ranking page (rotate through the list below): a genuine content
+   touch — a sharper FAQ answer, an updated fact, a tighter dek — then bumps
+   that page's `updated` date. Never bump a date without a real change.
+3. Runs `npm ci` and `npm run quality:fast` in `app/` (Playwright browsers may
+   not exist in the cloud environment; if `quality:release` is possible, run
+   it), commits generated `route-meta.json` / `nav-index.json`, and opens a PR
+   titled `cadence: <query>` whose body pastes the gate summary and lists the
+   files touched.
+
+Recrawl requests (Search Console → URL Inspection → Request indexing) are a
+local, signed-in-Chrome job and are NOT part of the routine: about 10 URLs a
+day per property; work through the "Discovered – currently not indexed" list,
+service pages first.
+
+### Query queue
+
+| status | query (intent) | page |
+| --- | --- | --- |
+| done 2026-08-18 | website design for small business nyc | /answers/website-design-for-small-business-nyc/ |
+| done 2026-08-18 | it consultants for small business nyc | /answers/it-consultants-for-small-business-nyc/ |
+| done 2026-08-18 | computer security for small business ny | /answers/computer-security-for-small-business-ny/ |
+| done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
+| pending | web designer lenox hill | expand the Upper East Side page's web-design block to name Lenox Hill and its practices; add a Lenox Hill FAQ |
+| pending | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
+| pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
+| pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
+| pending | website redesign checklist small business | /answers/website-redesign-checklist-small-business/ |
+| pending | managed it services vs break fix small business | /answers/managed-it-vs-break-fix-small-business/ |
+| pending | google business profile photos tips (nyc storefront) | journal post |
+| pending | small business wifi keeps dropping (shop / restaurant) | /answers/small-business-wifi-keeps-dropping/ |
+| pending | it support brooklyn small business | /answers/it-support-brooklyn-small-business/ |
+| pending | web design brooklyn small business | /answers/web-design-brooklyn-small-business/ |
+
+### Refresh rotation (pages that already earn impressions)
+
+`/`, `/services/`, `/services/custom-local-websites/`, `/services/it-support/`,
+`/areas/upper-east-side/`, `/areas/soho/`, `/nationwide/`, `/website-check/`,
+`/journal/cybersecurity-for-a-small-business-in-nyc-without-the-panic/`, `/about/`.
+Rotate in that order; record the last refreshed page and date here:
+
+- last refreshed: — (none yet)
