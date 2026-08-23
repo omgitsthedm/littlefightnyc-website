@@ -26,6 +26,16 @@ This is the production source for the Little Fight NYC website.
 
 The production branch is `main`. Netlify builds the live site from this repository.
 
+## Content-source architecture (crawler view vs hydrated view)
+
+Every route ships twice from one contract: `app/scripts/prerender-seo.mjs` writes the static
+`lf-seo` shell crawlers and no-JS visitors receive, and the React tree renders the same route
+after hydration. Both are generated from the same data modules (`app/src/data/seo-pages.json` →
+`route-meta.json`), and divergence is a build failure, not a risk to watch:
+`audit-metadata-parity` diffs the prerendered dist H1/title/meta against the contract, and
+`tests/quality-smoke.spec.ts` asserts the hydrated H1s against the same data. Change copy in the
+data modules (see HANDOFF notes for the H1's six pinned locations), never in one render path alone.
+
 ## Working on the site
 
 Read [`AGENTS.md`](./AGENTS.md) before making changes. It defines the source boundaries, validation steps, and deployment rules.
