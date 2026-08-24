@@ -630,6 +630,16 @@
   margin: 0;
 }
 
+.lf-es__foot-credit {
+  --lfc-size: 11px;
+  display: inline-flex;
+  color: var(--lf-bone-dim);
+}
+
+.lf-es__foot-credit .lfc:hover {
+  color: var(--lf-fight);
+}
+
 .lf-editorial .lf-es__foot-link {
   min-height: 44px;
   display: inline-flex;

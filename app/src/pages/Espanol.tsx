@@ -10,6 +10,7 @@ import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
 import CinematicMedia from "@/components/editorial/CinematicMedia";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import type { ConnectedPath } from "@/components/dataviz/connectedPath";
+import LifiCredit from "@/components/editorial/LifiCredit";
 
 /**
  * /es/ is the complete pitch in Spanish. One fully Spanish page with its own
@@ -349,6 +350,7 @@ export default function Espanol() {
         <button type="button" className="lf-es__foot-link" onClick={openConsentPreferences}>
           Opciones de privacidad
         </button>
+        <LifiCredit size="11px" className="lf-es__foot-credit" />
       </footer>
     </div>
   );
