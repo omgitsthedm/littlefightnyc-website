@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import LifiCredit from "./LifiCredit";
 import { openConsentPreferences } from "@/lib/consent";
 import "./QuietFooter.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
@@ -159,15 +160,11 @@ export default function QuietFooter() {
           <LanguageSwitcher />
         </div>
 
-        <p className="lf-quiet-foot__signature">
-          Designed, hosted, and cared for by{" "}
-          <a
-            href="https://littlefightnyc.com"
-            rel="author"
-          >
-            LittleFightNYC.com
-          </a>
-        </p>
+        {/* The house mark signs the page off — the same animated tugboat that
+            closes every site we build. */}
+        <div className="lf-quiet-foot__signature">
+          <LifiCredit size="11px" />
+        </div>
       </div>
     </footer>
   );

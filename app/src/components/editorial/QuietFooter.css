@@ -194,7 +194,7 @@
 .lf-quiet-foot__company .lf-quiet-foot__privacy-button:focus-visible,
 .lf-quiet-foot__contact a:focus-visible,
 .lf-quiet-foot__brand-link:focus-visible,
-.lf-quiet-foot__signature a:focus-visible {
+.lf-quiet-foot__signature .lfc:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
   border-radius: var(--lf-radius-sm);
@@ -228,25 +228,11 @@
   margin: 0;
   padding-top: var(--lf-space-5);
   border-top: 1px solid color-mix(in srgb, var(--lf-bone) 12%, transparent);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--lf-fight);
+  color: var(--lf-bone-dim);
 }
 
-.lf-quiet-foot__signature a {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
+.lf-quiet-foot__signature .lfc:hover {
   color: var(--lf-fight);
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--lf-fight) 40%, transparent);
-  transition: border-color var(--lf-time-fast) var(--lf-ease-out-quart);
-}
-
-.lf-quiet-foot__signature a:hover {
-  border-bottom-color: var(--lf-fight);
 }
 
 @media (max-width: 420px) {
