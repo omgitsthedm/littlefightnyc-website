@@ -34,11 +34,11 @@
     },
     {
       "path": "/services/",
-      "updated": "2026-08-18",
+      "updated": "2026-08-25",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
-      "description": "Get a clearer website, help with the everyday things that break, a free second opinion, and simpler tools that fit your business.",
+      "description": "Get a clearer website, help when the everyday things break, a free second opinion, and simpler tools that fit. A person answers 9am–9pm Eastern.",
       "h1": "Websites, fixes, and software you own.",
-      "shortAnswer": "Short answer: We build websites that help customers choose you, fix the everyday tech that breaks, and build software you own. The first look is free, and we say so when no paid work is the right answer.",
+      "shortAnswer": "Short answer: You get a website that helps customers choose you, fast help when the everyday tech breaks, and software you own. The first look is free, and we say so when no paid work is the right answer.",
       "type": "CollectionPage",
       "image": "/assets/hero-services-crossing.webp",
       "share": {
@@ -951,6 +951,16 @@
           "answer": "QR codes are fine. The trouble starts when many customers post from the same location and network in a burst, or when only happy customers get the code."
         }
       ]
+    },
+    {
+      "path": "/answers/instagram-instead-of-a-website-nyc-shop/",
+      "updated": "2026-08-25",
+      "title": "Instagram or a Website for Your NYC Shop | Little Fight NYC",
+      "description": "You need one page you own. Instagram is where people find you; a page you control is where they check hours, address, and how to book.",
+      "h1": "Do I need a website besides my Instagram?",
+      "shortAnswer": "Short answer: You need one page you own. Instagram is where people find you; a page you control is where they check hours, address, and how to book.",
+      "type": "Article",
+      "image": "/assets/figure-les-bottleshop.webp"
     },
     {
       "path": "/about/",

@@ -898,7 +898,7 @@ test(
     expect(
       indexedRoutes,
       "The indexed route baseline changed; review the route policy and update the expected count intentionally.",
-    ).toHaveLength(137);
+    ).toHaveLength(138);
 
     type H1Mismatch = {
       path: string;
