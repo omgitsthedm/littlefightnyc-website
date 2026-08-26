@@ -79,7 +79,11 @@ export default function Services() {
             <span className="lf-accent">and software you own.</span>
           </>
         }
-        dek="Pick the one that sounds like your day. The first look is free. No tech words needed."
+        // Aug 25, 2026 refresh: the first screen said the read was free but
+        // never said when anyone answers, which the copy contract asks for on
+        // the first screen. "No tech words needed" told an owner nothing they
+        // could act on; the response window does.
+        dek="Pick the one that sounds like your day. The first look is free. A real person answers 9am–9pm Eastern."
         pillars={[
           "Websites that help customers choose you",
           "Fast help when the basics break",

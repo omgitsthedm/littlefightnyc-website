@@ -51,6 +51,7 @@ const PHC_FILM_ROUTES = [
   })),
 ] as const;
 const PHC_FILM_NOT_EAGER_ROUTES = ["/", "/examples/", "/services/", "/es/", "/zh/"] as const;
+const PHC_FILM_DEFERRED_ROUTES = new Set(["/services/", "/es/", "/zh/"]);
 
 const LAB_CONCEPT_SLUGS = [
   "walkup-3d",
@@ -882,9 +883,30 @@ test(
         page.locator('img[src="/media/cabinetry-process-poster-c6d59dbc.webp"]'),
         `${path} eagerly renders the protected PHC process poster`,
       ).toHaveCount(0);
+
+      if (PHC_FILM_DEFERRED_ROUTES.has(path)) {
+        const placeholder = page.locator("[data-deferred-cinematic-media]");
+        await expect(
+          placeholder,
+          `${path} must defer the protected PHC film until its proof tile enters view`,
+        ).toHaveCount(1);
+
+        await placeholder.scrollIntoViewIfNeeded();
+        await expect(
+          page.locator(PHC_FILM_SELECTOR),
+          `${path} did not mount the real process film after its placeholder entered view`,
+        ).toHaveCount(1);
+        await expect(
+          page.locator('source[data-src^="/media/cabinetry-process-film-"]'),
+        ).toHaveCount(2);
+        await expect(
+          page.locator('img[src="/media/cabinetry-process-poster-c6d59dbc.webp"]'),
+        ).toHaveCount(1);
+      }
     }
 
     expect(PHC_FILM_NOT_EAGER_ROUTES).toHaveLength(5);
+    expect(PHC_FILM_DEFERRED_ROUTES.size).toBe(3);
     expectRuntimeClean(runtime);
   },
 );
@@ -898,7 +920,7 @@ test(
     expect(
       indexedRoutes,
       "The indexed route baseline changed; review the route policy and update the expected count intentionally.",
-    ).toHaveLength(137);
+    ).toHaveLength(138);
 
     type H1Mismatch = {
       path: string;

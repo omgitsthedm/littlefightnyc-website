@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-08-19
+Last updated: 2026-08-25
 
 ## Current code readiness
 
@@ -119,6 +119,16 @@ Each run:
    titled `cadence: <query>` whose body pastes the gate summary and lists the
    files touched.
 
+Sourcing rule, learned on the 2026-08-25 run: "sources cited" is not satisfied
+by a help-centre root. Cite the exact page that carries the claim, and label it
+with the date it was checked — `Instagram Terms of Use — checked Aug. 25, 2026`,
+not `Instagram Help Center`. Then write the claim so it tracks what that page
+actually says. "The company running it decides what shows and who sees it" was
+an unsourced assertion about a named company; "Instagram's terms say it may
+suspend or end access to the service" is the same warning, and a reader can
+check it in one click. If the sandbox cannot reach the source to confirm the
+page says what the copy claims, say so in the PR body rather than citing it.
+
 Recrawl requests (Search Console → URL Inspection → Request indexing) are a
 local, signed-in-Chrome job and are NOT part of the routine: about 10 URLs a
 day per property; work through the "Discovered – currently not indexed" list,
@@ -133,7 +143,7 @@ service pages first.
 | done 2026-08-18 | computer security for small business ny | /answers/computer-security-for-small-business-ny/ |
 | done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
 | done 2026-08-19 | web designer lenox hill | /areas/upper-east-side/ — Lenox Hill named in the web-design block, plus a "Do you build websites for Lenox Hill businesses?" FAQ |
-| pending | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
+| done 2026-08-25 | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
 | pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
 | pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
 | pending | website redesign checklist small business | /answers/website-redesign-checklist-small-business/ |
@@ -150,5 +160,8 @@ service pages first.
 `/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
-- last refreshed: `/` 2026-08-19 (home quick answer rewritten in owner voice so it
+- last refreshed: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
+  response window the first screen was missing, replacing "No tech words needed";
+  the quick answer moved from "We build…" to "You get…"; `updated` bumped with it)
+- previously: `/` 2026-08-19 (home quick answer rewritten in owner voice so it
   names the same three things the first screen does; `updated` bumped with it)
