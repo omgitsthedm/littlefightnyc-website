@@ -7,7 +7,7 @@ import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
-import CinematicMedia from "@/components/editorial/CinematicMedia";
+import { DeferredCinematicMedia } from "@/components/editorial/CinematicMedia";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import type { ConnectedPath } from "@/components/dataviz/connectedPath";
 import LifiCredit from "@/components/editorial/LifiCredit";
@@ -282,7 +282,7 @@ export default function Espanol() {
             {PROOF.map((item) => (
               <li key={item.client}>
                 {item.video ? (
-                  <CinematicMedia media={item.video} alt={item.alt} />
+                  <DeferredCinematicMedia media={item.video} alt={item.alt} />
                 ) : (
                   <img
                     src={item.image}

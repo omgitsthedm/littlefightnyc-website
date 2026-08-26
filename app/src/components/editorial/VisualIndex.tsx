@@ -3,7 +3,7 @@ import { ArrowUpRight, type LucideIcon } from "lucide-react";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import type { CinematicMediaAsset } from "@/data/cinematic-media";
-import CinematicMedia from "./CinematicMedia";
+import { DeferredCinematicMedia } from "./CinematicMedia";
 import "./VisualIndex.css";
 
 type VisualIndexItem = {
@@ -71,7 +71,7 @@ export default function VisualIndex({
                   aria-hidden={item.video ? undefined : true}
                 >
                   {item.video ? (
-                    <CinematicMedia media={item.video} />
+                    <DeferredCinematicMedia media={item.video} />
                   ) : (
                     <img {...skelImg}
                       src={item.image}

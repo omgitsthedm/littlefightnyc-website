@@ -14,7 +14,10 @@ export type AnswerGuide = {
   faq: Array<{ question: string; answer: string }>;
 };
 
-const googleProfile = { label: "Google Business Profile Help", url: "https://support.google.com/business/answer/3038177" };
+const googleProfile = {
+  label: "Google Business Profile Help — checked Aug. 25, 2026",
+  url: "https://support.google.com/business/answer/7039811?hl=en",
+};
 const googleReviews = { label: "Google Maps user-contributed content policy", url: "https://support.google.com/contributionpolicy/answer/7400114" };
 const googleMail = { label: "Google Email Sender Guidelines", url: "https://support.google.com/a/answer/81126" };
 const icann = { label: "ICANN: registrant benefits and responsibilities", url: "https://www.icann.org/resources/pages/benefits-2013-09-16-en" };
@@ -28,7 +31,10 @@ const shopify = { label: "Shopify Help Center", url: "https://help.shopify.com/"
 const airtable = { label: "Airtable: getting started", url: "https://support.airtable.com/docs/getting-started-with-airtable" };
 const notion = { label: "Notion: plans and features", url: "https://www.notion.com/pricing" };
 const glossgenius = { label: "GlossGenius: plans and features", url: "https://support.glossgenius.com/en/articles/189-glossgenius-pricing-and-subscription-plans" };
-const instagram = { label: "Instagram Help Center", url: "https://help.instagram.com/" };
+const instagram = {
+  label: "Instagram Terms of Use — checked Aug. 25, 2026",
+  url: "https://help.instagram.com/581066165581870/",
+};
 
 const OWNER_QUESTIONS: Record<string, string> = {
   "Website Design for Small Business NYC: What to Expect": "What should a small-business website in NYC include, and how does the work go?",
@@ -161,7 +167,7 @@ export const answerGuides: AnswerGuide[] = [
   // Aug 25, 2026 — weekly cadence. "do i need a website if i have instagram" is
   // a real NYC shop question, and the honest answer is not "yes, buy a site".
   // It is "own one page, keep the feed". Bridged to Websites.
-  guide("instagram-instead-of-a-website-nyc-shop", "Instagram or a Website for Your NYC Shop", "You need one page you own. Instagram is where people find you; a page you control is where they check hours, address, and how to book.", "An Instagram account is rented space. The company running it decides what shows and who sees it, and it can lock or rename an account without asking first. Your hours, address, services, and booking link sit in a bio and a grid, so a stranger has to scroll for them. One page you own puts those facts somewhere a customer and a search engine can both read.", "1. Open your own profile on a phone and count the taps to your hours, address, and a way to book. 2. Put those same facts on one page you control and on your Google Business Profile. 3. Link that page from the bio so the profile has one destination. 4. Register the domain in the business name, not a friend’s or a vendor’s account.", "If the feed already brings the customers you want and the bio answers hours, address, and booking, leave it alone. Plenty of shops need one page, not a site. Do not buy five pages when one honest page and a correct Google listing do the job.", "Send the profile link and name the one thing a customer should be able to do. We will say whether one page is enough or whether the shop needs more. The first look is free.", [{ question: "Can I just link my Instagram from Google?", answer: "You can, and a link beats nothing. A page you own still gives a customer the hours, address, services, and the booking step in one place, with no account or app in the way." }, { question: "What happens if I lose the account?", answer: "You lose the posts, the bio, and the only place your hours lived. A page you own keeps the facts and the booking link working while you sort the account out." }, { question: "Do I need a whole website or one page?", answer: "Often one page. Hours, address, services, a few real photos, and one clear action cover most shops. Add pages when a customer keeps asking something that needs its own answer." }]),
+  guide("instagram-instead-of-a-website-nyc-shop", "Instagram or a Website for Your NYC Shop", "Keep the Instagram feed, but give customers one page you control for hours, address, and booking.", "An Instagram account lives on a service your business does not control. Instagram’s terms say it may suspend or end access to the service, including by disabling or deleting an account. If your hours, address, services, and booking link live only there, that whole customer path depends on one account. A page on a domain your business controls gives those facts a separate home.", "1. Open your own profile on a phone and count the taps to your hours, address, and a way to book. 2. Put those same facts on one page you control and on your Google Business Profile. 3. Link that page from the bio so the profile has one destination. 4. Register the domain in the business name, not a friend’s or a vendor’s account.", "If the feed already brings the customers you want and the bio answers hours, address, and booking, leave it alone. Plenty of shops need one page, not a site. Do not buy five pages when one honest page and a correct Google listing do the job.", "Send the profile link and name the one thing a customer should be able to do. We will say whether one page is enough or whether the shop needs more. The first look is free.", [{ question: "Can I just link my Instagram from Google?", answer: "You can, and a link beats nothing. A page you own still gives a customer the hours, address, services, and the booking step in one place, with no account or app in the way." }, { question: "What happens if I lose the account?", answer: "If the account is disabled or unavailable, its posts and bio stop being a reliable customer path. A separate page keeps the facts and booking link available while you sort the account out." }, { question: "Do I need a whole website or one page?", answer: "Often one page. Hours, address, services, a few real photos, and one clear action cover most shops. Add pages when a customer keeps asking something that needs its own answer." }]),
 ];
 
 // The first six were originally published in May. The remaining guides were
