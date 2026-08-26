@@ -119,6 +119,16 @@ Each run:
    titled `cadence: <query>` whose body pastes the gate summary and lists the
    files touched.
 
+Sourcing rule, learned on the 2026-08-25 run: "sources cited" is not satisfied
+by a help-centre root. Cite the exact page that carries the claim, and label it
+with the date it was checked — `Instagram Terms of Use — checked Aug. 25, 2026`,
+not `Instagram Help Center`. Then write the claim so it tracks what that page
+actually says. "The company running it decides what shows and who sees it" was
+an unsourced assertion about a named company; "Instagram's terms say it may
+suspend or end access to the service" is the same warning, and a reader can
+check it in one click. If the sandbox cannot reach the source to confirm the
+page says what the copy claims, say so in the PR body rather than citing it.
+
 Recrawl requests (Search Console → URL Inspection → Request indexing) are a
 local, signed-in-Chrome job and are NOT part of the routine: about 10 URLs a
 day per property; work through the "Discovered – currently not indexed" list,
