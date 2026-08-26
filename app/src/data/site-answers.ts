@@ -15,8 +15,8 @@ export type AnswerGuide = {
 };
 
 const googleProfile = {
-  label: "Google Business Profile Help — checked Aug. 25, 2026",
-  url: "https://support.google.com/business/answer/7039811?hl=en",
+  label: "Google Business Profile — checked Aug. 25, 2026",
+  url: "https://www.google.com/business/",
 };
 const googleReviews = { label: "Google Maps user-contributed content policy", url: "https://support.google.com/contributionpolicy/answer/7400114" };
 const googleMail = { label: "Google Email Sender Guidelines", url: "https://support.google.com/a/answer/81126" };
