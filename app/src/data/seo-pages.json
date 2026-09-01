@@ -51,7 +51,7 @@
     },
     {
       "path": "/services/custom-local-websites/",
-      "updated": "2026-08-18",
+      "updated": "2026-09-01",
       "title": "Small Business Website Design NYC | Little Fight NYC",
       "description": "Website design for small businesses in NYC and beyond: a custom site built around your business, so customers find you, see what you do, and book without calling. Free first look; a written 14-day promise on qualifying scopes.",
       "h1": "Websites that make the next step obvious.",
@@ -69,7 +69,7 @@
       "faq": [
         {
           "question": "Do I need a new website, or just a cleanup?",
-          "answer": "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. The free consult tells you which."
+          "answer": "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. Send us the web address and we will say which one you need. The first look is free."
         },
         {
           "question": "Can you connect the site to booking or payments?",
@@ -961,6 +961,16 @@
       "shortAnswer": "Short answer: Keep the Instagram feed, but give customers one page you control for hours, address, and booking.",
       "type": "Article",
       "image": "/assets/figure-les-bottleshop.webp"
+    },
+    {
+      "path": "/answers/wordpress-vs-custom-website-small-business/",
+      "updated": "2026-09-01",
+      "title": "WordPress vs a Custom Website | Little Fight NYC",
+      "description": "You choose by who keeps it updated. WordPress is free software you host and maintain; a custom site is built for your one job with fewer parts to update.",
+      "h1": "Should I use WordPress or a custom website?",
+      "shortAnswer": "Short answer: You choose by who keeps it updated. WordPress is free software you host and maintain; a custom site is built for your one job with fewer parts to update.",
+      "type": "Article",
+      "image": "/assets/hero-laptop.webp"
     },
     {
       "path": "/about/",

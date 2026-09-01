@@ -352,7 +352,7 @@ export const services: Service[] = [
       {
         question: "Do I need a new website, or just a cleanup?",
         answer:
-          "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. The free consult tells you which.",
+          "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. Send us the web address and we will say which one you need. The first look is free.",
       },
       {
         question: "Can you connect the site to booking or payments?",
@@ -360,7 +360,7 @@ export const services: Service[] = [
           "Yes. The site should connect to what makes you money: booking, calls, forms, payments, and follow-up. We use the simplest dependable connection that fits.",
       },
       {
-        question: "What if I miss the 14-day window?",
+        question: "What if you miss the 14-day window?",
         answer:
           "The written scope explains whether the 14-day promise applies, what we need from each side, and the remedy if our qualifying work is late. Review time is planned with you before the clock starts.",
       },
