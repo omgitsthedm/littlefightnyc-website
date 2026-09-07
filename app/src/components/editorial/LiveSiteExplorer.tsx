@@ -76,15 +76,12 @@ export default function LiveSiteExplorer({
   devices = ["desktop", "mobile"],
   featureProof,
 }: Props) {
-  const initialDevice = (
-    typeof window !== "undefined"
-      && window.matchMedia("(max-width: 620px)").matches
-      && devices.includes("mobile")
-  )
-    ? "mobile"
-    : devices[0] ?? "desktop";
-  const [device, setDevice] = useState<CaseCaptureDevice>(initialDevice);
-  const [loading, setLoading] = useState(true);
+  // The browser chooses the initial capture through picture/media, so the
+  // server and the first interactive frame keep the same responsive layout.
+  // An explicit device choice then takes over; null restores automatic fit.
+  const [device, setDevice] = useState<CaseCaptureDevice | null>(null);
+  const defaultDevice = devices[0] ?? "desktop";
+  const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
   const formattedCaptureDate = new Intl.DateTimeFormat("en-US", {
@@ -93,11 +90,12 @@ export default function LiveSiteExplorer({
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${captureDate}T00:00:00Z`));
-  const dimensions = DEVICE_DIMENSIONS[device];
+  const dimensions = DEVICE_DIMENSIONS[device ?? defaultDevice];
+  const captureLabel = device ? DEVICE_LABELS[device] : "responsive";
   const conditionCount = ["Zero", "One", "Two", "Three"][devices.length]
     ?? String(devices.length);
 
-  function chooseDevice(next: CaseCaptureDevice) {
+  function chooseDevice(next: CaseCaptureDevice | null) {
     if (next === device) return;
     setLoading(true);
     setLoadError(false);
@@ -192,23 +190,23 @@ export default function LiveSiteExplorer({
           role="group"
           aria-label="Choose full-page capture size"
         >
-          {devices.map((entry) => {
-            const Icon = DEVICE_ICONS[entry];
+          {[null, ...devices].map((entry) => {
+            const Icon = entry ? DEVICE_ICONS[entry] : Monitor;
 
             return (
               <button
                 type="button"
-                aria-label={`${DEVICE_LABELS[entry]} preview`}
+                aria-label={entry ? `${DEVICE_LABELS[entry]} preview` : "Fit preview to this screen"}
                 aria-pressed={device === entry}
                 onClick={() => chooseDevice(entry)}
-                key={entry}
+                key={entry ?? "auto"}
               >
                 <Icon
                   size={entry === "mobile" ? 16 : 17}
                   strokeWidth={1.8}
                   aria-hidden="true"
                 />
-                <span>{DEVICE_LABELS[entry]}</span>
+                <span>{entry ? DEVICE_LABELS[entry] : "Your screen"}</span>
               </button>
             );
           })}
@@ -227,17 +225,19 @@ export default function LiveSiteExplorer({
         )}
       </div>
 
+      <noscript><style>{".lf-live-explorer__devices{display:none}"}</style></noscript>
+
       <div
         ref={viewportRef}
-        className={`lf-live-explorer__viewport lf-live-explorer__viewport--${device}`}
+        className={`lf-live-explorer__viewport lf-live-explorer__viewport--${device ?? "auto"}`}
         role="region"
-        aria-label={`${client} ${DEVICE_LABELS[device]} website capture. Scroll inside this frame to explore.`}
+        aria-label={`${client} ${captureLabel} website capture. Scroll inside this frame to explore.`}
         aria-busy={loading}
         tabIndex={0}
       >
         {loading && !loadError && (
           <span className="lf-live-explorer__loading" aria-live="polite">
-            Loading {DEVICE_LABELS[device]} capture
+            Loading {captureLabel} capture
           </span>
         )}
         {loadError && (
@@ -246,11 +246,14 @@ export default function LiveSiteExplorer({
             {url ? " The live site is still available above." : ""}
           </span>
         )}
+        <picture key={`${slug}-${device ?? "auto"}`}>
+        {!device && devices.includes("mobile") && (
+          <source media="(max-width: 620px)" srcSet={capturePath(slug, "mobile")} width={390} height={2400} />
+        )}
         <img
-          key={`${slug}-${device}`}
           className={loading ? "is-loading" : "is-loaded"}
-          src={capturePath(slug, device)}
-          alt={`${client} website ${DEVICE_LABELS[device]} capture from ${formattedCaptureDate}`}
+          src={capturePath(slug, device ?? defaultDevice)}
+          alt={`${client} website ${captureLabel} capture from ${formattedCaptureDate}`}
           width={dimensions.width}
           height={dimensions.height}
           loading="lazy"
@@ -261,6 +264,7 @@ export default function LiveSiteExplorer({
             setLoadError(true);
           }}
         />
+        </picture>
       </div>
     </section>
   );

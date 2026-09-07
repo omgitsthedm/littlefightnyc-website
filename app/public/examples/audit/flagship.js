@@ -11,6 +11,7 @@
     var urlInput = document.getElementById('siteUrl');
     var progressSection = document.getElementById('progressSection');
     var progressBar = document.getElementById('progressBar');
+    var progressError = document.getElementById('progressError');
     var steps = Array.prototype.slice.call(document.querySelectorAll('.progress-step'));
     if (!canvas || !viewport || !scan) return;
 
@@ -193,17 +194,24 @@
     }
 
     function updateState() {
-      var scanning = progressSection && !progressSection.classList.contains('hidden');
+      var progressVisible = progressSection && !progressSection.classList.contains('hidden');
+      var stopped = progressVisible && progressError && progressError.classList.contains('visible');
+      var complete = progressVisible && !stopped && progressBar && progressBar.value >= 100;
+      var scanning = progressVisible && !complete && !stopped;
       var current = steps.find(function (step) { return step.classList.contains('active'); });
       scan.setAttribute('data-scanning', String(scanning));
-      status.textContent = scanning ? 'Scanning' : 'Ready';
-      if (scanning) {
+      status.textContent = stopped ? 'Check stopped' : complete ? 'Report ready' : scanning ? 'Scanning' : 'Ready';
+      if (stopped) {
+        stageLabel.textContent = 'Check stopped';
+      } else if (complete) {
+        stageLabel.textContent = 'Report ready';
+      } else if (scanning) {
         var label = current ? current.textContent.replace(/\s+/g, ' ').trim().replace(/\.{3}|…/g, '') : 'Reading public page';
         stageLabel.textContent = label;
       } else {
         stageLabel.textContent = 'Signal map';
       }
-      if (progressBar && scanning) {
+      if (progressBar && progressVisible) {
         scan.style.setProperty('--audit-progress', progressBar.value + '%');
       }
       draw();
@@ -215,6 +223,7 @@
     if (progressSection) observer.observe(progressSection, { attributes: true, attributeFilter: ['class'] });
     steps.forEach(function (step) { observer.observe(step, { attributes: true, attributeFilter: ['class'] }); });
     if (progressBar) observer.observe(progressBar, { attributes: true, attributeFilter: ['value'] });
+    if (progressError) observer.observe(progressError, { attributes: true, attributeFilter: ['class'] });
 
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(viewport);
     else window.addEventListener('resize', resize, { passive: true });

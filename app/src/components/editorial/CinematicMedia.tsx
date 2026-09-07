@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import type { CinematicMediaAsset } from "@/data/cinematic-media";
 import "./CinematicMedia.css";
@@ -16,6 +16,53 @@ type NavigatorWithConnection = Navigator & {
     saveData?: boolean;
   };
 };
+
+/**
+ * Keeps protected media completely out of the initial DOM on secondary
+ * surfaces. The placeholder reserves the established media frame without
+ * carrying either the poster or film URLs; the real film mounts on entry.
+ */
+export function DeferredCinematicMedia({
+  media,
+  alt = "",
+  className = "",
+  fit = "cover",
+}: Omit<Props, "priority">) {
+  const placeholderRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const placeholder = placeholderRef.current;
+    if (!placeholder || mounted) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setMounted(true);
+        observer.disconnect();
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(placeholder);
+    return () => observer.disconnect();
+  }, [mounted]);
+
+  if (mounted) {
+    return <CinematicMedia media={media} alt={alt} className={className} fit={fit} />;
+  }
+
+  return (
+    <div
+      ref={placeholderRef}
+      className={`lf-cinematic-media lf-deferred-cinematic-media ${className}`.trim()}
+      data-deferred-cinematic-media="true"
+      data-fit={fit}
+      role={alt ? "img" : undefined}
+      aria-label={alt || undefined}
+    />
+  );
+}
 
 /**
  * Silent inline film with an instant poster and deliberately lazy decoding.

@@ -171,7 +171,18 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
 
       <!-- STATE 2: PROGRESS -->
       <section class="audit-progress-section hidden" id="progressSection" aria-label="Audit progress" aria-live="polite">
-        <p class="progress-heading">Auditing <span class="progress-url" id="progressUrl"></span></p>
+        <h2 class="progress-heading" id="progressHeading" tabindex="-1"><span id="progressHeadingLabel">Auditing</span> <span class="progress-url" id="progressUrl"></span></h2>
+
+        <div class="audit-email-recovery" id="auditEmailRecovery" hidden>
+          <p>We could not send a copy by email.</p>
+          <p><a class="btn" id="auditEmailRecoveryLink" href="/examples/audit/">Open report</a></p>
+          <p>Need a hand? <a href="mailto:hello@littlefightnyc.com">Email us</a> and we will help.</p>
+        </div>
+
+        <div class="progress-error" id="progressError">
+          <p class="progress-error-message" id="progressErrorMsg">Something went wrong while running your audit. Please try again.</p>
+          <button type="button" class="btn-retry" id="retryBtn">Try Again</button>
+        </div>
 
         <progress class="progress-bar-track" value="0" max="100" aria-label="Audit progress" id="progressBar">0%</progress>
 
@@ -228,10 +239,6 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
           </li>
         </ol>
 
-        <div class="progress-error" id="progressError">
-          <p class="progress-error-message" id="progressErrorMsg">Something went wrong while running your audit. Please try again.</p>
-          <button type="button" class="btn-retry" id="retryBtn">Try Again</button>
-        </div>
       </section>
 
       <aside class="audit-scan" aria-label="What the Website Audit Lab checks">
@@ -418,11 +425,15 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
       var emailError   = document.getElementById('emailError');
       var errorBanner  = document.getElementById('formErrorBanner');
       var progressUrl  = document.getElementById('progressUrl');
+      var progressHeading = document.getElementById('progressHeading');
+      var progressHeadingLabel = document.getElementById('progressHeadingLabel');
       var progressBar  = document.getElementById('progressBar');
       var stepEls      = document.querySelectorAll('.progress-step');
       var progressErr  = document.getElementById('progressError');
       var progressMsg  = document.getElementById('progressErrorMsg');
       var retryBtn     = document.getElementById('retryBtn');
+      var emailRecovery = document.getElementById('auditEmailRecovery');
+      var emailRecoveryLink = document.getElementById('auditEmailRecoveryLink');
       var honeypot     = document.getElementById('website');
 
       /* The main site can hand the visitor into the Lab with work already
@@ -569,9 +580,27 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
         progressBar.value = 0;
         progressBar.textContent = '0%';
         progressErr.classList.remove('visible');
+        emailRecovery.hidden = true;
+        emailRecoveryLink.setAttribute('href', '/examples/audit/');
+        progressHeadingLabel.textContent = 'Auditing';
+        progressUrl.hidden = false;
         stepEls.forEach(function (el) {
           el.classList.remove('active', 'done');
         });
+      }
+
+      function publicEmailDelivery(data) {
+        if (!data || typeof data !== 'object') return null;
+        return data.email_delivery === 'unavailable' ? 'unavailable' : null;
+      }
+
+      function showEmailRecovery(reportUrl) {
+        emailRecoveryLink.setAttribute('href', reportUrl);
+        progressHeadingLabel.textContent = 'Your report is ready.';
+        progressUrl.textContent = '';
+        progressUrl.hidden = true;
+        emailRecovery.hidden = false;
+        progressHeading.focus();
       }
 
       /* ── Progress animation ── */
@@ -675,6 +704,10 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
                   funnel_stage: 'engaged',
                   placement: 'audit_lab'
                 });
+                if (publicEmailDelivery(data) === 'unavailable') {
+                  showEmailRecovery(data.url);
+                  return;
+                }
                 setTimeout(function () {
                   window.location.href = data.url;
                 }, 800);
@@ -709,6 +742,11 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
       function showError(msg) {
         progressMsg.textContent = msg;
         progressErr.classList.add('visible');
+        progressHeadingLabel.textContent = 'The check could not finish.';
+        progressUrl.textContent = '';
+        progressUrl.hidden = true;
+        stepEls.forEach(function (el) { el.classList.remove('active'); });
+        progressHeading.focus();
       }
 
       /* ── Retry ── */

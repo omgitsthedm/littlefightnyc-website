@@ -34,11 +34,11 @@
     },
     {
       "path": "/services/",
-      "updated": "2026-08-18",
+      "updated": "2026-08-25",
       "title": "NYC Websites, IT Support & Custom Software | Little Fight NYC",
-      "description": "Get a clearer website, help with the everyday things that break, a free second opinion, and simpler tools that fit your business.",
+      "description": "Get a clearer website, help when the everyday things break, a free second opinion, and simpler tools that fit. A person answers 9am–9pm Eastern.",
       "h1": "Websites, fixes, and software you own.",
-      "shortAnswer": "Short answer: We build websites that help customers choose you, fix the everyday tech that breaks, and build software you own. The first look is free, and we say so when no paid work is the right answer.",
+      "shortAnswer": "Short answer: You get a website that helps customers choose you, fast help when the everyday tech breaks, and software you own. The first look is free, and we say so when no paid work is the right answer.",
       "type": "CollectionPage",
       "image": "/assets/hero-services-crossing.webp",
       "share": {
@@ -249,14 +249,18 @@
     },
     {
       "path": "/website-check/",
-      "updated": "2026-08-18",
-      "title": "Free Small Business Website Check | Little Fight NYC",
-      "description": "Get a free check of the public parts of your website. See what may make it hard to find, read, or use, then get a plain-English report.",
-      "h1": "See what stops customers on your website.",
-      "shortAnswer": "Short answer: You get a free, private report in plain words on what may stop customers on your website — can people read it, use it, find the basics, and take the next step. No login, card, password, or business access needed.",
+      "updated": "2026-09-06",
+      "title": "Free Website Check & First Website Advice | Little Fight NYC",
+      "description": "Get a free website report, or a human first look if you use social pages or referrals. See what customers need and choose a practical next step.",
+      "h1": "See what a new customer sees.",
+      "shortAnswer": "Short answer: If you have a public website, get a free private report on what may stop customers. If you use social pages, referrals, or have no website yet, ask for a free human first look. No login, card, or password needed.",
       "type": "WebPage",
       "image": "/assets/journal-what-a-free-tech-audit-actually-looks-like.webp",
       "faq": [
+        {
+          "question": "Can I start without a website?",
+          "answer": "Yes. Tell us your business name, where you work, and how customers find you now. A person reviews your request and suggests a next step. Social pages and referrals are valid starting points."
+        },
         {
           "question": "What does the Website Check access?",
           "answer": "Only the public website. It does not need a login, password, card, analytics account, or access to business systems."
@@ -269,9 +273,9 @@
     },
     {
       "path": "/tech-audit/",
-      "title": "Free Tech Audit for NYC Small Businesses | Little Fight NYC",
-      "description": "Book a free Tech Audit. A real person looks at your website, Google listing, tools, and monthly bills, then names the first useful fix.",
-      "h1": "Tell us what is getting in the way.",
+      "title": "Free First Look for Small Businesses | Little Fight NYC",
+      "description": "Get a free first look at your website, social page or everyday tools. Tell us what needs fixing. A person replies with a clear next step.",
+      "h1": "Get a clear next step.",
       "shortAnswer": "Short answer: the Tech Audit is a free, human look at your website, Google listing, tools, and monthly bills. You get a plain next step, not a pitch.",
       "type": "ContactPage",
       "image": "/assets/og-tugboat.jpg",
@@ -953,6 +957,16 @@
       ]
     },
     {
+      "path": "/answers/instagram-instead-of-a-website-nyc-shop/",
+      "updated": "2026-08-25",
+      "title": "Instagram or a Website for Your NYC Shop | Little Fight NYC",
+      "description": "Keep the Instagram feed, but give customers one page you control for hours, address, and booking.",
+      "h1": "Do I need a website besides my Instagram?",
+      "shortAnswer": "Short answer: Keep the Instagram feed, but give customers one page you control for hours, address, and booking.",
+      "type": "Article",
+      "image": "/assets/figure-les-bottleshop.webp"
+    },
+    {
       "path": "/about/",
       "updated": "2026-08-18",
       "title": "About Little Fight NYC | Help for Small Businesses",
@@ -1522,7 +1536,7 @@
       "path": "/case-studies/hair-by-rachel-charles/",
       "title": "Hair By Rachel Charles Website Case Study | Little Fight NYC",
       "description": "How Little Fight NYC turned an Instagram-first stylist into a bold 49-route custom-domain site with local discovery and a familiar Square booking path.",
-      "h1": "A bright editorial chair in Chelsea",
+      "h1": "A clearer booking path for an independent stylist.",
       "shortAnswer": "A distinctive public home where clients can discover Rachel’s work, understand the studio, and reach the booking flow from any screen.",
       "type": "Article",
       "published": "2026-05-13",

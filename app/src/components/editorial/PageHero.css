@@ -475,6 +475,15 @@
   animation: lf-pagehero-backdrop-in 1000ms var(--lf-ease-out) both;
 }
 
+/* The first public view already painted from these same components. Do not
+ * restart its title/media entrance when the retained HTML becomes interactive. */
+.lf-page-enter[data-initial-route] .lf-pagehero
+  :is(.lf-pagehero__eyebrow, .lf-pagehero__display, .lf-pagehero__title,
+      .lf-pagehero__dek, .lf-pagehero__pillars, .lf-pagehero__chips,
+      .lf-pagehero__image, .lf-pagehero__quick, .lf-pagehero__backdrop) {
+  animation: none;
+}
+
 @keyframes lf-pagehero-copy-in {
   from {
     opacity: 0.78;
@@ -983,6 +992,33 @@
   animation: none;
 }
 
+/* A source label belongs to the evidence it identifies. The backing keeps
+   both its explanation and source link readable over a real client capture. */
+.lf-pagehero__caption {
+  position: absolute;
+  inset-inline: var(--lf-space-4);
+  inset-block-end: var(--lf-space-4);
+  z-index: 2;
+  display: grid;
+  gap: var(--lf-space-1);
+  padding: var(--lf-space-3) var(--lf-space-4);
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-sm);
+  background: var(--lf-ink);
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-xs);
+  line-height: 1.4;
+}
+
+.lf-pagehero__caption a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--lf-control-min);
+  color: var(--lf-bone);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 /* First-screen contract at desktop (1440×900): the H1, dek, and both decisions
    have to land inside the first screen. Measured Aug-18 across all 213 routes:
    with-image titles at 91px wrapped to 4–5 lines in the half-width column,
@@ -1036,5 +1072,65 @@
 
   .lf-editorial .lf-pagehero__display {
     font-size: min(clamp(3.25rem, 6vw, 6rem), calc(204cqi / var(--lf-display-ch, 8)));
+  }
+}
+
+/* On laptop-height screens, the decision belongs with the opening promise.
+   This is opt-in for the first-look and its featured case; phone composition
+   and protected presentations retain their established frame. */
+@media (min-width: 64rem) {
+  .lf-pagehero.lf-pagehero--acquisition {
+    padding-block: var(--lf-space-6);
+    min-block-size: 0;
+  }
+
+  .lf-pagehero--acquisition .lf-pagehero__inner {
+    min-block-size: 0;
+    align-items: center;
+  }
+
+  .lf-pagehero--acquisition .lf-pagehero__text {
+    gap: var(--lf-space-3);
+  }
+
+  .lf-editorial .lf-pagehero--acquisition .lf-pagehero__title {
+    max-inline-size: 24ch;
+    font-size: clamp(3rem, 4.1vw, 4rem);
+  }
+
+  .lf-pagehero--acquisition .lf-pagehero__dek {
+    font-size: var(--lf-text-base);
+    line-height: 1.45;
+  }
+
+  .lf-pagehero--acquisition .lf-pagehero__pillars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--lf-space-2) var(--lf-space-5);
+    margin-block-start: 0;
+  }
+
+  .lf-pagehero--acquisition.lf-pagehero--case .lf-pagehero__inner {
+    padding-block: var(--lf-space-5);
+    align-content: center;
+  }
+
+  .lf-pagehero:is(.lf-pagehero--acquisition, .lf-pagehero--website) .lf-pagehero__decision {
+    min-block-size: 64px;
+    padding: var(--lf-space-3) var(--lf-space-4);
+    grid-template-rows: auto;
+  }
+
+  .lf-pagehero:is(.lf-pagehero--acquisition, .lf-pagehero--website) .lf-pagehero__decision > span {
+    display: none;
+  }
+
+  .lf-pagehero:is(.lf-pagehero--acquisition, .lf-pagehero--website) .lf-pagehero__decision strong {
+    font-size: var(--lf-text-md);
+    line-height: 1.2;
+  }
+
+  .lf-pagehero:is(.lf-pagehero--acquisition, .lf-pagehero--website) .lf-pagehero__decision > svg {
+    grid-row: 1;
   }
 }

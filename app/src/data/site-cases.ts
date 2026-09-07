@@ -483,9 +483,9 @@ export const caseStudies: CaseStudy[] = [
         "The live site shows the stylist's work, answers service questions, and sends a ready visitor into Square Appointments.",
     },
     showcase: {
-      label: "A bright editorial chair in Phoenix",
+      label: "A clearer booking path for an independent stylist.",
       kind: "Website",
-      context: "Independent stylist",
+      context: "Independent stylist in Phoenix",
       availability: "public",
       linkPolicy: "custom-domain",
       proof: {

@@ -212,6 +212,12 @@
   align-items: center;
 }
 
+/* Reserve the longest availability label so the live evening update does
+   not move the surrounding contact links onto a new line after loading. */
+.lf-quiet-foot__contact .lf-open__label {
+  min-inline-size: calc(17ch + 2.38em);
+}
+
 .lf-quiet-foot__contact a {
   display: inline-flex;
   align-items: center;
@@ -247,9 +253,19 @@
    ============================================================ */
 
 @media (max-width: 639px) {
+  .lf-quiet-foot__group--wide {
+    display: none;
+  }
+
   .lf-quiet-foot__nav {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  .lf-quiet-foot__group--fold {
+    display: none;
   }
 }
 

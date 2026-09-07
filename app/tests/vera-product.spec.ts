@@ -1670,7 +1670,16 @@ test(
       await expect(page.locator("svg .sweep, [class*='radar']")).toHaveCount(0);
       expect(
         await page.evaluate(
-          () => document.getAnimations().filter((animation) => animation.playState === "running").length,
+          () => document.getAnimations().filter((animation) => {
+            if (animation.playState !== "running") return false;
+
+            // The site-wide Little Fight credit is the sole approved animation;
+            // every other running animation could reintroduce the retired radar.
+            const target = animation.effect instanceof KeyframeEffect
+              ? animation.effect.target
+              : null;
+            return !target?.closest(".lfc");
+          }).length,
         ),
         `${path} must not revive the retired looping radar`,
       ).toBe(0);

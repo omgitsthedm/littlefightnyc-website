@@ -158,9 +158,9 @@ export default function ServiceSections() {
                 {service.headline}
               </h3>
               <div className="lf-svc__offer">
-                <p><strong>What it is:</strong> {serviceOffers[service.slug].what}</p>
-                <p><strong>Who it is for:</strong> {serviceOffers[service.slug].who}</p>
-                <p><strong>What you get:</strong> {serviceOffers[service.slug].get}</p>
+                {[["What it is", "what"], ["Who it is for", "who"], ["What you get", "get"]].map(([label, field]) => (
+                  <p key={field}><strong>{label}:</strong> {serviceOffers[service.slug][field as "what" | "who" | "get"]}</p>
+                ))}
               </div>
               <p className="lf-svc__proof">{service.proof}</p>
 

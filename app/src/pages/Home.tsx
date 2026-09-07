@@ -1,7 +1,7 @@
 // fonts/tokens/base are imported once at the entry (src/main.tsx) so their
 // @font-face rules live in a single stylesheet (no duplicate font downloads).
 
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
 import RouteMeta from "@/components/RouteMeta";
 import QuietNav from "@/components/editorial/QuietNav";
 import HomeWall from "@/components/editorial/HomeWall";
@@ -11,7 +11,7 @@ import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
 import CommandPalette from "@/components/editorial/CommandPalette";
 import { watchListReveals } from "@/lib/listReveal";
-import { whyWebsiteArguments } from "@/data/pitch-arguments";
+const WhyRealWebsite = lazy(() => import("@/components/editorial/WhyRealWebsite"));
 import "./Home.css";
 
 /**
@@ -38,19 +38,7 @@ export default function Home() {
       <QuietNav />
       <main id="main-content" className="lf-home-main">
         <HomeWall />
-        <section className="lf-website-reasons" aria-labelledby="why-real-website">
-          <div className="lf-container">
-            <h2 id="why-real-website">Why a real website</h2>
-            <div className="lf-website-reasons__list">
-              {whyWebsiteArguments.map((argument) => (
-                <article key={argument.title}>
-                  <h3>{argument.title}</h3>
-                  <p>{argument.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Suspense fallback={null}><WhyRealWebsite /></Suspense>
         <ServiceSections />
         <QuietContact intent="website" />
       </main>

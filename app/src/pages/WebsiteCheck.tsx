@@ -3,7 +3,10 @@ import { useState } from "react";
 import PageHero from "@/components/editorial/PageHero";
 import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { handoffToAuditLab } from "@/lib/auditPrefill";
+import FaqList from "@/components/editorial/FaqList";
+import websiteCheckContent from "@/data/website-check-content.json";
 import "@/styles/editorial/revenue-pages.css";
+import "./WebsiteCheck.css";
 
 export default function WebsiteCheck() {
   // Doherty: the submit hands off to the Lab with a full-page load (~1s on a
@@ -14,22 +17,23 @@ export default function WebsiteCheck() {
   return (
     <>
       <PageHero
-        eyebrow="Free website check"
+        layout="acquisition"
+        eyebrow="Free first look"
         icon={Search}
         // Answer first: what you get (a free plain-words report on what stops
         // customers), then how it works. The old H1 was vague ("See what gets
         // in the way") and the dek opened with an instruction.
-        title={<>See what stops customers on your website.</>}
-        dek="A free report in plain words. We check the public parts: can people read it, use it, find the basics, and take the next step? It also says what we could not see."
+        title={<>See what a new customer sees.</>}
+        dek="Have a website? Get a free report in plain words. Starting with social, referrals, or no website yet? Start with a free first look from a person."
         pillars={[
           "Free, and no sales call required",
           "No login, card, or password",
           "Says plainly what we could not see",
         ]}
         action={{
-          href: "#website-check-url",
+          href: "#website-check-start",
           kicker: "Free first look",
-          label: "Start the website check",
+          label: "Choose your starting point",
         }}
         image={{
           src: "/assets/journal-what-a-free-tech-audit-actually-looks-like.webp",
@@ -41,19 +45,44 @@ export default function WebsiteCheck() {
 
       <section className="lf-revenue-page lf-website-check" aria-labelledby="lf-website-check-title">
         <header className="lf-revenue-page__intro">
-          <p>Website in</p>
-          <h2 id="lf-website-check-title">A free report, in plain words.</h2>
+          <p>Start here</p>
+          <h2 id="lf-website-check-title">Start with the path that fits your business.</h2>
           <div>
             <p>
-              We look only at what anyone can see on your website. We do not
-              need a login, card, password, or access to your business.
-            </p>
-            <p>
-              The Website Check asks for an email before it sends your private
-              report. We can look at it with you for free. No sales call is required.
+              Choose the website check if you have a public site. If customers find you through
+              social or referrals, start with a free first look instead.
             </p>
           </div>
         </header>
+
+        <section id="website-check-start" className="lf-website-check__choices" aria-labelledby="lf-website-check-choice-title">
+          <p className="lf-website-check__choices-kicker" id="lf-website-check-choice-title">Two free ways to start</p>
+          <div className="lf-website-check__choices-grid">
+            <article className="lf-website-check__choice">
+              <h3>I have a website</h3>
+              <p>
+                A free report on what customers can find, read and do.
+              </p>
+              <a href="#website-check-url" data-lf-label="website_check_existing_site">
+                Check my website
+              </a>
+            </article>
+            <article className="lf-website-check__choice lf-website-check__choice--person">
+              <h3>I don’t have a website</h3>
+              <p>
+                A person reviews your request and suggests a next step.
+              </p>
+              <a
+                href="/tech-audit/?intent=website&source=no_website_check"
+                data-lf-event="human_review_requested"
+                data-lf-label="no_website_check"
+                data-lf-source="website_check"
+              >
+                Start a free first look
+              </a>
+            </article>
+          </div>
+        </section>
 
         <form
           className="lf-website-check__form"
@@ -76,27 +105,35 @@ export default function WebsiteCheck() {
           aria-busy={checking !== null}
         >
           <input type="hidden" name="source" value="website_check_page" />
-          <label htmlFor="website-check-url">Website URL</label>
-          <input id="website-check-url" data-audit-prefill="url" type="text" inputMode="url" autoComplete="url" placeholder="yourbusiness.com" required />
-          <label htmlFor="website-check-email">Email for your private report</label>
-          <input id="website-check-email" data-audit-prefill="email" type="email" autoComplete="email" placeholder="you@company.com" />
-          <button type="submit" disabled={checking !== null} data-checking={checking !== null || undefined}>
-            {checking !== null ? (
-              <>
-                Checking {checking}…
-                <Loader2 className="lf-website-check__spinner" size={18} strokeWidth={2} aria-hidden="true" />
-              </>
-            ) : (
-              <>
-                Check my website
-                <Search size={18} strokeWidth={2} aria-hidden="true" />
-              </>
-            )}
-          </button>
-          <p className="lf-website-check__status" role="status" aria-live="polite">
-            {checking !== null ? `Opening the report for ${checking}. This takes a moment.` : ""}
-          </p>
+          <div className="lf-website-check__automated-controls">
+            <label htmlFor="website-check-url">Website URL</label>
+            <input id="website-check-url" data-audit-prefill="url" type="text" inputMode="url" autoComplete="url" placeholder="yourbusiness.com" required />
+            <label htmlFor="website-check-email">Email for your private report</label>
+            <input id="website-check-email" data-audit-prefill="email" type="email" autoComplete="email" placeholder="you@company.com" />
+            <button type="submit" disabled={checking !== null} data-checking={checking !== null || undefined}>
+              {checking !== null ? (
+                <>
+                  Checking {checking}…
+                  <Loader2 className="lf-website-check__spinner" size={18} strokeWidth={2} aria-hidden="true" />
+                </>
+              ) : (
+                <>
+                  Check my website
+                  <Search size={18} strokeWidth={2} aria-hidden="true" />
+                </>
+              )}
+            </button>
+            <p className="lf-website-check__status" role="status" aria-live="polite">
+              {checking !== null ? `Opening the report for ${checking}. This takes a moment.` : ""}
+            </p>
+          </div>
           <p>Free. No account, card, or password. No automatic sales call.</p>
+          <noscript>
+            <style>{`.lf-website-check__automated-controls { display: none; }`}</style>
+            <p className="lf-website-check__noscript">
+              The automated check needs JavaScript. <a href="/tech-audit/?intent=website&source=website_check_page">Start a free human first look instead.</a>
+            </p>
+          </noscript>
         </form>
 
         <section
@@ -128,6 +165,11 @@ export default function WebsiteCheck() {
           <a href={SMS_HREF}><MessageSquare size={16} aria-hidden="true" />Text</a>
           <a href="mailto:hello@littlefightnyc.com"><Mail size={16} aria-hidden="true" />Email</a>
         </p>
+
+        <FaqList
+          title="Questions before you start"
+          items={websiteCheckContent.faq}
+        />
       </section>
     </>
   );

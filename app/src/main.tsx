@@ -17,6 +17,8 @@ import './styles/editorial/reveal-static.css'
 import App from './App.tsx'
 import { ForceFieldProvider } from './kernel/ForceField'
 import { getAnalyticsConsent, installConsentDefaults, onAnalyticsConsentChange } from './lib/consent'
+import { preparePublicRouteMount } from './lib/publicRouteBootstrap'
+import { preloadSelectedPublicRoute } from './lib/publicRoutePreload'
 
 /** Run at idle, or ASAP where requestIdleCallback is unavailable. */
 function onIdle(fn: () => void, timeout = 1) {
@@ -70,7 +72,11 @@ if (typeof window !== "undefined") {
 }
 
 const rootEl = document.getElementById('root')!;
-const root = createRoot(rootEl);
+const publicMount = preparePublicRouteMount(rootEl);
+// A direct URL asks for one route. Start that route's shell and leaf now, but
+// keep the complete server snapshot in place until the leaf actually commits.
+preloadSelectedPublicRoute(window.location.pathname);
+const root = createRoot(publicMount);
 root.render(
   <BrowserRouter>
     <ForceFieldProvider>

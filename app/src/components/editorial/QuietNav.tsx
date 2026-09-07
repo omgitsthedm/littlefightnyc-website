@@ -21,7 +21,7 @@ const NAV_LINKS = [
   { label: "Websites", to: "/services/custom-local-websites/" },
   { label: "Fix something", to: "/services/it-support/" },
   { label: "Software You Own", to: "/services/business-systems/" },
-  { label: "Free check", to: "/website-check/" },
+  { label: "First look", to: "/website-check/" },
   { label: "Results", to: "/examples/" },
   { label: "Answers", to: "/library/" },
 ] as const;
@@ -216,7 +216,7 @@ export default function QuietNav() {
           ))}
         </nav>
 
-        <div className="lf-nav__actions">
+        <div className={`lf-nav__actions${showStartCta ? " lf-nav__actions--has-start" : ""}`}>
           {/* The open/replies chip moved out of the bar (2026-07-18, David:
               desktop header was cramped) — availability lives in the hero
               trust row, the neon sign, and the footer. */}
@@ -272,6 +272,13 @@ export default function QuietNav() {
           </button>
         </div>
       </div>
+
+      <noscript>
+        <style>{`.lf-nav__toggle,.lf-nav__phone--chooser{display:none!important}.lf-nav__phone--direct{display:inline-flex!important}`}</style>
+        <nav className="lf-nav__noscript" aria-label="Primary without JavaScript">
+          {NAV_LINKS.map((link) => <a key={link.to} href={link.to}>{link.label}</a>)}
+        </nav>
+      </noscript>
 
       {open && (
         <>

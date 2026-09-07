@@ -33,7 +33,8 @@ export { glossaryTerms } from "./site-glossary";
 export type { AreaPage } from "./site-areas";
 export { areaPages } from "./site-areas";
 
-export { whyWebsiteArguments, serviceOffers } from "./pitch-arguments";
+export { serviceOffers } from "./pitch-arguments";
+export { whyWebsiteArguments } from "./why-website";
 
 export type Service = {
   slug: string;
@@ -175,7 +176,7 @@ export const services: Service[] = [
     title: "Computer broken, card reader frozen, Wi-Fi down",
     headline: "Fast help when the basics break.",
     plain: "We fix what is stopping the day first. Then we write down what changed. Email, Wi-Fi, card readers, booking, payments, logins, and devices.",
-    outcome: "Call or text first. Urgent New York jobs: we can be on site within 24 hours. The written scope names the rest.",
+    outcome: "Call or text first. Urgent New York jobs: usually on-site within 24 hours. We confirm timing with you, and the written scope names the work.",
     pillars: [
       "Call or text first — a human answers 9am–9pm Eastern",
       "Urgent New York jobs: usually on-site within 24 hours",
@@ -271,7 +272,7 @@ export const services: Service[] = [
     title: "A website built to help customers choose",
     headline: "Websites that make the next step obvious.",
     plain: "Custom websites for NYC businesses. Your services, phone, booking, orders, forms, map, payments, and follow-up can all point to one clear next step.",
-    outcome: "A qualifying website launches in 14 days. The written scope names the start date and what each side provides. It names the remedy if we are late.",
+    outcome: "A qualifying website scope may include the written 14-day promise. The scope states eligibility, when the clock starts, what each side provides, and the remedy if our qualifying work is late.",
     pillars: [
       "Built for one business, not a theme",
       "Every page ends in a clear next step",

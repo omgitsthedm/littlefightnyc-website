@@ -42,6 +42,8 @@ type Props = {
     video?: CinematicMediaAsset;
     fit?: "cover" | "contain";
   };
+  /** Identify real work and provide its source beside the hero image. */
+  imageCaption?: React.ReactNode;
   /**
    * Case-study archetype: the project proof image runs full-bleed BEHIND the
    * title under a dark scrim. The work IS the hero.
@@ -87,6 +89,8 @@ type Props = {
   action?: PageHeroAction | false;
   /** Keep the quick contact choices visible by default on every inner page. */
   showContactRail?: boolean;
+  /** Website service opening: keep the offer, proof and decisions together. */
+  layout?: "website" | "acquisition";
 };
 
 const PROTECTED_PRESENTATION_PATHS = new Set([
@@ -111,6 +115,7 @@ export default function PageHero({
   title,
   dek,
   image,
+  imageCaption,
   backdrop,
   quickAnswer,
   displayName,
@@ -119,6 +124,7 @@ export default function PageHero({
   visual,
   action,
   showContactRail = true,
+  layout,
 }: Props) {
   const ref = useScrollReveal<HTMLElement>({ revealOnMount: true });
   const { pathname } = useLocation();
@@ -158,6 +164,8 @@ export default function PageHero({
     quickAnswer ? "lf-pagehero--answer" : "",
     displayName ? "lf-pagehero--area" : "",
     protectedPresentation ? "lf-pagehero--protected" : "",
+    layout === "website" && !protectedPresentation ? "lf-pagehero--website" : "",
+    layout === "acquisition" && !protectedPresentation ? "lf-pagehero--acquisition" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -317,7 +325,7 @@ export default function PageHero({
         )}
 
         {image && (
-          <div className="lf-pagehero__image">
+          <div className={`lf-pagehero__image${imageCaption ? " lf-pagehero__image--captioned" : ""}`}>
             {image.video ? (
               <CinematicMedia
                 media={image.video}
@@ -353,6 +361,7 @@ export default function PageHero({
                 />
               </picture>
             )}
+            {imageCaption && <div className="lf-pagehero__caption">{imageCaption}</div>}
           </div>
         )}
       </div>

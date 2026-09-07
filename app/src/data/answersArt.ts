@@ -47,6 +47,7 @@ const ARCHETYPE_BY_SLUG: Record<string, AnswerArchetype> = {
   "does-my-small-business-need-a-website-reddit": "versus",
   "airtable-vs-notion-reddit-small-business": "versus",
   "nyc-small-business-tech-help-reddit": "versus",
+  "instagram-instead-of-a-website-nyc-shop": "versus",
   // Default — question motif
   "local-pharmacy-website-community-support": "question",
 };
@@ -150,6 +151,7 @@ export const ANSWER_CLUSTERS: AnswerCluster[] = [
       "best-pos-system-small-business-reddit",
       "when-custom-business-system-beats-saas",
       "does-my-small-business-need-a-website-reddit",
+      "instagram-instead-of-a-website-nyc-shop",
     ],
   },
   {
