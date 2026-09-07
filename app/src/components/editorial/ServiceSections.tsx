@@ -2,6 +2,7 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
 import { PHONE_DISPLAY, PHONE_HREF } from "@/data/contact";
+import { serviceOffers } from "@/data/pitch-arguments";
 import "./ServiceSections.css";
 
 /**
@@ -156,6 +157,11 @@ export default function ServiceSections() {
               <h3 id={`lf-svc-${service.key}`} className="lf-svc__headline">
                 {service.headline}
               </h3>
+              <div className="lf-svc__offer">
+                {[["What it is", "what"], ["Who it is for", "who"], ["What you get", "get"]].map(([label, field]) => (
+                  <p key={field}><strong>{label}:</strong> {serviceOffers[service.slug][field as "what" | "who" | "get"]}</p>
+                ))}
+              </div>
               <p className="lf-svc__proof">{service.proof}</p>
 
               <div className="lf-svc__actions">
