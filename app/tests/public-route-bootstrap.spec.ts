@@ -70,13 +70,22 @@ test(
     await expect(snapshot).toBeVisible();
     await expect(snapshot).toContainText("See what a new customer sees.");
     await expect(mount).toHaveAttribute("hidden", "");
-    // WebKit's FontFaceSet.ready can await document load, which is deliberately
-    // held by the route request. Load the fonts we measure directly instead.
-    await page.evaluate(() => Promise.all([
-      document.fonts.load('700 90px "Oswald Variable"'),
-      document.fonts.load('400 20px "Barlow"'),
-      document.fonts.load('500 16px "JetBrains Mono"'),
-    ]).then(() => undefined));
+    // Route CSS can arrive while its JavaScript is deliberately held. Wait
+    // for that CSS and the actual rendered faces before measuring the snapshot.
+    // FontFaceSet.ready would await the document load held by this test.
+    await page.waitForFunction(() => [...document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')]
+      .every(link => Boolean(link.sheet)));
+    await page.evaluate(async () => {
+      const faces = new Set([...document.querySelectorAll("#root *")]
+        .filter(element => element.getClientRects().length && [...element.childNodes]
+          .some(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim()))
+        .map(element => {
+          const style = getComputedStyle(element);
+          return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+        }));
+      await Promise.all([...faces].map(font => document.fonts.load(font)));
+      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    });
     const landmarks = ["h1", "#website-check-start", ".lf-website-check__form", ".lf-quiet-foot"];
     const initial = await snapshot.evaluate((element, selectors) => selectors.map((selector) => {
       const rect = element.querySelector(selector)!.getBoundingClientRect();
