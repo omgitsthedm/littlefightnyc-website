@@ -2606,7 +2606,14 @@ for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, heig
       );
       await expect(page.locator(".audit-scan__status")).toHaveText("Report ready");
       await expect(page.locator(".audit-scan")).toHaveAttribute("data-scanning", "false");
-      const reportAction = await page.locator("#auditEmailRecoveryLink").boundingBox();
+      const reportLink = page.locator("#auditEmailRecoveryLink");
+      // The focused heading starts the page's native smooth scroll. Visible
+      // content can still be outside the viewport until that movement settles.
+      await expect.poll(async () => {
+        const box = await reportLink.boundingBox();
+        return Boolean(box && box.y >= 0 && box.y + box.height <= recoveryViewport.height);
+      }, { timeout: 2_000 }).toBe(true);
+      const reportAction = await reportLink.boundingBox();
       expect(reportAction).not.toBeNull();
       expect(reportAction!.y).toBeGreaterThanOrEqual(0);
       expect(reportAction!.y + reportAction!.height).toBeLessThanOrEqual(recoveryViewport.height);
