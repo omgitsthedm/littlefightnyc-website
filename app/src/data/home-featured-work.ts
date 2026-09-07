@@ -18,7 +18,7 @@ export const HOME_FEATURED_WORK = [
     sourceLabel: "hairbyrachelcharles.com",
     verifiedAt: "2026-08-13",
     story: {
-      title: "A new client can find the salon, see the work, and book. No Instagram DM needed.",
+      title: "A new client can find the Phoenix salon, see the work, and book. No Instagram DM needed.",
       problem:
         "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
       kept: "Rachel’s point of view, the work itself, and the Square Appointments setup her clients already knew.",

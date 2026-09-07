@@ -485,7 +485,7 @@ export const caseStudies: CaseStudy[] = [
     showcase: {
       label: "A clearer booking path for an independent stylist.",
       kind: "Website",
-      context: "Independent stylist in Phoenix",
+      context: "Independent stylist",
       availability: "public",
       linkPolicy: "custom-domain",
       proof: {
@@ -506,7 +506,7 @@ export const caseStudies: CaseStudy[] = [
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
     updated: "2026-08-18",
-    title: "A new client can find the salon, see the work, and book. No Instagram DM needed.",
+    title: "A new client can find the Phoenix salon, see the work, and book. No Instagram DM needed.",
     problem: "A solo stylist ran her whole business through Instagram and word of mouth. No website. No Google profile. No clear way to book.",
     kept: "Rachel’s point of view, the work itself, and the Square Appointments setup her clients already knew.",
     changed: "Built a bold phone-first site that explains services, location, and what a new client should do next. The booking habit stayed the same: the site leads clearly into Square. We also set up the studio’s Google Business Profile.",

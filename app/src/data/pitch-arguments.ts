@@ -17,7 +17,7 @@ export const serviceOffers: Record<string, { what: string; who: string; get: str
   "tech-consulting": {
     what: "A free second opinion on technology.",
     who: "Owners deciding what to fix, replace, or cancel.",
-    get: "Practical next steps before you spend.",
+    get: "Next steps before you spend.",
   },
   "new-business-launch": {
     what: "Website and tech setup.",
