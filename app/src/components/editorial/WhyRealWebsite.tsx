@@ -1,5 +1,7 @@
 import { whyWebsiteArguments } from "@/data/why-website";
 
+import "./WhyRealWebsite.css";
+
 export default function WhyRealWebsite() {
   return (
     <section className="lf-website-reasons" aria-labelledby="why-real-website">

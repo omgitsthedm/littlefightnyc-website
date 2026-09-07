@@ -11,6 +11,7 @@ import {
   Workflow,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import WhyRealWebsite from "@/components/editorial/WhyRealWebsite";
 import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
 import WorkWall from "@/components/editorial/WorkWall";
@@ -157,6 +158,8 @@ export default function Services() {
           </Link>
         </div>
       </section>
+
+      <WhyRealWebsite />
 
       <section className="lf-svc-assurance" aria-labelledby="lf-svc-assurance-title">
         <div className="lf-svc-assurance__inner">

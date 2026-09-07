@@ -1470,7 +1470,11 @@ function serviceOfferHtml(slug) {
 // boilerplate on every route — the site’s best content was JS-gated.
 function authoredContentHtml(page) {
   if (page.path === "/services/") {
-    return Object.keys(siteContent.serviceOffers).map((slug) => {
+    return `    <section aria-labelledby="why-real-website">
+      <h2 id="why-real-website">Why a real website</h2>
+      ${siteContent.whyWebsiteArguments.map((argument) => `<article><h3>${escapeHtml(argument.title)}</h3><p>${escapeHtml(argument.body)}</p></article>`).join("\n")}
+    </section>
+` + Object.keys(siteContent.serviceOffers).map((slug) => {
       const service = siteContent.services.find((item) => item.slug === slug);
       return `<section><h2><a href="/services/${slug}/">${escapeHtml(service?.eyebrow ?? (slug === "new-business-launch" ? "New business launch" : "Ongoing care"))}</a></h2>${serviceOfferHtml(slug)}</section>`;
     }).join("\n");
@@ -2123,10 +2127,6 @@ function snapshot(page) {
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
     ${methodBlock(page)}
-    <section aria-labelledby="why-real-website">
-      <h2 id="why-real-website">Why a real website</h2>
-      ${siteContent.whyWebsiteArguments.map((argument) => `<article><h3>${escapeHtml(argument.title)}</h3><p>${escapeHtml(argument.body)}</p></article>`).join("\n")}
-    </section>
     <h2>Four ways to get unstuck</h2>
     <p>The homepage explains four services, and each one leads with what the owner ends up with rather than how the work is delivered.</p>
     <ul class="lf-seo__home-four">
