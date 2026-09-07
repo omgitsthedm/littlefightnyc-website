@@ -112,6 +112,27 @@ if (duplicatePaths.length > 0) {
   failures.push(`route-meta duplicate paths: ${[...new Set(duplicatePaths)].join(", ")}`);
 }
 
+// These routes render their actual React tree before the browser leaf commits.
+// Each uses current component markup rather than the legacy SEO header, so
+// assert the real buyer path instead of requiring that retired header class.
+const componentRouteCtas = {
+  "/": [["/website-check/#website-check-start", "Get a free first look", true]],
+  "/website-check/": [
+    ["#website-check-url", "Check my website"],
+    ["/tech-audit/?intent=website&source=no_website_check", "Start a free first look"],
+  ],
+  "/services/custom-local-websites/": [
+    ["/website-check/#website-check-start", "Free first look Get a free first look", true],
+  ],
+  "/case-studies/hair-by-rachel-charles/": [
+    ["/website-check/#website-check-start", "Free first look Get a free first look", true],
+  ],
+  // The direct form link belongs to the audit contact rail. Checking its
+  // component-specific label keeps a generic nav/header link from satisfying
+  // the buyer-path assertion.
+  "/tech-audit/": [["#fit-step-title", "Form", false, { "data-lf-label": "audit_intro_form" }]],
+};
+
 for (const page of routeMeta.pages) {
   let html;
   try {
@@ -132,7 +153,20 @@ for (const page of routeMeta.pages) {
     page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large",
   );
   expectSocialMeta(page.path, html, page);
-  if (!page.locale) {
+  const componentRouteCta = componentRouteCtas[page.path];
+  if (componentRouteCta) {
+    const links = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].map((match) => ({
+      ...tagAttributes(`<a ${match[1]}>`),
+      label: cleanText(match[2]),
+    }));
+    for (const [href, label, primary = false, requiredAttributes = {}] of componentRouteCta) {
+      if (!links.some((link) => link.href === href && link.label === label &&
+        (!primary || link["data-lf-primary-action"] === "true") &&
+        Object.entries(requiredAttributes).every(([name, value]) => link[name] === value))) {
+        failures.push(`${page.path}: missing rendered starting path ${label}`);
+      }
+    }
+  } else if (!page.locale) {
     const navCta = html.match(
       /<a\b([^>]*)class="[^"]*\blf-seo__nav-cta\b[^"]*"([^>]*)>([\s\S]*?)<\/a>/i,
     );
@@ -140,14 +174,13 @@ for (const page of routeMeta.pages) {
       failures.push(`${page.path}: missing prerendered primary navigation CTA`);
     } else {
       const attrs = tagAttributes(`<a ${navCta[1]} ${navCta[2]}>`);
-      expectEqual(`${page.path} nav CTA label`, cleanText(navCta[3]), "Check my website");
-      // The primary CTA lands in the URL field, focused (RouteScrollManager
-      // focuses a form control named by the hash) — one tap fewer than the
-      // top of the page. The hydrated nav uses the same href.
+      expectEqual(`${page.path} nav CTA label`, cleanText(navCta[3]), "Get a free first look");
+      // The primary CTA includes owners without a website. Legacy URL-field
+      // deep links remain available for visitors checking an existing site.
       expectEqual(
         `${page.path} nav CTA destination`,
         attrs.href,
-        "/website-check/#website-check-url",
+        "/website-check/#website-check-start",
       );
     }
   }

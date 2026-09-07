@@ -12,6 +12,7 @@ export type FirstPartyEventPlacement =
   | "nav_desktop"
   | "mobile_menu"
   | "website_check_page"
+  | "no_website_check"
   | "audit_lab"
   | "audit_report"
   | "client_desk"
@@ -51,6 +52,7 @@ export type ServiceInquiryType =
   | "other";
 
 export type FirstPartyEventContract = {
+  first_look_opened: FirstPartyEventContext;
   website_check_started: FirstPartyEventContext;
   website_check_ready: FirstPartyEventContext;
   report_opened: FirstPartyEventContext;
@@ -63,6 +65,7 @@ export type FirstPartyEventContract = {
 export type FirstPartyEventName = keyof FirstPartyEventContract;
 
 const FIRST_PARTY_EVENT_NAMES = new Set<FirstPartyEventName>([
+  "first_look_opened",
   "website_check_started",
   "website_check_ready",
   "report_opened",
@@ -78,6 +81,7 @@ const FIRST_PARTY_EVENT_PLACEMENTS = new Set<FirstPartyEventPlacement>([
   "nav_desktop",
   "mobile_menu",
   "website_check_page",
+  "no_website_check",
   "audit_lab",
   "audit_report",
   "client_desk",
@@ -118,6 +122,7 @@ const SERVICE_INQUIRY_TYPES = new Set<ServiceInquiryType>([
 // component accidentally supplies a free-form data attribute or payload.
 // Anything not named here stays on the page and never reaches a vendor.
 const ANALYTICS_EVENT_NAMES = new Set([
+  "first_look_opened",
   "booking_started",
   "client_error",
   "door_bridge",
@@ -620,6 +625,7 @@ function trackTikTokConversion(eventName: string, parameters: Record<string, unk
     eventName === "audit_scan_started" ||
     eventName === "tech_audit_started" ||
     eventName === "website_check_started" ||
+    eventName === "first_look_opened" ||
     eventName === "booking_started"
   ) {
     sendTikTokEvent("ClickButton", { ...page, content_name: eventName, ...parameters });
@@ -644,7 +650,8 @@ function funnelStage(eventName: string) {
     eventName === "tech_audit_intent" ||
     eventName === "website_plan_intent" ||
     eventName === "tech_audit_started" ||
-    eventName === "website_check_started"
+    eventName === "website_check_started" ||
+    eventName === "first_look_opened"
   ) return "consideration";
   if (eventName === "website_check_ready" || eventName === "report_opened") return "engaged";
   if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") return "contact";

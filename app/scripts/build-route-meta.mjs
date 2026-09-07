@@ -130,6 +130,21 @@ console.log(
   `route-meta.json: ${pages.length} routes (${journal.length} journal posts; shared with prerender metadata)`,
 );
 
+// Public intake needs its Q&A in the visible React routes as well as in the
+// prerendered FAQ schema. Keep that small public payload derived from the
+// authored SEO record rather than pulling the full SEO catalog into a
+// conversion route or maintaining a second hand-written copy.
+for (const slug of ["website-check", "tech-audit"]) {
+  const intake = seoData.pages.find((page) => page.path === `/${slug}/`);
+  if (!intake || !Array.isArray(intake.faq)) {
+    throw new Error(`seo-pages.json: /${slug}/ requires an FAQ array`);
+  }
+  writeFileSync(
+    join(dataDir, `${slug}-content.json`),
+    JSON.stringify({ faq: intake.faq }) + "\n",
+  );
+}
+
 // CoverageMatrix only needs the {slug,label} service columns — emit them alone
 // so it does not pull the full seo-pages.json payload into its chunk.
 const matrixServices = (seoData.matrix?.services ?? []).map((service) => ({

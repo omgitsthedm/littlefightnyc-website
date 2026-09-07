@@ -186,8 +186,8 @@ const ROUTES: readonly RouteContract[] = [
     key: "website-check",
     label: "Website Check",
     path: "/website-check/",
-    title: "Free Small Business Website Check | Little Fight NYC",
-    h1: /See what stops customers on your website\./i,
+    title: "Free Website Check & First Website Advice | Little Fight NYC",
+    h1: /See what a new customer sees\./i,
     criticalLink: 'form[action="/examples/audit/"]',
     tags: ["@chromium-desktop", "@chromium-mobile"],
   },
@@ -250,7 +250,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "Hair By Rachel Charles case study",
     path: "/case-studies/hair-by-rachel-charles/",
     title: "Hair By Rachel Charles Website Case Study | Little Fight NYC",
-    h1: /A bright editorial chair in Chelsea/i,
+    h1: /A clearer booking path for an independent stylist/i,
     criticalLink: 'a[href="/services/custom-local-websites/"]',
     tags: ["@chromium-desktop", "@chromium-mobile", "@webkit-mobile"],
   },
@@ -276,8 +276,8 @@ const ROUTES: readonly RouteContract[] = [
     key: "tech-audit",
     label: "Tech Audit",
     path: "/tech-audit/",
-    title: "Free Tech Audit for NYC Small Businesses | Little Fight NYC",
-    h1: /Tell us what is\s*getting in the way\./i,
+    title: "Free First Look for Small Businesses | Little Fight NYC",
+    h1: /Get a clear next step\./i,
     criticalLink: 'a[href="tel:+16463600318"]',
     tags: ["@chromium-desktop", "@chromium-mobile", "@webkit-mobile"],
   },
@@ -1183,13 +1183,28 @@ test(
     // across six visibly different trades.
     const wall = page.locator(".lf-wall");
     const tiles = wall.locator(".lf-wall__tile");
-    const lead = tiles.first().locator("img");
+    const firstTile = tiles.first().locator("img");
+    const avenue = wall.locator(".lf-wall__backdrop img");
+    const desktopAvenueSource = wall.locator('.lf-wall__backdrop source[media="(min-width: 64rem)"]');
 
     await expect(wall).toBeVisible();
     await expect(tiles).toHaveCount(6);
-    await expect(lead).toHaveAttribute("fetchpriority", "high");
+    await expect(avenue).toHaveAttribute("loading", "eager");
+    await expect(avenue).toHaveAttribute("fetchpriority", "high");
+    await expect(avenue).toHaveAttribute(
+      "srcset",
+      "/assets/hero-home-avenue-480.webp 480w, /assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-900.webp 900w",
+    );
+    await expect(avenue).toHaveAttribute("sizes", "50vw");
+    await expect(desktopAvenueSource).toHaveAttribute(
+      "srcset",
+      "/assets/hero-home-avenue-1280.webp 1280w, /assets/hero-home-avenue-1600.webp 1600w, /assets/hero-home-avenue-2000.webp 2000w",
+    );
+    await expect(desktopAvenueSource).toHaveAttribute("sizes", "100vw");
+    await expect(firstTile).toHaveAttribute("loading", "lazy");
+    await expect(firstTile).not.toHaveAttribute("fetchpriority", "high");
     await expect
-      .poll(() => lead.evaluate((node: HTMLImageElement) => node.naturalWidth))
+      .poll(() => firstTile.evaluate((node: HTMLImageElement) => node.naturalWidth))
       .toBeGreaterThan(0);
 
     // Six DIFFERENT trades is the whole point — a repeated label would mean
@@ -1315,7 +1330,12 @@ test(
       const contact = document.querySelector<HTMLElement>(".lf-contact-block");
       const services = document.querySelector<HTMLElement>(".lf-svcs");
       if (!contact || !services) throw new Error("mobile path fixture is incomplete");
-      const fullHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      const marketingPage = document.querySelector<HTMLElement>(".lf-editorial");
+      if (!marketingPage) throw new Error("mobile marketing page is missing");
+      // Keep the existing length budget on the complete marketing page,
+      // including its footer. The formerly fixed privacy utility is now after
+      // that page in normal flow and has its own small-screen regression.
+      const fullHeight = marketingPage.getBoundingClientRect().height;
       return {
         servicesBeforeContact: Boolean(
           services.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING,
@@ -1541,7 +1561,7 @@ test(
     await openRoute(page, ROUTES.find((route) => route.key === "tech-audit")!);
     const form = page.locator('form[name="tech-audit-scratch"]');
     await expect(form).toBeVisible();
-    await page.getByRole("button", { name: "Send my note" }).click();
+    await page.getByRole("button", { name: "Send my first-look request" }).click();
 
     await expect(form.locator('.lf-audit__error[role="alert"]')).toHaveCount(4);
     for (const field of ["name", "business", "contact", "message"]) {
@@ -2155,6 +2175,55 @@ test(
   },
 );
 
+for (const width of [320, 768]) {
+test(
+  `privacy choices preserve the inquiry path and focus return at ${width}px @all-projects`,
+  async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/website-check/#website-check-start");
+      await expect(page.locator(".lf-website-check")).toBeVisible();
+      const panel = page.getByRole("region", { name: "Privacy preferences", exact: true });
+      // The actual route now exists before its interactive mount; measure
+      // the privacy utility only once that utility itself is visible.
+      await expect(panel).toBeVisible();
+      const website = page.getByRole("textbox", { name: "Website URL", exact: true });
+      await website.fill("example.com");
+      await expect(website).toHaveValue("example.com");
+      const geometry = await page.evaluate(() => {
+        const consent = document.querySelector(".lf-consent");
+        const main = document.querySelector("main");
+        if (!consent || !main) throw new Error("missing consent or inquiry content");
+        return { panelTop: consent.getBoundingClientRect().top, contentBottom: main.getBoundingClientRect().bottom };
+      });
+      expect(geometry.panelTop).toBeGreaterThanOrEqual(geometry.contentBottom);
+      expect(await page.evaluate(() => localStorage.getItem("lf_analytics_consent_v1"))).toBeNull();
+
+      const trigger = page.getByRole("button", { name: "Privacy choices", exact: true });
+      await trigger.click();
+      await expect(panel).toBeFocused();
+      await expect(panel).toBeInViewport();
+      await expect(panel).toBeVisible();
+      await expect(page.getByRole("button", { name: "Essential only", exact: true })).toBeInViewport();
+      const violations = await new AxeBuilder({ page }).include(".lf-consent").withTags([...WCAG_TAGS]).analyze();
+      expect(violations.violations).toEqual([]);
+      await page.getByRole("button", { name: "Essential only", exact: true }).click();
+      await expect(trigger).toBeFocused();
+      await expect(panel).toHaveCount(0);
+      await expect(website).toHaveValue("example.com");
+      expect(await page.evaluate(() => localStorage.getItem("lf_analytics_consent_v1"))).toBe("denied");
+      await page.reload();
+      await expect(page.locator(".lf-website-check")).toBeVisible();
+      await expect(page.locator("[data-lf-route-mount]")).toBeVisible();
+      await expect(panel).toHaveCount(0);
+      await trigger.focus();
+      await trigger.press("Enter");
+      await expect(panel).toBeFocused();
+      await page.getByRole("button", { name: "Essential only", exact: true }).click();
+      await expect(trigger).toBeFocused();
+  },
+);
+}
+
 test(
   "analytics consent stays measurement-only while advertising is disabled @chromium-desktop @chromium-mobile",
   async ({ browser, baseURL }) => {
@@ -2271,11 +2340,11 @@ test(
         (entry) =>
           typeof entry === "object" &&
           entry !== null &&
-          (entry as { event?: string }).event === "website_check_started",
+          (entry as { event?: string }).event === "first_look_opened",
       ) as Record<string, unknown> | undefined,
     );
     expect(websiteCheckEvent).toEqual({
-      event: "website_check_started",
+      event: "first_look_opened",
       funnel_stage: "consideration",
       page_path: "/",
       placement: "home_hero",
@@ -2461,6 +2530,7 @@ test(
     expect(serialized).not.toContain("private-fixture@example.com");
     expect(serialized).not.toContain("test-audit-id");
     expect(statusRequestCount).toBeGreaterThanOrEqual(2);
+    await expect.poll(() => new URL(page.url()).hash).toBe("#test-report");
 
     await page.waitForTimeout(2_000);
     const settledEventNames = await page.evaluate(() =>
@@ -2474,6 +2544,132 @@ test(
     await context.close();
   },
 );
+
+for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 }]) {
+  test(
+    `Audit Lab keeps a ready report accessible at ${recoveryViewport.width}px when its email copy is unavailable @all-projects`,
+    async ({ browser, browserName, baseURL }) => {
+      const context = await browser.newContext({ viewport: recoveryViewport });
+      const page = await context.newPage();
+      await page.addInitScript(() => {
+        localStorage.setItem("lf_analytics_consent_v1", "granted");
+        const auditEvents: unknown[] = [];
+        (window as unknown as { __auditEvents: unknown[] }).__auditEvents = auditEvents;
+        window.addEventListener("lf:audit-analytics", (event) => {
+          auditEvents.push((event as CustomEvent).detail);
+        });
+      });
+
+      let runRequestCount = 0;
+      let statusRequestCount = 0;
+      await page.route("**/examples/audit/api/run-audit", (route) => {
+        runRequestCount += 1;
+        return route.fulfill({
+          status: 201,
+          contentType: "application/json",
+          body: JSON.stringify({ id: "recovery-audit-id" }),
+        });
+      });
+      await page.route("**/examples/audit/api/status?id=*", (route) => {
+        statusRequestCount += 1;
+        return route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            status: "done",
+            url: "/examples/audit/report/email-recovery-fixture",
+            email_delivery: "unavailable",
+          }),
+        });
+      });
+
+      await page.route("**/examples/audit/report/email-recovery-fixture", route => route.fulfill({
+        status: 200, contentType: "text/html", body: "<main><h1>Local report fixture</h1></main>",
+      }));
+      await page.goto(`${baseURL}/examples/audit/`, { waitUntil: "networkidle" });
+      await page.locator("#siteUrl").fill("private-recovery.example");
+      await page.locator("#email").fill("private-recovery@example.com");
+      await page.locator("#submitBtn").click();
+
+      const recovery = page.locator("#auditEmailRecovery");
+      await expect(recovery).toBeVisible({ timeout: 8_000 });
+      await expect(page.locator("#progressHeading")).toHaveText("Your report is ready.");
+      await expect(recovery).toContainText("We could not send a copy by email.");
+      await expect(recovery).not.toContainText(/failed|configured/i);
+      await expect(recovery.locator("#auditEmailRecoveryLink")).toHaveAttribute(
+        "href",
+        "/examples/audit/report/email-recovery-fixture",
+      );
+      await expect(recovery.getByRole("link", { name: "Email us" })).toHaveAttribute(
+        "href",
+        "mailto:hello@littlefightnyc.com",
+      );
+      await expect(page.locator(".audit-scan__status")).toHaveText("Report ready");
+      await expect(page.locator(".audit-scan")).toHaveAttribute("data-scanning", "false");
+      const reportAction = await page.locator("#auditEmailRecoveryLink").boundingBox();
+      expect(reportAction).not.toBeNull();
+      expect(reportAction!.y).toBeGreaterThanOrEqual(0);
+      expect(reportAction!.y + reportAction!.height).toBeLessThanOrEqual(recoveryViewport.height);
+      await expect(page.locator("#progressHeading")).toBeFocused();
+      await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
+      await expect(page.locator("#auditEmailRecoveryLink")).toBeFocused();
+
+      await page.waitForTimeout(1_200);
+      expect(new URL(page.url()).hash).toBe("");
+      expect(runRequestCount).toBe(1);
+      expect(statusRequestCount).toBe(1);
+
+      const events = await page.evaluate(
+        () => (window as unknown as { __auditEvents: unknown[] }).__auditEvents,
+      );
+      expect(events.map(event => (event as { eventName: string }).eventName)).toContain("website_check_ready");
+      const serialized = JSON.stringify(events);
+      expect(serialized).not.toContain("private-recovery.example");
+      expect(serialized).not.toContain("private-recovery@example.com");
+      expect(serialized).not.toContain("recovery-audit-id");
+      expect(serialized).not.toContain("not_configured");
+      expect(serialized).not.toContain("email_delivery");
+      expect(serialized).not.toContain("unavailable");
+
+      await page.keyboard.press("Enter");
+      await expect(page.getByRole("heading", { name: "Local report fixture" })).toBeVisible();
+      expect(runRequestCount).toBe(1);
+      await context.close();
+    },
+  );
+}
+
+test("Audit Lab stops its scan indicator on a failed job and keeps retry details @all-projects", async ({ page, browserName }) => {
+  let starts = 0;
+  await page.route("**/examples/audit/api/run-audit", route => {
+    starts += 1;
+    return route.fulfill({ status: 201, contentType: "application/json", body: JSON.stringify({ id: "stopped-fixture" }) });
+  });
+  await page.route("**/examples/audit/api/status?id=*", route => route.fulfill({
+    status: 200, contentType: "application/json", body: JSON.stringify({ status: "error", message: "The check could not finish. Please try again." }),
+  }));
+  await page.goto("/examples/audit/");
+  await page.locator("#siteUrl").fill("retry-fixture.example");
+  await page.locator("#email").fill("retry-fixture@example.com");
+  await page.locator("#submitBtn").click();
+  await expect(page.locator("#progressError")).toBeVisible();
+  await expect(page.locator(".audit-scan__status")).toHaveText("Check stopped");
+  await expect(page.locator(".audit-scan")).toHaveAttribute("data-scanning", "false");
+  await expect(page.locator("#auditEmailRecovery")).toBeHidden();
+  await expect(page.locator("#progressHeading")).toHaveText("The check could not finish.");
+  await expect(page.locator("#progressHeading")).toBeFocused();
+  const retry = page.getByRole("button", { name: "Try Again", exact: true });
+  const retryBox = await retry.boundingBox();
+  expect(retryBox!.y + retryBox!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+  await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
+  await expect(retry).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#siteUrl")).toHaveValue("retry-fixture.example");
+  await expect(page.locator("#email")).toHaveValue("retry-fixture@example.com");
+  await expect(page.locator("#submitBtn")).toBeEnabled();
+  await expect(page.locator(".audit-scan__status")).toHaveText("Ready");
+  expect(starts).toBe(1);
+});
 
 test(
   "Audit Lab withdraws consent across custom, storage, and page-show synchronization @chromium-desktop",
@@ -2833,6 +3029,9 @@ test(
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES.find((route) => route.key === "library")!);
+    // The crawler snapshot does not include the interactive live region. Wait
+    // for the mounted Library before observing what a screen reader receives.
+    await expect(page.locator("[data-lf-route-mount]")).not.toHaveAttribute("hidden", "");
 
     // Count what a screen reader would actually be handed: every distinct text
     // a polite live region holds while the user types. The visible counter is

@@ -1,6 +1,6 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-08-14
+Last updated: 2026-09-06 (local candidate; production publication unverified)
 
 ## Privacy boundary
 
@@ -18,33 +18,52 @@ Last updated: 2026-08-14
 
 ## Canonical funnel
 
-Build one GA4 Exploration funnel using **active users**. The general Tech Audit path uses these ordered events:
+The human first-look form now opens directly for every intent: website,
+support, consulting, systems and general. Owners without a website use the
+same form; the dedicated no-site arrival carries `intent=website` and
+`source=no_website_check`. Do not classify that arrival as an existing website.
 
-1. `page_view` — awareness
-2. `website_plan_intent`, `tech_audit_intent`, or `tech_audit_started` — consideration
-3. `intake_step_1` — issue selected
-4. `intake_step_2` — urgency selected
-5. `tech_audit_submit` — native form handoff started
-6. `generate_lead` — Netlify returned the visitor to `/thanks/`
+Use this common funnel, with **active users** beside raw event counts:
 
-The high-intent website path is deliberately shorter:
+1. `page_view` on `/tech-audit/` — the inquiry page was viewed.
+2. `tech_audit_started` — a field received non-empty input, or a valid submission began.
+3. `tech_audit_submit` — validation allowed the native POST to begin.
+4. `generate_lead` with `method=tech_audit_form` — `/thanks/` rendered with a submission marker.
 
-1. `page_view`
-2. `website_plan_intent`
-3. `tech_audit_submit`
-4. `generate_lead`
+`first_look_opened`, `website_plan_intent`, `human_review_requested`,
+`service_inquiry` and the legacy `tech_audit_intent` describe entry actions.
+Keep them as an optional entry breakdown; a direct or shared-link arrival need
+not emit a preceding CTA click. Do not require `intake_step_1` or
+`intake_step_2` for any intent. Their legacy handlers remain in source, but
+the current form starts at step 3.
 
-Do not treat the missing `intake_step_1` and `intake_step_2` events as abandonment when `intent=website`. That route now opens directly on the website brief.
+The success-page marker is browser evidence, not a provider receipt. It can
+come from the redirect query or tab storage and is removed after tracking to
+avoid ordinary reload duplicates. A direct unmarked visit does not emit
+`generate_lead`, but a manually supplied marker or stale submission state can
+produce the browser signal. Neither the marker nor the success-page text
+proves inbox delivery, an available buyer, an accepted scope or payment.
 
 Every tracked event carries `funnel_stage`. Break the funnel down by:
 
 - `page_path`
 - `placement`
-- `intent` (`website` or `general`)
+- `intent` where emitted (`website`, `support`, `consulting`, `systems` or `general`)
 - device category
 - default channel group / source / medium
 
-Use Google’s recommended `generate_lead` event as the **only GA4 key event**. The Tech Audit form sends `tech_audit_submit` when the native handoff starts and `generate_lead` only after Netlify returns the visitor to `/thanks/`; it does not also send the generic `form_submit` event. Phone, text, and email events (`phone_click`, `sms_click`, `email_click`) remain observation events until a call or reply is reconciled outside GA4. Those events include `placement` and `page_path`, so the page and component that earned the action can be reviewed. `booking_started` measures scheduling intent only. It does not prove that a meeting was booked or held.
+Use `generate_lead` as the **only configured GA4 key event**, retaining the
+browser-evidence limitation above. This is the intended configuration; local
+source does not prove the current GA4 account settings. The Tech Audit form
+does not also emit generic `form_submit`. Its submit event carries
+`form_name` and `page_path`, but not `intent` or `placement`; do not assume
+every event has every breakdown dimension. `tech_audit_started` and the
+thanks-page event carry the resolved intent.
+
+Phone, text and email events (`phone_click`, `sms_click`, `email_click`) remain
+observation events until a call or reply is reconciled outside GA4. Those
+events include `placement` and `page_path`. `booking_started` measures
+scheduling intent only; it does not prove that a meeting was booked or held.
 
 The public site loads the owned GA4 stream directly after consent with `send_page_view: false`; React Router sends the one canonical page view for the initial route and each later route. The direct transport is intentional: the prior GTM container delivered page views but had no allowlisted custom-event mapping, so conversion events stopped in the data layer. Advertising signals and ad personalization stay disabled.
 
@@ -53,13 +72,36 @@ The standalone Audit Lab has a separate diagnostic funnel:
 1. `page_view` — consented visit to `/examples/audit/`
 2. `audit_scan_started` — valid URL and email passed client validation
 3. `audit_scan_accepted` — the audit service returned a successful response and an audit ID
-4. `generate_lead` — the server accepted the audit job and follow-up record
+4. `generate_lead` — the request endpoint accepted the audit job
 5. `audit_report_ready` — status polling confirmed the report is ready
 
-The Audit Lab emits `generate_lead` once at that server-confirmed acceptance;
-it is the same sole GA4 key event, not a second key-event definition. Do not
-compare it with a Tech Audit `/thanks/` lead without separating the paths by
-`page_path` and `placement`.
+The Audit Lab emits `generate_lead` once when the request endpoint accepts
+the job. For an unauthenticated public production request, the endpoint first
+writes a durable follow-up ingress receipt; non-production and programmatic
+flows do not establish that private record. Acceptance does not prove later
+report generation, reconciliation or email delivery. It is the same key-event name, not
+another key-event definition. Separate Audit Lab and human inquiries by
+`page_path`, method and available placement before comparing them.
+
+`website_check_started` occurs at both the `/website-check/` handoff and the
+Lab's actual request start; those are two stages, not necessarily two owners
+or reports. `website_check_ready` accompanies the Lab's ready status, and
+`report_opened` measures the report-opening action. Neither event proves a
+human has reviewed the business or that email arrived. No-site human
+inquiries must not be required to produce any automated-check events.
+
+The local candidate now handles a ready report whose email copy could not
+be sent: final public status includes only `email_delivery=unavailable`, and
+the Lab presents an Open report link and human contact option. This is still
+a generated report, so `audit_report_ready` and `website_check_ready` remain
+valid. The email state and private provider details do not enter analytics.
+An omitted email state retains the existing redirect for sent and older
+reports; omission is not proof of inbox receipt.
+
+All these browser observations depend on consent and working JavaScript.
+Consent-denied and native no-JavaScript inquiries can be received without
+appearing in GA4. Report observed counts and the known coverage limit; do not
+extrapolate a total inquiry count or close rate from consented traffic alone.
 
 Use `audit_scan_failed` with `failure_category` (`rejected`, `rate_limit`, `provider`, `network`, or `timeout`) to diagnose loss. It is not a conversion.
 

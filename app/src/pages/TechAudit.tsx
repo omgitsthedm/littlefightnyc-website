@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone, Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import PageHero from "@/components/editorial/PageHero";
+import FaqList from "@/components/editorial/FaqList";
+import techAuditContent from "@/data/tech-audit-content.json";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import { ScoreGauge } from "@/components/dataviz/ScoreGauge";
@@ -39,13 +40,6 @@ const AUDIT_PROOF_SCORES = [
   { value: "100", label: "Easy to find" },
 ] as const;
 type Step = 1 | 2 | 3;
-
-const OUTCOMES = [
-  "What to keep",
-  "What to fix first",
-  "The clearest next move",
-  "An honest answer if the work can wait",
-];
 
 const REQUIRED_FIELDS: { name: Exclude<FieldName, "follow_up">; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
@@ -240,6 +234,10 @@ export default function TechAudit() {
   // Attribute a lead that arrived via the PWA share target (no explicit source,
   // but the share sheet passed text/title) so shares are measurable.
   const explicitSource = queryValue(searchParams, "source", 80);
+  // The Website Check makes this route available to owners who currently work
+  // through social, referrals, or a physical location. They need the same
+  // human first look, without a made-up website problem preloaded into the form.
+  const noWebsiteLead = explicitSource === "no_website_check";
   const leadOrigin =
     explicitSource ||
     (reportId ? "audit-lab" : "") ||
@@ -250,18 +248,31 @@ export default function TechAudit() {
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
   const activeDraft = draft?.intent === intentMode ? draft : null;
-  const initialSymptom = activeDraft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
+  // A regular website lead receives an automatic prompt. Do not carry that
+  // prompt into the no-site route, where it would tell an owner to improve a
+  // website they do not have. Keep genuine typed context and contact fields.
+  const discardAutomaticWebsiteContext = noWebsiteLead && activeDraft?.messageDirty !== true;
+  const initialSymptom = discardAutomaticWebsiteContext
+    ? null
+    : activeDraft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
+  const initialUrgency = discardAutomaticWebsiteContext
+    ? null
+    : activeDraft?.urgency ?? null;
   const initialMessage = appendAuditContext(
-    activeDraft?.message || composeMessage(initialSymptom, activeDraft?.urgency ?? null),
+    discardAutomaticWebsiteContext
+      ? ""
+      : activeDraft?.message || composeMessage(initialSymptom, initialUrgency),
     websiteUrl,
   );
   // Open on the real form. Owners can describe the problem in their own words
   // without completing a symptom quiz first.
   const [step, setStep] = useState<Step>(3);
   const [symptom, setSymptom] = useState<string | null>(initialSymptom);
-  const [urgency, setUrgency] = useState<string | null>(activeDraft?.urgency ?? null);
+  const [urgency, setUrgency] = useState<string | null>(initialUrgency);
   const [message, setMessage] = useState(initialMessage);
-  const [messageDirty, setMessageDirty] = useState(activeDraft?.messageDirty ?? false);
+  const [messageDirty, setMessageDirty] = useState(
+    discardAutomaticWebsiteContext ? false : activeDraft?.messageDirty ?? false,
+  );
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -535,121 +546,91 @@ export default function TechAudit() {
 
   return (
     <>
-      {websiteIntent ? (
-        <section className="lf-audit-intro" aria-labelledby="lf-audit-intro-title">
-          <div className="lf-audit-intro__inner">
-            <div className="lf-audit-intro__copy">
-              <p className="lf-audit-intro__eyebrow">
-                <ClipboardCheck size={18} strokeWidth={1.8} aria-hidden="true" />
-                Free website plan
-              </p>
-              <h1 id="lf-audit-intro-title">Get a clear website plan.</h1>
-              <p>You get what to keep and what to fix first. Tell us what the site needs to do. A real person reviews it and replies with a next move.</p>
-              <p className="lf-audit-intro__meta">A short form. Reviewed by a person during 9am–9pm Eastern.</p>
+      <section className="lf-audit-intro" aria-labelledby="lf-audit-intro-title" data-lf-owner-intro="true">
+        <div className="lf-audit-intro__inner">
+          <div className="lf-audit-intro__copy">
+            <p className="lf-audit-intro__eyebrow">
+              <ClipboardCheck size={18} strokeWidth={1.8} aria-hidden="true" />
+              Free first look
+            </p>
+            <h1 id="lf-audit-intro-title">Get a clear next step.</h1>
+            <p>Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.</p>
+            <p className="lf-audit-intro__meta">Free. No obligation. A person reads every note.</p>
 
-              {/* Every website lead from the nav, the audit report, the contact
-                  block, and the case studies lands here. This branch replaces
-                  PageHero, so it has to carry the same first-screen contract:
-                  all four channels and the hours line, before the form. */}
-              <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
-                <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
-                  <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
-                    <Phone size={16} strokeWidth={2} aria-hidden="true" />
-                    Call {PHONE_DISPLAY}
-                  </a>
-                  <a href={SMS_HREF} data-lf-label="audit_intro_sms">
-                    <MessageSquare size={16} strokeWidth={2} aria-hidden="true" />
-                    Text
-                  </a>
-                  <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="audit_intro_email">
-                    <Mail size={16} strokeWidth={2} aria-hidden="true" />
-                    Email
-                  </a>
-                  <a href="#fit-step-title" data-lf-label="audit_intro_form">
-                    <Send size={16} strokeWidth={2} aria-hidden="true" />
-                    Form
-                  </a>
-                </div>
-                <p className="lf-audit-intro__hours">
-                  9am–9pm Eastern: a human answers. After hours: leave a message.
-                </p>
-              </div>
-            </div>
-            <article className="lf-audit-intro__proof">
-              <Link
-                className="lf-audit-intro__proof-image"
-                to="/case-studies/hair-by-rachel-charles/"
-                aria-label="Read the Hair By Rachel Charles case study"
-              >
-                <img
-                  {...skelImg}
-                  src="/assets/case-hair-by-rachel-charles.webp"
-                  {...responsiveImageProps(
-                    "/assets/case-hair-by-rachel-charles.webp",
-                    "(min-width: 1200px) 34vw, 42vw",
-                    [480, 640, 900],
-                  )}
-                  alt="The Hair By Rachel Charles booking website as it shipped"
-                  width={1600}
-                  height={1200}
-                  fetchPriority="high"
-                  decoding="async"
-                />
-              </Link>
-              {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
-                    mobile: performance 96, accessibility 100, best practices 100, SEO 100.
-                    Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
-              <span className="lf-audit-intro__caption">Hair By Rachel Charles: checked on a phone on July 30, 2026. Fast to load, easy to use, built carefully, and easy for search to read.</span>
-              {/* Same verified 2026-07-30 measurement as the caption, restated as
-                  instruments. Values must track the evidence artifact above. */}
-              <span className="lf-audit-intro__scores" aria-hidden="true">
-                {AUDIT_PROOF_SCORES.map((score) => (
-                  <span key={score.label} className="lf-audit-intro__score">
-                    <ScoreGauge value={score.value} className="lf-gauge--sm" />
-                    <span className="lf-audit-intro__score-label">{score.label}</span>
-                  </span>
-                ))}
-              </span>
-              <span className="lf-audit-intro__proof-links">
-                <Link to="/case-studies/hair-by-rachel-charles/">Read the case study</Link>
-                <a
-                  href="https://github.com/omgitsthedm/littlefightnyc-website/blob/main/.lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  How we checked it
+            <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
+              <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
+                <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
+                  <Phone size={16} strokeWidth={2} aria-hidden="true" />
+                  Call {PHONE_DISPLAY}
                 </a>
-              </span>
-            </article>
+                <a href={SMS_HREF} data-lf-label="audit_intro_sms">
+                  <MessageSquare size={16} strokeWidth={2} aria-hidden="true" />
+                  Text
+                </a>
+                <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="audit_intro_email">
+                  <Mail size={16} strokeWidth={2} aria-hidden="true" />
+                  Email
+                </a>
+                <a href="#fit-step-title" data-lf-label="audit_intro_form">
+                  <Send size={16} strokeWidth={2} aria-hidden="true" />
+                  Form
+                </a>
+              </div>
+              <p className="lf-audit-intro__hours">
+                9am–9pm Eastern: a human answers. After hours: leave a message.
+              </p>
+            </div>
           </div>
-        </section>
-      ) : (
-        <PageHero
-          eyebrow="Free second opinion"
-          icon={ClipboardCheck}
-          title={(
-          <>
-            Tell us what is<br />
-            {" "}
-            <span className="lf-em">getting in the way.</span>
-          </>
-          )}
-          dek="A free look at your website, tools, and monthly bills. We name what to keep and what to fix first. One short form. A person reads it and replies."
-          action={{
-            href: "#fit-step-title",
-            kicker: "About two minutes",
-            label: "Start the free review",
-          }}
-          image={{
-            src: "/images/brand-scenes/shop-back-office.webp",
-            alt: "A small business back office with the everyday tools that keep the day moving",
-            width: 1672,
-            height: 941,
-          }}
-        />
-      )}
+          <article className="lf-audit-intro__proof">
+            <Link
+              className="lf-audit-intro__proof-image"
+              to="/case-studies/hair-by-rachel-charles/"
+              aria-label="Read the Hair By Rachel Charles case study"
+            >
+              <img
+                {...skelImg}
+                src="/assets/case-hair-by-rachel-charles.webp"
+                {...responsiveImageProps(
+                  "/assets/case-hair-by-rachel-charles.webp",
+                  "(min-width: 1200px) 34vw, 42vw",
+                  [480, 640, 900],
+                )}
+                alt="The Hair By Rachel Charles booking website as it shipped"
+                width={1600}
+                height={1200}
+                loading="lazy"
+                decoding="async"
+              />
+            </Link>
+            {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
+                  mobile: performance 96, accessibility 100, best practices 100, SEO 100.
+                  Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
+            <span className="lf-audit-intro__caption">Hair By Rachel Charles: checked on a phone on July 30, 2026. Fast to load, easy to use, built carefully, and easy for search to read.</span>
+            {/* Same verified 2026-07-30 measurement as the caption, restated as
+                instruments. Values must track the evidence artifact above. */}
+            <span className="lf-audit-intro__scores" aria-hidden="true">
+              {AUDIT_PROOF_SCORES.map((score) => (
+                <span key={score.label} className="lf-audit-intro__score">
+                  <ScoreGauge value={score.value} className="lf-gauge--sm" />
+                  <span className="lf-audit-intro__score-label">{score.label}</span>
+                </span>
+              ))}
+            </span>
+            <span className="lf-audit-intro__proof-links">
+              <Link to="/case-studies/hair-by-rachel-charles/">Read the case study</Link>
+              <a
+                href="https://github.com/omgitsthedm/littlefightnyc-website/blob/main/.lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                How we checked it
+              </a>
+            </span>
+          </article>
+        </div>
+      </section>
 
-      <section className={`lf-audit${websiteIntent ? " lf-audit--website" : ""}`}>
+      <section className="lf-audit">
         <div className="lf-audit__inner">
           <div className="lf-audit__flow">
             {step === 1 && (
@@ -786,26 +767,8 @@ export default function TechAudit() {
                   tabIndex={-1}
                   ref={headingRef}
                 >
-                  {websiteIntent ? "Where should we send your plan?" : STEP_TITLES[3]}
+                  Where should we respond?
                 </h2>
-                <p className="lf-audit__step-sub">
-                  {websiteIntent
-                    ? "A short note is enough. A real person reads every message."
-                    : "Free, and no obligation. We only need enough to reply."}
-                </p>
-
-                {/* This list used to sit below the submit button, so an owner
-                    gave us a name, a business, a contact and a problem before
-                    learning what came back. Answer first, then ask. */}
-                <p className="lf-audit__outcomes lf-audit__outcomes--lead">
-                  You get back:{" "}
-                  {OUTCOMES.map((o, i) => (
-                    <span key={o}>
-                      <strong>{o}</strong>
-                      {i < OUTCOMES.length - 1 ? "; " : "."}
-                    </span>
-                  ))}
-                </p>
 
                 <form
                   className="lf-audit__form"
@@ -815,7 +778,7 @@ export default function TechAudit() {
                   data-netlify="true"
                   netlify-honeypot="bot-field"
                   onSubmit={handleSubmit}
-                  noValidate
+                  noValidate={typeof window !== "undefined"}
                 >
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
                   <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
@@ -978,11 +941,7 @@ export default function TechAudit() {
                       fieldClass("message", message)
                     }`}
                   >
-                    <label htmlFor="fit-message">
-                      {websiteIntent
-                        ? "What should your website do better?"
-                        : "What feels broken, expensive, slow, or disconnected?"}
-                    </label>
+                    <label htmlFor="fit-message">What would you like to improve or fix?</label>
                     <textarea
                       id="fit-message"
                       name="message"
@@ -996,16 +955,15 @@ export default function TechAudit() {
                         clearErrorIfFilled("message", e.target.value);
                       }}
                       onBlur={(e) => validateField("message", e.target.value)}
-                      placeholder={websiteIntent
-                        ? "For example: customers cannot find what we offer, we need online booking, or the current site no longer reflects the business."
-                        : "A short sentence is fine. We will ask the rest when we reply."}
+                      placeholder="For example: We have no website yet and customers find us on Instagram, we need online booking, or a tool is slowing us down."
                       aria-invalid={errors.message ? true : undefined}
                       aria-describedby={
                         errors.message ? "fit-message-error" : "fit-message-note"
                       }
                     />
                     <p className="lf-audit__note" id="fit-message-note">
-                      No passwords or private customer data here. We do not need them to understand the job.
+                      No passwords or private customer data. A short sentence is enough. If helpful,
+                      add your city, social page, or how customers find you.
                     </p>
                     {errors.message && (
                       <p className="lf-audit__error" role="alert" id="fit-message-error">
@@ -1027,7 +985,7 @@ export default function TechAudit() {
                       </>
                     ) : (
                       <>
-                        {websiteIntent ? "Send my website plan request" : "Send my note"}{" "}
+                        Send my first-look request{" "}
                         <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
@@ -1080,6 +1038,9 @@ export default function TechAudit() {
           </aside>
         </div>
       </section>
+      <div className="lf-audit__questions">
+        <FaqList title="Questions before you send" items={techAuditContent.faq} />
+      </div>
     </>
   );
 }

@@ -126,6 +126,9 @@
 
 .lf-audit-shell-page .btn-primary:disabled::after { content: "Connecting"; }
 
+.lf-audit-shell-page .audit-email-recovery { margin-bottom: 24px; }
+.lf-audit-shell-page .audit-email-recovery p + p { margin-top: 16px; }
+
 .audit-scan {
   min-height: 650px;
   margin-top: 0;

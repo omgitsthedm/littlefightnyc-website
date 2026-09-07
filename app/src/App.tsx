@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ComponentType } from "react";
+import { lazy, Suspense, useLayoutEffect, type ComponentType } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import RouteMetaManager from "@/components/RouteMetaManager";
@@ -8,6 +8,7 @@ import GlobalViewTransitions from "@/components/GlobalViewTransitions";
 import TugSail from "@/components/editorial/TugSail";
 import SiteNotices from "@/components/SiteNotices";
 import { importWithRetry } from "@/lib/importWithRetry";
+import { commitPublicRoute } from "@/lib/publicRouteBootstrap";
 import Home from "@/pages/Home";
 
 // A transient mobile/CDN failure gets one quiet retry before the ErrorBoundary
@@ -67,10 +68,18 @@ function RouteFallback() {
   );
 }
 
+function RouteCommit() {
+  useLayoutEffect(() => {
+    commitPublicRoute();
+  }, []);
+  return null;
+}
+
 function route(Component: ComponentType) {
   return (
     <Suspense fallback={<RouteFallback />}>
       <Component />
+      <RouteCommit />
     </Suspense>
   );
 }
@@ -85,13 +94,12 @@ export default function App() {
       <RouteFocusManager />
       <GlobalViewTransitions />
       <TugSail />
-      <SiteNotices />
       <ErrorBoundary>
       <Routes>
         {/* Home: custom layout with the full Press Strike masthead - the
             magazine cover. Everything else inherits EditorialShell with the
             compact running masthead. */}
-        <Route index element={<Home />} />
+        <Route index element={<><Home /><RouteCommit /></>} />
 
         {/* The complete pitch in Spanish — standalone, fully-Spanish chrome
             (an English nav/footer around Spanish content would be half a page). */}
@@ -123,6 +131,7 @@ export default function App() {
             element={
               <Suspense fallback={<RouteFallback />}>
                 <TechAudit key={search} />
+                <RouteCommit />
               </Suspense>
             }
           />
@@ -162,6 +171,7 @@ export default function App() {
         </Route>
       </Routes>
       </ErrorBoundary>
+      <SiteNotices />
     </>
   );
 }

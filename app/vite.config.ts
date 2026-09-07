@@ -14,11 +14,15 @@ const veraFeedProxy = {
   },
 };
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
   build: {
     target: "es2022",
     sourcemap: false,
+    // The public prerender reads the client manifest to include the exact CSS
+    // closure for the real Website Check SSR markup. Server builds are a
+    // temporary build-time renderer and must not replace that manifest.
+    manifest: !isSsrBuild,
     modulePreload: {
       polyfill: false,
     },
@@ -85,4 +89,4 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
-});
+}));
