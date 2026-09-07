@@ -2,7 +2,48 @@
  * inspect real work, name the fight, then reach the contact desk. The close is
  * the shared contact block, trimmed on phones so the page stays short. */
 
+.lf-website-reasons {
+  padding-block: var(--lf-section-space);
+  border-top: 1px solid var(--lf-hairline);
+}
+
+.lf-editorial .lf-website-reasons h2 {
+  margin: 0 0 var(--lf-space-7);
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-2xl);
+  line-height: 1.1;
+}
+
+.lf-website-reasons__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--lf-space-7);
+}
+
+.lf-website-reasons__list article {
+  border-top: 1px solid var(--lf-hairline);
+  padding-top: var(--lf-space-5);
+}
+
+.lf-editorial .lf-website-reasons h3 {
+  margin: 0 0 var(--lf-space-4);
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-xl);
+  line-height: 1.15;
+}
+
+.lf-editorial .lf-website-reasons p {
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-base);
+  line-height: 1.6;
+}
+
 @media (max-width: 47.99rem) {
+  .lf-website-reasons__list {
+    grid-template-columns: 1fr;
+  }
+
   .lf-home-main .lf-contact-block {
     padding-block: 3rem;
   }

@@ -15,7 +15,7 @@ import PageHero from "@/components/editorial/PageHero";
 import VisualIndex from "@/components/editorial/VisualIndex";
 import WorkWall from "@/components/editorial/WorkWall";
 import QuietContact from "@/components/editorial/QuietContact";
-import { services, studioProjects } from "@/data/site";
+import { services, serviceOffers, studioProjects } from "@/data/site";
 import "@/styles/editorial/services-hub.css";
 
 /* Symptom → service. Owners arrive with a feeling, not a service name —
@@ -27,28 +27,24 @@ const ENTRY_ROUTES = [
     slug: "custom-local-websites",
     icon: Globe2,
     priority: "primary",
-    detail: "People should find you, understand you, and know whether to call, book, visit, or buy.",
   },
   {
     label: "Something is broken",
     slug: "it-support",
     icon: Headphones,
     priority: "support",
-    detail: "A card reader, Wi-Fi, email, booking link, or device is stopping the day.",
   },
   {
     label: "I need a free second opinion",
     slug: "tech-consulting",
     icon: Search,
     priority: "consulting",
-    detail: "You want an honest look before you renew, replace, sign, or spend.",
   },
   {
     label: "Monthly software is slowing us down",
     slug: "business-systems",
     icon: Workflow,
     priority: "software",
-    detail: "A costly tool still makes people type the same thing twice or run the business from a spreadsheet.",
   },
 ] as const;
 
@@ -116,7 +112,11 @@ export default function Services() {
                       <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
                       {route.label}
                     </span>
-                    <span className="lf-svc-router__detail">{route.detail}</span>
+                    <span className="lf-svc-router__detail">
+                      <span className="lf-offer-line"><strong>What it is:</strong> {serviceOffers[route.slug].what}</span>
+                      <span className="lf-offer-line"><strong>Who it is for:</strong> {serviceOffers[route.slug].who}</span>
+                      <span className="lf-offer-line"><strong>What you get:</strong> {serviceOffers[route.slug].get}</span>
+                    </span>
                     <span className="lf-svc-router__service">
                       {service.eyebrow}
                       <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
@@ -134,18 +134,20 @@ export default function Services() {
           <Link to="/services/new-business-launch/">
             <Store size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
-              <small>Opening or relaunching</small>
-              <strong>Open with one front door, not six loose logins.</strong>
-              <em>Your website, Google listing, email, booking, follow-up, and account access start in one clear plan.</em>
+              <small>New business launch</small>
+              <strong>What it is: {serviceOffers["new-business-launch"].what}</strong>
+              <em>Who it is for: {serviceOffers["new-business-launch"].who}</em>
+              <em>What you get: {serviceOffers["new-business-launch"].get}</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>
           <Link to="/services/ongoing-care/">
             <RefreshCw size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
-              <small>Already live</small>
-              <strong>Keep the front door working after launch.</strong>
-              <em>Current facts, checked forms, clear next steps, and notes your business keeps.</em>
+              <small>Ongoing care</small>
+              <strong>What it is: {serviceOffers["ongoing-care"].what}</strong>
+              <em>Who it is for: {serviceOffers["ongoing-care"].who}</em>
+              <em>What you get: {serviceOffers["ongoing-care"].get}</em>
             </span>
             <ArrowUpRight size={18} strokeWidth={2} aria-hidden="true" />
           </Link>

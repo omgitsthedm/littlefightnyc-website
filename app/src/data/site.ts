@@ -33,6 +33,8 @@ export { glossaryTerms } from "./site-glossary";
 export type { AreaPage } from "./site-areas";
 export { areaPages } from "./site-areas";
 
+export { whyWebsiteArguments, serviceOffers } from "./pitch-arguments";
+
 export type Service = {
   slug: string;
   eyebrow: string;
