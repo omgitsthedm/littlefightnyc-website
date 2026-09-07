@@ -278,12 +278,12 @@ export const areaPages: AreaPage[] = [
       {
         question: "What does a local SEO company actually do for an Upper East Side business?",
         answer:
-          "Honest version: it makes sure Google understands who you are, where you are, and what you do. Correct name and hours everywhere, real reviews coming in, service pages that answer what patients and clients actually search, and a site fast enough that nobody gives up. That is most of it. We do all of that as part of the work — and the first look is free.",
+          "We check which searches could bring you the right customers. Then we inspect your pages, Google profile, and booking path. The work can include technical fixes, service pages, and original project proof. We measure search visibility alongside calls, inquiries, and bookings. The first look is free; the scope names the work.",
       },
       {
         question: "Do I need a monthly SEO retainer?",
         answer:
-          "Usually no. Most local SEO is setup done right, then habits — fresh reviews, correct hours, an update when something changes. A retainer that cannot tell you what changed this month is just another bill. We set it up, show you what we did, and you own it.",
+          "You do not need a retainer to start with us. Competitive search takes continued work, though. Customer questions change. Competitors publish. Pages need better answers and stronger proof. We scope that work around your priorities and actual results. You should know what changed, why, and what happens next.",
       },
     ],
     nearby: ["upper-west-side", "midtown"],
@@ -798,6 +798,7 @@ type AreaOwnerContext = Pick<
   AreaPage,
   "shortAnswer" | "localPattern" | "firstMove" | "intro" | "businessLandscape" | "localSearchReality" | "whatWeFixHere" | "webDesign"
 > & {
+  headline?: string;
   /** Appended after the three shared area questions. Use it when a sub-
    *  neighborhood draws its own searches ("web designer lenox hill", GSC
    *  Aug 2026) and the answer is specific enough to be worth its own entry. */
@@ -856,15 +857,31 @@ const AREA_OWNER_CONTEXT: Record<string, AreaOwnerContext> = {
     whatWeFixHere: ["A homepage that hides basic practical information", "Directions or phone links that do not work on mobile", "A public listing leading to the wrong page", "A quick-action path with too many steps"],
   },
   "upper-east-side": {
-    shortAnswer: "Short answer: If you searched for an SEO company on the Upper East Side, here is the honest version: you get the part of local search that moves a shop — a correct Google profile, pages that answer the question, and a site that books — plus trust and appointment details steady enough for a careful customer to verify. No retainer, no rank promises.",
-    localPattern: "Some customers need reassurance before they act. Clear ownership, current facts, and a calm next step do more than a pile of sales language.",
-    firstMove: "Check whether a first-time visitor can verify who you are, what you do, and how to start without calling for basic facts.",
-    intro: "You get a page that makes trust easy to verify: who you are, how to reach you, how to book, all current. Plain and considered beats confident and foggy.",
-    businessLandscape: "Keep the expertise and relationships. Make the practical details and the handoff easier to follow.",
-    localSearchReality: "A careful customer should see current contact, service, and appointment information before making the first call.",
+    headline: "Local SEO, AI visibility, and better websites.",
+    shortAnswer: "Short answer: Upper East Side SEO, AI search visibility, and website design. Turn customer questions into useful pages and a clear booking path. Start with a free first look.",
+    localPattern: "A search for a service should land on that service. A recommendation should lead to proof. Both need an easy next step.",
+    firstMove: "Bring your website and the service you want to grow. We check the search result, the landing page, and the booking path together.",
+    intro: "A customer searching for a salon or practice has specific questions. What do you offer? Who does the work? What happens at the first appointment? We build the pages that answer those questions. Then we connect them to a useful Google profile and a working booking path.",
+    businessLandscape: "Start with the service you actually want more customers for. A salon color appointment needs different proof from a professional consultation. We use your real work, approved service details, and customer questions. Lenox Hill and Yorkville belong in the copy where they help someone find you.",
+    localSearchReality: "We inspect the words customers search and the pages Google shows. We compare relevant results, check indexing, and inspect your mobile experience. Your service pages should explain fit, process, and the next step. Original photos, clear business details, and useful answers support that work. Search reporting tells us where to improve next.",
     webDesign: "Website design on the Upper East Side is a trust job. Practices, salons, tutors, and shops here get checked before they get called: hours, the address, who you are, how to book. In Lenox Hill the check is tighter. The blocks around Lenox Hill Hospital and the storefronts on Lexington and Third run on private practices — dentists, dermatology, physical therapy, personal care — and a new patient reads the page before making the first call. You get a site built for that read: public facts that agree with your Google profile, one-tap booking or contact, new-patient and insurance details where people look for them, and pages that read like a considered practice instead of a template. You own the domain, code, and words when it launches.",
-    whatWeFixHere: ["A practice or service page missing plain fit information", "A contact route that does not say what happens next", "Out-of-date public details", "An appointment process that relies on phone tag"],
+    whatWeFixHere: ["Relevant searches showing a page that does not answer the question", "Pages Google cannot reliably crawl or index", "Service pages missing real work, process, or fit information", "Google profile details that disagree with the website", "Calls or bookings lost between the search result and the form", "Search reports that never connect visibility to business inquiries"],
     extraFaq: [
+      {
+        question: "Can you help my business appear in AI search answers?",
+        answer:
+          "Yes. We make your services and expertise easier to understand. That includes clear answers, original work, and consistent business details. We also check crawl access and relevant structured data. AI platforms choose their own sources; inclusion cannot be guaranteed. We report available AI visibility separately from ordinary search traffic.",
+      },
+      {
+        question: "How will I know whether the SEO work helps?",
+        answer:
+          "We record a baseline before changing the site. Search Console shows queries, impressions, clicks, and landing pages. With your approved measurement setup, we also track useful next steps. Those may be calls, booking clicks, or completed inquiries. We explain what each measure proves and what it cannot.",
+      },
+      {
+        question: "What does SEO for my business cost?",
+        answer:
+          "The scope depends on the site and the search market. Fixing indexing is different from building a new service page. We inspect the current site first, then name the work. You get the scope and price before paid work starts.",
+      },
       {
         question: "Do you build websites for Lenox Hill businesses?",
         answer:
@@ -1006,7 +1023,7 @@ for (const area of areaPages) {
     // Short on purpose: the neighborhood name is already the display line above
     // it, and a 12-word H1 wrapped to five lines at desktop and pushed the two
     // decisions past the first screen. The dek carries the specifics.
-    headline: `Websites, local search, and tech help for ${attributive} businesses.`,
+    headline: context.headline ?? `Websites, local search, and tech help for ${attributive} businesses.`,
     locative: areaLocative(area.name),
     faq: [
       { question: `What should ${article} ${attributive} business check first?`, answer: context.firstMove },
