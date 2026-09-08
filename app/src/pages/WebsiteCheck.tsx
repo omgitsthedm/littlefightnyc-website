@@ -1,6 +1,5 @@
-import { CalendarDays, ExternalLink, Loader2, Mail, MessageSquare, Phone, Search } from "lucide-react";
+import { ArrowRight, CalendarDays, ExternalLink, Loader2, Mail, MessageSquare, Phone, Search } from "lucide-react";
 import { useState } from "react";
-import PageHero from "@/components/editorial/PageHero";
 import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { handoffToAuditLab } from "@/lib/auditPrefill";
 import FaqList from "@/components/editorial/FaqList";
@@ -16,74 +15,81 @@ export default function WebsiteCheck() {
   const [checking, setChecking] = useState<string | null>(null);
   return (
     <>
-      <PageHero
-        layout="acquisition"
-        eyebrow="Free first look"
-        icon={Search}
-        // Answer first: what you get (a free plain-words report on what stops
-        // customers), then how it works. The old H1 was vague ("See what gets
-        // in the way") and the dek opened with an instruction.
-        title={<>See what a new customer sees.</>}
-        dek="Have a website? Get a free report in plain words. Starting with social, referrals, or no website yet? Start with a free first look from a person."
-        pillars={[
-          "Free, and no sales call required",
-          "No login, card, or password",
-          "Says plainly what we could not see",
-        ]}
-        action={{
-          href: "#website-check-start",
-          kicker: "Free first look",
-          label: "Choose your starting point",
-        }}
-        image={{
-          src: "/assets/journal-what-a-free-tech-audit-actually-looks-like.webp",
-          alt: "Little Fight NYC Website Audit Lab preview",
-          width: 1600,
-          height: 1067,
-        }}
-      />
-
-      <section className="lf-revenue-page lf-website-check" aria-labelledby="lf-website-check-title">
-        <header className="lf-revenue-page__intro">
-          <p>Start here</p>
-          <h2 id="lf-website-check-title">Start with the path that fits your business.</h2>
-          <div>
-            <p>
-              Choose the website check if you have a public site. If customers find you through
-              social or referrals, start with a free first look instead.
-            </p>
+      <section className="lf-website-check" aria-labelledby="lf-website-check-title">
+        <header className="lf-website-check__intro" data-lf-owner-intro="true">
+          <p className="lf-website-check__eyebrow">A free first look</p>
+          <h1 id="lf-website-check-title">See what a new <br />customer sees.</h1>
+          <div className="lf-website-check__intro-note">
+            <p>A first website, a better one, or less daily busywork.</p>
+            <a
+              className="lf-website-check__start"
+              href="/tech-audit/?intent=website&source=no_website_check"
+              data-lf-primary-action="true"
+              data-lf-event="human_review_requested"
+              data-lf-label="no_website_check"
+              data-lf-source="website_check"
+            >
+              Start a free first look <ArrowRight size={20} aria-hidden="true" />
+            </a>
+            <div className="lf-website-check__contact" data-lf-contact-rail="true">
+              <a href={PHONE_HREF}>Call {PHONE_DISPLAY}</a>
+              <a href={SMS_HREF}>Text</a>
+              <a href="mailto:hello@littlefightnyc.com">Email</a>
+              <a href="/tech-audit/">Form</a>
+            </div>
+            <p className="lf-website-check__hours">9am–9pm Eastern: a human answers. After hours: leave a message.</p>
           </div>
         </header>
 
         <section id="website-check-start" className="lf-website-check__choices" aria-labelledby="lf-website-check-choice-title">
-          <p className="lf-website-check__choices-kicker" id="lf-website-check-choice-title">Two free ways to start</p>
+          <h2 className="lf-website-check__choices-kicker" id="lf-website-check-choice-title">Choose how to start.</h2>
           <div className="lf-website-check__choices-grid">
-            <article className="lf-website-check__choice">
-              <h3>I have a website</h3>
-              <p>
-                A free report on what customers can find, read and do.
-              </p>
-              <a href="#website-check-url" data-lf-label="website_check_existing_site">
-                Check my website
-              </a>
-            </article>
             <article className="lf-website-check__choice lf-website-check__choice--person">
-              <h3>I don’t have a website</h3>
-              <p>
-                A person reviews your request and suggests a next step.
-              </p>
+              <p className="lf-website-check__eyebrow">For any starting point</p>
+              <h3>Let’s look at<br />your business.</h3>
+              <p>Already online? Starting from scratch? Both belong here.</p>
               <a
                 href="/tech-audit/?intent=website&source=no_website_check"
                 data-lf-event="human_review_requested"
                 data-lf-label="no_website_check"
                 data-lf-source="website_check"
               >
-                Start a free first look
+                Tell us what you need
+                <ArrowRight size={20} aria-hidden="true" />
               </a>
+              <p className="lf-website-check__reassurance">No technical brief. No passwords. No commitment.</p>
+              <ol className="lf-website-check__steps">
+                <li><strong>Tell us what you need.</strong><span>A website, social page, or just an idea.</span></li>
+                <li><strong>We look at what matters.</strong><span>What customers see. What slows you down.</span></li>
+                <li><strong>You get a clear next step.</strong><span>What to keep, what to fix, what can wait.</span></li>
+              </ol>
+            </article>
+            <article className="lf-website-check__choice lf-website-check__choice--automated">
+              <p className="lf-website-check__eyebrow">Optional · Automated check</p>
+              <h3>Want to check<br />a website now?</h3>
+              <p>Run a free technical check of a public website.</p>
+              <p>It can flag technical issues. It cannot judge your whole business.</p>
+              <a href="#website-check-url" data-lf-label="website_check_existing_site">
+                Check my website
+                <Search size={18} aria-hidden="true" />
+              </a>
+              <p className="lf-website-check__reassurance">No login or card. Results depend on available measurements.</p>
+              <div className="lf-website-check__limits">
+                <h4>Useful information. Honest limits.</h4>
+                <p>Missing measurements stay blank. A score is not a business plan.</p>
+                <p>You can always start with a person instead.</p>
+              </div>
             </article>
           </div>
         </section>
 
+        <div className="lf-website-check__report" aria-labelledby="lf-website-check-report-title">
+          <div className="lf-website-check__report-intro">
+            <p className="lf-website-check__eyebrow">The optional check</p>
+            <h2 id="lf-website-check-report-title">A useful place<br />to start.</h2>
+            <p>Enter a public website below. Your details carry into the Audit Lab.</p>
+            <p>There, you review the request before the check starts.</p>
+          </div>
         <form
           className="lf-website-check__form"
           action="/examples/audit/"
@@ -135,6 +141,7 @@ export default function WebsiteCheck() {
             </p>
           </noscript>
         </form>
+        </div>
 
         <section
           className="lf-revenue-page__handoff lf-website-check__booking"

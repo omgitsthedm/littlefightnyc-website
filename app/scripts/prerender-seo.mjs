@@ -1966,12 +1966,12 @@ function ownerStartBlock(page) {
   if (page.path === "/website-check/") {
     return `
       <section id="website-check-start" class="lf-seo__owner-start" data-lf-contact-rail="true" aria-labelledby="lf-check-choice-title">
-        <h2 id="lf-check-choice-title">Two free ways to start</h2>
+        <h2 id="lf-check-choice-title">Choose how to start.</h2>
         <div class="lf-seo__owner-decisions">
-          <a class="lf-seo__owner-action" href="/examples/audit/"><span>I have a website</span><strong>Check my website</strong></a>
-          <a class="lf-seo__owner-action" href="/tech-audit/?intent=website&amp;source=no_website_check"><span>I don’t have a website</span><strong>Start a free first look</strong></a>
+          <a class="lf-seo__owner-action" href="/tech-audit/?intent=website&amp;source=no_website_check"><span>For any starting point</span><strong>Start a free first look</strong></a>
+          <a class="lf-seo__owner-action" href="/examples/audit/"><span>Optional automated check</span><strong>Check my website</strong></a>
         </div>
-        <p>Have a public website? The automated check asks for its address and an email for your private report. Social pages and referrals can be a starting point for a human first look. A person reads your request and suggests a next step.</p>
+        <p>Already online or starting from scratch? A person reviews your request and suggests a next step. The optional automated check can flag technical issues. Missing measurements stay blank. A score is not a business plan.</p>
         <p class="lf-seo__owner-channels"><a href="tel:${site.phone}">Call ${site.phoneDisplay}</a><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
       </section>`;
   }

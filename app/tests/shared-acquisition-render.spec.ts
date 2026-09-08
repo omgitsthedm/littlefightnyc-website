@@ -66,8 +66,12 @@ test("the first decisions and inquiry field fit their intended openings @all-pro
   await page.setViewportSize({ width: 1280, height: 720 });
   for (const path of ["/website-check/", "/case-studies/hair-by-rachel-charles/", "/services/custom-local-websites/"]) {
     await page.goto(path, { waitUntil: "networkidle" });
-    const hero = page.locator(".lf-pagehero");
-    for (const selector of [".lf-pagehero__decision--primary", ".lf-pagehero__decision--urgent", ".lf-pagehero__hours"]) {
+    const isFirstLook = path === "/website-check/";
+    const hero = page.locator(isFirstLook ? ".lf-website-check__intro" : ".lf-pagehero");
+    const decisions = isFirstLook
+      ? [".lf-website-check__start", '.lf-website-check__contact a[href^="tel:"]', ".lf-website-check__hours"]
+      : [".lf-pagehero__decision--primary", ".lf-pagehero__decision--urgent", ".lf-pagehero__hours"];
+    for (const selector of decisions) {
       const box = await hero.locator(selector).boundingBox();
       expect(box).not.toBeNull();
       expect(box!.y + box!.height, `${path} ${selector}`).toBeLessThanOrEqual(720);
