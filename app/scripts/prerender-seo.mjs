@@ -2111,12 +2111,12 @@ function snapshot(page) {
         <figure class="lf-seo__home-scene">
           <p class="lf-seo__home-scene-title"><span>Shops like yours, already working</span>Six trades, six live sites — a painting contractor, a lender, a film company, a help service, a clothing label, a salon.</p>
           <div class="lf-seo__home-phone"><div class="lf-seo__home-phone-screen"><img src="/assets/case-chromatic-painting-design-900.webp" width="900" height="640" alt="Chromatic Painting &amp; Design — a live client site"></div></div>
-          <ul class="lf-seo__home-path" aria-label="Live client sites">
+          <ul class="lf-seo__home-path" aria-label="Client work and our own clothing label">
             <li><a href="/case-studies/chromatic-painting-design/"><strong>Painting contractor</strong> — Chromatic Painting &amp; Design</a></li>
             <li><a href="/case-studies/grand-funding-llc/"><strong>Lender</strong> — Grand Funding LLC</a></li>
             <li><a href="/case-studies/cc-films/"><strong>Film company</strong> — CC Films</a></li>
             <li><a href="/case-studies/clearhelp/"><strong>Help service</strong> — ClearHelp</a></li>
-            <li><a href="/case-studies/after-hours-agenda/"><strong>Clothing label</strong> — After Hours Agenda</a></li>
+            <li><a href="/case-studies/after-hours-agenda/"><strong>Our clothing label</strong> — After Hours Agenda, owned by Little Fight</a></li>
             <li><a href="/case-studies/hair-by-rachel-charles/"><strong>Salon</strong> — Hair By Rachel Charles</a></li>
           </ul>
         </figure>
