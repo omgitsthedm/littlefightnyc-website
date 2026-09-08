@@ -35,6 +35,10 @@ const instagram = {
   label: "Instagram Terms of Use — checked Aug. 25, 2026",
   url: "https://help.instagram.com/581066165581870/",
 };
+const wordpressUpdates = {
+  label: "WordPress.org: Updating WordPress — checked Sept. 8, 2026",
+  url: "https://wordpress.org/documentation/article/updating-wordpress/",
+};
 
 const OWNER_QUESTIONS: Record<string, string> = {
   "Website Design for Small Business NYC: What to Expect": "What should a small-business website in NYC include, and how does the work go?",
@@ -57,6 +61,7 @@ const OWNER_QUESTIONS: Record<string, string> = {
   "Airtable vs Notion for a Small Business: the Practical Answer": "Should my small business use Airtable or Notion?",
   "NYC Small Business Tech Help: What Owners Actually Need": "Where can a NYC small business get tech help?",
   "Instagram or a Website for Your NYC Shop": "Do I need a website besides my Instagram?",
+  "WordPress vs a Custom Website for Small Business": "Should I use WordPress or a custom site?",
 };
 
 function ownerWords(value: string) {
@@ -82,6 +87,7 @@ const COMPARISON_SOURCES: Record<string, AnswerSource[]> = {
   "shopify-vs-squarespace-reddit": [shopify, squarespace],
   "airtable-vs-notion-reddit-small-business": [airtable, notion],
   "instagram-instead-of-a-website-nyc-shop": [instagram, googleProfile],
+  "wordpress-vs-custom-website-small-business": [wordpressUpdates, icann],
 };
 
 // Guides whose quick answer was rewritten on a later date. The default below
@@ -98,6 +104,7 @@ const UPDATED_OVERRIDES: Record<string, string> = {
   "it-consultants-for-small-business-nyc": "2026-08-19",
   "computer-security-for-small-business-ny": "2026-08-19",
   "instagram-instead-of-a-website-nyc-shop": "2026-08-25",
+  "wordpress-vs-custom-website-small-business": "2026-09-08",
 };
 
 const guide = (
@@ -168,6 +175,11 @@ export const answerGuides: AnswerGuide[] = [
   // a real NYC shop question, and the honest answer is not "yes, buy a site".
   // It is "own one page, keep the feed". Bridged to Websites.
   guide("instagram-instead-of-a-website-nyc-shop", "Instagram or a Website for Your NYC Shop", "Keep the Instagram feed, but give customers one page you control for hours, address, and booking.", "An Instagram account lives on a service your business does not control. Instagram’s terms say it may suspend or end access to the service, including by disabling or deleting an account. If your hours, address, services, and booking link live only there, that whole customer path depends on one account. A page on a domain your business controls gives those facts a separate home.", "1. Open your own profile on a phone and count the taps to your hours, address, and a way to book. 2. Put those same facts on one page you control and on your Google Business Profile. 3. Link that page from the bio so the profile has one destination. 4. Register the domain in the business name, not a friend’s or a vendor’s account.", "If the feed already brings the customers you want and the bio answers hours, address, and booking, leave it alone. Plenty of shops need one page, not a site. Do not buy five pages when one honest page and a correct Google listing do the job.", "Send the profile link and name the one thing a customer should be able to do. We will say whether one page is enough or whether the shop needs more. The first look is free.", [{ question: "Can I just link my Instagram from Google?", answer: "You can, and a link beats nothing. A page you own still gives a customer the hours, address, services, and the booking step in one place, with no account or app in the way." }, { question: "What happens if I lose the account?", answer: "If the account is disabled or unavailable, its posts and bio stop being a reliable customer path. A separate page keeps the facts and booking link available while you sort the account out." }, { question: "Do I need a whole website or one page?", answer: "Often one page. Hours, address, services, a few real photos, and one clear action cover most shops. Add pages when a customer keeps asking something that needs its own answer." }]),
+  // Sept 8, 2026 — weekly cadence. "wordpress vs custom website small business"
+  // is a platform question with an ownership answer underneath it. The honest
+  // read is that WordPress is a monthly job somebody has to own, so the page
+  // asks who that person is before it asks what to build. Bridged to Websites.
+  guide("wordpress-vs-custom-website-small-business", "WordPress vs a Custom Website for Small Business", "You can run a business site on WordPress if one named person updates it every month. If nobody will own that job, buy a build that does not need it.", "WordPress is free software that somebody still has to run. Its own update guide says to back up the site first, and to keep plugins and themes on the latest version to stay secure. That is a standing monthly job, not a one-time build. Custom work leaves less waiting to be updated, but you are buying the person who writes the notes and answers when it breaks. Either way the domain, the hosting login, and the site files belong in the business name.", "1. Open the site’s admin and look at the updates screen. Count what is waiting. 2. Name the person who clears that list every month and put it on their calendar. 3. Ask who holds the domain, the hosting login, and the site files today. 4. Check that a backup exists and that somebody has restored one and watched it work.", "If the WordPress site loads fast on a phone, says the right things, and someone updates it, leave it alone. A rebuild will not fix a wrong Google listing or a form nobody tests. Do not switch platforms because a salesperson called yours outdated.", "Send the address and tell us who updates the site today. We will say whether the honest answer is an hour of cleanup, a care plan, or a new build. The first look is free.", [{ question: "Is WordPress bad for security?", answer: "Not by itself. Most break-ins use an old plugin, an old theme, or a reused admin password. WordPress’s own update guide says to back up first and keep plugins and themes current. Do those two things and the boring part that matters is done." }, { question: "Can I move a WordPress site somewhere else later?", answer: "Usually yes. The pages, images, and words are yours to export, so a move is work rather than starting from nothing. Confirm the export path before you sign, and keep the domain registered in the business name." }, { question: "How many plugins is too many?", answer: "Count the ones nobody can name a job for. Every one you keep is another thing to update every month. Ten that earn their keep beat thirty nobody chose." }]),
 ];
 
 // The first six were originally published in May. The remaining guides were
@@ -178,6 +190,7 @@ for (const answer of answerGuides.slice(6)) answer.published = "2026-07-12";
 // they carry their own honest first-publication date.
 const PUBLISHED_OVERRIDES: Record<string, string> = {
   "instagram-instead-of-a-website-nyc-shop": "2026-08-25",
+  "wordpress-vs-custom-website-small-business": "2026-09-08",
 };
 for (const answer of answerGuides) {
   const published = PUBLISHED_OVERRIDES[answer.slug];
@@ -191,6 +204,6 @@ export const answerServiceBridge: Record<string, { to: string; name: string; lin
   const consulting = { to: "/services/tech-consulting/", name: "Tech Consulting", line: "Want a second set of eyes? We can map the setup before you buy or replace anything." };
   const systems = { to: "/services/business-systems/", name: "Software You Own", line: "Tools no longer fit? We can map the handoffs before deciding whether to connect or build." };
   return {
-    "website-form-not-working-small-business": support, "reduce-monthly-software-costs-small-business": systems, "business-not-showing-on-google-maps": consulting, "hair-salon-save-money-software": systems, "local-pharmacy-website-community-support": websites, "when-custom-business-system-beats-saas": systems, "best-web-designer-nyc-reddit": websites, "best-web-design-agency-nyc-reddit": websites, "small-business-it-support-nyc-reddit-recommendations": support, "how-to-find-good-it-guy-reddit": support, "squarespace-vs-hiring-web-designer-reddit": websites, "wix-vs-custom-website-reddit": websites, "is-local-seo-worth-it-reddit": consulting, "google-business-profile-tips-reddit": consulting, "web-developer-ghosted-me-reddit": websites, "best-pos-system-small-business-reddit": consulting, "square-vs-toast-reddit": consulting, "glossgenius-vs-square-appointments-reddit": consulting, "shopify-vs-squarespace-reddit": websites, "does-my-small-business-need-a-website-reddit": websites, "airtable-vs-notion-reddit-small-business": systems, "nyc-small-business-tech-help-reddit": support, "google-business-profile-suspended": support, "website-down-emergency-nyc": support, "pos-system-down-restaurant-nyc": support, "business-email-going-to-spam": support, "google-reviews-not-showing-up": consulting, "website-design-for-small-business-nyc": websites, "it-consultants-for-small-business-nyc": support, "computer-security-for-small-business-ny": support, "instagram-instead-of-a-website-nyc-shop": websites,
+    "website-form-not-working-small-business": support, "reduce-monthly-software-costs-small-business": systems, "business-not-showing-on-google-maps": consulting, "hair-salon-save-money-software": systems, "local-pharmacy-website-community-support": websites, "when-custom-business-system-beats-saas": systems, "best-web-designer-nyc-reddit": websites, "best-web-design-agency-nyc-reddit": websites, "small-business-it-support-nyc-reddit-recommendations": support, "how-to-find-good-it-guy-reddit": support, "squarespace-vs-hiring-web-designer-reddit": websites, "wix-vs-custom-website-reddit": websites, "is-local-seo-worth-it-reddit": consulting, "google-business-profile-tips-reddit": consulting, "web-developer-ghosted-me-reddit": websites, "best-pos-system-small-business-reddit": consulting, "square-vs-toast-reddit": consulting, "glossgenius-vs-square-appointments-reddit": consulting, "shopify-vs-squarespace-reddit": websites, "does-my-small-business-need-a-website-reddit": websites, "airtable-vs-notion-reddit-small-business": systems, "nyc-small-business-tech-help-reddit": support, "google-business-profile-suspended": support, "website-down-emergency-nyc": support, "pos-system-down-restaurant-nyc": support, "business-email-going-to-spam": support, "google-reviews-not-showing-up": consulting, "website-design-for-small-business-nyc": websites, "it-consultants-for-small-business-nyc": support, "computer-security-for-small-business-ny": support, "instagram-instead-of-a-website-nyc-shop": websites, "wordpress-vs-custom-website-small-business": websites,
   };
 })();
