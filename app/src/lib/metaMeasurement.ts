@@ -62,7 +62,10 @@ function allowed() {
 }
 
 function clearCookies() {
+  if (!HOSTS.has(window.location.hostname)) return;
+  const present = new Set(document.cookie.split(";").map((cookie) => cookie.trim().split("=")[0]));
   for (const name of ["_fbp", "_fbc"]) {
+    if (!present.has(name)) continue;
     for (const domain of ["", window.location.hostname, ".littlefightnyc.com", "littlefightnyc.com"]) {
       document.cookie = name + "=; Max-Age=0; path=/; SameSite=Lax; Secure" + (domain ? "; domain=" + domain : "");
     }
