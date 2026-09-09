@@ -50,11 +50,14 @@ const VERA_ONLY_REMOVALS = {
   "script-src": [
     "https://www.googletagmanager.com",
     "https://www.google-analytics.com",
+    "https://connect.facebook.net",
   ],
   "connect-src": [
     "https://www.google-analytics.com",
     "https://analytics.google.com",
     "https://region1.google-analytics.com",
+    "https://www.facebook.com",
+    "https://connect.facebook.net",
   ],
 };
 const failures = [];
