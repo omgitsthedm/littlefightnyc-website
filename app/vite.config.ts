@@ -33,6 +33,9 @@ export default defineConfig(({ isSsrBuild }) => ({
       },
       output: {
         manualChunks(id) {
+          // Keep the shared consent controls cacheable without making their
+          // mount asynchronous: an early privacy click must always be heard.
+          if (id.endsWith("/src/components/SiteNotices.tsx")) return "privacy-controls";
           // "react-dom" alone never matched: the app imports "react-dom/client"
           // (main.tsx) and "react-dom" (viewTransition.ts), and manualChunks
           // keys are module specifiers, not packages. React DOM was therefore
