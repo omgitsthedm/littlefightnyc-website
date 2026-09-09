@@ -10,7 +10,7 @@ const HOSTS = new Set(["littlefightnyc.com", "www.littlefightnyc.com"]);
 const PUBLIC_PATHS = new Set(routeMeta.pages.map((page) => page.path));
 type MetaQueue = ((...args: unknown[]) => void) & {
   callMethod?: (...args: unknown[]) => void;
-  queue: unknown[][]; loaded: boolean; version: string; push?: MetaQueue;
+  queue: unknown[][]; loaded: boolean; version: string; push?: MetaQueue; disablePushState?: boolean;
 };
 declare global { interface Window { fbq?: MetaQueue; _fbq?: MetaQueue; } }
 type PendingEvent = { name: string; custom: boolean; source: string; location: string; id: string };
@@ -103,7 +103,11 @@ function boot() {
   queue.push = queue;
   window.fbq = window.fbq ?? queue;
   window._fbq = window._fbq ?? window.fbq;
+  // Our router owns page views and checks private URLs before every event.
+  // Meta's automatic history listener would otherwise count the same visit twice.
+  window.fbq.disablePushState = true;
   window.fbq("consent", "revoke");
+  window.fbq("set", "autoConfig", false);
   window.fbq("set", "autoConfig", false, META_PIXEL_ID);
   window.fbq("init", META_PIXEL_ID);
   const script = document.createElement("script");

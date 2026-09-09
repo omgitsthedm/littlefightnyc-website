@@ -58,6 +58,8 @@ const VERA_ONLY_REMOVALS = {
     "https://region1.google-analytics.com",
     "https://www.facebook.com",
     "https://connect.facebook.net",
+    "https://mpc2-prod-27-is5qnl632q-uk.a.run.app",
+    "https://5z-2b6b7616f94640c2840d1841e1ac24c3.ecs.us-east-1.on.aws",
   ],
 };
 const failures = [];

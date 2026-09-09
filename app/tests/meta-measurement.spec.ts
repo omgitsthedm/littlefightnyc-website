@@ -28,6 +28,10 @@ async function localProduction(page: Page, baseURL: string, options: { consent?:
       if (options.delay) await new Promise((resolve) => setTimeout(resolve, 600));
       return route.fulfill({ contentType: "text/javascript", body: [
         "window.metaCommands = [];",
+        "if (!window.fbq.disablePushState) {",
+        "  var push = history.pushState;",
+        "  history.pushState = function() { push.apply(history, arguments); window.fbq('trackSingle', '1093181229849562', 'PageView', {}, { eventID: 'vendor-auto' }); };",
+        "}",
         "window.fbq.callMethod = function() { window.metaCommands.push(Array.from(arguments)); };",
         "window.fbq.queue.forEach(function(args) { window.fbq.callMethod.apply(null, args); });",
         "window.fbq.queue = [];",
@@ -48,6 +52,7 @@ test("Meta requires its own consent, tracks SPA once, and stops on withdrawal @c
   await page.getByRole("button", { name: "Allow visits + Meta", exact: true }).click();
   await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
   const first = await commands(page);
+  expect(first).toContainEqual(["set", "autoConfig", false]);
   expect(first).toContainEqual(["set", "autoConfig", false, "1093181229849562"]);
   expect(first).toContainEqual(["init", "1093181229849562"]);
   expect(first.some((row) => row[0] === "init" && row.length > 2)).toBe(false);
