@@ -61,8 +61,8 @@ assert.match(
 );
 assert.match(
   noticeSource,
-  /saveAdvertisingConsent\("denied"\);\s*if \(choices\.analytics !== "granted"\) saveAnalyticsConsent\("granted"\);/,
-  "Allow analytics must explicitly keep advertising denied",
+  /saveAdvertisingConsent\("denied"\);\s*saveMetaConsent\("denied"\);\s*if \(choices\.analytics !== "granted"\) saveAnalyticsConsent\("granted"\);/,
+  "Allow visit counting must keep both Meta and legacy advertising denied",
 );
 assert.match(
   consentSource,
