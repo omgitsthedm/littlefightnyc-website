@@ -1,6 +1,6 @@
 import routeMeta from "@/data/route-meta.json";
 import { getMetaConsent, META_CONSENT_EVENT, META_CONSENT_KEY, refreshMetaConsent } from "./consent";
-import { socialCampaignParameters } from "./socialCampaign";
+import { publicCampaignParameters } from "./socialCampaign";
 
 // Verified in Little Fight NYC's Events Manager, September 9, 2026.
 // This is the website dataset; the Publisher app has a different ID.
@@ -27,7 +27,7 @@ export function isMetaPublicUrl(value: string): boolean {
     const url = new URL(value);
     if (!HOSTS.has(url.hostname) || url.protocol !== "https:" || url.port || url.username || url.password || url.hash ||
         !PUBLIC_PATHS.has(url.pathname)) return false;
-    const social = socialCampaignParameters(url.searchParams);
+    const social = publicCampaignParameters(url.searchParams);
     const google = url.searchParams.get("utm_source") === "google" &&
       url.searchParams.get("utm_medium") === "organic" &&
       url.searchParams.get("utm_campaign") === "business_profile";

@@ -84,6 +84,9 @@ test("Meta never loads on private URLs, legacy consent, or GPC @chromium-desktop
     { url: "/?email=private-fixture%40example.com", consent: true },
     { url: "/thanks/?report=private-report-fixture", consent: true },
     { url: "/?utm_source=facebook&utm_medium=organic_social&utm_campaign=new_chapter_2026_09&utm_content=private-fixture", consent: true },
+    { url: "/?utm_source=facebook&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=private-fixture", consent: true },
+    { url: "/?utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=recipient-123", consent: true },
+    { url: "/?utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=la01-seafood-markets&email=private-fixture%40example.com", consent: true },
     { url: "/", consent: true, gpc: true },
     { url: "/", consent: false },
   ]) {
@@ -97,6 +100,33 @@ test("Meta never loads on private URLs, legacy consent, or GPC @chromium-desktop
     await page.goto("https://littlefightnyc.com" + scenario.url, { waitUntil: "networkidle" });
     expect(sdk, scenario.url).toEqual([]);
     expect(hits(await commands(page))).toEqual([]);
+    await context.close();
+  }
+});
+
+test("new social and email campaigns retain attribution and require separate Meta consent @chromium-desktop", async ({ browser, baseURL }) => {
+  for (const query of [
+    "utm_source=facebook&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=la01-seafood-markets",
+    "utm_source=instagram&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=g01-independent-bike-shops",
+    "utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=la01-seafood-markets",
+  ]) {
+    const context = await browser.newContext({ serviceWorkers: "block" });
+    const page = await context.newPage();
+    const sdk = await localProduction(page, baseURL!);
+    await page.goto("https://littlefightnyc.com/website-check/?" + query, { waitUntil: "networkidle" });
+    expect(sdk).toEqual([]);
+    await page.getByRole("button", { name: "Allow visit counting", exact: true }).click();
+    expect(sdk).toEqual([]);
+    await expect.poll(async () => page.evaluate(() => (window.dataLayer ?? [])
+      .flatMap((row) => {
+        const args = row as { 0?: string; 1?: string; 2?: { page_location?: string } };
+        return args[0] === "event" && args[1] === "page_view" ? [args[2]?.page_location] : [];
+      }).at(-1)))
+      .toBe("https://littlefightnyc.com/website-check/?" + query);
+    await page.getByRole("button", { name: "Privacy choices", exact: true }).click();
+    await page.getByRole("button", { name: "Allow visits + Meta", exact: true }).click();
+    await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
+    expect(sdk).toHaveLength(1);
     await context.close();
   }
 });

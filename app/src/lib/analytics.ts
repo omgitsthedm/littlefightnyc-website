@@ -1,5 +1,5 @@
 import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
-import { socialCampaignParameters } from "./socialCampaign";
+import { publicCampaignParameters } from "./socialCampaign";
 import {
   getAdvertisingConsent,
   getAnalyticsConsent,
@@ -232,7 +232,7 @@ function safeAnalyticsLocation(value: unknown) {
         );
       }
     }
-    const social = socialCampaignParameters(location.searchParams);
+    const social = publicCampaignParameters(location.searchParams);
     if (social) social.forEach((approvedValue, key) => safeLocation.searchParams.set(key, approvedValue));
     return safeLocation.href.slice(0, 512);
   } catch {
