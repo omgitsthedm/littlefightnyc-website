@@ -1,3 +1,5 @@
+import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
+import { socialCampaignParameters } from "./socialCampaign";
 import {
   getAdvertisingConsent,
   getAnalyticsConsent,
@@ -230,6 +232,8 @@ function safeAnalyticsLocation(value: unknown) {
         );
       }
     }
+    const social = socialCampaignParameters(location.searchParams);
+    if (social) social.forEach((approvedValue, key) => safeLocation.searchParams.set(key, approvedValue));
     return safeLocation.href.slice(0, 512);
   } catch {
     return undefined;
@@ -662,6 +666,7 @@ function funnelStage(eventName: string) {
 
 function track(eventName: string, parameters: Record<string, unknown> = {}, deferVendorBoot = false) {
   if (!ANALYTICS_EVENT_NAMES.has(eventName)) return;
+  trackMetaEvent(eventName);
   const analyticsAllowed = getAnalyticsConsent() === "granted";
   const advertisingAllowed = getAdvertisingConsent() === "granted";
   if (!analyticsAllowed && !advertisingAllowed) return;
@@ -717,6 +722,7 @@ export function trackFirstPartyEvent<K extends FirstPartyEventName>(
 }
 
 export function trackPageView(path: string, title: string) {
+  trackMetaPageView();
   const pagePath = new URL(path, window.location.origin).pathname;
   if (
     getAnalyticsConsent() !== "granted" &&
@@ -825,6 +831,7 @@ function trackFirstPartyElementEvent(target: HTMLElement) {
 }
 
 export function installAnalyticsHooks() {
+  const removeMetaMeasurement = installMetaMeasurement();
   // Google's property-level switch stops a previously loaded tag immediately
   // after withdrawal, including automatic cookieless pings.
   setGoogleAnalyticsDisabled(getAnalyticsConsent() !== "granted");
@@ -1017,5 +1024,6 @@ export function installAnalyticsHooks() {
     window.removeEventListener("scroll", onScroll);
     removeConsentListener();
     removeAdvertisingConsentListener();
+    removeMetaMeasurement();
   };
 }

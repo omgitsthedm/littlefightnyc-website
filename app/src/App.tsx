@@ -6,7 +6,6 @@ import RouteScrollManager from "@/components/RouteScrollManager";
 import RouteFocusManager from "@/components/RouteFocusManager";
 import GlobalViewTransitions from "@/components/GlobalViewTransitions";
 import TugSail from "@/components/editorial/TugSail";
-import SiteNotices from "@/components/SiteNotices";
 import { importWithRetry } from "@/lib/importWithRetry";
 import { commitPublicRoute } from "@/lib/publicRouteBootstrap";
 import Home from "@/pages/Home";
@@ -21,6 +20,9 @@ function lazyRoute<T extends ComponentType<unknown>>(
 }
 
 const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
+// Privacy controls load alongside the page without expanding the first-paint
+// bundle. Optional measurement remains denied while this panel loads.
+const SiteNotices = lazyRoute(() => import("@/components/SiteNotices"));
 const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
 const Areas = lazyRoute(() => import("@/pages/Areas"));
@@ -171,7 +173,9 @@ export default function App() {
         </Route>
       </Routes>
       </ErrorBoundary>
-      <SiteNotices />
+      <ErrorBoundary>
+        <Suspense fallback={null}><SiteNotices /></Suspense>
+      </ErrorBoundary>
     </>
   );
 }

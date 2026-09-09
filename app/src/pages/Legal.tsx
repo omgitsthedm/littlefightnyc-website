@@ -64,12 +64,33 @@ export default function Legal() {
               reporting, and improving marketing, not to sell personal
               information.
             </p>
+            <h2>Facebook and Instagram measurement</h2>
+            <p>
+              If you choose “Allow visits + Meta,” the Meta Pixel and Meta’s web Conversions API connection share public
+              page views, contact clicks, inquiry starts, and confirmed form
+              completions with Meta. It uses browser identifiers such as _fbp
+              and _fbc, device information, IP address, and approved referral
+              labels to measure which social visits lead to inquiries. This
+              does not tell us the identity of every visitor or person who clicks.
+            </p>
+            <p>
+              We do not send form answers, names, email addresses, phone numbers,
+              or private report links to Meta. Automatic advanced matching and
+              automatic event collection are off. Meta may associate activity
+              with its accounts and use it for personalized content and ads,
+              under its <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noreferrer">privacy policy</a>.
+              You can manage Meta’s use in its “Activity from other businesses” settings.
+            </p>
             <h2>Cookies, pixels, and opt-outs</h2>
             <p>
               Analytics is off by default for a first-time visitor. Google
-              Analytics loads only after you choose “Allow visit counting.” If you
-              choose “Essential only,” the site still works and the optional
-              script does not load. You can change the choice at any time.
+              Analytics loads after “Allow visit counting” or “Allow visits + Meta.”
+              Meta loads only after the second choice. “Essential only” keeps
+              both off and the site still works. Global Privacy Control keeps
+              Meta off. Changing to visit counting only or essential only stops
+              Meta events and removes its first-party cookies; it does not
+              erase data already received by Meta. You can change your choice
+              at any time using the footer or the button below.
             </p>
             <p>
               <button type="button" className="lf-privacy-choice" onClick={openConsentPreferences}>

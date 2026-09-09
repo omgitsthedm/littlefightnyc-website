@@ -7,6 +7,31 @@ export type AdvertisingConsent = ConsentChoice;
 // access the reporting, and deliberately reopen this integration.
 export const ADVERTISING_MEASUREMENT_AVAILABLE = false;
 
+// Meta has its own fresh opt-in. Neither old analytics nor the retired TikTok
+// consent is permission to share activity with a newly connected provider.
+export const META_CONSENT_KEY = "lf_meta_consent_v1";
+export const META_CONSENT_EVENT = "lf:meta-consent";
+let metaChoice: ConsentChoice | undefined;
+
+export function getMetaConsent(): ConsentChoice {
+  if (typeof window === "undefined") return null;
+  if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return "denied";
+  if (metaChoice !== undefined) return metaChoice;
+  try {
+    const value = window.localStorage.getItem(META_CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : null;
+  } catch { return null; }
+}
+
+export function saveMetaConsent(choice: Exclude<ConsentChoice, null>) {
+  metaChoice = (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl
+    ? "denied" : choice;
+  try { window.localStorage.setItem(META_CONSENT_KEY, metaChoice); } catch { /* Honor the in-page choice. */ }
+  window.dispatchEvent(new CustomEvent(META_CONSENT_EVENT, { detail: metaChoice }));
+}
+
+export function refreshMetaConsent() { metaChoice = undefined; }
+
 const ANALYTICS_STORAGE_KEY = "lf_analytics_consent_v1";
 const ADVERTISING_STORAGE_KEY = "lf_advertising_consent_v1";
 export const CONSENT_CHANGE_EVENT = "lf:analytics-consent";
