@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-08-25
+Last updated: 2026-09-08
 
 ## Current code readiness
 
@@ -129,6 +129,16 @@ suspend or end access to the service" is the same warning, and a reader can
 check it in one click. If the sandbox cannot reach the source to confirm the
 page says what the copy claims, say so in the PR body rather than citing it.
 
+Bundle-budget note, learned on the 2026-09-08 run: every new route adds about
+700 bytes to the eager marketing entry, because `route-meta.json` and
+`nav-index.json` carry a row per page and both are imported eagerly. The margin
+in `audit-marketing-bundle.mjs` was down to 217 bytes, so the page tripped the
+gate on authored copy rather than on an import mistake. The budget was raised
+once (240 KB → 244 KB raw, 61 KB → 62 KB gzip) with the reason in the script.
+That headroom is a few cadence pages, not a licence: the next run that trips it
+should stop shipping 200-plus routes of metadata to render one, not raise the
+number again.
+
 Recrawl requests (Search Console → URL Inspection → Request indexing) are a
 local, signed-in-Chrome job and are NOT part of the routine: about 10 URLs a
 day per property; work through the "Discovered – currently not indexed" list,
@@ -144,7 +154,7 @@ service pages first.
 | done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
 | done 2026-08-19 | web designer lenox hill | /areas/upper-east-side/ — Lenox Hill named in the web-design block, plus a "Do you build websites for Lenox Hill businesses?" FAQ |
 | done 2026-08-25 | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
-| pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
+| done 2026-09-08 | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
 | pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
 | pending | website redesign checklist small business | /answers/website-redesign-checklist-small-business/ |
 | pending | managed it services vs break fix small business | /answers/managed-it-vs-break-fix-small-business/ |
@@ -160,7 +170,11 @@ service pages first.
 `/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
-- last refreshed: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
+- last refreshed: `/services/custom-local-websites/` 2026-09-08 (the cleanup-or-
+  rebuild FAQ ended on "The free consult tells you which" — a meeting, not a move,
+  and the phrase VOICE.md retires in favour of the free first look; it now names
+  the action the owner can take in the next minute; `updated` bumped with it)
+- previously: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
   response window the first screen was missing, replacing "No tech words needed";
   the quick answer moved from "We build…" to "You get…"; `updated` bumped with it)
 - previously: `/` 2026-08-19 (home quick answer rewritten in owner voice so it

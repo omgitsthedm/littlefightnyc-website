@@ -25,8 +25,17 @@ const gzipBytes = gzipSync(source, { level: 9 }).byteLength;
 // The 2026-08-04 direct-import repair established 234.85 KB raw / 58.63 KB
 // gzip. Keep a small maintenance margin while making an accidental return to
 // the 258 KB barrel-import graph fail loudly.
-const MAX_RAW_BYTES = 240_000;
-const MAX_GZIP_BYTES = 61_000;
+//
+// Raised once on 2026-09-08. The weekly answer cadence had eaten the margin to
+// 217 raw bytes. The growth is not an import mistake: every published route
+// carries a title, description, image, and share card in route-meta.json plus
+// a row in nav-index.json, and both files are imported eagerly (RouteMeta.tsx,
+// CommandPalette.tsx), so each new page costs roughly 700 bytes in the entry
+// whether or not anyone visits it. The headroom below is a few cadence
+// pages, not a licence — the repair is to stop handing a visitor the metadata
+// for 218 routes to render one.
+const MAX_RAW_BYTES = 244_000;
+const MAX_GZIP_BYTES = 62_000;
 
 assert.ok(
   info.size <= MAX_RAW_BYTES,
