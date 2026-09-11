@@ -72,6 +72,10 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /services-7                                    /services/                        301
 /software-cost-calculator/*                    /answers/reduce-monthly-software-costs-small-business/  301
 
+# --- Legacy About URL still reported by Search Console (2026-09-11)
+/about-5         /about/            301
+/about-5/        /about/            301
+
 # --- Information architecture consolidation (May 2026)
 /areas/soho.html     /areas/soho/            301
 /areas/midtown.html  /areas/midtown/         301
