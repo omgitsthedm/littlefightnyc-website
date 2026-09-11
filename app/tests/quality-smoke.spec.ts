@@ -1520,13 +1520,16 @@ test(
 );
 
 test(
-  "Website Check keeps the scan primary and offers a safe optional booking link @chromium-desktop @chromium-mobile",
+  "Website Check leads with a human review and keeps the scan and booking available @chromium-desktop @chromium-mobile",
   async ({ page }) => {
     const runtime = watchRuntime(page);
 
     await openRoute(page, ROUTES.find((route) => route.key === "website-check")!);
-    // The plain-language submit is the primary control now; the removed
-    // "Open" label exposed the same scan without telling an owner what it did.
+    // Every owner can choose a person; the technical check stays optional.
+    const firstLook = page.getByRole("link", { name: "Start a free first look", exact: true });
+    await expect(firstLook).toHaveAttribute("data-lf-primary-action", "true");
+    await expect(firstLook).toHaveAttribute("href", "/tech-audit/?intent=website&source=no_website_check");
+    await expect(page.getByText("Already online? Starting from scratch? Both belong here.")).toBeVisible();
     await expect(page.getByRole("button", { name: "Check my website" })).toBeVisible();
 
     const booking = page.locator(".lf-website-check__booking").getByRole("link", {

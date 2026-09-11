@@ -21,6 +21,7 @@ import "./HomeWall.css";
  */
 function WallTile({ study }: { study: (typeof HOME_WALL)[number] }) {
   const base = `/assets/case-${study.slug}`;
+  const isOwnedProduct = study.slug === "after-hours-agenda";
   return (
     <li className="lf-wall__tile">
       <Link to={`/case-studies/${study.slug}/`}>
@@ -31,12 +32,12 @@ function WallTile({ study }: { study: (typeof HOME_WALL)[number] }) {
             sizes="(min-width: 64rem) 16vw, (min-width: 48rem) 30vw, 45vw"
             width={900}
             height={640}
-            alt={`${study.client} — a live client site`}
+            alt={`${study.client} — ${isOwnedProduct ? "a Little Fight owned product" : "a live client site"}`}
             loading="lazy"
             decoding="async"
           />
         </LivePreview>
-        <span className="lf-wall__trade">{study.trade}</span>
+        <span className="lf-wall__trade">{isOwnedProduct ? "Our clothing label" : study.trade}</span>
         <span className="lf-wall__client">{study.client}</span>
       </Link>
     </li>
@@ -151,7 +152,7 @@ export default function HomeWall() {
 
         <p className="lf-wall__proof">Shops like yours, already working.</p>
 
-        <ul className="lf-wall__grid" aria-label="Six live client sites">
+        <ul className="lf-wall__grid" aria-label="Client work and our own clothing label">
           {HOME_WALL.map((study) => (
             <WallTile key={study.slug} study={study} />
           ))}
