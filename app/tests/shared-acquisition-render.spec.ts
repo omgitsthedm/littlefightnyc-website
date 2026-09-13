@@ -23,6 +23,7 @@ async function settleVisibleType(page: Page) {
 
 for (const route of [
   { path: "/", landmarks: ["h1", ".lf-wall__act", ".lf-quiet-foot"] },
+  { path: "/services/", landmarks: ["h1", ".lf-svc-router", ".lf-pagehero__actions", ".lf-pagehero__image"] },
   { path: "/services/custom-local-websites/", landmarks: ["h1", ".lf-pagehero__actions", ".lf-sd-web", ".lf-quiet-foot"] },
   { path: "/case-studies/hair-by-rachel-charles/", landmarks: ["h1", ".lf-pagehero__actions", ".lf-live-explorer__viewport", ".lf-quiet-foot"] },
   { path: "/tech-audit/", landmarks: ["h1", ".lf-audit__form", ".lf-quiet-foot"] },

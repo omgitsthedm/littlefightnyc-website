@@ -4,6 +4,7 @@ import { HOME_WALL } from "@/data/home-wall";
 import CustomerPath from "./CustomerPath";
 import LivePreview from "./LivePreview";
 import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
+import { acquisitionCtaForIntent } from "@/lib/acquisitionIntent";
 import "./HomeWall.css";
 
 /**
@@ -45,6 +46,7 @@ function WallTile({ study }: { study: (typeof HOME_WALL)[number] }) {
 }
 
 export default function HomeWall() {
+  const firstLook = acquisitionCtaForIntent("website", "home");
   return (
     <section className="lf-wall" aria-labelledby="lf-home-title" data-lf-owner-intro="true">
       {/* The city behind the promise: an Upper East Side avenue at dusk, the
@@ -108,8 +110,8 @@ export default function HomeWall() {
         <div className="lf-wall__act">
           <Link
             className="lf-wall__check"
-            to="/website-check/#website-check-start"
-            data-lf-event="first_look_opened"
+            to={firstLook.href}
+            data-lf-event={firstLook.event}
             data-lf-label="home_hero"
             data-lf-source="home"
             data-lf-primary-action="true"

@@ -86,6 +86,9 @@ const componentRenderedRoutes = {
   "/website-check/": {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/WebsiteCheck.tsx"],
   },
+  "/services/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/Services.tsx"],
+  },
   "/services/custom-local-websites/": {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/ServiceDetail.tsx"],
   },
@@ -1983,7 +1986,7 @@ function ownerStartBlock(page) {
     `${page.path} ${page.h1 ?? ""}`,
   );
   const primary = websiteFirst
-    ? { href: "/website-check/#website-check-start", kicker: "A first website, or a better one", label: "Get a free first look" }
+    ? { href: "/tech-audit/?intent=website&amp;source=page_hero", kicker: "A first website, or a better one", label: "Get a free first look" }
     : { href: "/tech-audit/", kicker: "Not sure what to fix?", label: "Get a clear plan" };
 
   return `
@@ -2105,7 +2108,7 @@ function snapshot(page) {
           <p class="lf-seo__home-sub">A first website. A better one. Less tech trouble.</p>
           <p class="lf-seo__home-sub">Websites nationwide, built around your business · Urgent NYC jobs, usually on-site within 24 hours · Software you own — code, data, and accounts</p>
           <div class="lf-seo__home-actions" aria-label="Start here" data-lf-contact-rail="true">
-            <a class="lf-seo__home-action lf-seo__home-action--primary" href="/website-check/#website-check-start"><span>Website or no website</span><strong>Get a free first look</strong></a>
+            <a class="lf-seo__home-action lf-seo__home-action--primary" href="/tech-audit/?intent=website&amp;source=home"><span>Website or no website</span><strong>Get a free first look</strong></a>
             <a class="lf-seo__home-action" href="tel:${site.phone}"><span>Call</span><strong>${site.phoneDisplay}</strong></a>
           </div>
           <p>Keep what works. Know what to fix.</p>
@@ -2210,7 +2213,7 @@ function snapshot(page) {
         <span class="lf-seo__nav-right">
           <span class="lf-seo__replies">Replies at 9am ET</span>
           <a class="lf-seo__phone" href="tel:${site.phone}">${site.phoneDisplay}</a>
-          <a class="lf-seo__nav-cta" href="/website-check/#website-check-start">Get a free first look</a>
+          <a class="lf-seo__nav-cta" href="/tech-audit/?intent=website&amp;source=nav">Get a free first look</a>
         </span>
       </header>
       <main id="main-content">

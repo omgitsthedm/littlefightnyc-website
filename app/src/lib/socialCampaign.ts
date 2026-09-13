@@ -82,6 +82,11 @@ export const NEXT_SOCIAL_POSTS = new Set([
 export const EMAIL_CAMPAIGN = "louisiana_business_2026_09";
 const EMAIL_TOPICS = new Set([...NEXT_SOCIAL_POSTS].filter((label) => label.startsWith("la")));
 
+// Public creative labels for the bounded RV-owner test. These identify an ad,
+// never an individual recipient, and do not enable any vendor without consent.
+export const PAID_CAMPAIGN = "rv_first_look_2026_09";
+const PAID_CREATIVES = new Set(["rv_guest_path", "rv_owner_control", "rv_mobile_demo"]);
+
 export function socialCampaignParameters(search: URLSearchParams): URLSearchParams | null {
   const source = search.get("utm_source");
   const content = search.get("utm_content");
@@ -99,6 +104,12 @@ export function publicCampaignParameters(search: URLSearchParams): URLSearchPara
   const social = socialCampaignParameters(search);
   if (social) return social;
   const content = search.get("utm_content");
+  if (["facebook", "instagram"].includes(search.get("utm_source") ?? "") &&
+      search.get("utm_medium") === "paid_social" &&
+      search.get("utm_campaign") === PAID_CAMPAIGN && content && PAID_CREATIVES.has(content)) {
+    return new URLSearchParams({ utm_source: search.get("utm_source")!, utm_medium: "paid_social",
+      utm_campaign: PAID_CAMPAIGN, utm_content: content });
+  }
   if (search.get("utm_source") !== "outreach" || search.get("utm_medium") !== "email" ||
       search.get("utm_campaign") !== EMAIL_CAMPAIGN || !content || !EMAIL_TOPICS.has(content)) return null;
   return new URLSearchParams({ utm_source: "outreach", utm_medium: "email",

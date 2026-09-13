@@ -19,30 +19,33 @@ import QuietContact from "@/components/editorial/QuietContact";
 import { services, serviceOffers, studioProjects } from "@/data/site";
 import "@/styles/editorial/services-hub.css";
 
-/* Symptom → service. Owners arrive with a feeling, not a service name —
-   route from the feeling. (Replaces the old 2×2 card grid: the page used
-   to state the same four services three times in a row.) */
+/* Situation → service. Keep all four choices together beside the invitation.
+   The service pages carry the complete scope; real shipped work stays nearby. */
 const ENTRY_ROUTES = [
   {
-    label: "I need a custom website",
+    label: "A first website, or a better one",
+    summary: "Help customers find you and take the next step.",
     slug: "custom-local-websites",
     icon: Globe2,
     priority: "primary",
   },
   {
     label: "Something is broken",
+    summary: "Get the computers, Wi-Fi, and email working.",
     slug: "it-support",
     icon: Headphones,
     priority: "support",
   },
   {
-    label: "I need a free second opinion",
+    label: "I need a second opinion",
+    summary: "Free advice before you fix, replace, or spend.",
     slug: "tech-consulting",
     icon: Search,
     priority: "consulting",
   },
   {
-    label: "Monthly software is slowing us down",
+    label: "I need software that fits",
+    summary: "Cut repeated work with a tool you own.",
     slug: "business-systems",
     icon: Workflow,
     priority: "software",
@@ -81,11 +84,38 @@ export default function Services() {
         // the first screen. "No tech words needed" told an owner nothing they
         // could act on; the response window does.
         dek="Pick the one that sounds like your day. The first look is free. A real person answers 9am–9pm Eastern."
-        pillars={[
-          "Websites that help customers choose you",
-          "Fast help when the basics break",
-          "Software built around how you already work",
-        ]}
+        choices={
+          <nav className="lf-svc-router" aria-label="Start from the symptom">
+            <div className="lf-svc-router__inner">
+              <p className="lf-svc-router__label">
+                <Waypoints size={14} strokeWidth={2} aria-hidden="true" />
+                Choose your next move
+              </p>
+              <ul className="lf-svc-router__list">
+                {ENTRY_ROUTES.map((route) => {
+                  const service = services.find((s) => s.slug === route.slug);
+                  if (!service) return null;
+                  const Icon = route.icon;
+                  return (
+                    <li key={route.label} className="lf-svc-router__item">
+                      <Link
+                        to={`/services/${service.slug}/`}
+                        className={`lf-svc-router__link lf-svc-router__link--${route.priority}`}
+                      >
+                        <span className="lf-svc-router__symptom">
+                          <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
+                          {route.label}
+                        </span>
+                        <span className="lf-svc-router__detail">{route.summary}</span>
+                        <ArrowUpRight className="lf-svc-router__arrow" size={18} strokeWidth={2} aria-hidden="true" />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </nav>
+        }
         // Was a stock Manhattan street. The page that says what we do now
         // shows what we shipped.
         visual={
@@ -95,44 +125,6 @@ export default function Services() {
           />
         }
       />
-
-      <nav className="lf-svc-router" aria-label="Start from the symptom">
-        <div className="lf-svc-router__inner">
-          <p className="lf-svc-router__label">
-            <Waypoints size={14} strokeWidth={2} aria-hidden="true" />
-            Choose your next move
-          </p>
-          <ul className="lf-svc-router__list">
-            {ENTRY_ROUTES.map((route) => {
-              const service = services.find((s) => s.slug === route.slug);
-              if (!service) return null;
-              const Icon = route.icon;
-              return (
-                <li key={route.label} className="lf-svc-router__item">
-                  <Link
-                    to={`/services/${service.slug}/`}
-                    className={`lf-svc-router__link lf-svc-router__link--${route.priority}`}
-                  >
-                    <span className="lf-svc-router__symptom">
-                      <Icon size={16} strokeWidth={1.75} aria-hidden="true" />
-                      {route.label}
-                    </span>
-                    <span className="lf-svc-router__detail">
-                      <span className="lf-offer-line"><strong>What it is:</strong> {serviceOffers[route.slug].what}</span>
-                      <span className="lf-offer-line"><strong>Who it is for:</strong> {serviceOffers[route.slug].who}</span>
-                      <span className="lf-offer-line"><strong>What you get:</strong> {serviceOffers[route.slug].get}</span>
-                    </span>
-                    <span className="lf-svc-router__service">
-                      {service.eyebrow}
-                      <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </nav>
 
       <section className="lf-svc-extensions" aria-label="Launch and care">
         <div className="lf-svc-extensions__inner">

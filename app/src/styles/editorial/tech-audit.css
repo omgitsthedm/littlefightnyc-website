@@ -705,6 +705,13 @@
               0 0.65rem 1.65rem color-mix(in srgb, var(--lf-audit-warn) 12%, transparent);
 }
 
+.lf-audit__hint {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.45;
+}
+
 .lf-audit__error {
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);

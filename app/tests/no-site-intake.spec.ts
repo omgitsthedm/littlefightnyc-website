@@ -35,7 +35,7 @@ test(
 test(
   "the no-site route clears an untouched website template but keeps contact details @chromium-desktop @chromium-mobile @webkit-mobile",
   async ({ page }) => {
-    await page.goto("/tech-audit/?intent=website&source=website_check");
+    await page.goto("/tech-audit/?intent=website&source=website_check&url=https%3A%2F%2Fexample.com%2F");
     const message = page.locator('textarea[name="message"]');
     await expect(message).not.toHaveValue("");
     await page.getByLabel("Your name").fill("Alex Owner");
@@ -113,3 +113,64 @@ test(
     })).toBe(true);
   },
 );
+
+
+test("human first-look promises reach the intake once with truthful context @all-projects", async ({ page }) => {
+  const writes: string[] = [];
+  await page.route("**/*", async route => {
+    const request = route.request();
+    if (!["GET", "HEAD"].includes(request.method())) {
+      writes.push(request.url());
+      await route.abort();
+    } else await route.continue();
+  });
+  for (const entry of [
+    { path: "/", selector: ".lf-wall__check", intent: "website", source: "home" },
+    { path: "/services/custom-local-websites/", selector: ".lf-pagehero__decision--primary", intent: "website", source: "page_hero" },
+    { path: "/services/", selector: ".lf-pagehero__decision--primary", intent: "general", source: "page_hero" },
+  ]) {
+    await page.goto(entry.path);
+    await page.locator(entry.selector).click();
+    await expect(page).toHaveURL(/\/tech-audit\//);
+    const form = page.locator('[data-lf-route-mount] form[name="tech-audit-scratch"]');
+    await expect(form.locator('[name="intent"]')).toHaveValue(entry.intent);
+    await expect(form.locator('[name="lead_origin"]')).toHaveValue(entry.source);
+    await expect(form.locator('[name="message"]')).toHaveValue("");
+    await expect(form.locator('[name="website_url"], [name="symptom"]')).toHaveCount(0);
+    const business = form.getByLabel("Business or idea", { exact: true });
+    await expect(business).toHaveAttribute("aria-describedby", "fit-business-hint");
+    await expect(page.locator("#fit-business-hint")).toHaveText("No name yet? Tell us what you are starting.");
+    await business.fill("A neighborhood repair shop, name undecided");
+    await business.blur();
+    await expect(business).not.toHaveAttribute("aria-invalid", "true");
+    await page.goBack();
+    await expect(page).toHaveURL(new RegExp(`${entry.path.replaceAll("/", "\\/")}$`));
+  }
+  expect(writes).toEqual([]);
+});
+
+test("the four service choices fit one comparison on desktop and phone @all-projects", async ({ page }) => {
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/services/", { waitUntil: "networkidle" });
+    const chooser = page.getByRole("navigation", { name: "Start from the symptom" });
+    const links = chooser.getByRole("link");
+    await expect(links).toHaveCount(4);
+    const box = await chooser.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height).toBeLessThanOrEqual(650);
+    expect(box!.y).toBeLessThanOrEqual(844);
+    for (const [index, slug] of ["custom-local-websites", "it-support", "tech-consulting", "business-systems"].entries()) {
+      await expect(links.nth(index)).toHaveAttribute("href", `/services/${slug}/`);
+      const target = await links.nth(index).boundingBox();
+      expect(target!.height).toBeGreaterThanOrEqual(44);
+    }
+    await links.first().focus();
+    for (let index = 1; index < 4; index += 1) {
+      // Safari reserves ordinary Tab for form controls unless full keyboard access is enabled.
+      await page.keyboard.press(test.info().project.name.startsWith("webkit") ? "Alt+Tab" : "Tab");
+      await expect(links.nth(index)).toBeFocused();
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  }
+});

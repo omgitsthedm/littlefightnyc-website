@@ -90,14 +90,14 @@ export function acquisitionCtaForIntent(
 ): AcquisitionCta {
   if (intent === "website") {
     return {
-      // Start with the owner's situation. A required URL would exclude
-      // first websites, social-only businesses and referral-led shops.
-      href: "/website-check/#website-check-start",
+      // An explicit human first look goes straight to the inclusive intake.
+      // The separately named Website Check remains an optional automated path.
+      href: techAuditHref(intent, source),
       label: "Get a free first look",
       compactLabel: "Free first look",
       kicker: "Free first look",
       compactKicker: "Free look",
-      event: "first_look_opened",
+      event: "human_review_requested",
     };
   }
   if (intent === "support") {

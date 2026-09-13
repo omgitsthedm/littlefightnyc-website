@@ -86,6 +86,9 @@ test("Meta never loads on private URLs, legacy consent, or GPC @chromium-desktop
     { url: "/?utm_source=facebook&utm_medium=organic_social&utm_campaign=new_chapter_2026_09&utm_content=private-fixture", consent: true },
     { url: "/?utm_source=facebook&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=private-fixture", consent: true },
     { url: "/?utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=recipient-123", consent: true },
+    { url: "/tech-audit/?utm_source=facebook&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=recipient-123", consent: true },
+    { url: "/tech-audit/?intent=website&source=private-fixture", consent: true },
+    { url: "/tech-audit/?intent=website&source=home&email=private-fixture%40example.com", consent: true },
     { url: "/?utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=la01-seafood-markets&email=private-fixture%40example.com", consent: true },
     { url: "/", consent: true, gpc: true },
     { url: "/", consent: false },
@@ -109,6 +112,8 @@ test("new social and email campaigns retain attribution and require separate Met
     "utm_source=facebook&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=la01-seafood-markets",
     "utm_source=instagram&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=g01-independent-bike-shops",
     "utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=la01-seafood-markets",
+    "utm_source=facebook&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=rv_guest_path",
+    "utm_source=instagram&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=rv_mobile_demo",
   ]) {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await context.newPage();
@@ -139,6 +144,20 @@ test("Meta lead means confirmed redirect, not refresh or form opening @chromium-
   await page.reload({ waitUntil: "networkidle" });
   expect(hits(await commands(page), "Lead")).toHaveLength(0);
   await page.goto("https://littlefightnyc.com/tech-audit/", { waitUntil: "networkidle" });
+  expect(hits(await commands(page), "Lead")).toHaveLength(0);
+});
+
+test("human intake preserves consented measurement through its public referrer @chromium-desktop", async ({ page, baseURL }) => {
+  await localProduction(page, baseURL!, { consent: true });
+  const intake = "https://littlefightnyc.com/tech-audit/?intent=website&source=home";
+  await page.goto(intake, { waitUntil: "networkidle" });
+  await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
+  expect(hits(await commands(page), "Lead")).toHaveLength(0);
+  await page.goto("https://littlefightnyc.com/thanks/?submitted=tech-audit&intent=website&reply=email", {
+    referer: intake, waitUntil: "networkidle",
+  });
+  await expect.poll(async () => hits(await commands(page), "Lead").length).toBe(1);
+  await page.reload({ waitUntil: "networkidle" });
   expect(hits(await commands(page), "Lead")).toHaveLength(0);
 });
 

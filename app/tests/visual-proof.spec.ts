@@ -98,7 +98,7 @@ test("portfolio proof step changes with visible feedback", async ({ page }) => {
   const hero = page.locator(".lf-pagehero");
   await expect(hero.getByRole("link", { name: /get a free first look/i })).toHaveAttribute(
     "href",
-    "/website-check/#website-check-start",
+    "/tech-audit/?intent=website&source=case_hair-by-rachel-charles_hero",
   );
 
   // This focused case keeps the dated capture and source-verified booking proof

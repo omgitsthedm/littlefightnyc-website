@@ -75,6 +75,8 @@ type Props = {
    * to a few words each — they are scanned, not read.
    */
   pillars?: string[];
+  /** A small native chooser when the page opens with several owner situations. */
+  choices?: React.ReactNode;
   /**
    * A bespoke hero visual, in place of the photo. Inner pages used to share
    * one shape — headline left, stock photo right — on every route; this lets
@@ -121,6 +123,7 @@ export default function PageHero({
   displayName,
   chips,
   pillars,
+  choices,
   visual,
   action,
   showContactRail = true,
@@ -238,6 +241,7 @@ export default function PageHero({
           )}
           <h1 className="lf-pagehero__title">{title}</h1>
           {dek && <p className="lf-pagehero__dek">{dek}</p>}
+          {choices}
           {pillars && pillars.length > 0 && (
             <ul className="lf-pagehero__pillars">
               {pillars.map((pillar) => (

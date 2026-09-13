@@ -116,16 +116,17 @@ if (duplicatePaths.length > 0) {
 // Each uses current component markup rather than the legacy SEO header, so
 // assert the real buyer path instead of requiring that retired header class.
 const componentRouteCtas = {
-  "/": [["/website-check/#website-check-start", "Get a free first look", true]],
+  "/": [["/tech-audit/?intent=website&source=home", "Get a free first look", true]],
+  "/services/": [["/tech-audit/?source=page_hero", "Free consult Free first look", true]],
   "/website-check/": [
     ["#website-check-url", "Check my website"],
     ["/tech-audit/?intent=website&source=no_website_check", "Start a free first look"],
   ],
   "/services/custom-local-websites/": [
-    ["/website-check/#website-check-start", "Free first look Get a free first look", true],
+    ["/tech-audit/?intent=website&source=page_hero", "Free first look Get a free first look", true],
   ],
   "/case-studies/hair-by-rachel-charles/": [
-    ["/website-check/#website-check-start", "Free first look Get a free first look", true],
+    ["/tech-audit/?intent=website&source=case_hair-by-rachel-charles_hero", "Free first look Get a free first look", true],
   ],
   // The direct form link belongs to the audit contact rail. Checking its
   // component-specific label keeps a generic nav/header link from satisfying
@@ -180,7 +181,7 @@ for (const page of routeMeta.pages) {
       expectEqual(
         `${page.path} nav CTA destination`,
         attrs.href,
-        "/website-check/#website-check-start",
+        "/tech-audit/?intent=website&source=nav",
       );
     }
   }

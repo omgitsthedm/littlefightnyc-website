@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { Route, Routes, StaticRouter } from "react-router-dom";
 import EditorialShell from "@/components/editorial/EditorialShell";
 import Home from "@/pages/Home";
+import Services from "@/pages/Services";
 import ServiceDetail from "@/pages/ServiceDetail";
 import CaseStudyDetail from "@/pages/CaseStudyDetail";
 import TechAudit from "@/pages/TechAudit";
@@ -19,6 +20,7 @@ import WebsiteCheck from "@/pages/WebsiteCheck";
 export const COMPONENT_RENDERED_PUBLIC_PATHS = [
   "/",
   "/website-check/",
+  "/services/",
   "/services/custom-local-websites/",
   "/case-studies/hair-by-rachel-charles/",
   "/tech-audit/",
@@ -41,6 +43,7 @@ function renderWithinEditorialShell(
       <Routes>
         <Route element={<EditorialShell />}>
           <Route path="/website-check/" element={<WebsiteCheck />} />
+          <Route path="/services/" element={<Services />} />
           <Route path="/services/:slug/" element={<ServiceDetail />} />
           <Route path="/case-studies/:slug/" element={<CaseStudyDetail />} />
           <Route path="/tech-audit/" element={<TechAudit />} />

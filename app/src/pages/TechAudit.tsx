@@ -234,10 +234,9 @@ export default function TechAudit() {
   // Attribute a lead that arrived via the PWA share target (no explicit source,
   // but the share sheet passed text/title) so shares are measurable.
   const explicitSource = queryValue(searchParams, "source", 80);
-  // The Website Check makes this route available to owners who currently work
-  // through social, referrals, or a physical location. They need the same
-  // human first look, without a made-up website problem preloaded into the form.
-  const noWebsiteLead = explicitSource === "no_website_check";
+  // A website intent expresses interest, not proof of an existing website.
+  // Only an owner-supplied URL or report may add automatic website context.
+  const noWebsiteLead = websiteIntent && !websiteUrl && !reportId;
   const leadOrigin =
     explicitSource ||
     (reportId ? "audit-lab" : "") ||
@@ -836,7 +835,7 @@ export default function TechAudit() {
                   </div>
 
                   <div className={`lf-audit__field${fieldClass("business", fields.business)}`}>
-                    <label htmlFor="fit-business">Business</label>
+                    <label htmlFor="fit-business">Business or idea</label>
                     <input
                       id="fit-business"
                       name="business"
@@ -849,8 +848,11 @@ export default function TechAudit() {
                       }}
                       onBlur={(e) => validateField("business", e.target.value)}
                       aria-invalid={errors.business ? true : undefined}
-                      aria-describedby={errors.business ? "fit-business-error" : undefined}
+                      aria-describedby={`fit-business-hint${errors.business ? " fit-business-error" : ""}`}
                     />
+                    <p className="lf-audit__hint" id="fit-business-hint">
+                      No name yet? Tell us what you are starting.
+                    </p>
                     {errors.business && (
                       <p className="lf-audit__error" role="alert" id="fit-business-error">
                         {errors.business}

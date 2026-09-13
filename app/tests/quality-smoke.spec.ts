@@ -174,7 +174,7 @@ const ROUTES: readonly RouteContract[] = [
     h1: /We handle the tech\.\s*You run the shop\./i,
     // Every viewport carries the same direct decision: start the full Website
     // Check or call for the thing that is already broken.
-    criticalLink: 'form[action="/examples/audit/"], a[href^="/website-check/"]',
+    criticalLink: 'a[href="/tech-audit/?intent=website&source=home"]',
     tags: [
       "@chromium-desktop",
       "@chromium-mobile",
@@ -1218,9 +1218,9 @@ test(
     expect(new Set(clients.map((client) => client.trim())).size).toBe(6);
 
     const call = wall.locator('a[href^="tel:"]');
-    const websiteCheck = wall.locator('a[href^="/website-check/"]');
+    const firstLook = wall.locator('a[href="/tech-audit/?intent=website&source=home"]');
     await expect(call).toBeVisible();
-    await expect(websiteCheck).toBeVisible();
+    await expect(firstLook).toBeVisible();
 
     const geometry = await page.evaluate(() => {
       const phone = document.querySelector<HTMLElement>(".lf-wall__call");
@@ -1255,7 +1255,7 @@ test(
     const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
     const wall = page.locator(".lf-wall");
     const heroCall = wall.locator(".lf-wall__call");
-    const websiteCheck = wall.locator('a[href^="/website-check/"]');
+    const firstLook = wall.locator('a[href="/tech-audit/?intent=website&source=home"]');
     const heroChannels = page.locator(".lf-wall__channels a");
 
     await expect(directCall).toBeVisible();
@@ -1263,7 +1263,7 @@ test(
     await expect(wall).toBeVisible();
     await expect(heroCall).toBeVisible();
     await expect(heroCall).toHaveAttribute("href", PHONE_HREF);
-    await expect(websiteCheck).toBeVisible();
+    await expect(firstLook).toBeVisible();
 
     // All four reach channels stay in the hero: call, text, email, form.
     await expect(heroChannels).toHaveCount(3);
@@ -2332,28 +2332,28 @@ test(
       )
       .toBe(1);
 
-    const websiteCheck = page.locator('.lf-wall a[href^="/website-check/"]');
-    await websiteCheck.evaluate((link) => {
+    const firstLook = page.locator('.lf-wall a[href="/tech-audit/?intent=website&source=home"]');
+    await firstLook.evaluate((link) => {
       link.addEventListener("click", (event) => event.preventDefault(), { once: true });
     });
-    await websiteCheck.click();
+    await firstLook.click();
 
-    const websiteCheckEvent = await page.evaluate(() =>
+    const firstLookEvent = await page.evaluate(() =>
       (window.dataLayer ?? []).findLast(
         (entry) =>
           typeof entry === "object" &&
           entry !== null &&
-          (entry as { event?: string }).event === "first_look_opened",
+          (entry as { event?: string }).event === "human_review_requested",
       ) as Record<string, unknown> | undefined,
     );
-    expect(websiteCheckEvent).toEqual({
-      event: "first_look_opened",
-      funnel_stage: "consideration",
+    expect(firstLookEvent).toEqual({
+      event: "human_review_requested",
+      funnel_stage: "contact",
       page_path: "/",
       placement: "home_hero",
       entry_source: "home",
     });
-    expect(JSON.stringify(websiteCheckEvent)).not.toContain("private-fixture");
+    expect(JSON.stringify(firstLookEvent)).not.toContain("private-fixture");
 
     await page.evaluate(() => window.dispatchEvent(new Event("lf:open-consent")));
     await expect(
