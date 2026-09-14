@@ -1,5 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
+// These tests serve the local candidate under the production origin. A real
+// service worker can bypass page.route and replace it with the live release.
+test.use({ serviceWorkers: "block" });
+
 type Command = unknown[];
 async function commands(page: Page) {
   return page.evaluate(() => (window as Window & { metaCommands?: unknown[][] }).metaCommands ?? []);
