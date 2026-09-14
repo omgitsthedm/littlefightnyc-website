@@ -98,6 +98,9 @@ const componentRenderedRoutes = {
   "/tech-audit/": {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/TechAudit.tsx"],
   },
+  "/nationwide/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/Nationwide.tsx"],
+  },
 };
 
 const componentRouteStyles = Object.fromEntries(
@@ -1026,6 +1029,7 @@ function routeChunkPrefix(page) {
   if (page.path === "/services/") return "Services-";
   if (page.path === "/examples/") return "FieldGuide-";
   if (page.path === "/tech-audit/") return "TechAudit-";
+  if (page.path === "/nationwide/") return "Nationwide-";
   if (page.path.startsWith("/case-studies/")) return "CaseStudyDetail-";
   if (page.path.startsWith("/journal/") && page.path !== "/journal/") return "JournalPost-";
   return "";

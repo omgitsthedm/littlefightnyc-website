@@ -5,6 +5,44 @@ import { expect, test } from "@playwright/test";
 // bypass those network controls or consume the test's private prefill record.
 test.use({ serviceWorkers: "block" });
 
+for (const [path, chunk, composition] of [["/", "Home", ".lf-home-main"], ["/nationwide/", "Nationwide", ".lf-pagehero"]]) {
+  test(`${path} retains its complete first response while the page code loads @all-projects`, async ({ page }) => {
+    let releaseChunk = () => {};
+    const held = new Promise<void>((resolve) => { releaseChunk = resolve; });
+    await page.route(`**/assets/${chunk}-*.js`, async (route) => {
+      await held;
+      await route.continue();
+    });
+    try {
+      await page.goto(path, { waitUntil: "domcontentloaded" });
+      const snapshot = page.locator('[data-lf-route-snapshot="initial"]');
+      await expect(snapshot.locator(composition)).toBeVisible();
+      await expect(snapshot.getByRole("heading", { level: 1 })).toBeVisible();
+      // WebKit's global fonts.ready also waits for the deliberately held
+      // module request. Load the heading's actual faces without that cycle.
+      await snapshot.getByRole("heading", { level: 1 }).evaluate(async (element) => {
+        const faces = new Set([element, ...element.querySelectorAll("*")].map((node) => {
+          const style = getComputedStyle(node);
+          return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+        }));
+        await Promise.all([...faces].map((font) => document.fonts.load(font)));
+      });
+      const heading = await snapshot.getByRole("heading", { level: 1 }).boundingBox();
+      expect(heading).not.toBeNull();
+      releaseChunk();
+      await expect(snapshot).toHaveCount(0);
+      await expect(page.locator("[data-lf-route-mount]:not([hidden])")).toBeAttached();
+      const readyHeading = await page.getByRole("heading", { level: 1 }).boundingBox();
+      expect(readyHeading).not.toBeNull();
+      for (const coordinate of ["x", "y", "width", "height"] as const) {
+        expect(Math.abs(readyHeading![coordinate] - heading![coordinate])).toBeLessThan(2);
+      }
+    } finally {
+      releaseChunk();
+    }
+  });
+}
+
 for (const landing of ["/tech-audit/", "/nationwide/"]) {
   test(`paid landing ${landing} loads homepage assets only when selected @all-projects`, async ({ page }) => {
     const homeAssets: string[] = [];

@@ -125,6 +125,9 @@ const componentRouteCtas = {
   "/services/custom-local-websites/": [
     ["/tech-audit/?intent=website&source=page_hero", "Free first look Get a free first look", true],
   ],
+  "/nationwide/": [
+    ["/tech-audit/?intent=website&source=page_hero", "Free first look Get a free first look", true],
+  ],
   "/case-studies/hair-by-rachel-charles/": [
     ["/tech-audit/?intent=website&source=case_hair-by-rachel-charles_hero", "Free first look Get a free first look", true],
   ],

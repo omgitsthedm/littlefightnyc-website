@@ -7,6 +7,7 @@ import Services from "@/pages/Services";
 import ServiceDetail from "@/pages/ServiceDetail";
 import CaseStudyDetail from "@/pages/CaseStudyDetail";
 import TechAudit from "@/pages/TechAudit";
+import Nationwide from "@/pages/Nationwide";
 import WebsiteCheck from "@/pages/WebsiteCheck";
 
 /**
@@ -24,6 +25,7 @@ export const COMPONENT_RENDERED_PUBLIC_PATHS = [
   "/services/custom-local-websites/",
   "/case-studies/hair-by-rachel-charles/",
   "/tech-audit/",
+  "/nationwide/",
 ] as const;
 
 export type ComponentRenderedPublicPath =
@@ -47,6 +49,7 @@ function renderWithinEditorialShell(
           <Route path="/services/:slug/" element={<ServiceDetail />} />
           <Route path="/case-studies/:slug/" element={<CaseStudyDetail />} />
           <Route path="/tech-audit/" element={<TechAudit />} />
+          <Route path="/nationwide/" element={<Nationwide />} />
         </Route>
       </Routes>
     </StaticRouter>,

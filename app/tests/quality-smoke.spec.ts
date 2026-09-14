@@ -1055,6 +1055,7 @@ test(
     });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await openRoute(page, ROUTES[0]);
+    await expect(page.locator("[data-lf-route-mount]:not([hidden])")).toBeAttached();
 
     expect(
       await page.evaluate(() => (
@@ -1251,6 +1252,7 @@ test(
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
+    await expect(page.locator("[data-lf-route-mount]:not([hidden])")).toBeAttached();
 
     const directCall = page.locator('.lf-nav__phone--direct[href^="tel:"]');
     const wall = page.locator(".lf-wall");
