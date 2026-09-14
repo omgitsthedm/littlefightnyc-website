@@ -1,4 +1,4 @@
-// Public, bounded labels for approved organic campaigns. No recipient identifiers.
+// Public, bounded campaign labels. No recipient or ad-click identifiers.
 export const SOCIAL_CAMPAIGN = "new_chapter_2026_09";
 export const SOCIAL_POSTS = new Set([
   "01-interior-design-studios",
@@ -87,6 +87,13 @@ const EMAIL_TOPICS = new Set([...NEXT_SOCIAL_POSTS].filter((label) => label.star
 export const PAID_CAMPAIGN = "rv_first_look_2026_09";
 const PAID_CREATIVES = new Set(["rv_guest_path", "rv_owner_control", "rv_mobile_demo"]);
 
+// The Search preparation uses fixed creative names, never search terms or
+// customer data. Recognizing these labels does not load a tag or grant consent.
+export const GOOGLE_SEARCH_CAMPAIGN = "gulf_websites_search_2026_09";
+const GOOGLE_SEARCH_CREATIVES = new Set([
+  "search_human_help", "search_owner_control", "search_sitelink",
+]);
+
 export function socialCampaignParameters(search: URLSearchParams): URLSearchParams | null {
   const source = search.get("utm_source");
   const content = search.get("utm_content");
@@ -104,6 +111,12 @@ export function publicCampaignParameters(search: URLSearchParams): URLSearchPara
   const social = socialCampaignParameters(search);
   if (social) return social;
   const content = search.get("utm_content");
+  if (search.get("utm_source") === "google" && search.get("utm_medium") === "cpc" &&
+      search.get("utm_campaign") === GOOGLE_SEARCH_CAMPAIGN && content &&
+      GOOGLE_SEARCH_CREATIVES.has(content)) {
+    return new URLSearchParams({ utm_source: "google", utm_medium: "cpc",
+      utm_campaign: GOOGLE_SEARCH_CAMPAIGN, utm_content: content });
+  }
   if (["facebook", "instagram"].includes(search.get("utm_source") ?? "") &&
       search.get("utm_medium") === "paid_social" &&
       search.get("utm_campaign") === PAID_CAMPAIGN && content && PAID_CREATIVES.has(content)) {

@@ -186,3 +186,70 @@ test("approved organic post labels survive GA sanitation; private fields do not 
   expect(locations.at(-1)).not.toContain("private-fixture");
   expect(await page.locator('script[src*="connect.facebook.net"]').count()).toBe(0);
 });
+
+for (const content of ["search_human_help", "search_owner_control", "search_sitelink"]) {
+  test(`Google Search ${content} keeps only public labels after opt-in @chromium-desktop`, async ({ page, baseURL }) => {
+    const query = `utm_source=google&utm_medium=cpc&utm_campaign=gulf_websites_search_2026_09&utm_content=${content}`;
+    await page.goto(`${baseURL}/tech-audit/?intent=website&${query}&email=private-fixture%40example.com&utm_term=private-search-fixture&gclid=private-click-fixture`);
+    const views = () => page.evaluate(() => (window.dataLayer ?? [])
+      .filter((row) => (row as { event?: string })?.event === "page_view")
+      .map((row) => (row as { page_location: string }).page_location));
+    expect(await views()).toEqual([]);
+    await page.getByRole("button", { name: "Allow visit counting", exact: true }).click();
+    await expect.poll(async () => (await views()).at(-1)).toBe(`${baseURL}/tech-audit/?${query}`);
+    expect(await page.locator('script[src*="googletagmanager.com"],script[src*="connect.facebook.net"]').count()).toBe(0);
+  });
+}
+
+for (const entry of [
+  { path: "/tech-audit/?intent=website&", content: "search_human_help" },
+  { path: "/nationwide/?", content: "search_owner_control" },
+]) {
+  test(`Google Search ${entry.content} reaches a single local inquiry with its attribution @chromium-desktop @chromium-mobile`, async ({ page, baseURL }) => {
+    const campaign = {
+      utm_source: "google", utm_medium: "cpc",
+      utm_campaign: "gulf_websites_search_2026_09", utm_content: entry.content,
+    };
+    const posts: string[] = [];
+    // All submission traffic is fulfilled locally. No provider or production
+    // website can receive a fixture, and the local host never loads real tags.
+    await page.route("**/*", async (route) => {
+      const request = route.request();
+      const url = new URL(request.url());
+      if (url.origin !== baseURL) return route.abort();
+      if (request.method() === "POST") {
+        posts.push(request.postData() ?? "");
+        return route.fulfill({ status: 303, headers: { location: url.pathname + url.search }, body: "" });
+      }
+      return route.continue();
+    });
+    await page.goto(baseURL + entry.path + new URLSearchParams(campaign).toString(), { waitUntil: "networkidle" });
+    await page.getByRole("button", { name: "Allow visit counting", exact: true }).click();
+    await expect.poll(() => page.evaluate(() => sessionStorage.getItem("lf-attribution"))).toBe(JSON.stringify(campaign));
+    if (entry.content === "search_owner_control") {
+      await page.locator('a[href^="/tech-audit/?intent=website"]:visible').first().click();
+    }
+    const form = page.locator('[data-lf-route-mount] form[name="tech-audit-scratch"]');
+    await expect(form).toBeVisible();
+    await form.locator('[name="name"]').fill("Local test");
+    await form.locator('[name="business"]').fill("Example fixture business");
+    await form.locator('[name="contact"]').fill("owner@example.com");
+    await form.locator('[name="message"]').fill("Customers need a clearer way to book.");
+    for (const [key, value] of Object.entries(campaign)) {
+      await expect(form.locator(`[name="${key}"]`)).toHaveValue(value);
+    }
+    const leads = () => page.evaluate(() => (window.dataLayer ?? [])
+      .filter((row) => (row as { event?: string })?.event === "generate_lead"));
+    expect(await leads()).toEqual([]);
+    await form.locator('button[type="submit"]').click();
+    await expect(page).toHaveURL(/\/thanks\//);
+    expect(posts).toHaveLength(1);
+    const payload = new URLSearchParams(posts[0]);
+    for (const [key, value] of Object.entries(campaign)) expect(payload.get(key)).toBe(value);
+    await expect.poll(async () => (await leads()).length).toBe(1);
+    expect(JSON.stringify(await leads())).not.toContain("owner@example.com");
+    expect(JSON.stringify(await leads())).not.toContain("Example fixture business");
+    await page.reload({ waitUntil: "networkidle" });
+    expect(await leads()).toEqual([]);
+  });
+}
