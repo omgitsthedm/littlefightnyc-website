@@ -81,7 +81,7 @@ function stylesheetClosure(sources, routePath) {
 // tree, not App's lazy-router orchestration.
 const componentRenderedRoutes = {
   "/": {
-    styles: ["index.html"],
+    styles: ["index.html", "src/pages/Home.tsx"],
   },
   "/website-check/": {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/WebsiteCheck.tsx"],
@@ -1022,6 +1022,7 @@ function routeImagePreload(page) {
 }
 
 function routeChunkPrefix(page) {
+  if (page.path === "/") return "Home-";
   if (page.path === "/services/") return "Services-";
   if (page.path === "/examples/") return "FieldGuide-";
   if (page.path === "/tech-audit/") return "TechAudit-";

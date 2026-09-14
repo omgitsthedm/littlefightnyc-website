@@ -17,7 +17,7 @@ function excludedPath(path: string): boolean {
 function routeForPath(pathname: string): PublicRoute | null {
   const path = pathname.replace(/\/+$/, "") || "/";
   if (excludedPath(path)) return null;
-  if (path === "/") return null;
+  if (path === "/") return { leaf: () => import("@/pages/Home") };
   if (path === "/es") return { leaf: () => import("@/pages/Espanol") };
   if (path === "/zh") return { leaf: () => import("@/pages/Zhongwen") };
   if (path === "/website-check") return { leaf: () => import("@/pages/WebsiteCheck"), shell: true };

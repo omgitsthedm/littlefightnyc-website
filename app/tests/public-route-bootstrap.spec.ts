@@ -5,6 +5,26 @@ import { expect, test } from "@playwright/test";
 // bypass those network controls or consume the test's private prefill record.
 test.use({ serviceWorkers: "block" });
 
+for (const landing of ["/tech-audit/", "/nationwide/"]) {
+  test(`paid landing ${landing} loads homepage assets only when selected @all-projects`, async ({ page }) => {
+    const homeAssets: string[] = [];
+    page.on("request", (request) => {
+      if (/\/assets\/Home-[^/]+\.(?:js|css)$/.test(new URL(request.url()).pathname)) {
+        homeAssets.push(request.url());
+      }
+    });
+    await page.goto(landing, { waitUntil: "networkidle" });
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    expect(homeAssets).toEqual([]);
+
+    await page.getByRole("link", { name: "Little Fight NYC — home", exact: true }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator(".lf-home-main")).toBeVisible();
+    await expect.poll(() => homeAssets.length).toBeGreaterThan(0);
+    await expect(page.locator(".lf-route-fallback")).toHaveCount(0);
+  });
+}
+
 test(
   "the complete header keeps readable separated routes and actions across desktop widths @all-projects",
   async ({ page }) => {

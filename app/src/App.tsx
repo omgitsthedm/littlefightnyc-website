@@ -9,7 +9,6 @@ import TugSail from "@/components/editorial/TugSail";
 import SiteNotices from "@/components/SiteNotices";
 import { importWithRetry } from "@/lib/importWithRetry";
 import { commitPublicRoute } from "@/lib/publicRouteBootstrap";
-import Home from "@/pages/Home";
 
 // A transient mobile/CDN failure gets one quiet retry before the ErrorBoundary
 // considers a guarded full refresh. This protects in-progress scroll/form state
@@ -21,6 +20,7 @@ function lazyRoute<T extends ComponentType<unknown>>(
 }
 
 const AnswerGuide = lazyRoute(() => import("@/pages/AnswerGuide"));
+const Home = lazyRoute(() => import("@/pages/Home"));
 const About = lazyRoute(() => import("@/pages/About"));
 const AreaDetail = lazyRoute(() => import("@/pages/AreaDetail"));
 const Areas = lazyRoute(() => import("@/pages/Areas"));
@@ -99,7 +99,7 @@ export default function App() {
         {/* Home: custom layout with the full Press Strike masthead - the
             magazine cover. Everything else inherits EditorialShell with the
             compact running masthead. */}
-        <Route index element={<><Home /><RouteCommit /></>} />
+        <Route index element={route(Home)} />
 
         {/* The complete pitch in Spanish — standalone, fully-Spanish chrome
             (an English nav/footer around Spanish content would be half a page). */}
