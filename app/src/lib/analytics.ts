@@ -7,6 +7,8 @@ import {
   ADVERTISING_MEASUREMENT_AVAILABLE,
   onAdvertisingConsentChange,
   onAnalyticsConsentChange,
+  hasGoogleAdsMeasurementConsent,
+  onGoogleAdsConsentChange,
 } from "./consent";
 
 export type FirstPartyEventPlacement =
@@ -208,6 +210,18 @@ const BUSINESS_PROFILE_CAMPAIGN = Object.freeze({
 });
 const BUSINESS_PROFILE_BOOKING_CONTENT = "booking";
 
+function appendGoogleClickIds(safeLocation: URL, source: URLSearchParams) {
+  // Only the consented Google transport receives these bounded identifiers.
+  // They never enter form attribution, Meta payloads, or arbitrary campaigns.
+  if (!hasGoogleAdsMeasurementConsent() || safeLocation.searchParams.get("utm_source") !== "google" || safeLocation.searchParams.get("utm_medium") !== "cpc") return;
+  for (const key of ["gclid", "gbraid", "wbraid"]) {
+    const value = source.get(key);
+    if (!value || !/^[A-Za-z0-9_-]{10,256}$/.test(value)) continue;
+    safeLocation.searchParams.set(key, value);
+    if (safeLocation.href.length > 512) safeLocation.searchParams.delete(key);
+  }
+}
+
 function safeAnalyticsLocation(value: unknown) {
   if (typeof value !== "string") return undefined;
   try {
@@ -235,6 +249,7 @@ function safeAnalyticsLocation(value: unknown) {
     }
     const social = publicCampaignParameters(location.searchParams);
     if (social) social.forEach((approvedValue, key) => safeLocation.searchParams.set(key, approvedValue));
+    appendGoogleClickIds(safeLocation, location.searchParams);
     return safeLocation.href.slice(0, 512);
   } catch {
     return undefined;
@@ -392,6 +407,15 @@ function setGoogleAnalyticsDisabled(disabled: boolean) {
   Object.assign(window, { [GA_DISABLE_KEY]: disabled });
 }
 
+function googlePageContext() {
+  let referrer = "";
+  try { referrer = new URL(document.referrer).origin + "/"; } catch { /* No public referrer. */ }
+  return {
+    page_location: safeAnalyticsLocation(window.location.href),
+    page_referrer: referrer,
+  };
+}
+
 function bootGoogleAnalytics() {
   if (getAnalyticsConsent() !== "granted" || !hasRealGaMeasurementId() || gaBooted) return;
 
@@ -405,8 +429,8 @@ function bootGoogleAnalytics() {
     // React Router owns page-view delivery so a route change and the initial
     // page never become two page views.
     send_page_view: false,
-    // There is no advertising program. Keep signals and ad personalization
-    // off even after a visitor permits anonymous visit counting.
+    ...googlePageContext(),
+    // Measurement does not enable remarketing or Google signals.
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
   });
@@ -527,9 +551,12 @@ function bootTikTokPixel() {
   tikTokBooted = true;
 }
 
+// Re-sanitize queued events at delivery: withdrawal during delayed tag boot
+// must not expose a click identifier that was allowed when the event queued.
 function sendGaEvent(eventName: string, parameters: Record<string, unknown>) {
   if (getAnalyticsConsent() !== "granted") return;
   if (hasRealGaMeasurementId() && typeof window.gtag === "function") {
+    parameters = { ...googlePageContext(), ...safeAnalyticsParameters(parameters) };
     window.gtag("event", eventName, parameters);
     return;
   }
@@ -780,6 +807,7 @@ const MEASUREMENT_COOKIE_PREFIXES = [
   "_clsk",
   "CLID",
 ];
+const GOOGLE_ADS_COOKIE_PREFIXES = ["_gcl", "_gac"];
 
 function clearVendorCookies(prefixes: readonly string[]) {
   if (typeof document === "undefined") return;
@@ -836,6 +864,7 @@ export function installAnalyticsHooks() {
   // Google's property-level switch stops a previously loaded tag immediately
   // after withdrawal, including automatic cookieless pings.
   setGoogleAnalyticsDisabled(getAnalyticsConsent() !== "granted");
+  if (!hasGoogleAdsMeasurementConsent()) clearVendorCookies(GOOGLE_ADS_COOKIE_PREFIXES);
   // A legacy analytics opt-in used to imply advertising consent. The new
   // contract does not: absent advertising consent is denied, and any durable
   // TikTok identifiers left by the old behavior are removed on the next load.
@@ -986,6 +1015,7 @@ export function installAnalyticsHooks() {
       analytics_Storage: "denied",
     });
     clearVendorCookies(MEASUREMENT_COOKIE_PREFIXES);
+    clearVendorCookies(GOOGLE_ADS_COOKIE_PREFIXES);
 
     if (getAdvertisingConsent() !== "granted") {
       pendingTikTokEvents = [];
@@ -1024,12 +1054,18 @@ export function installAnalyticsHooks() {
     clearVendorCookies(ADVERTISING_COOKIE_PREFIXES);
   });
 
+  const removeGoogleAdsConsentListener = onGoogleAdsConsentChange(() => {
+    if (!hasGoogleAdsMeasurementConsent()) clearVendorCookies(GOOGLE_ADS_COOKIE_PREFIXES);
+    if (gaBooted) window.gtag?.("set", googlePageContext());
+  });
+
   return () => {
     window.removeEventListener("click", onClick);
     window.removeEventListener("submit", onSubmit);
     window.removeEventListener("scroll", onScroll);
     removeConsentListener();
     removeAdvertisingConsentListener();
+    removeGoogleAdsConsentListener();
     removeMetaMeasurement();
   };
 }

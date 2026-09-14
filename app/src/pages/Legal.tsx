@@ -81,15 +81,29 @@ export default function Legal() {
               under its <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noreferrer">privacy policy</a>.
               You can manage Meta’s use in its “Activity from other businesses” settings.
             </p>
+            <h2>Google Ads measurement</h2>
+            <p>
+              “Allow visits + Google Ads” lets Google Analytics share inquiry
+              completion events with our linked Google Ads account. Approved
+              campaign labels and Google click identifiers help connect an ad
+              click with a later inquiry. Google may use first-party advertising
+              cookies such as _gcl and _gac for this measurement. We do not send
+              your form answers or contact details, upload customer lists, or
+              enable Google ad personalization or remarketing.
+            </p>
             <h2>Cookies, pixels, and opt-outs</h2>
             <p>
               Analytics is off by default for a first-time visitor. Google
-              Analytics loads after “Allow visit counting” or “Allow visits + Meta.”
-              Meta loads only after the second choice. “Essential only” keeps
-              both off and the site still works. Global Privacy Control keeps
-              Meta off. Changing to visit counting only or essential only stops
-              Meta events and removes its first-party cookies; it does not
-              erase data already received by Meta. You can change your choice
+              Analytics loads after a visit-counting choice. Google Ads and
+              Meta each need their own explicit permission; allowing one does
+              not grant permission to the other. An existing permission for the
+              other service stays as you set it. “Allow visit counting” turns
+              both advertising choices off. “Essential only” keeps all optional
+              measurement off and the site still works. Global Privacy Control
+              keeps both advertising choices off. Withdrawing advertising
+              permission stops its measurement and removes the corresponding
+              first-party advertising cookies; it does not erase data already
+              received by a service. You can change your choice
               at any time using the footer or the button below.
             </p>
             <p>

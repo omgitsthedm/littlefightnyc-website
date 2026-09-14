@@ -7,6 +7,39 @@ export type AdvertisingConsent = ConsentChoice;
 // access the reporting, and deliberately reopen this integration.
 export const ADVERTISING_MEASUREMENT_AVAILABLE = false;
 
+// Google Ads measurement has its own fresh choice. Legacy TikTok, Meta, or
+// visit-counting consent never grants this permission.
+export const GOOGLE_ADS_CONSENT_KEY = "lf_google_ads_consent_v1";
+export const GOOGLE_ADS_CONSENT_EVENT = "lf:google-ads-consent";
+let googleAdsChoice: ConsentChoice | undefined;
+
+export function getGoogleAdsConsent(): ConsentChoice {
+  if (typeof window === "undefined") return null;
+  if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return "denied";
+  if (googleAdsChoice !== undefined) return googleAdsChoice;
+  try {
+    const value = window.localStorage.getItem(GOOGLE_ADS_CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : null;
+  } catch { return null; }
+}
+
+export function hasGoogleAdsMeasurementConsent() {
+  return getAnalyticsConsent() === "granted" && getGoogleAdsConsent() === "granted";
+}
+
+export function saveGoogleAdsConsent(choice: Exclude<ConsentChoice, null>) {
+  googleAdsChoice = (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl
+    ? "denied" : choice;
+  try { window.localStorage.setItem(GOOGLE_ADS_CONSENT_KEY, googleAdsChoice); } catch { /* Honor the in-page choice. */ }
+  updateGoogleAdsConsent();
+  window.dispatchEvent(new CustomEvent(GOOGLE_ADS_CONSENT_EVENT, { detail: googleAdsChoice }));
+}
+
+export function onGoogleAdsConsentChange(listener: () => void) {
+  window.addEventListener(GOOGLE_ADS_CONSENT_EVENT, listener);
+  return () => window.removeEventListener(GOOGLE_ADS_CONSENT_EVENT, listener);
+}
+
 // Meta has its own fresh opt-in. Neither old analytics nor the retired TikTok
 // consent is permission to share activity with a newly connected provider.
 export const META_CONSENT_KEY = "lf_meta_consent_v1";
@@ -89,15 +122,13 @@ function updateGoogleAnalyticsConsent(consent: Exclude<AnalyticsConsent, null>) 
   });
 }
 
-function updateGoogleAdvertisingConsent(
-  consent: Exclude<AdvertisingConsent, null>,
-) {
+function updateGoogleAdsConsent() {
   ensureGtagQueue();
-  const value = consent === "granted" ? "granted" : "denied";
+  const value = hasGoogleAdsMeasurementConsent() ? "granted" : "denied";
   window.gtag?.("consent", "update", {
     ad_storage: value,
     ad_user_data: value,
-    ad_personalization: value,
+    ad_personalization: "denied",
   });
 }
 
@@ -116,11 +147,11 @@ export function installConsentDefaults() {
     ad_personalization: "denied",
     wait_for_update: 500,
   });
+  window.gtag?.("set", "ads_data_redaction", true);
 
   const analyticsConsent = getAnalyticsConsent();
-  const advertisingConsent = getAdvertisingConsent();
   if (analyticsConsent !== null) updateGoogleAnalyticsConsent(analyticsConsent);
-  if (advertisingConsent !== null) updateGoogleAdvertisingConsent(advertisingConsent);
+  updateGoogleAdsConsent();
 }
 
 export function saveAnalyticsConsent(consent: Exclude<AnalyticsConsent, null>) {
@@ -132,6 +163,7 @@ export function saveAnalyticsConsent(consent: Exclude<AnalyticsConsent, null>) {
   }
 
   updateGoogleAnalyticsConsent(consent);
+  updateGoogleAdsConsent();
   window.dispatchEvent(
     new CustomEvent<Exclude<AnalyticsConsent, null>>(CONSENT_CHANGE_EVENT, {
       detail: consent,
@@ -152,7 +184,6 @@ export function saveAdvertisingConsent(
     // is unavailable.
   }
 
-  updateGoogleAdvertisingConsent(effectiveConsent);
   window.dispatchEvent(
     new CustomEvent<Exclude<AdvertisingConsent, null>>(
       ADVERTISING_CONSENT_CHANGE_EVENT,

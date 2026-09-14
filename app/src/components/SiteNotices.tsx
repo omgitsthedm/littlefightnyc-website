@@ -10,6 +10,8 @@ import {
   getAnalyticsConsent,
   saveAdvertisingConsent,
   saveAnalyticsConsent,
+  getGoogleAdsConsent,
+  saveGoogleAdsConsent,
 } from "@/lib/consent";
 import "./SiteNotices.css";
 
@@ -18,9 +20,10 @@ type NoticeCopy = {
   title: string;
   body: string;
   details: string;
-  current: (analyticsOn: boolean, metaOn: boolean) => string;
+  current: (analyticsOn: boolean, metaOn: boolean, googleAdsOn: boolean) => string;
   allowAnalytics: string;
   allowMeta: string;
+  allowGoogleAds: string;
   essentialOnly: string;
 };
 
@@ -28,34 +31,37 @@ const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
   en: {
     ariaLabel: "Privacy preferences",
     title: "Privacy choices",
-    body: "Choose optional Google visit counting, or also share page and inquiry activity with Meta to measure Facebook and Instagram referrals. Meta may use this for personalized content and ads.",
+    body: "Choose optional Google visit counting. You can also allow Google Ads to connect ad clicks with inquiries, or Meta to measure Facebook and Instagram referrals. Google ad personalization stays off; Meta may use activity for personalized content and ads.",
     details: "Details",
-    current: (analyticsOn, metaOn) =>
-      `Current choice: visit counting ${analyticsOn ? "on" : "off"}; Meta ${metaOn ? "on" : "off"}`,
+    current: (analyticsOn, metaOn, googleAdsOn) =>
+      `Current choice: visit counting ${analyticsOn ? "on" : "off"}; Meta ${metaOn ? "on" : "off"}; Google Ads ${googleAdsOn ? "on" : "off"}`,
     allowAnalytics: "Allow visit counting",
     allowMeta: "Allow visits + Meta",
+    allowGoogleAds: "Allow visits + Google Ads",
     essentialOnly: "Essential only",
   },
   es: {
     ariaLabel: "Preferencias de privacidad",
     title: "Opciones de privacidad",
-    body: "Puedes permitir el conteo de visitas de Google y, si quieres, compartir visitas y acciones de consulta con Meta para medir las referencias de Facebook e Instagram. Meta puede usar estos datos para personalizar contenido y anuncios.",
+    body: "Puedes permitir el conteo de visitas de Google. También puedes permitir que Google Ads relacione clics en anuncios con consultas, o que Meta mida las referencias de Facebook e Instagram. La personalización de anuncios de Google sigue desactivada; Meta puede usar la actividad para personalizar contenido y anuncios.",
     details: "Detalles (en inglés)",
-    current: (analyticsOn, metaOn) =>
-      `Opción actual: conteo de visitas ${analyticsOn ? "activado" : "desactivado"}; Meta ${metaOn ? "activado" : "desactivado"}`,
+    current: (analyticsOn, metaOn, googleAdsOn) =>
+      `Opción actual: conteo de visitas ${analyticsOn ? "activado" : "desactivado"}; Meta ${metaOn ? "activado" : "desactivado"}; Google Ads ${googleAdsOn ? "activado" : "desactivado"}`,
     allowAnalytics: "Permitir conteo",
     allowMeta: "Permitir conteo + Meta",
+    allowGoogleAds: "Permitir conteo + Google Ads",
     essentialOnly: "Solo lo esencial",
   },
   zh: {
     ariaLabel: "隐私设置",
     title: "隐私选项",
-    body: "您可以允许 Google 访问统计，也可以允许与 Meta 分享页面访问和咨询操作，以衡量 Facebook 和 Instagram 带来的访问。Meta 可能将这些数据用于个性化内容和广告。",
+    body: "您可以允许 Google 访问统计，也可以允许 Google Ads 将广告点击与咨询关联，或允许 Meta 衡量 Facebook 和 Instagram 带来的访问。Google 广告个性化保持关闭；Meta 可能将活动用于个性化内容和广告。",
     details: "详细说明（英文）",
-    current: (analyticsOn, metaOn) =>
-      `当前选择：访问统计${analyticsOn ? "已开启" : "已关闭"}；Meta ${metaOn ? "已开启" : "已关闭"}`,
+    current: (analyticsOn, metaOn, googleAdsOn) =>
+      `当前选择：访问统计${analyticsOn ? "已开启" : "已关闭"}；Meta ${metaOn ? "已开启" : "已关闭"}；Google Ads ${googleAdsOn ? "已开启" : "已关闭"}`,
     allowAnalytics: "允许访问统计",
     allowMeta: "允许统计和 Meta",
+    allowGoogleAds: "允许统计和 Google Ads",
     essentialOnly: "仅必要功能",
   },
 };
@@ -71,6 +77,7 @@ function getConsentChoices() {
     analytics: getAnalyticsConsent(),
     advertising: getAdvertisingConsent(),
     meta: getMetaConsent(),
+    googleAds: getGoogleAdsConsent(),
   };
 }
 
@@ -81,7 +88,7 @@ function ConsentNotice() {
   // makes a choice. First-visit choices live after the page, in normal flow:
   // they never cover the work or interrupt an inquiry. Footer/legal controls
   // bring this same panel into view when the visitor asks to change a choice.
-  const [visible, setVisible] = useState(() => getAnalyticsConsent() === null || getMetaConsent() === null);
+  const [visible, setVisible] = useState(() => getAnalyticsConsent() === null || getMetaConsent() === null || getGoogleAdsConsent() === null);
   const [choices, setChoices] = useState(getConsentChoices);
   const panelRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
@@ -139,6 +146,7 @@ function ConsentNotice() {
   const allowAnalyticsOnly = () => {
     // Revoke advertising first so this action can never briefly start an ad
     // pixel when a visitor changes a previous broader choice.
+    saveGoogleAdsConsent("denied");
     saveAdvertisingConsent("denied");
     saveMetaConsent("denied");
     if (choices.analytics !== "granted") saveAnalyticsConsent("granted");
@@ -146,13 +154,23 @@ function ConsentNotice() {
   };
 
   const allowVisitsAndMeta = () => {
+    if (choices.googleAds !== "granted") saveGoogleAdsConsent("denied");
     saveAdvertisingConsent("denied");
     saveAnalyticsConsent("granted");
     saveMetaConsent("granted");
     finish();
   };
 
+  const allowVisitsAndGoogleAds = () => {
+    saveAdvertisingConsent("denied");
+    if (choices.meta !== "granted") saveMetaConsent("denied");
+    saveGoogleAdsConsent("granted");
+    if (choices.analytics !== "granted") saveAnalyticsConsent("granted");
+    finish();
+  };
+
   const allowEssentialOnly = () => {
+    saveGoogleAdsConsent("denied");
     saveAdvertisingConsent("denied");
     saveMetaConsent("denied");
     if (choices.analytics !== "denied") saveAnalyticsConsent("denied");
@@ -178,7 +196,7 @@ function ConsentNotice() {
         {choices.analytics && (
           <p className="lf-consent__current">
             <Check size={14} aria-hidden="true" />
-            {copy.current(choices.analytics === "granted", choices.meta === "granted")}
+            {copy.current(choices.analytics === "granted", choices.meta === "granted", choices.googleAds === "granted")}
           </p>
         )}
       </div>
@@ -192,6 +210,9 @@ function ConsentNotice() {
         </button>
         <button type="button" className="lf-notice__secondary" onClick={allowVisitsAndMeta}>
           {copy.allowMeta}
+        </button>
+        <button type="button" className="lf-notice__secondary" onClick={allowVisitsAndGoogleAds}>
+          {copy.allowGoogleAds}
         </button>
         <button
           type="button"
