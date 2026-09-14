@@ -143,8 +143,8 @@ const eagerPageImports = [...appSource.matchAll(/import \w+ from "@\/pages\/([^"
 );
 assert.deepEqual(
   eagerPageImports,
-  ["Home"],
-  "Home must be the only eager page; route code must not inflate every mobile visit",
+  [],
+  "Page routes must load for the selected destination, without inflating every mobile visit",
 );
 for (const [label, source] of [
   ["application routes", appSource],
