@@ -355,7 +355,9 @@ export const services: Service[] = [
       {
         question: "Do I need a new website, or just a cleanup?",
         answer:
-          "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. The free consult tells you which.",
+          // "The free consult tells you which" named a meeting, not a move.
+          // The owner reading this wants to know what to do in the next minute.
+          "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. Send us the address and the free first look says which one you need.",
       },
       {
         question: "Can you connect the site to booking or payments?",
