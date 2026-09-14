@@ -228,11 +228,18 @@ describe("Dakota consented inbound mapping", () => {
   it.each([
     ["another form", techAuditData({ "form-name": "contact" })],
     ["honeypot spam", techAuditData({ "bot-field": "filled" })],
+    ["internal readiness test", techAuditData({ contact: "hello@littlefightnyc.com", message: "Internal paid-ad readiness test LFNYC-PAID-PREFLIGHT-20260913" })],
     ["missing business", techAuditData({ business: "" })],
     ["malformed contact", techAuditData({ contact: "not-a-contact" })],
     ["malformed event", []],
   ])("ignores %s", (_label, value) => {
     expect(createTechAuditInboundCandidate(value, NOW)).toBeNull();
+  });
+
+  it("retains a customer asking for a test and an unmarked first-party inquiry", () => {
+    expect(createTechAuditInboundCandidate(techAuditData({ message: "Please test our website checkout." }), NOW)).not.toBeNull();
+    expect(createTechAuditInboundCandidate(techAuditData({ contact: "hello@littlefightnyc.com" }), NOW)).not.toBeNull();
+    expect(createTechAuditInboundCandidate(techAuditData({ message: "LFNYC-PAID-PREFLIGHT-20260913" }), NOW)).not.toBeNull();
   });
 
   it("does not retain raw network, secret, provider, or arbitrary event payload", () => {

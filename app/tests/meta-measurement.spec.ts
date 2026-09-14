@@ -153,7 +153,7 @@ test("human intake preserves consented measurement through its public referrer @
   await page.goto(intake, { waitUntil: "networkidle" });
   await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
   expect(hits(await commands(page), "Lead")).toHaveLength(0);
-  await page.goto("https://littlefightnyc.com/thanks/?submitted=tech-audit&intent=website&reply=email", {
+  await page.goto("https://littlefightnyc.com/thanks/?submitted=tech-audit&confirmed_intent=website&reply=email", {
     referer: intake, waitUntil: "networkidle",
   });
   await expect.poll(async () => hits(await commands(page), "Lead").length).toBe(1);

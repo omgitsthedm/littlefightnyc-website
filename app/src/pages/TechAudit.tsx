@@ -14,6 +14,7 @@ import { readAttribution } from "@/lib/attribution";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import {
+  isInternalTechAuditTest,
   normalizeTechAuditFollowUpPreference,
   parseTechAuditLeadIntent,
   safeTechAuditReportId,
@@ -285,6 +286,7 @@ export default function TechAudit() {
   const auditStartedRef = useRef(false);
   const attribution = readAttribution();
   const contactRoute = techAuditContactRoute(fields.contact);
+  const internalTest = isInternalTechAuditTest(fields.contact, message);
   const preferredRoute = contactRoute
     ? techAuditPreferredRoute(contactRoute, fields.follow_up)
     : null;
@@ -292,6 +294,7 @@ export default function TechAudit() {
     intent: leadIntent,
     replyRoute: preferredRoute,
     reportId,
+    internalTest,
   });
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
@@ -489,6 +492,8 @@ export default function TechAudit() {
     const submittedContact = (
       form.elements.namedItem("contact") as HTMLInputElement | null
     )?.value ?? "";
+    const submittedMessage = (form.elements.namedItem("message") as HTMLTextAreaElement | null)?.value ?? "";
+    const submittedInternalTest = isInternalTechAuditTest(submittedContact, submittedMessage);
     const submittedPreference = normalizeTechAuditFollowUpPreference(
       (form.elements.namedItem("follow_up") as HTMLSelectElement | null)?.value,
     );
@@ -504,12 +509,17 @@ export default function TechAudit() {
     const submittedAtInput = form.elements.namedItem("dakota_submitted_at") as HTMLInputElement | null;
     if (captureInput) captureInput.value = captureId;
     if (submittedAtInput) submittedAtInput.value = submittedAt;
+    const subjectInput = form.elements.namedItem("subject") as HTMLInputElement | null;
+    if (subjectInput) subjectInput.value = submittedInternalTest
+      ? "Internal Little Fight NYC test — not a lead"
+      : "New Little Fight NYC Tech Audit";
     // Re-resolve from the submitted DOM values so the native redirect always
     // carries the exact, consented response route even before React re-renders.
     form.setAttribute("action", techAuditConfirmationPath({
       intent: leadIntent,
       replyRoute: submittedReplyRoute,
       reportId,
+      internalTest: submittedInternalTest,
     }));
 
     hapticSubmit();
@@ -520,6 +530,7 @@ export default function TechAudit() {
     // clears it on confirmed success instead.
     setErrors({});
     try {
+      window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.internalTest, String(submittedInternalTest));
       window.sessionStorage.setItem(
         TECH_AUDIT_SESSION_KEYS.intent,
         leadIntent,
@@ -780,7 +791,7 @@ export default function TechAudit() {
                   noValidate={typeof window !== "undefined"}
                 >
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
-                  <input type="hidden" name="subject" value="New Little Fight NYC Tech Audit" />
+                  <input type="hidden" name="subject" value={internalTest ? "Internal Little Fight NYC test — not a lead" : "New Little Fight NYC Tech Audit"} />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
                   <input
                     type="hidden"

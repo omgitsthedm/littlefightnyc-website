@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  isInternalTechAuditTest,
   normalizeTechAuditFollowUpPreference,
   parseTechAuditLeadIntent,
   parseTechAuditPreferredRoute,
@@ -80,10 +81,11 @@ describe("Tech Audit contact contract", () => {
     });
 
     expect(path).toBe(
-      "/thanks/?submitted=tech-audit&intent=website&reply=sms&report=example-com-1a2b3c4d",
+      "/thanks/?submitted=tech-audit&confirmed_intent=website&reply=sms&report=example-com-1a2b3c4d",
     );
     expect(readTechAuditConfirmation(path.split("?")[1] ?? "")).toEqual({
       submitted: true,
+      internalTest: false,
       intent: "website",
       replyRoute: "sms",
       reportId: "example-com-1a2b3c4d",
@@ -97,6 +99,7 @@ describe("Tech Audit contact contract", () => {
       ),
     ).toEqual({
       submitted: false,
+      internalTest: false,
       intent: null,
       replyRoute: null,
       reportId: "",
@@ -106,6 +109,21 @@ describe("Tech Audit contact contract", () => {
     expect(parseTechAuditPreferredRoute("sms")).toBe("sms");
     expect(parseTechAuditPreferredRoute("text")).toBeNull();
     expect(safeTechAuditReportId(" example-com-1234 ")).toBe("example-com-1234");
+  });
+
+  it("keeps explicit internal checks distinct from real inquiries", () => {
+    const marker = "Internal paid-ad readiness test LFNYC-PAID-PREFLIGHT-20260913";
+    expect(isInternalTechAuditTest(" HELLO@LITTLEFIGHTNYC.COM ", marker)).toBe(true);
+    expect(isInternalTechAuditTest("hello@littlefightnyc.com", "LFNYC E2E 2026-09-14 0120")).toBe(true);
+    expect(isInternalTechAuditTest("owner@example.com", marker)).toBe(false);
+    expect(isInternalTechAuditTest("hello@littlefightnyc.com", "Please test our checkout.")).toBe(false);
+    expect(isInternalTechAuditTest("hello@littlefightnyc.com.evil.example", marker)).toBe(false);
+
+    const path = techAuditConfirmationPath({ intent: "website", replyRoute: "email", internalTest: true });
+    const url = new URL(path, "https://littlefightnyc.com");
+    expect(url.searchParams.has("intent")).toBe(false);
+    expect(readTechAuditConfirmation(url.search)).toMatchObject({ internalTest: true, intent: "website" });
+    expect(readTechAuditConfirmation("?submitted=tech-audit&intent=support").intent).toBe("support");
   });
 
   it.each([

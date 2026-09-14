@@ -53,11 +53,13 @@ export default function Thanks() {
 
     const query = readTechAuditConfirmation(window.location.search);
     let storedSubmission = false;
+    let internalTest = query.internalTest;
 
     try {
       storedSubmission = window.sessionStorage.getItem(
         TECH_AUDIT_SESSION_KEYS.submitted,
       ) === "true";
+      internalTest ||= window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.internalTest) === "true";
     } catch {
       // The one-time redirect marker remains sufficient for success tracking.
     }
@@ -87,6 +89,7 @@ export default function Thanks() {
 
     try {
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.submitted);
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.internalTest);
       // Confirmed success — retire the draft only after the native POST lands.
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.draft);
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.intent);
@@ -95,6 +98,8 @@ export default function Thanks() {
     } catch {
       // Storage can be unavailable; confirmation and tracking still succeed.
     }
+
+    if (internalTest) return;
 
     trackEvent("generate_lead", {
       method: "tech_audit_form",

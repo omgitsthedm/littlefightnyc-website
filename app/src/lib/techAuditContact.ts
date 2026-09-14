@@ -26,10 +26,12 @@ export const TECH_AUDIT_SESSION_KEYS = {
   replyRoute: "lf_tech_audit_reply_route",
   report: "lf_tech_audit_report_id",
   submitted: "lf_tech_audit_submitted",
+  internalTest: "lf_tech_audit_internal_test",
 } as const;
 
 export type TechAuditConfirmationState = {
   submitted: boolean;
+  internalTest: boolean;
   intent: TechAuditLeadIntent | null;
   replyRoute: TechAuditPreferredRoute | null;
   reportId: string;
@@ -46,6 +48,13 @@ const PREFERRED_ROUTE_SET = new Set<string>(["email", "phone", "sms"]);
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/u;
 const PHONE = /^\+?[0-9().\-\s]{7,32}(?:(?:x|ext\.?)\s*\d{1,8})?$/iu;
 const CONFIRMATION_MARKER = "tech-audit";
+
+/** Only explicitly marked first-party delivery checks are excluded. A real
+ * customer asking us to test something must still reach the inbox and desk. */
+export function isInternalTechAuditTest(contact: string, message: string): boolean {
+  return contact.trim().toLowerCase() === "hello@littlefightnyc.com" &&
+    /\bLFNYC(?:-PAID-PREFLIGHT-\d{8}| E2E \d{4}-\d{2}-\d{2} \d{2}:?\d{2})\b/u.test(message);
+}
 
 /**
  * One shared contact contract powers both the public form and Dakota's inbound
@@ -126,15 +135,20 @@ export function techAuditConfirmationPath({
   intent,
   replyRoute,
   reportId = "",
+  internalTest = false,
 }: {
   intent: TechAuditLeadIntent;
   replyRoute: TechAuditPreferredRoute | null;
   reportId?: string;
+  internalTest?: boolean;
 }): string {
   const params = new URLSearchParams({
     submitted: CONFIRMATION_MARKER,
-    intent,
+    confirmed_intent: intent,
   });
+  // Netlify combines redirect query fields with the native form body. Keep
+  // confirmation context distinct from the form's single `intent` field.
+  if (internalTest) params.set("internal_test", "1");
   if (replyRoute) params.set("reply", replyRoute);
   const safeReportId = safeTechAuditReportId(reportId);
   if (safeReportId) params.set("report", safeReportId);
@@ -145,7 +159,8 @@ export function readTechAuditConfirmation(search: string): TechAuditConfirmation
   const params = new URLSearchParams(search);
   return {
     submitted: params.get("submitted") === CONFIRMATION_MARKER,
-    intent: parseTechAuditLeadIntent(params.get("intent")),
+    internalTest: params.get("internal_test") === "1",
+    intent: parseTechAuditLeadIntent(params.get("confirmed_intent") ?? params.get("intent")),
     replyRoute: parseTechAuditPreferredRoute(params.get("reply")),
     reportId: safeTechAuditReportId(params.get("report")),
   };

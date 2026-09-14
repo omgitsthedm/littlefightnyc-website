@@ -1,5 +1,6 @@
 import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
 import { publicCampaignParameters } from "./socialCampaign";
+import { isInternalTechAuditTest, TECH_AUDIT_SESSION_KEYS } from "./techAuditContact";
 import {
   getAdvertisingConsent,
   getAnalyticsConsent,
@@ -913,11 +914,16 @@ export function installAnalyticsHooks() {
 
     const formName = form.getAttribute("name") ?? "unknown";
     if (formName === "tech-audit-scratch") {
+      const data = new FormData(form);
+      const internalTest = isInternalTechAuditTest(String(data.get("contact") ?? ""), String(data.get("message") ?? ""));
       try {
-        window.sessionStorage.setItem("lf_tech_audit_submitted", "true");
+        window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.submitted, "true");
+        window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.internalTest, String(internalTest));
       } catch {
         // Storage can be unavailable in hardened browsers; the generic submit event still fires.
       }
+
+      if (internalTest) return;
 
       track("tech_audit_submit", {
         form_name: formName,

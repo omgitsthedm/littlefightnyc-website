@@ -19,6 +19,19 @@ import type { DakotaOperatorStateEnvelope } from "./operator-state-schema";
 
 const NOW = new Date("2026-08-03T12:00:00.000Z");
 
+it("does not create a lead, receipt, or alert for an explicit internal delivery check", async () => {
+  const result = await captureTechAuditInboundReliably({
+    ...techAuditData(),
+    contact: "hello@littlefightnyc.com",
+    message: "Internal paid-ad readiness test LFNYC-PAID-PREFLIGHT-20260913",
+  }, {
+    getOperatorStore: () => { throw new Error("Internal test opened the sales store"); },
+    getReceiptStore: () => { throw new Error("Internal test opened the receipt store"); },
+    now: () => NOW,
+  });
+  expect(result).toBeNull();
+});
+
 function techAuditData(index = 1): Record<string, unknown> {
   return {
     "form-name": "tech-audit-scratch",

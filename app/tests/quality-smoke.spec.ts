@@ -1690,7 +1690,7 @@ test(
     const confirmationUrl = new URL(action!, baseURL!);
     expect(confirmationUrl.pathname).toBe("/thanks/");
     expect(confirmationUrl.searchParams.get("submitted")).toBe("tech-audit");
-    expect(confirmationUrl.searchParams.get("intent")).toBe("website");
+    expect(confirmationUrl.searchParams.get("confirmed_intent")).toBe("website");
     expect(confirmationUrl.searchParams.get("report")).toBeNull();
     expect(confirmationUrl.search).not.toContain("private");
     expect(confirmationUrl.search).not.toContain("script");
@@ -1730,6 +1730,52 @@ test(
     expectRuntimeClean(runtime);
   },
 );
+
+for (const inquiry of [
+  { label: "internal delivery check", contact: "hello@littlefightnyc.com", message: "Internal paid-ad readiness test LFNYC-PAID-PREFLIGHT-20260913", internal: true },
+  { label: "customer requesting a test", contact: "owner@example.com", message: "Please test our website checkout.", internal: false },
+]) {
+  test(`Tech Audit ${inquiry.label} preserves delivery and correct conversion counts @chromium-desktop @chromium-mobile`, async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("lf_analytics_consent_v1", "granted"));
+    // Accept only in this local browser fixture. No prospect or production
+    // submission is created by the regression test.
+    let submitted: { url: string; body: string } | undefined;
+    await page.route("**/thanks/**", async route => {
+      if (route.request().method() !== "POST") return route.continue();
+      submitted = { url: route.request().url(), body: route.request().postData() ?? "" };
+      await route.fulfill({ status: 204 });
+    });
+    await page.goto("/tech-audit/?intent=website", { waitUntil: "networkidle" });
+    const form = page.locator('form[name="tech-audit-scratch"]');
+    await form.locator('[name="name"]').fill("Local browser fixture");
+    await form.locator('[name="business"]').fill("Local test business");
+    await form.locator('[name="contact"]').fill(inquiry.contact);
+    await form.locator('[name="follow_up"]').selectOption("email");
+    await form.locator('[name="message"]').fill(inquiry.message);
+    await page.getByRole("button", { name: "Send my first-look request" }).click();
+    await expect.poll(() => submitted).toBeTruthy();
+    const delivered = new URLSearchParams(submitted!.body);
+    const redirect = new URL(submitted!.url);
+    expect(delivered.getAll("intent")).toEqual(["website"]);
+    expect(redirect.searchParams.has("intent")).toBe(false);
+    expect(redirect.searchParams.get("confirmed_intent")).toBe("website");
+    expect(delivered.get("contact")).toBe(inquiry.contact);
+    expect(delivered.get("message")).toBe(inquiry.message);
+    expect(delivered.get("subject")).toBe(inquiry.internal ? "Internal Little Fight NYC test — not a lead" : "New Little Fight NYC Tech Audit");
+    const eventCount = (name: string) => page.evaluate(eventName => (window.dataLayer ?? [])
+      .filter(row => typeof row === "object" && row !== null && (row as { event?: string }).event === eventName).length, name);
+    await expect.poll(() => eventCount("tech_audit_submit")).toBe(inquiry.internal ? 0 : 1);
+    // Also prove the redirect carries classification when storage is blocked
+    // or lost. A session marker alone would miss that browser mode.
+    await page.evaluate(() => sessionStorage.clear());
+    await page.goto(submitted!.url, { waitUntil: "networkidle" });
+    await expect(page.getByRole("heading", { name: /Your website message is with us/i })).toBeVisible();
+    await expect.poll(() => eventCount("generate_lead")).toBe(inquiry.internal ? 0 : 1);
+    expect(new URL(page.url()).searchParams.has("submitted")).toBe(false);
+    await page.reload({ waitUntil: "networkidle" });
+    expect(await eventCount("generate_lead")).toBe(0);
+  });
+}
 
 test(
   "a malformed URL fragment does not blank the page @chromium-desktop @chromium-mobile",

@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import type { Store } from "@netlify/blobs";
 
 import {
+  isInternalTechAuditTest,
   normalizeTechAuditFollowUpPreference,
   techAuditContactRoute,
   techAuditPreferredRoute,
@@ -249,6 +250,7 @@ export function createTechAuditInboundCandidate(
     return null;
   }
   if (rawField(data, "bot-field", 256)) return null;
+  if (isInternalTechAuditTest(rawField(data, "contact", 512), rawField(data, "message", 8_192))) return null;
 
   const name = boundedPlainText(rawField(data, "name", 512), 160);
   const businessName = boundedPlainText(rawField(data, "business", 512), 240);
