@@ -283,7 +283,7 @@ export const services: Service[] = [
       "Clear Google and map basics where they help",
       "Working forms, booking, and payment links",
       "Useful service and neighborhood pages",
-      "Care options with plain notes about what changed",
+      "Ongoing website support options with plain notes about what changed",
     ],
     image: "/assets/nyc-hair-salon-street.webp",
     accent: "orange",
@@ -297,7 +297,7 @@ export const services: Service[] = [
       "The public facts agree. Service pages, Maps details, reviews, booking links, and Google profile information should not make a customer guess which one is right.",
       "It works for any trade. A bar. A law firm. A clothing brand. A salon. A hardware store. The look changes. The job is the same: make the next step obvious.",
       "We build, you review, then we launch. Before we start, the written plan says what we need from each other and what happens next.",
-      "Care can keep the public path current when hours, offers, or tools change. You keep the accounts and the notes.",
+      "Ongoing website support can keep the public path current when hours, offers, or tools change. You keep the accounts and the notes.",
     ],
     commonIssues: [
       {
@@ -344,7 +344,7 @@ export const services: Service[] = [
       },
       {
         myth: "Once the site launches, we’re done.",
-        reality: "A site nobody touches goes stale. Hours change. Staff change. Tools change. Google changes. Care keeps the path working.",
+        reality: "A site nobody touches goes stale. Hours change. Staff change. Tools change. Google changes. Ongoing website support keeps the agreed path working.",
       },
       {
         myth: "A redesign will fix the leads problem.",

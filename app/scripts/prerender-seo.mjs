@@ -562,6 +562,10 @@ const BREADCRUMB_WORDS = {
   gbp: "GBP", faq: "FAQ",
 };
 
+const BREADCRUMB_LABELS = {
+  "/services/ongoing-care/": "In Your Corner",
+};
+
 // Section roots that no longer exist as pages. Building a breadcrumb from the
 // URL alone pointed 87 of 130 indexed pages at a parent that 301s — every
 // /journal/ (37), /answers/ (27), /case-studies/ (13), /industries/ (7) and
@@ -609,7 +613,7 @@ function breadcrumbFor(page) {
       continue;
     }
     items.push({
-      name: part
+      name: BREADCRUMB_LABELS[path] ?? part
         .split("-")
         .map((word) => BREADCRUMB_WORDS[word] ?? word[0].toUpperCase() + word.slice(1))
         .join(" "),
@@ -1193,7 +1197,7 @@ const primaryLinks = [
   { href: "/services/custom-local-websites/", label: "Custom Local Websites" },
   { href: "/services/business-systems/", label: "Business Systems" },
   { href: "/services/new-business-launch/", label: "New Business Launch" },
-  { href: "/services/ongoing-care/", label: "Ongoing Care" },
+  { href: "/services/ongoing-care/", label: "In Your Corner" },
   { href: "/services/#studio", label: "Studio" },
   { href: "/examples/", label: "Examples" },
   { href: "/areas/", label: "All 18 Neighborhoods" },
@@ -1484,7 +1488,7 @@ function authoredContentHtml(page) {
     </section>
 ` + Object.keys(siteContent.serviceOffers).map((slug) => {
       const service = siteContent.services.find((item) => item.slug === slug);
-      return `<section><h2><a href="/services/${slug}/">${escapeHtml(service?.eyebrow ?? (slug === "new-business-launch" ? "New business launch" : "Ongoing care"))}</a></h2>${serviceOfferHtml(slug)}</section>`;
+      return `<section><h2><a href="/services/${slug}/">${escapeHtml(service?.eyebrow ?? (slug === "new-business-launch" ? "New business launch" : "In Your Corner"))}</a></h2>${serviceOfferHtml(slug)}</section>`;
     }).join("\n");
   }
   if (page.path === "/areas/") {

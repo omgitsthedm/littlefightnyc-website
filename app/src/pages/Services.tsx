@@ -126,7 +126,7 @@ export default function Services() {
         }
       />
 
-      <section className="lf-svc-extensions" aria-label="Launch and care">
+      <section className="lf-svc-extensions" aria-label="Launch and ongoing website support">
         <div className="lf-svc-extensions__inner">
           <Link to="/services/new-business-launch/">
             <Store size={22} strokeWidth={1.7} aria-hidden="true" />
@@ -141,7 +141,7 @@ export default function Services() {
           <Link to="/services/ongoing-care/">
             <RefreshCw size={22} strokeWidth={1.7} aria-hidden="true" />
             <span>
-              <small>Ongoing care</small>
+              <small>In Your Corner</small>
               <strong>What it is: {serviceOffers["ongoing-care"].what}</strong>
               <em>Who it is for: {serviceOffers["ongoing-care"].who}</em>
               <em>What you get: {serviceOffers["ongoing-care"].get}</em>

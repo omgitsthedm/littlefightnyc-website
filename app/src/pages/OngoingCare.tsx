@@ -11,7 +11,7 @@ import {
 import { HELLO_EMAIL } from "@/data/contact";
 import "@/styles/editorial/revenue-pages.css";
 
-const CARE_WORK = [
+const SUPPORT_WORK = [
   {
     label: "Customer path",
     title: "Keep the actions working.",
@@ -20,25 +20,25 @@ const CARE_WORK = [
   {
     label: "Public facts",
     title: "Keep the business accurate.",
-    detail: "Hours, services, staff, offers, policies, and Google-facing facts change. Care keeps the website from confidently telling old stories.",
+    detail: "Hours, services, staff, offers, policies, and Google-facing facts change. Ongoing website support keeps the site from confidently telling old stories.",
   },
   {
-    label: "Keep it working",
+    label: "Website foundations",
     title: "Check the parts nobody sees.",
     detail: "The website, backups, basic safety, and website-address connection stay checked so a customer is less likely to find a break first.",
   },
   {
     label: "Ownership",
     title: "Keep the keys with the owner.",
-    detail: "Every important change is written down. The website address, code, content, accounts, and business data stay yours whether care continues or stops.",
+    detail: "Every important change is written down. The website address, code, content, accounts, and business data stay yours whether ongoing support continues or stops.",
   },
 ] as const;
 
-const CARE_PATH = createConnectedPath({
-  label: "An ongoing-care path",
+const SUPPORT_PATH = createConnectedPath({
+  label: "An ongoing website support path",
   summary:
-    "Ongoing care checks the public facts, customer actions, and behind-the-scenes connections. Every change is written down and stays with the business owner.",
-  caption: "Care keeps the path current; it does not lock the business in.",
+    "Ongoing website support checks the agreed customer path, public facts, and behind-the-scenes connections. Every finding is dated, and the owner keeps the record.",
+  caption: "The work follows the agreement in place; bigger changes return to the owner for a decision.",
   nodes: [
     { id: "one", label: "A real business change", sub: "Hours · staff · service · policy", col: 0 },
     { id: "two", label: "The public path is checked", sub: "Website · form · booking · call", col: 1 },
@@ -51,10 +51,10 @@ export default function OngoingCare() {
   return (
     <>
       <PageHero
-        eyebrow="Ongoing care"
+        eyebrow="In Your Corner"
         icon={RefreshCw}
-        title={<>Keep the front door honest after launch.</>}
-        dek="Care keeps your hours, forms, booking paths, and the quiet parts current. Ask once or keep us on call. You own the website address, code, and content either way."
+        title={<>Ongoing website support that keeps your customer path ready.</>}
+        dek="For existing Little Fight clients, support follows the agreement in place. We keep the agreed customer path current while you keep the website address, code, and content."
         image={{
           src: "/images/brand-scenes/shop-back-office.webp",
           alt: "A neighborhood shop back office with the everyday tools that keep the business running",
@@ -63,27 +63,57 @@ export default function OngoingCare() {
         }}
       />
 
-      <section className="lf-revenue-page" aria-labelledby="lf-care-title">
+      <section className="lf-revenue-page" aria-labelledby="lf-support-title">
         <header className="lf-revenue-page__intro">
-          <p>Care without lock-in</p>
-          <h2 id="lf-care-title">Your hours, forms, and booking stay right after launch.</h2>
+          <p>In Your Corner</p>
+          <h2 id="lf-support-title">Keep the public path clear after launch.</h2>
           <div>
             <p>
-              You get a website that keeps telling the truth: current hours,
-              a form that lands, the right service, a booking link that reaches
-              the right person. Every change is written down and stays yours.
+              Ongoing website support starts with the customer path that matters
+              to your business: a call, booking, order, question, or visit. We
+              agree what to check, date what we find, and keep a clear record
+              of the work.
             </p>
             <p>
-              Care fits the business you actually run. No mystery report. No
-              ownership trap. If you need help once, ask once. Without it, a
-              site can stay online while the useful parts quietly go stale, and
-              lose trust without ever looking broken.
+              For eligible existing clients, the support follows the agreement
+              already in place. We make routine corrections that are already
+              agreed. A larger change always comes back to you with the next
+              decision before work begins.
             </p>
           </div>
         </header>
 
+        <aside className="lf-revenue-page__handoff">
+          <div>
+            <p>Included for the sites we look after</p>
+            <h2>A monthly check, and the small fixes it finds.</h2>
+            <p>
+              Every site we look after gets a monthly check: the agreed
+              customer path, page speed, search health, broken links, and
+              whether forms and booking still deliver. We make the routine
+              corrections it turns up and tell you what changed. It is not a
+              report you have to act on, and it costs nothing extra.
+            </p>
+          </div>
+          <Link to="/clients/">Open the client desk</Link>
+        </aside>
+
+        <aside className="lf-revenue-page__handoff">
+          <div>
+            <p>A closer weekly check</p>
+            <h2>A weekly check, with a record</h2>
+            <p>
+              When we agree a weekly check in writing, we review the agreed
+              customer path, share dated findings, and make the routine
+              corrections already approved. Bigger changes stay with you for a
+              decision and a written next step.
+            </p>
+          </div>
+          <Link to="/clients/">Ask about a weekly check</Link>
+        </aside>
+
         <ol className="lf-revenue-page__rows">
-          {CARE_WORK.map((item, index) => (
+          {SUPPORT_WORK.map((item, index) => (
             <li key={item.label}>
               <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
               <p>{item.label}</p>
@@ -95,9 +125,9 @@ export default function OngoingCare() {
           ))}
         </ol>
 
-        <aside className="lf-revenue-page__visual" aria-label="The ongoing care path, drawn">
-          <p>How care stays accountable</p>
-          <ConnectedPathDiagram path={CARE_PATH} proof="ongoing-care" />
+        <aside className="lf-revenue-page__visual" aria-label="The ongoing website support path, drawn">
+          <p>How ongoing website support stays accountable</p>
+          <ConnectedPathDiagram path={SUPPORT_PATH} proof="ongoing-care" />
         </aside>
 
         <RecoveryReadiness />
@@ -119,8 +149,8 @@ export default function OngoingCare() {
       </section>
 
       <QuietContact
-        heading="Want the site looked after?"
-        lede="No long contract. The first look is free. Tell us what changes often, what cannot break, and who needs to know when it does. We suggest the smallest useful care plan."
+        heading="Want a personal first look before you decide?"
+        lede="Start with a free first look. We review the actual customer path, tell you what matters, and put any paid work in writing before it starts."
         intent="website"
       />
     </>

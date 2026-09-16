@@ -202,10 +202,10 @@ const ROUTES: readonly RouteContract[] = [
   },
   {
     key: "ongoing-care",
-    label: "Ongoing care",
+    label: "In Your Corner",
     path: "/services/ongoing-care/",
-    title: "Small Business Website Care NYC | Little Fight NYC",
-    h1: /Keep the front door honest after launch\./i,
+    title: "Ongoing Website Support NYC | Little Fight NYC",
+    h1: /Ongoing website support that keeps your customer path ready\./i,
     criticalLink: 'a[href="/clients/"]',
     tags: ["@chromium-desktop"],
   },
@@ -552,6 +552,36 @@ for (const route of ROUTES) {
     },
   );
 }
+
+test(
+  "In Your Corner puts the weekly decision early on a 393px phone @chromium-mobile",
+  async ({ page }, testInfo) => {
+    const runtime = watchRuntime(page);
+    await page.setViewportSize({ width: 393, height: 852 });
+    await openRoute(page, ROUTES.find((route) => route.key === "ongoing-care")!);
+    await expect(page.locator(".lf-revenue-page__handoff").first()).toBeVisible();
+
+    const geometry = await page.evaluate(() => {
+      const weekly = document.querySelector<HTMLElement>(".lf-revenue-page__handoff");
+      const weeklyLink = weekly?.querySelector<HTMLElement>('a[href="/clients/"]');
+      if (!weekly || !weeklyLink) throw new Error("weekly support offer is missing");
+      return {
+        documentHeight: Math.max(document.documentElement.scrollHeight, document.body.scrollHeight),
+        weeklyTop: weekly.getBoundingClientRect().top + window.scrollY,
+        weeklyLinkHeight: weeklyLink.getBoundingClientRect().height,
+      };
+    });
+
+    await testInfo.attach("weekly-offer-393px-geometry", {
+      body: JSON.stringify(geometry, null, 2),
+      contentType: "application/json",
+    });
+    expect(geometry.weeklyTop).toBeLessThanOrEqual(geometry.documentHeight * 0.2);
+    expect(geometry.weeklyLinkHeight).toBeGreaterThanOrEqual(44);
+    await expectNoHorizontalOverflow(page, "393px In Your Corner");
+    expectRuntimeClean(runtime);
+  },
+);
 
 test(
   "Lab concept shell stays usable across every build @chromium-desktop @chromium-mobile",
