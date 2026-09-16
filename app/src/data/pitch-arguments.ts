@@ -25,8 +25,8 @@ export const serviceOffers: Record<string, { what: string; who: string; get: str
     get: "A website, listing, email, booking, and access plan.",
   },
   "ongoing-care": {
-    what: "Website upkeep after launch.",
-    who: "Owners with a site to maintain.",
-    get: "Content updates, form checks, and work notes.",
+    what: "Ongoing website support for existing clients.",
+    who: "Owners with an agreement already in place.",
+    get: "Agreed path checks, dated findings, and routine corrections.",
   },
 };

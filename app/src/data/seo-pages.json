@@ -228,21 +228,29 @@
     },
     {
       "path": "/services/ongoing-care/",
-      "updated": "2026-08-18",
-      "title": "Small Business Website Care NYC | Little Fight NYC",
-      "description": "Keep website facts, forms, booking paths, hosting basics, and customer handoffs current. The business keeps the domain, code, content, and data.",
-      "h1": "Keep the front door honest after launch.",
-      "shortAnswer": "Short answer: Your customer path, public facts, and the quiet website machinery stay current after launch, with a change record, while you keep every key.",
+      "updated": "2026-09-15",
+      "title": "Ongoing Website Support NYC | Little Fight NYC",
+      "description": "Ongoing website support for existing clients: agreed customer paths, dated findings, routine corrections, and owner-controlled larger decisions.",
+      "h1": "Ongoing website support that keeps your customer path ready.",
+      "shortAnswer": "Short answer: Ongoing website support follows the agreement in place. We check the agreed customer path, date what we find, make routine corrections already approved, and bring larger work back for your decision.",
       "type": "Service",
-      "serviceName": "Ongoing website and technology care",
+      "serviceName": "In Your Corner — ongoing website support",
       "image": "/images/brand-scenes/shop-back-office.webp",
       "faq": [
         {
-          "question": "Do I need a long contract?",
-          "answer": "No. Care can be scoped around ongoing needs or requested once. The exact work and responsibility are written down before it starts."
+          "question": "How does ongoing website support work?",
+          "answer": "For eligible existing clients, the agreement names the customer path and routine corrections we check. Findings are dated. Larger changes return to you with a written scope before work starts."
         },
         {
-          "question": "Who owns the site if care stops?",
+          "question": "Is there a regular check included?",
+          "answer": "Yes. Every site we look after gets a monthly check of the agreed customer path, page speed, search health, broken links, and whether forms and booking still deliver, plus the routine corrections it turns up. A closer weekly check is available when it is agreed in writing."
+        },
+        {
+          "question": "What if Little Fight is not currently supporting my site?",
+          "answer": "Start with a free first look. We review the actual customer path, explain what matters, and put any paid work in writing before it starts."
+        },
+        {
+          "question": "Who owns the site if ongoing website support stops?",
           "answer": "You do. The domain, code, content, accounts, business data, and material change record remain yours."
         }
       ]
