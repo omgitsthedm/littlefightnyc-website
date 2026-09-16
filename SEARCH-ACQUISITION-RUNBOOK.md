@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-08-25
+Last updated: 2026-09-15
 
 ## Current code readiness
 
@@ -129,6 +129,14 @@ suspend or end access to the service" is the same warning, and a reader can
 check it in one click. If the sandbox cannot reach the source to confirm the
 page says what the copy claims, say so in the PR body rather than citing it.
 
+Egress note, learned on the 2026-09-15 run: the cloud sandbox's network policy
+blocks direct fetches to most publisher domains (`wordpress.org` and
+`developer.wordpress.org` both returned `EGRESS_BLOCKED`), while web search
+still works. Search excerpts attributed to the exact cited page are enough to
+write the claim, but the PR body must say the page was verified by search
+excerpt rather than by opening it, so the reviewer can click it once before
+merge.
+
 Recrawl requests (Search Console → URL Inspection → Request indexing) are a
 local, signed-in-Chrome job and are NOT part of the routine: about 10 URLs a
 day per property; work through the "Discovered – currently not indexed" list,
@@ -144,7 +152,7 @@ service pages first.
 | done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
 | done 2026-08-19 | web designer lenox hill | /areas/upper-east-side/ — Lenox Hill named in the web-design block, plus a "Do you build websites for Lenox Hill businesses?" FAQ |
 | done 2026-08-25 | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
-| pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
+| done 2026-09-15 | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
 | pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
 | pending | website redesign checklist small business | /answers/website-redesign-checklist-small-business/ |
 | pending | managed it services vs break fix small business | /answers/managed-it-vs-break-fix-small-business/ |
@@ -160,7 +168,11 @@ service pages first.
 `/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
-- last refreshed: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
+- last refreshed: `/services/custom-local-websites/` 2026-09-15 (the "new website
+  or just a cleanup?" FAQ now gives the owner a test they can run themselves —
+  book or call in two taps on a phone — and says "free first look, and a person
+  reads it" instead of the retired "free consult"; `updated` bumped with it)
+- previously: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
   response window the first screen was missing, replacing "No tech words needed";
   the quick answer moved from "We build…" to "You get…"; `updated` bumped with it)
 - previously: `/` 2026-08-19 (home quick answer rewritten in owner voice so it
