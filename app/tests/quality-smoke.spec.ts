@@ -1664,6 +1664,11 @@ test(
     });
 
     await openRoute(page, ROUTES.find((route) => route.key === "tech-audit")!);
+    // This case loses connectivity after the form has loaded. Let the route's
+    // background modules finish before cutting the network; delayed bootstrap
+    // and input handoff have their own controlled-request tests.
+    await expect(page.locator('[data-lf-route-snapshot="initial"]')).toHaveCount(0);
+    await page.waitForLoadState("networkidle");
     const form = page.locator('form[name="tech-audit-scratch"]');
     await form.locator('[name="name"]').fill("Offline Owner");
     await form.locator('[name="business"]').fill("Offline Test Shop");

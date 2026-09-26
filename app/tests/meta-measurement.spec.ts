@@ -153,21 +153,25 @@ test("Meta Lead requires a hydrated Tech Audit submission, not a thank-you query
 
 test("Meta Lead follows a hydrated valid Tech Audit submission once @chromium-desktop", async ({ page, baseURL }) => {
   await localProduction(page, baseURL!, { consent: true });
-  let submitted = false;
+  let submittedUrl = "";
   await page.route("https://littlefightnyc.com/thanks/**", async (route) => {
     if (route.request().method() !== "POST") return route.fallback();
-    submitted = true;
-    const target = new URL(route.request().url());
-    await route.fulfill({ status: 303, headers: { location: `${target.pathname}${target.search}` } });
+    submittedUrl = route.request().url();
+    // This fixture records the browser's native POST without inventing a
+    // redirect document. Navigate to the captured public confirmation URL in
+    // the same tab below, preserving the hydrated-submit session marker.
+    await route.fulfill({ status: 204 });
   });
   await page.goto("https://littlefightnyc.com/tech-audit/?intent=website&source=home", { waitUntil: "networkidle" });
-  const form = page.locator('form[name="tech-audit-scratch"]');
+  const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+  await expect(form).toBeVisible();
   await form.locator('[name="name"]').fill("Local browser fixture");
   await form.locator('[name="business"]').fill("Local test business");
   await form.locator('[name="contact"]').fill("owner@example.com");
   await form.locator('[name="message"]').fill("Please check the booking path.");
   await form.getByRole("button", { name: "Send my first-look request" }).click();
-  await expect.poll(() => submitted).toBe(true);
+  await expect.poll(() => submittedUrl).not.toBe("");
+  await page.goto(submittedUrl, { waitUntil: "networkidle" });
   await expect(page).toHaveURL(/\/thanks\//);
   await expect.poll(async () => hits(await commands(page), "Lead").length).toBe(1);
   await page.reload({ waitUntil: "networkidle" });
