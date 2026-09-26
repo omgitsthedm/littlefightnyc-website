@@ -11,6 +11,11 @@ import './styles/editorial/tokens.css'
 import './styles/editorial/base.css'
 import './styles/editorial/primitives.css'
 import './styles/editorial/motion.css'
+// These shared, small component styles are present in the initial public
+// route graph. Put them in the entry stylesheet so Vite does not emit separate
+// render-blocking CSS requests for the privacy controls and below-fold contact.
+import './components/SiteNotices.css'
+import './components/editorial/QuietContact.css'
 // Last — neutralizes the scroll-reveal entrance states so the site loads
 // "all at once" (see reveal-static.css). Imported after base/motion so it wins.
 import './styles/editorial/reveal-static.css'

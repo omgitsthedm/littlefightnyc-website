@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight, CalendarDays, Globe2, Mail, MessageSquare, Phone } from "lucide-react";
-import "./QuietContact.css";
 import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import {
   techAuditHref,

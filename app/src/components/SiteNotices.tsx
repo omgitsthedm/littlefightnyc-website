@@ -13,7 +13,6 @@ import {
   getGoogleAdsConsent,
   saveGoogleAdsConsent,
 } from "@/lib/consent";
-import "./SiteNotices.css";
 
 type NoticeCopy = {
   ariaLabel: string;
