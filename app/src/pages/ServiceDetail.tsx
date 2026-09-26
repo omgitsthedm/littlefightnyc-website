@@ -86,6 +86,12 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
 function WebsiteAcquisitionBlock() {
   const proof = caseStudies.find((study) => study.slug === "hair-by-rachel-charles");
   if (!proof) return null;
+  const hasLiveClientDomain = Boolean(
+    proof.url
+      && proof.showcase.availability === "public"
+      && proof.showcase.linkPolicy === "custom-domain"
+      && proof.showcase.proof.status === "public-live",
+  );
 
   return (
     <section className="lf-sd-web" aria-labelledby="lf-sd-web-title">
@@ -134,6 +140,18 @@ function WebsiteAcquisitionBlock() {
               <Link className="lf-sd-web__secondary" to={`/case-studies/${proof.slug}/`}>
                 Read the dated project proof
               </Link>
+              {hasLiveClientDomain && (
+                <a
+                  className="lf-sd-web__secondary"
+                  href={proof.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-lf-event="portfolio_live_source"
+                  data-lf-label={proof.slug}
+                >
+                  Visit {new URL(proof.url).hostname.replace(/^www\./, "")} ↗
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -142,6 +160,11 @@ function WebsiteAcquisitionBlock() {
           <header className="lf-sd-web__terms-head">
             <h2>Know what happens next.</h2>
             <p>Built for businesses that run on calls, bookings, visits or real questions. A working site may only need a cleanup. A large, changing catalog may need a different kind of shop.</p>
+            <div className="lf-sd-web__scope-links">
+              <p>Outside New York? Website projects can run remotely. On-site help stays in New York.</p>
+              <Link to="/nationwide/">See nationwide website work</Link>
+              <Link to="/journal/what-a-free-tech-audit-actually-looks-like/">See what the free first look covers</Link>
+            </div>
           </header>
           <ol className="lf-sd-web__steps">
             <li>

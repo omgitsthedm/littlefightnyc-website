@@ -1,4 +1,7 @@
 import { Globe2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { caseStudies } from "@/data/site-cases";
+import seoPages from "@/data/seo-pages.json";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
@@ -6,7 +9,8 @@ import FaqList from "@/components/editorial/FaqList";
 import QuietContact from "@/components/editorial/QuietContact";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import { createConnectedPath } from "@/components/dataviz/connectedPath";
-import { SpeedTruthCard } from "@/components/dataviz/OwnerCalculators";
+import { responsiveImageProps } from "@/lib/responsiveImages";
+import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/base.css";
 import "@/styles/editorial/nationwide.css";
 
@@ -18,28 +22,10 @@ import "@/styles/editorial/nationwide.css";
  * → hope → proof (SiteInFourteen) → the promises → the door out.
  */
 
-const NATIONWIDE_FAQ = [
-  {
-    question: "Do you need to visit my business to build the site?",
-    answer:
-      "No. Photos, a phone call, and honest talk about how your business runs are enough. The work happens on calls and screens, wherever you are.",
-  },
-  {
-    question: "I’m on the West Coast. How do time zones work?",
-    answer:
-      "We answer 9am to 9pm Eastern. That is 6am to 6pm Pacific. Text or email whenever you want. During that window, we aim to call back within 2 hours. Your written scope sets the project dates.",
-  },
-  {
-    question: "Who takes care of the site after it launches?",
-    answer:
-      "You own it, so you decide. Run it yourself with the plain instructions we provide, or keep us on call like our New York clients do.",
-  },
-  {
-    question: "Is a remote build different from a New York build?",
-    answer:
-      "The website process is remote either way. A New York scope may include on-site work; a nationwide website scope does not promise a local visit. Dates, responsibilities, and any qualifying timing remedy are written down before paid work starts.",
-  },
-];
+type SeoFaq = { question: string; answer: string };
+
+const nationwideMetadata = seoPages.pages.find((page) => page.path === "/nationwide/");
+const NATIONWIDE_FAQ: SeoFaq[] = nationwideMetadata?.faq ?? [];
 
 const REMOTE_WEBSITE_PATH = createConnectedPath({
   label: "A remote website project path",
@@ -55,6 +41,15 @@ const REMOTE_WEBSITE_PATH = createConnectedPath({
 });
 
 export default function Nationwide() {
+  const rachel = caseStudies.find((study) => study.slug === "hair-by-rachel-charles");
+  const hasLiveRachelSite = Boolean(
+    rachel
+      && rachel.url
+      && rachel.showcase.availability === "public"
+      && rachel.showcase.linkPolicy === "custom-domain"
+      && rachel.showcase.proof.status === "public-live",
+  );
+
   return (
     <>
       <PageHero
@@ -123,9 +118,43 @@ export default function Nationwide() {
             </EditorialBody>
           </article>
 
-          <div className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
-            <SpeedTruthCard />
-          </div>
+          {rachel && (
+            <section className="lf-content-tile lf-content-tile--full lf-nationwide-proof" aria-labelledby="lf-nationwide-proof-title">
+              <Link className="lf-nationwide-proof__image" to={`/case-studies/${rachel.slug}/`}>
+                <img
+                  {...skelImg}
+                  src={rachel.image}
+                  {...responsiveImageProps(rachel.image, "(min-width: 760px) 42vw, 100vw", [480, 640, 900])}
+                  alt={`The ${rachel.client} website as it shipped`}
+                  width={1600}
+                  height={1200}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </Link>
+              <div className="lf-nationwide-proof__copy">
+                <p className="lf-nationwide-proof__label">Public website proof · Phoenix, AZ</p>
+                <h2 id="lf-nationwide-proof-title">A clear path to a booking tool, from anywhere.</h2>
+                <p>
+                  Hair By Rachel Charles is a public Phoenix project. It shows the same clear service-to-booking path a remote website can support. On-site help remains a New York service.
+                </p>
+                <div className="lf-nationwide-proof__actions">
+                  <Link to={`/case-studies/${rachel.slug}/`}>Read the project proof</Link>
+                  {hasLiveRachelSite && (
+                    <a
+                      href={rachel.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-lf-event="portfolio_live_source"
+                      data-lf-label={rachel.slug}
+                    >
+                      Visit the live site ↗
+                    </a>
+                  )}
+                </div>
+              </div>
+            </section>
+          )}
 
           <aside className="lf-content-tile lf-content-tile--full lf-content-tile--signal">
             <PullQuote cite="Why a New York shop, anywhere">

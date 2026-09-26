@@ -15,30 +15,32 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import {
   isInternalTechAuditTest,
+  normalizeTechAuditDiscoverySource,
   normalizeTechAuditFollowUpPreference,
   parseTechAuditLeadIntent,
   safeTechAuditReportId,
   TECH_AUDIT_SESSION_KEYS,
+  TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS,
   techAuditConfirmationPath,
   techAuditContactProblem,
   techAuditContactRoute,
   techAuditFollowUpProblem,
   techAuditPreferredRoute,
   type TechAuditFollowUpPreference,
+  type TechAuditDiscoverySource,
   type TechAuditLeadIntent,
 } from "@/lib/techAuditContact";
 import "@/styles/editorial/tech-audit.css";
 import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
-
 // Hair By Rachel Charles, measured 2026-07-30, Lighthouse 13.4.1 (mobile).
 // Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
 const AUDIT_PROOF_SCORES = [
-  { value: "96", label: "Fast on a phone" },
-  { value: "100", label: "Easy to use" },
-  { value: "100", label: "Built carefully" },
-  { value: "100", label: "Easy to find" },
+  { value: "96", label: "Loading speed" },
+  { value: "100", label: "Accessibility" },
+  { value: "100", label: "Build checks" },
+  { value: "100", label: "Search basics" },
 ] as const;
 type Step = 1 | 2 | 3;
 
@@ -154,6 +156,7 @@ type ContactFields = {
   business: string;
   contact: string;
   follow_up: TechAuditFollowUpPreference;
+  discovery_source: TechAuditDiscoverySource;
 };
 
 const EMPTY_FIELDS: ContactFields = {
@@ -161,6 +164,7 @@ const EMPTY_FIELDS: ContactFields = {
   business: "",
   contact: "",
   follow_up: "fastest",
+  discovery_source: "",
 };
 
 type Draft = {
@@ -205,6 +209,7 @@ function readDraft(): Draft | null {
         business: typeof savedFields.business === "string" ? savedFields.business : "",
         contact: typeof savedFields.contact === "string" ? savedFields.contact : "",
         follow_up: normalizeTechAuditFollowUpPreference(savedFields.follow_up),
+        discovery_source: normalizeTechAuditDiscoverySource(savedFields.discovery_source),
       },
     };
   } catch {
@@ -276,6 +281,7 @@ export default function TechAudit() {
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitIssue, setSubmitIssue] = useState("");
   const [dakotaCaptureId, setDakotaCaptureId] = useState("");
   const [dakotaSubmittedAt, setDakotaSubmittedAt] = useState("");
   // Payoff beat — plays once when step 3 is REACHED with both choices made
@@ -294,6 +300,7 @@ export default function TechAudit() {
     intent: leadIntent,
     replyRoute: preferredRoute,
     reportId,
+    discoverySource: fields.discovery_source,
     internalTest,
   });
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
@@ -476,12 +483,27 @@ export default function TechAudit() {
 
     if (Object.keys(nextErrors).length > 0) {
       event.preventDefault();
+      setSubmitIssue("");
       setErrors(nextErrors);
       hapticError();
       const first = form.elements.namedItem(
         Object.keys(nextErrors)[0],
       ) as HTMLElement | null;
       first?.focus();
+      return;
+    }
+
+    setSubmitIssue("");
+    // A native POST cannot recover an offline request. Keep the completed
+    // form in place, persist the same draft as a navigation would, and let the
+    // owner retry when their connection returns. This must precede all submit
+    // tracking so a request that never left the device is not counted.
+    if (typeof navigator !== "undefined" && navigator.onLine === false) {
+      event.preventDefault();
+      writeDraft({ intent: intentMode, step, symptom, urgency, message, messageDirty, fields });
+      setSubmitting(false);
+      setSubmitIssue("You’re offline. Your answers are still here. Reconnect, then send again.");
+      hapticError();
       return;
     }
 
@@ -498,6 +520,11 @@ export default function TechAudit() {
       (form.elements.namedItem("follow_up") as HTMLSelectElement | null)?.value,
     );
     const submittedContactRoute = techAuditContactRoute(submittedContact);
+    const discoveryInput = form.elements.namedItem("discovery_source") as HTMLSelectElement | null;
+    const submittedDiscoverySource = normalizeTechAuditDiscoverySource(discoveryInput?.value);
+    // This select is optional. In the hydrated path, normalize its native
+    // payload before the browser submits and analytics observes the event.
+    if (discoveryInput) discoveryInput.value = submittedDiscoverySource;
     const submittedReplyRoute = submittedContactRoute
       ? techAuditPreferredRoute(submittedContactRoute, submittedPreference)
       : null;
@@ -519,6 +546,7 @@ export default function TechAudit() {
       intent: leadIntent,
       replyRoute: submittedReplyRoute,
       reportId,
+      discoverySource: submittedDiscoverySource,
       internalTest: submittedInternalTest,
     }));
 
@@ -548,6 +576,14 @@ export default function TechAudit() {
       } else {
         window.sessionStorage.removeItem(REPORT_CONTEXT_KEY);
       }
+      if (submittedDiscoverySource) {
+        window.sessionStorage.setItem(
+          TECH_AUDIT_SESSION_KEYS.discoverySource,
+          submittedDiscoverySource,
+        );
+      } else {
+        window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.discoverySource);
+      }
     } catch {
       /* Storage can be unavailable; submission still proceeds. */
     }
@@ -566,6 +602,7 @@ export default function TechAudit() {
             <h1 id="lf-audit-intro-title">Get a clear next step.</h1>
             <p>Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.</p>
             <p className="lf-audit-intro__meta">Free. No obligation. A person reads every note.</p>
+            <p className="lf-audit-intro__meta"><Link to="/journal/what-a-free-tech-audit-actually-looks-like/">See what the free first look covers.</Link></p>
 
             <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
               <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
@@ -615,7 +652,7 @@ export default function TechAudit() {
             {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
                   mobile: performance 96, accessibility 100, best practices 100, SEO 100.
                   Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
-            <span className="lf-audit-intro__caption">Hair By Rachel Charles: checked on a phone on July 30, 2026. Fast to load, easy to use, built carefully, and easy for search to read.</span>
+            <span className="lf-audit-intro__caption">Hair By Rachel Charles · Lighthouse mobile lab check · July 30, 2026. These technical scores measure loading and page checks, not rankings or bookings.</span>
             {/* Same verified 2026-07-30 measurement as the caption, restated as
                 instruments. Values must track the evidence artifact above. */}
             <span className="lf-audit-intro__scores" aria-hidden="true">
@@ -629,7 +666,7 @@ export default function TechAudit() {
             <span className="lf-audit-intro__proof-links">
               <Link to="/case-studies/hair-by-rachel-charles/">Read the case study</Link>
               <a
-                href="https://github.com/omgitsthedm/littlefightnyc-website/blob/main/.lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md"
+                href="https://github.com/omgitsthedm/littlefightnyc-website/blob/b0efb41ad63aafe13c8e63b2c8f6e024226349cd/.lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -985,6 +1022,21 @@ export default function TechAudit() {
                     )}
                   </div>
 
+                  <div className="lf-audit__field lf-audit__field--full">
+                    <label htmlFor="fit-discovery-source">How did you first hear about us? <span>(optional)</span></label>
+                    <select
+                      id="fit-discovery-source"
+                      name="discovery_source"
+                      value={fields.discovery_source}
+                      onChange={(e) => setField("discovery_source", normalizeTechAuditDiscoverySource(e.target.value))}
+                    >
+                      <option value="">Choose one</option>
+                      {TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS.map((option) => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
                   <button
                     className="lf-audit__submit"
                     type="submit"
@@ -1003,8 +1055,8 @@ export default function TechAudit() {
                       </>
                     )}
                   </button>
-                  <p className="lf-audit__submit-status" aria-live="polite" aria-atomic="true">
-                    {submitting ? "Sending securely. Keep this tab open for confirmation." : ""}
+                  <p className="lf-audit__submit-status" role="status" aria-live="polite" aria-atomic="true">
+                    {submitIssue || (submitting ? "Sending securely. Keep this tab open for confirmation." : "")}
                   </p>
                   <p className="lf-audit__assurance">
                     Free first look / No obligation / We reply 9am-9pm Eastern /

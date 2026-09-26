@@ -79,6 +79,10 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 # --- Information architecture consolidation (May 2026)
 /areas/soho.html     /areas/soho/            301
 /areas/midtown.html  /areas/midtown/         301
+# Brooklyn does not have a standalone hub; preserve its legacy discovery URLs
+# at the city-area index, where its neighborhoods remain available.
+/areas/brooklyn      /areas/                 301
+/areas/brooklyn/     /areas/                 301
 /work/               /services/              301
 /work                /services/              301
 /industries/     /examples/#industries      301
@@ -106,6 +110,10 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /blog/nyc-small-business-digital.html        /journal/nyc-small-business-digital/        301
 /blog/protecting-kids-from-ai                /journal/protecting-kids-from-ai/           301
 /blog/protecting-kids-from-ai.html           /journal/protecting-kids-from-ai/           301
+# The retired blog hub has no destination of its own. Send it straight to the
+# consolidated Library; retain the specific article mappings above.
+/blog/                                       /library/                                   301
+/blog                                        /library/                                   301
 /blog/*                                      /journal/                                   301
 
 /software-guides/airtable-vs-notion-vs-monday-small-business/*      /journal/airtable-vs-notion-vs-monday-small-business/      301

@@ -1,6 +1,10 @@
 import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
 import { publicCampaignParameters } from "./socialCampaign";
-import { isInternalTechAuditTest, TECH_AUDIT_SESSION_KEYS } from "./techAuditContact";
+import {
+  isInternalTechAuditTest,
+  normalizeTechAuditDiscoverySource,
+  TECH_AUDIT_SESSION_KEYS,
+} from "./techAuditContact";
 import {
   getAdvertisingConsent,
   getAnalyticsConsent,
@@ -159,6 +163,7 @@ const ANALYTICS_PARAMETER_KEYS = new Set([
   "connection",
   "contact_channel",
   "destination_path",
+  "discovery_source",
   "device",
   "entry_point",
   "entry_source",
@@ -201,6 +206,10 @@ function safeAnalyticsString(value: unknown, maxLength = 80) {
   if (typeof value !== "string") return undefined;
   const normalized = value.replace(/[\r\n\t]+/g, " ").replace(/\s+/g, " ").trim();
   return normalized ? normalized.slice(0, maxLength) : undefined;
+}
+
+function safeDiscoverySource(value: unknown) {
+  return normalizeTechAuditDiscoverySource(safeAnalyticsString(value, 32)) || undefined;
 }
 
 const BUSINESS_PROFILE_CAMPAIGN = Object.freeze({
@@ -277,6 +286,12 @@ function safeAnalyticsParameters(parameters: Record<string, unknown>) {
     if (key === "link_domain") {
       const domain = safeAnalyticsString(value, 253)?.toLowerCase();
       if (domain && /^[a-z0-9.-]+$/u.test(domain)) safe[key] = domain;
+      continue;
+    }
+
+    if (key === "discovery_source") {
+      const discoverySource = safeDiscoverySource(value);
+      if (discoverySource) safe[key] = discoverySource;
       continue;
     }
 
@@ -676,7 +691,10 @@ function funnelStage(eventName: string) {
   if (eventName === "generate_lead") return "lead";
   if (eventName === "tech_audit_submit" || eventName === "form_submit") return "submit";
   if (eventName === "human_review_requested" || eventName === "service_inquiry") return "contact";
-  if (eventName === "booking_started") return "submit";
+  // Opening an external calendar is a strong consideration signal, but a
+  // booking is not complete until the calendar confirms it. Keep this out of
+  // the submitted-inquiry stage so the funnel does not overstate results.
+  if (eventName === "booking_started") return "consideration";
   if (eventName.startsWith("intake_step_")) return "intake";
   if (
     eventName === "tech_audit_intent" ||
@@ -954,9 +972,11 @@ export function installAnalyticsHooks() {
 
       if (internalTest) return;
 
+      const discoverySource = safeDiscoverySource(data.get("discovery_source"));
       track("tech_audit_submit", {
         form_name: formName,
         page_path: window.location.pathname,
+        ...(discoverySource ? { discovery_source: discoverySource } : {}),
       });
       return;
     }

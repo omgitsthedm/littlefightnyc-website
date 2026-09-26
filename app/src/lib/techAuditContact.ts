@@ -20,11 +20,25 @@ export const TECH_AUDIT_LEAD_INTENTS = [
 
 export type TechAuditLeadIntent = (typeof TECH_AUDIT_LEAD_INTENTS)[number];
 
+export const TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS = [
+  { value: "google", label: "Google" },
+  { value: "chatgpt", label: "ChatGPT" },
+  { value: "other_ai", label: "Another AI assistant" },
+  { value: "referral", label: "A referral" },
+  { value: "social", label: "Social media" },
+  { value: "other", label: "Other" },
+  { value: "prefer_not_to_say", label: "Prefer not to say" },
+] as const;
+
+export type TechAuditDiscoverySource =
+  "" | (typeof TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS)[number]["value"];
+
 export const TECH_AUDIT_SESSION_KEYS = {
   draft: "lf_tech_audit_draft",
   intent: "lf_lead_intent",
   replyRoute: "lf_tech_audit_reply_route",
   report: "lf_tech_audit_report_id",
+  discoverySource: "lf_tech_audit_discovery_source",
   submitted: "lf_tech_audit_submitted",
   internalTest: "lf_tech_audit_internal_test",
 } as const;
@@ -35,6 +49,7 @@ export type TechAuditConfirmationState = {
   intent: TechAuditLeadIntent | null;
   replyRoute: TechAuditPreferredRoute | null;
   reportId: string;
+  discoverySource: TechAuditDiscoverySource;
 };
 
 export type TechAuditReplyLanguage = {
@@ -44,6 +59,9 @@ export type TechAuditReplyLanguage = {
 
 const FOLLOW_UP_PREFERENCE_SET = new Set<string>(TECH_AUDIT_FOLLOW_UP_PREFERENCES);
 const LEAD_INTENT_SET = new Set<string>(TECH_AUDIT_LEAD_INTENTS);
+const DISCOVERY_SOURCE_SET = new Set<string>(
+  TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS.map((option) => option.value),
+);
 const PREFERRED_ROUTE_SET = new Set<string>(["email", "phone", "sms"]);
 const EMAIL = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/u;
 const PHONE = /^\+?[0-9().\-\s]{7,32}(?:(?:x|ext\.?)\s*\d{1,8})?$/iu;
@@ -101,6 +119,12 @@ export function parseTechAuditLeadIntent(value: unknown): TechAuditLeadIntent | 
     : null;
 }
 
+export function normalizeTechAuditDiscoverySource(value: unknown): TechAuditDiscoverySource {
+  return typeof value === "string" && DISCOVERY_SOURCE_SET.has(value)
+    ? value as TechAuditDiscoverySource
+    : "";
+}
+
 export function parseTechAuditPreferredRoute(value: unknown): TechAuditPreferredRoute | null {
   return typeof value === "string" && PREFERRED_ROUTE_SET.has(value)
     ? value as TechAuditPreferredRoute
@@ -135,11 +159,13 @@ export function techAuditConfirmationPath({
   intent,
   replyRoute,
   reportId = "",
+  discoverySource = "",
   internalTest = false,
 }: {
   intent: TechAuditLeadIntent;
   replyRoute: TechAuditPreferredRoute | null;
   reportId?: string;
+  discoverySource?: TechAuditDiscoverySource;
   internalTest?: boolean;
 }): string {
   const params = new URLSearchParams({
@@ -150,6 +176,8 @@ export function techAuditConfirmationPath({
   // confirmation context distinct from the form's single `intent` field.
   if (internalTest) params.set("internal_test", "1");
   if (replyRoute) params.set("reply", replyRoute);
+  const safeDiscoverySource = normalizeTechAuditDiscoverySource(discoverySource);
+  if (safeDiscoverySource) params.set("confirmed_source", safeDiscoverySource);
   const safeReportId = safeTechAuditReportId(reportId);
   if (safeReportId) params.set("report", safeReportId);
   return `/thanks/?${params.toString()}`;
@@ -163,6 +191,7 @@ export function readTechAuditConfirmation(search: string): TechAuditConfirmation
     intent: parseTechAuditLeadIntent(params.get("confirmed_intent") ?? params.get("intent")),
     replyRoute: parseTechAuditPreferredRoute(params.get("reply")),
     reportId: safeTechAuditReportId(params.get("report")),
+    discoverySource: normalizeTechAuditDiscoverySource(params.get("confirmed_source")),
   };
 }
 

@@ -28,6 +28,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..");
 const distRoot = path.join(appRoot, "dist");
 const seoData = JSON.parse(await readFile(path.join(appRoot, "src/data/seo-pages.json"), "utf8"));
+const ongoingCareFaq = JSON.parse(
+  await readFile(path.join(appRoot, "src/data/ongoing-care-faq.json"), "utf8"),
+);
 const template = await readFile(path.join(distRoot, "index.html"), "utf8");
 const assetFiles = await readdir(path.join(distRoot, "assets"));
 
@@ -187,7 +190,13 @@ const site = seoData.site;
 const siteUrl = site.url.replace(/\/$/, "");
 // Dynamic route copy has one authoring home: the typed data the React pages
 // render. This catalog is shared with hydrated route metadata as well.
-const basePages = enrichAuthoredRoutePages(seoData.pages, siteContent, seoData.site.name);
+const basePages = enrichAuthoredRoutePages(
+  seoData.pages.map((page) =>
+    page.path === "/services/ongoing-care/" ? { ...page, faq: ongoingCareFaq } : page,
+  ),
+  siteContent,
+  seoData.site.name,
+);
 
 const aiBots = [
   "GPTBot",
@@ -1477,10 +1486,73 @@ function serviceOfferHtml(slug) {
     <p><strong>What you get:</strong> ${escapeHtml(offer.get)}</p>`;
 }
 
+// The React service, nationwide, and salon pages all point to this one public
+// case study. Keep the crawler fallback on the same record so a status or URL
+// change cannot leave a second, stale version of the proof in static HTML.
+function publicRachelCaseStudy() {
+  const study = siteContent.caseStudies?.find((item) => item.slug === "hair-by-rachel-charles");
+  if (!study) return null;
+  const hasLiveDomain = Boolean(
+    study.url
+      && study.showcase?.availability === "public"
+      && study.showcase?.linkPolicy === "custom-domain"
+      && study.showcase?.proof?.status === "public-live",
+  );
+  return { study, hasLiveDomain };
+}
+
+function rachelCaseStudyLink(study, label) {
+  return `<a href="/case-studies/${escapeAttr(study.slug)}/">${escapeHtml(label)}</a>`;
+}
+
+function rachelLiveSiteLink(study, label) {
+  return `<a href="${escapeAttr(study.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+}
+
+function websiteRachelProofHtml() {
+  const proof = publicRachelCaseStudy();
+  if (!proof) return "";
+  const { study, hasLiveDomain } = proof;
+  return `<section aria-labelledby="website-project-proof">
+    <a href="/case-studies/${escapeAttr(study.slug)}/"><img src="${escapeAttr(study.image)}" alt="The ${escapeAttr(study.client)} website as it shipped" width="1600" height="1200" loading="lazy" decoding="async" /></a>
+    <p>Public work, live</p>
+    <h2 id="website-project-proof">A clearer path from discovery to booking.</h2>
+    <dl><div><dt>Before</dt><dd>${escapeHtml(study.problem)}</dd></div><div><dt>Now</dt><dd>${escapeHtml(study.result)}</dd></div></dl>
+    <p><a href="/tech-audit/?intent=website&amp;source=website_service_proof">Get my website plan</a> · ${rachelCaseStudyLink(study, "Read the dated project proof")}${hasLiveDomain ? ` · ${rachelLiveSiteLink(study, `Visit ${new URL(study.url).hostname.replace(/^www\./, "")} ↗`)}` : ""}</p>
+  </section>`;
+}
+
+function nationwideRachelProofHtml() {
+  const proof = publicRachelCaseStudy();
+  if (!proof) return "";
+  const { study, hasLiveDomain } = proof;
+  return `<section aria-labelledby="nationwide-project-proof">
+    <a href="/case-studies/${escapeAttr(study.slug)}/"><img src="${escapeAttr(study.image)}" alt="The ${escapeAttr(study.client)} website as it shipped" width="1600" height="1200" loading="lazy" decoding="async" /></a>
+    <p>Public website proof · Phoenix, AZ</p>
+    <h2 id="nationwide-project-proof">A clear path to a booking tool, from anywhere.</h2>
+    <p>${escapeHtml(study.client)} is a public Phoenix project. It shows the same clear service-to-booking path a remote website can support. On-site help remains a New York service.</p>
+    <p>${rachelCaseStudyLink(study, "Read the project proof")}${hasLiveDomain ? ` · ${rachelLiveSiteLink(study, "Visit the live site ↗")}` : ""}</p>
+  </section>`;
+}
+
+function salonRachelProofHtml() {
+  const proof = publicRachelCaseStudy();
+  if (!proof) return "";
+  const { study } = proof;
+  return `<section aria-labelledby="salon-project-proof">
+    <a href="/case-studies/${escapeAttr(study.slug)}/"><img src="${escapeAttr(study.image)}" alt="Hair By Rachel Charles website for an independent stylist in Phoenix, shown on desktop, tablet, and phone" width="1600" height="1200" loading="lazy" decoding="async" /></a>
+    <p>Client website · ${escapeHtml(study.client)} · Phoenix, AZ</p>
+    <h2 id="salon-project-proof">${rachelCaseStudyLink(study, "See Rachel’s website and booking handoff")}</h2>
+  </section>`;
+}
+
 // The real authored writing, emitted as crawler-visible HTML per page type.
 // Before this, GPTBot/ClaudeBot/PerplexityBot saw only a shortAnswer + stock
 // boilerplate on every route — the site’s best content was JS-gated.
 function authoredContentHtml(page) {
+  if (page.path === "/services/ongoing-care/") {
+    return faqHtml(resolvedFaqFor(page), "Ongoing support questions");
+  }
   if (page.path === "/services/") {
     return `    <section aria-labelledby="why-real-website">
       <h2 id="why-real-website">Why a real website</h2>
@@ -1502,6 +1574,7 @@ function authoredContentHtml(page) {
   if (Array.isArray(page.paragraphs) && page.paragraphs.length > 0) {
     return [
       paragraphsHtml(page.paragraphs),
+      page.path === "/nationwide/" ? nationwideRachelProofHtml() : "",
       faqHtml(resolvedFaqFor(page) ?? [], "Long-distance questions, answered plainly"),
     ].join("\n");
   }
@@ -1593,6 +1666,7 @@ function authoredContentHtml(page) {
     const s = page.service;
     return [
       paragraphsHtml([s.plain, s.outcome, ...(s.whatItDoes ?? [])]),
+      page.path === "/services/custom-local-websites/" ? websiteRachelProofHtml() : "",
       (s.includes?.length ?? 0) > 0
         ? `<h2>What’s included</h2>\n<ul>${s.includes.map((x) => `<li>${escapeHtml(x)}</li>`).join("\n")}</ul>`
         : "",
@@ -1627,6 +1701,9 @@ function authoredContentHtml(page) {
       /(<p[^>]*>\s*Audit map\s*<\/p>\s*<h2[^>]*>[\s\S]*?<\/h2>)/i,
       `$1\n${pathOl}`
     );
+    if (page.path === "/industries/salons-wellness/") {
+      body += `\n${salonRachelProofHtml()}`;
+    }
     return body;
   }
 
@@ -1656,6 +1733,16 @@ function techAuditFormHtml(page) {
         </select>
       </label></p>
       <p><label>What feels broken, expensive, slow, or disconnected? <textarea name="message" rows="5" required></textarea></label></p>
+      <p><label>How did you first hear about us? (optional) <select name="discovery_source">
+        <option value="">Choose one</option>
+        <option value="google">Google</option>
+        <option value="chatgpt">ChatGPT</option>
+        <option value="other_ai">Another AI assistant</option>
+        <option value="referral">A referral</option>
+        <option value="social">Social media</option>
+        <option value="other">Other</option>
+        <option value="prefer_not_to_say">Prefer not to say</option>
+      </select></label></p>
       <p><button type="submit">Book my free Tech Audit</button></p>
       <p>Free consult · We reply within 2 hours, 9am–9pm ET.</p>
     </form>

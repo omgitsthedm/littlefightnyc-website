@@ -27,6 +27,37 @@
   max-width: 54ch;
 }
 
+/* Client work and its source remain readable content, including on phones. */
+.lf-industry-page .lf-pagehero.lf-pagehero--with-image .lf-pagehero__image--captioned {
+  position: relative;
+  inset: auto;
+  aspect-ratio: auto;
+  border: 1px solid var(--lf-hairline);
+}
+
+.lf-industry-page .lf-pagehero.lf-pagehero--with-image .lf-pagehero__image--captioned::after {
+  content: none;
+}
+
+.lf-industry-page .lf-pagehero__image--captioned .lf-pagehero__picture {
+  display: block;
+  aspect-ratio: 4 / 3;
+  block-size: auto;
+}
+
+.lf-industry-page .lf-pagehero.lf-pagehero--with-image .lf-pagehero__image--captioned img {
+  filter: none;
+  animation: none;
+  transform: none;
+}
+
+.lf-industry-page .lf-pagehero__image--captioned .lf-pagehero__caption {
+  position: static;
+  border: 0;
+  border-top: 1px solid var(--lf-hairline);
+  border-radius: 0;
+}
+
 /* Familiar situation and protected outcomes */
 
 .lf-industry-recognition {

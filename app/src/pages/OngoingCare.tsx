@@ -1,5 +1,6 @@
 import { RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
+import FaqList from "@/components/editorial/FaqList";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
@@ -9,6 +10,7 @@ import {
   RecoveryReadiness,
 } from "@/components/dataviz/OwnerCalculators";
 import { HELLO_EMAIL } from "@/data/contact";
+import ONGOING_CARE_FAQ from "@/data/ongoing-care-faq.json";
 import "@/styles/editorial/revenue-pages.css";
 
 const SUPPORT_WORK = [
@@ -146,6 +148,8 @@ export default function OngoingCare() {
           </div>
           <Link to="/clients/">Open the client desk</Link>
         </aside>
+
+        <FaqList title="Ongoing support questions" items={ONGOING_CARE_FAQ} />
       </section>
 
       <QuietContact

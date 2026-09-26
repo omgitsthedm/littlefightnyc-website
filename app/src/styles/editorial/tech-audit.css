@@ -118,9 +118,9 @@
 
 .lf-audit-intro__proof img {
   width: 100%;
-  height: clamp(220px, 22vw, 320px);
-  aspect-ratio: 16 / 8;
-  object-fit: cover;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
 }
 
 .lf-audit-intro__proof .lf-audit-intro__caption {

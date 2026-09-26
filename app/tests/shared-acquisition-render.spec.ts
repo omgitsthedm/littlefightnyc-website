@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 test.use({ serviceWorkers: "block" });
@@ -83,6 +84,25 @@ test("the first decisions and inquiry field fit their intended openings @all-pro
   const firstField = await page.locator("#fit-name").boundingBox();
   expect(firstField).not.toBeNull();
   expect(firstField!.y + firstField!.height).toBeLessThanOrEqual(844);
+});
+
+test("nationwide questions render from the canonical route metadata @all-projects", async ({ page }) => {
+  const source = JSON.parse(
+    readFileSync(new URL("../src/data/seo-pages.json", import.meta.url), "utf8"),
+  ) as { pages: Array<{ path: string; faq?: Array<{ question: string; answer: string }> }> };
+  const nationwide = source.pages.find((entry) => entry.path === "/nationwide/");
+  expect(nationwide?.faq, "Missing authored nationwide FAQ metadata").toHaveLength(4);
+
+  await page.goto("/nationwide/", { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "A clear path to a booking tool, from anywhere." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Read the project proof" })).toHaveAttribute(
+    "href",
+    "/case-studies/hair-by-rachel-charles/",
+  );
+  for (const item of nationwide!.faq!) {
+    const question = page.locator(".lf-faq__item").filter({ hasText: item.question });
+    await expect(question).toContainText(item.answer);
+  }
 });
 
 test("every inquiry entry retains its opening and the owner's supplied context @all-projects", async ({ page }) => {
@@ -174,6 +194,8 @@ test("native inquiry stays usable with JavaScript disabled @chromium-desktop @ch
   await expect(form).toHaveAttribute("method", "POST");
   await expect(form).not.toHaveAttribute("novalidate");
   await expect(form.locator('[name="form-name"]')).toHaveValue("tech-audit-scratch");
+  await expect(form.locator('[name="discovery_source"]')).toHaveCount(1);
+  await expect(form.locator('[name="discovery_source"] option')).toHaveCount(8);
   for (const name of ["name", "business", "contact", "message"]) {
     await expect(form.locator(`[name="${name}"]`)).toBeVisible();
     await expect(form.locator(`[name="${name}"]`)).toHaveAttribute("required", "");

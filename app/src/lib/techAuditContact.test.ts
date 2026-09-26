@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   isInternalTechAuditTest,
+  normalizeTechAuditDiscoverySource,
   normalizeTechAuditFollowUpPreference,
   parseTechAuditLeadIntent,
   parseTechAuditPreferredRoute,
@@ -78,10 +79,11 @@ describe("Tech Audit contact contract", () => {
       intent: "website",
       replyRoute: "sms",
       reportId: "example-com-1a2b3c4d",
+      discoverySource: "chatgpt",
     });
 
     expect(path).toBe(
-      "/thanks/?submitted=tech-audit&confirmed_intent=website&reply=sms&report=example-com-1a2b3c4d",
+      "/thanks/?submitted=tech-audit&confirmed_intent=website&reply=sms&confirmed_source=chatgpt&report=example-com-1a2b3c4d",
     );
     expect(readTechAuditConfirmation(path.split("?")[1] ?? "")).toEqual({
       submitted: true,
@@ -89,13 +91,14 @@ describe("Tech Audit contact contract", () => {
       intent: "website",
       replyRoute: "sms",
       reportId: "example-com-1a2b3c4d",
+      discoverySource: "chatgpt",
     });
   });
 
   it("rejects forged confirmation categories and malformed report IDs", () => {
     expect(
       readTechAuditConfirmation(
-        "?submitted=other&intent=owner%40example.com&reply=carrier-pigeon&report=..%2Fprivate",
+        "?submitted=other&intent=owner%40example.com&reply=carrier-pigeon&confirmed_source=owner%40example.com&report=..%2Fprivate",
       ),
     ).toEqual({
       submitted: false,
@@ -103,7 +106,17 @@ describe("Tech Audit contact contract", () => {
       intent: null,
       replyRoute: null,
       reportId: "",
+      discoverySource: "",
     });
+    expect(normalizeTechAuditDiscoverySource("chatgpt")).toBe("chatgpt");
+    expect(normalizeTechAuditDiscoverySource("owner@example.com")).toBe("");
+    expect(
+      techAuditConfirmationPath({
+        intent: "website",
+        replyRoute: null,
+        discoverySource: "owner@example.com" as never,
+      }),
+    ).not.toContain("confirmed_source");
     expect(parseTechAuditLeadIntent("consulting")).toBe("consulting");
     expect(parseTechAuditLeadIntent("sales")).toBeNull();
     expect(parseTechAuditPreferredRoute("sms")).toBe("sms");

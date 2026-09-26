@@ -29,6 +29,7 @@ export function acquisitionIntentForPathname(
     path === "/" ||
     path === "/website-check" ||
     path === "/nationwide" ||
+    path === "/industries/salons-wellness" ||
     path === "/services/new-business-launch" ||
     path === "/services/ongoing-care" ||
     path === "/services/custom-local-websites" ||

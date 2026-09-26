@@ -1554,6 +1554,7 @@ test(
 test(
   "Website Check leads with a human review and keeps the scan and booking available @chromium-desktop @chromium-mobile",
   async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("lf_analytics_consent_v1", "granted"));
     const runtime = watchRuntime(page);
 
     await openRoute(page, ROUTES.find((route) => route.key === "website-check")!);
@@ -1572,6 +1573,24 @@ test(
     await expect(booking).toHaveAttribute("rel", "noopener noreferrer");
     await expect(page.locator(`a[href="${BOOKING_HREF}"]`)).toHaveCount(1);
     await expect(page.getByText("No login, prep, or commitment.")).toBeVisible();
+
+    await booking.evaluate((link) => {
+      link.addEventListener("click", (event) => event.preventDefault(), { once: true });
+    });
+    await booking.click();
+    const bookingEvent = await page.evaluate(() =>
+      (window.dataLayer ?? []).findLast(
+        (entry) =>
+          typeof entry === "object"
+          && entry !== null
+          && (entry as { event?: string }).event === "booking_started",
+      ) as Record<string, unknown> | undefined,
+    );
+    expect(bookingEvent).toMatchObject({
+      event: "booking_started",
+      funnel_stage: "consideration",
+      placement: "website_check_page",
+    });
 
     expectRuntimeClean(runtime);
   },
@@ -1626,6 +1645,54 @@ test(
       "A validation-blocked submit was recorded as a conversion",
     ).toBeNull();
 
+    expectRuntimeClean(runtime);
+  },
+);
+
+test(
+  "Tech Audit keeps a valid offline request ready to retry @chromium-desktop",
+  async ({ page }) => {
+    const runtime = watchRuntime(page);
+    const firstPartyPosts: string[] = [];
+    page.on("request", (request) => {
+      if (request.method() !== "POST") return;
+      try {
+        if (PREVIEW_ORIGINS.has(new URL(request.url()).origin)) firstPartyPosts.push(request.url());
+      } catch {
+        firstPartyPosts.push(request.url());
+      }
+    });
+
+    await openRoute(page, ROUTES.find((route) => route.key === "tech-audit")!);
+    const form = page.locator('form[name="tech-audit-scratch"]');
+    await form.locator('[name="name"]').fill("Offline Owner");
+    await form.locator('[name="business"]').fill("Offline Test Shop");
+    await form.locator('[name="contact"]').fill("owner@example.com");
+    await form.locator('[name="message"]').fill("Please check the booking path.");
+
+    await page.context().setOffline(true);
+    await page.getByRole("button", { name: "Send my first-look request" }).click();
+
+    await expect(form.getByRole("status")).toContainText(
+      "You’re offline. Your answers are still here. Reconnect, then send again.",
+    );
+    await expect(form.locator('[name="name"]')).toHaveValue("Offline Owner");
+    await expect(form.locator('[name="business"]')).toHaveValue("Offline Test Shop");
+    await expect(form.locator('[name="contact"]')).toHaveValue("owner@example.com");
+    await expect(form.locator('[name="message"]')).toHaveValue("Please check the booking path.");
+    await expect(page.getByRole("button", { name: "Send my first-look request" })).toBeEnabled();
+    expect(firstPartyPosts, "An offline request attempted a native POST").toEqual([]);
+
+    await page.context().setOffline(false);
+    let retried = false;
+    await page.route("**/thanks/**", async (route) => {
+      if (route.request().method() !== "POST") return route.continue();
+      retried = true;
+      await route.fulfill({ status: 204 });
+    });
+    await page.getByRole("button", { name: "Send my first-look request" }).click();
+    await expect.poll(() => retried).toBe(true);
+    await page.unrouteAll({ behavior: "wait" });
     expectRuntimeClean(runtime);
   },
 );
@@ -1764,8 +1831,8 @@ test(
 );
 
 for (const inquiry of [
-  { label: "internal delivery check", contact: "hello@littlefightnyc.com", message: "Internal paid-ad readiness test LFNYC-PAID-PREFLIGHT-20260913", internal: true },
-  { label: "customer requesting a test", contact: "owner@example.com", message: "Please test our website checkout.", internal: false },
+  { label: "internal delivery check", contact: "hello@littlefightnyc.com", message: "Internal paid-ad readiness test LFNYC-PAID-PREFLIGHT-20260913", discoverySource: "chatgpt", internal: true },
+  { label: "customer requesting a test", contact: "owner@example.com", message: "Please test our website checkout.", discoverySource: "chatgpt", internal: false },
 ]) {
   test(`Tech Audit ${inquiry.label} preserves delivery and correct conversion counts @chromium-desktop @chromium-mobile`, async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("lf_analytics_consent_v1", "granted"));
@@ -1783,6 +1850,7 @@ for (const inquiry of [
     await form.locator('[name="business"]').fill("Local test business");
     await form.locator('[name="contact"]').fill(inquiry.contact);
     await form.locator('[name="follow_up"]').selectOption("email");
+    await form.locator('[name="discovery_source"]').selectOption(inquiry.discoverySource);
     await form.locator('[name="message"]').fill(inquiry.message);
     await page.getByRole("button", { name: "Send my first-look request" }).click();
     await expect.poll(() => submitted).toBeTruthy();
@@ -1793,21 +1861,78 @@ for (const inquiry of [
     expect(redirect.searchParams.get("confirmed_intent")).toBe("website");
     expect(delivered.get("contact")).toBe(inquiry.contact);
     expect(delivered.get("message")).toBe(inquiry.message);
+    expect(delivered.get("discovery_source")).toBe(inquiry.discoverySource);
     expect(delivered.get("subject")).toBe(inquiry.internal ? "Internal Little Fight NYC test — not a lead" : "New Little Fight NYC Tech Audit");
     const eventCount = (name: string) => page.evaluate(eventName => (window.dataLayer ?? [])
       .filter(row => typeof row === "object" && row !== null && (row as { event?: string }).event === eventName).length, name);
     await expect.poll(() => eventCount("tech_audit_submit")).toBe(inquiry.internal ? 0 : 1);
+    if (!inquiry.internal) {
+      const submitEvent = await page.evaluate(() => (window.dataLayer ?? [])
+        .find(row => typeof row === "object" && row !== null && (row as { event?: string }).event === "tech_audit_submit"));
+      expect(submitEvent).toMatchObject({ discovery_source: inquiry.discoverySource });
+      expect(JSON.stringify(submitEvent)).not.toContain(inquiry.contact);
+    }
     // Also prove the redirect carries classification when storage is blocked
     // or lost. A session marker alone would miss that browser mode.
     await page.evaluate(() => sessionStorage.clear());
     await page.goto(submitted!.url, { waitUntil: "networkidle" });
     await expect(page.getByRole("heading", { name: /Your website message is with us/i })).toBeVisible();
     await expect.poll(() => eventCount("generate_lead")).toBe(inquiry.internal ? 0 : 1);
+    expect(new URL(page.url()).searchParams.has("confirmed_source")).toBe(false);
+    if (!inquiry.internal) {
+      const leadEvent = await page.evaluate(() => (window.dataLayer ?? [])
+        .find(row => typeof row === "object" && row !== null && (row as { event?: string }).event === "generate_lead"));
+      expect(leadEvent).toMatchObject({ discovery_source: inquiry.discoverySource });
+      expect(JSON.stringify(leadEvent)).not.toContain(inquiry.contact);
+    }
     expect(new URL(page.url()).searchParams.has("submitted")).toBe(false);
     await page.reload({ waitUntil: "networkidle" });
     expect(await eventCount("generate_lead")).toBe(0);
   });
 }
+
+test(
+  "direct thanks links never turn a discovery source into a lead @chromium-desktop @chromium-mobile",
+  async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("lf_analytics_consent_v1", "granted"));
+    await page.goto("/thanks/?confirmed_source=chatgpt", { waitUntil: "networkidle" });
+    const leadEvents = await page.evaluate(() => (window.dataLayer ?? [])
+      .filter(row => typeof row === "object" && row !== null && (row as { event?: string }).event === "generate_lead"));
+    expect(leadEvents).toEqual([]);
+  },
+);
+
+test(
+  "Tech Audit drops a tampered discovery value before it reaches Netlify or GA4 @chromium-desktop @chromium-mobile",
+  async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("lf_analytics_consent_v1", "granted"));
+    let submitted: string | undefined;
+    await page.route("**/thanks/**", async route => {
+      if (route.request().method() !== "POST") return route.continue();
+      submitted = route.request().postData() ?? "";
+      await route.fulfill({ status: 204 });
+    });
+    await page.goto("/tech-audit/?intent=website", { waitUntil: "networkidle" });
+    const form = page.locator('form[name="tech-audit-scratch"]');
+    await form.locator('[name="name"]').fill("Local browser fixture");
+    await form.locator('[name="business"]').fill("Local test business");
+    await form.locator('[name="contact"]').fill("owner@example.com");
+    await form.locator('[name="follow_up"]').selectOption("email");
+    await form.locator('[name="message"]').fill("A local-only measurement integrity check.");
+    await form.locator('[name="discovery_source"]').evaluate((element) => {
+      const select = element as HTMLSelectElement;
+      select.add(new Option("Tampered", "visitor-supplied-value@example.com"));
+      select.value = "visitor-supplied-value@example.com";
+    });
+    await page.getByRole("button", { name: "Send my first-look request" }).click();
+    await expect.poll(() => submitted).toBeTruthy();
+    expect(new URLSearchParams(submitted).get("discovery_source")).toBe("");
+    const submitEvent = await page.evaluate(() => (window.dataLayer ?? [])
+      .find(row => typeof row === "object" && row !== null && (row as { event?: string }).event === "tech_audit_submit"));
+    expect(submitEvent).not.toHaveProperty("discovery_source");
+    expect(JSON.stringify(submitEvent)).not.toContain("visitor-supplied-value@example.com");
+  },
+);
 
 test(
   "a malformed URL fragment does not blank the page @chromium-desktop @chromium-mobile",

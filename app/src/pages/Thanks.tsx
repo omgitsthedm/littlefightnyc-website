@@ -9,6 +9,7 @@ import { BOOKING_HREF, PHONE_DISPLAY } from "@/data/contact";
 import {
   parseTechAuditLeadIntent,
   parseTechAuditPreferredRoute,
+  normalizeTechAuditDiscoverySource,
   readTechAuditConfirmation,
   safeTechAuditReportId,
   TECH_AUDIT_SESSION_KEYS,
@@ -21,6 +22,7 @@ export default function Thanks() {
     let storedIntent = null;
     let storedReplyRoute = null;
     let storedReportId = "";
+    let storedDiscoverySource = "";
     try {
       storedIntent = parseTechAuditLeadIntent(
         window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.intent),
@@ -30,6 +32,9 @@ export default function Thanks() {
       );
       storedReportId = safeTechAuditReportId(
         window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.report),
+      );
+      storedDiscoverySource = normalizeTechAuditDiscoverySource(
+        window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.discoverySource),
       );
     } catch {
       // The redirect query carries the same non-sensitive state when storage
@@ -41,9 +46,10 @@ export default function Thanks() {
       leadIntent: query.intent ?? storedIntent ?? (reportId ? "website" : "general"),
       replyRoute: query.replyRoute ?? storedReplyRoute,
       reportId,
+      discoverySource: query.discoverySource || storedDiscoverySource,
     };
   });
-  const { leadIntent, replyRoute, reportId } = confirmation;
+  const { leadIntent, replyRoute, reportId, discoverySource } = confirmation;
   const replyLanguage = techAuditReplyLanguage(replyRoute);
   const websiteIntent = leadIntent === "website" || Boolean(reportId);
   const trackedRef = useRef(false);
@@ -75,6 +81,7 @@ export default function Thanks() {
       try {
         const params = new URLSearchParams(window.location.search);
         params.delete("submitted");
+        params.delete("confirmed_source");
         const search = params.toString();
         window.history.replaceState(
           window.history.state,
@@ -95,6 +102,7 @@ export default function Thanks() {
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.intent);
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.replyRoute);
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.report);
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.discoverySource);
     } catch {
       // Storage can be unavailable; confirmation and tracking still succeed.
     }
@@ -106,8 +114,9 @@ export default function Thanks() {
       form_name: "tech-audit-scratch",
       page_path: "/thanks/",
       intent: leadIntent,
+      ...(discoverySource ? { discovery_source: discoverySource } : {}),
     });
-  }, [leadIntent]);
+  }, [discoverySource, leadIntent]);
 
   return (
     <div className="lf-thanks">

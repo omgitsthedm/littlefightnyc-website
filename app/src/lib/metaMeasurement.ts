@@ -56,6 +56,7 @@ export function isMetaPublicUrl(value: string): boolean {
       if (url.pathname === "/thanks/") {
         if (key === "submitted" && val === "tech-audit") continue;
         if ((key === "intent" || key === "confirmed_intent") && ["website", "support", "consulting", "systems", "general"].includes(val)) continue;
+        if (key === "confirmed_source" && ["google", "chatgpt", "other_ai", "referral", "social", "other", "prefer_not_to_say"].includes(val)) continue;
         if (key === "reply" && ["email", "phone", "sms"].includes(val)) continue;
       }
       return false;

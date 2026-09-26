@@ -19,19 +19,20 @@
     "audit:release": "npm --prefix app run audit:release",
     "test:dakota": "vitest run app/src/dakota netlify/functions/_shared/dakota",
     "test:browser": "npm --prefix app run test:browser",
-    "quality:fast": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:fast",
-    "quality:full": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:full",
-    "quality:release": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:release",
+    "quality:fast": "npm run typecheck:functions && npm run test:dakota && npm run test:acquisition && npm --prefix app run quality:fast",
+    "quality:full": "npm run typecheck:functions && npm run test:dakota && npm run test:acquisition && npm --prefix app run quality:full",
+    "quality:release": "npm run typecheck:functions && npm run test:dakota && npm run test:acquisition && npm --prefix app run quality:release",
     "quality:live": "npm --prefix app run quality:live",
     "quality:maintenance": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:maintenance",
-    "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json"
+    "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json",
+    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts"
   },
   "dependencies": {
     "@netlify/blobs": "10.7.13",
     "@netlify/database": "^1.1.0",
     "@netlify/functions": "^5.3.0",
     "@netlify/identity": "1.2.0",
-    "nodemailer": "^9.0.3"
+    "nodemailer": "9.1.1"
   },
   "devDependencies": {
     "@netlify/edge-functions": "3.0.8",

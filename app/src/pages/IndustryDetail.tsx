@@ -47,10 +47,12 @@ type IndustryRecognition = {
     width: number;
     height: number;
     widths: number[];
+    fit?: "cover" | "contain";
   };
   proof?: {
     to: string;
     label: string;
+    caption?: string;
   };
 };
 
@@ -169,15 +171,17 @@ const INDUSTRY_RECOGNITION: Record<string, IndustryRecognition> = {
     easier:
       "Services are clear. Booking and reminders line up. Google shows the right facts. Rebooking does not depend on one person's memory.",
     image: {
-      src: "/images/owner-stories/neighborhood-barber.webp",
-      alt: "An empty neighborhood barbershop with familiar chairs, mirrors, an appointment book, and a small booking screen",
-      width: 1672,
-      height: 941,
-      widths: [480, 640, 900, 1200],
+      src: "/assets/case-hair-by-rachel-charles.webp",
+      alt: "Hair By Rachel Charles website for an independent stylist in Phoenix, shown on desktop, tablet, and phone",
+      width: 1600,
+      height: 1200,
+      widths: [480, 640, 900],
+      fit: "contain",
     },
     proof: {
       to: "/case-studies/hair-by-rachel-charles/",
-      label: "See what changed",
+      label: "See Rachel’s website and booking handoff",
+      caption: "Client website · Hair By Rachel Charles · Phoenix, AZ",
     },
   },
 };
@@ -468,7 +472,13 @@ export default function IndustryDetail() {
           width: recognition.image.width,
           height: recognition.image.height,
           mobileWidths: recognition.image.widths,
+          fit: recognition.image.fit,
         }}
+        imageCaption={recognition.proof?.caption ? (
+          <>
+            {recognition.proof.caption} · <Link to={recognition.proof.to}>See the project</Link>
+          </>
+        ) : undefined}
       />
 
       <section

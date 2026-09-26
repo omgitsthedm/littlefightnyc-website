@@ -185,6 +185,37 @@
   line-height: 1.55;
 }
 
+.lf-sd-web__scope-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lf-space-3) var(--lf-space-5);
+  margin-top: var(--lf-space-5);
+}
+
+.lf-sd-web__terms-head .lf-sd-web__scope-links p {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.lf-sd-web__scope-links a {
+  min-height: 44px;
+  color: var(--lf-bone);
+  font-weight: 700;
+  text-decoration-color: var(--lf-fight);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color var(--lf-time-snappy) var(--lf-ease-standard);
+}
+
+.lf-sd-web__scope-links a:hover {
+  color: var(--lf-fight);
+}
+
+.lf-sd-web__scope-links a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
 .lf-sd-web__metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

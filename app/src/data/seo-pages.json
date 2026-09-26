@@ -235,25 +235,7 @@
       "shortAnswer": "Short answer: Ongoing website support follows the agreement in place. We check the agreed customer path, date what we find, make routine corrections already approved, and bring larger work back for your decision.",
       "type": "Service",
       "serviceName": "In Your Corner — ongoing website support",
-      "image": "/images/brand-scenes/shop-back-office.webp",
-      "faq": [
-        {
-          "question": "How does ongoing website support work?",
-          "answer": "For eligible existing clients, the agreement names the customer path and routine corrections we check. Findings are dated. Larger changes return to you with a written scope before work starts."
-        },
-        {
-          "question": "Is there a regular check included?",
-          "answer": "Yes. Every site we look after gets a monthly check of the agreed customer path, page speed, search health, broken links, and whether forms and booking still deliver, plus the routine corrections it turns up. A closer weekly check is available when it is agreed in writing."
-        },
-        {
-          "question": "What if Little Fight is not currently supporting my site?",
-          "answer": "Start with a free first look. We review the actual customer path, explain what matters, and put any paid work in writing before it starts."
-        },
-        {
-          "question": "Who owns the site if ongoing website support stops?",
-          "answer": "You do. The domain, code, content, accounts, business data, and material change record remain yours."
-        }
-      ]
+      "image": "/images/brand-scenes/shop-back-office.webp"
     },
     {
       "path": "/website-check/",
