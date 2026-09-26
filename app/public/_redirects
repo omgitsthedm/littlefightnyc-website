@@ -114,7 +114,7 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 # consolidated Library; retain the specific article mappings above.
 /blog/                                       /library/                                   301
 /blog                                        /library/                                   301
-/blog/*                                      /journal/                                   301
+/blog/*                                      /library/                                   301
 
 /software-guides/airtable-vs-notion-vs-monday-small-business/*      /journal/airtable-vs-notion-vs-monday-small-business/      301
 /software-guides/custom-business-system-vs-saas-subscriptions/*     /journal/custom-business-system-vs-saas-subscriptions/     301

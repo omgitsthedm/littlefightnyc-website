@@ -23,6 +23,7 @@ for (const source of ["/areas/brooklyn", "/areas/brooklyn/"]) {
 }
 
 const blogWildcardIndex = rules.findIndex(([from]) => from === "/blog/*");
+assert.deepEqual(rules[blogWildcardIndex], ["/blog/*", "/library/", "301"]);
 for (const source of ["/blog", "/blog/"]) {
   const rule = rules.find(([from]) => from === source);
   assert.deepEqual(rule, [source, "/library/", "301"]);
