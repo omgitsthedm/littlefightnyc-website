@@ -90,7 +90,8 @@ test("service and multilingual paths expose complete text equivalents", async ({
     await expect(proof).toContainText(/.{20,}/);
   }
   await page.goto("/nationwide/");
-  await expect(page.getByText("Not measured", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Read the project proof", exact: true })).toHaveAttribute("href", "/case-studies/hair-by-rachel-charles/");
+  await expect(page.getByText("Not measured", { exact: true })).toHaveCount(0);
 });
 
 test("portfolio proof step changes with visible feedback", async ({ page }) => {

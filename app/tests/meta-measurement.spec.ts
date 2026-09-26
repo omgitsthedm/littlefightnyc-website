@@ -140,10 +140,10 @@ test("new social and email campaigns retain attribution and require separate Met
   }
 });
 
-test("Meta lead means confirmed redirect, not refresh or form opening @chromium-desktop", async ({ page, baseURL }) => {
+test("Meta Lead requires a hydrated Tech Audit submission, not a thank-you query @chromium-desktop", async ({ page, baseURL }) => {
   await localProduction(page, baseURL!, { consent: true });
-  await page.goto("https://littlefightnyc.com/thanks/?submitted=tech-audit&intent=website&reply=email", { waitUntil: "networkidle" });
-  await expect.poll(async () => hits(await commands(page), "Lead").length).toBe(1);
+  await page.goto("https://littlefightnyc.com/thanks/?submitted=tech-audit&confirmed_intent=website&reply=email", { waitUntil: "networkidle" });
+  expect(hits(await commands(page), "Lead")).toHaveLength(0);
   expect(JSON.stringify(hits(await commands(page)))).not.toContain("private-fixture");
   await page.reload({ waitUntil: "networkidle" });
   expect(hits(await commands(page), "Lead")).toHaveLength(0);
@@ -151,15 +151,24 @@ test("Meta lead means confirmed redirect, not refresh or form opening @chromium-
   expect(hits(await commands(page), "Lead")).toHaveLength(0);
 });
 
-test("human intake preserves consented measurement through its public referrer @chromium-desktop", async ({ page, baseURL }) => {
+test("Meta Lead follows a hydrated valid Tech Audit submission once @chromium-desktop", async ({ page, baseURL }) => {
   await localProduction(page, baseURL!, { consent: true });
-  const intake = "https://littlefightnyc.com/tech-audit/?intent=website&source=home";
-  await page.goto(intake, { waitUntil: "networkidle" });
-  await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
-  expect(hits(await commands(page), "Lead")).toHaveLength(0);
-  await page.goto("https://littlefightnyc.com/thanks/?submitted=tech-audit&confirmed_intent=website&reply=email", {
-    referer: intake, waitUntil: "networkidle",
+  let submitted = false;
+  await page.route("https://littlefightnyc.com/thanks/**", async (route) => {
+    if (route.request().method() !== "POST") return route.fallback();
+    submitted = true;
+    const target = new URL(route.request().url());
+    await route.fulfill({ status: 303, headers: { location: `${target.pathname}${target.search}` } });
   });
+  await page.goto("https://littlefightnyc.com/tech-audit/?intent=website&source=home", { waitUntil: "networkidle" });
+  const form = page.locator('form[name="tech-audit-scratch"]');
+  await form.locator('[name="name"]').fill("Local browser fixture");
+  await form.locator('[name="business"]').fill("Local test business");
+  await form.locator('[name="contact"]').fill("owner@example.com");
+  await form.locator('[name="message"]').fill("Please check the booking path.");
+  await form.getByRole("button", { name: "Send my first-look request" }).click();
+  await expect.poll(() => submitted).toBe(true);
+  await expect(page).toHaveURL(/\/thanks\//);
   await expect.poll(async () => hits(await commands(page), "Lead").length).toBe(1);
   await page.reload({ waitUntil: "networkidle" });
   expect(hits(await commands(page), "Lead")).toHaveLength(0);

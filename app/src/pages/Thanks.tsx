@@ -67,16 +67,13 @@ export default function Thanks() {
       ) === "true";
       internalTest ||= window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.internalTest) === "true";
     } catch {
-      // The one-time redirect marker remains sufficient for success tracking.
+      // A redirect query can keep the confirmation copy accurate when storage
+      // is unavailable, but it cannot prove a hydrated form submission.
     }
 
-    const cameFromTechAudit = query.submitted || storedSubmission;
-    if (!cameFromTechAudit) return;
-    trackedRef.current = true;
-
-    // Remove the one-time marker before tracking so a reload or React's strict
-    // effect replay cannot count this submission twice. Keep intent, reply,
-    // and report in the URL so the confirmation remains accurate on reload.
+    // Remove the one-time marker before any conversion decision so a forged
+    // confirmation URL cannot persist or become a lead on a later render.
+    // Keep intent, reply, and report so the confirmation stays accurate.
     if (query.submitted) {
       try {
         const params = new URLSearchParams(window.location.search);
@@ -93,6 +90,12 @@ export default function Thanks() {
         // duplicate within this page lifecycle.
       }
     }
+
+    // Only the same-tab marker written after Tech Audit validation represents
+    // a hydrated native-submit attempt. A query-only /thanks/ URL is display
+    // context, not a lead. This does not claim that the server delivered it.
+    if (!storedSubmission) return;
+    trackedRef.current = true;
 
     try {
       window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.submitted);

@@ -1872,9 +1872,9 @@ for (const inquiry of [
       expect(submitEvent).toMatchObject({ discovery_source: inquiry.discoverySource });
       expect(JSON.stringify(submitEvent)).not.toContain(inquiry.contact);
     }
-    // Also prove the redirect carries classification when storage is blocked
-    // or lost. A session marker alone would miss that browser mode.
-    await page.evaluate(() => sessionStorage.clear());
+    // The confirmation event requires this same-tab marker from the hydrated,
+    // valid submission. The query alone is intentionally not enough.
+    expect(await page.evaluate(() => sessionStorage.getItem("lf_tech_audit_submitted"))).toBe("true");
     await page.goto(submitted!.url, { waitUntil: "networkidle" });
     await expect(page.getByRole("heading", { name: /Your website message is with us/i })).toBeVisible();
     await expect.poll(() => eventCount("generate_lead")).toBe(inquiry.internal ? 0 : 1);
@@ -1892,13 +1892,14 @@ for (const inquiry of [
 }
 
 test(
-  "direct thanks links never turn a discovery source into a lead @chromium-desktop @chromium-mobile",
+  "a forged Tech Audit thanks query never turns into a lead @chromium-desktop @chromium-mobile",
   async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem("lf_analytics_consent_v1", "granted"));
-    await page.goto("/thanks/?confirmed_source=chatgpt", { waitUntil: "networkidle" });
+    await page.goto("/thanks/?submitted=tech-audit&confirmed_intent=website&confirmed_source=chatgpt", { waitUntil: "networkidle" });
     const leadEvents = await page.evaluate(() => (window.dataLayer ?? [])
       .filter(row => typeof row === "object" && row !== null && (row as { event?: string }).event === "generate_lead"));
     expect(leadEvents).toEqual([]);
+    expect(new URL(page.url()).searchParams.has("submitted")).toBe(false);
   },
 );
 

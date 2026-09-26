@@ -558,6 +558,10 @@ export default function TechAudit() {
     // clears it on confirmed success instead.
     setErrors({});
     try {
+      // This marker is the client-side proof used by /thanks/ that a hydrated,
+      // validated native-submit attempt happened in this tab. It is not a
+      // server-delivery receipt.
+      window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.submitted, "true");
       window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.internalTest, String(submittedInternalTest));
       window.sessionStorage.setItem(
         TECH_AUDIT_SESSION_KEYS.intent,
@@ -601,8 +605,7 @@ export default function TechAudit() {
             </p>
             <h1 id="lf-audit-intro-title">Get a clear next step.</h1>
             <p>Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.</p>
-            <p className="lf-audit-intro__meta">Free. No obligation. A person reads every note.</p>
-            <p className="lf-audit-intro__meta"><Link to="/journal/what-a-free-tech-audit-actually-looks-like/">See what the free first look covers.</Link></p>
+            <p className="lf-audit-intro__meta">Free. No obligation. <Link to="/journal/what-a-free-tech-audit-actually-looks-like/" aria-label="See what the free first look covers">What’s included?</Link></p>
 
             <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
               <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
