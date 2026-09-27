@@ -222,7 +222,6 @@ export default function MiniMapNYC({
     <figure
       ref={ref}
       className={`lf-minimap${compact ? " lf-minimap--compact" : ""}${className ? ` ${className}` : ""}`}
-      role="group"
       aria-label="Where we work — New York City coverage map"
     >
       <p className="lf-viz-sr">{summary}</p>

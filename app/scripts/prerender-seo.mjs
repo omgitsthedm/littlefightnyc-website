@@ -55,7 +55,7 @@ function manifestKeyForSource(source) {
   return found[0];
 }
 
-function stylesheetClosure(sources, routePath) {
+async function stylesheetClosure(sources, routePath) {
   const seenEntries = new Set();
   const seenStyles = new Set();
   const styles = [];
@@ -74,6 +74,15 @@ function stylesheetClosure(sources, routePath) {
   }
 
   for (const source of sources) visit(manifestKeyForSource(source));
+  // These landing pages must paint their real composition without waiting
+  // for a chain of small component stylesheets. Keep the shared font/base
+  // sheets cached; include the route-specific CSS with its static markup.
+  if (/^\/(?:areas|industries)\/[^/]+\/$/.test(routePath)) {
+    const css = (await Promise.all(styles.map(stylesheet =>
+      readFile(path.join(distRoot, stylesheet), "utf8"),
+    ))).join("\n");
+    return `<style data-route-style="${escapeAttr(routePath)}">${css.replace(/<\/style/gi, "<\\/style")}</style>`;
+  }
   return styles.map(
     (stylesheet) => `<link rel="stylesheet" crossorigin href="/${escapeAttr(stylesheet)}" data-route-style="${escapeAttr(routePath)}">`,
   ).join("\n    ");
@@ -144,10 +153,10 @@ for (const routePath of [
 }
 
 const componentRouteStyles = Object.fromEntries(
-  Object.entries(componentRenderedRoutes).map(([routePath, { styles }]) => [
+  await Promise.all(Object.entries(componentRenderedRoutes).map(async ([routePath, { styles }]) => [
     routePath,
-    stylesheetClosure(styles, routePath),
-  ]),
+    await stylesheetClosure(styles, routePath),
+  ])),
 );
 
 // This renderer lives under node_modules so it is a build artifact, never a

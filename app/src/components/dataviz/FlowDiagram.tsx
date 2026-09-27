@@ -147,7 +147,6 @@ export default function FlowDiagram({
     <figure
       ref={revealRef}
       className={`lf-flow${className ? ` ${className}` : ""}`}
-      role="group"
       aria-label={label}
     >
       <p className="lf-viz-sr">{summary}</p>
