@@ -155,6 +155,64 @@ export interface DakotaRevenueMetrics {
   offerRows: DakotaProvenanceRow[];
 }
 
+export type DakotaWeeklyPeriod = "this_week" | "previous_week";
+
+export interface DakotaWeeklyRange {
+  period: DakotaWeeklyPeriod;
+  start: number;
+  end: number;
+  label: string;
+  timeZone: string;
+  asOf: number;
+  isPartial: boolean;
+}
+
+export interface DakotaWeeklyFunnel {
+  inbound: number;
+  contacted: number;
+  replied: number;
+  meetings: number;
+  proposals: number;
+  signed: number;
+  paid: number;
+  clearedRevenue: number;
+}
+
+/**
+ * These are unique-record event counts for a bounded Eastern week. They do not
+ * infer that a record entered a stage this week from its current status.
+ */
+export interface DakotaWeeklyRow extends DakotaWeeklyFunnel {
+  label: string;
+  records: number;
+}
+
+export interface DakotaWeeklyAcquisitionRow extends DakotaWeeklyRow {
+  identitySource: string;
+  leadOrigin: string | null;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+}
+
+export interface DakotaWeeklyCoverage {
+  operatorRecords: number;
+  recordsWithTimestampEvidence: number;
+  recordsInPeriod: number;
+  invalidActivityTimestamps: number;
+  paymentEvidenceWithoutAllocatableAmount: number;
+}
+
+export interface DakotaWeeklyMetrics {
+  range: DakotaWeeklyRange;
+  funnel: DakotaWeeklyFunnel;
+  response: DakotaResponseVelocity;
+  coverage: DakotaWeeklyCoverage;
+  sourceRows: DakotaWeeklyRow[];
+  acquisitionRows: DakotaWeeklyAcquisitionRow[];
+  offerRows: DakotaWeeklyRow[];
+}
+
 interface DakotaPacketOutcome {
   templateId: DakotaPursuitTemplateId;
   templateVersion: string;
@@ -361,6 +419,66 @@ function easternWallClockToUtc(parts: Omit<ZonedParts, "minute" | "second"> & { 
   return candidate;
 }
 
+function dateLabel(timestamp: number): string {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: RESPONSE_TIME_ZONE,
+    month: "short",
+    day: "numeric",
+  }).format(timestamp);
+}
+
+/**
+ * Monday 00:00 through the following Monday 00:00 in America/New_York.
+ * The current week is bounded by the report's as-of instant so a future event
+ * cannot appear simply because its timestamp falls later in this calendar week.
+ */
+export function buildDakotaWeeklyRange(
+  now = new Date(),
+  period: DakotaWeeklyPeriod = "this_week",
+): DakotaWeeklyRange {
+  const nowMillis = Number.isFinite(now.getTime()) ? now.getTime() : Date.now();
+  const local = easternParts(nowMillis);
+  const localDay = Date.UTC(local.year, local.month - 1, local.day);
+  const daysSinceMonday = (new Date(localDay).getUTCDay() + 6) % 7;
+  const periodOffset = period === "previous_week" ? 7 : 0;
+  const startDate = new Date(localDay - (daysSinceMonday + periodOffset) * DAY_MS);
+  const endDate = new Date(startDate.getTime() + 7 * DAY_MS);
+  const start = easternWallClockToUtc({
+    year: startDate.getUTCFullYear(), month: startDate.getUTCMonth() + 1, day: startDate.getUTCDate(), hour: 0,
+  });
+  const weekEnd = easternWallClockToUtc({
+    year: endDate.getUTCFullYear(), month: endDate.getUTCMonth() + 1, day: endDate.getUTCDate(), hour: 0,
+  });
+  const isPartial = period === "this_week" && nowMillis < weekEnd;
+  const end = isPartial ? nowMillis : weekEnd;
+  const lastDay = end - 1;
+  return {
+    period,
+    start,
+    end,
+    label: `${dateLabel(start)}–${dateLabel(lastDay)} Eastern${isPartial ? " · as of now" : ""}`,
+    timeZone: RESPONSE_TIME_ZONE,
+    asOf: nowMillis,
+    isPartial,
+  };
+}
+
+function isInWeeklyRange(timestamp: number | null, range: DakotaWeeklyRange): boolean {
+  return timestamp !== null && timestamp >= range.start && timestamp < range.end;
+}
+
+function isDateValueInWeeklyRange(value: string | null | undefined, range: DakotaWeeklyRange): boolean {
+  if (!value?.trim()) return false;
+  const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/u.exec(value.trim());
+  if (!dateOnly) return isInWeeklyRange(validTimestamp(value), range);
+  const localStart = easternParts(range.start);
+  const localEnd = easternParts(range.end - 1);
+  const targetDay = Date.UTC(Number(dateOnly[1]), Number(dateOnly[2]) - 1, Number(dateOnly[3]));
+  const firstDay = Date.UTC(localStart.year, localStart.month - 1, localStart.day);
+  const lastDay = Date.UTC(localEnd.year, localEnd.month - 1, localEnd.day);
+  return targetDay >= firstDay && targetDay <= lastDay;
+}
+
 /** Counts only the daily 09:00–21:00 America/New_York response window. */
 function responseWindowMinutes(start: number, end: number): number {
   if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return 0;
@@ -553,12 +671,25 @@ function buildCommercialTruth(operatorRecords: Record<string, OperatorRecord>): 
   };
 }
 
+function inboundReceiptTimestamp(record: OperatorRecord): number | null {
+  return earliestTimestamp(
+    record.activities
+      .filter((activity) => activity.type === "note"
+        && activity.channel === "internal"
+        && (activity.note.startsWith("Consented Tech Audit request received.")
+          || activity.note.startsWith("Website Audit request received.")))
+      .map((activity) => activity.occurredAt),
+  );
+}
+
 function buildResponseVelocity(
   operatorRecords: Record<string, OperatorRecord>,
   nowMillis: number,
+  range?: DakotaWeeklyRange,
 ): DakotaResponseVelocity {
   const responseMinutes: number[] = [];
   const pendingMinutes: number[] = [];
+  const responseCutoff = range ? Math.min(nowMillis, range.end) : nowMillis;
   let inboundRecords = 0;
   let measurableInboundRecords = 0;
   let missingReceivedTimestamp = 0;
@@ -567,16 +698,9 @@ function buildResponseVelocity(
 
   for (const record of Object.values(operatorRecords)) {
     if (!record.identity.source.toLowerCase().startsWith("inbound:")) continue;
+    const receivedAt = inboundReceiptTimestamp(record);
+    if (range && !isInWeeklyRange(receivedAt, range)) continue;
     inboundRecords += 1;
-
-    const receivedAt = earliestTimestamp(
-      record.activities
-        .filter((activity) => activity.type === "note"
-          && activity.channel === "internal"
-          && (activity.note.startsWith("Consented Tech Audit request received.")
-            || activity.note.startsWith("Website Audit request received.")))
-        .map((activity) => activity.occurredAt),
-    );
     if (receivedAt === null) {
       missingReceivedTimestamp += 1;
       continue;
@@ -590,10 +714,10 @@ function buildResponseVelocity(
         .map((activity) => activity.occurredAt),
     ]
       .map(validTimestamp)
-      .filter((value): value is number => value !== null && value >= receivedAt);
+        .filter((value): value is number => value !== null && value >= receivedAt && value <= responseCutoff);
     const outreachAt = outreachTimestamps.length ? Math.min(...outreachTimestamps) : null;
     if (outreachAt === null) {
-      if (receivedAt <= nowMillis) pendingMinutes.push(responseWindowMinutes(receivedAt, nowMillis));
+      if (receivedAt <= responseCutoff) pendingMinutes.push(responseWindowMinutes(receivedAt, responseCutoff));
       continue;
     }
 
@@ -657,6 +781,223 @@ function buildActionPressure(
   }
 
   return { open, overdue, oldestActionableAgeMinutes };
+}
+
+interface DakotaWeeklyEventFlags extends Omit<DakotaWeeklyFunnel, "clearedRevenue"> {
+  clearedRevenue: number;
+  paymentNeedsAllocation: boolean;
+}
+
+function hasTimestampInRange(
+  values: Array<string | null | undefined>,
+  range: DakotaWeeklyRange,
+): boolean {
+  return values.some((value) => isDateValueInWeeklyRange(value, range));
+}
+
+function hasUsableTimestamp(value: string | null | undefined): boolean {
+  if (!value?.trim()) return false;
+  const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/u.exec(value.trim());
+  if (!dateOnly) return validTimestamp(value) !== null;
+  const year = Number(dateOnly[1]);
+  const month = Number(dateOnly[2]);
+  const day = Number(dateOnly[3]);
+  const candidate = new Date(Date.UTC(year, month - 1, day));
+  return candidate.getUTCFullYear() === year
+    && candidate.getUTCMonth() === month - 1
+    && candidate.getUTCDate() === day;
+}
+
+function hasActivityInRange(
+  record: OperatorRecord,
+  types: readonly string[],
+  range: DakotaWeeklyRange,
+  outcome?: string,
+): boolean {
+  return record.activities.some((activity) => activity.type !== undefined
+    && types.includes(activity.type)
+    && (outcome === undefined || activity.outcome === outcome)
+    && isInWeeklyRange(validTimestamp(activity.occurredAt), range));
+}
+
+function weeklyEvents(record: OperatorRecord, range: DakotaWeeklyRange): DakotaWeeklyEventFlags {
+  const inbound = record.identity.source.toLowerCase().startsWith("inbound:")
+    && isInWeeklyRange(inboundReceiptTimestamp(record), range);
+  const contactedThisWeek = hasTimestampInRange([record.milestones?.firstContactedAt], range)
+    || hasActivityInRange(record, ["outreach", "call"], range);
+  const repliedThisWeek = hasTimestampInRange([record.milestones?.repliedAt], range)
+    || hasActivityInRange(record, ["reply"], range);
+  const meetingsThisWeek = hasTimestampInRange([record.milestones?.meetingAt], range)
+    || hasActivityInRange(record, ["meeting"], range);
+  const proposalsThisWeek = hasTimestampInRange([record.milestones?.proposalAt, record.commercialClose.proposalSentDate], range)
+    || hasActivityInRange(record, ["proposal_sent"], range);
+  const signedThisWeek = hasTimestampInRange([record.milestones?.wonAt, record.commercialClose.signedDate], range)
+    || hasActivityInRange(record, ["contract_signed"], range);
+  const paymentActivityThisWeek = hasActivityInRange(record, ["payment_received"], range, "paid");
+  const paidThisWeek = hasTimestampInRange([record.milestones?.paidAt, record.commercialClose.paidDate], range)
+    || paymentActivityThisWeek;
+  const paidDateThisWeek = isDateValueInWeeklyRange(record.commercialClose.paidDate, range);
+  const validPaidAmount = typeof record.commercialClose.amountPaid === "number"
+    && Number.isFinite(record.commercialClose.amountPaid)
+    && record.commercialClose.amountPaid >= 0;
+  const paymentEvidenceCount = record.activities.filter((activity) =>
+    activity.type === "payment_received" && activity.outcome === "paid",
+  ).length;
+  // amountPaid is cumulative. It belongs to this week only when the notebook has
+  // one dated paid event total; multiple partial payments need per-payment amounts.
+  const hasAllocatablePayment = paymentActivityThisWeek
+    && paidDateThisWeek
+    && validPaidAmount
+    && paymentEvidenceCount === 1;
+  return {
+    inbound: Number(inbound),
+    contacted: Number(contactedThisWeek),
+    replied: Number(repliedThisWeek),
+    meetings: Number(meetingsThisWeek),
+    proposals: Number(proposalsThisWeek),
+    signed: Number(signedThisWeek),
+    paid: Number(paidThisWeek),
+    clearedRevenue: hasAllocatablePayment ? record.commercialClose.amountPaid ?? 0 : 0,
+    paymentNeedsAllocation: paymentActivityThisWeek && !hasAllocatablePayment,
+  };
+}
+
+function hasAnyTimestampEvidence(record: OperatorRecord): boolean {
+  return record.activities.some((activity) => validTimestamp(activity.occurredAt) !== null)
+    || [
+      record.milestones?.firstContactedAt,
+      record.milestones?.repliedAt,
+      record.milestones?.meetingAt,
+      record.milestones?.proposalAt,
+      record.milestones?.wonAt,
+      record.milestones?.paidAt,
+      record.commercialClose.proposalSentDate,
+      record.commercialClose.signedDate,
+      record.commercialClose.paidDate,
+    ].some(hasUsableTimestamp);
+}
+
+function makeWeeklyRow(label: string): DakotaWeeklyRow {
+  return {
+    label,
+    records: 0,
+    inbound: 0,
+    contacted: 0,
+    replied: 0,
+    meetings: 0,
+    proposals: 0,
+    signed: 0,
+    paid: 0,
+    clearedRevenue: 0,
+  };
+}
+
+function recordIntoWeeklyRow(row: DakotaWeeklyRow, events: DakotaWeeklyEventFlags): void {
+  const hasEvent = events.inbound + events.contacted + events.replied + events.meetings
+    + events.proposals + events.signed + events.paid > 0;
+  if (!hasEvent) return;
+  row.records += 1;
+  row.inbound += events.inbound;
+  row.contacted += events.contacted;
+  row.replied += events.replied;
+  row.meetings += events.meetings;
+  row.proposals += events.proposals;
+  row.signed += events.signed;
+  row.paid += events.paid;
+  row.clearedRevenue += events.clearedRevenue;
+}
+
+function makeWeeklyAcquisitionRow(
+  attribution: Omit<DakotaAcquisitionRow, keyof DakotaProvenanceRow>,
+): DakotaWeeklyAcquisitionRow {
+  const utm = attribution.utmSource
+    ? `UTM ${[attribution.utmSource, attribution.utmMedium, attribution.utmCampaign].filter(Boolean).join(" / ")}`
+    : null;
+  const origin = attribution.leadOrigin ? `Origin ${attribution.leadOrigin}` : null;
+  return { ...makeWeeklyRow([attribution.identitySource, utm, origin].filter(Boolean).join(" · ")), ...attribution };
+}
+
+function sortWeeklyRows<Row extends DakotaWeeklyRow>(rows: Map<string, Row>): Row[] {
+  return [...rows.values()].filter((row) => row.records > 0).sort((left, right) =>
+    right.clearedRevenue - left.clearedRevenue
+    || right.paid - left.paid
+    || right.replied - left.replied
+    || right.records - left.records
+    || left.label.localeCompare(right.label));
+}
+
+export function buildDakotaWeeklyMetrics(
+  operatorRecords: Record<string, OperatorRecord>,
+  bridge: DakotaRevenueBridgeEnvelope | null,
+  now = new Date(),
+  period: DakotaWeeklyPeriod = "this_week",
+): DakotaWeeklyMetrics {
+  const range = buildDakotaWeeklyRange(now, period);
+  const sourceRows = new Map<string, DakotaWeeklyRow>();
+  const acquisitionRows = new Map<string, DakotaWeeklyAcquisitionRow>();
+  const offerRows = new Map<string, DakotaWeeklyRow>();
+  const funnel: DakotaWeeklyFunnel = {
+    inbound: 0, contacted: 0, replied: 0, meetings: 0, proposals: 0, signed: 0, paid: 0, clearedRevenue: 0,
+  };
+  let recordsWithTimestampEvidence = 0;
+  let recordsInPeriod = 0;
+  let invalidActivityTimestamps = 0;
+  let paymentEvidenceWithoutAllocatableAmount = 0;
+
+  for (const [key, record] of Object.entries(operatorRecords)) {
+    if (hasAnyTimestampEvidence(record)) recordsWithTimestampEvidence += 1;
+    invalidActivityTimestamps += record.activities.filter((activity) => validTimestamp(activity.occurredAt) === null).length;
+    const events = weeklyEvents(record, range);
+    const hasEvent = events.inbound + events.contacted + events.replied + events.meetings
+      + events.proposals + events.signed + events.paid > 0;
+    if (!hasEvent) continue;
+    recordsInPeriod += 1;
+    if (events.paymentNeedsAllocation) paymentEvidenceWithoutAllocatableAmount += 1;
+    funnel.inbound += events.inbound;
+    funnel.contacted += events.contacted;
+    funnel.replied += events.replied;
+    funnel.meetings += events.meetings;
+    funnel.proposals += events.proposals;
+    funnel.signed += events.signed;
+    funnel.paid += events.paid;
+    funnel.clearedRevenue += events.clearedRevenue;
+
+    const bridgeRecord = bridge?.records[key];
+    const source = record.identity.source || key.split(":", 1)[0] || "unknown";
+    const sourceRow = sourceRows.get(source) ?? makeWeeklyRow(source);
+    recordIntoWeeklyRow(sourceRow, events);
+    sourceRows.set(source, sourceRow);
+
+    const attribution = acquisitionAttribution(source, record);
+    const acquisitionKey = JSON.stringify(attribution);
+    const acquisitionRow = acquisitionRows.get(acquisitionKey) ?? makeWeeklyAcquisitionRow(attribution);
+    recordIntoWeeklyRow(acquisitionRow, events);
+    acquisitionRows.set(acquisitionKey, acquisitionRow);
+
+    if (bridgeRecord?.selected_offer) {
+      const offerCode = bridgeRecord.selected_offer.offer_code;
+      const offerRow = offerRows.get(offerCode) ?? makeWeeklyRow(offerCode);
+      recordIntoWeeklyRow(offerRow, events);
+      offerRows.set(offerCode, offerRow);
+    }
+  }
+
+  const nowMillis = Number.isFinite(now.getTime()) ? now.getTime() : Date.now();
+  return {
+    range,
+    funnel,
+    response: buildResponseVelocity(operatorRecords, nowMillis, range),
+    coverage: {
+      operatorRecords: Object.keys(operatorRecords).length,
+      recordsWithTimestampEvidence,
+      recordsInPeriod,
+      invalidActivityTimestamps,
+      paymentEvidenceWithoutAllocatableAmount,
+    },
+    sourceRows: sortWeeklyRows(sourceRows),
+    acquisitionRows: sortWeeklyRows(acquisitionRows),
+    offerRows: sortWeeklyRows(offerRows),
+  };
 }
 
 export function buildDakotaRevenueMetrics(

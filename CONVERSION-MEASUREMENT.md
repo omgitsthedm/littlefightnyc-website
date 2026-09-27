@@ -1,6 +1,7 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-09-06 (local candidate; production publication unverified)
+Last updated: 2026-09-27. Resolve production revision from `/release.json`;
+account configuration is dated evidence, separate from code publication.
 
 ## Privacy boundary
 
@@ -37,12 +38,13 @@ not emit a preceding CTA click. Do not require `intake_step_1` or
 `intake_step_2` for any intent. Their legacy handlers remain in source, but
 the current form starts at step 3.
 
-The success-page marker is browser evidence, not a provider receipt. It can
-come from the redirect query or tab storage and is removed after tracking to
-avoid ordinary reload duplicates. A direct unmarked visit does not emit
-`generate_lead`, but a manually supplied marker or stale submission state can
-produce the browser signal. Neither the marker nor the success-page text
-proves inbox delivery, an available buyer, an accepted scope or payment.
+The success-page marker is browser evidence, not a provider receipt. Only
+the same-tab session marker written after native form validation qualifies;
+a query-only confirmation URL cannot emit `generate_lead`. The marker is
+consumed to prevent ordinary reload duplicates, and marked internal tests
+are excluded. Deliberately altered browser storage can still forge browser
+evidence. Neither the marker nor the success-page text proves inbox delivery,
+an available buyer, an accepted scope or payment.
 
 Every tracked event carries `funnel_stage`. Break the funnel down by:
 
@@ -125,10 +127,19 @@ Report raw weekly counts beside rates: reviewed, approved, contacted, replied, m
 
 ## Reliability view
 
-Create a second GA4 Exploration filtered to:
+The private [LFNYC — Reliability signals Exploration](https://analytics.google.com/analytics/web/#/analysis/a384652620p524790284/edit/ASGd6E1ZTUaOA24pUMn6gA)
+was created and read back after reload on 2026-09-27 in property `524790284`:
 
-- `web_vital`: rows = `metric_name`; columns = `metric_rating`; breakdown = `page_path`, `browser`, `device`, `connection`.
-- `client_error`: rows = `failure_category`; breakdown = `page_path`, `browser`, `device`, `connection`. Browser error text, filenames, stack traces, and URLs remain local.
+- Web Vitals observations: `eventName=web_vital` and `metric_version=web-vitals-6`; rows = Web Vital name, Page path and screen class, Browser, Device category; columns = Web Vital rating; values = Event count and Total users.
+- Browser errors: `eventName=client_error`; rows = Failure category, Page path and screen class, Browser, Device category; values = Event count and Total users. Browser error text, filenames, stack traces, and submitted URLs remain local.
+
+Event-scoped `metric_version` and `metric_unit` definitions were created and
+verified through the Analytics API the same day. New definitions require
+processing time and do not backfill older events. The corrected-version
+report had no processed observations at verification. Event counts are
+callbacks, not unique page visits; users are not unique metric IDs. This
+Exploration diagnoses clusters and is not a percentile Core Web Vitals pass.
+Do not register unique metric IDs as high-cardinality custom dimensions.
 
 The self-hosted `web-vitals` library calculates CLS, INP, LCP and supplemental FCP. Values retain the existing integer scale: `metric_unit=score_x1000` for CLS (`90` means `0.09`), `ms` otherwise. Filter `metric_version=web-vitals-6` to exclude the former lifetime-summed CLS and maximum-only INP implementation. Group by `metric_id` and use the latest value/rating, or sum `metric_delta`; callbacks after backgrounding are updates, not additional visits. `page_path`/`page_location` identify the initial document or restored bfcache page, not its last SPA route. These are document metrics, not soft-navigation measurements. After consent withdrawal, performance reporting stays off until a new document loads, so re-grant cannot report a withdrawn interval. Browser error categories remain consent-gated. Investigate poor LCP/INP clusters or repeated resource errors.
 

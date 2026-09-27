@@ -6,6 +6,7 @@ import {
   DAKOTA_OPERATOR_ALERT_INDEX_MIGRATION_KEY,
   retryPendingDakotaOperatorAlerts,
   sendDakotaIngressOperatorAlert,
+  sendDakotaWebsiteAuditOperatorAlert,
   summarizeDakotaOperatorAlerts,
   type DakotaOperatorAlertStore,
 } from "./operator-alert";
@@ -144,6 +145,72 @@ describe("Dakota operator-only ingress alerts", () => {
       value as { schema_version?: string }
     ).schema_version === "dakota.operator-alert.v1")).toHaveLength(2);
     expect(JSON.stringify([...store.entries.values()])).not.toContain("owner@example.com");
+  });
+
+  it("durably wakes the fixed mailbox for Website Audit failures, deduplicates by report, and retries without prospect data", async () => {
+    const store = new AlertStore();
+    let now = new Date("2026-08-03T12:00:00.000Z");
+    let configured = true;
+    const calls: Array<{ url: string; init?: RequestInit }> = [];
+    const fetcher = vi.fn(async (
+      input: string | URL | Request,
+      init?: RequestInit,
+    ): Promise<Response> => {
+      const url = String(input);
+      calls.push({ url, init });
+      if (url.includes("oauth2.googleapis.com")) {
+        return new Response(JSON.stringify({ access_token: "operator-token" }), { status: 200 });
+      }
+      return new Response(JSON.stringify({ id: "website-audit-alert" }), { status: 200 });
+    });
+    const dependencies = {
+      getStore: () => store as unknown as DakotaOperatorAlertStore,
+      getEnv: () => configured ? "configured" : undefined,
+      fetch: fetcher as unknown as typeof globalThis.fetch,
+      wait: async () => undefined,
+      now: () => now,
+    };
+    const alert = {
+      reportId: "corner-market-12345678",
+      kind: "pipeline_failed" as const,
+    };
+
+    await expect(sendDakotaWebsiteAuditOperatorAlert(alert, dependencies)).resolves.toEqual({
+      status: "sent",
+      providerRef: "website-audit-alert",
+    });
+    await expect(sendDakotaWebsiteAuditOperatorAlert(alert, dependencies)).resolves.toEqual({
+      status: "deduplicated",
+    });
+
+    const pipelineMessage = decodeRawMessage(JSON.parse(String(
+      calls.find(({ url }) => url.includes("gmail.googleapis.com"))?.init?.body,
+    )).raw);
+    expect(pipelineMessage).toContain("Website Audit pipeline needs operator attention");
+    expect(pipelineMessage).toContain("To: hello@littlefightnyc.com");
+    expect(pipelineMessage).not.toContain("corner-market-12345678");
+    expect(pipelineMessage).not.toContain("owner@example.com");
+    expect(JSON.stringify([...store.entries.values()])).not.toContain("corner-market-12345678");
+
+    configured = false;
+    await expect(sendDakotaWebsiteAuditOperatorAlert({
+      reportId: "corner-market-12345678",
+      kind: "email_delivery_failed",
+    }, dependencies)).resolves.toEqual({ status: "not_configured" });
+    configured = true;
+    now = new Date("2026-08-03T12:05:00.000Z");
+    await expect(retryPendingDakotaOperatorAlerts(dependencies)).resolves.toMatchObject({
+      due: 1,
+      sent: 1,
+    });
+    const gmailCalls = calls.filter(({ url }) => url.includes("gmail.googleapis.com"));
+    expect(gmailCalls).toHaveLength(2);
+    const emailDeliveryMessage = decodeRawMessage(JSON.parse(String(
+      gmailCalls[1]?.init?.body,
+    )).raw);
+    expect(emailDeliveryMessage).toContain("Website Audit report email needs operator attention");
+    expect(emailDeliveryMessage).not.toContain("corner-market-12345678");
+    expect(emailDeliveryMessage).not.toContain("owner@example.com");
   });
 
   it("retries an unsent durable marker and exposes truthful operator-safe health", async () => {

@@ -29,6 +29,11 @@ import {
   normalizedWebsiteAuditGrade,
 } from "./_shared/dakota/website-audit-bridge.ts";
 import {
+  DAKOTA_OPERATOR_ALERT_STORE,
+  sendDakotaWebsiteAuditOperatorAlert,
+  type DakotaWebsiteAuditOperatorAlertKind,
+} from "./_shared/dakota/operator-alert.ts";
+import {
   attemptDakotaWebsiteAuditOutboxEntry,
   DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
   enqueueDakotaWebsiteAuditOutboxPatch,
@@ -147,6 +152,38 @@ function websiteAuditOutboxDependencies() {
       consistency: "strong" as const,
     }),
   };
+}
+
+export function shouldReconcileWebsiteAuditRevenueBridge(
+  deployContext: string | undefined,
+  requestSource: "website_audit" | "programmatic",
+): boolean {
+  return shouldPersistAuditLead(deployContext) && requestSource === "website_audit";
+}
+
+export async function notifyWebsiteAuditFailure(
+  reconcileRevenueBridge: boolean,
+  reportId: string,
+  kind: DakotaWebsiteAuditOperatorAlertKind,
+): Promise<void> {
+  // Preview and programmatic audit runs stay isolated: they neither write a
+  // Dakota alert marker nor attempt an operator-mailbox delivery.
+  if (!reconcileRevenueBridge) return;
+  try {
+    // The revenue-bridge failure fact remains authoritative. This durable,
+    // redacted wake-up is deliberately best-effort and uses the existing
+    // operator-alert retry schedule when Gmail is unavailable.
+    await sendDakotaWebsiteAuditOperatorAlert({ reportId, kind }, {
+      getStore: () => getStore({
+        name: DAKOTA_OPERATOR_ALERT_STORE,
+        consistency: "strong" as const,
+      }),
+      maxAttempts: 1,
+      requestTimeoutMs: 5_000,
+    });
+  } catch {
+    console.error("[audit] Dakota Website Audit operator wake-up failed");
+  }
 }
 
 function revenueBridgeSummary(value: string): string {
@@ -1219,8 +1256,10 @@ export default async (req: Request, context: Context) => {
   console.log(`[audit] ▶ Pipeline start: ${domain} → ${slug}`);
 
   const persistAuditLead = shouldPersistAuditLead(context.deploy.context);
-  const reconcileRevenueBridge =
-    persistAuditLead && requestSource === "website_audit";
+  const reconcileRevenueBridge = shouldReconcileWebsiteAuditRevenueBridge(
+    context.deploy.context,
+    requestSource,
+  );
 
   try {
     // ── Step 1: PageSpeed Insights ────────────────────────────
@@ -1466,6 +1505,14 @@ export default async (req: Request, context: Context) => {
       },
     );
 
+    if (emailDeliveryStatus === "failed") {
+      await notifyWebsiteAuditFailure(
+        reconcileRevenueBridge,
+        slug,
+        "email_delivery_failed",
+      );
+    }
+
     if (leadPersisted) {
       try {
         await updateAuditLeadEmailDelivery(slug, emailDeliveryStatus);
@@ -1499,6 +1546,7 @@ export default async (req: Request, context: Context) => {
         failure_reason: "audit_pipeline_failed",
       },
     );
+    await notifyWebsiteAuditFailure(reconcileRevenueBridge, slug, "pipeline_failed");
     await setStatus(
       slug,
       "error",

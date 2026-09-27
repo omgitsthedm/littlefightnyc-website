@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { EMPTY_OPERATOR_RECORD } from "./revenue";
 import {
   DAKOTA_INBOUND_RESPONSE_TARGET_MINUTES,
+  buildDakotaWeeklyMetrics,
+  buildDakotaWeeklyRange,
   buildDakotaRevenueMetrics,
 } from "./revenueBridgeMetrics";
 import type {
@@ -401,5 +403,99 @@ describe("Dakota Revenue Bridge metrics", () => {
     }, null).templatePerformance;
     expect(rows.find((row) => row.templateId === "restaurant_booking_fix_sop")).toMatchObject({ sends: 0, replies: 0 });
     expect(rows.find((row) => row.templateId === "salon_google_profile_sop")).toMatchObject({ sends: 1, replies: 0 });
+  });
+
+  it("bounds weekly operating metrics by Eastern week events instead of each record's current stage", () => {
+    const currentInbound = operator({
+      identity: { businessName: "Current inbound", source: "inbound:tech-audit", sourceId: "current" },
+      commercialClose: { ...EMPTY_OPERATOR_RECORD.commercialClose, amountDue: 1_200, amountPaid: 1_200, paidDate: "2026-03-11" },
+      activities: [
+        activity("received-current", "note", "2026-03-09T10:00:00-04:00"),
+        activity("contact-current", "outreach", "2026-03-09T11:00:00-04:00", "sent"),
+        activity("reply-current", "reply", "2026-03-10T10:00:00-04:00", "replied"),
+        activity("meeting-current", "meeting", "2026-03-10T11:00:00-04:00", "completed"),
+        activity("proposal-current", "proposal_sent", "2026-03-10T12:00:00-04:00", "sent"),
+        activity("signed-current", "contract_signed", "2026-03-11T10:00:00-04:00", "completed"),
+        activity("paid-current", "payment_received", "2026-03-11T11:00:00-04:00", "paid"),
+      ],
+    });
+    const priorPaid = operator({
+      identity: { businessName: "Prior paid", source: "manual", sourceId: "prior" },
+      status: "paid",
+      commercialClose: { ...EMPTY_OPERATOR_RECORD.commercialClose, amountDue: 900, amountPaid: 900, paidDate: "2026-03-02" },
+      activities: [activity("paid-prior", "payment_received", "2026-03-02T11:00:00-05:00", "paid")],
+    });
+    const missingTimestamp = operator({
+      identity: { businessName: "Undated", source: "manual", sourceId: "undated" },
+      activities: [activity("bad", "reply", "not-a-date", "replied")],
+    });
+    const weeklyBridge = bridge();
+    weeklyBridge.records = {
+      "inbound:tech-audit:current": { ...weeklyBridge.records["nys_dos:1"]! },
+    };
+    const records = {
+      "inbound:tech-audit:current": currentInbound,
+      "manual:prior": priorPaid,
+      "manual:undated": missingTimestamp,
+    };
+    const now = new Date("2026-03-11T12:00:00-04:00");
+    const current = buildDakotaWeeklyMetrics(records, weeklyBridge, now);
+    const previous = buildDakotaWeeklyMetrics(records, weeklyBridge, now, "previous_week");
+
+    expect(current.range.label).toBe("Mar 9–Mar 11 Eastern · as of now");
+    expect(current.funnel).toEqual({ inbound: 1, contacted: 1, replied: 1, meetings: 1, proposals: 1, signed: 1, paid: 1, clearedRevenue: 1_200 });
+    expect(current.response).toMatchObject({ inboundRecords: 1, responded: 1, averageFirstResponseMinutes: 60 });
+    expect(current.sourceRows).toEqual(expect.arrayContaining([
+      expect.objectContaining({ label: "inbound:tech-audit", records: 1, clearedRevenue: 1_200 }),
+    ]));
+    expect(current.acquisitionRows[0]).toMatchObject({ identitySource: "inbound:tech-audit" });
+    expect(current.offerRows).toEqual(expect.arrayContaining([
+      expect.objectContaining({ records: 1, clearedRevenue: 1_200 }),
+    ]));
+    expect(current.coverage).toMatchObject({ operatorRecords: 3, recordsWithTimestampEvidence: 2, recordsInPeriod: 1, invalidActivityTimestamps: 1 });
+
+    expect(previous.funnel).toEqual({ inbound: 0, contacted: 0, replied: 0, meetings: 0, proposals: 0, signed: 0, paid: 1, clearedRevenue: 900 });
+  });
+
+  it("uses real Eastern week boundaries across the spring daylight-saving transition", () => {
+    const range = buildDakotaWeeklyRange(new Date("2026-03-11T12:00:00-04:00"), "previous_week");
+    expect(range.start).toBe(Date.parse("2026-03-02T00:00:00-05:00"));
+    expect(range.end).toBe(Date.parse("2026-03-09T00:00:00-04:00"));
+    expect(range.end - range.start).toBe(167 * 60 * 60 * 1_000);
+  });
+
+  it("excludes future events and cumulative partial payments while retaining the inbound cohort response as of the report time", () => {
+    const partialPayment = operator({
+      identity: { businessName: "Partial", source: "manual", sourceId: "partial" },
+      commercialClose: { ...EMPTY_OPERATOR_RECORD.commercialClose, amountDue: 1_200, amountPaid: 1_200, paidDate: "2026-03-10" },
+      activities: [
+        activity("partial-first", "payment_received", "not-a-date", "paid"),
+        activity("partial-final", "payment_received", "2026-03-10T11:00:00-04:00", "paid"),
+      ],
+    });
+    const futureContact = operator({
+      identity: { businessName: "Future", source: "manual", sourceId: "future" },
+      commercialClose: { ...EMPTY_OPERATOR_RECORD.commercialClose, proposalAmount: 900, proposalSentDate: "2026-03-12" },
+      activities: [activity("future-contact", "outreach", "2026-03-11T13:00:00-04:00", "sent")],
+    });
+    const futureCommercialDate = operator({
+      identity: { businessName: "Future commercial date", source: "manual", sourceId: "future-commercial" },
+      commercialClose: { ...EMPTY_OPERATOR_RECORD.commercialClose, proposalAmount: 900, proposalSentDate: "2026-03-12" },
+    });
+    const previousInbound = operator({
+      identity: { businessName: "Previous inbound", source: "inbound:tech-audit", sourceId: "previous" },
+      activities: [
+        activity("previous-received", "note", "2026-03-08T10:00:00-04:00"),
+        activity("later-response", "outreach", "2026-03-09T10:00:00-04:00", "sent"),
+      ],
+    });
+    const now = new Date("2026-03-11T12:00:00-04:00");
+    const records = { "manual:partial": partialPayment, "manual:future": futureContact, "manual:future-commercial": futureCommercialDate, "inbound:tech-audit:previous": previousInbound };
+    const current = buildDakotaWeeklyMetrics(records, null, now);
+    const previous = buildDakotaWeeklyMetrics(records, null, now, "previous_week");
+
+    expect(current.funnel).toMatchObject({ contacted: 1, proposals: 0, paid: 1, clearedRevenue: 0 });
+    expect(current.coverage.paymentEvidenceWithoutAllocatableAmount).toBe(1);
+    expect(previous.response).toMatchObject({ inboundRecords: 1, responded: 0, pending: 1 });
   });
 });

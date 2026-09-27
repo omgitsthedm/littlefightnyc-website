@@ -39,10 +39,14 @@ import {
 import { collectReadyActions, TASK_TYPE_LABELS } from "./workflow";
 import {
   buildDakotaRevenueMetrics,
+  buildDakotaWeeklyMetrics,
   DAKOTA_TEMPLATE_COMPARISON_MIN_SENDS,
   type DakotaAcquisitionRow,
   type DakotaConversionRate,
   type DakotaProvenanceRow,
+  type DakotaWeeklyAcquisitionRow,
+  type DakotaWeeklyPeriod,
+  type DakotaWeeklyRow,
 } from "./revenueBridgeMetrics";
 import { pursuitTemplateById } from "./pursuitKit";
 import { GrowthOpsPanel } from "./GrowthOpsPanel";
@@ -559,12 +563,14 @@ export function MoneyView({
 }) {
   const [archiveBusy, setArchiveBusy] = useState("");
   const [archiveError, setArchiveError] = useState("");
+  const [weeklyPeriod, setWeeklyPeriod] = useState<DakotaWeeklyPeriod>("this_week");
   if (state.status === "loading" || state.status === "idle") return <div className="queue-loading" role="status"><Clock3 size={22} /><span>Loading money truth…</span></div>;
   if (state.status === "error") return <div className="queue-error" role="alert"><CircleAlert size={22} /><div><strong>Money view unavailable</strong><p>{state.message}</p></div></div>;
 
   const entries = Object.entries(state.envelope.records).sort(([, left], [, right]) => right.updated_at.localeCompare(left.updated_at));
   const bridge = revenueBridgeState.status === "ready" ? revenueBridgeState.envelope : null;
   const metrics = buildDakotaRevenueMetrics(queueRecords, state.envelope.records, bridge, now);
+  const weeklyMetrics = buildDakotaWeeklyMetrics(state.envelope.records, bridge, now, weeklyPeriod);
   const activeEntries = entries.filter(([, record]) => !CLOSED_STATUSES.has(record.status) && record.status !== "paid");
   const estimated = activeEntries.reduce((sum, [, record]) => sum + (record.estimatedValue ?? 0), 0);
   const proposed = metrics.commercial.proposalValue;
@@ -598,6 +604,12 @@ export function MoneyView({
         <Stat label="Outstanding" value={currency(outstanding)} detail="Evidenced invoice balance" icon={Clock3} />
         <Stat label="Average paid deal" value={metrics.commercial.averagePaidDeal === null ? "—" : currency(metrics.commercial.averagePaidDeal)} detail={metrics.commercial.fullyPaidDeals ? `${metrics.commercial.fullyPaidDeals} fully paid deal${metrics.commercial.fullyPaidDeals === 1 ? "" : "s"}` : "No fully paid deal yet"} icon={Check} />
       </div>
+      <WeeklyOperatingPanel
+        metrics={weeklyMetrics}
+        period={weeklyPeriod}
+        onPeriodChange={setWeeklyPeriod}
+        offerLabels={offerLabels}
+      />
       <section className="revenue-flow" aria-labelledby="revenue-flow-title">
         <div className="subsection-heading"><div><p className="eyebrow">Evidence-backed funnel</p><h3 id="revenue-flow-title">Where signals become clients—and where they stop</h3></div><span>{metrics.funnel.pendingExternalReview} outside event{metrics.funnel.pendingExternalReview === 1 ? "" : "s"} needs review</span></div>
         <div className="revenue-flow__stages">
@@ -709,6 +721,68 @@ function AcquisitionTable({ rows }: { rows: DakotaAcquisitionRow[] }) {
           : "";
         return <li key={row.label}><span><strong>{compactSource(row.identitySource)}</strong><small>{utm ? `UTM ${utm}` : row.leadOrigin ? `Lead origin: ${row.leadOrigin}` : "No campaign labels retained"}{utm && row.leadOrigin ? ` · Origin ${row.leadOrigin}` : ""}</small><small>{row.records} tracked · {row.contacted} contacted · {row.replied} replied · {row.meetings} meetings · {row.proposals} proposed</small></span><span><strong>{row.records ? Math.round((row.paid / row.records) * 100) : 0}% paid</strong><small>{percentage(row.conversion.reply)} reply · {percentage(row.conversion.meeting)} meeting</small><small>{currency(row.paidAmount)} collected</small></span></li>;
       })}</ul> : <p>No acquisition provenance is recorded.</p>}
+    </section>
+  );
+}
+
+function WeeklyRows({
+  title,
+  rows,
+  label,
+}: {
+  title: string;
+  rows: DakotaWeeklyRow[];
+  label: (row: DakotaWeeklyRow) => string;
+}) {
+  return (
+    <section className="weekly-rows" aria-labelledby={`weekly-${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>
+      <p className="eyebrow" id={`weekly-${title.toLowerCase().replace(/\s+/gu, "-")}-title`}>{title}</p>
+      {rows.length ? <ul>{rows.map((row) => <li key={row.label}><span><strong>{label(row)}</strong><small>{row.records} dated record{row.records === 1 ? "" : "s"} · {row.inbound} inbound · {row.contacted} contacted · {row.replied} replied · {row.meetings} meeting{row.meetings === 1 ? "" : "s"} · {row.proposals} proposal{row.proposals === 1 ? "" : "s"}</small></span><span><strong>{currency(row.clearedRevenue)}</strong><small>{row.paid} paid record{row.paid === 1 ? "" : "s"}</small></span></li>)}</ul> : <p>No dated activity in this period.</p>}
+    </section>
+  );
+}
+
+function WeeklyOperatingPanel({
+  metrics,
+  period,
+  onPeriodChange,
+  offerLabels,
+}: {
+  metrics: ReturnType<typeof buildDakotaWeeklyMetrics>;
+  period: DakotaWeeklyPeriod;
+  onPeriodChange: (period: DakotaWeeklyPeriod) => void;
+  offerLabels: Map<string, string>;
+}) {
+  const { funnel, coverage, response } = metrics;
+  return (
+    <section className="weekly-operating" aria-labelledby="weekly-operating-title">
+      <header className="weekly-operating__heading">
+        <div><p className="eyebrow">Weekly operating truth</p><h3 id="weekly-operating-title">What actually moved</h3><p>{metrics.range.label} · Each stage counts unique records with timestamp evidence; a current stage alone does not count.</p></div>
+        <div className="weekly-period" role="group" aria-label="Weekly reporting period">
+          <button type="button" aria-pressed={period === "this_week"} onClick={() => onPeriodChange("this_week")}>This week</button>
+          <button type="button" aria-pressed={period === "previous_week"} onClick={() => onPeriodChange("previous_week")}>Previous week</button>
+        </div>
+      </header>
+      <div className="weekly-operating__summary">
+        <article><span>Dated records</span><strong>{String(coverage.recordsInPeriod).padStart(2, "0")}</strong><p>Unique records with a measured event.</p></article>
+        <article><span>Median first response</span><strong>{compactMinutes(response.medianFirstResponseMinutes)}</strong><p>{response.responded ? `${response.withinTarget}/${response.responded} responses to inbound received in this period landed within the 2-hour target; ${response.pending} still unanswered.` : `${response.pending} inbound record${response.pending === 1 ? " is" : "s are"} from this period still unanswered.`}</p></article>
+        <article><span>Cleared cash</span><strong>{currency(funnel.clearedRevenue)}</strong><p>{funnel.paid} paid record{funnel.paid === 1 ? "" : "s"}; cash needs one dated payment record with an amount.</p></article>
+      </div>
+      <div className="weekly-operating__flow" aria-label="Weekly dated events">
+        {[
+          ["Inbound", funnel.inbound], ["Contacted", funnel.contacted], ["Replied", funnel.replied], ["Meetings", funnel.meetings], ["Proposals", funnel.proposals], ["Signed", funnel.signed], ["Paid", funnel.paid],
+        ].map(([label, value]) => <div key={String(label)}><span>{String(label)}</span><strong>{String(value).padStart(2, "0")}</strong></div>)}
+      </div>
+      <p className="weekly-operating__coverage"><ShieldCheck size={16} /> Timestamp coverage: {coverage.recordsWithTimestampEvidence}/{coverage.operatorRecords} private records have usable time evidence. {coverage.invalidActivityTimestamps ? `${coverage.invalidActivityTimestamps} activity timestamp${coverage.invalidActivityTimestamps === 1 ? " is" : "s are"} excluded.` : "No malformed activity timestamps."} {coverage.paymentEvidenceWithoutAllocatableAmount ? `${coverage.paymentEvidenceWithoutAllocatableAmount} paid record${coverage.paymentEvidenceWithoutAllocatableAmount === 1 ? " lacks" : "s lack"} a single dated amount, so weekly cash stays excluded.` : "Every paid record in this period has a single dated amount for weekly cash."}</p>
+      <div className="weekly-operating__rows">
+        <WeeklyRows title="Source" rows={metrics.sourceRows} label={(row) => compactSource(row.label)} />
+        <WeeklyRows title="Origin" rows={metrics.acquisitionRows} label={(row) => {
+          const acquisition = row as DakotaWeeklyAcquisitionRow;
+          const utm = acquisition.utmSource ? [acquisition.utmSource, acquisition.utmMedium, acquisition.utmCampaign].filter(Boolean).join(" / ") : null;
+          return utm ? `${compactSource(acquisition.identitySource)} · ${utm}` : acquisition.leadOrigin ? `${compactSource(acquisition.identitySource)} · ${acquisition.leadOrigin}` : compactSource(acquisition.identitySource);
+        }} />
+        <WeeklyRows title="Offer" rows={metrics.offerRows} label={(row) => offerLabels.get(row.label) ?? row.label.replaceAll("_", " ")} />
+      </div>
     </section>
   );
 }

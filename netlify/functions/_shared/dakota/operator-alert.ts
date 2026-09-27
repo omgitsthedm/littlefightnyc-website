@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import type { Store } from "@netlify/blobs";
 
 import type { DakotaIngressAlert } from "./ingress-receipts.ts";
-import { resolveWorkspaceContext } from "./workspace-config";
+import { resolveWorkspaceContext } from "./workspace-config.ts";
 
 const WORKSPACE_CONFIG = resolveWorkspaceContext().config;
 const ALERT_CONFIG = WORKSPACE_CONFIG.operatorAlerts;
@@ -50,6 +50,15 @@ export interface DakotaIngressOperatorAlertDependencies
   extends DakotaOperatorAlertDependencies {
   getStore: () => DakotaOperatorAlertStore;
   now?: () => Date;
+}
+
+export type DakotaWebsiteAuditOperatorAlertKind =
+  | "pipeline_failed"
+  | "email_delivery_failed";
+
+export interface DakotaWebsiteAuditOperatorAlert {
+  reportId: string;
+  kind: DakotaWebsiteAuditOperatorAlertKind;
 }
 
 export interface DakotaOperatorAlertMarker {
@@ -273,9 +282,42 @@ function alertId(alert: DakotaIngressAlert): string {
     .slice(0, 32);
 }
 
+function websiteAuditAlertReceiptId(alert: DakotaWebsiteAuditOperatorAlert): string {
+  const reportId = alert.reportId.trim().toLowerCase();
+  if (!/^[a-z0-9][a-z0-9-]{6,126}$/u.test(reportId)) {
+    throw new TypeError("Website Audit report ID is invalid.");
+  }
+  return createHash("sha256")
+    .update(`website-audit\u0000${alert.kind}\u0000${reportId}`)
+    .digest("hex")
+    .slice(0, 32);
+}
+
 function alertCopy(alert: DakotaIngressAlert): { subject: string; body: string } {
   const source = boundedHeader(alert.source || "consented inbound", 80);
   const receipt = boundedHeader(alert.receiptId, 40);
+  if (source === "website-audit:pipeline-failed") {
+    return {
+      subject: "[Dakota] Website Audit pipeline needs operator attention",
+      body: [
+        "A Website Audit did not finish. Review Dakota and the retained audit status.",
+        `Alert: ${receipt}`,
+        `Review: ${DAKOTA_APP_URL}`,
+        "This wake-up contains no prospect contact, submitted URL, or report content.",
+      ].join("\n\n"),
+    };
+  }
+  if (source === "website-audit:email-delivery-failed") {
+    return {
+      subject: "[Dakota] Website Audit report email needs operator attention",
+      body: [
+        "A Website Audit report was generated, but its delivery email did not complete. Review Dakota and the retained audit status.",
+        `Alert: ${receipt}`,
+        `Review: ${DAKOTA_APP_URL}`,
+        "This wake-up contains no prospect contact, submitted URL, or report content.",
+      ].join("\n\n"),
+    };
+  }
   if (alert.kind === "failed") {
     return {
       subject: "[Dakota] Inbound receipt needs operator attention",
@@ -580,6 +622,25 @@ export async function sendDakotaIngressOperatorAlert(
   const etag = reserved.etag ?? (await loadMarker(store, id))?.etag;
   if (!etag) throw new Error("operator_alert_reservation_missing");
   return deliverLeasedMarker(marker, etag, dependencies, proposedIndexKey);
+}
+
+/**
+ * Wake the fixed Dakota operator mailbox when an already-recorded Website
+ * Audit failure needs a human. The report ID only participates in the stable
+ * marker hash: no prospect contact, URL, or report content enters this alert
+ * store or email.
+ */
+export function sendDakotaWebsiteAuditOperatorAlert(
+  alert: DakotaWebsiteAuditOperatorAlert,
+  dependencies: DakotaIngressOperatorAlertDependencies,
+): Promise<DakotaOperatorAlertOnceResult> {
+  return sendDakotaIngressOperatorAlert({
+    kind: "failed",
+    receiptId: websiteAuditAlertReceiptId(alert),
+    source: alert.kind === "pipeline_failed"
+      ? "website-audit:pipeline-failed"
+      : "website-audit:email-delivery-failed",
+  }, dependencies);
 }
 
 async function migrateNextAlertIndexShard(
