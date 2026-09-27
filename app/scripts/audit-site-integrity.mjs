@@ -422,6 +422,20 @@ if (/data-route-preload[^>]+(?:case-chromatic-painting-design|hero-soho-crosswal
   failures.push("home still preloads a gallery or retired hero image");
 }
 
+// SoHo uses Manhattan for social metadata but a crosswalk in PageHero. Its
+// preload must follow the rendered responsive image, never the social card.
+const sohoDocument = await readFile(path.join(distRoot, "areas", "soho", "index.html"), "utf8");
+const sohoHeroPreload = (sohoDocument.match(/<link[^>]+rel="preload"[^>]+as="image"[^>]+data-route-preload[^>]*>/gi) ?? [])
+  .find((tag) => tag.includes("/assets/hero-soho-crosswalk-900.webp"));
+if (
+  !sohoHeroPreload
+  || !sohoHeroPreload.includes("/assets/hero-soho-crosswalk-480.webp 480w, /assets/hero-soho-crosswalk-640.webp 640w, /assets/hero-soho-crosswalk-900.webp 900w")
+  || !sohoHeroPreload.includes('imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw"')
+  || /data-route-preload[^>]+manhattan\.webp/i.test(sohoDocument)
+) {
+  failures.push("SoHo route preload must match the rendered crosswalk hero, not its Manhattan social image");
+}
+
 if (failures.length > 0) {
   console.error(`Site integrity audit failed (${failures.length}):`);
   for (const failure of failures) console.error(`- ${failure}`);

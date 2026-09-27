@@ -25,7 +25,7 @@
     "quality:live": "npm --prefix app run quality:live",
     "quality:maintenance": "npm run typecheck:functions && npm run test:dakota && npm --prefix app run quality:maintenance",
     "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json",
-    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts"
+    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts app/src/lib/attribution.test.ts app/src/lib/socialCampaign.test.ts app/src/lib/firstLookWebMcp.test.ts"
   },
   "dependencies": {
     "@netlify/blobs": "10.7.13",

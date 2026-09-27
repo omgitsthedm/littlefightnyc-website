@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone, Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -12,6 +12,7 @@ import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
 import { readAttribution } from "@/lib/attribution";
+import { registerFirstLookWebMcp, type FirstLookStageStatus } from "@/lib/firstLookWebMcp";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import {
@@ -279,6 +280,11 @@ export default function TechAudit() {
   const [messageDirty, setMessageDirty] = useState(
     discardAutomaticWebsiteContext ? false : activeDraft?.messageDirty ?? false,
   );
+  const firstLookStateRef = useRef({ message: initialMessage, messageDirty: discardAutomaticWebsiteContext ? false : activeDraft?.messageDirty ?? false });
+  const firstLookPendingRef = useRef<{
+    message: string;
+    resolve: (status: FirstLookStageStatus) => void;
+  } | null>(null);
   const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -323,6 +329,41 @@ export default function TechAudit() {
   useEffect(() => {
     writeDraft({ intent: intentMode, step, symptom, urgency, message, messageDirty, fields });
   }, [intentMode, step, symptom, urgency, message, messageDirty, fields]);
+
+  // The WebMCP action has no submission capability. It stages text in this
+  // controlled textarea and waits for React to render it before answering.
+  useEffect(() => {
+    firstLookStateRef.current = { message, messageDirty };
+    const pending = firstLookPendingRef.current;
+    if (!pending) return;
+    firstLookPendingRef.current = null;
+    pending.resolve(message === pending.message && messageDirty ? "ready_for_review" : "unavailable");
+  }, [message, messageDirty]);
+
+  const stageFirstLookRequest = useCallback(async (nextMessage: string): Promise<FirstLookStageStatus> => {
+    const current = firstLookStateRef.current;
+    if (current.messageDirty && current.message.trim() && current.message.trim() !== nextMessage) {
+      return "draft_conflict";
+    }
+    if (current.message.trim() === nextMessage) return "ready_for_review";
+    if (firstLookPendingRef.current) return "unavailable";
+
+    return new Promise((resolve) => {
+      firstLookPendingRef.current = { message: nextMessage, resolve };
+      setMessage(nextMessage);
+      setMessageDirty(true);
+    });
+  }, [setMessage, setMessageDirty]);
+
+  useEffect(() => {
+    const unregister = registerFirstLookWebMcp({ stage: stageFirstLookRequest });
+    return () => {
+      const pending = firstLookPendingRef.current;
+      firstLookPendingRef.current = null;
+      pending?.resolve("unavailable");
+      unregister();
+    };
+  }, [stageFirstLookRequest]);
 
   // The beat is one-shot: disarm after it has played so re-renders and
   // later step changes can never replay it.
@@ -607,7 +648,6 @@ export default function TechAudit() {
             <h1 id="lf-audit-intro-title">Get a clear next step.</h1>
             <p>Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.</p>
             <FirstLookScope compact />
-
             <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
               <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
                 <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
@@ -631,6 +671,34 @@ export default function TechAudit() {
                 9am–9pm Eastern: a human answers. After hours: leave a message.
               </p>
             </div>
+            <details className="lf-audit-intro__example" data-lf-first-look-example="hair-by-rachel-charles">
+              <summary>See a first-look example</summary>
+              <div className="lf-audit-intro__example-content">
+                <p className="lf-audit-intro__example-label">Public work example</p>
+                <h2 id="lf-audit-example-title">Keep the booking system. Make the path clearer.</h2>
+                <p className="lf-audit-intro__example-lead">
+                  Hair By Rachel Charles kept Square Appointments. The website explains the work and services, then sends a ready visitor to book.
+                </p>
+                <dl className="lf-audit-intro__example-steps">
+                  <div>
+                    <dt>Keep</dt>
+                    <dd>Square continued to manage availability.</dd>
+                  </div>
+                  <div>
+                    <dt>Clarify</dt>
+                    <dd>The site gave new clients a clear view of Rachel’s work and services.</dd>
+                  </div>
+                  <div>
+                    <dt>Hand off</dt>
+                    <dd>The booking step led into the calendar clients already knew.</dd>
+                  </div>
+                </dl>
+                <p className="lf-audit-intro__example-close">
+                  A first look puts the first useful decision in writing. Paid scope stays separate.
+                </p>
+                <Link to="/case-studies/hair-by-rachel-charles/">Read Rachel’s public case study</Link>
+              </div>
+            </details>
           </div>
           <article className="lf-audit-intro__proof">
             <Link

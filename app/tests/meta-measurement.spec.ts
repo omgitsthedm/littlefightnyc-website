@@ -112,12 +112,20 @@ test("Meta never loads on private URLs, legacy consent, or GPC @chromium-desktop
 });
 
 test("new social and email campaigns retain attribution and require separate Meta consent @chromium-desktop", async ({ browser, baseURL }) => {
-  for (const query of [
-    "utm_source=facebook&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=la01-seafood-markets",
-    "utm_source=instagram&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=g01-independent-bike-shops",
-    "utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=la01-seafood-markets",
-    "utm_source=facebook&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=rv_guest_path",
-    "utm_source=instagram&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=rv_mobile_demo",
+  for (const { query, expected = query, metaAllowed = true } of [
+    { query: "utm_source=facebook&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=la01-seafood-markets" },
+    { query: "utm_source=instagram&utm_medium=organic_social&utm_campaign=next_chapter_2026_09&utm_content=g01-independent-bike-shops" },
+    { query: "utm_source=outreach&utm_medium=email&utm_campaign=louisiana_business_2026_09&utm_content=la01-seafood-markets" },
+    { query: "utm_source=facebook&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=rv_guest_path" },
+    { query: "utm_source=instagram&utm_medium=paid_social&utm_campaign=rv_first_look_2026_09&utm_content=rv_mobile_demo" },
+    { query: "utm_source=ig&utm_medium=social&utm_content=link_in_bio" },
+    { query: "utm_source=google&utm_medium=cpc&utm_campaign=nyc_websites_search_2026_09&utm_content=search_salon_booking" },
+    { query: "utm_source=facebook&utm_medium=paid_social&utm_campaign=nyc_first_look_2026_09&utm_content=nyc_owner_control" },
+    {
+      query: "utm_source=ig&utm_medium=social&utm_content=link_in_bio&email=private-fixture%40example.com&utm_term=private-query&gclid=private-click-id",
+      expected: "utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+      metaAllowed: false,
+    },
   ]) {
     const context = await browser.newContext({ serviceWorkers: "block" });
     const page = await context.newPage();
@@ -131,11 +139,16 @@ test("new social and email campaigns retain attribution and require separate Met
         const args = row as { 0?: string; 1?: string; 2?: { page_location?: string } };
         return args[0] === "event" && args[1] === "page_view" ? [args[2]?.page_location] : [];
       }).at(-1)))
-      .toBe("https://littlefightnyc.com/website-check/?" + query);
+      .toBe("https://littlefightnyc.com/website-check/?" + expected);
     await page.getByRole("button", { name: "Privacy choices", exact: true }).click();
     await page.getByRole("button", { name: "Allow visits + Meta", exact: true }).click();
-    await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
-    expect(sdk).toHaveLength(1);
+    if (metaAllowed) {
+      await expect.poll(async () => hits(await commands(page), "PageView").length).toBe(1);
+      expect(sdk).toHaveLength(1);
+    } else {
+      expect(hits(await commands(page), "PageView")).toEqual([]);
+      expect(sdk).toEqual([]);
+    }
     await context.close();
   }
 });
@@ -198,6 +211,96 @@ test("approved organic post labels survive GA sanitation; private fields do not 
   expect(locations.at(-1)).toContain("utm_content=01-interior-design-studios");
   expect(locations.at(-1)).not.toContain("private-fixture");
   expect(await page.locator('script[src*="connect.facebook.net"]').count()).toBe(0);
+});
+
+test("First Look attribution needs consent and sends only fixed labels to a local inquiry @chromium-desktop", async ({ page, baseURL }) => {
+  const campaign = {
+    utm_source: "instagram", utm_medium: "organic_social",
+    utm_campaign: "lfnyc_first_look_2026_09", utm_content: "salon_booking_path",
+  };
+  const query = new URLSearchParams(campaign).toString();
+  const privateValues = "email=private-fixture%40example.com&utm_term=private-query&gclid=private-click-id&business=private-business";
+  const posts: string[] = [];
+  // Every request remains inside the local candidate. The fixture records the
+  // browser's form handoff without contacting a production endpoint.
+  await page.route("**/*", async (route) => {
+    const request = route.request();
+    const url = new URL(request.url());
+    if (url.origin !== baseURL) return route.abort();
+    if (request.method() === "POST") {
+      posts.push(request.postData() ?? "");
+      return route.fulfill({ status: 303, headers: { location: url.pathname + url.search }, body: "" });
+    }
+    return route.continue();
+  });
+  await page.goto(`${baseURL}/tech-audit/?intent=website&${query}&${privateValues}`, { waitUntil: "networkidle" });
+  const views = () => page.evaluate(() => (window.dataLayer ?? [])
+    .filter((row) => (row as { event?: string })?.event === "page_view")
+    .map((row) => (row as { page_location: string }).page_location));
+  expect(await views()).toEqual([]);
+  expect(await page.evaluate(() => sessionStorage.getItem("lf-attribution"))).toBeNull();
+  expect(await page.locator('script[src*="googletagmanager.com"],script[src*="connect.facebook.net"]').count()).toBe(0);
+
+  await page.getByRole("button", { name: "Allow visit counting", exact: true }).click();
+  await expect.poll(async () => (await views()).at(-1)).toBe(`${baseURL}/tech-audit/?${query}`);
+  await expect.poll(() => page.evaluate(() => sessionStorage.getItem("lf-attribution")))
+    .toBe(JSON.stringify(campaign));
+
+  const form = page.locator('[data-lf-route-mount] form[name="tech-audit-scratch"]');
+  await expect(form).toBeVisible();
+  await form.locator('[name="name"]').fill("Local test");
+  await form.locator('[name="business"]').fill("Example fixture business");
+  await form.locator('[name="contact"]').fill("owner@example.com");
+  await form.locator('[name="message"]').fill("Customers need a clearer way to book.");
+  await form.locator('button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/thanks\//);
+  expect(posts).toHaveLength(1);
+  const payload = new URLSearchParams(posts[0]);
+  for (const [key, value] of Object.entries(campaign)) expect(payload.get(key)).toBe(value);
+  expect(posts[0]).not.toContain("private-fixture");
+  expect(posts[0]).not.toContain("private-query");
+  expect(posts[0]).not.toContain("private-click-id");
+  expect(posts[0]).not.toContain("private-business");
+});
+
+test("a restored First Look draft carries consented attribution without editing the form @chromium-desktop", async ({ page, baseURL }) => {
+  const campaign = {
+    utm_source: "instagram", utm_medium: "organic_social",
+    utm_campaign: "lfnyc_first_look_2026_09", utm_content: "maps_clarity",
+  };
+  await page.addInitScript((draft) => {
+    sessionStorage.setItem("lf_tech_audit_draft", JSON.stringify(draft));
+  }, {
+    intent: "website", step: 3, symptom: "A website that gets inquiries", urgency: "Soon, but nothing is on fire",
+    message: "Customers need a clearer booking path.", messageDirty: true,
+    fields: {
+      name: "Local test", business: "Example fixture business", contact: "owner@example.com",
+      follow_up: "email", discovery_source: "",
+    },
+  });
+  const posts: string[] = [];
+  await page.route("**/*", async (route) => {
+    const request = route.request();
+    const url = new URL(request.url());
+    if (url.origin !== baseURL) return route.abort();
+    if (request.method() === "POST") {
+      posts.push(request.postData() ?? "");
+      return route.fulfill({ status: 303, headers: { location: url.pathname + url.search }, body: "" });
+    }
+    return route.continue();
+  });
+  await page.goto(`${baseURL}/tech-audit/?intent=website&${new URLSearchParams(campaign)}`, { waitUntil: "networkidle" });
+  const form = page.locator('[data-lf-route-mount] form[name="tech-audit-scratch"]');
+  await expect(form.locator('[name="name"]')).toHaveValue("Local test");
+  await expect(form.locator('[name="utm_source"]')).toHaveCount(0);
+  await page.getByRole("button", { name: "Allow visit counting", exact: true }).click();
+  await expect.poll(() => page.evaluate(() => sessionStorage.getItem("lf-attribution")))
+    .toBe(JSON.stringify(campaign));
+  await form.locator('button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/thanks\//);
+  expect(posts).toHaveLength(1);
+  const payload = new URLSearchParams(posts[0]);
+  for (const [key, value] of Object.entries(campaign)) expect(payload.get(key)).toBe(value);
 });
 
 for (const content of ["search_human_help", "search_owner_control", "search_sitelink"]) {

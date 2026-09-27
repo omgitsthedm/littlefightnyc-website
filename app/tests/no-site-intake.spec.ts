@@ -15,12 +15,69 @@ test(
     await expect(page).toHaveURL(/\/tech-audit\/\?intent=website&source=no_website_check$/);
     await expect(page.getByRole("heading", { name: "Get a clear next step." })).toBeVisible();
     await expect(page.getByText("Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.")).toBeVisible();
+    const firstLookExample = page.locator('[data-lf-first-look-example="hair-by-rachel-charles"]');
+    await expect(firstLookExample).toBeVisible();
+    await expect(firstLookExample).toHaveJSProperty("open", false);
+    await firstLookExample.getByText("See a first-look example", { exact: true }).click();
+    await expect(firstLookExample).toHaveJSProperty("open", true);
+    await expect(firstLookExample.getByText("Public work example")).toBeVisible();
+    await expect(firstLookExample.getByRole("heading", { name: "Keep the booking system. Make the path clearer." })).toBeVisible();
+    await expect(firstLookExample.getByText("Square continued to manage availability.")).toBeVisible();
+    await expect(firstLookExample.getByRole("link", { name: "Read Rachel’s public case study" })).toHaveAttribute(
+      "href",
+      "/case-studies/hair-by-rachel-charles/",
+    );
     await expect(page.getByLabel("What would you like to improve or fix?")).toBeVisible();
     await expect(page.getByText("No passwords or private customer data. A short sentence is enough. If helpful, add your city, social page, or how customers find you.")).toBeVisible();
     await expect(page.locator('textarea[name="message"]')).toHaveValue("");
     await expect(page.getByRole("button", { name: "Send my first-look request" })).toBeVisible();
   },
 );
+
+test("WebMCP stages a first-look request for review without sending or replacing a draft @chromium-desktop", async ({ page }) => {
+  const posts: string[] = [];
+  await page.addInitScript(() => {
+    type Tool = { execute: (input: unknown) => Promise<unknown> };
+    Object.defineProperty(document, "modelContext", {
+      configurable: true,
+      value: {
+        registerTool(tool: Tool) {
+          (window as Window & { firstLookTool?: Tool }).firstLookTool = tool;
+        },
+      },
+    });
+  });
+  page.on("request", (request) => {
+    if (request.method() === "POST") posts.push(request.url());
+  });
+
+  await page.goto("/tech-audit/?intent=website&source=no_website_check");
+  await expect.poll(() => page.evaluate(() => Boolean((window as Window & { firstLookTool?: unknown }).firstLookTool))).toBe(true);
+
+  const staged = await page.evaluate(async () => {
+    const tool = (window as Window & { firstLookTool: { execute: (input: unknown) => Promise<unknown> } }).firstLookTool;
+    return tool.execute({ message: "Please check how customers choose a service and book." });
+  });
+  expect(staged).toEqual({ status: "ready_for_review" });
+  const message = page.locator('textarea[name="message"]');
+  await expect(message).toHaveValue("Please check how customers choose a service and book.");
+  expect(posts).toEqual([]);
+
+  await message.fill("This is my own draft.");
+  const conflict = await page.evaluate(async () => {
+    const tool = (window as Window & { firstLookTool: { execute: (input: unknown) => Promise<unknown> } }).firstLookTool;
+    return tool.execute({ message: "Replace my draft." });
+  });
+  expect(conflict).toEqual({ status: "draft_conflict" });
+  await expect(message).toHaveValue("This is my own draft.");
+
+  const identical = await page.evaluate(async () => {
+    const tool = (window as Window & { firstLookTool: { execute: (input: unknown) => Promise<unknown> } }).firstLookTool;
+    return tool.execute({ message: "This is my own draft." });
+  });
+  expect(identical).toEqual({ status: "ready_for_review" });
+  expect(posts).toEqual([]);
+});
 
 test(
   "the existing website URL entry remains available at its stable hash @chromium-desktop @chromium-mobile @webkit-mobile",

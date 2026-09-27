@@ -1025,6 +1025,15 @@ function routeImagePreload(page) {
     return "";
   }
 
+  // The SoHo route keeps Manhattan as its social card, while PageHero renders
+  // the distinct crosswalk frame. Preload the rendered responsive set, not
+  // the metadata image, so the first response starts the actual LCP request.
+  if (page.path === "/areas/soho/") {
+    const base = "/assets/hero-soho-crosswalk";
+    const srcset = [480, 640, 900].map((w) => `${base}-${w}.webp ${w}w`).join(", ");
+    return `<link rel="preload" href="${base}-900.webp" imagesrcset="${srcset}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
+  }
+
   if (page.path === "/") {
     // The avenue backdrop is the largest paint behind the first decision on
     // phone and desktop. These media-gated preloads mirror HomeWall's exact

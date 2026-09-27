@@ -1,18 +1,9 @@
-/* Lead attribution: capture ad/campaign params once per session so the Fit
- * Check submission carries where the lead actually came from. The old static
- * site did this; the React migration dropped it. sessionStorage only — no
- * cookies, nothing sent anywhere except inside the form the visitor submits. */
+/* Lead attribution captures only fixed, public campaign labels once per
+ * session. Form handoff must never collect a recipient, business, search
+ * query, or advertising click ID from a landing-page URL. */
+import { leadCampaignParameters } from "./socialCampaign";
 
-const PARAMS = [
-  "utm_source",
-  "utm_medium",
-  "utm_campaign",
-  "utm_term",
-  "utm_content",
-  "gclid",
-  "gbraid",
-  "wbraid",
-] as const;
+const PARAMS = ["utm_source", "utm_medium", "utm_campaign", "utm_content"] as const;
 
 const STORAGE_KEY = "lf-attribution";
 
@@ -20,16 +11,12 @@ export function captureAttribution(): void {
   if (typeof window === "undefined") return;
   try {
     const search = new URLSearchParams(window.location.search);
-    const found: Record<string, string> = {};
-    for (const key of PARAMS) {
-      const value = search.get(key);
-      if (value) found[key] = value.slice(0, 200);
-    }
-    if (Object.keys(found).length === 0) return;
-    const existing = readAttribution();
+    const campaign = leadCampaignParameters(search);
+    if (!campaign) return;
+    const found = Object.fromEntries(campaign) as Record<string, string>;
     window.sessionStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ ...existing, ...found })
+      JSON.stringify(found)
     );
   } catch {
     // Storage unavailable (private mode etc.) — attribution is best-effort.
@@ -43,12 +30,13 @@ export function readAttribution(): Record<string, string> {
     if (!raw) return {};
     const parsed: unknown = JSON.parse(raw);
     if (!parsed || typeof parsed !== "object") return {};
-    const out: Record<string, string> = {};
+    const cached = new URLSearchParams();
     for (const key of PARAMS) {
       const value = (parsed as Record<string, unknown>)[key];
-      if (typeof value === "string") out[key] = value;
+      if (typeof value === "string") cached.set(key, value);
     }
-    return out;
+    const campaign = leadCampaignParameters(cached);
+    return campaign ? Object.fromEntries(campaign) : {};
   } catch {
     return {};
   }

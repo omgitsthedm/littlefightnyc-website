@@ -94,6 +94,32 @@ const GOOGLE_SEARCH_CREATIVES = new Set([
   "search_human_help", "search_owner_control", "search_sitelink",
 ]);
 
+// Fixed labels for the NYC paid-search hypothesis. These identify the public
+// creative only, never a search query, recipient, or click identifier.
+export const NYC_GOOGLE_SEARCH_CAMPAIGN = "nyc_websites_search_2026_09";
+const NYC_GOOGLE_SEARCH_CREATIVES = new Set([
+  "search_owner_control", "search_salon_booking", "search_sitelink",
+]);
+
+// Fixed labels for the NYC paid-social hypothesis. Consent still controls
+// vendor loading; recognizing these labels only keeps public attribution.
+export const NYC_PAID_CAMPAIGN = "nyc_first_look_2026_09";
+const NYC_PAID_CREATIVES = new Set(["nyc_owner_control", "salon_booking_path"]);
+
+// Fixed labels for the research sprint. These describe the public creative
+// and route only; a person, business, search query, or click ID never belongs
+// in campaign attribution.
+export const LFNYC_FIRST_LOOK_CAMPAIGN = "lfnyc_first_look_2026_09";
+const LFNYC_FIRST_LOOK_CREATIVES = new Set([
+  "maps_clarity", "salon_booking_path", "owner_control",
+]);
+
+const BUSINESS_PROFILE_CAMPAIGN = "business_profile";
+const BUSINESS_PROFILE_BOOKING_CONTENT = "booking";
+const INSTAGRAM_BIO_SOURCE = "ig";
+const INSTAGRAM_BIO_MEDIUM = "social";
+const INSTAGRAM_BIO_CONTENT = "link_in_bio";
+
 export function socialCampaignParameters(search: URLSearchParams): URLSearchParams | null {
   const source = search.get("utm_source");
   const content = search.get("utm_content");
@@ -111,11 +137,33 @@ export function publicCampaignParameters(search: URLSearchParams): URLSearchPara
   const social = socialCampaignParameters(search);
   if (social) return social;
   const content = search.get("utm_content");
+  const source = search.get("utm_source");
+  const medium = search.get("utm_medium");
+  const campaign = search.get("utm_campaign");
+  // This exact label is already present on Little Fight's native Instagram
+  // profile. It has no campaign by design; a supplied campaign is rejected.
+  if (source === INSTAGRAM_BIO_SOURCE && medium === INSTAGRAM_BIO_MEDIUM &&
+      content === INSTAGRAM_BIO_CONTENT && !search.has("utm_campaign")) {
+    return new URLSearchParams({ utm_source: INSTAGRAM_BIO_SOURCE,
+      utm_medium: INSTAGRAM_BIO_MEDIUM, utm_content: INSTAGRAM_BIO_CONTENT });
+  }
+  if (campaign === LFNYC_FIRST_LOOK_CAMPAIGN && content && LFNYC_FIRST_LOOK_CREATIVES.has(content) &&
+      ((["facebook", "instagram"].includes(source ?? "") && medium === "organic_social") ||
+       (["partner", "client"].includes(source ?? "") && medium === "referral"))) {
+    return new URLSearchParams({ utm_source: source!, utm_medium: medium!,
+      utm_campaign: LFNYC_FIRST_LOOK_CAMPAIGN, utm_content: content });
+  }
   if (search.get("utm_source") === "google" && search.get("utm_medium") === "cpc" &&
       search.get("utm_campaign") === GOOGLE_SEARCH_CAMPAIGN && content &&
       GOOGLE_SEARCH_CREATIVES.has(content)) {
     return new URLSearchParams({ utm_source: "google", utm_medium: "cpc",
       utm_campaign: GOOGLE_SEARCH_CAMPAIGN, utm_content: content });
+  }
+  if (search.get("utm_source") === "google" && search.get("utm_medium") === "cpc" &&
+      search.get("utm_campaign") === NYC_GOOGLE_SEARCH_CAMPAIGN && content &&
+      NYC_GOOGLE_SEARCH_CREATIVES.has(content)) {
+    return new URLSearchParams({ utm_source: "google", utm_medium: "cpc",
+      utm_campaign: NYC_GOOGLE_SEARCH_CAMPAIGN, utm_content: content });
   }
   if (["facebook", "instagram"].includes(search.get("utm_source") ?? "") &&
       search.get("utm_medium") === "paid_social" &&
@@ -123,8 +171,32 @@ export function publicCampaignParameters(search: URLSearchParams): URLSearchPara
     return new URLSearchParams({ utm_source: search.get("utm_source")!, utm_medium: "paid_social",
       utm_campaign: PAID_CAMPAIGN, utm_content: content });
   }
+  if (["facebook", "instagram"].includes(search.get("utm_source") ?? "") &&
+      search.get("utm_medium") === "paid_social" &&
+      search.get("utm_campaign") === NYC_PAID_CAMPAIGN && content && NYC_PAID_CREATIVES.has(content)) {
+    return new URLSearchParams({ utm_source: search.get("utm_source")!, utm_medium: "paid_social",
+      utm_campaign: NYC_PAID_CAMPAIGN, utm_content: content });
+  }
   if (search.get("utm_source") !== "outreach" || search.get("utm_medium") !== "email" ||
       search.get("utm_campaign") !== EMAIL_CAMPAIGN || !content || !EMAIL_TOPICS.has(content)) return null;
   return new URLSearchParams({ utm_source: "outreach", utm_medium: "email",
     utm_campaign: EMAIL_CAMPAIGN, utm_content: content });
+}
+
+// Form attribution accepts the same bounded public campaign labels as
+// consented measurement, plus the established Business Profile booking link.
+// It intentionally never carries search terms, click IDs, or arbitrary UTMs.
+export function leadCampaignParameters(search: URLSearchParams): URLSearchParams | null {
+  const publicCampaign = publicCampaignParameters(search);
+  if (publicCampaign) return publicCampaign;
+  if (search.get("utm_source") === "google" && search.get("utm_medium") === "organic" &&
+      search.get("utm_campaign") === BUSINESS_PROFILE_CAMPAIGN) {
+    const content = search.get("utm_content");
+    if (content !== null && content !== BUSINESS_PROFILE_BOOKING_CONTENT) return null;
+    const params = new URLSearchParams({ utm_source: "google", utm_medium: "organic",
+      utm_campaign: BUSINESS_PROFILE_CAMPAIGN });
+    if (content === BUSINESS_PROFILE_BOOKING_CONTENT) params.set("utm_content", BUSINESS_PROFILE_BOOKING_CONTENT);
+    return params;
+  }
+  return null;
 }
