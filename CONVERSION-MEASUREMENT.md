@@ -130,7 +130,7 @@ Create a second GA4 Exploration filtered to:
 - `web_vital`: rows = `metric_name`; columns = `metric_rating`; breakdown = `page_path`, `browser`, `device`, `connection`.
 - `client_error`: rows = `failure_category`; breakdown = `page_path`, `browser`, `device`, `connection`. Browser error text, filenames, stack traces, and URLs remain local.
 
-Core Web Vital values are integers. CLS is multiplied by 1,000 before transport (for example, `90` means `0.09`). Treat a new error signature, a poor LCP/INP cluster, or repeated Safari resource errors as a release investigation.
+The self-hosted `web-vitals` library calculates CLS, INP, LCP and supplemental FCP. Values retain the existing integer scale: `metric_unit=score_x1000` for CLS (`90` means `0.09`), `ms` otherwise. Filter `metric_version=web-vitals-6` to exclude the former lifetime-summed CLS and maximum-only INP implementation. Group by `metric_id` and use the latest value/rating, or sum `metric_delta`; callbacks after backgrounding are updates, not additional visits. `page_path`/`page_location` identify the initial document or restored bfcache page, not its last SPA route. These are document metrics, not soft-navigation measurements. After consent withdrawal, performance reporting stays off until a new document loads, so re-grant cannot report a withdrawn interval. Browser error categories remain consent-gated. Investigate poor LCP/INP clusters or repeated resource errors.
 
 ## Monthly lead-loop proof
 

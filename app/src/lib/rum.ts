@@ -1,10 +1,13 @@
-import { trackEvent } from "./analyticsClient";
+import { onCLS, onFCP, onINP, onLCP, type Metric } from "web-vitals";
+import { trackEvent } from "./analytics";
 import { getAnalyticsConsent, onAnalyticsConsentChange } from "./consent";
 
-type MetricName = "CLS" | "FCP" | "INP" | "LCP";
-
 let installed = false;
+let listening = false;
+let performanceRevoked = false;
+let documentPath = "";
 const reported = new Set<string>();
+const metricValues = new Map<string, number>();
 
 function browserBucket() {
   const ua = navigator.userAgent;
@@ -15,39 +18,41 @@ function browserBucket() {
   return "other";
 }
 
-function context() {
+function context(path = window.location.pathname) {
   const nav = navigator as Navigator & {
     connection?: { effectiveType?: string };
   };
 
   return {
-    page_path: window.location.pathname,
+    page_path: path,
     browser: browserBucket(),
     device: window.matchMedia("(pointer: coarse)").matches ? "touch" : "desktop",
     connection: nav.connection?.effectiveType ?? "unknown",
   };
 }
 
-function metricRating(name: MetricName, value: number) {
-  const limits: Record<MetricName, [number, number]> = {
-    CLS: [0.1, 0.25],
-    FCP: [1800, 3000],
-    INP: [200, 500],
-    LCP: [2500, 4000],
-  };
-  const [good, poor] = limits[name];
-  return value <= good ? "good" : value <= poor ? "needs_improvement" : "poor";
-}
-
-function reportMetric(name: MetricName, value: number) {
-  if (!Number.isFinite(value) || reported.has(name)) return;
-  reported.add(name);
-  const normalized = name === "CLS" ? Math.round(value * 1000) : Math.round(value);
+function reportMetric(metric: Metric) {
+  if (performanceRevoked || getAnalyticsConsent() !== "granted" ||
+      !Number.isFinite(metric.value) || metric.value < 0 ||
+      !Number.isFinite(metric.delta) || metricValues.get(metric.id) === metric.value) return;
+  metricValues.set(metric.id, metric.value);
+  // Preserve the existing GA4 integer scale. IDs distinguish visits restored
+  // from bfcache; deltas allow updates after a background/foreground cycle
+  // without treating every callback as a new page or summing cumulative values.
+  const scale = metric.name === "CLS" ? 1000 : 1;
+  const value = Math.round(metric.value * scale);
+  const delta = Math.round(metric.value * scale) - Math.round((metric.value - metric.delta) * scale);
   trackEvent("web_vital", {
-    ...context(),
-    metric_name: name,
-    metric_value: normalized,
-    metric_rating: metricRating(name, value),
+    ...context(documentPath),
+    page_location: new URL(documentPath, window.location.origin).href,
+    metric_name: metric.name,
+    metric_value: value,
+    metric_delta: delta,
+    metric_id: metric.id,
+    metric_unit: metric.name === "CLS" ? "score_x1000" : "ms",
+    metric_navigation: metric.navigationType,
+    metric_version: "web-vitals-6",
+    metric_rating: metric.rating.replace("-", "_"),
   });
 }
 
@@ -68,6 +73,7 @@ function safeText(value: unknown, fallback: string) {
 }
 
 function reportError(kind: string, message: unknown, file = "") {
+  if (getAnalyticsConsent() !== "granted") return;
   const cleaned = safeText(message, kind);
   const key = `${kind}:${cleaned}:${file}`;
   if (reported.has(key)) return;
@@ -86,66 +92,23 @@ function reportError(kind: string, message: unknown, file = "") {
 
 function observePerformance() {
   if (!("PerformanceObserver" in window)) return;
-  const supported = PerformanceObserver.supportedEntryTypes ?? [];
-  let lcp = 0;
-  let cls = 0;
-  let inp = 0;
-
-  if (supported.includes("paint")) {
-    const observer = new PerformanceObserver((list) => {
-      const fcp = list.getEntriesByName("first-contentful-paint")[0];
-      if (fcp) reportMetric("FCP", fcp.startTime);
-    });
-    observer.observe({ type: "paint", buffered: true });
-  }
-
-  if (supported.includes("largest-contentful-paint")) {
-    const observer = new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      lcp = entries.at(-1)?.startTime ?? lcp;
-    });
-    observer.observe({ type: "largest-contentful-paint", buffered: true });
-  }
-
-  if (supported.includes("layout-shift")) {
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        const shift = entry as PerformanceEntry & { value?: number; hadRecentInput?: boolean };
-        if (!shift.hadRecentInput) cls += shift.value ?? 0;
-      }
-    });
-    observer.observe({ type: "layout-shift", buffered: true });
-  }
-
-  if (supported.includes("event")) {
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        const interaction = entry as PerformanceEntry & { duration?: number; interactionId?: number };
-        if ((interaction.interactionId ?? 0) > 0) {
-          inp = Math.max(inp, interaction.duration ?? 0);
-        }
-      }
-    });
-    try {
-      observer.observe({
-        type: "event",
-        buffered: true,
-        durationThreshold: 40,
-      } as PerformanceObserverInit);
-    } catch {
-      // Older WebKit accepts PerformanceObserver but not event timing options.
-    }
-  }
-
-  const flush = () => {
-    if (lcp > 0) reportMetric("LCP", lcp);
-    reportMetric("CLS", cls);
-    if (inp > 0) reportMetric("INP", inp);
-  };
-  window.addEventListener("pagehide", flush, { once: true });
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") flush();
-  });
+  // Delayed consent may follow a client-side route change. Navigation Timing
+  // still identifies the document whose paint/layout metrics we are measuring.
+  const navigation = performance.getEntriesByType("navigation")[0];
+  documentPath = new URL(navigation?.name || window.location.href).pathname;
+  window.addEventListener("pageshow", (event) => {
+    if (!event.persisted) return;
+    documentPath = window.location.pathname;
+    metricValues.clear();
+  }, true);
+  // The standard, self-hosted library calculates CLS session windows, INP
+  // outliers and bfcache lifecycles. Never send its entries, DOM targets or URLs.
+  // Keep document-navigation metrics comparable across browsers; soft-nav
+  // measurement is deliberately not enabled on this shared reporting stream.
+  onCLS(reportMetric);
+  onFCP(reportMetric);
+  onINP(reportMetric);
+  onLCP(reportMetric);
 }
 
 function beginRum() {
@@ -172,8 +135,14 @@ function beginRum() {
 }
 
 export function installRum() {
+  if (listening) return;
+  listening = true;
   beginRum();
   onAnalyticsConsentChange((consent) => {
+    // web-vitals has no observer teardown/reset API. Once consent is withdrawn,
+    // discard this document's performance stream even after re-grant, avoiding
+    // a later report that includes the withdrawn interval. A new load resets it.
+    if (installed && consent === "denied") performanceRevoked = true;
     if (consent === "granted") beginRum();
   });
 }
